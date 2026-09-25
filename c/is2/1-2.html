@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>변이, 자연선택, 진화 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="나방 집단 시뮬레이션으로 자연선택의 조건을 확인하고, 항생제 내성 세균이 늘어나는 과정과 용불용설의 한계를 따져 보는 개념 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-is2-selection canvas, #card-is2-lamarck canvas { width: 100%; aspect-ratio: 1 / 1; }
+    #card-is2-resistance canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-is2-resistance .nums dd sup { font-size: 10px; }
+    @media (max-width: 640px) {
+      #card-is2-selection canvas { aspect-ratio: 3 / 4; }
+      #card-is2-lamarck canvas { aspect-ratio: 3 / 4; }
+    }
+  </style>
+</head>
+<body data-course="is2" data-sec="1-2">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>변이, 자연선택, 진화</h1>
+    <p class="lead">생물은 한 개체가 변해서 진화하지 않습니다. 개체마다 조금씩 다른 집단에서, 환경에 따라 살아남아 자손을 남기는 비율이 달라지면서 집단 전체의 모습이 바뀝니다. 이 절에서는 그 과정을 직접 돌려 보고, 흔히 하는 설명의 어느 부분이 틀렸는지 찾아봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">유전자와 형질</span><span class="p">세포 분열</span><span class="p">분포와 평균</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-is2-selection"><span class="mono">1.2.1</span>자연선택은 어떻게 작동할까?</a></li>
+        <li><a href="#card-is2-resistance"><span class="mono">1.2.2</span>항생제 내성 세균은 어떻게 늘어날까?</a></li>
+        <li><a href="#card-is2-lamarck"><span class="mono">1.2.3</span>기린은 필요해서 목이 길어졌을까?</a></li>
+        <li><a href="#video-is2-moth"><span class="mono">영상</span>흰 나방, 검은 나방</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-is2-selection">
+        <header class="card-head">
+          <span class="no">1.2.1</span><h2>자연선택은 어떻게 작동할까?</h2><span class="kind">개체군 시뮬레이션 · 모식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="나무껍질 위 나방 집단과, 세대마다 달라지는 색 분포 및 평균 그래프"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="나무껍질 색">
+                <button class="chip" type="button" data-bg="20">지의류 덮인 밝은 껍질</button>
+                <button class="chip" type="button" data-bg="85">그을음 덮인 어두운 껍질</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">껍질의 어두운 정도 = <output class="bg-out">85</output></label>
+                  <input class="bg" type="range" min="0" max="100" step="1" value="85" aria-label="나무껍질의 어두운 정도"></div>
+                <div><label class="mono">포식 압력 = <output class="pred-out">60</output>%</label>
+                  <input class="pred" type="range" min="0" max="95" step="5" value="60" aria-label="포식 압력"></div>
+              </div>
+              <div class="toggles">
+                <label><input type="checkbox" class="var" checked>개체마다 색이 다르다 (변이)</label>
+                <label><input type="checkbox" class="her" checked>색이 자손에게 전해진다 (유전)</label>
+              </div>
+              <div class="presets">
+                <button class="btn step" type="button" style="padding:5px 12px;font-size:13px">한 세대 지나기</button>
+                <button class="btn auto" type="button" style="padding:5px 12px;font-size:13px">자동으로</button>
+                <button class="chip reset" type="button">처음으로</button>
+              </div>
+              <dl class="nums">
+                <div><dt>세대</dt><dd class="gen">0</dd></div>
+                <div><dt>평균 어두운 정도</dt><dd class="mean">—</dd></div>
+                <div><dt>지난 세대 생존율</dt><dd class="surv">—</dd></div>
+              </dl>
+              <p class="fig-note msg"></p>
+              <p class="fig-note">모식 모형: 한 세대 120마리. 배경과 색이 다를수록 새에게 잘 들킨다고 두고, 살아남은 개체가 다음 세대를 채웁니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>나무껍질이 어두워지면 나방 집단은 어떻게 바뀔까요? 나방이 스스로 색을 어둡게 바꿀까요?</li>
+            <li><span class="tag">복원</span>같은 종이라도 개체마다 형질이 조금씩 다릅니다. 이 차이를 <em>변이</em>라고 하고, 그중 유전자 차이에서 온 변이는 자손에게 전해집니다. 새로운 변이는 DNA 돌연변이와 유성 생식 과정에서 생깁니다.</li>
+            <li><span class="tag">설명</span>생물은 살아남을 수 있는 것보다 많은 자손을 낳습니다. 환경에 알맞은 형질을 가진 개체가 더 많이 살아남아 자손을 남기면, 그 형질의 비율이 세대마다 늘어납니다. 이것이 <em>자연선택</em>입니다.</li>
+            <li><span class="tag">연결</span>자연선택에는 세 가지가 함께 필요합니다. 개체 사이의 변이, 그 변이의 유전, 형질에 따른 생존·번식의 차이. 하나라도 빠지면 집단은 바뀌지 않습니다.</li>
+            <li><span class="tag">적용</span>‘자동으로’를 눌러 몇 세대 지켜본 뒤 ‘처음으로’를 누르고, 이번에는 ‘변이’ 또는 ‘유전’을 끄고 돌려 보세요. 평균 그래프가 어떻게 다른가요? 배경을 밝게 되돌리면 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>한 나방의 색은 평생 그대로입니다. 바뀌는 것은 <em>집단 안의 비율</em>입니다. “나방이 환경에 적응하려고 색을 바꿨다”는 말은 개체와 집단을 섞은 표현입니다. 또 자연선택은 이미 있는 변이 가운데서 고를 뿐, 필요한 변이를 새로 만들어 주지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어느 섬의 도마뱀이 모두 같은 유전자를 가진 복제 개체라고 합시다. 섬에 새로운 포식자가 들어오면, 여러 세대 뒤 이 도마뱀 집단은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>포식자를 피하기 좋은 형질이 빠르게 늘어난다.<span class="why"><b>선택만 보고 변이를 빠뜨린 답입니다.</b> 모두 유전적으로 같으면 누가 살아남든 자손의 형질이 같아서 고를 것이 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>개체 수는 줄 수 있지만, 새 돌연변이가 생기기 전에는 유전적 형질의 구성이 바뀌지 않는다.<span class="why"><b>맞습니다.</b> 자연선택은 유전 변이가 있어야 작동합니다. 시간이 지나 돌연변이가 쌓이면 그때부터 선택이 일어날 수 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>포식자를 경험한 도마뱀이 빨라지고, 그 빠르기가 자손에게 전해진다.<span class="why"><b>살면서 얻은 형질의 유전을 가정한 답입니다.</b> 운동으로 붙은 근육은 자손에게 유전되지 않습니다. 1.2.3 카드에서 이 가정을 따져 봅니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-is2-resistance">
+        <header class="card-head">
+          <span class="no">1.2.2</span><h2>항생제 내성 세균은 어떻게 늘어날까?</h2><span class="kind">선택압 · 로그 그래프 · 모식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="항생제 농도와 투여 기간에 따라 항생제에 약한 세균과 내성 세균의 수가 바뀌는 로그 그래프 (모식)"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="항생제 농도">
+                <button class="chip" type="button" data-dose="0">투여 안 함</button>
+                <button class="chip" type="button" data-dose="3">낮게 (MIC의 4배)</button>
+                <button class="chip" type="button" data-dose="5">중간 (16배)</button>
+                <button class="chip" type="button" data-dose="7">높게 (64배)</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">한 번 투여량 = <output class="dose-out">—</output></label>
+                  <input class="dose" type="range" min="0" max="8" step="1" value="3" aria-label="항생제 투여량"></div>
+                <div><label class="mono">투여 기간 = <output class="days-out">7</output>일</label>
+                  <input class="days" type="range" min="1" max="10" step="1" value="7" aria-label="투여 기간"></div>
+              </div>
+              <div class="presets"><button class="btn again" type="button" style="margin-left:auto;padding:5px 12px;font-size:13px">다시 보기</button></div>
+              <dl class="nums">
+                <div><dt>10일 뒤 세균 수</dt><dd class="total">—</dd></div>
+                <div><dt>그중 내성 세균</dt><dd class="rfrac">—</dd></div>
+                <div><dt>결과</dt><dd class="verdict">—</dd></div>
+              </dl>
+              <p class="fig-note msg"></p>
+              <p class="fig-note">모식 모형: 처음 세균 1억 마리 가운데 10만 마리에 1마리꼴로 내성 세균이 섞여 있다고 가정했습니다. MIC는 세균이 자라지 못하게 하는 최소 농도입니다. 12시간마다 투여, 반감기 3시간.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>항생제를 쓰다 보면 잘 듣지 않는 세균이 늘어납니다. 항생제가 세균을 내성 세균으로 바꾼 걸까요?</li>
+            <li><span class="tag">복원</span>세균은 빠르게 분열해 수가 엄청나게 많고, 분열할 때마다 드물게 돌연변이가 생깁니다. 그래서 큰 세균 집단에는 약에 조금 더 잘 견디는 변이가 이미 섞여 있기 쉽습니다.</li>
+            <li><span class="tag">설명</span>항생제는 약한 세균을 먼저 없앱니다. 살아남은 내성 세균은 경쟁자가 사라진 빈자리에서 빠르게 불어납니다. 항생제는 내성을 <em>만드는</em> 것이 아니라 이미 있던 내성 세균을 <em>골라내는</em> 선택압으로 작용합니다.</li>
+            <li><span class="tag">연결</span>1.2.1의 나방과 같은 구조입니다. 변이(내성 유무), 유전(분열로 복제), 생존 차이(항생제). 세균은 한 세대가 짧아서 며칠 만에 집단 구성이 뒤집힐 수 있습니다.</li>
+            <li><span class="tag">적용</span>‘낮게’, ‘중간’, ‘높게’를 차례로 눌러 보세요. 아래 농도 그래프가 내성 세균의 MIC 선을 넘는지 보세요. ‘높게’에서 투여 기간을 1일로 줄이면 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>이 모형은 설명을 위한 모식이라 실제 약, 세균, 환자에 그대로 옮길 수 없습니다. 복용량과 기간은 의사와 약사의 지시를 따라야 합니다. 권장 투여 기간은 감염의 종류마다 다르고 지금도 연구가 이어지고 있습니다. 필요 없는 항생제 사용(예: 바이러스성 감기)은 내성 세균을 고르는 기회만 늘립니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">가축 사료에 성장 촉진용으로 적은 양의 항생제를 오랫동안 섞어 먹였습니다. 이 농장의 세균 집단에서 예상되는 변화는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>양이 적어서 세균에게 아무 영향이 없다.<span class="why"><b>양이 적은 것이 오히려 문제입니다.</b> 약한 세균만 억누르고 내성 세균은 살려 두는 농도가 오래 이어지면, 그 사이 내성 세균이 계속 골라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약한 세균이 줄고 내성 세균의 비율이 늘어난다.<span class="why"><b>맞습니다.</b> 낮은 농도가 오래 유지되는 조건은 카드의 ‘낮게’와 같습니다. 이런 이유로 여러 나라가 성장 촉진용 항생제 사용을 금지하거나 제한하고 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>세균이 항생제에 익숙해지며 한 마리 한 마리가 내성을 기른다.<span class="why"><b>개체가 적응한다는 생각입니다.</b> 내성은 대개 유전자 차이에서 오며, 늘어나는 것은 내성 유전자를 가진 세균의 비율입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-is2-lamarck">
+        <header class="card-head">
+          <span class="no">1.2.3</span><h2>기린은 필요해서 목이 길어졌을까?</h2><span class="kind">두 가설 비교 · 오개념 · 모식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="두 가지 진화 가설에 따라 기린 집단의 목 길이가 세대마다 어떻게 바뀌는지 나란히 보여 주는 그림 (모식)"></canvas>
+            <div class="ctl">
+              <div class="toggles">
+                <label><input type="checkbox" class="acq">살면서 얻은 변화는 유전되지 않는다 (관찰 사실 적용)</label>
+                <label><input type="checkbox" class="var" checked>태어날 때부터 목 길이가 개체마다 다르다</label>
+              </div>
+              <div class="presets">
+                <button class="btn step" type="button" style="padding:5px 12px;font-size:13px">한 세대 지나기</button>
+                <button class="chip reset" type="button">처음으로</button>
+              </div>
+              <dl class="nums">
+                <div><dt>세대</dt><dd class="gen">0</dd></div>
+                <div><dt>가설 1 평균</dt><dd class="ml">—</dd></div>
+                <div><dt>가설 2 평균</dt><dd class="md">—</dd></div>
+              </dl>
+              <p class="fig-note msg"></p>
+              <p class="fig-note">모식: 목 길이는 처음 평균을 100으로 둔 상대값입니다. 가설 2에서는 평균보다 조금 높은 잎에 닿는 개체일수록 번식할 확률이 높다고 두었습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>“기린은 높은 잎을 먹으려고 목을 늘이다 보니 목이 길어졌다.” 이 설명의 어디가 문제일까요?</li>
+            <li><span class="tag">복원</span>라마르크(1809)는 자주 쓰는 기관은 발달하고(용불용), 살면서 얻은 그 변화가 자손에게 전해진다(획득 형질 유전)고 설명했습니다. 다윈(1859)은 개체 사이의 변이와 자연선택으로 설명했습니다.</li>
+            <li><span class="tag">설명</span>‘한 세대 지나기’를 여러 번 눌러 보세요. 두 가설 모두 목이 길어집니다. <em>결과가 같으면 결과만으로는 가설을 가를 수 없습니다.</em> 두 가설이 서로 다르게 예측하는 조건을 찾아야 합니다.</li>
+            <li><span class="tag">연결</span>가설 1은 살면서 얻은 변화가 유전된다는 가정에 기대고 있습니다. 바이스만(1889)은 생쥐 꼬리를 5세대에 걸쳐 잘랐지만 태어난 901마리 가운데 꼬리가 짧은 새끼는 없었습니다. 지금은 몸에서 생긴 변화가 생식세포의 DNA를 바꾸지 않는다는 것이 알려져 있습니다.</li>
+            <li><span class="tag">적용</span>‘살면서 얻은 변화는 유전되지 않는다’를 켜고 다시 돌려 보세요. 어느 가설이 남나요? 이번에는 그것을 끄고 ‘개체마다 다르다’를 꺼 보세요. 가설 2에는 무엇이 꼭 필요한가요?</li>
+            <li class="warn"><span class="tag">판단</span>“필요해서 생겼다”는 말은 목적이 먼저 있고 변화가 뒤따른다는 뜻이 됩니다. 자연선택에는 목적이 없습니다. 또 기린 목이 길어진 실제 까닭은 아직 논쟁 중입니다. 높은 잎을 둘러싼 먹이 경쟁 외에, 수컷끼리 목을 휘둘러 싸우는 데 유리했다는 가설도 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">헬스를 오래 해서 근육이 많이 붙은 부모에게서 태어난 아이에 대해 옳은 설명은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>부모가 늘린 근육만큼 아이도 근육이 많이 태어난다.<span class="why"><b>획득 형질 유전을 가정한 답입니다.</b> 운동으로 커진 근육세포의 변화는 정자나 난자의 DNA로 옮겨 가지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>부모가 운동으로 얻은 근육은 유전되지 않고, 부모에게서 받은 유전자와 아이 자신의 생활이 근육량을 정한다.<span class="why"><b>맞습니다.</b> 부모와 아이가 닮는 것은 유전자를 물려받기 때문이지, 부모가 살면서 바꾼 몸을 물려받기 때문이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>여러 세대가 계속 운동하면 결국 근육이 많은 사람들로 진화한다.<span class="why"><b>반복하면 쌓인다는 생각입니다.</b> 운동 자체는 유전되지 않으므로 쌓이지 않습니다. 집단이 바뀌려면 근육량과 관련된 유전 변이가 번식에서 유리해야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <section class="video-block" id="video-is2-moth" aria-label="통통사과 영상">
+        <div>
+          <span class="mono">영상 · 통통사과 · 32초</span>
+          <h2>흰 나방, 검은 나방</h2>
+          <p>산업 혁명기 영국에서 회색가지나방의 색 비율이 뒤집혔다가 되돌아온 이야기입니다. 1848년 맨체스터에서 처음 기록된 검은 나방은 1895년 무렵 그 부근 나방의 약 98%가 되었고, 대기 오염이 줄자 다시 드물어졌습니다.
+            카드 1.2.1에서 껍질 색을 바꿔 가며 본 일이 실제 자연에서 일어난 사례입니다.</p>
+        </div>
+        <div class="phone">
+          <canvas width="360" height="640" aria-label="나무껍질 색이 바뀌면서 흰 나방과 검은 나방의 비율이 바뀌는 과정을 보여 주는 짧은 애니메이션"></canvas>
+          <button class="reel-play" type="button" aria-label="재생"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+          <div class="reel-bar">
+            <button class="reel-toggle mono" type="button">일시정지</button>
+            <input class="reel-seek" type="range" min="0" max="1000" value="0" aria-label="영상 위치">
+            <span class="reel-time mono">0:00</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/cards/is2/v-selection.js"></script>
+<script src="../../js/cards/is2/v-resistance.js"></script>
+<script src="../../js/cards/is2/v-lamarck.js"></script>
+<script src="../../js/cards/is2/v-reel-moth.js"></script>
+</body>
+</html>

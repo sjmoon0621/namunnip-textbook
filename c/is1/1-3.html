@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>측정과 어림 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="반복 측정과 오차, 유효숫자, 페르미 추정. 측정값을 얼마나 믿을 수 있는지 직접 재고 계산해 보는 개념 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    .toc li a { grid-template-columns: 44px 1fr; }
+    #card-is1-sigfig canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-is1-fermi canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-is1-fermi .ctl-row label.mono { margin-top: 4px; }
+  </style>
+</head>
+<body data-course="is1" data-sec="1-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>측정과 어림</h1>
+    <p class="lead">같은 것을 두 번 재면 값이 조금 다르게 나옵니다. 그렇다면 어떤 값을 적어야 하고, 그 값을 얼마나 믿을 수 있을까요? 이 절에서는 오차가 생기는 까닭, 의미 있는 자릿수를 정하는 방법, 그리고 정확히 잴 수 없는 양을 어림하는 방법을 다룹니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">평균 구하기</span><span class="p">반올림</span><span class="p">1.2 기본량과 단위</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-is1-error"><span class="mono">1.3.1</span>여러 번 재면 오차가 사라질까?</a></li>
+        <li><a href="#card-is1-sigfig"><span class="mono">1.3.2</span>계산기에 나온 숫자를 다 적어도 될까?</a></li>
+        <li><a href="#card-is1-fermi"><span class="mono">1.3.3</span>운동장의 모래알은 몇 개일까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+    </aside>
+
+    <div>
+      <!-- 1.3.1 반복 측정 -->
+      <article class="card" id="card-is1-error">
+        <header class="card-head">
+          <span class="no">1.3.1</span><h2>여러 번 재면 오차가 사라질까?</h2><span class="kind">우연 오차 · 계통 오차 · 반복 측정</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="스톱워치로 잰 진자 주기의 분포 막대그래프와 평균, 참값"></canvas>
+            <div class="ctl">
+              <div class="presets" style="align-items:center">
+                <button class="btn m1" type="button">1번 재기</button>
+                <button class="btn m10" type="button">10번 재기</button>
+                <button class="chip clear" type="button" style="margin-left:auto">지우기</button>
+              </div>
+              <div class="toggles">
+                <label><input type="checkbox" class="ten">10번 왕복을 한꺼번에 재고 10으로 나누기</label>
+                <label><input type="checkbox" class="late">멈춤 버튼을 늘 0.1초 늦게 누르는 버릇</label>
+              </div>
+              <dl class="nums n4">
+                <div><dt>측정 횟수</dt><dd class="n">0</dd></div>
+                <div><dt>평균 (s)</dt><dd class="mean">—</dd></div>
+                <div><dt>흩어짐 σ (s)</dt><dd class="sd">—</dd></div>
+                <div><dt>평균의 불확도 (s)</dt><dd class="se">—</dd></div>
+              </dl>
+              <p class="fig-note">모식: 길이 1.000 m 진자(참값 2.006 s)를 손으로 재는 상황입니다. 손이 누르는 순간의 흔들림은 한 번에 표준편차 약 0.06 s로 가정했습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>스톱워치로 진자의 주기를 재면 잴 때마다 값이 달라집니다. 많이 재서 평균을 내면 참값에 끝없이 가까워질까요?</li>
+            <li><span class="tag">복원</span>평균은 값들을 모두 더해 개수로 나눈 것입니다. 크게 나온 값과 작게 나온 값이 서로 상쇄되기를 기대하는 계산입니다.</li>
+            <li><span class="tag">설명</span>누르는 순간이 매번 조금씩 달라서 생기는 오차는 크게도, 작게도 나옵니다. 이런 <em>우연 오차</em>는 여러 번 재어 평균하면 줄어듭니다. 평균이 흔들리는 정도(평균의 불확도)는 <span class="formula">σ / √N</span>로, 100번 재면 한 번 잴 때의 1/10이 됩니다.</li>
+            <li><span class="tag">연결</span>하지만 매번 같은 방향으로 치우치는 <em>계통 오차</em>는 평균해도 줄지 않습니다. 멈춤을 늘 늦게 누르면 모든 값이 똑같이 커지고, 평균도 똑같이 커집니다. 계통 오차는 측정 방법을 바꾸거나 기구를 보정해야 줄어듭니다.</li>
+            <li><span class="tag">적용</span>‘10번 재기’를 여러 번 눌러 분포가 모이는 곳을 보세요. 그다음 ‘늦게 누르는 버릇’을 켜고 다시 재 보세요. 평균이 참값에서 멀어진 채로 불확도만 작아집니다. 마지막으로 ‘10번 왕복을 한꺼번에’를 켜면 두 오차가 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>실제 실험에서는 참값을 모릅니다. 그래서 분포가 좁다고(정밀하다고) 해서 값이 맞다고(정확하다고) 말할 수 없습니다. 계통 오차는 다른 방법으로 잰 값과 비교할 때에야 드러나는 경우가 많습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">영점이 0.3 g 어긋난 전자저울로 같은 물체를 100번 재어 평균을 냈습니다. 이 평균은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>100번이나 평균했으니 참값에 매우 가깝다.<span class="why"><b>평균이 줄여 주는 것은 우연 오차뿐입니다.</b> 100번 모두 0.3 g씩 치우쳐 있으니 평균도 0.3 g 치우칩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>흩어짐은 작지만 참값에서 약 0.3 g 벗어나 있다.<span class="why"><b>맞습니다.</b> 영점 오차는 계통 오차입니다. 저울의 영점을 맞추거나, 무게를 정확히 아는 추로 보정해야 없어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>여러 번 잴수록 영점 오차가 쌓여 더 틀려진다.<span class="why"><b>쌓이지는 않습니다.</b> 한 번 잴 때마다 같은 양만큼 치우칠 뿐이라, 평균의 치우침도 0.3 g 그대로입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- 1.3.2 유효숫자 -->
+      <article class="card" id="card-is1-sigfig">
+        <header class="card-head">
+          <span class="no">1.3.2</span><h2>계산기에 나온 숫자를 다 적어도 될까?</h2><span class="kind">유효숫자 · 눈금 읽기 · 곱셈</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="카드의 가로·세로를 잰 눈금 확대 그림과, 계산한 넓이가 될 수 있는 범위"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono" for="sfa">가로를 잰 도구</label>
+                  <select class="ia" id="sfa"><option value="1">1 cm 눈금 자</option><option value="2" selected>1 mm 눈금 자</option><option value="3">디지털 캘리퍼스</option></select></div>
+                <div><label class="mono" for="sfb">세로를 잰 도구</label>
+                  <select class="ib" id="sfb"><option value="1">1 cm 눈금 자</option><option value="2" selected>1 mm 눈금 자</option><option value="3">디지털 캘리퍼스</option></select></div>
+              </div>
+              <dl class="nums">
+                <div><dt>계산기 값 (cm²)</dt><dd class="raw">—</dd></div>
+                <div><dt>유효숫자</dt><dd class="sf">—</dd></div>
+                <div><dt>적을 값 (cm²)</dt><dd class="rep">—</dd></div>
+              </dl>
+              <p class="fig-note">재는 물체는 교통카드나 학생증 같은 표준 카드(85.60 mm × 53.98 mm)입니다. 눈금 자는 최소 눈금의 1/10까지 어림해 읽고, 마지막 자리는 ±1만큼 틀릴 수 있다고 보았습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>카드의 가로 8.56 cm, 세로 5.40 cm를 곱하면 계산기에 46.224가 나옵니다. 넓이를 46.224 cm²라고 적어도 될까요?</li>
+            <li><span class="tag">복원</span>눈금 자로 잴 때는 최소 눈금의 1/10까지 눈으로 어림해 읽습니다. mm 눈금 자로 8.56 cm라고 읽었다면 8.5까지는 확실하고, 마지막 6은 어림한 숫자입니다.</li>
+            <li><span class="tag">설명</span>확실한 숫자와 처음 나오는 어림한 숫자까지를 <em>유효숫자</em>라고 합니다. 8.56은 유효숫자 3개입니다. 어림한 자리 뒤의 숫자는 재지 않은 것이므로 적으면 안 됩니다. 5.40의 끝자리 0은 ‘0까지 읽었다’는 뜻이라 유효숫자에 들어갑니다.</li>
+            <li><span class="tag">연결</span>가로와 세로가 각각 조금씩 틀릴 수 있으니, 넓이도 한 값이 아니라 <em>범위</em>입니다. 그림 아래쪽 막대가 그 범위입니다. 범위 안에서 바뀌지 않는 자리만 믿을 수 있습니다. 곱셈과 나눗셈의 결과는 유효숫자가 가장 적은 값에 맞춰 적습니다.</li>
+            <li><span class="tag">적용</span>가로는 캘리퍼스, 세로는 1 cm 눈금 자로 바꿔 보세요. 가로를 아무리 정밀하게 재도 결과의 유효숫자는 몇 개인가요? 두 도구를 모두 캘리퍼스로 바꾸면 믿을 수 있는 자리가 어떻게 늘어나나요?</li>
+            <li class="warn"><span class="tag">판단</span>숫자를 많이 적는다고 정밀해지지 않습니다. 오히려 재지 않은 정밀도를 가진 척하는 셈입니다. 덧셈과 뺄셈은 규칙이 다릅니다. 자릿수가 아니라 <em>소수점 아래 자리</em>가 가장 적은 값에 맞춥니다(12.5 + 0.034 = 12.5).</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">질량 25.0 g, 부피 3.2 cm³인 물체의 밀도를 계산기로 구하니 7.8125가 나왔습니다. 알맞게 적은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>7.8125 g/cm³<span class="why"><b>계산기의 숫자를 그대로 옮겼습니다.</b> 부피를 2자리까지만 쟀는데 결과를 5자리로 적으면 재지 않은 정밀도를 주장하는 셈입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>7.81 g/cm³<span class="why"><b>질량의 유효숫자(3개)에 맞췄습니다.</b> 곱셈·나눗셈에서는 가장 적은 쪽, 곧 부피의 2개에 맞춰야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>7.8 g/cm³<span class="why"><b>맞습니다.</b> 부피 3.2는 유효숫자 2개이므로 결과도 2개로 적습니다. 부피가 3.1~3.3 사이라면 밀도는 약 7.6~8.1이라 둘째 자리부터 이미 흔들립니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- 1.3.3 페르미 추정 -->
+      <article class="card" id="card-is1-fermi">
+        <header class="card-head">
+          <span class="no">1.3.3</span><h2>운동장의 모래알은 몇 개일까?</h2><span class="kind">어림 · 페르미 추정 · 크기의 자릿수</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="어림한 모래알 수를 로그 눈금에 표시하고, 각 요소가 결과를 얼마나 흔드는지 막대로 비교"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">운동장 넓이 = <output class="aO">—</output> m²</label>
+                  <input class="a" type="range" min="2000" max="15000" step="500" value="7000" aria-label="운동장 넓이"></div>
+                <div><label class="mono">모래층 깊이 = <output class="dO">—</output> cm</label>
+                  <input class="d" type="range" min="2" max="30" step="1" value="10" aria-label="모래층 깊이"></div>
+                <div><label class="mono">모래알 지름 = <output class="sO">—</output> mm</label>
+                  <input class="s" type="range" min="-1" max="0.3" step="0.01" value="-0.3" aria-label="모래알 지름 (로그)"></div>
+                <div><label class="mono">알갱이가 차지하는 비율 = <output class="fO">—</output></label>
+                  <input class="f" type="range" min="0.5" max="0.7" step="0.01" value="0.6" aria-label="채움 비율"></div>
+              </div>
+              <dl class="nums">
+                <div><dt>모래알 수 (어림)</dt><dd class="nOut">—</dd></div>
+                <div><dt>자릿수</dt><dd class="oom">—</dd></div>
+                <div><dt>가장 크게 흔드는 요소</dt><dd class="topf">—</dd></div>
+              </dl>
+              <p class="fig-note">모식: 모래알을 같은 크기의 공으로 보았습니다. 모래는 지름 0.0625~2 mm인 알갱이를 말합니다. 막대는 각 요소를 ‘그럴듯한 범위’의 양 끝으로 바꿀 때 결과가 몇 배 달라지는지입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>운동장 겉흙 속 모래알을 하나씩 셀 수는 없습니다. 그래도 ‘대략 몇 개’인지는 말할 수 있을까요?</li>
+            <li><span class="tag">복원</span>개수 = 전체 부피 ÷ 알갱이 하나의 부피. 공의 부피는 <span class="formula">(π/6) d³</span>입니다. 알갱이 사이에는 빈틈이 있으니, 전체 부피 중 알갱이가 차지하는 비율(약 0.6)을 곱합니다.</li>
+            <li><span class="tag">설명</span><span class="formula">N = 넓이 × 깊이 × 비율 ÷ ((π/6) d³)</span>. 모르는 양을 아는 양, 또는 어림할 수 있는 양으로 쪼갠 다음 곱하는 방법을 <em>페르미 추정</em>이라고 합니다. 목표는 정확한 값이 아니라 <em>자릿수</em>, 곧 10의 몇 제곱인지입니다.</li>
+            <li><span class="tag">연결</span>각 요소를 조금씩 틀리게 어림해도, 어떤 것은 크게 어떤 것은 작게 틀려 서로 상쇄되기도 합니다. 다만 세제곱으로 들어가는 요소는 다릅니다. 지름을 2배 틀리면 결과는 8배 틀립니다.</li>
+            <li><span class="tag">적용</span>막대를 하나씩 움직여 보세요. 넓이를 2배로 해도 자릿수는 거의 그대로인데, 지름은 조금만 바꿔도 자릿수가 바뀝니다. 더 정확한 답을 원한다면 무엇부터 실제로 재야 할까요? 오른쪽 아래 막대가 답을 줍니다.</li>
+            <li class="warn"><span class="tag">판단</span>어림값은 틀린 값이 아니라 <em>범위가 있는 값</em>입니다. ‘약 6×10¹²개’보다 ‘10¹¹~10¹⁴개 사이’가 더 정직한 답일 때도 있습니다. 어림의 가치는 숫자 자체보다, 무엇이 결과를 좌우하는지 알게 해 주는 데 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 운동장에 모래 대신 지름이 10배 큰(약 5 mm) 자갈이 깔려 있다면, 알갱이 수는 대략 어떻게 될까요? (나머지 조건은 같다)</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/10이 된다.<span class="why"><b>지름과 개수가 반비례한다고 본 답입니다.</b> 알갱이 하나의 부피는 지름의 세제곱에 비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1/1000이 된다.<span class="why"><b>맞습니다.</b> 지름이 10배면 부피는 10³ = 1000배이므로, 같은 공간에 들어가는 수는 1/1000입니다. 자릿수가 3개 줄어듭니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/100이 된다.<span class="why"><b>넓이처럼 제곱으로 생각했습니다.</b> 운동장 표면만 덮는 한 층이라면 그럴 수 있지만, 여기서는 깊이가 있는 부피를 채웁니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/cards/is1/meas-error.js"></script>
+<script src="../../js/cards/is1/sigfig.js"></script>
+<script src="../../js/cards/is1/fermi.js"></script>
+</body>
+</html>

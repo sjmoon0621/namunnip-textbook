@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>정보와 디지털 신호 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="소리를 표본화·양자화해 숫자로 바꾸고, 온도 센서의 신호가 저항·전압·숫자로 바뀌는 과정을 직접 조작하는 개념 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    .toc li a { grid-template-columns: 44px 1fr; }
+  </style>
+</head>
+<body data-course="is1" data-sec="1-4">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>정보와 디지털 신호</h1>
+    <p class="lead">온도, 빛, 소리 같은 자연의 변화는 연속적으로 바뀝니다. 컴퓨터는 이것을 띄엄띄엄한 숫자로만 다룰 수 있습니다. 이 절에서는 센서가 자연의 변화를 전기 신호로 바꾸고, 그 신호가 숫자가 되는 과정을 단계별로 따라가며, 그 과정에서 무엇을 잃는지 살펴봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">진동수 (Hz)</span><span class="p">2진수</span><span class="p">전압과 저항 (V = IR)</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-is1-sampling"><span class="mono">1.4.1</span>소리는 어떻게 숫자가 될까?</a></li>
+        <li><a href="#card-is1-sensor"><span class="mono">1.4.2</span>온도계는 정말 온도를 잴까?</a></li>
+        <li><a href="#video-is1-sensors"><span class="mono">영상</span>스마트폰 속 센서들</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+    </aside>
+
+    <div>
+      <!-- 1.4.1 표본화·양자화 -->
+      <article class="card" id="card-is1-sampling">
+        <header class="card-head">
+          <span class="no">1.4.1</span><h2>소리는 어떻게 숫자가 될까?</h2><span class="kind">아날로그–디지털 변환 · 표본화 · 양자화</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="소리 파형과, 일정한 간격으로 뽑아 정해진 층으로 반올림한 디지털 값"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" data-pre="cd">CD (44.1 kHz, 16비트)</button>
+                <button class="chip" data-pre="tel">유선 전화 (8 kHz, 8비트)</button>
+                <button class="chip" data-pre="low">거친 설정 (8 kHz, 3비트)</button>
+                <button class="chip" data-pre="alias">너무 드문 표본화</button>
+              </div>
+              <label class="mono">소리의 진동수 = <output class="fO">—</output> Hz</label>
+              <input class="f" type="range" min="2.3" max="4" step="0.005" value="2.643" aria-label="소리의 진동수 (로그)">
+              <div class="ctl-row">
+                <div><label class="mono">표본화 = <output class="fsO">—</output> kHz</label>
+                  <input class="fs" type="range" min="1" max="48" step="0.1" value="8" aria-label="1초에 뽑는 횟수 (kHz)"></div>
+                <div><label class="mono">양자화 = <output class="bO">—</output>비트</label>
+                  <input class="b" type="range" min="1" max="16" step="1" value="3" aria-label="비트 수"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>높이 층 수</dt><dd class="lv">—</dd></div>
+                <div><dt>담을 수 있는 최고음</dt><dd class="ny">—</dd></div>
+                <div><dt>1초 데이터 (모노)</dt><dd class="rate">—</dd></div>
+                <div><dt>들리는 소리</dt><dd class="heard">—</dd></div>
+              </dl>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>마이크가 만든 전압은 매끄럽게 오르내리는 곡선입니다. 곡선 위의 점은 무한히 많은데, 어떻게 유한한 숫자 몇 개로 저장할까요?</li>
+            <li><span class="tag">복원</span>n비트로는 <span class="formula">2<sup>n</sup></span>가지 수를 나타낼 수 있습니다. 3비트면 000부터 111까지 8가지, 16비트면 65,536가지입니다.</li>
+            <li><span class="tag">설명</span>두 번 자릅니다. 먼저 시간을 일정한 간격으로 잘라 그 순간의 값만 뽑습니다(<em>표본화</em>). 그다음 뽑은 값을 정해진 층 가운데 가장 가까운 층으로 반올림합니다(<em>양자화</em>). 그러면 소리는 ‘몇 번째 층’이라는 정수의 목록이 됩니다.</li>
+            <li><span class="tag">연결</span>1초에 fs번 뽑으면 진동수가 <span class="formula">fs / 2</span>보다 낮은 소리만 제대로 담을 수 있습니다(표본화 정리). 사람은 약 20 kHz까지 들으므로 CD는 그 두 배가 넘는 44.1 kHz로 뽑습니다. 비트 수를 1 늘리면 층이 2배로 촘촘해져 반올림 오차가 절반이 됩니다.</li>
+            <li><span class="tag">적용</span>‘거친 설정’을 누르고 비트 수를 1씩 올려 보세요. 계단이 원래 곡선에 얼마나 빨리 가까워지나요? ‘너무 드문 표본화’에서는 뽑은 점들이 실제와 전혀 다른, 훨씬 낮은 소리(점선)를 그립니다. 이 현상을 에일리어싱이라고 합니다.</li>
+            <li class="warn"><span class="tag">판단</span>디지털이 아날로그보다 늘 ‘더 정확한’ 것은 아닙니다. 변환할 때 이미 정보를 버립니다. 대신 한번 숫자가 되면 복사하고 전송해도 더 나빠지지 않습니다. 촘촘하게 뽑을수록 데이터가 커지므로, 무엇을 담아야 하는지에 맞춰 설정을 고릅니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">박쥐는 약 50 kHz의 초음파를 냅니다. 이 소리를 녹음해 분석하려면 표본화 주파수는 적어도 얼마여야 할까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>44.1 kHz면 충분하다.<span class="why"><b>CD의 설정은 사람이 듣는 소리에 맞춘 것입니다.</b> 44.1 kHz로는 22.05 kHz까지만 담을 수 있어, 50 kHz 소리는 엉뚱한 낮은 소리로 기록됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50 kHz<span class="why"><b>진동수와 같게 뽑으면</b> 매번 파동의 같은 위치만 찍혀서 소리가 멈춘 것처럼 기록됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>100 kHz보다 높게<span class="why"><b>맞습니다.</b> 담으려는 가장 높은 진동수의 2배보다 빠르게 뽑아야 합니다. 실제 박쥐 연구용 녹음기는 수백 kHz로 표본화합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- 1.4.2 센서 -->
+      <article class="card" id="card-is1-sensor">
+        <header class="card-head">
+          <span class="no">1.4.2</span><h2>온도계는 정말 온도를 잴까?</h2><span class="kind">센서 · 서미스터 · 전압 나눔 · ADC</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="온도가 서미스터 저항, 전압, 디지털 숫자로 바뀌는 단계와 온도-전압 그래프"></canvas>
+            <div class="ctl">
+              <label class="mono">실제 온도 = <output class="tO">—</output> °C</label>
+              <input class="t" type="range" min="-20" max="100" step="0.1" value="25" aria-label="실제 온도"></label>
+              <div class="presets">
+                <button class="chip" data-bits="8">8비트 ADC</button>
+                <button class="chip" data-bits="10" aria-pressed="true">10비트 ADC</button>
+                <button class="chip" data-bits="12">12비트 ADC</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>서미스터 저항</dt><dd class="r">—</dd></div>
+                <div><dt>전압</dt><dd class="v">—</dd></div>
+                <div><dt>ADC 숫자</dt><dd class="code">—</dd></div>
+                <div><dt>숫자 한 칸 =</dt><dd class="res">—</dd></div>
+              </dl>
+              <p class="fig-note">부품값은 흔히 쓰는 대표값입니다: 25 °C에서 10 kΩ, B = 3950 K인 NTC 서미스터와 10 kΩ 고정 저항, 5 V 전원.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>디지털 온도계의 화면에는 ‘25.0 °C’가 뜹니다. 그런데 전자 회로는 전압과 전류만 다룹니다. 온도계 속 부품은 무엇을 재는 걸까요?</li>
+            <li><span class="tag">복원</span>물질의 성질 가운데는 온도에 따라 달라지는 것이 많습니다. 수은은 부피가 늘고, 금속은 저항이 커집니다. 이 변화를 재면 온도를 거꾸로 알아낼 수 있습니다.</li>
+            <li><span class="tag">설명</span>서미스터는 온도가 오르면 저항이 크게 줄어드는 반도체 부품입니다. 고정 저항과 이어 전압을 걸면, 저항 비율에 따라 가운데 지점의 전압이 바뀝니다. 이 전압을 아날로그–디지털 변환기(ADC)가 0~1023 같은 정수로 바꿉니다.</li>
+            <li><span class="tag">연결</span><em>온도 → 저항 → 전압 → 숫자.</em> 센서가 직접 재는 것은 온도가 아니라 저항 변화이고, 컴퓨터는 이 과정을 거꾸로 계산해 온도를 표시합니다. 빛 센서, 압력 센서, 가속도 센서도 모두 ‘재기 쉬운 전기량’으로 바꾸는 단계를 거칩니다.</li>
+            <li><span class="tag">적용</span>온도 막대를 −20 °C에서 100 °C까지 움직이며 ‘숫자 한 칸’이 몇 °C인지 보세요. 어느 온도에서 가장 섬세하게 재나요? ADC를 8비트로 바꾸면 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>화면에 소수점 아래 숫자가 나온다고 그만큼 정확한 것은 아닙니다. 부품값의 오차(흔히 ±1%), 서미스터가 제 몸의 전류로 데워지는 현상, 전원 전압의 흔들림이 모두 오차가 됩니다. 이 그래프의 곡선도 부품 규격으로 계산한 모형입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 회로에서 ADC만 10비트에서 12비트로 바꾸면, 25 °C 부근에서 ‘숫자 한 칸’이 나타내는 온도 폭은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1/4로 좁아진다.<span class="why"><b>맞습니다.</b> 12비트는 4096칸으로 10비트(1024칸)의 4배입니다. 같은 전압 범위를 4배 잘게 나누니 한 칸의 폭은 1/4이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 1/2로 좁아진다.<span class="why"><b>비트 수가 2 늘었으니 2배라고 생각하기 쉽습니다.</b> 하지만 비트 하나마다 칸 수가 2배가 되므로 2비트면 2 × 2 = 4배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도계가 4배 정확해진다.<span class="why"><b>잘게 나누는 것과 정확한 것은 다릅니다.</b> 부품값의 오차나 전원 전압의 흔들림은 ADC를 바꿔도 그대로 남습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <section class="video-block" id="video-is1-sensors" aria-label="통통사과 영상">
+        <div>
+          <span class="mono">영상 · 통통사과 · 32초</span>
+          <h2>스마트폰 속 센서들</h2>
+          <p>휴대 전화는 기울기, 빛, 소리, 기압을 쉬지 않고 잽니다. 센서마다 재는 것은 다르지만, 모두 그 변화를 전기 신호로 바꾸고 결국 숫자로 만든다는 점은 같습니다.
+            카드 1.4.2의 ‘온도 → 저항 → 전압 → 숫자’가 전화 속에서 어떻게 되풀이되는지 32초로 봅니다. 센서 구조는 모식입니다.</p>
+        </div>
+        <div class="phone">
+          <canvas width="360" height="640" aria-label="가속도 센서, 빛 센서, 마이크, 기압 센서가 각각 무엇을 전기 신호로 바꾸는지 보여 주는 짧은 애니메이션"></canvas>
+          <button class="reel-play" type="button" aria-label="재생"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+          <div class="reel-bar">
+            <button class="reel-toggle mono" type="button">일시정지</button>
+            <input class="reel-seek" type="range" min="0" max="1000" value="0" aria-label="영상 위치">
+            <span class="reel-time mono">0:00</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/cards/is1/sampling.js"></script>
+<script src="../../js/cards/is1/thermistor.js"></script>
+<script src="../../js/cards/is1/reel-sensors.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>감염병 진단 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="PCR 증폭과 Ct, 민감도·특이도·유병률로 읽는 진단 검사 결과. 직접 만져 보는 개념 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-is2-test .pk { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 2px 0 8px; vertical-align: -1px; }
+    #card-is2-test .pk.tp { background: #d4493a; }
+    #card-is2-test .pk.fn { border: 2px solid #d4493a; }
+    #card-is2-test .pk.fp { background: #e0a02a; }
+    #card-is2-test .pk.tn { background: #c9cbc2; }
+    #card-is2-test .test-msg { margin-top: 8px; font-size: 13.5px; color: var(--ink-2); }
+  </style>
+</head>
+<body data-course="is2" data-sec="3-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>감염병 진단</h1>
+    <p class="lead">콧속을 한 번 문지른 면봉에서 어떻게 바이러스를 찾아낼까요? 그리고 검사 결과가 ‘양성’이라고 나오면, 그 사람은 정말 감염된 걸까요? 검사가 작동하는 원리와 검사 결과를 읽는 방법을 차례로 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">DNA와 염기쌍</span><span class="p">거듭제곱과 로그</span><span class="p">비율과 백분율</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-is2-pcr"><span class="mono">3.1.1</span>PCR은 아주 적은 양의 바이러스를 어떻게 찾아낼까?</a></li>
+        <li><a href="#card-is2-test"><span class="mono">3.1.2</span>검사 결과가 양성이면 정말 감염일까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-is2-pcr">
+        <header class="card-head">
+          <span class="no">3.1.1</span><h2>PCR은 아주 적은 양의 바이러스를 어떻게 찾아낼까?</h2><span class="kind">유전자 증폭 · 로그 눈금 · 모식 모형</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="PCR 사이클에 따른 DNA 조각 수와 형광 세기, 검출 기준선을 넘는 사이클 Ct"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div>
+                  <label class="mono">처음 DNA 조각 수 = <output class="n0-out">100</output>개</label>
+                  <input class="n0" type="range" min="0" max="6" step="1" value="2" aria-label="처음 DNA 조각 수 (10의 거듭제곱)">
+                </div>
+                <div>
+                  <label class="mono">증폭 효율 = <output class="eff-out">100</output>%</label>
+                  <input class="eff" type="range" min="70" max="100" step="1" value="100" aria-label="한 사이클의 증폭 효율">
+                </div>
+              </div>
+              <label class="mono">사이클 = <output class="cyc-out">40</output></label>
+              <input class="cyc" type="range" min="0" max="40" step="1" value="40" aria-label="사이클 수">
+              <div class="presets" style="align-items:center">
+                <span class="toggles" style="margin:0">
+                  <label><input type="checkbox" class="logy">로그 눈금</label>
+                  <label><input type="checkbox" class="series">10배씩 묽힌 시료 함께 보기</label>
+                </span>
+                <button class="btn run" type="button" style="margin-left:auto">처음부터 증폭</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>사이클</dt><dd>—</dd></div>
+                <div><dt>DNA 조각 수</dt><dd>—</dd></div>
+                <div><dt>Ct (기준선 도달)</dt><dd>—</dd></div>
+                <div><dt>처음보다</dt><dd>—</dd></div>
+              </dl>
+              <p class="fig-note">모식 모형: 검출 기준선을 10¹⁰개, 재료가 떨어져 증폭이 멈추는 양을 10¹²개로 잡았습니다. 실제 기기는 형광 세기로 기준선을 정하고, 그 값은 기기와 시약마다 다릅니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>면봉에 묻어 나온 바이러스 유전자는 수십~수천 개 정도일 수 있습니다. 이렇게 적은 양은 어떤 기계로도 바로 볼 수 없습니다. 그런데 PCR 검사는 이것을 찾아냅니다. 어떻게 할까요?</li>
+            <li><span class="tag">복원</span>DNA는 두 가닥이 A–T, G–C로 짝을 지은 이중 나선입니다. 한 가닥의 염기 서열을 알면 짝이 되는 가닥의 서열도 정해집니다. 열을 가하면 두 가닥이 떨어집니다.</li>
+            <li><span class="tag">설명</span>PCR 한 사이클은 세 단계입니다. 약 95 °C로 가열해 두 가닥을 떼고, 온도를 낮춰 <em>찾고 싶은 서열에만 붙는 짧은 조각(프라이머)</em>을 붙이고, 약 72 °C에서 효소가 짝 가닥을 이어 만듭니다. 목표 조각이 한 사이클마다 이론상 2배가 됩니다.</li>
+            <li><span class="tag">연결</span>2배씩 늘면 n사이클 뒤에는 <span class="formula">N = N<sub>0</sub> × 2<sup>n</sup></span>입니다. 30사이클이면 2³⁰ ≈ 10억 배. 실시간 PCR은 늘어난 DNA에 붙어 빛을 내는 형광 물질로 양을 재고, 형광이 기준선을 넘는 사이클을 <em>Ct</em>라고 부릅니다. 코로나19 바이러스처럼 유전 물질이 RNA인 경우에는 먼저 RNA를 DNA로 바꾸는 역전사 과정을 거칩니다(RT-PCR).</li>
+            <li><span class="tag">적용</span>보통 눈금에서는 곡선이 한참 바닥에 붙어 있다가 갑자기 솟습니다. ‘로그 눈금’을 켜면 같은 곡선이 곧은 직선이 됩니다. 이제 ‘10배씩 묽힌 시료’를 켜 보세요. 시료가 10배 적을 때마다 Ct는 몇 사이클씩 늦어지나요? 효율을 90%로 낮추면 그 간격은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>Ct가 작을수록 처음 시료에 유전자가 많았다는 뜻이지만, Ct만으로 ‘전염력’을 단정할 수는 없습니다. PCR은 유전자 조각을 찾을 뿐 살아 있는 바이러스를 세지 않습니다. 그래서 회복한 뒤에도 한동안 양성이 나올 수 있고, 검체를 채취한 방법에 따라서도 Ct가 달라집니다. 실제 효율은 100%보다 조금 낮습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 기기, 효율 100%로 두 시료를 검사했습니다. 시료 A의 Ct는 22, 시료 B의 Ct는 25입니다. 처음 시료에 들어 있던 목표 유전자의 양은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>B가 A보다 약 3배 많다.<span class="why"><b>Ct를 ‘양’으로 읽은 답입니다.</b> Ct는 기준선에 닿기까지 걸린 사이클 수라서, 클수록 처음 양이 적습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>A가 B보다 약 3배 많다.<span class="why"><b>방향은 맞지만 배수가 틀렸습니다.</b> 사이클마다 2배가 되므로 3사이클 차이는 3배가 아니라 2³배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>A가 B보다 약 8배 많다.<span class="why"><b>맞습니다.</b> A는 B보다 3사이클 먼저 기준선에 닿았습니다. 그 3사이클 동안 B는 2 × 2 × 2 = 8배로 늘어나 A를 따라잡은 셈이니, 처음에는 A가 약 8배 많았습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-is2-test">
+        <header class="card-head">
+          <span class="no">3.1.2</span><h2>검사 결과가 양성이면 정말 감염일까?</h2><span class="kind">민감도 · 특이도 · 유병률 · 1000명 격자</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="1000명을 점으로 나타낸 격자. 감염 여부와 검사 결과에 따라 색이 다르고, 오른쪽 막대는 양성 판정을 받은 사람의 구성"></canvas>
+            <p class="legend"><span class="pk tp"></span>감염·양성 <span class="pk fn"></span>감염·음성(놓침) <span class="pk fp"></span>비감염·양성(위양성) <span class="pk tn"></span>비감염·음성</p>
+            <div class="ctl">
+              <label class="mono">유병률(검사받는 사람 가운데 실제 감염자 비율) = <output class="prev-out">1</output>%</label>
+              <input class="prev" type="range" min="0" max="9" step="1" value="3" aria-label="유병률">
+              <div class="ctl-row">
+                <div>
+                  <label class="mono">민감도 = <output class="sens-out">90</output>%</label>
+                  <input class="sens" type="range" min="50" max="100" step="1" value="90" aria-label="민감도">
+                </div>
+                <div>
+                  <label class="mono">특이도 = <output class="spec-out">95</output>%</label>
+                  <input class="spec" type="range" min="80" max="99.9" step="0.1" value="95" aria-label="특이도">
+                </div>
+              </div>
+              <div class="presets">
+                <button class="chip" type="button" data-set="0.5,90,98">증상 없는 사람 전체 검사</button>
+                <button class="chip" type="button" data-set="30,90,98">증상이 있어 찾아온 사람</button>
+                <button class="chip" type="button" data-set="0.5,90,99.9">특이도를 99.9%로</button>
+              </div>
+              <div class="toggles"><label><input type="checkbox" class="twice">양성이 나오면 다른 검사로 한 번 더 (둘 다 양성만 양성)</label></div>
+              <dl class="nums n4">
+                <div><dt>양성 판정</dt><dd>—</dd></div>
+                <div><dt>그중 실제 감염</dt><dd>—</dd></div>
+                <div><dt>놓친 감염자</dt><dd>—</dd></div>
+                <div><dt>음성이 맞을 확률</dt><dd>—</dd></div>
+              </dl>
+              <p class="test-msg"></p>
+              <p class="fig-note">버튼의 수치는 설명을 위한 예시값입니다. 격자는 1000명 기준이라 사람 수를 반올림해 그렸고, 아래 수치는 반올림하기 전 값으로 계산했습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>“이 검사는 감염자의 90%를 찾아냅니다.” 이 검사에서 양성이 나왔다면, 내가 감염되었을 가능성도 90%일까요?</li>
+            <li><span class="tag">복원</span>검사의 성능은 두 숫자로 말합니다. <em>민감도</em>는 감염자 가운데 양성이 나오는 비율, <em>특이도</em>는 감염되지 않은 사람 가운데 음성이 나오는 비율입니다. 어느 검사도 둘 다 100%는 아닙니다.</li>
+            <li><span class="tag">설명</span>확률보다 사람 수로 세면 쉽습니다. 1000명 중 10명(1%)이 감염자라고 합시다. 민감도 90%면 그중 9명이 양성입니다. 나머지 990명은 감염되지 않았지만, 특이도 95%라도 5%인 약 50명이 양성으로 나옵니다. 양성 59명 가운데 감염자는 9명뿐입니다.</li>
+            <li><span class="tag">연결</span>양성 판정을 받은 사람 가운데 실제 감염자의 비율을 <em>양성 예측도</em>라고 합니다. 오른쪽 막대에서 빨간 부분의 비율, 곧 <span class="formula">진양성 ÷ 양성 전체</span>입니다. 민감도·특이도는 검사의 성질이지만, 양성 예측도는 <em>검사받는 집단의 유병률</em>에 따라 달라집니다.</li>
+            <li><span class="tag">적용</span>민감도와 특이도는 그대로 두고 유병률만 바꿔 보세요. 오른쪽 막대에서 빨간 부분이 절반을 넘는 유병률은 어디부터인가요? ‘한 번 더’를 켜면 양성 예측도가 얼마나 오르는지도 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>“감염자가 양성일 확률”과 “양성인 사람이 감염자일 확률”은 다른 질문입니다. 둘을 뒤바꿔 읽는 것이 가장 흔한 실수입니다. 또 ‘한 번 더’는 두 검사의 오류가 서로 관계없다고 가정한 계산입니다. 같은 원리의 검사를 반복하면 같은 이유로 또 틀릴 수 있어서, 실제로는 이만큼 좋아지지 않을 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 집단의 유병률이 2%이고, 민감도와 특이도가 모두 95%인 검사를 1000명에게 했습니다. 양성 판정을 받은 사람 가운데 실제 감염자의 비율은 대략 얼마일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 95%<span class="why"><b>민감도를 그대로 옮긴 답입니다.</b> 95%는 감염자 20명 가운데 양성이 나오는 비율입니다. 양성인 사람 가운데 감염자의 비율은 따로 세어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 28%<span class="why"><b>맞습니다.</b> 감염자 20명 중 19명이 양성, 비감염자 980명 중 5%인 49명이 양성입니다. 양성 68명 가운데 감염자는 19명, 약 28%입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2%<span class="why"><b>검사 결과를 무시한 답입니다.</b> 2%는 검사 전의 감염 비율입니다. 양성이 나왔다는 정보로 가능성은 크게 올라갑니다. 다만 95%까지는 아닙니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/cards/is2/f-pcr.js"></script>
+<script src="../../js/cards/is2/f-test.js"></script>
+</body>
+</html>
