@@ -2579,8 +2579,14 @@ window.TOC = [
         "title": "ABO식 혈액형은 어떻게 판정할까? (가상 판정 키트)"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-blood",
+        "title": "ABO식 혈액형은 어떻게 판정할까?"
+       }
+      ]
      },
      {
       "n": 7,
