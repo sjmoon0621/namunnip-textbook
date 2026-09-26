@@ -2406,8 +2406,19 @@ window.TOC = [
         "title": "늑대가 돌아온 옐로스톤"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-logistic",
+        "title": "개체군은 왜 끝없이 늘지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-interact",
+        "title": "두 종이 함께 살면 어떻게 될까?"
+       }
+      ]
      }
     ]
    },
