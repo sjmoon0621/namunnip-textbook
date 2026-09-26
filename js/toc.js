@@ -3758,29 +3758,68 @@ window.TOC = [
       "n": 1,
       "title": "에크만 수송과 지형류",
       "code": "12지시02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-ekman",
+        "title": "바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-upwelling",
+        "title": "바람이 불면 왜 해안에 찬물이 올라올까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "천해파와 심해파",
       "code": "12지시02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-waves",
+        "title": "파도는 왜 해안에 가까워지면 느려지고 높아질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "해일",
       "code": "12지시02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-tsunami",
+        "title": "먼바다에서 1 m였던 지진 해일이 해안에서는 왜 훨씬 높아질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-esys-surge",
+        "title": "해일은 무엇 때문에 생기고, 어떻게 대비할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-danger",
+        "title": "태풍 진로의 오른쪽은 왜 더 위험할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "조석",
       "code": "12지시02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-tide",
+        "title": "밀물과 썰물은 왜 하루에 두 번일까, 그리고 왜 매일 달라질까?"
+       }
+      ]
      }
     ]
    },
