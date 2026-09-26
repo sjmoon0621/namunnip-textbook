@@ -3234,8 +3234,19 @@ window.TOC = [
         "title": "태양의 일생"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-hrd",
+        "title": "H–R도는 어떻게 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-evolve",
+        "title": "무거운 별은 왜 더 빨리 죽을까?"
+       }
+      ]
      },
      {
       "n": 4,
