@@ -77,7 +77,7 @@ window.NM = (() => {
       b.classList.add(b.dataset.ok === "1" ? "right" : "wrong");
       b.setAttribute("aria-pressed", "true");
       if (b.dataset.ok === "1") q.dataset.done = "1";
-      q.dispatchEvent(new CustomEvent("answered", { bubbles: true }));
+      q.dispatchEvent(new CustomEvent("answered", { bubbles: true, detail: { button: b, ok: b.dataset.ok === "1" } }));
     }));
   });
 

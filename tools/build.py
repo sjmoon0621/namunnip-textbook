@@ -93,7 +93,7 @@ def page_html(course, ch, sec, blocks):
 <header class="top">
   <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
   <nav class="crumbs" aria-label="위치"></nav>
-  <div class="top-right"><a href="./">← 과목 목차</a></div>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
 </header>
 
 <main class="wrap">
@@ -109,6 +109,7 @@ def page_html(course, ch, sec, blocks):
 {chr(10).join(toc)}
       </ol>
       <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec={course["id"]}-{ch["n"]}-{sec["n"]}">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
@@ -121,9 +122,62 @@ def page_html(course, ch, sec, blocks):
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
 {"".join(f'<script src="../../{s}"></script>{chr(10)}' for s in scripts)}</body>
 </html>
 '''
+
+
+def build_graph(blocks, used, out):
+    """graph/concepts.txt → js/graph-data.js. 개념 id | 이름 | 블록들 | 선수 개념들"""
+    src = ROOT / "graph" / "concepts.txt"
+    if not src.exists():
+        return
+    concepts, errors = [], []
+    for ln, line in enumerate(src.read_text().splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        parts = [p.strip() for p in line.split("|")]
+        if len(parts) != 4:
+            errors.append(f"{ln}행: 칸이 4개가 아님"); continue
+        cid, name, bl, req = parts
+        concepts.append({"id": cid, "name": name, "blocks": bl.split(), "req": req.split(), "line": ln})
+    ids = {c["id"] for c in concepts}
+    if len(ids) != len(concepts):
+        errors.append("개념 id 중복")
+    for c in concepts:
+        for b in c["blocks"]:
+            if b not in blocks:
+                errors.append(f'{c["line"]}행 {c["id"]}: 없는 블록 {b}')
+            elif b not in used:
+                errors.append(f'{c["line"]}행 {c["id"]}: 배치되지 않은 블록 {b}')
+        for r in c["req"]:
+            if r not in ids:
+                errors.append(f'{c["line"]}행 {c["id"]}: 없는 선수 개념 {r}')
+    # 선수 관계에 순환이 있으면 안 된다
+    req = {c["id"]: [r for r in c["req"] if r in ids] for c in concepts}
+    state = {}
+    def visit(n, path):
+        if state.get(n) == 1:
+            errors.append("선수 관계 순환: " + " → ".join(path + [n])); return
+        if state.get(n) == 2:
+            return
+        state[n] = 1
+        for r in req[n]:
+            visit(r, path + [n])
+        state[n] = 2
+    for n in req:
+        visit(n, [])
+    if errors:
+        raise SystemExit("개념 지도 오류:\n  " + "\n  ".join(errors))
+    covered = {b for c in concepts for b in c["blocks"]}
+    missing = [b for b in used if blocks[b]["type"] in TOC_KIND and b not in covered]
+    if missing:
+        print(f"개념 지도에 없는 블록 {len(missing)}개: {', '.join(missing)}")
+    data = [{k: c[k] for k in ("id", "name", "blocks", "req")} for c in concepts]
+    (out / "js" / "graph-data.js").write_text("/* 자동 생성: python3 tools/build.py (원본: graph/concepts.txt) — 직접 고치지 말 것 */\nwindow.GRAPH = " + json.dumps(data, ensure_ascii=False) + ";\n")
+    print(f"개념 지도: 개념 {len(data)}개, 선수 관계 {sum(len(c['req']) for c in data)}개")
 
 
 def main():
@@ -160,6 +214,7 @@ def main():
 
     (out / "js").mkdir(parents=True, exist_ok=True)
     (out / "js" / "toc.js").write_text("/* 자동 생성: python3 tools/build.py — 직접 고치지 말 것 */\nwindow.TOC = " + json.dumps(toc, ensure_ascii=False, indent=1) + ";\n")
+    build_graph(blocks, used, out)
     unused = sorted(set(blocks) - set(used))
     for c in toc:
         n = sum(len(s["items"]) for ch in c["chapters"] for s in ch["sections"])
