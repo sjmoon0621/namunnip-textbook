@@ -2613,8 +2613,19 @@ window.TOC = [
         "title": "집단 면역은 몇 %가 접종해야 생길까? (전파 시뮬레이션)"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-vtypes",
+        "title": "백신 종류는 무엇이 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-herd",
+        "title": "집단 면역은 몇 %가 접종해야 생길까?"
+       }
+      ]
      }
     ]
    },
