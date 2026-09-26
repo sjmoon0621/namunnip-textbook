@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>개념 지도 — 나뭇잎 과학 교과서</title>
-  <meta name="description" content="교과서의 모든 카드를 개념으로 묶고, 어떤 개념을 먼저 알아야 하는지 화살표로 이은 지도. 내가 본 카드와 틀린 문제가 색으로 표시됩니다.">
+  <meta name="description" content="교과서의 모든 카드를 개념으로 묶고, 어떤 개념을 먼저 알아야 하는지 이은 지도. 내가 본 카드와 틀린 문제가 색으로 표시됩니다.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,24 +22,49 @@
 
 <main class="gv">
   <div class="gv-stage">
-    <canvas id="gv-canvas" aria-label="개념 지도. 원은 개념, 화살표는 먼저 알아야 할 개념에서 다음 개념으로 이어진다."></canvas>
-    <div class="gv-tools">
+    <canvas id="gv-canvas" aria-label="개념 지도. 점은 개념, 선은 먼저 알아야 할 개념과 다음 개념의 연결."></canvas>
+
+    <div class="gv-top">
       <input type="search" id="gv-search" placeholder="개념이나 카드 제목 찾기" aria-label="개념 찾기">
-      <div class="gv-courses" id="gv-courses" role="group" aria-label="과목 골라 보기"></div>
-      <div class="gv-zoom">
-        <button type="button" data-z="in" aria-label="확대">+</button><button type="button" data-z="out" aria-label="축소">−</button><button type="button" data-z="fit">전체 보기</button>
+      <div class="gv-btns">
+        <button type="button" id="gv-fit" title="전체 보기" aria-label="전체 보기"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        <button type="button" id="gv-gear" title="그래프 설정" aria-label="그래프 설정" aria-expanded="false"><svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.5-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L15 3.5h-4l-.4 2.6a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.5a7.6 7.6 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a7.7 7.7 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
-    <details class="gv-legend" open>
-      <summary class="mono">읽는 법</summary>
-      <ul>
-        <li><i class="lg-ring"></i>원 하나가 개념 하나. 테두리 색은 과목, 원이 클수록 카드가 많습니다.</li>
-        <li><i class="lg-fill"></i>안쪽이 찬 만큼 그 개념의 카드를 본 것입니다.</li>
-        <li><i class="lg-dot"></i>빨간 점은 오답노트에 남은 문제가 있다는 뜻입니다.</li>
-        <li><i class="lg-arrow"></i>화살표는 먼저 알면 좋은 개념 → 다음 개념.</li>
-      </ul>
-    </details>
+
+    <aside class="gv-settings" id="gv-settings" hidden>
+      <details open>
+        <summary>필터</summary>
+        <label class="gv-row"><span>연결 없는 개념</span><input type="checkbox" data-set="orphans"></label>
+        <div class="gv-courses" id="gv-courses"></div>
+      </details>
+      <details>
+        <summary>색칠</summary>
+        <div class="gv-seg" role="radiogroup" aria-label="색칠 기준">
+          <button type="button" data-color="course">과목</button><button type="button" data-color="progress">내 진도</button>
+        </div>
+        <ul class="gv-groups" id="gv-groups"></ul>
+      </details>
+      <details>
+        <summary>표시</summary>
+        <label class="gv-row"><span>화살표</span><input type="checkbox" data-set="arrows"></label>
+        <label class="gv-row col"><span>글자 나타나는 배율</span><input type="range" min="0.2" max="2" step="0.05" data-set="textFade"></label>
+        <label class="gv-row col"><span>점 크기</span><input type="range" min="0.5" max="2" step="0.05" data-set="nodeSize"></label>
+        <label class="gv-row col"><span>선 두께</span><input type="range" min="0.3" max="3" step="0.1" data-set="linkWidth"></label>
+      </details>
+      <details>
+        <summary>힘</summary>
+        <label class="gv-row col"><span>중심으로 당기는 힘</span><input type="range" min="0" max="1" step="0.01" data-set="center"></label>
+        <label class="gv-row col"><span>서로 밀어내는 힘</span><input type="range" min="0" max="20" step="0.5" data-set="repel"></label>
+        <label class="gv-row col"><span>선이 당기는 힘</span><input type="range" min="0" max="1" step="0.01" data-set="linkForce"></label>
+        <label class="gv-row col"><span>선 길이</span><input type="range" min="20" max="300" step="5" data-set="linkDist"></label>
+        <button type="button" class="gv-reset" id="gv-reset">기본값으로</button>
+      </details>
+    </aside>
+
+    <p class="gv-hint" id="gv-hint">끌어서 이동 · 휠이나 두 손가락으로 확대 · 점을 누르면 자세히 · 점을 끌어 보세요</p>
   </div>
+
   <aside class="gv-panel" id="gv-panel" hidden>
     <button type="button" class="gv-close" aria-label="닫기">×</button>
     <div id="gv-detail"></div>
