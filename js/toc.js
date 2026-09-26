@@ -1720,8 +1720,19 @@ window.TOC = [
         "title": "비료, 플라스틱, 의약품 — 화학이 바꾼 것들"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-haber",
+        "title": "하버–보슈법은 어떻게 인류를 먹여 살렸을까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-chem-society",
+        "title": "공기로 비료를, 석유로 옷을"
+       }
+      ]
      },
      {
       "n": 2,
