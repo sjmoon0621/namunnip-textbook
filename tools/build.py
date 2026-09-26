@@ -7,6 +7,7 @@
   type: intro(절 소개) · card(개념 카드) · text(읽기: 글·사진·그림·표) · video(영상) · related(관련 카드 상자)
 - 번호: 카드·읽기 블록에 대단원.절.순서를 매겨 <span class="no">에 넣는다. 영상은 '영상'으로 표시.
 - 교육과정이 바뀌면 curricula/*.json에서 블록 id의 위치만 옮기고 다시 빌드한다.
+- 한 블록을 여러 과목·절에 배치해도 된다(예: 일반선택 카드를 진로선택 절에서 재사용). 같은 절에 두 번은 안 된다.
 """
 import json, re, sys, pathlib, html as H
 
@@ -213,9 +214,10 @@ def main():
                 for bid in s["blocks"]:
                     if bid not in blocks:
                         raise SystemExit(f'없는 블록: {bid} ({c["id"]} {ch["n"]}-{s["n"]})')
-                    if bid in used:
-                        raise SystemExit(f"블록이 두 곳에 배치됨: {bid} ({used[bid]}, {c['id']} {ch['n']}-{s['n']}) — 같은 내용을 두 번 싣지 말고 related 블록으로 연결할 것")
-                    used[bid] = f'{c["id"]} {ch["n"]}-{s["n"]}'
+                    here = f'{c["id"]} {ch["n"]}-{s["n"]}'
+                    if here in used.get(bid, []):
+                        raise SystemExit(f"한 절에 같은 블록이 두 번 배치됨: {bid} ({here})")
+                    used.setdefault(bid, []).append(here)   # 한 블록을 여러 과목·절에 재사용할 수 있다
                 items = [{"kind": TOC_KIND[blocks[b]["type"]], "id": b, "title": blocks[b]["title"]}
                          for b in s["blocks"] if blocks[b]["type"] in TOC_KIND]
                 tch["sections"].append({"n": s["n"], "title": s["title"], "code": s["code"], "page": bool(s["blocks"]), "items": items})

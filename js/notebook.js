@@ -9,6 +9,7 @@
   // 블록 id → 위치. 목차 순서도 함께 기록해 정렬에 쓴다
   const where = {}; let order = 0; let total = 0;
   TOC.forEach((c) => c.chapters.forEach((ch) => ch.sections.forEach((s) => s.items.forEach((it) => {
+    if (where[it.id]) return;   // 여러 곳에 재사용된 블록은 처음 자리를 대표로
     where[it.id] = { c, ch, s, it, order: order++ };
     if (it.kind !== "video") total++;
   }))));

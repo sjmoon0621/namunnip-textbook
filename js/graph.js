@@ -21,7 +21,7 @@
 
   /* ───── 데이터: 블록 점과 개념 허브 ───── */
   const courseName = {}, where = {}, order = [];
-  TOC.forEach((c) => { courseName[c.id] = c.name; c.chapters.forEach((ch) => ch.sections.forEach((s) => s.items.forEach((it) => { where[it.id] = { c, ch, s, it }; order.push(it.id); }))); });
+  TOC.forEach((c) => { courseName[c.id] = c.name; c.chapters.forEach((ch) => ch.sections.forEach((s) => s.items.forEach((it) => { if (where[it.id]) { where[it.id].also.push({ c, ch, s }); return; } where[it.id] = { c, ch, s, it, also: [] }; order.push(it.id); }))); });
   const ORDER = ["is1", "phy", "chem", "is2", "bio", "earth", "extra"], count = {};
   const place = (course) => {
     const i = (count[course] = (count[course] || 0) + 1), ca = ORDER.indexOf(course) / ORDER.length * Math.PI * 2, a = i * 2.39996, r = 7 * Math.sqrt(i);
