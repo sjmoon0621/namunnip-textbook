@@ -15,3 +15,4 @@
 | earth/seyfert-ngc7742.jpg | 세이퍼트은하 NGC 7742 | Hubble Heritage Team (AURA/STScI/NASA/ESA) | 퍼블릭 도메인 | https://commons.wikimedia.org/wiki/File:Seyfert_Galaxy_NGC_7742.jpg |
 | earth/radio-hercules-a.jpg | 전파 은하 헤르쿨레스 A | NASA, ESA, S. Baum and C. O'Dea (RIT), R. Perley and W. Cotton (NRAO/AUI/NSF), Hubble Heritage Team (STScI/AURA) | CC BY 3.0 | https://commons.wikimedia.org/wiki/File:A_Multi-Wavelength_View_of_Radio_Galaxy_Hercules_A.jpg |
 | earth/cmb-wmap.jpg | WMAP 9년 우주 배경 복사 지도 | NASA / WMAP Science Team | 퍼블릭 도메인 | https://commons.wikimedia.org/wiki/File:WMAP_2012.png |
+| mech/m87-black-hole.jpg | M87 중심 블랙홀 (EHT, 2019) | Event Horizon Telescope | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Black_hole_-_Messier_87_crop_max_res.jpg |

@@ -2271,43 +2271,114 @@ window.TOC = [
       "n": 1,
       "title": "힘의 합성과 운동 예측",
       "code": "12역학01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-incline",
+        "title": "빗면 위의 상자는 어느 쪽으로 움직일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-truss",
+        "title": "다리의 뼈대는 왜 삼각형으로 짤까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "포물선 운동과 역학적 에너지",
       "code": "12역학01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-projectile",
+        "title": "비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-projectile",
+        "title": "수평으로 던진 공은 왜 포물선을 그릴까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "원운동",
       "code": "12역학01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-circular",
+        "title": "줄이 끊기면 공은 어느 쪽으로 날아갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-inverse-square",
+        "title": "우주정거장에는 중력이 없을까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-apple-moon",
+        "title": "달도 떨어지고 있다"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "케플러 법칙과 만유인력",
       "code": "12역학01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-kepler",
+        "title": "행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-mech-kepler-history",
+        "title": "관측 자료에서 만유인력까지, 무엇이 이어졌을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "탈출 속도와 우주선 발사",
       "code": "12역학01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-escape",
+        "title": "달에는 왜 대기가 없을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-rocket",
+        "title": "로켓은 무엇을 밀고 나아갈까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "등가 원리와 일반 상대론",
       "code": "12역학01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-mech-gr",
+        "title": "중력은 힘일까, 휘어진 시공간일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-gps",
+        "title": "GPS 위성의 시계는 왜 보정해야 할까?"
+       }
+      ]
      }
     ]
    },
