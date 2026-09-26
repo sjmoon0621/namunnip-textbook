@@ -3642,36 +3642,111 @@ window.TOC = [
       "n": 1,
       "title": "지구시스템 권역의 형성",
       "code": "12지시01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-snowline",
+        "title": "안쪽 행성은 왜 암석으로, 바깥 행성은 왜 기체로 되어 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-esys-early-earth",
+        "title": "녹은 암석 덩어리가 어떻게 바다와 대기를 가진 행성이 되었을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-spheres",
+        "title": "지구시스템의 각 권역은 어떤 층으로 이루어져 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "물·탄소·산소의 순환과 지구의 진화",
       "code": "12지시01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-oxygen",
+        "title": "공기 중의 산소는 언제, 어떻게 늘어났을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-carbon",
+        "title": "탄소는 생태계를 어떻게 돌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-water-budget",
+        "title": "바다는 왜 넘치지도, 마르지도 않을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "맨틀 대류와 플룸",
       "code": "12지시01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-hotspot",
+        "title": "하와이 섬들의 나이로 판의 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-seafloor",
+        "title": "바다 밑 줄무늬는 무엇을 기록하고 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-plate-boundary",
+        "title": "판 경계마다 지진과 화산은 어떻게 다를까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "화산 활동과 화산암",
       "code": "12지시01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-volcano",
+        "title": "어떤 화산은 흐르고, 어떤 화산은 터지는 까닭은?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-magma",
+        "title": "마그마는 어디서, 왜 만들어질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-igneous",
+        "title": "현무암과 화강암은 왜 알갱이 크기가 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-columnar",
+        "title": "용암은 어떻게 육각기둥이 될까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "지진파와 지구 내부 구조",
       "code": "12지시01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-seismic",
+        "title": "지진파가 닿지 않는 곳이 왜 생길까?"
+       }
+      ]
      }
     ]
    },
