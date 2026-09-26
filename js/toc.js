@@ -971,8 +971,24 @@ window.TOC = [
         "title": "태양광과 풍력만으로 전기를 채울 수 있을까? (발전량 자료)"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is2-efficiency",
+        "title": "에너지는 보존되는데 왜 아껴야 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-solar-cell",
+        "title": "태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-renewable",
+        "title": "태양광과 풍력만으로 하루 전기를 채울 수 있을까?"
+       }
+      ]
      }
     ]
    },
