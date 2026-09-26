@@ -2390,36 +2390,111 @@ window.TOC = [
       "n": 1,
       "title": "열의 이동과 단열·열팽창",
       "code": "12역학02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-insulation",
+        "title": "단열재를 두껍게 하면 빠져나가는 열이 얼마나 줄까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-mech-heat-tech",
+        "title": "건물과 다리는 열을 어떻게 다룰까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "상태 변화와 이상 기체",
       "code": "12역학02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-heating-curve",
+        "title": "물이 끓는 동안 가한 열은 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-ideal-gas",
+        "title": "기체를 데우면 압력은 왜 커질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "열역학 제1법칙",
       "code": "12역학02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-first-law",
+        "title": "기체에 준 열은 어디에 쓰일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-joule",
+        "title": "물을 저어서 데울 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-brake",
+        "title": "멈춘 자동차의 운동 에너지는 어디로 갔을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "열기관과 열효율",
       "code": "12역학02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-cycle",
+        "title": "한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-engine",
+        "title": "열기관의 효율은 왜 100%가 될 수 없을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-wheel",
+        "title": "이 영구 기관은 왜 멈출까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-power-plants",
+        "title": "화력 발전과 원자력 발전은 무엇을 얻고 무엇을 치를까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-phy-engine",
+        "title": "증기 기관에서 자동차 엔진까지"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "엔트로피와 비가역 현상",
       "code": "12역학02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-entropy",
+        "title": "퍼진 기체는 왜 저절로 다시 모이지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-efficiency",
+        "title": "에너지는 보존되는데 왜 아껴야 할까?"
+       }
+      ]
      }
     ]
    },
