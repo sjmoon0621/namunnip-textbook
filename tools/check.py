@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""페이지를 로컬 서버로 띄워 헤드리스 크롬으로 열고, 콘솔 오류를 보고한다. 선택적으로 스크린샷.
+"""페이지를 로컬 서버로 띄워 헤드리스 크롬으로 열고, 콘솔 오류와 404(없는 스크립트·이미지)를 보고한다. 선택적으로 스크린샷.
 
 사용:
   python3 tools/check.py PORT c/is1/1-1.html [c/is1/1-2.html ...]
@@ -13,9 +13,19 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 
+MISSING = []   # 서버가 404로 응답한 경로 (페이지마다 비움)
+
+
 def serve(port):
-    p = subprocess.Popen([sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1", "--directory", str(ROOT)],
-                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    p = subprocess.Popen([sys.executable, "-u", "-m", "http.server", str(port), "--bind", "127.0.0.1", "--directory", str(ROOT)],
+                         stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
+
+    def watch():
+        for line in p.stderr:
+            m = re.search(r'"GET (\S+) HTTP[^"]*" 404', line)
+            if m and not m.group(1).startswith("/favicon"):
+                MISSING.append(m.group(1))
+    threading.Thread(target=watch, daemon=True).start()
     import time; time.sleep(0.8)
     return p
 
@@ -33,11 +43,13 @@ def main():
     bad = 0
     for page in args:
         url = f"http://127.0.0.1:{port}/{page}"
+        MISSING.clear()
         r = subprocess.run([CHROME, "--headless=new", "--enable-logging=stderr", "--v=1",
                             "--virtual-time-budget=6000", "--window-size=1440,1000", "--dump-dom", url],
                            capture_output=True, text=True, timeout=120)
         errs = [l for l in r.stderr.splitlines() if "CONSOLE" in l and ("Error" in l or "error" in l or "Uncaught" in l)]
         errs = [re.sub(r"^.*?CONSOLE\(\d+\)\] ", "", e) for e in errs]
+        errs += [f"404 {m}" for m in dict.fromkeys(MISSING)]
         if "<main" not in r.stdout:
             errs.append("페이지를 불러오지 못함")
         print(("OK   " if not errs else "FAIL ") + page)
