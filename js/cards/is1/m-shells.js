@@ -25,10 +25,11 @@
     ctx.clearRect(0, 0, w, h);
     const small = w < 520;
     const Z = +slider.value, c = conf(Z), g = group(Z);
-    const split = Math.round(w * 0.36);
+    const split = Math.round(w * 0.38);
+    const tx = 18, tw = w - tx - 4, cw = tw / 18, chh = Math.min(cw * 0.9, 24), ty = 20, tb = ty + 4 * chh + 8;
 
     // ── 전자 껍질 모형
-    const cx = split / 2, cy = h / 2 + 6, Rmax = Math.min(split / 2 - 6, h / 2 - 14);
+    const cx = split / 2, cy = tb + (h - tb) / 2 + 4, Rmax = Math.min(split / 2 - 6, (h - tb) / 2 - 8);
     const nuc = Math.max(9, Rmax * 0.16);
     for (let i = 0; i < 4; i++) {
       const r = nuc + (Rmax - nuc) * (i + 1) / 4;
@@ -47,12 +48,10 @@
     ctx.fillStyle = "#fff"; ctx.font = `600 ${small ? 9.5 : 11}px ${F.mono}`; ctx.textAlign = "center";
     ctx.fillText(`+${Z}`, cx, cy + 4);
     ctx.fillStyle = C.ink; ctx.font = `600 12px ${F.sans}`; ctx.textAlign = "left";
-    ctx.fillText(`${EL[Z - 1][1]} ${EL[Z - 1][0]}`, 4, 14);
+    ctx.fillText(`${EL[Z - 1][1]} ${EL[Z - 1][0]}`, 4, tb + 12);
 
     // ── 주기율표 (1~20번)
-    const tx = split + 8, tw = w - tx - 6, cw = tw / 18, chh = Math.min(cw * 1.05, (h * 0.46 - 14) / 4);
-    const ty = 16;
-    ctx.font = `${small ? 8.5 : 10}px ${F.mono}`;
+    ctx.font = `${small ? 9 : 11}px ${F.mono}`;
     for (let z = 1; z <= 20; z++) {
       const cz = conf(z), p = cz.length, gz = group(z);
       const x = tx + (gz - 1) * cw, y = ty + (p - 1) * chh;
@@ -67,14 +66,14 @@
     ctx.setLineDash([2, 3]); ctx.strokeStyle = C.rule;
     ctx.strokeRect(tx + 2 * cw + .5, ty + 3 * chh + .5, 10 * cw - 1, chh - 1); ctx.setLineDash([]);
     ctx.fillStyle = C.ink3; ctx.textAlign = "center"; ctx.font = `${small ? 8.5 : 9.5}px ${F.mono}`;
-    ctx.fillText("21번부터: 3~12족", tx + 7 * cw, ty + 3.5 * chh + 3);
+    ctx.fillText("21번부터 채워지는 3~12족", tx + 7 * cw, ty + 3.5 * chh + 3);
     ctx.textAlign = "right";
     for (let p = 1; p <= 4; p++) ctx.fillText(p, tx - 2, ty + (p - .5) * chh + 3);
 
     // ── 이온화 에너지 그래프
-    const gx = tx + 26, gy = ty + 4 * chh + 22, gw = w - gx - 8, gh = h - gy - 22;
+    const gx = split + 34, gy = tb + 22, gw = w - gx - 8, gh = h - gy - 22;
     const X = (z) => gx + (z - 1) / 19 * gw, Y = (v) => gy + (1 - v / 2500) * gh;
-    NM.axes(ctx, { x0: gx, y0: gy, w: gw, h: gh, X, Y, xt: [1, 2, 3, 10, 11, 18, 19].map((z) => [z, String(z)]), yt: [[0, "0"], [1000, "1000"], [2000, "2000"]], ylabel: "이온화 에너지 (kJ/mol)" });
+    NM.axes(ctx, { x0: gx, y0: gy, w: gw, h: gh, X, Y, xt: [[2, "He"], [10, "Ne"], [18, "Ar"]], yt: [[0, "0"], [1000, "1000"], [2000, "2000"]], ylabel: "이온화 에너지 (kJ/mol) · 주황 점 = 1족" });
     ctx.beginPath();
     for (let z = 1; z <= Z; z++) z === 1 ? ctx.moveTo(X(z), Y(IE[0])) : ctx.lineTo(X(z), Y(IE[z - 1]));
     ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.stroke();
@@ -95,7 +94,7 @@
     draw();
   }
   slider.addEventListener("input", update);
-  $(".prev").addEventListener("click", () => { slider.value = Math.max(1, +slider.value - 1); update(); });
-  $(".next").addEventListener("click", () => { slider.value = Math.min(20, +slider.value + 1); update(); });
+  $(".z-prev").addEventListener("click", () => { slider.value = Math.max(1, +slider.value - 1); update(); });
+  $(".z-next").addEventListener("click", () => { slider.value = Math.min(20, +slider.value + 1); update(); });
   update();
 })();

@@ -98,7 +98,7 @@
     ctx.textAlign = "right"; ctx.fillText("어두움", gx + gw, top1 + hh + 22);
     ctx.textAlign = "center"; ctx.fillStyle = C.forest; ctx.fillText("▲ 배경", clamp(X(bg), gx + 30, gx + gw - 40), top1 + hh + 22);
 
-    const top2 = top1 + hh + 48, h2 = h - top2 - 22;
+    const top2 = top1 + hh + 48, h2 = h - top2 - 32;
     const G = Math.max(20, hist.length - 1), g0 = gen - (hist.length - 1);
     const X2 = (k) => gx + k / G * gw, Y2 = (v) => top2 + (1 - v) * h2;
     NM.axes(ctx, { x0: gx, y0: top2, w: gw, h: h2, X: X2, Y: Y2, xt: [[0, `${g0}`], [G, `${g0 + G}`]], yt: [[0, "0"], [0.5, "50"], [1, "100"]], ylabel: "평균 어두운 정도", xlabel: "세대" });

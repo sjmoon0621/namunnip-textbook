@@ -11,7 +11,7 @@
   const MU0_2PI = 2e-7, BE = 30e-6;   // 한국의 지구 자기장 수평 성분 약 30 µT (북쪽)
   const WX = 40, WY = 22.5;           // 보이는 영역 (cm), 도선은 한가운데
   const wx = WX / 2, wy = WY / 2;
-  let probe = { x: wx + 5, y: wy };
+  let probe = { x: wx, y: wy - 5 };
 
   // 자기장 (T), 수학 좌표계(x 동쪽, y 북쪽). 입력은 화면 좌표(cm, y 아래)
   function B(px, py) {
@@ -53,7 +53,7 @@
     }
     // 작은 나침반 격자
     const R = Math.min(11, s * 1.1);
-    for (let gy = 2.5; gy < WY; gy += 4.5) for (let gx = 2.5; gx < WX; gx += 5) {
+    for (let gy = 2.25; gy < WY - 2.5; gy += 4.5) for (let gx = 2.5; gx < WX; gx += 5) {
       if (Math.hypot(gx - wx, gy - wy) < 1.6) continue;
       const [bx, by] = B(gx, gy);
       compass(ctx, X(gx), Y(gy), R, Math.atan2(by, bx), false);
@@ -68,10 +68,13 @@
     compass(ctx, X(probe.x), Y(probe.y), Math.max(20, R * 2.2), Math.atan2(by, bx), true);
     // 방위
     ctx.fillStyle = C.ink3; ctx.font = `10.5px ${F.mono}`; ctx.textAlign = "right";
-    ctx.fillText("↑ 북", w - 8, 14);
-    ctx.fillText(I > 0.05 ? "전류: 화면에서 나옴 ⊙" : I < -0.05 ? "전류: 화면으로 들어감 ⊗" : "전류 없음", w - 8, h - 8);
-    ctx.textAlign = "left";
-    ctx.fillRect(10, h - 12, 5 * s, 1.5); ctx.fillText("5 cm", 14 + 5 * s, h - 8);
+    const tag = (t, x, y, al) => { ctx.textAlign = al; const m = ctx.measureText(t).width, x0 = al === "right" ? x - m : x;
+      ctx.fillStyle = "rgba(251,251,248,.88)"; ctx.fillRect(x0 - 4, y - 11, m + 8, 15); ctx.fillStyle = C.ink2; ctx.fillText(t, x, y); };
+    tag("↑ 북", w - 8, 14, "right");
+    tag(I > 0.05 ? "전류: 화면에서 나옴 ⊙" : I < -0.05 ? "전류: 화면으로 들어감 ⊗" : "전류 없음", w - 8, h - 6, "right");
+    ctx.fillStyle = "rgba(251,251,248,.88)"; ctx.fillRect(4, h - 17, 5 * s + 44, 15);
+    ctx.fillStyle = C.ink2; ctx.textAlign = "left";
+    ctx.fillRect(10, h - 10, 5 * s, 1.5); ctx.fillText("5 cm", 14 + 5 * s, h - 6);
   }
 
   function update() {

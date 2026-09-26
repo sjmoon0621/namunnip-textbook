@@ -37,11 +37,11 @@
     const e = 3, gx = (pres(x + e, y) - pres(x - e, y)) / (2 * e), gy = (pres(x, y + e) - pres(x, y - e)) / (2 * e);
     let ux = -gy, uy = gx; const n = Math.hypot(ux, uy) || 1; ux /= n; uy /= n;
     const a = 30 * Math.PI / 180, rx = ux * Math.cos(a) - uy * Math.sin(a), ry = ux * Math.sin(a) + uy * Math.cos(a);
-    return { ux: rx, uy: ry, V: 0.7 * Math.hypot(gx, gy) * 100 / (1.2 * FCOR) };
+    return { ux: rx, uy: ry, V: 0.7 * Math.hypot(gx, gy) * 100 / 1000 / (1.2 * FCOR) };
   }
   function weather(x, y) {
     const dw = dW(x, y), dc = dC(x, y);
-    const rainW = x > -150 && x < 1100 && dw > 0 && dw < 350 ? 1 - dw / 350 : 0;
+    const rainW = x > -150 && x < 1100 && dw > 0 && dw < 400 ? 1 - dw / 400 : 0;
     const cloudW = x > -200 && x < 1200 && dw > 0 && dw < 650 ? 1 - dw / 650 : 0;
     const shower = y < 0 && dc < 10 && dc > -80 ? 1 : 0;
     const warm = sg(dc / 15) * sg(-dw / 15);
@@ -290,17 +290,18 @@
   root.querySelectorAll(".view").forEach((b) => b.addEventListener("click", () => {
     view = b.dataset.v; root.querySelectorAll(".view").forEach((c) => c.setAttribute("aria-pressed", String(c === b))); drawLog();
   }));
+  let acc = 0;
   btn.addEventListener("click", () => {
     playing = !playing; btn.textContent = playing ? "멈춤" : "재생";
     if (playing && +sT.value >= TMAX) sT.value = TMIN;
+    acc = +sT.value;
   });
   NM.loop(cvMap, (dt) => {
     if (!playing) return;
-    let t = +sT.value + dt * 5;
-    if (t >= TMAX) { t = TMAX; playing = false; btn.textContent = "재생"; }
-    sT.value = (Math.round(t * 2) / 2).toString();
-    if (Math.abs(+sT.value - t) < 1) update();
-    sT.dataset.acc = t;
+    acc += dt * 5;
+    if (acc >= TMAX) { acc = TMAX; playing = false; btn.textContent = "재생"; }
+    const v = Math.round(acc * 2) / 2;
+    if (v !== +sT.value) { sT.value = v; update(); }
   });
   update();
 })();

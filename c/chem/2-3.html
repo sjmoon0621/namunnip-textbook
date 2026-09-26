@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>루이스 구조와 분자 모양 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="루이스 전자점식 그리기, 전자쌍 반발 이론으로 분자 모양 예측하기(3D). 직접 만져 보는 개념 카드와 짧은 영상.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-chem-lewis canvas { cursor: pointer; }
+    #card-chem-vsepr .stepper { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 4px; align-items: center; font-size: 13.5px; }
+    #card-chem-vsepr .stepper span { display: inline-flex; align-items: center; gap: 6px; }
+    #card-chem-vsepr .stepper button { width: 26px; height: 26px; padding: 0; border: 1px solid var(--rule); background: var(--card); border-radius: 2px; font-family: var(--f-mono); }
+    #card-chem-vsepr .stepper button:hover { border-color: var(--ink); }
+    #card-chem-vsepr .stepper output { font-family: var(--f-mono); min-width: 1em; text-align: center; }
+  </style>
+</head>
+<body data-course="chem" data-sec="2-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>루이스 구조와 분자 모양</h1>
+    <p class="lead">분자 속 원자가 전자가 어디에 있는지를 점으로 나타내면, 어느 원자끼리 몇 쌍을 나누는지와 어떤 전자쌍이 결합에 쓰이지 않고 남는지가 보입니다. 이 전자쌍들이 서로 밀어내는 방식이 분자의 모양을 정합니다. 이 절에서는 전자점식을 그리는 규칙과, 그 그림에서 입체 모양을 예측하는 방법을 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">원자가 전자</span><span class="p">옥텟 규칙</span><span class="p">결합의 극성</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-chem-lewis"><span class="mono">2.3.1</span>루이스 전자점식은 어떻게 그릴까?</a></li>
+        <li><a href="#card-chem-vsepr"><span class="mono">2.3.2</span>물 분자는 왜 굽은 모양일까?</a></li>
+        <li><a href="#video-chem-shapes"><span class="mono">영상</span>분자 모양 한 번에 보기</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-chem-lewis">
+        <header class="card-head">
+          <span class="no">2.3.1</span><h2>루이스 전자점식은 어떻게 그릴까?</h2><span class="kind">원자가 전자 · 옥텟 규칙 · 다중 결합</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="분자의 루이스 구조. 결합을 눌러 단일, 2중, 3중 결합으로 바꾼다"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="분자 고르기">
+                <button class="chip" data-mol="h2o" aria-pressed="false">H₂O</button>
+                <button class="chip" data-mol="nh3" aria-pressed="false">NH₃</button>
+                <button class="chip" data-mol="co2" aria-pressed="true">CO₂</button>
+                <button class="chip" data-mol="hcn" aria-pressed="false">HCN</button>
+                <button class="chip" data-mol="ch2o" aria-pressed="false">HCHO</button>
+                <button class="chip" data-mol="n2" aria-pressed="false">N₂</button>
+              </div>
+              <p class="mono small dim" style="margin-top:8px">결합 바꾸기 (그림의 결합을 눌러도 됩니다)</p>
+              <div class="presets bonds"></div>
+              <dl class="nums n4">
+                <div><dt>원자가 전자 총수</dt><dd class="v-tot">—</dd></div>
+                <div><dt>공유 전자</dt><dd class="v-sh">—</dd></div>
+                <div><dt>비공유 전자</dt><dd class="v-lp">—</dd></div>
+                <div><dt>옥텟을 이룬 원자</dt><dd class="v-ok">—</dd></div>
+              </dl>
+              <p class="fig-note lw-msg" aria-live="polite"></p>
+              <p class="fig-note">비공유 전자쌍은 남은 전자를 바깥 원자부터 채워 넣어 자동으로 그립니다. 초록 원은 옥텟(H는 전자 2개)을 이룬 원자, 주황 원은 아직 못 이룬 원자입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>CO₂에서 탄소와 산소는 전자를 몇 쌍씩 나누고 있을까요? 화학식만 봐서는 알 수 없습니다. 전자를 하나하나 세어 그려 볼 방법이 필요합니다.</li>
+            <li><span class="tag">복원</span>원자가 전자는 가장 바깥 껍질의 전자로, 족 번호의 일의 자리와 같습니다(H 1, C 4, N 5, O 6). 원자들은 전자를 공유해 바깥 껍질에 전자 8개(H는 2개)를 채우려는 경향이 있습니다(옥텟 규칙).</li>
+            <li><span class="tag">설명</span>① 원자가 전자를 모두 더합니다. ② 원자를 단일 결합으로 잇습니다. ③ 남은 전자를 바깥 원자부터 쌍으로 채웁니다. ④ 가운데 원자가 옥텟을 못 이루면, 이웃 원자의 비공유 전자쌍을 결합으로 돌려 <em>2중·3중 결합</em>을 만듭니다.</li>
+            <li><span class="tag">연결</span>전자점식에서 두 원자 사이의 전자쌍은 <em>공유 전자쌍</em>, 한 원자에만 속한 전자쌍은 <em>비공유 전자쌍</em>입니다. 공유 전자쌍을 선 하나로 바꿔 쓴 것이 구조식입니다. 비공유 전자쌍은 다음 카드에서 분자 모양을 정하는 데 쓰입니다.</li>
+            <li><span class="tag">적용</span>CO₂는 처음에 모두 단일 결합입니다. 탄소 둘레 전자는 몇 개인가요? 결합을 눌러 차수를 바꿔 모든 원자가 초록이 되게 만들어 보세요. HCN, N₂, HCHO도 해 보세요. 전자 총수는 결합을 바꿔도 그대로입니다.</li>
+            <li class="warn"><span class="tag">판단</span>CO₂에서 한쪽을 3중 결합, 다른 쪽을 단일 결합으로 해도 모든 원자가 옥텟을 이룹니다. 하지만 이 구조에서는 원자에 전하가 남습니다(형식 전하). 실제 CO₂의 두 결합은 길이가 같아서 O=C=O가 더 잘 맞습니다. 또 BF₃(붕소 둘레 6개)나 SF₆(황 둘레 12개)처럼 옥텟 규칙을 따르지 않는 분자도 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">사이안화 수소(H–C–N 순서로 연결된 HCN)의 루이스 구조로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>C와 N 사이 단일 결합, N에 비공유 전자쌍 3개<span class="why"><b>전자 수는 맞지만 탄소가 옥텟을 이루지 못합니다.</b> 탄소 둘레에 전자가 4개뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>C와 N 사이 2중 결합, N에 비공유 전자쌍 2개<span class="why"><b>질소는 옥텟이지만 탄소 둘레가 6개입니다.</b> 한 쌍을 더 결합으로 돌려야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>C와 N 사이 3중 결합, N에 비공유 전자쌍 1개<span class="why"><b>맞습니다.</b> 원자가 전자 1 + 4 + 5 = 10개. H–C에 2개, C≡N에 6개, N의 비공유 전자쌍에 2개. H 2개, C 8개, N 8개입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-chem-vsepr">
+        <header class="card-head">
+          <span class="no">2.3.2</span><h2>물 분자는 왜 굽은 모양일까?</h2><span class="kind">전자쌍 반발 이론 · 3D 모형</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="가운데 원자 둘레 전자쌍이 서로 밀어내며 자리를 잡는 3차원 모형. 끌어서 돌릴 수 있다"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="예시 분자">
+                <button class="chip" data-p="2,0">BeCl₂</button>
+                <button class="chip" data-p="3,0">BF₃</button>
+                <button class="chip" data-p="4,0">CH₄</button>
+                <button class="chip" data-p="3,1">NH₃</button>
+                <button class="chip" data-p="2,2">H₂O</button>
+                <button class="chip" data-p="2,1">O₃</button>
+              </div>
+              <div class="stepper">
+                <span>결합 전자쌍 <button type="button" data-d="b,-1" aria-label="결합 전자쌍 빼기">−</button><output class="nb-out">2</output><button type="button" data-d="b,1" aria-label="결합 전자쌍 더하기">+</button></span>
+                <span>비공유 전자쌍 <button type="button" data-d="l,-1" aria-label="비공유 전자쌍 빼기">−</button><output class="nl-out">2</output><button type="button" data-d="l,1" aria-label="비공유 전자쌍 더하기">+</button></span>
+              </div>
+              <dl class="nums">
+                <div><dt>분자 모양</dt><dd class="v-shape">—</dd></div>
+                <div><dt>모형의 결합각</dt><dd class="v-mod">—</dd></div>
+                <div><dt>실측 (예시 분자)</dt><dd class="v-real">—</dd></div>
+              </dl>
+              <p class="fig-note vs-msg"></p>
+              <p class="fig-note">전자쌍이 구 표면에서 서로 밀어내는 모식 모형입니다. 비공유 전자쌍이 밀어내는 세기는 실측 결합각에 가깝도록 결합 전자쌍의 약 1.2배로 정했습니다. 다중 결합은 전자쌍 하나로 셉니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>H₂O와 CO₂는 모두 원자 3개로 된 분자입니다. 그런데 CO₂는 일직선이고 H₂O는 104.5°로 굽어 있습니다. 무엇이 이 차이를 만들까요?</li>
+            <li><span class="tag">복원</span>전자쌍은 모두 음전하를 띠므로 서로 밀어냅니다. 앞 카드의 전자점식에서 가운데 원자 둘레의 전자쌍을 세어 보면 CO₂의 C는 2군데(2중 결합 둘), H₂O의 O는 4쌍(공유 2, 비공유 2)입니다.</li>
+            <li><span class="tag">설명</span>가운데 원자 둘레의 전자쌍은 서로 <em>가장 멀리 떨어지는 방향</em>으로 배치됩니다(전자쌍 반발 이론). 2개면 180°, 3개면 120°의 평면, 4개면 109.5°의 사면체입니다. H₂O의 4쌍도 사면체 방향으로 퍼지는데, 그중 둘에만 수소가 붙어 있으니 원자만 보면 굽은 형이 됩니다.</li>
+            <li><span class="tag">연결</span>비공유 전자쌍은 한 원자핵에만 붙들려 가운데 원자 가까이 넓게 퍼지므로 더 세게 밀어냅니다. 그래서 결합각은 CH₄ 109.5° → NH₃ 107° → H₂O 104.5°로 줄어듭니다. 굽은 모양 때문에 H₂O는 결합 쌍극자가 상쇄되지 않는 극성 분자입니다.</li>
+            <li><span class="tag">적용</span>H₂O에서 비공유 전자쌍을 하나씩 빼 보세요. 결합각과 모양이 어떻게 변하나요? 결합 전자쌍 4개(CH₄)에서 하나를 비공유 전자쌍으로 바꾸면(NH₃) 결합각은 몇 도 줄어드나요? 그림을 끌어 돌리면서 입체 모양을 확인해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>종이에 그린 전자점식이 평면이라고 분자까지 평면인 것은 아닙니다. CH₄를 평면 십자 모양(90°)으로 그리지만 실제로는 사면체(109.5°)입니다. 또 이 모형은 방향을 잘 맞히지만 각도를 정확히 계산하지는 못합니다. 같은 16족인 H₂S는 전자쌍 배치가 물과 같은데도 결합각이 약 92°입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">황화 수소(H₂S)에서 S는 O와 같은 16족이다. H₂S 분자의 모양은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>직선형<span class="why"><b>화학식이 CO₂처럼 AX₂라서 고른 답입니다.</b> 모양은 화학식이 아니라 가운데 원자의 전자쌍 수로 정합니다. S에는 비공유 전자쌍이 2개 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>굽은 형<span class="why"><b>맞습니다.</b> S 둘레 전자쌍 4개 중 2개가 결합 전자쌍이라 H₂O와 같은 굽은 형입니다. 실제 결합각은 약 92°로 물보다 작습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>삼각뿔형<span class="why"><b>전자쌍 4개를 모두 원자로 셌습니다.</b> 삼각뿔형은 결합한 원자가 3개일 때(NH₃)입니다. 분자 모양은 원자의 위치만 보고 부릅니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <section class="video-block" id="video-chem-shapes" aria-label="통통사과 영상">
+        <div>
+          <span class="mono">영상 · 통통사과 · 32초</span>
+          <h2>분자 모양 한 번에 보기</h2>
+          <p>직선형, 평면 삼각형, 정사면체, 삼각뿔, 굽은 형. 다섯 모양이 모두 ‘전자쌍은 서로 멀어지려 한다’는 한 가지 규칙에서 나옵니다. 비공유 전자쌍이 늘 때마다 결합각이 줄어드는 모습을 차례로 봅니다. 이 영상도 파일이 아니라 코드로 그려집니다.</p>
+        </div>
+        <div class="phone">
+          <canvas width="360" height="640" aria-label="다섯 가지 분자 모양이 차례로 회전하며 결합각을 보여 주는 짧은 애니메이션"></canvas>
+          <button class="reel-play" type="button" aria-label="재생"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></button>
+          <div class="reel-bar">
+            <button class="reel-toggle mono" type="button">일시정지</button>
+            <input class="reel-seek" type="range" min="0" max="1000" value="0" aria-label="영상 위치">
+            <span class="reel-time mono">0:00</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/cards/chem/a-lewis.js"></script>
+<script src="../../js/cards/chem/a-vsepr.js"></script>
+<script src="../../js/cards/chem/a-reel-shapes.js"></script>
+</body>
+</html>

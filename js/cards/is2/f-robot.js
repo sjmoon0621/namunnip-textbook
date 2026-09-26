@@ -53,7 +53,7 @@
     const { w, h } = size;
     if (!w) return;
     ctx.clearRect(0, 0, w, h);
-    const sc = Math.min(w / 160, h / 90), ox = (w - 160 * sc) / 2, oy = (h - 90 * sc) / 2;
+    const sc = Math.min(w / 136, h / 72), ox = w / 2 - 80 * sc, oy = h / 2 - 45 * sc;
     const X = (x) => ox + x * sc, Y = (y) => oy + y * sc;
     // 트랙 (폭 2 cm)
     ctx.strokeStyle = C.ink; ctx.lineWidth = 2 * sc; ctx.beginPath();
@@ -76,7 +76,7 @@
     S.chart.forEach((e, i) => { const x = cx + i / 119 * cw, y = cy + ch / 2 - Math.max(-8, Math.min(8, e)) / 8 * ch / 2; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); });
     ctx.strokeStyle = C.apple; ctx.lineWidth = 1.5; ctx.stroke();
     ctx.font = `10.5px ${F.mono}`; ctx.fillStyle = C.ink3; ctx.textAlign = "left";
-    ctx.fillText("선에서 벗어난 거리, 최근 6초 (±8 cm)", cx + 4, cy + 12);
+    ctx.fillText("벗어난 거리 · 최근 6초 · ±8 cm", cx + 4, cy + 12);
     if (S.lost) {
       ctx.fillStyle = C.warn; ctx.font = `600 14px ${F.sans}`; ctx.textAlign = "center";
       ctx.fillText("선을 놓쳤습니다", X(S.x), Y(S.y) - 14); ctx.textAlign = "left";

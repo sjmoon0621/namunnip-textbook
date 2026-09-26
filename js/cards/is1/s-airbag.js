@@ -42,10 +42,11 @@
     ctx.setLineDash([2, 3]); ctx.strokeStyle = C.ink2; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(X(0), Y(fa)); ctx.lineTo(X(T), Y(fa)); ctx.stroke(); ctx.setLineDash([]);
     ctx.fillStyle = C.forest; ctx.font = `600 12px ${F.sans}`;
-    const lx = Math.min(X(T / 2) + 8, w - padR - 150);
-    ctx.fillText(`넓이 = 충격량 ${Math.round(dp)} N·s`, lx, Math.max(padT + 30, Y(pNow) - 8));
+    let lx = X(T) + 10; if (lx + 170 > w - padR) lx = X(T) - 180;
+    const ly = Math.max(padT + 44, Y(pNow * 0.55));
+    ctx.fillText(`넓이 = 충격량 ${Math.round(dp)} N·s`, lx, ly);
     ctx.fillStyle = C.ink3; ctx.font = `10.5px ${F.mono}`;
-    ctx.fillText(`두 넓이는 같음`, lx, Math.max(padT + 45, Y(pNow) + 7));
+    ctx.fillText(`점선 그래프와 넓이가 같음`, lx, ly + 15);
   }
 
   function update() {

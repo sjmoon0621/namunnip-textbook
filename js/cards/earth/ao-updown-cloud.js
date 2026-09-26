@@ -61,7 +61,7 @@
           ctx.strokeStyle = "rgba(63,111,163,.6)"; ctx.lineWidth = 1;
           for (let i = 0; i < 9; i++) { const x = sx + sw * (.15 + i * .08), y = yb + 6 + ((ph * 60 + i * 13) % Math.max(8, bot - yb - 12)); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - 2, y + 6); ctx.stroke(); }
         }
-        ctx.font = `10px ${F.mono}`; ctx.fillStyle = C.ink2; ctx.textAlign = "left"; ctx.fillText("구름 밑면", sx + 4, yb + 12);
+        ctx.font = `10px ${F.mono}`; ctx.fillStyle = C.ink2; ctx.textAlign = "right"; ctx.fillText("구름 밑면", sx + sw - 4, yb + 12);
       }
       // 모여드는 바람, 상승 화살표
       ctx.strokeStyle = C.warn; ctx.fillStyle = C.warn; ctx.lineWidth = 2;

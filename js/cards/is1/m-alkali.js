@@ -23,7 +23,7 @@
     const { w, h } = size; if (!w) return;
     ctx.clearRect(0, 0, w, h);
     const small = w < 520, P = M[m];
-    const split = Math.round(w * 0.5);
+    const split = Math.round(w * 0.46);
 
     // ── 비커 (위에서 비스듬히 본 모식)
     const bx = 14, bw = split - 28, top = 30, bh = h - top - 16;
@@ -75,11 +75,11 @@
 
     // ── 원자 크기 비교 (반지름 실측 비례, 껍질은 모식)
     const ox = split + 10, ow = w - ox - 6;
-    const scale = Math.min((ow / 3 - 8) / 2 / 227, (h - 70) / 2 / 227);
+    const scale = Math.min((ow / 3 - 4) / 2 / 227, (h - 80) / 2 / 227);
     const keys = ["Li", "Na", "K"];
     ctx.fillStyle = C.ink; ctx.font = `600 12px ${F.sans}`; ctx.textAlign = "left";
     ctx.fillText("원자의 크기 (반지름 비례)", ox, 16);
-    const base = h - 34;
+    const base = h - 32;
     keys.forEach((k, i) => {
       const A = M[k], R = A.r * scale, cx = ox + ow * (i + .5) / 3, cy = base - 227 * scale;
       const sel = k === m;
@@ -94,8 +94,9 @@
       });
       ctx.fillStyle = sel ? C.apple : "rgba(212,73,58,.4)"; ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2); ctx.fill();
       ctx.font = `${sel ? 600 : 400} 11px ${F.mono}`; ctx.fillStyle = sel ? C.ink : C.ink3; ctx.textAlign = "center";
-      ctx.fillText(`${k} · 껍질 ${A.shells.length}`, cx, base + 16);
-      ctx.fillText(`${A.r} pm`, cx, base + 29);
+      ctx.fillText(k, cx, base + 14);
+      ctx.font = `10px ${F.mono}`;
+      ctx.fillText(`껍질 ${A.shells.length}`, cx, base + 27);
     });
     ctx.textAlign = "left";
   }
@@ -106,7 +107,7 @@
     draw();
   }
   function start() {
-    const { w, h } = size; const split = Math.round(w * 0.5);
+    const { w, h } = size; const split = Math.round(w * 0.46);
     const bx = 14, bw = split - 28, top = 30, bh = h - top - 16, wy = top + bh * 0.22;
     t = 0; px = bx + bw / 2; py = wy + 2; const a = rnd() * Math.PI * 2; vx = Math.cos(a); vy = Math.sin(a) * 0.3;
     trail = []; bubbles = [];

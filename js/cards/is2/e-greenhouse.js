@@ -57,8 +57,8 @@
     // 대기의 방출
     if (r.A > 1) { arrow(col(0.72), atm1, gY, r.A, C.warn, true, true); arrow(col(0.86), atm0, topY, r.A, C.warn, true, true); }
     ctx.font = `10.5px ${F.mono}`; const lw = ctx.measureText(atmLab).width;
-    ctx.fillStyle = "rgba(251,251,248,.9)"; ctx.fillRect(dw - lw - 12, atm1 - 17, lw + 8, 15);
-    ctx.fillStyle = C.forest; ctx.fillText(atmLab, dw - lw - 8, atm1 - 6);
+    ctx.fillStyle = "rgba(251,251,248,.9)"; ctx.fillRect(dw - lw - 12, atm0 + 3, lw + 8, 15);
+    ctx.fillStyle = C.forest; ctx.fillText(atmLab, dw - lw - 8, atm0 + 14);
     // 온도계
     const tx = dw + tw / 2, t0 = topY + 10, t1 = gY - 6;
     const Y = (T) => t1 - (T + 40) / 80 * (t1 - t0);

@@ -61,7 +61,7 @@
     for (let z = 0; z <= ZMAX; z += 2) { const x = X(geo(z)), y = Y(z); z ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
     ctx.strokeStyle = C.ink2; ctx.lineWidth = 1.6; ctx.setLineDash([6, 4]); ctx.stroke(); ctx.setLineDash([]);
     ctx.fillStyle = C.ink2; ctx.font = `11px ${F.sans}`;
-    ctx.save(); ctx.translate(X(geo(150)) - 8, Y(150)); ctx.rotate(Math.PI / 2 - 0.35); ctx.textAlign = "center"; ctx.fillText("평소 지하 온도", 0, 0); ctx.restore();
+    ctx.save(); ctx.translate(X(geo(95)) - 10, Y(95)); ctx.rotate(Math.PI / 2 - 0.35); ctx.textAlign = "center"; ctx.fillText("평소 지하 온도", 0, 0); ctx.restore();
     // 용융 곡선들
     const curve = (fn, z0, z1, col, lw, dash) => {
       ctx.beginPath();
@@ -73,7 +73,7 @@
       curve(wetPer, 0, ZMAX, wf >= 0.5 ? "#3f6d8f" : "rgba(63,109,143,.35)", wf >= 0.5 ? 2.2 : 1.2, wf >= 0.5 ? [] : [3, 3]);
       if (wf > 0.02 && wf < 0.98) curve(solidus, 0, ZMAX, C.ink, 1.5);
       ctx.font = `600 11px ${F.sans}`;
-      ctx.fillStyle = C.apple; ctx.fillText("물 없는 맨틀이 녹기 시작하는 온도", X(dryPer(165)) - 200, Y(172));
+      ctx.fillStyle = C.apple; ctx.textAlign = "right"; ctx.fillText("물 없는 맨틀이 녹기 시작하는 온도", X(dryPer(18)) - 8, Y(18) + 4); ctx.textAlign = "left";
       ctx.fillStyle = "#3f6d8f"; ctx.fillText("물이 있을 때", X(wetPer(120)) - 78, Y(118));
     } else {
       curve(dryGra, 0, 50, wf < 0.5 ? C.apple : "rgba(212,73,58,.3)", wf < 0.5 ? 2.2 : 1.2, wf < 0.5 ? [] : [3, 3]);
@@ -97,7 +97,7 @@
     ctx.fillStyle = melt ? C.apple : C.ink; ctx.fill();
     ctx.strokeStyle = C.card; ctx.lineWidth = 2; ctx.stroke();
     if (melt) { ctx.beginPath(); ctx.arc(X(T), Y(z), 12, 0, Math.PI * 2); ctx.strokeStyle = C.apple; ctx.lineWidth = 1; ctx.stroke(); }
-    ctx.font = `10.5px ${F.mono}`; ctx.fillStyle = C.ink3; ctx.fillText("모식", x0 + pw - 30, y0 + ph - 6);
+    ctx.font = `10.5px ${F.mono}`; ctx.fillStyle = C.ink3; ctx.fillText("모식", x0 + 6, y0 + ph - 6);
   }
 
   function update() {

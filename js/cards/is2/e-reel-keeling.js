@@ -34,10 +34,10 @@
 
   const SCENES = [
     [0, 5, sIntro, [[0.2, 5, "1958년, 하와이 [마우나로아]산 중턱에서 공기 속 CO₂를 재기 시작했습니다."]]],
-    [5, 13, sCurve, [[5.1, 9, "그때 약 [316 ppm]이던 값은"], [9, 13, "2024년 약 [425 ppm]이 되었습니다."]]],
+    [5, 13, sCurve, [[5.1, 9, "그때 약 [316 ppm]이던 값은"], [9, 13, "2024년 약 [425 ppm]이 되었습니다."]]],
     [13, 19.5, sSaw, [[13.1, 16.2, "선이 톱니 모양인 까닭은? 해마다 [5월]에 높고 [10월]에 낮습니다."], [16.2, 19.5, "북반구 숲이 여름에 [광합성]으로 CO₂를 빨아들이기 때문입니다."]]],
-    [19.5, 25, sRate, [[19.6, 25, "오르는 속도도 빨라졌습니다. 1년에 [0.9 ppm]에서 [2.4 ppm]으로."]]],
-    [25, 30, sIce, [[25.1, 30, "빙하 속 공기로 본 지난 80만 년, CO₂는 [300 ppm]을 넘은 적이 없습니다."]]],
+    [19.5, 25, sRate, [[19.6, 25, "오르는 속도도 빨라졌습니다. 1년에 [0.9 ppm]에서 [2.4 ppm]으로."]]],
+    [25, 30, sIce, [[25.1, 30, "빙하 속 공기로 본 지난 80만 년, CO₂는 [300 ppm]을 넘은 적이 없습니다."]]],
   ];
 
   let T = 0, playing = false, userPaused = false;
@@ -77,7 +77,7 @@
     for (const part of text.split(/(\[|\])/)) {
       if (part === "[") { hi = true; continue; }
       if (part === "]") { hi = false; continue; }
-      part.split(/(\s+)/).forEach((wd) => wd && words.push({ wd, hi }));
+      part.split(/( +)/).forEach((wd) => wd && words.push({ wd, hi }));
     }
     const maxW = W - 56, lines = [[]]; let lw = 0;
     for (const t of words) {
@@ -101,13 +101,14 @@
 
   /* 1. 산과 관측소 */
   function sIntro(lt) {
+    ctx.translate(0, -60);
     ctx.fillStyle = "#2a2d29";
     ctx.beginPath(); ctx.moveTo(0, 430); ctx.quadraticCurveTo(180, 250, 360, 430); ctx.lineTo(360, 480); ctx.lineTo(0, 480); ctx.fill();
-    ctx.fillStyle = "#1f3b57"; ctx.fillRect(0, 470, W, 30);
-    // 관측소
-    ctx.fillStyle = C.paper; ctx.fillRect(196, 318, 18, 12); ctx.fillRect(203, 300, 3, 18);
-    label("마우나로아 관측소 · 해발 약 3,400 m", 180, 280, C.paper, "center");
-    label("태평양 한가운데, 공장과 숲에서 먼 곳", 180, 300 + 190, "rgba(243,244,239,.45)", "center");
+    ctx.fillStyle = "#1f3b57"; ctx.fillRect(0, 470, W, 10);
+    // 관측소 (산꼭대기 y ≈ 340 근처)
+    ctx.fillStyle = C.paper; ctx.fillRect(196, 332, 18, 10); ctx.fillRect(203, 316, 3, 16);
+    label("마우나로아 관측소 · 해발 약 3,400 m", 180, 300, C.paper, "center");
+    label("태평양 한가운데, 공장과 숲에서 먼 곳", 180, 190, "rgba(243,244,239,.45)", "center");
     // 공기 흐름 점
     for (let i = 0; i < 18; i++) {
       const x = ((i * 47 + lt * 40) % 400) - 20, y = 200 + (i % 5) * 16;
@@ -209,7 +210,9 @@
   new IntersectionObserver(([e]) => {
     if (e.isIntersecting && !userPaused && !reduce) play(); else if (!e.isIntersecting) pause();
   }, { threshold: 0.4 }).observe(cv);
-  const poster = () => { if (!playing) { T = reduce ? 12 : T; frame(T); sync(); } };
+  const q = /[?&]reel=([\d.]+)/.exec(location.search); // 검토용: ?reel=초 로 그 장면에서 멈춘다
+  if (q) { T = +q[1]; userPaused = true; }
+  const poster = () => { if (!playing) { T = reduce && !q ? 12 : T; frame(T); sync(); } };
   poster();
   document.fonts && document.fonts.ready.then(poster);
 })();

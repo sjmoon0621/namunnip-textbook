@@ -88,7 +88,7 @@
         if (mx > 20 && mx < w - 30 && my > 14 && my < h - 8 && (!best || my > best[1])) best = [mx, my];
       });
       ctx.stroke();
-      if (best) { ctx.fillStyle = "#f7f8f4"; ctx.fillRect(best[0] - 14, best[1] - 7, 28, 12); ctx.fillStyle = C.ink2; ctx.textAlign = "center"; ctx.fillText(String(lev), best[0], best[1] + 3); }
+      if (best && [H, L].every((o) => { const [x, y] = toPx(o.x, o.y); return Math.hypot(best[0] - x, best[1] - y) > 32; })) { ctx.fillStyle = "#f7f8f4"; ctx.fillRect(best[0] - 14, best[1] - 7, 28, 12); ctx.fillStyle = C.ink2; ctx.textAlign = "center"; ctx.fillText(String(lev), best[0], best[1] + 3); }
     }
     // 바람 화살표
     const gs = w < 480 ? 46 : 62;
@@ -121,7 +121,7 @@
     oK.textContent = (+sK.value).toFixed(1);
     const wd = wind(P.x, P.y);
     nP.textContent = `${pres(P.x, P.y).toFixed(1)} hPa`;
-    nG.textContent = `${wd.grad.toFixed(1)} hPa/100 km`;
+    nG.textContent = wd.grad.toFixed(1);
     nV.textContent = wd.V < 0.5 ? "거의 0" : `${wd.V.toFixed(0)} m/s`;
     nD.textContent = wd.V < 0.5 ? "—" : fromDir(wd.ux, wd.uy);
     draw();

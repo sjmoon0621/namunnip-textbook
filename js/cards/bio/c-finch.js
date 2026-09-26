@@ -28,19 +28,19 @@
     const { w, h } = size; if (!w) return;
     ctx.clearRect(0, 0, w, h);
     const k = calc();
-    const x0 = 30, y0 = 58, pw = w - x0 - 10, ph = h - y0 - 34;
+    const x0 = 30, y0 = 62, pw = w - x0 - 10, ph = h - y0 - 34;
     const XL = 6.5, XR = 12.5, YM = 0.5;
     const X = (z) => x0 + (z - XL) / (XR - XL) * pw, Y = (v) => y0 + ph - v / YM * ph;
     NM.axes(ctx, { x0, y0, w: pw, h: ph, X, Y, xt: [7, 8, 9, 10, 11, 12].map((z) => [z, `${z}`]), xlabel: "부리 깊이 (mm, 모식)" });
 
     // 먹이 막대: 작은 씨앗과 큰 씨앗의 비율
-    const small = Math.max(.08, .6 - .5 * k.e), bw = Math.min(220, pw * .5);
+    const small = Math.max(.08, .6 - .5 * k.e), bw = Math.min(200, w - 104 - x0 - 72);
     ctx.font = `10.5px ${F.mono}`; ctx.fillStyle = C.ink2; ctx.textAlign = "left";
     ctx.fillText("남은 먹이", x0, 14);
     ctx.fillStyle = "#c9b27a"; ctx.fillRect(x0 + 62, 5, bw * small, 12);
     ctx.fillStyle = "#6b5a45"; ctx.fillRect(x0 + 62 + bw * small, 5, bw * (1 - small), 12);
-    ctx.fillStyle = C.ink3; ctx.fillText("작고 무른 씨앗", x0 + 62, 30);
-    ctx.textAlign = "right"; ctx.fillText("크고 단단한 씨앗", x0 + 62 + bw, 30); ctx.textAlign = "left";
+    ctx.fillStyle = C.ink3; ctx.fillText("작은 씨앗", x0 + 62, 30);
+    ctx.textAlign = "right"; ctx.fillText(bw > 190 ? "크고 단단한 씨앗" : "큰 씨앗", x0 + 62 + bw, 30); ctx.textAlign = "left";
 
     const curve = (fn) => { ctx.beginPath(); ctx.moveTo(X(XL), Y(0)); for (let z = XL; z <= XR; z += .02) ctx.lineTo(X(z), Y(fn(z))); ctx.lineTo(X(XR), Y(0)); };
     curve((z) => pdf(z, MU)); ctx.fillStyle = "rgba(141,141,146,.18)"; ctx.fill(); ctx.strokeStyle = C.ink3; ctx.lineWidth = 1.2; ctx.stroke();
@@ -62,8 +62,8 @@
     arrow(MU, k.mo, y0 + 24, C.forest, "R");
 
     // 범례
-    const lx = x0 + pw - 150, ly = y0 + ph * .45;
-    if (w > 420) {
+    const lx = w - 104, ly = 4;
+    {
       ctx.font = `10.5px ${F.sans}`;
       [["rgba(141,141,146,.4)", "부모 세대"], ["rgba(224,160,42,.7)", "그중 살아남은 새"], [C.forest, "자손 세대"]].forEach(([c, t], i) => {
         ctx.fillStyle = c; ctx.fillRect(lx, ly + i * 16, 12, 8); ctx.fillStyle = C.ink2; ctx.fillText(t, lx + 18, ly + i * 16 + 8);

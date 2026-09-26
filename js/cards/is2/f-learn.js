@@ -56,7 +56,7 @@
     const { w: W, h: H } = size;
     if (!W) return;
     ctx.clearRect(0, 0, W, H);
-    const side = Math.min(H - 52, W * 0.58), x0 = 30, y0 = 18;
+    const narrow = W < 480, side = narrow ? Math.min(H - 52, W - 44) : Math.min(H - 52, W * 0.58), x0 = 30, y0 = 18;
     const X = (v) => x0 + v * side, Y = (v) => y0 + (1 - v) * side;
     plot = { x0, y0, side };
     // 확률 음영
@@ -86,7 +86,7 @@
 
     // 오른쪽: 오차(손실) 그래프
     const gx = x0 + side + 44, gw = W - gx - 10, gy = y0, gh = side;
-    if (gw > 60) {
+    if (!narrow && gw > 60) {
       const top = 1.0, n2 = Math.max(hist.length - 1, 1);
       const GX = (i) => gx + i / n2 * gw, GY = (v) => gy + (1 - Math.min(v, top) / top) * gh;
       const first = Math.max(0, steps - hist.length + 1);

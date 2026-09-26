@@ -58,8 +58,8 @@
     return {
       sens: [[w * 0.86, Y(0.74)], [w * 0.55, Y(0.6)], [sx + 22, Y(0.56)], [sx + 6, Y(0.6)]],
       inter: [[sx + 6, Y(0.6)], [sx - 4, Y(0.66)]],
-      motor: [[sx - 4, Y(0.66)], [sx + 22, Y(0.72)], [w * 0.5, Y(0.8)]],
-      motor2: [[sx - 4, Y(0.66)], [sx + 22, Y(0.72)], [w * 0.5, Y(0.8)]],
+      motor: [[sx - 4, Y(0.66)], [sx + 22, Y(0.72)], [w * 0.44, Y(0.73)]],
+      motor2: [[sx - 4, Y(0.66)], [sx + 22, Y(0.72)], [w * 0.44, Y(0.73)]],
       up: [[sx + 4, Y(0.6)], [sx + 4, Y(0.2)]],
       down: [[sx - 6, Y(0.2)], [sx - 6, Y(0.64)]],
       top, sx, Y, P,
@@ -92,7 +92,7 @@
     const hot = !ev.reflex && !ev.vol ? 1 : 0;
     const lift = ev.reflex && tau > ev.reflex ? 1 : ev.vol && tau > ev.vol ? 1 : 0;
     ctx.fillStyle = "#555"; ctx.fillRect(w * 0.8, Y(0.8) + 4, w * 0.16, 7);
-    ctx.fillStyle = "#e0a02a"; ctx.globalAlpha = 0.6;
+    ctx.strokeStyle = "#e0a02a"; ctx.lineWidth = 2; ctx.globalAlpha = 0.8;
     for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.moveTo(w * (0.83 + i * 0.045), Y(0.8) + 18); ctx.quadraticCurveTo(w * (0.84 + i * 0.045), Y(0.8) + 24, w * (0.83 + i * 0.045), Y(0.8) + 30); ctx.stroke(); }
     ctx.globalAlpha = 1;
     ctx.fillStyle = "#d8cbb4"; ctx.beginPath(); ctx.ellipse(w * 0.87, Y(0.76) - lift * 14, 13, 9, 0, 0, Math.PI * 2); ctx.fill();

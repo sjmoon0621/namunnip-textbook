@@ -11,10 +11,10 @@
   const MIN = [
     { k: "ol", name: "감람석", col: [138, 160, 90], dark: true, asp: 1.2, w: (s) => Math.max(0, 1 - s * 2.6) * 0.22 },
     { k: "px", name: "휘석", col: [62, 74, 54], dark: true, asp: 1.5, w: (s) => (1 - s) * 0.34 },
-    { k: "am", name: "각섬석", col: [44, 44, 40], dark: true, asp: 2.2, w: (s) => 0.22 * Math.exp(-((s - 0.45) / 0.25) ** 2) },
+    { k: "am", name: "각섬석", col: [44, 44, 40], dark: true, asp: 2.2, w: (s) => 0.22 * Math.exp(-(((s - 0.45) / 0.25) ** 2)) },
     { k: "bt", name: "흑운모", col: [70, 48, 32], dark: true, asp: 1.8, w: (s) => 0.1 * s },
     { k: "pl", name: "사장석", col: [236, 234, 224], dark: false, asp: 2.8, w: (s) => 0.42 * (1 - 0.45 * s) },
-    { k: "kf", name: "정장석", col: [229, 185, 165], dark: false, asp: 1.6, w: (s) => 0.36 * s * s },
+    { k: "kf", name: "정장석", col: [229, 185, 165], dark: false, asp: 1.6, w: (s) => 0.36 * Math.max(0, s - 0.2) ** 2 / 0.64 },
     { k: "qz", name: "석영", col: [205, 212, 216], dark: false, asp: 1.1, w: (s) => 0.36 * Math.max(0, s - 0.3) / 0.7 },
   ];
   let seed = 1;
@@ -41,7 +41,7 @@
       add(7, 0, 0.1, 0.75);           // 깊은 곳에서 천천히 자란 큰 결정(반정)
       add(Math.round(900 + 900 * cool), 0.55, 0.62, 0.9); // 분출 뒤 빨리 굳은 바탕
     } else if (cool < 0.94) {
-      const n = Math.round(10 * Math.pow(10, cool * 2.45));
+      const n = Math.round(28 * Math.pow(10, cool * 2.05));
       add(n, 0, 0.35, 22 / Math.sqrt(n));
     }
     owner = new Int32Array(N * N).fill(-1); arrive = new Float32Array(N * N).fill(1e9);
@@ -110,7 +110,7 @@
   function draw() {
     const { w, h } = size; if (!w || !owner) return;
     ctx.clearRect(0, 0, w, h);
-    const sq = Math.min(h - 30, w * 0.48), sx = 8, sy = 20;
+    const sq = Math.min(h - 28, w * 0.5), sx = 8, sy = 20;
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(off, sx, sy, sq, sq);
     ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.strokeRect(sx + .5, sy + .5, sq, sq);
@@ -171,7 +171,7 @@
   }
   function readout() {
     const cool = +sCool.value, si = +sSi.value;
-    oCool.textContent = cool < 0.25 ? "지하 깊은 곳 · 수만 년 이상" : cool < 0.5 ? "지하 얕은 곳 · 천천히" : cool < 0.94 ? "지표 · 며칠~몇 년" : "물이나 공기에 닿아 급랭";
+    oCool.textContent = two.checked ? "지하에서 천천히 식다가 지표로 분출" : cool < 0.25 ? "지하 깊은 곳 · 수만 년 이상" : cool < 0.5 ? "지하 얕은 곳 · 천천히" : cool < 0.94 ? "지표 · 며칠~몇 년" : "물이나 공기에 닿아 급랭";
     oSi.textContent = `${si}%`;
     const col = si < 52 ? 0 : si < 63 ? 1 : 2;
     let tex, name;

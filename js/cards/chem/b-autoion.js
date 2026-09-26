@@ -17,7 +17,8 @@
     if (v < 1e5) return Math.round(v).toLocaleString("en-US");
     const e = Math.floor(Math.log10(v)); return `${(v / 10 ** e).toFixed(1)}×10${sup(e)}`;
   };
-  const lenTxt = (l) => { const m = 10 ** l; return m >= 1e-2 ? `${(m * 100).toPrecision(2)} cm` : m >= 1e-3 ? `${(m * 1000).toPrecision(2)} mm` : m >= 1e-6 ? `${(m * 1e6).toPrecision(2)} μm` : `${(m * 1e9).toPrecision(2)} nm`; };
+  const pr = (v) => String(+v.toPrecision(2));
+  const lenTxt = (l) => { const m = 10 ** l; return m >= 0.99e-2 ? `${pr(m * 100)} cm` : m >= 0.99e-3 ? `${pr(m * 1000)} mm` : m >= 0.99e-6 ? `${pr(m * 1e6)} μm` : `${pr(m * 1e9)} nm`; };
 
   const { ctx, size } = fit(cv, () => draw());
   function draw() {
@@ -46,7 +47,7 @@
     ctx.fillText(`한 변 ${lenTxt(l)}`, x0 + s / 2, y0 + s + 16);
     const ref = REF.reduce((a, b) => Math.abs(b[0] - l) < Math.abs(a[0] - l) ? b : a);
     ctx.fillStyle = C.ink3; ctx.fillText(Math.abs(ref[0] - l) < 0.35 ? `≈ ${ref[1]} 크기` : " ", x0 + s / 2, y0 + s + 31);
-    if (nI < 60) { ctx.fillText("● H₃O⁺  ● OH⁻ (한 순간의 예)", x0 + s / 2, 14); }
+    if (nI < 60) { ctx.fillText("빨강 H₃O⁺ · 파랑 OH⁻ (한 순간의 예)", x0 + s / 2, 14); }
 
     // ── 로그 막대: 개수
     const gx = split + 70, gy = 26, gw = w - gx - 14, rows = [["H₂O", nW, "#5a96d2"], ["H₃O⁺", nI, C.apple], ["OH⁻", nI, "#3d6fb6"]];

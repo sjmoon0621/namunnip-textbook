@@ -5,9 +5,9 @@
   const { C, F, fit } = NM;
   const $ = (s) => root.querySelector(s);
   const cv = $("canvas"), sP = $(".ph"), oP = $(".ph-out");
-  const dH = $(".h"), dO = $(".oh"), dK = $(".kw"), dR = $(".ratio"), dS = $(".side");
+  const dH = $(".h"), dO = $(".oh"), dR = $(".ratio"), dS = $(".side");
   // 대략적인 pH (25 °C, 제품·상태에 따라 다름)
-  const EX = [[1.5, "위액"], [2.3, "레몬즙"], [2.9, "식초"], [5.0, "커피"], [6.7, "우유"], [7.0, "순수한 물"], [7.4, "혈액"], [8.1, "바닷물"], [8.3, "베이킹 소다 용액"], [11.6, "가정용 암모니아수"], [13.0, "0.1 M NaOH"]];
+  const EX = [[1.5, "위액"], [2.3, "레몬즙"], [2.9, "식초"], [5.0, "커피"], [7.0, "순수한 물"], [7.4, "혈액"], [8.3, "베이킹 소다 용액"], [11.6, "암모니아수"], [13.0, "0.1 M NaOH"]];
   const sup = (e) => String(e).split("").map((c) => "⁻⁰¹²³⁴⁵⁶⁷⁸⁹"["-0123456789".indexOf(c)]).join("");
   const sci = (v) => { const e = Math.floor(Math.log10(v) + 1e-9); const m = v / 10 ** e; return `${m.toFixed(1)}×10${sup(e)}`; };
   const col = (p) => { // 산성 = 주황빛, 염기성 = 파랑빛 (모식)
@@ -23,14 +23,14 @@
     const p = +sP.value, x0 = 30, pw = w - 60, X = (v) => x0 + v / 14 * pw;
     // 예시 물질 (위)
     ctx.font = `10.5px ${F.mono}`; ctx.textAlign = "center";
-    const lanes = [18, 32, 46];
+    const lanes = [14, 27, 40, 53];
     EX.forEach(([v, name], i) => {
-      const y = lanes[i % 3];
+      const y = lanes[i % 4];
       ctx.fillStyle = C.ink2; ctx.fillText(name, Math.min(Math.max(X(v), x0 + 30), x0 + pw - 30), y);
-      ctx.strokeStyle = C.rule; ctx.beginPath(); ctx.moveTo(X(v) + .5, y + 3); ctx.lineTo(X(v) + .5, 62); ctx.stroke();
+      ctx.strokeStyle = C.rule; ctx.beginPath(); ctx.moveTo(X(v) + .5, y + 3); ctx.lineTo(X(v) + .5, 66); ctx.stroke();
     });
     // 색 띠
-    const by = 62, bh = 16;
+    const by = 66, bh = 16;
     for (let i = 0; i < pw; i++) { ctx.fillStyle = col(i / pw * 14); ctx.fillRect(x0 + i, by, 1.5, bh); }
     ctx.fillStyle = C.ink3;
     for (let v = 0; v <= 14; v++) ctx.fillText(`${v}`, X(v), by + bh + 13);
@@ -58,7 +58,7 @@
   function update() {
     const p = +sP.value;
     oP.textContent = p.toFixed(1);
-    dH.textContent = sci(10 ** -p); dO.textContent = sci(10 ** -(14 - p)); dK.textContent = "1.0×10⁻¹⁴";
+    dH.textContent = sci(10 ** -p); dO.textContent = sci(10 ** -(14 - p));
     const r = 10 ** (7 - p);
     dR.textContent = Math.abs(p - 7) < 0.05 ? "같음" : r > 1 ? `${r >= 100 ? sci(r).replace("1.0×", "") : r.toFixed(r < 10 ? 1 : 0)}배 많음` : `${(1 / r) >= 100 ? sci(1 / r).replace("1.0×", "") : (1 / r).toFixed(1 / r < 10 ? 1 : 0)}분의 1`;
     dS.textContent = Math.abs(p - 7) < 0.05 ? "중성" : p < 7 ? "산성" : "염기성";

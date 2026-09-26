@@ -19,7 +19,7 @@
   const SCENES = [
     [0, 4.5, sceneFront, [[0.2, 4.5, "스피커 속에는 무엇이 들어 있을까요?"]]],
     [4.5, 10, sceneCut, [[4.6, 10, "[자석], [코일], 그리고 종이 [콘]. 거의 이것이 전부입니다."]]],
-    [10, 17, sceneForce, [[10.1, 13.5, "자석 틈에 있는 코일에 전류가 흐르면 코일이 [힘]을 받습니다."], [13.5, 17, "전류 방향이 바뀌면 힘도 [반대]로. F = BIL"]]],
+    [10, 17, sceneForce, [[10.1, 13.5, "자석 틈에 있는 코일에 전류가 흐르면 코일이 [힘]을 받습니다."], [13.5, 17, "전류 방향이 바뀌면 힘도 [반대]로 바뀝니다."]]],
     [17, 22.5, sceneSignal, [[17.1, 22.5, "음악 신호대로 전류가 1초에 [수십~수천 번] 방향을 바꾸고, 콘이 그대로 떨립니다."]]],
     [22.5, 27, sceneAir, [[22.6, 27, "콘이 공기를 밀고 당겨 [소리]가 됩니다."]]],
     [27, 32, sceneMic, [[27.1, 32, "거꾸로 소리로 코일을 흔들면 [전류]가 생깁니다. 다이내믹 마이크의 원리, 다음 절의 [전자기 유도]입니다."]]],
@@ -175,8 +175,8 @@
     label("코일 전류", 30, 108, GOLD);
     label("+", 18, 126, "rgba(243,244,239,.4)"); label("−", 18, 222, "rgba(243,244,239,.4)");
     ctx.beginPath(); ctx.arc(330, 170 - 50 * sig(lt), 5, 0, Math.PI * 2); ctx.fillStyle = GOLD; ctx.fill();
-    section(180, 360, 0.95, -22 * sig(lt), false, 0);
-    label("지금 전류 → 지금 콘의 위치", 180, 470, "rgba(243,244,239,.5)", "center");
+    section(180, 330, 0.95, -22 * sig(lt), false, 0);
+    label("지금 전류 → 지금 콘의 위치", 180, 425, "rgba(243,244,239,.5)", "center");
   }
 
   /* 5. 공기의 소밀파 */
@@ -202,15 +202,15 @@
   /* 6. 마이크 = 거꾸로 */
   function sceneMic(lt) {
     const sig = (t) => Math.sin(t * 7) * 0.7 + 0.3 * Math.sin(t * 17);
-    section(180, 260, 0.95, -20 * sig(lt), false, 0);
-    arrowV(180, 150, 190, "rgba(111,163,208,.8)", 2);
-    label("소리", 196, 170, BLUE, "left", `600 13px ${SANS}`);
+    section(180, 230, 0.95, -20 * sig(lt), false, 0);
+    arrowV(180, 110, 150, "rgba(111,163,208,.8)", 2);
+    label("소리", 196, 132, BLUE, "left", `600 13px ${SANS}`);
     ctx.strokeStyle = GOLD; ctx.lineWidth = 2; ctx.beginPath();
-    for (let x = 0; x <= 260; x += 2) { const t = lt - (260 - x) / 100; const y = 400 - 30 * sig(t); x ? ctx.lineTo(50 + x, y) : ctx.moveTo(50 + x, y); }
+    for (let x = 0; x <= 260; x += 2) { const t = lt - (260 - x) / 100; const y = 360 - 26 * sig(t); x ? ctx.lineTo(50 + x, y) : ctx.moveTo(50 + x, y); }
     ctx.stroke();
-    label("코일에 생긴 전류", 50, 360, GOLD);
+    label("코일에 생긴 전류", 50, 322, GOLD);
     ctx.save(); ctx.globalAlpha *= clamp((lt - 1.2) / 0.6, 0, 1);
-    label("스피커 ⇄ 마이크", 180, 470, C.sprout, "center", `600 20px ${SANS}`);
+    label("스피커 ⇄ 마이크", 180, 430, C.sprout, "center", `600 20px ${SANS}`);
     ctx.restore();
   }
 

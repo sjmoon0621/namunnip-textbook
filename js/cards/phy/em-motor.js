@@ -97,7 +97,7 @@
     ctx.beginPath(); ctx.arc(X(deg), Y(torque(a, 0)), 5, 0, Math.PI * 2); ctx.fillStyle = C.ink; ctx.fill();
     on = onSave;
     ctx.fillStyle = C.ink3; ctx.textAlign = "left";
-    ctx.fillText("+ : 시계 반대 방향", gx + 4, gy + 12);
+    ctx.fillText("+ : 시계 반대 방향", gx, gy + gh + 28);
     ctx.textAlign = "left";
   }
 

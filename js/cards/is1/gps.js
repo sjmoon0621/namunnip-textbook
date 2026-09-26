@@ -43,7 +43,7 @@
     const s = state();
     bOut.textContent = (s.bEst >= 0 ? "+" : "") + s.bEst.toFixed(2);
     const corr = c * s.bEst * 1e-6;
-    dCorr.textContent = `${corr >= 0 ? "−" : "+"}${Math.abs(corr).toFixed(0)} m`;
+    dCorr.textContent = Math.abs(corr) < 0.5 ? "0 m" : `${corr > 0 ? "−" : "+"}${Math.abs(corr).toFixed(0)} m`;
     dSpread.textContent = s.spread < 1 ? "< 1 m" : `${s.spread.toFixed(0)} m`;
     const ok = s.spread < 12;
     dVer.textContent = ok ? "한 점에서 만남" : "아직 어긋남";

@@ -86,7 +86,7 @@
       ctx.lineWidth = 3 * m.bron; ctx.beginPath(); ctx.moveTo(x, y - r); ctx.lineTo(x, y); ctx.stroke();
       ctx.lineWidth = 2.2 * m.bron; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - r * 0.7, y + r * 0.6); ctx.moveTo(x, y); ctx.lineTo(x + r * 0.7, y + r * 0.6); ctx.stroke();
       ctx.lineCap = "butt";
-      lab("기관지", m.bron > 1.1 ? "확장" : m.bron < 0.95 ? "수축" : "보통");
+      lab("기관지", m.bron > 1.15 ? "확장" : m.bron < 0.8 ? "수축" : "보통");
     } else if (o === "gut") {
       ctx.strokeStyle = "#b08a5a"; ctx.lineWidth = 5; ctx.beginPath();
       for (let i = 0; i <= 30; i++) { const xx = x - r * 1.2 + i / 30 * r * 2.4, yy = y + Math.sin(i / 30 * Math.PI * 3 - wave) * r * 0.45 * m.gut; i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }

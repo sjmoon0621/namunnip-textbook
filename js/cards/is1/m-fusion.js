@@ -49,7 +49,7 @@
     const COL = ["#dbe8f3", "#f3e3b8", "#cfd8c4", "#b9cfa9", "#e4c8b8", "#d5b9a5", "#8d8d92"];
     // 바깥부터: 수소 외피, 그 안으로 재가 쌓인 층들, 가운데는 지금 타는 중심
     const nLayers = end ? (m === "25" ? 7 : m === "1" ? 3 : 2) : s + 1;
-    const rad = (i) => R * (1 - i * 0.125);
+    const core = R * 0.3, rad = (i) => R - i * (R - core) / (end ? nLayers - 1 : nLayers);
     ctx.font = `600 12px ${F.sans}`; ctx.fillStyle = C.ink; ctx.textAlign = "center";
     ctx.fillText(end ? "마지막 모습 (모식)" : "별 중심부 (모식)", cx, 14);
     for (let i = 0; i < nLayers; i++) {
@@ -63,9 +63,9 @@
       ctx.fillStyle = C.ink;
       ctx.fillText(shells[i], cx, cy - (rad(i) + rad(i + 1)) / 2 + 4);
     }
-    const rc = rad(nLayers) * (end ? 1 : 1);
+    const rc = core;
     if (!end) {
-      ctx.beginPath(); ctx.arc(cx, cy, Math.max(rc, R * 0.2), 0, Math.PI * 2);
+      ctx.beginPath(); ctx.arc(cx, cy, rc, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(224,160,42,.95)"; ctx.fill();
       ctx.fillStyle = C.ink; ctx.font = `600 ${small ? 9.5 : 11}px ${F.sans}`;
       ctx.fillText(ST[s].f, cx, cy - 2);
@@ -73,7 +73,7 @@
     } else {
       const lab = m === "25" ? "철" : m === "1" ? "탄소·산소" : "헬륨";
       ctx.fillStyle = m === "25" ? C.paper : C.ink; ctx.font = `600 ${small ? 10 : 11}px ${F.sans}`;
-      ctx.fillText(lab, cx, cy - rad(nLayers - 1) / 2 + 8);
+      ctx.fillText(lab, cx, cy + 4);
     }
 
     // ── 오른쪽: 결합 에너지 곡선 (가로축 로그)

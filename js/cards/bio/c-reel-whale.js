@@ -89,7 +89,6 @@
       ctx.beginPath(); ctx.arc(X(m), y, i === k ? 5 : 3, 0, Math.PI * 2); ctx.fill();
     });
     label("5,500만 년 전", x0, y + 18, "rgba(243,244,239,.4)");
-    label("현재", x1, y + 18, "rgba(243,244,239,.4)", "right");
     if (k >= 0) label(["약 5,000만 년 전", "약 4,900만 년 전", "약 4,700만 년 전", "약 4,000만 년 전", "현재"][k], X(MYA[k][0]), y - 12, C.sprout, "center");
   }
   function water(level) {
@@ -117,7 +116,7 @@
     ctx.quadraticCurveTo(cx - L * .5 - tl * .6, cy - hb * .1, cx - L * .5 - tl, cy + (fluke ? -2 : 8));
     ctx.lineTo(cx - L * .5 - tl, cy + (fluke ? 4 : 10));
     ctx.quadraticCurveTo(cx - L * .5 - tl * .5, cy + hb * .2, cx - L * .45, cy + hb * .3); ctx.fill();
-    if (fluke) { ctx.beginPath(); ctx.ellipse(cx - L * .5 - tl, cy + 1, 5, 22, 0, 0, Math.PI * 2); ctx.fill(); }
+    if (fluke) { ctx.beginPath(); ctx.ellipse(cx - L * .5 - tl - 6, cy + 1, 18, 4, 0, 0, Math.PI * 2); ctx.fill(); }
     // 몸통, 머리
     ctx.beginPath(); ctx.ellipse(cx, cy, L / 2, hb / 2, 0, 0, Math.PI * 2); ctx.fill();
     ctx.beginPath(); ctx.ellipse(cx + L * .45 + hd * .35, cy - hb * .12, hd * .6, hb * .3, .08, 0, Math.PI * 2); ctx.fill();

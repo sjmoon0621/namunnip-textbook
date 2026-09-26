@@ -69,7 +69,7 @@
     for (const key of Object.keys(LED)) {
       const on = key === cur;
       ctx.beginPath();
-      for (let v = 0; v <= 4; v += 0.01) { const y = Y(I(key, v)); v ? ctx.lineTo(X(v), y) : ctx.moveTo(X(v), y); }
+      for (let v = 0; v <= 4; v += 0.01) { const a = I(key, v); if (a > 30) break; const y = Y(a); v ? ctx.lineTo(X(v), y) : ctx.moveTo(X(v), y); }
       ctx.strokeStyle = col(key, on ? 1 : 0.45); ctx.lineWidth = on ? 2.6 : 1.2; ctx.stroke();
     }
     ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);

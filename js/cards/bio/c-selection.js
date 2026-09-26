@@ -53,7 +53,7 @@
     ctx.clearRect(0, 0, w, h);
     const b = bg();
     // ── 왼쪽: 서식지
-    const fw = Math.round(w * .5), fh = h - 4;
+    const fw = Math.round(w * .44), fh = h - 4;
     ctx.fillStyle = shade(b); ctx.fillRect(0, 0, fw, fh);
     ctx.strokeStyle = shade(Math.max(0, b - .12)); ctx.lineWidth = 2;
     for (let i = 0; i < 9; i++) { ctx.beginPath(); const x = (i + .5) * fw / 9; ctx.moveTo(x, 0); ctx.bezierCurveTo(x + 8, fh * .3, x - 8, fh * .7, x + 4, fh); ctx.stroke(); }
@@ -71,7 +71,7 @@
     }
 
     // ── 오른쪽 위: 몸 색 분포
-    const x0 = fw + 34, gw = w - x0 - 8, gh = (h - 76) / 2, y1 = 20;
+    const x0 = fw + 26, gw = w - x0 - 8, gh = (h - 100) / 2, y1 = 20;
     const X = (z) => x0 + z * gw;
     const bins = new Array(20).fill(0);
     pop.forEach((p) => bins[Math.min(19, Math.floor(p.z * 20))]++);
@@ -85,7 +85,7 @@
     const y2 = y1 + gh + 44;
     const g0 = hist[0][0], g1 = Math.max(g0 + 20, hist[hist.length - 1][0]);
     const GX = (g) => x0 + (g - g0) / (g1 - g0) * gw, GY = (z) => y2 + (1 - z) * gh;
-    NM.axes(ctx, { x0, y0: y2, w: gw, h: gh, X: GX, Y: GY, xt: [[g0, `${g0}`], [g1, `${g1}세대`]], yt: [[0, "어둠"], [1, "밝음"]], ylabel: "평균 몸 색 (검정) · 배경 (노랑)" });
+    NM.axes(ctx, { x0, y0: y2, w: gw, h: gh, X: GX, Y: GY, xt: [[g0, `${g0}`], [g1, `${g1}세대`]], yt: [[0, "0"], [1, "1"]], ylabel: "평균 몸 색(검정) · 배경(노랑)" });
     ctx.lineWidth = 2;
     for (const [k, col] of [[2, C.amber], [1, C.ink]]) {
       ctx.strokeStyle = col; ctx.beginPath(); let started = false;
