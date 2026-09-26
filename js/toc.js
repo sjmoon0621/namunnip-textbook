@@ -3202,8 +3202,19 @@ window.TOC = [
         "title": "별빛의 흡수선으로 무엇을 알 수 있을까? (분광형) — ‘잎은 왜 초록색일까’와 같은 방법"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-blackbody",
+        "title": "별의 색으로 온도를 어떻게 알까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-spectral",
+        "title": "별빛의 흡수선으로 무엇을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
