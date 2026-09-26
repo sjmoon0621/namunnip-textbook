@@ -2506,36 +2506,86 @@ window.TOC = [
       "n": 1,
       "title": "단진동",
       "code": "12역학03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-shm",
+        "title": "용수철에 매단 추는 언제 가장 빠르고, 언제 가장 세게 당겨질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-phy-spring",
+        "title": "눌린 용수철에는 에너지가 얼마나 저장될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-pendulum",
+        "title": "진자 공식은 언제 틀릴까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "탄성파의 진행·반사·투과",
       "code": "12역학03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-pulse",
+        "title": "줄의 끝에 닿은 파동은 어떻게 되돌아올까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-mech-elastic-use",
+        "title": "보이지 않는 곳을 탄성파로 어떻게 볼까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "도플러 효과",
       "code": "12역학03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-doppler",
+        "title": "다가오는 사이렌은 왜 더 높게 들릴까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "음파의 간섭과 소음 제어",
       "code": "12역학03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-two-speaker",
+        "title": "스피커 두 대 사이에서 소리가 사라지는 자리는 어디일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-dslit",
+        "title": "이중 슬릿 무늬의 간격은 무엇이 정할까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "정상파와 악기",
       "code": "12역학03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-standing",
+        "title": "기타 줄과 리코더는 왜 정해진 음만 낼까?"
+       }
+      ]
      }
     ]
    }
