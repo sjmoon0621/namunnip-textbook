@@ -757,8 +757,19 @@ window.TOC = [
         "title": "녹, 손난로, 불꽃놀이 — 전자가 움직인다"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is2-hand-warmer",
+        "title": "손난로는 어떻게 뜨거워질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-cold-pack",
+        "title": "냉찜질 팩은 어떻게 차가워질까?"
+       }
+      ]
      }
     ]
    },
