@@ -3831,43 +3831,124 @@ window.TOC = [
       "n": 1,
       "title": "대기의 선택적 흡수와 생명체",
       "code": "12지시03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-absorb",
+        "title": "공기는 어떤 빛을 막고, 어떤 빛을 통과시킬까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-greenhouse",
+        "title": "온실 효과는 나쁜 것일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-blackbody",
+        "title": "별의 색으로 온도를 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "지구의 열수지",
       "code": "12지시03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-budget",
+        "title": "지표는 받은 에너지를 어떤 길로 내보낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-earth-energy",
+        "title": "지구시스템을 움직이는 에너지는 어디서 올까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "대기 안정도와 구름·강수",
       "code": "12지시03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-stability",
+        "title": "떠오른 공기 덩어리는 어디까지 올라갈까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-esys-precip",
+        "title": "구름 속 작은 물방울은 어떻게 빗방울이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-updown",
+        "title": "고기압 아래에서는 왜 날씨가 맑을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-thunder",
+        "title": "뇌우는 왜 여름 오후에 잘 생길까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "정역학 평형과 연직 운동",
       "code": "12지시03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-hydro",
+        "title": "공기는 왜 위로 떠오르지도, 가라앉지도 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-updown",
+        "title": "고기압 아래에서는 왜 날씨가 맑을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "지균풍·경도풍·지상풍",
       "code": "12지시03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-winds",
+        "title": "바람은 왜 등압선을 따라, 또는 비스듬히 불까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-isobar",
+        "title": "등압선만 보고 바람을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "행성파와 편서풍 파동",
       "code": "12지시03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-rossby",
+        "title": "굽이치는 편서풍 아래에서 저기압은 어디에 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-front",
+        "title": "온대 저기압이 지나가면 날씨는 어떤 순서로 바뀔까?"
+       }
+      ]
      }
     ]
    }
