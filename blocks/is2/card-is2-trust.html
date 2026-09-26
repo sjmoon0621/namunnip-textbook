@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is2/f-trust.js"
+  ]
+}
+-->
+<style>
+#card-is2-trust .pk { display: inline-block; width: 10px; height: 10px; margin: 0 2px 0 8px; vertical-align: -1px; }
+#card-is2-trust .pk.cat { background: #e0a02a; border-radius: 50%; }
+#card-is2-trust .pk.dog { background: #4f7cae; }
+#card-is2-trust .pk.ring { border: 1.5px solid #e0a02a; border-radius: 50%; }
+#card-is2-trust .tr-msg { margin-top: 8px; font-size: 13.5px; color: var(--ink-2); min-height: 1.6em; }
+</style>
+<article class="card" id="card-is2-trust">
+  <header class="card-head">
+    <span class="no"></span><h2>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</h2><span class="kind">확신도 · 학습 범위 · 가상 자료</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="학습을 마친 분류기의 판정 영역. 새 사진을 나타내는 점을 끌어 옮기면 판정과 확신도가 바뀐다"></canvas>
+      <p class="legend"><span><span class="pk cat"></span>학습한 고양이</span><span><span class="pk dog"></span>학습한 개</span><span><span class="pk ring"></span>다른 지역의 고양이</span><span>‘새 사진’ 표적을 끌어 옮겨 보세요.</span></p>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-probe="0.3,0.7">흔한 고양이 사진</button>
+          <button class="chip" type="button" data-probe="0.48,0.52">애매한 사진</button>
+          <button class="chip" type="button" data-probe="1.7,0.9">학습에 없던 동물</button>
+        </div>
+        <label class="mono">시험 사진의 변화: 고양이 주둥이가 평균 <output class="shift-out">0.00</output>만큼 긴 지역</label>
+        <input class="shift" type="range" min="0" max="0.5" step="0.05" value="0" aria-label="시험 자료의 변화">
+        <dl class="nums n4">
+          <div><dt>새 사진 판정</dt><dd>—</dd></div>
+          <div><dt>확신도</dt><dd>—</dd></div>
+          <div><dt>시험 정답률</dt><dd>—</dd></div>
+          <div><dt>시험 평균 확신도</dt><dd>—</dd></div>
+        </dl>
+        <p class="tr-msg"></p>
+        <p class="fig-note">가상 자료입니다. 분류기는 앞 카드와 같은 로지스틱 회귀이며, 점선 안의 학습 자료 40개로 미리 학습시켰습니다. 시험 자료는 200장(고양이 100, 개 100)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>인공지능이 “개일 확률 99.9%”라고 답했습니다. 이 숫자는 “이 답이 맞을 확률이 99.9%”라는 뜻일까요?</li>
+      <li><span class="tag">복원</span>앞 카드의 분류기는 점이 경계선에서 멀수록 높은 확률을 냅니다. 경계선에서 먼 곳이면 학습 자료가 있었든 없었든 확률이 높게 나옵니다.</li>
+      <li><span class="tag">설명</span>모델이 내는 확률은 모델 안에서 계산한 <em>확신도</em>입니다. 학습 자료와 비슷한 입력에서는 확신도가 실제 정답률과 대체로 맞지만, 학습 때 본 적 없는 입력에서는 둘이 따로 놉니다. 또 이 분류기는 ‘고양이’와 ‘개’ 둘 중 하나로만 답할 수 있어서, 둘 다 아닌 동물에도 둘 중 하나를 고릅니다.</li>
+      <li><span class="tag">연결</span>실제 인공지능도 비슷한 문제를 겪습니다. 한 병원의 사진으로 학습한 진단 모델이 다른 병원의 촬영 장비에서는 성능이 떨어진 사례가 보고되어 왔습니다. 그래서 중요한 곳에 쓰는 인공지능은 <em>실제로 쓰일 환경의 자료로 다시 검증</em>하고, 확신도가 낮거나 입력이 낯설 때 사람에게 넘기도록 설계합니다.</li>
+      <li><span class="tag">적용</span>‘학습에 없던 동물’을 눌러 확신도를 보세요. 이번에는 아래 막대를 0.4까지 올려 보세요. 시험 정답률과 평균 확신도는 각각 어떻게 변하나요?</li>
+      <li class="warn"><span class="tag">판단</span>“확신도가 높으니 맞겠지”는 흔한 오해입니다. 확신도는 학습 자료가 있던 범위 안에서만 의미가 있습니다. 인공지능의 답을 쓸 때는 “이 입력이 학습 자료와 비슷한가?”, “같은 환경에서 검증했는가?”를 먼저 물어야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">낮에 찍은 도로 사진으로만 학습한 표지판 인식 인공지능을 밤에 쓰려고 합니다. 밤 사진에서 “정지 표지판, 확신도 97%”라는 답이 나왔습니다. 가장 알맞은 태도는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>97%이므로 100번 중 97번은 맞는다고 믿는다.<span class="why"><b>확신도를 정답률로 읽은 답입니다.</b> 카드에서 시험 환경이 바뀌자 평균 확신도는 높게 남았지만 정답률은 크게 떨어졌습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>밤 사진으로 따로 검증하기 전에는 이 확신도를 그대로 믿지 않는다.<span class="why"><b>맞습니다.</b> 밤 사진은 학습 범위 밖입니다. 밤 사진으로 정답률을 확인하고, 필요하면 밤 사진을 넣어 다시 학습해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>인공지능은 밤에는 전혀 쓸 수 없다.<span class="why"><b>너무 나간 결론입니다.</b> 문제는 밤이라는 조건이 아니라 그 조건의 자료로 학습·검증하지 않았다는 점입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

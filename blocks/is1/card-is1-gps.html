@@ -1,0 +1,49 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is1/gps.js"
+  ]
+}
+-->
+<article class="card" id="card-is1-gps">
+  <header class="card-head">
+    <span class="no"></span><h2>GPS는 어떻게 시간으로 위치를 찾을까?</h2><span class="kind">빛의 속력 · 거리 측정 · 시계 보정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="세 위성까지의 거리선이 만나는 곳으로 위치를 찾는 지도. 시계 보정값에 따라 선이 움직인다"></canvas>
+      <div class="ctl">
+        <label class="mono">수신기 시계 보정값 = <output class="b-out">0.00</output> μs</label>
+        <input class="b" type="range" min="-3" max="3" step="0.01" value="0" aria-label="수신기 시계 보정값 (마이크로초)">
+        <div class="presets" style="align-items:center">
+          <span class="toggles" style="margin:0"><label><input type="checkbox" class="truth">실제 위치 보기</label></span>
+          <button class="btn renew" type="button" style="margin-left:auto">다른 수신기</button>
+        </div>
+        <dl class="nums">
+          <div><dt>보정한 거리</dt><dd class="corr">—</dd></div>
+          <div><dt>세 선의 어긋남</dt><dd class="spread">—</dd></div>
+          <div><dt>판정</dt><dd class="verdict">—</dd></div>
+        </dl>
+        <p class="fig-note">모식: 실제로는 3차원이고 위성 4개 이상을 씁니다. 여기서는 평면과 위성 3개로 줄였습니다. 위성은 약 2만 km 밖에 있어 거리가 같은 곳(원)이 이 지도에서는 거의 직선으로 보입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>휴대 전화는 하늘의 위성과 신호만 주고받는데 내 위치를 몇 m 안으로 압니다. 무엇을 재는 걸까요?</li>
+      <li><span class="tag">복원</span>거리 = 속력 × 시간. 전파는 빛의 속력, 초속 약 30만 km로 갑니다. 신호가 출발한 시각과 도착한 시각을 알면 위성까지의 거리를 알 수 있습니다.</li>
+      <li><span class="tag">설명</span>GPS 위성은 원자시계를 싣고 ‘지금 몇 시 몇 분 몇 초’를 계속 방송합니다. 수신기는 도착 시각과의 차이(약 0.07초)에 빛의 속력을 곱해 거리를 구합니다. 위성 하나로는 ‘그 거리만큼 떨어진 원 위 어딘가’까지만 압니다. 원 여러 개가 만나는 점이 내 위치입니다.</li>
+      <li><span class="tag">연결</span>빛은 1 μs(백만분의 1초)에 300 m를 갑니다. 그런데 휴대 전화 속 시계는 값싼 수정 시계라 금방 μs 단위로 어긋납니다. 이 시계 오차는 모든 위성까지의 거리를 <em>똑같은 양만큼</em> 늘리거나 줄입니다.</li>
+      <li><span class="tag">적용</span>지금은 세 선이 한 점에서 만나지 않습니다. 보정값 막대를 움직여 세 선이 한 점에서 만나게 해 보세요. 그 값이 바로 수신기 시계의 오차이고, 만나는 점이 위치입니다. 수신기는 이 계산을 1초에도 여러 번 합니다.</li>
+      <li class="warn"><span class="tag">판단</span>위성의 시계도 고쳐 써야 합니다. 상대성 이론에 따르면 위성 속 시계는 지상보다 하루에 약 38 μs 빨리 갑니다. 보정하지 않으면 하루에 10 km 넘게 위치가 틀어집니다. 그래서 위성 시계는 처음부터 이만큼 느리게 맞춰 발사합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">평면이 아니라 3차원 공간에서, 수신기 시계 오차까지 함께 풀려면 위성이 최소 몇 개 필요할까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3개<span class="why"><b>시계가 완벽하다면 맞습니다.</b> 모르는 값이 x, y, z 셋이면 거리 3개로 충분합니다. 하지만 수신기 시계 오차가 네 번째 미지수입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4개<span class="why"><b>맞습니다.</b> 미지수는 x, y, z와 시계 오차, 넷입니다. 그래서 GPS는 하늘 어디서나 위성 4개 이상이 보이도록 배치되어 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2개<span class="why"><b>평면에서 시계를 믿을 때의 답에 가깝습니다.</b> 그때도 원 두 개는 보통 두 점에서 만나서, 어느 쪽인지 정하려면 정보가 더 필요합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

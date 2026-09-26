@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is2/f-robot.js"
+  ]
+}
+-->
+<style>
+#card-is2-robot .rb-msg { margin-top: 8px; font-size: 13.5px; color: var(--ink-2); min-height: 1.6em; }
+</style>
+<article class="card" id="card-is2-robot">
+  <header class="card-head">
+    <span class="no"></span><h2>로봇은 어떻게 선을 따라갈까?</h2><span class="kind">감지 · 판단 · 동작 · 되먹임 · 모식 모형</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="타원 모양 검은 선을 따라가는 바퀴 로봇을 위에서 본 모습과, 선에서 벗어난 거리의 기록"></canvas>
+      <div class="ctl">
+        <label class="mono">조향 세기 K = <output class="gain-out">1.0</output> (1 cm 벗어날 때 초당 회전각, 라디안)</label>
+        <input class="gain" type="range" min="0.2" max="4" step="0.1" value="1" aria-label="조향 세기">
+        <div class="ctl-row">
+          <div>
+            <label class="mono">속력 = <output class="speed-out">20</output> cm/s</label>
+            <input class="speed" type="range" min="10" max="30" step="1" value="20" aria-label="속력">
+          </div>
+          <div>
+            <label class="mono">판단 지연 = <output class="delay-out">0.10</output> s</label>
+            <input class="delay" type="range" min="0" max="0.3" step="0.01" value="0.1" aria-label="판단 지연">
+          </div>
+        </div>
+        <div class="presets" style="align-items:center">
+          <button class="chip" type="button" data-set="0.3,20,0.1">약하게</button>
+          <button class="chip" type="button" data-set="1,20,0.1">알맞게</button>
+          <button class="chip" type="button" data-set="3.5,20,0.2">세게, 지연 0.2 s</button>
+          <button class="btn go" type="button" style="margin-left:auto">다시 출발</button>
+        </div>
+        <dl class="nums">
+          <div><dt>평균 벗어남</dt><dd>—</dd></div>
+          <div><dt>최대 벗어남</dt><dd>—</dd></div>
+          <div><dt>상태</dt><dd>—</dd></div>
+        </dl>
+        <p class="rb-msg"></p>
+        <p class="fig-note">모식 모형: 트랙은 가로 124 cm, 세로 60 cm 타원(양 끝 곡률 반지름 약 14.5 cm)입니다. 센서는 바퀴 축 5 cm 앞에 달려 있고 좌우 3 cm까지 잽니다. 벗어난 거리는 출발 4초 뒤부터 바퀴 축 가운데로 잰 값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>바닥의 검은 선을 따라 달리는 로봇은 길을 ‘보고’ 있지 않습니다. 선 위치를 재는 작은 센서 하나로 어떻게 곡선까지 따라갈까요?</li>
+      <li><span class="tag">복원</span>로봇은 <em>감지(센서) → 판단(제어기) → 동작(모터)</em>을 되풀이하는 기계입니다. 사람도 자전거를 탈 때 기울어짐을 느끼고, 판단하고, 핸들을 돌립니다.</li>
+      <li><span class="tag">설명</span>이 로봇은 선에서 벗어난 거리를 재서, 벗어난 만큼 반대쪽으로 방향을 틉니다(<span class="formula">회전 속도 = K × 벗어난 거리</span>). 움직인 결과를 다시 재서 다음 동작에 반영하니, 이것을 <em>되먹임(피드백)</em>이라고 합니다.</li>
+      <li><span class="tag">연결</span>곡선을 돌려면 회전 속도가 적어도 <span class="formula">속력 ÷ 곡률 반지름</span>이어야 합니다. 20 cm/s로 반지름 14.5 cm인 곡선을 돌려면 초당 약 1.4 라디안이 필요합니다. 센서는 3 cm까지만 재므로, K가 약 0.46보다 작으면 이 곡선을 돌 수 없습니다.</li>
+      <li><span class="tag">적용</span>‘약하게’, ‘알맞게’, ‘세게’를 차례로 눌러 보세요. 각각 어디서, 어떻게 실패하나요? ‘세게’에서 지연을 0으로 줄이면 어떻게 되나요? 속력을 30 cm/s로 올리면 잘 되는 K의 범위는 넓어지나요, 좁아지나요?</li>
+      <li class="warn"><span class="tag">판단</span>“세게 고칠수록 정확하다”는 생각은 지연이 없을 때만 맞습니다. 센서가 재고 모터가 반응하기까지 늘 시간이 걸리므로, 너무 세게 고치면 이미 지나간 상황에 반응해 좌우로 흔들립니다. 자율 주행차처럼 인공지능이 판단을 맡는 로봇도 이 고리 안에서 움직입니다. 판단이 똑똑해도 감지와 동작이 늦거나 부정확하면 안전하지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">잘 달리던 로봇의 카메라를 더 좋은 것으로 바꿨더니, 영상 처리 시간이 늘어 판단이 0.1초 더 늦어졌습니다. 조향 세기는 그대로입니다. 어떤 일이 일어나기 쉬울까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>센서가 좋아졌으니 더 정확하게 따라간다.<span class="why"><b>정확도만 보고 시간을 놓친 답입니다.</b> 되먹임에서는 얼마나 정확하게 재느냐만큼 얼마나 빨리 반영하느냐도 중요합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>늦게 반응해 좌우로 흔들리기 쉽다. 조향 세기를 낮추거나 지연을 줄여야 한다.<span class="why"><b>맞습니다.</b> 카드에서 지연을 늘리면, 전에는 잘 되던 조향 세기에서도 흔들림이 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.1초는 아주 짧으므로 아무 차이가 없다.<span class="why"><b>속력과 함께 따져야 합니다.</b> 20 cm/s면 0.1초 동안 2 cm를 갑니다. 선 폭과 센서 범위가 몇 cm인 로봇에게는 작은 거리가 아닙니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

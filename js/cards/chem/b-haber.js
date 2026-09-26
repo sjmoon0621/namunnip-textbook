@@ -1,6 +1,6 @@
 /* 카드: 암모니아 합성은 왜 높은 압력에서 할까? — N₂ + 3H₂ ⇌ 2NH₃ 평형 조성 (이상 기체 근사) */
 (() => {
-  const root = document.getElementById("card-chem-haber");
+  const root = document.getElementById("card-chem-haber-eq");
   if (!root) return;
   const { C, F, fit } = NM;
   const $ = (s) => root.querySelector(s);

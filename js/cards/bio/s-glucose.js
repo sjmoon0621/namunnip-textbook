@@ -1,6 +1,6 @@
 /* 카드: 당뇨병은 몸의 어떤 균형이 깨진 것일까? — 포도당 75 g을 마신 뒤 혈당·인슐린 곡선 (모식 모형) */
 (() => {
-  const root = document.getElementById("card-bio-glucose");
+  const root = document.getElementById("card-bio-diabetes");
   if (!root) return;
   const { C, F, fit } = NM;
   const $ = (s) => root.querySelector(s);

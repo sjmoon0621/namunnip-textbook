@@ -1,0 +1,53 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/phy/lm-litho.js"
+  ]
+}
+-->
+<article class="card" id="card-phy-lm-litho">
+  <header class="card-head">
+    <span class="no"></span><h2>반도체 회로는 왜 더 짧은 파장의 빛으로 새길까?</h2><span class="kind">노광 공정 · 회절과 개구수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="마스크 무늬, 웨이퍼에 닿는 빛의 세기, 현상 후 남은 감광제, 그리고 렌즈 구멍 안에 들어온 회절 빛의 위치"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" data-src="iline" aria-pressed="false">i선 365 nm · NA 0.6</button>
+          <button class="chip" data-src="krf" aria-pressed="false">KrF 248 · 0.8</button>
+          <button class="chip" data-src="arf" aria-pressed="true">ArF 193 · 0.93</button>
+          <button class="chip" data-src="arfi" aria-pressed="false">ArF 액침 193 · 1.35</button>
+          <button class="chip" data-src="euv" aria-pressed="false">EUV 13.5 · 0.33</button>
+        </div>
+        <label class="mono">무늬 간격(피치) p = <output class="pitch-out">250</output> nm</label>
+        <input class="pitch" type="range" min="1.2" max="3" step="0.005" value="2.398" aria-label="마스크 무늬의 피치 (로그 눈금)">
+        <div class="toggles"><label><input type="checkbox" class="obl">경사 조명 (빛을 양옆에서 비스듬히)</label></div>
+        <dl class="nums">
+          <div><dt>렌즈에 들어온 회절 빛</dt><dd class="orders">—</dd></div>
+          <div><dt>무늬 명암 대비</dt><dd class="contrast">—</dd></div>
+          <div><dt>이 장치의 최소 피치</dt><dd class="pmin">—</dd></div>
+        </dl>
+        <p class="fig-note">모식: 결맞은 빛, 선과 간격이 1 : 1인 마스크, 스칼라 근사로 계산했습니다. 마스크 무늬는 웨이퍼 크기로 줄여서 나타냈습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>스마트폰 칩 속 회로 선은 폭이 수십 nm입니다. 이 무늬는 마스크의 그림을 빛으로 비추어 렌즈로 줄여 찍어 새깁니다. 더 가는 선을 새기려면 왜 파장이 더 짧은 빛이 필요할까요?</li>
+      <li><span class="tag">복원</span>촘촘한 줄무늬를 지난 빛은 이중 슬릿처럼 정해진 방향으로만 갈라져 나갑니다(회절). 그 방향은 <span class="formula">sin θ = mλ / p</span>. 무늬가 촘촘할수록 더 크게 벌어집니다.</li>
+      <li><span class="tag">설명</span>렌즈는 일정한 각도 안으로 들어온 빛만 받습니다. 그 한계를 개구수 <span class="formula">NA = n sin θ<sub>max</sub></span>로 나타냅니다. 곧게 나간 0차 빛만 렌즈에 들어오면 웨이퍼에는 고른 빛만 닿고 무늬 정보가 사라집니다. ±1차 빛이 들어와 0차 빛과 간섭해야 줄무늬가 다시 그려집니다.</li>
+      <li><span class="tag">연결</span>수직으로 비출 때 1차 빛이 들어갈 조건은 <span class="formula">λ / p ≤ NA</span>, 곧 <span class="formula">p ≥ λ / NA</span>입니다. 그래서 광원은 수은등 i선(365 nm)에서 KrF(248 nm), ArF(193 nm) 레이저를 거쳐 극자외선(13.5 nm)으로 바뀌어 왔습니다. 렌즈와 웨이퍼 사이를 물로 채워 NA를 1보다 크게 만든 것이 액침 노광입니다.</li>
+      <li><span class="tag">적용</span>ArF에서 피치를 줄여 가며, 오른쪽 원 밖으로 ±1차 점이 나가는 순간을 찾아보세요. 명암 대비가 0이 되고 감광제에 아무 무늬도 남지 않습니다. 그 상태에서 경사 조명을 켜면 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>실제 공정은 조명 모양, 마스크 보정, 여러 번 나누어 찍기를 더해 이 한계를 더 밀어붙입니다. 극자외선은 거의 모든 물질에 흡수되어 렌즈 대신 거울로 빛을 모읍니다. 또 ‘3 nm 공정’ 같은 이름은 실제로 새긴 선의 폭을 뜻하지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">수직 조명으로 피치 80 nm인 선 무늬를 새겨야 합니다. ArF 액침(193 nm, NA 1.35)과 EUV(13.5 nm, NA 0.33) 가운데 한 번에 새길 수 있는 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>ArF 액침. NA가 4배 넘게 크므로.<span class="why"><b>NA만 보면 그렇게 보입니다.</b> 하지만 한계 피치는 λ/NA로 파장과 함께 봐야 합니다. ArF 액침은 193/1.35 ≈ 143 nm로 80 nm에 못 미칩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>EUV<span class="why"><b>맞습니다.</b> 13.5/0.33 ≈ 41 nm라서 80 nm 피치의 ±1차 빛이 렌즈 구멍 안에 들어옵니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 새길 수 없다. 빛의 파장보다 작은 무늬는 새길 수 없으므로.<span class="why"><b>파장보다 작으면 안 된다는 규칙은 없습니다.</b> 한계는 λ/NA입니다. EUV 파장은 13.5 nm로 80 nm보다 훨씬 짧기도 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

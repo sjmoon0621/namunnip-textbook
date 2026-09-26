@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is2/e-transmission.js"
+  ]
+}
+-->
+<style>
+#card-is2-transmission canvas { aspect-ratio: 16 / 10; }
+@media (max-width: 640px) { #card-is2-transmission canvas { aspect-ratio: 1 / 1; } }
+</style>
+<article class="card" id="card-is2-transmission">
+  <header class="card-head">
+    <span class="no"></span><h2>송전은 왜 높은 전압으로 할까?</h2><span class="kind">P = VI · I²R 손실 · 모식</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="발전소에서 도시까지 송전선의 전류와 발열, 보낸 전력 가운데 도착한 몫과 잃은 몫"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-kv="22.9">22.9 kV</button>
+          <button class="chip" type="button" data-kv="154">154 kV</button>
+          <button class="chip" type="button" data-kv="345">345 kV</button>
+          <button class="chip" type="button" data-kv="765">765 kV</button>
+        </div>
+        <label class="mono">송전 전압 = <output class="kv-out">345</output> kV</label>
+        <input class="kv" type="range" min="1" max="2.9031" step="any" value="2.537819" aria-label="송전 전압 (로그)">
+        <div class="ctl-row">
+          <div><label class="mono">보내는 전력 = <output class="mw-out">1000</output> MW</label>
+            <input class="mw" type="range" min="100" max="3000" step="100" value="1000" aria-label="보내는 전력"></div>
+          <div><label class="mono">거리 = <output class="km-out">200</output> km</label>
+            <input class="km" type="range" min="20" max="400" step="10" value="200" aria-label="송전 거리"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>전류</dt><dd class="amp">—</dd></div>
+          <div><dt>전선에서 잃는 전력</dt><dd class="loss">—</dd></div>
+          <div><dt>도시에 도착</dt><dd class="arr">—</dd></div>
+        </dl>
+        <p class="fig-note t-msg"></p>
+        <p class="fig-note">실제 송전은 3상 교류지만, 여기서는 전선 한 쌍의 직류로 단순화하고 전선 저항을 0.025 Ω/km로 두었습니다. 손실 비율은 모식 값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>발전소는 대개 도시에서 멀리 있습니다. 전선에도 저항이 있어 전류가 흐르면 열이 납니다. 어떻게 해야 먼 곳까지 전기를 적게 잃고 보낼 수 있을까요?</li>
+      <li><span class="tag">복원</span>전력은 전압과 전류의 곱입니다(<span class="formula">P = VI</span>). 저항 R인 전선에 전류 I가 흐르면 <span class="formula">I²R</span>만큼의 전력이 열로 바뀝니다.</li>
+      <li><span class="tag">설명</span>같은 전력을 보낼 때 전압을 높이면 전류가 그만큼 작아집니다. 잃는 전력은 전류의 <em>제곱</em>에 비례하므로, 전압을 10배 높이면 전류는 1/10, 손실은 1/100이 됩니다.</li>
+      <li><span class="tag">연결</span>그래서 발전소에서 나온 전기는 변압기로 전압을 높여 보내고, 도시 가까이에서 단계적으로 낮춥니다. 변압기는 두 코일의 감은 수 비로 전압을 바꾸는데, 자기 선속이 계속 변해야 하므로 <em>교류</em>에서만 작동합니다. 전력망이 교류를 쓰는 큰 이유입니다.</li>
+      <li><span class="tag">적용</span>345 kV에서 765 kV로 바꿔 보세요. 전압은 약 2.2배인데 손실은 몇 분의 1이 되나요? 22.9 kV로 1000 MW를 보내면 어떻게 되나요? 거리를 2배로 늘리면 손실은 어떻게 변하나요?</li>
+      <li class="warn"><span class="tag">판단</span>전압을 무한정 올릴 수는 없습니다. 전압이 높을수록 전선 사이와 땅 사이를 더 멀리 띄워야 하고, 커다란 탑과 절연 장치, 넓은 부지가 필요합니다. 또 <span class="formula">V²/R</span>로 손실을 계산하는 실수가 많은데, 여기서 V는 송전 전압이 아니라 전선 양 끝의 전압 차이여야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 송전선으로 같은 전력을 보내는데, 송전 전압을 154 kV에서 308 kV로 높였습니다. 전선에서 잃는 전력은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/2로 줄어든다.<span class="why"><b>전류가 1/2이 되는 것까지는 맞습니다.</b> 그런데 손실은 전류의 제곱에 비례하므로 한 번 더 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1/4로 줄어든다.<span class="why"><b>맞습니다.</b> I = P/V가 1/2이 되고, I²R은 (1/2)² = 1/4이 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>V²/R에 따라 4배로 늘어난다.<span class="why"><b>공식에 넣을 V를 잘못 고른 답입니다.</b> V²/R의 V는 전선 양 끝의 전압 차이입니다. 송전 전압을 넣으면 안 됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

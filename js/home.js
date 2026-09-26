@@ -6,10 +6,10 @@
   const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"];
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const count = (c) => {
-    let sec = 0, open = 0, cards = 0, vids = 0;
+    let sec = 0, open = 0, cards = 0, vids = 0;   // 읽기(text) 블록은 카드와 함께 센다
     c.chapters.forEach((ch) => ch.sections.forEach((s) => {
       sec++; if (s.page) open++;
-      s.items.forEach((it) => (it.kind === "card" ? cards++ : vids++));
+      s.items.forEach((it) => (it.kind === "video" ? vids++ : cards++));
     }));
     return { sec, open, cards, vids };
   };
@@ -24,11 +24,11 @@
         <div class="chapter">
           <h3><span class="mono">${R[ch.n]}</span>${esc(ch.title)}</h3>
           <ol>${ch.sections.map((s) => {
-            const nc = s.items.filter((i) => i.kind === "card").length, nv = s.items.length - nc;
+            const nv = s.items.filter((i) => i.kind === "video").length, nc = s.items.length - nv;
             const hay = esc([s.title, s.code, ...s.items.map((i) => i.title)].join(" ").toLowerCase());
             const label = `<span class="mono">${ch.n}.${s.n}</span><span class="t">${esc(s.title)}</span>`;
             const tail = s.page ? `<span class="cnt mono">${nc}${nv ? `+${nv}` : ""}</span>` : `<span class="cnt mono dim">준비 중</span>`;
-            const hits = `<ul class="hits">${s.items.map((i) => `<li data-hay="${esc(i.title.toLowerCase())}">${i.kind === "video" ? "영상 · " : ""}${esc(i.title)}</li>`).join("")}</ul>`;
+            const hits = `<ul class="hits">${s.items.map((i) => `<li data-hay="${esc(i.title.toLowerCase())}">${i.kind === "video" ? "영상 · " : i.kind === "text" ? "읽기 · " : ""}${esc(i.title)}</li>`).join("")}</ul>`;
             return s.page
               ? `<li data-hay="${hay}"><a href="${base}${c.id}/${ch.n}-${s.n}.html">${label}${tail}</a>${hits}</li>`
               : `<li data-hay="${hay}" class="soon"><div>${label}${tail}</div></li>`;
@@ -98,7 +98,7 @@
       <section class="c-chapter">
         <h2><span class="mono">${R[ch.n]}</span>${esc(ch.title)}</h2>
         <ol>${ch.sections.map((s) => {
-          const items = s.items.map((i) => `<li class="${i.kind}"><a href="${ch.n}-${s.n}.html#${i.id}">${i.kind === "video" ? '<span class="mono">영상</span>' : ""}${esc(i.title)}</a></li>`).join("");
+          const items = s.items.map((i) => `<li class="${i.kind}"><a href="${ch.n}-${s.n}.html#${i.id}">${i.kind === "video" ? '<span class="mono">영상</span>' : i.kind === "text" ? '<span class="mono">읽기</span>' : ""}${esc(i.title)}</a></li>`).join("");
           return `<li class="c-sec${s.page ? "" : " soon"}">
             <div class="c-sec-head">
               <span class="mono num">${ch.n}.${s.n}</span>

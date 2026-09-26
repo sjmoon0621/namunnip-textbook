@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is1/dimension.js"
+  ]
+}
+-->
+<style>
+#card-is1-dimension .steppers { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px 10px; margin: 8px 0 6px; }
+#card-is1-dimension .st { display: grid; grid-template-columns: 1fr 28px 34px 28px; align-items: center; gap: 2px; border-top: 1px solid var(--rule); padding-top: 5px; }
+#card-is1-dimension .st b { font-family: var(--f-mono); font-weight: 500; font-size: 13px; }
+#card-is1-dimension .st span { text-align: center; font-family: var(--f-mono); font-size: 15px; }
+#card-is1-dimension .st button { height: 26px; border: 1px solid var(--rule); background: var(--card); border-radius: 2px; font-family: var(--f-mono); padding: 0; }
+#card-is1-dimension .st button:hover { border-color: var(--ink); }
+#card-is1-dimension .st small { grid-column: 1 / -1; color: var(--ink-3); font-size: 11px; line-height: 1.3; }
+#card-is1-dimension .steppers { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 640px) { #card-is1-dimension .steppers { grid-template-columns: 1fr; } }
+</style>
+<article class="card" id="card-is1-dimension">
+  <header class="card-head">
+    <span class="no"></span><h2>단위만 보고 공식을 맞힐 수 있을까?</h2><span class="kind">차원 분석 · 지수 맞추기 · 그래프 검증</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽은 길이·질량·시간 차원의 균형표, 오른쪽은 실제 값과 추측한 식의 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets probs">
+          <button class="chip" data-p="pend" aria-pressed="true">진자의 주기</button>
+          <button class="chip" data-p="fall">떨어진 물체의 속력</button>
+          <button class="chip" data-p="wave">깊은 바다 물결의 속력</button>
+        </div>
+        <p class="mono guess" style="margin-top:6px">—</p>
+        <div class="steppers" aria-label="각 변수의 지수"></div>
+        <dl class="nums">
+          <div><dt>차원</dt><dd class="bal">—</dd></div>
+          <div><dt>맞춘 상수 k</dt><dd class="kfit">—</dd></div>
+          <div><dt>정확한 식</dt><dd class="exact">—</dd></div>
+        </dl>
+        <p class="fig-note">점은 정확한 식으로 계산한 값(공기 저항·물결 표면장력 무시), 선은 내가 고른 지수에 상수 k를 가장 잘 맞춘 곡선입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>진자의 주기는 무엇에 따라 달라질까요? 실의 길이, 추의 질량, 중력 가속도. 식을 모른다면 어떻게 추측할 수 있을까요?</li>
+      <li><span class="tag">복원</span>식의 양변은 단위가 같아야 합니다. ‘3 m = 3 s’가 말이 안 되듯, 초(s)가 나와야 하는 자리에 미터가 남으면 그 식은 틀린 것입니다.</li>
+      <li><span class="tag">설명</span>길이 L은 [m], 질량 m은 [kg], g는 [m/s²]입니다. 주기를 <span class="formula">T = k · L<sup>a</sup> m<sup>b</sup> g<sup>c</sup></span>로 놓고 m, kg, s의 지수가 양변에서 같아지도록 a, b, c를 고르면 식의 모양이 정해집니다. 이 방법을 차원 분석이라고 합니다.</li>
+      <li><span class="tag">연결</span>kg이 들어 있는 양이 질량 하나뿐이면, kg을 지울 방법이 없으니 질량의 지수는 0이어야 합니다. 식을 풀지 않고도 ‘진자의 주기는 추의 질량과 관계없다’는 결론이 나옵니다.</li>
+      <li><span class="tag">적용</span>지수를 바꿔 차원 표가 모두 맞게 만들어 보세요. 그 순간 곡선이 점을 정확히 지나갑니다. 다른 두 문제도 풀어 보고, 표 아래의 ‘맞춘 상수 k’를 정확한 식의 상수와 비교해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>차원 분석은 <em>숫자 상수</em>를 알려 주지 못합니다. 진자는 2π, 낙하는 √2처럼 k는 실험이나 이론으로 따로 구해야 합니다. 또 관계있는 변수를 빠뜨리면(예: 물결의 표면장력) 틀린 식이 나옵니다. 차원이 맞는다고 식이 맞는 것은 아니지만, 차원이 틀리면 식은 반드시 틀립니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 학생이 용수철에 매단 물체의 진동 주기를 <span class="formula">T = 2π√(k/m)</span>라고 적었습니다(k는 용수철 상수, 단위 N/m = kg/s²). 이 식은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>상수 2π가 있으니 맞는 식이다.<span class="why"><b>상수는 차원을 바꾸지 못합니다.</b> 2π가 붙어 있다고 식이 맞는 것은 아닙니다. 단위부터 확인해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>차원이 맞지 않으므로 틀렸다.<span class="why"><b>맞습니다.</b> k/m의 단위는 (kg/s²)/kg = 1/s²이라 √(k/m)는 1/s입니다. 주기(s)가 되려면 뒤집어서 √(m/k)여야 합니다. 실제 식은 T = 2π√(m/k)입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>질량이 들어 있으니 진자처럼 틀렸다.<span class="why"><b>진자와 용수철은 다릅니다.</b> 진자에서는 질량이 무게와 관성으로 두 번 들어가 상쇄되지만, 용수철의 힘은 질량과 관계없어서 주기가 질량에 따라 달라집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

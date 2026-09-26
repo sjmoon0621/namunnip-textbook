@@ -1,0 +1,72 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is2/f-test.js"
+  ]
+}
+-->
+<style>
+#card-is2-test .pk { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 2px 0 8px; vertical-align: -1px; }
+#card-is2-test .pk.tp { background: #d4493a; }
+#card-is2-test .pk.fn { border: 2px solid #d4493a; }
+#card-is2-test .pk.fp { background: #e0a02a; }
+#card-is2-test .pk.tn { background: #c9cbc2; }
+#card-is2-test .test-msg { margin-top: 8px; font-size: 13.5px; color: var(--ink-2); }
+</style>
+<article class="card" id="card-is2-test">
+  <header class="card-head">
+    <span class="no"></span><h2>검사 결과가 양성이면 정말 감염일까?</h2><span class="kind">민감도 · 특이도 · 유병률 · 1000명 격자</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="1000명을 점으로 나타낸 격자. 감염 여부와 검사 결과에 따라 색이 다르고, 오른쪽 막대는 양성 판정을 받은 사람의 구성"></canvas>
+      <p class="legend"><span class="pk tp"></span>감염·양성 <span class="pk fn"></span>감염·음성(놓침) <span class="pk fp"></span>비감염·양성(위양성) <span class="pk tn"></span>비감염·음성</p>
+      <div class="ctl">
+        <label class="mono">유병률(검사받는 사람 가운데 실제 감염자 비율) = <output class="prev-out">1</output>%</label>
+        <input class="prev" type="range" min="0" max="9" step="1" value="3" aria-label="유병률">
+        <div class="ctl-row">
+          <div>
+            <label class="mono">민감도 = <output class="sens-out">90</output>%</label>
+            <input class="sens" type="range" min="50" max="100" step="1" value="90" aria-label="민감도">
+          </div>
+          <div>
+            <label class="mono">특이도 = <output class="spec-out">95</output>%</label>
+            <input class="spec" type="range" min="80" max="99.9" step="0.1" value="95" aria-label="특이도">
+          </div>
+        </div>
+        <div class="presets">
+          <button class="chip" type="button" data-set="0.5,90,98">증상 없는 사람 전체 검사</button>
+          <button class="chip" type="button" data-set="30,90,98">증상이 있어 찾아온 사람</button>
+          <button class="chip" type="button" data-set="0.5,90,99.9">특이도를 99.9%로</button>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="twice">양성이 나오면 다른 검사로 한 번 더 (둘 다 양성만 양성)</label></div>
+        <dl class="nums n4">
+          <div><dt>양성 판정</dt><dd>—</dd></div>
+          <div><dt>그중 실제 감염</dt><dd>—</dd></div>
+          <div><dt>놓친 감염자</dt><dd>—</dd></div>
+          <div><dt>음성이 맞을 확률</dt><dd>—</dd></div>
+        </dl>
+        <p class="test-msg"></p>
+        <p class="fig-note">버튼의 수치는 설명을 위한 예시값입니다. 격자는 1000명 기준이라 사람 수를 반올림해 그렸고, 아래 수치는 반올림하기 전 값으로 계산했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>“이 검사는 감염자의 90%를 찾아냅니다.” 이 검사에서 양성이 나왔다면, 내가 감염되었을 가능성도 90%일까요?</li>
+      <li><span class="tag">복원</span>검사의 성능은 두 숫자로 말합니다. <em>민감도</em>는 감염자 가운데 양성이 나오는 비율, <em>특이도</em>는 감염되지 않은 사람 가운데 음성이 나오는 비율입니다. 어느 검사도 둘 다 100%는 아닙니다.</li>
+      <li><span class="tag">설명</span>확률보다 사람 수로 세면 쉽습니다. 1000명 중 10명(1%)이 감염자라고 합시다. 민감도 90%면 그중 9명이 양성입니다. 나머지 990명은 감염되지 않았지만, 특이도 95%라도 5%인 약 50명이 양성으로 나옵니다. 양성 59명 가운데 감염자는 9명뿐입니다.</li>
+      <li><span class="tag">연결</span>양성 판정을 받은 사람 가운데 실제 감염자의 비율을 <em>양성 예측도</em>라고 합니다. 오른쪽 막대에서 빨간 부분의 비율, 곧 <span class="formula">진양성 ÷ 양성 전체</span>입니다. 민감도·특이도는 검사의 성질이지만, 양성 예측도는 <em>검사받는 집단의 유병률</em>에 따라 달라집니다.</li>
+      <li><span class="tag">적용</span>민감도와 특이도는 그대로 두고 유병률만 바꿔 보세요. 오른쪽 막대에서 빨간 부분이 절반을 넘는 유병률은 어디부터인가요? ‘한 번 더’를 켜면 양성 예측도가 얼마나 오르는지도 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>“감염자가 양성일 확률”과 “양성인 사람이 감염자일 확률”은 다른 질문입니다. 둘을 뒤바꿔 읽는 것이 가장 흔한 실수입니다. 또 ‘한 번 더’는 두 검사의 오류가 서로 관계없다고 가정한 계산입니다. 같은 원리의 검사를 반복하면 같은 이유로 또 틀릴 수 있어서, 실제로는 이만큼 좋아지지 않을 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 집단의 유병률이 2%이고, 민감도와 특이도가 모두 95%인 검사를 1000명에게 했습니다. 양성 판정을 받은 사람 가운데 실제 감염자의 비율은 대략 얼마일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 95%<span class="why"><b>민감도를 그대로 옮긴 답입니다.</b> 95%는 감염자 20명 가운데 양성이 나오는 비율입니다. 양성인 사람 가운데 감염자의 비율은 따로 세어야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 28%<span class="why"><b>맞습니다.</b> 감염자 20명 중 19명이 양성, 비감염자 980명 중 5%인 49명이 양성입니다. 양성 68명 가운데 감염자는 19명, 약 28%입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2%<span class="why"><b>검사 결과를 무시한 답입니다.</b> 2%는 검사 전의 감염 비율입니다. 양성이 나왔다는 정보로 가능성은 크게 올라갑니다. 다만 95%까지는 아닙니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

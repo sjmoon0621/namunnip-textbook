@@ -113,10 +113,10 @@ window.NM = (() => {
       if (crumbs) crumbs.innerHTML = `<span aria-hidden="true">/</span><a href="./">${course.name}</a><span aria-hidden="true">/</span><span>${R[ch.n]}. ${ch.title}</span><span aria-hidden="true">/</span><b>${ch.n}.${s.n} ${s.title}</b>`;
       const meta = document.querySelector(".topic-hero .meta");
       if (meta) {
-        const nc = document.querySelectorAll("article.card").length, nv = document.querySelectorAll(".video-block").length;
+        const nc = document.querySelectorAll("article.card:not(.reading)").length, nt = document.querySelectorAll("article.reading").length, nv = document.querySelectorAll(".video-block").length;
         meta.innerHTML = `<span class="tag-pill live">${course.name}</span><span class="tag-pill">${R[ch.n]}. ${ch.title}</span>` +
           (/\d/.test(s.code) ? `<span class="tag-pill">[${s.code}]</span>` : "") +
-          `<span class="tag-pill">카드 ${nc}장${nv ? ` · 영상 ${nv}편` : ""}</span>`;
+          `<span class="tag-pill">${[nc && `카드 ${nc}장`, nt && `읽기 ${nt}편`, nv && `영상 ${nv}편`].filter(Boolean).join(" · ")}</span>`;
       }
       document.title = `${ch.n}.${s.n} ${s.title} — ${course.name} · 나뭇잎 과학 교과서`;
       const nav = document.querySelector("nav.next");

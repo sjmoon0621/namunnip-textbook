@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is1/thermistor.js"
+  ]
+}
+-->
+<style>
+#card-is1-sensor canvas { aspect-ratio: 4 / 3; }
+</style>
+<article class="card" id="card-is1-sensor">
+  <header class="card-head">
+    <span class="no"></span><h2>온도계는 정말 온도를 잴까?</h2><span class="kind">센서 · 서미스터 · 전압 나눔 · ADC</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="온도가 서미스터 저항, 전압, 디지털 숫자로 바뀌는 단계와 온도-전압 그래프"></canvas>
+      <div class="ctl">
+        <label class="mono">실제 온도 = <output class="tO">—</output> °C</label>
+        <input class="t" type="range" min="-20" max="100" step="0.1" value="25" aria-label="실제 온도">
+        <div class="presets">
+          <button class="chip" data-bits="8">8비트 ADC</button>
+          <button class="chip" data-bits="10" aria-pressed="true">10비트 ADC</button>
+          <button class="chip" data-bits="12">12비트 ADC</button>
+        </div>
+        <dl class="nums n4">
+          <div><dt>서미스터 저항</dt><dd class="r">—</dd></div>
+          <div><dt>전압</dt><dd class="v">—</dd></div>
+          <div><dt>ADC 숫자</dt><dd class="code">—</dd></div>
+          <div><dt>숫자 한 칸 =</dt><dd class="res">—</dd></div>
+        </dl>
+        <p class="fig-note">부품값은 흔히 쓰는 대표값입니다: 25 °C에서 10 kΩ, B = 3950 K인 NTC 서미스터와 10 kΩ 고정 저항, 5 V 전원.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>디지털 온도계의 화면에는 ‘25.0 °C’가 뜹니다. 그런데 전자 회로는 전압과 전류만 다룹니다. 온도계 속 부품은 무엇을 재는 걸까요?</li>
+      <li><span class="tag">복원</span>물질의 성질 가운데는 온도에 따라 달라지는 것이 많습니다. 수은은 부피가 늘고, 금속은 저항이 커집니다. 이 변화를 재면 온도를 거꾸로 알아낼 수 있습니다.</li>
+      <li><span class="tag">설명</span>서미스터는 온도가 오르면 저항이 크게 줄어드는 반도체 부품입니다. 고정 저항과 이어 전압을 걸면, 저항 비율에 따라 가운데 지점의 전압이 바뀝니다. 이 전압을 아날로그–디지털 변환기(ADC)가 0~1023 같은 정수로 바꿉니다.</li>
+      <li><span class="tag">연결</span><em>온도 → 저항 → 전압 → 숫자.</em> 센서가 직접 재는 것은 온도가 아니라 저항 변화이고, 컴퓨터는 이 과정을 거꾸로 계산해 온도를 표시합니다. 빛 센서, 압력 센서, 가속도 센서도 모두 ‘재기 쉬운 전기량’으로 바꾸는 단계를 거칩니다.</li>
+      <li><span class="tag">적용</span>온도 막대를 −20 °C에서 100 °C까지 움직이며 ‘숫자 한 칸’이 몇 °C인지 보세요. 어느 온도에서 가장 섬세하게 재나요? ADC를 8비트로 바꾸면 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>화면에 소수점 아래 숫자가 나온다고 그만큼 정확한 것은 아닙니다. 부품값의 오차(흔히 ±1%), 서미스터가 제 몸의 전류로 데워지는 현상, 전원 전압의 흔들림이 모두 오차가 됩니다. 이 그래프의 곡선도 부품 규격으로 계산한 모형입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 회로에서 ADC만 10비트에서 12비트로 바꾸면, 25 °C 부근에서 ‘숫자 한 칸’이 나타내는 온도 폭은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1/4로 좁아진다.<span class="why"><b>맞습니다.</b> 12비트는 4096칸으로 10비트(1024칸)의 4배입니다. 같은 전압 범위를 4배 잘게 나누니 한 칸의 폭은 1/4이 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 1/2로 좁아진다.<span class="why"><b>비트 수가 2 늘었으니 2배라고 생각하기 쉽습니다.</b> 하지만 비트 하나마다 칸 수가 2배가 되므로 2비트면 2 × 2 = 4배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도계가 4배 정확해진다.<span class="why"><b>잘게 나누는 것과 정확한 것은 다릅니다.</b> 부품값의 오차나 전원 전압의 흔들림은 ADC를 바꿔도 그대로 남습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

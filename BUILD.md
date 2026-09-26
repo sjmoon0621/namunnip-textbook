@@ -1,50 +1,60 @@
-# 절(section) 페이지 제작 가이드
+# 제작 가이드 — 블록형 교과서
 
-나뭇잎 디지털 과학 교과서는 **과목 → 대단원 → 절 → 카드** 구조다. 목차와 카드 제목 가안은 `curriculum.md`에 있다.
-여러 명이 동시에 만들고 있으니 **아래 규칙을 반드시 지킨다.**
+나뭇잎 디지털 과학 교과서는 **블록**을 **교육과정**에 배치해 만든다.
 
-## 1. 파일 규칙
+- **블록**(`blocks/`)은 카드, 읽기, 영상, 절 소개 같은 내용 한 조각이다. 고유 id를 가지며, 어느 절에 놓이는지는 모른다.
+- **교육과정**(`curricula/2022.json`)은 과목 → 대단원 → 절 → [블록 id] 배치표다.
+- `python3 tools/build.py`가 둘을 합쳐 절 페이지 `c/<과목>/<대단원>-<절>.html`과 목차 `js/toc.js`를 만든다. **생성된 파일은 직접 고치지 않는다.**
 
-| 무엇 | 경로 | 비고 |
-|---|---|---|
-| 절 페이지 | `c/<과목>/<대단원>-<절>.html` | 예: 통합과학1 Ⅲ-3 → `c/is1/3-3.html` |
-| 카드·영상 스크립트 | `js/cards/<과목>/<이름>.js` | 카드 하나에 파일 하나 |
-| 과목 코드 | `is1` 통합과학1 · `is2` 통합과학2 · `phy` 물리학 · `chem` 화학 · `bio` 생명과학 · `earth` 지구과학 | |
+교육과정이 바뀌면 새 배치표(`curricula/20XX.json`)만 만들면 된다. 블록 id가 그대로이므로 학생의 노트와 진도도 따라간다.
+`curriculum.md`는 처음 목차를 짤 때 쓴 기획안이고, 지금 구조의 기준은 `curricula/2022.json`이다.
 
-- **고치면 안 되는 공용 파일:** `css/tb.css`, `js/core.js`, `js/toc.js`, `index.html`, `c/*/index.html`, `tools/*`, 다른 사람이 맡은 절의 파일.
-- 공용 CSS에 없는 스타일이 필요하면, 내 페이지 `<head>` 안 `<style>`에 **내 카드 id로 범위를 좁혀서** 쓴다 (`#card-is1-sound .foo { … }`).
-- 공용 도구가 부족하면 내 카드 파일 안에 작은 함수를 만든다.
-- 외부 라이브러리는 쓰지 않는다. 캔버스 2D(또는 인라인 SVG)와 순수 JS로 그린다. 3D가 필요하면 직접 회전·투영한다.
-- 이미 만든 페이지(`c/is1/3-3.html`, `c/is2/2-4.html`, `c/phy/1-4.html`)에 카드를 **추가**하라고 지시받았다면, 기존 카드 마크업과 스크립트는 건드리지 말고 새 카드만 끼워 넣고 번호·목차만 맞춘다.
+## 1. 파일
 
-## 2. 페이지 뼈대
+| 무엇 | 경로 |
+|---|---|
+| 블록 | `blocks/<과목>/<블록 id>.html` — 파일 이름 = 블록 id = 최상위 요소의 id |
+| 카드·영상 스크립트 | `js/cards/<과목>/<이름>.js` — 블록 머리의 `scripts`에 적는다 |
+| 사진·그림 파일 | `assets/img/<과목>/<이름>` |
+| 배치표 | `curricula/2022.json` |
+| 공용 | `css/tb.css`, `js/core.js`, `js/home.js`, `index.html`, `c/*/index.html` |
 
-`c/is1/3-3.html`을 그대로 본뜬다. 핵심:
+과목 코드: `is1` 통합과학1 · `is2` 통합과학2 · `phy` 물리학 · `chem` 화학 · `bio` 생명과학 · `earth` 지구과학 · `extra` 교양·심화.
+블록 폴더는 처음 만든 과목을 따르며, 다른 과목에 배치해도 옮기지 않는다.
+
+## 2. 블록 파일 형식
 
 ```html
-<body data-course="is1" data-sec="1-3">          <!-- 과목 코드와 "대단원-절" -->
-<header class="top"> … <nav class="crumbs"></nav> … </header>   <!-- 비워 두면 core.js가 채움 -->
-<section class="topic-hero">
-  <div class="meta"></div>                         <!-- 비워 두면 core.js가 채움 -->
-  <h1>측정과 어림</h1>                              <!-- 절 제목 = curriculum.md의 절 이름 -->
-  <p class="lead">…이 절에서 다루는 질문 2~3문장…</p>
-  <div class="prereq"><span class="mono">먼저 알면 좋은 것</span><span class="p">…</span></div>
-</section>
-<aside class="toc"> 카드 목록 (#id 링크, 번호) + <p class="progress mono small"></p> </aside>
-… 카드들 …
-<nav class="next" aria-label="절 이동"></nav>        <!-- 비워 두면 core.js가 채움 -->
-<script src="../../js/toc.js"></script>
-<script src="../../js/core.js"></script>
-<script src="../../js/cards/is1/….js"></script>
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/earth/ao-forcing.js"],
+  "short": "옆 목차용 짧은 제목 (선택)"
+}
+-->
+<style>
+#card-earth-forcing canvas { aspect-ratio: 5 / 6; }
+</style>
+<article class="card" id="card-earth-forcing">
+  <header class="card-head">
+    <span class="no"></span><h2>…</h2><span class="kind">…</span>
+  </header>
+  …
+</article>
 ```
 
-`<title>`과 설명 meta도 채운다(core.js가 title은 다시 쓴다).
+- 머리 JSON의 `type`: `intro`(절 소개), `card`(개념 카드), `text`(읽기), `video`(영상), `related`(관련 카드 상자)
+- `<style>`은 선택이다. 셀렉터는 반드시 **이 블록의 id로 시작**해야 한다(`#card-… .foo`). 빌드가 페이지 `<head>`에 모아 넣는다.
+- `<span class="no"></span>`는 비워 둔다. 빌드가 배치된 위치에 따라 `대단원.절.순서`를 넣는다.
+- 본문에서 다른 카드를 번호로 가리키지 않는다("1.6.1 카드에서"처럼 쓰지 말 것). 배치가 바뀌면 번호도 바뀐다.
+- **절 소개**(`intro-<과목>-<대단원>-<절>`): 머리에 `"description"`(검색용 요약)을 넣고, 본문은 `<p class="lead">`와 `<div class="prereq">`로 쓴다. 절 제목은 배치표에서 온다.
+- 한 블록은 한 곳에만 배치한다. 다른 절에서 같은 내용을 쓰려면 `related` 블록으로 연결한다.
 
-## 3. 개념 카드
+## 3. 개념 카드 (`type: card`)
 
 ```html
 <article class="card" id="card-<과목>-<짧은이름>">
-  <header class="card-head"><span class="no">1.3.2</span><h2>질문 형태의 제목?</h2><span class="kind">주제 · 방식</span></header>
+  <header class="card-head"><span class="no"></span><h2>질문 형태의 제목?</h2><span class="kind">주제 · 방식</span></header>
   <div class="card-body">
     <div class="card-fig"> 캔버스·조작 도구·수치 (.ctl, .presets .chip, .nums, .readout, .legend, .fig-note) </div>
     <ol class="steps">
@@ -62,43 +72,62 @@
     <ol>
       <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>보기<span class="why"><b>한 줄 판정.</b> 왜 그럴듯한지, 왜 틀렸는지.</span></span></button></li>
       <li><button class="opt" data-ok="1">…정답도 .why로 이유…</button></li>
-      <li><button class="opt" data-ok="0">…</button></li>
     </ol>
   </div>
 </article>
 ```
 
-- 번호 `no`는 `대단원.절.순서` (예: 1.3.2).
-- 카드 스크립트는 `(() => { const root = document.getElementById("card-…"); if (!root) return; … })();` 형태. `root.querySelector`로만 요소를 찾는다(페이지 안 id 충돌 방지).
-- 공용 도구 `window.NM`: `NM.C`(색), `NM.F`(글꼴), `NM.fit(canvas, draw)`(DPR 맞춤, 첫 그리기는 비동기라 `draw` 안에서 `if (!w) return;` 처리), `NM.loop(el, frame)`(보일 때만 도는 애니메이션, `frame(dt)`), `NM.axes(ctx, {...})`(그래프 눈금), `NM.clamp`, `NM.ease`, `NM.reduce`(동작 줄이기 설정).
-- 좋은 예시: `js/cards/free-fall.js`, `js/cards/pendulum.js`, `js/cards/leaf-color.js`, `js/cards/photo-rate.js`, `js/cards/inverse-square.js`.
-- 캔버스 크기 클래스: `.cv-wide`(16:9), `.cv-sq`(1:1), 두 캔버스 나란히 `.card-fig.fig-2`.
+- 카드 스크립트는 `(() => { const root = document.getElementById("card-…"); if (!root) return; … })();` 형태로 쓰고, 요소는 `root.querySelector`로만 찾는다.
+- 공용 도구 `window.NM`: `C`(색), `F`(글꼴), `fit(canvas, draw)`(DPR 맞춤, 첫 그리기는 비동기라 `draw` 안에서 `if (!w) return;`), `loop(el, frame)`(보일 때만 도는 애니메이션), `axes(ctx, {...})`, `clamp`, `ease`, `reduce`.
+- 캔버스 크기: `.cv-wide`(16:9), `.cv-sq`(1:1), 두 캔버스 나란히 `.card-fig.fig-2`. 카드 그림 칸은 넓은 화면에서도 폭이 430px 안팎이다.
+- 외부 라이브러리는 쓰지 않는다.
 
-## 4. 영상
+## 4. 읽기 (`type: text`)
 
-`section.video-block` + 9:16 캔버스(360×640 논리 크기)를 코드로 그린다. 장면 목록·자막·진행 막대·재생/일시정지/탐색 막대를 갖춘다. `js/cards/reel-apple.js`와 `c/is1/3-3.html`의 영상 마크업을 본뜬다. 20~40초.
+조작해서 발견할 거리가 없는 내용(분류, 사례, 사진으로 보는 것, 사회적 영향)은 억지로 카드로 만들지 않고 읽기 블록으로 쓴다.
 
-## 5. 내용 원칙 (가장 중요)
-
-1. **내용을 줄이지 말고 계단을 놓는다.** 정의보다 필요성, 식보다 관계, 결론보다 근거를 먼저 쓴다. 식에는 성립 조건을 붙인다.
-2. **그림은 반드시 학생이 조작해서 무언가를 발견하게** 만든다. 장식용 애니메이션, 단순 슬라이드쇼는 카드가 아니다.
-3. **숫자는 정확하게.** 실제 상수·관측값을 쓰고, 단순화한 모형이면 카드 안에 ‘모식’, ‘상대값’이라고 밝힌다. 확실하지 않은 자료는 만들어 내지 말고 카드를 바꾸거나 뺀다.
-4. **판단 단계**에는 대표 오개념이나 모형의 한계를 쓴다. 확인 문제는 조건이 달라진 새 상황이고, 오답마다 ‘왜 그럴듯한지’를 설명한다.
-5. **문체:** 고등학생에게 말하듯 존댓말(~입니다/~습니다), 짧은 문장. 번역투, 과장(“놀라운”, “혁신적인”), 이모지 금지. 기존 카드 문장을 기준으로 삼는다.
-6. **curriculum.md의 카드 제목은 가안이다.** 더 좋은 질문이 있으면 바꿔도 되고, 인터랙티브로 만들 가치가 없거나 부적절하면 **빼도 된다.** 억지로 채우지 않는다. 뺀 것과 바꾼 것은 보고서에 적는다.
-7. 절의 성취기준(코드)이 요구하는 핵심을 카드들이 함께 다루는지 확인한다.
-
-## 6. 확인
-
-```bash
-python3 tools/check.py <내 포트> c/is1/1-1.html c/is1/1-2.html            # 콘솔 오류 검사
-python3 tools/check.py <내 포트> --shot <스크래치 폴더> c/is1/1-1.html     # 1440px 스크린샷
-python3 tools/check.py <내 포트> --mobile --shot <스크래치 폴더> c/is1/1-1.html   # 390px
+```html
+<article class="card reading" id="text-<과목>-<짧은이름>">
+  <header class="card-head"><span class="no"></span><h2>질문 형태의 제목?</h2><span class="kind">읽기 · 주제</span></header>
+  <div class="reading-body">
+    <p class="ask">도입 질문 한두 문장</p>
+    <h3><span class="mono">1</span>소제목</h3>
+    <p>… <em>핵심 용어</em> …</p>
+    <figure>
+      <svg viewBox="…">…</svg>   또는   <img src="../../assets/img/<과목>/<파일>" alt="…" loading="lazy">
+      <figcaption>설명 <span class="src">출처: … · 라이선스</span></figcaption>
+    </figure>
+    <div class="tbl"><table>…</table></div>
+    <p class="judge"><b>판단</b>오개념, 한계, 주의할 점</p>
+  </div>
+  <div class="quiz"> …카드와 같은 형식… </div>
+</article>
 ```
 
-- 모든 내 페이지가 `OK`여야 한다. 스크린샷을 직접 열어 그림이 제대로 그려졌는지, 글자가 겹치지 않는지, 모바일에서 가로 넘침이 없는지 본다.
+- 그림은 인라인 SVG로 직접 그리거나, 퍼블릭 도메인·CC 라이선스 사진을 `assets/img/`에 저장해 쓴다. 사진은 반드시 **출처와 라이선스**를 `.src`에 적는다.
+- 반쪽 그림 두 장을 나란히 놓으려면 `<figure class="half">`를 쓴다. 목록은 `<ul class="dots">`를 쓴다.
+
+## 5. 영상 (`type: video`)
+
+`section.video-block` 안에 9:16 캔버스(360×640 논리 크기)를 두고 코드로 그린다. 장면 목록, 자막, 진행 막대, 재생/일시정지, 탐색 막대를 갖춘다. `blocks/is1/video-apple-moon.html`을 본뜬다. 길이는 20~40초로 한다.
+
+## 6. 내용 원칙 (가장 중요)
+
+1. **내용을 줄이지 말고 계단을 놓는다.** 정의보다 필요성, 식보다 관계, 결론보다 근거를 먼저 쓴다. 식에는 성립 조건을 붙인다.
+2. **카드 그림은 반드시 학생이 조작해서 무언가를 발견하게** 만든다. 장식용 애니메이션이나 단순 슬라이드쇼는 카드가 아니다. 그런 내용은 읽기 블록으로 쓴다.
+3. **숫자는 정확하게.** 실제 상수와 관측값을 쓰고, 단순화한 모형이면 블록 안에 '모식', '상대값'이라고 밝힌다. 확실하지 않은 자료는 만들어 내지 않는다.
+4. **판단 단계**에는 대표 오개념이나 모형의 한계를 쓴다. 확인 문제는 조건이 달라진 새 상황으로 내고, 오답마다 '왜 그럴듯한지'를 설명한다.
+5. **문체:** 고등학생에게 말하듯 존댓말(~입니다/~습니다), 짧은 문장. 번역투, 과장("놀라운", "혁신적인"), 이모지는 쓰지 않는다.
+6. 교육과정 밖 내용은 다뤄도 된다. 다만 **절의 성취기준과 해설이 요구하는 내용은 빠짐없이** 블록들이 함께 다뤄야 한다.
+
+## 7. 빌드와 확인
+
+```bash
+python3 tools/build.py                                   # 페이지와 목차 생성
+python3 tools/check.py 8811 c/earth/1-6.html             # 콘솔 오류와 404 검사
+python3 tools/check.py 8811 --shot <폴더> c/earth/1-6.html          # 1440px 스크린샷
+python3 tools/check.py 8811 --mobile --shot <폴더> c/earth/1-6.html # 390px 스크린샷
+```
+
+- 모든 페이지가 `OK`여야 한다. 스크린샷을 열어 그림, 글자 겹침, 모바일 가로 넘침을 확인한다.
 - 계산이 들어간 카드는 `node`로 핵심 수치를 따로 검산한다.
-
-## 7. 보고
-
-끝나면 다음을 짧게 보고한다: 만든 페이지 경로, 절마다 카드·영상 제목, curriculum.md와 달라진 점(뺀 것·바꾼 것·추가한 것과 이유), check.py 결과, 남은 문제.

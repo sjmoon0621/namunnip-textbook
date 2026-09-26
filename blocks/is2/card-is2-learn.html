@@ -1,0 +1,70 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/is2/f-learn.js"
+  ]
+}
+-->
+<style>
+#card-is2-learn canvas { cursor: crosshair; }
+@media (max-width: 640px) { #card-is2-learn canvas.cv-wide { aspect-ratio: 1 / 1; } }
+#card-is2-learn .pk { display: inline-block; width: 10px; height: 10px; margin: 0 2px 0 8px; vertical-align: -1px; }
+#card-is2-learn .pk.cat { background: #e0a02a; border-radius: 50%; }
+#card-is2-learn .pk.dog { background: #4f7cae; }
+#card-is2-learn .pk.ring { border: 1.5px solid #e0a02a; border-radius: 50%; }
+#card-is2-learn .ln-msg { margin-top: 8px; font-size: 13.5px; color: var(--ink-2); min-height: 1.6em; }
+</style>
+<article class="card" id="card-is2-learn">
+  <header class="card-head">
+    <span class="no"></span><h2>인공지능은 어떻게 ‘학습’할까?</h2><span class="kind">기계 학습 · 분류 · 가상 자료</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="두 특징으로 고양이와 개를 나누는 분류기. 왼쪽은 자료와 판정 경계, 오른쪽은 학습 횟수에 따른 오차"></canvas>
+      <p class="legend"><span><span class="pk cat"></span>고양이</span><span><span class="pk dog"></span>개</span><span><span class="pk ring"></span>시험 자료(학습에 쓰지 않음)</span><span>그림을 누르면 점을 찍고, 점을 다시 누르면 지웁니다.</span></p>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="찍을 이름표">
+          <span class="mono" style="align-self:center;margin-right:4px">찍을 점</span>
+          <button class="chip" type="button" data-label="1">고양이</button>
+          <button class="chip" type="button" data-label="0">개</button>
+          <span class="mono" style="align-self:center;margin:0 4px 0 10px">자료</span>
+          <button class="chip" type="button" data-preset="even">고르게 모은 자료</button>
+          <button class="chip" type="button" data-preset="biased">치우친 자료</button>
+          <button class="chip" type="button" data-preset="none">모두 지우기</button>
+        </div>
+        <div class="presets" style="align-items:center">
+          <button class="btn train" type="button">학습 시키기</button>
+          <button class="chip step1" type="button">한 번만</button>
+          <button class="chip reset-w" type="button">학습 전으로</button>
+          <span class="toggles" style="margin:0 0 0 auto"><label><input type="checkbox" class="show-test">시험 자료 보기</label></span>
+        </div>
+        <dl class="nums n4">
+          <div><dt>학습 횟수</dt><dd>—</dd></div>
+          <div><dt>오차</dt><dd>—</dd></div>
+          <div><dt>학습 자료 정답률</dt><dd>—</dd></div>
+          <div><dt>시험 자료 정답률</dt><dd>—</dd></div>
+        </dl>
+        <p class="ln-msg"></p>
+        <p class="fig-note">가상 자료입니다. 좁은 화면에서는 오차 그래프 대신 아래 수치를 보세요. 두 특징은 0~1 사이 상대값이고, 분류기는 로지스틱 회귀라는 가장 단순한 모형입니다. 오차는 정답에 준 확률이 낮을수록 커지는 값(로그 손실)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>사람은 고양이와 개를 구별하는 규칙을 말로 다 설명하지 못합니다. 그런데 인공지능은 어떻게 구별하는 법을 ‘배울’까요?</li>
+      <li><span class="tag">복원</span>좌표평면의 직선 <span class="formula">ax + by + c = 0</span>은 평면을 두 쪽으로 나눕니다. a, b, c를 바꾸면 직선의 기울기와 위치가 바뀝니다.</li>
+      <li><span class="tag">설명</span>사진마다 특징 두 개(주둥이 길이, 귀 끝 뾰족함)를 재어 점으로 찍었습니다. 분류기는 점이 경계선의 어느 쪽에, 얼마나 멀리 있는지로 ‘고양이일 확률’을 냅니다. 처음에는 a, b, c가 모두 0이라 어디서나 50 : 50입니다.</li>
+      <li><span class="tag">연결</span>학습은 정답이 붙은 자료를 보고, <em>틀린 정도(오차)가 줄어드는 방향으로 a, b, c를 조금씩 고치는 일</em>을 되풀이하는 것입니다. 사진 인식 인공지능도 원리는 같습니다. 다만 특징을 사람이 정해 주지 않고 수백만 개의 값을 함께 고칩니다.</li>
+      <li><span class="tag">적용</span>‘학습 시키기’를 눌러 오차 그래프와 경계선을 지켜보세요. 그다음 개 무리 한가운데에 고양이를 하나 잘못 찍어 보세요. 경계선은 어떻게 움직이나요? ‘치우친 자료’로 학습한 뒤 ‘시험 자료 보기’를 켜면 무엇이 드러나나요?</li>
+      <li class="warn"><span class="tag">판단</span>학습 자료 정답률이 100%여도 처음 보는 자료에서 잘 맞힌다는 보장은 없습니다. ‘치우친 자료’에는 귀가 아주 뾰족한 고양이만 있어서, 분류기는 귀 모양만 보는 법을 배웠습니다. 인공지능은 <em>주어진 자료에 담긴 규칙</em>만 배웁니다. 자료가 치우치면 판단도 치우칩니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">한 회사가 지원자 서류를 걸러 내는 인공지능을 만들면서, 지난 10년 동안 합격한 사람들의 서류만으로 ‘좋은 지원자’를 학습시켰습니다. 가장 걱정해야 할 점은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10년 치 자료는 너무 많아서 학습이 끝나지 않는다.<span class="why"><b>양의 문제가 아닙니다.</b> 이 정도 자료는 금방 학습합니다. 걱정할 것은 무엇이 담겼느냐입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>과거 합격자에게 치우친 점이 있었다면, 그 치우침까지 규칙으로 배운다.<span class="why"><b>맞습니다.</b> 카드의 ‘치우친 자료’처럼, 인공지능은 자료에 있는 패턴을 그대로 배웁니다. 과거에 특정 집단이 적게 뽑혔다면 그 경향을 이어 갈 수 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>학습 자료 정답률이 높으면 공정하다는 뜻이므로 걱정할 필요가 없다.<span class="why"><b>학습 자료에서 잘 맞힌다는 것은 과거를 잘 따라 한다는 뜻일 뿐입니다.</b> 과거의 판단이 공정했는지는 따로 따져야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
