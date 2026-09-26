@@ -176,8 +176,20 @@ def build_graph(blocks, used, out):
     if missing:
         print(f"개념 지도에 없는 블록 {len(missing)}개: {', '.join(missing)}")
     data = [{k: c[k] for k in ("id", "name", "blocks", "req")} for c in concepts]
-    (out / "js" / "graph-data.js").write_text("/* 자동 생성: python3 tools/build.py (원본: graph/concepts.txt) — 직접 고치지 말 것 */\nwindow.GRAPH = " + json.dumps(data, ensure_ascii=False) + ";\n")
-    print(f"개념 지도: 개념 {len(data)}개, 선수 관계 {sum(len(c['req']) for c in data)}개")
+    # 카드끼리 직접 잇는 선 (graph/links.txt, 선택)
+    extra = []
+    lsrc = ROOT / "graph" / "links.txt"
+    if lsrc.exists():
+        for ln, line in enumerate(lsrc.read_text().splitlines(), 1):
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            a, sep, b = (x.strip() for x in line.partition(">"))
+            if not sep or a not in used or b not in used:
+                raise SystemExit(f"graph/links.txt {ln}행: '먼저 블록 > 다음 블록' 형식이 아니거나 배치되지 않은 블록")
+            extra.append([a, b])
+    (out / "js" / "graph-data.js").write_text("/* 자동 생성: python3 tools/build.py (원본: graph/concepts.txt, graph/links.txt) — 직접 고치지 말 것 */\n"
+        + "window.GRAPH = " + json.dumps(data, ensure_ascii=False) + ";\nwindow.GRAPH_LINKS = " + json.dumps(extra, ensure_ascii=False) + ";\n")
+    print(f"개념 지도: 개념 {len(data)}개, 선수 관계 {sum(len(c['req']) for c in data)}개, 카드 사이 선 {len(extra)}개")
 
 
 def main():
