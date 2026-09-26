@@ -12,9 +12,9 @@
 
 | 단계 | 내용 | 상태 |
 |---|---|---|
-| 0 | 지구과학 1.6.2 수리(`js/cards/earth/ao-forcing.js` 없음), `tools/check.py`가 404·"Failed to load resource"도 잡도록 보강 | ⏳ |
-| 1 | 블록 추출 + 교육과정 JSON + 빌드 전환 + 글·사진 블록 타입 (겉보기 결과 동일, diff로 확인) | ⏳ |
-| 2 | 아래 "빠진 내용" 채우기 (글·사진 위주, 필요한 곳만 카드) | ⏳ |
+| 0 | 지구과학 1.6.2 수리(`js/cards/earth/ao-forcing.js` 없음), `tools/check.py`가 404도 잡도록 보강 | ✅ 2026-09-26 |
+| 1 | 블록 추출 + 교육과정 JSON + 빌드 전환 + 읽기(글·사진) 블록 타입 (겉보기 결과 동일, diff로 확인) | ✅ 2026-09-26 |
+| 2 | 아래 "빠진 내용" 채우기 (글·사진 위주, 필요한 곳만 카드) | ✅ 완전히 빠진 것 19건 (읽기 블록) · ⏳ 언급만 있는 것 |
 | 3 | 노트·형광펜·오답노트 (로컬 저장) | ⏳ |
 | 4 | 개념 메타데이터 작성 + 그래프 뷰 | ⏳ |
 | 5 | 필요할 때 계정·동기화 | ⏳ |
@@ -25,7 +25,9 @@
 
 키워드와 카드 제목으로 대조한 결과라 채울 때 한 번 더 확인할 것.
 
-### 완전히 빠짐
+### 완전히 빠짐 — ✅ 모두 읽기 블록으로 채움 (2026-09-26)
+
+지구과학 1-6은 0단계에서 카드 수리로 해결. 나머지는 `blocks/*/text-*.html` 19개.
 
 | 과목 | 절 | 빠진 내용 | 지금 있는 것 |
 |---|---|---|---|
@@ -49,7 +51,7 @@
 | 지구과학 | 3-4 | 세이퍼트은하, 전파은하 | 퀘이사 |
 | 지구과학 | 3-5 | 우주 배경 복사, 급팽창, 가속 팽창(암흑 에너지), 관측 가능한 우주 | 허블 법칙, 중심 없음 |
 
-### 언급만 있음 (보강 권장)
+### 언급만 있음 (보강 권장) — ⏳ 남음
 
 - 통합과학1: 측정 표준의 필요성 논증(1-3), 정보통신이 문명에 미친 영향(1-4), 지권 변화가 지구시스템에 미치는 영향(3-2), 생활 속 화학 반응 사례(3-5)
 - 물리학: 등가속도 운동 v–t 그래프 해석(1-2), 센서·무선통신(2-6), 상대론의 사회적 영향(3-6)
@@ -61,17 +63,17 @@
 ### 블록 구조
 
 ```
-blocks/<course>/<slug>/
-  block.json   { id, type, title, concepts, requires, standards, license }
-  body.html
-  script.js    (interactive일 때만)
-curricula/
-  2022.json    과목 → 대단원 → 절 → [블록 id]
+blocks/<course>/<블록 id>.html   맨 앞 <!--block {JSON} --> 머리 + 선택적 <style> + 본문
+js/cards/<course>/*.js          카드 스크립트 (블록 머리의 scripts)
+curricula/2022.json             과목 → 대단원 → 절 → [블록 id]
+tools/build.py                  → c/**/*.html, js/toc.js 생성
 ```
+- 4단계(그래프)용 concepts·requires는 아직 블록 머리에 없음. 그때 추가
 
-- 블록 종류: card(interactive), video, text, figure(이미지+캡션+출처+라이선스), table, callout
+- 블록 종류: intro(절 소개), card(interactive), text(읽기: 글·SVG 그림·사진·표·확인 문제), video, related
+- 처음 계획한 figure·table·callout은 따로 두지 않고 text 블록 안의 요소로 합쳤다 (BUILD.md 4절)
 - 사진 출처: NASA, NOAA, 위키미디어의 CC 자료. 라이선스를 block.json에 기록
-- 빌드: `curricula/*.json` + `blocks/`를 읽어 절 페이지와 `js/toc.js` 생성 (`curriculum.md` 파싱 대체)
+- 빌드: `curricula/*.json` + `blocks/`를 읽어 절 페이지와 `js/toc.js` 생성 (`curriculum.md` 파싱 대체) ✅
 - 같은 블록을 여러 과목에 배치할 수 있다
 
 ### 노트
