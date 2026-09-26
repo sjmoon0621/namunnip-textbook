@@ -3266,8 +3266,19 @@ window.TOC = [
         "title": "우리 은하 밖으로"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-hubble",
+        "title": "은하는 모양으로 어떻게 나눌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-quasar",
+        "title": "퀘이사는 왜 특이 은하일까?"
+       }
+      ]
      },
      {
       "n": 5,
@@ -3287,8 +3298,19 @@ window.TOC = [
         "title": "빅뱅은 폭발이 아니다"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-hlaw",
+        "title": "멀리 있는 은하일수록 왜 빨리 멀어질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-nocenter",
+        "title": "우주에는 중심이 있을까?"
+       }
+      ]
      }
     ]
    }
