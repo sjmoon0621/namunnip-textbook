@@ -3174,8 +3174,19 @@ window.TOC = [
         "title": "금성은 왜 새벽과 저녁에만 보일까?"
        }
       ],
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-eclipse",
+        "title": "일식과 월식은 왜 매달 일어나지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-retro",
+        "title": "행성은 왜 가끔 뒤로 가는 것처럼 보일까?"
+       }
+      ]
      },
      {
       "n": 2,
