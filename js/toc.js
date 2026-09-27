@@ -4706,36 +4706,86 @@ window.TOC = [
       "n": 1,
       "title": "태양의 광구와 대기",
       "code": "12행우02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-sun",
+        "title": "같은 태양이 파장마다 왜 전혀 다르게 보일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-blackbody",
+        "title": "별의 색으로 온도를 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "별까지의 거리",
       "code": "12행우02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-distance",
+        "title": "별까지의 거리는 어떤 사다리를 타고 잴까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "별의 공간 운동",
       "code": "12행우02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-proper-motion",
+        "title": "10만 년 뒤 북두칠성은 어떤 모양일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "쌍성과 별의 질량",
       "code": "12행우02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-binary",
+        "title": "서로를 도는 두 별은 어떻게 별의 저울이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-hrd",
+        "title": "H–R도는 어떻게 읽을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "변광성과 초신성",
       "code": "12행우02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-variables",
+        "title": "별의 밝기가 변하는 모양만 보고 무슨 일인지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-evolve",
+        "title": "무거운 별은 왜 더 빨리 죽을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-earth-star-life",
+        "title": "별은 어떻게 태어나고, 무엇을 남기고 죽을까?"
+       }
+      ]
      }
     ]
    },
