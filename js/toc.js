@@ -4610,36 +4610,91 @@ window.TOC = [
       "n": 1,
       "title": "태양계 탐사",
       "code": "12행우01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-hohmann",
+        "title": "화성에 가려면 왜 2년 2개월마다 한 번씩만 떠날 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-space-exploration",
+        "title": "탐사선과 인공위성은 무엇을 알아냈을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "우주 위험 감시",
       "code": "12행우01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-impact",
+        "title": "작은 소행성 하나가 도시를 흔들 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-space-weather",
+        "title": "태양이 폭발하면 지구에서는 무슨 일이 생길까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "케플러 법칙과 태양계 천체의 운동",
       "code": "12행우01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-kepler3",
+        "title": "위성의 궤도만 보고 목성의 질량을 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-kepler",
+        "title": "행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-retro",
+        "title": "행성은 왜 가끔 뒤로 가는 것처럼 보일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "행성과 소천체",
       "code": "12행우01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-smallbodies",
+        "title": "명왕성은 왜 행성에서 빠졌을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "외계 행성계와 생명체",
       "code": "12행우01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-exoplanet",
+        "title": "보이지도 않는 외계 행성을 어떻게 찾고, 생명이 살 만한지 가늠할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-doppler",
+        "title": "다가오는 사이렌은 왜 더 높게 들릴까?"
+       }
+      ]
      }
     ]
    },
