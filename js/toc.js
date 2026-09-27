@@ -4187,36 +4187,86 @@ window.TOC = [
       "n": 1,
       "title": "생명공학기술의 발달",
       "code": "12유전03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-gene-biotech-history",
+        "title": "생명공학은 어떤 도구를 하나씩 손에 넣었을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "단일클론항체·줄기세포·유전자 편집",
       "code": "12유전03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-crispr",
+        "title": "유전자 가위는 수십억 염기 가운데 한 곳을 어떻게 찾아 자를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-gene-therapies",
+        "title": "단일클론항체, 줄기세포, 유전자 편집은 어떤 병을 고칠까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "생명공학기술의 활용",
       "code": "12유전03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-gel",
+        "title": "머리카락 한 올의 DNA로 사람을 가려낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-pcr",
+        "title": "PCR은 아주 적은 양의 바이러스를 어떻게 찾아낼까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "유전자 변형 생물체(LMO)",
       "code": "12유전03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-bt",
+        "title": "해충을 죽이는 옥수수를 심으면 해충은 결국 이겨 낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-selection",
+        "title": "진화는 ‘더 나아지는 것’일까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "생명 윤리",
       "code": "12유전03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-gene-bioethics",
+        "title": "할 수 있는 일과 해도 되는 일은 어떻게 가를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-ethics",
+        "title": "확진자의 이동 경로, 어디까지 공개해야 할까?"
+       }
+      ]
      }
     ]
    }
