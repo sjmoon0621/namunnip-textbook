@@ -2604,50 +2604,172 @@ window.TOC = [
       "n": 1,
       "title": "전기장과 등전위면",
       "code": "12전자01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-equipotential",
+        "title": "등전위면 간격만 보고 전기장의 세기를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-field",
+        "title": "보이지 않는 전기장을 어떻게 그릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-potential",
+        "title": "전위차는 ‘전기의 높이’일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "정전기 유도와 유전 분극",
       "code": "12전자01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-polarize",
+        "title": "전하를 띠지 않은 물체는 왜 대전체에 끌려올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-capacitor",
+        "title": "축전기는 전기 에너지를 어떻게 저장할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-touch",
+        "title": "터치스크린은 손가락을 어떻게 알아챌까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "전류가 만드는 자기장",
       "code": "12전자01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-bfield",
+        "title": "도선을 둥글게 감으면 자기장은 어떻게 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-oersted",
+        "title": "전류가 흐르면 왜 나침반이 돌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-magnet",
+        "title": "철은 자석에 붙는데 알루미늄은 왜 안 붙을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "로런츠 힘",
       "code": "12전자01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-lorentz",
+        "title": "자기장으로 원자의 질량을 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-motor",
+        "title": "전동기는 어떻게 계속 돌까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "전자기 유도와 변압기",
       "code": "12전자01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-transformer",
+        "title": "변압기는 왜 교류에서만 작동할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lenz",
+        "title": "자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-generator",
+        "title": "자석을 움직이면 왜 전류가 흐를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-transmission",
+        "title": "송전은 왜 높은 전압으로 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-wireless",
+        "title": "무선 충전기는 선 없이 어떻게 전기를 보낼까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "저항·축전기·인덕터",
       "code": "12전자01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-rlc",
+        "title": "축전기에 담긴 에너지는 회로에서 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-capacitor",
+        "title": "축전기는 전기 에너지를 어떻게 저장할까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "반도체 소자와 전자 회로",
       "code": "12전자01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-semis",
+        "title": "교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-doping",
+        "title": "반도체에 불순물을 넣으면 왜 전기가 잘 통할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-bands",
+        "title": "규소는 도체일까, 절연체일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-led",
+        "title": "LED는 색마다 왜 필요한 전압이 다를까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-is1-chip",
+        "title": "모래에서 반도체 칩까지"
+       }
+      ]
      }
     ]
    },
