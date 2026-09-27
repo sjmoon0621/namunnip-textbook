@@ -2902,36 +2902,111 @@ window.TOC = [
       "n": 1,
       "title": "단일 양자의 이중 슬릿 실험",
       "code": "12전자03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-single-photon",
+        "title": "전자를 하나씩 쏘아도 간섭무늬가 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-dslit",
+        "title": "이중 슬릿 무늬의 간격은 무엇이 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-emicro",
+        "title": "전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "중첩과 측정, 양자 기술",
       "code": "12전자03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-qubit",
+        "title": "측정하기 전의 양자 상태는 0일까, 1일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-emq-quantum-tech",
+        "title": "양자 컴퓨터와 양자 암호는 세상을 어떻게 바꿀까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "터널 효과",
       "code": "12전자03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-tunnel",
+        "title": "에너지가 모자란 전자가 어떻게 벽을 통과할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "현대 원자 모형과 불확정성 원리",
       "code": "12전자03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-orbital",
+        "title": "전자는 원자핵 둘레의 어디에 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-hyd",
+        "title": "수소는 왜 몇 가지 색의 빛만 낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-shells",
+        "title": "주기율표는 왜 이런 모양일까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "별의 핵융합과 스펙트럼",
       "code": "12전자03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-star-spectrum",
+        "title": "별빛의 검은 선으로 온도와 원소를 어떻게 알아낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-sun-fusion",
+        "title": "태양은 무엇을 태워서 빛날까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-fusion",
+        "title": "별은 왜 철에서 핵융합을 멈출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-spectrum",
+        "title": "별빛에서 원소를 어떻게 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-spec",
+        "title": "빛만 보고 무엇이 빛나는지 알 수 있을까?"
+       }
+      ]
      }
     ]
    }
