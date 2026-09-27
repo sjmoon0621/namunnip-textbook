@@ -4797,36 +4797,96 @@ window.TOC = [
       "n": 1,
       "title": "성단의 C–M도와 우리은하",
       "code": "12행우03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-cluster",
+        "title": "성단 사진 한 장으로 나이와 거리를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-hrd",
+        "title": "H–R도는 어떻게 읽을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "성간 소광과 성간 티끌",
       "code": "12행우03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-extinction",
+        "title": "은하수의 검은 틈에는 정말 별이 없을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "은하 회전 곡선과 암흑 물질",
       "code": "12행우03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-rotation",
+        "title": "은하의 바깥쪽 별은 왜 느려지지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-hubble",
+        "title": "은하는 모양으로 어떻게 나눌까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "적색 편이 탐사",
       "code": "12행우03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-redshift-survey",
+        "title": "하늘 사진에서는 안 보이던 우주의 구조가 스펙트럼으로 어떻게 드러날까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-hlaw",
+        "title": "멀리 있는 은하일수록 왜 빨리 멀어질까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "우주 거대 구조",
       "code": "12행우03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-cosmic-web",
+        "title": "거의 고르던 초기 우주에서 어떻게 거미줄 같은 구조가 생겼을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-space-large-structure",
+        "title": "은하 너머에는 어떤 구조가 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-nocenter",
+        "title": "우주에는 중심이 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-earth-cosmology",
+        "title": "우주에 대한 생각은 어떤 증거로 바뀌어 왔을까?"
+       }
+      ]
      }
     ]
    }
