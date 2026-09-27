@@ -4101,36 +4101,81 @@ window.TOC = [
       "n": 1,
       "title": "전사와 번역",
       "code": "12유전02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-central",
+        "title": "핵 속 DNA의 정보는 어떻게 세포질의 단백질이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-dogma",
+        "title": "DNA의 정보는 어떻게 단백질이 될까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "유전 부호",
       "code": "12유전02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-codon",
+        "title": "염기 하나가 바뀌면 단백질은 얼마나 달라질까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-is1-codon",
+        "title": "유전 암호표 읽는 법"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-mutation",
+        "title": "염기 하나가 바뀌면 무슨 일이 생길까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "유전자 발현 조절",
       "code": "12유전02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-lac",
+        "title": "대장균은 젖당 분해 효소를 언제 만들까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "세포 분화와 발생",
       "code": "12유전02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-differentiation",
+        "title": "같은 DNA를 가진 세포가 어떻게 근육도 되고 눈의 수정체도 될까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "발현 조절 연구와 인류 복지",
       "code": "12유전02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-gene-regulation-welfare",
+        "title": "유전자가 켜지고 꺼지는 원리를 알아서 무엇이 달라졌을까?"
+       }
+      ]
      }
     ]
    },
