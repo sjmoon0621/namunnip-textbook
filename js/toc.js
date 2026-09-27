@@ -2781,36 +2781,116 @@ window.TOC = [
       "n": 1,
       "title": "빛의 간섭과 회절",
       "code": "12전자02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-diffraction",
+        "title": "틈이 많아질수록 무늬는 왜 더 날카로워질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-emq-hologram",
+        "title": "홀로그램은 어떻게 입체 영상을 기록할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-dslit",
+        "title": "이중 슬릿 무늬의 간격은 무엇이 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-film",
+        "title": "비눗방울은 왜 무지갯빛일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "렌즈·거울과 수차",
       "code": "12전자02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-aberration",
+        "title": "렌즈는 왜 빛을 정확히 한 점에 모으지 못할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-refract",
+        "title": "볼록 렌즈는 왜 빛을 한 점에 모을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-image",
+        "title": "렌즈를 반쯤 가리면 상도 반만 생길까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "편광",
       "code": "12전자02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-polarizer",
+        "title": "편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "광전 효과와 광센서",
       "code": "12전자02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-pixels",
+        "title": "어두운 곳에서 찍은 사진은 왜 자글자글할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-photo",
+        "title": "빛을 세게 비추면 전자가 더 빨리 튀어나올까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-phy-image-sensor",
+        "title": "디지털카메라는 빛을 어떻게 숫자로 저장할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-solar-cell",
+        "title": "태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "레이저",
       "code": "12전자02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-laser",
+        "title": "레이저는 왜 아무리 세게 비춰도 원자 두 층만으로는 만들 수 없을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-emq-fiber",
+        "title": "머리카락 굵기의 유리실로 어떻게 대륙 사이의 인터넷을 이을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-hyd",
+        "title": "수소는 왜 몇 가지 색의 빛만 낼까?"
+       }
+      ]
      }
     ]
    },

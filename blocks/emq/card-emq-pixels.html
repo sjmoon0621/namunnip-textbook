@@ -1,0 +1,47 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/emq/l-pixels.js"
+  ]
+}
+-->
+<article class="card" id="card-emq-pixels">
+  <header class="card-head">
+    <span class="no"></span><h2>어두운 곳에서 찍은 사진은 왜 자글자글할까?</h2><span class="kind">광전 효과와 광센서 · 광자를 세는 픽셀</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽: 픽셀마다 모인 전자 수로 만든 사진. 오른쪽: 한 줄의 픽셀 값"></canvas>
+      <div class="ctl">
+        <label class="mono">장면의 밝기 (노출 동안 가장 밝은 픽셀에 오는 광자 수) = <output class="p-out">1000</output></label>
+        <input class="p" type="range" min="0.5" max="5" step="0.05" value="3" aria-label="광자 수 (로그 눈금)">
+        <label class="mono">빛의 파장 = <output class="l-out">550</output> nm</label>
+        <input class="l" type="range" min="400" max="1300" step="10" value="550" aria-label="빛의 파장">
+        <dl class="nums">
+          <div><dt>광자 1개의 에너지</dt><dd class="n-e">—</dd></div>
+          <div><dt>가장 밝은 픽셀의 전자 수 (양자 효율 60 %)</dt><dd class="n-n">—</dd></div>
+          <div><dt>신호 대 잡음비 √N</dt><dd class="n-s">—</dd></div>
+        </dl>
+        <p class="fig-note">규소의 띠틈 1.12 eV보다 에너지가 작은 광자(파장 약 1100 nm 이상)는 전자를 만들지 못한다고 두었습니다. 픽셀에 도착하는 광자 수는 무작위(푸아송 분포)로 흔들리고, 한 픽셀에는 전자를 1만 개까지 담을 수 있다고 가정했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>밝은 낮에 찍은 사진은 매끈한데, 어두운 방에서 찍으면 사진에 모래를 뿌린 듯한 잡음이 생깁니다. 카메라가 나빠서일까요, 빛 자체의 성질일까요?</li>
+      <li><span class="tag">복원</span>빛은 에너지 E = hf = hc/λ를 가진 알갱이, 곧 광자로 행동하며, 광자 하나가 전자 하나에 에너지를 줍니다(광전 효과). 빛의 세기는 광자의 수, 색은 광자 하나의 에너지를 정합니다.</li>
+      <li><span class="tag">설명</span>카메라의 이미지 센서는 수백만 개의 작은 규소 픽셀로 되어 있습니다. 광자가 규소에 흡수되어 띠틈보다 큰 에너지를 주면 전자–양공 쌍이 생기고(내부 광전 효과), 노출 동안 모인 전자 수를 읽어 숫자로 바꾸면 픽셀의 밝기가 됩니다. 그런데 광자는 빗방울처럼 무작위로 도착하므로, 평균 N개가 오는 픽셀도 실제로는 약 √N개만큼 들쭉날쭉합니다(<em>산탄 잡음</em>). 신호 대 잡음비는 N/√N = √N이라, 빛이 적을수록 잡음이 두드러집니다.</li>
+      <li><span class="tag">연결</span>같은 원리로 빛의 양을 전기 신호로 바꾸는 소자가 <em>광센서</em>(포토다이오드)입니다. 자동 밝기 조절, 리모컨 수신기, 광통신의 수신부, 자율 주행차의 라이다에 쓰입니다. <em>태양 전지</em>는 넓은 p–n 접합에서 생긴 전자와 양공을 전기장으로 갈라 전류로 꺼내는 커다란 포토다이오드입니다. 적외선 카메라는 띠틈이 더 작은 물질을 씁니다.</li>
+      <li><span class="tag">적용</span>광자 수를 줄여 가며 사진이 언제부터 알아보기 어려워지는지 보세요. 광자 수를 100배로 늘리면 신호 대 잡음비는 몇 배가 되나요? 파장을 1200 nm로 바꾸면 왜 사진이 까맣게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>어두운 사진의 잡음 중 산탄 잡음은 센서를 아무리 잘 만들어도 없앨 수 없는, 빛이 광자로 되어 있기 때문에 생기는 한계입니다. 줄이는 방법은 광자를 더 많이 모으는 것(큰 렌즈·긴 노출·큰 픽셀)이며, 스마트폰의 야간 모드는 여러 장을 찍어 평균합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">한 픽셀에 평균 100개의 전자가 모이던 조건에서 노출 시간을 4배로 늘렸습니다. 신호 대 잡음비는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2배가 된다 (10 → 20)<span class="why"><b>맞습니다.</b> N이 400이 되어 √400 = 20입니다. 잡음도 커지지만 신호가 더 빨리 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4배가 된다<span class="why"><b>잡음도 √4 = 2배로 커집니다.</b></span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>그대로이다<span class="why"><b>신호는 4배, 잡음은 2배라</b> 비는 2배가 됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
