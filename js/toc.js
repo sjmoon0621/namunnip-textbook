@@ -3954,50 +3954,142 @@ window.TOC = [
       "n": 1,
       "title": "상염색체 유전과 성염색체 유전",
       "code": "12유전01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-sexlinked",
+        "title": "색맹은 왜 남자에게 더 많을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-gene-chromo",
+        "title": "유전자, DNA, 염색체는 서로 어떤 관계일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-assort",
+        "title": "형제는 왜 서로 다르게 생길까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "사람의 유전 연구",
       "code": "12유전01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-pedigree",
+        "title": "가계도만 보고 유전 방식을 가려낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-blood",
+        "title": "ABO식 혈액형은 어떻게 판정할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "다유전자 유전",
       "code": "12유전01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-polygenic",
+        "title": "키는 왜 ‘크다·작다’ 두 가지가 아니라 고르게 이어질까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "염색체 이상과 유전자 이상",
       "code": "12유전01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-nondisjunction",
+        "title": "염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-gene-disorders",
+        "title": "유전병은 원인에 따라 어떻게 나눌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-mutation",
+        "title": "염기 하나가 바뀌면 무슨 일이 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-division",
+        "title": "체세포 분열과 감수 분열은 무엇이 다를까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "DNA 구조와 유전 물질의 규명",
       "code": "12유전01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-hershey",
+        "title": "바이러스가 세균 속으로 들여보내는 것은 단백질일까, DNA일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-gene-dna-history",
+        "title": "DNA가 유전 물질이고 이중 나선이라는 것은 어떻게 밝혀졌을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-cell-chargaff",
+        "title": "생물마다 DNA는 다른데, 왜 A와 T의 양은 늘 같을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "유전자 구조와 유전체",
       "code": "12유전01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-genome",
+        "title": "사람의 DNA 가운데 유전자는 얼마나 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-dna-pack",
+        "title": "2 m나 되는 DNA가 어떻게 핵 속에 들어갈까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-cell-pro-eu",
+        "title": "항생제는 왜 세균만 죽이고 사람 세포는 두고 갈까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "DNA 복제",
       "code": "12유전01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-replication",
+        "title": "DNA가 복제될 때 원래 가닥은 어디로 갈까?"
+       }
+      ]
      }
     ]
    },
