@@ -3520,29 +3520,68 @@ window.TOC = [
       "n": 1,
       "title": "작용기와 탄소 화합물",
       "code": "12반응03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-functional",
+        "title": "원자 몇 개가 바뀌면 술이 식초가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-dipole",
+        "title": "CO₂는 극성 결합이 있는데 왜 무극성 분자일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "작용기의 변화와 반응",
       "code": "12반응03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-reaction-map",
+        "title": "와인은 어떻게 식초가 되고, 식초는 어떻게 과일 향이 될까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "중합 반응과 고분자",
       "code": "12반응03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-polymer",
+        "title": "작은 분자를 이으면 어떻게 비닐과 나일론이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-polymer",
+        "title": "단백질과 DNA는 작은 단위를 어떻게 이어 붙일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "탄소 화합물과 사회",
       "code": "12반응03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-rxn-society",
+        "title": "새로운 탄소 화합물은 사회를 어떻게 바꾸었을까?"
+       },
+       {
+        "kind": "video",
+        "id": "video-chem-society",
+        "title": "공기로 비료를, 석유로 옷을"
+       }
+      ]
      }
     ]
    }
