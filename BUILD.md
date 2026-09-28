@@ -20,6 +20,19 @@
 | 공용 | `css/tb.css`, `js/core.js`, `js/home.js`, `index.html`, `c/*/index.html` |
 
 과목 코드: `is1` 통합과학1 · `is2` 통합과학2 · `phy` 물리학 · `chem` 화학 · `bio` 생명과학 · `earth` 지구과학 · `extra` 교양·심화.
+진로선택: `mech` 역학과 에너지 · `emq` 전자기와 양자 · `mateng` 물질과 에너지 · `rxn` 화학 반응의 세계 · `cell` 세포와 물질대사 · `gene` 생물의 유전 · `esys` 지구시스템과학 · `space` 행성우주과학.
+과목을 새로 더하면 `js/graph.js`의 `COLORS`와 `ORDER`에도 넣는다(개념 지도의 색과 배치).
+
+과목 안에서만 쓰는 공용 계산·그리기 도구는 카드 스크립트와 같은 폴더에 두고 `window.NM*` 이름으로 내보낸다. 이 파일은 특정 카드에 묶이지 않으므로, 쓰는 블록의 `scripts`에서 카드 스크립트보다 먼저 적는다.
+
+| 도구 | 파일 | 쓰는 과목 |
+|---|---|---|
+| `NMChem` (맥스웰–볼츠만 분포) | `js/cards/mateng/k-mb.js` | 물질과 에너지 |
+| `NMAcid` (산·염기 평형 풀이) | `js/cards/rxn/chem-eq.js` | 화학 반응의 세계 |
+| `NMMol` (구조식 그리기) | `js/cards/rxn/mol-draw.js` | 화학 반응의 세계 |
+| `NMCodon` (유전 부호 표) | `js/cards/gene/codon.js` | 생물의 유전 |
+
+여러 과목에서 쓰게 되면 `js/lib/`로 옮기는 것을 검토한다(옮기면 블록 머리의 경로도 함께 고칠 것).
 블록 폴더는 처음 만든 과목을 따르며, 다른 과목에 배치해도 옮기지 않는다.
 
 ## 2. 블록 파일 형식
