@@ -9,12 +9,12 @@
   const St = window.NMStore;
   const { F } = NM;
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const COLORS = { is1: "#86c36f", is2: "#4fc1b6", phy: "#6ea4e6", chem: "#b58de3", bio: "#e89a55", earth: "#caa47c", extra: "#9a9aa0" };
+  const COLORS = { is1: "#86c36f", is2: "#4fc1b6", phy: "#6ea4e6", mech: "#4f7fd6", emq: "#8fc3f5", chem: "#b58de3", mateng: "#9267d6", rxn: "#d3a8f0", bio: "#e89a55", cell: "#d97a3a", gene: "#f2bd86", earth: "#caa47c", esys: "#a88457", space: "#e3cfa3", extra: "#9a9aa0" };
   const ACCENT = "#a78bfa";
   const KIND = { card: "카드", text: "읽기", video: "영상" };
 
   /* ───── 설정 (이 브라우저에만 기억) ───── */
-  const DEFAULTS = { hubs: true, orphans: true, color: "course", arrows: false, textFade: 0.7, nodeSize: 1, linkWidth: 1, center: 0.5, repel: 4, linkForce: 0.6, linkDist: 38 };
+  const DEFAULTS = { courses: true, hubs: true, orphans: true, color: "course", arrows: false, textFade: 0.7, nodeSize: 1, linkWidth: 1, center: 0.5, repel: 4, linkForce: 0.6, linkDist: 38 };
   let set = { ...DEFAULTS };
   try { Object.assign(set, JSON.parse(localStorage.getItem("namunnip-graph-settings-v2") || "{}")); } catch (e) { /* 무시 */ }
   const saveSet = () => { try { localStorage.setItem("namunnip-graph-settings-v2", JSON.stringify(set)); } catch (e) { /* 무시 */ } };
@@ -22,7 +22,7 @@
   /* ───── 데이터: 블록 점과 개념 허브 ───── */
   const courseName = {}, where = {}, order = [];
   TOC.forEach((c) => { courseName[c.id] = c.name; c.chapters.forEach((ch) => ch.sections.forEach((s) => s.items.forEach((it) => { if (where[it.id]) { where[it.id].also.push({ c, ch, s }); return; } where[it.id] = { c, ch, s, it, also: [] }; order.push(it.id); }))); });
-  const ORDER = ["is1", "phy", "chem", "is2", "bio", "earth", "extra"], count = {};
+  const ORDER = ["is1", "phy", "mech", "emq", "chem", "mateng", "rxn", "is2", "bio", "cell", "gene", "earth", "esys", "space", "extra"], count = {};
   const place = (course) => {
     const i = (count[course] = (count[course] || 0) + 1), ca = ORDER.indexOf(course) / ORDER.length * Math.PI * 2, a = i * 2.39996, r = 7 * Math.sqrt(i);
     return { x: Math.cos(ca) * 220 + Math.cos(a) * r, y: Math.sin(ca) * 220 + Math.sin(a) * r };
@@ -46,6 +46,15 @@
   const hubOf = Object.fromEntries(concepts.map((h) => [h.cid, h]));
   concepts.forEach((h) => h.req.forEach((r) => hubOf[r] && hubOf[r].kidsC.push(h)));
   const EXTRA = (window.GRAPH_LINKS || []).filter(([a, b]) => all.has(a) && all.has(b));
+  // 과목 노드: 과목마다 하나. 그 과목에 배치된 블록(재사용 포함)과, 그 블록이 속한 개념 허브에 이어진다
+  const courseNodes = TOC.filter((c) => c.id !== "extra").map((c) => {
+    const ca = Math.max(0, ORDER.indexOf(c.id)) / ORDER.length * Math.PI * 2;
+    const blocks = order.filter((id) => where[id].c.id === c.id || where[id].also.some((a) => a.c.id === c.id));
+    const hubs = concepts.filter((h) => h.blocks.some((b) => blocks.includes(b)));
+    const node = { id: "k:" + c.id, type: "course", name: c.name, main: c.id, course: c, blocks, hubs, courses: { [c.id]: 1 }, vx: 0, vy: 0, fx: null, fy: null, x: Math.cos(ca) * 240, y: Math.sin(ca) * 240 };
+    all.set(node.id, node);
+    return node;
+  });
 
   /* ───── 상태 ───── */
   let nodes = [], links = [];
@@ -57,7 +66,7 @@
 
   /* ───── 지금 그릴 점과 선 (허브 켜기/끄기에 따라 다시 짠다) ───── */
   function rebuild() {
-    nodes = [...all.values()].filter((n) => n.type === "block" || set.hubs);
+    nodes = [...all.values()].filter((n) => n.type === "block" || (n.type === "hub" && set.hubs) || (n.type === "course" && set.courses));
     const L = new Map();
     const add = (a, b, kind) => { if (!a || !b || a === b) return; const k = a.id < b.id ? a.id + "|" + b.id : b.id + "|" + a.id; if (!L.has(k) || kind === "req") L.set(k, { a, b, kind }); };
     concepts.forEach((h) => {
@@ -71,12 +80,13 @@
       }
     });
     EXTRA.forEach(([a, b]) => add(all.get(a), all.get(b), "req"));
+    if (set.courses) courseNodes.forEach((k) => (set.hubs ? k.hubs : k.blocks.map((b) => all.get(b))).forEach((m) => add(k, m, "course")));
     links = [...L.values()];
     nodes.forEach((n) => { n.nb = new Set(); });
     links.forEach(({ a, b }) => { a.nb.add(b); b.nb.add(a); });
     nodes.forEach((n) => {
       n.deg = n.nb.size;
-      n.base = n.type === "hub" ? 3 + Math.sqrt(n.blocks.length) * 1.1 : 3.4 + Math.sqrt(n.deg) * 0.9;
+      n.base = n.type === "course" ? 17 : n.type === "hub" ? 3 + Math.sqrt(n.blocks.length) * 1.1 : 3.4 + Math.sqrt(n.deg) * 0.9;
     });
     if (selected && !nodes.includes(selected)) selected = null;
     if (local && !nodes.includes(local.center)) local = null;
@@ -95,9 +105,9 @@
     let s;
     if (n.type === "block") { s = blockStatus(n.id); s.p = s.seen ? 1 : 0; }
     else {
-      const bs = n.blocks.map(blockStatus);
+      const bs = n.blocks.filter((b) => all.get(b) && all.get(b).kind !== "video").map(blockStatus);
       s = { seen: bs.filter((b) => b.seen).length, wrong: bs.filter((b) => b.wrong).length, qs: bs.reduce((a, b) => a + b.qs, 0), qok: bs.reduce((a, b) => a + b.qok, 0) };
-      s.p = n.blocks.length ? s.seen / n.blocks.length : 0;
+      s.p = bs.length ? s.seen / bs.length : 0;
     }
     stCache.set(n, s); return s;
   }
@@ -109,7 +119,7 @@
 
   /* ───── 보이는 점 (과목 필터, 연결 없는 점, 로컬 그래프) ───── */
   function refilter() {
-    let pool = nodes.filter((n) => n.type === "block" ? !hiddenCourses.has(n.main) : !Object.keys(n.courses).every((c) => hiddenCourses.has(c)));
+    let pool = nodes.filter((n) => n.type === "block" || n.type === "course" ? !hiddenCourses.has(n.main) : !Object.keys(n.courses).every((c) => hiddenCourses.has(c)));
     const inPool = new Set(pool);
     if (!set.orphans) pool = pool.filter((n) => [...n.nb].some((m) => inPool.has(m)));
     if (local) {
@@ -143,8 +153,8 @@
     links.forEach(({ a, b, kind }) => {
       if (!shown.has(a) || !shown.has(b)) return;
       let dx = b.x + b.vx - a.x - a.vx, dy = b.y + b.vy - a.y - a.vy; const l = Math.hypot(dx, dy) || 1;
-      const dist = set.linkDist * (kind === "req" ? 2.2 : 1);
-      const k = (l - dist) / l * alpha * set.linkForce / Math.max(1, Math.min(a.deg, b.deg));
+      const dist = set.linkDist * (kind === "req" ? 2.2 : kind === "course" ? 3.2 : 1);
+      const k = (l - dist) / l * alpha * set.linkForce * (kind === "course" ? 0.35 : 1) / Math.max(1, Math.min(a.deg, b.deg));
       dx *= k; dy *= k; const bias = a.deg / (a.deg + b.deg || 1);
       b.vx -= dx * bias; b.vy -= dy * bias; a.vx += dx * (1 - bias); a.vy += dy * (1 - bias);
     });
@@ -187,6 +197,7 @@
     if (n.kind === "video") { const s = r * 1.25; ctx.moveTo(x, y - s); ctx.lineTo(x + s * 0.95, y + s * 0.7); ctx.lineTo(x - s * 0.95, y + s * 0.7); ctx.closePath(); return; }
     ctx.arc(x, y, r, 0, Math.PI * 2);
   }
+  const hexA = (h, a) => { const v = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); return `rgba(${v.join(",")},${a})`; };
   const short = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
 
   function draw() {
@@ -199,8 +210,8 @@
       const e = Math.min(fade.get(a) ?? 1, fade.get(b) ?? 1);
       const hot = (f && (a === f || b === f)) || (pathSet && pathSet.has(a) && pathSet.has(b));
       const [x1, y1] = toS(a.x, a.y), [x2, y2] = toS(b.x, b.y);
-      const baseA = kind === "req" ? 0.1 + 0.25 * e : 0.05 + 0.13 * e;
-      ctx.strokeStyle = hot ? ACCENT : `rgba(200,200,210,${baseA})`;
+      const baseA = kind === "req" ? 0.1 + 0.25 * e : kind === "course" ? 0.03 + 0.07 * e : 0.05 + 0.13 * e;
+      ctx.strokeStyle = hot ? ACCENT : kind === "course" ? hexA(COLORS[a.type === "course" ? a.main : b.main], baseA * 1.6) : `rgba(200,200,210,${baseA})`;
       ctx.lineWidth = (hot ? 1.5 : kind === "req" ? 1 : 0.7) * set.linkWidth * Math.min(1.6, Math.max(0.6, view.k));
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       if (kind === "req" && (set.arrows || hot)) {
@@ -216,7 +227,11 @@
       const e = fade.get(n) ?? 1, [x, y] = toS(n.x, n.y), r = Math.max(1.5, radius(n) * view.k), s = st(n);
       ctx.globalAlpha = 0.1 + 0.9 * e;
       const col = n === f ? ACCENT : nodeColor(n);
-      if (n.type === "hub") {
+      if (n.type === "course") {
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = Math.max(1.5, r * 0.12); ctx.stroke();
+        if (s.p > 0) { ctx.strokeStyle = "#8fd16f"; ctx.lineWidth = Math.max(2, r * 0.2); ctx.beginPath(); ctx.arc(x, y, r + ctx.lineWidth, -Math.PI / 2, -Math.PI / 2 + s.p * Math.PI * 2); ctx.stroke(); }
+      } else if (n.type === "hub") {
         ctx.fillStyle = "#1c1c1f"; shape(n, x, y, r); ctx.fill();
         ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.3, r * 0.38); shape(n, x, y, r); ctx.stroke();
       } else {
@@ -235,23 +250,23 @@
     const boxes = [];
     nodes.filter((n) => shown.has(n)).sort((a, b) => pri(b) - pri(a)).forEach((n) => {
       const forced = pri(n) >= 1e4, e = fade.get(n) ?? 1;
-      const a = forced ? 1 : (n.type === "hub" ? hubA : blkA) * e * e;
+      const a = forced || n.type === "course" ? Math.max(0.35, e) : (n.type === "hub" ? hubA : blkA) * e * e;
       if (a < 0.04) return;
       const [x, y] = toS(n.x, n.y), r = radius(n) * view.k;
-      const fs = Math.min(15, Math.max(10, (n.type === "hub" ? 12 : 11) * Math.sqrt(view.k)));
-      ctx.font = `${n === f || n.type === "hub" ? 600 : 400} ${fs}px ${F.sans}`;
-      const label = n === f ? n.name : short(n.name, n.type === "hub" ? 20 : 16);
+      const fs = n.type === "course" ? Math.min(17, Math.max(12, 14 * Math.sqrt(view.k))) : Math.min(15, Math.max(10, (n.type === "hub" ? 12 : 11) * Math.sqrt(view.k)));
+      ctx.font = `${n === f || n.type !== "block" ? 600 : 400} ${fs}px ${F.sans}`;
+      const label = n === f || n.type === "course" ? n.name : short(n.name, n.type === "hub" ? 20 : 16);
       const tw = ctx.measureText(label).width, bx = [x - tw / 2, x + tw / 2, y + r + 3, y + r + 5 + fs];
       if (!forced && boxes.some((b) => bx[0] < b[1] && bx[1] > b[0] && bx[2] < b[3] && bx[3] > b[2])) return;
       boxes.push(bx);
-      ctx.globalAlpha = a; ctx.fillStyle = n === f ? "#ffffff" : n.type === "hub" ? "#e4e4e8" : "#b9b9c1";
+      ctx.globalAlpha = a; ctx.fillStyle = n === f || n.type === "course" ? "#ffffff" : n.type === "hub" ? "#e4e4e8" : "#b9b9c1";
       ctx.fillText(label, x, y + r + 4);
       ctx.globalAlpha = 1;
     });
   }
   function pri(n) {
     const f = focusOf();
-    return (n === f ? 1e6 : 0) + (f && f.nb.has(n) ? 1e4 : 0) + (match && match.has(n) ? 1e5 : 0) + (pathSet && pathSet.has(n) && n.type === "hub" ? 1e5 : 0) + (n.type === "hub" ? 100 : 0) + n.base;
+    return (n === f ? 1e6 : 0) + (f && f.nb.has(n) ? 1e4 : 0) + (match && match.has(n) ? 1e5 : 0) + (pathSet && pathSet.has(n) && n.type === "hub" ? 1e5 : 0) + (n.type === "course" ? 5e3 : n.type === "hub" ? 100 : 0) + n.base;
   }
 
   /* ───── 애니메이션 루프 ───── */
@@ -349,7 +364,7 @@
   /* ───── 설정 패널 ───── */
   const gear = document.getElementById("gv-gear"), sp = document.getElementById("gv-settings");
   gear.addEventListener("click", () => { sp.hidden = !sp.hidden; gear.setAttribute("aria-expanded", String(!sp.hidden)); });
-  const legendShapes = `<li><i class="sh dot"></i>카드</li><li><i class="sh sq"></i>읽기</li><li><i class="sh tri"></i>영상</li><li><i class="sh hub"></i>개념 허브</li>`;
+  const legendShapes = `<li><i class="sh dot"></i>카드</li><li><i class="sh sq"></i>읽기</li><li><i class="sh tri"></i>영상</li><li><i class="sh hub"></i>개념 허브</li><li><i class="sh course"></i>과목</li>`;
   function syncControls() {
     sp.querySelectorAll("[data-set]").forEach((el) => { const k = el.dataset.set; el.type === "checkbox" ? (el.checked = !!set[k]) : (el.value = set[k]); });
     sp.querySelectorAll("[data-color]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.color === set.color)));
@@ -362,7 +377,7 @@
     const k = el.dataset.set;
     set[k] = el.type === "checkbox" ? el.checked : +el.value;
     saveSet();
-    if (k === "hubs") { pathSet = null; rebuild(); settled = false; touched = false; fitList = nodes; }
+    if (k === "hubs" || k === "courses") { pathSet = null; rebuild(); settled = false; touched = false; fitList = nodes; }
     else if (k === "orphans") refilter();
     else if (["center", "repel", "linkForce", "linkDist", "nodeSize"].includes(k)) heat(0.5);
     wake();
@@ -404,7 +419,15 @@
     selected = n; pathSet = null;
     if (!n) { panel.hidden = true; if (local) { local = null; refilter(); } history.replaceState(null, "", location.pathname); wake(); return; }
     const s = st(n);
-    if (n.type === "block") {
+    if (n.type === "course") {
+      const c = n.course, sec = (ch, se) => { const ids = se.items.filter((it) => it.kind !== "video").map((it) => it.id), seen = ids.filter((id) => blockStatus(id).seen).length; return `<li><a href="c/${c.id}/${ch.n}-${se.n}.html">${ch.n}.${se.n} ${esc(se.title)}</a><span class="mono">${seen}/${ids.length}</span></li>`; };
+      detail.innerHTML = `
+        <p class="mono gv-course"><span style="color:${COLORS[n.main]}">과목</span> · 절 ${c.chapters.reduce((a, ch) => a + ch.sections.length, 0)}개 · 블록 ${n.blocks.length}개 · 개념 ${n.hubs.length}개</p>
+        <h2>${esc(n.name)}</h2>
+        <p class="gv-prog">카드·읽기 ${s.seen}개 봄 (${Math.round(s.p * 100)} %)${s.qs ? ` · 확인 문제 ${s.qs}개 중 ${s.qok}개 맞힘` : ""}${s.wrong ? ` · <span class="bad">오답 ${s.wrong}개</span>` : ""}</p>
+        ${localBox()}
+        ${c.chapters.map((ch) => `<h3>${ch.n}. ${esc(ch.title)}</h3><ul class="gv-blocks gv-secs">${ch.sections.map((se) => sec(ch, se)).join("")}</ul>`).join("")}`;
+    } else if (n.type === "block") {
       const hubs = n.concepts, reqs = [...new Set(hubs.flatMap((h) => h.req.map((r) => hubOf[r])))], kids = [...new Set(hubs.flatMap((h) => h.kidsC))];
       const same = [...new Set(hubs.flatMap((h) => h.blocks))].filter((b) => b !== n.id);
       detail.innerHTML = `
@@ -443,11 +466,11 @@
     const go = e.target.closest("button[data-go]");
     if (go) {
       const n = all.get(go.dataset.go);
-      if (n && !nodes.includes(n)) { set.hubs = true; saveSet(); syncControls(); rebuild(); }   // 허브를 숨긴 채 개념을 누르면 허브를 다시 켠다
+      if (n && !nodes.includes(n)) { if (n.type === "course") set.courses = true; else set.hubs = true; saveSet(); syncControls(); rebuild(); }   // 숨긴 종류의 점을 누르면 다시 켠다
       select(n, true); return;
     }
     if (e.target.closest(".gv-path")) {
-      const n = selected, start = n.type === "hub" ? [n] : n.concepts, anc = ancestorsC(start), memo = {};
+      const n = selected, start = n.type === "hub" ? [n] : n.type === "course" ? n.hubs : n.concepts, anc = ancestorsC(start), memo = {};
       if (local) { local = null; refilter(); }
       const list = [...anc].sort((a, b) => depth(a, memo) - depth(b, memo) || a.name.localeCompare(b.name, "ko"));
       pathSet = new Set([n, ...start, ...anc]);
@@ -477,7 +500,7 @@
     wake();
     setTimeout(() => {
       const id = params.get("n") || (params.get("c") ? "c:" + params.get("c") : null), sec = params.get("sec");
-      if (id && all.has(id)) { const n = all.get(id); if (!nodes.includes(n)) { set.hubs = true; syncControls(); rebuild(); } select(n, true); return; }
+      if (id && all.has(id)) { const n = all.get(id); if (!nodes.includes(n)) { if (n.type === "course") set.courses = true; else set.hubs = true; syncControls(); rebuild(); } select(n, true); return; }
       if (sec) {
         const [cid, chn, sn] = sec.split("-");
         const list = nodes.filter((n) => n.type === "block" && n.w.c.id === cid && String(n.w.ch.n) === chn && String(n.w.s.n) === sn);
