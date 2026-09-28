@@ -75,6 +75,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is1-fermi",
         "title": "운동장의 모래알은 몇 개일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-standards",
+        "title": "왜 온 세계가 똑같은 1 kg을 써야 할까?"
        }
       ]
      },
@@ -98,6 +103,11 @@ window.TOC = [
         "kind": "video",
         "id": "video-is1-sensors",
         "title": "스마트폰 속 센서들"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-ict-history",
+        "title": "정보 통신 기술은 문명을 어떻게 바꾸었을까?"
        }
       ]
      }
@@ -279,6 +289,11 @@ window.TOC = [
         "kind": "video",
         "id": "video-is1-atlantic",
         "title": "대서양은 손톱이 자라는 속도로 넓어진다"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-geosphere-effects",
+        "title": "화산 하나가 지구 전체의 기온을 바꿀 수 있을까?"
        }
       ]
      },
@@ -353,6 +368,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is1-activation",
         "title": "효소는 반응을 어떻게 빠르게 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-enzymes-life",
+        "title": "생활 속에서 효소는 어떤 화학 반응을 도울까?"
        }
       ]
      },
@@ -798,6 +818,11 @@ window.TOC = [
        },
        {
         "kind": "card",
+        "id": "card-phy-vt",
+        "title": "속도–시간 그래프 한 장에서 무엇을 읽을 수 있을까?"
+       },
+       {
+        "kind": "card",
         "id": "card-phy-stopping",
         "title": "속력이 2배면 정지 거리는 몇 배가 될까?"
        },
@@ -1011,6 +1036,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-phy-wireless",
         "title": "무선 충전기는 선 없이 어떻게 전기를 보낼까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-phy-induction-tech",
+        "title": "교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?"
        }
       ]
      }
@@ -1145,6 +1175,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-phy-length",
         "title": "빠르게 움직이면 길이도 줄어들까? 상대성 이론은 무엇을 바꿨을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-phy-relativity-society",
+        "title": "상대성 이론은 우리 생활과 사회를 어떻게 바꾸었을까?"
        }
       ]
      }
@@ -1584,6 +1619,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-energy",
         "title": "더 먹은 만큼 몸무게는 계속 늘까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-epidemiology",
+        "title": "어떤 생활 습관이 병을 일으키는지 어떻게 알아낼까?"
        }
       ]
      },
@@ -1695,6 +1735,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-reflex",
         "title": "뜨거운 것에 닿으면 왜 생각보다 손이 먼저 움직일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-brain",
+        "title": "뇌의 각 부분은 어떤 일을 나누어 맡을까?"
        },
        {
         "kind": "card",
@@ -1988,6 +2033,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-earth-thunder",
         "title": "뇌우는 왜 여름 오후에 잘 생길까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-earth-severe-weather",
+        "title": "집중 호우, 폭설, 강풍, 황사는 어떻게 생기고 어떻게 대비할까?"
        }
       ]
      },
