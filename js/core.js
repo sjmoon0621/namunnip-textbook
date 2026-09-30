@@ -138,6 +138,7 @@ window.NM = (() => {
 /* 앱으로 설치(PWA)·오프라인: 교과서 최상위의 sw.js를 등록한다. 시험 모드(?test)와 iframe 안에서는 건너뛴다. */
 (() => {
   if (!("serviceWorker" in navigator) || !window.isSecureContext) return;
+  if (!/^https?:$/.test(location.protocol)) return;   // 데스크톱 앱(tauri://) 안에서는 파일이 이미 내장되어 있다
   if (window !== window.top || /[?&]test\b/.test(location.search)) return;
   const sw = new URL("../sw.js", document.currentScript.src);
   addEventListener("load", () => {
