@@ -164,3 +164,11 @@ python3 tools/check.py 8811 --mobile --shot <폴더> c/earth/1-6.html # 390px �
 - 형광펜은 칠한 글자와 앞뒤 24자로 저장하므로, 블록 글을 고치면 칠한 곳을 못 찾을 수 있다(찾지 못하면 내 노트에만 남는다).
 - 블록 id를 바꾸면 그 블록의 기록이 끊긴다. 이미 공개한 블록의 id는 바꾸지 않는다.
 - `notes.html`은 모아 보기와 백업(내보내기·가져오기), `graph.html`은 개념 지도다.
+
+## 10. 앱 설치와 오프라인 (PWA)
+
+- `manifest.webmanifest`(앱 이름·아이콘), `sw.js`(서비스 워커), `assets/icons/`(설치 아이콘)로 설치형 앱이 된다. `js/core.js`가 `sw.js`를 등록한다(`?test`와 iframe에서는 건너뜀).
+- `sw.js`는 처음 방문할 때 `sw-files.js`에 적힌 파일 전체(페이지·스크립트·그림·글꼴, 약 10 MB)를 받아 두고, 그 뒤로는 받아 둔 파일을 먼저 쓴다. 인터넷이 끊겨도 모든 절이 열린다.
+- `sw-files.js`는 빌드가 만든다(`c css js assets`와 최상위 html). 파일 내용이 바뀌면 버전 해시가 바뀌어 사용자 기기가 새 파일을 받는다. **공용 파일(`index.html`, `css/tb.css` 등)만 고쳐도 반드시 `python3 tools/build.py`를 다시 돌린 뒤 올린다.** 안 돌리면 설치한 사용자에게 옛 파일이 계속 보인다.
+- 글꼴은 외부 CDN 대신 `assets/fonts/`(OFL 라이선스 파일 포함)와 `css/fonts.css`를 쓴다. 손으로 쓰는 페이지의 `<head>`는 `tools/build.py`의 `pwa_head()`와 같게 맞춘다.
+- 외부 주소로 새 파일을 불러오지 않는다. 불러오면 오프라인에서 빠진다.

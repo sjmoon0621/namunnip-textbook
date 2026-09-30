@@ -134,3 +134,15 @@ window.NM = (() => {
 
   return { reduce, C, F, clamp, ease, fit, loop, axes };
 })();
+
+/* 앱으로 설치(PWA)·오프라인: 교과서 최상위의 sw.js를 등록한다. 시험 모드(?test)와 iframe 안에서는 건너뛴다. */
+(() => {
+  if (!("serviceWorker" in navigator) || !window.isSecureContext) return;
+  if (window !== window.top || /[?&]test\b/.test(location.search)) return;
+  const sw = new URL("../sw.js", document.currentScript.src);
+  addEventListener("load", () => {
+    navigator.serviceWorker.register(sw.href, { scope: new URL("./", sw).href }).catch((e) => console.warn("서비스 워커 등록 실패", e));
+    // 학습 기록(localStorage)이 저장 공간 정리로 지워지지 않게 요청한다. 브라우저가 거절할 수 있다.
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+  });
+})();

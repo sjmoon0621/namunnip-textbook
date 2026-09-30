@@ -45,6 +45,38 @@ def load_blocks():
     return blocks
 
 
+def pwa_head(p):
+    """모든 페이지 <head>에 들어가는 아이콘·글꼴·앱 설치(PWA) 태그. p는 최상위까지의 상대 경로('', '../../')."""
+    return f'''  <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="{p}manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="{p}css/fonts.css">'''
+
+
+# 오프라인 저장 목록(sw-files.js)에 넣을 파일: 실행에 필요한 것만. blocks/·tools/·graph/·curricula/는 빌드 재료라 뺀다.
+PRECACHE_DIRS = ("c", "css", "js", "assets")
+PRECACHE_SKIP = {".DS_Store"}
+
+
+def build_sw():
+    """sw.js가 설치 때 받아 둘 파일 목록과 버전(내용 해시)을 sw-files.js로 쓴다."""
+    import hashlib
+    files = sorted(p.name for p in ROOT.glob("*.html")) + ["manifest.webmanifest"]
+    for d in PRECACHE_DIRS:
+        files += sorted(str(p.relative_to(ROOT)) for p in (ROOT / d).rglob("*")
+                        if p.is_file() and p.name not in PRECACHE_SKIP and p.suffix not in (".md", ".txt"))
+    h = hashlib.sha256()
+    for f in files + ["sw.js"]:
+        h.update(f.encode()); h.update((ROOT / f).read_bytes())
+    version = h.hexdigest()[:12]
+    size = sum((ROOT / f).stat().st_size for f in files)
+    (ROOT / "sw-files.js").write_text("/* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */\nself.PRECACHE = "
+        + json.dumps({"version": version, "files": files}, ensure_ascii=False, indent=0) + ";\n")
+    print(f"오프라인 저장: 파일 {len(files)}개, {size / 1e6:.1f} MB, 버전 {version}")
+
+
 def indent(text, n):
     pad = " " * n
     return "\n".join(pad + l if l.strip() else "" for l in text.split("\n"))
@@ -82,11 +114,7 @@ def page_html(course, ch, sec, blocks):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{H.escape(sec["title"], quote=False)} — 나뭇잎 과학 교과서</title>
   <meta name="description" content="{H.escape(desc)}">
-  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap" rel="stylesheet">
+{pwa_head("../../")}
   <link rel="stylesheet" href="../../css/tb.css">
 {style}</head>
 <body data-course="{course["id"]}" data-sec="{ch["n"]}-{sec["n"]}">
@@ -229,6 +257,8 @@ def main():
     (out / "js").mkdir(parents=True, exist_ok=True)
     (out / "js" / "toc.js").write_text("/* 자동 생성: python3 tools/build.py — 직접 고치지 말 것 */\nwindow.TOC = " + json.dumps(toc, ensure_ascii=False, indent=1) + ";\n")
     build_graph(blocks, used, out)
+    if out == ROOT:
+        build_sw()   # 페이지를 모두 만든 뒤에 해시를 잰다
     unused = sorted(set(blocks) - set(used))
     for c in toc:
         n = sum(len(s["items"]) for ch in c["chapters"] for s in ch["sections"])
