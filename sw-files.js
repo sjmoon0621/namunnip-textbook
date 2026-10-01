@@ -1,6 +1,6 @@
 /* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */
 self.PRECACHE = {
-"version": "2105349d18b7",
+"version": "298476162f76",
 "files": [
 "graph.html",
 "index.html",
@@ -636,6 +636,7 @@ self.PRECACHE = {
 "js/graph-data.js",
 "js/graph.js",
 "js/home.js",
+"js/lib/lab.js",
 "js/notebook.js",
 "js/notes.js",
 "js/store.js",
