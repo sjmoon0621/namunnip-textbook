@@ -4985,15 +4985,42 @@ window.TOC = [
       "n": 1,
       "title": "과학사를 바꾼 결정적 실험",
       "code": "10과탐1-01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie1-galileo",
+        "title": "시계 없이 낙하 법칙을 찾을 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is1-inertia",
+        "title": "밀어 주는 힘이 없으면 물체는 멈출까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "과학사 사례로 본 과학의 본성",
       "code": "10과탐1-01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-sie1-nature",
+        "title": "과학 지식은 어떻게 만들어지고, 왜 바뀔까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-cell-photo-history",
+        "title": "나무의 몸은 어디서 왔을까? 300년에 걸친 대답"
+       },
+       {
+        "kind": "text",
+        "id": "text-gene-dna-history",
+        "title": "DNA가 유전 물질이고 이중 나선이라는 것은 어떻게 밝혀졌을까?"
+       }
+      ]
      }
     ]
    },
@@ -5005,29 +5032,68 @@ window.TOC = [
       "n": 1,
       "title": "관찰과 귀납적 탐구",
       "code": "10과탐1-02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie1-pendulum",
+        "title": "몇 번을 관찰해야 규칙을 믿을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "가설과 연역적 탐구",
       "code": "10과탐1-02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie1-pasteur",
+        "title": "고깃국물 속 미생물은 저절로 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-control",
+        "title": "가설은 어떻게 검증할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "데이터 분석과 표현",
       "code": "10과탐1-02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is1-error",
+        "title": "여러 번 재면 오차가 사라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie1-plot",
+        "title": "같은 자료인데 왜 그래프마다 다른 이야기를 할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "협력적 탐구와 증거에 근거한 해석",
       "code": "10과탐1-02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-sie1-peer",
+        "title": "놀라운 실험 결과는 바로 믿어도 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-epidemiology",
+        "title": "어떤 생활 습관이 병을 일으키는지 어떻게 알아낼까?"
+       }
+      ]
      }
     ]
    }

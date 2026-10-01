@@ -62,17 +62,17 @@ window.NMLab = (() => {
   function table(host, cols, onchange = () => {}) {
     const rows = [];
     host.classList.add("lab-tbl");
-    const render = () => {
+    const render = (quiet) => {
       host.innerHTML = `<table><thead><tr><th>#</th>${cols.map((c) => `<th>${c.label}</th>`).join("")}<th></th></tr></thead><tbody>${
         rows.length ? rows.map((r, i) => `<tr><td>${i + 1}</td>${cols.map((c) => `<td>${typeof r[c.key] === "number" ? fmt(r[c.key], c.res) : r[c.key] ?? "—"}</td>`).join("")}<td><button type="button" class="lab-del" data-i="${i}" aria-label="${i + 1}번째 기록 지우기">×</button></td></tr>`).join("")
           : `<tr><td colspan="${cols.length + 2}" class="lab-empty">아직 기록이 없습니다</td></tr>`}</tbody></table>`;
-      onchange(rows);
+      if (!quiet) onchange(rows);
     };
     host.addEventListener("click", (e) => {
       const b = e.target.closest(".lab-del"); if (!b) return;
       rows.splice(+b.dataset.i, 1); render();
     });
-    render();
+    render(true);   // 처음 그릴 때는 onchange를 부르지 않는다 (카드의 캔버스가 아직 준비 전일 수 있음)
     return {
       rows,
       add(r) { rows.push(r); render(); host.scrollTop = host.scrollHeight; },
@@ -143,5 +143,8 @@ window.NMLab = (() => {
     return { X, bw };
   }
 
-  return { gauss, snap, fmt, measure, stats, linfit, table, ticks, plot, hist };
+  /* 주소에 ?demo가 있으면 카드가 예시 기록을 미리 채운다 (캡처·점검용) */
+  const demo = /[?&]demo\b/.test(location.search);
+
+  return { demo, gauss, snap, fmt, measure, stats, linfit, table, ticks, plot, hist };
 })();
