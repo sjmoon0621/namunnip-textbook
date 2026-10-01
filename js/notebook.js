@@ -4,7 +4,7 @@
   const S = window.NMStore;
   if (!S || !window.TOC) return;
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"];
+  const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"];
 
   // 블록 id → 위치. 목차 순서도 함께 기록해 정렬에 쓴다
   const where = {}; let order = 0; let total = 0;

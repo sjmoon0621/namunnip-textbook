@@ -233,7 +233,7 @@ def main():
     used = {}
     toc = []
     for c in cur["courses"]:
-        tc = {"id": c["id"], "name": c["name"], "meta": c["meta"], "chapters": []}
+        tc = {"id": c["id"], "name": c["name"], "meta": c["meta"], "track": c["track"], "level": c["level"], "chapters": []}
         toc.append(tc)
         for ch in c["chapters"]:
             tch = {"n": ch["n"], "title": ch["title"], "sections": []}

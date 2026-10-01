@@ -21,6 +21,8 @@
 
 과목 코드: `is1` 통합과학1 · `is2` 통합과학2 · `phy` 물리학 · `chem` 화학 · `bio` 생명과학 · `earth` 지구과학 · `extra` 교양·심화.
 진로선택: `mech` 역학과 에너지 · `emq` 전자기와 양자 · `mateng` 물질과 에너지 · `rxn` 화학 반응의 세계 · `cell` 세포와 물질대사 · `gene` 생물의 유전 · `esys` 지구시스템과학 · `space` 행성우주과학.
+과탐실험: `sie1` · `sie2`. 과학계열 진로선택: `adphy` 고급 물리학 · `adchem` 고급 화학 · `adbio` 고급 생명과학 · `adearth` 고급 지구과학 · `resr` 과학과제 연구 · `info` 정보과학. 과학계열 융합선택: `labphy` 물리학 실험 · `labchem` 화학 실험 · `labbio` 생명과학 실험 · `labearth` 지구과학 실험. 융합선택: `hist` 과학의 역사와 문화 · `clim` 기후변화와 환경생태 · `fusi` 융합과학 탐구.
+과목마다 `track`(`phy|chem|bio|earth|common|fusion|extra`)과 `level`(`공통|일반|진로|고급|실험|융합|교양`)이 있고, 메인 페이지 체계도(`js/home.js`)가 이 두 값으로 상자를 배치한다. 새 과목을 추가하면 `c/<코드>/index.html`(다른 과목 것을 복사해 `data-course`만 바꿈)과 `js/graph.js`의 `COLORS`·`ORDER`도 넣을 것.
 과목을 새로 더하면 `js/graph.js`의 `COLORS`와 `ORDER`에도 넣는다(개념 지도의 색과 배치).
 
 과목 안에서만 쓰는 공용 계산·그리기 도구는 카드 스크립트와 같은 폴더에 두고 `window.NM*` 이름으로 내보낸다. 이 파일은 특정 카드에 묶이지 않으므로, 쓰는 블록의 `scripts`에서 카드 스크립트보다 먼저 적는다.

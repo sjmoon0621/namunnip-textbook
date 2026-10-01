@@ -3,7 +3,7 @@
   "use strict";
   const view = document.body.dataset.view;
   if (!view || !window.TOC) return;
-  const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"];
+  const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"];
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const count = (c) => {
     let sec = 0, open = 0, cards = 0, vids = 0;   // 읽기(text) 블록은 카드와 함께 센다
@@ -18,6 +18,27 @@
   if (view === "home") {
     const host = document.getElementById("courses-list");
     const base = "c/";
+
+    /* 체계도: 위 공통 띠 · 물리/화학/생명/지구 4열(일반 → 진로 → 고급 → 실험) · 아래 융합 띠 */
+    const TRACKS = [["phy", "물리"], ["chem", "화학"], ["bio", "생명과학"], ["earth", "지구과학"]];
+    const LV = { 공통: "공통", 일반: "일반선택", 진로: "진로선택", 고급: "과학계열 진로", 실험: "과학계열 융합", 융합: "융합선택" };
+    const RANK = ["공통", "일반", "진로", "고급", "실험", "융합"];
+    const box = (c) => {
+      const n = count(c), p = n.sec ? n.open / n.sec : 0;
+      return `<a class="tbox${n.open ? "" : " soon"}" href="${base}${c.id}/" data-track="${c.track}">
+        <span class="lv mono">${LV[c.level]}</span><b>${esc(c.name)}</b>
+        <span class="pg mono">${n.open ? `절 ${n.open}/${n.sec}` : `준비 중 · 절 ${n.sec}`}</span>
+        <i class="bar" style="--p:${p.toFixed(3)}"></i></a>`;
+    };
+    const pick = (f) => TOC.filter(f).sort((a, b) => RANK.indexOf(a.level) - RANK.indexOf(b.level));
+    const tree = document.getElementById("tree");
+    if (tree) tree.innerHTML = `
+      <div class="tree-head"><h2>과목 체계도</h2><p class="mono small dim">열마다 위에서 아래로 일반선택 → 진로선택 → 고급 → 실험. 흐린 상자는 아직 준비 중입니다.</p></div>
+      <div class="tree-band" data-track="common"><span class="band-lb mono">공통</span><div>${pick((c) => c.track === "common").map(box).join("")}</div></div>
+      <div class="tree-cols">${TRACKS.map(([t, nm]) => `
+        <div class="tree-col" data-track="${t}"><h3>${nm}</h3>${pick((c) => c.track === t).map(box).join("")}</div>`).join("")}
+      </div>
+      <div class="tree-band" data-track="fusion"><span class="band-lb mono">융합</span><div>${pick((c) => c.track === "fusion").map(box).join("")}</div></div>`;
     host.innerHTML = TOC.map((c) => {
       const n = count(c);
       const chapters = c.chapters.map((ch) => `
@@ -35,7 +56,7 @@
           }).join("")}</ol>
         </div>`).join("");
       return `
-      <section class="course" data-course="${c.id}">
+      <section class="course" data-course="${c.id}" data-track="${c.track}">
         <div class="course-head">
           <span class="mono">${esc(c.meta)}</span>
           <h2><a href="${base}${c.id}/">${esc(c.name)}</a></h2>
@@ -48,7 +69,7 @@
 
     const chips = document.getElementById("chips");
     chips.innerHTML = `<button class="chip" data-course="all" aria-pressed="true">전체</button>` +
-      TOC.map((c) => `<button class="chip" data-course="${c.id}" aria-pressed="false">${esc(c.name)}</button>`).join("");
+      [...TRACKS, ["common", "공통"], ["fusion", "융합"]].map(([t, nm]) => `<button class="chip" data-course="${t}" aria-pressed="false">${nm}</button>`).join("");
     const q = document.getElementById("q"), empty = document.getElementById("empty");
     let course = "all";
     function apply() {
@@ -66,7 +87,7 @@
           });
           ch.hidden = !chAny; if (chAny) any = true;
         });
-        sec.hidden = !(any && (course === "all" || sec.dataset.course === course));
+        sec.hidden = !(any && (course === "all" || sec.dataset.track === course));
         if (!sec.hidden) shown++;
       });
       empty.style.display = shown ? "none" : "block";
@@ -80,7 +101,8 @@
     q.addEventListener("input", apply);
     const total = TOC.reduce((a, c) => { const n = count(c); a.cards += n.cards; a.vids += n.vids; a.open += n.open; return a; }, { cards: 0, vids: 0, open: 0 });
     const stat = document.getElementById("stat");
-    if (stat) stat.textContent = `과목 ${TOC.length - 1} · 절 ${total.open} · 카드 ${total.cards} · 영상 ${total.vids}`;
+    const live = TOC.filter((c) => c.id !== "extra" && count(c).open).length;
+    if (stat) stat.textContent = `과목 ${live}/${TOC.length - 1} · 절 ${total.open} · 카드 ${total.cards} · 영상 ${total.vids}`;
   }
 
   /* ───── 과목 목차 ───── */

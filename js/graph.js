@@ -9,7 +9,10 @@
   const St = window.NMStore;
   const { F } = NM;
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const COLORS = { is1: "#86c36f", is2: "#4fc1b6", phy: "#6ea4e6", mech: "#4f7fd6", emq: "#8fc3f5", chem: "#b58de3", mateng: "#9267d6", rxn: "#d3a8f0", bio: "#e89a55", cell: "#d97a3a", gene: "#f2bd86", earth: "#caa47c", esys: "#a88457", space: "#e3cfa3", extra: "#9a9aa0" };
+  const COLORS = { is1: "#86c36f", is2: "#4fc1b6", phy: "#6ea4e6", mech: "#4f7fd6", emq: "#8fc3f5", chem: "#b58de3", mateng: "#9267d6", rxn: "#d3a8f0", bio: "#e89a55", cell: "#d97a3a", gene: "#f2bd86", earth: "#caa47c", esys: "#a88457", space: "#e3cfa3", extra: "#9a9aa0",
+    sie1: "#a6d98f", sie2: "#7ed6cc", adphy: "#3a62b0", labphy: "#b5d6f7", adchem: "#7449b8", labchem: "#e3c9f7", adbio: "#b8602a", labbio: "#f7d3ad", adearth: "#866640", labearth: "#efe1c0", resr: "#d6d06b", info: "#9fb0bf", hist: "#e08aa8", clim: "#5fae8f", fusi: "#c9a0d9" };
+  // 블록이 하나라도 배치된 과목만 지도에 (뼈대만 있는 과목은 범례·칩·과목 노드에서 뺀다)
+  const LIVE = TOC.filter((c) => c.chapters.some((ch) => ch.sections.some((x) => x.page)));
   const ACCENT = "#a78bfa";
   const KIND = { card: "카드", text: "읽기", video: "영상" };
 
@@ -22,7 +25,7 @@
   /* ───── 데이터: 블록 점과 개념 허브 ───── */
   const courseName = {}, where = {}, order = [];
   TOC.forEach((c) => { courseName[c.id] = c.name; c.chapters.forEach((ch) => ch.sections.forEach((s) => s.items.forEach((it) => { if (where[it.id]) { where[it.id].also.push({ c, ch, s }); return; } where[it.id] = { c, ch, s, it, also: [] }; order.push(it.id); }))); });
-  const ORDER = ["is1", "phy", "mech", "emq", "chem", "mateng", "rxn", "is2", "bio", "cell", "gene", "earth", "esys", "space", "extra"], count = {};
+  const ORDER = ["is1", "sie1", "phy", "mech", "emq", "adphy", "labphy", "chem", "mateng", "rxn", "adchem", "labchem", "is2", "sie2", "bio", "cell", "gene", "adbio", "labbio", "earth", "esys", "space", "adearth", "labearth", "resr", "info", "hist", "clim", "fusi", "extra"], count = {};
   const place = (course) => {
     const i = (count[course] = (count[course] || 0) + 1), ca = ORDER.indexOf(course) / ORDER.length * Math.PI * 2, a = i * 2.39996, r = 7 * Math.sqrt(i);
     return { x: Math.cos(ca) * 220 + Math.cos(a) * r, y: Math.sin(ca) * 220 + Math.sin(a) * r };
@@ -47,7 +50,7 @@
   concepts.forEach((h) => h.req.forEach((r) => hubOf[r] && hubOf[r].kidsC.push(h)));
   const EXTRA = (window.GRAPH_LINKS || []).filter(([a, b]) => all.has(a) && all.has(b));
   // 과목 노드: 과목마다 하나. 그 과목에 배치된 블록(재사용 포함)과, 그 블록이 속한 개념 허브에 이어진다
-  const courseNodes = TOC.filter((c) => c.id !== "extra").map((c) => {
+  const courseNodes = LIVE.filter((c) => c.id !== "extra").map((c) => {
     const ca = Math.max(0, ORDER.indexOf(c.id)) / ORDER.length * Math.PI * 2;
     const blocks = order.filter((id) => where[id].c.id === c.id || where[id].also.some((a) => a.c.id === c.id));
     const hubs = concepts.filter((h) => h.blocks.some((b) => blocks.includes(b)));
@@ -369,7 +372,7 @@
     sp.querySelectorAll("[data-set]").forEach((el) => { const k = el.dataset.set; el.type === "checkbox" ? (el.checked = !!set[k]) : (el.value = set[k]); });
     sp.querySelectorAll("[data-color]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.color === set.color)));
     document.getElementById("gv-groups").innerHTML = legendShapes + (set.color === "course"
-      ? TOC.map((c) => `<li><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</li>`).join("") + `<li><i class="ring"></i>흰 테두리: 본 블록</li><li><i style="background:#ff5f57"></i>오답노트에 있음</li><li><i style="background:#e0b400"></i>메모·형광펜</li>`
+      ? LIVE.map((c) => `<li><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</li>`).join("") + `<li><i class="ring"></i>흰 테두리: 본 블록</li><li><i style="background:#ff5f57"></i>오답노트에 있음</li><li><i style="background:#e0b400"></i>메모·형광펜</li>`
       : `<li><i style="background:#5c5c63"></i>아직 안 봄</li><li><i style="background:#8fd16f"></i>봄</li><li><i style="background:#ff7b73"></i>오답노트에 있음</li>`);
   }
   sp.addEventListener("input", (e) => {
@@ -388,12 +391,12 @@
   });
   document.getElementById("gv-reset").addEventListener("click", () => { set = { ...DEFAULTS }; saveSet(); syncControls(); rebuild(); });
   const cbox = document.getElementById("gv-courses");
-  cbox.innerHTML = TOC.map((c) => `<button type="button" class="gv-course-chip" aria-pressed="true" data-c="${c.id}"><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</button>`).join("");
+  cbox.innerHTML = LIVE.map((c) => `<button type="button" class="gv-course-chip" aria-pressed="true" data-c="${c.id}"><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</button>`).join("");
   cbox.addEventListener("click", (e) => {
     const b = e.target.closest("[data-c]"); if (!b) return;
     const c = b.dataset.c;
     hiddenCourses.has(c) ? hiddenCourses.delete(c) : hiddenCourses.add(c);
-    if (hiddenCourses.size === TOC.length) hiddenCourses.clear();
+    if (hiddenCourses.size === LIVE.length) hiddenCourses.clear();
     cbox.querySelectorAll("[data-c]").forEach((x) => x.setAttribute("aria-pressed", String(!hiddenCourses.has(x.dataset.c))));
     refilter(); setTimeout(() => fitTo([...shown], 50), 700);
   });

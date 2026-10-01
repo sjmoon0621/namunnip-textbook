@@ -108,7 +108,7 @@ window.NM = (() => {
     const i = flat.findIndex((x) => x.c.id === b.course && `${x.ch.n}-${x.s.n}` === b.sec);
     if (course && i >= 0) {
       const { ch, s } = flat[i];
-      const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"];
+      const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"];
       const crumbs = document.querySelector(".crumbs");
       if (crumbs) crumbs.innerHTML = `<span aria-hidden="true">/</span><a href="./">${course.name}</a><span aria-hidden="true">/</span><span>${R[ch.n]}. ${ch.title}</span><span aria-hidden="true">/</span><b>${ch.n}.${s.n} ${s.title}</b>`;
       const meta = document.querySelector(".topic-hero .meta");

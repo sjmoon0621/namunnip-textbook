@@ -4,6 +4,8 @@ window.TOC = [
   "id": "is1",
   "name": "통합과학1",
   "meta": "고1 공통",
+  "track": "common",
+  "level": "공통",
   "chapters": [
    {
     "n": 1,
@@ -407,6 +409,8 @@ window.TOC = [
   "id": "is2",
   "name": "통합과학2",
   "meta": "고1 공통",
+  "track": "common",
+  "level": "공통",
   "chapters": [
    {
     "n": 1,
@@ -776,7 +780,9 @@ window.TOC = [
  {
   "id": "phy",
   "name": "물리학",
-  "meta": "일반 선택",
+  "meta": "일반선택",
+  "track": "phy",
+  "level": "일반",
   "chapters": [
    {
     "n": 1,
@@ -1190,7 +1196,9 @@ window.TOC = [
  {
   "id": "chem",
   "name": "화학",
-  "meta": "일반 선택",
+  "meta": "일반선택",
+  "track": "chem",
+  "level": "일반",
   "chapters": [
    {
     "n": 1,
@@ -1526,7 +1534,9 @@ window.TOC = [
  {
   "id": "bio",
   "name": "생명과학",
-  "meta": "일반 선택",
+  "meta": "일반선택",
+  "track": "bio",
+  "level": "일반",
   "chapters": [
    {
     "n": 1,
@@ -1933,7 +1943,9 @@ window.TOC = [
  {
   "id": "earth",
   "name": "지구과학",
-  "meta": "일반 선택",
+  "meta": "일반선택",
+  "track": "earth",
+  "level": "일반",
   "chapters": [
    {
     "n": 1,
@@ -2311,7 +2323,9 @@ window.TOC = [
  {
   "id": "mech",
   "name": "역학과 에너지",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "phy",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -2644,7 +2658,9 @@ window.TOC = [
  {
   "id": "emq",
   "name": "전자기와 양자",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "phy",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -3065,7 +3081,9 @@ window.TOC = [
  {
   "id": "mateng",
   "name": "물질과 에너지",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "chem",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -3338,7 +3356,9 @@ window.TOC = [
  {
   "id": "rxn",
   "name": "화학 반응의 세계",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "chem",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -3640,7 +3660,9 @@ window.TOC = [
  {
   "id": "cell",
   "name": "세포와 물질대사",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "bio",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -3994,7 +4016,9 @@ window.TOC = [
  {
   "id": "gene",
   "name": "생물의 유전",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "bio",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -4325,7 +4349,9 @@ window.TOC = [
  {
   "id": "esys",
   "name": "지구시스템과학",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "earth",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -4650,7 +4676,9 @@ window.TOC = [
  {
   "id": "space",
   "name": "행성우주과학",
-  "meta": "진로 선택",
+  "meta": "진로선택",
+  "track": "earth",
+  "level": "진로",
   "chapters": [
    {
     "n": 1,
@@ -4943,9 +4971,2859 @@ window.TOC = [
   ]
  },
  {
+  "id": "sie1",
+  "name": "과학탐구실험1",
+  "meta": "고1 공통",
+  "track": "common",
+  "level": "공통",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "과학의 본성과 역사 속의 과학 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "과학사를 바꾼 결정적 실험",
+      "code": "10과탐1-01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "과학사 사례로 본 과학의 본성",
+      "code": "10과탐1-01-02",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "과학 탐구의 과정과 절차",
+    "sections": [
+     {
+      "n": 1,
+      "title": "관찰과 귀납적 탐구",
+      "code": "10과탐1-02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "가설과 연역적 탐구",
+      "code": "10과탐1-02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "데이터 분석과 표현",
+      "code": "10과탐1-02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "협력적 탐구와 증거에 근거한 해석",
+      "code": "10과탐1-02-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sie2",
+  "name": "과학탐구실험2",
+  "meta": "고1 공통",
+  "track": "common",
+  "level": "공통",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "생활 속의 과학 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "생활 속 과학 원리 탐구",
+      "code": "10과탐2-01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "사회적 이슈에서 탐구 문제 찾기",
+      "code": "10과탐2-01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "실생활 문제 해결 도구 설계·제작",
+      "code": "10과탐2-01-03",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "미래 사회와 첨단 과학 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "첨단 과학기술 속 과학 원리",
+      "code": "10과탐2-02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "탐구 산출물 발표와 공유",
+      "code": "10과탐2-02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "연구 윤리와 실험 안전",
+      "code": "10과탐2-02-03",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "hist",
+  "name": "과학의 역사와 문화",
+  "meta": "융합선택",
+  "track": "fusion",
+  "level": "융합",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "과학과 문명의 탄생과 통합",
+    "sections": [
+     {
+      "n": 1,
+      "title": "문명의 탄생과 과학",
+      "code": "12과사01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "고대 그리스의 과학",
+      "code": "12과사01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "중세 유럽·중동의 과학",
+      "code": "12과사01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "르네상스와 과학혁명",
+      "code": "12과사01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "과학자의 신념과 세계관",
+      "code": "12과사01-05",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "변화하는 과학과 세계",
+    "sections": [
+     {
+      "n": 1,
+      "title": "현대 과학과 사회문화",
+      "code": "12과사02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "과학자들의 논쟁과 의사소통",
+      "code": "12과사02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "예술·건축 속 과학 원리",
+      "code": "12과사02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "감염병과 사회",
+      "code": "12과사02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "교통수단과 미래 사회",
+      "code": "12과사02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "산업혁명 이후 과학기술의 명암",
+      "code": "12과사02-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "과학과 인류의 미래",
+    "sections": [
+     {
+      "n": 1,
+      "title": "과학기술과 새로운 문화",
+      "code": "12과사03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "과학 용어와 사회",
+      "code": "12과사03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "과학기술과 음악",
+      "code": "12과사03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "연결되는 세상과 미래",
+      "code": "12과사03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "가상 현실·증강 현실",
+      "code": "12과사03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "과학기술과 시민의 의사결정",
+      "code": "12과사03-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "clim",
+  "name": "기후변화와 환경생태",
+  "meta": "융합선택",
+  "track": "fusion",
+  "level": "융합",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "기후와 환경생태의 특성",
+    "sections": [
+     {
+      "n": 1,
+      "title": "날씨와 기후",
+      "code": "12기환01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "기후시스템의 되먹임",
+      "code": "12기환01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "기후변화가 생태계와 생활에 준 영향",
+      "code": "12기환01-03",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "기후위기와 환경생태 변화",
+    "sections": [
+     {
+      "n": 1,
+      "title": "기후위기의 원인",
+      "code": "12기환02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "해수면 상승",
+      "code": "12기환02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "극한 기상 현상",
+      "code": "12기환02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "기후변화 시나리오와 미래 생태계",
+      "code": "12기환02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "꽃의 개화 시기 변화",
+      "code": "12기환02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "꿀벌과 곤충의 감소",
+      "code": "12기환02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "물꽃 현상과 수생태계",
+      "code": "12기환02-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "곤충 매개 감염병",
+      "code": "12기환02-08",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "기후위기에 대응하는 우리의 노력",
+    "sections": [
+     {
+      "n": 1,
+      "title": "산호 백화와 바다 사막화",
+      "code": "12기환03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "사막화·대형 산불·가뭄과 홍수",
+      "code": "12기환03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "탄소중립 기술",
+      "code": "12기환03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "국제사회의 노력과 시민 참여",
+      "code": "12기환03-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fusi",
+  "name": "융합과학 탐구",
+  "meta": "융합선택",
+  "track": "fusion",
+  "level": "융합",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "융합과학 탐구의 이해",
+    "sections": [
+     {
+      "n": 1,
+      "title": "융합적 탐구의 유용성",
+      "code": "12융탐01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "예술·사회과학과 과학 탐구 비교",
+      "code": "12융탐01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "탐구 데이터의 종류와 가치",
+      "code": "12융탐01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "디지털 탐구 도구와 인공지능",
+      "code": "12융탐01-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "융합과학 탐구의 과정",
+    "sections": [
+     {
+      "n": 1,
+      "title": "데이터에서 탐구 문제 찾기",
+      "code": "12융탐02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "가설·모형과 탐구 설계",
+      "code": "12융탐02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "데이터 수집과 신뢰성 평가",
+      "code": "12융탐02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "데이터 시각화",
+      "code": "12융탐02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "평균·표준편차로 가설 평가",
+      "code": "12융탐02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "결론 도출과 평가",
+      "code": "12융탐02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "탐구 결과 발표와 토론",
+      "code": "12융탐02-07",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "융합과학 탐구의 전망",
+    "sections": [
+     {
+      "n": 1,
+      "title": "미래의 융합과학기술",
+      "code": "12융탐03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "인류 난제와 융합과학기술",
+      "code": "12융탐03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "융합과학 탐구의 윤리",
+      "code": "12융탐03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "시민 참여로 해결한 사회 문제",
+      "code": "12융탐03-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "adphy",
+  "name": "고급 물리학",
+  "meta": "과학계열 진로선택",
+  "track": "phy",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "역학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "포물선 운동의 벡터 분석",
+      "code": "12고물01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "보존력과 충돌",
+      "code": "12고물01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "회전 운동과 각운동량 보존",
+      "code": "12고물01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "행성의 운동과 인공위성",
+      "code": "12고물01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "이상 기체와 열역학 제1법칙",
+      "code": "12고물01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "열효율과 엔트로피",
+      "code": "12고물01-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "전자기학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "가우스 법칙과 전기장",
+      "code": "12고물02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "축전기의 연결과 유전체",
+      "code": "12고물02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "전류의 자기장과 자체 유도",
+      "code": "12고물02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "전자기파의 발생과 성질",
+      "code": "12고물02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "키르히호프 법칙",
+      "code": "12고물02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "교류와 RLC 회로의 공진",
+      "code": "12고물02-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "광학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "거울·렌즈와 광학 기기",
+      "code": "12고물03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "이중 슬릿과 간섭계",
+      "code": "12고물03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "회절과 분해능",
+      "code": "12고물03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "편광과 3D 영상",
+      "code": "12고물03-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "현대 물리",
+    "sections": [
+     {
+      "n": 1,
+      "title": "가속 좌표계와 관성력",
+      "code": "12고물04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "시공간, 질량–에너지, 중력과 시간",
+      "code": "12고물04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "빛의 이중성과 물질파",
+      "code": "12고물04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "상보성 원리와 불확정성 원리",
+      "code": "12고물04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "퍼텐셜 상자와 띠 이론",
+      "code": "12고물04-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "기본 입자와 핵반응, 플라스마",
+      "code": "12고물04-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "adchem",
+  "name": "고급 화학",
+  "meta": "과학계열 진로선택",
+  "track": "chem",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "물질의 구조",
+    "sections": [
+     {
+      "n": 1,
+      "title": "오비탈과 원자 모형",
+      "code": "12고화01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "전형·전이 원소의 전자 배치",
+      "code": "12고화01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "화학 결합과 입자 간 에너지",
+      "code": "12고화01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "형식 전하와 공명 구조",
+      "code": "12고화01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "원자가 결합 이론과 혼성 오비탈",
+      "code": "12고화01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "탄화수소의 이성질체",
+      "code": "12고화01-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "작용기와 반응",
+      "code": "12고화01-07",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "물질의 성질",
+    "sections": [
+     {
+      "n": 1,
+      "title": "기체 분자 운동론과 속력 분포",
+      "code": "12고화02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "이상 기체와 부분 압력",
+      "code": "12고화02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "실제 기체",
+      "code": "12고화02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "증기압·표면 장력·모세관 현상",
+      "code": "12고화02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "단위세포와 결정성 고체",
+      "code": "12고화02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "농도 단위와 용해도",
+      "code": "12고화02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "묽은 용액의 총괄성",
+      "code": "12고화02-07",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "물질의 변화와 에너지",
+    "sections": [
+     {
+      "n": 1,
+      "title": "내부 에너지와 열역학 제1법칙",
+      "code": "12고화03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "엔탈피와 헤스 법칙",
+      "code": "12고화03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "엔트로피",
+      "code": "12고화03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "깁스 자유 에너지와 자발성",
+      "code": "12고화03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "산화수와 산화·환원 반응식",
+      "code": "12고화03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "표준 환원 전위와 전지 전위",
+      "code": "12고화03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "전지 전위와 자유 에너지",
+      "code": "12고화03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "전기 분해와 전기량",
+      "code": "12고화03-08",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "물질의 변화와 화학 평형",
+    "sections": [
+     {
+      "n": 1,
+      "title": "평형 상수와 반응 지수",
+      "code": "12고화04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "온도와 평형 상수",
+      "code": "12고화04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "상평형과 용해 평형",
+      "code": "12고화04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "루이스 산 염기와 이온화 상수",
+      "code": "12고화04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "약산·약염기의 pH",
+      "code": "12고화04-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "적정 곡선과 완충 용액",
+      "code": "12고화04-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "반응 속도와 아레니우스 식",
+      "code": "12고화04-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "적분 속도식",
+      "code": "12고화04-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "충돌 이론",
+      "code": "12고화04-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "반응 메커니즘과 속도 결정 단계",
+      "code": "12고화04-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "촉매와 활성화 에너지",
+      "code": "12고화04-11",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "adbio",
+  "name": "고급 생명과학",
+  "meta": "과학계열 진로선택",
+  "track": "bio",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "생물의 구조와 에너지",
+    "sections": [
+     {
+      "n": 1,
+      "title": "생체 분자의 구조와 기능",
+      "code": "12고생01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "순환적·비순환적 광인산화",
+      "code": "12고생01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "캘빈 회로",
+      "code": "12고생01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "광호흡과 C3·C4·CAM 식물",
+      "code": "12고생01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "해당 과정·TCA 회로와 조절",
+      "code": "12고생01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "산화적 인산화와 ATP 합성 효소",
+      "code": "12고생01-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "생물의 조절과 방어",
+    "sections": [
+     {
+      "n": 1,
+      "title": "세포 간 신호 전달",
+      "code": "12고생02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "호르몬의 작용 경로",
+      "code": "12고생02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "막전위와 활동 전위",
+      "code": "12고생02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "시냅스 전달과 시냅스후 전위",
+      "code": "12고생02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "선천적 면역과 후천적 면역",
+      "code": "12고생02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "림프구와 체액성·세포성 면역",
+      "code": "12고생02-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "생명의 연속성",
+    "sections": [
+     {
+      "n": 1,
+      "title": "DNA 복제의 교정과 수선",
+      "code": "12고생03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "전사의 조절 요소",
+      "code": "12고생03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "유전 암호의 실험적 해독",
+      "code": "12고생03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "원핵·진핵세포의 발현 조절",
+      "code": "12고생03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "발생 유전자와 진화",
+      "code": "12고생03-05",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "생명공학기술과 미래",
+    "sections": [
+     {
+      "n": 1,
+      "title": "세포 공학 기술",
+      "code": "12고생04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "유전자 재조합 기술",
+      "code": "12고생04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "생명공학기술의 활용과 학문 분야",
+      "code": "12고생04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "생명공학기술의 윤리적·사회적 문제",
+      "code": "12고생04-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "adearth",
+  "name": "고급 지구과학",
+  "meta": "과학계열 진로선택",
+  "track": "earth",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "고체 지구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "지진파와 지구 내부",
+      "code": "12고지01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "중력 이상과 지하 탐사",
+      "code": "12고지01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "지구 자기장과 고지자기",
+      "code": "12고지01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "판구조론과 플룸구조론",
+      "code": "12고지01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "광물의 물리·화학적 성질",
+      "code": "12고지01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "편광 현미경과 광물 감정",
+      "code": "12고지01-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "암석의 생성 조건",
+      "code": "12고지01-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "지층 대비와 절대 연령",
+      "code": "12고지01-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "지질 시대와 고생물·고환경",
+      "code": "12고지01-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "주향·경사와 지질도",
+      "code": "12고지01-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "한반도의 지질",
+      "code": "12고지01-11",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "대기와 해양",
+    "sections": [
+     {
+      "n": 1,
+      "title": "수증기의 상태 변화와 구름",
+      "code": "12고지02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "단열선도와 대기 안정도",
+      "code": "12고지02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "대기와 해양에 작용하는 힘",
+      "code": "12고지02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "지균풍·경도풍·지상풍",
+      "code": "12고지02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "대기 대순환과 제트류",
+      "code": "12고지02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "수괴와 해수 속 음파",
+      "code": "12고지02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "해파와 해일",
+      "code": "12고지02-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "지형류·경도류·에크만 수송",
+      "code": "12고지02-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "표층·심층 순환과 서안 강화",
+      "code": "12고지02-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "기조력과 조석 마찰",
+      "code": "12고지02-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "엘니뇨–남방진동",
+      "code": "12고지02-11",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "우주",
+    "sections": [
+     {
+      "n": 1,
+      "title": "시간계·천구 좌표와 관측 기기",
+      "code": "12고지03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "행성의 겉보기 운동과 회합 주기",
+      "code": "12고지03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "별까지의 거리",
+      "code": "12고지03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "흑체 복사와 분광 분류",
+      "code": "12고지03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "별의 진화와 내부 구조",
+      "code": "12고지03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "핵융합, 변광성과 밀집성",
+      "code": "12고지03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "성간 물질과 성운",
+      "code": "12고지03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "우리은하의 구조와 회전",
+      "code": "12고지03-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "외부 은하와 활동 은하핵",
+      "code": "12고지03-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "허블–르메트르 법칙과 대폭발 우주론",
+      "code": "12고지03-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "급팽창·가속 팽창과 표준 우주 모형",
+      "code": "12고지03-11",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "resr",
+  "name": "과학과제 연구",
+  "meta": "과학계열 진로선택",
+  "track": "fusion",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "과학 연구의 문제 탐색 및 선정",
+    "sections": [
+     {
+      "n": 1,
+      "title": "귀납적 연구와 가설 연역적 연구",
+      "code": "12과연01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "과학 탐구의 요소",
+      "code": "12과연01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "연구 윤리",
+      "code": "12과연01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "연구 주제 선정",
+      "code": "12과연01-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "과학 연구의 설계 및 수행",
+    "sections": [
+     {
+      "n": 1,
+      "title": "자료와 문헌 조사",
+      "code": "12과연02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "연구 문제와 가설 설정",
+      "code": "12과연02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "연구 설계와 재료·기기 준비",
+      "code": "12과연02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "자료 수집과 표·그래프 변환",
+      "code": "12과연02-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "과학 연구의 결론 도출 및 공유",
+    "sections": [
+     {
+      "n": 1,
+      "title": "자료 해석과 가설 검증",
+      "code": "12과연03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "토론과 결론 도출",
+      "code": "12과연03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "연구 보고서 작성",
+      "code": "12과연03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "구두·포스터 발표",
+      "code": "12과연03-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "info",
+  "name": "정보과학",
+  "meta": "과학계열 진로선택",
+  "track": "fusion",
+  "level": "고급",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "프로그래밍",
+    "sections": [
+     {
+      "n": 1,
+      "title": "함수와 매개변수",
+      "code": "12정과01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "재귀 구조",
+      "code": "12정과01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "반복과 재귀 비교",
+      "code": "12정과01-03",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "데이터 구조",
+    "sections": [
+     {
+      "n": 1,
+      "title": "스택과 큐의 구현",
+      "code": "12정과02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "스택·큐로 문제 해결",
+      "code": "12정과02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "트리와 그래프의 구현",
+      "code": "12정과02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "트리·그래프로 문제 해결",
+      "code": "12정과02-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "알고리즘",
+    "sections": [
+     {
+      "n": 1,
+      "title": "상태 공간 완전 탐색",
+      "code": "12정과03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "가지치기 탐색",
+      "code": "12정과03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "문제 분해",
+      "code": "12정과03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "분할 정복",
+      "code": "12정과03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "동적 계획법",
+      "code": "12정과03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "빅오 표기법과 복잡도",
+      "code": "12정과03-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "정보과학 프로젝트",
+    "sections": [
+     {
+      "n": 1,
+      "title": "컴퓨터과학으로 풀 문제 발견",
+      "code": "12정과04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "프로젝트 설계",
+      "code": "12정과04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "오픈소스로 협력 개발",
+      "code": "12정과04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "테스트와 디버깅",
+      "code": "12정과04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "산출물 평가와 공유",
+      "code": "12정과04-05",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "labphy",
+  "name": "물리학 실험",
+  "meta": "과학계열 융합선택",
+  "track": "phy",
+  "level": "실험",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "물리 실험의 기초",
+    "sections": [
+     {
+      "n": 1,
+      "title": "정확도·정밀도와 오차의 전파",
+      "code": "12물실01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "최소 제곱법과 신뢰구간",
+      "code": "12물실01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "오실로스코프와 함수 발생기",
+      "code": "12물실01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "센서와 컴퓨터 측정",
+      "code": "12물실01-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "역학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "등가속도 직선 운동 측정",
+      "code": "12물실02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "질량과 가속도의 관계",
+      "code": "12물실02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "접촉면과 마찰력",
+      "code": "12물실02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "중력 가속도 측정",
+      "code": "12물실02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "구심력 측정",
+      "code": "12물실02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "진자의 주기",
+      "code": "12물실02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "운동량 보존",
+      "code": "12물실02-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "용수철 진자의 역학적 에너지",
+      "code": "12물실02-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "얼음의 융해열",
+      "code": "12물실02-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "열의 일당량",
+      "code": "12물실02-10",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "전자기학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "등전위선 그리기",
+      "code": "12물실03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "평행판 축전기의 전기 용량",
+      "code": "12물실03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "전압·전류·저항의 관계",
+      "code": "12물실03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "건전지의 내부 저항",
+      "code": "12물실03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "휘트스톤 브리지",
+      "code": "12물실03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "자기장 속 도선이 받는 힘",
+      "code": "12물실03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "유도 기전력의 크기와 방향",
+      "code": "12물실03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "RC·RL 회로의 시간 상수",
+      "code": "12물실03-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "RLC 회로의 특성",
+      "code": "12물실03-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "다이오드와 정류 회로",
+      "code": "12물실03-10",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "광학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "정상파와 공명",
+      "code": "12물실04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "구면 거울의 상",
+      "code": "12물실04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "굴절률과 전반사",
+      "code": "12물실04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "렌즈 방정식",
+      "code": "12물실04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "이중 슬릿으로 파장 측정",
+      "code": "12물실04-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "슬릿 폭·간격과 무늬",
+      "code": "12물실04-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "편광 실험",
+      "code": "12물실04-07",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 5,
+    "title": "현대 물리",
+    "sections": [
+     {
+      "n": 1,
+      "title": "광전 효과",
+      "code": "12물실05-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "음극선의 성질",
+      "code": "12물실05-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "전자의 비전하",
+      "code": "12물실05-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "프랑크–헤르츠 실험",
+      "code": "12물실05-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "labchem",
+  "name": "화학 실험",
+  "meta": "과학계열 융합선택",
+  "track": "chem",
+  "level": "실험",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "화학 실험의 기초",
+    "sections": [
+     {
+      "n": 1,
+      "title": "유효숫자",
+      "code": "12화실01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "부피·질량·온도·pH 측정 도구",
+      "code": "12화실01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "첨단 분석 기기와 데이터 해석",
+      "code": "12화실01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "용액 제조와 농도",
+      "code": "12화실01-04",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "물질의 성질",
+    "sections": [
+     {
+      "n": 1,
+      "title": "원소의 스펙트럼과 에너지 준위",
+      "code": "12화실02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "기체 상수 구하기",
+      "code": "12화실02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "미지 기체의 분자량",
+      "code": "12화실02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "결정 구조와 단위세포 모형",
+      "code": "12화실02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "여과",
+      "code": "12화실02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "추출과 분배 계수",
+      "code": "12화실02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "회전 증발 농축",
+      "code": "12화실02-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "재결정과 분별 결정",
+      "code": "12화실02-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "크로마토그래피",
+      "code": "12화실02-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "분별 증류",
+      "code": "12화실02-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "액체의 증기압과 분자 간 힘",
+      "code": "12화실02-11",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 12,
+      "title": "증기압 내림",
+      "code": "12화실02-12",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 13,
+      "title": "어는점 내림으로 화학식량 구하기",
+      "code": "12화실02-13",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 14,
+      "title": "삼투압으로 고분자 화학식량 구하기",
+      "code": "12화실02-14",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "화학 반응",
+    "sections": [
+     {
+      "n": 1,
+      "title": "반응열 측정과 헤스 법칙",
+      "code": "12화실03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "평형 이동과 평형 상수",
+      "code": "12화실03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "중화 적정",
+      "code": "12화실03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "산화·환원 적정",
+      "code": "12화실03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "화학 전지와 기전력",
+      "code": "12화실03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "전기 분해 생성물의 양",
+      "code": "12화실03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "초기 속도법과 반응 차수",
+      "code": "12화실03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "농도·온도·촉매와 반응 속도",
+      "code": "12화실03-08",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "탄소 화합물의 합성과 특성",
+    "sections": [
+     {
+      "n": 1,
+      "title": "탄화수소의 구조와 성질",
+      "code": "12화실04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "알코올의 산화",
+      "code": "12화실04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "작용기와 탄화수소 유도체의 반응",
+      "code": "12화실04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "비누 만들기",
+      "code": "12화실04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "방향족 탄화수소",
+      "code": "12화실04-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "아스피린 합성",
+      "code": "12화실04-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "labbio",
+  "name": "생명과학 실험",
+  "meta": "과학계열 융합선택",
+  "track": "bio",
+  "level": "실험",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "생물의 구조와 에너지",
+    "sections": [
+     {
+      "n": 1,
+      "title": "플랑크톤 관찰",
+      "code": "12생실01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "주사 전자 현미경",
+      "code": "12생실01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "원형질 분리",
+      "code": "12생실01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "삼투압과 수분 퍼텐셜",
+      "code": "12생실01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "삼투에 영향을 주는 요인",
+      "code": "12생실01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "식물의 조직과 기관",
+      "code": "12생실01-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "동물의 기관 해부와 관찰",
+      "code": "12생실01-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "효소 반응 속도의 요인",
+      "code": "12생실01-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "광합성 속도의 요인",
+      "code": "12생실01-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "세포 호흡 속도 측정",
+      "code": "12생실01-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "효모의 발효",
+      "code": "12생실01-11",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 12,
+      "title": "적혈구 용적률",
+      "code": "12생실01-12",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "자극과 반응",
+    "sections": [
+     {
+      "n": 1,
+      "title": "동물의 자극과 반응",
+      "code": "12생실02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "식물의 자극과 반응",
+      "code": "12생실02-02",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "생명의 연속성과 다양성",
+    "sections": [
+     {
+      "n": 1,
+      "title": "체세포 분열과 감수 분열 관찰",
+      "code": "12생실03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "꽃가루관 발아",
+      "code": "12생실03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "초파리의 초기 발생",
+      "code": "12생실03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "닭의 발생 표본",
+      "code": "12생실03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "초파리 침샘 염색체",
+      "code": "12생실03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "초파리 돌연변이 형질",
+      "code": "12생실03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "초파리 교배와 멘델 법칙",
+      "code": "12생실03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "X 염색체 연관 유전",
+      "code": "12생실03-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "가계 조사와 사람의 유전",
+      "code": "12생실03-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "대립유전자 빈도 모의실험",
+      "code": "12생실03-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "구조와 기능의 진화 사례",
+      "code": "12생실03-11",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 12,
+      "title": "채집·표본 제작과 동정",
+      "code": "12생실03-12",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 4,
+    "title": "환경과 생태계",
+    "sections": [
+     {
+      "n": 1,
+      "title": "방형구법과 우점종",
+      "code": "12생실04-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "함정 트랩과 곤충 군집",
+      "code": "12생실04-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "생물 요소와 비생물 요소",
+      "code": "12생실04-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "개체군 생장 곡선",
+      "code": "12생실04-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "동물 개체군에 영향을 주는 요인",
+      "code": "12생실04-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "환경 오염 물질과 식물 생장",
+      "code": "12생실04-06",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 5,
+    "title": "생명공학",
+    "sections": [
+     {
+      "n": 1,
+      "title": "동물 세포 계대 배양",
+      "code": "12생실05-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "식물 조직 배양",
+      "code": "12생실05-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "DNA 추출",
+      "code": "12생실05-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "DNA 전기 영동",
+      "code": "12생실05-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "제한 효소",
+      "code": "12생실05-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "대장균 형질 전환",
+      "code": "12생실05-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "PCR 유전자 증폭",
+      "code": "12생실05-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "생물정보학과 유전체 분석",
+      "code": "12생실05-08",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "labearth",
+  "name": "지구과학 실험",
+  "meta": "과학계열 융합선택",
+  "track": "earth",
+  "level": "실험",
+  "chapters": [
+   {
+    "n": 1,
+    "title": "고체 지구 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "지구타원체와 지오이드",
+      "code": "12지실01-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "진앙·진원 깊이와 지각 두께",
+      "code": "12지실01-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "중력 측정과 보정",
+      "code": "12지실01-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "고지자기와 극의 겉보기 이동",
+      "code": "12지실01-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "해저 확장 속도",
+      "code": "12지실01-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "광물의 성질과 분류",
+      "code": "12지실01-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "편광 현미경 관찰",
+      "code": "12지실01-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "암석의 성인과 분류",
+      "code": "12지실01-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "층서 대비와 상대 연령",
+      "code": "12지실01-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "방사성 동위 원소와 절대 연령",
+      "code": "12지실01-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "화석과 고환경",
+      "code": "12지실01-11",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 12,
+      "title": "주향·경사와 지질도",
+      "code": "12지실01-12",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 2,
+    "title": "대기와 해양 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "혼합비·비습과 수증기량",
+      "code": "12지실02-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "단열선도와 LCL·CCL·LFC",
+      "code": "12지실02-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "기온·이슬점 분포와 대기 안정도",
+      "code": "12지실02-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "전향력 시뮬레이션",
+      "code": "12지실02-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "일기도로 지균풍과 경도풍 비교",
+      "code": "12지실02-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "대기 대순환 시뮬레이션",
+      "code": "12지실02-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "ARGO 자료와 해수의 성질",
+      "code": "12지실02-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "조파 실험과 천해파",
+      "code": "12지실02-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "밀도 구조와 해류 속도",
+      "code": "12지실02-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "열염분 순환 실험",
+      "code": "12지실02-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "조석 자료 분석",
+      "code": "12지실02-11",
+      "page": false,
+      "items": []
+     }
+    ]
+   },
+   {
+    "n": 3,
+    "title": "우주 탐구",
+    "sections": [
+     {
+      "n": 1,
+      "title": "천구의와 구면 좌표",
+      "code": "12지실03-01",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 2,
+      "title": "아날렘마와 행성의 겉보기 운동",
+      "code": "12지실03-02",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 3,
+      "title": "시태양시·평균 태양시·균시차",
+      "code": "12지실03-03",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 4,
+      "title": "인공위성 궤도와 행성의 질량",
+      "code": "12지실03-04",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 5,
+      "title": "망원경의 분해능과 시야",
+      "code": "12지실03-05",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 6,
+      "title": "크레이터의 크기와 높이",
+      "code": "12지실03-06",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 7,
+      "title": "흑점 관측과 태양의 자전",
+      "code": "12지실03-07",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 8,
+      "title": "주계열 맞추기와 세페이드 변광성",
+      "code": "12지실03-08",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 9,
+      "title": "별의 스펙트럼과 흑체 복사",
+      "code": "12지실03-09",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 10,
+      "title": "차등 측광과 색지수",
+      "code": "12지실03-10",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 11,
+      "title": "성단의 H–R도",
+      "code": "12지실03-11",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 12,
+      "title": "성간 소광과 색초과",
+      "code": "12지실03-12",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 13,
+      "title": "구상 성단으로 찾는 은하 중심",
+      "code": "12지실03-13",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 14,
+      "title": "회전 곡선과 은하의 질량",
+      "code": "12지실03-14",
+      "page": false,
+      "items": []
+     },
+     {
+      "n": 15,
+      "title": "허블–르메트르 법칙과 우주의 나이",
+      "code": "12지실03-15",
+      "page": false,
+      "items": []
+     }
+    ]
+   }
+  ]
+ },
+ {
   "id": "extra",
   "name": "교양·심화",
   "meta": "교육과정 밖",
+  "track": "extra",
+  "level": "교양",
   "chapters": [
    {
     "n": 1,
