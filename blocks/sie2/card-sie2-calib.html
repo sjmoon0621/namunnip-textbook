@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/sie2/calib.js"
+  ]
+}
+-->
+<article class="card" id="card-sie2-calib">
+  <header class="card-head">
+    <span class="no"></span><h2>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</h2><span class="kind">실험 · 마이크로컨트롤러 · 센서 보정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="물통에 기준 온도계와 서미스터 센서를 함께 담그고, 마이크로컨트롤러가 읽은 ADC 값을 보여 주는 장치"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">물 온도 (참값) = <output class="t-out">25</output> °C</label>
+            <input class="t" type="range" min="0" max="80" step="1" value="25" aria-label="물 온도"></div>
+          <div class="presets meth" role="group" aria-label="보정 방법" style="align-self:end">
+            <button class="chip" data-m="two" aria-pressed="false">2점 보정</button><button class="chip" data-m="ls" aria-pressed="true">모든 점 직선 맞춤</button>
+          </div>
+        </div>
+        <div class="lab-btns"><button class="chip go rec" type="button">두 값 함께 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="ADC 값과 기준 온도의 그래프, 보정 직선, 보정 후 오차"></canvas>
+        <dl class="nums">
+          <div><dt>보정식</dt><dd class="n-f">—</dd></div>
+          <div><dt>지금 센서가 말하는 온도</dt><dd class="n-s">—</dd></div>
+          <div><dt>기록한 점의 최대 오차</dt><dd class="n-e">—</dd></div>
+        </dl>
+        <p class="fig-note">센서: 10 kΩ 서미스터(B = 3950)와 10 kΩ 고정 저항의 전압 나눔, 10비트 ADC(0~1023). 기준 온도계는 눈금 0.1 °C, 오차 ±0.2 °C쯤입니다. ADC 값은 전기 잡음으로 ±2쯤 흔들립니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>마이크로컨트롤러에 온도 센서를 연결하면 화면에는 "512" 같은 정수가 찍힙니다. 이 숫자를 섭씨온도로 바꾸는 식은 어디서 나올까요? 그리고 그 식은 얼마나 믿을 수 있을까요?</li>
+      <li><span class="tag">복원</span>서미스터는 온도가 오르면 저항이 줄어드는 소자입니다. 고정 저항과 직렬로 연결하면 서미스터 저항에 따라 나뉜 전압이 바뀌고, ADC가 이 전압을 0~1023 사이 정수로 바꿉니다. 이 관계는 직선이 아닙니다.</li>
+      <li><span class="tag">설계</span><em>보정(캘리브레이션)</em>은 믿을 수 있는 기준 기기와 같은 조건에서 함께 재어, 센서 값 → 실제 값 변환식을 만드는 일입니다. 센서와 기준 온도계를 같은 물에 담그고, 물 온도를 바꿔 가며 두 값을 짝지어 기록합니다.</li>
+      <li><span class="tag">분석</span>2점 보정은 두 점만으로 직선을 정해 간단하지만, 두 점 중 하나라도 오차가 있으면 식 전체가 틀어집니다. 여러 점에 직선을 맞추면 우연 오차가 줄어듭니다. 그러나 실제 관계가 S자 곡선이라, 0~80 °C처럼 범위를 넓히면 직선으로는 양 끝에서 오차가 커집니다.</li>
+      <li><span class="tag">측정</span>20~30 °C 사이에서 다섯 점을 기록해 보정한 뒤, 물 온도를 5 °C나 70 °C로 바꿔 센서가 말하는 온도를 확인하세요. 그다음 0~80 °C 전체에서 다시 기록하고 보정하면 최대 오차는 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>보정식은 <em>보정한 범위 안에서만</em> 믿을 수 있습니다. 범위 밖으로 늘여 쓰는 것(외삽)은 위험합니다. 넓은 범위가 필요하면 구간을 나누어 보정하거나, 서미스터의 곡선식(스타인하트–하트 식)을 씁니다. 뜨거운 물을 다룰 때는 전선과 회로가 물에 닿지 않게 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">20~30 °C에서 잘 보정한 센서로 냉동실(−15 °C) 온도를 쟀더니 −9 °C로 나왔습니다. 가장 알맞은 해석은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>센서가 고장 났다<span class="why"><b>고장이 아니어도 생기는 오차입니다.</b> 보정 범위 밖에서 직선식을 쓰면 S자 곡선과의 차이가 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>보정 범위 밖이라 직선식이 맞지 않는다<span class="why"><b>맞습니다.</b> 직선 보정은 보정한 구간 근처에서만 정확합니다. 냉동실을 재려면 그 온도 근처에서 다시 보정해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>ADC 잡음 때문이다<span class="why"><b>크기가 맞지 않습니다.</b> ±2의 잡음은 온도로 0.2 °C 안팎이라 6 °C나 되는 차이를 만들지 못합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

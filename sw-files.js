@@ -1,6 +1,6 @@
 /* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */
 self.PRECACHE = {
-"version": "341a6d106733",
+"version": "b1f51060e34c",
 "files": [
 "graph.html",
 "index.html",
@@ -251,6 +251,12 @@ self.PRECACHE = {
 "c/sie1/2-3.html",
 "c/sie1/2-4.html",
 "c/sie1/index.html",
+"c/sie2/1-1.html",
+"c/sie2/1-2.html",
+"c/sie2/1-3.html",
+"c/sie2/2-1.html",
+"c/sie2/2-2.html",
+"c/sie2/2-3.html",
 "c/sie2/index.html",
 "c/space/1-1.html",
 "c/space/1-2.html",
@@ -627,6 +633,10 @@ self.PRECACHE = {
 "js/cards/sie1/pasteur.js",
 "js/cards/sie1/pendulum.js",
 "js/cards/sie1/plot.js",
+"js/cards/sie2/calib.js",
+"js/cards/sie2/co2.js",
+"js/cards/sie2/column.js",
+"js/cards/sie2/egg.js",
 "js/cards/space/s-binary.js",
 "js/cards/space/s-cluster.js",
 "js/cards/space/s-distance.js",

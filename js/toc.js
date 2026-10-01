@@ -5114,22 +5114,45 @@ window.TOC = [
       "n": 1,
       "title": "생활 속 과학 원리 탐구",
       "code": "10과탐2-01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie2-egg",
+        "title": "큰 달걀은 얼마나 더 오래 삶아야 할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "사회적 이슈에서 탐구 문제 찾기",
       "code": "10과탐2-01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-sie2-question",
+        "title": "\"걱정된다\"를 어떻게 탐구 문제로 바꿀까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "실생활 문제 해결 도구 설계·제작",
       "code": "10과탐2-01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie2-column",
+        "title": "종이 한 장으로 얼마나 무거운 것을 버틸 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-egg-drop",
+        "title": "떨어뜨린 달걀이 깨지지 않게 하려면?"
+       }
+      ]
      }
     ]
    },
@@ -5141,22 +5164,60 @@ window.TOC = [
       "n": 1,
       "title": "첨단 과학기술 속 과학 원리",
       "code": "10과탐2-02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is1-sensor",
+        "title": "온도계는 정말 온도를 잴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie2-calib",
+        "title": "센서가 보낸 숫자를 어떻게 온도로 바꿀까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-sampling",
+        "title": "소리는 어떻게 숫자가 될까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "탐구 산출물 발표와 공유",
       "code": "10과탐2-02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie2-co2",
+        "title": "교실 공기, 숫자로 보면 무엇이 달라질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-iot",
+        "title": "사물인터넷은 무엇을 연결하고, 어디까지 믿을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "연구 윤리와 실험 안전",
       "code": "10과탐2-02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-sie2-ethics",
+        "title": "숫자 하나 고치는 것이 왜 그렇게 큰 잘못일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-ethics",
+        "title": "확진자의 이동 경로, 어디까지 공개해야 할까?"
+       }
+      ]
      }
     ]
    }
