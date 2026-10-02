@@ -48,6 +48,7 @@
         <li><a href="#card-is1-bands"><span class="mono">2.6.1</span>도체·반도체·절연체는 무엇이 다를까?</a></li>
         <li><a href="#card-is1-doping"><span class="mono">2.6.2</span>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a></li>
         <li><a href="#video-is1-chip"><span class="mono">영상</span>모래에서 반도체 칩까지</a></li>
+        <li><a href="#card-emq-semis"><span class="mono">2.6.3</span>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</a></li>
       </ol>
       <p class="progress mono small"></p>
       <p class="toc-links mono small"><a href="../../graph.html?sec=is1-2-6">이 절을 개념 지도에서 보기</a></p>
@@ -162,6 +163,54 @@
         </div>
       </section>
 
+      <article class="card" id="card-emq-semis">
+        <header class="card-head">
+          <span class="no">2.6.3</span><h2>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</h2><span class="kind">다이오드의 정류 · 트랜지스터의 증폭과 스위치</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="선택한 회로의 입력과 출력 그래프"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="회로">
+                <button type="button" class="chip" data-m="iv" aria-pressed="true">다이오드의 전류–전압</button>
+                <button type="button" class="chip" data-m="rect" aria-pressed="false">정류 회로</button>
+                <button type="button" class="chip" data-m="tr" aria-pressed="false">트랜지스터</button>
+              </div>
+              <div class="presets x-rect" role="group" aria-label="정류 방식">
+                <button type="button" class="chip" data-r="half" aria-pressed="false">반파 (다이오드 1개)</button>
+                <button type="button" class="chip" data-r="full" aria-pressed="true">전파 (다이오드 4개, 브리지)</button>
+              </div>
+              <label class="mono x-rect">평활 축전기 = <output class="c-out">0</output> μF</label>
+              <input class="c x-rect" type="range" min="0" max="2000" step="50" value="0" aria-label="평활 축전기 용량">
+              <label class="mono x-tr">베이스 전류 I<sub>B</sub> = <output class="b-out">20</output> μA</label>
+              <input class="b x-tr" type="range" min="0" max="200" step="1" value="20" aria-label="베이스 전류">
+              <dl class="nums">
+                <div><dt class="d1">—</dt><dd class="n-1">—</dd></div>
+                <div><dt class="d2">—</dt><dd class="n-2">—</dd></div>
+              </dl>
+              <p class="fig-note f-note"></p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>콘센트의 전기는 1초에 60번 방향이 바뀌는 교류인데, 스마트폰의 회로는 한 방향으로만 흐르는 직류로 작동합니다. 또 마이크의 아주 작은 전기 신호는 어떻게 스피커를 울릴 만큼 커질까요?</li>
+            <li><span class="tag">복원</span>p형 반도체는 양공이, n형 반도체는 전자가 전하를 나릅니다(도핑). 두 반도체를 붙인 경계(p–n 접합)에는 전하 운반자가 없는 공핍층이 생깁니다.</li>
+            <li><span class="tag">설명</span><em>다이오드</em>는 p–n 접합 하나로 된 소자입니다. p 쪽에 (+)를 걸면(순방향) 공핍층이 얇아져 규소는 약 0.7 V부터 전류가 급격히 흐르고, 반대로 걸면(역방향) 공핍층이 두꺼워져 거의 흐르지 않습니다. 그래서 교류의 한 방향만 통과시키는 <em>정류</em>에 쓰입니다. <em>트랜지스터</em>는 n–p–n(또는 p–n–p) 세 층으로 되어 있어, 베이스에 흐르는 작은 전류가 컬렉터–이미터 사이의 큰 전류를 조절합니다(I<sub>C</sub> ≈ βI<sub>B</sub>, β는 약 100).</li>
+            <li><span class="tag">연결</span>브리지 정류 회로와 축전기를 쓰면 교류가 거의 평평한 직류가 되어 충전기와 전원 장치를 만듭니다. 트랜지스터는 작은 신호를 비례해서 키우는 <em>증폭</em>(마이크 → 스피커)과, 베이스 전류로 큰 전류를 완전히 켜고 끄는 <em>스위치</em>로 쓰입니다. 스위치의 켜짐과 꺼짐이 디지털의 1과 0이며, 수십억 개의 트랜지스터 스위치가 모인 것이 컴퓨터의 CPU와 메모리입니다.</li>
+            <li><span class="tag">적용</span>정류 회로에서 반파와 전파의 출력 모양을 비교하고, 축전기를 넣으며 출력이 얼마나 평평해지는지 보세요. 트랜지스터에서 베이스 전류를 늘리면 컬렉터 전류가 어디까지 커지다가 멈추나요? 멈춘 상태가 스위치의 ‘켜짐’입니다.</li>
+            <li class="warn"><span class="tag">판단</span>“트랜지스터가 에너지를 만들어 신호를 키운다”는 오해입니다. 커진 신호의 에너지는 전원(배터리나 어댑터)에서 오고, 트랜지스터는 입력 신호의 모양대로 그 전류를 조절할 뿐입니다. 반도체 산업은 우리나라 수출의 약 5분의 1을 차지할 만큼 현대 문명과 경제의 바탕이 되었습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">반파 정류 회로에서 다이오드의 방향을 반대로 바꾸어 연결하면 출력은 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>교류의 나머지 반쪽(음의 반주기)만 통과해 출력 전압의 부호가 반대가 된다<span class="why"><b>맞습니다.</b> 다이오드는 방향만 고를 뿐, 어느 반쪽을 통과시키는지는 연결 방향이 정합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>전류가 전혀 흐르지 않는다<span class="why"><b>교류는 양쪽 방향이 번갈아 오므로</b> 반대쪽 반주기에는 순방향이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전파 정류가 된다<span class="why"><b>전파 정류에는 다이오드 4개(브리지)나 중간 탭이 있는 변압기가 필요합니다.</b></span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
@@ -174,5 +223,6 @@
 <script src="../../js/cards/is1/m-bands.js"></script>
 <script src="../../js/cards/is1/m-doping.js"></script>
 <script src="../../js/cards/is1/m-reel-chip.js"></script>
+<script src="../../js/cards/emq/e-semis.js"></script>
 </body>
 </html>
