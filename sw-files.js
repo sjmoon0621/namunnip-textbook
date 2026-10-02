@@ -1,6 +1,6 @@
 /* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */
 self.PRECACHE = {
-"version": "62a2a3eefa82",
+"version": "fb2b6caa9bc9",
 "files": [
 "graph.html",
 "index.html",
@@ -588,6 +588,9 @@ self.PRECACHE = {
 "js/cards/mech/w-two-speaker.js",
 "js/cards/pendulum.js",
 "js/cards/photo-rate.js",
+"js/cards/phy/circuit-meter.js",
+"js/cards/phy/compton.js",
+"js/cards/phy/diode-iv.js",
 "js/cards/phy/em-bulbs.js",
 "js/cards/phy/em-capacitor.js",
 "js/cards/phy/em-field.js",
@@ -617,6 +620,8 @@ self.PRECACHE = {
 "js/cards/phy/f-vt.js",
 "js/cards/phy/f-wheel.js",
 "js/cards/phy/f-work.js",
+"js/cards/phy/heat-transfer.js",
+"js/cards/phy/lens-bench.js",
 "js/cards/phy/lm-bands.js",
 "js/cards/phy/lm-double-slit.js",
 "js/cards/phy/lm-emicro.js",
@@ -631,6 +636,10 @@ self.PRECACHE = {
 "js/cards/phy/lm-reel-muon.js",
 "js/cards/phy/lm-spectra.js",
 "js/cards/phy/lm-thin-film.js",
+"js/cards/phy/prism.js",
+"js/cards/phy/solar-panel.js",
+"js/cards/phy/superpose.js",
+"js/cards/phy/video-track.js",
 "js/cards/phyllotaxis.js",
 "js/cards/reel-apple.js",
 "js/cards/rxn/a-buffer.js",

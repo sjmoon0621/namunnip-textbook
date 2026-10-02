@@ -991,6 +991,11 @@ window.TOC = [
         "kind": "video",
         "id": "video-phy-bus",
         "title": "급정거한 버스 안에서"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-video-track",
+        "title": "동영상 한 편으로 수레의 가속도를 잴 수 있을까?"
        }
       ]
      },
@@ -1070,6 +1075,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-mech-insulation",
         "title": "단열재를 두껍게 하면 빠져나가는 열이 얼마나 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-heat-transfer",
+        "title": "난로의 열은 어떤 길로 나에게 올까?"
        }
       ]
      },
@@ -1135,6 +1145,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-phy-bulbs",
         "title": "40 W 전구와 100 W 전구를 직렬로 이으면?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-circuit-meter",
+        "title": "직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?"
        }
       ]
      },
@@ -1236,6 +1251,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-phy-lm-film",
         "title": "비눗방울은 왜 무지갯빛일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-superpose",
+        "title": "마주 오던 두 파동이 만나면 부서질까, 그냥 지나갈까?"
        }
       ]
      },
@@ -1259,6 +1279,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-phy-lm-litho",
         "title": "반도체 회로는 왜 더 짧은 파장의 빛으로 새길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lens-bench",
+        "title": "스크린에 맺힌 상만으로 렌즈의 초점 거리를 잴 수 있을까?"
        }
       ]
      },
@@ -1287,6 +1312,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-emq-diffraction",
         "title": "틈이 많아질수록 무늬는 왜 더 날카로워질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-compton",
+        "title": "X선이 전자에 부딪혀 튕겨 나오면 왜 색(파장)이 바뀔까?"
        }
       ]
      },
@@ -1305,6 +1335,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-phy-lm-spec",
         "title": "빛만 보고 무엇이 빛나는지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-prism",
+        "title": "프리즘은 하얀빛 속에 숨은 무지개를 어떻게 꺼낼까?"
        }
       ]
      },
@@ -1333,6 +1368,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-solar-cell",
         "title": "태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-diode-iv",
+        "title": "다이오드는 왜 한쪽으로만 전류를 흘릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-solar-panel",
+        "title": "작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?"
        }
       ]
      },
