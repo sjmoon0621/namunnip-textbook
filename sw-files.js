@@ -1,6 +1,6 @@
 /* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */
 self.PRECACHE = {
-"version": "92b856a8816f",
+"version": "62a2a3eefa82",
 "files": [
 "graph.html",
 "index.html",
@@ -508,6 +508,7 @@ self.PRECACHE = {
 "js/cards/is1/standard.js",
 "js/cards/is1/thermistor.js",
 "js/cards/is1/units.js",
+"js/cards/is2/acid-plate.js",
 "js/cards/is2/e-co2-forcing.js",
 "js/cards/is2/e-efficiency.js",
 "js/cards/is2/e-energy-pyramid.js",
@@ -523,6 +524,7 @@ self.PRECACHE = {
 "js/cards/is2/e-solar-cell.js",
 "js/cards/is2/e-sun-fusion.js",
 "js/cards/is2/e-transmission.js",
+"js/cards/is2/energy-design.js",
 "js/cards/is2/f-confound.js",
 "js/cards/is2/f-dredge.js",
 "js/cards/is2/f-ethics.js",
@@ -532,6 +534,12 @@ self.PRECACHE = {
 "js/cards/is2/f-robot.js",
 "js/cards/is2/f-test.js",
 "js/cards/is2/f-trust.js",
+"js/cards/is2/mass-extinction.js",
+"js/cards/is2/paleoenv.js",
+"js/cards/is2/rapid-test.js",
+"js/cards/is2/reident.js",
+"js/cards/is2/robot-design.js",
+"js/cards/is2/ssp.js",
 "js/cards/is2/v-cold-pack.js",
 "js/cards/is2/v-deep-time.js",
 "js/cards/is2/v-extinction.js",

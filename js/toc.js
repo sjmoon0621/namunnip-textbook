@@ -531,6 +531,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-extinction",
         "title": "대멸종 뒤에는 무슨 일이 일어났을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-paleoenv",
+        "title": "지층 속 화석만 보고 그때 그곳의 모습을 그릴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-mass-extinction",
+        "title": "공룡을 없앤 범인은 소행성일까, 화산일까?"
        }
       ]
      },
@@ -610,6 +620,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-neutral",
         "title": "산과 염기를 섞으면 무엇이 사라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-acid-plate",
+        "title": "이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?"
        }
       ]
      },
@@ -703,6 +718,16 @@ window.TOC = [
         "kind": "video",
         "id": "video-is2-keeling",
         "title": "킬링 곡선 60여 년"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-carbon-cycle",
+        "title": "사람이 내보낸 탄소는 모두 공기 중에 남을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-ssp",
+        "title": "2100년의 지구는 지금 우리가 고르는 길에 따라 얼마나 달라질까?"
        }
       ]
      },
@@ -726,6 +751,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-photo-rate",
         "title": "빛을 늘리면 광합성도 계속 빨라질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-sun-path",
+        "title": "바람, 비, 밥, 석유는 모두 햇빛에서 왔을까?"
        }
       ]
      },
@@ -777,6 +807,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-renewable",
         "title": "태양광과 풍력만으로 하루 전기를 채울 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-energy-design",
+        "title": "우리 학교 전기를 신재생 에너지로 채운다면 무엇을 얼마나 지을까?"
        }
       ]
      }
@@ -801,6 +836,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-test",
         "title": "검사 결과가 양성이면 정말 감염일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-rapid-test",
+        "title": "신속 항원 검사의 두 줄은 어떻게 생기고, 왜 PCR보다 놓치기 쉬울까?"
        }
       ]
      },
@@ -819,6 +859,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-dredge",
         "title": "자료를 많이 뒤지면 우연도 규칙처럼 보일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-reident",
+        "title": "이름을 지운 자료로도 나를 찾아낼 수 있을까?"
        }
       ]
      },
@@ -852,6 +897,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-is2-iot",
         "title": "사물인터넷은 무엇을 연결하고, 어디까지 믿을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-robot-design",
+        "title": "생활 로봇이 할 일을 하려면 어떤 감각과 손발이 필요할까?"
        }
       ]
      },
@@ -865,6 +915,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-ethics",
         "title": "확진자의 이동 경로, 어디까지 공개해야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-science-role",
+        "title": "과학은 미래의 문제를 어디까지 해결할 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-genai",
+        "title": "생성형 AI가 그린 그림은 누구의 것일까?"
        }
       ]
      }
