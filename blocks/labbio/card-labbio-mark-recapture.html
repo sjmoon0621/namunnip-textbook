@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/mark-recapture.js"
+  ]
+}
+-->
+<style>
+#card-labbio-mark-recapture .tbl-host table { font-size: 11.5px; }
+#card-labbio-mark-recapture .mr-opts { display: flex; flex-direction: column; gap: 2px; margin: 6px 0 2px; }
+#card-labbio-mark-recapture .mr-plot { margin: 6px 0 2px; font-size: 13px; line-height: 1.55; }
+#card-labbio-mark-recapture .lab-btns .chip:disabled { opacity: .4; cursor: default; }
+#card-labbio-mark-recapture .mr-plot .r { color: var(--ink-3); font-family: var(--f-mono); font-size: 11px; }
+</style>
+<article class="card" id="card-labbio-mark-recapture">
+  <header class="card-head">
+    <span class="no"></span><h2>쥐며느리 개체군의 크기는 무엇이 정할까?</h2><span class="kind">실험 · 표지 재포획법 · 생물·비생물 요인 · 밀도 의존</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="화단 조사 구역 안의 쥐며느리, 표지된 개체와 다시 잡힌 개체"></canvas>
+      <div class="ctl">
+        <div class="presets plot" role="group" aria-label="조사 구역">
+          <span class="mono small dim">구역</span>
+          <button class="chip" data-p="0" aria-pressed="true">1 낙엽 덮인 화단</button><button class="chip" data-p="1" aria-pressed="false">2 낙엽 걷은 화단</button><button class="chip" data-p="2" aria-pressed="false">3 두꺼비 사는 화단</button><button class="chip" data-p="3" aria-pressed="false">4 볕 드는 마른 화단</button>
+        </div>
+        <p class="mr-plot" aria-live="polite"></p>
+        <div class="presets ev" role="group" aria-label="조사 전 계절 사건">
+          <span class="mono small dim">사건</span>
+          <button class="chip" data-e="0" aria-pressed="true">없음 (봄)</button><button class="chip" data-e="1" aria-pressed="false">한여름 가뭄 뒤</button><button class="chip" data-e="2" aria-pressed="false">곰팡이병 유행 뒤</button>
+        </div>
+        <div class="mr-opts">
+          <label class="mono small"><input type="checkbox" class="molt"> 다시 잡기 전에 탈피해 표지가 떨어지는 개체가 있음</label>
+          <label class="mono small"><input type="checkbox" class="nomix"> 놓아준 뒤 10분 만에 같은 판자 밑을 다시 뒤짐</label>
+        </div>
+        <div class="lab-btns"><button class="chip go cap1" type="button">1차: 잡아서 표지하고 놓아주기</button><button class="chip go cap2" type="button" disabled>2차: 하루 뒤 다시 잡기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="조사 구역과 사건별 개체군 크기 추정값과 95% 신뢰 구간"></canvas>
+        <p class="fig-note">구역마다 판자 20장(30 cm × 30 cm)을 깔아 두고, 그 밑에서 잡은 쥐며느리 등딱지에 수성 페인트로 점을 찍어 놓아줍니다. 추정값은 채프먼 보정식 N̂ = (M+1)(C+1)/(m+1) − 1로 계산합니다 (M 표지 수, C 2차 포획 수, m 그중 표지된 수). 기록 표의 구역 번호 옆 * 는 표지 탈락, † 는 곧바로 다시 뒤진 조사입니다. 구역별 환경과 개체 수는 교육용 가상 자료입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>교정 화단 네 곳의 쥐며느리 수가 서로 다른 것 같습니다. 숨어 사는 동물을 다 셀 수 없을 때 개체군 크기를 어떻게 추정할까요? 또 그 차이를 만드는 것은 먹이, 포식자, 수분, 온도 가운데 무엇일까요?</li>
+      <li><span class="tag">복원</span><em>표지 재포획법</em>은 1차로 M마리를 잡아 표지한 뒤 놓아주고, 섞일 시간을 둔 뒤 2차로 C마리를 잡아 그중 표지된 m마리를 셉니다. 표지 개체의 비율이 전체에서와 같다고 보면 m/C = M/N이므로 N ≈ MC/m입니다(링컨–피터슨). m이 작을 때는 채프먼 보정식이 덜 치우칩니다.</li>
+      <li><span class="tag">설계</span>네 구역은 판자 수, 조사 시각, 표지 방법을 같게 하고 환경 하나씩만 다르게 골랐습니다. 구역 1과 2는 먹이(낙엽)와 수분, 1과 3은 포식자(두꺼비), 1과 4는 햇볕과 수분이 다릅니다. 이 방법은 조사 기간에 개체군이 닫혀 있고(출생·사망·이동 없음), 표지가 떨어지지 않고, 표지가 행동을 바꾸지 않으며, 놓아준 개체가 고르게 섞인다고 가정합니다.</li>
+      <li><span class="tag">분석</span>구역 1과 다른 구역의 N̂를 비교해 어떤 요인이 개체군을 줄였는지 추론합니다. 먹이와 포식자는 <em>생물 요소</em>, 수분과 햇볕(온도)은 <em>비생물 요소</em>입니다. 사건 뒤에는 처음 대비 남은 비율을 구역끼리 비교합니다. 가뭄처럼 밀도와 상관없이 같은 비율을 줄이는 요인은 <em>밀도 비의존적</em>, 전염병이나 먹이 경쟁처럼 빽빽할수록 더 크게 줄이는 요인은 <em>밀도 의존적</em> 요인입니다.</li>
+      <li><span class="tag">측정</span>사건 "없음"에서 네 구역을 한 번씩 조사하세요. 그다음 사건을 "가뭄 뒤", "곰팡이병 뒤"로 바꿔 구역 1과 2를 다시 조사하고, 남은 비율(사건 뒤 N̂ ÷ 처음 N̂)을 비교하세요. 마지막으로 두 체크 상자를 하나씩 켜고 구역 1을 다시 조사해 N̂가 어느 쪽으로 치우치는지 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>쥐며느리는 탈피하므로 표지가 떨어지면 m이 작아져 N̂가 실제보다 커집니다. 놓아준 곳을 곧바로 다시 뒤지면 표지 개체가 많이 잡혀 m이 커지고 N̂가 작아집니다. 둘 다 반복해도 줄지 않는 계통 오차이므로, 탈피 직후를 피하고 하루쯤 기다려 섞이게 합니다. m이 10마리보다 적으면 신뢰 구간이 매우 넓어집니다. 표지는 독성 없는 수성 페인트를 등딱지에 아주 작게 찍고, 잡은 곳에 그날 바로 놓아줍니다. 판자를 뒤집을 때는 장갑을 끼고 지네나 벌을 조심합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">한 연못에서 붕어 60마리에 표지해 놓아주고 일주일 뒤 50마리를 잡았더니 10마리가 표지되어 있었습니다. 그런데 표지한 붕어는 상처 때문에 그 사이 일부가 죽었다고 합니다. 옳은 설명은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>추정값 300마리는 정확하다<span class="why"><b>가정이 깨졌습니다.</b> 계산은 60 × 50 ÷ 10 = 300이 맞지만, 표지 개체가 죽어 표지 비율이 줄었으므로 이 값은 믿기 어렵습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>실제 개체 수는 300마리보다 적을 가능성이 크다<span class="why"><b>맞습니다.</b> 표지 개체가 줄면 다시 잡힌 표지 개체 m이 작아지고, N̂ = MC/m은 실제보다 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>실제 개체 수는 300마리보다 많을 가능성이 크다<span class="why"><b>방향이 반대입니다.</b> m이 작아지면 분모가 작아져 추정값이 커집니다. 따라서 실제는 추정값보다 적습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

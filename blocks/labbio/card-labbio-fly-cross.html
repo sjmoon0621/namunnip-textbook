@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/chi.js",
+    "js/cards/labbio/fly-cross.js"
+  ]
+}
+-->
+<style>
+#card-labbio-fly-cross .fc-opts { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 6px 0 2px; font-size: 13px; color: var(--ink-2); }
+#card-labbio-fly-cross .fc-obs { margin: 6px 0 2px; min-height: 2.6em; color: var(--ink-2); }
+#card-labbio-fly-cross .fc-obs b { color: var(--ink); }
+</style>
+<article class="card" id="card-labbio-fly-cross">
+  <header class="card-head">
+    <span class="no"></span><h2>초파리를 교배해 세어 보면 정말 3 : 1이 나올까?</h2><span class="kind">실험 · 초파리 교배 · 멘델 법칙 · 카이제곱 검정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="마지막으로 센 초파리들과 표현형 비율 막대그래프"></canvas>
+      <div class="ctl">
+        <div class="presets cross" role="group" aria-label="교배 조합">
+          <span class="mono small dim">교배</span>
+          <button class="chip" data-c="vg" aria-pressed="true">흔적 날개 × 야생형</button><button class="chip" data-c="e" aria-pressed="false">흑색 몸 × 야생형</button><button class="chip" data-c="di" aria-pressed="false">흔적 날개·흑색 몸 × 야생형</button><button class="chip" data-c="tc" aria-pressed="false">검정 교배</button>
+        </div>
+        <div class="fc-opts">
+          <label><input type="checkbox" class="nonvirgin"> P 암컷을 처녀 암컷이 아닌 것으로 (실수)</label>
+          <label><input type="checkbox" class="viab"> 돌연변이의 생존율 낮음 반영</label>
+        </div>
+        <div class="lab-btns"><button class="chip go p-cross" type="button">① P 교배 → F₁ 세기</button><button class="chip go f-cross" type="button">② F₁끼리 교배 → F₂ 한 병 세기</button><button class="chip clear" type="button">새로 시작</button></div>
+        <p class="fc-obs small">교배 조합을 고르고 ① P 교배부터 시작하세요.</p>
+        <dl class="nums">
+          <div><dt>F₂ 누적 개체 수</dt><dd class="n-n">—</dd></div>
+          <div><dt>χ² (자유도)</dt><dd class="n-x">—</dd></div>
+          <div><dt>p 값 · 판정 (α = 0.05)</dt><dd class="n-p">—</dd></div>
+        </dl>
+        <div class="tbl-host"></div>
+        <p class="fig-note">한 병(배양병)에서 우화한 자손은 40~100마리쯤입니다. 마취한 초파리를 붓으로 나누며 표현형별로 셉니다. 흔적 날개(vg)는 2번 염색체, 흑색 몸(e)은 3번 염색체에 있는 열성 돌연변이입니다. 생존율 차이는 돌연변이 개체가 야생형의 85%쯤만 살아남는다고 둔 예시값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>멘델은 완두로 분리의 법칙과 독립의 법칙을 찾았습니다. 동물인 초파리도 같은 법칙을 따를까요? 실제로 센 자손 수는 이론값과 조금씩 다른데, 그 차이가 우연인지 아닌지는 어떻게 판단할까요?</li>
+      <li><span class="tag">복원</span>대립유전자 한 쌍은 생식세포를 만들 때 갈라져 하나씩 들어갑니다(<em>분리의 법칙</em>). 서로 다른 염색체에 있는 두 유전자는 서로 영향 없이 생식세포로 들어갑니다(<em>독립의 법칙</em>). 그래서 F₂의 표현형 비는 한 쌍이면 3 : 1, 두 쌍이면 9 : 3 : 3 : 1이 기대됩니다.</li>
+      <li><span class="tag">설계</span>P 교배의 암컷은 반드시 <em>처녀 암컷</em>을 씁니다. 초파리 암컷은 정자를 저장하므로, 이미 형제와 짝짓기한 암컷은 원하지 않는 자손을 낳습니다. 25 °C에서 암컷은 우화 뒤 약 8시간 동안 짝짓기하지 않으니, 배양병의 성체를 모두 비운 뒤 8시간 안에 나온 암컷을 모아 따로 둡니다. 교배 7~8일 뒤 F₁이 나오기 전에 어버이를 빼내야 F₁과 섞이지 않습니다. F₁끼리 교배할 때는 모두 같은 유전자형이므로 처녀 암컷이 필요 없습니다.</li>
+      <li><span class="tag">분석</span>관찰 수(O)와 기대 수(E)로 <em>χ² = Σ (O − E)² / E</em>를 계산합니다. 자유도는 표현형 수 − 1입니다. χ²가 임곗값(자유도 1이면 3.84, 3이면 7.81)보다 작으면, 즉 p > 0.05이면 차이를 우연으로 설명할 수 있으므로 가설을 버리지 않습니다. 이는 ‘가설이 증명되었다’는 뜻이 아닙니다.</li>
+      <li><span class="tag">측정</span>흔적 날개 교배에서 F₁을 세고, F₂를 다섯 병 이상 세어 χ²가 어떻게 바뀌는지 보세요. 이어서 양성 잡종으로 9 : 3 : 3 : 1을, 검정 교배로 1 : 1 : 1 : 1을 확인하세요. 마지막으로 ‘처녀 암컷이 아닌 것으로’를 켜고 다시 해 보면 F₁부터 무엇이 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>한 병만 세면 우연에 따른 흔들림이 큽니다. 여러 병을 합치면 우연 오차는 줄지만, 돌연변이의 생존율이 낮은 것처럼 한쪽으로 치우친 원인은 개체 수를 늘려도 사라지지 않고 오히려 χ²를 키웁니다. 이론과 다른 결과가 나오면 표현형 판별 실수, 처녀 암컷 수집 실패, 생존율 차이, 온도(흔적 날개는 29 °C 근처에서 날개가 길어지기도 함)를 차례로 따져 봅니다. 에테르 같은 마취제는 환기되는 곳에서 쓰고, 돌연변이 계통은 LMO 관련 규정에 따라 관리하며, 다 쓴 초파리는 알코올이나 고압 멸균으로 처리합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">흔적 날개 F₂를 2000마리 세었더니 야생형 1560, 흔적 날개 440이었습니다(χ² = 9.6). 가장 알맞은 해석은 무엇일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>개체 수가 많으니 우연에 의한 차이다<span class="why"><b>반대입니다.</b> 개체 수가 많을수록 우연에 의한 비율의 흔들림은 작아집니다. 2000마리에서 22%로 25%보다 적다면 우연으로 보기 어렵습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>흔적 날개 개체가 덜 살아남는 등 체계적인 원인이 있을 수 있다<span class="why"><b>맞습니다.</b> χ²가 3.84보다 커서 3 : 1 가설과 차이가 큽니다. 분리의 법칙 자체보다 생존율 차이나 판별 실수 같은 계통적 원인을 먼저 의심합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>분리의 법칙은 초파리에 맞지 않는다<span class="why"><b>너무 나간 결론입니다.</b> 열성 개체가 적게 나온 것은 생식세포 형성 이후, 발생 중에 일부가 죽어도 생깁니다. 검정 교배나 알 단계부터 세는 실험으로 원인을 따로 확인해야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

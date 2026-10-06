@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/bioinfo.js"
+  ]
+}
+-->
+<style>
+#card-labbio-bioinfo .bi-msg { font-size: 13px; color: var(--ink-2); min-height: 1.4em; margin: 4px 0 0; }
+</style>
+<article class="card" id="card-labbio-bioinfo">
+  <header class="card-head">
+    <span class="no"></span><h2>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</h2><span class="kind">탐구 · 생물정보학 · 서열 검색과 변이 찾기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="검색한 서열과 가장 비슷한 서열의 정렬, 또는 환자 서열과 참조 서열의 정렬과 아미노산 번역"></canvas>
+      <div class="ctl">
+        <div class="presets mode" role="group" aria-label="분석 방법">
+          <span class="mono small dim">분석</span>
+          <button class="chip" data-m="search" aria-pressed="true">유사 서열 검색</button><button class="chip" data-m="variant" aria-pressed="false">환자 서열의 변이 찾기</button>
+        </div>
+        <div class="presets qsel" role="group" aria-label="검색할 서열">
+          <span class="mono small dim">검색할 서열</span>
+          <button class="chip" data-q="0" aria-pressed="true">미지 서열 1</button><button class="chip" data-q="1" aria-pressed="false">미지 서열 2</button><button class="chip" data-q="2" aria-pressed="false">미지 서열 3</button>
+        </div>
+        <div class="presets psel" role="group" aria-label="환자" style="display:none">
+          <span class="mono small dim">환자</span>
+          <button class="chip" data-p="0" aria-pressed="true">환자 가</button><button class="chip" data-p="1" aria-pressed="false">환자 나</button><button class="chip" data-p="2" aria-pressed="false">환자 다</button>
+        </div>
+        <div class="lab-btns"><button class="chip go run" type="button">데이터베이스 검색</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <p class="bi-msg" aria-live="polite"></p>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="데이터베이스 서열마다의 일치율 막대그래프"></canvas>
+        <p class="fig-note">교육용으로 줄인 데이터베이스입니다. ‘사람 HBB’는 실제 β-글로빈 유전자 암호화 부위의 앞 60염기이고, 나머지 서열은 비교를 위해 만든 가상 서열입니다. 실제 BLAST는 수억 개의 서열에서 짧은 일치(씨앗)를 먼저 찾고 양옆으로 넓혀 가며, 틈(삽입·결실)을 허용하고 우연히 일치할 가능성(E값)도 계산합니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>환자에게서 얻은 DNA 조각이 어느 유전자의 일부인지, 건강한 사람의 서열과 어디가 다른지 알아내려 합니다. 사람 유전체는 약 30억 염기쌍입니다. 눈으로 비교할 수 없는 이 많은 정보를 어떻게 다룰까요?</li>
+      <li><span class="tag">복원</span>유전자의 염기 서열은 코돈(3염기) 단위로 아미노산을 지정합니다. 한 염기가 바뀌면 아미노산이 바뀌거나(<em>비동의 변이</em>), 그대로이거나(<em>동의 변이</em>), 종결 코돈이 될 수 있습니다. <em>생물정보학</em>은 이런 생물 정보를 컴퓨터로 저장·검색·비교·해석하는 분야입니다.</li>
+      <li><span class="tag">설계</span>먼저 미지 서열을 데이터베이스 전체와 비교해 가장 비슷한 서열을 찾습니다(유사 서열 검색). 정체를 알면 같은 유전자의 <em>참조 서열</em>과 환자 서열을 나란히 놓고(정렬), 다른 자리를 찾아 코돈과 아미노산이 어떻게 바뀌는지 확인합니다.</li>
+      <li><span class="tag">분석</span>일치율이 높고 긴 구간이 맞을수록 같은 유전자이거나 가까운 종의 같은 유전자일 가능성이 큽니다. 무작위 서열끼리도 한 자리마다 1/4은 우연히 같고, 위치를 옮겨 가며 맞추면 40%를 넘기도 합니다. 그래서 일치율만이 아니라 여러 염기가 연속으로 같은 구간(씨앗)이 있는지도 봅니다. 사람 사이의 흔한 변이 수십만 곳을 많은 환자와 건강한 사람에게서 비교해, 특정 질병과 함께 나타나는 변이를 찾는 방법이 <em>전장 유전체 연관 분석(GWAS)</em>입니다.</li>
+      <li><span class="tag">측정</span>미지 서열 세 개를 검색해 각각 가장 비슷한 서열과 일치율을 기록하세요. 그다음 ‘변이 찾기’로 바꿔 환자 가·나·다의 서열을 참조 서열과 정렬하고, 몇 번째 코돈의 어떤 염기가 바뀌었는지, 아미노산이 어떻게 바뀌었는지 적으세요. 세 환자 가운데 아미노산이 바뀌지 않은 사람은 누구인가요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>서열 분석 기기도 오류를 내므로, 하나의 읽기에서만 보이는 변이는 여러 번 읽어 확인합니다. 변이가 있다고 모두 병을 일으키는 것은 아니며, GWAS에서 찾은 연관은 원인이 아니라 ‘함께 나타남’일 수 있습니다. 유전체 정보는 본인과 가족의 건강 정보를 담은 민감한 개인 정보이므로, 동의를 받아 수집하고 익명화해 보호해야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 환자의 HBB 유전자 6번째 코돈(전통적인 번호)이 GAG에서 GAA로 바뀌었습니다. 이 변이로 낫 모양 적혈구 빈혈증이 생길까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>생긴다. 낫 모양 적혈구 빈혈증과 같은 코돈이 바뀌었기 때문이다<span class="why"><b>위치가 같아도 결과는 바뀐 염기에 따라 다릅니다.</b> 낫 모양 적혈구 빈혈증은 GAG → GTG로 글루탐산이 발린으로 바뀐 경우입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>생기지 않을 가능성이 크다. GAA도 글루탐산을 지정하는 동의 변이이다<span class="why"><b>맞습니다.</b> 유전 부호의 중복성 때문에 셋째 염기가 바뀌어도 같은 아미노산이 되는 경우가 많습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>단백질이 만들어지지 않는다<span class="why"><b>GAA는 종결 코돈이 아닙니다.</b> 종결 코돈은 UAA, UAG, UGA(DNA로는 TAA, TAG, TGA)입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

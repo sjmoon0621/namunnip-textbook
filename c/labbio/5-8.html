@@ -1,0 +1,223 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>생물정보학과 유전체 분석 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="생물정보학의 연구 방법(서열 검색, 서열 정렬, 유전체 데이터베이스, 전장 유전체 연관 분석)으로 유전체 분석이 질병 치료에 기여한 사례를 조사하고, 다양한 매체로 협력하여 발표한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labbio-bioinfo .bi-msg { font-size: 13px; color: var(--ink-2); min-height: 1.4em; margin: 4px 0 0; }
+    #card-bio-seq-tree canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
+    #card-bio-seq-tree .aln { margin-top: 8px; font-family: var(--f-mono); font-size: 10.5px; line-height: 1.6; overflow-x: auto; }
+    #card-bio-seq-tree .aln .row { display: flex; align-items: center; gap: 6px; white-space: nowrap; cursor: pointer; }
+    #card-bio-seq-tree .aln .row:hover { background: var(--paper-2); }
+    #card-bio-seq-tree .aln .nm { flex: none; width: 8.2em; font-family: var(--f-sans); font-size: 11px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; }
+    #card-bio-seq-tree .aln .row.ref .nm { color: var(--forest); font-weight: 700; }
+    #card-bio-seq-tree .aln .sq i { font-style: normal; color: var(--ink-3); }
+    #card-bio-seq-tree .aln .row.ref .sq i { color: var(--ink); }
+    #card-bio-seq-tree .aln .sq i.d { background: #f1d79b; color: var(--ink); font-weight: 600; }
+    #card-bio-seq-tree .aln .sq i.x { opacity: .3; background: none; font-weight: 400; }
+    #card-bio-seq-tree .aln .dd { flex: none; width: 3em; text-align: right; color: var(--ink-2); }
+    #card-bio-seq-tree .mat { margin-top: 8px; overflow-x: auto; }
+    #card-bio-seq-tree .mat table { border-collapse: collapse; font-family: var(--f-mono); font-size: 11px; }
+    #card-bio-seq-tree .mat th, #card-bio-seq-tree .mat td { padding: 2px 7px; text-align: right; border-bottom: 1px solid var(--rule); font-weight: 400; }
+    #card-bio-seq-tree .mat th { color: var(--ink-3); }
+    #card-bio-seq-tree .mat td.min { background: var(--forest); color: #fff; font-weight: 600; }
+    #card-bio-seq-tree .mat td.tie { background: var(--sprout, #b5d7ac); }
+  </style>
+</head>
+<body data-course="labbio" data-sec="5-8">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>생물정보학과 유전체 분석</h1>
+    <p class="lead">사람 유전체 30억 염기쌍 가운데 한 글자가 다르면 병이 생기기도 합니다. 컴퓨터로 서열을 검색하고 비교해 그 한 글자를 찾고, 그것이 치료로 이어진 사례를 모둠이 함께 조사해 봅시다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">유전 부호와 코돈</span><span class="p">돌연변이</span><span class="p">유전병</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labbio-bioinfo"><span class="mono">5.8.1</span>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</a></li>
+        <li><a href="#text-labbio-genome-med"><span class="mono">5.8.2</span>유전체 분석은 실제로 어떤 환자를 도왔을까?</a></li>
+        <li><a href="#card-bio-seq-tree"><span class="mono">5.8.3</span>DNA 서열의 차이로 계통수를 그릴 수 있을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labbio-5-8">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labbio-bioinfo">
+        <header class="card-head">
+          <span class="no">5.8.1</span><h2>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</h2><span class="kind">탐구 · 생물정보학 · 서열 검색과 변이 찾기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="검색한 서열과 가장 비슷한 서열의 정렬, 또는 환자 서열과 참조 서열의 정렬과 아미노산 번역"></canvas>
+            <div class="ctl">
+              <div class="presets mode" role="group" aria-label="분석 방법">
+                <span class="mono small dim">분석</span>
+                <button class="chip" data-m="search" aria-pressed="true">유사 서열 검색</button><button class="chip" data-m="variant" aria-pressed="false">환자 서열의 변이 찾기</button>
+              </div>
+              <div class="presets qsel" role="group" aria-label="검색할 서열">
+                <span class="mono small dim">검색할 서열</span>
+                <button class="chip" data-q="0" aria-pressed="true">미지 서열 1</button><button class="chip" data-q="1" aria-pressed="false">미지 서열 2</button><button class="chip" data-q="2" aria-pressed="false">미지 서열 3</button>
+              </div>
+              <div class="presets psel" role="group" aria-label="환자" style="display:none">
+                <span class="mono small dim">환자</span>
+                <button class="chip" data-p="0" aria-pressed="true">환자 가</button><button class="chip" data-p="1" aria-pressed="false">환자 나</button><button class="chip" data-p="2" aria-pressed="false">환자 다</button>
+              </div>
+              <div class="lab-btns"><button class="chip go run" type="button">데이터베이스 검색</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <p class="bi-msg" aria-live="polite"></p>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="데이터베이스 서열마다의 일치율 막대그래프"></canvas>
+              <p class="fig-note">교육용으로 줄인 데이터베이스입니다. ‘사람 HBB’는 실제 β-글로빈 유전자 암호화 부위의 앞 60염기이고, 나머지 서열은 비교를 위해 만든 가상 서열입니다. 실제 BLAST는 수억 개의 서열에서 짧은 일치(씨앗)를 먼저 찾고 양옆으로 넓혀 가며, 틈(삽입·결실)을 허용하고 우연히 일치할 가능성(E값)도 계산합니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>환자에게서 얻은 DNA 조각이 어느 유전자의 일부인지, 건강한 사람의 서열과 어디가 다른지 알아내려 합니다. 사람 유전체는 약 30억 염기쌍입니다. 눈으로 비교할 수 없는 이 많은 정보를 어떻게 다룰까요?</li>
+            <li><span class="tag">복원</span>유전자의 염기 서열은 코돈(3염기) 단위로 아미노산을 지정합니다. 한 염기가 바뀌면 아미노산이 바뀌거나(<em>비동의 변이</em>), 그대로이거나(<em>동의 변이</em>), 종결 코돈이 될 수 있습니다. <em>생물정보학</em>은 이런 생물 정보를 컴퓨터로 저장·검색·비교·해석하는 분야입니다.</li>
+            <li><span class="tag">설계</span>먼저 미지 서열을 데이터베이스 전체와 비교해 가장 비슷한 서열을 찾습니다(유사 서열 검색). 정체를 알면 같은 유전자의 <em>참조 서열</em>과 환자 서열을 나란히 놓고(정렬), 다른 자리를 찾아 코돈과 아미노산이 어떻게 바뀌는지 확인합니다.</li>
+            <li><span class="tag">분석</span>일치율이 높고 긴 구간이 맞을수록 같은 유전자이거나 가까운 종의 같은 유전자일 가능성이 큽니다. 무작위 서열끼리도 한 자리마다 1/4은 우연히 같고, 위치를 옮겨 가며 맞추면 40%를 넘기도 합니다. 그래서 일치율만이 아니라 여러 염기가 연속으로 같은 구간(씨앗)이 있는지도 봅니다. 사람 사이의 흔한 변이 수십만 곳을 많은 환자와 건강한 사람에게서 비교해, 특정 질병과 함께 나타나는 변이를 찾는 방법이 <em>전장 유전체 연관 분석(GWAS)</em>입니다.</li>
+            <li><span class="tag">측정</span>미지 서열 세 개를 검색해 각각 가장 비슷한 서열과 일치율을 기록하세요. 그다음 ‘변이 찾기’로 바꿔 환자 가·나·다의 서열을 참조 서열과 정렬하고, 몇 번째 코돈의 어떤 염기가 바뀌었는지, 아미노산이 어떻게 바뀌었는지 적으세요. 세 환자 가운데 아미노산이 바뀌지 않은 사람은 누구인가요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>서열 분석 기기도 오류를 내므로, 하나의 읽기에서만 보이는 변이는 여러 번 읽어 확인합니다. 변이가 있다고 모두 병을 일으키는 것은 아니며, GWAS에서 찾은 연관은 원인이 아니라 ‘함께 나타남’일 수 있습니다. 유전체 정보는 본인과 가족의 건강 정보를 담은 민감한 개인 정보이므로, 동의를 받아 수집하고 익명화해 보호해야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 환자의 HBB 유전자 6번째 코돈(전통적인 번호)이 GAG에서 GAA로 바뀌었습니다. 이 변이로 낫 모양 적혈구 빈혈증이 생길까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>생긴다. 낫 모양 적혈구 빈혈증과 같은 코돈이 바뀌었기 때문이다<span class="why"><b>위치가 같아도 결과는 바뀐 염기에 따라 다릅니다.</b> 낫 모양 적혈구 빈혈증은 GAG → GTG로 글루탐산이 발린으로 바뀐 경우입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>생기지 않을 가능성이 크다. GAA도 글루탐산을 지정하는 동의 변이이다<span class="why"><b>맞습니다.</b> 유전 부호의 중복성 때문에 셋째 염기가 바뀌어도 같은 아미노산이 되는 경우가 많습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>단백질이 만들어지지 않는다<span class="why"><b>GAA는 종결 코돈이 아닙니다.</b> 종결 코돈은 UAA, UAG, UGA(DNA로는 TAA, TAG, TGA)입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-labbio-genome-med">
+        <header class="card-head">
+          <span class="no">5.8.2</span><h2>유전체 분석은 실제로 어떤 환자를 도왔을까?</h2><span class="kind">읽기 · 유전체 데이터베이스와 질병 치료 사례 · 모둠 발표</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">같은 병이라도 환자마다 원인 유전자가 다르면 듣는 약도 다릅니다. 유전체 정보를 모은 데이터베이스와 분석 방법이 진단과 치료를 어떻게 바꾸었는지 사례로 살펴봅시다.</p>
+          <h3><span class="mono">1</span>누구나 쓸 수 있는 유전체 데이터베이스</h3>
+          <ul class="dots">
+            <li><em>GenBank</em>(미국 NCBI): 전 세계 연구자가 등록한 염기 서열 저장소. 같은 곳의 <em>BLAST</em>로 서열을 검색합니다.</li>
+            <li><em>dbSNP, ClinVar</em>(NCBI): 사람의 변이 목록과, 각 변이가 질병과 관련 있는지에 대한 근거를 모은 데이터베이스.</li>
+            <li><em>Ensembl, UCSC 유전체 브라우저</em>: 염색체 위의 유전자 위치, 구조, 변이를 지도처럼 보여 줍니다.</li>
+            <li>우리나라도 국가 연구비로 생산한 생명 연구 자료를 모아 공유하는 국가 바이오 데이터 스테이션을 운영합니다.</li>
+          </ul>
+          <h3><span class="mono">2</span>치료에 쓰인 사례</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>질병</th><th>유전체 분석으로 찾은 것</th><th>치료·관리에 쓰인 방식</th></tr></thead>
+            <tbody>
+              <tr><td>만성 골수성 백혈병</td><td>9번과 22번 염색체가 자리를 바꿔 생긴 BCR-ABL 융합 유전자가 세포 분열을 계속 켜 둠</td><td>BCR-ABL 단백질만 막는 표적 항암제(이마티닙)가 개발되어 많은 환자가 장기 생존</td></tr>
+              <tr><td>비소세포 폐암 일부</td><td>암세포의 EGFR 유전자 변이</td><td>암 조직의 변이를 검사해, 변이가 있는 환자에게 EGFR 억제제를 처방</td></tr>
+              <tr><td>유전성 유방암·난소암</td><td>BRCA1·BRCA2 유전자의 병적 변이(DNA 손상 수리에 이상)</td><td>보인자의 정기 검진·예방 수술 상담, BRCA 변이 암에 PARP 억제제 사용</td></tr>
+              <tr><td>약물 반응 차이</td><td>약을 분해하는 효소(예: CYP2C19, CYP2C9) 유전자 변이</td><td>일부 약의 종류나 용량을 유전형에 맞춰 조절</td></tr>
+              <tr><td>희귀 유전 질환</td><td>전장 엑솜·유전체 분석으로 원인 변이 확인</td><td>몇 년씩 걸리던 진단 기간을 줄이고, 가족의 유전 상담에 활용</td></tr>
+            </tbody>
+          </table></div>
+          <h3><span class="mono">3</span>GWAS: 흔한 병의 위험 유전자 찾기</h3>
+          <p>당뇨병, 고혈압처럼 여러 유전자와 환경이 함께 작용하는 병은 원인 유전자 하나로 설명되지 않습니다. <em>전장 유전체 연관 분석(GWAS)</em>은 환자 수천~수십만 명과 건강한 사람을 모아, 유전체 전체에 흩어진 수십만 곳 이상의 단일 염기 다형성(SNP)을 비교합니다. 2005년 나이 관련 황반 변성과 관련된 CFH 유전자 변이를 찾은 것이 초기의 대표 사례입니다. 하나하나의 효과는 작아서, 여러 변이를 합쳐 위험도를 어림하는 연구가 진행 중입니다.</p>
+          <h3><span class="mono">모둠 발표</span></h3>
+          <ul class="dots">
+            <li>위 표의 사례나 새로 찾은 사례 하나를 모둠이 고르고, 질병 → 관련 유전자와 변이 → 쓰인 데이터베이스와 분석 방법 → 치료에 쓰인 방식 → 한계와 윤리 문제 순서로 정리하세요.</li>
+            <li>정리한 내용을 정보 그림, 짧은 영상, 슬라이드, 온라인 게시판 가운데 알맞은 매체로 만들고, 다른 모둠의 발표에 질문 하나와 보탤 점 하나를 남기세요.</li>
+            <li>실제로 GenBank나 ClinVar에서 그 유전자를 검색해 보고, 발표에 출처를 밝히세요.</li>
+          </ul>
+          <p class="judge"><b>판단</b>표적 치료는 해당 변이가 있는 환자에게만 효과가 있고, 시간이 지나면 암세포에 새 변이가 생겨 내성이 나타나기도 합니다. ‘유전자 검사 결과 = 운명’이 아닙니다. 대부분의 병은 유전자와 환경이 함께 작용하므로, 위험 변이가 있어도 병이 생기지 않을 수 있습니다. 유전 정보로 고용이나 보험에서 차별하지 못하도록 우리나라를 비롯한 여러 나라가 법으로 정하고 있습니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">GWAS에서 어떤 SNP를 가진 사람이 당뇨병에 걸린 비율이 조금 더 높게 나왔습니다. 알맞은 해석은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>이 SNP가 당뇨병의 원인이므로 이 SNP가 있으면 반드시 당뇨병에 걸린다<span class="why"><b>연관은 원인과 같지 않습니다.</b> 그 SNP 근처의 다른 변이가 진짜 원인일 수 있고, 효과도 대개 작습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>이 SNP 근처에 위험과 관련된 유전 요인이 있을 가능성이 있어, 추가 연구가 필요하다<span class="why"><b>맞습니다.</b> GWAS는 후보 영역을 알려 주고, 실제 기능은 세포·동물 실험 등으로 따로 확인합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>환경은 관계없다는 뜻이다<span class="why"><b>흔한 병은 대부분 유전과 환경이 함께 작용합니다.</b> 유전 요인 하나가 발견되었다고 환경의 영향이 사라지지 않습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-bio-seq-tree">
+        <header class="card-head">
+          <span class="no">5.8.3</span><h2>DNA 서열의 차이로 계통수를 그릴 수 있을까?</h2><span class="kind">분자 계통 · 거리 행렬 · UPGMA · 분자 시계</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="거리 행렬에서 가장 가까운 둘을 차례로 묶어 자라는 계통수"></canvas>
+            <div class="ctl">
+              <div class="presets data" role="group" aria-label="자료">
+                <span class="mono small dim">자료</span>
+                <button class="chip" data-d="dna" aria-pressed="true">DNA 염기 48개</button><button class="chip" data-d="pro" aria-pressed="false">단백질 아미노산 32개</button>
+              </div>
+              <div class="presets lens" role="group" aria-label="비교에 쓸 길이">
+                <span class="mono small dim">쓸 길이</span>
+                <button class="chip" data-l="12" aria-pressed="false">앞 12자리</button><button class="chip" data-l="24" aria-pressed="false">앞 24자리</button><button class="chip" data-l="0" aria-pressed="true">전체</button>
+              </div>
+              <div class="aln" role="group" aria-label="정렬한 서열. 줄을 누르면 비교 기준이 바뀝니다"></div>
+              <p class="mono small dim" style="margin:2px 0 0">줄을 누르면 그 생물이 비교 기준이 됩니다. 노란 칸이 기준과 다른 자리입니다.</p>
+              <div class="mat"></div>
+              <div class="lab-btns"><button class="chip go join" type="button">가장 가까운 둘 묶기</button><button class="chip all" type="button">끝까지</button><button class="chip reset" type="button">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>단계</dt><dd class="n-step">—</dd></div>
+                <div><dt>방금 묶은 둘</dt><dd class="n-pair">—</dd></div>
+                <div><dt>만난 위치(평균 차이)</dt><dd class="n-d">—</dd></div>
+              </dl>
+              <p class="verdict small"></p>
+              <p class="fig-note">교육용으로 줄인 가상 서열입니다. DNA는 실제 유전체 비교에서 얻은 차이 비율(사람–침팬지 약 1.2%, 사람–고릴라 약 1.6%, 사람–오랑우탄 약 3%, 사람–붉은털원숭이 약 6~7%)의 순서와 대략적인 비를 본떴고, 단백질은 시토크롬 c를 본떠 차이를 줄였습니다(실제 104개 남짓한 아미노산에서 사람과의 차이는 붉은털원숭이 1개, 개 11개, 닭 13개, 효모 40여 개입니다).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>사람, 침팬지, 고릴라 가운데 누가 누구와 가장 가까울까요? 겉모습은 보는 사람에 따라 판단이 갈립니다. 생김새 대신 DNA 서열의 차이만 세어서 계통수를 그릴 수 있을까요?</li>
+            <li><span class="tag">복원</span>생물은 공통 조상에게서 DNA를 물려받습니다. 두 계통이 갈라진 뒤에는 각 계통에서 돌연변이가 따로 쌓입니다. 그래서 갈라진 지 오래된 두 종일수록 같은 유전자의 서열 차이가 큽니다.</li>
+            <li><span class="tag">설명</span>같은 유전자를 자리가 맞게 나란히 놓고(정렬), 두 종마다 다른 자리의 수를 세면 <em>거리 행렬</em>이 됩니다. <em>UPGMA</em>는 행렬에서 가장 작은 칸의 두 무리를 하나로 묶고, 새 무리와 나머지 사이의 거리를 원래 거리들의 평균으로 바꾼 뒤 이 과정을 되풀이합니다. 묶인 순서가 곧 갈라진 순서의 역순입니다.</li>
+            <li><span class="tag">연결</span>돌연변이가 거의 일정한 속도로 쌓인다면 서열 차이는 갈라진 뒤 흐른 시간에 비례합니다. 이것이 <em>분자 시계</em>입니다. 화석으로 한 분기 시점(예: 사람과 침팬지, 약 600만~700만 년 전)을 정하면 다른 분기 시점도 어림할 수 있습니다. 단백질의 아미노산 서열로도 같은 방법을 씁니다.</li>
+            <li><span class="tag">적용</span>‘가장 가까운 둘 묶기’를 누를 때마다 표의 초록 칸이 나무의 어느 가지가 되는지, 표가 어떻게 한 줄씩 줄어드는지 보세요. 그다음 쓸 길이를 ‘앞 12자리’로 줄여 다시 해 보세요. 사람, 침팬지, 고릴라, 오랑우탄을 구별할 수 있나요? 단백질로 바꾸면 효모는 어디에 붙나요?</li>
+            <li class="warn"><span class="tag">판단</span>이 방법은 모든 계통에서 변이 속도가 같다고 가정합니다. 한 계통만 빨리 변하면 나무가 틀어집니다. 같은 자리에 변이가 두 번 일어나 원래대로 돌아가면 차이로 세지 못해, 먼 관계일수록 거리를 작게 잡습니다. 서열이 짧으면 차이가 0인 동점이 생겨 순서를 정할 수 없습니다. 실제 연구는 수천~수백만 자리와 여러 유전자를 비교하고, 더 정교한 방법도 함께 씁니다. 유전자마다 나무가 조금씩 다를 수도 있습니다. 사람 유전체의 일부 구간은 침팬지보다 고릴라와 더 비슷합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>묶은 뒤의 거리</h3>
+          <p class="q">세 종 A, B, C의 서열 차이가 A–B 4, A–C 10, B–C 12입니다. UPGMA로 A와 B를 먼저 묶었다면, 새 무리 (A, B)와 C 사이의 거리는 얼마로 계산할까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10<span class="why"><b>가장 가까운 값을 고른 답입니다.</b> 그럴듯하지만 UPGMA는 무리 안의 모든 쌍을 똑같이 대표하려고 평균을 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞습니다.</b> (10 + 12) ÷ 2 = 11입니다. A와 B는 이제 한 무리이므로 C까지의 거리도 둘의 평균으로 나타냅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22<span class="why"><b>거리를 더하면 무리가 커질수록 거리가 부풀어 오릅니다.</b> 거리는 한 쌍 사이의 차이 수를 뜻하므로 합이 아니라 평균을 씁니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labbio/bioinfo.js"></script>
+<script src="../../js/cards/bio/seq-tree.js"></script>
+</body>
+</html>

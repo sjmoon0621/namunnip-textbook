@@ -1,0 +1,74 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/mitosis.js"
+  ]
+}
+-->
+<style>
+#card-labbio-mitosis .lb-field { width: 100%; aspect-ratio: 1 / 1; max-width: 400px; display: block; margin: 0 auto; cursor: crosshair; }
+#card-labbio-mitosis .lb-pick { margin: 8px 0 2px; padding: 8px 10px; background: var(--paper-2); border-left: 3px solid var(--rule); }
+#card-labbio-mitosis .lb-pick .presets { margin-top: 4px; }
+#card-labbio-mitosis .lb-score { color: var(--ink-2); }
+#card-labbio-mitosis .lb-row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; margin-top: 6px; }
+#card-labbio-mitosis .lb-hide { display: none; }
+</style>
+<article class="card" id="card-labbio-mitosis">
+  <header class="card-head">
+    <span class="no"></span><h2>양파 뿌리 끝 세포를 세어서 분열 단계마다 걸리는 시간을 알 수 있을까?</h2><span class="kind">실험 · 가상 현미경 · 체세포 분열과 감수 분열</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="lb-field" aria-label="아세트올세인으로 염색한 세포를 400배로 본 현미경 시야"></canvas>
+      <div class="ctl">
+        <div class="presets lb-mode" role="group" aria-label="시료">
+          <span class="mono small dim">시료</span>
+          <button class="chip" data-m="mit" aria-pressed="true">양파 뿌리 끝 (체세포 분열)</button><button class="chip" data-m="mei" aria-pressed="false">백합 꽃밥 (감수 분열)</button>
+        </div>
+        <div class="presets lb-region" role="group" aria-label="관찰 부위">
+          <span class="mono small dim">부위</span>
+          <button class="chip" data-r="tip" aria-pressed="true">생장점 (끝에서 1~2 mm)</button><button class="chip" data-r="elong" aria-pressed="false">신장 부위 (끝에서 5 mm 이상)</button>
+        </div>
+        <div class="lb-bud lb-hide">
+          <label class="mono">꽃봉오리 크기 <output class="bud-out">3</output> / 5 (작을수록 어린 꽃봉오리)</label>
+          <input class="bud" type="range" min="1" max="5" step="1" value="3" aria-label="꽃봉오리 크기">
+        </div>
+        <div class="lb-row">
+          <label class="mono small"><input type="checkbox" class="nomac"> 해리(염산 처리) 생략</label>
+          <label class="mono small"><input type="checkbox" class="bias"> 초기 전기를 간기로 셈</label>
+        </div>
+        <div class="lab-btns"><button class="chip lb-new" type="button">새 시야로 옮기기</button><button class="chip go lb-count" type="button">이 시야의 세포 세어 기록</button><button class="chip lb-clear" type="button">기록 지우기</button></div>
+        <div class="lb-pick">
+          <div class="mono small lb-sel">시야의 세포를 하나 눌러 단계를 판정해 보세요.</div>
+          <div class="presets lb-stages" role="group" aria-label="단계 판정"></div>
+          <div class="mono small lb-score"></div>
+        </div>
+        <div class="tbl-host lb-t-mit"></div>
+        <div class="tbl-host lb-t-mei lb-hide"></div>
+        <label class="mono small lb-cyc-l">세포 주기 길이 가정 T = <output class="cyc-out">24</output> 시간</label>
+        <input class="cyc" type="range" min="12" max="36" step="1" value="24" aria-label="세포 주기 길이">
+        <canvas class="cv-plot" aria-label="기록을 합친 단계별 세포 비율과 추정 시간"></canvas>
+        <p class="fig-note">세포 비율은 교육용 모식값입니다. 세는 사람마다 단계 경계(간기와 초기 전기, 후기와 말기)를 다르게 판정하므로 시야 한 장의 값은 크게 흔들립니다. 여러 시야와 모둠의 기록을 합쳐야 비율이 안정됩니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>뿌리 끝을 고정해서 염색하면 세포마다 분열의 서로 다른 순간이 멈춰 있는 사진이 됩니다. 이 정지 사진 한 장으로 각 단계가 얼마나 오래 걸리는지 알아낼 수 있을까요? 또 꽃밥 속 감수 분열은 체세포 분열과 무엇이 다르게 보일까요?</li>
+      <li><span class="tag">복원</span>체세포 분열은 <em>간기</em>에 DNA를 복제한 뒤 전기(염색체 응축) → 중기(적도판에 배열) → 후기(염색 분체 분리) → 말기(핵 2개, 세포판) 순으로 진행합니다. 감수 분열은 1분열에서 <em>상동 염색체</em>가 2가 염색체로 짝지어 적도판에 늘어섰다가 갈라지고, 2분열에서 염색 분체가 갈라져 세포 4개(사분자)가 됩니다.</li>
+      <li><span class="tag">설계</span>절차마다 이유가 있습니다. <em>고정</em>(카르노이액: 에탄올과 아세트산 3 : 1)은 세포를 죽여 분열 단계를 그대로 멈춥니다. <em>해리</em>(1 N 염산, 60 °C 안팎에서 몇 분)는 세포벽 사이 펙틴층을 녹여 세포를 떼어 놓습니다. <em>염색</em>(아세트올세인 또는 아세트산카민)은 염색체를 붉게 물들이고, <em>압착</em>은 세포를 한 층으로 펼칩니다. 관찰 부위는 분열이 활발한 생장점입니다.</li>
+      <li><span class="tag">분석</span>세포들이 서로 다른 시점에 분열을 시작해 고르게 섞여 있다면, 어느 단계에 있는 세포의 비율은 그 단계의 길이에 비례합니다. 그래서 <em>단계의 시간 ≈ 비율 × 세포 주기 길이 T</em>로 어림합니다. 분열 중인 세포의 비율을 <em>분열 지수</em>라고 합니다. 꽃밥은 한 꽃밥 안의 세포가 거의 함께 분열하므로(동조 분열) 비율로 시간을 구할 수 없습니다.</li>
+      <li><span class="tag">측정</span>생장점에서 시야를 여러 번 옮기며 세포를 세어 기록하세요(200개 이상). 그래프에서 간기와 각 단계의 비율, 추정 시간을 읽습니다. 신장 부위도 세어 분열 지수를 비교하세요. 세포를 하나씩 눌러 단계를 직접 판정하고, 모둠원과 판정이 갈린 세포는 근거(염색체 모양·위치)를 말로 설명해 합의해 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>"초기 전기를 간기로 셈"을 켜면 시야를 아무리 늘려도 전기가 계속 작게 나옵니다. 판정 기준이 치우친 <em>계통 오차</em>이므로 모둠이 기준을 먼저 맞춰야 합니다. 해리를 빼면 세포가 겹쳐 셀 수 없는 세포가 생깁니다. 염산과 카르노이액은 피부와 눈을 상하게 하고 아세트산 냄새가 강하므로 보안경·장갑을 끼고 환기합니다. 슬라이드를 가열할 때 끓이지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 모둠이 생장점 세포 500개를 세어 중기 세포 15개를 찾았습니다. 세포 주기가 20시간이라면 중기의 길이는 약 얼마로 어림할 수 있을까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 0.6시간(36분)<span class="why"><b>맞습니다.</b> 비율 15/500 = 0.03이고, 0.03 × 20시간 = 0.6시간입니다. 세포들이 비동조로 분열한다는 가정이 필요합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 15분, 중기 세포 1개가 1분씩이므로<span class="why"><b>세포 수 자체는 시간이 아닙니다.</b> 시야를 넓히면 개수는 늘어나므로 전체에 대한 비율로 바꿔야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>알 수 없다. 살아 있는 세포를 계속 지켜봐야만 시간을 잴 수 있다<span class="why"><b>그럴듯하지만 정지 사진으로도 어림할 수 있습니다.</b> 많은 세포가 서로 다른 시점에 멈춰 있으므로 비율이 각 단계의 상대적인 길이를 알려 줍니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

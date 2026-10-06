@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/chi.js",
+    "js/cards/labbio/bead-sim.js"
+  ]
+}
+-->
+<style>
+#card-labbio-bead-sim .bs-obs { margin: 6px 0 2px; min-height: 2.6em; color: var(--ink-2); }
+#card-labbio-bead-sim .bs-obs b { color: var(--ink); }
+</style>
+<article class="card" id="card-labbio-bead-sim">
+  <header class="card-head">
+    <span class="no"></span><h2>콩 주머니에서 짝을 뽑아 세대를 넘기면 대립유전자 빈도는 어떻게 변할까?</h2><span class="kind">실험 · 모의실험 설계 · 유전자풀 · 하디·바인베르크 평형</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="붉은 콩과 흰 콩이 든 주머니와 이번 세대에 뽑은 개체들"></canvas>
+      <div class="ctl">
+        <div class="presets scen" role="group" aria-label="진화 요인">
+          <span class="mono small dim">규칙</span>
+          <button class="chip" data-s="drift" aria-pressed="true">무작위로만</button><button class="chip" data-s="sel50" aria-pressed="false">aa 절반 제거</button><button class="chip" data-s="sel100" aria-pressed="false">aa 모두 제거</button><button class="chip" data-s="mig" aria-pressed="false">흰 콩 개체 이주</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">처음 붉은 콩 비율 p₀ = <output class="p-out">0.50</output></label>
+            <input class="p0" type="range" min="0.1" max="0.9" step="0.05" value="0.5" aria-label="처음 붉은 콩 비율"></div>
+          <div><label class="mono">한 세대에 뽑는 개체 N = <output class="n-out">20</output></label>
+            <input class="nn" type="range" min="5" max="50" step="5" value="20" aria-label="한 세대에 뽑는 개체 수"></div>
+        </div>
+        <div class="lab-btns"><button class="chip one" type="button">① 한 쌍 꺼내기</button><button class="chip all" type="button">② 나머지 모두 꺼내기</button><button class="chip go bs-step" type="button">③ 규칙 적용 → 다음 세대 주머니</button><button class="chip auto" type="button">5세대 진행</button><button class="chip again" type="button">새 모둠으로 다시</button></div>
+        <p class="bs-obs small">주머니에는 콩 200개가 들어 있습니다. 두 개씩 꺼내 한 개체의 유전자형으로 기록하세요.</p>
+        <dl class="nums">
+          <div><dt>세대 · 주머니의 p</dt><dd class="n-g">—</dd></div>
+          <div><dt>이번 세대 AA : Aa : aa</dt><dd class="n-o">—</dd></div>
+          <div><dt>하디·바인베르크 기댓값 · χ²</dt><dd class="n-h">—</dd></div>
+        </dl>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="세대에 따른 붉은 콩 비율 p의 변화"></canvas>
+        <p class="fig-note">붉은 콩 = 대립유전자 A, 흰 콩 = a. 다음 세대 주머니는 살아남은 개체의 콩 비율에 맞춰 콩 200개로 다시 채웁니다(살아남은 개체가 무작위로 짝짓기해 생식세포를 많이 만드는 것에 해당). 이주는 매 세대 뽑은 개체 수의 10%만큼 aa 개체(흰 콩만 있는 다른 집단)가 들어오는 규칙입니다. 그래프의 점선은 무한히 큰 집단에서 기대되는 p, 회색 선은 앞 모둠들의 결과입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>교실에서 콩과 주머니만으로 몇 세대에 걸친 진화를 재현할 수 있을까요? 아무 선택이 없을 때와 특정 유전자형이 덜 살아남을 때, 대립유전자 빈도는 세대마다 어떻게 달라질까요?</li>
+      <li><span class="tag">복원</span>한 집단의 대립유전자 전체가 <em>유전자풀</em>입니다. 집단이 크고, 돌연변이·이주·선택이 없고, 무작위로 짝짓기하면 대립유전자 빈도 p, q는 세대가 지나도 변하지 않고, 유전자형 비율은 p² : 2pq : q²이 됩니다(<em>하디·바인베르크 평형</em>). 이 조건이 깨지면 빈도가 변하는데, 이것이 집단 수준의 진화입니다.</li>
+      <li><span class="tag">설계</span>주머니 = 유전자풀, 콩 한 개 = 대립유전자, 콩 두 개 = 한 개체입니다. 조작 변인은 규칙(선택, 이주의 유무)과 뽑는 개체 수 N, 종속 변인은 세대별 p입니다. 콩의 크기·촉감이 같아야 무작위로 뽑히니, 눈을 감고 섞은 뒤 꺼냅니다. 같은 조건으로 여러 모둠이 실험해 결과를 겹쳐 봅니다.</li>
+      <li><span class="tag">분석</span>p = (2 × AA + Aa) / (2 × 개체 수)로 구합니다. ‘무작위로만’에서는 p가 위아래로 흔들리며 모둠마다 다른 방향으로 갑니다(<em>유전적 부동</em>). aa를 제거하면 p가 꾸준히 커지지만, q가 작아질수록 aa가 드물어져 변화가 느려집니다. a는 Aa 속에 숨어 쉽게 사라지지 않습니다. 이론값 q′ = q(1 − sq) / (1 − sq²)과 비교해 보세요.</li>
+      <li><span class="tag">측정</span>N = 20, ‘무작위로만’으로 10세대를 진행하고, ‘새 모둠으로 다시’를 눌러 세 모둠 이상 결과를 겹쳐 보세요. 그다음 N을 5와 50으로 바꿔 흔들림을 비교하고, ‘aa 모두 제거’와 ‘이주’로도 해 보세요. 매 세대 관찰한 유전자형이 p² : 2pq : q²과 맞는지 χ²로 확인합니다.</li>
+      <li class="warn"><span class="tag">오차·안전</span>이 모형은 세대가 겹치지 않고, 성별이 없고, 모든 개체가 같은 수의 자손을 남긴다고 가정합니다. 실제 실험에서는 콩을 다시 넣지 않고 뽑는지, 다음 세대 주머니를 만들 때 계산을 반올림했는지에 따라서도 결과가 달라집니다. 바닥에 떨어진 콩은 미끄러울 수 있으니 바로 줍고, 실험에 쓴 콩은 먹지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">처음 p = 0.5에서 ‘aa 모두 제거’ 규칙으로 10세대를 진행했습니다. 흰 콩(a)은 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>첫 세대에 aa를 모두 없앴으니 a는 바로 사라진다<span class="why"><b>Aa 개체 속 a는 살아남습니다.</b> 다음 세대에 Aa끼리 만나면 다시 aa가 나옵니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>q는 줄어들지만 줄어드는 속도가 점점 느려진다<span class="why"><b>맞습니다.</b> 이론적으로 q는 0.5 → 0.33 → 0.25 → 0.2 …처럼 q/(1+q)로 줄어, 10세대 뒤에도 약 0.08이 남습니다. a가 드물수록 대부분 Aa에 숨어 있어 선택을 덜 받습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>q는 한 세대마다 같은 양만큼 줄어든다<span class="why"><b>변화량은 일정하지 않습니다.</b> 첫 세대에는 0.17쯤 줄지만 뒤로 갈수록 줄어드는 양이 작아집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

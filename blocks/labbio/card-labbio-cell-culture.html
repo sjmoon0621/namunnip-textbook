@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/cell-culture.js"
+  ]
+}
+-->
+<style>
+#card-labbio-cell-culture .cc-opts { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 6px 0 2px; }
+#card-labbio-cell-culture .cc-msg { font-size: 13px; color: var(--warn); min-height: 1.4em; margin: 4px 0 0; }
+</style>
+<article class="card" id="card-labbio-cell-culture">
+  <header class="card-head">
+    <span class="no"></span><h2>바닥을 다 덮은 세포는 언제, 얼마나 나눠 옮겨야 할까?</h2><span class="kind">실험 · 동물 세포 계대 배양 · 생장 곡선과 배가 시간</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="배양 플라스크와 현미경으로 본 부착 세포, 배지 색"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">트립신 처리 = <output class="tr-out">4</output> 분</label>
+            <input class="tr" type="range" min="1" max="15" step="1" value="4" aria-label="트립신 처리 시간"></div>
+          <div class="presets split" role="group" aria-label="분주 비율">
+            <span class="mono small dim">분주 비율</span>
+            <button class="chip" data-r="2" aria-pressed="false">1:2</button><button class="chip" data-r="4" aria-pressed="true">1:4</button><button class="chip" data-r="8" aria-pressed="false">1:8</button>
+          </div>
+        </div>
+        <div class="cc-opts">
+          <label class="mono small"><input type="checkbox" class="skip"> 클린 벤치 소독과 70% 에탄올 분무 건너뛰기</label>
+        </div>
+        <div class="lab-btns"><button class="chip go grow" type="button">배양기에서 12시간</button><button class="chip go count" type="button">세포 수 세기</button><button class="chip pass" type="button">계대 배양하기</button><button class="chip reset" type="button">새 플라스크로 시작</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <p class="cc-msg" aria-live="polite"></p>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="배양 일수에 따른 세포 수의 로그 그래프와 대수 생장기 맞춤선"></canvas>
+        <p class="fig-note">HeLa 세포와 비슷한 부착 세포를 T25 플라스크(바닥 25 cm²)에서 키우는 모형입니다(배가 시간 약 24 h, 다 덮였을 때 약 2.5×10⁶개). 세포 수는 같은 조건의 플라스크 하나를 떼어 트리판 블루로 염색하고 혈구 계산판으로 센 값이라 ±10%쯤 흔들립니다. 그래프의 붉은 선은 덮인 비율 10~60%인 점만으로 맞춘 직선입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>배양 접시의 세포는 영양만 주면 끝없이 늘어날까요? 바닥을 다 덮은 세포는 어떻게 되고, 언제 얼마만큼 덜어 새 플라스크로 옮겨야(<em>계대 배양</em>) 세포를 건강하게 계속 키울 수 있을까요?</li>
+      <li><span class="tag">복원</span>대부분의 동물 세포는 바닥에 붙어 한 층으로 자라는 <em>부착 세포</em>입니다. 정상 세포는 서로 닿으면 분열을 멈추고(접촉 저해), 배지의 영양이 줄고 노폐물이 쌓이면 죽기 시작합니다. 세포 수는 <em>지연기 → 대수 생장기 → 정체기</em>를 거치며, 대수기에 세포 수가 두 배가 되는 시간을 <em>배가 시간</em>이라 합니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 계대 시점, 분주 비율, 트립신 처리 시간, 무균 조작 여부이고 종속 변인은 살아 있는 세포 수와 덮인 비율입니다. 37 °C, CO₂ 5%, 같은 배지(DMEM + 소태아혈청 10%)는 통제합니다. 계대할 때는 배지를 버리고 PBS로 씻은 뒤 트립신으로 세포를 떼어 내고, 혈청이 든 배지를 넣어 트립신 작용을 멈춘 다음 새 플라스크에 나눠 담습니다.</li>
+      <li><span class="tag">분석</span>세로축을 log(세포 수)로 그리면 대수기는 직선이 됩니다. 기울기가 하루에 log 값 s만큼 늘어난다는 뜻이면 배가 시간은 <span class="formula">t<sub>d</sub> = log 2 / s</span>입니다. 정체기에 오래 두면 세포가 떨어져 나가고 배지가 산성(노란색)이 되므로, 보통 70~90% 덮였을 때 계대합니다.</li>
+      <li><span class="tag">측정</span>12시간씩 배양하며 하루에 한 번 세포 수를 세어 생장 곡선을 그리고 배가 시간을 구하세요. 80% 안팎 덮였을 때 트립신 4분, 1:4로 계대한 뒤 다시 세어 보세요. 다음에는 트립신을 1분, 15분으로 바꾸고, 마지막으로 소독을 건너뛰어 보세요. 지연기의 길이는 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>세포가 뭉쳐 있거나 계산판 칸 경계의 세포를 일관되게 세지 않으면 계통 오차가 생깁니다. 세균에 오염되면 배지가 하루 만에 노랗고 뿌옇게 변하지만, 마이코플라스마 오염은 눈으로 보이지 않아 따로 검사해야 합니다. 항생제는 무균 조작을 대신하지 못합니다. 사람 세포주는 감염 위험을 가정하고 클린 벤치(생물 안전 작업대) 안에서 장갑을 끼고 다루며, 쓴 배지와 플라스크는 고압 증기 멸균(121 °C, 15분 이상)한 뒤 관련 규정에 따라 폐기합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">80% 덮인 플라스크를 1:2 대신 1:8로 나눠 담았습니다. 지연기는 같다고 할 때, 다시 80% 덮이기까지 걸리는 시간은 어떻게 될까요? (배가 시간 24 h)</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>같다. 어차피 정체기까지 자라기 때문이다<span class="why"><b>출발 세포 수가 다르면 걸리는 시간도 다릅니다.</b> 도착점(80%)은 같아도 처음 세포 수가 4배 적으면 그만큼 더 분열해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4배 오래 걸린다<span class="why"><b>세포 수는 곱으로 늘어납니다.</b> 4배 차이는 분열 두 번(2² = 4)이면 메워지므로 시간이 4배가 되지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>배가 시간 두 번만큼, 약 이틀 더 걸린다<span class="why"><b>맞습니다.</b> 1:2는 한 번, 1:8은 세 번 분열해야 원래 수로 돌아오므로 두 번(약 48 h) 더 걸립니다. log 그래프에서 출발점만 아래로 내려간 평행선입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

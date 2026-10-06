@@ -1,0 +1,79 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/sem.js"
+  ]
+}
+-->
+<style>
+#card-labbio-sem .ctl-row { gap: 2px 14px; }
+#card-labbio-sem .state { font-size: 12.5px; margin: 6px 0 2px; padding: 6px 10px; border-left: 3px solid var(--rule); color: var(--ink-2); }
+#card-labbio-sem .state.bad { border-left-color: var(--warn); color: var(--warn); }
+#card-labbio-sem .state.good { border-left-color: var(--forest); color: var(--forest); }
+#card-labbio-sem .cmp { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0 4px; }
+#card-labbio-sem .cmp th, #card-labbio-sem .cmp td { border-bottom: 1px solid var(--rule); padding: 4px 6px; text-align: left; vertical-align: top; }
+#card-labbio-sem .cmp th { color: var(--ink-2); font-weight: 500; background: var(--paper-2); }
+</style>
+<article class="card" id="card-labbio-sem">
+  <header class="card-head">
+    <span class="no"></span><h2>주사 전자 현미경으로 꽃가루의 가시까지 선명하게 보려면 무엇을 맞춰야 할까?</h2><span class="kind">실험 · 주사 전자 현미경 · 초점과 비점 수차 · 피사계 심도</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="주사 전자 현미경 경통 모식도와 모니터에 나타난 시료의 이차 전자 상"></canvas>
+      <div class="ctl">
+        <div class="presets smp" role="group" aria-label="시료">
+          <span class="mono small dim">시료</span>
+          <button class="chip" data-s="pollen" aria-pressed="true">해바라기 꽃가루</button><button class="chip" data-s="eye" aria-pressed="false">초파리 겹눈</button><button class="chip" data-s="stoma" aria-pressed="false">잎 표피의 기공</button>
+        </div>
+        <div class="lab-btns"><button class="chip coat" type="button" aria-pressed="false">금 코팅(스퍼터) 하기</button><button class="chip pump" type="button">진공 배기 후 빔 켜기</button><button class="chip vent" type="button">공기 넣고 시료 꺼내기</button></div>
+        <div class="ctl-row">
+          <div><label class="mono">가속 전압 = <output class="kv-out">15</output> kV</label><input class="kv" type="range" min="1" max="30" step="1" value="15" aria-label="가속 전압"></div>
+          <div><label class="mono">배율 = ×<output class="m-out">1500</output></label><input class="mag" type="range" min="2" max="4.3" step="0.01" value="3.18" aria-label="배율 (로그 눈금)"></div>
+          <div><label class="mono">작동 거리 WD = <output class="wd-out">10</output> mm</label><input class="wd" type="range" min="5" max="30" step="1" value="10" aria-label="작동 거리 (시료 높이)"></div>
+          <div><label class="mono">스폿 크기 = <output class="sp-out">3</output></label><input class="spot" type="range" min="1" max="10" step="1" value="3" aria-label="스폿 크기"></div>
+          <div><label class="mono">초점 (거친) = <output class="fc-out">8.0</output> mm</label><input class="fc" type="range" min="3" max="32" step="0.1" value="8" aria-label="초점 거친 조절"></div>
+          <div><label class="mono">초점 (미세) = <output class="ff-out">+0.000</output> mm</label><input class="ff" type="range" min="-0.5" max="0.5" step="0.005" value="0" aria-label="초점 미세 조절"></div>
+          <div><label class="mono">비점 보정 X = <output class="sx-out">0.00</output></label><input class="sx" type="range" min="-1" max="1" step="0.02" value="0" aria-label="비점 수차 보정 X"></div>
+          <div><label class="mono">비점 보정 Y = <output class="sy-out">0.00</output></label><input class="sy" type="range" min="-1" max="1" step="0.02" value="0" aria-label="비점 수차 보정 Y"></div>
+          <div><label class="mono">밝기 = <output class="b-out">25</output></label><input class="br" type="range" min="0" max="100" step="1" value="25" aria-label="밝기"></div>
+          <div><label class="mono">대비 = <output class="c-out">85</output></label><input class="ct" type="range" min="0" max="100" step="1" value="85" aria-label="대비"></div>
+        </div>
+        <p class="state">시료실에 공기가 들어 있습니다. 진공을 만든 뒤 빔을 켜세요.</p>
+        <div class="lab-btns"><button class="chip go shot" type="button">이 상태로 사진 찍고 선명도 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="초점 위치에 따른 선명도 그래프"></canvas>
+        <dl class="nums"><div><dt>전자 탐침 지름</dt><dd class="n-p">—</dd></div><div><dt>화면 한 화소의 크기</dt><dd class="n-x">—</dd></div><div><dt>피사계 심도 (계산)</dt><dd class="n-d">—</dd></div></dl>
+        <table class="cmp">
+          <thead><tr><th></th><th>광학 현미경</th><th>투과 전자 현미경</th><th>주사 전자 현미경</th></tr></thead>
+          <tbody>
+            <tr><td>쓰는 것</td><td>가시광선, 유리 렌즈</td><td>투과한 전자, 전자기 렌즈</td><td>표면에서 튀어나온 이차 전자</td></tr>
+            <tr><td>분해능</td><td>약 200 nm</td><td>약 0.1~0.5 nm</td><td>약 1~10 nm</td></tr>
+            <tr><td>상</td><td>컬러, 살아 있는 세포 가능</td><td>얇은 절편의 내부 단면 (흑백)</td><td>표면의 입체 모습 (흑백)</td></tr>
+            <tr><td>시료 준비</td><td>얇게, 필요하면 염색</td><td>고정·탈수·초박절편, 중금속 염색, 진공</td><td>고정·건조, 금속 코팅, 진공</td></tr>
+          </tbody>
+        </table>
+        <p class="fig-note">화면 폭을 100 mm로 보고 배율을 정했습니다(×1000이면 시야 폭 100 μm). 대물 조리개 반지름 15 μm, 탐침 지름과 잡음, 대전 정도는 실제 장비의 경향을 따른 모식값입니다. 선명도 지수는 상의 흐림·잡음·대전·밝기 포화를 합쳐 0~100으로 나타낸 값이며 ±3%쯤 흔들립니다. 시료마다 실제 초점 위치는 시료 두께 때문에 WD 눈금과 조금 다릅니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>광학 현미경으로는 꽃가루가 작은 공처럼만 보입니다. 주사 전자 현미경(SEM)은 어떻게 표면의 가시와 구멍을 입체적으로 보여 주고, 선명한 상을 얻으려면 무엇을 어떤 순서로 맞춰야 할까요?</li>
+      <li><span class="tag">복원</span>분해능은 쓰는 파동의 파장에 비례합니다. 15 kV로 가속한 전자의 물질파 파장은 약 0.01 nm로 가시광선(400~700 nm)보다 수만 배 짧습니다. SEM은 <em>전자총</em>에서 나온 전자를 전자기 렌즈(집속 렌즈, 대물렌즈)로 가늘게 모으고, <em>주사 코일</em>로 시료 표면을 한 줄씩 훑습니다. 각 점에서 튀어나온 <em>이차 전자</em>의 양을 <em>검출기</em>가 세어 모니터의 같은 점 밝기로 그립니다.</li>
+      <li><span class="tag">설계</span>시료는 고정·건조하고 금을 얇게 입혀(스퍼터 코팅) 전기가 통하게 합니다. 경통과 시료실은 진공으로 만듭니다. 그다음 ① 가속 전압·스폿 크기를 정하고 ② 낮은 배율에서 초점을 대강 맞춘 뒤 ③ 목표보다 높은 배율에서 미세 초점과 비점 보정 X·Y를 번갈아 맞추고 ④ 배율을 내려 밝기·대비를 조절해 촬영합니다.</li>
+      <li><span class="tag">분석</span>초점을 조금씩 바꾸며 찍은 선명도를 그래프로 그리면 봉우리가 생기고, 봉우리 위치가 최적 초점입니다. 봉우리의 폭은 <em>피사계 심도</em>를 보여 줍니다. 전자빔이 모이는 각 α는 조리개 반지름 ÷ WD라서, WD를 늘리면 α가 작아져 피사계 심도는 깊어지고 탐침은 굵어져 분해능은 나빠집니다.</li>
+      <li><span class="tag">측정</span>코팅과 진공을 마친 뒤 ×1500에서 선명한 상을 만들어 보세요. 그다음 초점(미세)을 −0.3 mm부터 +0.3 mm까지 0.1 mm 간격으로 바꾸며 찍어 봉우리를 그리고, WD를 25 mm로 바꿔 다시 그려 봉우리 폭을 비교하세요. 코팅하지 않은 시료를 15 kV와 2 kV로 보면 어떻게 다른가요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>코팅하지 않은 생물 시료는 전자가 빠져나가지 못하고 쌓여(<em>대전</em>) 하얗게 번쩍이고 상이 찢어집니다. 가속 전압을 1~2 kV로 낮추면 대전이 줄지만 잡음이 늘고 분해능이 떨어집니다. 가속 전압이 너무 높으면 전자가 시료 깊이 들어가 표면이 반투명하게 흐려집니다. SEM 사진의 색은 실제 색이 아니라 나중에 칠한 것입니다. 진공 상태에서 시료실 문을 억지로 열지 않고, 금 코팅 장치와 고전압부는 지도 교사와 함께 다룹니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">울퉁불퉁한 곤충 다리 전체를 위아래 모두 초점이 맞게 찍고 싶습니다. 가장 알맞은 조절은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>작동 거리를 늘린다<span class="why"><b>맞습니다.</b> WD가 길어지면 빔이 모이는 각이 작아져 피사계 심도가 깊어집니다. 대신 탐침이 굵어져 최고 분해능은 조금 낮아집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>가속 전압을 최대로 올린다<span class="why"><b>피사계 심도는 빔이 모이는 각이 정합니다.</b> 전압을 너무 올리면 오히려 전자가 깊이 들어가 표면이 흐려지고 생물 시료가 손상됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>비점 보정 손잡이를 끝까지 돌린다<span class="why"><b>비점 보정은 빔 단면을 둥글게 만드는 조절입니다.</b> 맞는 값은 하나뿐이고 지나치면 상이 한 방향으로 늘어나 흐려집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

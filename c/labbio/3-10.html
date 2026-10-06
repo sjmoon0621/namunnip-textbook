@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>대립유전자 빈도 모의실험 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="진화적 관점에서 대립유전자 빈도의 변화를 알아보는 모의실험을 직접 설계하고 수행하여, 유전적 부동·자연선택·이주가 대립유전자 빈도를 어떻게 바꾸는지 하디·바인베르크 평형과 비교한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labbio-bead-sim .bs-obs { margin: 6px 0 2px; min-height: 2.6em; color: var(--ink-2); }
+    #card-labbio-bead-sim .bs-obs b { color: var(--ink); }
+  </style>
+</head>
+<body data-course="labbio" data-sec="3-10">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>대립유전자 빈도 모의실험</h1>
+    <p class="lead">붉은 콩과 흰 콩을 담은 주머니 하나면 교실에서 몇십 세대의 진화를 재현할 수 있습니다. 뽑기 규칙을 어떻게 정해야 자연선택이나 이주가 되고, 주머니 크기는 결과를 어떻게 바꿀까요?</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">유전자풀과 대립유전자 빈도</span><span class="p">하디·바인베르크 평형</span><span class="p">카이제곱 검정</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labbio-bead-sim"><span class="mono">3.10.1</span>콩 주머니에서 짝을 뽑아 세대를 넘기면 대립유전자 빈도는 어떻게 변할까?</a></li>
+        <li><a href="#card-bio-genepool"><span class="mono">3.10.2</span>작은 섬의 생물 집단에서는 왜 우연이 진화를 이끌까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labbio-3-10">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labbio-bead-sim">
+        <header class="card-head">
+          <span class="no">3.10.1</span><h2>콩 주머니에서 짝을 뽑아 세대를 넘기면 대립유전자 빈도는 어떻게 변할까?</h2><span class="kind">실험 · 모의실험 설계 · 유전자풀 · 하디·바인베르크 평형</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="붉은 콩과 흰 콩이 든 주머니와 이번 세대에 뽑은 개체들"></canvas>
+            <div class="ctl">
+              <div class="presets scen" role="group" aria-label="진화 요인">
+                <span class="mono small dim">규칙</span>
+                <button class="chip" data-s="drift" aria-pressed="true">무작위로만</button><button class="chip" data-s="sel50" aria-pressed="false">aa 절반 제거</button><button class="chip" data-s="sel100" aria-pressed="false">aa 모두 제거</button><button class="chip" data-s="mig" aria-pressed="false">흰 콩 개체 이주</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">처음 붉은 콩 비율 p₀ = <output class="p-out">0.50</output></label>
+                  <input class="p0" type="range" min="0.1" max="0.9" step="0.05" value="0.5" aria-label="처음 붉은 콩 비율"></div>
+                <div><label class="mono">한 세대에 뽑는 개체 N = <output class="n-out">20</output></label>
+                  <input class="nn" type="range" min="5" max="50" step="5" value="20" aria-label="한 세대에 뽑는 개체 수"></div>
+              </div>
+              <div class="lab-btns"><button class="chip one" type="button">① 한 쌍 꺼내기</button><button class="chip all" type="button">② 나머지 모두 꺼내기</button><button class="chip go bs-step" type="button">③ 규칙 적용 → 다음 세대 주머니</button><button class="chip auto" type="button">5세대 진행</button><button class="chip again" type="button">새 모둠으로 다시</button></div>
+              <p class="bs-obs small">주머니에는 콩 200개가 들어 있습니다. 두 개씩 꺼내 한 개체의 유전자형으로 기록하세요.</p>
+              <dl class="nums">
+                <div><dt>세대 · 주머니의 p</dt><dd class="n-g">—</dd></div>
+                <div><dt>이번 세대 AA : Aa : aa</dt><dd class="n-o">—</dd></div>
+                <div><dt>하디·바인베르크 기댓값 · χ²</dt><dd class="n-h">—</dd></div>
+              </dl>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="세대에 따른 붉은 콩 비율 p의 변화"></canvas>
+              <p class="fig-note">붉은 콩 = 대립유전자 A, 흰 콩 = a. 다음 세대 주머니는 살아남은 개체의 콩 비율에 맞춰 콩 200개로 다시 채웁니다(살아남은 개체가 무작위로 짝짓기해 생식세포를 많이 만드는 것에 해당). 이주는 매 세대 뽑은 개체 수의 10%만큼 aa 개체(흰 콩만 있는 다른 집단)가 들어오는 규칙입니다. 그래프의 점선은 무한히 큰 집단에서 기대되는 p, 회색 선은 앞 모둠들의 결과입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>교실에서 콩과 주머니만으로 몇 세대에 걸친 진화를 재현할 수 있을까요? 아무 선택이 없을 때와 특정 유전자형이 덜 살아남을 때, 대립유전자 빈도는 세대마다 어떻게 달라질까요?</li>
+            <li><span class="tag">복원</span>한 집단의 대립유전자 전체가 <em>유전자풀</em>입니다. 집단이 크고, 돌연변이·이주·선택이 없고, 무작위로 짝짓기하면 대립유전자 빈도 p, q는 세대가 지나도 변하지 않고, 유전자형 비율은 p² : 2pq : q²이 됩니다(<em>하디·바인베르크 평형</em>). 이 조건이 깨지면 빈도가 변하는데, 이것이 집단 수준의 진화입니다.</li>
+            <li><span class="tag">설계</span>주머니 = 유전자풀, 콩 한 개 = 대립유전자, 콩 두 개 = 한 개체입니다. 조작 변인은 규칙(선택, 이주의 유무)과 뽑는 개체 수 N, 종속 변인은 세대별 p입니다. 콩의 크기·촉감이 같아야 무작위로 뽑히니, 눈을 감고 섞은 뒤 꺼냅니다. 같은 조건으로 여러 모둠이 실험해 결과를 겹쳐 봅니다.</li>
+            <li><span class="tag">분석</span>p = (2 × AA + Aa) / (2 × 개체 수)로 구합니다. ‘무작위로만’에서는 p가 위아래로 흔들리며 모둠마다 다른 방향으로 갑니다(<em>유전적 부동</em>). aa를 제거하면 p가 꾸준히 커지지만, q가 작아질수록 aa가 드물어져 변화가 느려집니다. a는 Aa 속에 숨어 쉽게 사라지지 않습니다. 이론값 q′ = q(1 − sq) / (1 − sq²)과 비교해 보세요.</li>
+            <li><span class="tag">측정</span>N = 20, ‘무작위로만’으로 10세대를 진행하고, ‘새 모둠으로 다시’를 눌러 세 모둠 이상 결과를 겹쳐 보세요. 그다음 N을 5와 50으로 바꿔 흔들림을 비교하고, ‘aa 모두 제거’와 ‘이주’로도 해 보세요. 매 세대 관찰한 유전자형이 p² : 2pq : q²과 맞는지 χ²로 확인합니다.</li>
+            <li class="warn"><span class="tag">오차·안전</span>이 모형은 세대가 겹치지 않고, 성별이 없고, 모든 개체가 같은 수의 자손을 남긴다고 가정합니다. 실제 실험에서는 콩을 다시 넣지 않고 뽑는지, 다음 세대 주머니를 만들 때 계산을 반올림했는지에 따라서도 결과가 달라집니다. 바닥에 떨어진 콩은 미끄러울 수 있으니 바로 줍고, 실험에 쓴 콩은 먹지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">처음 p = 0.5에서 ‘aa 모두 제거’ 규칙으로 10세대를 진행했습니다. 흰 콩(a)은 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>첫 세대에 aa를 모두 없앴으니 a는 바로 사라진다<span class="why"><b>Aa 개체 속 a는 살아남습니다.</b> 다음 세대에 Aa끼리 만나면 다시 aa가 나옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>q는 줄어들지만 줄어드는 속도가 점점 느려진다<span class="why"><b>맞습니다.</b> 이론적으로 q는 0.5 → 0.33 → 0.25 → 0.2 …처럼 q/(1+q)로 줄어, 10세대 뒤에도 약 0.08이 남습니다. a가 드물수록 대부분 Aa에 숨어 있어 선택을 덜 받습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>q는 한 세대마다 같은 양만큼 줄어든다<span class="why"><b>변화량은 일정하지 않습니다.</b> 첫 세대에는 0.17쯤 줄지만 뒤로 갈수록 줄어드는 양이 작아집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-bio-genepool">
+        <header class="card-head">
+          <span class="no">3.10.2</span><h2>작은 섬의 생물 집단에서는 왜 우연이 진화를 이끌까?</h2><span class="kind">유전자풀 · 대립유전자 빈도 · 진화의 요인 (시뮬레이션)</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="같은 조건의 집단 8개에서 대립유전자 A의 빈도가 세대에 따라 바뀌는 그래프"></canvas>
+            <div class="ctl">
+              <div class="presets pre" role="group" aria-label="예시 상황">
+                <button class="chip" type="button" data-p="drift" aria-pressed="true">유전적 부동</button><button class="chip" type="button" data-p="bottle" aria-pressed="false">병목 효과</button><button class="chip" type="button" data-p="founder" aria-pressed="false">창시자 효과</button><button class="chip" type="button" data-p="select" aria-pressed="false">자연선택</button><button class="chip" type="button" data-p="flow" aria-pressed="false">유전자 흐름</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">집단 크기 N = <output class="o-n">20</output></label>
+                  <input class="s-n" type="range" min="0" max="100" step="1" value="15" aria-label="집단 크기 (개체 수)"></div>
+                <div><label class="mono">처음 빈도 p₀ = <output class="o-p">0.50</output></label>
+                  <input class="s-p" type="range" min="0.05" max="0.95" step="0.05" value="0.5" aria-label="대립유전자 A의 처음 빈도"></div>
+                <div><label class="mono">선택 s = <output class="o-s">0</output></label>
+                  <input class="s-s" type="range" min="-0.2" max="0.2" step="0.01" value="0" aria-label="선택 계수 (AA가 aa보다 유리한 정도)"></div>
+                <div><label class="mono">이주율 m = <output class="o-m">0</output></label>
+                  <input class="s-m" type="range" min="0" max="0.1" step="0.005" value="0" aria-label="한 세대에 들어오는 이주자 비율"></div>
+                <div><label class="mono">이웃 집단 빈도 = <output class="o-q">0.20</output></label>
+                  <input class="s-q" type="range" min="0" max="1" step="0.05" value="0.2" aria-label="이주자가 오는 이웃 집단의 A 빈도"></div>
+                <div><label class="mono">돌연변이율 μ = <output class="o-u">0</output></label>
+                  <input class="s-u" type="range" min="0" max="5" step="1" value="0" aria-label="한 세대 돌연변이율 단계"></div>
+              </div>
+              <div class="toggles"><label><input type="checkbox" class="c-bot"> 30세대에 병목 (5세대 동안 4마리만 남음)</label> <label><input type="checkbox" class="c-fou"> 창시자 효과 (2마리가 새 섬에 정착)</label></div>
+              <div class="lab-btns"><button class="chip go run" type="button">다시 실행 (새 우연)</button><button class="chip pause" type="button">멈춤</button></div>
+              <dl class="nums n4">
+                <div><dt>세대</dt><dd class="n-g">0</dd></div>
+                <div><dt>A 고정 (p=1)</dt><dd class="n-fix">0</dd></div>
+                <div><dt>A 소실 (p=0)</dt><dd class="n-los">0</dd></div>
+                <div><dt>평균 이형 접합 비율</dt><dd class="n-h">—</dd></div>
+              </dl>
+              <p class="verdict small"></p>
+              <p class="fig-note">교육용 모식 시뮬레이션(라이트–피셔 모형)입니다. 가는 선 8개는 같은 조건에서 출발한 서로 다른 집단, 굵은 점선은 집단이 무한히 클 때(우연이 없을 때) 예상되는 빈도입니다. 선택은 AA·Aa·aa의 상대 적합도를 1+s : 1+s/2 : 1로 두었고, 돌연변이는 A→a, a→A가 같은 비율로 일어난다고 가정했습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>큰 대륙에서는 수백 년이 지나도 비슷하던 형질이, 작은 섬에 고립된 몇십 마리 집단에서는 몇십 세대 만에 한쪽으로 쏠리거나 아예 사라지곤 합니다. 더 유리한 형질도 아닌데 왜 그럴까요?</li>
+            <li><span class="tag">복원</span>한 집단이 가진 유전자 전체를 <em>유전자풀</em>이라고 합니다. 유전자풀에서 어떤 대립유전자가 차지하는 비율이 <em>대립유전자 빈도</em>입니다. 예를 들어 50마리(대립유전자 100개) 가운데 A가 60개이면 p(A) = 0.6, q(a) = 0.4이고, p + q = 1입니다. 진화는 세대가 지나며 유전자풀의 대립유전자 빈도가 바뀌는 것입니다.</li>
+            <li><span class="tag">설명</span>집단이 매우 크고, 돌연변이·이주·자연선택이 없고, 무작위로 짝짓기하면 대립유전자 빈도는 세대가 지나도 변하지 않습니다(<em>하디–바인베르크 평형</em>). 이때 유전자형 빈도는 AA : Aa : aa = p² : 2pq : q²입니다. 이 조건이 깨지면 진화가 일어납니다. 빈도를 바꾸는 요인은 <em>돌연변이</em>, <em>자연선택</em>, <em>유전자 흐름</em>(이주), <em>유전적 부동</em>(우연) 네 가지입니다.</li>
+            <li><span class="tag">연결</span>유전적 부동은 다음 세대에 전해질 대립유전자를 부모 세대에서 무작위로 뽑을 때 생기는 표본 오차입니다. 동전을 10번 던지면 앞면이 7번 나오기 쉽지만 1000번 던지면 70%가 나오기 어려운 것처럼, 집단이 작을수록 빈도가 크게 흔들립니다. 집단 크기가 갑자기 줄었다 회복되는 <em>병목 효과</em>, 소수가 새 지역에 정착하는 <em>창시자 효과</em>는 부동이 특히 크게 작용하는 경우입니다.</li>
+            <li><span class="tag">적용</span>'유전적 부동'에서 N을 20 → 1000으로 바꿔 가며 다시 실행하고, 고정·소실되는 집단 수를 비교하세요. '자연선택'에서 N을 20으로 줄이면 유리한 A도 사라지는 집단이 나오나요? '유전자 흐름'에서 이주율 m을 0으로 하면 집단끼리 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>유전적 부동은 유리한 형질을 고르지 않습니다. 그래서 '진화는 늘 적응 방향으로 일어난다'는 생각은 틀렸습니다. 유전자 흐름은 집단 사이의 차이를 줄이고, 부동은 차이를 키웁니다. 이 모형은 세대가 겹치지 않고 무작위로 짝짓기하는 단순한 집단을 가정하므로, 실제 생물에서는 성비, 짝 선택, 세대 겹침 때문에 결과가 달라질 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 대륙 집단(p = 0.5)에서 각각 4마리가 서로 다른 작은 섬 10곳에 정착했습니다. 이주와 선택이 없을 때 100세대 뒤의 모습으로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모든 섬에서 p가 0.5 근처로 유지된다<span class="why"><b>큰 집단의 하디–바인베르크 평형을 떠올린 답입니다.</b> 4마리(대립유전자 8개)에서 시작하면 처음부터 빈도가 크게 어긋나고, 작은 집단에서는 부동이 계속 빈도를 흔듭니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>섬마다 p가 서로 달라지고, A가 고정되거나 사라진 섬이 많다<span class="why"><b>맞습니다.</b> 창시자 효과와 유전적 부동이 겹쳐 섬마다 빈도가 무작위로 갈라지고, 결국 많은 섬에서 한 대립유전자만 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>모든 섬에서 더 유리한 대립유전자가 고정된다<span class="why"><b>선택이 없다고 했습니다.</b> 부동은 유리함과 상관없이 일어나므로 어느 대립유전자가 남을지는 섬마다 우연으로 정해집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labbio/chi.js"></script>
+<script src="../../js/cards/labbio/bead-sim.js"></script>
+<script src="../../js/cards/bio/genepool.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/electrophoresis.js"
+  ]
+}
+-->
+<style>
+#card-labbio-electrophoresis .ep-opts { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 6px 0 2px; }
+#card-labbio-electrophoresis .ep-msg { font-size: 13px; color: var(--ink-2); min-height: 1.4em; margin: 4px 0 0; }
+</style>
+<article class="card" id="card-labbio-electrophoresis">
+  <header class="card-head">
+    <span class="no"></span><h2>젤 속에서 이동한 거리만 재고 DNA 조각의 크기를 알 수 있을까?</h2><span class="kind">실험 · 아가로스 젤 전기 영동 · 표준 곡선</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="아가로스 젤에서 크기 표준 사다리와 시료 A, B, C의 DNA 띠가 (+)극 쪽으로 이동한 모습"></canvas>
+      <div class="ctl">
+        <div class="presets gel" role="group" aria-label="아가로스 농도">
+          <span class="mono small dim">아가로스</span>
+          <button class="chip" data-g="0.7" aria-pressed="false">0.7%</button><button class="chip" data-g="1" aria-pressed="true">1.0%</button><button class="chip" data-g="1.5" aria-pressed="false">1.5%</button><button class="chip" data-g="2" aria-pressed="false">2.0%</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">전압 = <output class="v-out">100</output> V</label>
+            <input class="v" type="range" min="50" max="150" step="10" value="100" aria-label="전압"></div>
+          <div><label class="mono">시간 = <output class="t-out">40</output> 분</label>
+            <input class="t" type="range" min="0" max="90" step="5" value="40" aria-label="전기 영동 시간"></div>
+        </div>
+        <div class="presets lane" role="group" aria-label="잴 레인">
+          <span class="mono small dim">잴 레인</span>
+          <button class="chip" data-l="0" aria-pressed="true">M (사다리)</button><button class="chip" data-l="1" aria-pressed="false">A</button><button class="chip" data-l="2" aria-pressed="false">B</button><button class="chip" data-l="3" aria-pressed="false">C</button>
+        </div>
+        <div class="ep-opts"><label class="mono small"><input type="checkbox" class="lin" checked> 직선 구간(500~5,000 bp) 사다리만으로 맞추기</label></div>
+        <div class="lab-btns"><button class="chip go meas" type="button">이 레인의 띠 거리를 자로 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <p class="ep-msg" aria-live="polite"></p>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="사다리 띠의 이동 거리와 log(염기쌍 수) 그래프, 맞춤 직선과 미지 시료의 추정 크기"></canvas>
+        <p class="fig-note">젤 길이 8 cm(우물에서 끝까지 7 cm), 전극 사이 12 cm, TAE 완충 용액 모형입니다. 사다리는 흔히 쓰는 1 kb 크기 표준(250~10,000 bp, 14개 띠)을 따랐고, 이동도 식은 실제 경향(큰 조각일수록 느리고, 젤이 진할수록 큰 조각이 더 몰림)을 흉내 낸 모식입니다. 거리는 우물 아래 끝에서 띠 가운데까지 1 mm 눈금 자로 잽니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>DNA 조각은 너무 작아 길이를 자로 잴 수 없습니다. 그런데 젤 속에서 전기를 걸어 이동한 거리만 재면 몇 염기쌍(bp)인지 알 수 있다고 합니다. 어떻게 가능할까요?</li>
+      <li><span class="tag">복원</span>DNA는 인산기 때문에 길이에 비례하는 음전하를 띠어, 전기장에서 (+)극 쪽으로 움직입니다. 전하/질량 비는 길이와 관계없이 거의 같으므로, 크기를 가르는 것은 <em>아가로스 젤의 그물 구조</em>입니다. 작은 조각은 그물 사이를 쉽게 빠져나가 멀리 가고, 큰 조각은 덜 갑니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 젤 농도, 전압, 시간이고 종속 변인은 띠의 이동 거리입니다. 크기를 아는 조각들이 섞인 <em>크기 표준(사다리)</em>을 같은 젤에 함께 걸어야 합니다. 시료에 로딩 염료(밀도를 높여 우물에 가라앉히고 진행 정도를 보여 줌)를 섞어 넣고, 다 걸면 DNA 염색약으로 염색해 청색광이나 자외선에서 띠를 봅니다.</li>
+      <li><span class="tag">분석</span>사다리 띠의 이동 거리 d와 log(bp)를 그리면 가운데 구간이 거의 직선입니다. 이 <em>표준 곡선</em> log(bp) = a·d + b에 미지 띠의 거리를 넣어 크기를 구합니다. 기울기 a는 음수이고, 그 크기는 젤 농도와 시간에 따라 달라지므로 표준 곡선은 젤마다 새로 그려야 합니다.</li>
+      <li><span class="tag">측정</span>1% 젤, 100 V, 40분에서 사다리 띠 거리를 재고, A·B·C의 띠도 재세요. 추정한 크기를 적은 뒤, 2% 젤로 바꿔 다시 재 보세요. 큰 조각과 작은 조각 가운데 어느 쪽 추정이 좋아지나요? 시간을 90분으로 늘리면 무슨 일이 생기나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>표준 곡선의 양 끝(아주 큰 조각, 아주 작은 조각)은 직선에서 벗어나 추정 오차가 큽니다. 전압을 너무 높이면 젤이 데워져 띠가 번지고 휩니다. 원형 플라스미드는 같은 길이라도 꼬인 정도에 따라 직선 DNA와 다르게 이동하므로 이 곡선을 그대로 쓸 수 없습니다. 전기 영동 장치는 뚜껑을 닫은 뒤 전원을 켜고, 끈 뒤에 엽니다. 자외선을 볼 때는 보호 안경을 쓰고, 염색약은 장갑을 끼고 다룹니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 시료를 1% 젤 대신 2% 젤에 같은 전압과 시간으로 걸었습니다. 결과로 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모든 띠가 더 멀리 이동한다<span class="why"><b>그물이 촘촘해지면 이동이 느려집니다.</b> 젤이 진할수록 모든 조각의 이동 거리가 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>작은 조각들은 더 잘 갈라지고, 큰 조각들은 우물 근처에 몰린다<span class="why"><b>맞습니다.</b> 그래서 수백 bp 이하 조각은 진한 젤, 수 kb 이상 조각은 묽은 젤에서 분석합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>띠의 순서가 뒤바뀐다<span class="why"><b>순서는 그대로입니다.</b> 젤 농도는 간격을 바꿀 뿐, 작은 조각이 더 멀리 간다는 관계는 같습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

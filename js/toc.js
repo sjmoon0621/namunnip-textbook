@@ -8355,85 +8355,177 @@ window.TOC = [
       "n": 1,
       "title": "플랑크톤 관찰",
       "code": "12생실01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-plankton",
+        "title": "연못물 한 방울 속 플랑크톤, 무엇을 보고 식물성과 동물성을 가를까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "주사 전자 현미경",
       "code": "12생실01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-sem",
+        "title": "주사 전자 현미경으로 꽃가루의 가시까지 선명하게 보려면 무엇을 맞춰야 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "원형질 분리",
       "code": "12생실01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-plasmolysis",
+        "title": "양파 세포가 원형질 분리를 시작하는 설탕물 농도는 얼마일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-cell-osmosis",
+        "title": "소금물에 담근 세포는 왜 쪼그라들까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "삼투압과 수분 퍼텐셜",
       "code": "12생실01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-water-potential",
+        "title": "감자 세포의 삼투압은 몇 MPa일까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "삼투에 영향을 주는 요인",
       "code": "12생실01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-osmosis-design",
+        "title": "투석막 주머니에 물이 빨리 들어오게 하는 요인은 무엇일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "식물의 조직과 기관",
       "code": "12생실01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-plant-tissue",
+        "title": "뿌리·줄기·잎의 단면에서 물이 지나는 길을 찾을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "동물의 기관 해부와 관찰",
       "code": "12생실01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-dissection",
+        "title": "오징어와 붕어의 몸속, 기관이 놓인 자리로 하는 일을 추론할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "효소 반응 속도의 요인",
       "code": "12생실01-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-enzyme-rate",
+        "title": "거름종이 원판이 떠오르는 시간으로 효소의 반응 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-cell-enzyme-lab",
+        "title": "효소가 가장 잘 일하는 조건은 어떻게 찾을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "광합성 속도의 요인",
       "code": "12생실01-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-photosynthesis",
+        "title": "검정말이 내는 기포 수로 광합성 속도를 비교할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-photo-rate",
+        "title": "빛을 늘리면 광합성도 계속 빨라질까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "세포 호흡 속도 측정",
       "code": "12생실01-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-respirometer",
+        "title": "싹 트는 콩은 얼마나 빨리 산소를 쓸까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "효모의 발효",
       "code": "12생실01-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-yeast",
+        "title": "효모는 어떤 당을, 몇 도에서 가장 잘 발효할까?"
+       }
+      ]
      },
      {
       "n": 12,
       "title": "적혈구 용적률",
       "code": "12생실01-12",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-hematocrit",
+        "title": "원심 분리한 모세관에서 적혈구 층의 길이를 재면 무엇을 알 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-labbio-rbc",
+        "title": "적혈구는 왜 핵도 없이 가운데가 오목한 원반 모양일까?"
+       }
+      ]
      }
     ]
    },
@@ -8445,15 +8537,27 @@ window.TOC = [
       "n": 1,
       "title": "동물의 자극과 반응",
       "code": "12생실02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-taxis",
+        "title": "쥐며느리는 정말 어둡고 축축한 곳을 고를까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "식물의 자극과 반응",
       "code": "12생실02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-tropism",
+        "title": "귀리 싹의 끝을 가리면 왜 빛 쪽으로 굽지 않을까?"
+       }
+      ]
      }
     ]
    },
@@ -8465,85 +8569,182 @@ window.TOC = [
       "n": 1,
       "title": "체세포 분열과 감수 분열 관찰",
       "code": "12생실03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-mitosis",
+        "title": "양파 뿌리 끝 세포를 세어서 분열 단계마다 걸리는 시간을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "꽃가루관 발아",
       "code": "12생실03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-pollen",
+        "title": "꽃가루관이 가장 잘 자라는 설탕 농도는 얼마일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "초파리의 초기 발생",
       "code": "12생실03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-fly-dev",
+        "title": "초파리 알은 며칠 만에 어른벌레가 될까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "닭의 발생 표본",
       "code": "12생실03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-chick",
+        "title": "섞여 버린 닭 배아 영구표본, 발생 순서대로 다시 놓을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "초파리 침샘 염색체",
       "code": "12생실03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-polytene",
+        "title": "초파리 침샘 염색체는 왜 맨눈 가까이 보일 만큼 클까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "초파리 돌연변이 형질",
       "code": "12생실03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-fly-mutants",
+        "title": "마취한 초파리 열 마리, 암수와 돌연변이 형질을 가려낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "초파리 교배와 멘델 법칙",
       "code": "12생실03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-fly-cross",
+        "title": "초파리를 교배해 세어 보면 정말 3 : 1이 나올까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "X 염색체 연관 유전",
       "code": "12생실03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-sex-linked",
+        "title": "흰 눈 초파리는 암수를 바꿔 교배하면 왜 결과가 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-gene-sexlinked",
+        "title": "색맹은 왜 남자에게 더 많을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "가계 조사와 사람의 유전",
       "code": "12생실03-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-survey",
+        "title": "우리 반과 가족을 조사하면 사람 형질의 유전 방식을 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-gene-pedigree",
+        "title": "가계도만 보고 유전 방식을 가려낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "대립유전자 빈도 모의실험",
       "code": "12생실03-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-bead-sim",
+        "title": "콩 주머니에서 짝을 뽑아 세대를 넘기면 대립유전자 빈도는 어떻게 변할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-genepool",
+        "title": "작은 섬의 생물 집단에서는 왜 우연이 진화를 이끌까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "구조와 기능의 진화 사례",
       "code": "12생실03-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-labbio-evo-cases",
+        "title": "날개, 부리, 목, 눈은 어떻게 지금의 모습이 되었을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-evo-methods",
+        "title": "진화는 어떤 증거와 방법으로 연구할까?"
+       }
+      ]
      },
      {
       "n": 12,
       "title": "채집·표본 제작과 동정",
       "code": "12생실03-12",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-specimen",
+        "title": "채집한 곤충과 풀을 연구에 쓸 수 있는 표본으로 만들려면 무엇이 필요할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-key",
+        "title": "질문 몇 개로 처음 보는 생물의 문(門)을 알아낼 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -8555,43 +8756,84 @@ window.TOC = [
       "n": 1,
       "title": "방형구법과 우점종",
       "code": "12생실04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-quadrat",
+        "title": "방형구 몇 개면 이 초원의 우점종을 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labbio-transect",
+        "title": "물가에서 언덕까지, 우점종은 왜 띠를 이루며 바뀔까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "함정 트랩과 곤충 군집",
       "code": "12생실04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-pitfall",
+        "title": "숲과 잔디밭, 땅 위를 기어 다니는 곤충 군집은 어느 쪽이 더 다양할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "생물 요소와 비생물 요소",
       "code": "12생실04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-eco-survey",
+        "title": "학교 연못 둘레에서 잰 숫자로 생물과 환경의 관계를 말할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "개체군 생장 곡선",
       "code": "12생실04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-culture",
+        "title": "효모를 키우며 날마다 세면 개체군은 어떤 곡선을 그릴까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "동물 개체군에 영향을 주는 요인",
       "code": "12생실04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-mark-recapture",
+        "title": "쥐며느리 개체군의 크기는 무엇이 정할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "환경 오염 물질과 식물 생장",
       "code": "12생실04-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-pollutant",
+        "title": "오염 물질이 얼마나 짙어야 무 싹의 뿌리가 절반만 자랄까?"
+       }
+      ]
      }
     ]
    },
@@ -8603,57 +8845,135 @@ window.TOC = [
       "n": 1,
       "title": "동물 세포 계대 배양",
       "code": "12생실05-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-cell-culture",
+        "title": "바닥을 다 덮은 세포는 언제, 얼마나 나눠 옮겨야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-labbio-cell-research",
+        "title": "플라스크에서 키운 동물 세포는 어디에 쓰일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "식물 조직 배양",
       "code": "12생실05-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-tissue-culture",
+        "title": "잎이나 줄기 한 조각에서 식물 한 그루를 다시 키울 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-labbio-plant-culture-uses",
+        "title": "식물 조직 배양은 농업과 보존에 어떻게 쓰일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "DNA 추출",
       "code": "12생실05-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-dna-extract",
+        "title": "딸기 한 알에서 DNA를 눈에 보이게 꺼낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "DNA 전기 영동",
       "code": "12생실05-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-electrophoresis",
+        "title": "젤 속에서 이동한 거리만 재고 DNA 조각의 크기를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-gene-gel",
+        "title": "머리카락 한 올의 DNA로 사람을 가려낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "제한 효소",
       "code": "12생실05-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-restriction",
+        "title": "제한 효소가 정말 그 염기 서열만 자르는지 어떻게 확인할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "대장균 형질 전환",
       "code": "12생실05-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-transformation",
+        "title": "해파리 유전자를 넣은 대장균만 골라낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "PCR 유전자 증폭",
       "code": "12생실05-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-pcr",
+        "title": "온도만 오르내리게 했는데 DNA가 왜 수억 배로 늘어날까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-pcr",
+        "title": "PCR은 아주 적은 양의 바이러스를 어떻게 찾아낼까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "생물정보학과 유전체 분석",
       "code": "12생실05-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-bioinfo",
+        "title": "염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-labbio-genome-med",
+        "title": "유전체 분석은 실제로 어떤 환자를 도왔을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-seq-tree",
+        "title": "DNA 서열의 차이로 계통수를 그릴 수 있을까?"
+       }
+      ]
      }
     ]
    }

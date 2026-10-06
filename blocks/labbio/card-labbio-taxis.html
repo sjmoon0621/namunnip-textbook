@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labbio/taxis.js"
+  ],
+  "short": "선택 상자로 동물의 반응 관찰"
+}
+-->
+<style>
+#card-labbio-taxis .presets { flex-wrap: wrap; align-items: center; }
+#card-labbio-taxis .chip:disabled { opacity: .4; cursor: not-allowed; }
+</style>
+<article class="card" id="card-labbio-taxis">
+  <header class="card-head">
+    <span class="no"></span><h2>쥐며느리는 정말 어둡고 축축한 곳을 고를까?</h2><span class="kind">실험 · 선택 상자 · 주성과 무정위 운동성 · 카이제곱 검정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽과 오른쪽 환경이 다른 선택 상자 안에서 움직이는 동물들"></canvas>
+      <div class="ctl">
+        <div class="presets ani" role="group" aria-label="동물 고르기">
+          <span class="mono small dim">동물</span>
+          <button class="chip" data-a="iso" aria-pressed="true">쥐며느리</button><button class="chip" data-a="pla" aria-pressed="false">플라나리아</button><button class="chip" data-a="art" aria-pressed="false">아르테미아 유생</button>
+        </div>
+        <div class="presets sti" role="group" aria-label="자극 고르기">
+          <span class="mono small dim">왼쪽에 준 자극</span>
+          <button class="chip" data-s="light" aria-pressed="true">어둡게 (빛)</button><button class="chip" data-s="wet" aria-pressed="false">젖은 종이 (습도)</button><button class="chip" data-s="food" aria-pressed="false">간 즙 (화학)</button><button class="chip" data-s="none" aria-pressed="false">자극 없음</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">넣는 개체 수 N = <output class="n-out">20</output></label>
+            <input class="n" type="range" min="10" max="40" step="2" value="20" aria-label="개체 수"></div>
+        </div>
+        <div class="lab-btns"><button class="chip go run" type="button">가운데에 풀고 10분 관찰 (1분마다 세기)</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="시간에 따른 왼쪽 개체 비율과 우연으로 볼 수 있는 범위"></canvas>
+        <p class="fig-note">상자는 가로 30 cm로, 가운데 구멍으로 동물을 한꺼번에 풀어 놓고 1분마다 양쪽 개체 수를 셉니다. 동물의 움직임은 실제 행동 경향을 흉내 낸 모식 시뮬레이션이며, 같은 조건에서도 매번 결과가 달라집니다. 그래프의 회색 띠는 동물이 아무 쪽도 고르지 않을 때(50 : 50) 우연히 나올 수 있는 범위(χ² &lt; 3.84, 유의 수준 5%)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>돌을 들추면 쥐며느리가 우르르 있고, 빛을 비추면 재빨리 그늘로 숨습니다. 쥐며느리는 정말 어두운 곳과 축축한 곳을 "골라" 가는 것일까요, 아니면 우연히 모인 것일까요? 플라나리아와 아르테미아는 빛과 먹이 냄새에 어떻게 반응할까요?</li>
+      <li><span class="tag">복원</span>동물은 감각기로 자극을 받아들이고, 신경계가 그 정보를 처리해 근육(효과기)에 명령을 내려 반응합니다(자극 → 감각기 → 신경 → 근육 → 반응). 사람이 떨어지는 자를 잡는 반응도 같은 경로입니다. 자극의 방향을 향하거나 피해 움직이는 것을 <em>주성</em>(빛이면 주광성, 화학 물질이면 주화성), 방향과 관계없이 싫은 곳에서 더 빨리·더 자주 움직이다 결국 좋은 곳에 모이는 것을 <em>무정위 운동성</em>이라고 합니다.</li>
+      <li><span class="tag">설계</span>상자 양쪽에서 조사하려는 자극 하나만 다르게 하고 온도, 바닥 재질, 냄새 등은 같게 합니다. 자극이 없는 상자(양쪽이 같음)가 대조군입니다. 개체 수를 충분히 하고, 같은 실험을 여러 번 하거나 상자 방향을 바꿔 위치 효과를 없앱니다. 귀무가설은 "동물은 어느 쪽도 고르지 않는다(50 : 50)"입니다.</li>
+      <li><span class="tag">분석</span>10분 뒤 왼쪽 수 O₁과 오른쪽 수 O₂를 기댓값 E = N/2와 비교해 χ² = (O₁ − E)²/E + (O₂ − E)²/E를 구합니다. 두 칸이면 자유도 1이고, χ²가 3.84보다 크면 "우연만으로 이렇게 치우칠 확률이 5%보다 작다"고 보아 귀무가설을 기각합니다. 쥐며느리는 어둡고 습한 쪽, 플라나리아는 어두운 쪽과 먹이 쪽, 아르테미아 유생은 밝은 쪽으로 모이는 경향을 보입니다.</li>
+      <li><span class="tag">측정</span>먼저 "자극 없음"으로 세 번 관찰해 χ²가 대부분 3.84보다 작은지 확인하세요. 그다음 쥐며느리에 빛과 습도 자극을 각각 주어 보세요. N을 10으로 줄이면 같은 경향이라도 χ²가 기준을 넘기 어려워지는 까닭은 무엇일까요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>χ² 검정은 개체가 서로 독립적으로 움직인다고 가정합니다. 쥐며느리처럼 서로 모이는 동물은 이 가정이 깨져 치우침이 실제보다 커 보일 수 있으므로, 여러 번 반복한 결과를 함께 봅니다. 빛을 쓸 때 전등 열로 한쪽이 더워지면 온도까지 함께 바뀝니다. 동물은 붓으로 살살 옮기고, 실험 뒤에는 잡아 온 곳에 되돌려 보내거나 사육 상자로 옮기며, 만진 뒤에는 손을 씻습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">쥐며느리 20마리를 빛 자극 상자에 넣었더니 10분 뒤 어두운 쪽 13마리, 밝은 쪽 7마리였습니다(χ² = 1.8). 바른 결론은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>쥐며느리는 어두운 곳을 좋아한다는 것이 증명되었다<span class="why"><b>치우쳐 보이지만 우연의 범위 안입니다.</b> χ²가 3.84보다 작으므로 50 : 50이라는 귀무가설을 기각할 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>이 자료만으로는 선호가 있다고 말할 수 없으니, 개체 수를 늘리거나 반복해야 한다<span class="why"><b>맞습니다.</b> 같은 비율(65%)이라도 N이 40이면 χ²가 3.6, 60이면 5.4가 되어 기준을 넘습니다. 표본이 작으면 실제 경향도 확인하기 어렵습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>쥐며느리는 빛에 반응하지 않는다는 것이 증명되었다<span class="why"><b>"기각하지 못함"은 "없음을 증명함"이 아닙니다.</b> 효과가 있어도 표본이 작으면 검정이 잡아내지 못할 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
