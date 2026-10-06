@@ -1,0 +1,74 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/earth/argo-data.js",
+    "js/cards/earth/argo.js"
+  ],
+  "short": "해역별 수온·염분 연직 분포"
+}
+-->
+<style>
+#card-earth-argo canvas { aspect-ratio: 10 / 9; }
+#card-earth-argo .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+#card-earth-argo .tbl-host { max-height: 190px; overflow: auto; }
+</style>
+<article class="card" id="card-earth-argo">
+  <header class="card-head">
+    <span class="no"></span><h2>바다마다 깊이에 따라 수온과 염분은 어떻게 다를까?</h2><span class="kind">실험 · 실제 자료 · 연직 분포 · 수온–염분도</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="해역별 수온·염분·밀도의 깊이에 따른 분포, 또는 수온–염분도"></canvas>
+      <div class="ctl">
+        <div class="presets views" role="group" aria-label="보기">
+          <span class="mono small dim">보기</span>
+          <button class="chip" data-v="T" aria-pressed="true">수온</button><button class="chip" data-v="S" aria-pressed="false">염분</button><button class="chip" data-v="R" aria-pressed="false">밀도 σt</button><button class="chip" data-v="TS" aria-pressed="false">수온–염분도</button>
+        </div>
+        <div class="presets sites" role="group" aria-label="해역">
+          <span class="mono small dim">해역</span>
+          <button class="chip" data-k="eqp"><span class="sw"></span>적도 태평양</button><button class="chip" data-k="nps"><span class="sw"></span>북태평양 아열대</button><button class="chip" data-k="es"><span class="sw"></span>동해 울릉 분지</button><button class="chip" data-k="lab"><span class="sw"></span>래브라도해</button><button class="chip" data-k="so"><span class="sw"></span>남극해</button><button class="chip" data-k="med"><span class="sw"></span>지중해 유출수</button>
+        </div>
+        <div class="presets mons" role="group" aria-label="달">
+          <span class="mono small dim">달</span>
+          <button class="chip" data-m="02" aria-pressed="false">2월</button><button class="chip" data-m="08" aria-pressed="true">8월</button>
+          <label class="mono small"><input type="checkbox" class="other"> 다른 달 점선</label>
+          <label class="mono small"><input type="checkbox" class="layers" checked> 층 구분</label>
+          <label class="mono small"><input type="checkbox" class="zoom"> 위 500 m 확대</label>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">플로트가 잴 깊이 <output class="zr-out">150</output> m</label><input class="zr" type="range" min="0" max="2000" step="10" value="150" aria-label="잴 깊이"></div>
+          <div><label class="mono small"><input type="checkbox" class="drift"> 염분 센서 표류 (+0.03 psu)</label><span class="mono small dim">기준 해역: <b class="n-focus">—</b></span></div>
+        </div>
+        <div class="lab-btns"><button class="chip go" type="button">플로트로 이 깊이 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <dl class="nums n4">
+          <div><dt>혼합층 두께</dt><dd class="n-ml">—</dd></div>
+          <div><dt>수온 약층</dt><dd class="n-th">—</dd></div>
+          <div><dt>표층 σt</dt><dd class="n-r0">—</dd></div>
+          <div><dt>1000 m σt</dt><dd class="n-r1">—</dd></div>
+        </dl>
+        <p class="verdict small"></p>
+        <p class="fig-note">해역 단추를 누르면 그 해역을 켜고 기준(굵은 선)으로 삼습니다. 기준 해역을 한 번 더 누르면 끕니다. 자료: NOAA 세계 해양 지도(WOA23)의 2015~2022년 기후값, 1° 격자 한 칸(대부분 Argo 플로트 관측, 퍼블릭 도메인). 2월·8월 값은 1500 m까지이고 그 아래는 연평균입니다. σt는 UNESCO(1980) 해수 상태 방정식의 대기압 식으로 계산했습니다. 혼합층은 10 m보다 σt가 0.03 커지는 깊이, 수온 약층은 1 m에 0.02 °C 넘게 식는 구간으로 정했습니다. 측정값에는 내부파로 물이 ±10 m쯤 출렁이는 효과와 센서 오차(수온 ±0.002 °C, 염분 ±0.005)를 섞었습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>바닷물의 수온과 염분은 깊이에 따라 어떻게 변할까요? 적도, 아열대, 동해, 극 가까운 바다에서 그 모양이 같을까요? 여름과 겨울에는 어디가 달라지고 어디가 그대로일까요?</li>
+      <li><span class="tag">복원</span>해수는 깊이에 따라 <em>혼합층</em>(바람이 섞어 수온이 고른 층), <em>수온 약층</em>(깊이에 따라 수온이 급히 떨어지는 층), <em>심해층</em>(차갑고 거의 변하지 않는 층)으로 나눕니다. 해수의 밀도는 수온이 낮을수록, 염분이 높을수록 큽니다. 밀도 1025 kg/m³를 σt = 25.0처럼 1000을 뺀 값으로 줄여 씁니다.</li>
+      <li><span class="tag">설계</span>지금 바다에는 Argo 플로트 약 4,000대가 떠 있습니다. 플로트는 1000 m 깊이에서 떠다니다가 열흘마다 2000 m까지 내려간 뒤 떠오르며 수온·염분·압력을 재고, 위성으로 자료를 보냅니다. 이 카드에서는 해역(장소)과 달(계절)이 조작 변인, 깊이별 수온·염분이 종속 변인입니다. 한 번 잰 값은 그날의 물결과 소용돌이에 따라 흔들리므로, 여러 해의 관측을 평균한 기후값을 함께 봅니다.</li>
+      <li><span class="tag">분석</span>적도 태평양과 북태평양 아열대는 표층이 25 °C를 넘고, 표층에서 수백 m 사이에 10 °C 넘게 떨어지는 뚜렷한 수온 약층이 있습니다. 래브라도해와 남극해는 표층부터 차가워 수온 약층이 거의 없습니다. 동해는 8월 표층이 약 25 °C지만 300 m 아래는 1 °C 안팎의 차가운 물(동해 고유수)로 채워져 있습니다. 밀도 곡선은 모양이 수온 곡선을 거꾸로 한 것과 비슷합니다. 대양에서는 수온이 밀도를 주로 정한다는 뜻입니다. 수온–염분도에서는 해역마다 곡선이 다른 자리에 놓여 물 덩어리를 구별할 수 있습니다.</li>
+      <li><span class="tag">측정</span>동해를 기준으로 두고 2월과 8월을 바꿔 보세요. 혼합층 두께는 몇 m에서 몇 m로 바뀌나요? 150 m와 800 m에서 플로트로 세 번씩 재어 기록하세요. 어느 깊이에서 측정값이 더 흔들리나요? 남극해를 고르면 아래 판정 문장이 어떻게 바뀌는지, 지중해 유출수는 1000 m 부근 염분이 어떤지도 확인하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>수온 약층에서는 물이 조금만 위아래로 움직여도 그 깊이의 수온이 크게 바뀌므로 한 번의 측정값이 많이 흔들립니다(우연 오차). 반대로 염분 센서가 오염되어 값이 일정하게 치우치면(표류) 여러 번 재어 평균을 내도 사라지지 않습니다. 그래서 Argo 자료는 배에서 잰 정밀 자료와 비교해 나중에 보정합니다. σt는 압력 효과를 뺀 밀도라 깊은 물끼리의 비교에는 한계가 있고, 이 자료는 1° 격자 한 칸의 평균이라 연안이나 한 번의 관측과는 다를 수 있습니다. 실제 바다에서 해양 관측을 할 때는 구명조끼를 입고, 장비를 내리는 줄 가까이에 서지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">남극해의 겨울(8월) 자료에서 표층 수온은 −1.5 °C이고, 200~500 m의 물은 약 1.5 °C로 더 따뜻합니다. 이 물기둥에 대한 설명으로 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>따뜻한 물이 아래에 있으므로 곧 위로 떠올라 뒤집힌다<span class="why"><b>수온만 보면 그럴듯하지만</b> 아래쪽 물은 염분이 더 높아(약 34.7 psu) 밀도가 표층보다 큽니다. 밀도가 깊을수록 크면 뒤집히지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>염분이 깊을수록 높아 밀도는 깊을수록 커지므로 안정하다<span class="why"><b>맞습니다.</b> 수온이 낮아 수온의 영향이 작은 극지 바다에서는 염분이 밀도를 주로 정합니다. 카드에서 남극해 밀도 곡선을 보면 깊을수록 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표층이 가장 차가우므로 표층 물의 밀도가 가장 크다<span class="why"><b>염분을 빠뜨렸습니다.</b> 표층은 해빙이 녹은 물과 강수로 염분이 낮아(약 34.1 psu) 아래쪽 물보다 가볍습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

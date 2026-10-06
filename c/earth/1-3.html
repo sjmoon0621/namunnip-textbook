@@ -20,6 +20,11 @@
     #card-earth-front .cv-meteo { width: 100%; aspect-ratio: 16 / 7; margin-top: 8px; }
     @media (max-width: 640px) { #card-earth-front .cv-wide { aspect-ratio: 4 / 3; } }
     @media (max-width: 640px) { #card-earth-front .cv-meteo { aspect-ratio: 4 / 3; } }
+    #card-earth-forecast .fc-map { width: 100%; aspect-ratio: 5 / 4; display: block; }
+    #card-earth-forecast .fc-plot { aspect-ratio: 16 / 7; }
+    #card-earth-forecast .pred .presets { margin-top: 4px; }
+    #card-earth-forecast .pred .q-l { min-width: 7.5em; }
+    #card-earth-forecast .ctl-row { grid-template-columns: 1fr; }
   </style>
 </head>
 <body data-course="earth" data-sec="1-3">
@@ -49,6 +54,8 @@
         <li><a href="#card-earth-updown"><span class="mono">1.3.2</span>고기압 아래에서는 왜 날씨가 맑을까?</a></li>
         <li><a href="#card-earth-front"><span class="mono">1.3.3</span>온대 저기압이 지나가면 날씨는 어떤 순서로 바뀔까?</a></li>
         <li><a href="#text-earth-satellite"><span class="mono">1.3.4</span>위성 영상과 레이더 영상은 각각 무엇을 보여 줄까?</a></li>
+        <li><a href="#card-earth-forecast"><span class="mono">1.3.5</span>일기도, 위성 영상, 레이더를 함께 보면 내일 날씨를 맞힐 수 있을까?</a></li>
+        <li><a href="#text-earth-moving-highs"><span class="mono">1.3.6</span>봄가을 날씨는 왜 사나흘마다 바뀔까?</a></li>
       </ol>
       <p class="progress mono small"></p>
       <p class="toc-links mono small"><a href="../../graph.html?sec=earth-1-3">이 절을 개념 지도에서 보기</a></p>
@@ -238,6 +245,133 @@
         </div>
       </article>
 
+      <article class="card" id="card-earth-forecast">
+        <header class="card-head">
+          <span class="no">1.3.5</span><h2>일기도, 위성 영상, 레이더를 함께 보면 내일 날씨를 맞힐 수 있을까?</h2><span class="kind">일기 예보 · 세 자료 겹쳐 보기 · 가상 사례</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="fc-map" aria-label="동아시아 지도 위의 가상 온대 저기압과 전선, 고기압. 지상 일기도, 적외 위성 영상, 레이더 강수 영상을 켜고 끌 수 있다"></canvas>
+            <canvas class="cv-plot fc-plot" aria-label="서울의 기온과 강수량 관측 기록. 지금 시각까지만 보인다"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="보이는 자료">
+                <span class="mono small dim">자료</span>
+                <button class="chip" data-l="map" aria-pressed="true">지상 일기도</button><button class="chip" data-l="ir" aria-pressed="false">적외 위성 영상</button><button class="chip" data-l="rad" aria-pressed="false">레이더 강수</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">시각 = <output class="t-out">1일째 09시</output></label>
+                  <input class="tt" type="range" min="0" max="72" step="6" value="0" aria-label="시각 (6시간 간격, 사흘)"></div>
+                <div class="presets" role="group" aria-label="예측 시점">
+                  <span class="mono small dim">예측 시점</span>
+                  <button class="chip" data-cp="18" aria-pressed="false">2일째 03시</button><button class="chip" data-cp="36" aria-pressed="false">2일째 21시</button><button class="chip" data-cp="54" aria-pressed="false">3일째 15시</button>
+                </div>
+              </div>
+              <div class="pred" hidden>
+                <div class="presets" data-q="rain" role="group" aria-label="12시간 뒤 비"><span class="mono small dim q-l">12시간 뒤 비</span><button class="chip" data-v="y" aria-pressed="false">온다</button><button class="chip" data-v="n" aria-pressed="false">안 온다</button></div>
+                <div class="presets" data-q="temp" role="group" aria-label="12시간 뒤 기온"><span class="mono small dim q-l">기온 (지금보다)</span><button class="chip" data-v="up" aria-pressed="false">오른다</button><button class="chip" data-v="same" aria-pressed="false">비슷 (±1.5 °C)</button><button class="chip" data-v="down" aria-pressed="false">내린다</button></div>
+                <div class="presets" data-q="wind" role="group" aria-label="12시간 뒤 풍향"><span class="mono small dim q-l">풍향</span><button class="chip" data-v="e" aria-pressed="false">동~남동풍</button><button class="chip" data-v="s" aria-pressed="false">남~남서풍</button><button class="chip" data-v="nw" aria-pressed="false">서~북서~북풍</button></div>
+              </div>
+              <div class="lab-btns"><button class="chip go check" type="button">12시간 뒤 관측 보기</button></div>
+              <dl class="nums n4">
+                <div><dt>서울 기압</dt><dd class="n-p">—</dd></div>
+                <div><dt>서울 기온</dt><dd class="n-t">—</dd></div>
+                <div><dt>서울 바람</dt><dd class="n-w">—</dd></div>
+                <div><dt>서울 날씨</dt><dd class="n-s">—</dd></div>
+              </dl>
+              <p class="verdict small">예측 시점을 고르면 그 시각까지의 서울 관측만 보입니다. 지도와 영상을 읽고 12시간 뒤를 예측해 보세요.</p>
+              <p class="fig-note">실제 날짜가 아닌 <b>가상의 모식 사례</b>입니다. 봄철에 흔한 온대 저기압과 뒤따르는 이동성 고기압을 단순한 식으로 만들었고, 기압·기온·강수 값은 실제 관측이 아닌 모형 값입니다. 등압선 4 hPa 간격, 풍향은 기압 경도에 지표 마찰(30° 안쪽으로 꺾임)을 넣어 구했습니다. 점선 원은 레이더 관측 범위(모식)입니다. 육지 윤곽: Natural Earth(퍼블릭 도메인).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>예보관은 일기도 한 장만 보고 예보하지 않습니다. 기압 배치(일기도), 구름(위성), 비(레이더)를 겹쳐 보고 시간에 따라 어떻게 움직이는지 따라갑니다. 이 세 자료로 서울의 12시간 뒤 날씨를 맞힐 수 있을까요?</li>
+            <li><span class="tag">복원</span>우리나라 부근의 저기압과 고기압은 편서풍을 타고 대체로 서쪽에서 동쪽으로 하루 수백~천 km씩 움직입니다. 온대 저기압 동쪽에는 온난 전선, 남서쪽에는 한랭 전선이 있고, 바람은 등압선을 비스듬히 가로질러 저기압 쪽으로 붑니다.</li>
+            <li><span class="tag">설명</span>세 자료는 보는 것이 다릅니다. 일기도는 <em>기압 배치와 전선</em>을, 적외 위성 영상은 <em>구름 꼭대기가 차가운(높은) 곳</em>을 밝게, 레이더는 <em>지금 비가 내리는 곳과 세기</em>를 보여 줍니다. 온난 전선 앞에는 넓은 구름과 약한 비, 한랭 전선을 따라서는 좁은 띠의 강한 비가 보입니다.</li>
+            <li><span class="tag">연결</span>예보의 기본은 <em>외삽</em>입니다. 저기압 중심과 전선이 6시간에 얼마나 움직였는지 보고, 같은 속도로 12시간 더 가면 서울이 전선의 어느 쪽에 놓일지 따져 봅니다. 전선의 어느 쪽에 있느냐가 풍향과 기온을 정합니다.</li>
+            <li><span class="tag">적용</span>예측 시점 세 곳을 차례로 골라 보세요. 각 시점에서 시각 막대를 앞뒤로 6시간만 움직여 저기압이 움직이는 방향과 속도를 재고, 위성·레이더를 켜서 서울 서쪽에 무엇이 다가오는지 확인한 뒤 비·기온·풍향을 고르고 관측과 비교하세요.</li>
+            <li class="warn"><span class="tag">판단</span>실제 저기압은 이동하면서 발달하거나 약해지고, 속도와 방향도 바뀝니다. 그래서 외삽만으로는 하루 이틀 뒤를 맞히기 어렵고, 기상청은 대기의 운동 방정식을 컴퓨터로 푸는 <em>수치 예보 모델</em>과 여러 번 돌린 결과의 퍼짐(앙상블)을 함께 씁니다. 이 카드의 사례는 모식이라 실제보다 훨씬 규칙적으로 움직입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>다른 자료 조합</h3>
+          <p class="q">어느 날 서해 상의 적외 위성 영상에는 남서–북동으로 길고 좁은 밝은 구름띠가 보이고, 레이더에는 그 띠를 따라 강한 강수 에코(시간당 10 mm 이상)가 줄지어 있습니다. 띠는 동쪽으로 시속 40 km쯤 움직이고 있으며, 서울에서 서쪽으로 약 200 km 떨어져 있습니다. 서울의 앞으로 날씨로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>하루 내내 약한 비가 이어지고 남동풍이 계속 분다<span class="why"><b>온난 전선 앞의 모습입니다.</b> 넓은 구름에서 약한 비가 오래 내리는 것은 온난 전선의 특징이고, 좁고 강한 띠는 한랭 전선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 5시간 뒤 짧고 강한 비가 내리고, 그 뒤 북서풍이 불며 기온이 내려간다<span class="why"><b>맞습니다.</b> 좁고 강한 강수 띠는 한랭 전선입니다. 200 km ÷ 40 km/h ≈ 5시간 뒤 서울을 지나며, 통과 뒤에는 찬 공기가 들어와 바람이 북서풍으로 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>구름띠는 높은 곳에 있으니 비는 오지 않는다<span class="why"><b>적외 영상에서 밝다는 것은 구름 꼭대기가 높다는 뜻입니다.</b> 적란운처럼 높이 솟은 구름일수록 밝고, 레이더 에코가 이미 강한 비를 보여 줍니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-earth-moving-highs">
+        <header class="card-head">
+          <span class="no">1.3.6</span><h2>봄가을 날씨는 왜 사나흘마다 바뀔까?</h2><span class="kind">읽기 · 이동성 고기압과 온대 저기압 · 기상 현상의 규모</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">봄과 가을에는 맑고 건조한 날이 이어지다가 하루쯤 흐리고 비가 온 뒤 다시 맑아지는 일이 되풀이됩니다. 여름 장마나 겨울 한파처럼 한 가지 날씨가 오래 머물지 않는 까닭은 무엇일까요?</p>
+
+          <h3><span class="mono">1</span>편서풍 파동이 고기압과 저기압을 줄지어 보낸다</h3>
+          <p>중위도 상공에는 서쪽에서 동쪽으로 부는 <em>편서풍</em>이 남북으로 굽이치며 흐릅니다. 남쪽으로 처진 곳을 <em>기압골</em>, 북쪽으로 솟은 곳을 <em>기압 마루</em>라고 합니다. 기압골의 동쪽 아래에서는 지상 저기압이, 마루의 동쪽 아래에서는 지상 고기압이 잘 생깁니다. 그래서 지상에는 고기압과 저기압이 번갈아 늘어서고, 파동 전체가 편서풍을 타고 하루 수백~1000 km씩 동쪽으로 움직입니다.</p>
+          <p>한 지점에서 보면 저기압과 저기압 사이 거리(수천 km)를 이동 속도로 나눈 시간마다 저기압이 찾아오고, 그 사이에 고기압이 지나갑니다. 이것이 대략 사나흘에서 닷새 간격으로 날씨가 바뀌는 까닭입니다.</p>
+          <figure>
+            <svg viewBox="0 0 640 210" style="max-width:640px;display:block;margin:0 auto" role="img" aria-label="상층 편서풍 파동과 그 아래 번갈아 늘어선 지상 고기압과 저기압, 동쪽으로 이동">
+              <path d="M10 70 C 70 70, 90 140, 150 140 S 230 40, 290 40 S 370 140, 430 140 S 510 40, 570 40 S 620 70, 630 75" fill="none" stroke="#5d5d61" stroke-width="2.5"/>
+              <text x="150" y="160" text-anchor="middle" font-size="12" fill="#5d5d61">기압골</text>
+              <text x="290" y="30" text-anchor="middle" font-size="12" fill="#5d5d61">기압 마루</text>
+              <text x="430" y="160" text-anchor="middle" font-size="12" fill="#5d5d61">기압골</text>
+              <text x="570" y="30" text-anchor="middle" font-size="12" fill="#5d5d61">기압 마루</text>
+              <circle cx="220" cy="185" r="15" fill="#f6dcd6"/><text x="220" y="191" text-anchor="middle" font-size="17" font-weight="700" fill="#c8402f">L</text>
+              <circle cx="360" cy="185" r="15" fill="#d9e4f3"/><text x="360" y="191" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5fb3">H</text>
+              <circle cx="500" cy="185" r="15" fill="#f6dcd6"/><text x="500" y="191" text-anchor="middle" font-size="17" font-weight="700" fill="#c8402f">L</text>
+              <circle cx="80" cy="185" r="15" fill="#d9e4f3"/><text x="80" y="191" text-anchor="middle" font-size="17" font-weight="700" fill="#2f5fb3">H</text>
+              <path d="M560 112 L 620 112" stroke="#232326" stroke-width="2"/><path d="M620 112 l -8 -5 v 10 z" fill="#232326"/>
+              <text x="590" y="104" text-anchor="middle" font-size="11" fill="#232326">동쪽으로 이동</text>
+              <text x="12" y="20" font-size="11" fill="#8d8d92">상층 편서풍 (약 5 km 높이)</text>
+              <text x="12" y="205" font-size="11" fill="#8d8d92">지상</text>
+            </svg>
+            <figcaption>상층 편서풍 파동과 지상 기압계의 관계(모식). 기압골 동쪽에 저기압, 마루 동쪽에 고기압이 놓여 함께 동쪽으로 움직입니다.</figcaption>
+          </figure>
+
+          <h3><span class="mono">2</span>이동성 고기압: 맑고, 건조하고, 일교차가 크다</h3>
+          <p>봄과 가을에 우리나라를 지나는 고기압은 주로 중국 화중 지방의 따뜻하고 건조한 <em>양쯔강 기단</em>에서 떨어져 나와 편서풍을 타고 옵니다. 한곳에 머물지 않으므로 <em>이동성 고기압</em>이라고 부릅니다. 고기압 중심 부근에서는 공기가 내려오며 데워지므로 구름이 생기기 어렵습니다. 하늘이 맑고 바람이 약하니 낮에는 햇빛을 그대로 받아 따뜻하고, 밤에는 지표의 열이 우주로 빠져나가 기온이 크게 떨어집니다. 그래서 <em>일교차가 크고</em>, 새벽에 안개나 서리가 끼기 쉽습니다. 공기가 건조해 봄철 산불이 잘 번지고, 저기압이 지나간 뒤 다가오는 고기압 앞쪽의 북서풍을 타고 황사가 들어오기도 합니다.</p>
+
+          <h3><span class="mono">3</span>온대 저기압: 전선과 비를 몰고 온다</h3>
+          <p>고기압 사이의 기압골에서는 찬 공기와 따뜻한 공기가 만나 <em>온대 저기압</em>이 발달합니다. 온난 전선 앞에서는 넓은 구름과 약한 비가 오래 내리고, 한랭 전선이 지나면 짧고 강한 비 뒤에 북서풍이 불며 기온이 내려갑니다. 저기압이 빠져나가면 다음 고기압이 들어와 다시 맑아집니다.</p>
+          <div class="tbl"><table>
+            <thead><tr><th></th><th>이동성 고기압</th><th>온대 저기압</th></tr></thead>
+            <tbody>
+              <tr><td>공기 흐름</td><td>중심에서 내려와 시계 방향으로 불어 나감</td><td>시계 반대 방향으로 불어 들어와 올라감</td></tr>
+              <tr><td>날씨</td><td>맑음, 건조, 바람 약함, 일교차 큼</td><td>흐림, 비, 전선 통과 때 풍향·기온 변화</td></tr>
+              <tr><td>위성 영상</td><td>구름 없는 넓은 영역</td><td>쉼표 모양 구름, 한랭 전선을 따라 긴 구름띠</td></tr>
+              <tr><td>레이더 영상</td><td>에코가 거의 없음</td><td>온난 전선 앞의 넓고 약한 에코, 한랭 전선의 좁고 강한 띠</td></tr>
+            </tbody>
+          </table></div>
+
+          <h3><span class="mono">4</span>기상 현상의 규모: 크기와 수명은 함께 간다</h3>
+          <p>기상 현상은 크기가 클수록 오래 갑니다. 일기도의 고기압과 저기압처럼 수평 크기 1000 km 안팎, 수명 며칠인 현상을 <em>종관 규모</em>라고 합니다. 그보다 작은 <em>중규모</em> 현상은 수십~수백 km 크기로 몇 시간에서 하루 안에 생겼다 사라집니다. 여름 집중 호우는 대개 장마 전선이나 종관 규모 저기압 속에서 생긴 중규모 현상입니다.</p>
+          <div class="tbl"><table>
+            <thead><tr><th>규모</th><th>수평 크기</th><th>수명</th><th>예</th><th>위성·레이더로 보면</th></tr></thead>
+            <tbody>
+              <tr><td>행성 규모</td><td>수천~1만 km 이상</td><td>1주 이상</td><td>편서풍 파동, 북태평양 고기압</td><td>여러 날의 영상을 이어 보아야 드러남</td></tr>
+              <tr><td>종관 규모</td><td>수백~수천 km</td><td>며칠</td><td>온대 저기압, 이동성 고기압, 태풍</td><td>위성 영상 한 장에 전체 모습이 담김(쉼표 구름, 맑은 영역, 나선 구름)</td></tr>
+              <tr><td>중규모</td><td>수십~수백 km</td><td>몇 시간~하루</td><td>장마 전선 위 중규모 저기압, 집중 호우를 일으키는 중규모 대류계, 해풍</td><td>적외 영상에서 매우 밝고 둥근 구름 덩어리(꼭대기가 높고 차가움), 레이더에서 한곳에 머물거나 줄지어 지나가는 강한 에코</td></tr>
+              <tr><td>소규모</td><td>수십 m~수 km</td><td>몇 분~1시간</td><td>뇌우 세포 하나, 돌풍, 토네이도</td><td>레이더의 작은 강한 에코 한 점, 위성으로는 구별하기 어려움</td></tr>
+            </tbody>
+          </table></div>
+          <p>규모가 작을수록 예보가 어렵습니다. 종관 규모 저기압은 수치 예보 모델로 며칠 앞서 예상할 수 있지만, 집중 호우를 일으키는 중규모 대류계는 어디에서 생길지 몇 시간 전에야 드러나는 경우가 많습니다. 그래서 집중 호우 감시에는 몇 분마다 새로 찍는 레이더 영상과 위성 영상이 특히 중요합니다.</p>
+
+          <p class="judge"><b>판단</b>"사나흘마다 바뀐다"는 평균적인 경향일 뿐 정해진 주기가 아닙니다. 파동이 느려지거나 멈추면(저지 고기압) 같은 날씨가 한 주 넘게 이어지기도 합니다. 또 "고기압이면 늘 맑다"도 조건이 붙습니다. 겨울에 시베리아 고기압이 확장하면 찬 공기가 따뜻한 서해를 건너며 눈구름을 만들어, 고기압의 영향 아래에서도 서해안에 폭설이 내립니다. 여름에는 북태평양 고기압이 오래 버티고 편서풍대가 북쪽으로 물러나 이런 교대가 뚜렷하지 않습니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>가을 밤의 이동성 고기압</h3>
+          <p class="q">10월 어느 날 저녁, 이동성 고기압의 중심이 서해에서 우리나라 쪽으로 다가오고 있습니다. 내일 새벽 내륙 지방의 날씨로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>맑고 바람이 약해 기온이 크게 떨어지고, 안개나 서리가 낄 수 있다<span class="why"><b>맞습니다.</b> 고기압 중심 부근은 하강 기류로 맑고 바람이 약합니다. 구름이 덮지 않으니 밤사이 지표의 열이 빠져나가 새벽 기온이 크게 떨어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>공기가 올라가 소나기구름이 발달한다<span class="why"><b>상승 기류는 저기압의 특징입니다.</b> 고기압에서는 공기가 내려오며 데워져 구름이 사라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>남서풍이 강하게 불어 따뜻하고 습하다<span class="why"><b>온대 저기압의 따뜻한 구역 모습입니다.</b> 고기압이 다가오는 앞쪽(동쪽)에서는 북서풍 계열 바람이 불고, 중심 부근에서는 바람이 약합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
@@ -250,5 +384,7 @@
 <script src="../../js/cards/earth/ao-isobar-wind.js"></script>
 <script src="../../js/cards/earth/ao-updown-cloud.js"></script>
 <script src="../../js/cards/earth/ao-front-passage.js"></script>
+<script src="../../js/cards/earth/eastasia-land-data.js"></script>
+<script src="../../js/cards/earth/forecast.js"></script>
 </body>
 </html>

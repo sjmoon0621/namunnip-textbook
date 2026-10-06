@@ -16,6 +16,10 @@
   <style>
     @media (max-width: 640px) { #card-earth-thermocline canvas { aspect-ratio: 4 / 3; } }
     @media (max-width: 640px) { #card-earth-salinity canvas { aspect-ratio: 4 / 3; } }
+    #card-earth-argo canvas { aspect-ratio: 10 / 9; }
+    #card-earth-argo .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+    #card-earth-argo .tbl-host { max-height: 190px; overflow: auto; }
+    #card-earth-gas .g-col { aspect-ratio: 5 / 4; }
   </style>
 </head>
 <body data-course="earth" data-sec="1-1">
@@ -44,6 +48,8 @@
         <li><a href="#card-earth-thermocline"><span class="mono">1.1.1</span>따뜻한 물은 왜 바다 위쪽에만 있을까?</a></li>
         <li><a href="#card-earth-salinity"><span class="mono">1.1.2</span>짠 바다와 싱거운 바다, 성분 비율도 다를까?</a></li>
         <li><a href="#text-earth-oxygen"><span class="mono">1.1.3</span>바닷물에 녹은 산소는 어느 깊이에 가장 적을까?</a></li>
+        <li><a href="#card-earth-argo"><span class="mono">1.1.4</span>해역별 수온·염분 연직 분포</a></li>
+        <li><a href="#card-earth-gas"><span class="mono">1.1.5</span>해수에 녹은 기체 · 생물 펌프</a></li>
       </ol>
       <p class="progress mono small"></p>
       <p class="toc-links mono small"><a href="../../graph.html?sec=earth-1-1">이 절을 개념 지도에서 보기</a></p>
@@ -207,6 +213,121 @@
         </div>
       </article>
 
+      <article class="card" id="card-earth-argo">
+        <header class="card-head">
+          <span class="no">1.1.4</span><h2>바다마다 깊이에 따라 수온과 염분은 어떻게 다를까?</h2><span class="kind">실험 · 실제 자료 · 연직 분포 · 수온–염분도</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="해역별 수온·염분·밀도의 깊이에 따른 분포, 또는 수온–염분도"></canvas>
+            <div class="ctl">
+              <div class="presets views" role="group" aria-label="보기">
+                <span class="mono small dim">보기</span>
+                <button class="chip" data-v="T" aria-pressed="true">수온</button><button class="chip" data-v="S" aria-pressed="false">염분</button><button class="chip" data-v="R" aria-pressed="false">밀도 σt</button><button class="chip" data-v="TS" aria-pressed="false">수온–염분도</button>
+              </div>
+              <div class="presets sites" role="group" aria-label="해역">
+                <span class="mono small dim">해역</span>
+                <button class="chip" data-k="eqp"><span class="sw"></span>적도 태평양</button><button class="chip" data-k="nps"><span class="sw"></span>북태평양 아열대</button><button class="chip" data-k="es"><span class="sw"></span>동해 울릉 분지</button><button class="chip" data-k="lab"><span class="sw"></span>래브라도해</button><button class="chip" data-k="so"><span class="sw"></span>남극해</button><button class="chip" data-k="med"><span class="sw"></span>지중해 유출수</button>
+              </div>
+              <div class="presets mons" role="group" aria-label="달">
+                <span class="mono small dim">달</span>
+                <button class="chip" data-m="02" aria-pressed="false">2월</button><button class="chip" data-m="08" aria-pressed="true">8월</button>
+                <label class="mono small"><input type="checkbox" class="other"> 다른 달 점선</label>
+                <label class="mono small"><input type="checkbox" class="layers" checked> 층 구분</label>
+                <label class="mono small"><input type="checkbox" class="zoom"> 위 500 m 확대</label>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">플로트가 잴 깊이 <output class="zr-out">150</output> m</label><input class="zr" type="range" min="0" max="2000" step="10" value="150" aria-label="잴 깊이"></div>
+                <div><label class="mono small"><input type="checkbox" class="drift"> 염분 센서 표류 (+0.03 psu)</label><span class="mono small dim">기준 해역: <b class="n-focus">—</b></span></div>
+              </div>
+              <div class="lab-btns"><button class="chip go" type="button">플로트로 이 깊이 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <dl class="nums n4">
+                <div><dt>혼합층 두께</dt><dd class="n-ml">—</dd></div>
+                <div><dt>수온 약층</dt><dd class="n-th">—</dd></div>
+                <div><dt>표층 σt</dt><dd class="n-r0">—</dd></div>
+                <div><dt>1000 m σt</dt><dd class="n-r1">—</dd></div>
+              </dl>
+              <p class="verdict small"></p>
+              <p class="fig-note">해역 단추를 누르면 그 해역을 켜고 기준(굵은 선)으로 삼습니다. 기준 해역을 한 번 더 누르면 끕니다. 자료: NOAA 세계 해양 지도(WOA23)의 2015~2022년 기후값, 1° 격자 한 칸(대부분 Argo 플로트 관측, 퍼블릭 도메인). 2월·8월 값은 1500 m까지이고 그 아래는 연평균입니다. σt는 UNESCO(1980) 해수 상태 방정식의 대기압 식으로 계산했습니다. 혼합층은 10 m보다 σt가 0.03 커지는 깊이, 수온 약층은 1 m에 0.02 °C 넘게 식는 구간으로 정했습니다. 측정값에는 내부파로 물이 ±10 m쯤 출렁이는 효과와 센서 오차(수온 ±0.002 °C, 염분 ±0.005)를 섞었습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>바닷물의 수온과 염분은 깊이에 따라 어떻게 변할까요? 적도, 아열대, 동해, 극 가까운 바다에서 그 모양이 같을까요? 여름과 겨울에는 어디가 달라지고 어디가 그대로일까요?</li>
+            <li><span class="tag">복원</span>해수는 깊이에 따라 <em>혼합층</em>(바람이 섞어 수온이 고른 층), <em>수온 약층</em>(깊이에 따라 수온이 급히 떨어지는 층), <em>심해층</em>(차갑고 거의 변하지 않는 층)으로 나눕니다. 해수의 밀도는 수온이 낮을수록, 염분이 높을수록 큽니다. 밀도 1025 kg/m³를 σt = 25.0처럼 1000을 뺀 값으로 줄여 씁니다.</li>
+            <li><span class="tag">설계</span>지금 바다에는 Argo 플로트 약 4,000대가 떠 있습니다. 플로트는 1000 m 깊이에서 떠다니다가 열흘마다 2000 m까지 내려간 뒤 떠오르며 수온·염분·압력을 재고, 위성으로 자료를 보냅니다. 이 카드에서는 해역(장소)과 달(계절)이 조작 변인, 깊이별 수온·염분이 종속 변인입니다. 한 번 잰 값은 그날의 물결과 소용돌이에 따라 흔들리므로, 여러 해의 관측을 평균한 기후값을 함께 봅니다.</li>
+            <li><span class="tag">분석</span>적도 태평양과 북태평양 아열대는 표층이 25 °C를 넘고, 표층에서 수백 m 사이에 10 °C 넘게 떨어지는 뚜렷한 수온 약층이 있습니다. 래브라도해와 남극해는 표층부터 차가워 수온 약층이 거의 없습니다. 동해는 8월 표층이 약 25 °C지만 300 m 아래는 1 °C 안팎의 차가운 물(동해 고유수)로 채워져 있습니다. 밀도 곡선은 모양이 수온 곡선을 거꾸로 한 것과 비슷합니다. 대양에서는 수온이 밀도를 주로 정한다는 뜻입니다. 수온–염분도에서는 해역마다 곡선이 다른 자리에 놓여 물 덩어리를 구별할 수 있습니다.</li>
+            <li><span class="tag">측정</span>동해를 기준으로 두고 2월과 8월을 바꿔 보세요. 혼합층 두께는 몇 m에서 몇 m로 바뀌나요? 150 m와 800 m에서 플로트로 세 번씩 재어 기록하세요. 어느 깊이에서 측정값이 더 흔들리나요? 남극해를 고르면 아래 판정 문장이 어떻게 바뀌는지, 지중해 유출수는 1000 m 부근 염분이 어떤지도 확인하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>수온 약층에서는 물이 조금만 위아래로 움직여도 그 깊이의 수온이 크게 바뀌므로 한 번의 측정값이 많이 흔들립니다(우연 오차). 반대로 염분 센서가 오염되어 값이 일정하게 치우치면(표류) 여러 번 재어 평균을 내도 사라지지 않습니다. 그래서 Argo 자료는 배에서 잰 정밀 자료와 비교해 나중에 보정합니다. σt는 압력 효과를 뺀 밀도라 깊은 물끼리의 비교에는 한계가 있고, 이 자료는 1° 격자 한 칸의 평균이라 연안이나 한 번의 관측과는 다를 수 있습니다. 실제 바다에서 해양 관측을 할 때는 구명조끼를 입고, 장비를 내리는 줄 가까이에 서지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">남극해의 겨울(8월) 자료에서 표층 수온은 −1.5 °C이고, 200~500 m의 물은 약 1.5 °C로 더 따뜻합니다. 이 물기둥에 대한 설명으로 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>따뜻한 물이 아래에 있으므로 곧 위로 떠올라 뒤집힌다<span class="why"><b>수온만 보면 그럴듯하지만</b> 아래쪽 물은 염분이 더 높아(약 34.7 psu) 밀도가 표층보다 큽니다. 밀도가 깊을수록 크면 뒤집히지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>염분이 깊을수록 높아 밀도는 깊을수록 커지므로 안정하다<span class="why"><b>맞습니다.</b> 수온이 낮아 수온의 영향이 작은 극지 바다에서는 염분이 밀도를 주로 정합니다. 카드에서 남극해 밀도 곡선을 보면 깊을수록 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표층이 가장 차가우므로 표층 물의 밀도가 가장 크다<span class="why"><b>염분을 빠뜨렸습니다.</b> 표층은 해빙이 녹은 물과 강수로 염분이 낮아(약 34.1 psu) 아래쪽 물보다 가볍습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-earth-gas">
+        <header class="card-head">
+          <span class="no">1.1.5</span><h2>차가운 바다에 산소가 더 많이 녹는 까닭은?</h2><span class="kind">기체의 용해도 · 산소 최소층 · 생물 펌프 · 해양 산성화</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-plot g-sol" aria-label="수온에 따른 산소 또는 이산화 탄소의 용해량 곡선"></canvas>
+            <div class="ctl">
+              <div class="presets gas" role="group" aria-label="기체">
+                <span class="mono small dim">기체</span>
+                <button class="chip" data-g="o2" aria-pressed="true">산소 O₂</button><button class="chip" data-g="co2" aria-pressed="false">이산화 탄소 CO₂</button>
+              </div>
+              <div class="presets pre" role="group" aria-label="예시 조건">
+                <button class="chip" data-pre="trop" aria-pressed="false">열대 표층 28 °C</button><button class="chip" data-pre="polar" aria-pressed="false">극지 표층 0 °C</button><button class="chip" data-pre="pre" aria-pressed="false">산업화 이전 280 ppm</button><button class="chip" data-pre="high" aria-pressed="false">21세기 말 높은 배출 850 ppm</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">표층 수온 <output class="t-out">20</output> °C</label><input class="t" type="range" min="0" max="30" step="1" value="20" aria-label="표층 수온"></div>
+                <div><label class="mono">염분 <output class="s-out">35</output> psu</label><input class="s" type="range" min="0" max="40" step="1" value="35" aria-label="염분"></div>
+                <div><label class="mono">대기 CO₂ <output class="c-out">420</output> ppm</label><input class="c" type="range" min="280" max="1000" step="10" value="420" aria-label="대기 이산화 탄소 농도"></div>
+                <div><label class="mono">플랑크톤 생산 <output class="p-out">100</output>%</label><input class="p" type="range" min="0" max="200" step="10" value="100" aria-label="플랑크톤 생산량"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>O₂ 포화량</dt><dd class="n-o2">—</dd></div>
+                <div><dt>녹은 CO₂</dt><dd class="n-co2">—</dd></div>
+                <div><dt>표층 pH</dt><dd class="n-ph">—</dd></div>
+                <div><dt>탄산 이온</dt><dd class="n-co3">—</dd></div>
+              </dl>
+            </div>
+            <canvas class="cv-wide g-col" aria-label="깊이에 따른 용존 산소와 호흡으로 늘어난 이산화 탄소의 모식 분포, 가라앉는 유기물 입자"></canvas>
+            <dl class="nums">
+              <div><dt>산소 최소층의 산소</dt><dd class="n-min">—</dd></div>
+              <div><dt>산소 최소층 깊이</dt><dd class="n-zmin">—</dd></div>
+              <div><dt>1000 m에서 늘어난 CO₂</dt><dd class="n-dc">—</dd></div>
+            </dl>
+            <p class="fig-note">위 그래프는 실제 경험식입니다. 산소: Weiss(1970), 이산화 탄소 용해도: Weiss(1974), pH와 탄산 이온: 총알칼리도 2300 µmol/kg(35 psu 기준)인 바닷물이 대기와 평형을 이룰 때의 값(Lueker 등 2000의 해리 상수). 아래 그림은 수온이 표층에서 3 °C까지 낮아지는 바다에 생산과 분해를 얹은 <b>모식 모형</b>이라 깊이와 값은 대략적입니다. 갈색 점은 가라앉는 유기물(죽은 플랑크톤, 배설물)입니다.</p>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>탄산음료는 차가울 때 김이 덜 빠지고, 미지근해지면 거품이 쏟아집니다. 바다도 마찬가지일까요? 차가운 극지 바다와 따뜻한 열대 바다 중 어디에 산소와 이산화 탄소가 더 많이 녹아 있을까요?</li>
+            <li><span class="tag">복원</span>기체는 수온이 낮을수록 물에 잘 녹습니다. 따뜻한 물에서는 기체 분자의 운동 에너지가 커서 물 분자 사이에 붙잡혀 있지 못하고 빠져나가기 쉽기 때문입니다. 녹은 이온(염류)이 많을수록 기체가 들어갈 자리가 줄어 덜 녹습니다(염석 효과).</li>
+            <li><span class="tag">설명</span>담수 0 °C에서는 산소가 약 14.6 mg/L, 30 °C에서는 약 7.5 mg/L 녹습니다. 같은 수온에서 바닷물(35 psu)은 담수보다 20%쯤 적게 녹습니다. 이산화 탄소는 수온에 더 민감해서 0 °C에서 30 °C로 가면 녹는 양이 절반 아래로 줄어듭니다. 그래서 차가운 고위도 바다는 대기의 CO₂를 빨아들이고, 따뜻한 적도 바다는 내놓는 쪽이 됩니다.</li>
+            <li><span class="tag">연결</span>깊이에 따라 보면 용해도만으로는 설명되지 않습니다. 빛이 드는 표층에서는 식물성 플랑크톤의 광합성으로 산소가 포화량보다 많아지기도 합니다(산소 극대). 플랑크톤이 죽거나 배설물이 되어 가라앉으면 수백 m 깊이에서 세균이 이를 분해하며 산소를 쓰고 CO₂를 내놓습니다. 이 때문에 수온 약층 아래에 <em>산소 최소층</em>이 생기고, 탄소는 표층에서 깊은 바다로 옮겨집니다. 이것이 <em>생물 펌프</em>입니다. 찬 물이 CO₂를 녹여 가라앉으며 운반하는 것은 <em>용해도 펌프</em>라고 합니다.</li>
+            <li><span class="tag">적용</span>‘열대 표층’과 ‘극지 표층’을 번갈아 눌러 산소 포화량을 비교하세요. CO₂로 바꾸어 0 °C와 30 °C의 녹는 양이 몇 배 차이 나는지 재어 보세요. 플랑크톤 생산을 0%로 내리면 산소 최소층은 어떻게 되나요? 대기 CO₂를 280 ppm에서 850 ppm으로 올리면 pH와 탄산 이온은 얼마나 줄어드나요?</li>
+            <li class="warn"><span class="tag">판단</span>“바다가 CO₂를 많이 흡수하니 좋은 일”이라고만 볼 수 없습니다. 녹은 CO₂는 물과 만나 탄산이 되고 수소 이온을 내놓아 pH를 낮춥니다(<em>해양 산성화</em>). 산업화 이전 이후 표층 pH는 약 0.1 낮아졌습니다. 이때 탄산 이온이 줄어 조개·산호·플랑크톤이 탄산 칼슘 껍데기를 만들기 어려워집니다. 산성화라고 해도 바다가 산성(pH &lt; 7)이 되는 것은 아니고, 염기성이 약해진다는 뜻입니다. 아래 깊이 그림은 모식이며 실제 산소 최소층의 깊이와 세기는 해역마다 크게 다릅니다(동태평양·아라비아해에서 특히 강함).</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">지구 온난화로 표층 수온이 오르고, 위아래 바닷물의 밀도 차가 커져 섞임이 약해졌습니다. 바닷속 산소에 대한 예상으로 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>따뜻하면 광합성이 활발해져 산소 최소층이 사라진다<span class="why"><b>광합성은 빛이 드는 표층에서만 일어납니다.</b> 표층에서 만든 산소는 섞임이 약해지면 깊은 곳까지 더 못 내려가고, 가라앉은 유기물의 분해는 계속 산소를 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>표층의 산소 포화량이 줄고 깊은 곳으로 산소 공급도 줄어 산소 최소층이 넓어진다<span class="why"><b>맞습니다.</b> 수온이 오르면 녹는 양 자체가 줄고, 성층이 강해지면 산소가 많은 표층수가 아래로 덜 섞입니다. 실제로 지난 수십 년 동안 세계 바다의 산소량이 줄고 산소 최소층이 넓어진 것이 관측되었습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>염분이 같으면 수온은 산소량에 영향을 주지 않는다<span class="why"><b>염분과 수온은 둘 다 용해도를 바꿉니다.</b> 그래프에서 같은 35 psu라도 0 °C와 30 °C의 포화량은 거의 두 배 차이가 납니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
@@ -218,5 +339,9 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/cards/earth/ao-thermocline.js"></script>
 <script src="../../js/cards/earth/ao-salinity.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/earth/argo-data.js"></script>
+<script src="../../js/cards/earth/argo.js"></script>
+<script src="../../js/cards/earth/gas.js"></script>
 </body>
 </html>

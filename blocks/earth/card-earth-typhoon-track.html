@@ -1,0 +1,82 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/earth/eastasia-land-data.js",
+    "js/cards/earth/typhoon-track-data.js",
+    "js/cards/earth/typhoon-track.js"
+  ]
+}
+-->
+<style>
+#card-earth-typhoon-track .tt-map { width: 100%; aspect-ratio: 1 / 1; display: block; }
+#card-earth-typhoon-track .tt-plot { aspect-ratio: 16 / 8; }
+#card-earth-typhoon-track .ctl-row { grid-template-columns: 1fr; }
+#card-earth-typhoon-track .plan { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 3px; font-size: 13px; }
+#card-earth-typhoon-track .plan label { display: flex; gap: 6px; align-items: flex-start; cursor: pointer; }
+#card-earth-typhoon-track .plan input { margin-top: 3px; }
+#card-earth-typhoon-track .sub { margin: 12px 0 2px; font-size: 13px; font-weight: 600; }
+</style>
+<article class="card" id="card-earth-typhoon-track">
+  <header class="card-head">
+    <span class="no"></span><h2>실제 태풍의 길과 세기를 자료로 읽을 수 있을까?</h2><span class="kind">실제 자료 · 태풍 최적 경로 · 위험 반원 · 우리 지역 대응</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="tt-map" aria-label="북서태평양 지도 위의 태풍 진로. 중심 기압에 따라 색이 다르고, 고른 시각의 강풍 반경과 위험 반원이 표시된다"></canvas>
+      <canvas class="cv-plot tt-plot" aria-label="태풍의 중심 기압과 위도의 시간 변화. 북위 30도 통과와 한반도 상륙 시각 표시"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="태풍 고르기">
+          <button class="chip" data-ty="rusa" aria-pressed="true">루사 2002</button><button class="chip" data-ty="maemi" aria-pressed="false">매미 2003</button><button class="chip" data-ty="hinnamnor" aria-pressed="false">힌남노 2022</button><button class="chip" data-ty="khanun" aria-pressed="false">카눈 2023</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">시각 = <output class="i-out">—</output> (6시간 간격)</label>
+            <input class="ti" type="range" min="0" max="50" step="1" value="0" aria-label="최적 경로 자료의 시각"></div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>중심 기압</dt><dd class="n-p">—</dd></div>
+          <div><dt>최대 풍속 (10분 평균)</dt><dd class="n-w">—</dd></div>
+          <div><dt>이동 속도</dt><dd class="n-v">—</dd></div>
+          <div><dt>등급</dt><dd class="n-g">—</dd></div>
+        </dl>
+        <p class="sub">우리 지역 대응안</p>
+        <div class="presets" role="group" aria-label="도시 고르기">
+          <button class="chip" data-city="seoul" aria-pressed="false">서울</button><button class="chip" data-city="busan" aria-pressed="true">부산</button><button class="chip" data-city="gwangju" aria-pressed="false">광주</button><button class="chip" data-city="gangneung" aria-pressed="false">강릉</button><button class="chip" data-city="pohang" aria-pressed="false">포항</button><button class="chip" data-city="jeju" aria-pressed="false">제주</button>
+        </div>
+        <dl class="nums n4">
+          <div><dt>가장 가까울 때</dt><dd class="c-t">—</dd></div>
+          <div><dt>중심까지 거리</dt><dd class="c-d">—</dd></div>
+          <div><dt>그때 중심 기압</dt><dd class="c-p">—</dd></div>
+          <div><dt>진로 기준</dt><dd class="c-s">—</dd></div>
+        </dl>
+        <ul class="plan">
+          <li><label><input type="checkbox" data-ok="1"> 창문을 닫고 잠금장치와 창틀을 단단히 고정한다</label></li>
+          <li><label><input type="checkbox" data-ok="1"> 지하 주차장·하천 둔치의 차를 미리 옮기고, 태풍이 올 때는 지하 공간에 내려가지 않는다</label></li>
+          <li><label><input type="checkbox" data-ok="1"> 해안·방파제·계곡·하천 가에 가지 않는다</label></li>
+          <li><label><input type="checkbox" data-ok="0"> 바람이 갑자기 잦아들면 태풍이 지나간 것이니 바로 밖에 나가 정리한다</label></li>
+          <li><label><input type="checkbox" data-ok="1"> 손전등·물·보조 배터리를 준비하고 기상청 특보와 대피 안내를 확인한다</label></li>
+          <li><label><input type="checkbox" data-ok="0"> 바닷가에 나가 높은 파도를 가까이서 본다</label></li>
+        </ul>
+        <p class="verdict small plan-v">—</p>
+        <p class="fig-note">자료: NOAA NCEI 국제 태풍 최적 경로 자료(IBTrACS v04r01, 퍼블릭 도메인). 위치는 IBTrACS 통합 값, 중심 기압·최대 풍속(10분 평균)·30 kt 바람 반경은 그 안의 일본 기상청(RSMC 도쿄) 최적 경로 값이며 6시간 간격입니다. 흰 점은 매일 09시(한국 시각), 원은 30 kt(약 15 m/s) 이상 바람이 부는 반경의 긴 쪽 값을 원으로 그린 것입니다. 최근접 시각·거리와 상륙 시각은 6시간 자료를 직선으로 이어 어림한 값이라, 기상청이 발표한 상륙 시각과 1~2시간 다를 수 있습니다. 육지 윤곽: Natural Earth.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>태풍 예보에는 진로도와 함께 "중심 기압 950 hPa, 시속 40 km로 북북동진"처럼 숫자가 붙습니다. 실제로 우리나라에 큰 피해를 준 태풍의 기록을 보면 그 숫자들이 어떻게 바뀌었을까요?</li>
+      <li><span class="tag">복원</span>태풍은 따뜻한 바다에서 증발한 수증기가 응결하며 내놓는 숨은열로 발달합니다. 중심 기압이 낮을수록 기압 경도가 커서 바람이 셉니다. 북반구에서는 진행 방향의 오른쪽에서 회전 바람과 이동 속도가 더해져 <em>위험 반원</em>이 됩니다.</li>
+      <li><span class="tag">설명</span>네 태풍 모두 북위 22~31°의 따뜻한 바다(늦여름 해수면 온도가 대체로 28 °C 안팎)에서 기압이 가장 낮았고, 더 북상하면서 차가운 바다를 만나고 육지에 오르면 수증기 공급이 줄고 지표 마찰이 커져 중심 기압이 빠르게 올라갑니다. 진로는 처음에 북서쪽으로 가다가 북위 25~30° 부근에서 북동쪽으로 꺾이는(<em>전향</em>) 포물선 모양이 많습니다. 북태평양 고기압의 가장자리를 따라 돌다가 편서풍대에 들어가기 때문입니다.</li>
+      <li><span class="tag">연결</span>전향 뒤에는 편서풍을 타서 이동 속도가 크게 빨라집니다. 이동 속도가 빠르면 오른쪽 반원의 바람이 더 세지고, 대비할 시간은 짧아집니다. 반대로 느린 태풍은 한곳에 오래 비를 뿌립니다. 2002년 루사 때 강릉에는 하루 870.5 mm의 비가 내렸습니다.</li>
+      <li><span class="tag">적용</span>시각 막대를 움직여 각 태풍의 이동 속도가 북위 30° 전후로 어떻게 바뀌는지, 한반도에 오른 뒤 중심 기압이 하루 동안 몇 hPa 올랐는지 읽으세요. 그다음 도시를 골라 가장 가까워지는 시각과 거리, 그 도시가 진로의 오른쪽인지 왼쪽인지 확인하고 대응안을 고르세요. 매미 때 부산과 서울을 비교해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>최적 경로는 태풍이 지나간 뒤 모든 자료를 모아 다시 정리한 기록이라, 예보 당시의 정보보다 정확합니다. 실제 대응은 예보 진로의 오차(예보 원)를 생각해 더 넓게 해야 합니다. 또 피해는 중심 기압만으로 정해지지 않습니다. 강풍 반경 밖이라도 산지·해안의 비와 해일, 만조 시각이 겹치면 큰 피해가 납니다. 나라마다 최대 풍속을 재는 평균 시간(1분, 10분)이 달라 같은 태풍도 기관마다 값이 다릅니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>다른 진로라면</h3>
+    <p class="q">어떤 태풍이 남해안에 상륙해 북북동쪽으로 시속 50 km로 이동합니다. 도시 A는 진로에서 동쪽으로 80 km, 도시 B는 서쪽으로 80 km 떨어져 있습니다. 두 도시에 대한 설명으로 가장 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>두 도시는 중심에서 같은 거리이므로 바람의 세기도 같다<span class="why"><b>이동 속도를 빠뜨렸습니다.</b> 회전 바람만 보면 같지만, 오른쪽(동쪽) A에서는 이동 속도가 더해지고 왼쪽 B에서는 빼집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>A가 위험 반원에 들어 바람이 더 세고, 이동이 빨라 대비할 시간도 짧다<span class="why"><b>맞습니다.</b> 북북동으로 가는 태풍의 오른쪽은 동쪽입니다. 시속 50 km(약 14 m/s)가 회전 바람에 더해지고, 빠른 이동 탓에 강풍이 갑자기 닥칩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>상륙했으니 두 도시 모두 대비할 필요가 없다<span class="why"><b>상륙 뒤 약해지는 것은 맞지만 바로 사라지지 않습니다.</b> 상륙 직후 몇 시간은 여전히 강한 바람과 많은 비를 동반하고, 산지에서는 비가 더 많아질 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

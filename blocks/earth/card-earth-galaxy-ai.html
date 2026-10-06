@@ -1,0 +1,75 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/earth/galaxy-ai.js"
+  ]
+}
+-->
+<style>
+#card-earth-galaxy-ai .gx-main { width: 100%; aspect-ratio: 16 / 7.5; display: block; cursor: pointer; }
+#card-earth-galaxy-ai .gx-plot { width: 100%; aspect-ratio: 16 / 10; display: block; margin-top: 6px; }
+#card-earth-galaxy-ai .ctl-row label { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+#card-earth-galaxy-ai .nums dd { font-size: 14px; }
+#card-earth-galaxy-ai .fig-note { line-height: 1.5; }
+</style>
+<article class="card" id="card-earth-galaxy-ai">
+  <header class="card-head">
+    <span class="no"></span><h2>은하 사진 수천 장을 인공지능은 어떻게 분류할까?</h2><span class="kind">기계 학습 · 특징 추출 · k-최근접 이웃 · 합성 자료</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="gx-main" aria-label="학습용 합성 은하 그림 24장의 격자와, 고른 은하의 확대 그림 및 네 가지 특징값(타원율, 중심 집중도, 비대칭도, 나선팔 세기)"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="고른 은하에 붙일 이름표">
+          <span class="mono small dim">이름표</span>
+          <button class="chip" type="button" data-lab="0">E 타원</button><button class="chip" type="button" data-lab="1">S 나선</button><button class="chip" type="button" data-lab="2">SB 막대 나선</button><button class="chip" type="button" data-lab="3">Irr 불규칙</button><button class="chip" type="button" data-lab="-1">지우기</button>
+        </div>
+        <div class="lab-btns">
+          <button class="chip go" type="button" data-act="auto">남은 은하는 전문가 이름표로</button>
+          <button class="chip" type="button" data-act="noise">이름표 1/3을 틀리게</button>
+          <button class="chip" type="button" data-act="fix">틀린 이름표 바로잡기</button>
+          <button class="chip" type="button" data-act="clear">이름표 모두 지우기</button>
+          <button class="chip" type="button" data-act="new">새 은하 묶음</button>
+        </div>
+      </div>
+      <canvas class="gx-plot" aria-label="고른 두 특징으로 만든 산점도와 분류기의 판정 영역, 그리고 시험 은하 80장의 혼동 행렬"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <label>가로축 <select class="fx" aria-label="가로축 특징"></select></label>
+          <label>세로축 <select class="fy" aria-label="세로축 특징"></select></label>
+        </div>
+        <div class="presets" role="group" aria-label="이웃 수 k">
+          <span class="mono small dim">이웃 수 k</span>
+          <button class="chip" type="button" data-k="1">1</button><button class="chip" type="button" data-k="3">3</button><button class="chip" type="button" data-k="7">7</button>
+          <span class="toggles" style="margin:0 0 0 auto"><label><input type="checkbox" class="show-test">시험 자료 보기</label></span>
+        </div>
+        <dl class="nums n4">
+          <div><dt>이름표 붙인 수</dt><dd class="n-lab">—</dd></div>
+          <div><dt>틀린 이름표</dt><dd class="n-wrong">—</dd></div>
+          <div><dt>시험 정확도</dt><dd class="n-acc">—</dd></div>
+          <div><dt>가장 헷갈린 쌍</dt><dd class="n-conf">—</dd></div>
+        </dl>
+        <p class="verdict small"></p>
+        <p class="fig-note">은하 그림은 실제 사진이 아니라 코드로 만든 32×32 화소의 합성 그림입니다(타원 은하 E0~E7, 나선팔과 팽대부, 막대, 덩어리진 불규칙 은하 + 잡음). 특징 네 개는 그림의 화소에서 직접 계산합니다. 분류기는 학습 자료 가운데 가장 가까운 k개의 이름표로 다수결하는 k-최근접 이웃이고, 시험 은하 80장(종류마다 20장)은 학습에 쓰지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>대형 탐사 망원경은 하룻밤에도 은하 수만 개를 찍습니다. 사람이 한 장씩 보며 허블 분류를 하기엔 너무 많습니다. 컴퓨터에게 은하 모양을 가르칠 수 있을까요?</li>
+      <li><span class="tag">복원</span>허블 분류는 모양으로 은하를 나눕니다. 타원 은하(E)는 둥글거나 납작한 타원이고 매끈합니다. 나선 은하(S)는 중심의 팽대부와 나선팔이 있고, 막대 나선 은하(SB)는 중심을 가로지르는 막대 끝에서 팔이 뻗습니다. 불규칙 은하(Irr)는 일정한 모양이 없습니다.</li>
+      <li><span class="tag">설명</span>컴퓨터는 "나선팔이 보인다"를 바로 알지 못합니다. 그래서 그림을 숫자로 바꿉니다. <em>타원율</em>은 밝기 분포가 얼마나 납작한지, <em>중심 집중도</em>는 빛이 중심에 얼마나 몰렸는지, <em>비대칭도</em>는 180° 돌렸을 때 얼마나 달라지는지, <em>나선팔 세기</em>는 흐리게 한 그림과 비교해 줄무늬 구조가 얼마나 있는지를 잽니다. 이 숫자를 <em>특징</em>이라 합니다. 사람이 이름표를 붙인 은하(학습 자료)를 특징 공간에 찍어 두고, 새 은하는 가장 가까운 학습 은하들의 이름표를 따르게 하는 것이 <em>k-최근접 이웃</em> 분류입니다.</li>
+      <li><span class="tag">연결</span>실제 연구도 같은 길을 걸었습니다. 갤럭시 주(Galaxy Zoo)에서는 수많은 시민 과학자가 웹에서 은하 사진에 이름표를 붙였고, 이 이름표가 기계 학습의 학습 자료가 되었습니다. 요즘은 합성곱 신경망(CNN) 같은 딥러닝이 특징을 사람이 정하지 않고 사진에서 스스로 찾아 냅니다. 그래도 정답 이름표가 있어야 배운다는 점은 같습니다.</li>
+      <li><span class="tag">적용</span>① 은하 몇 장에 직접 이름표를 붙이고, 나머지는 "전문가 이름표"로 채우세요. ② 가로·세로축 특징을 바꾸며 시험 정확도가 가장 높은 쌍을 찾으세요. 어떤 두 종류가 끝까지 헷갈리나요? ③ "이름표 1/3을 틀리게"를 누르고 k = 1과 k = 7의 정확도를 비교하세요. ④ 이름표를 모두 지우고 종류마다 한 장씩만 붙이면 정확도는 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>분류기는 학습 자료보다 나아질 수 없습니다. 이름표가 틀리거나, 자료가 적거나, 어떤 종류가 빠지면 정확도가 떨어집니다. 또 정확도가 높아도 시험 자료가 학습 자료와 비슷한 조건일 때만 믿을 수 있습니다. 더 멀리 있어 흐릿한 은하나 다른 망원경의 사진에서는 성능이 달라질 수 있습니다. 이 카드의 은하는 합성 그림이므로, 정확도 숫자를 실제 연구 성능으로 읽으면 안 됩니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>학습 자료가 바뀌면</h3>
+    <p class="q">어느 학생이 나선 은하 50장과 타원 은하 50장만으로 분류기를 학습시킨 뒤, 불규칙 은하가 섞인 새 사진 묶음을 분류했습니다. 결과에 대한 설명으로 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>자료가 100장이나 되므로 불규칙 은하도 잘 찾아낸다<span class="why"><b>양보다 종류가 문제입니다.</b> 학습 자료에 불규칙 은하 이름표가 하나도 없으면, 분류기는 그 이름을 내놓을 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>불규칙 은하는 모두 나선이나 타원 중 하나로 잘못 분류된다<span class="why"><b>맞습니다.</b> k-최근접 이웃은 학습 자료에 있는 이름표 중에서만 고릅니다. 불규칙 은하는 특징 공간에서 더 가까운 쪽 이름을 받게 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>딥러닝(CNN)으로 바꾸면 학습 자료를 고치지 않아도 불규칙 은하를 찾는다<span class="why"><b>방법을 바꿔도 마찬가지입니다.</b> CNN은 특징을 스스로 찾지만, 가르치지 않은 이름을 붙일 수는 없습니다. 학습 자료에 불규칙 은하를 넣어야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

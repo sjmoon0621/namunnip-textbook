@@ -2341,6 +2341,16 @@ window.TOC = [
         "kind": "text",
         "id": "text-earth-oxygen",
         "title": "바닷물에 녹은 산소는 어느 깊이에 가장 적을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-argo",
+        "title": "바다마다 깊이에 따라 수온과 염분은 어떻게 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-gas",
+        "title": "차가운 바다에 산소가 더 많이 녹는 까닭은?"
        }
       ]
      },
@@ -2369,6 +2379,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-esys-ekman",
         "title": "바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-gyre",
+        "title": "바람과 지구 자전은 어떻게 거대한 해류 고리를 만들까?"
        }
       ]
      },
@@ -2397,6 +2412,16 @@ window.TOC = [
         "kind": "text",
         "id": "text-earth-satellite",
         "title": "위성 영상과 레이더 영상은 각각 무엇을 보여 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-forecast",
+        "title": "일기도, 위성 영상, 레이더를 함께 보면 내일 날씨를 맞힐 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-earth-moving-highs",
+        "title": "봄가을 날씨는 왜 사나흘마다 바뀔까?"
        }
       ]
      },
@@ -2425,6 +2450,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-earth-severe-weather",
         "title": "집중 호우, 폭설, 강풍, 황사는 어떻게 생기고 어떻게 대비할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-typhoon-track",
+        "title": "실제 태풍의 길과 세기를 자료로 읽을 수 있을까?"
        }
       ]
      },
@@ -2443,6 +2473,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-earth-enso",
         "title": "엘니뇨 때는 적도 태평양에서 무엇이 뒤바뀔까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-oni",
+        "title": "실제 관측 자료에서 엘니뇨와 라니냐의 해를 찾을 수 있을까?"
        }
       ]
      },
@@ -2461,6 +2496,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-earth-forcing",
         "title": "지금의 온난화는 태양 때문일 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-attrib",
+        "title": "지금의 온난화가 자연 때문인지 사람 때문인지 어떻게 가려낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-mitigate",
+        "title": "탄소 제거와 태양 복사 조절, 어떤 기술에 기대야 할까?"
        }
       ]
      }
@@ -2485,6 +2530,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-earth-half-life",
         "title": "방사성 동위 원소 시계는 어떻게 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-correlate",
+        "title": "멀리 떨어진 두 지역의 지층을 어떻게 이어 맞출까?"
        }
       ]
      },
@@ -2518,6 +2568,21 @@ window.TOC = [
         "kind": "card",
         "id": "card-is2-index-fossil",
         "title": "화석으로 어떻게 시간을 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-paleoenv",
+        "title": "지층 속 화석만 보고 그때 그곳의 모습을 그릴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-sedrock",
+        "title": "모래가 어떻게 단단한 사암이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-fossil-map",
+        "title": "우리나라 어디에서 어느 시대 화석이 나올까?"
        }
       ]
      },
@@ -2577,6 +2642,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-earth-columnar",
         "title": "용암은 어떻게 육각기둥이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-geopark",
+        "title": "국가지질공원에서는 무엇을 보고, 왜 지켜야 할까?"
        }
       ]
      }
@@ -2652,6 +2722,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-earth-star-life",
         "title": "별은 어떻게 태어나고, 무엇을 남기고 죽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-star-core",
+        "title": "무거운 별과 가벼운 별은 속에서 핵융합하는 방식이 다를까?"
        }
       ]
      },
@@ -2675,6 +2750,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-earth-active-galaxy",
         "title": "은하의 유형에 따라 별과 가스는 어떻게 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-galaxy-ai",
+        "title": "은하 사진 수천 장을 인공지능은 어떻게 분류할까?"
        }
       ]
      },

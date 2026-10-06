@@ -1,0 +1,72 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/earth/eastasia-land-data.js",
+    "js/cards/earth/forecast.js"
+  ]
+}
+-->
+<style>
+#card-earth-forecast .fc-map { width: 100%; aspect-ratio: 5 / 4; display: block; }
+#card-earth-forecast .fc-plot { aspect-ratio: 16 / 7; }
+#card-earth-forecast .pred .presets { margin-top: 4px; }
+#card-earth-forecast .pred .q-l { min-width: 7.5em; }
+#card-earth-forecast .ctl-row { grid-template-columns: 1fr; }
+</style>
+<article class="card" id="card-earth-forecast">
+  <header class="card-head">
+    <span class="no"></span><h2>일기도, 위성 영상, 레이더를 함께 보면 내일 날씨를 맞힐 수 있을까?</h2><span class="kind">일기 예보 · 세 자료 겹쳐 보기 · 가상 사례</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="fc-map" aria-label="동아시아 지도 위의 가상 온대 저기압과 전선, 고기압. 지상 일기도, 적외 위성 영상, 레이더 강수 영상을 켜고 끌 수 있다"></canvas>
+      <canvas class="cv-plot fc-plot" aria-label="서울의 기온과 강수량 관측 기록. 지금 시각까지만 보인다"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="보이는 자료">
+          <span class="mono small dim">자료</span>
+          <button class="chip" data-l="map" aria-pressed="true">지상 일기도</button><button class="chip" data-l="ir" aria-pressed="false">적외 위성 영상</button><button class="chip" data-l="rad" aria-pressed="false">레이더 강수</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">시각 = <output class="t-out">1일째 09시</output></label>
+            <input class="tt" type="range" min="0" max="72" step="6" value="0" aria-label="시각 (6시간 간격, 사흘)"></div>
+          <div class="presets" role="group" aria-label="예측 시점">
+            <span class="mono small dim">예측 시점</span>
+            <button class="chip" data-cp="18" aria-pressed="false">2일째 03시</button><button class="chip" data-cp="36" aria-pressed="false">2일째 21시</button><button class="chip" data-cp="54" aria-pressed="false">3일째 15시</button>
+          </div>
+        </div>
+        <div class="pred" hidden>
+          <div class="presets" data-q="rain" role="group" aria-label="12시간 뒤 비"><span class="mono small dim q-l">12시간 뒤 비</span><button class="chip" data-v="y" aria-pressed="false">온다</button><button class="chip" data-v="n" aria-pressed="false">안 온다</button></div>
+          <div class="presets" data-q="temp" role="group" aria-label="12시간 뒤 기온"><span class="mono small dim q-l">기온 (지금보다)</span><button class="chip" data-v="up" aria-pressed="false">오른다</button><button class="chip" data-v="same" aria-pressed="false">비슷 (±1.5 °C)</button><button class="chip" data-v="down" aria-pressed="false">내린다</button></div>
+          <div class="presets" data-q="wind" role="group" aria-label="12시간 뒤 풍향"><span class="mono small dim q-l">풍향</span><button class="chip" data-v="e" aria-pressed="false">동~남동풍</button><button class="chip" data-v="s" aria-pressed="false">남~남서풍</button><button class="chip" data-v="nw" aria-pressed="false">서~북서~북풍</button></div>
+        </div>
+        <div class="lab-btns"><button class="chip go check" type="button">12시간 뒤 관측 보기</button></div>
+        <dl class="nums n4">
+          <div><dt>서울 기압</dt><dd class="n-p">—</dd></div>
+          <div><dt>서울 기온</dt><dd class="n-t">—</dd></div>
+          <div><dt>서울 바람</dt><dd class="n-w">—</dd></div>
+          <div><dt>서울 날씨</dt><dd class="n-s">—</dd></div>
+        </dl>
+        <p class="verdict small">예측 시점을 고르면 그 시각까지의 서울 관측만 보입니다. 지도와 영상을 읽고 12시간 뒤를 예측해 보세요.</p>
+        <p class="fig-note">실제 날짜가 아닌 <b>가상의 모식 사례</b>입니다. 봄철에 흔한 온대 저기압과 뒤따르는 이동성 고기압을 단순한 식으로 만들었고, 기압·기온·강수 값은 실제 관측이 아닌 모형 값입니다. 등압선 4 hPa 간격, 풍향은 기압 경도에 지표 마찰(30° 안쪽으로 꺾임)을 넣어 구했습니다. 점선 원은 레이더 관측 범위(모식)입니다. 육지 윤곽: Natural Earth(퍼블릭 도메인).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>예보관은 일기도 한 장만 보고 예보하지 않습니다. 기압 배치(일기도), 구름(위성), 비(레이더)를 겹쳐 보고 시간에 따라 어떻게 움직이는지 따라갑니다. 이 세 자료로 서울의 12시간 뒤 날씨를 맞힐 수 있을까요?</li>
+      <li><span class="tag">복원</span>우리나라 부근의 저기압과 고기압은 편서풍을 타고 대체로 서쪽에서 동쪽으로 하루 수백~천 km씩 움직입니다. 온대 저기압 동쪽에는 온난 전선, 남서쪽에는 한랭 전선이 있고, 바람은 등압선을 비스듬히 가로질러 저기압 쪽으로 붑니다.</li>
+      <li><span class="tag">설명</span>세 자료는 보는 것이 다릅니다. 일기도는 <em>기압 배치와 전선</em>을, 적외 위성 영상은 <em>구름 꼭대기가 차가운(높은) 곳</em>을 밝게, 레이더는 <em>지금 비가 내리는 곳과 세기</em>를 보여 줍니다. 온난 전선 앞에는 넓은 구름과 약한 비, 한랭 전선을 따라서는 좁은 띠의 강한 비가 보입니다.</li>
+      <li><span class="tag">연결</span>예보의 기본은 <em>외삽</em>입니다. 저기압 중심과 전선이 6시간에 얼마나 움직였는지 보고, 같은 속도로 12시간 더 가면 서울이 전선의 어느 쪽에 놓일지 따져 봅니다. 전선의 어느 쪽에 있느냐가 풍향과 기온을 정합니다.</li>
+      <li><span class="tag">적용</span>예측 시점 세 곳을 차례로 골라 보세요. 각 시점에서 시각 막대를 앞뒤로 6시간만 움직여 저기압이 움직이는 방향과 속도를 재고, 위성·레이더를 켜서 서울 서쪽에 무엇이 다가오는지 확인한 뒤 비·기온·풍향을 고르고 관측과 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>실제 저기압은 이동하면서 발달하거나 약해지고, 속도와 방향도 바뀝니다. 그래서 외삽만으로는 하루 이틀 뒤를 맞히기 어렵고, 기상청은 대기의 운동 방정식을 컴퓨터로 푸는 <em>수치 예보 모델</em>과 여러 번 돌린 결과의 퍼짐(앙상블)을 함께 씁니다. 이 카드의 사례는 모식이라 실제보다 훨씬 규칙적으로 움직입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>다른 자료 조합</h3>
+    <p class="q">어느 날 서해 상의 적외 위성 영상에는 남서–북동으로 길고 좁은 밝은 구름띠가 보이고, 레이더에는 그 띠를 따라 강한 강수 에코(시간당 10 mm 이상)가 줄지어 있습니다. 띠는 동쪽으로 시속 40 km쯤 움직이고 있으며, 서울에서 서쪽으로 약 200 km 떨어져 있습니다. 서울의 앞으로 날씨로 가장 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>하루 내내 약한 비가 이어지고 남동풍이 계속 분다<span class="why"><b>온난 전선 앞의 모습입니다.</b> 넓은 구름에서 약한 비가 오래 내리는 것은 온난 전선의 특징이고, 좁고 강한 띠는 한랭 전선입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 5시간 뒤 짧고 강한 비가 내리고, 그 뒤 북서풍이 불며 기온이 내려간다<span class="why"><b>맞습니다.</b> 좁고 강한 강수 띠는 한랭 전선입니다. 200 km ÷ 40 km/h ≈ 5시간 뒤 서울을 지나며, 통과 뒤에는 찬 공기가 들어와 바람이 북서풍으로 바뀝니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>구름띠는 높은 곳에 있으니 비는 오지 않는다<span class="why"><b>적외 영상에서 밝다는 것은 구름 꼭대기가 높다는 뜻입니다.</b> 적란운처럼 높이 솟은 구름일수록 밝고, 레이더 에코가 이미 강한 비를 보여 줍니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
