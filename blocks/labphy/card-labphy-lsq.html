@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/lsq.js"
+  ]
+}
+-->
+<style>
+#card-labphy-lsq .cv-res { width: 100%; aspect-ratio: 16 / 6; margin-top: 2px; display: block; }
+#card-labphy-lsq .toggles { margin: 4px 0 2px; }
+#card-labphy-lsq .nums dd { font-size: 13.5px; }
+</style>
+<article class="card" id="card-labphy-lsq">
+  <header class="card-head">
+    <span class="no"></span><h2>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</h2><span class="kind">실험 · 최소 제곱법 · 잔차 · 95% 신뢰구간</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="추를 매단 용수철과 눈금자"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">추 질량 m = <output class="m-out">100</output> g</label>
+            <input class="m" type="range" min="20" max="200" step="10" value="100" aria-label="추 질량"></div>
+          <div><label class="mono">읽기 잡음 σ = <output class="s-out">0.10</output> cm</label>
+            <input class="s" type="range" min="0.02" max="0.5" step="0.02" value="0.1" aria-label="눈금 읽기 잡음의 표준편차"></div>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="o0">원점을 지나는 직선으로 맞추기 (y = a·x)</label></div>
+        <div class="lab-btns"><button class="chip go meas" type="button">늘어난 길이 재기</button><button class="chip go sweep" type="button">20 g부터 200 g까지 한 번씩</button><button class="chip clear" type="button">기록 지우기</button><button class="chip rep" type="button">같은 실험 100번 반복해 보기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="질량과 늘어난 길이 그래프, 최소 제곱 직선, 95% 신뢰 띠"></canvas>
+        <canvas class="cv-res" aria-label="잔차 그래프"></canvas>
+        <dl class="nums n4"><div><dt>기울기 a (95%)</dt><dd class="n-a">—</dd></div><div><dt>절편 b (95%)</dt><dd class="n-b">—</dd></div><div><dt>용수철 상수 k</dt><dd class="n-k">—</dd></div><div><dt>100번 중 참 기울기를 포함</dt><dd class="n-c">—</dd></div></dl>
+        <p class="fig-note">자의 눈금은 1 mm입니다. 녹색 띠는 맞춘 직선이 있을 법한 95% 신뢰 띠, 아래 그래프는 잔차(측정값 − 직선 값)입니다. 이 용수철은 감긴 코일끼리 서로 누르는 초기 장력이 있어서, 아주 가벼운 추로는 거의 늘어나지 않습니다(모식 모형).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>추의 질량을 바꿔 가며 용수철이 늘어난 길이를 재면 점들이 직선 근처에 흩어집니다. 어떤 직선이 "가장 잘 맞는" 직선이고, 그 기울기로 구한 용수철 상수는 얼마나 믿을 수 있을까요?</li>
+      <li><span class="tag">복원</span>훅 법칙에 따라 늘어난 길이 x는 힘 mg에 비례합니다(x = mg/k). 그래프의 기울기 a = g/k에서 k를 구합니다. 같은 양을 여러 번 재면 값이 흩어지고, 그 흩어짐은 표준편차로 나타냅니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 추 질량, 종속 변인은 늘어난 길이입니다. 질량을 고르게 펼쳐 여러 점을 잽니다. 가로축 값의 범위가 넓을수록 기울기를 잘 정할 수 있습니다. 눈금은 눈높이를 맞추어 읽습니다.</li>
+      <li><span class="tag">분석</span><em>최소 제곱법</em>은 잔차의 제곱합 Σ(yᵢ − a·xᵢ − b)²이 가장 작아지는 a, b를 고릅니다. 기울기의 표준 오차는 s<sub>a</sub> = s/√Σ(xᵢ − x̄)²이고(s는 잔차의 표준편차), 95% 신뢰구간은 a ± t·s<sub>a</sub>입니다. t는 점이 적을수록 커집니다(점 5개면 3.18, 많으면 2에 가까워짐). 잔차가 0 근처에 고르게 흩어지면 모형이 알맞고, 휘어진 무늬가 보이면 모형이 잘못된 것입니다.</li>
+      <li><span class="tag">측정</span>먼저 질량마다 한 번씩 재어 기울기의 신뢰구간을 확인하세요. 다음에 점을 더 모으거나(N을 늘림) 잡음을 줄였을 때 구간이 어떻게 줄어드는지 보세요. "원점을 지나는 직선"을 켜면 잔차에 어떤 무늬가 생기나요? "100번 반복"으로 신뢰구간이 참 기울기를 몇 번 담는지 세어 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>신뢰구간은 우연 오차만 반영합니다. 모형이 틀리면(초기 장력을 무시하고 원점을 지나게 맞추면) 구간이 좁아도 참값을 놓칩니다. 이때는 잔차의 무늬가 신호입니다. 탄성 한계를 넘는 무거운 추를 걸면 용수철이 영구히 늘어나 직선 관계가 깨집니다. 추가 떨어지지 않게 고리를 확인하고, 스탠드가 넘어지지 않도록 바닥을 클램프로 고정합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 용수철로 다시 실험하면서 측정점 수를 5개에서 20개로 늘렸습니다(질량 범위와 잡음은 그대로). 기울기 95% 신뢰구간의 폭은 대략 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/4로 줄어든다<span class="why"><b>점 수에 반비례하지 않습니다.</b> 표준 오차는 √N에 반비례하므로 N이 4배면 1/2배 정도입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>절반보다 더 줄어든다<span class="why"><b>맞습니다.</b> s<sub>a</sub>는 1/√N에 비례해 1/2이 되고, t 값도 3.18에서 2.10으로 작아져 구간 폭은 약 1/3까지 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>변하지 않는다<span class="why"><b>점 하나하나의 잡음은 그대로지만</b> 점이 많을수록 우연 오차가 서로 상쇄되어 직선의 기울기는 더 잘 정해집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

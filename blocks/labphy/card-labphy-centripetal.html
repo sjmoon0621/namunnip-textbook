@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/centripetal.js"
+  ]
+}
+-->
+<style>
+#card-labphy-centripetal .opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 2px; }
+</style>
+<article class="card" id="card-labphy-centripetal">
+  <header class="card-head">
+    <span class="no"></span><h2>추의 무게만큼 당기면 고무마개는 얼마나 빨리 돌까?</h2><span class="kind">실험 · 등속 원운동 · 구심력 · 주기 측정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="유리관을 통과한 줄 위쪽에 고무마개가 돌고, 아래쪽에 추가 매달린 장치와 초시계"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">줄 길이 L = <output class="l-out">0.60</output> m</label>
+            <input class="l" type="range" min="0.3" max="1" step="0.05" value="0.6" aria-label="관 끝에서 고무마개 중심까지 줄 길이"></div>
+          <div><label class="mono">고무마개 m = <output class="m-out">20</output> g</label>
+            <input class="m" type="range" min="10" max="40" step="5" value="20" aria-label="고무마개 질량"></div>
+          <div><label class="mono">매단 추 M = <output class="M-out">200</output> g</label>
+            <input class="M" type="range" min="50" max="300" step="10" value="200" aria-label="매단 추의 질량"></div>
+        </div>
+        <div class="opts">
+          <label class="mono small"><input type="checkbox" class="fric"> 줄과 관 사이 마찰</label>
+          <label class="mono small"><input type="checkbox" class="knot"> L을 마개 중심이 아니라 매듭까지 잼</label>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">10바퀴 시간 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets xsel" role="group" aria-label="그래프 축">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" type="button" data-x="F" aria-pressed="true">Mg – m·4π²L/T²</button><button class="chip" type="button" data-x="TL" aria-pressed="false">T² – L</button><button class="chip" type="button" data-x="TM" aria-pressed="false">T² – 1/M</button>
+        </div>
+        <canvas class="cv-plot" aria-label="기록으로 그린 그래프와 원점을 지나는 맞춤 직선"></canvas>
+        <dl class="nums"><div><dt>맞춤 기울기</dt><dd class="n-a">—</dd></div><div><dt class="n-2t">기대 기울기</dt><dd class="n-2">—</dd></div><div><dt>마개 속력 (마지막)</dt><dd class="n-v">—</dd></div></dl>
+        <p class="fig-note">초시계는 0.01 s 단위지만 누르는 반응 시간 때문에 한 번에 ±0.1 s쯤 오차가 납니다. 10바퀴 시간을 재서 10으로 나눕니다. 관 아래 줄에 끼운 클립이 관 끝에 닿지 않고 바로 아래에 머물도록 돌리는 빠르기를 맞추면, 줄 길이 L이 일정하게 유지됩니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>원운동을 하려면 원의 중심 쪽으로 힘(구심력)이 필요합니다. 구심력 F = mv²/r = m·4π²r/T²는 정말 질량, 반지름, 주기와 이런 관계일까요? 힘을 정해 두고 주기를 재서 확인해 봅니다.</li>
+      <li><span class="tag">복원</span>속력 v로 반지름 r인 원을 도는 물체의 가속도는 중심을 향하고 크기는 v²/r = ω²r입니다. 한 바퀴 도는 시간 T와 ω는 ω = 2π/T로 이어집니다. 줄이 마개를 당기는 장력이 이 가속도를 만듭니다.</li>
+      <li><span class="tag">설계</span>줄을 유리관(또는 볼펜 대롱)에 꿰어 위에는 고무마개, 아래에는 추 M을 답니다. 관이 매끄러우면 줄의 장력은 Mg입니다. 조작 변인은 L, m, M 중 하나이고 나머지는 통제합니다. 종속 변인은 주기 T입니다. 줄은 마개의 무게 때문에 조금 아래로 처지지만, 장력이 마개에 주는 수평 성분과 반지름이 같은 비율(cos φ)로 줄어 <em>Mg = m·4π²L/T²</em>가 줄 길이 L로 그대로 성립합니다.</li>
+      <li><span class="tag">분석</span>각 기록에서 m·4π²L/T²를 계산해 가로축에, Mg를 세로축에 놓으면 기울기 1인 직선에 놓여야 합니다. m과 M을 고정하고 L만 바꾸면 T²–L이 원점을 지나는 직선(기울기 4π²m/Mg)이고, M만 바꾸면 T²–1/M이 직선입니다. 기울기가 1에서 벗어나는 방향을 보면 계통 오차를 짐작할 수 있습니다.</li>
+      <li><span class="tag">측정</span>먼저 L만 0.3 m에서 1.0 m까지 다섯 번 이상 바꿔 재고, 다음에는 M만 바꿔 재세요. 그다음 ‘L을 매듭까지 잼’을 켜고 다시 재면 Mg–mω²L 그래프의 기울기는 1보다 커지나요, 작아지나요? ‘마찰’을 켜면 점들은 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>관과 줄 사이 마찰은 돌리는 상태에 따라 장력을 늘리기도 줄이기도 해서 점을 흩어 놓습니다. 관 입구를 매끄럽게 다듬거나 테이프로 감싸 줄이고, 여러 번 재어 평균을 냅니다. 마개 중심까지가 아니라 매듭까지 잰 L은 늘 짧으므로 구심력을 작게 계산하는 계통 오차입니다. 줄이 끊기거나 마개가 빠지면 접선 방향으로 날아가니, 보안경을 쓰고 주변 사람과 2 m 이상 떨어져 머리 위 높이에서 돌립니다. 유리관은 가장자리를 테이프로 감싸 깨지거나 손을 베지 않게 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">추 M과 고무마개 m은 그대로 두고 줄 길이 L을 4배로 늘렸습니다. 클립 위치를 유지하려면 주기는 몇 배가 되어야 할까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4배<span class="why"><b>둘레가 4배라서 그럴듯하지만,</b> 장력이 같으므로 m·4π²L/T²도 같아야 합니다. L이 4배면 T²이 4배, T는 2배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2배<span class="why"><b>맞습니다.</b> Mg = m·4π²L/T²에서 Mg와 m이 같으면 T ∝ √L입니다. 마개의 속력 2πL/T는 2배가 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>그대로<span class="why"><b>힘이 같다고 주기까지 같지는 않습니다.</b> 반지름이 커지면 같은 구심력으로 만들 수 있는 각속도가 줄어듭니다(ω² = Mg/(mL)).</span></span></button></li>
+    </ol>
+  </div>
+</article>

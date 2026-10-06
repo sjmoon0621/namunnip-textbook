@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/explode.js"
+  ]
+}
+-->
+<style>
+#card-labphy-explode .opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 2px; }
+</style>
+<article class="card" id="card-labphy-explode">
+  <header class="card-head">
+    <span class="no"></span><h2>붙어 있던 두 수레가 튕겨 나가면 운동량의 합은 얼마일까?</h2><span class="kind">실험 · 운동량 보존 · 포토게이트 · 역학 수레</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="트랙 가운데에 붙어 있는 두 수레와 양쪽 포토게이트"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">왼쪽 수레 1 추가 막대 <output class="b1-out">0</output>개 → m₁ = <output class="m1-out">0.250</output> kg</label>
+            <input class="b1" type="range" min="0" max="2" step="1" value="0" aria-label="수레 1에 올린 막대 개수"></div>
+          <div><label class="mono">오른쪽 수레 2 추가 막대 <output class="b2-out">0</output>개 → m₂ = <output class="m2-out">0.250</output> kg</label>
+            <input class="b2" type="range" min="0" max="2" step="1" value="0" aria-label="수레 2에 올린 막대 개수"></div>
+          <div><label class="mono">용수철 누름 단계 = <output class="k-out">2</output></label>
+            <input class="k" type="range" min="1" max="3" step="1" value="2" aria-label="용수철 플런저 누름 단계"></div>
+        </div>
+        <div class="opts"><label class="mono small"><input type="checkbox" class="tilt"> 트랙 오른쪽이 0.3° 낮음 (수평 맞추지 않음)</label></div>
+        <div class="lab-btns"><button class="chip go fire" type="button">용수철 풀기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets xsel" role="group" aria-label="그래프 축">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" type="button" data-x="p" aria-pressed="true">m₁|v₁| – m₂v₂</button><button class="chip" type="button" data-x="r" aria-pressed="false">v₂/|v₁| – m₁/m₂</button>
+        </div>
+        <canvas class="cv-plot" aria-label="두 수레 운동량 크기의 그래프와 기울기 1인 기준선"></canvas>
+        <dl class="nums"><div><dt>맞춤 기울기</dt><dd class="n-a">—</dd></div><div><dt>평균 Σp / 평균 |p|</dt><dd class="n-r">—</dd></div><div><dt>운동 에너지 합 (마지막)</dt><dd class="n-k">—</dd></div></dl>
+        <p class="fig-note">수레는 0.250 kg, 추가 막대도 하나에 0.250 kg입니다. 수레 위 깃발의 폭은 10.0 cm이고, 포토게이트(분해능 0.1 ms)가 깃발이 빛살을 가린 시간 Δt를 잽니다. 속도는 v = 0.100 m / Δt, 오른쪽을 + 방향으로 씁니다. 깃발이 게이트에 닿을 때까지 수레는 약 20 cm를 갑니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>정지해 있던 두 수레의 처음 운동량의 합은 0입니다. 두 수레 사이의 용수철이 서로를 밀어 떨어뜨린 뒤에도 운동량의 합은 0일까요? 질량이 다르면 속력은 어떻게 나뉠까요?</li>
+      <li><span class="tag">복원</span>운동량은 p = mv로, 방향이 있는 양입니다. 용수철이 수레 1을 미는 힘과 수레 2를 미는 힘은 작용 반작용으로 크기가 같고 방향이 반대이며, 미는 시간도 같습니다. 그래서 두 수레가 받는 충격량은 크기가 같고 방향이 반대입니다.</li>
+      <li><span class="tag">설계</span>수평을 맞춘 트랙 가운데에 용수철 플런저를 누른 수레 두 대를 맞대어 놓고, 플런저 단추를 막대로 살짝 쳐서 풀어 줍니다. 조작 변인은 두 수레의 질량(추가 막대 개수), 종속 변인은 두 수레의 속도입니다. 용수철을 누른 단계는 통제합니다. 손으로 수레를 잡고 있다 놓으면 손이 충격량을 더하므로 수레는 그대로 둔 채 단추만 칩니다.</li>
+      <li><span class="tag">분석</span>각 기록에서 p₁ = m₁v₁, p₂ = m₂v₂, Σp = p₁ + p₂를 계산합니다. 가로축 m₂v₂, 세로축 m₁|v₁|로 그리면 기울기 1인 직선에 놓여야 하고, 가로축 m₁/m₂, 세로축 v₂/|v₁|로 그려도 기울기 1입니다. 즉 <em>m₁v₁ + m₂v₂ = 0</em>, 속력의 비는 질량의 반비례입니다. Σp가 |p|에 비해 몇 %인지로 보존 여부를 판단합니다.</li>
+      <li><span class="tag">측정</span>막대 개수를 바꿔 가며 질량 조합 다섯 가지 이상으로 재세요. 용수철 단계를 바꾸면 속력은 달라지지만 Σp는 어떤가요? ‘트랙 기울어짐’을 켜고 다시 재면 Σp가 어느 쪽으로 치우치나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>트랙이 조금만 기울어도 한 수레는 빨라지고 다른 수레는 느려져 Σp가 한쪽 부호로 치우칩니다(계통 오차). 수준기로 수평을 맞추고, 수레를 가만히 놓았을 때 움직이지 않는지 확인합니다. 바퀴 마찰 때문에 게이트에 닿기 전에 속력이 조금 줄어드니 게이트는 출발점 가까이 둡니다. 운동 에너지는 용수철의 탄성 에너지에서 왔으므로 보존되는 것은 운동 에너지가 아니라 운동량의 합입니다. 트랙 양 끝에는 멈춤 장치를 달고, 용수철을 누른 채 얼굴 가까이 들여다보지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">0.25 kg 수레와 0.75 kg 수레가 붙어 있다가 용수철로 튕겨 나갔습니다. 가벼운 수레가 0.60 m/s로 움직였다면 무거운 수레의 속력은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.20 m/s<span class="why"><b>맞습니다.</b> 0.25 × 0.60 = 0.75 × v, v = 0.20 m/s. 질량이 3배이니 속력은 1/3입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.60 m/s<span class="why"><b>힘이 같다고 속력까지 같지는 않습니다.</b> 같은 충격량을 받아도 질량이 크면 속도 변화가 작습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.35 m/s<span class="why"><b>운동 에너지를 똑같이 나눈다고 생각한 값입니다.</b> 0.25·0.60² = 0.75·v²이면 v ≈ 0.35 m/s지만, 두 수레가 같게 나누는 것은 운동량의 크기이고 운동 에너지는 가벼운 쪽이 3배 더 가져갑니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

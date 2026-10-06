@@ -1,0 +1,46 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/rectifier.js"
+  ]
+}
+-->
+<article class="card" id="card-labphy-rectifier">
+  <header class="card-head">
+    <span class="no"></span><h2>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</h2><span class="kind">실험 · 반파·브리지 전파 정류 · 평활 축전기 · 리플</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="변압기, 다이오드, 평활 축전기, 부하 저항으로 된 정류 회로와 입력·출력 전압 파형"></canvas>
+      <div class="ctl">
+        <div class="presets ckt" role="group" aria-label="정류 회로"><span class="mono small dim">회로</span><button class="chip" data-k="half" aria-pressed="false">반파 (다이오드 1개)</button><button class="chip" data-k="full" aria-pressed="true">브리지 전파 (다이오드 4개)</button></div>
+        <div class="presets cap" role="group" aria-label="평활 축전기"><span class="mono small dim">평활 C</span><button class="chip" data-c="0" aria-pressed="false">없음</button><button class="chip" data-c="10" aria-pressed="false">10 μF</button><button class="chip" data-c="47" aria-pressed="false">47 μF</button><button class="chip" data-c="100" aria-pressed="true">100 μF</button><button class="chip" data-c="470" aria-pressed="false">470 μF</button></div>
+        <div class="presets load" role="group" aria-label="부하 저항"><span class="mono small dim">부하 R_L</span><button class="chip" data-r="220" aria-pressed="false">220 Ω</button><button class="chip" data-r="470" aria-pressed="false">470 Ω</button><button class="chip" data-r="1000" aria-pressed="true">1 kΩ</button><button class="chip" data-r="2200" aria-pressed="false">2.2 kΩ</button><button class="chip" data-r="4700" aria-pressed="false">4.7 kΩ</button></div>
+        <div class="lab-btns"><button class="chip go rec" type="button">출력 전압 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip zoom" type="button" aria-pressed="false">출력만 확대 (AC 결합)</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="근사식으로 계산한 리플과 측정한 리플의 비교 그래프"></canvas>
+        <dl class="nums"><div><dt>출력 평균 (직류 전압계)</dt><dd class="n-dc">—</dd></div><div><dt>리플 ΔV (봉우리–골)</dt><dd class="n-rp">—</dd></div><div><dt>리플 진동수</dt><dd class="n-fr">—</dd></div></dl>
+        <p class="fig-note">변압기 2차 코일 6.0 V(실횻값), 60 Hz를 넣습니다. 봉우리 전압은 6.0 × √2 ≈ 8.5 V입니다. 실리콘 다이오드 하나가 켜져 있을 때 약 0.7 V가 걸리고, 변압기 코일과 다이오드의 저항을 합쳐 약 1 Ω으로 계산했습니다. 그래프 가로축은 근사식 V_p/(f_r R_L C)로 계산한 값이고, 축전기가 없는 기록은 그리지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>휴대 전화 충전기는 교류를 직류로 바꿉니다. 다이오드는 한쪽 방향 전류만 흘리지만, 그것만으로는 전압이 0과 봉우리 사이를 오르내립니다. 전압을 일정하게 만들려면 무엇을 더해야 하고, 무엇이 남은 흔들림(리플)의 크기를 정할까요?</li>
+      <li><span class="tag">복원</span>p–n 접합 다이오드는 순방향 전압이 약 0.7 V(실리콘)를 넘을 때만 전류를 흘립니다. 축전기는 전압이 높을 때 전하를 받아 두었다가 전압이 낮아지면 내보내고, 부하 저항을 통해 방전할 때의 시간 상수는 R_L C입니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 회로 종류(반파·브리지 전파), 평활 축전기 C, 부하 저항 R_L이고, 종속 변인은 출력의 평균 전압과 리플 ΔV입니다. 오실로스코프를 AC 결합으로 두면 작은 리플을 크게 확대해 볼 수 있습니다.</li>
+      <li><span class="tag">분석</span>반파 정류는 한 주기에 한 번, 브리지 전파 정류는 두 번 축전기를 채우므로 리플 진동수 f_r은 60 Hz와 120 Hz입니다. 축전기는 다음 봉우리까지 약 1/f_r 동안 방전하므로 리플은 <em>ΔV ≈ V_p/(f_r R_L C)</em>로 어림됩니다. 이 근사는 ΔV가 V_p보다 훨씬 작을 때만 맞습니다. 측정값과 근사값이 y = x 선 위에 놓이는지 확인합니다.</li>
+      <li><span class="tag">측정</span>R_L = 1 kΩ에서 두 회로 각각 C를 바꿔 가며 기록하세요. 같은 C에서 전파 정류의 리플이 반파의 약 절반인지, 부하 저항을 줄이면(전류를 많이 쓰면) 리플이 커지는지 확인하세요. 평활 축전기가 작을 때 점이 y = x 선에서 벗어나는 까닭은 무엇일까요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>브리지 회로의 출력 봉우리는 다이오드 두 개를 지나므로 반파보다 약 0.7 V 낮습니다. 오실로스코프 두 채널은 접지가 공통이라, 브리지 회로에서 입력과 출력을 동시에 재면 다이오드 하나가 접지선으로 단락됩니다. 한 번에 한 쪽씩 재거나 차동 프로브를 씁니다. 220 V 가정용 전기에는 직접 연결하지 말고 저전압 변압기 출력만 씁니다. 전해 축전기는 극성을 바르게 꽂고, 실험 뒤에는 저항으로 방전시킨 다음 만집니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">반파 정류 회로에 평활 축전기 100 μF와 부하 1 kΩ을 연결했더니 리플이 1.2 V였습니다. 브리지 전파 정류로 바꾸고 축전기를 200 μF로 키우면 리플은 대략 얼마일까요? 봉우리 전압 차이는 무시합니다.</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 0.3 V<span class="why"><b>맞습니다.</b> 전파 정류로 리플 진동수가 2배, C도 2배이므로 ΔV ≈ V_p/(f_r R_L C)는 1/4이 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 0.6 V<span class="why"><b>둘 중 한 가지 효과만 셈했습니다.</b> 전파 정류와 축전기 증가가 각각 리플을 절반으로 줄입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2.4 V<span class="why"><b>축전기가 크면 오래 버팁니다.</b> 방전 시간 상수 R_L C가 커질수록 다음 봉우리까지 전압이 덜 떨어집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

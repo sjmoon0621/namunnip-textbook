@@ -7272,29 +7272,68 @@ window.TOC = [
       "n": 1,
       "title": "정확도·정밀도와 오차의 전파",
       "code": "12물실01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-precision",
+        "title": "밀도를 정확하게 구하려면 어느 길이를 더 정밀하게 재야 할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "최소 제곱법과 신뢰구간",
       "code": "12물실01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-lsq",
+        "title": "흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "오실로스코프와 함수 발생기",
       "code": "12물실01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-scope",
+        "title": "화면의 눈금 칸만 세어서 신호의 진동수와 전압을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "센서와 컴퓨터 측정",
       "code": "12물실01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-logger",
+        "title": "센서가 1초에 몇 번 재야 진자의 운동을 제대로 기록할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-sampling",
+        "title": "소리는 어떻게 숫자가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-sensor",
+        "title": "온도계는 정말 온도를 잴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie2-calib",
+        "title": "센서가 보낸 숫자를 어떻게 온도로 바꿀까?"
+       }
+      ]
      }
     ]
    },
@@ -7306,71 +7345,156 @@ window.TOC = [
       "n": 1,
       "title": "등가속도 직선 운동 측정",
       "code": "12물실02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-video-track",
+        "title": "동영상 한 편으로 수레의 가속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-ticker",
+        "title": "종이테이프에 찍힌 점만으로 가속도를 구할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "질량과 가속도의 관계",
       "code": "12물실02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-newton2",
+        "title": "같은 힘으로 끌 때, 수레가 두 배 무거우면 가속도는 절반이 될까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "접촉면과 마찰력",
       "code": "12물실02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-friction",
+        "title": "나무토막을 끌 때, 처음 움직일 때와 끌려가는 동안의 힘은 같을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "중력 가속도 측정",
       "code": "12물실02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-g",
+        "title": "떨어지는 물체로 g를 몇 % 정확도까지 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "구심력 측정",
       "code": "12물실02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-centripetal",
+        "title": "추의 무게만큼 당기면 고무마개는 얼마나 빨리 돌까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "진자의 주기",
       "code": "12물실02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-sie1-pendulum",
+        "title": "몇 번을 관찰해야 규칙을 믿을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-pendulum",
+        "title": "진자 공식은 언제 틀릴까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "운동량 보존",
       "code": "12물실02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-explode",
+        "title": "붙어 있던 두 수레가 튕겨 나가면 운동량의 합은 얼마일까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "용수철 진자의 역학적 에너지",
       "code": "12물실02-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-spring-energy",
+        "title": "오르내리는 추의 에너지를 모두 더하면 정말 일정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-shm",
+        "title": "용수철에 매단 추는 언제 가장 빠르고, 언제 가장 세게 당겨질까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "얼음의 융해열",
       "code": "12물실02-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-ice-fusion",
+        "title": "따뜻한 물이 식은 만큼으로 얼음의 융해열을 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-heating-curve",
+        "title": "물이 끓는 동안 가한 열은 어디로 갈까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "열의 일당량",
       "code": "12물실02-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-joule",
+        "title": "물을 저어서 데울 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-joule",
+        "title": "손잡이를 돌린 일과 데워진 물로 1 cal가 몇 J인지 잴 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -7382,71 +7506,141 @@ window.TOC = [
       "n": 1,
       "title": "등전위선 그리기",
       "code": "12물실03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-equipotential",
+        "title": "전압계 탐침 하나로 보이지 않는 전기장의 지도를 그릴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "평행판 축전기의 전기 용량",
       "code": "12물실03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-capacitor",
+        "title": "포일과 종이로 만든 축전기로 C = εA/d를 확인할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "전압·전류·저항의 관계",
       "code": "12물실03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-circuit-meter",
+        "title": "직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-ohm",
+        "title": "저항과 꼬마전구, 둘 다 옴의 법칙을 따를까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "건전지의 내부 저항",
       "code": "12물실03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-internal-r",
+        "title": "전지 안에 숨은 저항을 밖에서 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "휘트스톤 브리지",
       "code": "12물실03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-wheatstone",
+        "title": "검류계 바늘이 0이 되는 곳에서 미지 저항을 읽어 낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "자기장 속 도선이 받는 힘",
       "code": "12물실03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-current-balance",
+        "title": "전자저울 눈금만으로 자석 사이 자기장의 세기를 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "유도 기전력의 크기와 방향",
       "code": "12물실03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-induction",
+        "title": "자석을 빨리 떨어뜨리면 코일에 생기는 전압은 커질까, 오래갈까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "RC·RL 회로의 시간 상수",
       "code": "12물실03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-rc",
+        "title": "축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "RLC 회로의 특성",
       "code": "12물실03-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-rlc",
+        "title": "진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "다이오드와 정류 회로",
       "code": "12물실03-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-diode-iv",
+        "title": "다이오드는 왜 한쪽으로만 전류를 흘릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-rectifier",
+        "title": "교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?"
+       }
+      ]
      }
     ]
    },
@@ -7458,50 +7652,112 @@ window.TOC = [
       "n": 1,
       "title": "정상파와 공명",
       "code": "12물실04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-standing",
+        "title": "물높이만 바꿔서 소리의 속력을 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-standing",
+        "title": "기타 줄과 리코더는 왜 정해진 음만 낼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "구면 거울의 상",
       "code": "12물실04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-mirror",
+        "title": "스크린에 잡히지 않는 상의 위치는 어떻게 잴까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "굴절률과 전반사",
       "code": "12물실04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-refraction",
+        "title": "밖으로 나가던 빛은 언제 사라질까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "렌즈 방정식",
       "code": "12물실04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-lens-bench",
+        "title": "스크린에 맺힌 상만으로 렌즈의 초점 거리를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-lens2",
+        "title": "상을 맺지 못하는 오목 렌즈의 초점 거리는 어떻게 잴까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "이중 슬릿으로 파장 측정",
       "code": "12물실04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-double-slit",
+        "title": "자와 줄자만으로 빛의 파장을 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "슬릿 폭·간격과 무늬",
       "code": "12물실04-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-slit-pattern",
+        "title": "줄무늬 간격과 밝기 봉우리의 폭은 각각 무엇이 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-diffraction",
+        "title": "틈이 많아질수록 무늬는 왜 더 날카로워질까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "편광 실험",
       "code": "12물실04-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-polarization",
+        "title": "편광판을 돌리면 빛의 세기는 어떤 규칙으로 줄어들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-polarizer",
+        "title": "편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?"
+       }
+      ]
      }
     ]
    },
@@ -7513,29 +7769,58 @@ window.TOC = [
       "n": 1,
       "title": "광전 효과",
       "code": "12물실05-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-photoelectric",
+        "title": "정지 전압과 진동수의 그래프에서 플랑크 상수를 읽을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-photo",
+        "title": "빛을 세게 비추면 전자가 더 빨리 튀어나올까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "음극선의 성질",
       "code": "12물실05-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-cathode",
+        "title": "음극선은 빛일까, 전하를 띤 알갱이일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "전자의 비전하",
       "code": "12물실05-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-em-ratio",
+        "title": "빛나는 전자 고리의 지름만 재서 전자의 e/m을 구할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "프랑크–헤르츠 실험",
       "code": "12물실05-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labphy-franck-hertz",
+        "title": "전압을 올리는데 왜 전류가 4.9 V마다 줄어들까?"
+       }
+      ]
      }
     ]
    }

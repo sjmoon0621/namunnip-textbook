@@ -1,0 +1,76 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/g.js"
+  ]
+}
+-->
+<style>
+#card-labphy-g .grp { margin-top: 4px; }
+#card-labphy-g .opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 4px 0; }
+</style>
+<article class="card" id="card-labphy-g">
+  <header class="card-head">
+    <span class="no"></span><h2>떨어지는 물체로 g를 몇 % 정확도까지 잴 수 있을까?</h2><span class="kind">실험 · 포토게이트 · 낙하 시간 · 수평 던지기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="고른 방법의 실험 장치: 피켓 펜스와 포토게이트, 전자석과 접촉판, 또는 책상 끝의 경사로와 공"></canvas>
+      <div class="ctl">
+        <div class="presets msel" role="group" aria-label="측정 방법">
+          <span class="mono small dim">방법</span>
+          <button class="chip" type="button" data-m="fence" aria-pressed="true">A 피켓 펜스</button><button class="chip" type="button" data-m="drop" aria-pressed="false">B 높이별 낙하 시간</button><button class="chip" type="button" data-m="proj" aria-pressed="false">C 수평 던지기</button>
+        </div>
+        <div class="grp" data-g="fence">
+          <div class="ctl-row">
+            <div><label class="mono">놓는 위치 (게이트 위) = <output class="z-out">3.0</output> cm</label>
+              <input class="z" type="range" min="1" max="20" step="1" value="3" aria-label="피켓 펜스를 놓는 높이"></div>
+          </div>
+        </div>
+        <div class="grp" data-g="drop" hidden>
+          <div class="ctl-row">
+            <div><label class="mono">낙하 높이 h = <output class="h-out">0.50</output> m</label>
+              <input class="h" type="range" min="0.2" max="1.5" step="0.05" value="0.5" aria-label="낙하 높이"></div>
+          </div>
+          <div class="opts"><label class="mono small"><input type="checkbox" class="lag"> 전자석이 늦게 놓아 줌 (남은 자기)</label></div>
+        </div>
+        <div class="grp" data-g="proj" hidden>
+          <div class="ctl-row">
+            <div><label class="mono">책상 높이 h = <output class="ph-out">0.80</output> m</label>
+              <input class="ph" type="range" min="0.5" max="1.2" step="0.05" value="0.8" aria-label="공이 떠나는 높이"></div>
+            <div><label class="mono">경사로 출발 높이 = <output class="H-out">10</output> cm</label>
+              <input class="H" type="range" min="4" max="20" step="1" value="10" aria-label="경사로 위 출발 높이"></div>
+          </div>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">떨어뜨려 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets xsel" role="group" aria-label="그래프 축" hidden>
+          <span class="mono small dim">그래프</span>
+          <button class="chip" type="button" data-x="ht2" aria-pressed="true">h – t²</button><button class="chip" type="button" data-x="tsh" aria-pressed="false">t – √h</button>
+        </div>
+        <canvas class="cv-plot" aria-label="기록한 자료의 그래프와 맞춤 직선"></canvas>
+        <dl class="nums"><div><dt>그래프로 구한 g</dt><dd class="n-g">—</dd></div><div><dt>표준오차</dt><dd class="n-se">—</dd></div><div><dt class="n-3t">절편</dt><dd class="n-3">—</dd></div></dl>
+        <p class="fig-note mnote"></p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>중력 가속도 g는 위도와 높이에 따라 조금씩 다르고, 서울에서는 약 9.80 m/s²입니다. 학교 실험실의 장비로 이 값을 1% 안쪽까지 재려면 무엇을 어떻게 재야 할까요? 방법마다 어떤 오차가 가장 클까요?</li>
+      <li><span class="tag">복원</span>정지 상태에서 떨어진 물체는 h = ½gt², v = gt를 따릅니다. 수평으로 v₀로 던진 물체는 수평 방향으로 등속, 연직 방향으로 자유 낙하하므로 R = v₀·√(2h/g)입니다. 포토게이트는 빛살이 가려지고 열리는 순간을 0.1 ms 단위로 기록합니다.</li>
+      <li><span class="tag">설계</span>A: 간격 5.00 cm로 검은 띠를 칠한 투명판(피켓 펜스)을 게이트 사이로 떨어뜨려, 띠가 지날 때마다 시각을 얻습니다. B: 전자석으로 쇠구슬을 붙잡았다 끊는 순간 타이머가 시작되고, 바닥의 접촉판에 닿으면 멈춥니다. 조작 변인은 높이 h입니다. C: 경사로 끝에 포토게이트를 달아 공의 처음 속력 v₀를 재고, 먹지에 찍힌 자국으로 수평 거리 R을 잽니다. 스마트폰 가속도 센서나 마이크로프로세서(아두이노 등)와 적외선 센서로도 같은 시각 자료를 얻을 수 있습니다.</li>
+      <li><span class="tag">분석</span>A: 띠 사이 평균 속력 v = 0.0500 m / Δt를 그 구간의 가운데 시각에 찍으면 v–t 그래프의 기울기가 g입니다. B: h–t² 그래프의 기울기는 g/2입니다. 시작이 늦는 계통 오차가 있으면 t – √h 그래프가 더 낫습니다. 기울기는 √(2/g), 세로 절편은 늦어진 시간입니다. C: 세로축 R²/v₀², 가로축 h로 그리면 기울기가 2/g입니다. 같은 실험실에서 진자로 잰 g(T = 2π√(L/g))와 비교해 보세요.</li>
+      <li><span class="tag">측정</span>세 방법으로 각각 g를 구하세요. B에서 높이를 다섯 가지 이상 바꾸고, ‘전자석이 늦게 놓아 줌’을 켠 뒤 두 그래프의 결과를 비교하세요. h–t² 기울기로 구한 g는 얼마나 틀어지나요? C에서는 책상 높이를 바꾸되 출발 높이는 그대로 두세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>시간 측정의 1 ms 오차는 0.2 s 낙하에서 0.5%, g로는 1%입니다(g ∝ 1/t²). 높이를 크게 할수록 상대 오차가 줄어듭니다. A는 펜스가 기울어 떨어지거나 띠 간격이 고르지 않으면 계통 오차가 생기고, C는 공이 굴러서 내려오므로 v₀를 경사로 높이로 계산하면 안 되고 반드시 직접 재야 합니다. 쇠구슬과 피켓 펜스가 떨어지는 바닥에는 완충재를 깔고, 낙하 경로에 손이나 얼굴을 넣지 않습니다. 전자석 전원은 쓰지 않을 때 끕니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">B 방법에서 타이머가 늘 0.010 s 늦게 시작한다는 사실을 몰랐습니다(측정 시간이 참값보다 짧음). h–t² 그래프의 기울기로 구한 g는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>오차가 일정하니 기울기는 그대로다<span class="why"><b>t에 일정한 값이 더해지면 t²에는 일정하지 않은 값이 더해집니다.</b> (t − τ)² = t² − 2τt + τ²이므로 긴 시간일수록 더 많이 줄고, 직선의 기울기가 바뀝니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>참값보다 크게 나온다<span class="why"><b>맞습니다.</b> 시간을 짧게 재면 같은 높이를 더 빨리 떨어진 것으로 보여 g가 커집니다. t – √h로 그리면 τ는 절편으로 빠지고 기울기는 바르게 남습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>참값보다 작게 나온다<span class="why"><b>방향이 반대입니다.</b> 전자석이 늦게 놓아 주어 타이머가 일찍 시작하는 경우(측정 시간이 김)에 g가 작게 나옵니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/em-ratio.js"
+  ]
+}
+-->
+<style>
+#card-labphy-em-ratio .em-opt { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 6px 0 2px; font-size: 13px; color: var(--ink-2); }
+#card-labphy-em-ratio .em-opt label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+#card-labphy-em-ratio .em-opt input { accent-color: var(--ink); margin: 0; }
+</style>
+<article class="card" id="card-labphy-em-ratio">
+  <header class="card-head">
+    <span class="no"></span><h2>빛나는 전자 고리의 지름만 재서 전자의 e/m을 구할 수 있을까?</h2><span class="kind">실험 · 헬름홀츠 코일 · 비전하 측정</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="헬름홀츠 코일 사이의 유리구 안에서 원을 그리는 전자 빔과 눈금자"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">가속 전압 V = <output class="v-out">200</output> V</label>
+            <input class="v" type="range" min="100" max="300" step="10" value="200" aria-label="가속 전압"></div>
+          <div><label class="mono">코일 전류 I = <output class="i-out">1.50</output> A</label>
+            <input class="i" type="range" min="0.8" max="2.5" step="0.05" value="1.5" aria-label="코일 전류"></div>
+        </div>
+        <div class="em-opt">
+          <label><input type="checkbox" class="earth">지구 자기장 보정 생략 (코일 축이 남북 방향)</label>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">빔 지름 읽어 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">참값 보기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="가로축 B²r², 세로축 2V 그래프와 원점을 지나는 맞춤 직선"></canvas>
+        <dl class="nums"><div><dt>기울기로 구한 e/m</dt><dd class="n-em">—</dd></div><div><dt>표준오차</dt><dd class="n-se">—</dd></div><div><dt>참값과 차이</dt><dd class="n-diff">—</dd></div></dl>
+        <p class="fig-note">코일: 반지름 R = 15.0 cm, 감은 수 N = 130인 헬름홀츠 코일 한 쌍. 가운데 자기장은 B = (4/5)<sup>3/2</sup>μ₀NI/R = 0.779 mT/A × I입니다. 유리구 안 눈금은 1 mm 간격이고, 빔 굵기와 시차 때문에 지름을 ±1~2 mm쯤 다르게 읽습니다. 장치 수치는 학교용 장비를 본뜬 예시입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>음극선이 전하를 띤 입자의 흐름이라면, 자기장 속에서 원을 그릴 것입니다. 원의 반지름과 가속 전압, 자기장 세기를 재서 이 입자의 전하와 질량의 비 e/m을 구할 수 있을까요?</li>
+      <li><span class="tag">복원</span>전압 V로 가속된 전자는 eV = ½mv²의 운동 에너지를 얻습니다. 속도에 수직인 균일한 자기장 B 안에서는 로런츠 힘 evB가 구심력 mv²/r 역할을 하므로 r = mv/(eB)입니다. 두 식에서 v를 지우면 <em>e/m = 2V/(B²r²)</em>가 됩니다.</li>
+      <li><span class="tag">설계</span>유리구에는 낮은 압력의 기체(수소나 헬륨)가 들어 있어, 전자가 지나가는 길이 희미하게 빛납니다. 조작 변인은 V와 코일 전류 I, 종속 변인은 빔 원의 지름 d = 2r입니다. 한 변인을 고정하고 다른 변인을 여러 단계로 바꿉니다. 코일 간격을 반지름과 같게 둔 헬름홀츠 배치는 가운데 자기장이 거의 균일하도록 만든 것입니다.</li>
+      <li><span class="tag">분석</span>가로축에 B²r², 세로축에 2V를 놓으면 점들이 원점을 지나는 직선에 놓이고, <em>기울기가 바로 e/m</em>입니다. 한 점으로 계산하면 지름을 잘못 읽은 오차가 그대로 들어가지만, 여러 점에 직선을 맞추면 우연 오차가 줄고 표준오차도 함께 얻습니다. 기준값은 1.759×10¹¹ C/kg입니다.</li>
+      <li><span class="tag">측정</span>I = 1.50 A로 두고 V를 150 V에서 300 V까지 여섯 단계 이상 바꿔 재고, 다음에는 V = 250 V로 두고 I를 바꿔 재 보세요. 두 묶음이 같은 직선에 놓이나요? 그다음 "지구 자기장 보정 생략"을 켜고 다시 재어, 기울기가 어떻게 달라지는지 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>지름은 빔 바깥 가장자리가 아니라 굵기의 가운데를 읽고, 눈과 빔과 눈금을 한 줄로 맞춰 시차를 줄입니다. 지구 자기장(수평 성분 약 30 μT)은 코일 자기장에 더해지거나 빠지는 계통 오차라서 많이 재도 사라지지 않습니다. 코일 축을 동서로 놓거나 전류 방향을 바꿔 두 번 재어 평균합니다. 가속 전압은 수백 볼트이므로 전원을 켠 채 단자를 만지지 말고, 유리구는 깨지기 쉬운 진공관이니 부딪히지 않게 합니다. 코일에 2 A 넘게 오래 흘리면 뜨거워지니 측정 사이에는 전류를 줄입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">코일 전류를 그대로 두고 가속 전압을 2배로 올렸습니다. 빔 원의 반지름은 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2배가 된다<span class="why"><b>반지름은 속력에 비례하지, 전압에 비례하지 않습니다.</b> 전압이 2배면 운동 에너지가 2배이고, 속력은 √2배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 1.41배가 된다<span class="why"><b>맞습니다.</b> r = (1/B)√(2mV/e)이므로 r ∝ √V입니다. 그래서 r²과 V가 정비례합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>반으로 줄어든다<span class="why"><b>자기력도 커지기는 합니다.</b> 그러나 필요한 구심력 mv²/r이 더 빨리 커져서 원은 오히려 커집니다. 자기장을 2배로 할 때에야 반지름이 반이 됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

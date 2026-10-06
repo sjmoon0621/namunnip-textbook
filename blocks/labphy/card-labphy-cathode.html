@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/cathode.js"
+  ]
+}
+-->
+<style>
+#card-labphy-cathode .toggle { display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink-2); margin: 6px 0 2px; }
+#card-labphy-cathode .osel { margin-top: 2px; }
+</style>
+<article class="card" id="card-labphy-cathode">
+  <header class="card-head">
+    <span class="no"></span><h2>음극선은 빛일까, 전하를 띤 알갱이일까?</h2><span class="kind">실험 · 음극선관 · 전기장·자기장 편향</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="음극선관의 옆모습: 음극, 양극, 편향판, 편향 코일, 형광 화면과 화면 정면의 점 위치"></canvas>
+      <div class="ctl">
+        <div class="presets osel" role="group" aria-label="관 속에 넣을 물체">
+          <span class="mono small dim">관 속 물체</span>
+          <button class="chip" data-o="none" aria-pressed="true">없음 (편향 측정)</button><button class="chip" data-o="cross" aria-pressed="false">몰타 십자</button><button class="chip" data-o="wheel" aria-pressed="false">바람개비</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">가속 전압 V<sub>a</sub> = <output class="va-out">2.0</output> kV</label>
+            <input class="va" type="range" min="1" max="5" step="0.1" value="2" aria-label="가속 전압"></div>
+          <div><label class="mono">편향판 전압 V<sub>d</sub> = <output class="vd-out">0</output> V <span class="dim small">(+: 위판이 +)</span></label>
+            <input class="vd" type="range" min="-200" max="200" step="5" value="0" aria-label="편향판 전압"></div>
+          <div><label class="mono">코일 전류 I = <output class="ic-out">0.00</output> A <span class="dim small">(+: B가 화면 안쪽 ⊗)</span></label>
+            <input class="ic" type="range" min="-1" max="1" step="0.01" value="0" aria-label="편향 코일 전류"></div>
+          <div><label class="toggle"><input class="earth" type="checkbox" checked>지구 자기장 가리지 않음 (계통 오차)</label></div>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">점 위치 기록</button><button class="chip zero" type="button">편향 끄기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets xsel" role="group" aria-label="그래프 가로축">
+          <span class="mono small dim">가로축</span>
+          <button class="chip" data-x="vd" aria-pressed="true">V<sub>d</sub></button><button class="chip" data-x="vdva" aria-pressed="false">V<sub>d</sub>/V<sub>a</sub></button><button class="chip" data-x="ic" aria-pressed="false">I</button><button class="chip" data-x="icva" aria-pressed="false">I/√V<sub>a</sub></button>
+        </div>
+        <canvas class="cv-plot" aria-label="화면 위 점의 위치와 고른 변인의 그래프"></canvas>
+        <dl class="nums"><div><dt>눈금으로 읽은 점 위치 y</dt><dd class="n-y">—</dd></div><div><dt>판 사이 전기장 E</dt><dd class="n-e">—</dd></div><div><dt>코일 자기장 B</dt><dd class="n-b">—</dd></div></dl>
+        <p class="fig-note">편향판 길이 l = 4.0 cm, 판 간격 d = 1.0 cm, 판 가운데에서 화면까지 D = 15 cm. 코일은 판과 같은 구간에 균일한 자기장 B = (0.50 mT/A) × I를 만든다고 봅니다(모식 장치). 화면 눈금은 1 mm이고 점이 퍼져 있어 ±0.5 mm쯤 읽기 오차가 납니다. 그래프는 V<sub>d</sub> 축이면 I = 0인 기록만, I 축이면 V<sub>d</sub> = 0인 기록만 씁니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>음극선관의 음극에서 나와 형광 화면을 빛나게 하는 음극선은 무엇일까요? 빛처럼 직진하는지, 질량과 운동량이 있는지, 전하를 띠었다면 부호가 무엇인지 실험으로 가려 봅시다.</li>
+      <li><span class="tag">복원</span>전하 q가 전기장 E에서 받는 힘은 qE이고, 속도 v로 자기장 B 속을 지나면 qv×B의 힘을 받습니다. 빛(전자기파)은 전하가 없어 전기장·자기장에서 휘지 않습니다. 음극이 −, 양극이 +인 관에서 무엇인가가 음극에서 양극 쪽으로 날아갑니다.</li>
+      <li><span class="tag">설계</span>① 몰타 십자를 넣어 화면에 날카로운 그림자가 생기는지(직진) 봅니다. ② 바람개비를 넣어 움직이는 방향을 봅니다. ③ 가속 전압을 고정하고 편향판 전압 V<sub>d</sub>만 바꾸며 점의 위치 y를 잽니다. ④ 코일 전류 I만 바꾸며 y를 잽니다. ⑤ 가속 전압을 바꿔 ③을 되풀이합니다.</li>
+      <li><span class="tag">분석</span>점은 + 판 쪽으로 휩니다. 그러므로 음극선은 <em>음전하</em>입니다. 판 사이에서 등가속도 운동을 하므로 y = (l D / 2d)·V<sub>d</sub>/V<sub>a</sub>이고, y–V<sub>d</sub>/V<sub>a</sub> 그래프는 가속 전압이 달라도 한 직선에 모이며 기울기는 lD/2d = 0.30 m입니다. 자기장 편향은 y ∝ B/v ∝ I/√V<sub>a</sub>입니다. 두 편향이 상쇄되면(y = 0) qE = qvB이므로 <em>v = E/B</em>로 속력을 잴 수 있습니다.</li>
+      <li><span class="tag">측정</span>V<sub>a</sub> = 2.0 kV에서 V<sub>d</sub>를 −150 V부터 +150 V까지 바꾸며 점 위치를 기록하고, 3.0 kV와 4.0 kV에서도 몇 점 기록해 가로축을 V<sub>d</sub>/V<sub>a</sub>로 바꿔 보세요. 그다음 V<sub>d</sub> = 100 V로 두고 점이 가운데로 돌아올 때까지 코일 전류를 키워 v = E/B를 계산하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>지구 자기장은 관 전체에 걸쳐 작용해 편향이 0일 때도 점이 몇 mm 밀립니다. 이 계통 오차는 반복해도 줄지 않고 그래프의 절편으로 나타납니다. 관을 돌려 보거나 영점을 먼저 기록해 빼 줍니다. 바람개비가 굴러가는 것을 음극선의 운동량 증거로 흔히 설명하지만, 톰슨은 그 힘이 운동량만으로는 너무 작다고 보았고 날개가 데워져 생기는 기체 효과가 크다는 해석이 많습니다. 음극선관에는 수 kV의 고전압이 걸리므로 전원을 끈 뒤에만 연결을 바꾸고, 진공 유리관은 깨지면 파편이 튀므로 부딪치지 않게 다룹니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">V<sub>a</sub> = 2.0 kV에서 V<sub>d</sub> = 100 V일 때 점이 화면 위쪽으로 15 mm 올라갔습니다. 다른 조건은 그대로 두고 가속 전압만 4.0 kV로 올리면 점은 어디에 생길까요? (지구 자기장 효과는 무시)</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>위쪽 30 mm<span class="why"><b>방향이 반대입니다.</b> 가속 전압이 크면 전자가 빨라 판 사이를 짧게 지나므로 덜 휩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>위쪽 7.5 mm<span class="why"><b>맞습니다.</b> y ∝ V<sub>d</sub>/V<sub>a</sub>이므로 V<sub>a</sub>가 2배면 y는 1/2입니다. 운동 에너지 eV<sub>a</sub>가 2배라 v²이 2배가 되고, 편향각 ∝ 1/v²입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>위쪽 약 10.6 mm<span class="why"><b>자기장 편향과 헷갈린 경우입니다.</b> 자기장에 의한 편향은 1/v ∝ 1/√V<sub>a</sub>로 줄지만, 전기장 편향은 1/v² ∝ 1/V<sub>a</sub>로 줄어듭니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

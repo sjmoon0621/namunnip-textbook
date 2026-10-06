@@ -1,0 +1,50 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/rlc.js"
+  ]
+}
+-->
+<article class="card" id="card-labphy-rlc">
+  <header class="card-head">
+    <span class="no"></span><h2>진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?</h2><span class="kind">실험 · RLC 직렬 회로 · 공진 · Q값과 위상</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="함수 발생기, 저항, 코일, 축전기를 직렬로 연결한 회로와 두 채널 오실로스코프 화면"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">진동수 f = <output class="f-out">1000</output> Hz</label>
+            <input class="f" type="range" min="0" max="1" step="0.001" value="0.4" aria-label="함수 발생기 진동수 (로그 눈금)"></div>
+          <div class="presets rr" role="group" aria-label="저항"><span class="mono small dim">R</span><button class="chip" data-i="0" aria-pressed="true">10 Ω</button><button class="chip" data-i="1" aria-pressed="false">47 Ω</button><button class="chip" data-i="2" aria-pressed="false">100 Ω</button></div>
+        </div>
+        <div class="presets cc" role="group" aria-label="축전기"><span class="mono small dim">C (L = 10 mH)</span><button class="chip" data-i="0" aria-pressed="false">0.47 μF</button><button class="chip" data-i="1" aria-pressed="true">1.0 μF</button><button class="chip" data-i="2" aria-pressed="false">2.2 μF</button></div>
+        <div class="lab-btns"><button class="chip go rec" type="button">이 진동수에서 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets view" role="group" aria-label="분석 그래프"><span class="mono small dim">그래프</span><button class="chip" data-v="i" aria-pressed="true">전류 진폭–f</button><button class="chip" data-v="p" aria-pressed="false">위상차–f</button></div>
+        <canvas class="cv-plot" aria-label="진동수에 따른 전류 진폭 또는 위상차 그래프. 지금 R·C 설정의 기록은 초록, 다른 설정은 회색"></canvas>
+        <dl class="nums n4"><div><dt>기록으로 찾은 f₀</dt><dd class="n-f0">—</dd></div><div><dt>1/(2π√LC) (표시값)</dt><dd class="n-th">—</dd></div><div><dt>반전력 폭 Δf</dt><dd class="n-df">—</dd></div><div><dt>Q = f₀/Δf</dt><dd class="n-q">—</dd></div></dl>
+        <p class="fig-note">함수 발생기 출력 진폭은 2.00 V로 일정하게 맞춥니다. CH1은 전원 전압, CH2는 저항 양 끝 전압 V_R이고 전류 진폭은 I = V_R/R입니다. 위상차는 두 파형의 시간 차 Δt로 φ = 360°·fΔt를 계산한 값입니다(전류가 앞서면 +). 코일의 저항과 부품의 실제 값은 화면에 나오지 않습니다. 분석 값은 지금 고른 R·C의 기록만으로 구합니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>라디오는 수많은 방송 전파 가운데 한 진동수만 골라 받습니다. 저항, 코일, 축전기를 직렬로 연결하고 교류의 진동수를 바꾸면 전류는 어떻게 달라질까요? 가장 큰 전류가 흐르는 진동수는 무엇이 정할까요?</li>
+      <li><span class="tag">복원</span>코일의 유도 리액턴스 X_L = 2πfL은 진동수에 비례하고, 축전기의 용량 리액턴스 X_C = 1/(2πfC)는 반비례합니다. 직렬 회로의 임피던스는 <em>Z = √(R² + (X_L − X_C)²)</em>이고, 전류 진폭은 I = V₀/Z입니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 진동수 f, 종속 변인은 전류 진폭 I와 위상차 φ입니다. 전원 진폭과 L, C는 고정하고, R을 바꿔 곡선의 모양을 비교합니다. 공진 근처에서는 전류가 빠르게 변하므로 진동수 간격을 촘촘하게 잡습니다.</li>
+      <li><span class="tag">분석</span>X_L = X_C인 <em>f₀ = 1/(2π√LC)</em>에서 Z = R로 가장 작아 전류가 최대이고 위상차는 0입니다. f₀보다 낮으면 축전기가 우세해 전류가 전압보다 앞서고(φ > 0), 높으면 코일이 우세해 전류가 뒤집니다. 전류가 최댓값의 1/√2로 줄어드는 두 진동수 사이의 폭 Δf로 <em>Q = f₀/Δf</em>를 구합니다. 직렬 회로에서 Q = (1/R)√(L/C)라서 R이 작을수록 공진 곡선이 뾰족합니다.</li>
+      <li><span class="tag">측정</span>R = 10 Ω, C = 1.0 μF에서 500 Hz부터 6 kHz까지 기록하되 공진 근처는 50 Hz 이하 간격으로 촘촘히 재세요. f₀, Δf, Q를 구하고 R = 47 Ω, 100 Ω에서도 반복해 곡선을 겹쳐 보세요. C를 바꾸면 f₀가 어떻게 움직이는지도 확인하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>코일 도선의 저항이 R에 더해지므로 잰 Q는 (1/R)√(L/C)보다 작습니다. R이 작을수록 이 차이가 커지는 계통 오차입니다. 부품 표시값의 오차 때문에 잰 f₀도 계산값과 몇 % 다를 수 있습니다. 진동수 간격이 성기면 봉우리 높이와 Δf가 부정확해집니다. 공진에서는 코일과 축전기 양 끝 전압이 전원 전압의 Q배까지 커질 수 있으므로 소자의 정격 전압을 확인합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">L = 10 mH, C = 1.0 μF인 직렬 RLC 회로에서 C만 4.0 μF로 바꾸었습니다. 공진 진동수는 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4배로 커진다<span class="why"><b>C가 커지면 X_C가 작아져 더 낮은 진동수에서 X_L과 같아집니다.</b> 그리고 f₀는 C에 비례하지 않고 √C에 반비례합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4로 줄어든다<span class="why"><b>방향은 맞지만 크기가 틀렸습니다.</b> f₀ = 1/(2π√LC)이므로 √4 = 2배만큼 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 1.6 kHz에서 약 0.8 kHz로 절반이 된다<span class="why"><b>맞습니다.</b> f₀ = 1/(2π√(0.01 × 4×10⁻⁶)) ≈ 796 Hz로 처음 1592 Hz의 절반입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

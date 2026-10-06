@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/logger.js"
+  ]
+}
+-->
+<style>
+#card-labphy-logger .lg-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; }
+#card-labphy-logger .lg-row .mono { min-width: 6.5em; }
+#card-labphy-logger .lg-truth { font-size: 12px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 4px; margin-left: 4px; }
+</style>
+<article class="card" id="card-labphy-logger">
+  <header class="card-head">
+    <span class="no"></span><h2>센서가 1초에 몇 번 재야 진자의 운동을 제대로 기록할까?</h2><span class="kind">실험 · 운동 센서 · 표본화 빈도 · ADC 분해능</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="용수철에 매달려 위아래로 진동하는 추, 그 아래의 초음파 운동 센서, 기록된 거리–시간 그래프"></canvas>
+      <div class="ctl">
+        <div><label class="mono">추 질량 m = <output class="m-out">250</output> g</label>
+          <input class="m" type="range" min="100" max="500" step="50" value="250" aria-label="추 질량"></div>
+        <div class="lg-row fs" role="group" aria-label="표본화 빈도">
+          <span class="mono small dim">표본화 빈도</span>
+          <button class="chip" data-fs="1" aria-pressed="false">1</button><button class="chip" data-fs="1.5" aria-pressed="false">1.5</button><button class="chip" data-fs="2" aria-pressed="false">2</button><button class="chip" data-fs="2.5" aria-pressed="false">2.5</button><button class="chip" data-fs="3" aria-pressed="false">3</button><button class="chip" data-fs="4" aria-pressed="false">4</button><button class="chip" data-fs="5" aria-pressed="false">5</button><button class="chip" data-fs="10" aria-pressed="true">10</button><span class="mono small dim">Hz</span>
+        </div>
+        <div class="lg-row bits" role="group" aria-label="ADC 비트 수">
+          <span class="mono small dim">ADC 비트</span>
+          <button class="chip" data-b="6" aria-pressed="false">6</button><button class="chip" data-b="8" aria-pressed="false">8</button><button class="chip" data-b="10" aria-pressed="true">10</button><button class="chip" data-b="12" aria-pressed="false">12</button>
+          <label class="lg-truth"><input type="checkbox" class="truth">실제 운동 겹쳐 보기</label>
+        </div>
+        <div class="lab-btns"><button class="chip go rec" type="button">10초 동안 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <dl class="nums"><div><dt>분해능 (1 LSB)</dt><dd class="n-lsb">—</dd></div><div><dt>표본 수 / 10 s</dt><dd class="n-n">—</dd></div><div><dt>나이퀴스트 진동수</dt><dd class="n-ny">—</dd></div></dl>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="표본화 빈도에 따른 기록 자료의 겉보기 진동수 그래프"></canvas>
+        <p class="fig-note">초음파 센서의 측정 범위는 0.15~4.00 m이고, 이 범위를 ADC 비트 수만큼의 단계로 나눠 기록합니다. 거리 자체의 우연 오차는 약 ±1 mm입니다. 표의 겉보기 주기는 기록된 점들이 평균선을 위로 지나는 시각 사이 간격의 평균입니다. 기록 10초 동안 두 번 이상 지나지 않으면 "—"로 표시합니다. 용수철 상수는 화면에 나타나지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>운동 센서를 컴퓨터에 연결하면 거리–시간 그래프가 저절로 그려집니다. 그런데 이 그래프는 언제나 실제 운동을 보여 줄까요? 센서가 얼마나 자주, 얼마나 잘게 재야 용수철 진자의 주기를 믿을 수 있게 기록할 수 있을까요?</li>
+      <li><span class="tag">복원</span>센서는 물리량을 전압으로 바꾸고, 인터페이스의 <em>ADC</em>(아날로그–디지털 변환기)가 그 전압을 정해진 시간 간격마다 정수로 바꿉니다. 1초에 재는 횟수가 <em>표본화 빈도</em> f<sub>s</sub>, 나눌 수 있는 단계 수가 2<sup>n</sup>(n비트)입니다. 측정 범위를 2<sup>n</sup>으로 나눈 값(1 LSB)이 기록의 분해능입니다.</li>
+      <li><span class="tag">설계</span>추를 아래로 6 cm쯤 당겼다 놓고, 바로 아래 바닥에 둔 초음파 센서로 추까지의 거리를 10초 동안 기록합니다. 조작 변인은 표본화 빈도와 ADC 비트 수, 통제 변인은 추 질량과 진폭입니다. 종속 변인은 기록된 그래프에서 구한 겉보기 주기와 진폭입니다.</li>
+      <li><span class="tag">분석</span>주기적인 신호를 제대로 기록하려면 표본화 빈도가 신호 진동수의 2배보다 커야 합니다(<em>나이퀴스트 조건</em>, f &lt; f<sub>s</sub>/2). 이 조건을 어기면 실제보다 훨씬 느린 가짜 진동이 기록되는데, 이것을 <em>에일리어싱</em>이라고 합니다. 겉보기 진동수는 |f − k·f<sub>s</sub>| 꼴(k는 정수)이 됩니다. 그래프에서 점선(f<sub>s</sub>/2) 아래로 떨어지는 점들을 찾아보세요.</li>
+      <li><span class="tag">측정</span>10 Hz, 10비트로 먼저 기록해 주기를 구하세요. 그다음 표본화 빈도를 5, 3, 2.5, 2, 1.5, 1 Hz로 낮춰 가며 기록하고, "실제 운동 겹쳐 보기"로 확인하세요. 마지막으로 10 Hz에서 비트 수를 6으로 낮추면 그래프와 진폭이 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>표본화 빈도가 낮으면 아무리 정밀한 센서도 엉뚱한 주기를 기록합니다(계통 오차). 반대로 너무 높이면 자료만 많아지고 정밀도는 센서 잡음에 묶입니다. 진동수의 10배 이상이면 모양까지 잘 보입니다. 초음파 센서 앞 15 cm 안쪽은 잴 수 없고, 다른 물체나 옆 모둠의 센서에서 반사된 소리가 섞이면 튀는 값이 생깁니다. 추가 떨어지지 않게 고리를 단단히 걸고, 센서 바로 위로 추가 떨어질 수 있으니 진폭을 크게 하지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">진동수 3.0 Hz로 진동하는 물체를 운동 센서로 표본화 빈도 4 Hz로 기록했습니다. 그래프에 나타나는 진동수는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3.0 Hz<span class="why"><b>나이퀴스트 조건을 어겼습니다.</b> 4 Hz로 재면 2 Hz보다 빠른 진동은 제대로 기록되지 않습니다. 표본화 빈도가 신호보다 크기만 하면 된다고 생각하기 쉽습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1.0 Hz<span class="why"><b>맞습니다.</b> 겉보기 진동수는 |3.0 − 1×4| = 1.0 Hz입니다. 실제보다 느린 가짜 진동(에일리어싱)이 기록됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>7.0 Hz<span class="why"><b>더하는 쪽은 기록될 수 없습니다.</b> 4 Hz로 잰 자료에는 2 Hz보다 빠른 진동이 나타날 수 없습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

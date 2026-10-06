@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>다이오드와 정류 회로 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="p–n 접합 다이오드의 전류–전압 특성을 측정하여 정류 작용을 확인하고, 반파·전파 정류 회로와 평활 축전기를 구성하여 교류가 직류로 바뀌는 과정을 오실로스코프로 관찰한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+</head>
+<body data-course="labphy" data-sec="3-10">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>다이오드와 정류 회로</h1>
+    <p class="lead">벽의 콘센트는 교류를 주지만 휴대 전화와 노트북은 직류로 움직입니다. 그 사이에서 다이오드는 한쪽 방향의 전류만 통과시키고, 축전기는 남은 흔들림을 메웁니다. 다이오드의 특성 곡선을 먼저 재고, 정류 회로를 직접 꾸며 출력 파형이 어떻게 매끈해지는지 확인합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">p형·n형 반도체</span><span class="p">교류의 봉우리값과 실횻값</span><span class="p">RC 회로의 시간 상수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-phy-diode-iv"><span class="mono">3.10.1</span>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a></li>
+        <li><a href="#card-labphy-rectifier"><span class="mono">3.10.2</span>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labphy-3-10">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-phy-diode-iv">
+        <header class="card-head">
+          <span class="no">3.10.1</span><h2>다이오드는 왜 한쪽으로만 전류를 흘릴까?</h2><span class="kind">실험 · 다이오드 전류–전압 특성 · 정류</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="전원, 보호 저항, 다이오드 회로와 교류를 넣었을 때 입력·출력 파형"></canvas>
+            <div class="ctl">
+              <div class="presets kind" role="group" aria-label="다이오드"><span class="mono small dim">소자</span><button class="chip" data-k="si" aria-pressed="true">실리콘 다이오드</button><button class="chip" data-k="ge" aria-pressed="false">저마늄 다이오드</button><button class="chip" data-k="led" aria-pressed="false">빨간 LED</button></div>
+              <div class="ctl-row"><div><label class="mono">전원 전압 = <output class="v-out">1.0</output> V</label><input class="v" type="range" min="-5" max="5" step="0.1" value="1" aria-label="전원 전압"></div></div>
+              <div class="lab-btns"><button class="chip go rec" type="button">전압·전류 기록</button><button class="chip sweep" type="button">−5 V부터 5 V까지 자동 측정</button><button class="chip clear" type="button">기록 지우기</button><button class="chip ac" type="button" aria-pressed="false">교류 넣어 보기</button></div>
+              <canvas class="cv-plot" aria-label="다이오드 양 끝 전압과 전류의 그래프"></canvas>
+              <dl class="nums"><div><dt>다이오드 양 끝 전압</dt><dd class="n-vd">—</dd></div><div><dt>전류</dt><dd class="n-i">—</dd></div><div><dt>방향</dt><dd class="n-dir">—</dd></div></dl>
+              <p class="fig-note">보호 저항 100 Ω과 다이오드를 직렬로 연결하고, 전압계(다이오드 양 끝)와 전류계로 잽니다. 다이오드 식 I = Iₛ(e^(V/nV_T) − 1)로 계산했고, 역방향 항복은 넣지 않았습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>휴대 전화 충전기 안에는 교류를 직류로 바꾸는 부품이 있습니다. 그 핵심인 다이오드는 전압을 거꾸로 걸면 정말 전류를 막을까요? 똑바로 걸면 저항처럼 전압에 비례해 전류가 흐를까요?</li>
+            <li><span class="tag">복원</span>다이오드는 p형 반도체와 n형 반도체를 붙인 p–n 접합입니다. 접합면에는 전하 운반자가 없는 공핍층이 있어 전류의 흐름을 막는 장벽 역할을 합니다.</li>
+            <li><span class="tag">설계</span>전원 전압을 −5 V부터 +5 V까지 바꾸며 다이오드 양 끝 전압과 전류를 잽니다. 큰 전류가 흘러 다이오드가 타지 않도록 보호 저항을 직렬로 연결합니다. 소자 종류를 조작 변인으로 바꿔 봅니다.</li>
+            <li><span class="tag">분석</span>순방향(p쪽에 +)으로 걸면 약 0.6 V(실리콘)를 넘으며 전류가 갑자기 커집니다. 역방향으로 걸면 공핍층이 넓어져 전류가 거의 흐르지 않습니다. 그래프는 직선이 아니므로 다이오드는 옴의 법칙을 따르지 않습니다. 저마늄은 약 0.3 V, 빨간 LED는 약 1.8 V에서 켜집니다.</li>
+            <li><span class="tag">측정</span>자동 측정으로 세 소자의 특성 곡선을 겹쳐 그려 보세요. 그다음 "교류 넣어 보기"로 출력 파형을 보고, 그래프의 어느 부분이 정류를 만드는지 설명하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>순방향 전압이 문턱을 넘은 뒤에는 조금만 올려도 전류가 급격히 커져 소자가 탈 수 있으므로 반드시 보호 저항을 씁니다. 실제 다이오드는 역방향 전압이 아주 크면 갑자기 전류가 흐르는 항복이 일어나는데, 이 카드에는 넣지 않았습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>그래프 해석</h3>
+          <p class="q">실리콘 다이오드의 양 끝 전압이 0.3 V일 때와 0.7 V일 때 전류를 비교한 것으로 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>전압이 2.3배이므로 전류도 2.3배다<span class="why"><b>옴의 법칙을 따르는 저항일 때의 생각입니다.</b> 다이오드의 전류는 전압에 지수적으로 늘어납니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.3 V에서는 거의 0이고, 0.7 V에서는 수 mA가 흐른다<span class="why"><b>맞습니다.</b> 문턱 전압을 넘기 전에는 장벽 때문에 전류가 거의 흐르지 않다가, 넘으면 급격히 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 0이다. 1 V가 넘어야 흐른다<span class="why"><b>실리콘의 문턱은 약 0.6~0.7 V입니다.</b></span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labphy-rectifier">
+        <header class="card-head">
+          <span class="no">3.10.2</span><h2>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</h2><span class="kind">실험 · 반파·브리지 전파 정류 · 평활 축전기 · 리플</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="변압기, 다이오드, 평활 축전기, 부하 저항으로 된 정류 회로와 입력·출력 전압 파형"></canvas>
+            <div class="ctl">
+              <div class="presets ckt" role="group" aria-label="정류 회로"><span class="mono small dim">회로</span><button class="chip" data-k="half" aria-pressed="false">반파 (다이오드 1개)</button><button class="chip" data-k="full" aria-pressed="true">브리지 전파 (다이오드 4개)</button></div>
+              <div class="presets cap" role="group" aria-label="평활 축전기"><span class="mono small dim">평활 C</span><button class="chip" data-c="0" aria-pressed="false">없음</button><button class="chip" data-c="10" aria-pressed="false">10 μF</button><button class="chip" data-c="47" aria-pressed="false">47 μF</button><button class="chip" data-c="100" aria-pressed="true">100 μF</button><button class="chip" data-c="470" aria-pressed="false">470 μF</button></div>
+              <div class="presets load" role="group" aria-label="부하 저항"><span class="mono small dim">부하 R_L</span><button class="chip" data-r="220" aria-pressed="false">220 Ω</button><button class="chip" data-r="470" aria-pressed="false">470 Ω</button><button class="chip" data-r="1000" aria-pressed="true">1 kΩ</button><button class="chip" data-r="2200" aria-pressed="false">2.2 kΩ</button><button class="chip" data-r="4700" aria-pressed="false">4.7 kΩ</button></div>
+              <div class="lab-btns"><button class="chip go rec" type="button">출력 전압 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip zoom" type="button" aria-pressed="false">출력만 확대 (AC 결합)</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="근사식으로 계산한 리플과 측정한 리플의 비교 그래프"></canvas>
+              <dl class="nums"><div><dt>출력 평균 (직류 전압계)</dt><dd class="n-dc">—</dd></div><div><dt>리플 ΔV (봉우리–골)</dt><dd class="n-rp">—</dd></div><div><dt>리플 진동수</dt><dd class="n-fr">—</dd></div></dl>
+              <p class="fig-note">변압기 2차 코일 6.0 V(실횻값), 60 Hz를 넣습니다. 봉우리 전압은 6.0 × √2 ≈ 8.5 V입니다. 실리콘 다이오드 하나가 켜져 있을 때 약 0.7 V가 걸리고, 변압기 코일과 다이오드의 저항을 합쳐 약 1 Ω으로 계산했습니다. 그래프 가로축은 근사식 V_p/(f_r R_L C)로 계산한 값이고, 축전기가 없는 기록은 그리지 않습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>휴대 전화 충전기는 교류를 직류로 바꿉니다. 다이오드는 한쪽 방향 전류만 흘리지만, 그것만으로는 전압이 0과 봉우리 사이를 오르내립니다. 전압을 일정하게 만들려면 무엇을 더해야 하고, 무엇이 남은 흔들림(리플)의 크기를 정할까요?</li>
+            <li><span class="tag">복원</span>p–n 접합 다이오드는 순방향 전압이 약 0.7 V(실리콘)를 넘을 때만 전류를 흘립니다. 축전기는 전압이 높을 때 전하를 받아 두었다가 전압이 낮아지면 내보내고, 부하 저항을 통해 방전할 때의 시간 상수는 R_L C입니다.</li>
+            <li><span class="tag">설계</span>조작 변인은 회로 종류(반파·브리지 전파), 평활 축전기 C, 부하 저항 R_L이고, 종속 변인은 출력의 평균 전압과 리플 ΔV입니다. 오실로스코프를 AC 결합으로 두면 작은 리플을 크게 확대해 볼 수 있습니다.</li>
+            <li><span class="tag">분석</span>반파 정류는 한 주기에 한 번, 브리지 전파 정류는 두 번 축전기를 채우므로 리플 진동수 f_r은 60 Hz와 120 Hz입니다. 축전기는 다음 봉우리까지 약 1/f_r 동안 방전하므로 리플은 <em>ΔV ≈ V_p/(f_r R_L C)</em>로 어림됩니다. 이 근사는 ΔV가 V_p보다 훨씬 작을 때만 맞습니다. 측정값과 근사값이 y = x 선 위에 놓이는지 확인합니다.</li>
+            <li><span class="tag">측정</span>R_L = 1 kΩ에서 두 회로 각각 C를 바꿔 가며 기록하세요. 같은 C에서 전파 정류의 리플이 반파의 약 절반인지, 부하 저항을 줄이면(전류를 많이 쓰면) 리플이 커지는지 확인하세요. 평활 축전기가 작을 때 점이 y = x 선에서 벗어나는 까닭은 무엇일까요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>브리지 회로의 출력 봉우리는 다이오드 두 개를 지나므로 반파보다 약 0.7 V 낮습니다. 오실로스코프 두 채널은 접지가 공통이라, 브리지 회로에서 입력과 출력을 동시에 재면 다이오드 하나가 접지선으로 단락됩니다. 한 번에 한 쪽씩 재거나 차동 프로브를 씁니다. 220 V 가정용 전기에는 직접 연결하지 말고 저전압 변압기 출력만 씁니다. 전해 축전기는 극성을 바르게 꽂고, 실험 뒤에는 저항으로 방전시킨 다음 만집니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">반파 정류 회로에 평활 축전기 100 μF와 부하 1 kΩ을 연결했더니 리플이 1.2 V였습니다. 브리지 전파 정류로 바꾸고 축전기를 200 μF로 키우면 리플은 대략 얼마일까요? 봉우리 전압 차이는 무시합니다.</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 0.3 V<span class="why"><b>맞습니다.</b> 전파 정류로 리플 진동수가 2배, C도 2배이므로 ΔV ≈ V_p/(f_r R_L C)는 1/4이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 0.6 V<span class="why"><b>둘 중 한 가지 효과만 셈했습니다.</b> 전파 정류와 축전기 증가가 각각 리플을 절반으로 줄입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2.4 V<span class="why"><b>축전기가 크면 오래 버팁니다.</b> 방전 시간 상수 R_L C가 커질수록 다음 봉우리까지 전압이 덜 떨어집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/phy/diode-iv.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labphy/rectifier.js"></script>
+</body>
+</html>

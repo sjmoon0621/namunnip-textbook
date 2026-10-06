@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/wheatstone.js"
+  ]
+}
+-->
+<style>
+#card-labphy-wheatstone .nudge { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 2px 0 4px; }
+#card-labphy-wheatstone .nudge .chip { min-width: 4.6em; }
+</style>
+<article class="card" id="card-labphy-wheatstone">
+  <header class="card-head">
+    <span class="no"></span><h2>검류계 바늘이 0이 되는 곳에서 미지 저항을 읽어 낼 수 있을까?</h2><span class="kind">실험 · 휘트스톤 브리지 · 미터 브리지 · 영점법</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="미터 브리지: 1 m 저항선, 두 틈에 끼운 미지 저항과 기준 저항, 가운데 단자와 접점 사이의 검류계, 저항선 양 끝의 전원"></canvas>
+      <div class="ctl">
+        <label class="mono">접점 위치 L₁ = <output class="l-out">50.0</output> cm (L₂ = <output class="l2-out">50.0</output> cm)</label>
+        <input class="l" type="range" min="1" max="99" step="0.1" value="50" aria-label="저항선 위 접점 위치">
+        <div class="nudge"><button class="chip mv" type="button" data-d="-1">−1 cm</button><button class="chip mv" type="button" data-d="-0.1">−0.1 cm</button><button class="chip mv" type="button" data-d="0.1">+0.1 cm</button><button class="chip mv" type="button" data-d="1">+1 cm</button></div>
+        <div class="presets ux" role="group" aria-label="미지 저항"><span class="mono small dim">미지 저항</span><button class="chip" data-x="0" aria-pressed="true">X₁</button><button class="chip" data-x="1" aria-pressed="false">X₂</button><button class="chip" data-x="2" aria-pressed="false">X₃</button>
+          <button class="chip swap" type="button" aria-pressed="false">좌우 바꾸기</button><button class="chip prot" type="button" aria-pressed="true">보호 저항 1 kΩ</button></div>
+        <div class="presets rs" role="group" aria-label="기준 저항 R (저항 상자)"><span class="mono small dim">기준 R</span></div>
+        <dl class="nums n4"><div><dt>검류계</dt><dd class="n-g">—</dd></div><div><dt>영점 L₀ (맞춤)</dt><dd class="n-l0">—</dd></div><div><dt>Rx (브리지)</dt><dd class="n-rx">—</dd></div><div><dt>감도</dt><dd class="n-s">—</dd></div></dl>
+        <div class="lab-btns"><button class="chip go rec" type="button">접점 누르고 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip mm" type="button">멀티미터로 재기</button></div>
+        <p class="verdict small"></p>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="접점 위치 L₁과 검류계 전류 그래프, 맞춤 직선이 0을 지나는 곳이 평형점"></canvas>
+        <p class="fig-note">저항선 100.0 cm, 전체 약 2 Ω, 눈금 0.1 cm. 전원 2 V(가변 저항 포함 8 Ω). 검류계는 1 μA 눈금, ±50 μA를 넘으면 바늘이 끝에 붙습니다. 저항선 양 끝의 납땜·구리판 접촉 저항(끝 보정)이 조금 있습니다. 그래프와 맞춤에는 지금과 같은 미지 저항·R·배치·보호 저항 조건의 기록 중 바늘이 끝에 붙지 않은 점만 씁니다. 미지 저항의 참값은 화면에 나오지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>전류계와 전압계로 저항을 재면 계기 자체의 저항과 눈금 오차가 결과에 섞입니다. 전류를 재지 않고 "전류가 0인 상태"만 찾아서 저항을 정밀하게 잴 수 있을까요?</li>
+      <li><span class="tag">복원</span>네 저항을 마름모로 잇고 가운데를 검류계로 이은 것이 <em>휘트스톤 브리지</em>입니다. 검류계에 전류가 흐르지 않으면 두 점의 전위가 같아서, 왼쪽과 오른쪽 저항의 비가 같습니다. 미터 브리지에서는 저항선의 두 부분이 두 저항을 맡고, 고른 저항선의 저항은 길이에 비례하므로 <em>Rx = R · L₁/L₂</em>입니다.</li>
+      <li><span class="tag">설계</span>왼쪽 틈에 미지 저항 Rx, 오른쪽 틈에 저항 상자 R을 끼웁니다. 먼저 보호 저항을 켠 채 접점을 옮겨 대략의 평형점을 찾고, 보호 저항을 끈 다음 그 근처에서 정밀하게 찾습니다. 평형점이 50 cm 가까이 오도록 R을 고르면 좋습니다.</li>
+      <li><span class="tag">분석</span>평형점 양쪽 몇 곳에서 검류계 전류 Ig를 기록하면 Ig–L₁ 그래프가 직선이 되고, 직선이 0을 지나는 L₀가 평형점입니다. 눈으로 바늘이 0인 곳을 찾는 것보다 정확합니다. 직선의 기울기가 <em>감도</em>(1 cm 움직일 때 바늘이 움직이는 양)입니다. L₁의 읽기 오차 δL이 Rx에 주는 상대 오차는 δL(1/L₁ + 1/L₂)라서 L₁ = 50 cm에서 가장 작습니다.</li>
+      <li><span class="tag">측정</span>X₁에서 R을 바꿔 가며 평형점이 20 cm, 50 cm, 80 cm 근처에 오게 하고, 각각 평형점 양쪽 4점 이상을 기록해 Rx를 구하세요. 다음에 "좌우 바꾸기"로 Rx와 R의 자리를 바꿔 다시 구하고 두 값을 평균하세요. 마지막으로 멀티미터 값과 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>저항선 양 끝의 접촉 저항과 눈금 0점의 어긋남은 L₁을 한쪽으로 미는 계통 오차입니다. Rx와 R의 자리를 바꿔 두 번 재고 평균하면 대부분 상쇄됩니다. 접점을 저항선 위로 문지르면 선이 깎여 굵기가 달라지므로 들었다 놓으며 누릅니다. 전류를 오래 흘리면 저항선이 데워져 저항이 변하므로 전원 스위치는 읽을 때만 닫고, 검류계는 처음에 반드시 보호 저항을 넣어 큰 전류로 바늘이 상하지 않게 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">왼쪽 틈에 Rx, 오른쪽 틈에 R = 30 Ω을 넣었더니 평형점이 L₁ = 40.0 cm였습니다. Rx와 R의 자리를 바꾸면 평형점은 어디일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>40.0 cm 그대로<span class="why"><b>저항의 비가 뒤집혔습니다.</b> 왼쪽이 30 Ω, 오른쪽이 20 Ω이 되었으니 평형점도 옮겨 갑니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>60.0 cm<span class="why"><b>맞습니다.</b> 처음 Rx = 30 × 40/60 = 20 Ω입니다. 자리를 바꾸면 L₁/L₂ = 30/20이라 L₁ = 60.0 cm입니다. 실제로는 끝 보정 때문에 두 값의 합이 정확히 100 cm가 되지 않는데, 그 차이가 계통 오차의 크기입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>저항선 위에 평형점이 없다<span class="why"><b>두 저항이 모두 양수이면 평형점은 늘 0과 100 cm 사이에 있습니다.</b> L₁/L₂는 0부터 무한대까지 모든 값을 가질 수 있기 때문입니다. 다만 비가 아주 크거나 작으면 평형점이 끝으로 몰려 오차가 커집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

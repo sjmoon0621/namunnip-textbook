@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labphy/photoelectric.js"
+  ]
+}
+-->
+<style>
+#card-labphy-photoelectric .vfine { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+#card-labphy-photoelectric .vfine .chip { padding: 2px 9px; }
+#card-labphy-photoelectric .tbl-cap { margin-top: 10px; font-size: 12px; color: var(--ink-2); font-family: var(--f-mono); }
+#card-labphy-photoelectric .toggle { display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink-2); margin: 6px 0 2px; }
+</style>
+<article class="card" id="card-labphy-photoelectric">
+  <header class="card-head">
+    <span class="no"></span><h2>정지 전압과 진동수의 그래프에서 플랑크 상수를 읽을 수 있을까?</h2><span class="kind">실험 · 광전관 · 정지 전압 · 플랑크 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="수은등 빛이 필터를 지나 광전관의 음극에 닿고, 튀어나온 전자가 양극으로 가는 회로와 전류계"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono" for="pe-line">수은등 필터 (선스펙트럼)</label>
+            <select class="line" id="pe-line"><option value="365">365.0 nm 자외선</option><option value="405">404.7 nm 보라</option><option value="436" selected>435.8 nm 파랑</option><option value="546">546.1 nm 초록</option><option value="577">577.0 nm 노랑</option></select></div>
+          <div><label class="mono">빛의 세기 (조리개) = <output class="i-out">100</output>%</label>
+            <input class="inten" type="range" min="25" max="100" step="25" value="100" aria-label="빛의 세기"></div>
+        </div>
+        <label class="mono">양극 전압 V = <output class="v-out">+1.00</output> V <span class="dim small">(−이면 전자를 되돌리는 역전압)</span></label>
+        <input class="volt" type="range" min="-2" max="3" step="0.01" value="1" aria-label="양극 전압">
+        <div class="vfine"><span class="mono small dim">미세 조정</span><button class="chip vm" type="button">−0.01 V</button><button class="chip vp" type="button">+0.01 V</button></div>
+        <label class="toggle"><input class="rev" type="checkbox">양극에도 빛이 닿음 (양극 역전류, 계통 오차)</label>
+        <div class="lab-btns"><button class="chip go meas" type="button">전압·전류 기록</button><button class="chip go stop" type="button">지금 전압을 정지 전압으로 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <p class="tbl-cap">① 전류–전압 기록</p>
+        <div class="tbl-host tbl-iv"></div>
+        <p class="tbl-cap">② 정지 전압 기록 (전류가 0이 되는 역전압의 크기)</p>
+        <div class="tbl-host tbl-v0"></div>
+        <div class="presets psel" role="group" aria-label="그래프 종류">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" data-p="iv" aria-pressed="true">I–V 곡선</button><button class="chip" data-p="vf" aria-pressed="false">V₀–f 직선</button>
+        </div>
+        <canvas class="cv-plot" aria-label="기록한 전류–전압 곡선 또는 정지 전압–진동수 그래프"></canvas>
+        <dl class="nums"><div><dt>전류계 I</dt><dd class="n-i">—</dd></div><div><dt>그래프로 구한 h (×10⁻³⁴ J·s)</dt><dd class="n-h">—</dd></div><div><dt>그래프로 구한 일함수 W</dt><dd class="n-w">—</dd></div></dl>
+        <p class="fig-note">전압계 분해능 0.01 V, 전류계 분해능 0.01 nA이며 전류계 바늘이 ±0.02 nA쯤 흔들립니다. 음극의 일함수는 화면에 나오지 않습니다(학교용 Sb–Cs 광전관 수준의 모식값). 점 색은 고른 필터의 색입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>빛을 세게 하면 광전자의 에너지가 커질까요, 개수만 많아질까요? 여러 진동수의 빛으로 광전자의 최대 에너지를 재면 빛 에너지와 진동수 사이의 관계, 곧 플랑크 상수를 구할 수 있을까요?</li>
+      <li><span class="tag">복원</span>광자 하나의 에너지는 <em>E = hf</em>입니다. 전자는 광자 하나를 흡수해 일함수 W만큼 써서 금속을 빠져나오고, 남은 에너지가 운동 에너지가 됩니다: K<sub>max</sub> = hf − W. 양극에 역전압 V를 걸면 전자는 eV만큼 에너지를 잃으므로, 가장 빠른 전자도 못 오는 전압이 <em>정지 전압 V₀</em>이고 eV₀ = K<sub>max</sub>입니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 빛의 진동수(필터), 빛의 세기(조리개), 양극 전압입니다. 종속 변인은 광전류입니다. 한 필터에서 전압을 +3 V부터 낮추며 전류를 기록해 I–V 곡선을 얻고, 전류가 0이 되는 역전압을 정지 전압으로 기록합니다. 필터 다섯 개로 반복합니다.</li>
+      <li><span class="tag">분석</span>세기를 바꾸면 포화 전류는 세기에 비례해 변하지만 정지 전압은 그대로입니다. V₀ = (h/e)f − W/e이므로 V₀–f 그래프는 직선이고, <em>기울기 × e = h</em>, 세로 절편 × (−e) = W, 가로 절편이 문턱 진동수 f₀입니다. 파동 모형으로는 세기와 무관한 V₀와 문턱 진동수를 설명할 수 없습니다.</li>
+      <li><span class="tag">측정</span>435.8 nm에서 세기 100%와 50%로 각각 I–V 곡선을 기록해 비교하세요. 그다음 필터 다섯 개 각각에서 미세 조정 버튼으로 전류가 0.00 nA가 되는 전압을 찾아 정지 전압을 기록하고, V₀–f 직선에서 h를 구해 6.63 × 10⁻³⁴ J·s와 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>I–V 곡선은 정지 전압 근처에서 0에 천천히 다가가므로 "0이 되는 곳"을 고르는 판단에 계통 오차가 생깁니다. 양극에 빛이 닿으면 역방향 전류가 섞여 전류가 0이 되는 전압이 실제 V₀보다 작게 읽힙니다. 이 효과는 모든 필터에서 비슷해 기울기(h)보다 절편(W)을 더 크게 흔듭니다. 수은등은 자외선을 내므로 눈으로 직접 보지 말고, 램프가 매우 뜨거우니 끈 뒤에도 만지지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 광전관에 404.7 nm 빛을 비추며 빛의 세기를 절반으로 줄이고, 음극을 일함수가 더 큰 금속으로 바꾼 광전관으로도 재었습니다. V₀–f 그래프에서 무엇이 달라질까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세기를 줄이면 정지 전압이 작아진다<span class="why"><b>세기는 광자의 개수를 바꿀 뿐입니다.</b> 전류(전자의 개수)는 줄지만 광자 하나의 에너지 hf는 같아 정지 전압은 그대로입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>금속을 바꾸면 직선이 평행 이동하고 기울기는 같다<span class="why"><b>맞습니다.</b> 기울기 h/e는 금속과 무관한 상수이고, 일함수가 커지면 세로 절편 −W/e가 더 아래로 내려가 문턱 진동수가 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>일함수가 큰 금속은 기울기가 더 가파르다<span class="why"><b>기울기는 h/e입니다.</b> 일함수는 광자 에너지에서 빼는 일정한 값이라 직선을 아래로 옮길 뿐, 기울기를 바꾸지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
