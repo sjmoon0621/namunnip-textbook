@@ -1444,6 +1444,16 @@ window.TOC = [
         "kind": "video",
         "id": "video-chem-society",
         "title": "공기로 비료를, 석유로 옷을"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-safety",
+        "title": "시약병의 그림 문자만 보고 위험을 알아챌 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-chem-green",
+        "title": "화학은 탄소와 자원 문제를 어떻게 풀고 있을까?"
        }
       ]
      },
@@ -1467,6 +1477,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-molvol",
         "title": "기체 1몰의 부피는 왜 기체 종류와 상관없을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-molar-mass",
+        "title": "물 1몰과 설탕 1몰은 왜 무게가 다를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-chem-avogadro",
+        "title": "보이지 않는 원자의 수를 사람들은 어떻게 세었을까?"
        }
       ]
      },
@@ -1490,6 +1510,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-limit",
         "title": "반응물 하나가 먼저 바닥나면, 생성물은 얼마나 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-caco3",
+        "title": "달걀 껍데기를 염산에 넣으면 날아간 기체로 반응식을 확인할 수 있을까?"
        }
       ]
      }
@@ -1532,6 +1557,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-dipole",
         "title": "CO₂는 극성 결합이 있는데 왜 무극성 분자일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-polar-lab",
+        "title": "대전된 막대를 가까이 대면 물줄기는 휘는데 기름 줄기는 왜 안 휠까?"
        }
       ]
      },
@@ -1602,6 +1632,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-vapor-eq",
         "title": "뚜껑 닫은 병 속의 물은 왜 줄지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-color-rev",
+        "title": "색이 바뀌었다가 되돌아오는 반응은 무엇을 알려 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-phase",
+        "title": "얼린 딸기는 어떻게 물을 녹이지 않고 바로 날려 보낼까?"
        }
       ]
      },
@@ -1661,6 +1701,16 @@ window.TOC = [
         "kind": "video",
         "id": "video-chem-altitude",
         "title": "높은 산에 오르면 왜 숨이 찰까"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-shift-lab",
+        "title": "세 시험관의 색은 조건을 바꾸면 어느 쪽으로 변할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-chem-eq-cases",
+        "title": "몸속, 바닷속, 공장 속의 평형은 어떻게 움직일까?"
        }
       ]
      }
@@ -1690,6 +1740,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-kw-temp",
         "title": "pH 7은 언제나 중성일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-dilute-ph",
+        "title": "염산을 10배씩 계속 묽히면 pH는 끝없이 커질까?"
        }
       ]
      },
@@ -1726,6 +1781,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-chem-eq-point",
         "title": "중화점에서 용액은 언제나 중성일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-antacid",
+        "title": "제산제 한 알은 위산을 얼마나 중화할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-chem-neutral-env",
+        "title": "산성 토양과 산 누출 사고는 어떻게 중화할까?"
        }
       ]
      },

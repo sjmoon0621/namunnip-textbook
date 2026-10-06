@@ -1,6 +1,6 @@
 /* 자동 생성: python3 tools/build.py — 오프라인 저장 목록. 직접 고치지 말 것 */
 self.PRECACHE = {
-"version": "fb2b6caa9bc9",
+"version": "0093c36e89fc",
 "files": [
 "graph.html",
 "index.html",
@@ -354,6 +354,7 @@ self.PRECACHE = {
 "js/cards/chem/a-reel-shapes.js",
 "js/cards/chem/a-reel-society.js",
 "js/cards/chem/a-vsepr.js",
+"js/cards/chem/antacid.js",
 "js/cards/chem/b-autoion.js",
 "js/cards/chem/b-dilution.js",
 "js/cards/chem/b-dyn-eq.js",
@@ -373,6 +374,14 @@ self.PRECACHE = {
 "js/cards/chem/b-soda.js",
 "js/cards/chem/b-vapor-eq.js",
 "js/cards/chem/b-vinegar.js",
+"js/cards/chem/caco3.js",
+"js/cards/chem/color-rev.js",
+"js/cards/chem/dilute-ph.js",
+"js/cards/chem/molar-mass.js",
+"js/cards/chem/phase.js",
+"js/cards/chem/polar-lab.js",
+"js/cards/chem/safety.js",
+"js/cards/chem/shift-lab.js",
 "js/cards/earth/ao-amoc-box.js",
 "js/cards/earth/ao-coastal-upwelling.js",
 "js/cards/earth/ao-danger-semicircle.js",
