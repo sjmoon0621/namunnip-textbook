@@ -7841,29 +7841,58 @@ window.TOC = [
       "n": 1,
       "title": "유효숫자",
       "code": "12화실01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is1-sigfig",
+        "title": "계산기에 나온 숫자를 다 적어도 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-sigfig",
+        "title": "눈금 실린더와 뷰렛은 소수 몇째 자리까지 읽어야 할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "부피·질량·온도·pH 측정 도구",
       "code": "12화실01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-tools",
+        "title": "25 mL를 옮길 때 비커, 실린더, 피펫 가운데 무엇을 써야 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "첨단 분석 기기와 데이터 해석",
       "code": "12화실01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-instrument",
+        "title": "기기가 그려 준 그래프에서 농도, 작용기, 원소를 어떻게 읽어 낼까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "용액 제조와 농도",
       "code": "12화실01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-solution",
+        "title": "0.100 M 용액 100 mL를 만들 때 어떤 실수가 농도를 가장 크게 바꿀까?"
+       }
+      ]
      }
     ]
    },
@@ -7875,99 +7904,193 @@ window.TOC = [
       "n": 1,
       "title": "원소의 스펙트럼과 에너지 준위",
       "code": "12화실02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-spectrum",
+        "title": "분광기로 본 몇 줄의 빛에서 에너지 준위를 어떻게 알아낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-hyd",
+        "title": "수소는 왜 몇 가지 색의 빛만 낼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "기체 상수 구하기",
       "code": "12화실02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-gas-r",
+        "title": "마그네슘 리본 한 조각으로 기체 상수 R을 구할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "미지 기체의 분자량",
       "code": "12화실02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-dumas",
+        "title": "플라스크를 채운 증기의 질량으로 미지 액체의 분자량을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "결정 구조와 단위세포 모형",
       "code": "12화실02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-unit-cell",
+        "title": "상자 한 변의 길이만 재면 금속의 밀도를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "여과",
       "code": "12화실02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-filtration",
+        "title": "무엇을 거르느냐에 따라 여과 장치를 바꿔야 할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "추출과 분배 계수",
       "code": "12화실02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-extraction",
+        "title": "같은 용매를 한 번에 쓸까, 나눠서 여러 번 쓸까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "회전 증발 농축",
       "code": "12화실02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-rotavap",
+        "title": "40 °C 물중탕으로 물을 끓여 날려 보낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "재결정과 분별 결정",
       "code": "12화실02-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-recrystal",
+        "title": "섞인 소금 가루에서 질산 칼륨만 골라낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "크로마토그래피",
       "code": "12화실02-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-chroma",
+        "title": "초록 잎 한 점은 왜 여러 색의 띠로 갈라질까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "분별 증류",
       "code": "12화실02-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-distill",
+        "title": "분별관 하나로 에탄올을 얼마나 진하게 모을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "액체의 증기압과 분자 간 힘",
       "code": "12화실02-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-vapor",
+        "title": "액체마다 증기압이 다른 까닭을 압력 센서로 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-bp-data",
+        "title": "극성이 없는 분자도 서로 끌어당길까?"
+       }
+      ]
      },
      {
       "n": 12,
       "title": "증기압 내림",
       "code": "12화실02-12",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-raoult",
+        "title": "설탕물의 증기압은 맹물보다 얼마나 낮을까?"
+       }
+      ]
      },
      {
       "n": 13,
       "title": "어는점 내림으로 화학식량 구하기",
       "code": "12화실02-13",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-freezing",
+        "title": "얼려 보기만 해도 흰 가루의 화학식량을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 14,
       "title": "삼투압으로 고분자 화학식량 구하기",
       "code": "12화실02-14",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-osmometer",
+        "title": "반투막 위로 올라온 용액 기둥으로 고분자의 몰질량을 잴 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -7979,57 +8102,140 @@ window.TOC = [
       "n": 1,
       "title": "반응열 측정과 헤스 법칙",
       "code": "12화실03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-calorimetry",
+        "title": "두 단계로 잰 반응열의 합은 한 번에 잰 반응열과 같을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-hess",
+        "title": "잴 수 없는 반응의 열을 어떻게 알아낼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "평형 이동과 평형 상수",
       "code": "12화실03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-fescn",
+        "title": "섞는 양을 바꿔도 변하지 않는 값이 정말 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-shift-lab",
+        "title": "세 시험관의 색은 조건을 바꾸면 어느 쪽으로 변할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "중화 적정",
       "code": "12화실03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-acid-titration",
+        "title": "뷰렛 한 방울 차이로 미지 산의 농도를 어디까지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-titration",
+        "title": "적정 곡선의 모양에서 산의 세기를 읽을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "산화·환원 적정",
       "code": "12화실03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-redox-titration",
+        "title": "지시약 없이 적정이 끝난 순간을 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "화학 전지와 기전력",
       "code": "12화실03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-cell-emf",
+        "title": "전지의 전압은 금속이 정할까, 용액이 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-cell",
+        "title": "두 금속을 고르면 전지의 전압을 미리 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "전기 분해 생성물의 양",
       "code": "12화실03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-electrolysis",
+        "title": "흘린 전하량으로 전극에 생길 물질의 양을 미리 맞힐 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-electrolysis",
+        "title": "전기를 얼마나 흘리면 금속을 얼마나 얻을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "초기 속도법과 반응 차수",
       "code": "12화실03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-clock",
+        "title": "용액이 갑자기 남색으로 바뀌는 시간으로 반응 속도식을 구할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-rate-law",
+        "title": "농도를 2배로 하면 반응은 몇 배 빨라질까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "농도·온도·촉매와 반응 속도",
       "code": "12화실03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-rate-design",
+        "title": "무엇을 고정해야 \"이 요인이 속도를 바꿨다\"고 말할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-rate-factors",
+        "title": "냉장고, 잘게 썬 장작, 촉매 장치는 각각 무엇을 바꿀까?"
+       }
+      ]
      }
     ]
    },
@@ -8041,43 +8247,94 @@ window.TOC = [
       "n": 1,
       "title": "탄화수소의 구조와 성질",
       "code": "12화실04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-hydrocarbon",
+        "title": "탄소 여섯 개짜리 탄화수소들은 왜 끓는점도, 브로민수에 대한 반응도 다를까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "알코올의 산화",
       "code": "12화실04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-alcohol-ox",
+        "title": "세 가지 알코올을 똑같이 산화시켰는데, 생성물은 왜 서로 다를까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "작용기와 탄화수소 유도체의 반응",
       "code": "12화실04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-functional",
+        "title": "원자 몇 개가 바뀌면 술이 식초가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-functional-tests",
+        "title": "이름표가 떨어진 시약병 여섯 개, 시험관 반응만으로 무엇인지 알아낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-reaction-map",
+        "title": "와인은 어떻게 식초가 되고, 식초는 어떻게 과일 향이 될까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "비누 만들기",
       "code": "12화실04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-soap",
+        "title": "기름과 수산화 나트륨으로 어떻게 기름때를 지우는 비누가 생길까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "방향족 탄화수소",
       "code": "12화실04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-aromatic",
+        "title": "벤젠에 이중 결합이 세 개 있다면, 왜 브로민수의 색을 없애지 못할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "아스피린 합성",
       "code": "12화실04-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-aspirin",
+        "title": "버드나무 껍질의 약을 실험실에서 만들면, 얼마나 얻고 얼마나 순수할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-rxn-society",
+        "title": "새로운 탄소 화합물은 사회를 어떻게 바꾸었을까?"
+       }
+      ]
      }
     ]
    }

@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/extraction.js"
+  ]
+}
+-->
+<style>
+#card-labchem-extraction .ex-opts { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 6px 0 2px; }
+#card-labchem-extraction .ex-msg { font-size: 13px; color: var(--warn); min-height: 1.4em; margin: 4px 0 0; }
+</style>
+<article class="card" id="card-labchem-extraction">
+  <header class="card-head">
+    <span class="no"></span><h2>같은 용매를 한 번에 쓸까, 나눠서 여러 번 쓸까?</h2><span class="kind">실험 · 분액 깔때기 · 분배 계수 · 다단 추출</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="두 층으로 나뉜 분액 깔때기와 각 층의 농도"></canvas>
+      <div class="ctl">
+        <div class="presets sol" role="group" aria-label="용질과 유기 용매">
+          <span class="mono small dim">용질 / 유기 용매</span>
+          <button class="chip" data-s="i2" aria-pressed="true">I₂ / 헥세인</button><button class="chip" data-s="caf" aria-pressed="false">카페인 / 다이클로로메테인</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">유기 용매 총량 V = <output class="v-out">30</output> mL</label>
+            <input class="v" type="range" min="10" max="90" step="5" value="30" aria-label="유기 용매 총 부피"></div>
+          <div><label class="mono">나눠 쓰는 횟수 n = <output class="n-out">1</output></label>
+            <input class="n" type="range" min="1" max="5" step="1" value="1" aria-label="추출 횟수"></div>
+        </div>
+        <div class="ex-opts">
+          <label class="mono small"><input type="checkbox" class="shake" checked> 충분히 흔들기(1분)</label>
+          <label class="mono small"><input type="checkbox" class="vent" checked> 흔들다가 거꾸로 들고 콕을 열어 압력 빼기</label>
+        </div>
+        <p class="ex-msg"></p>
+        <div class="lab-btns"><button class="chip go meas" type="button">추출하고 수층에 남은 양 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="추출 횟수와 수층에 남은 비율 그래프"></canvas>
+        <p class="fig-note">수층은 처음 100 mL입니다(I₂ 20 mg 또는 카페인 1.00 g). 남은 양은 분광 광도계로 재며 상대 오차 약 2%입니다. 분배 계수는 25 °C 근처의 대략값(I₂ 헥세인/물 ≈ 30, 카페인 다이클로로메테인/물 ≈ 4.6)으로 둔 모형이고, 카페인 용액은 실제로 무색이지만 그림에서는 옅게 칠했습니다. 점선은 지금 고른 용질과 V에서의 이론 곡선입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>물에 녹은 물질을 유기 용매로 옮겨 뽑아내는 것이 추출입니다. 쓸 수 있는 용매의 양이 정해져 있을 때, 한 번에 다 넣고 흔드는 것과 나눠서 여러 번 흔드는 것 중 어느 쪽이 물에 남는 양을 더 줄일까요?</li>
+      <li><span class="tag">복원</span>서로 섞이지 않는 두 용매에 한 용질이 녹아 평형에 이르면, 두 층의 농도 비는 온도가 같을 때 일정합니다. 이것이 <em>분배 계수</em> K<sub>D</sub> = C<sub>유기</sub> / C<sub>물</sub>입니다. 무극성인 I₂는 물보다 헥세인에 훨씬 잘 녹습니다. 밀도가 작은 용매가 위층이 됩니다(헥세인 0.66, 물 1.00, 다이클로로메테인 1.33 g/mL).</li>
+      <li><span class="tag">설계</span>조작 변인은 나눠 쓰는 횟수 n(유기 용매 총량 V는 같게), 종속 변인은 수층에 남은 용질의 비율입니다. 수층 부피, 온도, 흔드는 시간은 통제합니다. 각 회차가 끝나면 아래층을 콕으로 빼내고, 수층에 새 유기 용매를 넣어 다시 흔듭니다.</li>
+      <li><span class="tag">분석</span>한 번 추출 뒤 수층에 남는 비율은 V<sub>물</sub> / (V<sub>물</sub> + K·V<sub>유기</sub>)입니다. V를 n번에 나누면 <em>남는 비율 = (V<sub>물</sub> / (V<sub>물</sub> + K·V/n))<sup>n</sup></em>으로, n이 클수록 작아집니다. 기록마다 이 식을 거꾸로 풀어 K를 계산할 수 있습니다. K가 작은 카페인일수록 나눠 쓰는 효과가 큽니다.</li>
+      <li><span class="tag">측정</span>V = 30 mL로 두고 n을 1부터 5까지 바꿔 재세요. 같은 일을 카페인으로 되풀이해 두 곡선을 비교하고, 기록에서 계산한 K가 일정한지 보세요. 그다음 "충분히 흔들기"를 끄고 재면 K 계산값이 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>덜 흔들어 평형에 이르지 못하면 K를 작게 잡는 계통 오차가 생깁니다. 반대로 너무 세게 흔들면 에멀션이 생겨 층이 잘 안 갈라집니다. 휘발성 용매는 흔들면 증기압으로 속 압력이 올라가므로, 깔때기를 거꾸로 들고 꼭지를 사람 없는 쪽(후드 안)으로 향하게 한 채 콕을 열어 자주 압력을 뺍니다. 마개를 막은 채 아래층을 빼면 흐르지 않으니 마개를 먼저 엽니다. 어느 층이 물층인지 헷갈리면 물 한 방울을 떨어뜨려 어느 층에 섞이는지 확인하고, 두 층 모두 끝날 때까지 버리지 않습니다. 다이클로로메테인과 헥세인은 흄 후드에서 다룹니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">K<sub>D</sub> = 4인 용질이 물 100 mL에 녹아 있습니다. 유기 용매 50 mL를 한 번에 쓰면 수층에 1/3이 남습니다. 25 mL씩 두 번 나눠 쓰면?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>똑같이 1/3이 남는다. 총량이 같기 때문이다<span class="why"><b>총량이 같아도 결과는 다릅니다.</b> 매번 남은 양의 일정 비율을 뽑아내므로 나눠 쓰면 곱셈으로 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1/4이 남는다<span class="why"><b>맞습니다.</b> 한 번에 100/(100 + 4×25) = 1/2이 남고, 두 번이면 (1/2)² = 1/4입니다. 1/3보다 적습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/6이 남는다. 두 번 했으니 1/3의 절반이다<span class="why"><b>나눠 쓴 회차는 용매가 절반이라 덜 뽑아냅니다.</b> 한 회차에 1/3이 아니라 1/2이 남습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

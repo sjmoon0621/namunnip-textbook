@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/redox-titration.js"
+  ]
+}
+-->
+<style>
+#card-labchem-redox-titration .opt-row { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; margin: 6px 0 2px; }
+#card-labchem-redox-titration .lab-btns .chip.rec { border-color: var(--warn); color: var(--warn); }
+</style>
+<article class="card" id="card-labchem-redox-titration">
+  <header class="card-head">
+    <span class="no"></span><h2>지시약 없이 적정이 끝난 순간을 어떻게 알까?</h2><span class="kind">실험 · 과망가니즈산 칼륨 적정 · 전자 수의 비 · 산의 선택</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="과망가니즈산 칼륨 용액이 든 뷰렛과 시료가 든 삼각 플라스크, 분홍색 유지 시간"></canvas>
+      <div class="ctl">
+        <div class="presets smp" role="group" aria-label="시료">
+          <span class="mono small dim">시료</span>
+          <button class="chip" data-s="h2o2" aria-pressed="true">과산화 수소 (10배 묽힘)</button><button class="chip" data-s="fe" aria-pressed="false">Fe²⁺ (황산 철(II))</button><button class="chip" data-s="ox" aria-pressed="false">옥살산</button>
+        </div>
+        <div class="presets acd" role="group" aria-label="넣는 산">
+          <span class="mono small dim">산 10 mL</span>
+          <button class="chip" data-c="h2so4" aria-pressed="true">3 M H₂SO₄</button><button class="chip" data-c="hcl" aria-pressed="false">3 M HCl</button><button class="chip" data-c="none" aria-pressed="false">넣지 않음</button>
+        </div>
+        <div class="opt-row"><label class="mono small"><input type="checkbox" class="heat"> 플라스크를 60~70 °C로 데우기</label></div>
+        <div class="lab-btns"><button class="chip go a1" type="button">+1.00 mL</button><button class="chip go a01" type="button">+0.10 mL</button><button class="chip go adrop" type="button">+1 방울</button><button class="chip rec" type="button">종말점: 눈금 읽고 기록</button><button class="chip fresh" type="button">새 플라스크</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="조건별 적정 부피 그래프"></canvas>
+        <dl class="nums"><div><dt>일치한 적정 (H₂SO₄ 조건)</dt><dd class="n-c">—</dd></div><div><dt>시료 농도 (일치한 값 평균)</dt><dd class="n-m">—</dd></div><div><dt>참값 <button class="chip truth" type="button">보기</button></dt><dd class="n-t">?</dd></div></dl>
+        <p class="fig-note">KMnO₄ 표준 용액 0.0200 M(옥살산 나트륨으로 표정함). 시료는 홀 피펫으로 취합니다: 과산화 수소 10.00 mL, Fe²⁺·옥살산 20.00 mL. 화면은 실제 시간으로 흐르므로 방울을 넣고 색이 사라지는지 기다려 보세요. 진한 보라색 용액이라 메니스커스 위쪽 끝을 읽습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>약국에서 산 과산화 수소수의 농도가 표시대로 약 3%인지 확인하려고 합니다. 산화제인 과망가니즈산 칼륨(KMnO₄) 용액으로 적정하면 지시약을 넣지 않아도 종말점을 알 수 있다고 합니다. 어떻게 가능할까요?</li>
+      <li><span class="tag">복원</span>산성 용액에서 MnO₄⁻(보라)는 전자 5개를 받아 Mn²⁺(거의 무색)가 됩니다: MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O. H₂O₂와 옥살산은 1분자가 전자 2개를, Fe²⁺는 1개를 내놓습니다. 주고받는 전자 수가 같아야 하므로 2MnO₄⁻ + 5H₂O₂ + 6H⁺ → 2Mn²⁺ + 5O₂ + 8H₂O, 몰 비는 <em>MnO₄⁻ : H₂O₂ = 2 : 5</em>, MnO₄⁻ : Fe²⁺ = 1 : 5입니다.</li>
+      <li><span class="tag">설계</span>시료에 묽은 황산을 넣어 산성으로 만들고 KMnO₄를 떨어뜨립니다. 환원제가 남아 있는 동안은 보라색이 곧 사라지고, 환원제가 다 떨어지면 남은 MnO₄⁻ 때문에 연분홍이 30초 넘게 남습니다. KMnO₄ 자신이 <em>지시약</em> 노릇을 합니다. 옥살산은 상온에서 반응이 느려 60~70 °C로 데워서 적정합니다.</li>
+      <li><span class="tag">분석</span>n(MnO₄⁻) = 0.0200 M × V. 과산화 수소의 몰수는 이 값의 5/2배이고, 농도는 그것을 10.00 mL로 나눕니다. 10배 묽힌 시료이므로 원액은 10배, 질량 백분율은 몰 농도 × 34.0 g/mol ÷ 10입니다(밀도 1 g/mL로 근사). 처음 몇 방울은 색이 천천히 빠지다가 점점 빨리 빠지는 것은 생성된 Mn²⁺가 반응을 빠르게 하기 때문입니다(자체 촉매).</li>
+      <li><span class="tag">측정</span>H₂SO₄ 조건에서 일치하는 결과가 나올 때까지 적정해 원액의 농도와 %를 구하세요. 그다음 산을 HCl로, 또 산을 넣지 않고 같은 적정을 해 보세요. 옥살산은 데우지 않고 해 본 뒤 데워서 다시 하세요. 부피가 어떻게 달라지는지 그래프에서 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>HCl을 쓰면 Cl⁻도 MnO₄⁻에 산화되어(Cl₂ 발생) KMnO₄가 더 들고 분홍색이 자꾸 사라집니다. 산이 부족하면 MnO₄⁻가 전자 3개만 받아 갈색 MnO₂ 앙금이 생겨 몰 비 자체가 달라지고 종말점도 보이지 않습니다. 그래서 반응하지 않는 황산을 씁니다. KMnO₄는 피부와 옷을 갈색으로 물들이고 강한 산화제이며, 진한 황산을 묽힐 때는 반드시 물에 산을 조금씩 넣습니다. 보안경과 장갑을 끼고, 뜨거운 플라스크는 집게로 잡습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">0.0200 M KMnO₄로 Fe²⁺ 시료 20.00 mL를 적정했더니 18.00 mL가 들었습니다. 같은 KMnO₄로 같은 몰수의 H₂O₂를 적정한다면 몇 mL가 들까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>18.00 mL<span class="why"><b>몰수가 같아도 내놓는 전자 수가 다릅니다.</b> Fe²⁺는 1개, H₂O₂는 2개를 내놓습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>36.00 mL<span class="why"><b>맞습니다.</b> H₂O₂ 1몰은 전자 2몰을 내놓으므로 받아 줄 MnO₄⁻도 2배가 필요합니다. 몰 비로 보면 Fe²⁺ 5몰에 MnO₄⁻ 1몰, H₂O₂ 5몰에 MnO₄⁻ 2몰입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9.00 mL<span class="why"><b>방향이 반대입니다.</b> 전자를 더 많이 내놓는 환원제일수록 산화제가 더 필요합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

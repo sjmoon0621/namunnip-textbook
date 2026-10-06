@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/electrolysis.js"
+  ]
+}
+-->
+<style>
+#card-labchem-electrolysis .opt-row { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; margin: 6px 0 2px; }
+</style>
+<article class="card" id="card-labchem-electrolysis">
+  <header class="card-head">
+    <span class="no"></span><h2>흘린 전하량으로 전극에 생길 물질의 양을 미리 맞힐 수 있을까?</h2><span class="kind">실험 · 구리 전극 전기 분해 · 물의 전기 분해 · 패러데이 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="직류 전원 장치, 전류계와 전기 분해 장치"></canvas>
+      <div class="ctl">
+        <div class="presets mode" role="group" aria-label="장치">
+          <span class="mono small dim">장치</span>
+          <button class="chip" data-m="cu" aria-pressed="true">CuSO₄ 수용액 + 구리 전극</button><button class="chip" data-m="h2o" aria-pressed="false">호프만 장치 (Na₂SO₄ 수용액)</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">전류 I = <output class="i-out">0.50</output> A</label>
+            <input class="i" type="range" min="0.1" max="1" step="0.05" value="0.5" aria-label="전류"></div>
+          <div><label class="mono">시간 t = <output class="t-out">20</output> 분</label>
+            <input class="t" type="range" min="2" max="30" step="1" value="20" aria-label="전류를 흘린 시간"></div>
+        </div>
+        <div class="opt-row"><label class="mono small"><input type="checkbox" class="wet"> 전극을 말리지 않고 바로 무게 재기</label></div>
+        <dl class="nums"><div><dt>예측 (실행 전에 계산)</dt><dd class="n-p">—</dd></div><div><dt>측정</dt><dd class="n-m">—</dd></div><div><dt>측정 ÷ 예측</dt><dd class="n-e">—</dd></div></dl>
+        <div class="lab-btns"><button class="chip go run" type="button">전원 켜고 실행</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="전하량과 생성물 몰수 그래프"></canvas>
+        <p class="fig-note">전류계 분해능 0.01 A(전원 장치의 전류는 ±1%쯤 흔들림), 초시계 1 s, 전자저울 0.001 g, 호프만 장치 눈금 0.1 mL(최대 50 mL). 기체 부피는 25 °C, 1 atm에서 잽니다. F = 96485 C/mol, Cu 63.55 g/mol, 기체 1 mol = 24.5 L(25 °C, 1 atm).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>구리판 두 장을 황산 구리(II) 수용액에 담그고 0.50 A로 20분 동안 전류를 흘리면, (−)극에 구리가 몇 g 붙을까요? 계산으로 먼저 예측하고, 실제로 재어 예측이 맞는지 확인해 봅시다.</li>
+      <li><span class="tag">복원</span>전하량은 Q = It(C)입니다. 전자 1 mol의 전하량이 <em>패러데이 상수</em> F = 96485 C/mol이므로 흐른 전자는 It/F mol입니다. (−)극: Cu²⁺ + 2e⁻ → Cu, (+)극: Cu → Cu²⁺ + 2e⁻. 물의 전기 분해에서는 (−)극 2H₂O + 2e⁻ → H₂ + 2OH⁻, (+)극 2H₂O → O₂ + 4H⁺ + 4e⁻입니다.</li>
+      <li><span class="tag">설계</span>전극은 사포로 닦고 증류수·에탄올로 헹궈 말린 뒤 무게를 잽니다. 전류를 일정하게 유지하며 시간을 재고, 끝나면 다시 헹궈 완전히 말린 뒤 잽니다. 조작 변인은 I와 t(곧 Q), 종속 변인은 전극의 질량 변화 또는 기체 부피입니다. 실행하기 전에 위의 "예측" 칸 값을 자신의 계산과 맞춰 보세요.</li>
+      <li><span class="tag">분석</span>여러 Q에서 잰 Cu의 몰수를 Q에 대해 그리면 원점을 지나는 직선이 되고, 기울기는 1/(2F)입니다. 기울기로 F를 거꾸로 구해 96485와 비교합니다. 측정값 ÷ 예측값이 <em>전류 효율</em>입니다. 호프만 장치에서는 H₂는 전자 2개마다, O₂는 전자 4개마다 1분자씩 생기므로 부피비가 2 : 1이 되어야 합니다.</li>
+      <li><span class="tag">측정</span>전류나 시간을 바꿔 Q가 다른 실험을 네 번 이상 하세요. (−)극이 늘어난 질량과 (+)극이 줄어든 질량이 예측과 얼마나 맞나요? "말리지 않고"를 켜면 결과가 어떻게 되나요? 호프만 장치로 바꿔 H₂ : O₂ 부피비도 확인하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>(+)극에서 떨어져 나간 구리 부스러기 때문에 (+)극은 예측보다 더 가벼워지고, 전류를 너무 크게 하면 (−)극의 구리가 푸석하게 붙어 헹굴 때 떨어집니다. 물기가 남으면 질량이 크게 나옵니다(계통 오차). O₂는 H₂보다 물에 잘 녹아 처음에는 부피비가 2 : 1보다 크고, 모은 기체에는 수증기가 섞여 있어 부피가 약 3% 크게 나옵니다. 황산 구리(II)는 독성이 있어 장갑을 끼고, 수소는 불꽃과 멀리 둡니다. 전원을 끈 뒤 전극을 만집니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 전하량을 흘려, 질산 은(AgNO₃) 수용액에서 은을 석출시켰습니다. 구리 전기 분해에서 (−)극에 Cu 1.00 mmol이 붙었다면, 은은 몇 mmol 붙을까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1.00 mmol<span class="why"><b>이온의 전하가 다릅니다.</b> Cu²⁺는 원자 1개에 전자 2개, Ag⁺는 1개가 필요합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2.00 mmol<span class="why"><b>맞습니다.</b> 흐른 전자는 2.00 mmol이고, Ag⁺ + e⁻ → Ag이므로 은 2.00 mmol이 석출됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.50 mmol<span class="why"><b>방향이 반대입니다.</b> 전자 하나로 원자 하나를 만드는 은이 더 많이 석출됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

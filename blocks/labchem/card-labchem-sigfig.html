@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/sigfig.js"
+  ]
+}
+-->
+<style>
+#card-labchem-sigfig .rd-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0 2px; }
+#card-labchem-sigfig .rd-row input[type="text"] { width: 7.5em; font-family: var(--f-mono); font-size: 14px; padding: 4px 8px; border: 1px solid var(--ink-3); background: var(--card); color: var(--ink); }
+#card-labchem-sigfig .rd-msg { font-size: 12.5px; color: var(--ink-2); min-height: 1.4em; margin: 2px 0 4px; }
+</style>
+<article class="card" id="card-labchem-sigfig">
+  <header class="card-head">
+    <span class="no"></span><h2>눈금 실린더와 뷰렛은 소수 몇째 자리까지 읽어야 할까?</h2><span class="kind">실험 · 유효숫자 · 메니스커스와 시차</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="확대한 눈금과 메니스커스, 눈의 위치, 전자저울 표시"></canvas>
+      <div class="ctl">
+        <div class="presets tsel" role="group" aria-label="부피 측정 기구">
+          <span class="mono small dim">기구</span>
+          <button class="chip" data-t="cyl" aria-pressed="true">100 mL 눈금 실린더</button><button class="chip" data-t="bur" aria-pressed="false">50 mL 뷰렛</button>
+        </div>
+        <div><label class="mono">눈높이 <output class="e-out">메니스커스와 수평</output></label>
+          <input class="eye" type="range" min="-3" max="3" step="1" value="0" aria-label="눈높이"></div>
+        <div class="rd-row">
+          <label class="mono small" for="sf-in">내가 읽은 부피 (mL)</label>
+          <input id="sf-in" class="vin" type="text" inputmode="decimal" autocomplete="off" placeholder="예: 47.3">
+          <button class="chip go rec" type="button">기록하고 밀도 계산</button>
+        </div>
+        <p class="rd-msg" aria-live="polite"></p>
+        <div class="lab-btns"><button class="chip new" type="button">새 시료 받기</button><button class="chip truth" type="button">방금 시료의 참 부피 보기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="회차별 밀도와 오차 막대, 20 °C 물의 밀도"></canvas>
+        <dl class="nums"><div><dt>계산기에 나온 ρ</dt><dd class="n-raw">—</dd></div><div><dt>유효숫자 맞춘 ρ</dt><dd class="n-sf">—</dd></div><div><dt>m과 V의 유효숫자</dt><dd class="n-cnt">—</dd></div></dl>
+        <p class="fig-note">시료는 20 °C의 물입니다(밀도 0.9982 g/mL). 질량은 0.01 g 전자저울로 빈 용기(m₀)와 물을 담은 용기(m₁)를 재어 뺍니다. 그림은 눈금 부분을 크게 확대한 것입니다. 오차 막대는 부피를 최소 눈금의 ±0.2칸, 질량을 ±0.01 g으로 어림해 전파한 값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>물의 밀도를 재려고 눈금 실린더와 뷰렛으로 부피를, 전자저울로 질량을 쟀습니다. 부피는 소수 몇째 자리까지 적어야 하고, 계산기에 0.998214…가 나온 밀도는 몇 자리까지 적어야 할까요?</li>
+      <li><span class="tag">복원</span>눈금 기구는 <em>최소 눈금의 1/10까지 어림해</em> 읽습니다. 1 mL 눈금의 실린더는 소수 첫째 자리(47.3 mL), 0.1 mL 눈금의 뷰렛은 소수 둘째 자리(23.46 mL)까지 읽습니다. 디지털 저울은 화면에 나온 자리까지가 측정값이고, 마지막 자리가 불확실한 자리입니다.</li>
+      <li><span class="tag">설계</span>물처럼 유리를 적시는 액체는 가운데가 오목한 <em>메니스커스</em>를 만듭니다. 오목한 면의 가장 낮은 곳을, 눈을 그 높이에 맞춘 채 읽습니다. 질량은 빈 용기와 물을 담은 용기를 각각 재어 빼는 <em>차감법</em>으로 구합니다. 같은 저울로 두 번 재므로 저울의 영점이 조금 어긋나 있어도 차이에서 지워집니다.</li>
+      <li><span class="tag">분석</span>덧셈·뺄셈은 <em>소수점 아래 자리 수</em>가 가장 적은 값에 맞춥니다. 137.52 g − 128.41 g = 9.11 g은 소수 둘째 자리까지지만 유효숫자는 3개로 줄어듭니다. 곱셈·나눗셈은 <em>유효숫자 개수</em>가 가장 적은 값에 맞춥니다. 중간 계산에서는 한 자리를 더 두고, 마지막에 한 번만 반올림합니다(버릴 자리가 5 이상이면 올림).</li>
+      <li><span class="tag">측정</span>실린더와 뷰렛에서 각각 두세 번 시료를 받아, 눈높이를 수평으로 두고 읽어 기록하세요. 그다음 눈높이를 위나 아래로 옮겨 같은 방식으로 읽어 보세요. 그래프에서 시차가 있는 점은 어느 쪽으로 벗어나나요? 실린더와 뷰렛에서 방향이 같나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>시차는 매번 같은 쪽으로 생기는 계통 오차입니다. 눈금 실린더는 숫자가 위로 커지므로 위에서 보면 크게, 뷰렛은 숫자가 아래로 커지므로 위에서 보면 작게 읽힙니다. 자릿수를 더 적는다고 정밀해지지 않으며, 덜 적으면 잰 정보를 버리는 것입니다. 유리 기구는 바닥이 평평한 곳에 세우고, 뷰렛에 액체를 채울 때는 깔때기를 쓰되 눈높이보다 낮은 위치에서 채우며, 다 채운 뒤에는 깔때기를 빼고 읽습니다(깔때기에서 방울이 떨어져 눈금이 바뀝니다).</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">뷰렛의 처음 눈금이 0.52 mL, 적정이 끝났을 때 눈금이 18.47 mL였습니다. 이때 넣은 용액의 부피로 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>18 mL<span class="why"><b>잰 정보를 버렸습니다.</b> 두 값이 모두 소수 둘째 자리까지 읽은 값이므로, 차이도 소수 둘째 자리까지 적습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>17.95 mL<span class="why"><b>맞습니다.</b> 뺄셈은 소수점 아래 자리 수로 맞춥니다. 18.47 − 0.52 = 17.95 mL이고 유효숫자는 4개입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>17.9 mL (0.52가 유효숫자 2개이므로 결과도 줄인다)<span class="why"><b>곱셈·나눗셈 규칙을 뺄셈에 썼습니다.</b> 덧셈·뺄셈에서는 유효숫자 개수가 아니라 소수점 아래 자리를 봅니다. 0.52도 소수 둘째 자리까지 잰 값입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

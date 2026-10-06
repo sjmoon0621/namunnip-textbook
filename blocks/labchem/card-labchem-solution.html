@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/solution.js"
+  ]
+}
+-->
+<style>
+#card-labchem-solution .mrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0; }
+#card-labchem-solution .mrow input[type="number"] { width: 8em; font-family: var(--f-mono); font-size: 14px; padding: 4px 8px; border: 1px solid var(--ink-3); background: var(--card); color: var(--ink); }
+#card-labchem-solution .mrow input:disabled { opacity: 0.4; }
+#card-labchem-solution .goal { font-size: 13px; color: var(--ink-2); margin: 2px 0; }
+</style>
+<article class="card" id="card-labchem-solution">
+  <header class="card-head">
+    <span class="no"></span><h2>0.100 M 용액 100 mL를 만들 때 어떤 실수가 농도를 가장 크게 바꿀까?</h2><span class="kind">실험 · 용액 제조 · 몰 농도·퍼센트·ppm·몰랄 농도</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="저울, 부피 플라스크 목의 눈금선과 메니스커스, 피펫"></canvas>
+      <div class="ctl">
+        <div class="presets gsel" role="group" aria-label="만들 용액">
+          <span class="mono small dim">만들 용액</span>
+          <button class="chip" data-g="nacl" aria-pressed="true">0.100 M NaCl</button><button class="chip" data-g="cu" aria-pressed="false">0.0500 M CuSO₄</button><button class="chip" data-g="dil" aria-pressed="false">0.0100 M NaCl (희석)</button>
+        </div>
+        <p class="goal"></p>
+        <div class="mrow"><label class="mono small" for="sol-m">분석 저울에 단 질량 (g)</label><input id="sol-m" class="mass" type="number" min="0" max="5" step="0.0001" value="0.5000"></div>
+        <div><label class="mono">눈금선에 대한 메니스커스 바닥 = <output class="f-out">0</output> mm</label>
+          <input class="fill" type="range" min="-4" max="8" step="1" value="0" aria-label="눈금선에 대한 메니스커스 높이"></div>
+        <div class="toggles">
+          <label><input type="checkbox" class="e-rinse">녹인 비커와 유리 막대를 헹군 물을 넣지 않음</label>
+          <label><input type="checkbox" class="e-wet">피펫을 원액으로 헹구지 않음 (안에 물기)</label>
+          <label><input type="checkbox" class="e-mix">마개 닫고 뒤집어 섞지 않음</label>
+        </div>
+        <div class="lab-btns"><button class="chip go make" type="button">용액 만들고 농도 확인</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="만든 용액의 목표 대비 농도 오차"></canvas>
+        <dl class="nums n4"><div><dt>몰 농도</dt><dd class="n-M">—</dd></div><div><dt>퍼센트 농도 (w/w)</dt><dd class="n-p">—</dd></div><div><dt>ppm (질량)</dt><dd class="n-ppm">—</dd></div><div><dt>몰랄 농도</dt><dd class="n-m">—</dd></div></dl>
+        <p class="fig-note">플라스크는 100 mL A급(±0.08 mL), 피펫은 10 mL A급(±0.02 mL)입니다. 목의 안지름이 약 1.3 cm라 메니스커스가 1 mm 높으면 약 0.13 mL가 더 들어갑니다. 농도 확인값은 ±0.3% 정도의 우연 오차가 있는 분석 결과입니다. 아래 네 농도는 마지막으로 만든 용액을 여러 방식으로 나타낸 것입니다(용액 밀도는 농도로 어림).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>0.100 M NaCl 100 mL, 황산 구리(Ⅱ) 결정으로 0.0500 M CuSO₄ 100 mL, 그리고 0.100 M 원액을 묽힌 0.0100 M NaCl 100 mL를 만들어야 합니다. 몇 g을 달고 어떤 순서로 만들어야 할까요? 흔한 실수는 농도를 얼마나 바꿀까요?</li>
+      <li><span class="tag">복원</span><em>몰 농도</em>(M) = 용질 mol / 용액 L, <em>퍼센트 농도</em>(w/w) = 용질 g / 용액 g × 100, <em>ppm</em> = 용질 g / 용액 g × 10⁶, <em>몰랄 농도</em>(m) = 용질 mol / 용매 kg입니다. 몰 농도는 부피로 정의하므로 온도에 따라 조금 변하고, 퍼센트·ppm·몰랄 농도는 질량으로 정의하므로 온도와 무관합니다. 묽힐 때는 용질의 몰수가 그대로이므로 M₁V₁ = M₂V₂입니다.</li>
+      <li><span class="tag">설계</span>필요한 질량 = M × V × 몰 질량입니다. 분석 저울로 달아 비커에서 적은 양의 물에 녹이고, 깔때기로 부피 플라스크에 옮깁니다. 비커와 유리 막대를 증류수로 두세 번 헹궈 그 물도 넣고, 눈금선 가까이에서는 스포이트로 메니스커스 바닥을 눈금선에 맞춥니다. 마개를 닫고 열 번 이상 뒤집어 섞습니다. 희석에서는 피펫을 원액으로 두세 번 헹군 뒤 10.00 mL를 옮겨 같은 방법으로 100 mL를 맞춥니다.</li>
+      <li><span class="tag">분석</span>NaCl 0.100 M × 0.1000 L × 58.44 g/mol = 0.5844 g입니다. 파란 결정은 CuSO₄·5H₂O(249.69 g/mol)이므로 0.0500 × 0.1000 × 249.69 = 1.2484 g을 답니다. 무수물(159.61 g/mol)로 계산해 0.7980 g만 달면 농도가 약 36% 낮아집니다. 0.0100 M은 0.100 M 원액 10.00 mL를 100 mL로 맞추면 됩니다.</li>
+      <li><span class="tag">측정</span>세 용액을 바르게 만들어 오차가 ±0.5% 안에 드는지 확인하세요. 그다음 실수를 하나씩 해 보세요. 눈금선을 넘겨 채우기, 무수물 몰 질량으로 계산하기, 헹군 물 빼먹기, 피펫을 원액으로 헹구지 않기, 섞지 않기. 어느 실수가 가장 큰가요? 어느 실수가 결과를 들쭉날쭉하게 만드나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>눈금선을 넘겨 채웠다면 덜어 내도 소용없습니다. 용질도 함께 덜어지므로 처음부터 다시 만듭니다. 수화물과 무수물의 혼동, 헹군 물 빼먹기는 늘 농도를 낮추는 계통 오차이고, 섞지 않은 용액은 뽑는 곳마다 농도가 달라 우연 오차처럼 보입니다. 황산 구리(Ⅱ)는 삼키거나 눈에 들어가면 해로우므로 보안경과 장갑을 쓰고, 남은 용액은 중금속 폐액 통에 버립니다. 피펫은 반드시 피펫 필러로 빨아올립니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">0.200 M 포도당 수용액을 25 °C에서 만들어 두었다가 5 °C 냉장고에 넣었습니다. 차가워진 용액에서 바뀌는 값은? (용액은 식으면 부피가 조금 줄어듭니다.)</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>몰 농도만 조금 커진다<span class="why"><b>맞습니다.</b> 용질 몰수는 그대로인데 용액 부피가 줄어 mol/L가 커집니다. 질량으로 정한 퍼센트 농도와 몰랄 농도는 그대로입니다. 그래서 부피 플라스크에는 기준 온도(20 °C)가 적혀 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>몰랄 농도만 커진다<span class="why"><b>반대입니다.</b> 몰랄 농도는 용질 mol과 용매 kg으로 정해, 온도가 바뀌어도 질량은 변하지 않으므로 그대로입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>네 농도가 모두 그대로이다<span class="why"><b>부피의 온도 의존을 빠뜨렸습니다.</b> 용질과 용매의 양은 그대로지만, 부피가 들어가는 몰 농도는 달라집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

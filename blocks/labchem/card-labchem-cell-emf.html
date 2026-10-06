@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/cell-emf.js"
+  ]
+}
+-->
+<style>
+#card-labchem-cell-emf .opt-row { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; margin: 6px 0 2px; }
+#card-labchem-cell-emf .presets .chip { min-width: 2.6em; }
+</style>
+<article class="card" id="card-labchem-cell-emf">
+  <header class="card-head">
+    <span class="no"></span><h2>전지의 전압은 금속이 정할까, 용액이 정할까?</h2><span class="kind">실험 · 화학 전지 꾸미기 · 기전력 측정 · 농도 효과</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="두 반쪽 전지, 염다리, 디지털 전압계"></canvas>
+      <div class="ctl">
+        <div class="presets ml" role="group" aria-label="왼쪽 전극 (전압계 COM 단자)">
+          <span class="mono small dim">왼쪽(COM)</span>
+          <button class="chip" data-l="Mg" aria-pressed="false">Mg</button><button class="chip" data-l="Zn" aria-pressed="true">Zn</button><button class="chip" data-l="Fe" aria-pressed="false">Fe</button><button class="chip" data-l="Pb" aria-pressed="false">Pb</button><button class="chip" data-l="Cu" aria-pressed="false">Cu</button><button class="chip" data-l="Ag" aria-pressed="false">Ag</button>
+        </div>
+        <div class="presets mr" role="group" aria-label="오른쪽 전극 (전압계 + 단자)">
+          <span class="mono small dim">오른쪽(+)</span>
+          <button class="chip" data-r="Mg" aria-pressed="false">Mg</button><button class="chip" data-r="Zn" aria-pressed="false">Zn</button><button class="chip" data-r="Fe" aria-pressed="false">Fe</button><button class="chip" data-r="Pb" aria-pressed="false">Pb</button><button class="chip" data-r="Cu" aria-pressed="true">Cu</button><button class="chip" data-r="Ag" aria-pressed="false">Ag</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">왼쪽 이온 농도 = <output class="cl-out">1.0</output> M</label>
+            <input class="cl" type="range" min="-3" max="0" step="1" value="0" aria-label="왼쪽 용액 농도 (로그 눈금)"></div>
+          <div><label class="mono">오른쪽 이온 농도 = <output class="cr-out">1.0</output> M</label>
+            <input class="cr" type="range" min="-3" max="0" step="1" value="0" aria-label="오른쪽 용액 농도 (로그 눈금)"></div>
+        </div>
+        <div class="opt-row"><label class="mono small"><input type="checkbox" class="bridge" checked> 염다리 (KNO₃) 걸치기</label></div>
+        <div class="lab-btns"><button class="chip go meas" type="button">전압계 읽고 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets view" role="group" aria-label="그래프 종류">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" data-p="e0" aria-pressed="true">측정값–E° 차이 (1 M)</button><button class="chip" data-p="q" aria-pressed="false">같은 금속 쌍의 농도 효과</button>
+        </div>
+        <canvas class="cv-plot" aria-label="측정 기전력 그래프"></canvas>
+        <dl class="nums"><div><dt>E°(오른쪽) − E°(왼쪽)</dt><dd class="n-e">—</dd></div><div><dt>방금 읽은 값</dt><dd class="n-v">—</dd></div><div><dt>차이</dt><dd class="n-d">—</dd></div></dl>
+        <p class="fig-note">모든 반쪽 전지는 금속판 + 그 금속의 질산염 수용액, 25 °C입니다. 디지털 전압계는 1 mV까지 표시하고 ±5 mV쯤 흔들립니다. 금속판은 사포로 닦아 씁니다. Mg·Fe 실측값은 표면 산화막 때문에 E° 예측과 다른 것을 반영한 모식값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>아연–구리 전지는 약 1.1 V를 냅니다. 금속을 다른 것으로 바꾸면, 또 같은 금속이라도 용액의 농도를 바꾸면 전압이 달라질까요? 무엇이 화학 전지의 기전력을 정할까요?</li>
+      <li><span class="tag">복원</span>반쪽 전지의 환원 전위가 클수록 그 쪽 이온이 전자를 잘 받습니다. 두 반쪽 전지를 이으면 E°가 작은 금속이 산화되는 (−)극, 큰 쪽이 (+)극이 되고, 표준 상태(1 M, 25 °C)의 기전력은 E°<sub>cell</sub> = E°<sub>(+)극</sub> − E°<sub>(−)극</sub>입니다. 표준 환원 전위(V): Mg −2.37, Zn −0.76, Fe −0.44, Pb −0.13, Cu +0.34, Ag +0.80.</li>
+      <li><span class="tag">설계</span>두 비커에 금속판과 그 이온의 수용액을 넣고 KNO₃ 염다리로 잇습니다. 전압계의 COM 단자를 왼쪽, + 단자를 오른쪽에 연결합니다. 값이 음수로 나오면 왼쪽이 (+)극이라는 뜻입니다. 조작 변인은 금속 쌍과 농도, 종속 변인은 전압, 통제 변인은 온도·염다리·전극 면적입니다.</li>
+      <li><span class="tag">분석</span>1 M 용액끼리 잰 값을 E° 차이에 대해 그리면 기울기 1인 직선 근처에 놓입니다. 농도가 다르면 <em>네른스트 식</em> E = E° − (0.0592/n) log Q(25 °C)를 따라, (+)극 쪽 이온이 진할수록, (−)극 쪽 이온이 묽을수록 기전력이 커집니다. log Q에 대한 기울기로 주고받은 전자 수 n을 구할 수 있습니다.</li>
+      <li><span class="tag">측정</span>Zn을 왼쪽에 두고 오른쪽을 Fe, Pb, Cu, Ag로 바꿔 가며 1 M에서 재세요. Mg도 재 보고, 예측과 얼마나 다른지 보세요. 그다음 Zn–Cu에서 Zn²⁺ 또는 Cu²⁺ 농도만 10배씩 바꿔 재고 두 번째 그래프를 보세요. 마지막으로 염다리를 빼면 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>염다리를 빼면 회로가 끊겨 이온이 이동하지 못하므로 전압이 0 근처로 떨어집니다. 염다리는 두 용액의 전하 균형을 맞추는 이온의 통로입니다. Mg는 물과 반응하고 산화막이 있어 E° 차이보다 훨씬 작은 값이 나오며, 전압계 대신 전구를 연결해 전류를 흘리면 내부 저항 때문에 전압이 더 떨어집니다. 질산 은은 피부를 검게 물들이고 질산 납은 독성이 있으니 장갑을 끼고, 폐액은 중금속 폐액통에 모읍니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">Zn | Zn²⁺(1 M) ‖ Cu²⁺(1 M) | Cu 전지에서 구리 쪽 용액만 0.01 M로 묽혔습니다. 25 °C에서 기전력은 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 0.06 V 작아져 약 1.04 V<span class="why"><b>맞습니다.</b> Q = [Zn²⁺]/[Cu²⁺] = 100, n = 2이므로 E = 1.10 − 0.0296 × 2 ≈ 1.04 V입니다. 전자를 받을 Cu²⁺가 줄어 (+)극의 환원 경향이 약해집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>그대로 1.10 V<span class="why"><b>E°는 표준 상태(1 M)에서만의 값입니다.</b> 농도가 바뀌면 네른스트 식만큼 달라집니다. 다만 변화는 10배당 수십 mV로 작습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>100분의 1인 약 0.011 V<span class="why"><b>전압은 농도에 비례하지 않습니다.</b> 기전력은 주로 두 금속의 환원 전위 차이가 정하고, 농도는 로그로만 작게 영향을 줍니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

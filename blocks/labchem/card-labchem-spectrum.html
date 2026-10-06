@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/spectrum.js"
+  ]
+}
+-->
+<style>
+#card-labchem-spectrum .presets .grp { flex-basis: 100%; height: 0; }
+</style>
+<article class="card" id="card-labchem-spectrum">
+  <header class="card-head">
+    <span class="no"></span><h2>분광기로 본 몇 줄의 빛에서 에너지 준위를 어떻게 알아낼까?</h2><span class="kind">실험 · 불꽃 반응 · 선 스펙트럼 · 발머 계열</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="광원과 분광기로 본 선 스펙트럼, 눈금과 십자선"></canvas>
+      <div class="ctl">
+        <div class="presets ssel" role="group" aria-label="광원">
+          <span class="mono small dim">방전관</span>
+          <button class="chip" data-s="H" aria-pressed="true">수소</button><button class="chip" data-s="He" aria-pressed="false">헬륨</button><button class="chip" data-s="Hg" aria-pressed="false">수은</button>
+          <span class="grp"></span>
+          <span class="mono small dim">불꽃</span>
+          <button class="chip" data-s="Na" aria-pressed="false">NaCl</button><button class="chip" data-s="Li" aria-pressed="false">LiCl</button><button class="chip" data-s="Sr" aria-pressed="false">SrCl₂</button><button class="chip" data-s="Cu" aria-pressed="false">CuCl₂</button><button class="chip" data-s="X" aria-pressed="false">미지 시료</button>
+        </div>
+        <div><label class="mono">십자선 눈금 읽음 = <output class="c-out">500.0</output> nm</label>
+          <input class="cur" type="range" min="400" max="700" step="0.5" value="500" aria-label="십자선 위치"></div>
+        <div class="toggles"><label><input type="checkbox" class="calib">눈금판을 수은 546.1 nm 선에 맞춰 보정함</label></div>
+        <div class="lab-btns"><button class="chip go rec" type="button">십자선 위치 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="수소 선의 1/λ와 1/n² 그래프"></canvas>
+        <dl class="nums"><div><dt>리드베리 상수 (기울기)</dt><dd class="n-R">—</dd></div><div><dt>n = 2 준위 에너지</dt><dd class="n-E2">—</dd></div><div><dt>수소 이온화 에너지</dt><dd class="n-I">—</dd></div></dl>
+        <p class="fig-note">손 분광기 눈금은 10 nm 간격이고 1 nm까지 어림해 읽습니다. 보정하지 않은 눈금판은 몇 nm 밀려 있습니다. 원자선의 파장은 NIST 자료의 대표값이고, 스트론튬·구리 불꽃의 넓은 띠는 원자가 아니라 SrOH, CuCl 같은 분자가 내는 빛을 모식으로 그린 것입니다. n은 수소 선을 기록할 때 가장 가까운 발머 선의 값으로 붙입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>원소마다 불꽃색이 다른 까닭은 무엇일까요? 분광기로 본 몇 개의 밝은 선에서 원자 속 전자의 에너지가 띄엄띄엄한 값만 가진다는 증거를 찾을 수 있을까요?</li>
+      <li><span class="tag">복원</span>빛의 파장과 광자 에너지는 <span class="formula">E = hc/λ</span>로 이어집니다(hc = 1239.8 eV·nm). 전자가 높은 에너지 준위에서 낮은 준위로 옮겨 갈 때 두 준위의 차이만큼의 에너지를 광자 하나로 내보냅니다. 준위가 연속이면 스펙트럼도 연속이어야 합니다.</li>
+      <li><span class="tag">설계</span>백금선이나 니크롬선을 진한 염산으로 씻어 불꽃색이 없어질 때까지 달군 뒤, 시료 수용액을 묻혀 겉불꽃에 넣습니다. 방전관은 전원 장치에 끼워 빛을 냅니다. 먼저 파장을 아는 수은 선(435.8, 546.1 nm)으로 분광기 눈금을 보정하고, 같은 거리와 각도에서 각 광원의 선 위치를 읽습니다.</li>
+      <li><span class="tag">분석</span>각 선의 에너지 E = 1239.8/λ (eV)를 구합니다. 수소의 가시광선 선들은 n = 3, 4, 5, 6에서 n = 2로 떨어지는 발머 계열입니다. <span class="formula">1/λ = R<sub>H</sub>(1/2² − 1/n²)</span>이므로 1/λ를 1/n²에 대해 그리면 기울기가 −R<sub>H</sub>, 절편이 R<sub>H</sub>/4인 직선이 됩니다. 기울기로 R<sub>H</sub>와 이온화 에너지(hcR<sub>H</sub> ≈ 13.6 eV)를, 절편으로 n = 2 준위의 에너지(−3.40 eV)를 구합니다.</li>
+      <li><span class="tag">측정</span>먼저 보정 없이 수은 초록 선을 읽어 눈금이 얼마나 밀렸는지 확인하고, 보정한 뒤 수소의 네 선을 모두 기록하세요. 그래프의 기울기에서 R<sub>H</sub>를 구하고 문헌값 1.097×10⁷ m⁻¹(10.97 μm⁻¹)과 비교하세요. 그다음 미지 시료의 선을 읽어 어떤 원소인지 판정하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>눈금판이 밀려 있으면 모든 파장이 같은 방향으로 어긋나는 계통 오차가 생기고, 1/n² 그래프의 절편이 틀어집니다. 선이 흐리거나 굵으면 위치를 읽는 우연 오차가 커집니다. 나트륨은 아주 적은 양으로도 노란 선이 강하게 나오므로, 다른 시료에 섞여 있으면 노란빛이 다른 색을 가립니다. 방전관 전원은 수천 볼트이므로 켜진 상태에서 관을 만지거나 바꾸지 않습니다. 수은 방전관은 자외선도 내므로 오래 똑바로 보지 않습니다. 염산은 보안경을 쓰고 다루고, 버너 근처에 머리카락과 종이를 두지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 원자의 에너지 준위가 E₁ = −10.0 eV, E₂ = −7.5 eV, E₃ = −6.0 eV 세 개뿐이라고 합시다. 이 원자의 방출 스펙트럼에서 볼 수 있는 선은 모두 몇 개이고, 가장 긴 파장은 얼마일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2개, 약 496 nm<span class="why"><b>3 → 1 전이를 빠뜨렸습니다.</b> 전자는 한 칸씩만 내려가지 않고, 3에서 1로 바로 떨어질 수도 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>3개, 약 827 nm<span class="why"><b>맞습니다.</b> 3→2(1.5 eV), 2→1(2.5 eV), 3→1(4.0 eV) 세 선이 나옵니다. 에너지 차가 가장 작은 3→2가 가장 긴 파장이고, 1239.8/1.5 ≈ 827 nm입니다(적외선).</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3개, 약 310 nm<span class="why"><b>가장 짧은 파장입니다.</b> 4.0 eV인 3→1 전이는 1239.8/4.0 ≈ 310 nm로 세 선 가운데 파장이 가장 짧습니다. 에너지가 클수록 파장은 짧습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

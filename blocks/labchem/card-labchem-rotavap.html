@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/rotavap.js"
+  ]
+}
+-->
+<style>
+#card-labchem-rotavap .rv-msg { font-size: 13px; line-height: 1.5; color: var(--ink-2); min-height: 1.5em; margin: 4px 0 0; }
+#card-labchem-rotavap .rv-msg b { color: var(--warn); font-weight: 600; }
+</style>
+<article class="card" id="card-labchem-rotavap">
+  <header class="card-head">
+    <span class="no"></span><h2>40 °C 물중탕으로 물을 끓여 날려 보낼 수 있을까?</h2><span class="kind">실험 · 회전 증발 농축기 · 압력과 끓는점 · 증발 엔탈피</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="회전 증발 농축기: 물중탕, 회전 플라스크, 냉각기, 받는 플라스크, 압력계"></canvas>
+      <div class="ctl">
+        <div class="presets sol" role="group" aria-label="용매">
+          <span class="mono small dim">용매</span>
+          <button class="chip" data-s="acetone" aria-pressed="false">아세톤</button><button class="chip" data-s="hexane" aria-pressed="false">헥세인</button><button class="chip" data-s="ethanol" aria-pressed="true">에탄올</button><button class="chip" data-s="water" aria-pressed="false">물</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">중탕 온도 = <output class="tb-out">40</output> °C</label>
+            <input class="tb" type="range" min="20" max="80" step="1" value="40" aria-label="물중탕 온도"></div>
+          <div><label class="mono">압력 = <output class="p-out">1013</output> mbar</label>
+            <input class="p" type="range" min="0" max="100" step="0.5" value="100" aria-label="장치 속 압력 (로그 눈금)"></div>
+          <div><label class="mono">회전 속도 = <output class="r-out">120</output> rpm</label>
+            <input class="r" type="range" min="0" max="250" step="10" value="120" aria-label="플라스크 회전 속도"></div>
+          <div><label class="mono">냉각수 온도 = <output class="tc-out">5</output> °C</label>
+            <input class="tc" type="range" min="0" max="25" step="1" value="5" aria-label="냉각수 온도"></div>
+        </div>
+        <p class="rv-msg"></p>
+        <div class="lab-btns"><button class="chip d20" type="button">Δ20 규칙으로 압력 맞추기</button><button class="chip go meas" type="button">2분 돌리고 증기 온도·회수량 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets gsel" role="group" aria-label="그래프">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" data-g="cc" aria-pressed="true">ln P – 1/T</button><button class="chip" data-g="rate" aria-pressed="false">회수량 – 온도 차</button>
+        </div>
+        <canvas class="cv-plot" aria-label="기록한 자료의 그래프"></canvas>
+        <p class="fig-note">압력 슬라이더는 로그 눈금(10–1013 mbar)입니다. 증기 온도는 냉각기로 가는 증기관의 온도계(분해능 0.1 °C, ±0.4 °C)로, 회수량은 받는 플라스크 눈금(1 mL)으로 읽습니다. 끓는점은 앙투안 식(문헌 상수)으로 계산했고, 증발 속도는 가열 면적과 온도 차에 비례하게 둔 대략 모형입니다. 처음 용액은 100 mL입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>추출한 용액에서 용매만 없애고 녹아 있던 물질을 얻으려 합니다. 높은 온도로 오래 끓이면 물질이 분해될 수 있습니다. 낮은 온도에서 빠르게, 그리고 안전하게 용매를 날려 보내려면 압력·온도·회전을 어떻게 맞춰야 할까요?</li>
+      <li><span class="tag">복원</span>액체는 증기 압력이 바깥 압력과 같아지는 온도에서 끓습니다. 그래서 압력을 낮추면 끓는점이 내려갑니다. 증기 압력과 온도 사이에는 클라우지우스–클라페이롱 관계 <em>ln P = −ΔH<sub>증발</sub>/(RT) + 상수</em>가 근사적으로 성립합니다. 분자 사이의 힘이 클수록 ΔH<sub>증발</sub>이 크고 끓는점이 높습니다.</li>
+      <li><span class="tag">설계</span>회전 증발 농축기는 플라스크를 돌려 안쪽 벽에 얇은 액막을 만들고(증발 면적 증가, 국부 과열 방지), 진공 펌프로 압력을 낮추며, 냉각기에서 증기를 다시 액체로 모읍니다. 조작 변인은 압력(또는 중탕 온도), 측정값은 끓는 증기의 온도와 2분 동안 모인 용매의 양입니다. 실험실에서 흔히 쓰는 <em>Δ20 규칙</em>은 "증기 온도를 중탕보다 20 °C 낮게, 냉각수는 증기보다 20 °C 이상 낮게" 맞추라는 경험 규칙입니다.</li>
+      <li><span class="tag">분석</span>같은 용매로 압력을 여러 번 바꿔 끓는 증기 온도를 재면, ln P를 1/T에 대해 그린 점들이 직선에 놓이고 기울기 × (−R)이 증발 엔탈피입니다(에탄올 약 42 kJ/mol). 회수량은 중탕과 증기의 온도 차가 클수록, 회전이 빠를수록 늘어납니다. 그러나 온도 차가 너무 크면 액체가 갑자기 끓어올라(범핑) 시료가 트랩으로 튀고, 냉각수와 증기의 온도 차가 작으면 증기가 응축되지 않고 펌프로 빠져나갑니다.</li>
+      <li><span class="tag">측정</span>에탄올로 중탕을 60 °C에 두고 압력을 다섯 가지 이상 바꿔 재어 ln P – 1/T 직선에서 ΔH를 구하세요. 다른 용매로도 되풀이해 기울기를 비교하세요. 그다음 "Δ20 규칙"을 눌러 맞춘 조건과, 압력을 그보다 훨씬 낮춘 조건, 냉각수를 25 °C로 올린 조건의 회수량을 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>흄 후드 같은 환기 시설이 없으면 휘발성이 강하고 유독한 용매는 쓰지 않습니다. 플라스크는 절반 이하로 채우고, 금이 간 플라스크는 감압 때 안쪽으로 깨질 수 있어 쓰지 않으며, 클립으로 고정합니다. 압력은 천천히 낮추고, 끝낼 때는 회전을 멈추고 플라스크를 중탕에서 들어 올린 뒤 압력을 대기압으로 되돌리고 나서 떼어 냅니다. 증기 온도계가 증기관에 제대로 닿지 않으면 끓는점을 낮게 읽는 계통 오차가 생깁니다. 앙투안 상수는 끓는점 근처에서만 정확합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">물을 40 °C 중탕으로 날려 보내려고 압력을 23 mbar(물의 끓는점 약 20 °C)로 맞췄는데, 냉각수가 18 °C입니다. 받는 플라스크에 물이 거의 모이지 않는 까닭은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>23 mbar에서는 물이 끓지 않는다<span class="why"><b>끓습니다.</b> 23 mbar에서 물의 끓는점은 약 20 °C라 40 °C 중탕에서 충분히 끓습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>증기(약 20 °C)와 냉각수(18 °C)의 온도 차가 작아 응축이 거의 안 된다<span class="why"><b>맞습니다.</b> 증기는 냉각기에서 열을 빼앗겨야 액체가 됩니다. 온도 차가 2 °C뿐이면 대부분 응축되지 못하고 펌프로 빠져나갑니다. 냉각수를 0 °C 근처로 낮춰야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>회전 속도를 낮춰야 물이 모인다<span class="why"><b>회전은 증발을 돕습니다.</b> 회전을 늦추면 증발이 느려질 뿐, 응축 문제는 그대로입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

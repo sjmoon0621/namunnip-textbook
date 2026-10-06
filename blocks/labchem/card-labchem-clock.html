@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/clock.js"
+  ]
+}
+-->
+<style>
+#card-labchem-clock .ctl-row.three { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 640px) { #card-labchem-clock .ctl-row.three { grid-template-columns: 1fr; } }
+</style>
+<article class="card" id="card-labchem-clock">
+  <header class="card-head">
+    <span class="no"></span><h2>용액이 갑자기 남색으로 바뀌는 시간으로 반응 속도식을 구할 수 있을까?</h2><span class="kind">실험 · 아이오딘 시계 반응 · 초기 속도법 · 반응 차수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="시계 반응 비커, 초시계, 티오황산 이온이 남은 양"></canvas>
+      <div class="ctl">
+        <div class="ctl-row three">
+          <div><label class="mono">0.200 M KI <output class="vi-out">10.0</output> mL</label>
+            <input class="vi" type="range" min="5" max="20" step="2.5" value="10" aria-label="아이오딘화 칼륨 용액 부피"></div>
+          <div><label class="mono">0.100 M S₂O₈²⁻ <output class="vp-out">10.0</output> mL</label>
+            <input class="vp" type="range" min="5" max="20" step="2.5" value="10" aria-label="과황산 암모늄 용액 부피"></div>
+          <div><label class="mono">온도 <output class="t-out">25</output> °C</label>
+            <input class="t" type="range" min="15" max="35" step="5" value="25" aria-label="온도"></div>
+        </div>
+        <div class="lab-btns"><button class="chip go mix" type="button">섞고 초시계 누르기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets view" role="group" aria-label="그래프 가로축">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" data-p="i" aria-pressed="true">log 속도–log[I⁻]</button><button class="chip" data-p="p" aria-pressed="false">log 속도–log[S₂O₈²⁻]</button>
+        </div>
+        <canvas class="cv-plot" aria-label="로그–로그 그래프와 기울기"></canvas>
+        <dl class="nums"><div><dt>I⁻에 대한 차수 m</dt><dd class="n-m">—</dd></div><div><dt>S₂O₈²⁻에 대한 차수 n</dt><dd class="n-n">—</dd></div><div><dt>속도 상수 k (25 °C)</dt><dd class="n-k">—</dd></div></dl>
+        <p class="fig-note">전체 부피는 물을 더해 50.0 mL로 맞추고, 0.0100 M Na₂S₂O₃ 5.0 mL와 녹말 용액을 늘 같이 넣습니다(이온 세기는 KCl·(NH₄)₂SO₄로 맞춤). 그래서 남색이 나타날 때까지 반응한 S₂O₈²⁻는 언제나 5.0×10⁻⁴ M입니다. 초시계는 0.1 s까지 읽고, 섞는 순간과 색이 바뀌는 순간을 판단하는 데 ±0.3 s쯤 오차가 납니다. 속도 상수는 모식값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>S₂O₈²⁻ + 2I⁻ → 2SO₄²⁻ + I₂ 반응의 속도는 두 반응물의 농도에 각각 어떻게 의존할까요? 반응식의 계수(1과 2)를 보고 차수를 짐작해도 될까요?</li>
+      <li><span class="tag">복원</span>반응 속도식은 v = k[S₂O₈²⁻]<sup>n</sup>[I⁻]<sup>m</sup>이고 차수 m, n은 실험으로만 정할 수 있습니다. 반응 초기에는 농도가 거의 처음 값 그대로이므로, 처음 농도와 그때의 속도(<em>초기 속도</em>)를 짝지으면 차수를 구할 수 있습니다.</li>
+      <li><span class="tag">설계</span>생긴 I₂는 함께 넣은 S₂O₃²⁻와 곧바로 반응해 다시 I⁻가 됩니다(I₂ + 2S₂O₃²⁻ → 2I⁻ + S₄O₆²⁻). S₂O₃²⁻가 다 떨어지는 순간 I₂가 녹말과 만나 남색이 됩니다. 그때까지 반응한 S₂O₈²⁻의 양은 늘 같으므로 초기 속도 ≈ 5.0×10⁻⁴ M ÷ t입니다. 한 반응물의 부피만 바꾸고 다른 반응물·전체 부피·온도는 고정합니다.</li>
+      <li><span class="tag">분석</span>v = k[A]<sup>m</sup>…의 양변에 로그를 취하면 log v = m log[A] + (상수)입니다. 다른 농도를 고정한 실험들로 log v–log[A] 그래프를 그리면 <em>기울기가 곧 차수</em>입니다. 차수를 정한 뒤 v ÷ ([S₂O₈²⁻]<sup>n</sup>[I⁻]<sup>m</sup>)로 k를 구하고 평균 냅니다. 단위는 차수에 따라 달라집니다.</li>
+      <li><span class="tag">측정</span>S₂O₈²⁻를 10.0 mL로 고정하고 KI만 5, 10, 15, 20 mL로 바꿔 재세요. 그다음 KI를 10.0 mL로 고정하고 S₂O₈²⁻만 바꿔 재세요. 같은 조건을 두 번씩 재면 반복성도 확인할 수 있습니다. 온도를 35 °C로 올리면 t는 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>t가 짧을수록 반응 시간 판단 오차(±0.3 s)의 비율이 커지므로 10 s보다 짧은 조건은 피합니다. 섞은 용액의 온도가 실내와 다르면 속도가 달라지니 모든 용액을 같은 항온조에 미리 둡니다. 과황산 암모늄은 강한 산화제로 피부·호흡기를 자극하고, 아이오딘은 옷과 피부를 물들입니다. 보안경과 장갑을 끼고 폐액은 정해진 통에 모읍니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">KI와 S₂O₈²⁻의 부피를 <b>둘 다 2배</b>로 하고(물을 줄여 전체 50.0 mL 유지), 티오황산 이온의 양은 그대로 두었습니다. 남색이 나타나는 시간은 대략 어떻게 될까요? (v = k[S₂O₈²⁻][I⁻])</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/2로 짧아진다<span class="why"><b>한 반응물만 2배일 때의 결과입니다.</b> 두 반응물에 대해 각각 1차이므로 둘 다 2배면 속도는 4배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1/4로 짧아진다<span class="why"><b>맞습니다.</b> 속도가 2 × 2 = 4배가 되고, 남색까지 반응해야 하는 양(5.0×10⁻⁴ M)은 같으므로 시간은 1/4입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/8로 짧아진다<span class="why"><b>반응식의 계수를 차수로 쓴 계산입니다.</b> I⁻의 계수가 2라고 2차인 것은 아닙니다. 차수는 실험으로 정합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

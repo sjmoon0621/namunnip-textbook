@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labchem/fescn.js"
+  ]
+}
+-->
+<style>
+#card-labchem-fescn .opt-row { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; margin: 4px 0; }
+</style>
+<article class="card" id="card-labchem-fescn">
+  <header class="card-head">
+    <span class="no"></span><h2>섞는 양을 바꿔도 변하지 않는 값이 정말 있을까?</h2><span class="kind">실험 · 분광 광도법 · Fe³⁺ + SCN⁻ ⇌ FeSCN²⁺ · 평형 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="분광 광도계의 광원, 447 nm 필터, 큐벳, 검출기와 흡광도 표시"></canvas>
+      <div class="ctl">
+        <div class="presets mode" role="group" aria-label="용액 종류">
+          <span class="mono small dim">용액</span>
+          <button class="chip" data-m="cal" aria-pressed="true">검량선용 (Fe³⁺ 0.200 M 과량)</button><button class="chip" data-m="mix" aria-pressed="false">평형 혼합물 (Fe³⁺ 1.00 mM)</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">SCN⁻ 용액 부피 V = <output class="v-out">1.0</output> mL</label>
+            <input class="v" type="range" min="1" max="5" step="0.5" value="1" aria-label="티오사이안산 이온 용액 부피"></div>
+          <div><label class="mono">항온조 온도 = <output class="t-out">25</output> °C</label>
+            <input class="t" type="range" min="15" max="45" step="5" value="25" aria-label="온도"></div>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">만들어 흡광도 측정</button><button class="chip addfe" type="button">혼합물에 Fe³⁺ 한 방울 더 넣고 측정</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets view" role="group" aria-label="그래프 종류">
+          <span class="mono small dim">그래프</span>
+          <button class="chip" data-p="cal" aria-pressed="true">검량선 A–[FeSCN²⁺]</button><button class="chip" data-p="k" aria-pressed="false">혼합물마다 구한 K</button>
+        </div>
+        <canvas class="cv-plot" aria-label="검량선 또는 평형 상수 그래프"></canvas>
+        <dl class="nums"><div><dt>검량선 기울기 εb</dt><dd class="n-s">—</dd></div><div><dt>마지막 혼합물 [FeSCN²⁺]</dt><dd class="n-x">—</dd></div><div><dt>K 평균 (25 °C)</dt><dd class="n-k">—</dd></div></dl>
+        <p class="fig-note">모든 용액은 0.5 M HNO₃로 10.00 mL를 맞춥니다. 검량선용: 0.400 M Fe³⁺ 5.00 mL + 2.00×10⁻⁴ M SCN⁻ V mL. 혼합물: 2.00×10⁻³ M Fe³⁺ 5.00 mL + 2.00×10⁻³ M SCN⁻ V mL. 파장 447 nm, 큐벳 1.00 cm, 흡광도 분해능 0.001. 참 K는 화면에 나오지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>Fe³⁺와 SCN⁻를 여러 비율로 섞으면 붉은 FeSCN²⁺의 양은 매번 다릅니다. 그런데 평형 농도로 계산한 K = [FeSCN²⁺]/([Fe³⁺][SCN⁻])는 정말 일정할까요? 온도를 바꾸면 어떻게 될까요?</li>
+      <li><span class="tag">복원</span>색 있는 용액이 빛을 흡수하는 정도(흡광도 A)는 농도에 비례합니다(<em>비어–람베르트 법칙</em> A = εbc). 그래서 A를 재면 눈에 보이지 않는 이온의 농도를 숫자로 알 수 있습니다. FeSCN²⁺는 파란빛(447 nm 부근)을 가장 잘 흡수해 붉게 보입니다.</li>
+      <li><span class="tag">설계</span>먼저 Fe³⁺를 크게 과량(0.200 M) 넣어 SCN⁻가 거의 모두 FeSCN²⁺가 되게 한 용액들로 <em>검량선</em>을 만듭니다. 그다음 Fe³⁺ 1.00 mM에 SCN⁻의 양만 바꾼 혼합물들의 A를 잽니다. 질산을 넣는 까닭은 Fe³⁺가 물과 반응해 갈색 수산화물이 되는 것을 막기 위해서입니다. 온도는 항온조로 통제합니다.</li>
+      <li><span class="tag">분석</span>검량선 기울기로 [FeSCN²⁺]<sub>평형</sub> = A/기울기를 구합니다. ICE 표로 [Fe³⁺]<sub>평형</sub> = [Fe³⁺]₀ − x, [SCN⁻]<sub>평형</sub> = [SCN⁻]₀ − x를 계산하고 K를 냅니다. 처음 농도가 달라도 K가 거의 같다면, 평형은 질량 작용의 법칙이라는 수학적 규칙을 따른다는 증거입니다.</li>
+      <li><span class="tag">측정</span>검량선용 용액을 다섯 개 이상 재고, 25 °C에서 혼합물 다섯 개를 재세요. 그다음 혼합물에 Fe³⁺ 한 방울을 더 넣어 보세요. 색은 진해지는데(정반응 쪽 이동) K는 그대로인가요? 마지막으로 온도를 바꿔 같은 혼합물을 재고, K가 어떻게 변하는지로 정반응이 발열인지 흡열인지 판단하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>검량선은 "SCN⁻가 모두 FeSCN²⁺가 되었다"고 가정하지만 실제로는 96%쯤이라, 기울기가 조금 작게 나오고 K도 치우칩니다(계통 오차). Fe³⁺를 더 진하게 하면 줄어듭니다. 큐벳의 투명한 면을 만지지 말고, 흡광도가 0.1~1 사이일 때 가장 정확합니다. 질산과 Fe(NO₃)₃은 피부와 눈을 상하게 하므로 보안경과 장갑을 끼고, 폐액은 중금속 폐액통에 모읍니다. 압력 변화는 기체 평형으로 따로 관찰합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">평형에 있는 혼합물에 Na₂HPO₄을 넣었더니 Fe³⁺가 무색 착이온으로 묶여 용액의 붉은색이 옅어졌습니다. 같은 온도에서 다시 평형이 되었을 때 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>색이 옅어졌으니 K가 작아졌다<span class="why"><b>K는 온도가 같으면 변하지 않습니다.</b> [Fe³⁺]가 줄어 Q가 K보다 커졌고, 역반응 쪽으로 이동해 [FeSCN²⁺]가 줄었을 뿐입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>역반응 쪽으로 이동했고 K는 그대로다<span class="why"><b>맞습니다.</b> 생성물이 줄고 SCN⁻가 늘어 [FeSCN²⁺]/([Fe³⁺][SCN⁻])가 다시 처음과 같은 K가 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>정반응 쪽으로 이동해 다시 처음 색이 된다<span class="why"><b>이동 방향이 반대입니다.</b> 줄어든 것은 반응물 Fe³⁺이므로, Fe³⁺를 다시 내놓는 역반응 쪽으로 이동합니다. 르샤틀리에 원리는 변화를 줄이는 방향을 알려 줄 뿐, 처음 색으로 되돌려 주지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
