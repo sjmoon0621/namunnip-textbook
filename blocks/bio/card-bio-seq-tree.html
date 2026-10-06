@@ -1,0 +1,75 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/bio/seq-tree.js"
+  ]
+}
+-->
+<style>
+#card-bio-seq-tree canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
+#card-bio-seq-tree .aln { margin-top: 8px; font-family: var(--f-mono); font-size: 10.5px; line-height: 1.6; overflow-x: auto; }
+#card-bio-seq-tree .aln .row { display: flex; align-items: center; gap: 6px; white-space: nowrap; cursor: pointer; }
+#card-bio-seq-tree .aln .row:hover { background: var(--paper-2); }
+#card-bio-seq-tree .aln .nm { flex: none; width: 8.2em; font-family: var(--f-sans); font-size: 11px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; }
+#card-bio-seq-tree .aln .row.ref .nm { color: var(--forest); font-weight: 700; }
+#card-bio-seq-tree .aln .sq i { font-style: normal; color: var(--ink-3); }
+#card-bio-seq-tree .aln .row.ref .sq i { color: var(--ink); }
+#card-bio-seq-tree .aln .sq i.d { background: #f1d79b; color: var(--ink); font-weight: 600; }
+#card-bio-seq-tree .aln .sq i.x { opacity: .3; background: none; font-weight: 400; }
+#card-bio-seq-tree .aln .dd { flex: none; width: 3em; text-align: right; color: var(--ink-2); }
+#card-bio-seq-tree .mat { margin-top: 8px; overflow-x: auto; }
+#card-bio-seq-tree .mat table { border-collapse: collapse; font-family: var(--f-mono); font-size: 11px; }
+#card-bio-seq-tree .mat th, #card-bio-seq-tree .mat td { padding: 2px 7px; text-align: right; border-bottom: 1px solid var(--rule); font-weight: 400; }
+#card-bio-seq-tree .mat th { color: var(--ink-3); }
+#card-bio-seq-tree .mat td.min { background: var(--forest); color: #fff; font-weight: 600; }
+#card-bio-seq-tree .mat td.tie { background: var(--sprout, #b5d7ac); }
+</style>
+<article class="card" id="card-bio-seq-tree">
+  <header class="card-head">
+    <span class="no"></span><h2>DNA 서열의 차이로 계통수를 그릴 수 있을까?</h2><span class="kind">분자 계통 · 거리 행렬 · UPGMA · 분자 시계</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="거리 행렬에서 가장 가까운 둘을 차례로 묶어 자라는 계통수"></canvas>
+      <div class="ctl">
+        <div class="presets data" role="group" aria-label="자료">
+          <span class="mono small dim">자료</span>
+          <button class="chip" data-d="dna" aria-pressed="true">DNA 염기 48개</button><button class="chip" data-d="pro" aria-pressed="false">단백질 아미노산 32개</button>
+        </div>
+        <div class="presets lens" role="group" aria-label="비교에 쓸 길이">
+          <span class="mono small dim">쓸 길이</span>
+          <button class="chip" data-l="12" aria-pressed="false">앞 12자리</button><button class="chip" data-l="24" aria-pressed="false">앞 24자리</button><button class="chip" data-l="0" aria-pressed="true">전체</button>
+        </div>
+        <div class="aln" role="group" aria-label="정렬한 서열. 줄을 누르면 비교 기준이 바뀝니다"></div>
+        <p class="mono small dim" style="margin:2px 0 0">줄을 누르면 그 생물이 비교 기준이 됩니다. 노란 칸이 기준과 다른 자리입니다.</p>
+        <div class="mat"></div>
+        <div class="lab-btns"><button class="chip go join" type="button">가장 가까운 둘 묶기</button><button class="chip all" type="button">끝까지</button><button class="chip reset" type="button">처음부터</button></div>
+        <dl class="nums">
+          <div><dt>단계</dt><dd class="n-step">—</dd></div>
+          <div><dt>방금 묶은 둘</dt><dd class="n-pair">—</dd></div>
+          <div><dt>만난 위치(평균 차이)</dt><dd class="n-d">—</dd></div>
+        </dl>
+        <p class="verdict small"></p>
+        <p class="fig-note">교육용으로 줄인 가상 서열입니다. DNA는 실제 유전체 비교에서 얻은 차이 비율(사람–침팬지 약 1.2%, 사람–고릴라 약 1.6%, 사람–오랑우탄 약 3%, 사람–붉은털원숭이 약 6~7%)의 순서와 대략적인 비를 본떴고, 단백질은 시토크롬 c를 본떠 차이를 줄였습니다(실제 104개 남짓한 아미노산에서 사람과의 차이는 붉은털원숭이 1개, 개 11개, 닭 13개, 효모 40여 개입니다).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>사람, 침팬지, 고릴라 가운데 누가 누구와 가장 가까울까요? 겉모습은 보는 사람에 따라 판단이 갈립니다. 생김새 대신 DNA 서열의 차이만 세어서 계통수를 그릴 수 있을까요?</li>
+      <li><span class="tag">복원</span>생물은 공통 조상에게서 DNA를 물려받습니다. 두 계통이 갈라진 뒤에는 각 계통에서 돌연변이가 따로 쌓입니다. 그래서 갈라진 지 오래된 두 종일수록 같은 유전자의 서열 차이가 큽니다.</li>
+      <li><span class="tag">설명</span>같은 유전자를 자리가 맞게 나란히 놓고(정렬), 두 종마다 다른 자리의 수를 세면 <em>거리 행렬</em>이 됩니다. <em>UPGMA</em>는 행렬에서 가장 작은 칸의 두 무리를 하나로 묶고, 새 무리와 나머지 사이의 거리를 원래 거리들의 평균으로 바꾼 뒤 이 과정을 되풀이합니다. 묶인 순서가 곧 갈라진 순서의 역순입니다.</li>
+      <li><span class="tag">연결</span>돌연변이가 거의 일정한 속도로 쌓인다면 서열 차이는 갈라진 뒤 흐른 시간에 비례합니다. 이것이 <em>분자 시계</em>입니다. 화석으로 한 분기 시점(예: 사람과 침팬지, 약 600만~700만 년 전)을 정하면 다른 분기 시점도 어림할 수 있습니다. 단백질의 아미노산 서열로도 같은 방법을 씁니다.</li>
+      <li><span class="tag">적용</span>‘가장 가까운 둘 묶기’를 누를 때마다 표의 초록 칸이 나무의 어느 가지가 되는지, 표가 어떻게 한 줄씩 줄어드는지 보세요. 그다음 쓸 길이를 ‘앞 12자리’로 줄여 다시 해 보세요. 사람, 침팬지, 고릴라, 오랑우탄을 구별할 수 있나요? 단백질로 바꾸면 효모는 어디에 붙나요?</li>
+      <li class="warn"><span class="tag">판단</span>이 방법은 모든 계통에서 변이 속도가 같다고 가정합니다. 한 계통만 빨리 변하면 나무가 틀어집니다. 같은 자리에 변이가 두 번 일어나 원래대로 돌아가면 차이로 세지 못해, 먼 관계일수록 거리를 작게 잡습니다. 서열이 짧으면 차이가 0인 동점이 생겨 순서를 정할 수 없습니다. 실제 연구는 수천~수백만 자리와 여러 유전자를 비교하고, 더 정교한 방법도 함께 씁니다. 유전자마다 나무가 조금씩 다를 수도 있습니다. 사람 유전체의 일부 구간은 침팬지보다 고릴라와 더 비슷합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>묶은 뒤의 거리</h3>
+    <p class="q">세 종 A, B, C의 서열 차이가 A–B 4, A–C 10, B–C 12입니다. UPGMA로 A와 B를 먼저 묶었다면, 새 무리 (A, B)와 C 사이의 거리는 얼마로 계산할까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10<span class="why"><b>가장 가까운 값을 고른 답입니다.</b> 그럴듯하지만 UPGMA는 무리 안의 모든 쌍을 똑같이 대표하려고 평균을 씁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞습니다.</b> (10 + 12) ÷ 2 = 11입니다. A와 B는 이제 한 무리이므로 C까지의 거리도 둘의 평균으로 나타냅니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22<span class="why"><b>거리를 더하면 무리가 커질수록 거리가 부풀어 오릅니다.</b> 거리는 한 쌍 사이의 차이 수를 뜻하므로 합이 아니라 평균을 씁니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -17,6 +17,31 @@
     #card-bio-tree-read canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-bio-tree-build canvas { width: 100%; aspect-ratio: 4 / 3; }
     @media (max-width: 640px) { #card-bio-tree-build canvas { aspect-ratio: 5 / 6; } }
+    #card-bio-key canvas { width: 100%; aspect-ratio: 4 / 3; display: block; }
+    #card-bio-key .spec { margin-top: 8px; padding: 8px 10px; background: var(--paper-2); }
+    #card-bio-key .spec ul { margin: 4px 0 0; padding-left: 1.1em; }
+    #card-bio-key .spec li { margin: 2px 0; line-height: 1.5; }
+    #card-bio-key .spec li.hint { color: var(--forest); font-weight: 600; }
+    #card-bio-key .lab-btns .chip:disabled { opacity: .35; cursor: default; }
+    #card-bio-key .qnow { margin: 8px 0 0; font-weight: 600; min-height: 1.5em; }
+    @media (max-width: 640px) { #card-bio-key canvas { aspect-ratio: 1 / 1; } }
+    #card-bio-seq-tree canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
+    #card-bio-seq-tree .aln { margin-top: 8px; font-family: var(--f-mono); font-size: 10.5px; line-height: 1.6; overflow-x: auto; }
+    #card-bio-seq-tree .aln .row { display: flex; align-items: center; gap: 6px; white-space: nowrap; cursor: pointer; }
+    #card-bio-seq-tree .aln .row:hover { background: var(--paper-2); }
+    #card-bio-seq-tree .aln .nm { flex: none; width: 8.2em; font-family: var(--f-sans); font-size: 11px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; }
+    #card-bio-seq-tree .aln .row.ref .nm { color: var(--forest); font-weight: 700; }
+    #card-bio-seq-tree .aln .sq i { font-style: normal; color: var(--ink-3); }
+    #card-bio-seq-tree .aln .row.ref .sq i { color: var(--ink); }
+    #card-bio-seq-tree .aln .sq i.d { background: #f1d79b; color: var(--ink); font-weight: 600; }
+    #card-bio-seq-tree .aln .sq i.x { opacity: .3; background: none; font-weight: 400; }
+    #card-bio-seq-tree .aln .dd { flex: none; width: 3em; text-align: right; color: var(--ink-2); }
+    #card-bio-seq-tree .mat { margin-top: 8px; overflow-x: auto; }
+    #card-bio-seq-tree .mat table { border-collapse: collapse; font-family: var(--f-mono); font-size: 11px; }
+    #card-bio-seq-tree .mat th, #card-bio-seq-tree .mat td { padding: 2px 7px; text-align: right; border-bottom: 1px solid var(--rule); font-weight: 400; }
+    #card-bio-seq-tree .mat th { color: var(--ink-3); }
+    #card-bio-seq-tree .mat td.min { background: var(--forest); color: #fff; font-weight: 600; }
+    #card-bio-seq-tree .mat td.tie { background: var(--sprout, #b5d7ac); }
   </style>
 </head>
 <body data-course="bio" data-sec="3-5">
@@ -44,6 +69,8 @@
       <ol>
         <li><a href="#card-bio-tree-read"><span class="mono">3.5.1</span>계통수는 어떻게 읽을까?</a></li>
         <li><a href="#card-bio-tree-build"><span class="mono">3.5.2</span>형질 표로 계통수를 그릴 수 있을까?</a></li>
+        <li><a href="#card-bio-key"><span class="mono">3.5.3</span>질문 몇 개로 처음 보는 생물의 문(門)을 알아낼 수 있을까?</a></li>
+        <li><a href="#card-bio-seq-tree"><span class="mono">3.5.4</span>DNA 서열의 차이로 계통수를 그릴 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
       <p class="toc-links mono small"><a href="../../graph.html?sec=bio-3-5">이 절을 개념 지도에서 보기</a></p>
@@ -134,6 +161,104 @@
         </div>
       </article>
 
+      <article class="card" id="card-bio-key">
+        <header class="card-head">
+          <span class="no">3.5.3</span><h2>질문 몇 개로 처음 보는 생물의 문(門)을 알아낼 수 있을까?</h2><span class="kind">분류 검색표 · 식물과 동물의 문 · 계통 분류</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="두 갈래 질문을 이어 놓은 분류 검색표와 지금까지 고른 길"></canvas>
+            <div class="ctl">
+              <div class="presets keys" role="group" aria-label="검색표">
+                <span class="mono small dim">검색표</span>
+                <button class="chip" data-k="plant" aria-pressed="true">식물</button><button class="chip" data-k="animal" aria-pressed="false">동물</button>
+              </div>
+              <div class="presets specs" role="group" aria-label="분류할 생물"><span class="mono small dim">생물</span></div>
+              <div class="presets modes" role="group" aria-label="방식">
+                <span class="mono small dim">방식</span>
+                <button class="chip" data-m="hint" aria-pressed="true">힌트 보며 따라가기</button><button class="chip" data-m="self" aria-pressed="false">직접 분류</button>
+              </div>
+              <div class="spec small"><b class="sp-name"></b> <span class="dim">형질 카드</span><ul class="traits"></ul></div>
+              <p class="qnow small"></p>
+              <div class="lab-btns"><button class="chip go yes" type="button">예</button><button class="chip go no" type="button">아니요</button><button class="chip back" type="button">한 단계 되돌리기</button><button class="chip show" type="button">정답 길 보기</button><button class="chip reset" type="button">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>답한 질문</dt><dd class="n-ans">—</dd></div>
+                <div><dt>틀린 답</dt><dd class="n-bad">—</dd></div>
+                <div><dt>도착한 무리</dt><dd class="n-end">—</dd></div>
+              </dl>
+              <p class="verdict small"></p>
+              <p class="fig-note">위쪽 가지가 ‘아니요’, 아래쪽 가지가 ‘예’입니다. 원구의 운명, 배엽 수, 탈피처럼 겉으로 보이지 않는 형질은 발생·생활사를 조사한 결과로 형질 카드에 적어 두었습니다. 분류군 이름은 고등학교 수준의 문(식물은 무리) 단위입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>산길에서 처음 보는 풀을 만나거나 갯바위에서 낯선 동물을 보았습니다. 이름을 몰라도 몇 가지 질문에 ‘예’, ‘아니요’로 답하기만 하면 그 생물이 어느 문에 속하는지 알아낼 수 있을까요?</li>
+            <li><span class="tag">복원</span>생물은 종 → 속 → 과 → 목 → 강 → 문 → 계 → 역으로 묶입니다. 같은 문의 생물은 몸의 기본 설계를 공유합니다. 식물은 관다발, 씨, 씨방으로, 동물은 조직, 배엽, 원구의 운명, 탈피, 체절 같은 형질로 무리를 나눕니다.</li>
+            <li><span class="tag">설명</span><em>분류 검색표</em>는 두 갈래 질문을 차례로 이어 놓은 표입니다. 질문 하나에 답할 때마다 후보가 둘로 갈리고, 마지막에 무리 하나만 남습니다. 좋은 질문은 누가 보아도 답이 같고, 답이 ‘예’와 ‘아니요’로 뚜렷하게 갈립니다. “크다”, “흔하다” 같은 질문은 쓸 수 없습니다.</li>
+            <li><span class="tag">연결</span>식물 검색표의 질문 순서(관다발 → 씨 → 씨방)는 이 형질들이 진화 과정에서 생긴 순서와 같습니다. 그래서 검색표의 모양이 식물 계통수와 닮았습니다. 동물 검색표도 조직 → 3배엽 → 선구·후구 → 탈피로 이어져 동물 계통수의 큰 가지를 따라갑니다.</li>
+            <li><span class="tag">적용</span>식물에서 은행나무를 골라 힌트를 보며 따라가 보세요. 그다음 동물로 바꾸고 ‘직접 분류’에서 거미와 불가사리를 형질 카드만 보고 분류하세요. 거미에서 ‘체절이 있으니 환형동물’이라고 생각해 일부러 ⑤에 ‘아니요’라고 답하면 어디에 도착하나요?</li>
+            <li class="warn"><span class="tag">판단</span>검색표는 이름을 찾는 도구이고, 질문 하나는 형질 하나만 봅니다. 사는 곳이나 몸의 대칭 같은 겉모습 하나로 나누면 <em>인위 분류</em>가 되어 관계를 틀리게 묶습니다. 불가사리는 어른 몸이 방사 대칭이지만 해파리보다 사람에 더 가까운 후구동물입니다. 기생 생활로 형질이 사라진 생물처럼 예외도 있습니다. 그래서 <em>계통 분류</em>는 여러 형질과 DNA를 함께 비교해 공통 조상에서 갈라진 순서를 따릅니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>질문의 순서</h3>
+          <p class="q">처음 보는 동물이 진정한 조직과 3배엽을 가진 선구동물입니다. 몸이 체절로 나뉘어 있고, 자라면서 탈피하며, 마디가 있는 다리가 있습니다. 위의 동물 검색표로 찾으면 어느 무리일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>환형동물<span class="why"><b>체절만 보고 고른 답입니다.</b> 검색표는 탈피 여부를 체절보다 먼저 묻습니다. 탈피하는 동물은 ⑦번 질문까지 가지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>절지동물<span class="why"><b>맞습니다.</b> ⑤ 탈피 ‘예’, ⑥ 외골격과 마디 있는 다리 ‘예’로 절지동물에 도착합니다. 절지동물도 체절이 있지만, 그 질문은 다른 가지에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선형동물<span class="why"><b>탈피까지는 맞았습니다.</b> 그러나 선형동물은 외골격과 마디 있는 다리가 없어 ⑥에서 ‘아니요’로 갈립니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-bio-seq-tree">
+        <header class="card-head">
+          <span class="no">3.5.4</span><h2>DNA 서열의 차이로 계통수를 그릴 수 있을까?</h2><span class="kind">분자 계통 · 거리 행렬 · UPGMA · 분자 시계</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="거리 행렬에서 가장 가까운 둘을 차례로 묶어 자라는 계통수"></canvas>
+            <div class="ctl">
+              <div class="presets data" role="group" aria-label="자료">
+                <span class="mono small dim">자료</span>
+                <button class="chip" data-d="dna" aria-pressed="true">DNA 염기 48개</button><button class="chip" data-d="pro" aria-pressed="false">단백질 아미노산 32개</button>
+              </div>
+              <div class="presets lens" role="group" aria-label="비교에 쓸 길이">
+                <span class="mono small dim">쓸 길이</span>
+                <button class="chip" data-l="12" aria-pressed="false">앞 12자리</button><button class="chip" data-l="24" aria-pressed="false">앞 24자리</button><button class="chip" data-l="0" aria-pressed="true">전체</button>
+              </div>
+              <div class="aln" role="group" aria-label="정렬한 서열. 줄을 누르면 비교 기준이 바뀝니다"></div>
+              <p class="mono small dim" style="margin:2px 0 0">줄을 누르면 그 생물이 비교 기준이 됩니다. 노란 칸이 기준과 다른 자리입니다.</p>
+              <div class="mat"></div>
+              <div class="lab-btns"><button class="chip go join" type="button">가장 가까운 둘 묶기</button><button class="chip all" type="button">끝까지</button><button class="chip reset" type="button">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>단계</dt><dd class="n-step">—</dd></div>
+                <div><dt>방금 묶은 둘</dt><dd class="n-pair">—</dd></div>
+                <div><dt>만난 위치(평균 차이)</dt><dd class="n-d">—</dd></div>
+              </dl>
+              <p class="verdict small"></p>
+              <p class="fig-note">교육용으로 줄인 가상 서열입니다. DNA는 실제 유전체 비교에서 얻은 차이 비율(사람–침팬지 약 1.2%, 사람–고릴라 약 1.6%, 사람–오랑우탄 약 3%, 사람–붉은털원숭이 약 6~7%)의 순서와 대략적인 비를 본떴고, 단백질은 시토크롬 c를 본떠 차이를 줄였습니다(실제 104개 남짓한 아미노산에서 사람과의 차이는 붉은털원숭이 1개, 개 11개, 닭 13개, 효모 40여 개입니다).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>사람, 침팬지, 고릴라 가운데 누가 누구와 가장 가까울까요? 겉모습은 보는 사람에 따라 판단이 갈립니다. 생김새 대신 DNA 서열의 차이만 세어서 계통수를 그릴 수 있을까요?</li>
+            <li><span class="tag">복원</span>생물은 공통 조상에게서 DNA를 물려받습니다. 두 계통이 갈라진 뒤에는 각 계통에서 돌연변이가 따로 쌓입니다. 그래서 갈라진 지 오래된 두 종일수록 같은 유전자의 서열 차이가 큽니다.</li>
+            <li><span class="tag">설명</span>같은 유전자를 자리가 맞게 나란히 놓고(정렬), 두 종마다 다른 자리의 수를 세면 <em>거리 행렬</em>이 됩니다. <em>UPGMA</em>는 행렬에서 가장 작은 칸의 두 무리를 하나로 묶고, 새 무리와 나머지 사이의 거리를 원래 거리들의 평균으로 바꾼 뒤 이 과정을 되풀이합니다. 묶인 순서가 곧 갈라진 순서의 역순입니다.</li>
+            <li><span class="tag">연결</span>돌연변이가 거의 일정한 속도로 쌓인다면 서열 차이는 갈라진 뒤 흐른 시간에 비례합니다. 이것이 <em>분자 시계</em>입니다. 화석으로 한 분기 시점(예: 사람과 침팬지, 약 600만~700만 년 전)을 정하면 다른 분기 시점도 어림할 수 있습니다. 단백질의 아미노산 서열로도 같은 방법을 씁니다.</li>
+            <li><span class="tag">적용</span>‘가장 가까운 둘 묶기’를 누를 때마다 표의 초록 칸이 나무의 어느 가지가 되는지, 표가 어떻게 한 줄씩 줄어드는지 보세요. 그다음 쓸 길이를 ‘앞 12자리’로 줄여 다시 해 보세요. 사람, 침팬지, 고릴라, 오랑우탄을 구별할 수 있나요? 단백질로 바꾸면 효모는 어디에 붙나요?</li>
+            <li class="warn"><span class="tag">판단</span>이 방법은 모든 계통에서 변이 속도가 같다고 가정합니다. 한 계통만 빨리 변하면 나무가 틀어집니다. 같은 자리에 변이가 두 번 일어나 원래대로 돌아가면 차이로 세지 못해, 먼 관계일수록 거리를 작게 잡습니다. 서열이 짧으면 차이가 0인 동점이 생겨 순서를 정할 수 없습니다. 실제 연구는 수천~수백만 자리와 여러 유전자를 비교하고, 더 정교한 방법도 함께 씁니다. 유전자마다 나무가 조금씩 다를 수도 있습니다. 사람 유전체의 일부 구간은 침팬지보다 고릴라와 더 비슷합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>묶은 뒤의 거리</h3>
+          <p class="q">세 종 A, B, C의 서열 차이가 A–B 4, A–C 10, B–C 12입니다. UPGMA로 A와 B를 먼저 묶었다면, 새 무리 (A, B)와 C 사이의 거리는 얼마로 계산할까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10<span class="why"><b>가장 가까운 값을 고른 답입니다.</b> 그럴듯하지만 UPGMA는 무리 안의 모든 쌍을 똑같이 대표하려고 평균을 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞습니다.</b> (10 + 12) ÷ 2 = 11입니다. A와 B는 이제 한 무리이므로 C까지의 거리도 둘의 평균으로 나타냅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22<span class="why"><b>거리를 더하면 무리가 커질수록 거리가 부풀어 오릅니다.</b> 거리는 한 쌍 사이의 차이 수를 뜻하므로 합이 아니라 평균을 씁니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
@@ -145,5 +270,7 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/cards/bio/c-tree-read.js"></script>
 <script src="../../js/cards/bio/c-tree-build.js"></script>
+<script src="../../js/cards/bio/key.js"></script>
+<script src="../../js/cards/bio/seq-tree.js"></script>
 </body>
 </html>

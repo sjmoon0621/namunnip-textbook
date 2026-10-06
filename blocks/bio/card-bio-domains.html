@@ -1,0 +1,79 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/bio/domains.js"
+  ]
+}
+-->
+<style>
+#card-bio-domains .feat { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: center; margin: 8px 0; }
+#card-bio-domains .feat .chip { justify-self: start; }
+#card-bio-domains .feat .ans { font-size: 13px; color: var(--ink-3); }
+#card-bio-domains .feat .ans.on { color: var(--ink); }
+#card-bio-domains .orgs .chip.done { border-color: var(--forest); color: var(--forest); }
+#card-bio-domains .orgs .chip.done[aria-pressed="true"] { background: var(--forest); color: #fff; }
+#card-bio-domains .sum { margin-top: 10px; overflow-x: auto; }
+#card-bio-domains .sum table { width: 100%; border-collapse: collapse; font-size: 12px; }
+#card-bio-domains .sum th, #card-bio-domains .sum td { border-top: 1px solid var(--rule); padding: 4px 5px; text-align: left; vertical-align: top; }
+#card-bio-domains .sum th { font-family: var(--f-mono); font-weight: 400; color: var(--ink-3); font-size: 11px; }
+#card-bio-domains .sum td.got { color: var(--forest); }
+</style>
+<article class="card" id="card-bio-domains">
+  <header class="card-head">
+    <span class="no"></span><h2>처음 보는 생물을 3역 6계 중 어디에 넣을까?</h2><span class="kind">3역 6계 · 분류 기준 · 질문으로 좁히기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="공통 조상에서 세균역, 고세균역, 진핵생물역이 갈라지고 진핵생물역이 원생생물계, 식물계, 균계, 동물계로 나뉘는 계통 그림과 지금까지 분류한 생물"></canvas>
+      <div class="ctl">
+        <div class="presets orgs" role="group" aria-label="분류할 생물"><span class="mono small dim">생물</span></div>
+        <div class="feat"></div>
+        <div class="presets dom" role="group" aria-label="역 고르기">
+          <span class="mono small dim">역</span>
+          <button class="chip" type="button" data-d="B" aria-pressed="false">세균역</button><button class="chip" type="button" data-d="A" aria-pressed="false">고세균역</button><button class="chip" type="button" data-d="E" aria-pressed="false">진핵생물역</button>
+        </div>
+        <div class="presets kin" role="group" aria-label="계 고르기" style="margin-top:6px">
+          <span class="mono small dim">계</span>
+          <button class="chip" type="button" data-k="bac" aria-pressed="false">진정세균계</button><button class="chip" type="button" data-k="arc" aria-pressed="false">고세균계</button><button class="chip" type="button" data-k="pro" aria-pressed="false">원생생물계</button><button class="chip" type="button" data-k="pla" aria-pressed="false">식물계</button><button class="chip" type="button" data-k="fun" aria-pressed="false">균계</button><button class="chip" type="button" data-k="ani" aria-pressed="false">동물계</button>
+        </div>
+        <div class="lab-btns"><button class="chip go judge" type="button">판정하기</button><button class="chip reset" type="button">처음부터</button></div>
+        <dl class="nums">
+          <div><dt>분류한 생물</dt><dd class="n-done">0 / 10</dd></div>
+          <div><dt>이 생물에 던진 질문</dt><dd class="n-q">0 / 5</dd></div>
+          <div><dt>첫 판정에 맞힘</dt><dd class="n-first">0</dd></div>
+        </dl>
+        <p class="verdict small"></p>
+        <div class="sum"><table>
+          <thead><tr><th>계 (역)</th><th>핵막</th><th>세포벽</th><th>몸 · 영양</th><th>분류한 생물</th></tr></thead>
+          <tbody>
+            <tr><td>진정세균계 (세균)</td><td>없음</td><td>펩티도글리칸</td><td>단세포 · 다양</td><td class="got" data-row="bac">—</td></tr>
+            <tr><td>고세균계 (고세균)</td><td>없음</td><td>펩티도글리칸 없음</td><td>단세포 · 다양</td><td class="got" data-row="arc">—</td></tr>
+            <tr><td>원생생물계 (진핵)</td><td>있음</td><td>없음 또는 셀룰로스 등</td><td>주로 단세포 · 다양</td><td class="got" data-row="pro">—</td></tr>
+            <tr><td>식물계 (진핵)</td><td>있음</td><td>셀룰로스</td><td>다세포, 배 형성 · 광합성</td><td class="got" data-row="pla">—</td></tr>
+            <tr><td>균계 (진핵)</td><td>있음</td><td>키틴 포함</td><td>균사·효모 · 흡수</td><td class="got" data-row="fun">—</td></tr>
+            <tr><td>동물계 (진핵)</td><td>있음</td><td>없음</td><td>다세포 · 섭취</td><td class="got" data-row="ani">—</td></tr>
+          </tbody>
+        </table></div>
+        <p class="fig-note">생물을 고르고, 질문 버튼을 눌러 특징을 하나씩 확인한 뒤 역과 계를 고르세요. 질문을 적게 쓰고 맞힐수록 분류 기준을 잘 이해한 것입니다. 계통 그림은 리보솜 RNA 서열로 그린 관계를 단순화한 모식입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>현미경으로 처음 보는 생물을 찾았습니다. 크기나 생김새만으로 '식물 같다', '동물 같다'고 정해도 될까요? 어떤 특징을 차례로 확인하면 정확히 분류할 수 있을까요?</li>
+      <li><span class="tag">복원</span>원핵세포에는 핵막이 없고 DNA가 세포질에 있습니다. 진핵세포에는 핵막으로 둘러싸인 핵과 미토콘드리아 같은 막으로 된 세포 소기관이 있습니다. 세포벽은 식물은 셀룰로스, 균류는 키틴, 세균은 펩티도글리칸이 주성분이고 동물 세포에는 없습니다.</li>
+      <li><span class="tag">설명</span>우즈(C. Woese)는 모든 생물이 가진 리보솜 RNA의 염기 서열을 비교해, 겉보기에 비슷한 원핵생물이 서로 매우 다른 두 무리(세균, 고세균)로 나뉜다는 것을 밝혔습니다. 그래서 생물을 <em>세균역, 고세균역, 진핵생물역</em>의 <em>3역</em>으로 나눕니다. 그 아래에서는 핵막, 세포벽, 세포 수와 몸의 분화, 영양 방식을 기준으로 <em>진정세균계, 고세균계, 원생생물계, 식물계, 균계, 동물계</em>의 <em>6계</em>로 나눕니다.</li>
+      <li><span class="tag">연결</span>고세균은 핵막이 없어 세균과 겉모습이 비슷하지만, 리보솜 RNA 서열과 유전자 발현 방식은 진핵생물과 더 가깝습니다. 그래서 계통 그림에서 고세균역은 진핵생물역과 더 가까운 가지에 놓입니다. 메테인 생성균처럼 극한 환경에 사는 것이 많지만, 흙과 바다에도 널리 삽니다.</li>
+      <li><span class="tag">적용</span>대장균과 메테인 생성균을 차례로 분류해 보세요. 두 생물을 구별하는 데 꼭 필요한 질문은 무엇인가요? 그다음 해캄과 이끼를 분류해 보세요. 둘 다 광합성을 하고 셀룰로스 세포벽이 있는데, 어떤 질문이 둘을 갈라 주나요?</li>
+      <li class="warn"><span class="tag">판단</span>원생생물계는 '핵막이 있지만 식물·균·동물이 아닌 것'을 모은 무리입니다. 계통으로 보면 해캄 같은 녹조류는 식물에 가깝고, 아메바 무리는 동물·균류와 가깝습니다. 그래서 오늘날에는 원생생물계를 하나의 공통 조상에서 나온 무리가 아닌 <em>다계통군</em>으로 보고, 여러 무리로 나누자는 의견이 많습니다. '광합성을 하면 식물', '움직이면 동물'처럼 한 가지 특징으로 분류하면 틀리기 쉽습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">온천에서 새 미생물을 찾았습니다. 핵막이 없고 세포벽에 펩티도글리칸이 없으며, 리보솜 RNA 서열이 메테인 생성균과 비슷합니다. 이 생물은 어디에 속할까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세균역 진정세균계<span class="why"><b>핵막이 없다는 점만 본 답입니다.</b> 핵막이 없는 것은 세균과 고세균 모두의 특징이라, 둘을 가르려면 세포벽 성분과 rRNA 서열을 봐야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>고세균역 고세균계<span class="why"><b>맞습니다.</b> 펩티도글리칸이 없는 세포벽과 고세균과 비슷한 rRNA 서열이 결정적인 근거입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>진핵생물역 원생생물계<span class="why"><b>고세균이 진핵생물과 가깝다는 점을 헷갈린 답입니다.</b> 핵막이 없으므로 진핵생물이 아닙니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

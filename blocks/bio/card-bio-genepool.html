@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/bio/genepool.js"
+  ]
+}
+-->
+<article class="card" id="card-bio-genepool">
+  <header class="card-head">
+    <span class="no"></span><h2>작은 섬의 생물 집단에서는 왜 우연이 진화를 이끌까?</h2><span class="kind">유전자풀 · 대립유전자 빈도 · 진화의 요인 (시뮬레이션)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="같은 조건의 집단 8개에서 대립유전자 A의 빈도가 세대에 따라 바뀌는 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets pre" role="group" aria-label="예시 상황">
+          <button class="chip" type="button" data-p="drift" aria-pressed="true">유전적 부동</button><button class="chip" type="button" data-p="bottle" aria-pressed="false">병목 효과</button><button class="chip" type="button" data-p="founder" aria-pressed="false">창시자 효과</button><button class="chip" type="button" data-p="select" aria-pressed="false">자연선택</button><button class="chip" type="button" data-p="flow" aria-pressed="false">유전자 흐름</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">집단 크기 N = <output class="o-n">20</output></label>
+            <input class="s-n" type="range" min="0" max="100" step="1" value="15" aria-label="집단 크기 (개체 수)"></div>
+          <div><label class="mono">처음 빈도 p₀ = <output class="o-p">0.50</output></label>
+            <input class="s-p" type="range" min="0.05" max="0.95" step="0.05" value="0.5" aria-label="대립유전자 A의 처음 빈도"></div>
+          <div><label class="mono">선택 s = <output class="o-s">0</output></label>
+            <input class="s-s" type="range" min="-0.2" max="0.2" step="0.01" value="0" aria-label="선택 계수 (AA가 aa보다 유리한 정도)"></div>
+          <div><label class="mono">이주율 m = <output class="o-m">0</output></label>
+            <input class="s-m" type="range" min="0" max="0.1" step="0.005" value="0" aria-label="한 세대에 들어오는 이주자 비율"></div>
+          <div><label class="mono">이웃 집단 빈도 = <output class="o-q">0.20</output></label>
+            <input class="s-q" type="range" min="0" max="1" step="0.05" value="0.2" aria-label="이주자가 오는 이웃 집단의 A 빈도"></div>
+          <div><label class="mono">돌연변이율 μ = <output class="o-u">0</output></label>
+            <input class="s-u" type="range" min="0" max="5" step="1" value="0" aria-label="한 세대 돌연변이율 단계"></div>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="c-bot"> 30세대에 병목 (5세대 동안 4마리만 남음)</label> <label><input type="checkbox" class="c-fou"> 창시자 효과 (2마리가 새 섬에 정착)</label></div>
+        <div class="lab-btns"><button class="chip go run" type="button">다시 실행 (새 우연)</button><button class="chip pause" type="button">멈춤</button></div>
+        <dl class="nums n4">
+          <div><dt>세대</dt><dd class="n-g">0</dd></div>
+          <div><dt>A 고정 (p=1)</dt><dd class="n-fix">0</dd></div>
+          <div><dt>A 소실 (p=0)</dt><dd class="n-los">0</dd></div>
+          <div><dt>평균 이형 접합 비율</dt><dd class="n-h">—</dd></div>
+        </dl>
+        <p class="verdict small"></p>
+        <p class="fig-note">교육용 모식 시뮬레이션(라이트–피셔 모형)입니다. 가는 선 8개는 같은 조건에서 출발한 서로 다른 집단, 굵은 점선은 집단이 무한히 클 때(우연이 없을 때) 예상되는 빈도입니다. 선택은 AA·Aa·aa의 상대 적합도를 1+s : 1+s/2 : 1로 두었고, 돌연변이는 A→a, a→A가 같은 비율로 일어난다고 가정했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>큰 대륙에서는 수백 년이 지나도 비슷하던 형질이, 작은 섬에 고립된 몇십 마리 집단에서는 몇십 세대 만에 한쪽으로 쏠리거나 아예 사라지곤 합니다. 더 유리한 형질도 아닌데 왜 그럴까요?</li>
+      <li><span class="tag">복원</span>한 집단이 가진 유전자 전체를 <em>유전자풀</em>이라고 합니다. 유전자풀에서 어떤 대립유전자가 차지하는 비율이 <em>대립유전자 빈도</em>입니다. 예를 들어 50마리(대립유전자 100개) 가운데 A가 60개이면 p(A) = 0.6, q(a) = 0.4이고, p + q = 1입니다. 진화는 세대가 지나며 유전자풀의 대립유전자 빈도가 바뀌는 것입니다.</li>
+      <li><span class="tag">설명</span>집단이 매우 크고, 돌연변이·이주·자연선택이 없고, 무작위로 짝짓기하면 대립유전자 빈도는 세대가 지나도 변하지 않습니다(<em>하디–바인베르크 평형</em>). 이때 유전자형 빈도는 AA : Aa : aa = p² : 2pq : q²입니다. 이 조건이 깨지면 진화가 일어납니다. 빈도를 바꾸는 요인은 <em>돌연변이</em>, <em>자연선택</em>, <em>유전자 흐름</em>(이주), <em>유전적 부동</em>(우연) 네 가지입니다.</li>
+      <li><span class="tag">연결</span>유전적 부동은 다음 세대에 전해질 대립유전자를 부모 세대에서 무작위로 뽑을 때 생기는 표본 오차입니다. 동전을 10번 던지면 앞면이 7번 나오기 쉽지만 1000번 던지면 70%가 나오기 어려운 것처럼, 집단이 작을수록 빈도가 크게 흔들립니다. 집단 크기가 갑자기 줄었다 회복되는 <em>병목 효과</em>, 소수가 새 지역에 정착하는 <em>창시자 효과</em>는 부동이 특히 크게 작용하는 경우입니다.</li>
+      <li><span class="tag">적용</span>'유전적 부동'에서 N을 20 → 1000으로 바꿔 가며 다시 실행하고, 고정·소실되는 집단 수를 비교하세요. '자연선택'에서 N을 20으로 줄이면 유리한 A도 사라지는 집단이 나오나요? '유전자 흐름'에서 이주율 m을 0으로 하면 집단끼리 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>유전적 부동은 유리한 형질을 고르지 않습니다. 그래서 '진화는 늘 적응 방향으로 일어난다'는 생각은 틀렸습니다. 유전자 흐름은 집단 사이의 차이를 줄이고, 부동은 차이를 키웁니다. 이 모형은 세대가 겹치지 않고 무작위로 짝짓기하는 단순한 집단을 가정하므로, 실제 생물에서는 성비, 짝 선택, 세대 겹침 때문에 결과가 달라질 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 대륙 집단(p = 0.5)에서 각각 4마리가 서로 다른 작은 섬 10곳에 정착했습니다. 이주와 선택이 없을 때 100세대 뒤의 모습으로 가장 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모든 섬에서 p가 0.5 근처로 유지된다<span class="why"><b>큰 집단의 하디–바인베르크 평형을 떠올린 답입니다.</b> 4마리(대립유전자 8개)에서 시작하면 처음부터 빈도가 크게 어긋나고, 작은 집단에서는 부동이 계속 빈도를 흔듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>섬마다 p가 서로 달라지고, A가 고정되거나 사라진 섬이 많다<span class="why"><b>맞습니다.</b> 창시자 효과와 유전적 부동이 겹쳐 섬마다 빈도가 무작위로 갈라지고, 결국 많은 섬에서 한 대립유전자만 남습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>모든 섬에서 더 유리한 대립유전자가 고정된다<span class="why"><b>선택이 없다고 했습니다.</b> 부동은 유리함과 상관없이 일어나므로 어느 대립유전자가 남을지는 섬마다 우연으로 정해집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

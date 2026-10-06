@@ -1847,6 +1847,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-control",
         "title": "가설은 어떻게 검증할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-gene-bioethics",
+        "title": "할 수 있는 일과 해도 되는 일은 어떻게 가를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-modern",
+        "title": "생명과학은 다른 학문과 만나 무엇을 해냈을까?"
        }
       ]
      },
@@ -1901,6 +1911,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-exercise",
         "title": "운동하면 왜 숨이 가빠지고 심장이 빨리 뛸까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-digest",
+        "title": "소화 효소는 어떤 영양소를 분해할까?"
        }
       ]
      },
@@ -1924,6 +1939,11 @@ window.TOC = [
         "kind": "text",
         "id": "text-bio-epidemiology",
         "title": "어떤 생활 습관이 병을 일으키는지 어떻게 알아낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-metabolic",
+        "title": "건강 검진표로 대사 증후군을 알아낼 수 있을까?"
        }
       ]
      },
@@ -1975,6 +1995,16 @@ window.TOC = [
         "kind": "text",
         "id": "text-bio-niche",
         "title": "먹이가 겹치는 종들은 어떻게 함께 살까? 기생은 어떤 관계일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-quadrat",
+        "title": "방형구 몇 개면 이 초원의 우점종을 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-disturb",
+        "title": "생태계의 한 고리를 빼거나 더하면 어떻게 될까?"
        }
       ]
      }
@@ -2045,6 +2075,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-autonomic",
         "title": "교감 신경과 부교감 신경은 어떻게 반대로 일할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-brain-map",
+        "title": "뇌 영상으로 뇌의 어느 부분이 무슨 일을 하는지 알 수 있을까?"
        }
       ]
      },
@@ -2068,6 +2103,16 @@ window.TOC = [
         "kind": "video",
         "id": "video-bio-fever",
         "title": "열이 오를 때 왜 추울까"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-hormone",
+        "title": "물을 많이 마시면 오줌은 왜 묽어질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-wearable",
+        "title": "스마트 워치 기록으로 항상성을 탐구할 수 있을까?"
        }
       ]
      },
@@ -2141,6 +2186,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-gene-chromo",
         "title": "유전자, DNA, 염색체는 서로 어떤 관계일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-gene-nondisjunction",
+        "title": "염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-karyotype",
+        "title": "흩어진 염색체 사진으로 핵형을 맞출 수 있을까?"
        }
       ]
      },
@@ -2187,6 +2242,16 @@ window.TOC = [
         "kind": "video",
         "id": "video-bio-whale",
         "title": "고래는 어떻게 바다로 돌아갔을까"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-genepool",
+        "title": "작은 섬의 생물 집단에서는 왜 우연이 진화를 이끌까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-bio-evo-methods",
+        "title": "진화는 어떤 증거와 방법으로 연구할까?"
        }
       ]
      },
@@ -2205,6 +2270,11 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-species",
         "title": "‘종’은 어떻게 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-domains",
+        "title": "처음 보는 생물을 3역 6계 중 어디에 넣을까?"
        }
       ]
      },
@@ -2223,6 +2293,16 @@ window.TOC = [
         "kind": "card",
         "id": "card-bio-tree-build",
         "title": "형질 표로 계통수를 그릴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-key",
+        "title": "질문 몇 개로 처음 보는 생물의 문(門)을 알아낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-seq-tree",
+        "title": "DNA 서열의 차이로 계통수를 그릴 수 있을까?"
        }
       ]
      }

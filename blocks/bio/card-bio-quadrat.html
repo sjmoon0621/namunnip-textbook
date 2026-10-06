@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/bio/quadrat.js"
+  ]
+}
+-->
+<style>
+#card-bio-quadrat canvas.cv-wide { cursor: crosshair; }
+#card-bio-quadrat .tbl-host th { line-height: 1.2; }
+#card-bio-quadrat .sum-host { max-height: none; }
+#card-bio-quadrat .sum-host table { font-size: 11px; table-layout: fixed; }
+#card-bio-quadrat .sum-host th, #card-bio-quadrat .sum-host td { padding: 3px 4px; line-height: 1.25; }
+#card-bio-quadrat .sum-host th:first-child, #card-bio-quadrat .sum-host td:first-child { width: 4.2em; color: var(--ink); text-align: left; }
+#card-bio-quadrat .sum-host tr.qd-best td { background: var(--paper-2); font-weight: 600; }
+#card-bio-quadrat .sum-host .dim { color: var(--ink-3); font-weight: 400; }
+</style>
+<article class="card" id="card-bio-quadrat">
+  <header class="card-head">
+    <span class="no"></span><h2>방형구 몇 개면 이 초원의 우점종을 알 수 있을까?</h2><span class="kind">실험 · 방형구법 · 중요치와 우점종</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="다섯 종의 풀이 자라는 12 m × 9 m 초원과 던진 방형구, 마지막 방형구의 확대 모습"></canvas>
+      <div class="ctl">
+        <div class="lab-btns"><button class="chip go" type="button" data-n="1">무작위로 1개</button><button class="chip go" type="button" data-n="5">무작위로 5개</button><button class="chip go" type="button" data-n="20">무작위로 20개</button><button class="chip clear" type="button">기록 지우기</button><button class="chip reveal" type="button" aria-pressed="false">참값 보기</button><button class="chip newf" type="button">다른 초원</button></div>
+        <div class="tbl-host"></div>
+        <div class="sum-host lab-tbl" aria-live="polite"></div>
+        <dl class="nums">
+          <div><dt>던진 방형구</dt><dd class="n-q">—</dd></div>
+          <div><dt>추정 우점종 (중요치)</dt><dd class="n-top">—</dd></div>
+          <div><dt>중요치 평균 차이</dt><dd class="n-err">—</dd></div>
+        </dl>
+        <canvas class="cv-plot" aria-label="던진 방형구 수에 따라 다시 계산한 종별 중요치 추정값과 참값"></canvas>
+        <p class="verdict small"></p>
+        <p class="fig-note">초원을 누르면 그 자리에 1 m × 1 m 방형구가 놓입니다. 기록 표의 "12·15%"는 방형구 안의 개체 수 12, 눈으로 어림한 피도 15%라는 뜻입니다(피도는 5% 단위로 어림, 어림 오차 ±4%쯤). 요약 표의 회색 숫자는 초원 전체로 계산한 참값입니다. 초원과 종별 분포는 교육용 가상 자료입니다.</p>
+        <p class="fig-note">밀도 = 개체 수 ÷ 전체 방형구 면적 · 빈도 = 출현한 방형구 수 ÷ 전체 방형구 수 · 피도 = 점유 면적 ÷ 전체 방형구 면적 · 상대 ○○ = 그 종의 ○○ ÷ 모든 종의 ○○ 합 × 100 · 중요치 = 상대 밀도 + 상대 빈도 + 상대 피도</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>운동장 옆 초원에 어떤 풀이 가장 많은지 알고 싶습니다. 풀을 하나하나 다 셀 수는 없습니다. 땅 일부만 조사해서 이 군집을 대표하는 종, 곧 <em>우점종</em>을 찾을 수 있을까요? 몇 군데를 조사해야 믿을 만할까요?</li>
+      <li><span class="tag">복원</span>군집은 같은 곳에 사는 여러 종 개체군의 모임입니다. 전체를 다 셀 수 없을 때는 일부(표본)를 골라 전체를 추정합니다. 표본이 전체를 대표하려면 <em>무작위로</em> 고르고, 수가 충분해야 합니다.</li>
+      <li><span class="tag">설계</span>1 m × 1 m 틀(<em>방형구</em>)을 조사 지역에 여러 개 놓고, 틀마다 종별 개체 수, 출현 여부, 땅을 덮은 면적을 기록합니다. 조작 변인은 방형구의 수, 종속 변인은 종마다 계산한 중요치입니다. 방형구 크기와 조사 지역은 통제합니다. 놓을 자리는 눈으로 고르지 않고 난수로 정합니다.</li>
+      <li><span class="tag">분석</span>밀도는 얼마나 빽빽한지, 빈도는 얼마나 고르게 퍼졌는지, 피도는 땅을 얼마나 덮는지를 나타냅니다. 세 값은 단위가 다르므로 모든 종의 합에 대한 백분율(상대값)로 바꾼 뒤 더합니다. 이 합이 <em>중요치</em>이고, 중요치가 가장 큰 종이 우점종입니다. 바랭이처럼 덩이로 모여 나는 종은 밀도가 높아도 빈도가 낮고, 쑥처럼 포기가 큰 종은 개체 수가 적어도 피도가 높습니다.</li>
+      <li><span class="tag">측정</span>"무작위로 1개"를 다섯 번 눌러 기록한 뒤 추정 우점종을 적으세요. 그다음 20개를 더 던지고 아래 그래프에서 중요치 곡선이 언제쯤 안정되는지 보세요. 마지막으로 "참값 보기"를 눌러 비교하고, "다른 초원"에서 같은 과정을 되풀이해 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>방형구가 적으면 덩이로 모인 종을 우연히 많이 만나거나 놓쳐 추정이 크게 흔들립니다(우연 오차, 방형구 수를 늘리면 줄어듭니다). 꽃이 핀 곳이나 풀이 무성한 곳에 일부러 놓으면 아무리 많이 던져도 한쪽으로 치우칩니다(계통 오차). 빈도는 방형구 크기에 따라 달라지므로 크기가 다른 조사끼리는 비교하지 않습니다. 야외 조사에서는 긴 옷과 장갑을 갖추고, 벌·뱀·진드기에 주의하며, 조사 뒤 식물을 뽑거나 밟아 훼손하지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 산비탈에서 방형구 10개로 조사한 결과, 세 종의 상대 밀도·상대 빈도·상대 피도(%)가 A는 50·20·20, B는 20·45·45, C는 30·35·35였습니다. 이 군집의 우점종은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>A. 개체 수가 가장 많다<span class="why"><b>밀도 하나만 본 판단입니다.</b> A의 중요치는 50 + 20 + 20 = 90으로 가장 작습니다. 작은 개체가 한곳에 모여 나면 밀도만 높게 나옵니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>B. 중요치가 가장 크다<span class="why"><b>맞습니다.</b> 중요치는 A 90, B 20 + 45 + 45 = 110, C 30 + 35 + 35 = 100입니다. B는 개체 수는 적지만 여러 방형구에 고르게 나타나고 땅을 넓게 덮습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>C. 세 값이 모두 중간 이상으로 고르다<span class="why"><b>고르다고 우점종이 되지는 않습니다.</b> 우점종은 세 상대값을 더한 중요치의 크기로 정합니다. C의 중요치는 100으로 B보다 작습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
