@@ -1,0 +1,261 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>막전위와 활동 전위 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="신경 세포의 막전위 변화를 이온의 이동과 전압 개폐 통로로 이해하고, 절대적·상대적 불응기의 개념과 필요성을 설명하며, 말이집 이상으로 생기는 전도 질환을 조사해 매체로 소통한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-adbio-ghk canvas { width: 100%; aspect-ratio: 6 / 5; }
+    #card-adbio-hh canvas { width: 100%; aspect-ratio: 4 / 5; }
+    #card-bio-saltatory canvas { width: 100%; }
+    #card-bio-saltatory canvas { aspect-ratio: 4 / 3; }
+    @media (max-width: 640px) { #card-bio-saltatory canvas { aspect-ratio: 1 / 1; } }
+  </style>
+</head>
+<body data-course="adbio" data-sec="2-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>막전위와 활동 전위</h1>
+    <p class="lead">뉴런의 휴지 전위와 활동 전위는 이온 농도가 아니라 막이 어떤 이온을 얼마나 통과시키느냐가 바뀌어 생깁니다. 네른스트 식과 골드만 식으로 막전위를 계산하고, 호지킨과 헉슬리의 모형으로 활동 전위와 불응기를 직접 만들어 봅니다. 말이집이 손상되면 전도가 어떻게 무너지는지도 살펴봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">휴지 전위와 활동 전위</span><span class="p">Na⁺–K⁺ 펌프</span><span class="p">자연로그와 지수 함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-adbio-ghk"><span class="mono">2.3.1</span>네른스트 식과 GHK 식</a></li>
+        <li><a href="#card-adbio-hh"><span class="mono">2.3.2</span>호지킨–헉슬리 모형과 불응기</a></li>
+        <li><a href="#card-bio-saltatory"><span class="mono">2.3.3</span>말이집이 있으면 왜 신호가 더 빠를까?</a></li>
+        <li><a href="#text-adbio-demyelination"><span class="mono">2.3.4</span>말이집 이상과 전도 질환</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adbio-2-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-adbio-ghk">
+        <header class="card-head">
+          <span class="no">2.3.1</span><h2>휴지 전위는 왜 −70 mV 근처에 머물까?</h2><span class="kind">막전위 · 네른스트 식 · 골드만–호지킨–카츠 식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="왼쪽: 전압 눈금 위의 K⁺, Na⁺, Cl⁻ 평형 전위와 실제 막전위 V. 오른쪽: 세포막을 사이에 둔 세 이온의 농도와 알짜 이동 방향"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="상황">
+                <button type="button" class="chip" data-p="5,0.04,0.45">휴지 상태</button>
+                <button type="button" class="chip" data-p="5,20,0.45">활동 전위 꼭대기</button>
+                <button type="button" class="chip" data-p="8,0.04,0.45">고칼륨혈증</button>
+                <button type="button" class="chip" data-p="5,0.04,0">K⁺와 Na⁺만</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">세포 밖 [K⁺] = <output class="ko-out">5.0</output> mM</label>
+                  <input class="ko" type="range" min="0" max="2.15" step="0.01" value="0.699" aria-label="세포 밖 칼륨 이온 농도 (로그 눈금)"></div>
+                <div><label class="mono">P<sub>Na</sub> / P<sub>K</sub> = <output class="pna-out">0.04</output></label>
+                  <input class="pna" type="range" min="-3" max="1.5" step="0.01" value="-1.398" aria-label="칼륨에 대한 나트륨의 상대 투과도 (로그 눈금)"></div>
+                <div><label class="mono">P<sub>Cl</sub> / P<sub>K</sub> = <output class="pcl-out">0.45</output></label>
+                  <input class="pcl" type="range" min="0" max="2" step="0.01" value="0.45" aria-label="칼륨에 대한 염화 이온의 상대 투과도"></div>
+                <div><label class="mono">온도 = <output class="tc-out">37</output> °C</label>
+                  <input class="tc" type="range" min="0" max="45" step="1" value="37" aria-label="온도"></div>
+              </div>
+              <dl class="nums">
+                <div><dt>E<sub>K</sub> (네른스트)</dt><dd class="n-ek">—</dd></div>
+                <div><dt>E<sub>Na</sub> (네른스트)</dt><dd class="n-ena">—</dd></div>
+                <div><dt>막전위 V (GHK)</dt><dd class="n-v">—</dd></div>
+              </dl>
+              <p class="fig-note">세포 안 농도는 포유류 뉴런의 대표값(K⁺ 140, Na⁺ 15, Cl⁻ 10 mM), 밖은 Na⁺ 145, Cl⁻ 110 mM으로 두었습니다. 휴지 상태의 투과도 비 P<sub>K</sub> : P<sub>Na</sub> : P<sub>Cl</sub> = 1 : 0.04 : 0.45는 호지킨과 카츠가 오징어 축삭에서 얻은 값입니다. 화살표는 GHK 전류식으로 계산한 각 이온의 알짜 이동 방향이며, 굵기는 상대값입니다. Na⁺–K⁺ 펌프의 전류는 넣지 않았습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>뉴런의 휴지 전위는 약 −70 mV입니다. K⁺만 생각하면 −90 mV, Na⁺만 생각하면 +60 mV쯤 되어야 합니다. 실제 막전위는 왜 그 사이의 이 값에 놓일까요?</li>
+            <li><span class="tag">복원</span>Na⁺–K⁺ 펌프는 ATP를 써서 Na⁺ 3개를 내보내고 K⁺ 2개를 들여와, 세포 안에는 K⁺이, 밖에는 Na⁺이 많습니다. 휴지 상태의 막에는 늘 열려 있는 K⁺ 누출 통로가 많아 K⁺이 가장 잘 통과합니다.</li>
+            <li><span class="tag">설명</span>K⁺만 통과하는 막을 생각하면, K⁺이 농도 기울기를 따라 빠져나갈수록 안쪽이 음전하를 띠어 나가는 K⁺을 끌어당깁니다. 두 힘이 같아지는 전위가 <em>평형 전위</em>이고 <em>네른스트 식</em> <em>E = (RT/zF) ln([밖]/[안])</em>으로 구합니다. 37 °C에서 RT/F는 26.7 mV이므로 E<sub>K</sub> = 26.7 × ln(5/140) ≈ −89 mV입니다. 여러 이온이 함께 통과하면 막전위는 각 이온의 투과도로 가중한 값이 되며, 이것이 <em>골드만–호지킨–카츠(GHK) 식</em> <em>V = (RT/F) ln[(P<sub>K</sub>[K⁺]<sub>밖</sub> + P<sub>Na</sub>[Na⁺]<sub>밖</sub> + P<sub>Cl</sub>[Cl⁻]<sub>안</sub>) / (P<sub>K</sub>[K⁺]<sub>안</sub> + P<sub>Na</sub>[Na⁺]<sub>안</sub> + P<sub>Cl</sub>[Cl⁻]<sub>밖</sub>)]</em>입니다. 이 전위에서 K⁺이 나가는 전류와 Na⁺이 들어오는 전류가 맞비겨 알짜 전류가 0이 됩니다.</li>
+            <li><span class="tag">연결</span>활동 전위는 농도가 아니라 투과도가 바뀌는 사건입니다. 전압 개폐 Na⁺ 통로가 열려 P<sub>Na</sub>/P<sub>K</sub>가 약 20으로 커지면 막전위는 E<sub>Na</sub> 쪽으로 옮겨 가고, Na⁺ 통로가 닫히고 K⁺ 통로가 열리면 다시 E<sub>K</sub> 쪽으로 돌아옵니다. 그래서 활동 전위의 꼭대기는 E<sub>Na</sub>를 넘지 못하고, 과분극의 바닥은 E<sub>K</sub>보다 내려가지 못합니다.</li>
+            <li><span class="tag">적용</span>‘활동 전위 꼭대기’를 눌러 막전위가 어디로 가는지 보세요. 세포 밖 K⁺ 농도를 5 mM에서 8 mM로 올리면(고칼륨혈증) 휴지 전위는 몇 mV 바뀌나요? 그때 E<sub>Na</sub>는 바뀌나요? 같은 조건에서 P<sub>Na</sub>/P<sub>K</sub>를 바꾸면 E<sub>Na</sub>는 그대로인데 V만 움직이는 까닭을 식으로 설명해 보세요. 온도를 0 °C로 내리면 평형 전위의 크기가 어떻게 바뀌나요?</li>
+            <li class="warn"><span class="tag">판단</span>“휴지 전위는 Na⁺–K⁺ 펌프가 만든다”는 말은 반만 맞습니다. 펌프는 농도 기울기를 만들고 그 자체로도 몇 mV의 음전위를 보태지만, −70 mV의 대부분은 K⁺이 누출 통로로 빠져나가며 생기는 확산 전위입니다. 또 막전위를 −70 mV로 만드는 데 필요한 전하는 세포 안 이온의 극히 일부라서, 막 양쪽의 농도는 사실상 그대로입니다. GHK 식은 이온들이 서로 독립적으로 움직이고 막 속 전기장이 고르다는 가정 위에 서 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">심장 수술에서 심장을 잠시 멈추려고 K⁺ 농도가 높은 용액을 관상 동맥에 흘립니다. 세포 밖 K⁺이 크게 늘면 심근 세포는 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>막전위가 더 음(−)으로 내려가 흥분하지 않는다<span class="why"><b>방향이 반대입니다.</b> 밖의 K⁺이 많아지면 [K⁺]<sub>밖</sub>/[K⁺]<sub>안</sub>가 커져 E<sub>K</sub>와 휴지 전위가 0 쪽으로 올라갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>막이 탈분극된 채 머물러 Na⁺ 통로가 불활성화되고, 새 활동 전위가 생기지 않는다<span class="why"><b>맞습니다.</b> 막전위가 올라간 채 유지되면 Na⁺ 통로의 불활성화 문이 닫힌 채로 남아 세포가 흥분하지 못합니다. 그래서 고칼륨 용액이 심장을 멈춥니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>Na⁺의 평형 전위가 크게 바뀌어 활동 전위의 꼭대기가 낮아진다<span class="why"><b>E<sub>Na</sub>는 Na⁺ 농도로만 정해집니다.</b> K⁺ 농도를 바꿔도 E<sub>Na</sub>는 그대로입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adbio-hh">
+        <header class="card-head">
+          <span class="no">2.3.2</span><h2>활동 전위 직후에 준 두 번째 자극은 왜 통하지 않을까?</h2><span class="kind">전압 개폐 통로 · 호지킨–헉슬리 모형 · 절대적·상대적 불응기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="위: 두 번의 전류 자극에 따른 막전위 변화. 가운데: Na⁺ 전도도와 K⁺ 전도도, Na⁺ 통로 불활성화 문의 열린 비율 h. 아래: 두 자극의 간격에 따라 두 번째 활동 전위에 필요한 최소 자극 세기"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="예시">
+                <button type="button" class="chip" data-p="40,3,250">3 ms 뒤 아주 센 자극</button>
+                <button type="button" class="chip" data-p="40,8,100">8 ms 뒤 센 자극</button>
+                <button type="button" class="chip" data-p="40,8,40">8 ms 뒤 같은 세기</button>
+                <button type="button" class="chip" data-p="10,10,10">역치 아래 두 번</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">첫 자극 = <output class="a1-out">40</output> µA/cm²</label>
+                  <input class="a1" type="range" min="0" max="80" step="1" value="40" aria-label="첫 번째 자극의 세기"></div>
+                <div><label class="mono">두 자극의 간격 = <output class="dd-out">8.0</output> ms</label>
+                  <input class="dd" type="range" min="1" max="25" step="0.5" value="8" aria-label="두 자극 사이의 시간 간격"></div>
+                <div><label class="mono">둘째 자극 = <output class="a2-out">40</output> µA/cm²</label>
+                  <input class="a2" type="range" min="0" max="300" step="1" value="40" aria-label="두 번째 자극의 세기"></div>
+              </div>
+              <div class="toggles">
+                <label><input type="checkbox" class="ttx">테트로도톡신(TTX): Na⁺ 통로 차단</label>
+                <label><input type="checkbox" class="tea">TEA: K⁺ 통로 차단</label>
+              </div>
+              <dl class="nums">
+                <div><dt>활동 전위 수</dt><dd class="n-n">—</dd></div>
+                <div><dt>가장 높은 막전위</dt><dd class="n-p">—</dd></div>
+                <div><dt>휴지 상태의 역치 세기</dt><dd class="n-t">—</dd></div>
+              </dl>
+              <p class="fig-note">호지킨과 헉슬리가 오징어 거대 축삭(6.3 °C)에서 측정해 만든 1952년 모형의 표준 매개변수를 휴지 전위 −65 mV에 맞춰 그대로 풀었습니다(g<sub>Na</sub> 최대 120, g<sub>K</sub> 최대 36 mS/cm²). 자극은 폭 0.5 ms의 전류입니다. 아래 그래프는 첫 자극을 40 µA/cm²로 고정해 계산했고, 붉은 띠는 300 µA/cm²로도 두 번째 활동 전위가 생기지 않는 간격입니다. 사람 뉴런은 체온이 높아 시간 눈금이 몇 배 짧습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>활동 전위가 한 번 지나간 축삭에 곧바로 자극을 한 번 더 주면 어떻게 될까요? 자극을 아무리 세게 해도 반응하지 않는 시간이 있고, 세게 하면 반응하는 시간이 따로 있습니다. 두 시간은 무엇이 다르고, 신경은 왜 이런 시간을 가질까요?</li>
+            <li><span class="tag">복원</span>휴지 상태의 막은 K⁺이 잘 새어 나가 막전위가 K⁺의 평형 전위 가까이에 있습니다. 막전위가 역치를 넘으면 전압 개폐 Na⁺ 통로가 열려 막전위가 Na⁺의 평형 전위 쪽으로 치솟고, 이어 전압 개폐 K⁺ 통로가 열려 다시 내려옵니다.</li>
+            <li><span class="tag">설명</span>호지킨과 헉슬리는 전압 고정법으로 전류를 Na⁺ 성분과 K⁺ 성분으로 나누어 재고, 각 전도도를 문(gate) 변수로 나타냈습니다. <em>g<sub>Na</sub> = ḡ<sub>Na</sub>m³h</em>, <em>g<sub>K</sub> = ḡ<sub>K</sub>n⁴</em>이고 막을 흐르는 전류는 <em>C dV/dt = I<sub>자극</sub> − g<sub>Na</sub>(V − E<sub>Na</sub>) − g<sub>K</sub>(V − E<sub>K</sub>) − g<sub>L</sub>(V − E<sub>L</sub>)</em>입니다. 탈분극되면 활성화 문 m은 0.1 ms 단위로 빠르게 열리고, 불활성화 문 h는 몇 ms에 걸쳐 닫히며, K⁺ 통로의 문 n은 느리게 열립니다. 막전위가 올라갈수록 Na⁺ 통로가 더 열리는 양성 피드백이 활동 전위를 만들고, h가 닫히고 n이 열리는 음성 피드백이 그것을 끝냅니다.</li>
+            <li><span class="tag">연결</span>활동 전위 직후에는 h가 거의 0이라 Na⁺ 통로가 열릴 수 없습니다. 이때는 자극을 키워도 활동 전위가 생기지 않는데, 이것이 <em>절대적 불응기</em>입니다. h가 회복되는 동안에는 일부 통로만 쓸 수 있고 K⁺ 통로도 아직 열려 있어 더 센 자극이 있어야 역치에 닿습니다. 이것이 <em>상대적 불응기</em>입니다. 흥분이 지나간 바로 뒤쪽 막은 불응기에 있으므로 흥분은 되돌아가지 못하고 한 방향으로만 전도되며, 불응기는 뉴런이 낼 수 있는 활동 전위의 최대 빈도도 정합니다.</li>
+            <li><span class="tag">적용</span>간격을 3 ms에 두고 둘째 자극을 300까지 올려 보세요. 가운데 그래프에서 그때 h는 얼마인가요? 간격을 늘리며 아래 곡선이 평소 역치로 내려오는 모습을 보고, 절대적·상대적 불응기의 경계를 읽어 보세요. TEA를 켜면 활동 전위의 모양과 불응기 곡선이 어떻게 바뀌나요? TTX를 켜면 무엇이 사라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>불응기를 “Na⁺이 다 빠져나가 다시 채워질 때까지”라고 설명하면 틀립니다. 활동 전위 한 번에 드나드는 이온은 세포 안 이온의 아주 작은 일부라서 농도는 거의 바뀌지 않습니다. 불응기의 원인은 Na⁺ 통로의 불활성화와 열려 있는 K⁺ 통로이며, Na⁺–K⁺ 펌프는 오랜 시간에 걸쳐 농도 기울기를 유지할 뿐 활동 전위 하나를 되돌리는 일을 하지 않습니다. 또한 이 모형은 오징어 축삭 한 부위를 다룬 것이라 사람 뉴런의 여러 통로 종류와 축삭을 따라 퍼지는 전류는 담지 않았습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 독소가 Na⁺ 통로의 불활성화 문(h)을 망가뜨려, 통로가 한번 열리면 닫히지 않게 만들었습니다. 이 축삭에서 예상되는 변화로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>활동 전위의 최고점만 조금 낮아지고 나머지는 그대로이다<span class="why"><b>h는 최고점보다 끝내는 과정을 맡습니다.</b> 불활성화가 없으면 Na⁺ 유입이 이어져 활동 전위가 길게 늘어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>재분극이 늦어져 활동 전위가 길어지고, 절대적 불응기의 원인 하나가 사라진다<span class="why"><b>맞습니다.</b> Na⁺ 통로가 닫히지 않으니 K⁺ 유출만으로 막전위를 내리기 어렵고, 불활성화로 생기는 절대적 불응기도 성립하지 않습니다. 실제로 일부 독소(예: 바트라코톡신)가 이와 비슷하게 작용합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>Na⁺이 막을 통과하지 못해 활동 전위가 생기지 않는다<span class="why"><b>이것은 TTX처럼 통로를 막는 경우입니다.</b> 불활성화 문이 망가지면 오히려 통로가 더 오래 열려 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-bio-saltatory">
+        <header class="card-head">
+          <span class="no">2.3.3</span><h2>말이집이 있으면 왜 신호가 더 빠를까?</h2><span class="kind">도약 전도 · 축삭 지름 · 경주</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="말이집 없는 축삭과 말이집 있는 축삭의 흥분 전도 속도 비교"></canvas>
+            <div class="ctl">
+              <label class="mono">축삭 지름 = <output class="diam-out">10</output> μm</label>
+              <input class="diam" type="range" min="-0.3" max="3" step="0.01" value="1" aria-label="축삭 지름 (로그 눈금)">
+              <div class="presets">
+                <button class="chip" data-d="1">통증 C 섬유 1 μm</button>
+                <button class="chip" data-d="15">운동 뉴런 15 μm</button>
+                <button class="chip" data-d="500">오징어 거대 축삭 500 μm</button>
+                <button class="btn restart" type="button" style="margin-left:auto">다시 출발</button>
+              </div>
+              <dl class="nums">
+                <div><dt>말이집 없음</dt><dd class="vu bad">—</dd></div>
+                <div><dt>말이집 있음</dt><dd class="vm good">—</dd></div>
+                <div><dt>말이집 없이 같은 속도</dt><dd class="need">—</dd></div>
+              </dl>
+              <p class="fig-note sal-msg"></p>
+              <p class="fig-note">속도는 실측 자료에 맞춘 어림식입니다: 말이집 있음 v ≈ 6d, 말이집 없음 v ≈ 1.1√d (v는 m/s, d는 μm). 마디 사이 거리는 지름의 약 100배로 잡았습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>발가락을 움직이라는 명령은 척수에서 1 m 가까이 내려가야 합니다. 신경은 이 거리를 얼마나 빨리 갈 수 있을까요?</li>
+            <li><span class="tag">복원</span>활동 전위는 옆 막을 역치까지 올려 다시 만들어지며 전도됩니다. 옆 막을 올리는 것은 축삭 안을 퍼지는 이온의 흐름(국소 전류)입니다.</li>
+            <li><span class="tag">설명</span>축삭이 굵으면 안쪽의 저항이 작아 국소 전류가 더 멀리 퍼집니다. 그래서 말이집 없는 축삭은 굵을수록 빠릅니다. 말이집은 절연체처럼 축삭을 감싸 전류가 새지 않게 하고, 말이집이 끊긴 <em>랑비에 결절</em>에서만 활동 전위가 생기게 합니다. 흥분이 결절에서 결절로 건너뛰는 이 방식이 <em>도약 전도</em>입니다.</li>
+            <li><span class="tag">연결</span>말이집 없는 축삭은 지름을 4배로 늘려야 속도가 2배가 됩니다(v ∝ √d). 말이집 있는 축삭은 지름에 거의 비례해 빨라집니다(v ∝ d). 같은 굵기에서 차이가 수십 배까지 벌어집니다.</li>
+            <li><span class="tag">적용</span>‘운동 뉴런 15 μm’를 눌러 두 축삭의 도착 시간을 비교하세요. ‘말이집 없이 같은 속도’ 칸에 나온 굵기는 신경 다발 하나에 수천 개의 축삭이 들어가야 한다는 점에서 가능할까요? ‘오징어 거대 축삭’도 눌러 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>‘도약’이라는 말 때문에 신호가 공중을 뛰어넘는다고 생각하기 쉽습니다. 실제로는 전류가 말이집 아래 축삭 안을 따라 흐르고, 활동 전위를 다시 만드는 곳만 결절로 줄어든 것입니다. 또 신호가 한 번에 결절 하나만 켜는 것도 아닙니다. 활동 전위가 1 ms쯤 이어지는 동안 신호는 수 cm를 가므로 여러 결절이 동시에 흥분해 있습니다. 말이집이 손상되는 다발성 경화증에서는 전도가 느려지거나 끊깁니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">지름이 같은 두 축삭 A(말이집 있음), B(말이집 없음)에서 A의 말이집만 모두 벗겨 냈습니다. A의 흥분 전도 속도는 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>굵기가 같으니 변하지 않는다.<span class="why"><b>속도를 정하는 것은 굵기만이 아닙니다.</b> 같은 굵기에서도 말이집이 있으면 수십 배 빠릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>B와 비슷하게 느려지거나, 전도가 중간에 끊길 수 있다.<span class="why"><b>맞습니다.</b> 말이집 아래 막에는 Na⁺ 통로가 적어서 벗겨진 부분에서 활동 전위를 제대로 만들지 못할 수도 있습니다. 다발성 경화증에서 일어나는 일입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>막 전체에서 활동 전위가 생기니 오히려 빨라진다.<span class="why"><b>활동 전위가 생기는 곳이 많을수록 느립니다.</b> 한 곳에서 활동 전위를 만드는 데 시간이 걸리므로, 건너뛰는 구간이 길수록 빠릅니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-adbio-demyelination">
+        <header class="card-head">
+          <span class="no">2.3.4</span><h2>말이집이 손상되면 신호는 왜 느려지거나 끊길까?</h2><span class="kind">읽기 · 활동 전위의 전도 이상으로 생기는 질환 · 조사와 발표</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">말이집 신경에서는 활동 전위가 랑비에 결절에서 결절로 건너뛰며 50 m/s 넘게 전도됩니다. 말이집이 얇아지거나 벗겨지면 이 속도는 어떻게 될까요? 그리고 그 결과는 몸에 어떤 증상으로 나타날까요?</p>
+          <h3><span class="mono">1</span>말이집이 하는 일과 잃었을 때의 결과</h3>
+          <p>말이집은 축삭을 여러 겹 감싼 세포막으로, 중추 신경계에서는 희소돌기 아교 세포가, 말초 신경계에서는 슈반 세포가 만듭니다. 말이집은 막의 전기 저항을 높이고 막의 전기 용량을 줄여, 결절에서 생긴 전류가 새지 않고 다음 결절까지 충분히 닿게 합니다. 전압 개폐 Na⁺ 통로는 결절에 몰려 있고, 말이집 아래의 막에는 거의 없습니다.</p>
+          <p>말이집이 벗겨지면 전류가 그 구간의 막으로 새어 나가고, 막을 충전하는 데 전하가 더 많이 들어 다음 결절의 탈분극이 늦어집니다. 조금 손상되면 전도가 <em>느려지고</em>, 많이 손상되어 다음 결절이 역치에 닿지 못하면 전도가 <em>차단됩니다</em>. 같은 신경 다발의 축삭들이 서로 다르게 느려지면 신호가 흩어져 도착합니다. 체온이 오르면 Na⁺ 통로가 더 빨리 닫혀 활동 전위가 짧아지므로, 아슬아슬하게 전도되던 축삭에서 차단이 일어나기도 합니다. 다발경화증 환자가 더운 날이나 목욕 뒤에 증상이 잠시 나빠지는 현상(우토프 현상)이 이렇게 설명됩니다.</p>
+          <h3><span class="mono">2</span>대표적인 질환</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>질환</th><th>손상 부위</th><th>원인</th><th>주요 증상과 경과</th></tr></thead>
+            <tbody>
+              <tr><th>다발경화증</th><td>중추 신경계 (뇌, 척수, 시신경)</td><td>면역계가 중추 신경계의 말이집을 공격하는 자가 면역 질환. 유전 요인과 환경 요인(비타민 D 부족, 엡스타인–바 바이러스 감염 등)이 함께 관여</td><td>시력 저하, 감각 이상, 근력 약화, 균형 장애. 재발과 완화를 되풀이하는 경우가 많으며, 20~40대에 흔히 시작</td></tr>
+              <tr><th>길랭–바레 증후군</th><td>말초 신경</td><td>감염(캄필로박터 장염, 호흡기 감염 등) 뒤 병원체에 대한 항체가 말초 신경의 성분과 교차 반응하는 자가 면역</td><td>다리에서 시작해 위로 올라오는 근력 약화가 며칠~몇 주 사이에 진행. 호흡근이 마비될 수 있으나 치료(면역 글로불린, 혈장 교환)와 함께 대부분 회복</td></tr>
+              <tr><th>샤르코–마리–투스병(1형)</th><td>말초 신경</td><td>말이집 단백질 유전자의 이상. 가장 흔한 1A형은 PMP22 유전자를 포함한 염색체 부분의 중복</td><td>어릴 때부터 서서히 진행하는 발과 다리의 근육 위축, 오목발. 유전 상담이 중요</td></tr>
+              <tr><th>시신경 척수염</th><td>시신경, 척수</td><td>별아교 세포의 물 통로 단백질(아쿠아포린-4)에 대한 자가 항체</td><td>심한 시신경염과 척수염. 다발경화증과 치료법이 달라 감별이 중요</td></tr>
+            </tbody>
+          </table></div>
+          <h3><span class="mono">3</span>어떻게 찾아내고 기록할까</h3>
+          <p><em>신경 전도 검사</em>는 피부 위에서 신경을 전기로 자극하고 두 지점에서 근육이나 신경의 반응을 기록해, 두 지점 사이 거리를 시간 차로 나누어 전도 속도를 구합니다. 말이집이 손상된 말초 신경병에서는 속도가 크게 떨어지고, 축삭 자체가 손상된 경우에는 속도보다 반응의 크기가 줄어듭니다. 중추 신경계의 병변은 자기 공명 영상(MRI)으로 찾고, 눈에 빛 자극을 주고 뇌파 반응이 늦게 오는지 보는 시각 유발 전위 검사도 씁니다. 이런 질환은 증상이 오랜 기간에 걸쳐 오르내리므로, 환자 기록을 모아 분석하는 데이터베이스가 원인 연구와 치료제 개발의 바탕이 됩니다.</p>
+          <h3><span class="mono">4</span>모둠 조사와 발표</h3>
+          <ul class="dots">
+            <li>질환 하나를 골라 ① 손상되는 세포와 부위, ② 전도가 어떻게 바뀌는지(느려짐·차단·흩어짐), ③ 그것이 어떤 증상으로 이어지는지를 한 줄로 잇는 인과 사슬을 만듭니다.</li>
+            <li>환자 단체나 질병관리청, 대한신경과학회처럼 출처가 분명한 자료를 쓰고, 출처와 날짜를 적습니다. 개인 경험담은 사례로만 쓰고 일반화하지 않습니다.</li>
+            <li>발표 매체(포스터, 짧은 영상, 카드 뉴스 등)를 정하고, 역할(자료 조사, 과학 설명 검토, 디자인, 발표)을 나눕니다. 환자를 낙인찍거나 두려움을 키우는 표현을 피합니다.</li>
+          </ul>
+          <p class="judge"><b>판단</b>“말이집이 없으면 신호가 전혀 전달되지 않는다”는 말은 정확하지 않습니다. 말이집이 없는 축삭도 연속 전도로 신호를 보내며, 말이집이 벗겨진 축삭은 시간이 지나 그 구간에 Na⁺ 통로를 새로 배치해 느리게나마 전도를 되찾기도 합니다. 문제는 말이집에 맞추어 설계된 축삭이 갑자기 말이집을 잃었을 때 생기는 불일치입니다. 또 표의 원인 설명은 현재까지의 연구를 요약한 것으로, 다발경화증처럼 원인이 완전히 밝혀지지 않은 질환도 있습니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">팔꿈치와 손목 사이 거리가 25 cm인 정중 신경에서, 두 지점을 자극했을 때 근육 반응이 나타난 시간 차가 10 ms였습니다. 정상 전도 속도가 약 50~60 m/s일 때 이 결과의 해석으로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전도 속도가 25 m/s로 크게 느려, 말이집 손상을 의심할 수 있다<span class="why"><b>맞습니다.</b> 0.25 m ÷ 0.010 s = 25 m/s로 정상의 절반 이하입니다. 속도가 이렇게 크게 떨어지는 것은 말이집 손상의 특징입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>전도 속도가 250 m/s로 정상보다 빠르다<span class="why"><b>단위 환산을 확인하세요.</b> 25 cm는 0.25 m, 10 ms는 0.01 s이므로 25 m/s입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전도 속도는 정상이고, 근육 자체의 이상이다<span class="why"><b>두 지점 자극의 시간 차를 쓰면 근육과 시냅스에서 걸리는 시간은 빠집니다.</b> 남는 것은 두 지점 사이 신경의 전도 시간입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/adbio/s2-ghk.js"></script>
+<script src="../../js/cards/adbio/s2-hh.js"></script>
+<script src="../../js/cards/bio/h-saltatory.js"></script>
+</body>
+</html>

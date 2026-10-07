@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adearth/ae10-threepoint.js"]
+}
+-->
+<style>
+#card-adearth-threepoint canvas { width: 100%; aspect-ratio: 1 / 1.36; display: block; }
+#card-adearth-threepoint .tp-btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+#card-adearth-threepoint .tp-btns button { font: inherit; font-size: 13px; padding: 5px 12px; border: 1px solid var(--ink); background: var(--card); color: var(--ink); border-radius: 999px; cursor: pointer; }
+#card-adearth-threepoint .tp-btns button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+#card-adearth-threepoint .nums dd { font-size: 14px; }
+</style>
+<article class="card" id="card-adearth-threepoint">
+  <header class="card-head">
+    <span class="no"></span><h2>시추공 세 개의 자료만으로 지질도를 그릴 수 있을까?</h2><span class="kind">3점법 · 주향과 경사 · 지질도 작성 · 단면도와 겉보기 경사</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위는 등고선 지도에 시추공 A, B, C와 예측한 지층 경계선, 아래는 지질 단면도"></canvas>
+      <div class="ctl">
+        <label class="mono">주향(오른손 규칙) = <output class="s-out">090</output>°</label>
+        <input class="s" type="range" min="0" max="359" step="1" value="90" aria-label="주향 방위각">
+        <label class="mono">경사 = <output class="d-out">10</output>°</label>
+        <input class="d" type="range" min="0" max="60" step="0.5" value="10" aria-label="경사각">
+        <label class="mono">단면 방향 = <output class="a-out">090</output>° <span style="color:var(--ink-3)">(지도의 점선)</span></label>
+        <input class="a" type="range" min="0" max="179" step="1" value="90" aria-label="단면선의 방위각">
+        <div class="tp-btns">
+          <button type="button" class="tp-con" aria-pressed="false">3점법 작도 보기</button>
+          <button type="button" class="tp-perp">단면을 주향에 수직으로</button>
+        </div>
+        <dl class="nums">
+          <div><dt>지층면의 자세</dt><dd class="n-sd">—</dd></div>
+          <div><dt>B · C 예측 오차 (m)</dt><dd class="n-res">—</dd></div>
+          <div><dt>단면의 겉보기 경사</dt><dd class="n-ap">—</dd></div>
+        </dl>
+        <p class="fig-note">가상의 지역(2 km × 2 km, 등고선 간격 20 m)입니다. 지층 경계는 평면이라고 가정했습니다. 지도의 색은 지금 고른 주향·경사로 예측한 지층 분포이고, ◆는 야외 노두에서 경계가 직접 확인된 지점입니다. 단면도는 수직 과장 2배로 그렸고, 겉보기 경사 값은 과장 없이 계산했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>숲으로 덮인 지역이라 노두가 거의 없습니다. 시추공 세 곳에서 사암층과 셰일층의 경계를 만난 높이만 알고 있습니다. 이 자료로 지층 경계가 땅 위 어디를 지나는지, 곧 지질도를 그릴 수 있을까요?</li>
+      <li><span class="tag">복원</span>지층면과 수평면이 만나는 선의 방향이 주향, 주향에 수직으로 잰 지층면의 기울기가 경사입니다. 같은 지층면 위에서 높이가 같은 점들을 이으면 주향 방향의 직선(구조 등고선)이 됩니다.</li>
+      <li><span class="tag">설명</span>평면은 한 직선 위에 있지 않은 세 점으로 정해집니다. 이것이 <em>3점법</em>입니다. ① 가장 높은 점과 가장 낮은 점을 잇고, 그 선 위에서 가운데 높이의 점을 비례로 찾습니다. ② 그 점과 가운데 높이의 시추공을 이은 선이 주향입니다. ③ 가장 낮은 점(또는 가장 높은 점)에서 이 주향선까지의 수직 거리 d와 높이 차 Δz로 경사 δ = arctan(Δz/d)를 구합니다.</li>
+      <li><span class="tag">연결</span>지층면의 자세를 알면 지질도를 그릴 수 있습니다. 지형의 높이가 지층면의 높이보다 높은 곳에는 위의 지층이, 낮은 곳에는 아래 지층이 드러나므로, 둘이 같아지는 곳이 지도의 경계선입니다. 그래서 경계선은 골짜기에서 V자로 휩니다. 단면도에서 지층의 기울기는 단면이 주향과 이루는 각 β에 따라 달라 보이며, 겉보기 경사 α는 tan α = tan δ · sin β입니다. β = 90°일 때만 참경사가 보입니다.</li>
+      <li><span class="tag">적용</span>주향과 경사를 조절해 B와 C의 예측 오차를 둘 다 ±5 m 안으로 줄여 보세요. 예측 경계선이 노두 ◆들을 지나나요? '3점법 작도 보기'로 확인한 뒤, 단면 방향을 바꾸어 겉보기 경사가 가장 클 때와 0일 때의 단면 방향을 찾으세요.</li>
+      <li class="warn"><span class="tag">판단</span>3점법은 세 점 사이에서 지층면이 평평하다고 가정합니다. 습곡이나 단층이 있으면 세 점이 같은 평면 위에 있지 않아 엉뚱한 자세가 나오므로, 시추공이 넷 이상이면 서로 맞는지 확인해야 합니다. 또 세 점이 거의 한 직선 위에 있으면 작은 높이 오차에도 주향이 크게 달라집니다. 단면도는 대개 수직 과장으로 그리므로, 그림에서 각도기로 잰 경사는 실제보다 큽니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">주향 N0°E(남북), 경사 40°E인 지층을 동서 방향이 아니라 주향과 30°를 이루는 방향의 단면에서 보았습니다. 단면에 보이는 겉보기 경사는 약 몇 도입니까?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>40°<span class="why"><b>참경사는 주향에 수직인 단면(β = 90°)에서만 보입니다.</b></span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 23°<span class="why"><b>맞습니다.</b> tan α = tan 40° × sin 30° = 0.839 × 0.5 ≈ 0.42이므로 α ≈ 23°입니다. 겉보기 경사는 늘 참경사보다 작거나 같습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>20°<span class="why"><b>각을 그대로 곱하면 안 됩니다.</b> 40° × sin 30° = 20°처럼 보이지만, 관계는 각이 아니라 기울기(tan)에 성립합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

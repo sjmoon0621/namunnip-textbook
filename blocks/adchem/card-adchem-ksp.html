@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adchem/eq-ksp.js"]
+}
+-->
+<style>
+#card-adchem-ksp canvas { width: 100%; aspect-ratio: 16 / 10; }
+#card-adchem-ksp .rank { width: 100%; border-collapse: collapse; font-family: var(--f-mono); font-size: 11.5px; margin-top: 6px; }
+#card-adchem-ksp .rank th, #card-adchem-ksp .rank td { border-bottom: 1px solid var(--rule); padding: 3px 5px; text-align: right; }
+#card-adchem-ksp .rank th:first-child, #card-adchem-ksp .rank td:first-child { text-align: left; }
+#card-adchem-ksp .rank th { color: var(--ink-3); font-weight: 400; }
+#card-adchem-ksp .rank tr.on td { color: var(--forest); font-weight: 600; }
+</style>
+<article class="card" id="card-adchem-ksp">
+  <header class="card-head">
+    <span class="no"></span><h2>Ksp가 작은 염이 언제나 덜 녹을까?</h2><span class="kind">용해 평형 · 용해도곱 상수 · 공통 이온 효과</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="공통 이온의 농도에 따른 몰 용해도, 로그–로그 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="염">
+          <button type="button" class="chip" data-s="agcl" aria-pressed="true">AgCl</button>
+          <button type="button" class="chip" data-s="ag2cro4" aria-pressed="false">Ag₂CrO₄</button>
+          <button type="button" class="chip" data-s="pbi2" aria-pressed="false">PbI₂</button>
+          <button type="button" class="chip" data-s="caf2" aria-pressed="false">CaF₂</button>
+          <button type="button" class="chip" data-s="baso4" aria-pressed="false">BaSO₄</button>
+        </div>
+        <div class="presets" role="group" aria-label="미리 녹여 둔 이온">
+          <button type="button" class="chip" data-ion="0" aria-pressed="true">양이온</button>
+          <button type="button" class="chip" data-ion="1" aria-pressed="false">음이온</button>
+        </div>
+        <label class="mono">미리 녹여 둔 <output class="ion-out">Ag⁺</output>의 농도 = <output class="c-out">0</output> M</label>
+        <input class="c" type="range" min="-8" max="0" step="0.05" value="-8" aria-label="공통 이온 농도의 로그 값">
+        <dl class="nums">
+          <div><dt>몰 용해도 s (mol/L)</dt><dd class="n-s">—</dd></div>
+          <div><dt>녹는 질량 (mg/L)</dt><dd class="n-m">—</dd></div>
+          <div><dt>순수한 물에 비해</dt><dd class="n-r">—</dd></div>
+        </dl>
+        <table class="rank"></table>
+        <p class="fig-note">Ksp는 25 °C 값(CRC Handbook)입니다. 이온의 활동도 계수를 1로 보고, 이온이 물과 반응하거나 착이온(AgCl₂⁻ 등)을 만드는 효과는 넣지 않았습니다. 왼쪽 끝은 공통 이온이 없는 순수한 물입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>AgCl의 Ksp는 1.8 × 10⁻¹⁰, Ag₂CrO₄의 Ksp는 1.1 × 10⁻¹²로 Ag₂CrO₄ 쪽이 100배 이상 작습니다. 그렇다면 물에는 Ag₂CrO₄가 덜 녹을까요? 소금물이나 질산 은 용액 속이라면 답이 바뀔까요?</li>
+      <li><span class="tag">복원</span>평형 상수 식에는 고체를 넣지 않습니다. 평형에 물질을 더 넣으면 그 물질을 소모하는 쪽으로 평형이 이동합니다(르샤틀리에 원리).</li>
+      <li><span class="tag">설명</span>포화 용액에서는 녹는 속도와 석출되는 속도가 같은 용해 평형이 이루어집니다. M<sub>a</sub>X<sub>b</sub>(s) ⇌ aM<sup>n+</sup> + bX<sup>m−</sup>의 평형 상수 <em>K<sub>sp</sub> = [M]<sup>a</sup>[X]<sup>b</sup></em>를 용해도곱 상수라 합니다. 순수한 물에 s mol/L가 녹으면 [M] = as, [X] = bs이므로 1:1 염은 Ksp = s², 2:1이나 1:2 염은 Ksp = 4s³입니다. s와 Ksp의 관계가 화학식마다 다르므로, 화학식이 다른 염끼리는 Ksp만으로 용해도를 비교할 수 없습니다.</li>
+      <li><span class="tag">연결</span>이온 하나를 미리 녹여 두면 그 이온의 농도가 커진 만큼 다른 이온의 농도가 작아져야 Ksp가 유지되므로 용해도가 줄어듭니다(<em>공통 이온 효과</em>). 그래프에서 공통 이온이 충분히 진하면 log s가 직선으로 줄고, 기울기는 그 이온의 계수에 따라 −1, −2, −½이 됩니다. 이온의 농도를 넣어 계산한 Q가 Ksp를 넘으면 앙금이 생깁니다. 질산 은으로 Cl⁻를 적정할 때 CrO₄²⁻를 지시약으로 넣는 모어법은, AgCl이 거의 다 가라앉은 뒤에야 붉은 Ag₂CrO₄의 Q가 Ksp를 넘는 성질을 이용합니다.</li>
+      <li><span class="tag">적용</span>표에서 Ksp 순서와 순수한 물에서의 용해도 순서를 비교하세요. AgCl과 Ag₂CrO₄를 번갈아 고르고 Ag⁺를 0.01 M 넣어 보세요. 어느 쪽이 더 많이 녹나요? CaF₂에 F⁻를 넣을 때와 Ca²⁺를 넣을 때, 같은 농도에서 어느 쪽이 용해도를 더 많이 줄이나요? 직선 구간의 기울기로 설명해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>이 계산은 이상 용액 모형입니다. 실제로는 다른 이온이 많을수록 이온끼리 서로 가려 주어(활동도 감소) 용해도가 조금 커지고, Cl⁻가 아주 진하면 AgCl₂⁻ 같은 착이온이 생겨 AgCl의 용해도가 오히려 다시 커집니다. 또 F⁻, CrO₄²⁻처럼 약산의 짝염기인 이온은 산성 용액에서 H⁺와 결합하므로, 이런 염은 산에 더 잘 녹습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">AgCl(Ksp 1.8 × 10⁻¹⁰)과 Ag₂CrO₄(Ksp 1.1 × 10⁻¹²)를 각각 0.010 M AgNO₃ 수용액에 녹였습니다. 어느 쪽의 몰 용해도가 더 클까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>Ag₂CrO₄, 순수한 물에서처럼 약 5배 크다<span class="why"><b>공통 이온이 있으면 비가 바뀝니다.</b> Ag₂CrO₄의 s = Ksp/[Ag⁺]² = 1.1 × 10⁻⁸이고, Ag⁺ 계수가 2라서 공통 이온 효과를 더 크게 받습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>AgCl, 약 1.6배 크다<span class="why"><b>맞습니다.</b> AgCl의 s = 1.8 × 10⁻¹⁰ / 0.010 = 1.8 × 10⁻⁸, Ag₂CrO₄의 s = 1.1 × 10⁻¹² / (0.010)² = 1.1 × 10⁻⁸입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>Ksp가 큰 AgCl 쪽이 100배 이상 크다<span class="why"><b>Ksp의 비가 그대로 용해도의 비가 되지는 않습니다.</b> 두 염의 Ksp 식에서 [Ag⁺]의 지수가 다르기 때문입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

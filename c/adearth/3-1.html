@@ -1,0 +1,372 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>시간계·천구 좌표와 관측 기기 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="항성시·태양시·표준시 같은 시간계와 지평 좌표계·적도 좌표계를 이해해 천체의 위치 변화를 천구에 나타내고, 망원경의 분해능·집광력과 CCD 같은 검출기의 양자 효율·잡음 특성과 원리를 설명한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labearth-celestial .cv-wide { cursor: grab; touch-action: pan-y; }
+    #card-labearth-celestial .stars { margin-top: 8px; }
+    #card-adearth-sidereal canvas { width: 100%; aspect-ratio: 5 / 4; }
+    #card-labearth-equation-time .opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 2px; }
+    #card-labearth-telescope [hidden] { display: none !important; }
+    #card-adearth-detector canvas { width: 100%; aspect-ratio: 4 / 3; }
+  </style>
+</head>
+<body data-course="adearth" data-sec="3-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>시간계·천구 좌표와 관측 기기</h1>
+    <p class="lead">같은 별이 매일 4분씩 일찍 남중하고, 해시계와 손목시계는 날마다 다른 만큼 어긋납니다. 시간을 무엇으로 재는지 정하면 천체의 위치를 좌표로 적고 관측 시각을 미리 계산할 수 있습니다. 그 빛을 모으는 망원경과 빛을 세는 검출기가 어떤 원리로 성능이 정해지는지도 함께 살펴봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">지구의 자전과 공전</span><span class="p">천구와 별의 일주 운동</span><span class="p">빛의 회절과 광전 효과</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-celestial"><span class="mono">3.1.1</span>별의 남중 고도만 재면 내가 선 곳의 위도를 알 수 있을까?</a></li>
+        <li><a href="#card-adearth-sidereal"><span class="mono">3.1.2</span>항성시와 태양시</a></li>
+        <li><a href="#card-labearth-equation-time"><span class="mono">3.1.3</span>해시계의 정오와 시계의 정오는 왜 날마다 다르게 어긋날까?</a></li>
+        <li><a href="#card-labearth-telescope"><span class="mono">3.1.4</span>망원경의 성능을 정하는 것은 배율일까, 구경일까?</a></li>
+        <li><a href="#card-adearth-detector"><span class="mono">3.1.5</span>검출기와 신호 대 잡음비</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adearth-3-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-celestial">
+        <header class="card-head">
+          <span class="no">3.1.1</span><h2>별의 남중 고도만 재면 내가 선 곳의 위도를 알 수 있을까?</h2><span class="kind">실험 · 천구의 · 지평 좌표와 적도 좌표 · 시간각</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="관측자를 중심으로 한 천구. 지평선, 자오선, 천구 적도, 천구 북극과 고른 별의 일주권, 방위각과 고도를 나타낸 호"></canvas>
+            <div class="ctl">
+              <div class="presets stars" role="group" aria-label="별 고르기"></div>
+              <div class="ctl-row">
+                <div><label class="mono">관측지 위도 φ = <output class="lat-out">37.5°N</output></label>
+                  <input class="lat" type="range" min="-30" max="90" step="0.5" value="37.5" aria-label="관측지 위도"></div>
+                <div><label class="mono">날짜 <output class="d-out">3월 21일</output> (2026년)</label>
+                  <input class="day" type="range" min="1" max="365" step="1" value="80" aria-label="날짜 (2026년의 몇째 날)"></div>
+                <div><label class="mono">시각 <output class="t-out">21:00</output> KST</label>
+                  <input class="tm" type="range" min="0" max="23.95" step="0.05" value="21" aria-label="한국 표준시 시각"></div>
+                <div><label class="mono small dim">그림을 좌우로 끌면 천구의를 돌려 볼 수 있습니다</label></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>지방 항성시</dt><dd class="n-lst">—</dd></div>
+                <div><dt>시간각 H = 항성시 − α</dt><dd class="n-h">—</dd></div>
+                <div><dt>방위각 A (북→동)</dt><dd class="n-a">—</dd></div>
+                <div><dt>고도 h</dt><dd class="n-alt">—</dd></div>
+              </dl>
+              <dl class="nums">
+                <div><dt>적경 α · 적위 δ</dt><dd class="n-eq">—</dd></div>
+                <div><dt>뜨고 지는 성질</dt><dd class="n-rs">—</dd></div>
+                <div><dt>뜨는 · 지는 시각 (KST)</dt><dd class="n-rt">—</dd></div>
+              </dl>
+              <div class="lab-btns"><button class="chip go meas" type="button">지금 위치 읽기</button><button class="chip go transit" type="button">남중할 때 읽기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="별의 적위와 남중 고도 그래프와 맞춤 직선"></canvas>
+              <p class="fig-note">별의 적경·적위는 J2000.0 기준 실제 값(Hipparcos 목록)입니다. 천구의 눈금은 1° 간격이라 고도·방위각을 읽을 때 ±0.5°쯤 오차가 납니다. 대기의 굴절(지평선 근처에서 약 0.5°)과 세차 운동은 넣지 않았습니다. 관측지의 경도는 서울(127.0°E)로 고정했습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>여러 별이 자오선을 지날 때(남중할 때) 고도를 재면, 지도 없이도 내가 선 곳의 위도를 알아낼 수 있을까요? 별의 위치를 적는 두 좌표계는 어떻게 서로 바뀔까요?</li>
+            <li><span class="tag">복원</span><em>지평 좌표계</em>는 관측자의 지평선을 기준으로 방위각 A(북점에서 동쪽으로 잰 각)와 고도 h로 별의 위치를 적습니다. 같은 별이라도 시각과 장소에 따라 값이 바뀝니다. <em>적도 좌표계</em>는 천구 적도를 기준으로 적경 α(춘분점에서 동쪽으로, 시 단위)와 적위 δ로 적어서 별마다 거의 고정된 값을 가집니다. 천구 북극의 고도는 관측지의 위도 φ와 같습니다.</li>
+            <li><span class="tag">설계</span>두 좌표를 잇는 것이 <em>시간각</em> H입니다. 자오선에서 서쪽으로 잰 별의 시간각은 H = (지방 항성시) − α이고, 지방 항성시는 춘분점의 시간각입니다. 항성시는 하루에 약 3분 56초씩 태양시보다 빨리 갑니다. 조작 변인은 고르는 별(δ), 통제 변인은 관측지 위도, 종속 변인은 남중 고도입니다.</li>
+            <li><span class="tag">분석</span>남쪽 하늘에서 남중하는 별은 h = 90° − φ + δ를 따릅니다. 가로축 δ, 세로축 남중 고도로 그리면 기울기 1인 직선이 되고, 절편이 90° − φ입니다. 변환식은 sin h = sin φ sin δ + cos φ cos δ cos H입니다. δ &gt; 90° − φ인 별은 지지 않는 <em>주극성</em>, δ &lt; −(90° − φ)인 별은 뜨지 않습니다.</li>
+            <li><span class="tag">측정</span>별을 바꿔 가며 "남중할 때 읽기"로 다섯 개 이상 기록하고 그래프의 절편에서 위도를 구하세요. 직녀성과 북극성은 남쪽이 아니라 천정 너머 북쪽에서 남중합니다. 그래프에서 이 점들은 어디에 놓이나요? 위도를 33.5°(제주)로 바꾸면 카노푸스는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>지평선 가까이에서는 대기 굴절 때문에 별이 실제보다 약 0.5° 높게 보이므로 고도가 낮은 별의 자료는 계통 오차가 큽니다. 고도 30° 이상인 별을 주로 쓰면 줄일 수 있습니다. 적경·적위도 세차 운동 때문에 70여 년에 약 1°씩 바뀌므로 정밀 관측에는 관측 연도의 좌표를 씁니다. 야간 관측은 두 명 이상 함께 하고, 어두운 곳에서는 붉은 손전등으로 발밑을 확인합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">위도 35°N인 곳에서 적위 −20°인 별의 남중 고도와, 이 별이 주극성인지를 옳게 짝지은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>남중 고도 35°, 뜨고 지는 별<span class="why"><b>맞습니다.</b> h = 90° − 35° + (−20°) = 35°입니다. 주극성이 되려면 δ &gt; 90° − 35° = 55°여야 하므로 이 별은 뜨고 집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>남중 고도 55°, 뜨고 지는 별<span class="why"><b>적위의 부호를 놓쳤습니다.</b> 90° − φ = 55°는 천구 적도의 남중 고도입니다. 적위가 −20°이면 그보다 20° 낮습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>남중 고도 35°, 주극성<span class="why"><b>남중 고도가 양수라고 주극성은 아닙니다.</b> 주극성은 가장 낮을 때(하중)에도 지평선 위에 있어야 합니다. 이 별이 가장 낮을 때의 고도는 φ + δ − 90° = −75°로 지평선 아래입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adearth-sidereal">
+        <header class="card-head">
+          <span class="no">3.1.2</span><h2>오늘 밤 9시에 남중한 별은 한 달 뒤 몇 시에 남중할까?</h2><span class="kind">시간계 · 항성일과 태양일 · 지방 항성시와 시간각</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="위: 북쪽에서 내려다본 지구의 공전 궤도와 관측자의 자오선 방향. 아래: 자오선을 가운데에 둔 적경–적위 하늘 띠와 밝은 별, 태양의 위치"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">날짜 (2026년) = <output class="d-out">—</output></label>
+                  <input class="d" type="range" min="0" max="364" step="1" value="45" aria-label="날짜"></div>
+                <div><label class="mono">한국 표준시 = <output class="t-out">—</output></label>
+                  <input class="t" type="range" min="0" max="1439" step="1" value="1260" aria-label="한국 표준시"></div>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">관측지 경도 = <output class="l-out">127.0</output>° E</label>
+                  <input class="l" type="range" min="124" max="132" step="0.1" value="127" aria-label="경도"></div>
+                <div class="presets" role="group" aria-label="시간 건너뛰기">
+                  <button type="button" class="chip ae-sid" >+1 항성일</button><button type="button" class="chip ae-sol">+1 태양일</button>
+                </div>
+              </div>
+              <div class="presets" role="group" aria-label="따라갈 별">
+                <button type="button" class="chip" data-s="0" aria-pressed="true">시리우스</button><button type="button" class="chip" data-s="1" aria-pressed="false">레굴루스</button><button type="button" class="chip" data-s="2" aria-pressed="false">안타레스</button><button type="button" class="chip" data-s="3" aria-pressed="false">직녀성</button><button type="button" class="chip" data-s="4" aria-pressed="false">포말하우트</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>지방 항성시</dt><dd class="n-lst">—</dd></div>
+                <div><dt>태양의 시간각</dt><dd class="n-hs">—</dd></div>
+                <div><dt>고른 별의 시간각</dt><dd class="n-h">—</dd></div>
+                <div><dt>그 별의 남중 시각</dt><dd class="n-tr">—</dd></div>
+              </dl>
+              <p class="fig-note">항성시는 그리니치 평균 항성시 공식(IAU 1982 근사)에 경도를 더해 계산합니다. 별의 좌표는 J2000.0 값이고, 태양의 위치는 정확도 약 0.01°인 근사식입니다. 위 그림의 궤도와 지구 크기는 모식입니다. 아래 띠의 어두운 부분은 적도 근처 별(δ ≈ 0°) 기준으로 지평선 아래인 시간각 ±6시 밖입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>2월 중순 밤 9시 무렵 시리우스가 정남쪽 하늘에 떠 있습니다. 한 달 뒤 같은 시각에 보면 시리우스는 서쪽으로 기울어 있습니다. 별은 매일 몇 분씩 일찍 남중하는 걸까요? 그 까닭은 무엇일까요?</li>
+            <li><span class="tag">복원</span>지구는 북쪽에서 볼 때 시계 반대 방향으로 자전하고, 같은 방향으로 공전합니다. 하루에 공전하는 각은 360°/365.25일 ≈ 0.986°입니다. 별의 위치는 적경 α(춘분점에서 동쪽으로 잰 시 단위 각)와 적위 δ로 적습니다.</li>
+            <li><span class="tag">설명</span>먼 별을 기준으로 지구가 한 바퀴 도는 시간이 <em>항성일</em>(23시 56분 4.09초), 태양을 기준으로 한 바퀴 도는 시간이 <em>태양일</em>(평균 24시간)입니다. 한 항성일 동안 지구가 약 1° 공전했으므로, 태양을 다시 자오선에 올리려면 약 1°, 곧 4분을 더 돌아야 합니다. 1년 동안 지구는 태양 기준으로 365.25번, 별 기준으로는 366.25번 돕니다. 그래서 1/P<sub>항성일</sub> = 1/P<sub>태양일</sub> + 1/(1년)입니다. 춘분점의 시간각을 <em>지방 항성시</em>(LST)라 하면, 자오선에 있는 별의 적경이 곧 LST이고, 어떤 별의 시간각은 <em>H = LST − α</em>입니다.</li>
+            <li><span class="tag">연결</span>시간은 무엇이 자오선을 지나는지로 정합니다. 춘분점(별)을 쓰면 항성시, 실제 태양을 쓰면 시태양시, 고르게 움직이는 평균 태양을 쓰면 평균 태양시입니다. 그리니치의 평균 태양시가 세계시(UT)이고, 한국 표준시는 UT + 9시(동경 135°의 평균 태양시)입니다. 천문학자는 날짜를 이어 세는 율리우스일로 시간을 적고, 관측 계획은 그날 밤 LST에서 보고 싶은 천체의 적경을 빼서 세웁니다.</li>
+            <li><span class="tag">적용</span>시리우스를 고르고 시각을 움직여 시간각이 0이 되는 시각을 찾으세요. 그다음 ‘+1 항성일’을 여러 번 누르면 시리우스의 시간각과 한국 표준시는 어떻게 되나요? ‘+1 태양일’을 누르면 무엇이 바뀌나요? 날짜를 30일 늦추면 남중 시각은 몇 분 빨라지나요? 경도를 124°(백령도)와 131°(울릉도)로 바꾸면 같은 별의 남중 시각은 몇 분 차이 나나요?</li>
+            <li class="warn"><span class="tag">판단</span>항성일과 태양일의 차이는 자전축의 기울기 때문이 아니라 공전 때문입니다. 기울기와 타원 궤도는 날마다 태양일 길이를 조금씩 바꾸는 균시차를 만들 뿐입니다. 또 항성일은 춘분점을 기준으로 하는데 춘분점이 세차 운동으로 서쪽으로 조금씩 움직이므로, 먼 별(관성계)에 대한 실제 자전 주기(23시 56분 4.10초)보다 약 0.008초 짧습니다. 이 카드에서 적경·적위를 지평 좌표로 바꾸는 계산은 다루지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어느 날 밤 서울(동경 127°)에서 적경 10시 08분인 레굴루스가 밤 10시에 남중했습니다. 같은 날 밤, 적경 13시 25분인 스피카가 남중하는 시각은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>밤 10시 (같은 날 같은 하늘이므로)<span class="why"><b>적경이 다르면 남중 시각도 다릅니다.</b> 자오선에는 LST와 같은 적경의 별만 걸려 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 새벽 1시 16분<span class="why"><b>맞습니다.</b> 적경 차 3시간 17분만큼 항성시가 흘러야 하고, 항성시 3시간 17분은 태양시로 약 3시간 16분 28초입니다(1.0027배 빠름).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 저녁 6시 43분<span class="why"><b>방향을 거꾸로 셌습니다.</b> 적경이 큰 별은 동쪽에 있어 더 늦게 남중합니다. 적경은 동쪽으로 갈수록 커집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-equation-time">
+        <header class="card-head">
+          <span class="no">3.1.3</span><h2>해시계의 정오와 시계의 정오는 왜 날마다 다르게 어긋날까?</h2><span class="kind">실험 · 시태양시 · 평균 태양시 · 균시차 · 표준시</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="위에서 본 막대(그노몬)와 그림자, 그림자 끝이 하루 동안 그리는 길, 그리고 한국 표준시 시계"></canvas>
+            <div class="ctl">
+              <div class="presets city" role="group" aria-label="관측 장소">
+                <button type="button" class="chip" data-lon="124.71" data-lat="37.97" aria-pressed="false">백령도</button>
+                <button type="button" class="chip" data-lon="126.98" data-lat="37.57" aria-pressed="true">서울</button>
+                <button type="button" class="chip" data-lon="129.08" data-lat="35.18" aria-pressed="false">부산</button>
+                <button type="button" class="chip" data-lon="131.87" data-lat="37.24" aria-pressed="false">독도</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">날짜 <output class="d-out">2월 11일</output> (2026년)</label>
+                  <input class="day" type="range" min="1" max="365" step="1" value="42" aria-label="날짜"></div>
+                <div><label class="mono">시계 <output class="t-out">12:00</output> KST</label>
+                  <input class="tm" type="range" min="10" max="15" step="0.0166667" value="12" aria-label="한국 표준시 시각"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>해시계 (시태양시)</dt><dd class="n-ast">—</dd></div>
+                <div><dt>지방 평균 태양시</dt><dd class="n-lmt">—</dd></div>
+                <div><dt>균시차 E</dt><dd class="n-e">—</dd></div>
+                <div><dt>그림자 길이 (막대 1 m)</dt><dd class="n-sh">—</dd></div>
+              </dl>
+              <dl class="nums">
+                <div><dt>해 뜨는 시각</dt><dd class="n-rise">—</dd></div>
+                <div><dt>남중 시각</dt><dd class="n-tr">—</dd></div>
+                <div><dt>해 지는 시각</dt><dd class="n-set">—</dd></div>
+              </dl>
+              <div class="lab-btns"><button class="chip go meas" type="button">이날 남중 시각 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="기록한 남중 시각에서 구한 균시차와 이심률·자전축 경사에 따른 성분 곡선"></canvas>
+              <div class="ctl-row">
+                <div><label class="mono">모형 이심률 e = <output class="e-out">0.0167</output></label>
+                  <input class="ecc" type="range" min="0" max="0.1" step="0.0001" value="0.0167" aria-label="모형의 공전 궤도 이심률"></div>
+                <div><label class="mono">모형 자전축 경사 ε = <output class="o-out">23.4</output>°</label>
+                  <input class="obl" type="range" min="0" max="40" step="0.1" value="23.4" aria-label="모형의 자전축 경사"></div>
+              </div>
+              <div class="opts">
+                <label class="mono small"><input type="checkbox" class="c-e" checked> 이심률 성분</label>
+                <label class="mono small"><input type="checkbox" class="c-o" checked> 자전축 경사 성분</label>
+                <label class="mono small"><input type="checkbox" class="c-s" checked> 두 성분의 합</label>
+              </div>
+              <p class="fig-note">남중 시각은 "같은 고도법"으로 잽니다. 오전과 오후에 그림자 끝이 같은 원에 닿는 두 시각의 가운데를 남중 시각으로 삼으며, 판정 오차는 ±1분쯤입니다. 태양 위치는 NOAA 근사식으로 계산했고, 해 뜨고 지는 시각은 대기 굴절과 태양 반지름을 넣어 고도 −0.83°일 때입니다. 아래 그래프의 성분 곡선은 근사식 E ≈ −7.66 sin D + 9.86 sin(2D + 3.59)분을 e와 ε에 맞춰 키우고 줄인 모형입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>해시계는 태양이 남중할 때 12시를 가리킵니다. 그런데 서울에서 시계로 남중 시각을 재면 12시 정각이 아니고, 날짜마다 최대 30분 가까이 달라집니다. 이 차이는 어디서 올까요?</li>
+            <li><span class="tag">복원</span>시간은 무엇이 자오선을 지나는지로 정의합니다. <em>항성시</em>는 춘분점(별)의 시간각, <em>시태양시</em>는 실제 태양의 시간각 + 12시, <em>평균 태양시</em>는 천구 적도를 일정한 빠르기로 도는 가상의 평균 태양을 기준으로 합니다. 경도마다 다른 평균 태양시가 <em>지방시</em>이고, 우리나라 표준시(KST)는 동경 135°의 지방 평균시입니다. <em>태음시</em>는 달의 시간각을 기준으로 하며, 달이 남중하는 시각은 하루에 약 50분씩 늦어집니다.</li>
+            <li><span class="tag">설계</span>장소(경도)를 고정하고 날짜를 바꿔 가며 남중 시각을 잽니다. 남중 시각 = 12:00 + (135° − 경도) × 4분 − E입니다. 경도 보정(서울은 약 +32분)은 1년 내내 같고, 나머지 날마다 바뀌는 부분이 <em>균시차</em> E = 시태양시 − 평균 태양시입니다.</li>
+            <li><span class="tag">분석</span>기록에서 E를 구해 날짜에 따라 그리면 1년에 두 번씩 커졌다 작아지는 곡선이 됩니다. 이 곡선은 두 성분의 합입니다. ① 궤도가 타원이라 근일점(1월 초) 근처에서 태양이 황도를 빨리 움직이는 효과(주기 1년, 진폭 약 7.7분). ② 황도가 천구 적도에 23.4° 기울어 있어 황도 위의 고른 움직임도 적경으로는 고르지 않은 효과(주기 반년, 진폭 약 9.9분).</li>
+            <li><span class="tag">측정</span>한 달에 두 번 이상 남중 시각을 재서 1년 치를 모으고, 그래프에서 E가 가장 큰 날과 가장 작은 날을 찾으세요. 모형의 e를 0으로 하거나 ε를 0으로 해 보며 어느 성분이 어느 봉우리를 만드는지 확인하세요. 같은 날 부산과 백령도의 남중 시각은 몇 분 차이 나나요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>그림자가 가장 짧은 순간은 변화가 느려서 직접 고르면 오차가 몇 분이 됩니다. 같은 고도법처럼 대칭인 두 시각을 쓰면 줄일 수 있습니다. 막대가 기울어 있거나 지면이 수평이 아니면 계통 오차가 생기므로 다림추와 수준기로 맞춥니다. 그림자를 볼 때도 태양을 직접 보지 않습니다. 균시차 곡선은 근일점의 위치와 이심률이 바뀌는 수천 년 단위로는 모양이 달라집니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">균시차가 −14분인 2월 중순, 동경 129°인 부산에서 태양이 남중하는 시각(KST)은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12시 38분<span class="why"><b>맞습니다.</b> 경도 보정 (135 − 129) × 4 = 24분, 균시차 −14분을 빼면 12:00 + 24 + 14 = 12:38입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12시 10분<span class="why"><b>균시차의 부호를 반대로 썼습니다.</b> E가 음수이면 실제 태양이 평균 태양보다 늦으므로 남중도 늦어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>11시 46분<span class="why"><b>경도 보정 방향이 틀렸습니다.</b> 부산은 표준 경선(135°)보다 서쪽이라 태양이 더 늦게 남중합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-telescope">
+        <header class="card-head">
+          <span class="no">3.1.4</span><h2>망원경의 성능을 정하는 것은 배율일까, 구경일까?</h2><span class="kind">실험 · 분해능 · 배율 · 시야(FOV) · 집광력</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <div class="presets tgt" role="group" aria-label="관측 대상">
+              <button type="button" class="chip" data-t="dbl" aria-pressed="true">이중성 (밝기 같은 두 별)</button>
+              <button type="button" class="chip" data-t="jup" aria-pressed="false">목성</button>
+            </div>
+            <canvas class="cv-wide" aria-label="카메라 센서에 찍힌 대상의 확대 영상과, 센서 전체 시야에 보름달 크기를 겹친 그림"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">구경 D = <output class="d-out">80</output> mm</label>
+                  <input class="dia" type="range" min="50" max="300" step="10" value="80" aria-label="대물렌즈 지름"></div>
+                <div><label class="mono">대물 초점 거리 f = <output class="f-out">900</output> mm</label>
+                  <input class="foc" type="range" min="300" max="3000" step="50" value="900" aria-label="대물렌즈 초점 거리"></div>
+                <div><label class="mono">시상(대기 흔들림) = <output class="s-out">1.0</output>″</label>
+                  <input class="see" type="range" min="0.3" max="4" step="0.1" value="1" aria-label="시상"></div>
+                <div class="g-dbl"><label class="mono">두 별 사이 각 = <output class="sep-out">2.0</output>″</label>
+                  <input class="sep" type="range" min="0.3" max="8" step="0.1" value="2" aria-label="이중성의 각거리"></div>
+                <div class="g-jup" hidden><label class="mono">목성까지 거리 = <output class="j-out">4.2</output> AU</label>
+                  <input class="jd" type="range" min="3.95" max="6.45" step="0.05" value="4.2" aria-label="목성까지 거리"></div>
+              </div>
+              <div class="presets eye" role="group" aria-label="접안렌즈 초점 거리">
+                <span class="mono small dim">접안렌즈 (겉보기 시야 52°)</span>
+                <button type="button" class="chip" data-e="25" aria-pressed="true">25 mm</button><button type="button" class="chip" data-e="10" aria-pressed="false">10 mm</button><button type="button" class="chip" data-e="6" aria-pressed="false">6 mm</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>배율 f/f<sub>e</sub></dt><dd class="n-mag">—</dd></div>
+                <div><dt>실시야 = 52°/배율</dt><dd class="n-tf">—</dd></div>
+                <div><dt>회절 한계 1.22λ/D</dt><dd class="n-res">—</dd></div>
+                <div><dt>집광력 (눈 7 mm 대비)</dt><dd class="n-lg">—</dd></div>
+              </dl>
+              <dl class="nums n4">
+                <div><dt>한계 등급 (어림)</dt><dd class="n-lim">—</dd></div>
+                <div><dt>화소 척도 206.3·p/f</dt><dd class="n-ps">—</dd></div>
+                <div><dt>센서 시야 (FOV)</dt><dd class="n-fov">—</dd></div>
+                <div><dt class="k-obj">두 별 사이 (화소)</dt><dd class="n-obj">—</dd></div>
+              </dl>
+              <div class="lab-btns"><button class="chip go meas" type="button">분해 한계 재기 (이중성)</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="구경의 역수와 분해 한계의 그래프"></canvas>
+              <p class="fig-note">카메라는 화소 3.75 μm, 1280×960 화소 센서(4.8 mm × 3.6 mm)로 가정했습니다. 영상은 파장 550 nm의 에어리 무늬에 시상(가우스 흐림)을 겹쳐 계산한 모식입니다. 분해 한계 측정은 두 별의 간격을 줄여 가며 "두 개로 보이는 가장 작은 간격"을 판정하는 실험이며 판정 오차는 ±7%쯤입니다. 목성 적도 지름 142,984 km(NASA)이고, 목성까지 거리는 충일 때 약 4.0 AU, 합 근처에서 약 6.4 AU입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>배율이 높은 망원경일수록 더 자세히 보일까요? 같은 배율로 보아도 구경이 큰 망원경에서 두 별이 더 잘 갈라져 보인다면, 성능을 정하는 것은 무엇일까요?</li>
+            <li><span class="tag">복원</span>빛은 원형 구멍을 지나며 회절해서, 별 하나도 점이 아니라 고리가 있는 원반(에어리 원반)으로 맺힙니다. 원반의 각 반지름은 θ = 1.22 λ/D(라디안)로, 구경 D가 클수록 작습니다. 1 rad = 206,265″입니다.</li>
+            <li><span class="tag">설계</span>시상을 좋게(0.5″ 이하) 고정하고 구경 D만 바꿔 가며, 두 별이 갈라져 보이는 가장 작은 각(분해 한계)을 잽니다. 조작 변인은 D, 종속 변인은 분해 한계 θ<sub>min</sub>, 통제 변인은 파장·시상·초점 거리입니다. 다음에는 시상을 2″로 나쁘게 하고 같은 측정을 되풀이합니다.</li>
+            <li><span class="tag">분석</span>가로축 1/D, 세로축 θ<sub>min</sub>으로 그리면 원점을 지나는 직선이 되고, 기울기가 1.22λ × 206,265입니다(λ = 550 nm이면 약 138″·mm). 배율 = f/f<sub>e</sub>, 실시야 = 겉보기 시야/배율, 센서 시야 = 206,265 × (센서 크기)/f, 화소 척도 = 206.3 × (화소 μm)/(f mm)″, 집광력 ∝ D²입니다. 행성의 겉보기 지름(″) = 206,265 × 지름/거리이고, 이를 화소 척도로 나누면 사진 속 크기(화소)가 됩니다.</li>
+            <li><span class="tag">측정</span>시상 0.5″에서 구경을 60, 80, 100, 150, 200, 300 mm로 바꿔 분해 한계를 재고 기울기에서 파장을 구하세요. 시상 2″에서는 큰 구경의 점이 어떻게 되나요? 목성으로 바꿔 초점 거리 900 mm와 2400 mm에서 목성이 몇 화소로 찍히는지 재고, 같은 구경에서 초점 거리만 늘리면 줄무늬가 더 보이는지 확인하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>배율은 접안렌즈만 바꾸면 얼마든지 높일 수 있지만, 구경으로 정해지는 분해 한계보다 작은 것은 보이지 않습니다(빈 배율). 땅 위에서는 대기 흔들림(시상, 보통 1–3″) 때문에 구경이 큰 망원경도 그 이상 갈라 보지 못합니다. 화소 척도가 분해 한계의 절반보다 크면 센서가 세부를 놓칩니다. 낮에 망원경을 다룰 때 태양 쪽으로 향하지 않도록 하고, 파인더에도 덮개를 씌웁니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">구경 100 mm, 초점 거리 1000 mm 망원경에 초점 거리 5 mm 접안렌즈를 끼우면 배율이 200배입니다. 이 배율을 400배로 올리면 분해 한계는 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>절반으로 작아져 더 가까운 이중성이 갈라진다<span class="why"><b>배율은 상을 키울 뿐입니다.</b> 회절 원반도 함께 커지므로 두 원반이 겹친 정도는 그대로입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 1.4″로 그대로이다<span class="why"><b>맞습니다.</b> 분해 한계는 1.22λ/D로 구경만의 함수입니다. 100 mm에서는 약 138/100 = 1.4″입니다. 상은 더 크고 어두워질 뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 배로 커져 더 나빠진다<span class="why"><b>분해 한계 자체는 배율과 무관합니다.</b> 다만 지나친 배율에서는 상이 어둡고 흐려 보여 판정이 어려워질 수는 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adearth-detector">
+        <header class="card-head">
+          <span class="no">3.1.5</span><h2>같은 망원경에 CCD를 달면 왜 훨씬 어두운 별까지 찍힐까?</h2><span class="kind">관측 기기 · 양자 효율 · 읽기 잡음 · 신호 대 잡음비</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="노출 시간(로그 눈금)에 따른 신호 대 잡음비. 세 검출기의 곡선과 지금 조건의 점, 포화 영역"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="검출기">
+                <button type="button" class="chip" data-k="ccd" aria-pressed="true">냉각 CCD</button><button type="button" class="chip" data-k="cmos" aria-pressed="false">CMOS</button><button type="button" class="chip" data-k="plate" aria-pressed="false">사진 건판</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">노출 시간 t = <output class="t-out">—</output></label>
+                  <input class="t" type="range" min="-2" max="3.5" step="0.01" value="1" aria-label="노출 시간 (로그 눈금)"></div>
+                <div><label class="mono">별의 V 등급 = <output class="m-out">15.0</output></label>
+                  <input class="m" type="range" min="4" max="21" step="0.1" value="15" aria-label="별의 겉보기 등급"></div>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">구경 D = <output class="dd-out">30</output> cm</label>
+                  <input class="dd" type="range" min="10" max="200" step="1" value="30" aria-label="구경"></div>
+                <div class="presets" role="group" aria-label="하늘 밝기">
+                  <button type="button" class="chip" data-sky="21.5" aria-pressed="true">어두운 하늘 21.5</button><button type="button" class="chip" data-sky="18.5" aria-pressed="false">도시 하늘 18.5</button>
+                </div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>별 신호 (전자)</dt><dd class="n-s">—</dd></div>
+                <div><dt>잡음 (전자)</dt><dd class="n-n">—</dd></div>
+                <div><dt>S/N</dt><dd class="n-sn">—</dd></div>
+                <div><dt>가장 밝은 화소 채움</dt><dd class="n-fw">—</dd></div>
+              </dl>
+              <p class="fig-note">V = 0인 별의 V 필터 광자 흐름을 약 8.8 × 10<sup>5</sup> 개/(s·cm²), 대기·광학계·필터 투과율을 0.6으로 둔 어림 계산입니다. 시상 2″, 화소 1″, 측광 구경 반지름 2″(약 12.6화소)로 둡니다. 검출기 값은 대표값입니다. CCD: QE 0.90, 읽기 잡음 5 e⁻, 암전류 0.01 e⁻/s, 우물 10만 e⁻. CMOS: QE 0.80, 1.5 e⁻, 0.05 e⁻/s, 5만 e⁻. 사진 건판: QE 약 0.01, 비선형이어서 포화 대신 감도가 떨어지는 효과를 모식으로 넣었습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1980년대에 사진 건판을 CCD로 바꾸자, 같은 망원경으로 찍을 수 있는 가장 어두운 별이 몇 등급이나 내려갔습니다. 망원경은 그대로인데 검출기만 바꿨을 뿐입니다. 무엇이 달라진 걸까요?</li>
+            <li><span class="tag">복원</span>빛은 광자로 들어옵니다. 광자가 무작위로 도착하므로, 평균 N개를 센다면 그 값은 √N 정도 흔들립니다(포아송 잡음). 망원경이 모으는 빛의 양(집광력)은 구경의 제곱 D²에 비례합니다.</li>
+            <li><span class="tag">설명</span>CCD는 규소 화소마다 광전 효과로 생긴 전자를 전위 우물에 모아 두었다가, 노출이 끝나면 전하를 이웃 화소로 차례로 넘겨(전하 결합) 한 출구에서 셉니다. 검출기의 성능은 다음 값으로 정해집니다. <em>양자 효율</em>(QE, 들어온 광자 중 전자가 되는 비율), <em>선형성</em>(신호가 빛의 양에 비례하는가), <em>우물 깊이</em>(포화 전까지 모을 수 있는 전자 수), <em>읽기 잡음</em>(읽을 때마다 더해지는 잡음), <em>암전류</em>(빛 없이 열로 생기는 전자, 냉각하면 줄어듦). 별 신호 S와 하늘·암전류·읽기 잡음을 합치면 S/N = S / √(S + n<sub>pix</sub>(B<sub>하늘</sub> + B<sub>암</sub> + R²))입니다.</li>
+            <li><span class="tag">연결</span>노출이 아주 짧으면 읽기 잡음이 잡음을 지배해 S/N ∝ t이고, 길어지면 별이나 하늘의 포아송 잡음이 지배해 S/N ∝ √t가 됩니다. 이때 S ∝ QE·D²·t이므로 같은 S/N을 얻는 데 드는 시간은 1/(QE·D²)에 비례합니다. QE가 1 %에서 90 %로 오르는 것은 구경을 약 9.5배 키운 것과 같습니다. 적외선은 HgCdTe 같은 다른 반도체 배열, 전파는 안테나와 수신기, X선은 광자 하나하나를 세는 검출기를 씁니다.</li>
+            <li><span class="tag">적용</span>V = 15인 별을 CCD로 찍고 노출을 0.01초에서 늘리며 그래프의 기울기가 1에서 1/2로 바뀌는 곳을 찾으세요. 같은 별을 사진 건판으로 S/N = 10까지 찍으려면 몇 초가 필요한가요? 구경을 2배로 키우면 같은 S/N에 필요한 시간은 몇 분의 1이 되나요? 도시 하늘로 바꾸고 V = 19인 별을 찍어 보세요. 노출을 늘려도 S/N이 잘 오르지 않는 까닭은 무엇인가요? V = 6인 별은 몇 초부터 포화되나요?</li>
+            <li class="warn"><span class="tag">판단</span>“노출을 길게 할수록 언제나 좋다”는 생각은 틀립니다. 밝은 별은 우물이 차면 포화되어 측광에 쓸 수 없고, 하늘이 밝은 곳에서는 하늘의 잡음도 함께 커집니다. 긴 노출을 여러 장으로 나눠 더하면 포화는 피하지만 읽기 잡음이 장 수만큼 더해집니다. 이 카드의 수치는 대표적인 장비를 가정한 어림값이고, 실제 S/N은 시상, 대기 투명도, 평탄화 보정의 품질에 따라 달라집니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어두운 하늘 아래에서 아주 어두운 은하를 찍는데, 하늘 배경의 포아송 잡음이 잡음의 대부분을 차지합니다. 구경 1 m 망원경으로 1시간 노출해 얻은 S/N을 구경 2 m 망원경으로 얻으려면 몇 분 노출해야 할까요? (검출기는 같음)</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15분<span class="why"><b>맞습니다.</b> 별 신호와 하늘 신호가 모두 D²t에 비례하므로 S/N ∝ D√t입니다. D가 2배면 같은 S/N에 필요한 t는 1/4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>30분<span class="why"><b>구경에 비례한다고 본 답입니다.</b> 모으는 빛의 양은 구경이 아니라 구경의 제곱에 비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3.75분<span class="why"><b>S/N이 신호에 비례한다고 본 답입니다.</b> 잡음도 √(신호)로 함께 커지므로 S/N은 신호의 제곱근에 비례합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/celestial.js"></script>
+<script src="../../js/cards/adearth/ae-sidereal.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/equation-time.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/telescope.js"></script>
+<script src="../../js/cards/adearth/ae-detector.js"></script>
+</body>
+</html>

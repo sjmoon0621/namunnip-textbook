@@ -1,0 +1,53 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adbio/c4-assembly.js"],
+  "short": "유전체 조립과 생물정보학"
+}
+-->
+<style>
+#card-adbio-assembly canvas { width: 100%; aspect-ratio: 16 / 11; display: block; }
+</style>
+<article class="card" id="card-adbio-assembly">
+  <header class="card-head">
+    <span class="no"></span><h2>유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?</h2><span class="kind">생물정보학 · 산탄총 염기 서열 분석과 조립 · 랜더–워터먼 모형</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="대장균 유전체 위의 콘티그 배치와, 읽은 깊이에 따른 콘티그 수 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="읽기 길이">
+          <button type="button" class="chip" data-L="150" aria-pressed="true">짧은 읽기 150 bp</button>
+          <button type="button" class="chip" data-L="15000" aria-pressed="false">긴 읽기 15 kb</button>
+        </div>
+        <label class="mono">읽은 깊이(커버리지) c = <output class="c-out">5</output>×</label>
+        <input class="cov" type="range" min="0.5" max="40" step="0.5" value="5" aria-label="커버리지">
+        <div class="toggles"><label><input type="checkbox" class="rep">반복 서열 반영 (rRNA 오페론 약 5 kb × 7벌)</label></div>
+        <dl class="nums n4">
+          <div><dt>읽기 수 N</dt><dd class="n-n">—</dd></div>
+          <div><dt>안 읽힌 염기 / e<sup>−c</sup></dt><dd class="n-u">—</dd></div>
+          <div><dt>콘티그 수 (모의)</dt><dd class="n-c">—</dd></div>
+          <div><dt>이론 N e<sup>−c(1−θ)</sup></dt><dd class="n-t">—</dd></div>
+        </dl>
+        <p class="fig-note">유전체 길이는 대장균 K-12 MG1655의 4,641,652 bp, rRNA 오페론은 이 균주의 실제 수인 7벌입니다. 읽기 시작 위치를 무작위로 뽑아 실제로 이어 붙인 모의 결과이며, 두 읽기가 읽기 길이의 20 % 이상(θ = 0.2) 겹쳐야 잇는다고 두었습니다. 시퀀싱 오류는 없다고 가정했고, 반복 서열은 7벌을 모두 끊는 것으로 단순화했습니다(모식).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>오늘날의 시퀀서는 DNA를 처음부터 끝까지 한 번에 읽지 못합니다. 유전체를 무작위로 잘게 부숴 수백만 조각을 읽은 뒤, 겹치는 부분을 찾아 컴퓨터로 이어 붙입니다. 그렇다면 얼마나 많이 읽어야 빈틈없이 이어질까요? 아무리 많이 읽어도 이어지지 않는 곳도 있을까요?</li>
+      <li><span class="tag">복원</span>DNA 염기 서열은 A, T, G, C 네 글자로 된 긴 문자열입니다. 서로 다른 두 조각의 끝부분 서열이 같으면, 두 조각이 유전체에서 이웃해 있었다고 추정할 수 있습니다. 이어 붙여 만든 끊김 없는 서열을 <em>콘티그</em>라 합니다.</li>
+      <li><span class="tag">설명</span>길이 G인 유전체에서 길이 L인 읽기 N개를 무작위로 얻으면, 평균 <em>커버리지</em>는 <em>c = NL / G</em>입니다. 한 염기가 한 번도 읽히지 않을 확률은 푸아송 분포로 <em>e<sup>−c</sup></em>입니다. 콘티그가 끊기는 곳은 ‘다음 읽기가 충분히 겹치지 않는 곳’이므로, 콘티그 수는 대략 <em>N e<sup>−c(1−θ)</sup></em>입니다(θ는 잇는 데 필요한 최소 겹침 비율). 이것이 1988년의 <em>랜더–워터먼 모형</em>입니다. 커버리지가 늘수록 빈틈은 지수적으로 줄어듭니다.</li>
+      <li><span class="tag">연결</span>모형이 놓친 장애물은 <em>반복 서열</em>입니다. 같은 서열이 여러 곳에 있으면, 반복보다 짧은 읽기로는 반복의 양쪽 이웃이 어느 것끼리 짝인지 알 수 없습니다. 그래서 짧은 읽기만 쓴 유전체는 반복마다 끊깁니다. 수십 kb를 한 번에 읽는 긴 읽기 기술이 나오면서, 2022년에는 사람 유전체의 남은 빈틈을 메운 ‘끝에서 끝까지(T2T)’ 서열이 발표되었습니다. 이렇게 생물 자료를 수학, 통계, 컴퓨터로 해석하는 분야가 <em>생물정보학</em>입니다.</li>
+      <li><span class="tag">적용</span>짧은 읽기로 커버리지를 1×, 3×, 8×, 20×로 올리며 콘티그 수를 이론값과 비교하세요. 반복 서열을 켜면 커버리지를 40×로 올려도 콘티그가 몇 개 아래로 내려가지 않나요? 긴 읽기로 바꾸면 같은 커버리지에서 읽기 수 N과 콘티그 수가 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>커버리지를 높이면 빈틈은 줄지만 반복 문제는 풀리지 않습니다. 반복을 풀려면 반복보다 긴 읽기가 필요합니다. 또 실제 읽기에는 오류가 있습니다. 짧은 읽기는 정확도가 높고 값이 싸며, 긴 읽기는 오류율이 상대적으로 높았지만 최근에는 크게 낮아졌습니다. 그래서 실제 연구에서는 두 방법을 섞기도 합니다. 랜더–워터먼 모형은 읽기 위치가 완전히 무작위라고 가정하지만, GC 함량 등에 따라 잘 읽히지 않는 구간이 있어 실제 빈틈은 이론보다 많기 쉽습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">길이 3 × 10<sup>9</sup> bp인 유전체를 150 bp 읽기로 30× 커버리지만큼 읽었습니다. 다음 중 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>읽기는 약 6 × 10<sup>8</sup>개이고, 한 번도 읽히지 않은 염기의 기대 비율은 e<sup>−30</sup>으로 거의 0이다.<span class="why"><b>맞습니다.</b> N = cG/L = 30 × 3 × 10<sup>9</sup> / 150 = 6 × 10<sup>8</sup>. 무작위 모형에서는 빈틈이 거의 없지만, 실제 빈틈은 대부분 반복 서열과 읽기 어려운 구간에서 생깁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>커버리지가 30×이므로 모든 염기가 정확히 30번씩 읽혔다.<span class="why"><b>커버리지는 평균입니다.</b> 각 염기가 읽힌 횟수는 평균 30인 푸아송 분포처럼 퍼집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>커버리지를 60×로 늘리면 10 kb짜리 반복 서열도 이어 붙일 수 있다.<span class="why"><b>그럴듯하지만 틀렸습니다.</b> 150 bp 읽기는 아무리 많아도 10 kb 반복을 가로지르지 못합니다. 반복보다 긴 읽기가 필요합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

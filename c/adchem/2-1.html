@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>기체 분자 운동론과 속력 분포 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="기체의 온도, 압력, 부피 사이의 관계를 기체 분자 운동론으로 이해하고, 절대 온도가 분자 평균 운동 에너지의 척도임을 유도한다. 맥스웰–볼츠만 분포로 온도와 몰 질량에 따른 기체 분자의 속력 분포 변화를 예측한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-adchem-maxwell canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-adchem-maxwell .pin { margin-top: 4px; }
+  </style>
+</head>
+<body data-course="adchem" data-sec="2-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>기체 분자 운동론과 속력 분포</h1>
+    <p class="lead">방 안 공기 분자는 초속 수백 미터로 날아다니며 1초에 수십억 번 서로 부딪칩니다. 그런데도 우리는 압력과 온도라는 숫자 두 개로 기체를 다룹니다. 수많은 분자의 무질서한 운동에서 어떻게 PV = nRT 같은 단순한 관계가 나오고, 분자들의 속력은 어떻게 퍼져 있을까요?</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">보일·샤를 법칙</span><span class="p">운동량과 충격량</span><span class="p">운동 에너지</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-mech-ideal-gas"><span class="mono">2.1.1</span>기체를 데우면 압력은 왜 커질까?</a></li>
+        <li><a href="#card-adchem-maxwell"><span class="mono">2.1.2</span>맥스웰–볼츠만 속력 분포</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-2-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-mech-ideal-gas">
+        <header class="card-head">
+          <span class="no">2.1.1</span><h2>기체를 데우면 압력은 왜 커질까?</h2><span class="kind">이상 기체 · PV = nRT</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="피스톤 달린 용기 속에서 움직이는 기체 분자와, 온도·부피에 따른 압력"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">온도 T = <output class="t-out">300</output> K</label>
+                  <input class="t" type="range" min="100" max="600" step="5" value="300" aria-label="절대 온도"></div>
+                <div><label class="mono">부피 V = <output class="v-out">24.9</output> L</label>
+                  <input class="v" type="range" min="5" max="50" step="0.1" value="24.9" aria-label="부피"></div>
+                <div><label class="mono">기체의 양 n = <output class="n-out">1.0</output> mol</label>
+                  <input class="n" type="range" min="0.2" max="2" step="0.1" value="1" aria-label="몰수"></div>
+              </div>
+              <dl class="nums">
+                <div><dt>압력 P</dt><dd class="n-p">—</dd></div>
+                <div><dt>분자의 평균 속력(질소)</dt><dd class="n-vr">—</dd></div>
+                <div><dt>PV ÷ T</dt><dd class="n-k">—</dd></div>
+              </dl>
+              <p class="fig-note">P = nRT/V, R = 8.314 J/(mol·K). 그림의 분자 수와 속력은 모식입니다(실제 1 mol은 6×10²³개). 평균 속력은 질소 분자의 √(3RT/M)입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>여름 햇볕 아래 둔 자동차 타이어는 공기압이 올라갑니다. 공기를 더 넣지도 않았는데 왜 압력이 커질까요?</li>
+            <li><span class="tag">복원</span>기체의 압력은 수많은 분자가 벽에 부딪치며 미는 힘을 넓이로 나눈 것입니다. 온도가 높을수록 분자는 빠르게 움직입니다.</li>
+            <li><span class="tag">설명</span>실험에 따르면 기체의 양이 일정할 때 압력은 부피에 반비례하고(보일 법칙), 부피가 일정하면 압력은 절대 온도에 비례합니다(샤를 법칙과 같은 관계). 이를 합치면 <em>PV = nRT</em>, 곧 이상 기체 상태 방정식입니다. 여기서 온도는 반드시 절대 온도(K = °C + 273)를 씁니다.</li>
+            <li><span class="tag">연결</span>분자 운동으로 보면, 부피를 줄이면 분자가 벽에 더 자주 부딪치고, 온도를 올리면 더 빠르게 더 세게 부딪칩니다. 분자의 평균 운동 에너지는 절대 온도에 비례하므로 평균 속력은 √T에 비례합니다. 0 K에서는 분자 운동이 가장 작아져 이상 기체의 압력이 0이 됩니다.</li>
+            <li><span class="tag">적용</span>부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력은 몇 배가 되나요? 이때 분자의 평균 속력은 몇 배가 되나요? 그다음 온도를 고정하고 부피를 절반으로 줄여 압력을 비교해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>이상 기체는 분자 자체의 크기와 분자 사이 인력을 무시한 모형입니다. 상온·상압의 공기는 이 모형을 잘 따르지만, 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 어긋납니다. 또 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나오므로, 반드시 절대 온도를 써야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">27 °C에서 공기압이 2.0기압인 타이어가 햇볕에 57 °C가 되었습니다. 부피가 거의 변하지 않는다면 공기압은 대략?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 4.2기압 — 온도가 2배 넘게 올랐으므로<span class="why"><b>섭씨온도로 비를 낸 답입니다.</b> 압력은 절대 온도에 비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 2.2기압<span class="why"><b>맞습니다.</b> 300 K에서 330 K로 1.1배가 되었으므로 2.0 × 1.1 = 2.2기압입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.0기압 그대로 — 공기를 넣지 않았으므로<span class="why"><b>기체의 양이 같아도</b> 온도가 오르면 분자가 더 세게 부딪쳐 압력이 커집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adchem-maxwell">
+        <header class="card-head">
+          <span class="no">2.1.2</span><h2>같은 온도의 기체 분자는 모두 같은 속력으로 움직일까?</h2><span class="kind">기체 분자 운동론 · 맥스웰–볼츠만 속력 분포</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="위: 상자 속을 움직이는 기체 분자. 기준 속력보다 빠른 분자는 주황색. 아래: 분자 속력 분포 곡선과 세 가지 대표 속력"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="기체">
+                <button type="button" class="chip" data-g="H2" aria-pressed="false">H₂</button>
+                <button type="button" class="chip" data-g="He" aria-pressed="false">He</button>
+                <button type="button" class="chip" data-g="N2" aria-pressed="true">N₂</button>
+                <button type="button" class="chip" data-g="CO2" aria-pressed="false">CO₂</button>
+                <button type="button" class="chip" data-g="Xe" aria-pressed="false">Xe</button>
+              </div>
+              <label class="mono">온도 T = <output class="t-out">300</output> K</label>
+              <input class="t" type="range" min="100" max="2000" step="10" value="300" aria-label="온도">
+              <label class="mono">기준 속력 v* = <output class="v-out">1000</output> m/s</label>
+              <input class="v" type="range" min="200" max="5000" step="50" value="1000" aria-label="기준 속력">
+              <button type="button" class="chip pin" aria-pressed="false">지금 곡선을 점선으로 남기기</button>
+              <dl class="nums">
+                <div><dt>최빈 속력 v<sub>p</sub> = √(2RT/M)</dt><dd class="n-p">—</dd></div>
+                <div><dt>평균 속력 v̄ = √(8RT/πM)</dt><dd class="n-a">—</dd></div>
+                <div><dt>제곱 평균 제곱근 속력 v<sub>rms</sub> = √(3RT/M)</dt><dd class="n-r">—</dd></div>
+                <div><dt>분자 1개의 평균 운동 에너지 (3/2)k<sub>B</sub>T</dt><dd class="n-e">—</dd></div>
+                <div><dt>v*보다 빠른 분자의 비율</dt><dd class="n-f">—</dd></div>
+              </dl>
+              <p class="fig-note">아래 곡선은 맥스웰–볼츠만 분포 f(v) = 4π(M/2πRT)<sup>3/2</sup>v²e<sup>−Mv²/2RT</sup>로 계산했습니다(R = 8.314 J/(mol·K), 몰 질량 H₂ 2.016, He 4.003, N₂ 28.01, CO₂ 44.01, Xe 131.29 g/mol). 곡선 아래 넓이는 언제나 1입니다. 위 상자의 분자 수(150개)와 움직이는 속도는 보기 좋게 줄인 모식이며, 분자의 속력 비율만 실제 분포에서 뽑았습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>25 °C 공기 속 질소 분자의 평균 속력은 약 470 m/s로, 여객기보다 두 배쯤 빠릅니다. 그렇다면 모든 질소 분자가 470 m/s로 날고 있을까요? 온도를 올리면 분자 속력의 분포는 어떻게 바뀔까요?</li>
+            <li><span class="tag">복원</span>이상 기체는 PV = nRT를 따릅니다. 기체 분자 운동론은 ① 분자 자체의 부피는 용기에 비해 무시하고, ② 충돌할 때 말고는 분자 사이에 힘이 없으며, ③ 충돌은 완전 탄성이고, ④ 분자들은 무질서하게 모든 방향으로 움직인다고 가정합니다.</li>
+            <li><span class="tag">설명</span>한 변이 L인 상자에서 질량 m인 분자가 x 방향 벽에 부딪칠 때마다 운동량 2mv<sub>x</sub>를 주고, 2L/v<sub>x</sub>마다 같은 벽에 돌아옵니다. 그래서 한 분자가 벽에 주는 평균 힘은 mv<sub>x</sub>²/L입니다. N개를 더하고 세 방향이 고르다는 것(⟨v<sub>x</sub>²⟩ = ⟨v²⟩/3)을 쓰면 <em>PV = (1/3)Nm⟨v²⟩ = (2/3)N⟨E<sub>k</sub>⟩</em>입니다. 이것을 PV = nRT와 견주면 <em>⟨E<sub>k</sub>⟩ = (3/2)k<sub>B</sub>T</em>가 됩니다. 절대 온도는 분자 평균 운동 에너지의 척도이며, v<sub>rms</sub> = √(3RT/M)입니다. 다만 이것은 평균일 뿐이고, 분자들은 서로 부딪치며 에너지를 계속 주고받기 때문에 속력은 넓게 퍼집니다. 그 분포가 <em>맥스웰–볼츠만 분포</em>이며, 앞의 v²는 빠른 속력일수록 방향의 가짓수(속도 공간의 껍질 넓이)가 많아짐을, 뒤의 e<sup>−Mv²/2RT</sup>는 큰 운동 에너지를 가질 확률이 지수적으로 작아짐을 나타냅니다.</li>
+            <li><span class="tag">연결</span>세 대표 속력은 언제나 v<sub>p</sub> : v̄ : v<sub>rms</sub> = 1 : 1.128 : 1.225입니다. 같은 온도에서는 √M에 반비례하므로 가벼운 기체일수록 빠르고, 이것이 그레이엄의 분출 법칙(분출 속도 ∝ 1/√M)의 바탕입니다. 화학 반응에서는 활성화 에너지를 넘는 ‘빠른 꼬리’의 분자만 반응하므로, 온도를 조금만 올려도 꼬리의 넓이가 크게 늘어 반응 속도가 빨라집니다.</li>
+            <li><span class="tag">적용</span>N₂에서 v* = 1000 m/s로 두고 온도를 300 K에서 600 K로 올려 보세요. 평균 속력은 몇 배가 되고, 1000 m/s보다 빠른 분자의 비율은 몇 배가 되나요? ‘점선으로 남기기’를 누른 뒤 He로 바꾸면, 같은 300 K에서 곡선의 모양이 어떻게 다른가요? CO₂ 300 K 곡선을 남겨 두고, 그 곡선과 거의 겹치는 N₂의 온도를 찾아보세요. 왜 그 온도일까요?</li>
+            <li class="warn"><span class="tag">판단</span>“온도가 오르면 모든 분자가 똑같이 빨라진다”거나 “곡선의 봉우리가 낮아지니 분자 수가 줄었다”는 오해입니다. 곡선 아래 넓이는 언제나 전체 분자(1)이고, 온도가 오르면 분포가 오른쪽으로 넓게 퍼질 뿐입니다. 또 이 분포는 분자끼리 충분히 부딪쳐 열평형에 이른 이상 기체에서 성립합니다. 아주 낮은 온도나 아주 묽은 우주 공간의 기체, 막 분출된 분자선처럼 평형이 아닌 경우에는 맞지 않을 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 온도에서 H₂와 O₂(32.00 g/mol)를 작은 구멍으로 분출시킵니다. 두 기체에 대해 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>분자 1개의 평균 운동 에너지는 H₂가 16배 크다.<span class="why"><b>평균 운동 에너지는 온도만으로 정해집니다.</b> 같은 온도라면 (3/2)k<sub>B</sub>T로 같습니다. 가벼운 H₂가 빠른 것은 같은 에너지를 작은 질량이 나눠 갖기 때문입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>H₂의 v<sub>rms</sub>는 O₂의 약 4배이고, 분출 속도도 약 4배다.<span class="why"><b>맞습니다.</b> √(32.00/2.016) ≈ 3.98입니다. 분출 속도는 구멍에 다가오는 분자의 평균 속력에 비례하므로 그레이엄 법칙대로 1/√M을 따릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>H₂ 분자는 모두 O₂ 분자보다 빠르다.<span class="why"><b>분포가 겹칩니다.</b> 대표 속력은 H₂가 크지만, O₂의 빠른 꼬리에 있는 분자는 H₂의 느린 쪽 분자보다 빠릅니다. 분포 전체를 보아야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/mech/t-ideal-gas.js"></script>
+<script src="../../js/cards/adchem/s2-maxwell.js"></script>
+</body>
+</html>

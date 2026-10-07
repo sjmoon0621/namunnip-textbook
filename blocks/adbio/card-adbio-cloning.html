@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adbio/c4-cloning.js"],
+  "short": "재조합 플라스미드 설계"
+}
+-->
+<style>
+#card-adbio-cloning .cv-end { width: 100%; aspect-ratio: 16 / 7; display: block; }
+#card-adbio-cloning .cv-dish { width: 100%; aspect-ratio: 16 / 8; display: block; margin-top: 10px; }
+#card-adbio-cloning .grp { margin: 8px 0 0; font-size: 12px; color: var(--ink-3); font-family: var(--f-mono); }
+</style>
+<article class="card" id="card-adbio-cloning">
+  <header class="card-head">
+    <span class="no"></span><h2>어떤 제한 효소로 잘라야 원하는 재조합 플라스미드만 얻을 수 있을까?</h2><span class="kind">유전자 재조합 · 점착 말단과 연결 · 방향성 클로닝 · 청백 선별 · 모식</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-end" aria-label="벡터의 잘린 끝과 삽입 DNA의 끝이 맞물리는지 보여 주는 염기 서열 그림"></canvas>
+      <div class="ctl">
+        <p class="grp">벡터(pUC19 계열)의 다중 클로닝 자리를 자르는 효소</p>
+        <div class="presets" role="group" aria-label="벡터를 자르는 효소">
+          <button type="button" class="chip" data-v="EE" aria-pressed="false">EcoRI</button>
+          <button type="button" class="chip" data-v="BB" aria-pressed="false">BamHI</button>
+          <button type="button" class="chip" data-v="EB" aria-pressed="false">EcoRI + BamHI</button>
+          <button type="button" class="chip" data-v="SS" aria-pressed="false">SmaI (평활 말단)</button>
+        </div>
+        <p class="grp">GFP 유전자(약 720 bp) PCR 산물의 양 끝</p>
+        <div class="presets" role="group" aria-label="삽입 DNA의 끝">
+          <button type="button" class="chip" data-i="EE" aria-pressed="false">EcoRI … EcoRI</button>
+          <button type="button" class="chip" data-i="EB" aria-pressed="false">EcoRI … BamHI</button>
+          <button type="button" class="chip" data-i="BB" aria-pressed="false">BamHI … BamHI</button>
+          <button type="button" class="chip" data-i="SS" aria-pressed="false">평활 … 평활</button>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="cip">자른 벡터를 탈인산화 (5′ 인산 제거)</label></div>
+        <label class="mono">삽입 DNA : 벡터 몰비 = <output class="r-out">3</output> : 1</label>
+        <input class="ratio" type="range" min="0" max="10" step="1" value="3" aria-label="삽입 DNA와 벡터의 몰비">
+        <canvas class="cv-dish" aria-label="암피실린, X-gal, IPTG 평판에 자란 파란 콜로니와 흰 콜로니"></canvas>
+        <dl class="nums">
+          <div><dt>콜로니 수</dt><dd class="n-n">—</dd></div>
+          <div><dt>흰 콜로니 비율</dt><dd class="n-w">—</dd></div>
+          <div><dt>흰 콜로니 중 정방향</dt><dd class="n-f">—</dd></div>
+        </dl>
+        <p class="fig-note">모식 모형입니다. 콜로니 수와 비율은 상대값으로, 분자 내 연결(벡터 스스로 닫힘)이 분자 사이 연결보다 잘 일어나고 평활 말단 연결 효율이 점착 말단보다 낮다는 경향만 반영했습니다. 자르지 못한 벡터가 늘 조금 남는다고 두었습니다. 끝의 염기 서열은 실제 효소의 인식 서열(EcoRI G^AATTC, BamHI G^GATCC, SmaI CCC^GGG)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>해파리의 초록 형광 단백질(GFP) 유전자를 대장균 플라스미드에 끼워 넣으려 합니다. 벡터와 유전자를 자르고 붙인 뒤 대장균에 넣으면, 평판에는 유전자가 들어간 플라스미드와 빈 플라스미드를 가진 대장균이 섞여 자랍니다. 유전자가 원하는 방향으로 들어간 것만 많이 얻으려면 무엇을 어떻게 골라야 할까요?</li>
+      <li><span class="tag">복원</span>제한 효소는 4~8 bp의 회문 서열을 알아보고 자릅니다. 엇갈려 자르면 한 가닥이 튀어나온 <em>점착 말단</em>이, 같은 자리를 자르면 <em>평활 말단</em>이 생깁니다. DNA 연결 효소는 이웃한 뉴클레오타이드의 3′-OH와 5′-인산 사이에 인산 다이에스터 결합을 만듭니다.</li>
+      <li><span class="tag">설명</span>유전자 재조합은 ① 벡터와 목적 유전자를 같은(또는 맞물리는) 제한 효소로 자르고 ② 연결 효소로 붙인 뒤 ③ 숙주 세포에 넣고(형질 전환) ④ 원하는 세포를 골라 ⑤ 확인하는 과정입니다. pUC19 같은 벡터에는 복제 원점, 앰피실린 저항성 유전자(<em>amp<sup>R</sup></em>), 그리고 여러 제한 효소 자리가 모인 <em>다중 클로닝 자리</em>가 <em>lacZα</em> 유전자 안에 있습니다. 앰피실린 배지에서는 플라스미드를 가진 세포만 자랍니다. X-gal과 IPTG를 함께 넣으면 lacZα가 온전한 세포는 β-갈락토시데이스 활성이 생겨 X-gal을 분해해 파랗게 되고, 유전자가 끼어 lacZα가 끊긴 세포는 하얗게 남습니다(<em>청백 선별</em>).</li>
+      <li><span class="tag">연결</span>한 효소로만 자르면 벡터의 두 끝이 서로 맞물려 저절로 닫히고, 유전자는 두 방향으로 들어갑니다. 서로 다른 두 효소로 자르면 벡터는 스스로 닫히지 못하고 유전자는 한 방향으로만 들어갑니다(<em>방향성 클로닝</em>). 한 효소만 써야 한다면 벡터의 5′ 인산을 떼어 내(탈인산화) 벡터끼리 붙지 못하게 합니다. 삽입 DNA에는 인산이 남아 있어 한 가닥씩은 연결되고, 남은 틈은 대장균이 메웁니다.</li>
+      <li><span class="tag">적용</span>벡터와 삽입 DNA를 모두 EcoRI로 맞추고 몰비 3:1에서 흰 콜로니 비율을 보세요. 탈인산화를 켜면 무엇이 바뀌나요? 흰 콜로니 중 정방향 비율은 왜 그대로인가요? 이번에는 EcoRI + BamHI 조합으로 바꾸세요. 벡터는 EcoRI + BamHI로, 삽입 DNA는 EcoRI … EcoRI로 어긋나게 고르면 위 그림의 어느 이음매가 맞지 않나요? 마지막으로 SmaI와 평활 PCR 산물을 써 보고 콜로니 수를 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>흰 콜로니라고 해서 원하는 플라스미드라는 보장은 없습니다. 유전자가 거꾸로 들어갔거나, 짧은 조각이나 PCR 오류가 있는 유전자가 들어가도 하얗습니다. 그래서 몇 개를 골라 콜로니 PCR, 제한 효소 지도, 염기 서열 분석으로 확인합니다. 또 몰비를 너무 높이면 삽입 DNA가 여러 개 이어 붙는 경우가 늘어납니다(이 모형에는 넣지 않았습니다). 유전자 안에 쓰려는 제한 효소 자리가 또 있으면 유전자가 잘려 버리므로, 효소를 고르기 전에 서열을 먼저 확인해야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">BamHI(G^GATCC)로 자른 벡터에, BglII(A^GATCT)로 자른 유전자를 넣으려 합니다. 두 효소의 인식 서열은 다르지만 튀어나온 끝은 둘 다 5′-GATC입니다. 결과로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>연결은 되지만, 이어진 자리(GGATCT)는 두 효소 어느 것으로도 다시 잘리지 않는다.<span class="why"><b>맞습니다.</b> 점착 말단이 상보적이면 인식 서열이 달라도 연결됩니다. 다만 이음매가 G GATC T가 되어 BamHI(GGATCC)도 BglII(AGATCT)도 알아보지 못합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>인식 서열이 다르므로 연결되지 않는다.<span class="why"><b>그럴듯하지만 틀렸습니다.</b> 연결을 정하는 것은 튀어나온 네 염기의 상보성이지 6 bp 인식 서열 전체가 아닙니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>연결된 뒤 BamHI로 다시 자르면 유전자를 그대로 꺼낼 수 있다.<span class="why"><b>이음매에는 BamHI 자리가 다시 생기지 않습니다.</b> 서열이 GGATCC가 아니라 GGATCT이기 때문입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adearth/ae-detector.js"],
+  "short": "검출기와 신호 대 잡음비"
+}
+-->
+<style>
+#card-adearth-detector canvas { width: 100%; aspect-ratio: 4 / 3; }
+</style>
+<article class="card" id="card-adearth-detector">
+  <header class="card-head">
+    <span class="no"></span><h2>같은 망원경에 CCD를 달면 왜 훨씬 어두운 별까지 찍힐까?</h2><span class="kind">관측 기기 · 양자 효율 · 읽기 잡음 · 신호 대 잡음비</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="노출 시간(로그 눈금)에 따른 신호 대 잡음비. 세 검출기의 곡선과 지금 조건의 점, 포화 영역"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="검출기">
+          <button type="button" class="chip" data-k="ccd" aria-pressed="true">냉각 CCD</button><button type="button" class="chip" data-k="cmos" aria-pressed="false">CMOS</button><button type="button" class="chip" data-k="plate" aria-pressed="false">사진 건판</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">노출 시간 t = <output class="t-out">—</output></label>
+            <input class="t" type="range" min="-2" max="3.5" step="0.01" value="1" aria-label="노출 시간 (로그 눈금)"></div>
+          <div><label class="mono">별의 V 등급 = <output class="m-out">15.0</output></label>
+            <input class="m" type="range" min="4" max="21" step="0.1" value="15" aria-label="별의 겉보기 등급"></div>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">구경 D = <output class="dd-out">30</output> cm</label>
+            <input class="dd" type="range" min="10" max="200" step="1" value="30" aria-label="구경"></div>
+          <div class="presets" role="group" aria-label="하늘 밝기">
+            <button type="button" class="chip" data-sky="21.5" aria-pressed="true">어두운 하늘 21.5</button><button type="button" class="chip" data-sky="18.5" aria-pressed="false">도시 하늘 18.5</button>
+          </div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>별 신호 (전자)</dt><dd class="n-s">—</dd></div>
+          <div><dt>잡음 (전자)</dt><dd class="n-n">—</dd></div>
+          <div><dt>S/N</dt><dd class="n-sn">—</dd></div>
+          <div><dt>가장 밝은 화소 채움</dt><dd class="n-fw">—</dd></div>
+        </dl>
+        <p class="fig-note">V = 0인 별의 V 필터 광자 흐름을 약 8.8 × 10<sup>5</sup> 개/(s·cm²), 대기·광학계·필터 투과율을 0.6으로 둔 어림 계산입니다. 시상 2″, 화소 1″, 측광 구경 반지름 2″(약 12.6화소)로 둡니다. 검출기 값은 대표값입니다. CCD: QE 0.90, 읽기 잡음 5 e⁻, 암전류 0.01 e⁻/s, 우물 10만 e⁻. CMOS: QE 0.80, 1.5 e⁻, 0.05 e⁻/s, 5만 e⁻. 사진 건판: QE 약 0.01, 비선형이어서 포화 대신 감도가 떨어지는 효과를 모식으로 넣었습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>1980년대에 사진 건판을 CCD로 바꾸자, 같은 망원경으로 찍을 수 있는 가장 어두운 별이 몇 등급이나 내려갔습니다. 망원경은 그대로인데 검출기만 바꿨을 뿐입니다. 무엇이 달라진 걸까요?</li>
+      <li><span class="tag">복원</span>빛은 광자로 들어옵니다. 광자가 무작위로 도착하므로, 평균 N개를 센다면 그 값은 √N 정도 흔들립니다(포아송 잡음). 망원경이 모으는 빛의 양(집광력)은 구경의 제곱 D²에 비례합니다.</li>
+      <li><span class="tag">설명</span>CCD는 규소 화소마다 광전 효과로 생긴 전자를 전위 우물에 모아 두었다가, 노출이 끝나면 전하를 이웃 화소로 차례로 넘겨(전하 결합) 한 출구에서 셉니다. 검출기의 성능은 다음 값으로 정해집니다. <em>양자 효율</em>(QE, 들어온 광자 중 전자가 되는 비율), <em>선형성</em>(신호가 빛의 양에 비례하는가), <em>우물 깊이</em>(포화 전까지 모을 수 있는 전자 수), <em>읽기 잡음</em>(읽을 때마다 더해지는 잡음), <em>암전류</em>(빛 없이 열로 생기는 전자, 냉각하면 줄어듦). 별 신호 S와 하늘·암전류·읽기 잡음을 합치면 S/N = S / √(S + n<sub>pix</sub>(B<sub>하늘</sub> + B<sub>암</sub> + R²))입니다.</li>
+      <li><span class="tag">연결</span>노출이 아주 짧으면 읽기 잡음이 잡음을 지배해 S/N ∝ t이고, 길어지면 별이나 하늘의 포아송 잡음이 지배해 S/N ∝ √t가 됩니다. 이때 S ∝ QE·D²·t이므로 같은 S/N을 얻는 데 드는 시간은 1/(QE·D²)에 비례합니다. QE가 1 %에서 90 %로 오르는 것은 구경을 약 9.5배 키운 것과 같습니다. 적외선은 HgCdTe 같은 다른 반도체 배열, 전파는 안테나와 수신기, X선은 광자 하나하나를 세는 검출기를 씁니다.</li>
+      <li><span class="tag">적용</span>V = 15인 별을 CCD로 찍고 노출을 0.01초에서 늘리며 그래프의 기울기가 1에서 1/2로 바뀌는 곳을 찾으세요. 같은 별을 사진 건판으로 S/N = 10까지 찍으려면 몇 초가 필요한가요? 구경을 2배로 키우면 같은 S/N에 필요한 시간은 몇 분의 1이 되나요? 도시 하늘로 바꾸고 V = 19인 별을 찍어 보세요. 노출을 늘려도 S/N이 잘 오르지 않는 까닭은 무엇인가요? V = 6인 별은 몇 초부터 포화되나요?</li>
+      <li class="warn"><span class="tag">판단</span>“노출을 길게 할수록 언제나 좋다”는 생각은 틀립니다. 밝은 별은 우물이 차면 포화되어 측광에 쓸 수 없고, 하늘이 밝은 곳에서는 하늘의 잡음도 함께 커집니다. 긴 노출을 여러 장으로 나눠 더하면 포화는 피하지만 읽기 잡음이 장 수만큼 더해집니다. 이 카드의 수치는 대표적인 장비를 가정한 어림값이고, 실제 S/N은 시상, 대기 투명도, 평탄화 보정의 품질에 따라 달라집니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어두운 하늘 아래에서 아주 어두운 은하를 찍는데, 하늘 배경의 포아송 잡음이 잡음의 대부분을 차지합니다. 구경 1 m 망원경으로 1시간 노출해 얻은 S/N을 구경 2 m 망원경으로 얻으려면 몇 분 노출해야 할까요? (검출기는 같음)</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15분<span class="why"><b>맞습니다.</b> 별 신호와 하늘 신호가 모두 D²t에 비례하므로 S/N ∝ D√t입니다. D가 2배면 같은 S/N에 필요한 t는 1/4입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>30분<span class="why"><b>구경에 비례한다고 본 답입니다.</b> 모으는 빛의 양은 구경이 아니라 구경의 제곱에 비례합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3.75분<span class="why"><b>S/N이 신호에 비례한다고 본 답입니다.</b> 잡음도 √(신호)로 함께 커지므로 S/N은 신호의 제곱근에 비례합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

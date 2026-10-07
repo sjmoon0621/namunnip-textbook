@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adphy/me-drag.js"
+  ],
+  "short": "위치·속도·가속도 벡터와 공기 저항"
+}
+-->
+<style>
+#card-adphy-drag .nums { grid-template-columns: 1fr 1fr; }
+#card-adphy-drag .nums dd { font-size: 14px; }
+</style>
+<article class="card" id="card-adphy-drag">
+  <header class="card-head">
+    <span class="no"></span><h2>공기 저항이 있으면 포물선은 어떻게 찌그러질까?</h2><span class="kind">위치·속도·가속도 벡터 · 미분 · 운동 방정식</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽: 공의 궤적과 시각 t에서의 위치·속도·가속도 벡터, 점선은 진공에서의 궤적. 오른쪽: 속도 벡터 끝이 그리는 자취(호도그래프)"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="공기 저항">
+          <button type="button" class="chip" data-k="0" aria-pressed="false">진공</button>
+          <button type="button" class="chip" data-k="0.1" aria-pressed="true">약한 저항</button>
+          <button type="button" class="chip" data-k="0.4" aria-pressed="false">강한 저항</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">던지는 각 θ = <output class="ang-out">45</output>°</label>
+            <input class="ang" type="range" min="5" max="85" step="1" value="45" aria-label="던지는 각도"></div>
+          <div><label class="mono">처음 속력 v₀ = <output class="v-out">25</output> m/s</label>
+            <input class="v" type="range" min="5" max="35" step="0.5" value="25" aria-label="처음 속력"></div>
+          <div><label class="mono">저항 상수 k = b/m = <output class="k-out">0.10</output> /s</label>
+            <input class="k" type="range" min="0" max="0.6" step="0.01" value="0.1" aria-label="저항 상수"></div>
+          <div><label class="mono">시각 t = <output class="t-out">0.00</output> s</label>
+            <input class="t" type="range" min="0" max="1" step="0.002" value="0.3" aria-label="시각 (비행 시간 중 비율)"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>위치 r = (x, y)</dt><dd class="n-r">—</dd></div>
+          <div><dt>속도 v = dr/dt</dt><dd class="n-v">—</dd></div>
+          <div><dt>가속도 a = dv/dt</dt><dd class="n-a">—</dd></div>
+          <div><dt>도달 거리 (진공일 때) · 최적 각</dt><dd class="n-R">—</dd></div>
+        </dl>
+        <p class="legend"><span class="line-key" style="--c:#8d8d92"></span>위치 r <span class="line-key" style="--c:#3f6fa3"></span>속도 v <span class="line-key" style="--c:#d4493a"></span>가속도 a <span class="line-key dash" style="--c:#8d8d92"></span>진공 궤적</p>
+        <p class="fig-note">g = 9.8 m/s². 공기 저항을 속도에 비례하는 힘 −bv로 둔 모형(선형 저항)입니다. 실제 야구공·축구공의 저항은 속력의 제곱에 더 가깝습니다. 속도·가속도 화살표의 길이는 각각 0.4 s, 0.4 s² 동안의 변위로 그렸습니다(서로 다른 눈금).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>야구 중계에서 뜬공의 궤적을 보면 올라갈 때보다 떨어질 때가 더 가파릅니다. 교과서의 포물선은 좌우가 대칭인데, 무엇이 대칭을 깨뜨릴까요? 그리고 그 효과를 식으로 어떻게 계산할까요?</li>
+      <li><span class="tag">복원</span>비스듬히 던진 공은 수평 방향으로 등속, 연직 방향으로 등가속도 운동을 합니다. 순간 속도는 아주 짧은 시간 동안의 변위를 그 시간으로 나눈 값, 곧 위치를 시간에 대해 미분한 값입니다.</li>
+      <li><span class="tag">설명</span>위치를 벡터 <em>r</em>(t) = x(t)<b>i</b> + y(t)<b>j</b>로 쓰면 속도는 <em>v = dr/dt</em>, 가속도는 <em>a = dv/dt</em>입니다. 진공에서는 a = (0, −g)로 일정하므로 적분하면 v = v₀ + at, r = v₀t + ½at²가 나옵니다. 공기 저항 −b<b>v</b>가 더해지면 운동 방정식은 m<b>dv</b>/dt = m<b>g</b> − b<b>v</b>, 곧 <em>dv/dt = g − kv</em>(k = b/m)가 됩니다. 이 미분 방정식의 해는 v<sub>x</sub> = v<sub>0x</sub>e<sup>−kt</sup>, v<sub>y</sub> = (v<sub>0y</sub> + g/k)e<sup>−kt</sup> − g/k이고, 이를 한 번 더 적분하면 위치가 나옵니다.</li>
+      <li><span class="tag">연결</span>오른쪽 그림은 속도 벡터의 끝을 이은 자취(호도그래프)입니다. 가속도는 속도의 변화율이므로 이 자취의 접선 방향을 가리킵니다. 진공에서는 자취가 연직 직선이라 가속도가 늘 아래로 g입니다. 저항이 있으면 자취가 종단 속도 (0, −g/k)를 향하는 직선이 되고, 가속도는 아래쪽에 ‘속도와 반대 방향’ 성분이 더해집니다.</li>
+      <li><span class="tag">적용</span>‘약한 저항’에서 시각 막대를 끝까지 움직이며 가속도 화살표가 최고점에서도 연직 아래가 아닌지 확인하세요. 각도를 바꿔 가며 최적 각이 45°보다 작아지는지, k를 0.4로 올리면 궤적의 끝이 얼마나 가팔라지는지 보세요. 진공에서는 호도그래프가 어떤 모양인가요?</li>
+      <li class="warn"><span class="tag">판단</span>“최고점에서 가속도는 0이다”, “가속도는 속도 방향을 향한다”는 흔한 오개념입니다. 가속도는 속도의 <em>변화</em> 방향을 가리킵니다. 또 선형 저항은 느린 물체(작은 입자, 점성이 큰 유체)에 맞는 모형입니다. 빠른 공에는 저항이 v²에 비례해 식을 손으로 풀 수 없으므로, 짧은 시간 간격으로 v와 r을 차례로 고치는 수치 계산을 씁니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">속도에 비례하는 공기 저항을 받는 공이 궤적의 최고점을 지나고 있습니다. 이 순간 공의 가속도에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>크기는 g보다 조금 크고, 방향은 연직 아래에서 진행 반대쪽으로 기울어 있다<span class="why"><b>맞습니다.</b> 최고점에서 속도는 수평이므로 저항 −kv도 수평 뒤쪽입니다. 중력 g와 합치면 크기는 √(g² + k²v²)로 g보다 크고, 방향은 뒤쪽 아래입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연직 속도가 0이므로 가속도도 0이다<span class="why"><b>속도와 가속도를 혼동했습니다.</b> 연직 속도는 이 순간 0이지만 계속 줄고 있으므로 변화율은 0이 아닙니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공기 저항이 있어도 가속도는 정확히 연직 아래로 g이다<span class="why"><b>진공일 때만 맞습니다.</b> 저항은 속도에 비례하므로 수평으로 움직이는 동안 수평 가속도를 만듭니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

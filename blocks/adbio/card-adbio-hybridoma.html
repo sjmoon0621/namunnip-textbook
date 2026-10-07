@@ -1,0 +1,73 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adbio/c4-hybridoma.js"],
+  "short": "하이브리도마와 HAT 선택"
+}
+-->
+<style>
+#card-adbio-hybridoma .cv-plate { width: 100%; aspect-ratio: 3 / 2; display: block; margin-top: 14px; }
+#card-adbio-hybridoma .sub { margin: 14px 0 0; font-size: 13px; color: var(--ink-2); }
+</style>
+<article class="card" id="card-adbio-hybridoma">
+  <header class="card-head">
+    <span class="no"></span><h2>항체를 만드는 세포와 죽지 않는 암세포를 합친 뒤, 원하는 세포만 어떻게 골라낼까?</h2><span class="kind">세포 융합 · 하이브리도마 · HAT 선택과 한계 희석 · 모식</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide cv-grow" aria-label="융합 뒤 배양 일수에 따른 다섯 종류 세포 수의 변화(로그 눈금)"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="배지">
+          <button type="button" class="chip" data-med="normal" aria-pressed="false">일반 배지</button>
+          <button type="button" class="chip" data-med="hat" aria-pressed="true">HAT 배지</button>
+        </div>
+        <div class="presets" role="group" aria-label="골수종 세포주">
+          <button type="button" class="chip" data-my="neg" aria-pressed="true">HGPRT 결핍 골수종</button>
+          <button type="button" class="chip" data-my="pos" aria-pressed="false">HGPRT 정상 골수종</button>
+        </div>
+        <label class="mono">융합 뒤 배양 <output class="d-out">10</output>일째</label>
+        <input class="day" type="range" min="0" max="14" step="0.5" value="10" aria-label="배양 일수">
+        <p class="legend">
+          <span class="line-key" style="--c:#3f6fa3"></span>B 세포
+          <span class="line-key" style="--c:#8d8d92"></span>B–B 융합
+          <span class="line-key" style="--c:#b5532f"></span>골수종
+          <span class="line-key" style="--c:#e0a02a"></span>골수종–골수종 융합
+          <span class="line-key" style="--c:#3b7c2a"></span>하이브리도마
+        </p>
+        <dl class="nums">
+          <div><dt>하이브리도마 (상대 수)</dt><dd class="n-h">—</dd></div>
+          <div><dt>골수종 계열 (상대 수)</dt><dd class="n-m">—</dd></div>
+          <div><dt>살아 있는 세포 중 하이브리도마</dt><dd class="n-f">—</dd></div>
+        </dl>
+        <p class="sub"><b>② 한 세포에서 시작한 클론 얻기</b> — HAT에서 살아남은 세포를 96홈 판에 희석해 나눠 담습니다.</p>
+        <canvas class="cv-plate" aria-label="96홈 판의 각 홈에 들어간 세포 수"></canvas>
+        <label class="mono">한 홈에 들어가는 평균 세포 수 λ = <output class="l-out">1.0</output></label>
+        <input class="lam" type="range" min="0.1" max="4" step="0.1" value="1" aria-label="홈당 평균 세포 수">
+        <div class="lab-btns"><button type="button" class="chip go redo">다시 나눠 담기</button></div>
+        <dl class="nums">
+          <div><dt>세포가 자란 홈</dt><dd class="p-g">—</dd></div>
+          <div><dt>그중 세포 1개에서 시작</dt><dd class="p-1">—</dd></div>
+          <div><dt>이론값 P(1개 | 자람)</dt><dd class="p-t">—</dd></div>
+        </dl>
+        <p class="fig-note">모식 모형입니다. 처음 세포 수는 생쥐 비장 세포 약 10<sup>8</sup>개와 골수종 세포 2 × 10<sup>7</sup>개를 PEG로 융합한 실험의 자릿수에 맞춘 상대값이고, 쓸 만한 하이브리도마가 10<sup>5</sup>개 가운데 1개꼴로 생긴다고 두었습니다. 배가 시간 약 1일, 배양 용량의 한계를 넣었습니다. 홈에 들어가는 세포 수는 푸아송 분포로 뽑았습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>항원을 주사한 생쥐의 B 세포는 원하는 항체를 만들지만, 접시에서는 며칠 만에 죽습니다. 골수종(암이 된 형질 세포)은 끝없이 분열하지만 원하는 항체를 만들지 못합니다. 두 세포를 합친 세포만 골라 키울 수 있다면 한 종류의 항체를 무한히 얻을 수 있습니다. 그런데 융합에 성공하는 세포는 십만 개에 하나꼴입니다. 나머지를 어떻게 없앨까요?</li>
+      <li><span class="tag">복원</span>B 세포 하나는 한 가지 항원 결정기에만 붙는 항체를 만듭니다. 세포는 DNA 재료인 뉴클레오타이드를 두 길로 얻습니다. 하나는 작은 분자로부터 처음부터 짓는 <em>새로 합성 경로</em>이고, 다른 하나는 이미 있는 염기(하이포잔틴)와 뉴클레오사이드(티미딘)를 재활용하는 <em>재활용 경로</em>입니다. 재활용 경로에는 HGPRT(하이포잔틴–구아닌 포스포리보실 전달 효소)와 TK(티미딘 인산화 효소)가 필요합니다.</li>
+      <li><span class="tag">설명</span>폴리에틸렌 글라이콜(PEG)이나 전기 펄스로 두 세포의 막을 합치면 핵 두 개를 가진 세포가 되고, 분열하면서 염색체가 한 핵에 모입니다. 이것이 <em>세포 융합</em>입니다. HAT 배지는 하이포잔틴(H), 아미노프테린(A), 티미딘(T)을 넣은 배지입니다. 아미노프테린은 새로 합성 경로를 막으므로, 세포는 재활용 경로로만 살아야 합니다. HGPRT가 없는 골수종과 골수종끼리 융합한 세포는 죽습니다. B 세포와 B–B 융합 세포는 HGPRT가 있지만 분열 능력이 없어 저절로 사라집니다. B 세포의 HGPRT 유전자와 골수종의 무한 증식 능력을 함께 가진 <em>하이브리도마</em>만 남습니다.</li>
+      <li><span class="tag">연결</span>HAT에서 살아남은 세포는 여러 B 세포에서 온 섞인 집단입니다. 그래서 희석해 홈마다 세포 하나가 들어가게 나눠 담고(<em>한계 희석</em>), 효소 결합 면역 분석(ELISA)으로 원하는 항체를 내는 클론을 고릅니다. 홈에 들어가는 세포 수가 평균 λ인 푸아송 분포를 따르면, 세포가 자란 홈이 한 세포에서 시작했을 확률은 <em>λe<sup>−λ</sup> / (1 − e<sup>−λ</sup>)</em>입니다. 이렇게 얻은 항체가 <em>단일 클론 항체</em>이며, 쾰러와 밀스타인이 1975년에 처음 만들었습니다(1984년 노벨 생리의학상).</li>
+      <li><span class="tag">적용</span>일반 배지와 HAT 배지에서 10일째 하이브리도마의 비율을 비교하세요. 이번에는 HGPRT가 정상인 골수종을 써 보세요. 선택이 왜 실패하나요? 아래 판에서 λ를 3, 1, 0.3으로 바꾸며 ‘세포 1개에서 시작’의 비율을 이론값과 비교하세요. 단일 클론을 확실히 얻으려면 λ를 어떻게 정하고, 그 대가는 무엇인가요?</li>
+      <li class="warn"><span class="tag">판단</span>HAT 선택은 골수종을 없애 줄 뿐 원하는 항체를 내는 클론을 골라 주지는 않습니다. 그 일은 ELISA 같은 선별 검사가 합니다. λ를 낮춰도 단일 클론일 확률은 1이 되지 않으므로 실제로는 한계 희석을 두세 번 되풀이합니다(재클론화). 또 생쥐 항체를 사람에게 반복해 주면 면역계가 이를 이물질로 공격하므로, 오늘날 치료용 항체는 사람화 항체나 완전 사람 항체로 만듭니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">HGPRT는 정상이지만 TK(티미딘 인산화 효소)가 없는 골수종 세포주를 B 세포와 융합했습니다. HAT 배지에서 어떤 일이 일어날까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>골수종과 골수종끼리 융합한 세포는 죽고, 하이브리도마는 B 세포의 TK로 살아남는다.<span class="why"><b>맞습니다.</b> 아미노프테린은 퓨린과 피리미딘(티미딘) 새로 합성을 모두 막으므로, 티미딘을 재활용할 TK가 없으면 살 수 없습니다. 하이브리도마는 B 세포에서 TK 유전자를 받습니다. 결핍 효소가 HGPRT이든 TK이든 원리는 같습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>HGPRT가 정상이므로 골수종이 살아남아 선택이 실패한다.<span class="why"><b>재활용 경로 하나만으로는 부족합니다.</b> HAT에서는 퓨린과 티미딘을 모두 재활용해야 하므로 HGPRT와 TK가 둘 다 있어야 삽니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>B 세포도 함께 살아남아 하이브리도마와 섞인다.<span class="why"><b>B 세포는 효소는 있지만 배양 접시에서 분열하지 못해 며칠 안에 사라집니다.</b> 그래서 B 세포를 없애는 약물은 따로 필요 없습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

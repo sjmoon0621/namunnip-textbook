@@ -1,0 +1,276 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>축전기의 연결과 유전체 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="평행판 축전기를 직렬과 병렬로 연결할 때 전기 용량의 변화를 계산하고, 평행판 축전기에서 유전체가 전기장과 전기 용량을 바꾸는 역할을 설명한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-phy-capacitor .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 6px 0 4px; }
+    #card-phy-capacitor .row .mono { color: var(--ink-3); }
+    #card-phy-capacitor .btn { padding: 4px 11px; font-size: 12.5px; background: var(--card); color: var(--ink); margin-left: auto; }
+    #card-phy-capacitor .btn:hover { background: var(--paper-2); }
+    #card-phy-capacitor input:disabled { opacity: .45; }
+    #card-adphy-capnet canvas { width: 100%; aspect-ratio: 16 / 9; }
+  </style>
+</head>
+<body data-course="adphy" data-sec="2-2">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>축전기의 연결과 유전체</h1>
+    <p class="lead">휴대 전화 기판에는 쌀알보다 작은 축전기가 수백 개 붙어 있고, 그 속은 얇은 세라믹 유전체로 채워져 있습니다. 축전기를 여러 개 이으면 용량은 어떻게 합쳐지고, 극판 사이의 물질은 무슨 일을 할까요? 가우스 법칙으로 얻은 평행판 전기장에서 출발해 답을 계산해 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">평행판 사이의 전기장 E = σ/ε₀</span><span class="p">전기 용량 C = Q/V</span><span class="p">유전 분극</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-phy-capacitor"><span class="mono">2.2.1</span>축전기는 전기 에너지를 어떻게 저장할까?</a></li>
+        <li><a href="#card-emq-polarize"><span class="mono">2.2.2</span>전하를 띠지 않은 물체는 왜 대전체에 끌려올까?</a></li>
+        <li><a href="#card-adphy-capnet"><span class="mono">2.2.3</span>축전기 연결과 유전체</a></li>
+        <li><a href="#card-labphy-capacitor"><span class="mono">2.2.4</span>포일과 종이로 만든 축전기로 C = εA/d를 확인할 수 있을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-2-2">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-phy-capacitor">
+        <header class="card-head">
+          <span class="no">2.2.1</span><h2>축전기는 전기 에너지를 어떻게 저장할까?</h2><span class="kind">전기 용량 · 유전체 · Q–V 그래프</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="전지와 스위치에 연결된 평행판 축전기의 옆모습과, 전하량-전압 그래프"></canvas>
+            <div class="ctl">
+              <div class="row">
+                <span class="mono">전지</span>
+                <button class="chip" data-conn="1">연결</button><button class="chip" data-conn="0">분리</button>
+                <button class="btn set-ref" type="button">지금 상태를 기준으로</button>
+              </div>
+              <div class="row">
+                <span class="mono">판 사이</span>
+                <button class="chip" data-k="1">공기 1.0</button><button class="chip" data-k="3.5">종이 3.5</button><button class="chip" data-k="4.7">파이렉스 유리 4.7</button><button class="chip" data-k="5.4">운모 5.4</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">판 넓이 A = <output class="area-out">100</output> cm²</label>
+                  <input class="area" type="range" min="50" max="400" step="10" value="100" aria-label="판 넓이"></div>
+                <div><label class="mono">판 간격 d = <output class="gap-out">1.0</output> mm</label>
+                  <input class="gap" type="range" min="0.5" max="5" step="0.1" value="1" aria-label="판 간격"></div>
+              </div>
+              <label class="mono">전지 전압 = <output class="volt-out">9</output> V</label>
+              <input class="volt" type="range" min="0" max="12" step="0.5" value="9" aria-label="전지 전압">
+              <dl class="nums n4">
+                <div><dt>전기 용량 C</dt><dd class="n-c">—</dd></div>
+                <div><dt>전하량 Q</dt><dd class="n-q">—</dd></div>
+                <div><dt>두 판의 전압 V</dt><dd class="n-v">—</dd></div>
+                <div><dt>저장 에너지 U</dt><dd class="n-u">—</dd></div>
+              </dl>
+              <p class="fig-note">판 사이 전기장 <span class="n-e">—</span> · 저장 에너지는 기준 상태의 <span class="n-ratio">—</span>. 판의 + · − 표시 개수와 전기장 선의 수는 크기를 나타낸 모식이고, 유전체 안쪽의 작은 부호는 분극으로 생긴 전하입니다. 괄호 안 숫자는 유전 상수입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>카메라 플래시는 건전지로 몇 초 동안 충전한 뒤, 수천분의 1초 만에 번쩍 빛을 냅니다. 전지와 전구 사이에 있는 축전기는 전기 에너지를 어떤 꼴로 담아 둘까요?</li>
+            <li><span class="tag">복원</span>평행판 사이의 전기장은 <span class="formula">E = V / d</span>로 고릅니다. 전하 q를 전위차 V만큼 옮기려면 qV만큼 일을 해야 합니다.</li>
+            <li><span class="tag">설명</span>축전기를 전지에 이으면 한 판에 +Q, 다른 판에 −Q가 모이고, Q는 전압에 비례합니다. 그 비례 상수가 전기 용량 <span class="formula">C = Q / V</span>입니다. 평행판이면 <span class="formula">C = κε₀A / d</span>로, 판이 넓을수록, 간격이 좁을수록, 유전체를 넣을수록 커집니다.</li>
+            <li><span class="tag">연결</span>처음 전하는 쉽게 옮겨지지만, 전하가 쌓일수록 전압이 올라가 다음 전하를 옮기기가 어려워집니다. 그래서 들인 일의 합은 QV가 아니라 Q–V 그래프의 삼각형 넓이 <span class="formula">U = ½QV = ½CV²</span>입니다. 이 에너지는 판 사이의 전기장에 담겨 있습니다.</li>
+            <li><span class="tag">적용</span>전지에 연결한 채로 간격 d를 넓혀 보세요. 전하가 빠져나가고 에너지도 줄어듭니다. 이번에는 ‘분리’를 누른 뒤 똑같이 넓혀 보세요. 전하는 그대로인데 전압과 에너지가 커집니다. 늘어난 에너지는 어디서 왔을까요?</li>
+            <li class="warn"><span class="tag">판단</span>결과가 반대인 까닭은 고정된 양이 다르기 때문입니다. 연결되어 있으면 V가, 분리되어 있으면 Q가 고정됩니다. 분리한 뒤 늘어난 에너지는 서로 당기는 두 판을 떼어 놓느라 손이 한 일입니다. 또 유전체는 전하를 ‘더 담는 물질’이 아닙니다. 분극된 전하가 판의 전기장을 일부 상쇄해서, 같은 전압에 더 많은 전하가 모이게 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">전지에 연결된 평행판 축전기의 판 사이를, 전지를 연결한 채로 유전 상수 2인 물질로 가득 채웠습니다. 맞는 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전하량도 저장 에너지도 2배가 된다.<span class="why"><b>맞습니다.</b> 전압이 V로 고정된 채 C가 2배이므로 Q = CV도, U = ½CV²도 2배입니다. 늘어난 전하와 에너지는 전지가 공급합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>전하량은 그대로이고 저장 에너지는 절반이 된다.<span class="why"><b>전지를 뗀 경우의 답입니다.</b> 분리되어 있다면 Q가 고정되어 U = Q²/2C가 절반이 됩니다. 이 문제에서는 전지가 연결되어 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 판의 전압이 절반으로 줄어든다.<span class="why"><b>이것도 분리된 경우입니다.</b> 전지에 연결되어 있는 한 두 판의 전압은 전지 전압과 같습니다. ‘연결’과 ‘분리’를 바꿔 가며 유전체를 넣어 보세요.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-emq-polarize">
+        <header class="card-head">
+          <span class="no">2.2.2</span><h2>전하를 띠지 않은 물체는 왜 대전체에 끌려올까?</h2><span class="kind">정전기 유도 · 유전 분극</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="대전된 막대 옆에 놓인 금속 공 또는 절연체 공 속의 전하 분포"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="물체의 종류">
+                <button type="button" class="chip" data-m="metal" aria-pressed="true">금속 (도체)</button>
+                <button type="button" class="chip" data-m="diel" aria-pressed="false">플라스틱·종이 (절연체)</button>
+                <button type="button" class="chip" data-m="ground" aria-pressed="false">금속 + 접지선 연결</button>
+              </div>
+              <div class="presets" role="group" aria-label="막대의 전하">
+                <button type="button" class="chip" data-s="-1" aria-pressed="true">막대 (−)</button>
+                <button type="button" class="chip" data-s="1" aria-pressed="false">막대 (+)</button>
+              </div>
+              <label class="mono">막대와 공 사이 거리 = <output class="d-out">6</output> cm</label>
+              <input class="d" type="range" min="2" max="15" step="0.5" value="6" aria-label="막대와 공 사이 거리">
+              <dl class="nums">
+                <div><dt>공 전체의 전하</dt><dd class="n-q">—</dd></div>
+                <div><dt>공이 받는 힘</dt><dd class="n-f">—</dd></div>
+              </dl>
+              <p class="fig-note">힘의 상대 크기는 점전하 옆 작은 공에 대한 근사 F ∝ 1/d⁵ (도체), 유전체는 여기에 (ε−1)/(ε+2) (ε = 3으로 둠)를 곱해 거리 6 cm 금속 공을 1로 맞춘 값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>문지른 빨대를 가까이 대면 전하를 띠지 않은 종잇조각이 달라붙고, 빈 알루미늄 캔이 굴러옵니다. 공 전체의 전하는 0인데 왜 끌려올까요?</li>
+            <li><span class="tag">복원</span>같은 종류의 전하는 밀어내고 다른 종류는 끌어당기며, 힘은 거리가 가까울수록 셉니다. 금속에는 원자에 묶이지 않고 움직이는 자유 전자가 많고, 절연체에는 거의 없습니다.</li>
+            <li><span class="tag">설명</span>대전체를 금속에 가까이 하면 자유 전자가 끌려오거나 밀려나 가까운 쪽에는 대전체와 반대 전하, 먼 쪽에는 같은 전하가 모입니다. 이것이 <em>정전기 유도</em>입니다. 절연체에서는 전자가 멀리 움직이지 못하지만, 분자마다 전자 구름이 살짝 치우쳐 (+)와 (−)가 약간 갈라지는데, 이것이 <em>유전 분극</em>입니다. 어느 경우든 반대 전하가 대전체에 더 가까이 있으므로, 끌어당기는 힘이 미는 힘보다 커서 물체가 끌려옵니다.</li>
+            <li><span class="tag">연결</span>금속에 접지선을 이으면 먼 쪽으로 밀려난 전하가 땅으로 빠져나가, 접지선을 뗀 뒤에는 금속이 대전체와 반대 전하를 띱니다(유도에 의한 대전). 유전 분극은 축전기 사이에 유전체를 넣어 전기 용량을 키우는 데 쓰이고, 정전기 유도는 레이저 프린터·복사기의 토너 부착, 공장 굴뚝의 먼지를 모으는 전기 집진기, 터치스크린 등에 쓰입니다. 주유소의 정전기 방지 패드는 반대로 몸의 전하를 땅으로 흘려보냅니다.</li>
+            <li><span class="tag">적용</span>막대를 가까이 가져가며 끌림이 얼마나 빨리 커지는지 보세요. 같은 거리에서 금속과 절연체 중 어느 쪽이 더 세게 끌려오나요? 접지선을 연결했을 때 공의 전체 전하는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>“대전체에 끌려오는 물체는 반대 전하를 띠고 있다”는 결론은 성급합니다. 전하를 띠지 않은 물체도 유도나 분극 때문에 끌려옵니다. 물체가 대전되었는지 확인하려면 끌림이 아니라 밀어냄을 보아야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">(−)로 대전된 막대를 금속 공에 가까이 댄 채 공을 잠시 접지했다가 접지선을 떼고, 그다음 막대를 치웠습니다. 공은 어떤 전하를 띨까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(+) 전하<span class="why"><b>맞습니다.</b> 막대가 밀어낸 전자가 땅으로 빠져나갔으므로, 전자가 모자라 (+)가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(−) 전하<span class="why"><b>막대의 전하가 공으로 옮겨 간 것이 아닙니다.</b> 막대와 공은 닿지 않았습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전하를 띠지 않는다<span class="why"><b>접지선을 통해 전자가 빠져나간 채로 끊겼으므로</b> 전체 전하는 0이 아닙니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adphy-capnet">
+        <header class="card-head">
+          <span class="no">2.2.3</span><h2>유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?</h2><span class="kind">축전기의 직렬·병렬 연결 · 유전체와 속박 전하 · 에너지</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="전지와 두 평행판 축전기의 회로. 극판 사이의 세로선은 전기력선, 극판 위아래의 부호는 자유 전하, 주황 영역은 유전체. 아래에 각 축전기의 전기 용량 · 전하량 · 전압"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="연결">
+                <button type="button" class="chip" data-net="series" aria-pressed="true">직렬 연결</button>
+                <button type="button" class="chip" data-net="parallel" aria-pressed="false">병렬 연결</button>
+              </div>
+              <div class="presets" role="group" aria-label="유전체를 끼우는 방식">
+                <button type="button" class="chip" data-mode="side" aria-pressed="true">C₂: 옆에서 밀어 넣기</button>
+                <button type="button" class="chip" data-mode="slab" aria-pressed="false">C₂: 얇은 판 깔기</button>
+              </div>
+              <div class="presets" role="group" aria-label="전지">
+                <button type="button" class="chip" data-link="on" aria-pressed="true">전지 연결 유지</button>
+                <button type="button" class="chip" data-link="off" aria-pressed="false">충전 후 전지 떼기</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">C₁ 간격 = <output class="d1-out">2.0</output> mm</label>
+                <input class="d1" type="range" min="1" max="5" step="0.1" value="2" aria-label="C1 극판 간격"></div>
+                <div><label class="mono">C₂ 간격 = <output class="d2-out">2.0</output> mm</label>
+                <input class="d2" type="range" min="1" max="5" step="0.1" value="2" aria-label="C2 극판 간격"></div>
+                <div><label class="mono">유전 상수 κ = <output class="k-out">3.0</output></label>
+                <input class="k" type="range" min="1" max="10" step="0.1" value="3" aria-label="유전 상수"></div>
+                <div><label class="mono">채운 비율 = <output class="x-out">0</output> %</label>
+                <input class="x" type="range" min="0" max="100" step="1" value="0" aria-label="유전체로 채운 비율"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>합성 용량</dt><dd class="n-c">—</dd></div>
+                <div><dt>전지 쪽 전하</dt><dd class="n-q">—</dd></div>
+                <div><dt>전체 전압</dt><dd class="n-v">—</dd></div>
+                <div><dt>저장 에너지</dt><dd class="n-u">—</dd></div>
+              </dl>
+              <p class="fig-note n-b"></p>
+              <p class="fig-note">극판 넓이 100 cm²(10 cm × 10 cm), 전지 12 V, ε₀ = 8.85×10⁻¹² F/m. 가장자리 효과는 무시했습니다. 전기력선 수는 전기장 세기에, 극판의 부호 수는 자유 전하 밀도에 비례하게 그렸습니다(모식).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>극판 사이에 유리나 플라스틱을 끼우면 전기 용량이 κ배가 된다고 배웠습니다. 그런데 유전체가 틈의 절반만 채운다면, 그 절반을 어느 방향으로 채우느냐에 따라 결과가 같을까요?</li>
+            <li><span class="tag">복원</span>평행판 축전기의 전기 용량은 <em>C = ε₀A/d</em>이고, 극판 사이의 전기장은 E = σ/ε₀ = V/d로 고릅니다(가장자리 효과 무시). 저장 에너지는 U = ½QV = ½CV² = Q²/2C입니다.</li>
+            <li><span class="tag">설명</span><em>직렬</em>로 연결하면 가운데 도선과 극판은 고립되어 있어 알짜 전하가 0이므로 두 축전기의 전하량이 같고, 전압이 나뉩니다: 1/C = 1/C₁ + 1/C₂. <em>병렬</em>로 연결하면 전압이 같고 전하량이 나뉩니다: C = C₁ + C₂. 유전체 속 분자는 분극해 표면에 속박 전하를 만들고, 이것이 자유 전하의 전기장을 일부 상쇄해 같은 자유 전하에서 전기장을 1/κ로 줄입니다. 그래서 같은 전압에 더 많은 전하가 실립니다.</li>
+            <li><span class="tag">연결</span>옆에서 넓이 비율 x만큼 밀어 넣으면 두 부분의 전압이 같으므로 <em>병렬</em>입니다: C = (ε₀A/d)[(1 − x) + κx]. 이때 전기장은 두 부분이 같고, 유전체 쪽 극판에 자유 전하가 κ배로 몰립니다. 두께 비율 x의 판을 깔면 두 층에 같은 전하가 지나므로 <em>직렬</em>입니다: C = ε₀A/[d(1 − x) + dx/κ]. 이때는 자유 전하가 고르고, 유전체 속 전기장이 1/κ로 작습니다. 둘 다 x = 1이면 κε₀A/d로 같아집니다.</li>
+            <li><span class="tag">적용</span>직렬에서 C₂에 유전체를 넣으면 C₁의 전압은 오르나요, 내리나요? 같은 κ, 같은 x = 50 %에서 두 방식의 C₂를 비교하고 어느 쪽이 더 큰지 확인하세요. 그다음 ‘충전 후 전지 떼기’를 누르고 유전체를 넣거나 빼며 에너지가 어떻게 변하는지, 전지를 연결한 채로 할 때와 비교하세요.</li>
+            <li class="warn"><span class="tag">판단</span>“유전체를 넣으면 에너지가 늘어난다”는 조건에 따라 틀립니다. 전지를 떼면 Q가 일정해 U = Q²/2C가 <em>줄고</em>, 줄어든 에너지는 유전체를 극판 사이로 끌어당기는 일이 됩니다. 전지를 연결한 채면 U = ½CV²가 늘지만, 전지는 그 두 배의 일(QV)을 합니다. 또 κ는 유전체가 견딜 수 있는 최대 전기장(절연 내력)을 넘으면 의미가 없어지며, 공기는 약 3 MV/m에서 방전합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">같은 공기 축전기 두 개(각 C)를 직렬로 12 V 전지에 연결했습니다. 연결을 유지한 채 한쪽 극판 사이를 κ = 3인 유전체로 완전히 채우면, 채우지 않은 축전기의 전압은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>6 V 그대로<span class="why"><b>병렬처럼 생각한 답입니다.</b> 직렬에서는 두 축전기의 전하량이 같아야 하므로 용량이 바뀌면 전압 분배가 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>9 V<span class="why"><b>맞습니다.</b> Q가 같으므로 V는 1/C에 비례하고, 1/C : 1/3C = 3 : 1로 12 V가 9 V와 3 V로 나뉩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3 V<span class="why"><b>비례 관계를 거꾸로 쓴 답입니다.</b> 용량이 커진 쪽(유전체)이 오히려 작은 전압을 나눠 가집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labphy-capacitor">
+        <header class="card-head">
+          <span class="no">2.2.4</span><h2>포일과 종이로 만든 축전기로 C = εA/d를 확인할 수 있을까?</h2><span class="kind">실험 · 평행판 축전기 · 전기 용량계 · 유전율</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="알루미늄 포일 극판 사이에 종이를 끼운 축전기의 위 모습과 단면, 전기 용량계 표시"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">끼운 장수 n = <output class="n-out">2</output> 장</label>
+                  <input class="n" type="range" min="1" max="10" step="1" value="2" aria-label="극판 사이에 끼운 유전체 장수"></div>
+                <div><label class="mono">포일 한 변 = <output class="s-out">20</output> cm</label>
+                  <input class="s" type="range" min="10" max="30" step="5" value="20" aria-label="정사각형 포일 극판의 한 변 길이"></div>
+              </div>
+              <div class="presets diel" role="group" aria-label="유전체"><span class="mono small dim">유전체</span><button class="chip" data-d="paper" aria-pressed="true">복사 용지</button><button class="chip" data-d="pet" aria-pressed="false">OHP 필름</button>
+                <span class="mono small dim">그래프</span><button class="chip" data-m="d" aria-pressed="true">C–1/d</button><button class="chip" data-m="a" aria-pressed="false">C–A</button></div>
+              <div class="lab-btns"><button class="chip go rec" type="button">용량 측정·기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip press" type="button" aria-pressed="true">책으로 누르기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="기록한 전기 용량 그래프와 맞춤 직선"></canvas>
+              <dl class="nums"><div><dt>기울기</dt><dd class="n-a">—</dd></div><div><dt>절편</dt><dd class="n-b">—</dd></div><div><dt>구한 비유전율 εᵣ = ε/ε₀</dt><dd class="n-e">—</dd></div></dl>
+              <p class="fig-note">유전체 한 장의 두께는 마이크로미터로 잰 0.100 mm입니다. 전기 용량계는 2 nF 이하에서 0.001 nF, 20 nF 이하에서 0.01 nF까지 읽고 ±0.5%쯤 흔들립니다. 측정 도선 자체에도 수십 pF의 용량이 있습니다. C–1/d 그래프는 지금 포일 크기의 기록만, C–A 그래프는 지금 장수의 기록만 씁니다. 유전체의 비유전율은 화면에 나오지 않습니다. ε₀ = 8.85 × 10⁻¹² F/m.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>평행판 축전기의 전기 용량은 극판 넓이 A에 비례하고 극판 사이 거리 d에 반비례한다고 배웠습니다. 집에서 만든 축전기에서도 그렇게 될까요? 그래프로 종이의 유전율까지 구할 수 있을까요?</li>
+            <li><span class="tag">복원</span>극판에 전하 ±Q가 있으면 사이의 전기장은 E = Q/(εA)이고 전위차는 V = Ed입니다. 그래서 C = Q/V = <em>εA/d</em>입니다. 유전체를 넣으면 ε = εᵣε₀로 커져 용량이 εᵣ배가 됩니다.</li>
+            <li><span class="tag">설계</span>d는 끼운 종이 장수로 바꾸고(한 장 0.100 mm), A는 포일을 정사각형으로 잘라 바꿉니다. d를 바꾸는 동안 A와 유전체 종류, 누르는 힘을 통제하고, A를 바꾸는 동안 장수를 통제합니다. 종이는 극판보다 2 cm 이상 크게 잘라 두 포일이 닿지 않게 합니다.</li>
+            <li><span class="tag">분석</span>C–1/d 그래프는 기울기가 εA인 직선이므로 ε = 기울기/A입니다. C–A 그래프의 기울기는 ε/d입니다. 두 그래프 모두 원점을 조금 벗어난 절편이 남는데, 측정 도선과 극판 가장자리 바깥으로 휘어 나가는 전기장(가장자리 효과)이 더하는 용량입니다. 절편을 두고 직선을 맞추면 이 몫이 기울기를 흐리지 않습니다.</li>
+            <li><span class="tag">측정</span>포일 20 cm에서 장수를 1장부터 8장까지 바꿔 재고 C–1/d 그래프에서 εᵣ을 구하세요. 다음에 장수를 2장으로 두고 포일 크기를 바꿔 C–A 그래프를 그려 같은 εᵣ이 나오는지 비교하세요. "책으로 누르기"를 끄고 다시 재면 무엇이 달라지나요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>포일이 구겨져 생긴 공기 틈은 d를 늘리는 계통 오차라 평균을 내도 사라지지 않습니다. 얇을수록(장수가 적을수록) 틈의 몫이 커서 1/d가 큰 쪽 점이 아래로 처집니다. 종이가 습기를 먹으면 εᵣ이 달라지므로 같은 날 같은 종이로 잽니다. 포일 가장자리에 손을 베지 않게 하고, 용량계 외의 전원(특히 가정용 전기)에는 절대 연결하지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">포일 한 변 20 cm, 종이 2장으로 만든 축전기가 4.0 nF였습니다. 포일 한 변을 30 cm로 바꾸고 종이를 3장 끼우면 대략 얼마일까요? (가장자리 효과와 도선 용량은 무시)</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4.0 nF<span class="why"><b>한 변과 장수가 모두 1.5배라 그대로라고 생각하기 쉽습니다.</b> 하지만 넓이는 한 변의 제곱이라 2.25배가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>6.0 nF<span class="why"><b>맞습니다.</b> A는 (30/20)² = 2.25배, d는 1.5배이므로 C는 2.25/1.5 = 1.5배, 6.0 nF입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>13.5 nF<span class="why"><b>d가 커지는 효과를 곱했습니다.</b> 전기 용량은 d에 반비례하므로 1.5로 나눠야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/phy/em-capacitor.js"></script>
+<script src="../../js/cards/emq/e-polarize.js"></script>
+<script src="../../js/cards/adphy/em-capnet.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labphy/capacitor.js"></script>
+</body>
+</html>

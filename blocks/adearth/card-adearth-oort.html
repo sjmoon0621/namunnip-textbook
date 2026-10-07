@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adearth/ae-oort.js"],
+  "short": "태양 부근 별의 운동과 오르트 상수"
+}
+-->
+<style>
+#card-adearth-oort .lab-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 6px 0 2px; }
+#card-adearth-oort .lab-row .btn { padding: 6px 12px; font-size: 13px; }
+</style>
+<article class="card" id="card-adearth-oort">
+  <header class="card-head">
+    <span class="no"></span><h2>태양 근처 별들의 움직임만으로 우리은하의 회전 속도를 알 수 있을까?</h2><span class="kind">별의 시선 속도와 접선 속도 · 차등 회전 · 오르트 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide cv-r" aria-label="은하 경도에 따른 별들의 시선 속도 분포와 맞춘 사인 곡선"></canvas>
+      <canvas class="cv-wide cv-t" aria-label="은하 경도에 따른 별들의 접선 속도를 거리로 나눈 값의 분포와 맞춘 곡선"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div>
+            <label class="mono">별까지의 거리 d ≈ <output class="d-out">1.00</output> kpc</label>
+            <input class="d" type="range" min="0.1" max="3" step="0.05" value="1" aria-label="표본 별까지의 거리">
+          </div>
+          <div>
+            <label class="mono">별의 고유 운동(무작위) σ = <output class="s-out">15</output> km/s</label>
+            <input class="s" type="range" min="0" max="40" step="1" value="15" aria-label="무작위 속도 분산">
+          </div>
+        </div>
+        <div class="lab-row">
+          <button type="button" class="btn again">새 표본 300개</button>
+          <span class="legend"><span class="dot real"></span> 별 하나 <span class="line-key" style="--c:#3b7c2a"></span> 맞춘 곡선</span>
+        </div>
+        <dl class="nums n4">
+          <div><dt>A (km/s/kpc)</dt><dd class="n-a">—</dd></div>
+          <div><dt>B (km/s/kpc)</dt><dd class="n-b">—</dd></div>
+          <div><dt>Ω₀ = A − B (km/s/kpc)</dt><dd class="n-o">—</dd></div>
+          <div><dt>태양의 회전 속도 V₀</dt><dd class="n-v">—</dd></div>
+        </dl>
+        <p class="fig-note">모형 은하: R₀ = 8.2 kpc, 태양 위치의 회전 속도 223 km/s, 회전 곡선의 기울기 dV/dR = −3.4 km/s/kpc(Gaia 관측으로 구한 A = 15.3, B = −11.9 km/s/kpc에 맞춤, Bovy 2017). 별은 이 모형에서 정확한 기하로 계산한 속도에 무작위 속도를 더해 만든 모의 표본이며, 태양의 고유 운동은 이미 빼 주었다고 가정합니다. V₀는 R₀ = 8.2 kpc를 써서 구합니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>우리는 우리은하 안에서 함께 돌고 있어서, 은하가 도는 모습을 밖에서 볼 수 없습니다. 태양 둘레 수천 광년 안의 별들이 우리에 대해 어떻게 움직이는지만 재서, 은하가 얼마나 빨리 도는지 알아낼 수 있을까요?</li>
+      <li><span class="tag">복원</span>별의 공간 속도는 시선 방향 성분인 <em>시선 속도</em> v<sub>r</sub>(도플러 효과로 측정)와 하늘면 방향의 <em>접선 속도</em> v<sub>t</sub>로 나뉩니다. 접선 속도는 고유 운동 μ와 거리 d로 구합니다: <em>v<sub>t</sub> = 4.74 μ d</em> (km/s, μ는 ″/년, d는 pc). 공간 속도는 √(v<sub>r</sub>² + v<sub>t</sub>²)입니다. 은하 경도 l은 은하 중심 방향을 0°로 하여 은하 회전 방향(백조자리 쪽)으로 잽니다.</li>
+      <li><span class="tag">설명</span>은하가 강체처럼 돈다면 모든 별이 같은 각속도로 돌아 서로의 거리가 변하지 않으므로, 상대 속도는 0입니다. 실제로는 안쪽 별의 각속도가 더 큰 <em>차등 회전</em>을 합니다. 태양 둘레 d ≪ R₀인 별에 대해 이를 1차까지 전개하면 <em>v<sub>r</sub> = A d sin 2l</em>, <em>v<sub>t</sub> = d (A cos 2l + B)</em>가 됩니다. 여기서 A = ½(V₀/R₀ − dV/dR)는 층밀림의 세기, B = −½(V₀/R₀ + dV/dR)는 국소적인 소용돌이를 나타내는 <em>오르트 상수</em>입니다. 시선 속도가 l = 45°, 225°에서 멀어지고 135°, 315°에서 다가오는 ‘네 잎’ 모양이 차등 회전의 증거입니다.</li>
+      <li><span class="tag">연결</span>두 상수를 빼면 A − B = V₀/R₀ = Ω₀, 곧 태양의 각속도가 나옵니다. 섀플리의 방법이나 은하 중심 별들의 궤도로 R₀를 알면 V₀ = Ω₀R₀이고, 공전 주기 2π/Ω₀는 약 2억 3천만 년입니다. 또 A + B = −dV/dR이 0에 가깝다는 것은 태양 부근의 회전 곡선이 거의 평평하다는 뜻입니다. 케플러 회전(V ∝ R<sup>−1/2</sup>)이었다면 A + B = V₀/(2R₀) ≈ 14 km/s/kpc가 되어야 하므로, 태양 궤도 바깥에도 많은 질량이 있음을 시사합니다.</li>
+      <li><span class="tag">적용</span>거리 1 kpc, σ = 15 km/s에서 두 그래프의 사인 무늬를 확인하고 A, B, V₀를 읽으세요. ‘새 표본’을 여러 번 눌러 값이 얼마나 흔들리는지 보세요. 거리를 0.1 kpc로 줄이면 무늬가 왜 무작위 속도에 묻히나요? 거리를 3 kpc까지 늘리면 무늬는 뚜렷해지지만 A와 V₀가 모형 값에서 벗어나기 시작합니다. 왜 그럴까요?</li>
+      <li class="warn"><span class="tag">판단</span>오르트 공식은 d ≪ R₀일 때의 근사라서, 먼 별을 쓰면 계통 오차가 생깁니다. 반대로 가까운 별만 쓰면 별마다 다른 무작위 속도에 신호가 묻힙니다. 실제로는 태양 자신의 고유 운동(태양 향점 방향으로 약 20 km/s)을 먼저 빼야 하고, 은하면 방향의 별은 티끌 때문에 거리를 잘못 재기 쉽습니다. Gaia처럼 수십만 개 별의 거리와 고유 운동을 정밀하게 잰 자료가 있어야 A, B를 1 km/s/kpc보다 좋은 정밀도로 구할 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 은하의 원반이 회전목마처럼 모든 반지름에서 같은 각속도로 돈다면(V ∝ R), 그 은하 안의 관측자가 주변 별에서 얻는 결과로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>시선 속도의 sin 2l 무늬가 사라지고(A = 0), 접선 속도는 모든 방향에서 B·d로 같다<span class="why"><b>맞습니다.</b> dV/dR = V₀/R₀이면 A = 0, B = −Ω₀입니다. 별들 사이의 거리는 변하지 않고, 관측자의 좌표계가 함께 돌아서 생기는 겉보기 회전만 남습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>은하가 빨리 돌수록 시선 속도의 무늬가 더 커진다<span class="why"><b>회전 속도와 차등 회전을 섞었습니다.</b> 무늬의 크기 A는 각속도가 반지름에 따라 얼마나 달라지는지에 따라 정해집니다. 강체 회전에서는 아무리 빨라도 A = 0입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>A − B가 0이 되어 회전 속도를 구할 수 없다<span class="why"><b>A − B = Ω₀는 회전 방식과 관계없이 성립합니다.</b> 이 경우 A = 0이어도 B = −Ω₀이므로 A − B = Ω₀입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

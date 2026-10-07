@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adchem/st-wavefn.js"],
+  "short": "파동 함수 그래프 읽기"
+}
+-->
+<style>
+#card-adchem-wavefn canvas { width: 100%; aspect-ratio: 16 / 12; display: block; }
+#card-adchem-wavefn .chip:disabled { opacity: .35; cursor: not-allowed; }
+#card-adchem-wavefn .presets + .presets { margin-top: 6px; }
+</style>
+<article class="card" id="card-adchem-wavefn">
+  <header class="card-head">
+    <span class="no"></span><h2>파동 함수의 그래프에서 무엇을 읽을 수 있을까?</h2><span class="kind">수소 원자의 파동 함수 · 지름 분포 · 마디</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽: xz 평면에서 파동 함수의 부호와 크기. 오른쪽 위: 지름 함수 R(r). 오른쪽 아래: 지름 확률 분포 r²R²"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="주양자수 n">
+          <button type="button" class="chip" data-n="1" aria-pressed="false">n = 1</button>
+          <button type="button" class="chip" data-n="2" aria-pressed="false">n = 2</button>
+          <button type="button" class="chip" data-n="3" aria-pressed="true">n = 3</button>
+          <button type="button" class="chip" data-n="4" aria-pressed="false">n = 4</button>
+        </div>
+        <div class="presets" role="group" aria-label="방위 양자수 l">
+          <button type="button" class="chip" data-l="0" aria-pressed="true">s (l = 0)</button>
+          <button type="button" class="chip" data-l="1" aria-pressed="false">p (l = 1)</button>
+          <button type="button" class="chip" data-l="2" aria-pressed="false">d (l = 2)</button>
+          <button type="button" class="chip" data-l="3" aria-pressed="false">f (l = 3)</button>
+        </div>
+        <label class="mono">경계 반지름 r = <output class="r-out">5.0</output> a₀</label>
+        <input class="r" type="range" min="0" max="1" step="0.002" value="0.25" aria-label="경계 반지름">
+        <dl class="nums n4">
+          <div><dt>지름 마디 수</dt><dd class="n-rn">—</dd></div>
+          <div><dt>각 마디 수</dt><dd class="n-an">—</dd></div>
+          <div><dt>에너지 (수소)</dt><dd class="n-e">—</dd></div>
+          <div><dt>r 안에서 발견 확률</dt><dd class="n-p">—</dd></div>
+        </dl>
+        <p class="fig-note">수소 원자(Z = 1)의 정확한 파동 함수 ψ = R<sub>nl</sub>(r)·Y<sub>l0</sub>(θ)를 그렸습니다(m = 0, 실수 함수). 왼쪽 그림의 빨강은 ψ &gt; 0, 파랑은 ψ &lt; 0이며 색의 진하기는 |ψ|에 비례하도록 오비탈마다 따로 맞췄습니다(상대값). a₀ = 52.9 pm. ‘r 안에서 발견 확률’은 반지름 r인 구 안에 전자가 있을 확률 ∫<sub>0</sub><sup>r</sup> r²R² dr입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>오비탈 그림은 흔히 경계가 뚜렷한 풍선처럼 그려집니다. 그런데 오비탈이 ‘함수’라면, 그 그래프에서 읽을 수 있는 것은 무엇이고 풍선의 경계는 어디에서 온 것일까요?</li>
+      <li><span class="tag">복원</span>전자는 파동의 성질을 가지며, 위치와 운동량을 동시에 정확히 정할 수 없습니다. 현대 원자 모형은 전자의 상태를 공간의 함수 ψ로 나타내고, |ψ|²를 그 점 근처에서 전자가 발견될 확률 밀도로 해석합니다(보른의 해석).</li>
+      <li><span class="tag">설명</span>수소 원자의 슈뢰딩거 방정식을 풀면 해는 세 양자수 n, l, m으로 구별되며 <em>ψ<sub>nlm</sub> = R<sub>nl</sub>(r)·Y<sub>lm</sub>(θ, φ)</em>처럼 지름 부분과 각 부분의 곱이 됩니다. 에너지는 E<sub>n</sub> = −13.6 eV/n²로 n에만 의존합니다. 함수 값이 0이 되는 곳을 <em>마디</em>라 하며, 지름 함수가 0이 되는 구면(지름 마디)은 n − l − 1개, 각 함수가 0이 되는 평면·원뿔(각 마디)은 l개, 합하면 n − 1개입니다. 같은 높이의 진동에서 마디가 많을수록 진동수가 크듯, 마디가 많은 상태일수록 에너지가 높습니다.</li>
+      <li><span class="tag">연결</span>ψ의 부호(+, −)는 확률이 아니라 파동의 위상입니다. 확률 밀도 |ψ|²는 핵에서 가장 크지만(1s), 반지름 r인 얇은 껍질의 부피가 4πr²dr로 커지므로 <em>지름 확률 분포 r²R²</em>는 핵에서 0이고 어떤 거리에서 최대가 됩니다. 1s의 최댓값 위치는 보어 반지름 a₀입니다. 교과서의 오비탈 경계면은 보통 전자를 90 % 포함하는 등확률면을 그린 것이고, 위상의 부호는 다음 절의 결합(겹침)에서 중요해집니다.</li>
+      <li><span class="tag">적용</span>n = 3에서 s, p, d를 차례로 고르며 지름 마디와 각 마디의 수가 어떻게 나뉘는지 세어 보세요. 슬라이더로 1s 전자를 90 % 포함하는 반지름을 찾아보세요(약 2.7 a₀). 3s와 3d의 지름 분포를 비교하면, 3s에는 핵 가까이에 작은 봉우리들이 있습니다. 이 봉우리들이 다전자 원자에서 무슨 일을 할지 예상해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>수소 원자에서는 3s, 3p, 3d의 에너지가 모두 같지만, 전자가 여럿인 원자에서는 그렇지 않습니다. 핵 가까이 파고드는(침투) 봉우리가 있는 s 오비탈의 전자는 다른 전자의 가림을 덜 받아 에너지가 낮아지고, 그래서 E(3s) &lt; E(3p) &lt; E(3d)가 됩니다. 또 다전자 원자의 오비탈은 정확한 해가 아니라 근사이며, 마디에서 전자가 ‘지나가지 못한다’는 생각은 궤도 모형에서 온 오해입니다. 확률 밀도가 0인 면이 있을 뿐, 전자는 정해진 길로 움직이지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 수소 원자 오비탈은 지름 마디가 1개, 각 마디가 2개입니다. 이 오비탈에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4d 오비탈이며, 수소에서 에너지는 −0.85 eV이다<span class="why"><b>맞습니다.</b> 각 마디 l = 2이므로 d, 전체 마디 n − 1 = 3이므로 n = 4입니다. E = −13.6/16 ≈ −0.85 eV입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3d 오비탈이다<span class="why"><b>지름 마디를 빼먹은 계산입니다.</b> 3d는 n − l − 1 = 0이라 지름 마디가 없습니다. 마디가 모두 3개이므로 n = 4입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>ψ가 음수인 영역에서는 전자가 발견될 확률도 음수이다<span class="why"><b>부호와 확률을 혼동했습니다.</b> 확률 밀도는 |ψ|²이므로 언제나 0 이상입니다. 부호는 위상을 나타냅니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

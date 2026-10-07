@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adearth/c2-forces.js"
+  ]
+}
+-->
+<style>
+#card-adearth-forces canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
+#card-adearth-forces .fo-state { font-size: 12.5px; color: var(--ink-2); min-height: 2.8em; margin: 4px 0 6px; line-height: 1.5; }
+</style>
+<article class="card" id="card-adearth-forces">
+  <header class="card-head">
+    <span class="no"></span><h2>태풍과 욕조 소용돌이에서 가장 센 힘은 같을까?</h2><span class="kind">운동 방정식 · 힘의 크기 비교(규모 분석) · 로스비 수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="전향력, 원심력, 마찰력과 이들과 균형을 이루는 기압 경도력의 크기를 로그 눈금 막대로 비교한 그림"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="대상">
+          <button type="button" class="chip" data-p="0" aria-pressed="true">중위도 저기압 상공</button>
+          <button type="button" class="chip" data-p="1" aria-pressed="false">지상 바람</button>
+          <button type="button" class="chip" data-p="2" aria-pressed="false">태풍 최대풍 반경</button>
+          <button type="button" class="chip" data-p="3" aria-pressed="false">토네이도</button>
+          <button type="button" class="chip" data-p="4" aria-pressed="false">구로시오</button>
+          <button type="button" class="chip" data-p="5" aria-pressed="false">욕조 배수</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">속력 V = <output class="v-out"></output></label>
+          <input class="v" type="range" min="-2" max="2" step="0.01" value="1" aria-label="속력 (로그 눈금)"></div>
+          <div><label class="mono">곡률 반지름 R = <output class="r-out"></output></label>
+          <input class="r" type="range" min="-2" max="7" step="0.01" value="6" aria-label="곡률 반지름 (로그 눈금)"></div>
+          <div><label class="mono">위도 φ = <output class="p-out"></output>°</label>
+          <input class="p" type="range" min="5" max="90" step="1" value="40" aria-label="위도"></div>
+          <div><label class="mono">마찰 계수 k = <output class="k-out"></output> s⁻¹</label>
+          <input class="k" type="range" min="-7" max="-1" step="0.05" value="-6" aria-label="마찰 계수 (로그 눈금)"></div>
+        </div>
+        <p class="fo-state" aria-live="polite"></p>
+        <dl class="nums">
+          <div><dt>로스비 수 Ro = V/(fR)</dt><dd class="n-ro">—</dd></div>
+          <div><dt>필요한 기압 경도</dt><dd class="n-pg">—</dd></div>
+          <div><dt>등압선과 바람의 각</dt><dd class="n-a">—</dd></div>
+        </dl>
+        <p class="fig-note">반지름 R인 원을 저기압성(북반구에서 반시계 방향)으로 일정한 속력으로 도는 정상 상태를 가정했습니다. 그러면 기압 경도력 = (전향력 + 원심력)과 마찰력의 벡터 합입니다. 마찰은 속도에 비례하는 선형 마찰(−kV)로 둔 모식입니다. 공기 밀도 1.2 kg/m³, 바닷물 1025 kg/m³, Ω = 7.292×10⁻⁵ rad/s. 프리셋의 값은 자릿수를 보기 위한 대표값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>“욕조 물은 북반구에서 반시계 방향으로 빠진다”는 말이 있습니다. 태풍이 반시계 방향으로 도는 것은 전향력 때문인데, 욕조 물도 그럴까요? 어떤 힘이 중요한지는 무엇이 정할까요?</li>
+      <li><span class="tag">복원</span>뉴턴 제2법칙은 단위 질량에 대해 가속도 = 작용하는 힘의 합입니다. 회전하는 지구 위에서 보면 관성력인 전향력과 원심력을 더해야 합니다. 기압은 단위 면적에 작용하는 힘입니다.</li>
+      <li><span class="tag">설명</span>밑면 <em>A</em>, 길이 Δ<em>x</em>인 공기 기둥의 양쪽 기압이 <em>p</em>와 <em>p</em> + Δ<em>p</em>이면 알짜 힘은 −Δ<em>p</em>·<em>A</em>이고 질량은 ρ<em>A</em>Δ<em>x</em>이므로, 단위 질량당 <em>기압 경도력</em>은 −(1/ρ)∂<em>p</em>/∂<em>x</em>입니다. 바다에서는 해수면이 Δη만큼 기울면 같은 깊이의 수압 차가 ρ<em>g</em>Δη이므로 −<em>g</em>∂η/∂<em>x</em>가 됩니다. <em>전향력</em>은 −2<strong>Ω</strong>×<strong>v</strong>이며, 수평 운동에 대한 수평 성분의 크기는 <em>fV</em>(<em>f</em> = 2Ω sinφ)이고 북반구에서는 진행 방향의 오른쪽을 향합니다. 곡선 운동에는 구심 가속도 <em>V</em>²/<em>R</em>이 필요하고(회전 좌표에서는 원심력으로 봄), 지표 근처에는 속도를 줄이는 <em>마찰력</em>이 작용합니다. 이를 합친 수평 운동 방정식은 d<strong>V</strong>/d<em>t</em> = −(1/ρ)∇<em>p</em> − <em>f</em><strong>k</strong>×<strong>V</strong> + <strong>F</strong><sub>r</sub>입니다.</li>
+      <li><span class="tag">연결</span>원심력과 전향력의 비 (<em>V</em>²/<em>R</em>)/(<em>fV</em>) = <em>V</em>/(<em>fR</em>)를 <em>로스비 수</em>라 합니다. Ro ≪ 1이면 전향력이 기압 경도력과 균형을 이루는 지균풍이, Ro ~ 1이면 셋이 함께 균형을 이루는 경도풍이, Ro ≫ 1이면 전향력을 무시하고 원심력만 기압 경도력과 균형을 이루는 선형풍(회전풍)이 됩니다. 선형풍은 저기압이 북반구에서도 시계 방향으로 돌 수 있습니다. 마찰 계수 <em>k</em>가 <em>f</em>와 비슷해지면 바람이 등압선을 가로질러 저기압 쪽으로 불어 들어갑니다.</li>
+      <li><span class="tag">적용</span>여섯 프리셋을 차례로 누르며 가장 긴 막대가 무엇인지 기록하세요. 중위도 저기압과 구로시오의 로스비 수는 비슷한가요? 욕조 배수에서 전향력은 원심력의 몇 분의 1인가요? 지상 바람에서 마찰 계수를 바꾸면 등압선과 바람의 각이 어떻게 변하나요?</li>
+      <li class="warn"><span class="tag">판단</span>원심력과 전향력은 회전 좌표계에서 운동을 기술할 때 도입하는 관성력으로, 다른 물체가 가하는 힘이 아닙니다. 또 이 그림은 정상 상태의 원운동만 다룹니다. 실제로는 가속도 d<strong>V</strong>/d<em>t</em>가 0이 아닌 경우도 많고, 연직 운동과 전향력의 연직 성분(2Ω<em>V</em>cosφ)은 정역학 평형에 비하면 매우 작아 뺐습니다. 욕조 물의 회전 방향은 물을 채울 때 남은 회전과 욕조 모양이 정하며, 전향력으로 결정된다는 말은 틀립니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">적도에서 위도 5°쯤 떨어진 열대 해상에서 반지름 300 km, 풍속 15 m/s인 열대 저기압이 막 생겨났습니다. 이 저기압의 힘의 균형에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>열대에서도 바람이 등압선과 나란하므로 지균풍 근사가 잘 맞는다<span class="why"><b>위도가 낮은 것을 놓쳤습니다.</b> 위도 5°에서 <em>f</em> ≈ 1.3×10⁻⁵ s⁻¹이므로 Ro = 15/(1.3×10⁻⁵ × 3×10⁵) ≈ 4로 1보다 큽니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>로스비 수가 1보다 커서 원심력이 전향력보다 크고, 경도풍(또는 선형풍)에 가깝다<span class="why"><b>맞습니다.</b> 원심력 <em>V</em>²/<em>R</em> = 7.5×10⁻⁴ m/s²가 전향력 <em>fV</em> ≈ 2×10⁻⁴ m/s²보다 몇 배 큽니다. 저위도 일기도에서 등압선 대신 유선을 그리는 까닭입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전향력이 작으므로 저기압이 회전하지 못한다<span class="why"><b>지나친 결론입니다.</b> 전향력이 작아도 0이 아니면 오랜 시간에 걸쳐 회전이 쌓이고, 회전이 생긴 뒤에는 원심력이 기압 경도력과 균형을 이룹니다. 다만 위도 약 5° 안쪽에서는 태풍이 거의 생기지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

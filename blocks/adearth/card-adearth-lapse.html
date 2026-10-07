@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adearth/c2-lapse.js"
+  ]
+}
+-->
+<style>
+#card-adearth-lapse canvas { width: 100%; aspect-ratio: 16 / 11; display: block; }
+#card-adearth-lapse .lp-state { font-size: 12.5px; color: var(--ink-2); min-height: 2.8em; margin: 4px 0 6px; line-height: 1.5; }
+</style>
+<article class="card" id="card-adearth-lapse">
+  <header class="card-head">
+    <span class="no"></span><h2>밀려 올라간 공기 덩어리는 되돌아올까, 계속 올라갈까?</h2><span class="kind">단열 감률의 유도 · 온위 · 부력 진동수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽: 주변 기온 분포와 위아래로 움직이는 공기 덩어리. 오른쪽: 기온과 기압에 따른 습윤 단열 감률"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="공기 덩어리의 상태">
+          <button type="button" class="chip" data-m="dry" aria-pressed="true">불포화 공기 덩어리</button>
+          <button type="button" class="chip" data-m="wet" aria-pressed="false">포화된 공기 덩어리</button>
+        </div>
+        <label class="mono">주변 기온 감률 Γ = <output class="g-out">6.5</output> K/km</label>
+        <input class="g" type="range" min="-4" max="12" step="0.1" value="6.5" aria-label="주변 기온 감률">
+        <div class="ctl-row">
+          <div><label class="mono">그 높이의 기온 = <output class="t-out">10</output> °C</label>
+          <input class="t" type="range" min="-40" max="30" step="1" value="10" aria-label="공기 덩어리가 있는 높이의 기온"></div>
+          <div><label class="mono">그 높이의 기압 = <output class="p-out">850</output> hPa</label>
+          <input class="p" type="range" min="300" max="1000" step="10" value="850" aria-label="공기 덩어리가 있는 높이의 기압"></div>
+        </div>
+        <p class="lp-state" aria-live="polite"></p>
+        <dl class="nums n4">
+          <div><dt>덩어리의 감률</dt><dd class="n-gp">—</dd></div>
+          <div><dt>온위 θ</dt><dd class="n-th">—</dd></div>
+          <div><dt>N² (s⁻²)</dt><dd class="n-n2">—</dd></div>
+          <div><dt>진동 주기 / 증폭 시간</dt><dd class="n-per">—</dd></div>
+        </dl>
+        <p class="fig-note">처음 변위는 300 m이고, 덩어리는 주변과 섞이지 않는다고 봅니다. 애니메이션의 시간은 실제보다 약 100배 빠릅니다. 습윤 단열 감률은 Γ<sub>m</sub> = g(1 + Lw<sub>s</sub>/R<sub>d</sub>T)/(c<sub>p</sub> + L²w<sub>s</sub>ε/R<sub>d</sub>T²)로 계산했습니다(L = 2.5×10⁶ J/kg, c<sub>p</sub> = 1005 J/(kg·K), R<sub>d</sub> = 287 J/(kg·K), ε = 0.622). 포화된 덩어리의 N²은 (g/T)(Γ<sub>m</sub> − Γ)로 근사했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>바람이 산을 넘거나 지표가 데워지면 공기 덩어리가 조금 위로 밀립니다. 밀려 올라간 덩어리는 제자리로 돌아올까요, 아니면 스스로 더 올라갈까요? 그 답을 숫자 하나로 나타낼 수 있을까요?</li>
+      <li><span class="tag">복원</span>정역학 평형에서 d<em>p</em>/d<em>z</em> = −ρ<em>g</em>입니다. 열역학 제1법칙은 공기 1 kg에 대해 δ<em>q</em> = <em>c</em><sub>p</sub>d<em>T</em> − (1/ρ)d<em>p</em>로 쓸 수 있습니다. 단열이면 δ<em>q</em> = 0입니다.</li>
+      <li><span class="tag">설명</span>단열 과정에서 <em>c</em><sub>p</sub>d<em>T</em> = (1/ρ)d<em>p</em> = −<em>g</em>d<em>z</em>이므로 <em>건조 단열 감률</em>은 Γ<sub>d</sub> = −d<em>T</em>/d<em>z</em> = <em>g</em>/<em>c</em><sub>p</sub> = 9.8 K/km입니다. 같은 식을 적분하면 <em>T</em>(1000/<em>p</em>)<sup><em>R</em>/<em>c</em>p</sup>가 일정하고, 이 값을 <em>온위</em> θ라 합니다(<em>R</em>/<em>c</em><sub>p</sub> ≈ 0.286). 포화된 덩어리는 응결열 <em>L</em>d<em>w</em><sub>s</sub>를 얻으므로 덜 식고, 그 감률 Γ<sub>m</sub>은 기온과 기압에 따라 달라집니다. 주변보다 Δ<em>T</em>만큼 따뜻한 덩어리는 단위 질량당 <em>g</em>Δ<em>T</em>/<em>T</em>의 부력을 받습니다. 높이 δ<em>z</em>만큼 밀렸을 때 Δ<em>T</em> = −(Γ<sub>d</sub> − Γ)δ<em>z</em>이므로 운동 방정식은 d²δ<em>z</em>/d<em>t</em>² = −<em>N</em>²δ<em>z</em>, <em>N</em>² = (<em>g</em>/<em>T</em>)(Γ<sub>d</sub> − Γ) = (<em>g</em>/θ)dθ/d<em>z</em>입니다.</li>
+      <li><span class="tag">연결</span><em>N</em>² &gt; 0이면 덩어리는 주기 2π/<em>N</em>으로 위아래로 진동하며 제자리로 돌아오므로 안정합니다. 대류권의 평균(Γ = 6.5 K/km)에서는 주기가 10분 안팎이고, 산 너머에 줄지어 생기는 렌즈 구름(산악파)이 이 진동의 흔적입니다. <em>N</em>² &lt; 0이면 변위가 지수 함수로 커져 불안정합니다. 온위로 말하면 높이 올라갈수록 θ가 커지면 안정, 작아지면 불안정입니다. Γ<sub>m</sub> &lt; Γ &lt; Γ<sub>d</sub>이면 불포화 덩어리에는 안정하지만 포화된 덩어리에는 불안정한 <em>조건부 불안정</em>입니다. 단열선도의 건조 단열선은 온위가 같은 선이고, 습윤 단열선은 상당 온위가 같은 선입니다.</li>
+      <li><span class="tag">적용</span>Γ = 6.5 K/km에서 불포화와 포화를 바꿔 보세요. 기온 25 °C·1000 hPa와 −30 °C·500 hPa에서 습윤 단열 감률은 각각 얼마이고, 왜 그렇게 다를까요? 역전층(Γ &lt; 0)에서 진동 주기는 어떻게 되나요? 불포화일 때 Γ를 9.8 K/km보다 크게 하면 무엇이 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>이 계산은 덩어리가 주변 공기와 섞이지 않고, 기압은 곧바로 주변과 같아지며, 변위가 작다고 가정합니다. 실제 적운은 주변의 건조한 공기를 끌어들여(유입) 부력이 줄어듭니다. 또 <em>N</em>²은 한 점의 국소적인 안정도일 뿐이어서, 아래층이 안정하더라도 덩어리를 자유 대류 고도까지 들어 올리면 그 위에서 크게 불안정해질 수 있습니다. 이런 큰 변위의 안정도는 단열선도에서 CAPE와 CIN으로 판단합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 날 지상에서 3 km까지의 기온 감률이 8 K/km였습니다. 지상 공기의 이슬점이 기온보다 15 °C 낮을 때와 1 °C 낮을 때를 비교한 것으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>기온 감률이 같으므로 두 경우의 안정도는 같다<span class="why"><b>Γ만 보고 판단했습니다.</b> 8 K/km는 Γ<sub>m</sub>과 Γ<sub>d</sub> 사이이므로, 공기 덩어리가 포화되는지에 따라 답이 달라집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>이슬점 차가 1 °C이면 약 125 m만 올라도 포화되어 그 위에서 불안정해지기 쉽다<span class="why"><b>맞습니다.</b> 상승 응결 고도가 낮아 덩어리가 곧 Γ<sub>m</sub>(약 5 K/km)으로 식으므로 주변(8 K/km)보다 따뜻해집니다. 조건부 불안정에서 습한 공기가 소나기를 일으키는 까닭입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>이슬점 차가 15 °C이면 덩어리가 9.8 K/km로 식으므로 불안정하다<span class="why"><b>방향을 거꾸로 생각했습니다.</b> 덩어리가 주변(8 K/km)보다 빨리 식으면 주변보다 차가워져 되돌아옵니다. 불포화 덩어리에게 이 대기는 안정합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

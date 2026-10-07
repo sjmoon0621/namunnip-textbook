@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adphy/me-collide2d.js"
+  ],
+  "short": "평면 충돌과 질량 중심 좌표계"
+}
+-->
+<style>
+#card-adphy-collide2d .nums dd { font-size: 14px; }
+</style>
+<article class="card" id="card-adphy-collide2d">
+  <header class="card-head">
+    <span class="no"></span><h2>당구공은 왜 직각으로 갈라질까?</h2><span class="kind">평면 충돌 · 운동량 벡터 · 질량 중심 좌표계 · 반발 계수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽: 움직이는 공 1이 정지한 공 2에 비스듬히 부딪치는 모습. 오른쪽: 충돌 전후의 운동량 벡터 그림"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="보는 좌표계">
+          <button type="button" class="chip" data-f="lab" aria-pressed="true">실험실에서 보기</button>
+          <button type="button" class="chip" data-f="cm" aria-pressed="false">질량 중심과 함께 움직이며 보기</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">질량비 m₂/m₁ = <output class="m-out">1.00</output></label>
+            <input class="m" type="range" min="0.25" max="4" step="0.05" value="1" aria-label="질량비"></div>
+          <div><label class="mono">빗맞은 정도 b/(r₁+r₂) = <output class="b-out">0.50</output></label>
+            <input class="b" type="range" min="0" max="0.95" step="0.01" value="0.5" aria-label="충돌 매개 변수"></div>
+          <div><label class="mono">반발 계수 e = <output class="e-out">1.00</output></label>
+            <input class="e" type="range" min="0" max="1" step="0.01" value="1" aria-label="반발 계수"></div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>두 공이 갈라진 각</dt><dd class="n-sep">—</dd></div>
+          <div><dt>공 1이 꺾인 각</dt><dd class="n-th">—</dd></div>
+          <div><dt>운동 에너지 K′/K</dt><dd class="n-k">—</dd></div>
+          <div><dt>질량 중심 속도 / u</dt><dd class="n-v">—</dd></div>
+        </dl>
+        <p class="legend"><span class="dot" style="background:#3f6fa3"></span>공 1 (처음 속도 u) <span class="dot" style="background:#e0a02a"></span>공 2 (처음에 정지) <span class="dot" style="background:#232326"></span>질량 중심</p>
+        <p class="fig-note">마찰과 회전이 없는 매끄러운 원판(모식). 맞닿는 순간 두 중심을 잇는 방향(법선)으로만 충격량이 작용합니다. 법선 방향 상대 속도는 e배가 되어 뒤집히고, 접선 방향 속도는 그대로입니다. 공의 크기는 같게 그렸습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>당구에서 큐볼로 정지한 공을 비스듬히 맞히면 두 공은 거의 직각으로 갈라집니다. 맞히는 위치를 바꿔도 그렇습니다. 왜 하필 90°일까요?</li>
+      <li><span class="tag">복원</span>외력이 없으면 충돌 전후 운동량의 합은 보존됩니다. 반발 계수 e는 충돌 후 멀어지는 상대 속력과 충돌 전 다가오는 상대 속력의 비이고, e = 1이면 운동 에너지도 보존되는 탄성 충돌입니다.</li>
+      <li><span class="tag">설명</span>평면에서는 운동량이 벡터이므로 성분마다 보존됩니다. <em>p₁ = p₁′ + p₂′</em>이므로 충돌 후 두 운동량 화살표를 이어 붙이면 언제나 처음 화살표로 돌아옵니다(오른쪽 삼각형). 질량이 같고 탄성 충돌이면 운동 에너지 보존 p₁² = p₁′² + p₂′²가 더해지는데, 이것은 피타고라스 정리입니다. 그래서 두 화살표는 직각을 이룹니다.</li>
+      <li><span class="tag">연결</span>질량 중심은 외력이 없으면 등속으로 움직입니다(V = m₁u/(m₁ + m₂)). 질량 중심과 함께 움직이며 보면 두 공의 운동량은 언제나 크기가 같고 방향이 반대입니다. 탄성 충돌은 이 한 쌍의 화살표를 <em>돌리기만</em> 하고, 비탄성 충돌은 법선 성분을 e배로 줄입니다. 운동 에너지의 손실은 모두 이 좌표계의 운동 에너지에서 나옵니다. 질량 중심의 운동 에너지 ½(m₁ + m₂)V²는 어떤 충돌로도 없앨 수 없습니다.</li>
+      <li><span class="tag">적용</span>질량비 1, e = 1에서 빗맞은 정도를 바꿔 가며 갈라진 각을 보세요. 질량비를 4로 키우거나 0.25로 줄이면 각이 90°보다 커지나요, 작아지나요? e를 0으로 낮추고 질량 중심 좌표계로 바꿔, 충돌 후 남는 운동이 무엇인지 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>실제 당구공은 테이블과의 마찰로 구르고 회전하므로, 갈라진 각이 90°에서 조금 벗어납니다. 또 “비탄성 충돌에서는 운동량도 줄어든다”는 오개념입니다. 외력이 없으면 운동량은 e와 관계없이 보존되고, 줄어드는 것은 운동 에너지뿐입니다. 완전 비탄성 충돌(e = 0)이라도 정면이 아니면 두 공이 한 덩어리가 되지 않고 접선 방향 속도 차이는 남습니다(이 모형에서는 마찰을 무시했기 때문입니다).</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">움직이는 양성자가 정지한 헬륨 원자핵(질량이 약 4배)에 빗맞아 탄성 충돌했습니다. 충돌 후 두 입자가 갈라진 각에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>90°보다 크다<span class="why"><b>맞습니다.</b> p² = p₁′² + p₂′² + 2p₁′·p₂′와 에너지 보존 p² = p₁′² + p₂′²/4를 비교하면 p₁′·p₂′ &lt; 0이므로 둔각입니다. 가벼운 입자가 무거운 입자에 부딪치면 뒤로 튈 수도 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>탄성 충돌이므로 언제나 90°이다<span class="why"><b>질량이 같을 때만 맞습니다.</b> 90°는 운동 에너지 식이 피타고라스 정리와 같아지는 m₁ = m₂의 결과입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>90°보다 작다<span class="why"><b>무거운 입자가 가벼운 입자를 칠 때의 결과입니다.</b> 그때는 두 입자가 모두 앞으로 진행해 예각으로 갈라집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

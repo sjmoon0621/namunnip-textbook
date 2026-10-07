@@ -1,0 +1,74 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adphy/em-kirchhoff.js"],
+  "short": "키르히호프 법칙"
+}
+-->
+<style>
+#card-adphy-kirchhoff canvas { width: 100%; aspect-ratio: 4 / 3; }
+#card-adphy-kirchhoff .eq { margin: 10px 0 6px; padding: 8px 12px; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.7; }
+#card-adphy-kirchhoff .eq p { display: grid; grid-template-columns: 8.5em 1fr; gap: 8px; }
+#card-adphy-kirchhoff .eq span { color: var(--ink-3); }
+#card-adphy-kirchhoff .eq b { font-weight: 600; margin-right: 10px; white-space: nowrap; }
+#card-adphy-kirchhoff .eq b.neg { color: var(--warn); }
+#card-adphy-kirchhoff .eq i { font-style: normal; display: flex; flex-wrap: wrap; }
+</style>
+<article class="card" id="card-adphy-kirchhoff">
+  <header class="card-head">
+    <span class="no"></span><h2>전류 방향을 거꾸로 가정해도 답이 맞을까?</h2><span class="kind">키르히호프 법칙 · 접합점 법칙과 고리 법칙 · 두 고리 회로</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="전지 두 개와 저항 세 개로 된 두 고리 회로. 도선의 색은 전위(파랑 낮음, 빨강 높음), 흰 점은 실제 전류의 움직임, 초록 화살표는 가정한 전류 방향"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="가정한 전류 방향">
+          <button type="button" class="chip" data-d="1">I₁ 가정: 위로</button>
+          <button type="button" class="chip" data-d="2">I₂ 가정: 위로</button>
+          <button type="button" class="chip" data-d="3">I₃ 가정: 아래로</button>
+        </div>
+        <div class="presets" role="group" aria-label="예시">
+          <button type="button" class="chip" data-p="same">두 전지가 함께 밀 때</button>
+          <button type="button" class="chip" data-p="charge">약한 전지가 충전될 때</button>
+          <button type="button" class="chip" data-p="flip">ε₂를 뒤집었을 때</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">ε₁ = <output class="e1-out">12</output> V</label>
+          <input class="e1" type="range" min="0" max="12" step="1" value="12" aria-label="전지 1의 기전력"></div>
+          <div><label class="mono">ε₂ = <output class="e2-out">6</output> V (음수 = 뒤집음)</label>
+          <input class="e2" type="range" min="-12" max="12" step="1" value="6" aria-label="전지 2의 기전력"></div>
+          <div><label class="mono">R₁ = <output class="r1-out">4</output> Ω</label>
+          <input class="r1" type="range" min="1" max="20" step="1" value="4" aria-label="저항 1"></div>
+          <div><label class="mono">R₂ = <output class="r2-out">6</output> Ω</label>
+          <input class="r2" type="range" min="1" max="20" step="1" value="6" aria-label="저항 2"></div>
+          <div><label class="mono">R₃ = <output class="r3-out">8</output> Ω</label>
+          <input class="r3" type="range" min="1" max="20" step="1" value="8" aria-label="저항 3"></div>
+        </div>
+        <div class="eq" aria-live="polite"></div>
+        <dl class="nums">
+          <div><dt>전지가 내는 일률 Σ εI</dt><dd class="n-p">—</dd></div>
+          <div><dt>저항의 발열 Σ I²R</dt><dd class="n-h">—</dd></div>
+          <div><dt>전지 상태</dt><dd class="n-v">—</dd></div>
+        </dl>
+        <p class="fig-note">전지의 내부 저항은 R₁, R₂에 포함된 것으로 보고 도선 저항은 무시했습니다. 고리는 모두 시계 방향(↻)으로 돌며, 전지를 −에서 +로 지나면 +ε, 가정한 전류 방향으로 저항을 지나면 −IR로 썼습니다. 빨간 값은 가정과 실제 방향이 반대라는 뜻입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>전지가 둘 이상이고 고리가 여러 개인 회로는 직렬·병렬로 묶어 합성 저항을 구하는 방법이 통하지 않습니다. 어느 쪽으로 전류가 흐르는지도 모르는 상태에서 각 가지의 전류를 어떻게 구할까요?</li>
+      <li><span class="tag">복원</span>저항에 전류 I가 흐르면 전류 방향으로 전위가 IR만큼 낮아집니다(옴의 법칙). 전지는 −극에서 +극으로 갈 때 전위를 ε만큼 높입니다. 전위는 위치마다 하나의 값만 가집니다.</li>
+      <li><span class="tag">설명</span><em>접합점 법칙</em>: 한 접합점으로 들어오는 전류의 합은 나가는 전류의 합과 같습니다(ΣI = 0). 전하가 접합점에 쌓이거나 생기지 않기 때문이며, <em>전하 보존</em>의 표현입니다. <em>고리 법칙</em>: 닫힌 고리를 한 바퀴 돌면 전위 변화의 합은 0입니다(Σε − ΣIR = 0). 출발점으로 돌아오면 전위가 같아야 하기 때문이며, 단위 전하에 대한 <em>에너지 보존</em>입니다.</li>
+      <li><span class="tag">연결</span>모르는 전류가 3개이면 독립인 식이 3개 필요합니다. 접합점이 2개(A, B)지만 두 식은 같은 내용이라 하나만 쓰고, 나머지는 고리 2개에서 얻습니다(바깥 큰 고리는 두 고리 식의 합이라 새 정보가 없습니다). 방향은 아무렇게나 가정해도 되며, 계산 결과가 음수이면 실제 방향이 반대라는 뜻일 뿐입니다. 결과가 맞는지는 전지가 내는 일률과 저항의 발열이 같은지로 확인할 수 있습니다.</li>
+      <li><span class="tag">적용</span>초록 버튼으로 가정 방향을 바꾸며 식의 부호와 답이 어떻게 달라지는지 보세요. 실제 전류(흰 점)는 바뀌나요? ‘약한 전지가 충전될 때’에서 ε₂를 지나는 전류는 어느 극으로 들어가나요? ε₂를 몇 V로 맞추면 I₂ = 0이 되는지 찾고, 그때 A의 전위와 ε₂를 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>“전지는 언제나 +극에서 전류를 내보낸다”는 틀린 생각입니다. 더 센 전지가 있으면 전류가 약한 전지의 +극으로 들어가 그 전지가 에너지를 받습니다(충전, 일률 εI가 음수). 또 키르히호프 법칙은 도선의 전기장이 보존력일 때의 이야기입니다. 고리 속 자기 선속이 빠르게 변하면 ∮E·dl ≠ 0이므로 유도 기전력을 고리 법칙에 따로 넣어야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">이 회로에서 R₃를 떼어 내 가운데 가지를 끊었습니다(ε₁ = 12 V, ε₂ = 6 V, 둘 다 +극이 위, R₁ = 4 Ω, R₂ = 2 Ω). 남은 한 고리에 흐르는 전류의 크기와 ε₂의 상태는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1 A, ε₂는 충전된다<span class="why"><b>맞습니다.</b> 두 전지가 서로 마주 밀어 알짜 기전력은 12 − 6 = 6 V, 전체 저항 6 Ω이므로 1 A입니다. 전류는 ε₂의 +극으로 들어갑니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3 A, 두 전지 모두 방전된다<span class="why"><b>두 기전력을 더한 답입니다.</b> 한 고리를 돌면 두 전지를 서로 반대 방향(−→+, +→−)으로 지나므로 빼야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0 A, 가운데 가지가 끊겨 고리가 없다<span class="why"><b>바깥 큰 고리는 그대로 닫혀 있습니다.</b> ε₁–R₁–ε₂–R₂가 한 고리를 이룹니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

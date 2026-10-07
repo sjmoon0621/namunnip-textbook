@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adphy/em-ac.js"],
+  "short": "리액턴스와 공진"
+}
+-->
+<style>
+#card-adphy-ac canvas { width: 100%; aspect-ratio: 1 / 1; }
+</style>
+<article class="card" id="card-adphy-ac">
+  <header class="card-head">
+    <span class="no"></span><h2>코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?</h2><span class="kind">교류 · 용량·유도 리액턴스 · 임피던스 · RLC 공진</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽 위: 저항·코일·축전기 전압과 전원 전압의 회전하는 위상자. 오른쪽 위: 전원 전압과 전류의 시간 파형. 아래: 진동수에 따른 전류 실횻값의 공진 곡선"></canvas>
+      <div class="ctl">
+        <label class="mono">진동수 f = <output class="f-out">300</output> Hz</label>
+        <input class="f" type="range" min="1" max="4" step="0.001" value="2.477" aria-label="교류 진동수 (로그 눈금)">
+        <div class="presets"><button type="button" class="chip" data-res>공진 진동수에 맞추기</button></div>
+        <div class="ctl-row">
+          <div><label class="mono">R = <output class="r-out">10</output> Ω</label>
+          <input class="r" type="range" min="1" max="100" step="1" value="10" aria-label="저항"></div>
+          <div><label class="mono">L = <output class="l-out">10</output> mH</label>
+          <input class="l" type="range" min="1" max="100" step="1" value="10" aria-label="인덕턴스"></div>
+          <div><label class="mono">C = <output class="c-out">10</output> μF</label>
+          <input class="c" type="range" min="1" max="100" step="1" value="10" aria-label="전기 용량"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>유도 리액턴스 X<sub>L</sub> = ωL</dt><dd class="n-xl">—</dd></div>
+          <div><dt>용량 리액턴스 X<sub>C</sub> = 1/ωC</dt><dd class="n-xc">—</dd></div>
+          <div><dt>임피던스 Z</dt><dd class="n-z">—</dd></div>
+          <div><dt>전류 실횻값 V/Z</dt><dd class="n-i">—</dd></div>
+          <div><dt>전류가 늦은 위상 φ</dt><dd class="n-ph">—</dd></div>
+          <div><dt>공진 진동수 f₀</dt><dd class="n-f0">—</dd></div>
+        </dl>
+        <p class="fig-note">전원 전압 실횻값 10 V(최댓값 14.1 V)의 직렬 RLC 회로입니다. 위상자는 반시계 방향으로 돌며, 어느 순간의 실제 전압은 위상자를 가로축에 투영한 값입니다. 화면의 회전은 실제보다 매우 느립니다. φ가 음수이면 전류가 전압보다 앞섭니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>직렬 RLC 회로에서 저항, 코일, 축전기 양 끝의 전압을 교류 전압계로 따로 재면, 세 값을 더한 것이 전원 전압보다 훨씬 클 때가 있습니다. 직렬 회로에서 전압의 합은 전원 전압과 같아야 하지 않을까요?</li>
+      <li><span class="tag">복원</span>자기장 B 속에서 넓이 A, N회 감은 코일을 각속도 ω로 돌리면 선속 NBA cos ωt가 변해 <em>ε = NBAω sin ωt</em>의 교류 기전력이 생깁니다. 실횻값은 최댓값의 1/√2입니다. 코일에는 v<sub>L</sub> = L dI/dt, 축전기에는 v<sub>C</sub> = q/C가 걸립니다.</li>
+      <li><span class="tag">설명</span>전류가 I = I<sub>m</sub> cos ωt이면 저항 전압 I<sub>m</sub>R cos ωt는 전류와 같은 위상입니다. 코일 전압은 미분하면 −ωLI<sub>m</sub> sin ωt = ωLI<sub>m</sub> cos(ωt + 90°)로 전류보다 90° <em>앞서고</em>, 축전기 전압은 q를 적분해 (I<sub>m</sub>/ωC) cos(ωt − 90°)로 90° <em>늦습니다</em>. 진폭의 비가 각각의 ‘교류 저항’이 되며, <em>유도 리액턴스 X<sub>L</sub> = ωL</em>, <em>용량 리액턴스 X<sub>C</sub> = 1/ωC</em>라 합니다. 위상이 다른 세 전압은 화살표(위상자)로 더해야 하므로 <em>임피던스 Z = √(R² + (X<sub>L</sub> − X<sub>C</sub>)²)</em>, I = V/Z, tan φ = (X<sub>L</sub> − X<sub>C</sub>)/R입니다.</li>
+      <li><span class="tag">연결</span>코일 전압과 축전기 전압은 정반대 방향이라 서로 빼집니다. X<sub>L</sub> = X<sub>C</sub>가 되는 진동수 <em>f₀ = 1/(2π√(LC))</em>에서 둘이 완전히 상쇄되어 Z = R로 가장 작고 전류가 가장 큽니다. 이것이 <em>공진</em>이며, 저항이 없는 LC 회로가 에너지를 축전기와 코일 사이에서 주고받으며 스스로 진동하는 고유 진동수와 같습니다. 라디오는 C를 바꿔 원하는 방송의 진동수에 f₀를 맞춥니다. R이 작을수록 공진 곡선이 뾰족해 이웃 방송을 잘 걸러 냅니다.</li>
+      <li><span class="tag">적용</span>진동수를 낮은 쪽부터 올리며 X<sub>L</sub>과 X<sub>C</sub>가 어떻게 변하는지, 위상자 그림에서 전원 전압 화살표가 전류보다 앞서는지 늦는지 보세요. ‘공진 진동수에 맞추기’를 누르면 φ는 몇 °인가요? 그때 V<sub>L</sub> 화살표는 전원 전압 화살표보다 긴가요? R을 1 Ω과 100 Ω으로 바꿔 공진 곡선의 폭을 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>“직렬 회로에서 각 부품 전압의 합은 전원 전압”은 순간값끼리만 맞습니다. 전압계가 보여 주는 실횻값은 위상이 달라 그냥 더할 수 없으며, 공진 근처에서는 V<sub>L</sub>과 V<sub>C</sub>가 각각 전원 전압의 몇 배가 될 수 있습니다(실제 회로에서 부품의 내전압을 확인해야 하는 까닭). 또 리액턴스는 에너지를 열로 내보내지 않으므로, 평균 전력은 I²R = VI cos φ로 저항에서만 소모됩니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">L = 10 mH, C = 10 μF인 직렬 RLC 회로의 공진 진동수는 약 503 Hz입니다. 축전기를 C = 2.5 μF로 바꾸면 공진 진동수와, 원래 503 Hz에서의 회로 성질은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 X<sub>C</sub> &gt; X<sub>L</sub>이라 전류가 전압보다 앞선다<span class="why"><b>맞습니다.</b> f₀ ∝ 1/√C이므로 C가 1/4이면 f₀는 2배입니다. 503 Hz에서 X<sub>C</sub>는 4배로 커져 축전기 성질이 우세합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>공진 진동수는 약 2012 Hz가 된다<span class="why"><b>f₀가 1/C에 비례한다고 본 답입니다.</b> f₀ = 1/(2π√(LC))라 제곱근이 붙습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 전류가 전압보다 늦는다<span class="why"><b>앞섬과 늦음을 거꾸로 썼습니다.</b> 공진보다 낮은 진동수에서는 X<sub>C</sub>가 커서 회로가 축전기처럼 행동하고, 전류가 앞섭니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adchem/th-formation.js"],
+  "short": "생성 엔탈피와 ΔH, ΔU"
+}
+-->
+<style>
+#card-adchem-formation .eq { font-family: var(--f-mono); font-size: 13px; margin: 4px 0 2px; color: var(--ink); }
+</style>
+<article class="card" id="card-adchem-formation">
+  <header class="card-head">
+    <span class="no"></span><h2>표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?</h2><span class="kind">H = U + PV · 표준 생성 엔탈피 · 헤스 법칙 · ΔH와 ΔU</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="성분 원소를 0으로 둔 엔탈피 준위 도표. 반응물과 생성물의 준위, 반응 엔탈피 화살표, 그리고 ΔH와 ΔU 비교 막대"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="반응">
+          <button type="button" class="chip" data-r="ch4" aria-pressed="true">메테인 연소</button>
+          <button type="button" class="chip" data-r="etoh" aria-pressed="false">에탄올 연소</button>
+          <button type="button" class="chip" data-r="glu" aria-pressed="false">포도당 연소</button>
+          <button type="button" class="chip" data-r="nh3" aria-pressed="false">암모니아 합성</button>
+          <button type="button" class="chip" data-r="caco3" aria-pressed="false">석회석 분해</button>
+          <button type="button" class="chip" data-r="no" aria-pressed="false">일산화 질소 생성</button>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="gas"> 생성된 물을 수증기 H₂O(g)로</label></div>
+        <p class="eq">—</p>
+        <dl class="nums n4">
+          <div><dt>ΔH° (kJ)</dt><dd class="n-h">—</dd></div>
+          <div><dt>Δn<sub>기체</sub> (mol)</dt><dd class="n-n">—</dd></div>
+          <div><dt>w = −Δn<sub>기체</sub>RT</dt><dd class="n-w">—</dd></div>
+          <div><dt>ΔU° = ΔH° + w</dt><dd class="n-u">—</dd></div>
+        </dl>
+        <p class="fig-note">25 °C, 1 bar의 표준 생성 엔탈피(kJ/mol): CH₄(g) −74.6, C₂H₅OH(l) −277.6, C₆H₁₂O₆(s) −1273.3, CO₂(g) −393.5, H₂O(l) −285.8, H₂O(g) −241.8, NH₃(g) −45.9, CaCO₃(s, 방해석) −1207.6, CaO(s) −634.9, NO(g) +91.3 (CRC Handbook). 홑원소 물질은 0입니다. ΔU는 기체를 이상 기체로, 고체·액체의 부피 변화를 무시하고 계산했습니다(RT = 2.48 kJ/mol).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>화학 반응은 수백만 가지인데, 반응열을 모두 열량계로 잴 수는 없습니다. 탄소를 태워 일산화 탄소만 얻는 반응처럼 깔끔하게 일으킬 수 없는 반응도 있습니다. 물질마다 숫자 하나씩만 적어 둔 표로 모든 반응의 반응열을 구할 수 있을까요?</li>
+      <li><span class="tag">복원</span>ΔU = q + w이고, 압력 P가 일정할 때 계가 받은 일은 w = −PΔV입니다. 헤스 법칙에 따르면 반응을 여러 단계로 나누어도 전체 반응열은 같습니다.</li>
+      <li><span class="tag">설명</span><em>엔탈피</em>를 H = U + PV로 정의하면 압력이 일정할 때 ΔH = ΔU + PΔV = q<sub>P</sub>, 곧 열린 그릇에서 잰 열이 그대로 ΔH가 됩니다. H도 상태 함수이므로 기준점을 하나 정하면 됩니다. 표준 상태(1 bar)의 가장 안정한 홑원소 물질을 0으로 두고, 그 원소들로 화합물 1 mol을 만들 때의 ΔH를 <em>표준 생성 엔탈피</em> Δ<sub>f</sub>H°라 합니다. 그러면 어떤 반응이든 원소를 거쳐 가는 길로 돌아갈 수 있어 <em>ΔH°<sub>반응</sub> = Σν Δ<sub>f</sub>H°(생성물) − Σν Δ<sub>f</sub>H°(반응물)</em>입니다.</li>
+      <li><span class="tag">연결</span>기체의 몰수가 Δn<sub>기체</sub>만큼 바뀌면 PΔV ≈ Δn<sub>기체</sub>RT이므로 ΔH = ΔU + Δn<sub>기체</sub>RT입니다. 메테인이 타면 기체 3 mol이 1 mol로 줄어, 대기가 계를 눌러 약 5 kJ의 일을 해 줍니다. 그래서 봄베 열량계(부피 일정)에서 잰 ΔU와 열린 그릇의 ΔH가 조금 다릅니다. 실제 반응은 대부분 압력이 일정한 조건에서 일어나므로, 이 일을 따로 계산하지 않아도 되는 ΔH가 더 쓸모 있습니다.</li>
+      <li><span class="tag">적용</span>반응을 바꿔 가며 도표의 두 화살표(원소 → 반응물, 원소 → 생성물)의 차이가 ΔH°임을 확인하세요. 메테인 연소에서 물을 수증기로 바꾸면 ΔH°가 얼마나 달라지고, 그 차이는 무엇인가요? ΔH°와 ΔU°가 같아지는 반응은 어느 것이며 왜 그런가요? 석회석 분해는 ΔU°가 ΔH°보다 큰가요, 작은가요?</li>
+      <li class="warn"><span class="tag">판단</span>Δ<sub>f</sub>H°가 0이라고 그 물질의 엔탈피가 실제로 0인 것은 아닙니다. 엔탈피의 절댓값은 알 수 없고, 0은 해발 고도의 해수면처럼 정한 기준일 뿐입니다. 또 Δ<sub>f</sub>H°는 25 °C 값이라 고온 반응에는 근삿값입니다. 표의 값을 쓸 때는 물질의 상태(g, l, s)와 동소체(흑연과 다이아몬드)를 반드시 맞춰야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">수소 연소 2H₂(g) + O₂(g) → 2H₂O(l)의 ΔH° = −571.6 kJ입니다. 같은 반응을 25 °C 봄베 열량계(부피 일정)에서 했을 때 재는 열 q<sub>V</sub>는? (RT = 2.48 kJ/mol)</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>−571.6 kJ<span class="why"><b>Δn<sub>기체</sub>가 0이 아닙니다.</b> 기체 3 mol이 액체로 바뀌므로 Δn<sub>기체</sub> = −3이고, 부피 일정이면 대기가 해 주던 일이 빠집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−579.0 kJ<span class="why"><b>부호를 거꾸로 적용했습니다.</b> ΔU = ΔH − Δn<sub>기체</sub>RT = −571.6 − (−3)(2.48)이므로 더하는 것이 맞습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>−564.2 kJ<span class="why"><b>맞습니다.</b> q<sub>V</sub> = ΔU = −571.6 + 3 × 2.48 ≈ −564.2 kJ. 압력이 일정할 때는 줄어드는 기체 부피만큼 대기가 일 7.4 kJ을 더 해 주어, 그만큼 열이 더 나옵니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

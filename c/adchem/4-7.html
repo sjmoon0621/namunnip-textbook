@@ -1,0 +1,216 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>반응 속도와 아레니우스 식 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="농도, 온도, 표면적, 촉매 등 화학 반응 속도에 영향을 미치는 요인을 이해하고, 아레니우스 식 k = A·e^(−Ea/RT)으로 온도에 따른 속도 상수의 변화를 정량적으로 설명한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labchem-rate-design .ctl-row.three { grid-template-columns: 1fr 1fr; }
+    #card-labchem-rate-design .dcheck { font-size: 12.5px; margin: 6px 0 2px; padding: 6px 10px; border-left: 3px solid var(--rule); color: var(--ink-2); }
+    #card-labchem-rate-design .dcheck.bad { border-left-color: var(--warn); color: var(--warn); }
+    #card-labchem-rate-design .dcheck.good { border-left-color: var(--forest); color: var(--forest); }
+  </style>
+</head>
+<body data-course="adchem" data-sec="4-7">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>반응 속도와 아레니우스 식</h1>
+    <p class="lead">우유는 냉장고 밖에서 몇 배나 빨리 상할까요? “10 °C 오르면 반응이 2배 빨라진다”는 말은 어디서 나왔고, 언제나 맞을까요? 이 절에서는 온도가 속도 상수를 바꾸는 방식을 아레니우스 식 하나로 정리하고, 그래프의 기울기에서 활성화 에너지를 읽어 냅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">반응 속도식과 속도 상수</span><span class="p">활성화 에너지</span><span class="p">자연로그와 지수 함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-mateng-rate-factors"><span class="mono">4.7.1</span>냉장고, 잘게 썬 장작, 촉매 장치는 각각 무엇을 바꿀까?</a></li>
+        <li><a href="#card-adchem-arrhenius"><span class="mono">4.7.2</span>아레니우스 식</a></li>
+        <li><a href="#card-labchem-rate-design"><span class="mono">4.7.3</span>무엇을 고정해야 "이 요인이 속도를 바꿨다"고 말할 수 있을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-4-7">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-mateng-rate-factors">
+        <header class="card-head">
+          <span class="no">4.7.1</span><h2>냉장고, 잘게 썬 장작, 촉매 장치는 각각 무엇을 바꿀까?</h2><span class="kind">반응 속도에 영향을 주는 요인 · 농도, 온도, 촉매</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="반응 경로에 따른 에너지 도표와 촉매가 낮춘 활성화 에너지, 조건에 따른 상대적인 반응 속도 막대"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">반응물 농도 = 처음의 <output class="c-out">1.0</output>배</label>
+                  <input class="c" type="range" min="0.25" max="4" step="0.25" value="1" aria-label="반응물 농도"></div>
+                <div><label class="mono">온도 = <output class="t-out">25</output> °C</label>
+                  <input class="t" type="range" min="0" max="100" step="1" value="25" aria-label="온도"></div>
+              </div>
+              <div class="toggles"><label><input type="checkbox" class="cat"> 촉매 넣기 (Eₐ 60 → 40 kJ/mol)</label></div>
+              <dl class="nums">
+                <div><dt>처음(25 °C, 1배, 촉매 없음) 대비 속도</dt><dd class="n-r">—</dd></div>
+                <div><dt>충돌 횟수</dt><dd class="n-col">—</dd></div>
+                <div><dt>Eₐ를 넘는 분자의 비율</dt><dd class="n-fr">—</dd></div>
+              </dl>
+              <p class="fig-note">반응물 A에 대해 1차인 반응 A → B(ΔH = −30 kJ/mol)를 가정한 모식입니다. 속도 ∝ 농도 × (Eₐ를 넘는 분자의 비율)로 계산했습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>우유는 냉장고에서 천천히 상하고, 통나무는 잘 타지 않지만 잘게 쪼갠 장작은 잘 탑니다. 자동차 배기관의 촉매 장치는 유독한 기체를 순식간에 바꿔 놓습니다. 세 가지는 각각 반응의 무엇을 바꾼 걸까요?</li>
+            <li><span class="tag">복원</span>반응이 일어나려면 입자가 부딪쳐야 하고, 그 충돌 에너지가 활성화 에너지 이상이어야 합니다.</li>
+            <li><span class="tag">설명</span><em>농도</em>를 높이거나 고체를 잘게 쪼개 표면적을 넓히면 충돌 횟수가 늘어 반응이 빨라집니다. <em>온도</em>를 높이면 충돌도 조금 잦아지지만, 무엇보다 활성화 에너지를 넘는 분자의 비율이 크게 늘어납니다. <em>촉매</em>는 활성화 에너지가 더 낮은 새 반응 경로를 열어 줍니다. 촉매는 반응 뒤에 그대로 남습니다.</li>
+            <li><span class="tag">연결</span>생활 속 예: 냉장·냉동 보관(온도를 낮춰 부패 반응을 늦춤), 가루 설탕이 각설탕보다 빨리 녹음(표면적), 산소 호흡기(산소 농도), 몸속 효소(생체 촉매), 자동차 촉매 변환기(백금·로듐이 CO와 NO를 CO₂와 N₂로 바꿈), 하버–보슈법의 철 촉매. 반대로 방부제나 음식의 진공 포장은 반응을 늦추는 예입니다.</li>
+            <li><span class="tag">적용</span>농도를 2배로 하면 속도는 몇 배인가요? 온도를 25 °C에서 35 °C로 올리면요? 촉매를 넣으면 속도가 몇 배가 되나요? 세 방법 가운데 가장 효과가 큰 것은 무엇이고, 에너지 도표에서 무엇이 달라지는지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>“촉매는 반응을 더 많이 일으켜 생성물의 양을 늘린다”는 오개념입니다. 촉매는 정반응과 역반응을 똑같이 빠르게 해 평형에 빨리 도달하게 할 뿐, ΔH와 평형에서의 양은 바꾸지 않습니다. 도표에서 반응물과 생성물의 높이가 그대로인 것을 확인하세요.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 반응에 촉매를 넣었더니 훨씬 빨라졌습니다. 촉매를 넣기 전과 비교해 달라지지 않은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>활성화 에너지<span class="why"><b>촉매는 활성화 에너지가 낮은 경로를 엽니다.</b> 그래서 빨라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>반응의 ΔH<span class="why"><b>맞습니다.</b> 반응물과 생성물이 같으므로 두 높이의 차이인 ΔH는 그대로입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>활성화 에너지 이상인 분자의 비율<span class="why"><b>문턱이 낮아졌으니 넘는 분자가 크게 늘었습니다.</b></span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adchem-arrhenius">
+        <header class="card-head">
+          <span class="no">4.7.2</span><h2>“10 °C 오르면 2배 빨라진다”는 언제 맞을까?</h2><span class="kind">아레니우스 식 · ln k–1/T 그래프 · 두 온도 공식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="왼쪽: 두 온도 사이에서 속도 상수 k와 온도의 관계. 오른쪽: ln k와 1/T의 직선 그래프와 기울기"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="반응">
+                <span class="mono small dim">반응</span>
+                <button type="button" class="chip" data-r="n2o5" aria-pressed="true">2N₂O₅ → 4NO₂ + O₂</button>
+                <button type="button" class="chip" data-r="cp" aria-pressed="false">사이클로프로페인 → 프로펜</button>
+                <button type="button" class="chip" data-r="x" aria-pressed="false">가상 반응</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">Eₐ = <output class="ea-out">103</output> kJ/mol</label>
+                  <input class="ea" type="range" min="10" max="300" step="1" value="103" aria-label="활성화 에너지"></div>
+                <div><label class="mono">A = <output class="a-out">—</output> s⁻¹</label>
+                  <input class="la" type="range" min="6" max="18" step="0.1" value="13.7" aria-label="빈도 인자(로그 눈금)"></div>
+                <div><label class="mono">T₁ = <output class="t1-out">298</output> K</label>
+                  <input class="t1" type="range" min="250" max="800" step="1" value="298" aria-label="온도 1"></div>
+                <div><label class="mono">T₂ = <output class="t2-out">308</output> K</label>
+                  <input class="t2" type="range" min="250" max="800" step="1" value="308" aria-label="온도 2"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>k(T₁)</dt><dd class="n-k1">—</dd></div>
+                <div><dt>k(T₂)</dt><dd class="n-k2">—</dd></div>
+                <div><dt>k₂ / k₁</dt><dd class="n-r">—</dd></div>
+                <div><dt>T₁에서 반감기 ln2/k</dt><dd class="n-h">—</dd></div>
+              </dl>
+              <p class="fig-note">두 반응의 A와 Eₐ는 기체상 1차 반응의 문헌값(N₂O₅: A = 4.94×10¹³ s⁻¹, Eₐ = 103.4 kJ/mol, 사이클로프로페인: A = 1.58×10¹⁵ s⁻¹, Eₐ = 272 kJ/mol)이고, 가상 반응은 값을 마음대로 바꿀 수 있는 1차 반응입니다. A와 Eₐ는 이 온도 범위에서 일정하다고 가정했습니다. R = 8.314 J/(mol·K).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>음식은 실온에서 냉장고보다 훨씬 빨리 상하고, “온도가 10 °C 오르면 반응 속도가 2배쯤 된다”는 경험칙도 있습니다. 온도가 정확히 무엇을 바꾸기에 이렇게 큰 차이가 날까요? 그리고 이 경험칙은 모든 반응, 모든 온도에서 맞을까요?</li>
+            <li><span class="tag">복원</span>반응 속도는 농도, 온도, 촉매, 고체의 표면적에 따라 달라집니다. 속도식 <em>v = k[A]<sup>m</sup>[B]<sup>n</sup></em>에서 농도의 효과는 [A], [B]에 들어 있고, 온도와 촉매의 효과는 모두 <em>속도 상수 k</em>에 들어 있습니다. 활성화 에너지 Eₐ를 넘는 분자의 비율은 온도가 오를수록 커집니다.</li>
+            <li><span class="tag">설명</span>아레니우스는 실험 자료에서 <span class="formula">k = A e<sup>−Eₐ/RT</sup></span>를 얻었습니다. e<sup>−Eₐ/RT</sup>는 Eₐ 이상의 에너지로 충돌하는 비율이고, <em>빈도 인자</em> A는 충돌 빈도와 방향 조건을 담습니다. 양변에 자연로그를 취하면 <em>ln k = ln A − (Eₐ/R)(1/T)</em>이므로, ln k를 1/T에 대해 그리면 기울기가 −Eₐ/R인 직선이 됩니다. 두 온도에서 빼면 A가 사라져 <span class="formula">ln(k₂/k₁) = (Eₐ/R)(1/T₁ − 1/T₂)</span>를 얻습니다.</li>
+            <li><span class="tag">연결</span>ln(k₂/k₁)은 Eₐ에 비례하므로, Eₐ가 2배인 반응은 같은 온도 변화에서 배수가 제곱이 됩니다. 또 1/T₁ − 1/T₂ ≈ ΔT/T²이라 같은 10 K라도 온도가 높은 곳에서는 효과가 작습니다. 실험실에서는 여러 온도에서 k를 재어 ln k–1/T 그래프의 기울기로 Eₐ를 구합니다.</li>
+            <li><span class="tag">적용</span>가상 반응을 고르고 T₁ = 298 K, T₂ = 308 K에서 k₂/k₁ = 2가 되는 Eₐ를 찾아보세요. 그 Eₐ를 그대로 두고 T₁ = 500 K, T₂ = 510 K로 바꾸면 배수는 얼마인가요? N₂O₅ 반응의 25 °C 반감기는 몇 시간이고, 35 °C에서는 어떻게 되나요? 사이클로프로페인이 실온에서 사실상 반응하지 않는 까닭을 k 값으로 설명해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>“10 °C에 2배”는 Eₐ가 50 kJ/mol 안팎이고 실온 근처일 때만 맞는 어림입니다. 아레니우스 식도 A와 Eₐ가 온도에 따라 거의 변하지 않는다는 가정 위에 있습니다. 효소 반응은 온도가 너무 높으면 효소가 변성되어 직선에서 벗어나고, 여러 경로가 경쟁하는 반응은 온도 범위에 따라 기울기가 달라질 수 있습니다. 또 온도는 Eₐ를 낮추지 않습니다. 문턱은 그대로이고 문턱을 넘는 분자의 비율이 늘어납니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">반응 X는 300 K에서 310 K로 올리면 속도 상수가 2배가 됩니다. A의 크기는 다르지만 Eₐ가 반응 X의 2배인 반응 Y를 같은 조건에서 300 K에서 310 K로 올리면 속도 상수는 약 몇 배가 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2배<span class="why"><b>A에만 주목한 답입니다.</b> A는 두 온도의 비를 구할 때 약분되지만 Eₐ는 남습니다. 배수는 Eₐ에 따라 달라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4배<span class="why"><b>맞습니다.</b> ln(k₂/k₁)이 Eₐ에 비례하므로 Y의 ln(k₂/k₁)은 2 ln 2 = ln 4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1배보다 작아진다. 문턱이 높으면 온도 효과가 줄기 때문이다<span class="why"><b>거꾸로입니다.</b> Eₐ가 큰 반응일수록 k의 절댓값은 작지만, 온도에 대한 민감도는 더 큽니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labchem-rate-design">
+        <header class="card-head">
+          <span class="no">4.7.3</span><h2>무엇을 고정해야 "이 요인이 속도를 바꿨다"고 말할 수 있을까?</h2><span class="kind">실험 설계 · 과산화 수소 분해 · 기체 주사기 · 아레니우스 그래프</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="항온조 속 반응 플라스크와 기체 주사기"></canvas>
+            <div class="ctl">
+              <div class="presets cat" role="group" aria-label="촉매">
+                <span class="mono small dim">촉매</span>
+                <button class="chip" data-c="none" aria-pressed="false">없음</button><button class="chip" data-c="mno2" aria-pressed="false">MnO₂ 0.10 g</button><button class="chip" data-c="ki" aria-pressed="true">0.50 M KI 1.0 mL</button><button class="chip" data-c="yeast" aria-pressed="false">효모 현탁액 1.0 mL</button>
+              </div>
+              <div class="ctl-row three">
+                <div><label class="mono">H₂O₂ 농도 = <output class="c-out">3.0</output> % (5.0 mL)</label>
+                  <input class="c" type="range" min="0.5" max="3" step="0.5" value="3" aria-label="과산화 수소 농도"></div>
+                <div><label class="mono">항온조 온도 = <output class="t-out">25</output> °C</label>
+                  <input class="t" type="range" min="10" max="50" step="5" value="25" aria-label="온도"></div>
+              </div>
+              <div class="lab-btns"><button class="chip go run" type="button">촉매 넣고 2분 동안 5초마다 부피 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <p class="dcheck">설계 점검: 첫 실행입니다. 무엇을 바꿀지 먼저 정하세요.</p>
+              <div class="tbl-host"></div>
+              <div class="presets view" role="group" aria-label="그래프 종류">
+                <span class="mono small dim">그래프</span>
+                <button class="chip" data-p="vt" aria-pressed="true">V–t 곡선</button><button class="chip" data-p="conc" aria-pressed="false">속도–농도</button><button class="chip" data-p="arr" aria-pressed="false">ln 속도–1/T</button>
+              </div>
+              <canvas class="cv-plot" aria-label="기체 부피–시간 곡선, 속도–농도 또는 아레니우스 그래프"></canvas>
+              <dl class="nums"><div><dt>방금 실행의 초기 속도</dt><dd class="n-r">—</dd></div><div><dt>속도–농도 기울기 (mL/s per %)</dt><dd class="n-o">—</dd></div><div><dt>활성화 에너지 Ea</dt><dd class="n-e">—</dd></div></dl>
+              <p class="fig-note">기체 주사기 눈금 1 mL(최대 100 mL)를 0.5 mL까지 어림해 읽고, 마찰 때문에 ±0.3 mL쯤 흔들립니다. 초기 속도는 처음 20초 동안의 다섯 점에 맞춘 직선의 기울기입니다. 촉매마다 속도 상수와 Ea는 문헌 범위를 참고한 모식값이고, MnO₂ 가루는 매번 표면적이 조금씩 달라집니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>2H₂O₂ → 2H₂O + O₂ 반응의 속도는 농도, 온도, 촉매에 따라 어떻게 달라질까요? 한 요인의 효과만 따로 보려면 실험을 어떻게 짜야 할까요?</li>
+            <li><span class="tag">복원</span>반응 속도는 단위 시간당 생성물이 늘어나는 양으로 잴 수 있습니다. 여기서는 생긴 O₂의 부피를 기체 주사기로 잽니다. 농도가 진할수록 충돌이 잦아지고, 온도가 높을수록 활성화 에너지를 넘는 분자가 늘며, 촉매는 활성화 에너지가 낮은 경로를 엽니다.</li>
+            <li><span class="tag">설계</span>먼저 알아볼 요인 하나를 <em>조작 변인</em>으로 정하고, 나머지(H₂O₂ 부피·농도, 촉매 종류와 양, 온도, 플라스크 흔드는 방법)는 <em>통제 변인</em>으로 고정합니다. 종속 변인은 처음 20초 동안의 O₂ 발생 속도입니다. 촉매를 넣지 않은 플라스크는 대조군입니다. 같은 조건을 두 번 이상 반복해 우연 오차의 크기도 봅니다. 기록 표 위의 "설계 점검"이 앞 실행과 무엇이 달라졌는지 알려 줍니다.</li>
+            <li><span class="tag">분석</span>속도–농도 그래프가 원점을 지나는 직선이면 H₂O₂에 대해 1차입니다. 온도 효과는 <em>아레니우스 식</em> k = A·e<sup>−Ea/RT</sup>로 정리합니다. 양변에 ln을 취하면 ln k = ln A − (Ea/R)(1/T)이므로, ln(속도)–1/T 그래프의 기울기 × (−R)이 Ea입니다. 촉매가 바뀌면 Ea 자체가 바뀝니다.</li>
+            <li><span class="tag">측정</span>스스로 계획을 세워 보세요. 예: KI 촉매, 3.0%로 고정하고 온도만 15~45 °C에서 바꿔 Ea 구하기 → 같은 방법으로 MnO₂의 Ea 구해 비교하기 → 25 °C에서 농도만 바꿔 차수 확인하기. 효모로 온도를 50 °C까지 올리면 아레니우스 그래프가 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>효모 속 카탈레이스는 단백질이라 45 °C를 넘으면 변성되어 오히려 느려지므로, 그 점들은 아레니우스 직선에서 벗어납니다. 주사기 마찰과 MnO₂ 가루 양의 차이는 우연 오차이고, 반복 측정으로 크기를 확인합니다. 빠른 반응은 처음 20초 안에도 H₂O₂가 꽤 줄어 초기 속도가 작게 잡히므로, 고온 점일수록 Ea가 조금 작게 나옵니다(측정 구간을 줄이거나 촉매 양을 줄여 개선). 3%보다 진한 과산화 수소는 피부를 하얗게 상하게 하므로 장갑과 보안경을 끼고, 기체가 빠르게 나올 때 마개가 튀지 않도록 촉매 양을 처음에는 적게 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">한 모둠이 "온도의 효과"를 알아보려고 25 °C에서는 MnO₂ 0.10 g, 35 °C에서는 MnO₂ 0.20 g을 넣었더니 35 °C에서 속도가 4배였습니다. 이 결론에 대해 옳은 판단은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10 °C 오르면 속도가 4배가 된다<span class="why"><b>두 변인이 함께 바뀌었습니다.</b> 촉매 양(표면적)도 2배가 되었으므로 4배 중 얼마가 온도 때문인지 알 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>촉매 양을 고정하고 다시 재야 온도 효과를 말할 수 있다<span class="why"><b>맞습니다.</b> 조작 변인은 하나만 바꾸고, 촉매의 종류와 양은 통제 변인으로 같게 둬야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>촉매는 반응 뒤 그대로 남으니 양은 상관없다<span class="why"><b>소모되지 않는다는 것과 양이 무관하다는 것은 다릅니다.</b> 고체 촉매는 표면에서 반응이 일어나므로 양(표면적)이 많을수록 빨라집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/mateng/k-mb.js"></script>
+<script src="../../js/cards/mateng/k-factors.js"></script>
+<script src="../../js/cards/adchem/k-arrhenius.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labchem/rate-design.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>흑체 복사와 분광 분류 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="플랑크 법칙에서 빈 변위 법칙과 슈테판–볼츠만 법칙을 유도하여 별의 표면 온도, 광도, 등급, 색지수를 계산하고, 볼츠만 분포와 사하 식으로 분광형과 광도 계급을 이해하여 H–R도에서 별의 특징을 설명한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-adearth-planck canvas { width: 100%; aspect-ratio: 1 / 1; }
+    #card-adearth-planck .nums dd { font-size: 13px; }
+    #card-labearth-photometry .ph-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 4px 0; font-size: 13px; }
+    #card-adearth-balmer canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-adearth-balmer .nums dd { font-size: 13px; }
+    #card-labearth-stellar-spectrum .ss-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 4px 0; font-size: 13px; }
+  </style>
+</head>
+<body data-course="adearth" data-sec="3-4">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>흑체 복사와 분광 분류</h1>
+    <p class="lead">별빛을 펼친 무지개 띠 하나에 별의 온도, 크기, 대기의 압력까지 들어 있습니다. 흑체 복사의 식을 직접 유도해 온도와 광도를 계산하고, 흡수선의 세기가 왜 성분이 아니라 온도와 압력으로 정해지는지 원자의 준위와 이온화로 따져 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">흑체 복사와 빈 법칙</span><span class="p">원자의 에너지 준위</span><span class="p">미분과 적분</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-adearth-planck"><span class="mono">3.4.1</span>플랑크 법칙에서 빈 법칙과 슈테판–볼츠만 법칙으로</a></li>
+        <li><a href="#card-labearth-photometry"><span class="mono">3.4.2</span>같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?</a></li>
+        <li><a href="#card-adearth-balmer"><span class="mono">3.4.3</span>분광형의 물리: 볼츠만·사하 식</a></li>
+        <li><a href="#card-labearth-stellar-spectrum"><span class="mono">3.4.4</span>분광기로 찍은 별빛에서 표면 온도를 어떻게 읽을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adearth-3-4">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-adearth-planck">
+        <header class="card-head">
+          <span class="no">3.4.1</span><h2>플랑크 곡선 하나에서 빈 법칙과 T⁴ 법칙이 어떻게 함께 나올까?</h2><span class="kind">흑체 복사 법칙의 유도 · 광도와 등급 · 색지수</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="위: 파장에 따른 흑체의 복사 세기(플랑크 곡선)와 B, V 필터 대역, 태양 온도의 곡선. 아래: 세기를 T⁵으로 나누고 가로축을 λT로 바꾼 그래프에서 두 곡선이 겹치는 모습"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">표면 온도 T = <output class="t-out">—</output> K</label>
+                  <input class="t" type="range" min="3.40" max="4.60" step="0.002" value="4.0" aria-label="표면 온도 (로그 눈금)"></div>
+                <div><label class="mono">반지름 R = <output class="r-out">1.0</output> R☉</label>
+                  <input class="r" type="range" min="-2.2" max="3" step="0.01" value="0" aria-label="반지름 (로그 눈금)"></div>
+              </div>
+              <div class="presets" role="group" aria-label="별">
+                <button type="button" class="chip" data-t="3600" data-r="760">베텔게우스</button><button type="button" class="chip" data-t="5772" data-r="1">태양</button><button type="button" class="chip" data-t="9940" data-r="1.71">시리우스 A</button><button type="button" class="chip" data-t="25000" data-r="0.0084">시리우스 B</button><button type="button" class="chip" data-t="12100" data-r="79">리겔</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>λ<sub>max</sub> (곡선의 꼭대기)</dt><dd class="n-l">—</dd></div>
+                <div><dt>π∫B<sub>λ</sub>dλ (수치 적분)</dt><dd class="n-f">—</dd></div>
+                <div><dt>광도 L / 절대 복사 등급</dt><dd class="n-L">—</dd></div>
+                <div><dt>흑체의 B − V</dt><dd class="n-c">—</dd></div>
+              </dl>
+              <p class="fig-note">h, c, k, σ는 CODATA 값, L☉ = 3.828 × 10²⁶ W, M<sub>bol,☉</sub> = 4.74(IAU 2015)입니다. 적분은 10 nm–100 μm 구간을 수치로 더한 값입니다. B, V 필터는 중심 440 nm·550 nm, 반치폭 98 nm·89 nm인 가우스 모양으로 근사했고, 흑체 9600 K에서 B − V = 0이 되게 영점을 맞췄습니다. 별의 온도와 반지름은 문헌의 대표값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>시리우스 B는 태양보다 훨씬 뜨겁지만 우리 눈에는 거의 안 보이고, 베텔게우스는 차가운데도 태양의 10만 배쯤 밝습니다. 온도, 반지름, 밝기, 색 사이의 정확한 관계는 어디서 나올까요? 빈 법칙과 슈테판–볼츠만 법칙은 따로 외워야 하는 두 법칙일까요?</li>
+            <li><span class="tag">복원</span>흑체가 단위 넓이, 단위 입체각, 단위 파장마다 내는 복사 세기는 플랑크 법칙 <em>B<sub>λ</sub>(T) = (2hc²/λ⁵) · 1/(e<sup>hc/λkT</sup> − 1)</em>를 따릅니다. 진동수 ν인 빛의 에너지가 hν 단위로만 주고받아진다는 가정에서 나온 식입니다. 등급은 밝기의 로그 눈금이며, 5등급 차가 밝기 100배입니다.</li>
+            <li><span class="tag">설명</span>x = hc/λkT로 바꾸면 <em>B<sub>λ</sub> = (2k⁵T⁵/h⁴c³) · x⁵/(e<sup>x</sup> − 1)</em>입니다. 온도는 앞의 상수 T⁵에만 들어가므로 곡선의 모양은 x 하나로 정해집니다. ① 꼭대기: d/dx[x⁵/(e<sup>x</sup>−1)] = 0에서 x = 5(1 − e<sup>−x</sup>), 풀면 x = 4.965이므로 <em>λ<sub>max</sub>T = hc/(4.965k) = 2.898 × 10⁻³ m·K</em>(빈 법칙). ② 넓이: dλ = −(hc/kT)dx/x²를 넣으면 ∫B<sub>λ</sub>dλ = (2k⁴T⁴/h³c²)∫x³/(e<sup>x</sup>−1)dx이고 이 적분은 π⁴/15입니다. 표면 밖으로 나가는 복사를 모두 더하면(π를 곱함) <em>F = σT⁴, σ = 2π⁵k⁴/(15h³c²) = 5.67 × 10⁻⁸ W/(m²·K⁴)</em>(슈테판–볼츠만 법칙).</li>
+            <li><span class="tag">연결</span>별 전체가 내는 에너지는 <em>L = 4πR²σT⁴</em>이고, 절대 복사 등급은 M<sub>bol</sub> = 4.74 − 2.5 log(L/L☉)입니다. 한편 B 필터와 V 필터로 잰 밝기의 비는 R과 거리가 모두 약분되고 T만 남으므로, <em>색지수 B − V</em>는 거리를 몰라도 온도를 알려 줍니다. 그래서 H–R도의 가로축에는 온도 대신 B − V나 분광형을 놓을 수 있고, 같은 온도에서 위로 갈수록 반지름이 큽니다.</li>
+            <li><span class="tag">적용</span>온도를 바꾸며 위 그래프의 꼭대기와 아래 그래프를 비교하세요. 아래 그래프에서 두 곡선이 언제나 겹치는 까닭은 무엇인가요? T를 2배로 하면 λ<sub>max</sub>, 적분값, B − V는 각각 어떻게 되나요? 별 버튼을 눌러 시리우스 B와 베텔게우스의 L과 M<sub>bol</sub>을 비교하세요. 태양에서 수치 적분값이 σT⁴과 같은지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>별은 완전한 흑체가 아닙니다. 대기의 흡수선이 짧은 파장 쪽 빛을 많이 가려서 실제 태양의 B − V는 0.65인데 같은 온도 흑체는 약 0.47입니다. 그래서 별의 온도는 L = 4πR²σT<sub>eff</sub>⁴를 만족하는 <em>유효 온도</em>로 정의하고, 색지수와 온도의 관계는 실제 별로 보정해 씁니다. 또 성간 티끌은 푸른빛을 더 많이 가려서 B − V를 크게(붉게) 만들므로, 소광을 보정하지 않으면 온도를 낮게 잡습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">표면 온도가 태양의 2배이고 반지름이 태양의 절반인 별이 있습니다. 이 별의 절대 복사 등급은 약 얼마인가요? (태양 4.74)</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 1.7<span class="why"><b>반지름 효과를 빠뜨렸습니다.</b> 온도만 보면 16배이지만 겉넓이가 1/4이라 광도는 4배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 3.2<span class="why"><b>맞습니다.</b> L = (1/2)² × 2⁴ = 4 L☉이고, M = 4.74 − 2.5 log 4 ≈ 3.24입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 4.7 (두 효과가 상쇄된다)<span class="why"><b>온도의 지수를 2로 잘못 썼습니다.</b> 단위 넓이당 복사는 T²이 아니라 T⁴에 비례합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-photometry">
+        <header class="card-head">
+          <span class="no">3.4.2</span><h2>같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?</h2><span class="kind">실험 · CCD 차등 측광 · 기기 등급과 표준 등급 · 색지수</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide ph-ccd" aria-label="CCD 화면. 표적 별과 비교성 다섯 개, 측광 구경 원"></canvas>
+            <div class="ctl">
+              <div><label class="mono">별의 고도 h = <output class="h-out">60</output>° (대기량 X = <output class="x-out">1.15</output>)</label>
+                <input class="alt" type="range" min="20" max="85" step="1" value="60" aria-label="별의 고도"></div>
+              <div class="ph-row"><label><input type="checkbox" class="cloud"> 엷은 구름 (프레임마다 투과율이 바뀜)</label></div>
+              <div class="lab-btns"><button class="chip go shot" type="button">B·V 필터로 한 장씩 찍고 측광</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <dl class="nums n4"><div><dt>프레임</dt><dd class="n-f">—</dd></div><div><dt>표적 V</dt><dd class="n-v">—</dd></div><div><dt>표적 B − V</dt><dd class="n-bv">—</dd></div><div><dt>표면 온도</dt><dd class="n-t">—</dd></div></dl>
+              <div class="tbl-host"></div>
+              <div class="presets ph-pv" role="group" aria-label="그래프">
+                <span class="mono small dim">그래프</span>
+                <button class="chip" data-v="tr" aria-pressed="true">변환식 (마지막 프레임)</button><button class="chip" data-v="tg" aria-pressed="false">프레임별 표적 V</button><button class="chip" data-v="bg" aria-pressed="false">대기량–기기 등급</button>
+              </div>
+              <canvas class="cv-plot ph-plot" aria-label="표준 등급 변환 그래프"></canvas>
+              <p class="fig-note">기기 등급 m = −2.5 log(N/t), 노출 t = 30 s, 구경 안 화소 50개, 하늘 배경 300카운트/화소, 읽기 잡음 10 e⁻. 비교성의 표준 등급과 대기 소광 계수(k<sub>V</sub> = 0.22, k<sub>B</sub> = 0.36)는 학교 관측지를 가정한 예시값입니다. 온도는 B − V를 왜성 표준표(Pecaut &amp; Mamajek 2013)에 대어 읽습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>CCD가 세는 것은 별빛이 만든 전자 수(카운트)뿐입니다. 망원경·필터·대기 상태가 매번 다른데, 카운트로 어떻게 누구에게나 통하는 표준 등급과 색지수를 얻을까요?</li>
+            <li><span class="tag">복원</span>등급은 밝기의 로그 눈금입니다. 카운트 N으로 <em>기기 등급 m = −2.5 log(N/t)</em>를 정하면, 표준 등급과는 영점, 대기 소광(k·X), 필터 차이(색 항)만큼 다릅니다. 대기량 X는 천정에서 1이고 고도 h가 낮을수록 약 1/sin h로 커집니다.</li>
+            <li><span class="tag">설계</span>표준 등급을 아는 비교성 여러 개와 표적 별을 <em>같은 사진</em>에 담아 B, V 필터로 찍습니다. 같은 사진의 별은 대기량과 구름의 영향을 똑같이 받으므로, 비교성에서 구한 변환식 V − v = ε(B − V) + ζ를 표적에 그대로 쓰면 그 영향이 지워집니다(<em>차등 측광</em>). 색지수는 B − V = μ(b − v) + ζ<sub>BV</sub>로 바꿉니다.</li>
+            <li><span class="tag">분석</span>마지막 프레임의 비교성으로 V − v를 (B − V)에 대해 직선 맞춤하면 기울기가 색 항 ε, 절편이 그 프레임의 영점입니다. 표적의 B − V를 먼저 구하고 V를 계산합니다. B − V가 작을수록 푸르고 뜨겁습니다(0.65 근처면 태양과 비슷한 약 5,800 K).</li>
+            <li><span class="tag">측정</span>고도를 바꿔 가며 5장 이상 찍고 '프레임별 표적 V'를 보세요. 구름을 켜고 다시 찍어도 표적 V가 흔들리지 않나요? '대기량–기기 등급' 그래프에서 비교성 C1의 기울기로 소광 계수 k<sub>V</sub>를 구하세요(구름이 없을 때).</li>
+            <li class="warn"><span class="tag">오차·안전</span>어두운 별은 카운트가 적어 포아송 잡음(√N)과 하늘 배경 잡음이 상대적으로 커집니다(우연 오차). 비교성과 표적의 색이 많이 다르면 색 항을 빼먹을 때 계통 오차가 남습니다. 고도가 낮으면 대기 소광이 크고 별이 흐려지므로 가능하면 고도 30° 이상에서 찍습니다. 소광 계수는 맑은 밤에만 일정하므로, 구름이 있으면 다른 사진의 영점을 빌려 쓰는 절대 측광은 쓸 수 없습니다. 밤 관측 때 냉각 CCD의 전원·전선을 정리해 걸려 넘어지지 않게 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">첫 사진(X = 1.2)에서 구한 영점을, 구름이 지나가는 중에 찍은 둘째 사진(X = 1.8)의 표적 별에 그대로 썼습니다. 무엇이 문제일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>같은 망원경이니 영점이 같아 문제없다<span class="why"><b>영점에는 대기가 들어 있습니다.</b> 대기량이 0.6 늘었으니 V에서만 약 0.13등급 더 어두워지고, 구름은 그 위에 더해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>표적이 실제보다 어둡게 측정된다<span class="why"><b>맞습니다.</b> 대기 소광(k·ΔX)과 구름 때문에 줄어든 빛을 별의 성질로 잘못 읽습니다. 둘째 사진 안의 비교성으로 영점을 다시 구하면(차등 측광) 이 효과가 지워집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>B − V만 틀리고 V는 맞다<span class="why"><b>둘 다 영향을 받습니다.</b> 구름은 두 필터를 비슷하게 어둡게 해서 색에는 덜 영향을 주지만, V 자체는 그대로 어두워집니다. 대기 소광은 B에서 더 커서 색도 붉어집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adearth-balmer">
+        <header class="card-head">
+          <span class="no">3.4.3</span><h2>수소가 가장 많은 태양에서 왜 칼슘 흡수선이 수소선보다 진할까?</h2><span class="kind">분광 분류의 물리 · 볼츠만 분포와 사하 식 · 광도 계급</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="표면 온도(왼쪽이 뜨거움, 로그 눈금)에 따라 수소 원자 하나당 발머선을 흡수할 수 있는 원자 수(H, n = 2)와 Ca II K선을 흡수할 수 있는 이온 수. 위쪽에 분광형 눈금"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">표면 온도 T = <output class="t-out">—</output> K</label>
+                  <input class="t" type="range" min="3.55" max="4.45" step="0.0001" value="3.7613" aria-label="표면 온도 (로그 눈금)"></div>
+                <div><label class="mono">대기의 전자 압력 P<sub>e</sub> = <output class="p-out">20</output> Pa</label>
+                  <input class="p" type="range" min="-1" max="3" step="0.01" value="1.301" aria-label="전자 압력 (로그 눈금)"></div>
+              </div>
+              <div class="presets" role="group" aria-label="대기 밀도">
+                <button type="button" class="chip" data-p="20" aria-pressed="true">주계열성 대기 (20 Pa)</button><button type="button" class="chip" data-p="0.5" aria-pressed="false">초거성 대기 (0.5 Pa)</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>H n = 2 / 전체 H</dt><dd class="n-h">—</dd></div>
+                <div><dt>Ca II 바닥 상태 / 전체 H</dt><dd class="n-c">—</dd></div>
+                <div><dt>Ca II ÷ H(n = 2)</dt><dd class="n-r">—</dd></div>
+                <div><dt>발머선 흡수자가 가장 많은 T</dt><dd class="n-pk">—</dd></div>
+              </dl>
+              <p class="fig-note">대기를 온도 T, 전자 압력 P<sub>e</sub>가 일정한 한 층으로 본 모식입니다(실제 별의 P<sub>e</sub>는 온도에 따라서도 달라짐). 이온화 에너지 H 13.6 eV, Ca 6.11 eV·11.87 eV, 분배 함수 Ca I 1.32·Ca II 2.30·Ca III 1.00, 태양의 Ca/H 수 비 2.2 × 10⁻⁶을 썼습니다. 세로축은 로그 눈금입니다. 흡수선의 실제 세기는 흡수자 수 외에 전이 확률, 선의 폭에도 달려 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>태양 대기에는 칼슘 원자 하나당 수소 원자가 약 45만 개 있습니다. 그런데 태양 스펙트럼에서 가장 진한 선은 수소의 발머선이 아니라 이온화된 칼슘(Ca II)의 H, K선입니다. 반대로 시리우스 같은 A형 별에서는 발머선이 가장 진합니다. 원소의 양이 아니라면 무엇이 흡수선의 세기를 정할까요?</li>
+            <li><span class="tag">복원</span>발머선(Hα, Hβ …)은 수소 원자의 전자가 n = 2 준위에서 위로 올라가며 빛을 흡수할 때 생깁니다. 바닥 상태(n = 1)의 전자는 발머선을 흡수하지 못합니다. 원자가 전자를 잃으면(이온화) 그 원자의 선은 사라집니다. 온도가 높을수록 입자의 평균 운동 에너지 kT가 큽니다.</li>
+            <li><span class="tag">설명</span>들뜬 준위의 비율은 <em>볼츠만 분포</em> N<sub>2</sub>/N<sub>1</sub> = (g<sub>2</sub>/g<sub>1</sub>)e<sup>−(E₂−E₁)/kT</sup>를 따릅니다(수소는 g<sub>2</sub>/g<sub>1</sub> = 4, E₂ − E₁ = 10.2 eV). 이온화된 비율은 <em>사하 식</em> N<sub>II</sub>/N<sub>I</sub> = (2kTZ<sub>II</sub>/P<sub>e</sub>Z<sub>I</sub>)(2πm<sub>e</sub>kT/h²)<sup>3/2</sup>e<sup>−χ/kT</sup>를 따릅니다. 온도가 오르면 n = 2로 올라가는 원자는 늘지만, 동시에 이온화되어 사라지는 원자도 늘어납니다. 두 효과가 겹쳐 n = 2 수소는 어떤 온도에서 가장 많아지고, 그 온도가 A형 별(약 1만 K)입니다.</li>
+            <li><span class="tag">연결</span>분광형 O, B, A, F, G, K, M은 성분이 아니라 온도의 순서입니다. O형은 He II, B형은 He I, A형은 H, G·K형은 Ca II와 금속, M형은 TiO 분자 띠가 두드러집니다. 사하 식에는 P<sub>e</sub>가 들어 있어서, 같은 온도라도 대기가 희박한 거성·초거성에서는 이온화가 더 잘 일어나고 선의 폭도 좁습니다. 이 차이로 정하는 것이 MK <em>광도 계급</em>(Ia, Ib, II, III, IV, V)이고, 분광형과 광도 계급을 합치면 H–R도에서 별의 자리(그리고 절대 등급)가 정해집니다.</li>
+            <li><span class="tag">적용</span>온도를 태양(5,772 K)에 두고 Ca II 흡수자가 n = 2 수소보다 몇 배 많은지 읽으세요. 온도를 올리며 발머선 곡선이 최대가 되는 온도와 분광형을 찾으세요. 그다음 초거성 대기로 바꾸면 그 온도는 어느 쪽으로 옮겨 가나요? 발머선 세기만으로 별의 온도를 정하려 할 때 생기는 문제는 무엇인가요?</li>
+            <li class="warn"><span class="tag">판단</span>“O형 별에는 수소가 적어서 발머선이 약하다”, “태양에는 칼슘이 수소보다 많다”는 해석은 모두 틀립니다. 거의 모든 별의 대기는 수소가 약 90 %(개수)이고, 선의 세기는 온도와 압력이 정한 준위·이온화 분포를 따릅니다. 또 발머선은 약 1만 K 양쪽에서 같은 세기가 될 수 있으므로, 온도를 정할 때는 He, Ca II, 금속선처럼 다른 선과 함께 봐야 합니다. 이 카드의 곡선은 국소 열평형을 가정한 계산입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">표면 온도가 같은 8,500 K인 주계열성과 초거성을 비교합니다. 초거성 대기는 훨씬 희박합니다. 이 온도에서 두 별의 대기에 대한 설명으로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>온도가 같으므로 수소의 이온화 비율도 같다<span class="why"><b>사하 식의 P<sub>e</sub>를 놓쳤습니다.</b> 이온화 비율은 온도뿐 아니라 전자 밀도에도 달려 있습니다. 전자가 드물면 이온이 전자를 다시 붙잡기 어렵습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>초거성 쪽이 수소가 더 많이 이온화되어 있어, 발머선 흡수자가 가장 많은 온도가 더 낮다<span class="why"><b>맞습니다.</b> 압력이 낮으면 같은 온도에서 이온화가 더 많이 일어나, 발머선 최대가 낮은 온도로 옮겨 갑니다. 이 차이와 선의 폭이 광도 계급을 정하는 근거입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>초거성 대기는 밀도가 낮으므로 이온화가 덜 일어난다<span class="why"><b>충돌 이온화만 떠올린 답입니다.</b> 이온화와 재결합의 평형을 보면, 밀도가 낮을 때 재결합이 줄어 이온화 비율이 오히려 커집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-stellar-spectrum">
+        <header class="card-head">
+          <span class="no">3.4.4</span><h2>분광기로 찍은 별빛에서 표면 온도를 어떻게 읽을까?</h2><span class="kind">실험 · 분광 관측 · 플랑크 곡선 맞추기 · 흡수선 세기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide ss-main" aria-label="별의 스펙트럼 띠와 세기 그래프, 맞춘 플랑크 곡선"></canvas>
+            <div class="ctl">
+              <div class="presets ss-star" role="group" aria-label="별">
+                <span class="mono small dim">별</span>
+                <button class="chip" data-s="0" aria-pressed="true">태양</button><button class="chip" data-s="1" aria-pressed="false">스피카</button><button class="chip" data-s="2" aria-pressed="false">리겔</button><button class="chip" data-s="3" aria-pressed="false">시리우스</button><button class="chip" data-s="4" aria-pressed="false">베가</button><button class="chip" data-s="5" aria-pressed="false">프로키온</button><button class="chip" data-s="6" aria-pressed="false">아크투루스</button><button class="chip" data-s="7" aria-pressed="false">알데바란</button><button class="chip" data-s="8" aria-pressed="false">베텔게우스</button>
+              </div>
+              <div class="lab-btns"><button class="chip go shot" type="button">스펙트럼 찍기 (노출 1회)</button></div>
+              <div><label class="mono">맞춤 온도 T = <output class="t-out">6000</output> K</label>
+                <input class="tt" type="range" min="3.4" max="4.5" step="0.002" value="3.778" aria-label="플랑크 곡선 온도 (로그 눈금)"></div>
+              <div class="ss-row"><label><input type="checkbox" class="resp"> 기기 감도 보정 안 함 (검출기 감도 곡선이 그대로 남음)</label></div>
+              <dl class="nums n4"><div><dt>가장 밝은 파장</dt><dd class="n-pk">—</dd></div><div><dt>빈 법칙 온도</dt><dd class="n-tw">—</dd></div><div><dt>Hα 깊이</dt><dd class="n-ha">—</dd></div><div><dt>Ca II K 깊이</dt><dd class="n-ca">—</dd></div></dl>
+              <div class="lab-btns"><button class="chip go rec" type="button">이 별 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <div class="presets ss-pv" role="group" aria-label="그래프">
+                <span class="mono small dim">그래프</span>
+                <button class="chip" data-v="line" aria-pressed="true">흡수선 깊이–온도</button><button class="chip" data-v="wien" aria-pressed="false">빈 법칙 vs 곡선 맞춤</button>
+              </div>
+              <canvas class="cv-plot ss-plot" aria-label="기록한 별의 흡수선 깊이 또는 온도 비교"></canvas>
+              <p class="fig-note">분광기 범위는 350~1000 nm, 분해능 약 1 nm입니다. 별의 분광형과 표면 온도는 문헌의 대표값이고, 흡수선 파장(수소 발머선, Ca II H·K 393.4/396.8 nm, Na D 589 nm, He I 447.1 nm, 지구 대기 산소 A띠 759 nm 등)은 실제 값입니다. 연속 스펙트럼은 플랑크 법칙, 흡수선 깊이는 분광형에 따른 경향을 나타낸 모식입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>별빛을 분광기에 통과시키면 무지개 띠 위에 검은 줄이 보입니다. 띠의 밝기 분포와 검은 줄의 세기로 별의 표면 온도를 구할 수 있을까요? 두 방법은 같은 답을 줄까요?</li>
+            <li><span class="tag">복원</span>별은 근사적으로 흑체처럼 빛을 냅니다. 플랑크 법칙의 곡선은 온도가 높을수록 모든 파장에서 밝고, 가장 밝은 파장이 짧아집니다(<em>빈 법칙 λ<sub>max</sub> = 2.898 × 10⁶ nm·K / T</em>). 대기의 원자·이온은 특정 파장을 흡수해 흡수선을 만들고, 어떤 선이 강한지는 대기 온도가 정합니다.</li>
+            <li><span class="tag">설계</span>같은 분광기·같은 노출로 여러 별을 찍습니다. 검출기는 파장마다 감도가 달라서, 표준성(온도를 아는 별)이나 표준 램프로 구한 감도 곡선으로 나눠 주어야 진짜 모양이 나옵니다. 스마트폰 분광 앱으로 찍을 때도 같은 보정이 필요합니다.</li>
+            <li><span class="tag">분석</span>흡수선이 없는 부분에 플랑크 곡선을 겹쳐 온도를 맞춥니다(높이는 자동으로 맞춤). 가장 밝은 파장이 범위 안에 있으면 빈 법칙으로도 T를 구해 비교합니다. 흡수선 깊이를 온도 순으로 늘어놓으면 수소선은 약 1만 K(A형)에서, Ca II는 G·K형에서 가장 강하고, M형에는 분자(TiO) 띠가 나타납니다.</li>
+            <li><span class="tag">측정</span>아홉 별을 하나씩 찍고, 온도 슬라이더로 곡선을 맞춘 뒤 기록하세요. 스피카·리겔처럼 뜨거운 별에서 빈 법칙 온도가 왜 엉터리가 되는지 설명하세요. '감도 보정 안 함'을 켜고 태양을 다시 재면 온도가 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>뜨거운 별의 최댓값은 자외선(350 nm 밖)에 있어, 범위 끝의 가장 밝은 점을 최댓값으로 읽으면 온도를 크게 낮게 잡습니다. 감도 보정을 빼면 곡선 모양이 검출기 모양을 닮아 모든 별의 온도가 비슷하게 나옵니다(계통 오차). 별은 완전한 흑체가 아니어서 짧은 파장 쪽은 흡수선이 몰려 곡선보다 어둡습니다. <b>태양 스펙트럼은 절대 망원경이나 분광기로 태양을 직접 보며 찍지 않습니다.</b> 흰 종이나 구름에 비친 빛, 또는 태양 필터를 쓴 장비로만 찍습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 별의 스펙트럼에서 수소 발머선은 아주 약하고, He I 447.1 nm 선이 뚜렷하며, 350~1000 nm 범위에서 세기가 짧은 파장 쪽으로 갈수록 계속 커집니다. 이 별에 대한 판단으로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>수소선이 약하니 수소가 거의 없는 별이다<span class="why"><b>흡수선 세기는 주로 온도가 정합니다.</b> 너무 뜨거우면 수소가 대부분 이온화되어 발머선을 만들 들뜬 수소 원자가 적을 뿐, 수소는 여전히 가장 많은 원소입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>표면 온도가 약 2만 K 이상인 B형 별이다<span class="why"><b>맞습니다.</b> 헬륨선은 매우 뜨거운 O·B형에서만 나타나고, 최댓값이 350 nm보다 짧으니 T > 2.898 × 10⁶/350 ≈ 8,300 K입니다. 정확한 온도는 곡선 전체를 맞춰 구합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>가장 밝은 파장이 350 nm이므로 약 8,300 K이다<span class="why"><b>범위 끝은 최댓값이 아닙니다.</b> 세기가 계속 커지는 중이므로 진짜 최댓값은 더 짧은 파장에 있고, 온도는 그보다 높습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/adearth/ae-planck.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/astro-ms-data.js"></script>
+<script src="../../js/cards/labearth/photometry.js"></script>
+<script src="../../js/cards/adearth/ae-balmer.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/stellar-spectrum.js"></script>
+</body>
+</html>

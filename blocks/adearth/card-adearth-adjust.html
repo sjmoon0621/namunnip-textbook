@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adearth/c2-adjust.js"
+  ]
+}
+-->
+<style>
+#card-adearth-adjust canvas { width: 100%; aspect-ratio: 1 / 0.95; display: block; }
+#card-adearth-adjust .ad-state { font-size: 12.5px; color: var(--ink-2); min-height: 2.8em; margin: 4px 0 6px; line-height: 1.5; }
+</style>
+<article class="card" id="card-adearth-adjust">
+  <header class="card-head">
+    <span class="no"></span><h2>멈춰 있던 공기는 어떤 길을 거쳐 지균풍이 될까?</h2><span class="kind">운동 방정식의 풀이 · 관성 진동 · 지균풍과 지상풍의 형성</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 곧은 등압선 사이에서 정지 상태로 출발한 공기 덩어리의 경로. 아래: 시간에 따른 풍속과 지균풍 속력"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">위도 = <output class="p-out"></output></label>
+          <input class="p" type="range" min="-80" max="80" step="1" value="37" aria-label="위도 (음수는 남반구)"></div>
+          <div><label class="mono">기압 경도 = <output class="g-out">1.0</output> hPa/100 km</label>
+          <input class="g" type="range" min="0.3" max="3" step="0.1" value="1" aria-label="기압 경도"></div>
+          <div><label class="mono">마찰 계수 k = <output class="k-out">0</output>×10⁻⁵ s⁻¹</label>
+          <input class="k" type="range" min="0" max="20" step="0.5" value="0" aria-label="마찰 계수"></div>
+          <div><label class="mono">경과 시간 = <output class="t-out">72</output> 시간</label>
+          <input class="t" type="range" min="0" max="72" step="0.5" value="72" aria-label="경과 시간"></div>
+        </div>
+        <p class="ad-state" aria-live="polite"></p>
+        <dl class="nums n4">
+          <div><dt>지균풍 V<sub>g</sub></dt><dd class="n-g">—</dd></div>
+          <div><dt>결국 부는 바람</dt><dd class="n-v">—</dd></div>
+          <div><dt>등압선과 이루는 각</dt><dd class="n-a">—</dd></div>
+          <div><dt>관성 주기 2π/|f|</dt><dd class="n-i">—</dd></div>
+        </dl>
+        <p class="fig-note">위쪽(북쪽)이 저기압인 곧은 등압선이 계속 유지된다고 가정하고, du/dt = fv − ku, dv/dt = (1/ρ)|∇p| − fu − kv를 정확히 풀었습니다(공기 밀도 1.2 kg/m³). 위 그림은 가로와 세로의 축척이 다릅니다. 마찰은 속도에 비례한다고 둔 모식이며, 실제 대기 경계층에서 k는 대략 10⁻⁵~10⁻⁴ s⁻¹입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>기압 경도력은 저기압 쪽을 향합니다. 그런데 정지해 있던 공기가 움직이기 시작하면 결국 등압선과 나란하게 붑니다. 공기는 저기압 쪽으로 출발했다가 어떤 길로 방향을 틀까요? 얼마나 걸릴까요?</li>
+      <li><span class="tag">복원</span>수평 운동 방정식은 d<strong>V</strong>/d<em>t</em> = −(1/ρ)∇<em>p</em> − <em>f</em><strong>k</strong>×<strong>V</strong> + <strong>F</strong><sub>r</sub>입니다(<strong>k</strong>는 연직 위쪽 단위 벡터). 전향력은 속도에 수직이라서 속력을 바꾸지 않고 방향만 바꿉니다.</li>
+      <li><span class="tag">설명</span>마찰이 없을 때 정상 상태(d<strong>V</strong>/d<em>t</em> = 0)를 놓으면 <em>fV</em><sub>g</sub> = (1/ρ)|∇<em>p</em>|이므로 <em>지균풍</em> <em>V</em><sub>g</sub> = (1/ρ<em>f</em>)|∇<em>p</em>|입니다. 그런데 정지 상태에서 출발한 공기는 지균풍에 곧장 도달하지 않습니다. 속도를 <strong>V</strong> = <strong>V</strong><sub>g</sub> + <strong>V</strong>′로 나누면 남은 부분 <strong>V</strong>′는 d<strong>V</strong>′/d<em>t</em> = −<em>f</em><strong>k</strong>×<strong>V</strong>′만 따르므로, 크기가 <em>V</em><sub>g</sub>인 채로 주기 2π/<em>f</em>(중위도에서 약 20시간)로 돕니다(<em>관성 진동</em>). 그래서 공기는 지균풍 방향으로 흘러가며 고리를 그리고, 속력은 0과 2<em>V</em><sub>g</sub> 사이를 오갑니다. 마찰 −<em>k</em><strong>V</strong>가 있으면 이 진동이 e<sup>−<em>kt</em></sup>로 사라지고, 정상 상태 바람은 등압선을 tan α = <em>k</em>/<em>f</em>인 각으로 가로지르며 속력은 <em>V</em><sub>g</sub>·<em>f</em>/√(<em>f</em>² + <em>k</em>²)로 줄어듭니다.</li>
+      <li><span class="tag">연결</span>상공 1 km 위의 자유 대기에서는 마찰이 작아 바람이 지균풍에 가깝고, 남은 진동은 다른 과정으로 흩어집니다. 지표 근처 대기 경계층에서는 마찰 때문에 지상풍이 등압선을 비스듬히 가로질러 저기압 쪽으로 불어 들어갑니다. 바다 위(<em>k</em>가 작음)에서는 각이 10~20°, 거친 육지 위에서는 30~45°쯤입니다. 밤에 지표가 식어 경계층의 마찰이 갑자기 약해지면 바람이 관성 진동을 시작해 새벽에 지균풍보다 강해지는데, 이것이 야간 하층 제트입니다.</li>
+      <li><span class="tag">적용</span>마찰을 0으로 두고 위도 20°, 37°, 70°에서 고리의 크기와 관성 주기를 비교하세요. 위도를 −37°(남반구)로 바꾸면 바람은 어느 쪽으로 흐르나요? 마찰 계수를 5×10⁻⁵ s⁻¹와 2×10⁻⁴ s⁻¹로 두고 바람과 등압선의 각, 풍속을 지균풍과 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>실제로는 공기가 움직이면 질량이 재배치되어 기압장도 함께 변합니다(지균 조절). 이 그림은 기압장이 고정되었다고 본 단순한 경우입니다. 또 “지상풍은 등압선과 30° 각을 이룬다”처럼 각을 하나로 외우면 안 됩니다. 각은 마찰과 위도에 따라 달라지고, 경계층 안에서도 높이에 따라 바람이 돌아갑니다(에크만 나선). 적도 근처에서는 <em>f</em>가 0에 가까워 지균풍이 성립하지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">위도 30°N과 60°N에서 기압 경도와 지면의 마찰 계수(k = 5×10⁻⁵ s⁻¹)가 같다면, 정상 상태 지상풍에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>마찰이 같으므로 두 곳에서 바람과 등압선의 각이 같다<span class="why"><b>f를 빠뜨렸습니다.</b> tan α = k/f이므로 f가 작은 30°N에서 각이 더 큽니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>30°N에서 바람이 더 세고, 등압선을 더 큰 각으로 가로지른다<span class="why"><b>맞습니다.</b> f는 30°N에서 7.3×10⁻⁵, 60°N에서 1.26×10⁻⁴ s⁻¹입니다. 속력 G/√(f² + k²)는 f가 작은 쪽이 크고, 각은 30°N에서 약 34°, 60°N에서 약 22°입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>60°N에서는 전향력이 커서 바람이 고기압 쪽으로 꺾인다<span class="why"><b>전향력이 커도 꺾이는 방향은 바뀌지 않습니다.</b> 마찰이 있는 한 바람은 언제나 저기압 쪽 성분을 가집니다. 전향력이 크면 그 각이 작아질 뿐입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,257 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>별까지의 거리 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="연주 시차, 분광 시차, 주계열 맞추기, 세페이드 변광성의 주기–광도 관계를 이용하여 별까지의 거리를 구하고, 거리 지수와 오차의 전파를 바탕으로 각 방법이 쓰이는 거리 범위를 설명한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-adearth-distance-error canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-labearth-msfit .msf-cmd { width: 100%; aspect-ratio: 1 / 1; display: block; }
+    #card-labearth-msfit .msf-truth { margin-top: 6px; }
+    #card-labearth-cepheid .cp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 4px 0; font-size: 13px; }
+  </style>
+</head>
+<body data-course="adearth" data-sec="3-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>별까지의 거리</h1>
+    <p class="lead">하늘에서 가장 밝게 보이는 별이 가장 가까운 별은 아닙니다. 별의 진짜 밝기를 알려면 먼저 거리를 알아야 하고, 거리는 한 가지 자로 다 잴 수 없습니다. 시차에서 시작해 스펙트럼, 성단, 변광성으로 이어지는 거리 사다리를 오르며, 칸마다 오차가 어떻게 쌓이는지 따져 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">겉보기 등급과 절대 등급</span><span class="p">로그와 지수</span><span class="p">H–R도</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-space-distance"><span class="mono">3.3.1</span>별까지의 거리는 어떤 사다리를 타고 잴까?</a></li>
+        <li><a href="#card-adearth-distance-error"><span class="mono">3.3.2</span>연주 시차와 분광 시차의 오차</a></li>
+        <li><a href="#card-labearth-msfit"><span class="mono">3.3.3</span>성단의 주계열을 표준 주계열에 겹치면 거리가 나올까?</a></li>
+        <li><a href="#card-labearth-cepheid"><span class="mono">3.3.4</span>깜빡이는 별의 주기를 재면 다른 은하까지의 거리가 나올까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adearth-3-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-space-distance">
+        <header class="card-head">
+          <span class="no">3.3.1</span><h2>별까지의 거리는 어떤 사다리를 타고 잴까?</h2><span class="kind">연주 시차 · 거리 지수 · 우주 거리 사다리</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="위: 연주 시차의 원리. 아래: 거리 측정 방법별로 잴 수 있는 범위(로그 눈금)와 지금의 별 위치"></canvas>
+            <div class="ctl">
+              <label class="mono">연주 시차 p = <output class="p-out">0.10</output>″ (각초)</label>
+              <input class="p" type="range" min="-4" max="0" step="0.01" value="-1" aria-label="연주 시차 (로그 눈금)">
+              <label class="mono">겉보기 등급 m = <output class="m-out">5.0</output></label>
+              <input class="m" type="range" min="-2" max="20" step="0.1" value="5" aria-label="겉보기 등급">
+              <div class="presets" role="group" aria-label="측정 정밀도">
+                <button type="button" class="chip" data-s="0.001" aria-pressed="false">히파르코스 위성 (±1 mas)</button>
+                <button type="button" class="chip" data-s="0.00002" aria-pressed="true">가이아 위성 (±0.02 mas)</button>
+              </div>
+              <dl class="nums">
+                <div><dt>거리 d = 1/p</dt><dd class="n-d">—</dd></div>
+                <div><dt>절대 등급 M = m + 5 − 5 log d</dt><dd class="n-M">—</dd></div>
+                <div><dt>거리 오차 (시차 측정 오차 때문에)</dt><dd class="n-e">—</dd></div>
+              </dl>
+              <p class="fig-note">1 pc(파섹) ≈ 3.26 광년 ≈ 3.09 × 10¹³ km. 1 mas = 0.001″. 오차는 시차 측정 오차만 생각한 값이며, 성간 소광은 무시했습니다(3단원).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>가장 가까운 별 프록시마 센타우리까지는 약 4.2광년, 안드로메다은하까지는 약 250만 광년입니다. 한 가지 자로 이렇게 차이 나는 거리를 모두 잴 수 있을까요?</li>
+            <li><span class="tag">복원</span>팔을 뻗어 엄지를 보고 두 눈을 번갈아 감으면 엄지가 배경에 대해 움직입니다(시차). 가까운 물체일수록 많이 움직입니다. 별의 밝기는 거리의 제곱에 반비례합니다.</li>
+            <li><span class="tag">설명</span>지구가 태양 둘레를 도는 동안 가까운 별은 먼 별을 배경으로 조금씩 위치가 바뀌는데, 그 각의 절반이 <em>연주 시차</em> p입니다. 연주 시차가 1″인 별까지의 거리를 1 <em>파섹(pc)</em>이라 하면 d(pc) = 1/p(″)입니다. 거리를 알면 겉보기 등급 m을 10 pc에서 본 밝기인 <em>절대 등급</em> M으로 바꿀 수 있고(m − M = 5 log d − 5, <em>거리 지수</em>), 반대로 M을 아는 별은 m만 재면 거리를 구할 수 있습니다.</li>
+            <li><span class="tag">연결</span>시차는 멀수록 작아져 측정 오차에 묻히므로, 먼 곳은 광도를 아는 천체(<em>표준 촛불</em>)로 잽니다. 가까운 곳에서 시차로 절대 등급을 맞춘 뒤 주계열성, 세페이드 변광성(2.5절), Ia형 초신성, 허블 법칙으로 차례로 이어 가는 것을 <em>우주 거리 사다리</em>라 합니다. 아래 칸의 오차는 위 칸으로 그대로 전해집니다.</li>
+            <li><span class="tag">적용</span>시차를 0.1″에서 0.001″로 줄이며 거리와 오차를 보세요. 히파르코스와 가이아로 10 % 오차 안에서 잴 수 있는 거리는 각각 얼마인가요? 겉보기 등급이 같은 두 별 중 시차가 작은 별의 절대 등급은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>“거리를 잰다”는 것은 늘 오차와 함께 말해야 합니다. 시차가 측정 오차와 비슷할 만큼 작으면 1/p로 계산한 거리는 크게 틀릴 수 있고, 음수 시차가 나오기도 합니다. 과학자들은 이런 자료를 통계적으로 신중하게 다룹니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">연주 시차가 0.01″이고 겉보기 등급이 3인 별의 절대 등급은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−2<span class="why"><b>맞습니다.</b> d = 100 pc, M = 3 + 5 − 5 log 100 = 8 − 10 = −2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3<span class="why"><b>10 pc에 있을 때만 m = M입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>부호를 반대로 했습니다.</b> 멀리 있는데 밝게 보이면 실제로는 더 밝은(등급이 작은) 별입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adearth-distance-error">
+        <header class="card-head">
+          <span class="no">3.3.2</span><h2>먼 별까지는 왜 시차 대신 스펙트럼으로 거리를 잴까?</h2><span class="kind">별까지의 거리 · 연주 시차와 분광 시차 · 오차의 전파</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="거리(로그 눈금)에 따른 상대 거리 오차. 지상·히파르코스·가이아 시차와 분광 시차의 오차 선, 지금 고른 거리"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">실제 거리 d = <output class="d-out">—</output></label>
+                  <input class="d" type="range" min="0.3" max="4.5" step="0.01" value="2.5" aria-label="실제 거리 (로그 눈금)"></div>
+                <div><label class="mono">절대 등급 보정의 흩어짐 σ<sub>M</sub> = <output class="sm-out">0.40</output> 등급</label>
+                  <input class="sm" type="range" min="0.1" max="1" step="0.05" value="0.4" aria-label="절대 등급의 흩어짐"></div>
+              </div>
+              <div class="presets" role="group" aria-label="광도 계급으로 판정">
+                <button type="button" class="chip" data-c="0" aria-pressed="true">K0 V 주계열성으로 판정</button><button type="button" class="chip" data-c="1" aria-pressed="false">K0 III 거성으로 판정</button><button type="button" class="chip" data-c="2" aria-pressed="false">K0 Ib 초거성으로 판정</button>
+              </div>
+              <div class="presets"><button type="button" class="chip ae-ext" aria-pressed="false">성간 소광 넣기 (1 등급/kpc)</button></div>
+              <dl class="nums n4">
+                <div><dt>관측 겉보기 등급 V</dt><dd class="n-m">—</dd></div>
+                <div><dt>연주 시차 p</dt><dd class="n-p">—</dd></div>
+                <div><dt>분광 시차로 구한 거리</dt><dd class="n-sd">—</dd></div>
+                <div><dt>더 정확한 방법</dt><dd class="n-w">—</dd></div>
+              </dl>
+              <p class="fig-note">시차 측정 오차 σ<sub>p</sub>는 대표값입니다. 지상 사진 관측 약 10 mas, 히파르코스(1997) 약 1 mas, 가이아 DR3 밝은 별 약 0.02 mas(G ≈ 20 등급에서는 약 0.5 mas). 관측하는 별은 실제로 K0 V 주계열성(M<sub>V</sub> ≈ +5.9)입니다. K0 III(≈ +0.7), K0 Ib(≈ −4.5)의 절대 등급은 분광형–광도 계급 보정표의 어림값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>가이아 위성은 10억 개가 넘는 별의 시차를 쟀습니다. 그런데 천문학자들은 지금도 별의 스펙트럼으로 거리를 어림합니다. 시차가 있는데 왜 다른 방법이 필요할까요? 어떤 거리에서 어떤 방법을 믿어야 할까요?</li>
+            <li><span class="tag">복원</span>연주 시차가 p(″)이면 거리는 d(pc) = 1/p입니다. 겉보기 등급 m과 절대 등급 M 사이에는 m − M = 5 log d − 5(거리 지수)가 성립합니다. H–R도에서 분광형이 같아도 주계열성, 거성, 초거성은 절대 등급이 크게 다릅니다.</li>
+            <li><span class="tag">설명</span>시차의 측정 오차 σ<sub>p</sub>는 거리와 상관없이 거의 일정합니다. d = 1/p를 미분하면 <em>σ<sub>d</sub>/d = σ<sub>p</sub>/p = σ<sub>p</sub>·d</em>이므로, 상대 오차는 거리에 비례해 커집니다. <em>분광 시차</em>는 스펙트럼에서 분광형과 광도 계급(흡수선의 폭과 세기 비로 판정)을 정해 H–R도에서 M을 읽고, 거리 지수로 d = 10<sup>(m−M+5)/5</sup>를 구하는 방법입니다. 여기서 M의 불확실성 σ<sub>M</sub>이 전해지면 <em>σ<sub>d</sub>/d = (ln 10/5)σ<sub>M</sub> ≈ 0.46σ<sub>M</sub></em>으로, 거리와 상관없이 일정합니다. 이름에 ‘시차’가 붙었지만 각을 재지는 않습니다.</li>
+            <li><span class="tag">연결</span>두 직선이 만나는 거리보다 가까우면 시차가, 멀면 분광 시차가 더 정확합니다. 성단은 별 수십 개를 한꺼번에 표준 주계열에 맞추므로(주계열 맞추기) 흩어짐이 줄고, 세페이드 변광성은 주기만 재면 M이 정해져 더 먼 은하까지 닿습니다. 각 방법의 영점은 바로 아래 칸, 결국 시차로 맞추므로 아래 칸의 계통 오차는 위 칸으로 그대로 전해집니다(우주 거리 사다리). 소광 A가 있으면 m − M = 5 log d − 5 + A이므로, 소광을 빼먹으면 거리를 10<sup>A/5</sup>배 크게 잡습니다.</li>
+            <li><span class="tag">적용</span>거리를 바꾸며 가이아 선과 분광 시차 선이 만나는 거리를 읽으세요. σ<sub>M</sub>을 0.2로 줄이면 그 거리는 어떻게 되나요? 이번에는 이 K0 V 별을 거성으로 잘못 판정해 보세요. 분광 시차로 구한 거리는 실제의 몇 배인가요? 그 차이는 σ<sub>M</sub>에서 오는 오차와 비교해 얼마나 큰가요? 성간 소광을 넣고 d = 2 kpc에서 거리가 얼마나 틀리는지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>오차가 큰 시차로 계산한 1/p는 실제 거리의 좋은 어림값이 아닙니다. σ<sub>p</sub>/p가 20 %를 넘으면 1/p는 한쪽으로 치우치고, 시차가 음수로 나오기도 하므로 통계적 방법으로 다뤄야 합니다. 분광 시차의 오차 σ<sub>d</sub>/d ≈ 0.46σ<sub>M</sub>은 작은 오차일 때의 근사이고, 광도 계급을 잘못 판정하는 것 같은 큰 실수는 이 식으로 표현되지 않는 계통 오차입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어두운 별이라 가이아 시차 오차가 0.1 mas입니다. 이 별의 분광 시차는 σ<sub>M</sub> = 0.3 등급입니다. 분광 시차가 시차보다 더 정확해지기 시작하는 거리는 대략 얼마인가요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1.4 kpc<span class="why"><b>맞습니다.</b> 분광 시차의 상대 오차는 0.46 × 0.3 ≈ 0.14이고, 시차의 상대 오차는 σ<sub>p</sub>·d = 10<sup>−4</sup>″ × d(pc)이므로 d ≈ 1400 pc에서 같아집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 14 kpc<span class="why"><b>mas를 초로 바꿀 때 자릿수를 놓쳤습니다.</b> 0.1 mas = 10<sup>−4</sup>″입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>어떤 거리에서도 시차가 더 정확하다<span class="why"><b>시차의 상대 오차가 거리에 비례해 커진다는 점을 놓쳤습니다.</b> 분광 시차의 상대 오차는 일정하므로 어느 거리부터는 반드시 더 작습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-msfit">
+        <header class="card-head">
+          <span class="no">3.3.3</span><h2>성단의 주계열을 표준 주계열에 겹치면 거리가 나올까?</h2><span class="kind">실험 · 주계열 맞추기 · 거리 지수 · Gaia 실제 측광</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="msf-cmd" aria-label="성단의 색–등급도와 표준 주계열"></canvas>
+            <div class="ctl">
+              <div class="presets msf-cl" role="group" aria-label="성단">
+                <span class="mono small dim">성단</span>
+                <button class="chip" data-c="pleiades" aria-pressed="true">플레이아데스 (M45)</button><button class="chip" data-c="m67" aria-pressed="false">M67</button>
+              </div>
+              <div><label class="mono">거리 지수 추정값 m − M = <output class="mu-out">4.00</output></label>
+                <input class="mu" type="range" min="2" max="12" step="0.05" value="4" aria-label="거리 지수 추정값"></div>
+              <div class="toggles"><label><input type="checkbox" class="red"> 성간 소광 보정 (E(B−V) = 0.04)</label></div>
+              <dl class="nums"><div><dt>맞춤 구간 별 수</dt><dd class="n-n">—</dd></div><div><dt>어긋남 (중앙값, 등급)</dt><dd class="n-off">—</dd></div><div><dt>이 추정의 거리</dt><dd class="n-d">—</dd></div></dl>
+              <div class="lab-btns"><button class="chip go rec" type="button">이 겹침 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth-b" type="button">시차 거리 보기</button></div>
+              <p class="small dim msf-truth"></p>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="기록한 거리 지수와 어긋남의 그래프"></canvas>
+              <p class="fig-note">점은 ESA Gaia DR3에서 시차·고유 운동으로 고른 실제 성단 별입니다(CC BY-SA 3.0 IGO). 실선은 태양 근처 왜성의 평균 주계열(Pecaut &amp; Mamajek 2013, Mamajek 2022판)을 m − M만큼 내린 것입니다. 초록 띠는 맞춤에 쓰는 구간입니다(M67은 전향점 근처의 진화한 별을 빼려고 G 13.8보다 어두운 별만 씁니다). 소광은 E(BP−RP) ≈ 1.34 E(B−V), A<sub>G</sub> ≈ 2.74 E(B−V)로 바꿨습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>연주 시차는 수백 pc만 넘어가도 재기 어렵습니다. 별이 수백 개 모인 성단은 사진 한 장의 색과 밝기만으로 거리를 잴 수 있을까요?</li>
+            <li><span class="tag">복원</span>같은 성단의 별은 거리가 거의 같으므로, 겉보기 등급 m과 절대 등급 M의 차인 <em>거리 지수 m − M = 5 log d − 5</em>(d는 pc)도 모두 같습니다. 주계열성은 색(표면 온도)이 같으면 절대 등급도 거의 같습니다.</li>
+            <li><span class="tag">설계</span>가로축은 색지수(BP−RP), 세로축은 겉보기 등급 G인 색–등급도를 그립니다. 거리를 아는 가까운 별들로 만든 표준 주계열(색 → 절대 등급)을 세로로만 옮겨 성단 주계열에 겹칩니다. 옮긴 양이 m − M입니다. 진화한 별(전향점 위쪽, 거성)과 쌍성은 겹침에서 빼야 하므로 맞춤 구간을 정해 둡니다.</li>
+            <li><span class="tag">분석</span>여러 m − M 값에서 '어긋남'(맞춤 구간 별들의 G와 표준선의 차이, 중앙값)을 기록하면 그래프가 0을 지나는 직선이 됩니다. 0이 되는 m − M이 가장 잘 맞는 값이고, d = 10<sup>(m−M+5)/5</sup> pc입니다.</li>
+            <li><span class="tag">측정</span>플레이아데스에서 슬라이더를 움직여 어긋남이 +와 −인 겹침을 각각 두세 개 기록하세요. 소광 보정을 켜고 다시 기록하면 거리가 어느 쪽으로 몇 % 달라지나요? M67에서도 같은 일을 하고, '시차 거리 보기'로 Gaia 시차 거리와 비교하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>성간 티끌은 별을 어둡게(A) 하면서 동시에 붉게(색초과 E) 만들어, 성단 주계열 전체를 오른쪽 아래로 밉니다. 주계열은 비스듬히 누워 있어서 붉어진 효과가 더 크게 작용하므로, 주계열 맞추기에서 소광을 무시하면 오히려 거리가 작게 나옵니다(계통 오차). 플레이아데스에서 소광 보정을 켜고 끄며 확인하세요. 표준 주계열은 태양 근처 별의 평균이라, 금속 함량이 다른 성단(특히 구상 성단)에 그대로 쓰면 0.2~0.5등급 어긋날 수 있습니다. 같은 색에서 0.75등급쯤 위에 줄지은 별은 밝기가 비슷한 두 별이 겹친 쌍성입니다. 밤하늘 관측 자료를 직접 얻을 때는 어두운 곳에서 움직이므로 붉은 손전등을 쓰고, 망원경 주변의 전선에 걸려 넘어지지 않게 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 성단은 별의 절반쯤이 밝기가 비슷한 두 별로 된 쌍성입니다. 쌍성을 빼지 않고 모든 별의 중앙값으로 표준 주계열을 겹치면, 구한 거리는 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>쌍성도 같은 거리에 있으니 영향이 없다<span class="why"><b>거리는 같지만 밝기가 다릅니다.</b> 비슷한 두 별이 겹치면 빛이 두 배라 약 0.75등급 밝게 보이고, 색은 거의 그대로입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>성단이 실제보다 가깝게 나온다<span class="why"><b>맞습니다.</b> 쌍성이 섞이면 같은 색에서 별들이 더 밝은 쪽으로 몰려, 표준선을 덜 내려도 겹칩니다. m − M이 작아지니 거리도 작게 나옵니다. 그래서 주계열의 아래쪽(어두운) 가장자리에 맞추거나 쌍성 띠를 빼고 맞춥니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>성단이 실제보다 멀게 나온다<span class="why"><b>방향이 반대입니다.</b> 별이 더 밝아 보이면 가까이 있는 것처럼 해석됩니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-labearth-cepheid">
+        <header class="card-head">
+          <span class="no">3.3.4</span><h2>깜빡이는 별의 주기를 재면 다른 은하까지의 거리가 나올까?</h2><span class="kind">실험 · 세페이드 변광성 · 주기–광도 관계 · OGLE 실제 자료</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide cp-main" aria-label="관측한 밝기 변화 또는 주기–광도 도표"></canvas>
+            <div class="ctl">
+              <div class="presets cp-tg" role="group" aria-label="관측 대상">
+                <span class="mono small dim">대상</span>
+                <button class="chip" data-t="dcep" aria-pressed="true">δ Cep (우리은하)</button><button class="chip" data-t="lmc" aria-pressed="false">대마젤란은하 세페이드</button>
+              </div>
+              <div class="cp-dcep">
+                <div class="lab-btns"><button class="chip go obs1" type="button">하룻밤 관측</button><button class="chip go obs5" type="button">5일 밤 관측</button></div>
+                <div><label class="mono">시험 주기 P = <output class="p-out">5.000</output> 일</label>
+                  <input class="per" type="range" min="4.5" max="6.2" step="0.001" value="5" aria-label="시험 주기"></div>
+              </div>
+              <div class="cp-lmc" hidden>
+                <div class="lab-btns"><button class="chip go lm1" type="button">세페이드 1개 측정</button><button class="chip go lm10" type="button">10개 측정</button></div>
+              </div>
+              <div class="cp-row"><label><input type="checkbox" class="ext"> 성간 소광 보정 (δ Cep A<sub>V</sub> ≈ 0.23, 대마젤란은하 A<sub>V</sub> ≈ 0.3)</label></div>
+              <dl class="nums"><div><dt class="n1t">관측한 밤</dt><dd class="n1">0</dd></div><div><dt class="n2t">평균 등급 ⟨V⟩</dt><dd class="n2">—</dd></div><div><dt class="n3t">흩어짐 (접은 곡선)</dt><dd class="n3">—</dd></div></dl>
+              <div class="lab-btns"><button class="chip go rec" type="button">이 주기로 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot cp-plot" aria-label="주기로 접은 광도 곡선 또는 거리 분포"></canvas>
+              <p class="fig-note">주기–광도 관계는 HST 시차로 보정한 M<sub>V</sub> = −2.43(log P − 1) − 4.05(Benedict et al. 2007)를 씁니다. δ Cep의 주기(5.366일)와 밝기 범위(V 3.48~4.37)는 실제 값이고, 곡선 모양과 측정 잡음(±0.02등급)은 모식입니다. 대마젤란은하 세페이드는 OGLE-III 목록의 실제 주기·평균 등급입니다(Soszyński et al. 2008). 소광값은 대표값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>외부 은하는 너무 멀어 연주 시차도, 주계열 맞추기도 쓸 수 없습니다. 밝기가 규칙적으로 변하는 세페이드 변광성으로는 어디까지 거리를 잴 수 있을까요?</li>
+            <li><span class="tag">복원</span>세페이드 변광성은 부풀었다 줄었다 하며 밝기가 바뀌는 거성입니다. 1912년 리비트는 소마젤란은하의 세페이드에서 <em>주기가 길수록 평균 밝기가 밝다</em>는 관계를 찾았습니다. 주기 P로 절대 등급 M을 알면, 겉보기 등급 m과 함께 m − M = 5 log d − 5에서 d를 구합니다.</li>
+            <li><span class="tag">설계</span>밤마다 같은 시각에 변광성과 비교성을 함께 찍어 V 등급을 잽니다. 주기가 5일 남짓이면 하룻밤에 한 번 재도 되지만, 하루 간격으로만 재면 비슷한 주기가 여러 개 맞아 보이므로(가짜 주기) 관측 날이 고르지 않을수록 좋습니다. 측정 시각을 시험 주기로 나눈 나머지(위상)로 점을 다시 늘어놓아 곡선이 가장 매끈해지는 주기를 찾습니다.</li>
+            <li><span class="tag">분석</span>접은 곡선에서 평균 등급 ⟨V⟩를 읽고, M<sub>V</sub> = −2.43(log P − 1) − 4.05로 절대 등급을 구합니다. d = 10<sup>(⟨V⟩ − M<sub>V</sub> − A<sub>V</sub> + 5)/5</sup> pc입니다. 대마젤란은하에서는 세페이드 여러 개의 거리를 평균하고, 주기–광도 도표의 기울기도 확인합니다.</li>
+            <li><span class="tag">측정</span>δ Cep를 15일 밤 이상 관측한 뒤, 시험 주기를 움직여 흩어짐이 가장 작은 값을 찾아 기록하세요(시차로 잰 거리는 약 270 pc). 다음에는 대마젤란은하 세페이드를 20개 이상 측정하고, 소광 보정을 켜고 끄며 평균 거리를 비교하세요(다른 방법으로 잰 값은 약 50 kpc).</li>
+            <li class="warn"><span class="tag">오차·안전</span>성간 티끌을 무시하면 별이 어두워 보여 거리가 커집니다(계통 오차). 대마젤란은하에서 기울기가 −2.43보다 가파르게 나오는 까닭은 V 등급이 소광과 별의 온도 차에 민감하기 때문이고, 그래서 실제 연구는 적외선이나 소광을 상쇄하는 조합 등급을 씁니다. 1950년대 전에는 종족이 다른 두 종류의 세페이드를 하나로 보아 외부 은하 거리를 절반쯤으로 잡았습니다. 낮에 태양 쪽으로 망원경을 돌리지 말고, 밤 관측은 반드시 보호자·교사와 함께 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 외부 은하에서 주기 30일, 평균 V = 25.0인 세페이드를 찾았습니다(소광 무시). M<sub>V</sub> = −2.43(log P − 1) − 4.05일 때 이 은하까지의 거리는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 6.5 Mpc<span class="why"><b>주기를 반영하지 않았습니다.</b> M<sub>V</sub> = −4.05는 주기 10일짜리의 값입니다. 주기 30일이면 log P = 1.48이어서 M<sub>V</sub> ≈ −5.21로 더 밝고, 그만큼 더 멀리 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 11 Mpc<span class="why"><b>맞습니다.</b> M<sub>V</sub> = −2.43 × 0.477 − 4.05 ≈ −5.21, m − M ≈ 30.2이므로 d = 10<sup>(30.2+5)/5</sup> ≈ 1.1 × 10⁷ pc입니다. 처녀자리 은하단 근처 은하가 이 정도 거리입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 110 Mpc<span class="why"><b>지수 계산에서 한 자리 밀렸습니다.</b> 거리 지수가 5 커질 때 거리가 10배입니다. 30.2이면 10⁷ pc 남짓입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/space/s-distance.js"></script>
+<script src="../../js/cards/adearth/ae-distance-error.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/astro-ms-data.js"></script>
+<script src="../../js/cards/labearth/astro-cluster-data.js"></script>
+<script src="../../js/cards/labearth/msfit.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/astro-ogle-data.js"></script>
+<script src="../../js/cards/labearth/cepheid.js"></script>
+</body>
+</html>

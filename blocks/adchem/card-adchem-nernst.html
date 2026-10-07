@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adchem/ec-nernst.js"],
+  "short": "네른스트 식과 평형 상수"
+}
+-->
+<style>
+#card-adchem-nernst .eq { font-family: var(--f-mono); font-size: 13px; margin: 4px 0 6px; color: var(--ink); }
+</style>
+<article class="card" id="card-adchem-nernst">
+  <header class="card-head">
+    <span class="no"></span><h2>다 쓴 전지는 왜 전압이 0이 될까?</h2><span class="kind">ΔG = −nFE · 네른스트 식 · E°와 평형 상수 · 농도 전지</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="반응 지수 Q의 로그에 따른 전지 전위 E 그래프. E가 0이 되는 점이 평형 상수 K이다"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="전지">
+          <button type="button" class="chip" data-c="dan" aria-pressed="true">다니엘 전지 Zn | Cu</button>
+          <button type="button" class="chip" data-c="conc" aria-pressed="false">구리 농도 전지</button>
+          <button type="button" class="chip" data-c="fuel" aria-pressed="false">수소–산소 연료 전지</button>
+        </div>
+        <p class="eq">—</p>
+        <div class="ctl-row">
+          <div><label class="mono"><span class="l1">—</span> = <output class="o1">—</output></label>
+          <input class="s1" type="range" min="-4" max="1" step="0.05" value="0" aria-label="첫째 농도 또는 압력 (로그 눈금)"></div>
+          <div><label class="mono"><span class="l2">—</span> = <output class="o2">—</output></label>
+          <input class="s2" type="range" min="-4" max="1" step="0.05" value="0" aria-label="둘째 농도 또는 압력 (로그 눈금)"></div>
+        </div>
+        <label class="mono">온도 = <output class="t-out">25</output> °C</label>
+        <input class="t" type="range" min="0" max="80" step="1" value="25" aria-label="온도">
+        <dl class="nums n4">
+          <div><dt>log Q</dt><dd class="n-q">—</dd></div>
+          <div><dt>E (V)</dt><dd class="n-e">—</dd></div>
+          <div><dt>ΔG = −nFE (kJ)</dt><dd class="n-g">—</dd></div>
+          <div><dt>K = e<sup>nFE°/RT</sup></dt><dd class="n-k">—</dd></div>
+        </dl>
+        <p class="fig-note">E = E° − (RT/nF) ln Q. 25 °C에서 RT/F × ln 10 = 0.0592 V입니다. 농도는 활동도 대신 몰 농도(M), 기체는 압력(bar)을 그대로 썼고(이상 용액·이상 기체 근사), E°는 25 °C 값(다니엘 1.104 V, 연료 전지 1.229 V)이 온도에 따라 변하지 않는다고 보았습니다. ΔG는 반응식대로 1회 반응할 때(전자 n mol)의 값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>다니엘 전지는 표준 상태에서 1.10 V를 냅니다. 전류를 계속 뽑으면 Cu²⁺는 줄고 Zn²⁺는 늘어납니다. 전압은 어떻게 변하고, 언제 0이 될까요? 같은 물질로 만든 두 전극 사이에서도 전압이 생길 수 있을까요?</li>
+      <li><span class="tag">복원</span>E°<sub>전지</sub> = E°<sub>환원 전극</sub> − E°<sub>산화 전극</sub>이고, 온도와 압력이 일정할 때 ΔG &lt; 0이면 반응이 자발적입니다. 반응 지수 Q는 평형 상수식에 지금의 농도를 넣은 값입니다.</li>
+      <li><span class="tag">설명</span>전지 안에서 반응은 부피를 거의 바꾸지 않으므로 팽창 일은 무시할 수 있고, 반응이 하는 일은 전자를 전위차 E만큼 밀어 올리는 <em>전기적 일</em>입니다. 전자 n mol의 전하는 nF이므로, 가역적으로 꺼낼 수 있는 최대 전기적 일이 −ΔG와 같다는 데서 <em>ΔG = −nFE</em>(표준 상태에서 ΔG° = −nFE°)가 나옵니다. ΔG = ΔG° + RT ln Q에 대입하면 <em>네른스트 식</em> E = E° − (RT/nF) ln Q를 얻습니다. 평형에서는 ΔG = 0, E = 0, Q = K이므로 <em>ln K = nFE°/RT</em>입니다.</li>
+      <li><span class="tag">연결</span>E &gt; 0, ΔG &lt; 0, Q &lt; K는 모두 ‘정반응이 자발적’이라는 같은 말입니다. 전지가 방전되면 Q가 K를 향해 커지고 E가 0을 향해 줄어듭니다. 다니엘 전지의 K는 약 10<sup>37</sup>이라서 Cu²⁺가 거의 다 소모될 때까지 전압이 크게 떨어지지 않습니다. 반대로 E° = 0인 농도 전지는 농도 차이만으로 전압을 만들며, 신경 세포의 막전위도 이와 같은 원리입니다. 연료 전지의 ΔG° = −4 × 96 485 × 1.229 J ≈ −474 kJ은 물 2 mol의 표준 생성 자유 에너지와 같습니다.</li>
+      <li><span class="tag">적용</span>다니엘 전지에서 [Cu²⁺]를 줄이고 [Zn²⁺]를 늘려 보세요. log Q가 1 커질 때 E는 얼마나 줄어드나요? 농도 전지에서 두 농도를 같게 하면 E는 얼마이고, 어느 쪽이 (+)극인가요? 온도를 올리면 그래프의 기울기가 어떻게 바뀌나요? 연료 전지에서 기체 압력을 10배로 높이면 전압은 얼마나 오르나요?</li>
+      <li class="warn"><span class="tag">판단</span>네른스트 식이 주는 E는 전류가 거의 흐르지 않을 때의 값(개방 회로 전압)입니다. 실제로 전류를 뽑으면 내부 저항과 전극 반응의 느림(과전압) 때문에 전압이 이보다 낮아집니다. 또 묽지 않은 용액에서는 농도 대신 활동도를 써야 해서 계산값과 측정값이 어긋납니다. 다 쓴 전지의 전압이 0에 가까운 것은 대부분 평형에 다다라서라기보다 반응물이 고갈되거나 내부 저항이 커졌기 때문입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">25 °C에서 전자 1개를 주고받는 반응(n = 1)의 E° = +0.118 V입니다. 이 반응의 평형 상수 K는 대략?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 0.118<span class="why"><b>E°와 K는 같은 수가 아닙니다.</b> E°는 K의 로그에 비례합니다: log K = nE°/0.0592.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 100<span class="why"><b>맞습니다.</b> log K = 1 × 0.118/0.0592 ≈ 2이므로 K ≈ 10². 전위차 0.0592 V마다 K가 10배씩 바뀝니다(n = 1일 때).</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 0.01<span class="why"><b>부호를 거꾸로 적용했습니다.</b> E° &gt; 0이면 ΔG° &lt; 0이고 K &gt; 1입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

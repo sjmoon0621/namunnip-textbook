@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adearth/ae-distance-error.js"],
+  "short": "연주 시차와 분광 시차의 오차"
+}
+-->
+<style>
+#card-adearth-distance-error canvas { width: 100%; aspect-ratio: 4 / 3; }
+</style>
+<article class="card" id="card-adearth-distance-error">
+  <header class="card-head">
+    <span class="no"></span><h2>먼 별까지는 왜 시차 대신 스펙트럼으로 거리를 잴까?</h2><span class="kind">별까지의 거리 · 연주 시차와 분광 시차 · 오차의 전파</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="거리(로그 눈금)에 따른 상대 거리 오차. 지상·히파르코스·가이아 시차와 분광 시차의 오차 선, 지금 고른 거리"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">실제 거리 d = <output class="d-out">—</output></label>
+            <input class="d" type="range" min="0.3" max="4.5" step="0.01" value="2.5" aria-label="실제 거리 (로그 눈금)"></div>
+          <div><label class="mono">절대 등급 보정의 흩어짐 σ<sub>M</sub> = <output class="sm-out">0.40</output> 등급</label>
+            <input class="sm" type="range" min="0.1" max="1" step="0.05" value="0.4" aria-label="절대 등급의 흩어짐"></div>
+        </div>
+        <div class="presets" role="group" aria-label="광도 계급으로 판정">
+          <button type="button" class="chip" data-c="0" aria-pressed="true">K0 V 주계열성으로 판정</button><button type="button" class="chip" data-c="1" aria-pressed="false">K0 III 거성으로 판정</button><button type="button" class="chip" data-c="2" aria-pressed="false">K0 Ib 초거성으로 판정</button>
+        </div>
+        <div class="presets"><button type="button" class="chip ae-ext" aria-pressed="false">성간 소광 넣기 (1 등급/kpc)</button></div>
+        <dl class="nums n4">
+          <div><dt>관측 겉보기 등급 V</dt><dd class="n-m">—</dd></div>
+          <div><dt>연주 시차 p</dt><dd class="n-p">—</dd></div>
+          <div><dt>분광 시차로 구한 거리</dt><dd class="n-sd">—</dd></div>
+          <div><dt>더 정확한 방법</dt><dd class="n-w">—</dd></div>
+        </dl>
+        <p class="fig-note">시차 측정 오차 σ<sub>p</sub>는 대표값입니다. 지상 사진 관측 약 10 mas, 히파르코스(1997) 약 1 mas, 가이아 DR3 밝은 별 약 0.02 mas(G ≈ 20 등급에서는 약 0.5 mas). 관측하는 별은 실제로 K0 V 주계열성(M<sub>V</sub> ≈ +5.9)입니다. K0 III(≈ +0.7), K0 Ib(≈ −4.5)의 절대 등급은 분광형–광도 계급 보정표의 어림값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>가이아 위성은 10억 개가 넘는 별의 시차를 쟀습니다. 그런데 천문학자들은 지금도 별의 스펙트럼으로 거리를 어림합니다. 시차가 있는데 왜 다른 방법이 필요할까요? 어떤 거리에서 어떤 방법을 믿어야 할까요?</li>
+      <li><span class="tag">복원</span>연주 시차가 p(″)이면 거리는 d(pc) = 1/p입니다. 겉보기 등급 m과 절대 등급 M 사이에는 m − M = 5 log d − 5(거리 지수)가 성립합니다. H–R도에서 분광형이 같아도 주계열성, 거성, 초거성은 절대 등급이 크게 다릅니다.</li>
+      <li><span class="tag">설명</span>시차의 측정 오차 σ<sub>p</sub>는 거리와 상관없이 거의 일정합니다. d = 1/p를 미분하면 <em>σ<sub>d</sub>/d = σ<sub>p</sub>/p = σ<sub>p</sub>·d</em>이므로, 상대 오차는 거리에 비례해 커집니다. <em>분광 시차</em>는 스펙트럼에서 분광형과 광도 계급(흡수선의 폭과 세기 비로 판정)을 정해 H–R도에서 M을 읽고, 거리 지수로 d = 10<sup>(m−M+5)/5</sup>를 구하는 방법입니다. 여기서 M의 불확실성 σ<sub>M</sub>이 전해지면 <em>σ<sub>d</sub>/d = (ln 10/5)σ<sub>M</sub> ≈ 0.46σ<sub>M</sub></em>으로, 거리와 상관없이 일정합니다. 이름에 ‘시차’가 붙었지만 각을 재지는 않습니다.</li>
+      <li><span class="tag">연결</span>두 직선이 만나는 거리보다 가까우면 시차가, 멀면 분광 시차가 더 정확합니다. 성단은 별 수십 개를 한꺼번에 표준 주계열에 맞추므로(주계열 맞추기) 흩어짐이 줄고, 세페이드 변광성은 주기만 재면 M이 정해져 더 먼 은하까지 닿습니다. 각 방법의 영점은 바로 아래 칸, 결국 시차로 맞추므로 아래 칸의 계통 오차는 위 칸으로 그대로 전해집니다(우주 거리 사다리). 소광 A가 있으면 m − M = 5 log d − 5 + A이므로, 소광을 빼먹으면 거리를 10<sup>A/5</sup>배 크게 잡습니다.</li>
+      <li><span class="tag">적용</span>거리를 바꾸며 가이아 선과 분광 시차 선이 만나는 거리를 읽으세요. σ<sub>M</sub>을 0.2로 줄이면 그 거리는 어떻게 되나요? 이번에는 이 K0 V 별을 거성으로 잘못 판정해 보세요. 분광 시차로 구한 거리는 실제의 몇 배인가요? 그 차이는 σ<sub>M</sub>에서 오는 오차와 비교해 얼마나 큰가요? 성간 소광을 넣고 d = 2 kpc에서 거리가 얼마나 틀리는지도 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>오차가 큰 시차로 계산한 1/p는 실제 거리의 좋은 어림값이 아닙니다. σ<sub>p</sub>/p가 20 %를 넘으면 1/p는 한쪽으로 치우치고, 시차가 음수로 나오기도 하므로 통계적 방법으로 다뤄야 합니다. 분광 시차의 오차 σ<sub>d</sub>/d ≈ 0.46σ<sub>M</sub>은 작은 오차일 때의 근사이고, 광도 계급을 잘못 판정하는 것 같은 큰 실수는 이 식으로 표현되지 않는 계통 오차입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어두운 별이라 가이아 시차 오차가 0.1 mas입니다. 이 별의 분광 시차는 σ<sub>M</sub> = 0.3 등급입니다. 분광 시차가 시차보다 더 정확해지기 시작하는 거리는 대략 얼마인가요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1.4 kpc<span class="why"><b>맞습니다.</b> 분광 시차의 상대 오차는 0.46 × 0.3 ≈ 0.14이고, 시차의 상대 오차는 σ<sub>p</sub>·d = 10<sup>−4</sup>″ × d(pc)이므로 d ≈ 1400 pc에서 같아집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 14 kpc<span class="why"><b>mas를 초로 바꿀 때 자릿수를 놓쳤습니다.</b> 0.1 mas = 10<sup>−4</sup>″입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>어떤 거리에서도 시차가 더 정확하다<span class="why"><b>시차의 상대 오차가 거리에 비례해 커진다는 점을 놓쳤습니다.</b> 분광 시차의 상대 오차는 일정하므로 어느 거리부터는 반드시 더 작습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

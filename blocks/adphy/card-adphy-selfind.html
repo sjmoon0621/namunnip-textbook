@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adphy/em-selfind.js"],
+  "short": "자체 유도 계수"
+}
+-->
+<style>
+#card-adphy-selfind canvas { width: 100%; aspect-ratio: 6 / 5; }
+</style>
+<article class="card" id="card-adphy-selfind">
+  <header class="card-head">
+    <span class="no"></span><h2>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</h2><span class="kind">자체 유도 · L = μ₀N²A/ℓ · RL 회로의 시간 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 솔레노이드 그림. 아래: 스위치를 닫은 뒤와 전지를 뺀 뒤 코일 전류와 코일 유도 기전력의 시간 변화"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">감은 수 N = <output class="n-out">500</output></label>
+          <input class="n" type="range" min="100" max="1000" step="10" value="500" aria-label="감은 수"></div>
+          <div><label class="mono">길이 ℓ = <output class="l-out">10</output> cm</label>
+          <input class="l" type="range" min="5" max="30" step="1" value="10" aria-label="코일 길이"></div>
+          <div><label class="mono">반지름 = <output class="a-out">1.5</output> cm</label>
+          <input class="a" type="range" min="0.5" max="3" step="0.1" value="1.5" aria-label="코일 반지름"></div>
+          <div><label class="mono">심의 상대 투자율 μr = <output class="m-out">1</output></label>
+          <input class="m" type="range" min="0" max="3" step="0.05" value="0" aria-label="상대 투자율 (로그 눈금)"></div>
+          <div><label class="mono">회로 저항 R = <output class="r-out">10</output> Ω</label>
+          <input class="r" type="range" min="1" max="100" step="1" value="10" aria-label="회로 저항"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>자체 유도 계수 L</dt><dd class="n-l">—</dd></div>
+          <div><dt>시간 상수 L/R</dt><dd class="n-t">—</dd></div>
+          <div><dt>최종 에너지 ½LI₀²</dt><dd class="n-u">—</dd></div>
+        </dl>
+        <p class="fig-note">전지 6 V, I₀ = ε/R. L은 긴 솔레노이드 근사(속 자기장이 μ₀μrnI로 고르다고 봄)로 계산했습니다. 철심의 μr은 전류와 자기 회로 모양에 따라 크게 달라지므로 여기서는 하나의 상수로 둔 모식입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>코일에 전지를 연결해도 전류는 즉시 최댓값이 되지 않고, 스위치를 끊으면 불꽃이 튀기도 합니다. 코일이 자기 전류의 변화를 방해하는 정도는 무엇이 정할까요?</li>
+      <li><span class="tag">복원</span>긴 솔레노이드 속 자기장은 B = μ₀nI(n = N/ℓ)입니다. <em>패러데이 법칙</em>에 따르면 코일을 지나는 자기 선속이 변할 때 유도 기전력 ε = −N dΦ/dt가 생기고, 렌츠 법칙에 따라 그 방향은 선속 변화를 방해하는 쪽입니다.</li>
+      <li><span class="tag">설명</span>코일 자신의 전류가 만든 자기장도 자기 코일을 지납니다. 한 바퀴를 지나는 선속은 Φ = BA = μ₀(N/ℓ)IA이고, 이것이 N바퀴에 모두 걸리므로 전체 <em>선속 쇄교</em>는 NΦ = μ₀N²AI/ℓ입니다. 이것이 I에 비례하므로 비례 상수를 <em>자체 유도 계수</em> L로 정의합니다: NΦ = LI, <em>L = μ₀N²A/ℓ</em>(단위 H = Wb/A). 그러면 전류가 변할 때 코일 양 끝의 기전력은 ε<sub>L</sub> = −L dI/dt입니다. N이 두 번 들어가는 까닭은 감은 수가 자기장을 키우고(n), 그 자기장을 받는 바퀴 수도 늘리기(N) 때문입니다.</li>
+      <li><span class="tag">연결</span>저항 R과 직렬로 기전력 ε에 연결하면 키르히호프 법칙으로 ε − L dI/dt − IR = 0이고, 풀면 <em>I = (ε/R)(1 − e<sup>−t/τ</sup>)</em>, τ = L/R입니다. 전지가 하는 일 중 일부는 열이 되고, 나머지는 자기장에 ½LI²로 저장됩니다. 전지를 빼면 이 에너지가 저항에서 열로 나오며 I = I₀e<sup>−t/τ</sup>로 줄어듭니다. 심에 투자율이 큰 물질을 넣으면 B가 μr배가 되어 L도 μr배가 됩니다.</li>
+      <li><span class="tag">적용</span>N을 250에서 500으로 두 배로 늘리고 L이 몇 배가 되는지 확인하세요. 같은 도선 길이로 반지름을 두 배로 하면 감을 수 있는 바퀴 수가 절반이 되는데, 이때 L은 어떻게 될까요? μr을 키우거나 R을 바꿔 τ가 어떻게 달라지는지, 그리고 그래프에서 τ만큼 지났을 때 전류가 최종값의 몇 %인지 읽어 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>“코일이 전류를 막는다”는 말은 정확하지 않습니다. 코일은 전류의 <em>크기</em>가 아니라 <em>변화</em>를 방해하며, 직류가 일정하게 흐르면 이상적인 코일의 전압은 0입니다. 또 그래프처럼 저항으로 천천히 방전시키지 않고 회로를 갑자기 끊으면 dI/dt가 매우 커져 수백 V가 넘는 기전력이 생길 수 있으므로, 실제 회로에는 다이오드 같은 보호 경로를 둡니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">길이·반지름이 같은 두 솔레노이드 A(200회)와 B(400회)를 같은 저항 R의 회로에 각각 연결했습니다(코일 자체 저항은 무시). 스위치를 닫은 뒤 전류가 최종값의 63 %에 이르는 시간은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>B가 A의 2배<span class="why"><b>L이 N에 비례한다고 본 답입니다.</b> 감은 수는 자기장과 선속을 받는 바퀴 수에 모두 들어가므로 L ∝ N²입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>B가 A의 4배<span class="why"><b>맞습니다.</b> 63 %에 이르는 시간은 τ = L/R이고, L ∝ N²이므로 4배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘이 같다. 최종 전류 ε/R가 같기 때문이다<span class="why"><b>최종값과 도달 시간을 혼동했습니다.</b> 최종 전류는 같지만, 거기까지 가는 빠르기는 L/R이 정합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

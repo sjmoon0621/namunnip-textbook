@@ -6113,43 +6113,129 @@ window.TOC = [
       "n": 1,
       "title": "포물선 운동의 벡터 분석",
       "code": "12고물01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-projectile",
+        "title": "비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-drag",
+        "title": "공기 저항이 있으면 포물선은 어떻게 찌그러질까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "보존력과 충돌",
       "code": "12고물01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-collision",
+        "title": "부딪칠 때 무엇이 보존될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-potential",
+        "title": "힘의 그래프에서 위치 에너지를 어떻게 얻을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-collide2d",
+        "title": "당구공은 왜 직각으로 갈라질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "회전 운동과 각운동량 보존",
       "code": "12고물01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-seesaw",
+        "title": "시소에서 가벼운 사람은 왜 멀리 앉아야 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-rolling",
+        "title": "같은 비탈에서 굴렸는데 왜 도착 순서가 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-spin",
+        "title": "회전의자에서 팔을 오므리면 왜 빨리 돌까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "행성의 운동과 인공위성",
       "code": "12고물01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-kepler",
+        "title": "행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-orbit",
+        "title": "인공위성은 얼마나 빨리 던져야 지구를 돌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-escape",
+        "title": "달에는 왜 대기가 없을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "이상 기체와 열역학 제1법칙",
       "code": "12고물01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-ideal-gas",
+        "title": "기체를 데우면 압력은 왜 커질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-process",
+        "title": "같은 부피만큼 팽창해도 필요한 열은 왜 다를까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "열효율과 엔트로피",
       "code": "12고물01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-cycle",
+        "title": "한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-carnot",
+        "title": "열기관의 효율에는 왜 넘을 수 없는 한계가 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mech-entropy",
+        "title": "퍼진 기체는 왜 저절로 다시 모이지 않을까?"
+       }
+      ]
      }
     ]
    },
@@ -6161,43 +6247,154 @@ window.TOC = [
       "n": 1,
       "title": "가우스 법칙과 전기장",
       "code": "12고물02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-equipotential",
+        "title": "등전위면 간격만 보고 전기장의 세기를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-field",
+        "title": "보이지 않는 전기장을 어떻게 그릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-gauss",
+        "title": "닫힌 면 하나로 전기장을 구할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-dipole",
+        "title": "알짜 전하가 0인 쌍극자는 왜 전기장을 만들고 회전할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "축전기의 연결과 유전체",
       "code": "12고물02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-capacitor",
+        "title": "축전기는 전기 에너지를 어떻게 저장할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-polarize",
+        "title": "전하를 띠지 않은 물체는 왜 대전체에 끌려올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-capnet",
+        "title": "유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-capacitor",
+        "title": "포일과 종이로 만든 축전기로 C = εA/d를 확인할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "전류의 자기장과 자체 유도",
       "code": "12고물02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-bfield",
+        "title": "도선을 둥글게 감으면 자기장은 어떻게 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-biot",
+        "title": "솔레노이드 속 자기장 μ₀nI는 언제 믿을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-induction",
+        "title": "자석을 빨리 떨어뜨리면 코일에 생기는 전압은 커질까, 오래갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-selfind",
+        "title": "코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-rc",
+        "title": "축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "전자기파의 발생과 성질",
       "code": "12고물02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adphy-wave",
+        "title": "안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adphy-maxwell",
+        "title": "맥스웰은 어떻게 전기와 자기의 식에서 빛의 속력을 꺼냈을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "키르히호프 법칙",
       "code": "12고물02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-circuit-meter",
+        "title": "직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-kirchhoff",
+        "title": "전류 방향을 거꾸로 가정해도 답이 맞을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "교류와 RLC 회로의 공진",
       "code": "12고물02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is2-generator",
+        "title": "자석을 움직이면 왜 전류가 흐를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-rlc",
+        "title": "축전기에 담긴 에너지는 회로에서 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-ac",
+        "title": "코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-rlc",
+        "title": "진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?"
+       }
+      ]
      }
     ]
    },
@@ -6209,29 +6406,98 @@ window.TOC = [
       "n": 1,
       "title": "거울·렌즈와 광학 기기",
       "code": "12고물03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-lm-image",
+        "title": "렌즈를 반쯤 가리면 상도 반만 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-mirror",
+        "title": "스크린에 잡히지 않는 상의 위치는 어떻게 잴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-instrument",
+        "title": "렌즈 두 장을 겹치면 왜 상이 수백 배로 커질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-aberration",
+        "title": "렌즈는 왜 빛을 정확히 한 점에 모으지 못할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "이중 슬릿과 간섭계",
       "code": "12고물03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-lm-dslit",
+        "title": "이중 슬릿 무늬의 간격은 무엇이 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-interferometer",
+        "title": "빛의 파장으로 1만분의 1 mm를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-film",
+        "title": "비눗방울은 왜 무지갯빛일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "회절과 분해능",
       "code": "12고물03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-diffraction",
+        "title": "틈이 많아질수록 무늬는 왜 더 날카로워질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-rayleigh",
+        "title": "망원경은 왜 클수록 더 가까이 붙은 두 별을 가를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-litho",
+        "title": "반도체 회로는 왜 더 짧은 파장의 빛으로 새길까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "편광과 3D 영상",
       "code": "12고물03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-polarizer",
+        "title": "편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-3d",
+        "title": "3D 영화관 안경은 왜 고개를 기울여도 화면이 겹쳐 보이지 않을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adphy-display",
+        "title": "휴대 전화 화면 속에는 편광판이 몇 장 들어 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -6243,43 +6509,174 @@ window.TOC = [
       "n": 1,
       "title": "가속 좌표계와 관성력",
       "code": "12고물04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adphy-frames",
+        "title": "돌아가는 회전판 위에서 똑바로 민 공은 왜 휘어 갈까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "시공간, 질량–에너지, 중력과 시간",
       "code": "12고물04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-adphy-sr",
+        "title": "상대성 이론은 어떤 모순에서 출발해 시간과 공간을 어떻게 바꾸었을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-spacetime",
+        "title": "동시에 일어난 두 사건이 다른 관찰자에게는 동시가 아닐 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-clock",
+        "title": "빠르게 움직이면 정말 시간이 느리게 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-mass-energy",
+        "title": "가속기에서 에너지를 계속 넣으면 전자는 빛보다 빨라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-gps",
+        "title": "GPS 위성의 시계는 왜 보정해야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-mech-gr",
+        "title": "중력은 힘일까, 휘어진 시공간일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "빛의 이중성과 물질파",
       "code": "12고물04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-lm-photo",
+        "title": "빛을 세게 비추면 전자가 더 빨리 튀어나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-compton",
+        "title": "X선이 전자에 부딪혀 튕겨 나오면 왜 색(파장)이 바뀔까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-planck",
+        "title": "고전 물리학은 왜 뜨거운 물체가 자외선을 무한히 낸다고 예측했을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-davisson",
+        "title": "니켈 결정에 쏜 전자는 왜 특정한 각도로 몰려 튀어나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-emicro",
+        "title": "전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "상보성 원리와 불확정성 원리",
       "code": "12고물04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-single-photon",
+        "title": "전자를 하나씩 쏘아도 간섭무늬가 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-packet",
+        "title": "한곳에 모인 파동을 만들려면 파장이 몇 가지나 필요할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adphy-complementarity",
+        "title": "전자가 어느 슬릿을 지났는지 보면 왜 간섭무늬가 사라질까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "퍼텐셜 상자와 띠 이론",
       "code": "12고물04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-phy-lm-hyd",
+        "title": "수소는 왜 몇 가지 색의 빛만 낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-well",
+        "title": "상자에 갇힌 전자는 왜 아무 에너지나 가질 수 없을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-emq-tunnel",
+        "title": "에너지가 모자란 전자가 어떻게 벽을 통과할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-bands",
+        "title": "원자가 많이 모이면 에너지 준위는 왜 띠가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-phy-lm-bands",
+        "title": "규소는 도체일까, 절연체일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adphy-nano",
+        "title": "물질을 나노미터 크기로 줄이면 무엇이 달라질까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "기본 입자와 핵반응, 플라스마",
       "code": "12고물04-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-adphy-particles",
+        "title": "세상은 몇 종류의 입자와 몇 가지 힘으로 이루어져 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-sun-fusion",
+        "title": "태양은 무엇을 태워서 빛날까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adphy-nuclear",
+        "title": "원자로와 핵융합 장치는 원자핵의 에너지를 어떻게 꺼낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adphy-gamow",
+        "title": "태양 중심은 쿨롱 장벽을 넘기에 너무 차가운데, 어떻게 핵융합이 일어날까?"
+       }
+      ]
      }
     ]
    }
@@ -6300,50 +6697,147 @@ window.TOC = [
       "n": 1,
       "title": "오비탈과 원자 모형",
       "code": "12고화01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-emq-orbital",
+        "title": "전자는 원자핵 둘레의 어디에 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-wavefn",
+        "title": "파동 함수의 그래프에서 무엇을 읽을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "전형·전이 원소의 전자 배치",
       "code": "12고화01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is1-shells",
+        "title": "주기율표는 왜 이런 모양일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-config",
+        "title": "전이 원소의 전자 배치는 전형 원소와 무엇이 다를까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "화학 결합과 입자 간 에너지",
       "code": "12고화01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-potential",
+        "title": "두 입자를 가까이 가져가면 에너지는 어떻게 변할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-solids",
+        "title": "소금, 얼음, 다이아몬드, 구리는 무엇으로 붙잡혀 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "형식 전하와 공명 구조",
       "code": "12고화01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-lewis",
+        "title": "루이스 전자점식은 어떻게 그릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-formal",
+        "title": "세 결합의 길이가 같은 질산 이온을 루이스 구조식으로 어떻게 나타낼까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "원자가 결합 이론과 혼성 오비탈",
       "code": "12고화01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-vsepr",
+        "title": "물 분자는 왜 굽은 모양일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-hybrid",
+        "title": "s 오비탈을 얼마나 섞으면 결합각이 109.5°, 120°, 180°가 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adchem-bond-theories",
+        "title": "결합을 설명하는 이론은 왜 하나가 아니라 여럿일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-aromatic",
+        "title": "벤젠에 이중 결합이 세 개 있다면, 왜 브로민수의 색을 없애지 못할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "탄화수소의 이성질체",
       "code": "12고화01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-isomer",
+        "title": "C₆H₁₄로 만들 수 있는 분자는 모두 몇 가지일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-hydrocarbon",
+        "title": "탄소 여섯 개짜리 탄화수소들은 왜 끓는점도, 브로민수에 대한 반응도 다를까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "작용기와 반응",
       "code": "12고화01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-functional",
+        "title": "원자 몇 개가 바뀌면 술이 식초가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-fg-acid",
+        "title": "페놀은 왜 수산화 나트륨에는 녹고 탄산수소 나트륨에는 안 녹을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-oxlevel",
+        "title": "같은 산화제를 써도 어떤 알코올은 산화되고 어떤 알코올은 그대로일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-alcohol-ox",
+        "title": "세 가지 알코올을 똑같이 산화시켰는데, 생성물은 왜 서로 다를까?"
+       }
+      ]
      }
     ]
    },
@@ -6355,50 +6849,142 @@ window.TOC = [
       "n": 1,
       "title": "기체 분자 운동론과 속력 분포",
       "code": "12고화02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-ideal-gas",
+        "title": "기체를 데우면 압력은 왜 커질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-maxwell",
+        "title": "같은 온도의 기체 분자는 모두 같은 속력으로 움직일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "이상 기체와 부분 압력",
       "code": "12고화02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-stopcock",
+        "title": "콕을 열어 두 기체를 섞으면 각 기체의 압력은 어떻게 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-partial",
+        "title": "깊이 잠수할 때는 왜 공기 대신 다른 기체를 마실까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "실제 기체",
       "code": "12고화02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-real-gas",
+        "title": "높은 압력의 기체는 왜 PV = nRT를 따르지 않을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "증기압·표면 장력·모세관 현상",
       "code": "12고화02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-bp-data",
+        "title": "극성이 없는 분자도 서로 끌어당길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-capillary",
+        "title": "가는 유리관 속 물은 왜 저절로 올라가고, 수은은 내려갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-vapor",
+        "title": "액체마다 증기압이 다른 까닭을 압력 센서로 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "단위세포와 결정성 고체",
       "code": "12고화02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-solids",
+        "title": "소금, 얼음, 다이아몬드, 구리는 무엇으로 붙잡혀 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-unit-cell",
+        "title": "상자 한 변의 길이만 재면 금속의 밀도를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-ionic-cell",
+        "title": "NaCl과 CsCl은 둘 다 1 : 1 화합물인데, 왜 결정 구조가 다를까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "농도 단위와 용해도",
       "code": "12고화02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labchem-solution",
+        "title": "0.100 M 용액 100 mL를 만들 때 어떤 실수가 농도를 가장 크게 바꿀까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-solubility",
+        "title": "온도를 올리면 왜 어떤 염은 더 녹고 어떤 염은 덜 녹을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-soda",
+        "title": "탄산음료 뚜껑을 열면 왜 거품이 날까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "묽은 용액의 총괄성",
       "code": "12고화02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-colligative",
+        "title": "소금물은 왜 더 높은 온도에서 끓고, 더 낮은 온도에서 얼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-colligative",
+        "title": "증기압이 조금 내려갔을 뿐인데, 왜 어는점은 끓는점보다 3.6배나 크게 움직일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-mateng-osmosis",
+        "title": "바닷물을 마실 물로 바꾸려면 얼마나 세게 눌러야 할까?"
+       }
+      ]
      }
     ]
    },
@@ -6410,57 +6996,165 @@ window.TOC = [
       "n": 1,
       "title": "내부 에너지와 열역학 제1법칙",
       "code": "12고화03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-first-law",
+        "title": "기체에 준 열은 어디에 쓰일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-path",
+        "title": "같은 곳에 도착해도 길에 따라 열과 일이 달라질까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "엔탈피와 헤스 법칙",
       "code": "12고화03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-hess",
+        "title": "잴 수 없는 반응의 열을 어떻게 알아낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-formation",
+        "title": "표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-calorimetry",
+        "title": "두 단계로 잰 반응열의 합은 한 번에 잰 반응열과 같을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "엔트로피",
       "code": "12고화03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mech-entropy",
+        "title": "퍼진 기체는 왜 저절로 다시 모이지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-suniv",
+        "title": "물이 얼면 질서가 생기는데, 왜 저절로 얼까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "깁스 자유 에너지와 자발성",
       "code": "12고화03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-spont",
+        "title": "열을 흡수하는 변화도 저절로 일어날 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-gibbs-t",
+        "title": "석회석은 몇 도부터 저절로 분해될까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "산화수와 산화·환원 반응식",
       "code": "12고화03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-oxnum",
+        "title": "복잡한 산화·환원 반응식의 계수는 어떻게 맞출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-balance",
+        "title": "잃은 전자와 얻은 전자를 어떻게 맞출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-redox-titration",
+        "title": "지시약 없이 적정이 끝난 순간을 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "표준 환원 전위와 전지 전위",
       "code": "12고화03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-cell",
+        "title": "두 금속을 고르면 전지의 전압을 미리 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-ered",
+        "title": "표 하나로 어떤 산화·환원 반응이 일어날지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-cell-emf",
+        "title": "전지의 전압은 금속이 정할까, 용액이 정할까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "전지 전위와 자유 에너지",
       "code": "12고화03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-nernst",
+        "title": "다 쓴 전지는 왜 전압이 0이 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-rxn-battery-history",
+        "title": "개구리 다리에서 스마트폰 배터리까지, 전지는 어떻게 발전했을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "전기 분해와 전기량",
       "code": "12고화03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-electrolysis",
+        "title": "전기를 얼마나 흘리면 금속을 얼마나 얻을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-elec-v",
+        "title": "전압을 얼마나 걸어야 전기 분해가 시작되고, 전기는 얼마나 들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-electrolysis",
+        "title": "흘린 전하량으로 전극에 생길 물질의 양을 미리 맞힐 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -6472,78 +7166,224 @@ window.TOC = [
       "n": 1,
       "title": "평형 상수와 반응 지수",
       "code": "12고화04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-qk",
+        "title": "Q와 K를 비교하면 무엇을 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-ice",
+        "title": "아무렇게나 섞은 기체는 어디에서 멈출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-fescn",
+        "title": "섞는 양을 바꿔도 변하지 않는 값이 정말 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "온도와 평형 상수",
       "code": "12고화04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-lechat",
+        "title": "평형을 흔들면 어떻게 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-vanthoff",
+        "title": "온도를 바꾸면 평형 상수는 왜, 얼마나 변할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-chem-haber-eq",
+        "title": "암모니아 합성은 왜 높은 압력에서 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "상평형과 용해 평형",
       "code": "12고화04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-chem-phase",
+        "title": "얼린 딸기는 어떻게 물을 녹이지 않고 바로 날려 보낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-vapor",
+        "title": "액체마다 증기압이 다른 까닭을 압력 센서로 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-ksp",
+        "title": "Ksp가 작은 염이 언제나 덜 녹을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "루이스 산 염기와 이온화 상수",
       "code": "12고화04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-conjugate",
+        "title": "OH⁻가 없는 암모니아는 어떻게 염기일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-lewis",
+        "title": "H⁺가 없는 금속 이온은 어떻게 물을 산성으로 만들까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "약산·약염기의 pH",
       "code": "12고화04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-weak-acid",
+        "title": "같은 농도의 산인데 pH는 왜 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-pka",
+        "title": "적정 곡선에서 약산의 pKa를 읽어 낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-hydrolysis",
+        "title": "중화로 만든 염의 수용액은 왜 중성이 아닐 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "적정 곡선과 완충 용액",
       "code": "12고화04-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-rxn-titration",
+        "title": "적정 곡선의 모양에서 산의 세기를 읽을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-polyprotic",
+        "title": "인산을 적정하면 pH는 왜 두 번 뛸까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-rxn-buffer",
+        "title": "혈액의 pH는 어떻게 7.4에 머물까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "반응 속도와 아레니우스 식",
       "code": "12고화04-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-rate-factors",
+        "title": "냉장고, 잘게 썬 장작, 촉매 장치는 각각 무엇을 바꿀까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-arrhenius",
+        "title": "“10 °C 오르면 2배 빨라진다”는 언제 맞을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labchem-rate-design",
+        "title": "무엇을 고정해야 \"이 요인이 속도를 바꿨다\"고 말할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "적분 속도식",
       "code": "12고화04-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-rate-law",
+        "title": "농도를 2배로 하면 반응은 몇 배 빨라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-integrated",
+        "title": "농도–시간 자료만 보고 반응 차수를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "충돌 이론",
       "code": "12고화04-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-mateng-ea",
+        "title": "부딪친다고 모두 반응할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adchem-collision",
+        "title": "온도를 올리면 충돌이 늘어서 빨라질까, 충돌이 세져서 빨라질까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "반응 메커니즘과 속도 결정 단계",
       "code": "12고화04-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-mechanism",
+        "title": "두 단계 반응에서 전체 빠르기는 누가 정할까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "촉매와 활성화 에너지",
       "code": "12고화04-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adchem-catalyst",
+        "title": "촉매는 반응물을 얼마나 꽉 붙잡아야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adchem-catalysts",
+        "title": "촉매는 어떤 방식으로 새 경로를 열까?"
+       }
+      ]
      }
     ]
    }
@@ -6564,43 +7404,124 @@ window.TOC = [
       "n": 1,
       "title": "생체 분자의 구조와 기능",
       "code": "12고생01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-cell-carb-lipid",
+        "title": "탄수화물과 지질은 어떤 종류가 있고, 어떻게 찾아낼까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-cell-protein",
+        "title": "아미노산 한 줄이 어떻게 일하는 단백질이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-isomer",
+        "title": "분자식이 모두 C₆H₁₂O₆인데 포도당, 갈락토스, 과당은 왜 다른 물질일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-fatty",
+        "title": "이중 결합 하나의 모양이 왜 세포막을 굳게도, 무르게도 할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "순환적·비순환적 광인산화",
       "code": "12고생01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-cell-etc",
+        "title": "전자는 한쪽에선 내려가고, 다른 쪽에선 왜 올라갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-cyclic",
+        "title": "광계 Ⅰ의 전자는 왜 일부러 되돌아갈까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "캘빈 회로",
       "code": "12고생01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adbio-benson",
+        "title": "방사성 탄소를 몇 초만 주면 어디에 먼저 나타날까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-cell-calvin",
+        "title": "불을 끄면 캘빈 회로의 어떤 물질이 쌓일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "광호흡과 C3·C4·CAM 식물",
       "code": "12고생01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adbio-rubisco",
+        "title": "루비스코는 왜 CO₂ 대신 O₂를 붙잡을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-c3c4cam",
+        "title": "벼, 옥수수, 선인장은 같은 햇빛 아래에서 탄소를 어떻게 다르게 모을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "해당 과정·TCA 회로와 조절",
       "code": "12고생01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-cell-carbon",
+        "title": "포도당의 탄소 6개는 어디로 가고, 에너지는 어디에 실릴까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-hub",
+        "title": "해당 과정과 TCA 회로의 중간 산물은 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-pfk",
+        "title": "ATP를 기질로 쓰는 효소가 왜 ATP가 많으면 느려질까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "산화적 인산화와 ATP 합성 효소",
       "code": "12고생01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-cell-chemiosmosis",
+        "title": "산소를 쓰는 일과 ATP를 만드는 일은 어떻게 이어져 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-synthase",
+        "title": "H⁺가 지나가면 효소가 왜 돌고, 돌면 왜 ATP가 생길까?"
+       }
+      ]
      }
     ]
    },
@@ -6612,43 +7533,134 @@ window.TOC = [
       "n": 1,
       "title": "세포 간 신호 전달",
       "code": "12고생02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-glucose",
+        "title": "밥을 먹으면 혈당은 어떻게 다시 내려갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-signal",
+        "title": "세포는 왜 신호를 보내는 방법을 여러 가지로 나누어 쓸까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "호르몬의 작용 경로",
       "code": "12고생02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-hormone",
+        "title": "물을 많이 마시면 오줌은 왜 묽어질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-hormone-kinds",
+        "title": "호르몬의 화학 구조만 보고 작용 방식을 짐작할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-hormone-path",
+        "title": "에피네프린은 몇 초 만에, 에스트로젠은 몇 시간 뒤에 듣는 까닭은?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "막전위와 활동 전위",
       "code": "12고생02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adbio-ghk",
+        "title": "휴지 전위는 왜 −70 mV 근처에 머물까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-hh",
+        "title": "활동 전위 직후에 준 두 번째 자극은 왜 통하지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-saltatory",
+        "title": "말이집이 있으면 왜 신호가 더 빠를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-demyelination",
+        "title": "말이집이 손상되면 신호는 왜 느려지거나 끊길까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "시냅스 전달과 시냅스후 전위",
       "code": "12고생02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-bio-syndir",
+        "title": "시냅스에서 신호는 왜 한 방향으로만 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-psp",
+        "title": "시냅스 하나로는 부족할 때, 뉴런은 신호를 어떻게 더할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-syndrug",
+        "title": "약물은 시냅스의 어느 단계에 끼어들까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "선천적 면역과 후천적 면역",
       "code": "12고생02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-adbio-immune-players",
+        "title": "면역 반응에는 어떤 물질과 세포가 나서고, 각자 무엇을 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-infection",
+        "title": "선천 면역과 후천 면역 가운데 하나만 있으면 감염을 이겨 낼까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "림프구와 체액성·세포성 면역",
       "code": "12고생02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adbio-vdj",
+        "title": "유전자 조각 백여 개로 어떻게 수백만 가지 항체를 만들까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-tcell-mhc",
+        "title": "T 림프구는 세포 속에 숨은 바이러스를 어떻게 찾아낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-immune",
+        "title": "두 번째 감염은 왜 더 빨리 이겨낼까?"
+       }
+      ]
      }
     ]
    },
@@ -6660,36 +7672,96 @@ window.TOC = [
       "n": 1,
       "title": "DNA 복제의 교정과 수선",
       "code": "12고생03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-replication",
+        "title": "DNA가 복제될 때 원래 가닥은 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-proofread",
+        "title": "DNA를 복제할 때 생긴 실수와 손상은 누가, 무엇으로 고칠까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "전사의 조절 요소",
       "code": "12고생03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-central",
+        "title": "핵 속 DNA의 정보는 어떻게 세포질의 단백질이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-promoter",
+        "title": "RNA 중합 효소는 수백만 염기쌍 가운데 어디서 전사를 시작할지 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "유전 암호의 실험적 해독",
       "code": "12고생03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-codon",
+        "title": "염기 하나가 바뀌면 단백질은 얼마나 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-codebreak",
+        "title": "코돈 64개의 뜻은 어떤 실험으로 하나씩 밝혀졌을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "원핵·진핵세포의 발현 조절",
       "code": "12고생03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-gene-lac",
+        "title": "대장균은 젖당 분해 효소를 언제 만들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-operon",
+        "title": "젖당 오페론은 켜지기를 기다리고, 트립토판 오페론은 꺼지기를 기다린다?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-eukreg",
+        "title": "진핵세포는 오페론 없이 유전자를 어떻게 켜고 끌까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "발생 유전자와 진화",
       "code": "12고생03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adbio-hox",
+        "title": "초파리의 날개를 네 장으로 만드는 유전자가 생쥐의 척추뼈도 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-gene-differentiation",
+        "title": "같은 DNA를 가진 세포가 어떻게 근육도 되고 눈의 수정체도 될까?"
+       }
+      ]
      }
     ]
    },
@@ -6701,29 +7773,83 @@ window.TOC = [
       "n": 1,
       "title": "세포 공학 기술",
       "code": "12고생04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-tissue-culture",
+        "title": "잎이나 줄기 한 조각에서 식물 한 그루를 다시 키울 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-cell-eng",
+        "title": "다 자란 세포 하나로 개체나 장기 세포를 다시 만들 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-hybridoma",
+        "title": "항체를 만드는 세포와 죽지 않는 암세포를 합친 뒤, 원하는 세포만 어떻게 골라낼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "유전자 재조합 기술",
       "code": "12고생04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labbio-restriction",
+        "title": "제한 효소가 정말 그 염기 서열만 자르는지 어떻게 확인할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-cloning",
+        "title": "어떤 제한 효소로 잘라야 원하는 재조합 플라스미드만 얻을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labbio-transformation",
+        "title": "해파리 유전자를 넣은 대장균만 골라낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "생명공학기술의 활용과 학문 분야",
       "code": "12고생04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-adbio-omics",
+        "title": "유전체를 다 읽은 뒤, 생명과학은 무엇을 더 알아내야 했을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adbio-assembly",
+        "title": "유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "생명공학기술의 윤리적·사회적 문제",
       "code": "12고생04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-gene-bioethics",
+        "title": "할 수 있는 일과 해도 되는 일은 어떻게 가를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adbio-ethics",
+        "title": "새 생명공학기술 앞에서, 내 의견을 어떻게 근거 있게 주장할까?"
+       }
+      ]
      }
     ]
    }
@@ -6744,78 +7870,259 @@ window.TOC = [
       "n": 1,
       "title": "지진파와 지구 내부",
       "code": "12고지01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-seismic",
+        "title": "지진파가 닿지 않는 곳이 왜 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-epicenter",
+        "title": "지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-prem",
+        "title": "아무도 가 보지 못한 지구 속 물질을 지진파 속도로 어떻게 알아낼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "중력 이상과 지하 탐사",
       "code": "12고지01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-geoid",
+        "title": "지구는 얼마나 납작하고, 해수면은 얼마나 울퉁불퉁할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-gravity",
+        "title": "중력 측정값에서 땅속 덩어리를 찾으려면 무엇을 빼야 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-buried",
+        "title": "중력 이상 곡선의 모양만으로 땅속 덩어리의 깊이와 질량을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "지구 자기장과 고지자기",
       "code": "12고지01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adearth-dynamo",
+        "title": "지구 자기장은 왜 수십억 년 동안 사라지지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-apwp",
+        "title": "옛날에는 자북극이 두 개였을까, 대륙이 움직였을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "판구조론과 플룸구조론",
       "code": "12고지01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-hotspot",
+        "title": "하와이 섬들의 나이로 판의 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-spreading",
+        "title": "해령 양쪽의 자기 줄무늬로 해저가 넓어지는 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-cooling",
+        "title": "해저는 왜 해령에서 멀어질수록 깊어지고, 그 무게가 판을 밀 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-plume",
+        "title": "판의 경계에서 멀리 떨어진 곳의 화산과 대륙의 분열은 무엇으로 설명할까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "광물의 물리·화학적 성질",
       "code": "12고지01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is1-silicate",
+        "title": "규산염 사면체 하나로 어떻게 여러 광물이 만들어질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-mineral-id",
+        "title": "생김새가 비슷한 광물을 어떻게 가려낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-solidsol",
+        "title": "같은 감람석인데 왜 산지마다 밀도와 색이 다를까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "편광 현미경과 광물 감정",
       "code": "12고지01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-polarizing",
+        "title": "박편 속 투명한 알갱이들을 편광 현미경으로 어떻게 구별할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-retard",
+        "title": "투명한 광물이 직교 니콜에서 왜 색을 띠고, 그 색으로 무엇을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "암석의 생성 조건",
       "code": "12고지01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-rock-id",
+        "title": "암석 표본의 조직과 성분으로 그 암석이 생긴 과정을 알아낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-crystallize",
+        "title": "같은 마그마에서 왜 서로 다른 암석이 여러 가지 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-facies",
+        "title": "같은 현무암이 어디서는 녹색 편암, 어디서는 청색 편암이 되는 까닭은?"
+       },
+       {
+        "kind": "text",
+        "id": "text-earth-sediment",
+        "title": "지층에 남은 무늬로 옛 환경을 어떻게 읽을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-ore",
+        "title": "암석이 만들어지는 과정에서 쓸모 있는 원소는 어떻게 한곳에 모일까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "지층 대비와 절대 연령",
       "code": "12고지01-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-section",
+        "title": "노두의 경계면만 보고 그 사이에 무슨 일이 있었는지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-correlate",
+        "title": "멀리 떨어진 두 지역의 지층을 어떻게 이어 맞출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-isochron",
+        "title": "어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-concordia",
+        "title": "열을 받아 납이 빠져나간 지르콘으로도 처음 굳은 나이를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "지질 시대와 고생물·고환경",
       "code": "12고지01-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-geotime",
+        "title": "지질 시대는 무엇을 기준으로 나눌까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-range",
+        "title": "화석 몇 가지가 함께 나오면 지층의 시대를 얼마나 좁힐 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-trackway",
+        "title": "공룡 발자국 화석으로 그 공룡이 얼마나 빨리 걸었는지 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "주향·경사와 지질도",
       "code": "12고지01-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-strike-dip",
+        "title": "지질도의 구불구불한 지층 경계선에서 지층의 기울기와 두께를 읽을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-threepoint",
+        "title": "시추공 세 개의 자료만으로 지질도를 그릴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "한반도의 지질",
       "code": "12고지01-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adearth-korea-map",
+        "title": "한반도의 땅덩이들은 언제, 어떤 순서로 만들어졌을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-korea-history",
+        "title": "한반도는 어떤 판구조 환경을 거쳐 지금의 모습이 되었을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-fossil-map",
+        "title": "우리나라 어디에서 어느 시대 화석이 나올까?"
+       }
+      ]
      }
     ]
    },
@@ -6827,78 +8134,279 @@ window.TOC = [
       "n": 1,
       "title": "수증기의 상태 변화와 구름",
       "code": "12고지02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-humidity",
+        "title": "공기를 압축하면 수증기량은 늘어날까, 그대로일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-cloud",
+        "title": "안개와 구름은 어떤 길로 포화에 이를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-droplet",
+        "title": "구름 물방울이 빗방울로 자라는 데는 얼마나 걸릴까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-esys-precip",
+        "title": "구름 속 작은 물방울은 어떻게 빗방울이 될까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "단열선도와 대기 안정도",
       "code": "12고지02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-stability",
+        "title": "떠오른 공기 덩어리는 어디까지 올라갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-lapse",
+        "title": "밀려 올라간 공기 덩어리는 되돌아올까, 계속 올라갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-skewt",
+        "title": "라디오존데 자료 한 장으로 구름이 생길 높이를 찾을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "대기와 해양에 작용하는 힘",
       "code": "12고지02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-coriolis",
+        "title": "돌아가는 원판 위로 굴린 공은 정말 휘어서 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-forces",
+        "title": "태풍과 욕조 소용돌이에서 가장 센 힘은 같을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "지균풍·경도풍·지상풍",
       "code": "12고지02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-winds",
+        "title": "바람은 왜 등압선을 따라, 또는 비스듬히 불까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-adjust",
+        "title": "멈춰 있던 공기는 어떤 길을 거쳐 지균풍이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-geowind",
+        "title": "일기도의 등고선 간격만으로 바람의 세기를 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "대기 대순환과 제트류",
       "code": "12고지02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-circulation",
+        "title": "사하라 사막과 아마존 밀림은 같은 순환의 두 얼굴일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-rossby",
+        "title": "굽이치는 편서풍 아래에서 저기압은 어디에 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-jet",
+        "title": "제트류는 왜 대류권 꼭대기에서 가장 셀까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "수괴와 해수 속 음파",
       "code": "12고지02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-ts",
+        "title": "차갑고 짠 물은 어디까지 가라앉을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-watermass",
+        "title": "바닷속 한 지점의 물은 어디에서 온 물일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-sofar",
+        "title": "바닷속 소리는 왜 수천 km까지 전해질까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "해파와 해일",
       "code": "12고지02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-waves",
+        "title": "파도는 왜 해안에 가까워지면 느려지고 높아질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-dispersion",
+        "title": "심해파와 천해파의 속도 공식은 어디까지 맞을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-surge",
+        "title": "같은 태풍인데 왜 어떤 해안에서만 해일이 클까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-esys-surge",
+        "title": "해일은 무엇 때문에 생기고, 어떻게 대비할까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "지형류·경도류·에크만 수송",
       "code": "12고지02-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-ekman",
+        "title": "바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-gradcur",
+        "title": "해수면 경사가 같아도 소용돌이에 따라 해류가 빨라지거나 느려질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-geostrophic",
+        "title": "바닷물의 온도 단면만으로 구로시오의 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-ekman-spiral",
+        "title": "바람이 1년 내내 불면 바닷물은 얼마나, 어느 쪽으로 옮겨질까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "표층·심층 순환과 서안 강화",
       "code": "12고지02-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-gyre",
+        "title": "바람과 지구 자전은 어떻게 거대한 해류 고리를 만들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-sverdrup",
+        "title": "바람만 알면 쿠로시오가 나르는 물의 양을 계산할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-thermohaline",
+        "title": "차갑거나 짠 물은 수조 바닥을 얼마나 빨리 퍼져 나갈까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "기조력과 조석 마찰",
       "code": "12고지02-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-esys-tide",
+        "title": "밀물과 썰물은 왜 하루에 두 번일까, 그리고 왜 매일 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-tidal-force",
+        "title": "태양이 달보다 지구를 훨씬 세게 당기는데, 왜 조석은 달이 더 크게 만들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-tide-resonance",
+        "title": "평형 조석은 1 m도 안 되는데, 왜 어떤 만에서는 조차가 10 m를 넘을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-tidal-friction",
+        "title": "달이 해마다 3.8 cm씩 멀어지면 지구의 하루는 어떻게 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-tide",
+        "title": "바닷가마다 물때의 모양이 다른 까닭은 무엇일까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "엘니뇨–남방진동",
       "code": "12고지02-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-enso",
+        "title": "엘니뇨 때는 적도 태평양에서 무엇이 뒤바뀔까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-enso-osc",
+        "title": "엘니뇨는 왜 2~7년마다 저절로 되풀이될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-oni",
+        "title": "실제 관측 자료에서 엘니뇨와 라니냐의 해를 찾을 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-enso-tele",
+        "title": "적도 태평양의 수온 변화가 어떻게 지구 반대편과 우리나라의 날씨까지 바꿀까?"
+       }
+      ]
      }
     ]
    },
@@ -6910,78 +8418,299 @@ window.TOC = [
       "n": 1,
       "title": "시간계·천구 좌표와 관측 기기",
       "code": "12고지03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-celestial",
+        "title": "별의 남중 고도만 재면 내가 선 곳의 위도를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-sidereal",
+        "title": "오늘 밤 9시에 남중한 별은 한 달 뒤 몇 시에 남중할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-equation-time",
+        "title": "해시계의 정오와 시계의 정오는 왜 날마다 다르게 어긋날까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-telescope",
+        "title": "망원경의 성능을 정하는 것은 배율일까, 구경일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-detector",
+        "title": "같은 망원경에 CCD를 달면 왜 훨씬 어두운 별까지 찍힐까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "행성의 겉보기 운동과 회합 주기",
       "code": "12고지03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-analemma",
+        "title": "매일 같은 시각에 찍은 태양은 왜 8자를 그리고, 화성은 왜 뒤로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-synodic",
+        "title": "화성이 26개월마다 충이 된다는 것만으로 화성까지의 거리를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "별까지의 거리",
       "code": "12고지03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-distance",
+        "title": "별까지의 거리는 어떤 사다리를 타고 잴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-distance-error",
+        "title": "먼 별까지는 왜 시차 대신 스펙트럼으로 거리를 잴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-msfit",
+        "title": "성단의 주계열을 표준 주계열에 겹치면 거리가 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-cepheid",
+        "title": "깜빡이는 별의 주기를 재면 다른 은하까지의 거리가 나올까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "흑체 복사와 분광 분류",
       "code": "12고지03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adearth-planck",
+        "title": "플랑크 곡선 하나에서 빈 법칙과 T⁴ 법칙이 어떻게 함께 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-photometry",
+        "title": "같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-balmer",
+        "title": "수소가 가장 많은 태양에서 왜 칼슘 흡수선이 수소선보다 진할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-stellar-spectrum",
+        "title": "분광기로 찍은 별빛에서 표면 온도를 어떻게 읽을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "별의 진화와 내부 구조",
       "code": "12고지03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-adearth-hydrostatic",
+        "title": "중력이 쉬지 않고 당기는데 태양은 왜 무너지지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-tracks",
+        "title": "중심의 수소가 바닥나면 별은 왜 오히려 커지고 밝아질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-cluster-hr",
+        "title": "네 성단의 H–R도를 겹치면 어느 성단이 가장 늙었는지 보일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "핵융합, 변광성과 밀집성",
       "code": "12고지03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-star-core",
+        "title": "무거운 별과 가벼운 별은 속에서 핵융합하는 방식이 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-fusion",
+        "title": "별은 왜 철에서 핵융합을 멈출까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-stellar-fates",
+        "title": "무거운 별은 왜 마지막 연료를 하루 만에 다 태울까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-variables",
+        "title": "별의 밝기가 변하는 모양만 보고 무슨 일인지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-compact",
+        "title": "별이 남긴 중심핵은 얼마나 무거워질 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "성간 물질과 성운",
       "code": "12고지03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-space-extinction",
+        "title": "은하수의 검은 틈에는 정말 별이 없을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-extinction",
+        "title": "별빛이 얼마나 붉어졌는지 재면 티끌에 가린 별의 거리를 바로잡을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-stromgren",
+        "title": "O형 별 하나는 얼마나 넓은 성운을 밝힐 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-ism-cycle",
+        "title": "별 사이의 텅 빈 공간은 어떻게 다음 세대의 별을 낳을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "우리은하의 구조와 회전",
       "code": "12고지03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-shapley",
+        "title": "구상 성단 157개의 위치로 우리은하의 중심을 찾을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-proper-motion",
+        "title": "10만 년 뒤 북두칠성은 어떤 모양일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-oort",
+        "title": "태양 근처 별들의 움직임만으로 우리은하의 회전 속도를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-hi21",
+        "title": "21 cm 전파 한 줄로 우리은하의 나선팔과 회전 곡선을 그릴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-rotation-mass",
+        "title": "은하의 바깥쪽 회전 속도로 잰 질량은 보이는 별과 가스의 질량과 같을까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "외부 은하와 활동 은하핵",
       "code": "12고지03-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-hubble",
+        "title": "은하는 모양으로 어떻게 나눌까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-adearth-galaxy-agn",
+        "title": "은하는 빛으로 어림한 것보다 왜 무겁고, 중심은 왜 그렇게 밝을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-quasar",
+        "title": "퀘이사는 왜 특이 은하일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-merger",
+        "title": "두 은하가 스쳐 지나가면 왜 길쭉한 꼬리가 생길까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "허블–르메트르 법칙과 대폭발 우주론",
       "code": "12고지03-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-hubble-age",
+        "title": "은하의 거리와 후퇴 속도로 우주의 나이를 계산할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-cmb",
+        "title": "하늘 전체에서 오는 희미한 전파는 왜 대폭발의 증거일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is1-bbn",
+        "title": "우주는 왜 대부분 수소와 헬륨일까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "급팽창·가속 팽창과 표준 우주 모형",
       "code": "12고지03-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-earth-cosmology",
+        "title": "우주에 대한 생각은 어떤 증거로 바뀌어 왔을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-adearth-friedmann",
+        "title": "우주의 팽창은 느려져야 하는데, 왜 빨라지고 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-cosmic-web",
+        "title": "거의 고르던 초기 우주에서 어떻게 거미줄 같은 구조가 생겼을까?"
+       }
+      ]
      }
     ]
    }

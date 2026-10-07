@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>적분 속도식 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="0차, 1차, 2차 반응의 적분 속도식과 반감기를 이해하고, 농도–시간 자료를 직선 그래프로 바꾸어 반응 차수를 판정하며 시간에 따른 농도를 예측한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-adchem-integrated canvas.main { width: 100%; aspect-ratio: 5 / 4; }
+    #card-adchem-integrated .ig-guess { display: none; align-items: center; flex-wrap: wrap; gap: 6px; margin: 6px 0 2px; }
+    #card-adchem-integrated .ig-guess.on { display: flex; }
+    #card-adchem-integrated .ig-msg { font-size: 13px; color: var(--ink-2); margin-left: 4px; }
+    #card-adchem-integrated .ig-msg.good { color: var(--forest); }
+    #card-adchem-integrated .ig-msg.bad { color: var(--warn); }
+    #card-adchem-integrated .ctl-row.dim { opacity: .45; pointer-events: none; }
+  </style>
+</head>
+<body data-course="adchem" data-sec="4-8">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>적분 속도식</h1>
+    <p class="lead">속도식 v = k[A]<sup>n</sup>은 지금 이 순간의 빠르기만 알려 줍니다. 10분 뒤 농도가 얼마일지, 약이 몸에서 절반으로 줄어드는 데 얼마나 걸릴지 알려면 이 식을 시간에 대해 적분해야 합니다. 차수에 따라 어떤 그래프가 직선이 되는지가 실험에서 차수를 가려내는 열쇠입니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">반응 속도식과 반응 차수</span><span class="p">미분과 적분의 기초</span><span class="p">자연로그</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-mateng-rate-law"><span class="mono">4.8.1</span>농도를 2배로 하면 반응은 몇 배 빨라질까?</a></li>
+        <li><a href="#card-adchem-integrated"><span class="mono">4.8.2</span>적분 속도식</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-4-8">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-mateng-rate-law">
+        <header class="card-head">
+          <span class="no">4.8.1</span><h2>농도를 2배로 하면 반응은 몇 배 빨라질까?</h2><span class="kind">반응 속도식 · 초기 속도 실험</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="초기 농도와 측정된 초기 속도를 적은 실험 결과 표"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="반응">
+                <button class="chip" data-rx="no" aria-pressed="true">2NO + O₂ → 2NO₂</button><button class="chip" data-rx="h2o2">H₂O₂ + 2I⁻ + 2H⁺ → I₂ + 2H₂O</button><button class="chip" data-rx="acetone">아세톤 + I₂ (산 촉매)</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">[<span class="na">NO</span>] = <output class="a-out">0.010</output> M</label>
+                  <input class="a" type="range" min="0.005" max="0.04" step="0.005" value="0.01" aria-label="반응물 A의 농도"></div>
+                <div><label class="mono">[<span class="nb">O₂</span>] = <output class="b-out">0.010</output> M</label>
+                  <input class="b" type="range" min="0.005" max="0.04" step="0.005" value="0.01" aria-label="반응물 B의 농도"></div>
+              </div>
+              <div class="presets"><button class="chip run" type="button">이 농도로 실험하기</button><button class="chip clear" type="button">표 지우기</button></div>
+              <div class="presets guess" role="group" aria-label="차수 추측">
+                <span class="mono small">내 추측: A의 차수</span><button class="chip" data-m="0">0</button><button class="chip" data-m="1">1</button><button class="chip" data-m="2">2</button>
+                <span class="mono small">B의 차수</span><button class="chip" data-n="0">0</button><button class="chip" data-n="1">1</button><button class="chip" data-n="2">2</button>
+              </div>
+              <p class="rl-msg"></p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>2NO + O₂ → 2NO₂ 반응에서 NO의 계수는 2, O₂는 1입니다. 그렇다면 NO의 농도를 2배로 하면 반응은 4배, O₂를 2배로 하면 2배 빨라질까요? 반응식만 보고 알 수 있을까요?</li>
+            <li><span class="tag">복원</span>반응 속도는 단위 시간 동안 반응물의 농도가 줄어드는 양(또는 생성물이 늘어나는 양)입니다. 농도가 진할수록 입자가 더 자주 부딪쳐 대개 빨라집니다.</li>
+            <li><span class="tag">설명</span>반응 속도와 농도의 관계를 식으로 쓴 것이 <em>반응 속도식</em> v = k[A]<sup>m</sup>[B]<sup>n</sup>입니다. k는 속도 상수, m과 n은 <em>반응 차수</em>입니다. 차수는 반응식의 계수와 같다는 보장이 없어서, 실험으로 정해야 합니다.</li>
+            <li><span class="tag">연결</span>차수를 구하려면 한 반응물의 농도만 바꾸고 다른 것은 고정한 채 처음 속도(초기 속도)를 잽니다. A를 2배로 했을 때 속도가 2배면 A에 대해 1차, 4배면 2차, 그대로면 0차입니다. 0차는 그 물질이 속도를 정하는 단계에 참여하지 않는다는 뜻입니다.</li>
+            <li><span class="tag">적용</span>세 반응 각각에 대해, 한 번에 한 농도만 바꾸며 실험을 3~4번 해 보세요. 표에서 차수를 추측해 누르면 맞는지 알려 줍니다. 아세톤 반응에서 I₂의 농도를 바꾸면 무슨 일이 일어나나요?</li>
+            <li class="warn"><span class="tag">판단</span>“반응 차수 = 반응식의 계수”라는 생각은 오개념입니다. 첫째 반응은 우연히 계수와 같지만, 둘째 반응의 I⁻ 계수는 2인데 차수는 1이고, 셋째 반응의 I₂는 계수가 1인데 차수는 0입니다. 반응은 대개 여러 단계로 일어나고, 가장 느린 단계가 속도식을 정하기 때문입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">v = k[A]²[B]인 반응에서 [A]와 [B]를 모두 2배로 하면 초기 속도는 몇 배가 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2배<span class="why"><b>차수를 무시한 답입니다.</b> 각 농도의 차수만큼 제곱해 곱해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4배<span class="why"><b>A만 계산한 답입니다.</b> B도 2배가 되었습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>8배<span class="why"><b>맞습니다.</b> 2² × 2¹ = 8배입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-adchem-integrated">
+        <header class="card-head">
+          <span class="no">4.8.2</span><h2>농도–시간 자료만 보고 반응 차수를 알 수 있을까?</h2><span class="kind">적분 속도식 · 0·1·2차 · 반감기 · 직선 그래프</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="main" aria-label="위: 반응물 농도와 시간. 아래 왼쪽: ln[A]와 시간. 아래 오른쪽: 1/[A]와 시간. 각 그래프에 측정점과 맞춤 직선"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="반응 차수">
+                <span class="mono small dim">차수</span>
+                <button type="button" class="chip" data-o="0" aria-pressed="false">0차</button>
+                <button type="button" class="chip" data-o="1" aria-pressed="true">1차</button>
+                <button type="button" class="chip" data-o="2" aria-pressed="false">2차</button>
+                <button type="button" class="chip" data-o="m" aria-pressed="false">미지 시료</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">[A]₀ = <output class="a-out">1.00</output> M</label>
+                  <input class="a0" type="range" min="0.2" max="2" step="0.05" value="1" aria-label="처음 농도"></div>
+                <div><label class="mono">k = <output class="k-out">—</output></label>
+                  <input class="lk" type="range" min="-3" max="-1" step="0.05" value="-2" aria-label="속도 상수(로그 눈금)"></div>
+              </div>
+              <div class="ig-guess" role="group" aria-label="미지 시료의 차수 판정">
+                <span class="mono small dim">판정</span>
+                <button type="button" class="chip" data-g="0">0차</button><button type="button" class="chip" data-g="1">1차</button><button type="button" class="chip" data-g="2">2차</button>
+                <button type="button" class="chip clear" data-new="1">새 시료</button>
+                <span class="ig-msg">세 그래프를 보고 차수를 고르세요.</span>
+              </div>
+              <dl class="nums">
+                <div><dt>첫 반감기 [A]₀ → [A]₀/2</dt><dd class="n-h1">—</dd></div>
+                <div><dt>다음 반감기 [A]₀/2 → [A]₀/4</dt><dd class="n-h2">—</dd></div>
+                <div><dt>다음 반감기 [A]₀/4 → [A]₀/8</dt><dd class="n-h3">—</dd></div>
+              </dl>
+              <p class="fig-note">점은 이론값에 1.5 %의 무작위 측정 오차를 더한 모식 자료입니다. 아래 두 그래프의 빨간 선은 최소제곱 직선이고 R²는 결정 계수입니다. 시간 축은 [A]가 처음의 약 10 %가 될 때까지 자동으로 맞춥니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>어떤 반응물의 농도를 시간에 따라 쟀더니 점점 느리게 줄어드는 곡선이 나왔습니다. 곡선 모양만으로는 0차, 1차, 2차를 가리기 어렵습니다. 초기 속도를 여러 번 재지 않고, 한 번의 농도–시간 자료로 차수를 정할 수 있을까요?</li>
+            <li><span class="tag">복원</span>반응 A → 생성물의 속도식은 <em>−d[A]/dt = k[A]<sup>n</sup></em>입니다. 이 식은 한순간의 속도를 말해 주는 미분 속도식입니다. 시간에 따른 [A]를 알려면 이 미분 방정식을 풀어야 합니다.</li>
+            <li><span class="tag">설명</span>변수를 분리해 0부터 t까지 적분하면 <em>적분 속도식</em>을 얻습니다. 0차: <span class="formula">[A] = [A]₀ − kt</span>, 1차: <span class="formula">ln[A] = ln[A]₀ − kt</span>, 2차: <span class="formula">1/[A] = 1/[A]₀ + kt</span>. 각각 [A], ln[A], 1/[A]를 t에 대해 그리면 직선이 되고, 기울기의 크기가 k입니다. [A] = [A]₀/2를 넣으면 반감기는 0차 [A]₀/2k, 1차 ln2/k, 2차 1/(k[A]₀)입니다.</li>
+            <li><span class="tag">연결</span>1차 반응의 반감기만 농도와 무관합니다. 그래서 방사성 붕괴와 대부분의 약물 제거처럼 1차인 과정은 “반감기”라는 하나의 수로 나타낼 수 있습니다. 0차 반응은 반감기가 갈수록 짧아지고, 2차 반응은 갈수록 길어집니다. 한 반응물이 아주 많이 남는 조건에서는 2차 반응도 1차처럼 보이는데(유사 1차), 실험에서 차수를 하나씩 따로 구할 때 이 방법을 씁니다.</li>
+            <li><span class="tag">적용</span>차수를 바꿔 가며 세 그래프 중 어느 것이 직선이 되는지, 세 반감기가 어떻게 변하는지 확인하세요. 1차에서 [A]₀를 2배로 하면 반감기는? 2차에서는? 그다음 ‘미지 시료’를 골라 차수를 판정하고, 직선의 기울기로 k를 어림해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>R²가 0.95를 넘는다고 직선이라 단정하면 안 됩니다. 반응 초반만 보면 세 그래프가 모두 직선에 가깝습니다. 반응이 충분히 진행된 구간(반감기 2~3번)까지 재고, 점들이 직선 주위에 고르게 흩어지는지, 한쪽으로 휘는지를 보아야 합니다. 또 이 식들은 반응물이 하나이거나 다른 반응물 농도가 사실상 일정하고, 역반응이 무시될 때 성립합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 반응에서 [A]가 0.80 M에서 0.40 M이 되는 데 20분, 0.40 M에서 0.20 M이 되는 데 40분이 걸렸습니다. 이 반응에 대한 설명으로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1차 반응이고, 반감기는 30분이다<span class="why"><b>1차라면 두 반감기가 같아야 합니다.</b> 평균을 낸 것이지만 반감기가 2배로 늘었다는 사실이 차수를 알려 줍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2차 반응이고, 1/[A]–t 그래프가 직선이다<span class="why"><b>맞습니다.</b> 반감기 1/(k[A]₀)는 농도가 절반이 되면 2배가 됩니다. k = 1/(20 min × 0.80 M) ≈ 0.063 M⁻¹min⁻¹입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0차 반응이고, [A]–t 그래프가 직선이다<span class="why"><b>거꾸로입니다.</b> 0차 반응은 일정한 빠르기로 줄어 반감기가 갈수록 짧아집니다(20분 → 10분).</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/mateng/k-rate-law.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/adchem/k-integrated.js"></script>
+</body>
+</html>

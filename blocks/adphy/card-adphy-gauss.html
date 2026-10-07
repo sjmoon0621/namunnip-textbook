@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/cards/adphy/em-gauss.js"],
+  "short": "가우스 법칙"
+}
+-->
+<style>
+#card-adphy-gauss canvas { width: 100%; aspect-ratio: 5 / 6; }
+#card-adphy-gauss input:disabled { opacity: .4; }
+</style>
+<article class="card" id="card-adphy-gauss">
+  <header class="card-head">
+    <span class="no"></span><h2>닫힌 면 하나로 전기장을 구할 수 있을까?</h2><span class="kind">전기 선속 · 가우스 법칙 · 도체와 유전체</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 전하 분포와 초록 점선의 가우스 면, 면 위의 전기장 화살표. 아래: 중심에서의 거리에 따른 전기장 또는 전위 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="전하 분포">
+          <button type="button" class="chip" data-p="point" aria-pressed="true">점전하</button>
+          <button type="button" class="chip" data-p="sphere" aria-pressed="false">대전된 부도체 구</button>
+          <button type="button" class="chip" data-p="cond" aria-pressed="false">도체 껍질 + 속 전하</button>
+          <button type="button" class="chip" data-p="shield" aria-pressed="false">대전된 빈 도체</button>
+          <button type="button" class="chip" data-p="diel" aria-pressed="false">유전체 껍질</button>
+          <button type="button" class="chip" data-p="dipole" aria-pressed="false">전기 쌍극자</button>
+        </div>
+        <div class="presets" role="group" aria-label="그래프">
+          <button type="button" class="chip" data-g="E" aria-pressed="true">그래프: 전기장 E(r)</button>
+          <button type="button" class="chip" data-g="V" aria-pressed="false">그래프: 전위 V(r)</button>
+        </div>
+        <label class="mono">가우스 면의 반지름 r = <output class="r-out">3.0</output> cm</label>
+        <input class="r" type="range" min="0.5" max="10" step="0.1" value="3" aria-label="가우스 면의 반지름">
+        <label class="mono">유전 상수 κ = <output class="k-out">3.0</output> (유전체 껍질에서만)</label>
+        <input class="k" type="range" min="1" max="10" step="0.1" value="3" aria-label="유전 상수">
+        <dl class="nums n4">
+          <div><dt>면 안의 전하</dt><dd class="n-q">—</dd></div>
+          <div><dt>선속 Φ (N·m²/C)</dt><dd class="n-p">—</dd></div>
+          <div><dt>면 위 E (N/C)</dt><dd class="n-e">—</dd></div>
+          <div><dt>면 위 V (V)</dt><dd class="n-v">—</dd></div>
+        </dl>
+        <p class="fig-note n-note"></p>
+        <p class="fig-note">전하량은 모두 1 nC, 진공(공기) 속입니다. k = 8.99×10⁹ N·m²/C², ε₀ = 8.85×10⁻¹² C²/(N·m²). 구대칭 분포의 E는 가우스 법칙으로, 쌍극자의 E는 두 점전하의 쿨롱 전기장을 더해 계산했습니다. 그림은 3차원 구를 지나는 단면입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>점전하 하나의 전기장은 쿨롱 법칙으로 바로 구합니다. 그런데 공 모양으로 퍼진 전하, 전하를 감싼 금속 껍질, 유리처럼 분극되는 물질이 섞이면 수많은 점전하의 전기장을 일일이 더해야 할까요?</li>
+      <li><span class="tag">복원</span>점전하의 전기장은 <em>E = kq/r²</em>(k = 1/4πε₀)이고, 전기력선은 양전하에서 나와 음전하로 들어갑니다. 전기장이 E인 곳에서 면적 ΔA인 작은 면을 지나는 <em>전기 선속</em>은 ΔΦ = EΔA cos θ(θ는 면의 법선과 E 사이의 각)로, 그 면을 뚫고 나가는 전기력선의 수에 비례합니다.</li>
+      <li><span class="tag">설명</span>점전하 q를 중심에 둔 반지름 r인 구면에서 E는 어디서나 kq/r²이고 면에 수직입니다. 그래서 선속은 Φ = E·4πr² = (q/4πε₀r²)·4πr² = <em>q/ε₀</em>로, r과 관계없습니다. 면의 모양을 바꿔도 뚫고 나가는 전기력선 수는 같고, 바깥 전하의 전기력선은 들어온 만큼 나가므로 선속에 보태지 않습니다. 중첩 원리로 일반화하면 <em>가우스 법칙</em> ∮E·dA = Q<sub>안</sub>/ε₀를 얻습니다. 분포에 대칭성이 있어 면 위의 E가 일정하면, 이 식에서 E = Q<sub>안</sub>/(4πε₀r²)를 바로 풀 수 있습니다.</li>
+      <li><span class="tag">연결</span>정전기 평형의 <em>도체</em> 속은 E = 0입니다. 도체 속에 가우스 면을 그리면 Q<sub>안</sub> = 0이어야 하므로, 속 전하 +q가 있으면 안쪽 면에 −q가 유도되고, 알짜 전하는 모두 바깥 면에 모입니다. 빈 도체 속 공간의 전기장이 0이 되는 <em>정전기 차폐</em>도 같은 논리이고, E = 0이므로 도체 전체는 하나의 <em>등전위</em> 영역입니다. <em>유전체</em>는 분자가 분극해 안쪽 면에 −q(1 − 1/κ)의 속박 전하를 만들어 전기장을 E/κ로 줄입니다. 자유 전하만 세려면 ∮κE·dA = Q<sub>자유</sub>/ε₀로 쓰면 됩니다. 전위는 V(r) = ∫<sub>r</sub><sup>∞</sup>E dr로 E 그래프의 넓이에서 나옵니다.</li>
+      <li><span class="tag">적용</span>점전하에서 r을 바꾸며 선속이 변하는지 확인하세요. 부도체 구 안에서 E가 r에 비례하는 까닭을 면 안의 전하로 설명해 보세요. 두 도체 예시에서 r을 4–6 cm에 두고 E와 V를 읽은 뒤 V(r) 그래프로 바꿔 보세요. 유전체 껍질에서 κ를 키우면 껍질 안과 밖의 E는 각각 어떻게 되나요? 마지막으로 쌍극자를 고르고 아래 그래프의 넓이를 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>“선속이 0이면 면 위의 전기장도 0이다”는 틀린 추론입니다. 쌍극자를 감싼 면은 선속이 0이지만 위쪽에서는 나가고 아래쪽에서는 들어옵니다. 가우스 법칙은 언제나 성립하지만, E를 적분 밖으로 꺼낼 수 있는 구·원통·평면 대칭에서만 E를 직접 구하는 도구가 됩니다. 또 차폐는 정전기 평형일 때의 이야기이며, 껍질 밖의 전기장은 속 전하가 그대로 만든다는 것도 주의하세요(‘도체 껍질 + 속 전하’에서 r &gt; 6 cm).</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">대전되지 않은 속 빈 도체 공 안의 중심에서 벗어난 자리에 +2 nC를 넣었습니다. 공 바깥에서 공을 감싸는 가우스 면에 대해 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>도체가 차폐하므로 바깥 면의 선속은 0이다<span class="why"><b>차폐 방향이 반대입니다.</b> 빈 도체는 바깥의 영향을 속에서 막지만, 속 전하가 만든 유도 전하 +2 nC가 바깥 면에 나타나 바깥 선속은 2 nC/ε₀입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>선속은 2 nC/ε₀이고, 바깥 면의 전하는 고르게 퍼져 공 밖 전기장은 중심에 놓인 점전하와 같다<span class="why"><b>맞습니다.</b> 안쪽 면의 −2 nC는 치우쳐 분포해 속 전하의 영향을 상쇄하고, 도체 속 E = 0이므로 바깥 면의 +2 nC는 속 전하의 위치를 ‘모른 채’ 고르게 퍼집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선속은 2 nC/ε₀이지만 공 밖 전기장은 전하가 치우친 쪽이 더 세다<span class="why"><b>그럴듯하지만 아닙니다.</b> 도체 속 전기장이 0이므로 바깥 면의 전하 분포는 속 전하의 위치와 무관하게 구대칭입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

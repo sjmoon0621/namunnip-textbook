@@ -1,0 +1,69 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/adearth/buried.js"
+  ]
+}
+-->
+<style>
+#card-adearth-buried canvas { width: 100%; aspect-ratio: 5 / 4; display: block; }
+#card-adearth-buried .bu-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px 14px; }
+#card-adearth-buried .bu-row label { font-size: 12px; }
+#card-adearth-buried .nums dd { font-size: 15px; }
+@media (max-width: 640px) { #card-adearth-buried .bu-row { grid-template-columns: 1fr; } }
+</style>
+<article class="card" id="card-adearth-buried">
+  <header class="card-head">
+    <span class="no"></span><h2>중력 이상 곡선의 모양만으로 땅속 덩어리의 깊이와 질량을 알 수 있을까?</h2><span class="kind">부게 이상의 해석 · 매몰된 구와 원통 · 반값 너비 · 역문제</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 측선을 따라 잰 부게 이상(점)과 모형이 계산한 곡선. 아래: 지하 단면과 모형 물체"></canvas>
+      <div class="ctl">
+        <div class="presets bu-case" role="group" aria-label="탐사 자료">
+          <span class="mono small dim">탐사 자료(가상)</span>
+          <button type="button" class="chip" data-c="ore" aria-pressed="true">A 철광상 후보</button>
+          <button type="button" class="chip" data-c="salt" aria-pressed="false">B 암염 돔 후보</button>
+          <button type="button" class="chip" data-c="cave" aria-pressed="false">C 도로 밑 공동</button>
+        </div>
+        <div class="presets bu-shape" role="group" aria-label="모형 모양">
+          <span class="mono small dim">모형 모양</span>
+          <button type="button" class="chip" data-s="sphere" aria-pressed="true">구</button>
+          <button type="button" class="chip" data-s="cyl" aria-pressed="false">수평 원통(측선에 수직)</button>
+        </div>
+        <div class="bu-row">
+          <div><label class="mono">중심 깊이 z = <output class="z-out"></output> m</label><input class="z" type="range" min="40" max="1500" step="5" value="800" aria-label="중심 깊이"></div>
+          <div><label class="mono">반지름 R = <output class="r-out"></output> m</label><input class="r" type="range" min="5" max="800" step="5" value="200" aria-label="반지름"></div>
+          <div><label class="mono">밀도 차 Δρ = <output class="p-out"></output> g/cm³</label><input class="p" type="range" min="-2.7" max="3" step="0.05" value="1" aria-label="밀도 차"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>모형의 최대 이상</dt><dd class="n-a">—</dd></div>
+          <div><dt>모형의 반값 너비 x<sub>½</sub></dt><dd class="n-h">—</dd></div>
+          <div><dt>자료와의 차이 (RMS)</dt><dd class="n-e">—</dd></div>
+          <div><dt>초과 질량 ΔM</dt><dd class="n-m">—</dd></div>
+          <div><dt class="k-dt">Δρ·R³</dt><dd class="n-k">—</dd></div>
+          <div><dt>판정</dt><dd class="n-j">—</dd></div>
+        </dl>
+        <p class="fig-note">점은 이 카드가 만든 가상 탐사 자료입니다(측점 간격은 자료마다 다르고, 측정 오차 약 0.02 mGal의 잡음을 넣었습니다). 위도·프리에어·부게 보정을 마친 부게 이상이라고 가정했습니다. 1 mGal = 10⁻⁵ m/s², 지표 중력의 약 1억분의 1입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>측선을 따라 부게 이상을 재었더니 가운데가 볼록한 곡선이 나왔습니다. 땅을 파지 않고, 이 곡선만으로 땅속 물체가 얼마나 깊은 곳에 얼마나 많이 있는지 알 수 있을까요?</li>
+      <li><span class="tag">복원</span>지구타원체에서 계산한 정규 중력과 실제 중력의 차를 중력 이상이라 합니다. 위도, 고도, 지형의 영향을 뺀 부게 이상에는 땅속 밀도 분포의 영향만 남습니다. 주변 암석보다 무거운 물체 위에서는 양(+)의 이상, 가벼운 물체 위에서는 음(−)의 이상이 나타납니다.</li>
+      <li><span class="tag">설명</span>밀도 차 Δρ, 반지름 R인 구의 초과 질량 ΔM = ⁴⁄₃πR³Δρ는 중심에 모인 점질량처럼 끌어당깁니다. 수평 거리 x인 측점에서 연직 성분만 재므로 <em>Δg(x) = GΔM·z / (x² + z²)<sup>3/2</sup></em>입니다. 최댓값은 GΔM/z²이고, 이 값의 절반이 되는 거리(반값 너비)는 <em>x<sub>½</sub> ≈ 0.766 z</em>입니다. 곡선의 <em>폭</em>이 깊이를, 폭을 안 다음에는 <em>높이</em>가 초과 질량을 알려 줍니다. 길게 누운 원통은 Δg = 2GλΔ·z/(x² + z²) (λ: 단위 길이당 초과 질량)이고 x<sub>½</sub> = z입니다.</li>
+      <li><span class="tag">연결</span>이렇게 관측 곡선에서 원인을 거꾸로 찾는 것을 역문제라 합니다. 중력 탐사로는 철광석·크로뮴철석 같은 무거운 광체(양의 이상), 석유와 가스를 가두는 암염 돔·퇴적 분지(음의 이상), 지하 공동과 싱크홀(음의 이상)을 찾습니다. 넓게 보면 산맥 아래의 큰 음의 부게 이상은 가벼운 지각 뿌리, 곧 지각 평형(아이소스타시)의 증거입니다.</li>
+      <li><span class="tag">적용</span>자료 A를 고르고 먼저 깊이 z만 움직여 곡선의 폭을 점에 맞추세요. 그다음 R이나 Δρ로 높이를 맞추세요. 맞춘 z는 반값 너비 ÷ 0.766과 같나요? 이제 R을 키우고 Δρ를 줄여 Δρ·R³을 같게 유지해 보세요. 곡선이 달라지나요? 자료 B, C도 맞추고, 모형을 수평 원통으로 바꾸면 같은 자료에서 깊이가 어떻게 달라지는지 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>중력 자료로 정해지는 것은 깊이와 <em>초과 질량</em>뿐입니다. 작고 무거운 광체와 크고 조금 무거운 광체는 똑같은 곡선을 만듭니다(비유일성). 그래서 시추, 지진파 탐사, 자력 탐사, 지질도로 밀도나 크기를 따로 정해야 합니다. 모양을 잘못 가정해도 깊이가 틀리게 나옵니다. 또 깊이가 두 배가 되면 최대 이상은 구에서 1/4로 줄고 곡선은 넓게 퍼지므로, 깊고 작은 물체는 측정 오차에 묻혀 찾을 수 없습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">두 측선에서 거의 구 모양인 물체에 의한 양의 부게 이상을 얻었습니다. 측선 P는 최대 이상 2.0 mGal, 반값 너비 300 m이고, 측선 Q는 최대 이상 2.0 mGal, 반값 너비 600 m입니다. 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>최대 이상이 같으므로 두 물체의 초과 질량도 같다<span class="why"><b>깊이를 빼먹었습니다.</b> 최대 이상은 GΔM/z²입니다. 깊이가 다르면 같은 높이라도 질량이 다릅니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>Q의 물체가 두 배 깊고, 초과 질량은 네 배이다<span class="why"><b>맞습니다.</b> z = x<sub>½</sub>/0.766이므로 Q가 두 배 깊습니다. 같은 최대 이상을 내려면 ΔM ∝ z²이므로 4배여야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>Q의 물체가 더 무거운 광물로 이루어져 있다<span class="why"><b>알 수 없습니다.</b> 초과 질량이 크다는 것만 알 수 있습니다. 밀도가 큰지, 부피가 큰지는 중력 자료만으로 가려낼 수 없습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
