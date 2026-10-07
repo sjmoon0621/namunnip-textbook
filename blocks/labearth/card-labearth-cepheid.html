@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/astro-ogle-data.js",
+    "js/cards/labearth/cepheid.js"
+  ]
+}
+-->
+<style>
+#card-labearth-cepheid .cp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 4px 0; font-size: 13px; }
+</style>
+<article class="card" id="card-labearth-cepheid">
+  <header class="card-head">
+    <span class="no"></span><h2>깜빡이는 별의 주기를 재면 다른 은하까지의 거리가 나올까?</h2><span class="kind">실험 · 세페이드 변광성 · 주기–광도 관계 · OGLE 실제 자료</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide cp-main" aria-label="관측한 밝기 변화 또는 주기–광도 도표"></canvas>
+      <div class="ctl">
+        <div class="presets cp-tg" role="group" aria-label="관측 대상">
+          <span class="mono small dim">대상</span>
+          <button class="chip" data-t="dcep" aria-pressed="true">δ Cep (우리은하)</button><button class="chip" data-t="lmc" aria-pressed="false">대마젤란은하 세페이드</button>
+        </div>
+        <div class="cp-dcep">
+          <div class="lab-btns"><button class="chip go obs1" type="button">하룻밤 관측</button><button class="chip go obs5" type="button">5일 밤 관측</button></div>
+          <div><label class="mono">시험 주기 P = <output class="p-out">5.000</output> 일</label>
+            <input class="per" type="range" min="4.5" max="6.2" step="0.001" value="5" aria-label="시험 주기"></div>
+        </div>
+        <div class="cp-lmc" hidden>
+          <div class="lab-btns"><button class="chip go lm1" type="button">세페이드 1개 측정</button><button class="chip go lm10" type="button">10개 측정</button></div>
+        </div>
+        <div class="cp-row"><label><input type="checkbox" class="ext"> 성간 소광 보정 (δ Cep A<sub>V</sub> ≈ 0.23, 대마젤란은하 A<sub>V</sub> ≈ 0.3)</label></div>
+        <dl class="nums"><div><dt class="n1t">관측한 밤</dt><dd class="n1">0</dd></div><div><dt class="n2t">평균 등급 ⟨V⟩</dt><dd class="n2">—</dd></div><div><dt class="n3t">흩어짐 (접은 곡선)</dt><dd class="n3">—</dd></div></dl>
+        <div class="lab-btns"><button class="chip go rec" type="button">이 주기로 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot cp-plot" aria-label="주기로 접은 광도 곡선 또는 거리 분포"></canvas>
+        <p class="fig-note">주기–광도 관계는 HST 시차로 보정한 M<sub>V</sub> = −2.43(log P − 1) − 4.05(Benedict et al. 2007)를 씁니다. δ Cep의 주기(5.366일)와 밝기 범위(V 3.48~4.37)는 실제 값이고, 곡선 모양과 측정 잡음(±0.02등급)은 모식입니다. 대마젤란은하 세페이드는 OGLE-III 목록의 실제 주기·평균 등급입니다(Soszyński et al. 2008). 소광값은 대표값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>외부 은하는 너무 멀어 연주 시차도, 주계열 맞추기도 쓸 수 없습니다. 밝기가 규칙적으로 변하는 세페이드 변광성으로는 어디까지 거리를 잴 수 있을까요?</li>
+      <li><span class="tag">복원</span>세페이드 변광성은 부풀었다 줄었다 하며 밝기가 바뀌는 거성입니다. 1912년 리비트는 소마젤란은하의 세페이드에서 <em>주기가 길수록 평균 밝기가 밝다</em>는 관계를 찾았습니다. 주기 P로 절대 등급 M을 알면, 겉보기 등급 m과 함께 m − M = 5 log d − 5에서 d를 구합니다.</li>
+      <li><span class="tag">설계</span>밤마다 같은 시각에 변광성과 비교성을 함께 찍어 V 등급을 잽니다. 주기가 5일 남짓이면 하룻밤에 한 번 재도 되지만, 하루 간격으로만 재면 비슷한 주기가 여러 개 맞아 보이므로(가짜 주기) 관측 날이 고르지 않을수록 좋습니다. 측정 시각을 시험 주기로 나눈 나머지(위상)로 점을 다시 늘어놓아 곡선이 가장 매끈해지는 주기를 찾습니다.</li>
+      <li><span class="tag">분석</span>접은 곡선에서 평균 등급 ⟨V⟩를 읽고, M<sub>V</sub> = −2.43(log P − 1) − 4.05로 절대 등급을 구합니다. d = 10<sup>(⟨V⟩ − M<sub>V</sub> − A<sub>V</sub> + 5)/5</sup> pc입니다. 대마젤란은하에서는 세페이드 여러 개의 거리를 평균하고, 주기–광도 도표의 기울기도 확인합니다.</li>
+      <li><span class="tag">측정</span>δ Cep를 15일 밤 이상 관측한 뒤, 시험 주기를 움직여 흩어짐이 가장 작은 값을 찾아 기록하세요(시차로 잰 거리는 약 270 pc). 다음에는 대마젤란은하 세페이드를 20개 이상 측정하고, 소광 보정을 켜고 끄며 평균 거리를 비교하세요(다른 방법으로 잰 값은 약 50 kpc).</li>
+      <li class="warn"><span class="tag">오차·안전</span>성간 티끌을 무시하면 별이 어두워 보여 거리가 커집니다(계통 오차). 대마젤란은하에서 기울기가 −2.43보다 가파르게 나오는 까닭은 V 등급이 소광과 별의 온도 차에 민감하기 때문이고, 그래서 실제 연구는 적외선이나 소광을 상쇄하는 조합 등급을 씁니다. 1950년대 전에는 종족이 다른 두 종류의 세페이드를 하나로 보아 외부 은하 거리를 절반쯤으로 잡았습니다. 낮에 태양 쪽으로 망원경을 돌리지 말고, 밤 관측은 반드시 보호자·교사와 함께 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 외부 은하에서 주기 30일, 평균 V = 25.0인 세페이드를 찾았습니다(소광 무시). M<sub>V</sub> = −2.43(log P − 1) − 4.05일 때 이 은하까지의 거리는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 6.5 Mpc<span class="why"><b>주기를 반영하지 않았습니다.</b> M<sub>V</sub> = −4.05는 주기 10일짜리의 값입니다. 주기 30일이면 log P = 1.48이어서 M<sub>V</sub> ≈ −5.21로 더 밝고, 그만큼 더 멀리 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 11 Mpc<span class="why"><b>맞습니다.</b> M<sub>V</sub> = −2.43 × 0.477 − 4.05 ≈ −5.21, m − M ≈ 30.2이므로 d = 10<sup>(30.2+5)/5</sup> ≈ 1.1 × 10⁷ pc입니다. 처녀자리 은하단 근처 은하가 이 정도 거리입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 110 Mpc<span class="why"><b>지수 계산에서 한 자리 밀렸습니다.</b> 거리 지수가 5 커질 때 거리가 10배입니다. 30.2이면 10⁷ pc 남짓입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

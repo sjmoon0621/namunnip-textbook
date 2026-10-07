@@ -1,0 +1,71 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/thermo.js",
+    "js/cards/labearth/pohang-sounding-data.js",
+    "js/cards/labearth/skewt.js"
+  ]
+}
+-->
+<style>
+#card-labearth-skewt canvas.sk { width: 100%; aspect-ratio: 1 / 1.08; display: block; touch-action: none; cursor: crosshair; }
+#card-labearth-skewt .sk-read { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); min-height: 1.5em; margin: 4px 0; }
+#card-labearth-skewt .sk-cape { font-size: 12.5px; color: var(--ink-2); min-height: 1.4em; }
+</style>
+<article class="card" id="card-labearth-skewt">
+  <header class="card-head">
+    <span class="no"></span><h2>라디오존데 자료 한 장으로 구름이 생길 높이를 찾을 수 있을까?</h2><span class="kind">실험 · 단열선도(스큐 T–log p) · LCL, CCL, LFC</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="sk" aria-label="포항 라디오존데 관측 기온과 이슬점이 그려진 단열선도. 누르면 그 점의 기압, 기온, 높이를 읽는다"></canvas>
+      <p class="sk-read">단열선도를 누르거나 끌어서 읽을 점을 고르세요.</p>
+      <div class="ctl">
+        <div class="presets snd" role="group" aria-label="관측 자료">
+          <button type="button" class="chip" data-s="072706" aria-pressed="true">7월 27일 15시</button>
+          <button type="button" class="chip" data-s="072700" aria-pressed="false">7월 27일 09시</button>
+          <button type="button" class="chip" data-s="011700" aria-pressed="false">1월 17일 09시</button>
+        </div>
+        <div class="presets lay" role="group" aria-label="그릴 선">
+          <span class="mono small dim">그리기</span>
+          <button type="button" class="chip" data-l="dry" aria-pressed="false">① 지표 기온의 건조 단열선</button>
+          <button type="button" class="chip" data-l="mix" aria-pressed="false">② 지표 이슬점의 혼합비선</button>
+          <button type="button" class="chip" data-l="moist" aria-pressed="false">③ LCL 위 습윤 단열선</button>
+          <button type="button" class="chip" data-l="cape" aria-pressed="false">양의 부력 칠하기</button>
+        </div>
+        <div class="lab-btns">
+          <button class="chip go" data-k="LCL" type="button">LCL로 기록</button><button class="chip go" data-k="CCL" type="button">CCL로 기록</button><button class="chip go" data-k="LFC" type="button">LFC로 기록</button><button class="chip go" data-k="EL" type="button">EL로 기록</button>
+          <button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">계산값 보기</button>
+        </div>
+        <div class="tbl-host"></div>
+        <dl class="nums n4">
+          <div><dt>LCL</dt><dd class="n-lcl">—</dd></div>
+          <div><dt>CCL</dt><dd class="n-ccl">—</dd></div>
+          <div><dt>LFC</dt><dd class="n-lfc">—</dd></div>
+          <div><dt>EL</dt><dd class="n-el">—</dd></div>
+        </dl>
+        <p class="sk-cape"></p>
+        <p class="fig-note">관측 자료: 포항(47138) 라디오존데, 2026년 7월 27일 00·06 UTC와 1월 17일 00 UTC(한국 시각 09·15·09시). NOAA NCEI IGRA2(퍼블릭 도메인, 2026-10-07 받음). 높이는 관측 기온으로 측고 공정식을 적분해 구했습니다. 가는 주황 실선은 건조 단열선(온위 10 °C 간격), 초록 점선은 습윤 단열선, 보라 점선은 혼합비선(g/kg), 회색 기울어진 선은 등온선입니다. 그래프를 눌러 읽으면 기압은 5 hPa, 기온은 0.5 °C 단위로 기록됩니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>고층 기상 관측소에서는 보통 하루 두 번(필요할 때는 더 자주) 풍선에 라디오존데를 매달아 띄웁니다. 오후에 소나기 구름이 생길지, 생긴다면 구름 밑면은 몇 m이고 얼마나 높이 솟을지를 이 자료만으로 알 수 있을까요?</li>
+      <li><span class="tag">복원</span>불포화 공기 덩어리는 오르면서 <em>건조 단열선</em>을 따라 식고, 혼합비는 그대로이므로 이슬점은 <em>혼합비선</em>을 따라 내려갑니다. 두 선이 만나는 곳에서 포화되어 응결이 시작되고, 그 뒤로는 <em>습윤 단열선</em>을 따라 식습니다. 단열선도는 이 세 종류의 선을 미리 그려 둔 그래프 용지입니다.</li>
+      <li><span class="tag">설계</span>세로축은 기압의 로그(위로 갈수록 높은 고도), 가로축은 기온이며, 등온선이 오른쪽으로 기울어 있습니다(스큐 T–log p). ①과 ②를 그려 두 선이 만나는 점을 눌러 <em>상승 응결 고도(LCL)</em>로 기록하세요. 지표 이슬점의 혼합비선이 관측 기온 곡선과 만나는 점은 지표가 데워져 대류가 일어날 때 구름 밑면이 생기는 <em>대류 응결 고도(CCL)</em>입니다. ③을 그려 공기 덩어리 경로가 관측 기온 곡선의 오른쪽(더 따뜻함)으로 넘어가는 점이 <em>자유 대류 고도(LFC)</em>, 다시 왼쪽으로 돌아오는 점이 <em>평형 고도(EL)</em>입니다.</li>
+      <li><span class="tag">분석</span>LFC부터 EL까지 공기 덩어리가 주변보다 따뜻한 넓이가 <em>대류 가용 잠재 에너지(CAPE)</em>로, 클수록 상승 기류가 강한 뇌우가 생길 수 있습니다. LFC 아래에서 공기 덩어리가 주변보다 찬 넓이(CIN)는 대류를 막는 뚜껑입니다. 지표의 혼합비는 이슬점을 지나는 혼합비선의 값으로, 포화 혼합비는 기온을 지나는 혼합비선의 값으로 읽고, 두 값의 비가 대략 상대 습도입니다. CCL을 지나는 건조 단열선을 지표까지 내리면 대류가 시작되는 지표 기온(대류 온도)을 얻습니다.</li>
+      <li><span class="tag">측정</span>7월 27일 15시 자료에서 LCL, CCL, LFC, EL을 차례로 찾아 기록한 뒤, 계산값과 비교하세요. 같은 날 09시 자료와 비교하면 지표 기온이 오른 오후에 LCL과 CIN은 어떻게 달라졌나요? 1월 자료에서는 ③을 그려도 LFC가 나타나지 않는 까닭을 관측 기온 곡선의 모양(약 900 hPa의 역전층)으로 설명하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>선이 거의 나란히 만나는 곳은 눈으로 교점을 잡기 어려워 수십 hPa씩 차이가 납니다. 혼합비선과 건조 단열선을 정확히 그리고, 교점 근처를 확대해 읽는 습관을 들이세요. 이 계산은 공기 덩어리가 주변과 섞이지 않고 수증기에 의한 가온도 효과를 무시하므로 실제 CAPE와 다를 수 있고, 풍선은 바람에 밀려 수십 km 떨어진 곳의 공기를 재기도 합니다. 라디오존데 비양 실습에서는 헬륨 풍선을 전선 근처에서 띄우지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">기온은 오후와 같고 이슬점만 3 °C 낮은 날이라면, 같은 단열선도에서 LCL과 CAPE는 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>LCL은 낮아지고 CAPE는 커진다<span class="why"><b>방향이 반대입니다.</b> 이슬점이 낮으면 혼합비선이 왼쪽으로 옮겨 건조 단열선과 더 높은 곳에서 만납니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>LCL은 높아지고(약 370 m), CAPE는 작아진다<span class="why"><b>맞습니다.</b> 구름 밑면은 대략 125 m × (기온 − 이슬점)이므로 3 °C에 약 370 m 높아집니다. 포화가 늦어 공기 덩어리가 더 높은 곳에서 더 차가운 습윤 단열선을 타게 되므로 주변보다 따뜻한 넓이가 줄어듭니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지표 기온이 같으므로 LCL과 CAPE 모두 그대로다<span class="why"><b>이슬점은 수증기량입니다.</b> 지표 기온이 같아도 수증기가 적으면 응결이 늦고, 숨은열도 적게 나옵니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

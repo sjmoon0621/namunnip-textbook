@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>차등 측광과 색지수 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="같은 시야의 비교성을 이용하는 차등 측광법의 원리를 이해하고, CCD 측광계로 얻은 기기 등급을 영점·대기 소광·색 보정으로 표준 등급으로 바꾸어 별의 등급과 색지수(B−V)를 구한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labearth-photometry .ph-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 4px 0; font-size: 13px; }
+  </style>
+</head>
+<body data-course="labearth" data-sec="3-10">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>차등 측광과 색지수</h1>
+    <p class="lead">CCD 사진의 별은 카운트라는 숫자일 뿐입니다. 망원경, 필터, 그날의 하늘이 모두 그 숫자를 바꿉니다. 같은 사진 속 등급을 아는 별들과 비교하면, 누구와도 견줄 수 있는 표준 등급과 색지수가 나옵니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">등급과 밝기의 관계 (포그슨 식)</span><span class="p">색지수와 표면 온도</span><span class="p">직선 맞춤</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-photometry"><span class="mono">3.10.1</span>같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-3-10">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-photometry">
+        <header class="card-head">
+          <span class="no">3.10.1</span><h2>같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?</h2><span class="kind">실험 · CCD 차등 측광 · 기기 등급과 표준 등급 · 색지수</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide ph-ccd" aria-label="CCD 화면. 표적 별과 비교성 다섯 개, 측광 구경 원"></canvas>
+            <div class="ctl">
+              <div><label class="mono">별의 고도 h = <output class="h-out">60</output>° (대기량 X = <output class="x-out">1.15</output>)</label>
+                <input class="alt" type="range" min="20" max="85" step="1" value="60" aria-label="별의 고도"></div>
+              <div class="ph-row"><label><input type="checkbox" class="cloud"> 엷은 구름 (프레임마다 투과율이 바뀜)</label></div>
+              <div class="lab-btns"><button class="chip go shot" type="button">B·V 필터로 한 장씩 찍고 측광</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <dl class="nums n4"><div><dt>프레임</dt><dd class="n-f">—</dd></div><div><dt>표적 V</dt><dd class="n-v">—</dd></div><div><dt>표적 B − V</dt><dd class="n-bv">—</dd></div><div><dt>표면 온도</dt><dd class="n-t">—</dd></div></dl>
+              <div class="tbl-host"></div>
+              <div class="presets ph-pv" role="group" aria-label="그래프">
+                <span class="mono small dim">그래프</span>
+                <button class="chip" data-v="tr" aria-pressed="true">변환식 (마지막 프레임)</button><button class="chip" data-v="tg" aria-pressed="false">프레임별 표적 V</button><button class="chip" data-v="bg" aria-pressed="false">대기량–기기 등급</button>
+              </div>
+              <canvas class="cv-plot ph-plot" aria-label="표준 등급 변환 그래프"></canvas>
+              <p class="fig-note">기기 등급 m = −2.5 log(N/t), 노출 t = 30 s, 구경 안 화소 50개, 하늘 배경 300카운트/화소, 읽기 잡음 10 e⁻. 비교성의 표준 등급과 대기 소광 계수(k<sub>V</sub> = 0.22, k<sub>B</sub> = 0.36)는 학교 관측지를 가정한 예시값입니다. 온도는 B − V를 왜성 표준표(Pecaut &amp; Mamajek 2013)에 대어 읽습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>CCD가 세는 것은 별빛이 만든 전자 수(카운트)뿐입니다. 망원경·필터·대기 상태가 매번 다른데, 카운트로 어떻게 누구에게나 통하는 표준 등급과 색지수를 얻을까요?</li>
+            <li><span class="tag">복원</span>등급은 밝기의 로그 눈금입니다. 카운트 N으로 <em>기기 등급 m = −2.5 log(N/t)</em>를 정하면, 표준 등급과는 영점, 대기 소광(k·X), 필터 차이(색 항)만큼 다릅니다. 대기량 X는 천정에서 1이고 고도 h가 낮을수록 약 1/sin h로 커집니다.</li>
+            <li><span class="tag">설계</span>표준 등급을 아는 비교성 여러 개와 표적 별을 <em>같은 사진</em>에 담아 B, V 필터로 찍습니다. 같은 사진의 별은 대기량과 구름의 영향을 똑같이 받으므로, 비교성에서 구한 변환식 V − v = ε(B − V) + ζ를 표적에 그대로 쓰면 그 영향이 지워집니다(<em>차등 측광</em>). 색지수는 B − V = μ(b − v) + ζ<sub>BV</sub>로 바꿉니다.</li>
+            <li><span class="tag">분석</span>마지막 프레임의 비교성으로 V − v를 (B − V)에 대해 직선 맞춤하면 기울기가 색 항 ε, 절편이 그 프레임의 영점입니다. 표적의 B − V를 먼저 구하고 V를 계산합니다. B − V가 작을수록 푸르고 뜨겁습니다(0.65 근처면 태양과 비슷한 약 5,800 K).</li>
+            <li><span class="tag">측정</span>고도를 바꿔 가며 5장 이상 찍고 '프레임별 표적 V'를 보세요. 구름을 켜고 다시 찍어도 표적 V가 흔들리지 않나요? '대기량–기기 등급' 그래프에서 비교성 C1의 기울기로 소광 계수 k<sub>V</sub>를 구하세요(구름이 없을 때).</li>
+            <li class="warn"><span class="tag">오차·안전</span>어두운 별은 카운트가 적어 포아송 잡음(√N)과 하늘 배경 잡음이 상대적으로 커집니다(우연 오차). 비교성과 표적의 색이 많이 다르면 색 항을 빼먹을 때 계통 오차가 남습니다. 고도가 낮으면 대기 소광이 크고 별이 흐려지므로 가능하면 고도 30° 이상에서 찍습니다. 소광 계수는 맑은 밤에만 일정하므로, 구름이 있으면 다른 사진의 영점을 빌려 쓰는 절대 측광은 쓸 수 없습니다. 밤 관측 때 냉각 CCD의 전원·전선을 정리해 걸려 넘어지지 않게 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">첫 사진(X = 1.2)에서 구한 영점을, 구름이 지나가는 중에 찍은 둘째 사진(X = 1.8)의 표적 별에 그대로 썼습니다. 무엇이 문제일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>같은 망원경이니 영점이 같아 문제없다<span class="why"><b>영점에는 대기가 들어 있습니다.</b> 대기량이 0.6 늘었으니 V에서만 약 0.13등급 더 어두워지고, 구름은 그 위에 더해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>표적이 실제보다 어둡게 측정된다<span class="why"><b>맞습니다.</b> 대기 소광(k·ΔX)과 구름 때문에 줄어든 빛을 별의 성질로 잘못 읽습니다. 둘째 사진 안의 비교성으로 영점을 다시 구하면(차등 측광) 이 효과가 지워집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>B − V만 틀리고 V는 맞다<span class="why"><b>둘 다 영향을 받습니다.</b> 구름은 두 필터를 비슷하게 어둡게 해서 색에는 덜 영향을 주지만, V 자체는 그대로 어두워집니다. 대기 소광은 B에서 더 커서 색도 붉어집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/astro-ms-data.js"></script>
+<script src="../../js/cards/labearth/photometry.js"></script>
+</body>
+</html>

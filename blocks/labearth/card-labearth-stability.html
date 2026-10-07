@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/thermo.js",
+    "js/cards/labearth/pohang-sounding-data.js",
+    "js/cards/labearth/stability.js"
+  ]
+}
+-->
+<style>
+#card-labearth-stability canvas.st-cv { width: 100%; aspect-ratio: 4 / 3; display: block; }
+</style>
+<article class="card" id="card-labearth-stability">
+  <header class="card-head">
+    <span class="no"></span><h2>여름 오후와 겨울 아침, 대기는 얼마나 다르게 쌓여 있을까?</h2><span class="kind">실험 · 기온·이슬점 연직 분포 · 기온 감률과 대기 안정도</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="st-cv" aria-label="두 관측 시각의 높이별 기온과 이슬점, 고른 층과 구름 밑면"></canvas>
+      <div class="ctl">
+        <div class="presets pair" role="group" aria-label="비교할 두 자료">
+          <button type="button" class="chip" data-p="0" aria-pressed="true">여름 09시 ↔ 여름 15시</button>
+          <button type="button" class="chip" data-p="1" aria-pressed="false">여름 15시 ↔ 겨울 09시</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">층의 아래 z₁ = <output class="z1-out">0.0</output> km</label>
+            <input class="z1" type="range" min="0" max="9.5" step="0.1" value="0" aria-label="층의 아래 높이"></div>
+          <div><label class="mono">층의 위 z₂ = <output class="z2-out">1.0</output> km</label>
+            <input class="z2" type="range" min="0.2" max="10" step="0.1" value="1" aria-label="층의 위 높이"></div>
+        </div>
+        <div class="lab-btns">
+          <button class="chip go ma" type="button">A의 기온 감률 재기</button><button class="chip go mb" type="button">B의 기온 감률 재기</button>
+          <button class="chip go cb" type="button">두 자료의 구름 밑면 계산</button><button class="chip clear" type="button">기록 지우기</button>
+        </div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="잰 층의 기온 감률과 건조·습윤 단열 감률 비교"></canvas>
+        <p class="fig-note">자료: 포항(47138) 라디오존데 관측(NOAA NCEI IGRA2, 퍼블릭 도메인). 기온은 그래프에서 0.1 °C 단위로 읽고 ±0.2 °C쯤 읽기 오차가 섞입니다. 건조 단열 감률은 9.8 °C/km, 습윤 단열 감률은 그 층의 평균 기온과 기압으로 계산합니다(따뜻할수록 작음). 구름 밑면은 지표의 (기온 − 이슬점) × 125 m로 어림합니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>여름 오후에는 뭉게구름이 솟고 소나기가 내리기 쉽지만, 겨울 아침에는 연기가 위로 오르지 못하고 낮게 깔립니다. 두 날 대기의 높이별 기온과 이슬점 분포는 어떻게 다를까요?</li>
+      <li><span class="tag">복원</span>높이에 따라 기온이 내려가는 비율이 <em>기온 감률</em> Γ = −ΔT/Δz입니다. 불포화 공기 덩어리는 건조 단열 감률(Γd ≈ 9.8 °C/km), 포화된 공기 덩어리는 습윤 단열 감률(Γm, 약 4~7 °C/km)로 식습니다. 지표 공기가 이슬점까지 식는 높이에서 구름이 생기며, 그 높이는 약 125 m × (T − Td)입니다.</li>
+      <li><span class="tag">설계</span>두 시각의 라디오존데 자료를 나란히 놓고, 같은 높이 구간(z₁~z₂)을 골라 두 자료의 기온 감률을 잽니다. 지표~1 km, 1~2 km, 2~3 km, 3~6 km처럼 층을 나누어 차례로 재고, 기온과 이슬점이 거의 붙은 층(습한 층, 구름층)과 기온이 높이와 함께 오르는 층(<em>역전층</em>)을 찾습니다.</li>
+      <li><span class="tag">분석</span>주변 기온 감률이 Γm보다 작으면 <em>절대 안정</em>, Γd보다 크면 <em>절대 불안정</em>, 그 사이면 공기가 포화되었을 때만 불안정한 <em>조건부 불안정</em>입니다. 역전층(Γ &lt; 0)은 아주 안정해서 그 아래에 연기, 미세 먼지, 안개를 가둡니다. 그래프에서 점이 건조 단열선(9.8)의 오른쪽에 있으면 절대 불안정, 습윤 단열 감률보다 왼쪽이면 절대 안정입니다.</li>
+      <li><span class="tag">측정</span>여름 09시와 15시를 비교하세요. 지표~1 km 층의 기온 감률은 낮 동안 어떻게 바뀌었고, 구름 밑면은 얼마나 높아졌나요? 다음에는 겨울 09시 자료에서 약 0.7~1.2 km 사이의 층을 재어 역전층의 세기를 구하고, 그 아래 이슬점 분포로 어떤 구름이 있었을지 추리하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>층을 너무 두껍게 잡으면 그 안의 역전층이나 불안정층이 평균되어 사라집니다. 반대로 너무 얇게 잡으면 읽기 오차 0.2 °C가 감률에 크게 들어갑니다(100 m 층에서 ±2 °C/km 이상). 지표 바로 위 수십 m는 햇빛에 달궈진 지면 때문에 초단열(Γ &gt; Γd)이 흔하지만 오래 유지되지 않습니다. 이 판정은 대기 일부를 단면으로 본 것이며, 실제 구름 생성에는 상승 운동(전선, 지형, 수렴)이 함께 필요합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 층의 기온 감률이 6.5 °C/km이고 이 층의 습윤 단열 감률은 5 °C/km입니다. 이 층에 대한 설명으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>건조 단열 감률보다 작으므로 절대 안정이다<span class="why"><b>절반만 맞습니다.</b> 불포화 공기에 대해서는 안정하지만, 포화된 공기는 5 °C/km로만 식어 주변(6.5)보다 따뜻해집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>조건부 불안정이다. 공기가 포화되어 올라가면 계속 상승할 수 있다<span class="why"><b>맞습니다.</b> Γm(5) &lt; Γ(6.5) &lt; Γd(9.8)이므로 포화 여부가 안정도를 결정합니다. 중위도 대류권의 평균 감률이 바로 이 범위입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기온이 높이에 따라 내려가므로 불안정하다<span class="why"><b>기온이 내려가는 것만으로는 불안정이 아닙니다.</b> 얼마나 빨리 내려가는지를 단열 감률과 비교해야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

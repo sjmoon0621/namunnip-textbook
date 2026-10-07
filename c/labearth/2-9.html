@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>밀도 구조와 해류 속도 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="해양의 밀도 구조로부터 해수면과 수온 약층의 경사가 서로 반대임을 이해하고, 실제 수온·염분 단면으로 해수면 높이 차를 구하여 지형류의 속도를 계산한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+</head>
+<body data-course="labearth" data-sec="2-9">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>밀도 구조와 해류 속도</h1>
+    <p class="lead">구로시오는 초속 1–2 m로 흐르는 거대한 강이지만, 배에서 그 속도를 직접 재기는 어렵습니다. 대신 바닷물의 온도와 염분이 만드는 해수면의 아주 작은 기울기에서 해류의 속도를 계산해 냅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">전향력</span><span class="p">지형류</span><span class="p">수온 약층</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-geostrophic"><span class="mono">2.9.1</span>바닷물의 온도 단면만으로 구로시오의 속도를 잴 수 있을까?</a></li>
+        <li><a href="#card-esys-ekman"><span class="mono">2.9.2</span>바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-2-9">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-geostrophic">
+        <header class="card-head">
+          <span class="no">2.9.1</span><h2>바닷물의 온도 단면만으로 구로시오의 속도를 잴 수 있을까?</h2><span class="kind">실험 · 실제 자료 · 해수면 경사와 수온 약층 경사 · 지형류</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="동경 133.4도를 따라 북위 27도에서 32.4도까지의 해수면 높이와 수온 단면, 두 관측점 A와 B"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">관측점 A 북위 <output class="a-out">29.875</output>°</label>
+                  <input class="la" type="range" min="0" max="21" step="1" value="11" aria-label="관측점 A의 위도"></div>
+                <div><label class="mono">관측점 B 북위 <output class="b-out">31.375</output>°</label>
+                  <input class="lb" type="range" min="0" max="21" step="1" value="17" aria-label="관측점 B의 위도"></div>
+              </div>
+              <dl class="nums">
+                <div><dt>A–B 거리 Δx</dt><dd class="dx">—</dd></div>
+                <div><dt>평균 위도의 f</dt><dd class="ff">—</dd></div>
+                <div><dt>g / f</dt><dd class="gf">—</dd></div>
+              </dl>
+              <div class="lab-btns"><button class="chip go meas" type="button">A, B에서 해수면 높이·15 °C 깊이 읽기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <div class="presets xsel" role="group" aria-label="그래프">
+                <span class="mono small dim">그래프</span>
+                <button class="chip" data-x="v" aria-pressed="true">유속 – 위도</button><button class="chip" data-x="z" aria-pressed="false">수온 약층 높이 차 – 해수면 높이 차</button>
+              </div>
+              <canvas class="cv-plot" aria-label="기록으로 그린 그래프"></canvas>
+              <p class="fig-note">수온 단면: NOAA World Ocean Atlas 2023의 2015–2022년 연평균(0.25° 격자, 동경 133.375°, 시코쿠 남쪽, 퍼블릭 도메인). 해수면 높이는 같은 자료의 수온·염분으로 계산한 1000 m 기준 <em>역학적 높이</em>입니다(위성 고도계가 재는 실제 해수면과 비교하면 절댓값은 다르고 높이 차는 비슷함). 읽기 오차로 해수면 높이 ±0.5 cm, 등온선 깊이 ±4 m 정도를 넣었습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>구로시오는 일본 남쪽을 따라 북동쪽으로 흐르는 강한 해류입니다. 해류계를 바다에 일일이 넣지 않고도, 배에서 잰 수온·염분 자료만으로 해류의 속도를 계산할 수 있을까요?</li>
+            <li><span class="tag">복원</span>수평 방향으로 해수면이 기울어 있으면 높은 쪽에서 낮은 쪽으로 <em>수압 경도력</em>이 작용하고, 북반구에서는 흐름의 오른쪽 직각으로 <em>전향력</em>이 작용합니다. 두 힘이 평형을 이루면 해수는 등압선(해수면 등고선)을 따라 흐르는데, 이것이 <em>지형류</em>입니다. 북반구에서는 해수면이 높은 쪽이 흐름의 오른쪽에 있습니다.</li>
+            <li><span class="tag">설계</span>평형 조건 g·Δη/Δx = f·v에서 <em>v = (g / f)·(Δη / Δx)</em>이고, f = 2Ω sin φ(Ω = 7.29 × 10⁻⁵ s⁻¹)입니다. 가벼운 위층이 무거운 아래층 위에 떠 있으면, 위층이 두꺼운 곳은 수면이 높아지고 수온 약층은 깊어집니다. 그래서 두 경사는 방향이 반대이고, 아래층이 거의 멈춰 있으려면 기울기 비가 Δz / Δη ≈ −ρ / Δρ(수백 배)가 됩니다. A, B 두 관측점을 고르고 해수면 높이와 15 °C 등온선 깊이를 읽어 기록합니다.</li>
+            <li><span class="tag">분석</span>남쪽(북위 30° 부근)은 따뜻한 물이 두껍게 쌓여 15 °C 등온선이 460 m쯤 깊고, 해수면이 높습니다. 북쪽으로 갈수록 등온선은 240 m까지 올라오고 해수면은 0.5 m 넘게 낮아집니다. 해수면이 높은 쪽(남쪽)이 오른쪽이 되도록 서면 동쪽을 보게 되므로, 흐름은 동쪽(지면에서 나오는 방향)입니다. 경사가 가장 가파른 북위 31.5–32.4° 사이에서 유속이 가장 큽니다.</li>
+            <li><span class="tag">측정</span>A와 B를 0.25°(약 28 km) 간격으로 붙여 남쪽에서 북쪽으로 옮겨 가며 다섯 번 이상 기록하고, 유속이 가장 큰 위도를 찾으세요. 다음에는 A와 B를 2° 넘게 벌려 재 보세요. 유속이 어떻게 달라지나요? 두 번째 그래프에서 원점을 지나는 직선의 기울기(Δz / Δη)는 몇 배인가요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>여기서 얻은 유속(최대 약 0.5 m/s)은 실제로 관측되는 구로시오 표층 유속(1–2 m/s)보다 작습니다. 이유는 셋입니다. ① 8년 평균 자료라서 해마다 남북으로 움직이는 좁은 해류가 넓고 약하게 퍼졌습니다(계통 오차). ② 1000 m에서는 흐름이 없다고 가정했는데, 실제로는 깊은 곳도 조금 흐릅니다. ③ 두 관측점 사이의 평균 속도만 구하므로 간격이 넓으면 최댓값을 놓칩니다. 또 적도 부근(f → 0)이나 마찰이 큰 얕은 바다에서는 지형류 평형이 성립하지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">북위 20°에서 두 관측점이 50 km 떨어져 있고, 남쪽 점의 해수면이 북쪽 점보다 10 cm 높습니다. 옳은 것은? (g = 9.8 m/s², sin 20° ≈ 0.34)</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>동쪽으로 약 0.4 m/s로 흐르고, 수온 약층은 남쪽이 더 깊다<span class="why"><b>맞습니다.</b> f = 2 × 7.29 × 10⁻⁵ × 0.34 ≈ 5.0 × 10⁻⁵ s⁻¹, v = 9.8 / 5.0×10⁻⁵ × 0.10 / 50 000 ≈ 0.39 m/s입니다. 해수면이 높은 남쪽이 오른쪽이므로 동쪽으로 흐르고, 해수면이 높은 쪽은 위층이 두꺼워 수온 약층이 깊습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>해수면이 높은 남쪽에서 낮은 북쪽으로 흐른다<span class="why"><b>수압 경도력 방향으로만 생각한 오답입니다.</b> 회전하는 지구에서는 전향력과 평형을 이룬 뒤 등압선을 따라, 경사와 직각으로 흐릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같은 경사라면 북위 40°에서 유속이 더 크다<span class="why"><b>반대입니다.</b> f가 위도의 사인에 비례해 커지므로 같은 경사에서 고위도의 유속은 더 작습니다(약 0.53배).</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-esys-ekman">
+        <header class="card-head">
+          <span class="no">2.9.2</span><h2>바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?</h2><span class="kind">에크만 수송 · 해수면 경사와 지형류</span>
+        </header>
+        <style>#card-esys-ekman .seg{display:flex;gap:.4rem;flex-wrap:wrap;margin:.3rem 0 .6rem}</style>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="왼쪽: 깊이에 따른 해수 흐름(에크만 나선)과 순 수송 방향. 오른쪽: 아열대 순환의 해수면 언덕과 지형류의 힘의 균형"></canvas>
+            <div class="ctl">
+              <div class="seg" role="group" aria-label="반구">
+                <button type="button" class="chip h-n" aria-pressed="true">북반구</button>
+                <button type="button" class="chip h-s" aria-pressed="false">남반구</button>
+              </div>
+              <label class="mono">위도 = <output class="p-out">30</output>°</label>
+              <input class="p" type="range" min="5" max="80" step="1" value="30" aria-label="위도">
+              <label class="mono">풍속 = <output class="w-out">10</output> m/s</label>
+              <input class="w" type="range" min="3" max="25" step="0.5" value="10" aria-label="풍속">
+              <dl class="nums">
+                <div><dt>마찰층(에크만층) 두께</dt><dd class="n-d">—</dd></div>
+                <div><dt>해안 1 km당 에크만 수송</dt><dd class="n-m">—</dd></div>
+                <div><dt>해수면이 1000 km에 1 m 기울 때 지형류</dt><dd class="n-g">—</dd></div>
+              </dl>
+              <p class="fig-note">에크만층 두께는 경험식 D ≈ 4.3 W / √sin(위도) (m), 수송량은 M = τ / (ρf) (τ: 바람의 응력, f: 전향력 계수), 지형류는 v = (g/f) × (해수면 경사)로 계산한 대략값입니다. 적도 근처(f → 0)에서는 이 식들이 성립하지 않습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1890년대 난센은 북극해에서 배와 빙산이 바람 방향이 아니라 바람의 오른쪽 20°~40°로 떠내려가는 것을 보았습니다. 바람이 미는 물이 왜 옆으로 갈까요?</li>
+            <li><span class="tag">복원</span>자전하는 지구에서 움직이는 물체는 북반구에서 진행 방향의 오른쪽, 남반구에서 왼쪽으로 휘는 <em>전향력</em>을 받습니다. 연안 용승도 바람과 직각인 물의 이동으로 설명했습니다(지구과학).</li>
+            <li><span class="tag">설명</span>바람은 표면의 물을 끌고, 표면의 물은 마찰로 그 아래 물을 끕니다. 층마다 전향력으로 조금씩 더 오른쪽으로 휘고 느려져서, 깊이에 따라 흐름이 나선 모양으로 돕니다(<em>에크만 나선</em>). 마찰층 전체의 물을 더하면 순 이동은 북반구에서 바람의 오른쪽 90° 방향이며, 이를 <em>에크만 수송</em>이라 합니다.</li>
+            <li><span class="tag">연결</span>북태평양에서 무역풍(동풍)은 물을 북쪽으로, 편서풍은 물을 남쪽으로 보냅니다. 그 사이 위도 30° 부근에 물이 쌓여 해수면이 가운데가 1 m쯤 높은 완만한 언덕이 됩니다. 물은 언덕에서 바깥으로 밀리는 <em>수압 경도력</em>을 받지만, 흐르기 시작하면 전향력이 오른쪽으로 휘게 해서 결국 두 힘이 평형을 이루고 등수위선과 나란히 흐릅니다. 이것이 <em>지형류</em>이며, 아열대 순환이 시계 방향으로 도는 까닭입니다.</li>
+            <li><span class="tag">적용</span>위도를 낮추고 높이며 에크만 수송량과 지형류의 속도가 어떻게 달라지는지 보세요. 같은 해수면 경사라도 저위도에서 지형류가 빠른 까닭은 무엇일까요? 남반구로 바꾸면 언덕 둘레의 흐름은 어느 방향이 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>“해류는 바람이 부는 방향으로 흐른다”는 오해입니다. 바람은 에크만 수송으로 물을 쌓고, 쌓인 물의 경사가 지형류를 만듭니다. 또 이론의 에크만 나선(표면 45°)은 이상적인 경우이고, 실제 바다에서는 성층과 난류 때문에 각도와 두께가 다르게 관측됩니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">남반구 아열대 해역에서 해수면 언덕이 생겼을 때, 지형류는 언덕 둘레를 어느 방향으로 돌까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>시계 반대 방향<span class="why"><b>맞습니다.</b> 남반구에서는 전향력이 왼쪽으로 작용하므로, 바깥으로 향하는 수압 경도력과 평형을 이루려면 언덕을 왼쪽에 두고 흘러야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>시계 방향<span class="why"><b>북반구의 경우입니다.</b> 남반구에서는 전향력의 방향이 반대입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>언덕 꼭대기에서 바깥으로 곧장 흘러내린다<span class="why"><b>흐르기 시작하면 전향력이 방향을 바꿉니다.</b> 적도 근처가 아니라면 결국 등수위선과 나란히 흐릅니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/kuroshio-data.js"></script>
+<script src="../../js/cards/labearth/geostrophic.js"></script>
+<script src="../../js/cards/esys/o-ekman.js"></script>
+</body>
+</html>

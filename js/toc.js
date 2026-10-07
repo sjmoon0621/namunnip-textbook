@@ -8994,85 +8994,197 @@ window.TOC = [
       "n": 1,
       "title": "지구타원체와 지오이드",
       "code": "12지실01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-geoid",
+        "title": "지구는 얼마나 납작하고, 해수면은 얼마나 울퉁불퉁할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "진앙·진원 깊이와 지각 두께",
       "code": "12지실01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-epicenter",
+        "title": "지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "중력 측정과 보정",
       "code": "12지실01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-gravity",
+        "title": "중력 측정값에서 땅속 덩어리를 찾으려면 무엇을 빼야 할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "고지자기와 극의 겉보기 이동",
       "code": "12지실01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-apwp",
+        "title": "옛날에는 자북극이 두 개였을까, 대륙이 움직였을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "해저 확장 속도",
       "code": "12지실01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-spreading",
+        "title": "해령 양쪽의 자기 줄무늬로 해저가 넓어지는 속도를 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "광물의 성질과 분류",
       "code": "12지실01-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-mineral-id",
+        "title": "생김새가 비슷한 광물을 어떻게 가려낼까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "편광 현미경 관찰",
       "code": "12지실01-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-polarizing",
+        "title": "박편 속 투명한 알갱이들을 편광 현미경으로 어떻게 구별할까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "암석의 성인과 분류",
       "code": "12지실01-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-rock-id",
+        "title": "암석 표본의 조직과 성분으로 그 암석이 생긴 과정을 알아낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-igneous",
+        "title": "현무암과 화강암은 왜 알갱이 크기가 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-foliation",
+        "title": "변성암의 줄무늬는 왜 생길까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-sedrock",
+        "title": "모래가 어떻게 단단한 사암이 될까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "층서 대비와 상대 연령",
       "code": "12지실01-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-relative-age",
+        "title": "지층의 순서만으로 나이를 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-section",
+        "title": "노두의 경계면만 보고 그 사이에 무슨 일이 있었는지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-correlate",
+        "title": "멀리 떨어진 두 지역의 지층을 어떻게 이어 맞출까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "방사성 동위 원소와 절대 연령",
       "code": "12지실01-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-half-life",
+        "title": "방사성 동위 원소 시계는 어떻게 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-isochron",
+        "title": "어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "화석과 고환경",
       "code": "12지실01-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-fossil-map",
+        "title": "우리나라 어디에서 어느 시대 화석이 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-paleoenv",
+        "title": "지층 속 화석만 보고 그때 그곳의 모습을 그릴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-trackway",
+        "title": "공룡 발자국 화석으로 그 공룡이 얼마나 빨리 걸었는지 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 12,
       "title": "주향·경사와 지질도",
       "code": "12지실01-12",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-strike-dip",
+        "title": "지질도의 구불구불한 지층 경계선에서 지층의 기울기와 두께를 읽을 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -9084,78 +9196,179 @@ window.TOC = [
       "n": 1,
       "title": "혼합비·비습과 수증기량",
       "code": "12지실02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-humidity",
+        "title": "공기를 압축하면 수증기량은 늘어날까, 그대로일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "단열선도와 LCL·CCL·LFC",
       "code": "12지실02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-skewt",
+        "title": "라디오존데 자료 한 장으로 구름이 생길 높이를 찾을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "기온·이슬점 분포와 대기 안정도",
       "code": "12지실02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-stability",
+        "title": "여름 오후와 겨울 아침, 대기는 얼마나 다르게 쌓여 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-stability",
+        "title": "떠오른 공기 덩어리는 어디까지 올라갈까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "전향력 시뮬레이션",
       "code": "12지실02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-coriolis",
+        "title": "돌아가는 원판 위로 굴린 공은 정말 휘어서 갈까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "일기도로 지균풍과 경도풍 비교",
       "code": "12지실02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-geowind",
+        "title": "일기도의 등고선 간격만으로 바람의 세기를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-winds",
+        "title": "바람은 왜 등압선을 따라, 또는 비스듬히 불까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "대기 대순환 시뮬레이션",
       "code": "12지실02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-circulation",
+        "title": "사하라 사막과 아마존 밀림은 같은 순환의 두 얼굴일까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "ARGO 자료와 해수의 성질",
       "code": "12지실02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-earth-argo",
+        "title": "바다마다 깊이에 따라 수온과 염분은 어떻게 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-argo-float",
+        "title": "플로트 한 대의 7년 기록에서 무엇을 읽어 낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "조파 실험과 천해파",
       "code": "12지실02-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-wave-tank",
+        "title": "물이 얕아지면 파도는 왜 느려지고 높아질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-tsunami",
+        "title": "먼바다에서 1 m였던 지진 해일이 해안에서는 왜 훨씬 높아질까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "밀도 구조와 해류 속도",
       "code": "12지실02-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-geostrophic",
+        "title": "바닷물의 온도 단면만으로 구로시오의 속도를 잴 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-ekman",
+        "title": "바람과 직각으로 흐른 물이 어떻게 거대한 해류가 될까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "열염분 순환 실험",
       "code": "12지실02-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-thermohaline",
+        "title": "차갑거나 짠 물은 수조 바닥을 얼마나 빨리 퍼져 나갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-amoc",
+        "title": "빙하가 녹으면 심층 순환이 멈출 수 있을까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "조석 자료 분석",
       "code": "12지실02-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-tide",
+        "title": "바닷가마다 물때의 모양이 다른 까닭은 무엇일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-esys-tide",
+        "title": "밀물과 썰물은 왜 하루에 두 번일까, 그리고 왜 매일 달라질까?"
+       }
+      ]
      }
     ]
    },
@@ -9167,106 +9380,226 @@ window.TOC = [
       "n": 1,
       "title": "천구의와 구면 좌표",
       "code": "12지실03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-celestial",
+        "title": "별의 남중 고도만 재면 내가 선 곳의 위도를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "아날렘마와 행성의 겉보기 운동",
       "code": "12지실03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-analemma",
+        "title": "매일 같은 시각에 찍은 태양은 왜 8자를 그리고, 화성은 왜 뒤로 갈까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "시태양시·평균 태양시·균시차",
       "code": "12지실03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-equation-time",
+        "title": "해시계의 정오와 시계의 정오는 왜 날마다 다르게 어긋날까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "인공위성 궤도와 행성의 질량",
       "code": "12지실03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-orbit-mass",
+        "title": "인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "망원경의 분해능과 시야",
       "code": "12지실03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-telescope",
+        "title": "망원경의 성능을 정하는 것은 배율일까, 구경일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "크레이터의 크기와 높이",
       "code": "12지실03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-crater",
+        "title": "달 사진 한 장으로 크레이터의 깊이까지 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "흑점 관측과 태양의 자전",
       "code": "12지실03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-sunspot",
+        "title": "흑점을 며칠 따라가면 태양이 위도마다 다르게 돈다는 것을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "주계열 맞추기와 세페이드 변광성",
       "code": "12지실03-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-msfit",
+        "title": "성단의 주계열을 표준 주계열에 겹치면 거리가 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labearth-cepheid",
+        "title": "깜빡이는 별의 주기를 재면 다른 은하까지의 거리가 나올까?"
+       }
+      ]
      },
      {
       "n": 9,
       "title": "별의 스펙트럼과 흑체 복사",
       "code": "12지실03-09",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-stellar-spectrum",
+        "title": "분광기로 찍은 별빛에서 표면 온도를 어떻게 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-spectral",
+        "title": "별빛의 흡수선으로 무엇을 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 10,
       "title": "차등 측광과 색지수",
       "code": "12지실03-10",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-photometry",
+        "title": "같은 사진 속 비교성을 쓰면 구름이 껴도 별의 등급을 정확히 잴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 11,
       "title": "성단의 H–R도",
       "code": "12지실03-11",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-cluster-hr",
+        "title": "네 성단의 H–R도를 겹치면 어느 성단이 가장 늙었는지 보일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-cluster",
+        "title": "성단 사진 한 장으로 나이와 거리를 알 수 있을까?"
+       }
+      ]
      },
      {
       "n": 12,
       "title": "성간 소광과 색초과",
       "code": "12지실03-12",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-extinction",
+        "title": "별빛이 얼마나 붉어졌는지 재면 티끌에 가린 별의 거리를 바로잡을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-extinction",
+        "title": "은하수의 검은 틈에는 정말 별이 없을까?"
+       }
+      ]
      },
      {
       "n": 13,
       "title": "구상 성단으로 찾는 은하 중심",
       "code": "12지실03-13",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-shapley",
+        "title": "구상 성단 157개의 위치로 우리은하의 중심을 찾을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 14,
       "title": "회전 곡선과 은하의 질량",
       "code": "12지실03-14",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-rotation-mass",
+        "title": "은하의 바깥쪽 회전 속도로 잰 질량은 보이는 별과 가스의 질량과 같을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-space-rotation",
+        "title": "은하의 바깥쪽 별은 왜 느려지지 않을까?"
+       }
+      ]
      },
      {
       "n": 15,
       "title": "허블–르메트르 법칙과 우주의 나이",
       "code": "12지실03-15",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-labearth-hubble-age",
+        "title": "은하의 거리와 후퇴 속도로 우주의 나이를 계산할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-hlaw",
+        "title": "멀리 있는 은하일수록 왜 빨리 멀어질까?"
+       }
+      ]
      }
     ]
    }

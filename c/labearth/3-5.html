@@ -1,0 +1,128 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>망원경의 분해능과 시야 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="천체 망원경을 조작해 천체를 관측하고, 구경과 초점 거리로 관측 시스템의 분해능, 배율, 시야(FOV), 집광력, 행성의 겉보기 크기를 계산한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labearth-telescope [hidden] { display: none !important; }
+  </style>
+</head>
+<body data-course="labearth" data-sec="3-5">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>망원경의 분해능과 시야</h1>
+    <p class="lead">같은 목성도 망원경에 따라 점처럼 보이기도 하고 줄무늬가 보이기도 합니다. 망원경의 성능을 정하는 것은 배율일까요, 렌즈의 지름일까요?</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">볼록 렌즈와 초점 거리</span><span class="p">빛의 회절</span><span class="p">각도의 단위 (각초)</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-telescope"><span class="mono">3.5.1</span>망원경의 성능을 정하는 것은 배율일까, 구경일까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-3-5">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-telescope">
+        <header class="card-head">
+          <span class="no">3.5.1</span><h2>망원경의 성능을 정하는 것은 배율일까, 구경일까?</h2><span class="kind">실험 · 분해능 · 배율 · 시야(FOV) · 집광력</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <div class="presets tgt" role="group" aria-label="관측 대상">
+              <button type="button" class="chip" data-t="dbl" aria-pressed="true">이중성 (밝기 같은 두 별)</button>
+              <button type="button" class="chip" data-t="jup" aria-pressed="false">목성</button>
+            </div>
+            <canvas class="cv-wide" aria-label="카메라 센서에 찍힌 대상의 확대 영상과, 센서 전체 시야에 보름달 크기를 겹친 그림"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">구경 D = <output class="d-out">80</output> mm</label>
+                  <input class="dia" type="range" min="50" max="300" step="10" value="80" aria-label="대물렌즈 지름"></div>
+                <div><label class="mono">대물 초점 거리 f = <output class="f-out">900</output> mm</label>
+                  <input class="foc" type="range" min="300" max="3000" step="50" value="900" aria-label="대물렌즈 초점 거리"></div>
+                <div><label class="mono">시상(대기 흔들림) = <output class="s-out">1.0</output>″</label>
+                  <input class="see" type="range" min="0.3" max="4" step="0.1" value="1" aria-label="시상"></div>
+                <div class="g-dbl"><label class="mono">두 별 사이 각 = <output class="sep-out">2.0</output>″</label>
+                  <input class="sep" type="range" min="0.3" max="8" step="0.1" value="2" aria-label="이중성의 각거리"></div>
+                <div class="g-jup" hidden><label class="mono">목성까지 거리 = <output class="j-out">4.2</output> AU</label>
+                  <input class="jd" type="range" min="3.95" max="6.45" step="0.05" value="4.2" aria-label="목성까지 거리"></div>
+              </div>
+              <div class="presets eye" role="group" aria-label="접안렌즈 초점 거리">
+                <span class="mono small dim">접안렌즈 (겉보기 시야 52°)</span>
+                <button type="button" class="chip" data-e="25" aria-pressed="true">25 mm</button><button type="button" class="chip" data-e="10" aria-pressed="false">10 mm</button><button type="button" class="chip" data-e="6" aria-pressed="false">6 mm</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>배율 f/f<sub>e</sub></dt><dd class="n-mag">—</dd></div>
+                <div><dt>실시야 = 52°/배율</dt><dd class="n-tf">—</dd></div>
+                <div><dt>회절 한계 1.22λ/D</dt><dd class="n-res">—</dd></div>
+                <div><dt>집광력 (눈 7 mm 대비)</dt><dd class="n-lg">—</dd></div>
+              </dl>
+              <dl class="nums n4">
+                <div><dt>한계 등급 (어림)</dt><dd class="n-lim">—</dd></div>
+                <div><dt>화소 척도 206.3·p/f</dt><dd class="n-ps">—</dd></div>
+                <div><dt>센서 시야 (FOV)</dt><dd class="n-fov">—</dd></div>
+                <div><dt class="k-obj">두 별 사이 (화소)</dt><dd class="n-obj">—</dd></div>
+              </dl>
+              <div class="lab-btns"><button class="chip go meas" type="button">분해 한계 재기 (이중성)</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="구경의 역수와 분해 한계의 그래프"></canvas>
+              <p class="fig-note">카메라는 화소 3.75 μm, 1280×960 화소 센서(4.8 mm × 3.6 mm)로 가정했습니다. 영상은 파장 550 nm의 에어리 무늬에 시상(가우스 흐림)을 겹쳐 계산한 모식입니다. 분해 한계 측정은 두 별의 간격을 줄여 가며 "두 개로 보이는 가장 작은 간격"을 판정하는 실험이며 판정 오차는 ±7%쯤입니다. 목성 적도 지름 142,984 km(NASA)이고, 목성까지 거리는 충일 때 약 4.0 AU, 합 근처에서 약 6.4 AU입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>배율이 높은 망원경일수록 더 자세히 보일까요? 같은 배율로 보아도 구경이 큰 망원경에서 두 별이 더 잘 갈라져 보인다면, 성능을 정하는 것은 무엇일까요?</li>
+            <li><span class="tag">복원</span>빛은 원형 구멍을 지나며 회절해서, 별 하나도 점이 아니라 고리가 있는 원반(에어리 원반)으로 맺힙니다. 원반의 각 반지름은 θ = 1.22 λ/D(라디안)로, 구경 D가 클수록 작습니다. 1 rad = 206,265″입니다.</li>
+            <li><span class="tag">설계</span>시상을 좋게(0.5″ 이하) 고정하고 구경 D만 바꿔 가며, 두 별이 갈라져 보이는 가장 작은 각(분해 한계)을 잽니다. 조작 변인은 D, 종속 변인은 분해 한계 θ<sub>min</sub>, 통제 변인은 파장·시상·초점 거리입니다. 다음에는 시상을 2″로 나쁘게 하고 같은 측정을 되풀이합니다.</li>
+            <li><span class="tag">분석</span>가로축 1/D, 세로축 θ<sub>min</sub>으로 그리면 원점을 지나는 직선이 되고, 기울기가 1.22λ × 206,265입니다(λ = 550 nm이면 약 138″·mm). 배율 = f/f<sub>e</sub>, 실시야 = 겉보기 시야/배율, 센서 시야 = 206,265 × (센서 크기)/f, 화소 척도 = 206.3 × (화소 μm)/(f mm)″, 집광력 ∝ D²입니다. 행성의 겉보기 지름(″) = 206,265 × 지름/거리이고, 이를 화소 척도로 나누면 사진 속 크기(화소)가 됩니다.</li>
+            <li><span class="tag">측정</span>시상 0.5″에서 구경을 60, 80, 100, 150, 200, 300 mm로 바꿔 분해 한계를 재고 기울기에서 파장을 구하세요. 시상 2″에서는 큰 구경의 점이 어떻게 되나요? 목성으로 바꿔 초점 거리 900 mm와 2400 mm에서 목성이 몇 화소로 찍히는지 재고, 같은 구경에서 초점 거리만 늘리면 줄무늬가 더 보이는지 확인하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>배율은 접안렌즈만 바꾸면 얼마든지 높일 수 있지만, 구경으로 정해지는 분해 한계보다 작은 것은 보이지 않습니다(빈 배율). 땅 위에서는 대기 흔들림(시상, 보통 1–3″) 때문에 구경이 큰 망원경도 그 이상 갈라 보지 못합니다. 화소 척도가 분해 한계의 절반보다 크면 센서가 세부를 놓칩니다. 낮에 망원경을 다룰 때 태양 쪽으로 향하지 않도록 하고, 파인더에도 덮개를 씌웁니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">구경 100 mm, 초점 거리 1000 mm 망원경에 초점 거리 5 mm 접안렌즈를 끼우면 배율이 200배입니다. 이 배율을 400배로 올리면 분해 한계는 어떻게 될까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>절반으로 작아져 더 가까운 이중성이 갈라진다<span class="why"><b>배율은 상을 키울 뿐입니다.</b> 회절 원반도 함께 커지므로 두 원반이 겹친 정도는 그대로입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 1.4″로 그대로이다<span class="why"><b>맞습니다.</b> 분해 한계는 1.22λ/D로 구경만의 함수입니다. 100 mm에서는 약 138/100 = 1.4″입니다. 상은 더 크고 어두워질 뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 배로 커져 더 나빠진다<span class="why"><b>분해 한계 자체는 배율과 무관합니다.</b> 다만 지나친 배율에서는 상이 어둡고 흐려 보여 판정이 어려워질 수는 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/telescope.js"></script>
+</body>
+</html>

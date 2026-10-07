@@ -1,0 +1,79 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/equation-time.js"
+  ]
+}
+-->
+<style>
+#card-labearth-equation-time .opts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 6px 0 2px; }
+</style>
+<article class="card" id="card-labearth-equation-time">
+  <header class="card-head">
+    <span class="no"></span><h2>해시계의 정오와 시계의 정오는 왜 날마다 다르게 어긋날까?</h2><span class="kind">실험 · 시태양시 · 평균 태양시 · 균시차 · 표준시</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="위에서 본 막대(그노몬)와 그림자, 그림자 끝이 하루 동안 그리는 길, 그리고 한국 표준시 시계"></canvas>
+      <div class="ctl">
+        <div class="presets city" role="group" aria-label="관측 장소">
+          <button type="button" class="chip" data-lon="124.71" data-lat="37.97" aria-pressed="false">백령도</button>
+          <button type="button" class="chip" data-lon="126.98" data-lat="37.57" aria-pressed="true">서울</button>
+          <button type="button" class="chip" data-lon="129.08" data-lat="35.18" aria-pressed="false">부산</button>
+          <button type="button" class="chip" data-lon="131.87" data-lat="37.24" aria-pressed="false">독도</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">날짜 <output class="d-out">2월 11일</output> (2026년)</label>
+            <input class="day" type="range" min="1" max="365" step="1" value="42" aria-label="날짜"></div>
+          <div><label class="mono">시계 <output class="t-out">12:00</output> KST</label>
+            <input class="tm" type="range" min="10" max="15" step="0.0166667" value="12" aria-label="한국 표준시 시각"></div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>해시계 (시태양시)</dt><dd class="n-ast">—</dd></div>
+          <div><dt>지방 평균 태양시</dt><dd class="n-lmt">—</dd></div>
+          <div><dt>균시차 E</dt><dd class="n-e">—</dd></div>
+          <div><dt>그림자 길이 (막대 1 m)</dt><dd class="n-sh">—</dd></div>
+        </dl>
+        <dl class="nums">
+          <div><dt>해 뜨는 시각</dt><dd class="n-rise">—</dd></div>
+          <div><dt>남중 시각</dt><dd class="n-tr">—</dd></div>
+          <div><dt>해 지는 시각</dt><dd class="n-set">—</dd></div>
+        </dl>
+        <div class="lab-btns"><button class="chip go meas" type="button">이날 남중 시각 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="기록한 남중 시각에서 구한 균시차와 이심률·자전축 경사에 따른 성분 곡선"></canvas>
+        <div class="ctl-row">
+          <div><label class="mono">모형 이심률 e = <output class="e-out">0.0167</output></label>
+            <input class="ecc" type="range" min="0" max="0.1" step="0.0001" value="0.0167" aria-label="모형의 공전 궤도 이심률"></div>
+          <div><label class="mono">모형 자전축 경사 ε = <output class="o-out">23.4</output>°</label>
+            <input class="obl" type="range" min="0" max="40" step="0.1" value="23.4" aria-label="모형의 자전축 경사"></div>
+        </div>
+        <div class="opts">
+          <label class="mono small"><input type="checkbox" class="c-e" checked> 이심률 성분</label>
+          <label class="mono small"><input type="checkbox" class="c-o" checked> 자전축 경사 성분</label>
+          <label class="mono small"><input type="checkbox" class="c-s" checked> 두 성분의 합</label>
+        </div>
+        <p class="fig-note">남중 시각은 "같은 고도법"으로 잽니다. 오전과 오후에 그림자 끝이 같은 원에 닿는 두 시각의 가운데를 남중 시각으로 삼으며, 판정 오차는 ±1분쯤입니다. 태양 위치는 NOAA 근사식으로 계산했고, 해 뜨고 지는 시각은 대기 굴절과 태양 반지름을 넣어 고도 −0.83°일 때입니다. 아래 그래프의 성분 곡선은 근사식 E ≈ −7.66 sin D + 9.86 sin(2D + 3.59)분을 e와 ε에 맞춰 키우고 줄인 모형입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>해시계는 태양이 남중할 때 12시를 가리킵니다. 그런데 서울에서 시계로 남중 시각을 재면 12시 정각이 아니고, 날짜마다 최대 30분 가까이 달라집니다. 이 차이는 어디서 올까요?</li>
+      <li><span class="tag">복원</span>시간은 무엇이 자오선을 지나는지로 정의합니다. <em>항성시</em>는 춘분점(별)의 시간각, <em>시태양시</em>는 실제 태양의 시간각 + 12시, <em>평균 태양시</em>는 천구 적도를 일정한 빠르기로 도는 가상의 평균 태양을 기준으로 합니다. 경도마다 다른 평균 태양시가 <em>지방시</em>이고, 우리나라 표준시(KST)는 동경 135°의 지방 평균시입니다. <em>태음시</em>는 달의 시간각을 기준으로 하며, 달이 남중하는 시각은 하루에 약 50분씩 늦어집니다.</li>
+      <li><span class="tag">설계</span>장소(경도)를 고정하고 날짜를 바꿔 가며 남중 시각을 잽니다. 남중 시각 = 12:00 + (135° − 경도) × 4분 − E입니다. 경도 보정(서울은 약 +32분)은 1년 내내 같고, 나머지 날마다 바뀌는 부분이 <em>균시차</em> E = 시태양시 − 평균 태양시입니다.</li>
+      <li><span class="tag">분석</span>기록에서 E를 구해 날짜에 따라 그리면 1년에 두 번씩 커졌다 작아지는 곡선이 됩니다. 이 곡선은 두 성분의 합입니다. ① 궤도가 타원이라 근일점(1월 초) 근처에서 태양이 황도를 빨리 움직이는 효과(주기 1년, 진폭 약 7.7분). ② 황도가 천구 적도에 23.4° 기울어 있어 황도 위의 고른 움직임도 적경으로는 고르지 않은 효과(주기 반년, 진폭 약 9.9분).</li>
+      <li><span class="tag">측정</span>한 달에 두 번 이상 남중 시각을 재서 1년 치를 모으고, 그래프에서 E가 가장 큰 날과 가장 작은 날을 찾으세요. 모형의 e를 0으로 하거나 ε를 0으로 해 보며 어느 성분이 어느 봉우리를 만드는지 확인하세요. 같은 날 부산과 백령도의 남중 시각은 몇 분 차이 나나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>그림자가 가장 짧은 순간은 변화가 느려서 직접 고르면 오차가 몇 분이 됩니다. 같은 고도법처럼 대칭인 두 시각을 쓰면 줄일 수 있습니다. 막대가 기울어 있거나 지면이 수평이 아니면 계통 오차가 생기므로 다림추와 수준기로 맞춥니다. 그림자를 볼 때도 태양을 직접 보지 않습니다. 균시차 곡선은 근일점의 위치와 이심률이 바뀌는 수천 년 단위로는 모양이 달라집니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">균시차가 −14분인 2월 중순, 동경 129°인 부산에서 태양이 남중하는 시각(KST)은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12시 38분<span class="why"><b>맞습니다.</b> 경도 보정 (135 − 129) × 4 = 24분, 균시차 −14분을 빼면 12:00 + 24 + 14 = 12:38입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12시 10분<span class="why"><b>균시차의 부호를 반대로 썼습니다.</b> E가 음수이면 실제 태양이 평균 태양보다 늦으므로 남중도 늦어집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>11시 46분<span class="why"><b>경도 보정 방향이 틀렸습니다.</b> 부산은 표준 경선(135°)보다 서쪽이라 태양이 더 늦게 남중합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

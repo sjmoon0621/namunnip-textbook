@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/tide-data.js",
+    "js/cards/labearth/tide.js"
+  ]
+}
+-->
+<style>
+#card-labearth-tide .td-day { width: 100%; }
+#card-labearth-tide .td-type { font-size: 13px; color: var(--ink-2); margin: 2px 0 6px; min-height: 1.4em; }
+</style>
+<article class="card" id="card-labearth-tide">
+  <header class="card-head">
+    <span class="no"></span><h2>바닷가마다 물때의 모양이 다른 까닭은 무엇일까?</h2><span class="kind">실험 · 실제 자료 · 조석의 유형과 조화 상수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="고른 검조소의 2025년 3월 한 달 조위 곡선, 달의 위상과 적위, 고른 날 앞뒤 사흘의 확대 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets ssel" role="group" aria-label="검조소">
+          <span class="mono small dim">검조소</span>
+        </div>
+        <dl class="nums n4">
+          <div><dt>M2 + S2 (m)</dt><dd class="hsemi">—</dd></div>
+          <div><dt>K1 + O1 (m)</dt><dd class="hdiur">—</dd></div>
+          <div><dt>F (관측)</dt><dd class="fobs">—</dd></div>
+          <div><dt>F (평형 조석론)</dt><dd class="feq">—</dd></div>
+        </dl>
+        <p class="td-type" aria-live="polite"></p>
+        <label class="mono">날짜 2025년 3월 <output class="d-out">14</output>일 (UTC)</label>
+        <input class="td-day" type="range" min="1" max="31" step="1" value="14" aria-label="날짜">
+        <div class="lab-btns"><button class="chip go meas" type="button">이날 고조 횟수·조차 읽기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets xsel" role="group" aria-label="그래프 가로축">
+          <span class="mono small dim">가로축</span>
+          <button class="chip" data-x="d" aria-pressed="true">날짜</button><button class="chip" data-x="age" aria-pressed="false">월령</button><button class="chip" data-x="dec" aria-pressed="false">|달의 적위|</button>
+        </div>
+        <canvas class="cv-plot" aria-label="지금 고른 검조소에서 기록한 하루 조차 그래프"></canvas>
+        <p class="fig-note">조위: NOAA CO-OPS 검증 시간별 조위(2025년 3월, 평균 해수면 기준, 퍼블릭 도메인). 조화 상수: 같은 기관이 발표한 각 검조소의 분조 진폭. 달의 위상은 미국 해군 천문대(USNO) 자료이고, 달의 적위는 천체력 근사식으로 계산한 값입니다(오차 약 0.3°). 하루는 세계시(UTC) 0시부터 24시까지로 셉니다. 그래프에는 지금 고른 검조소의 기록만 나옵니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>인천은 하루에 물이 두 번 들고 두 번 나지만, 바다에 따라서는 하루에 한 번만 드는 곳도 있습니다. 같은 달과 태양이 당기는데 왜 곳마다 조석의 모양이 다를까요? 또 사리와 조금은 어디서나 보름달과 반달에 맞춰 올까요?</li>
+      <li><span class="tag">복원</span>기조력은 달(과 태양)이 지구 각 부분을 당기는 힘과 지구 중심을 당기는 힘의 차이입니다. <em>평형 조석론</em>은 바다가 이 힘에 즉시 따라가 달 쪽과 반대쪽에 물이 부푼다고 봅니다. 그러면 하루에 만조가 두 번(반일주조) 오고, 달의 적위가 클 때는 두 만조 높이가 달라집니다(일조 부등).</li>
+      <li><span class="tag">설계</span>조석 곡선은 여러 주기의 사인파(분조)를 더한 것으로 분석합니다. 반일주 분조 M2(12.42시간)·S2(12.00시간)와 일주 분조 K1(23.93시간)·O1(25.82시간)의 진폭으로 <em>형태수 F = (K1 + O1) / (M2 + S2)</em>를 구해 F &lt; 0.25 반일주조, 0.25–1.5 혼합조(주로 반일주), 1.5–3 혼합조(주로 일주), F &gt; 3 일주조로 나눕니다. 검조소와 날짜를 바꿔 가며 고조 횟수와 하루 조차를 기록합니다.</li>
+      <li><span class="tag">분석</span>보스턴·앵커리지는 하루 두 번 고조가 거의 같은 높이로 오고, 조차는 삭·망 하루이틀 뒤에 가장 큽니다(사리). 펜서콜라는 고조가 하루 한 번이고, 조차는 위상이 아니라 <em>달의 적위</em>를 따라갑니다. 적위가 가장 큰 3월 8일·22일 무렵(반달 무렵)에 조차가 크고, 달이 적도를 지나는 날(삭·망 무렵)에 가장 작습니다. 같은 북위 30°대인데도 펜서콜라의 F는 평형 조석론 값의 10배가 넘습니다.</li>
+      <li><span class="tag">측정</span>보스턴과 펜서콜라에서 3, 6, 8, 11, 14, 18, 22, 25, 29일의 조차를 각각 기록하고 가로축을 월령, |달의 적위|로 바꿔 보세요. 어느 검조소가 월령을, 어느 검조소가 적위를 따르나요? 앵커리지의 조차는 보스턴의 몇 배인가요? 샌프란시스코와 우널래스카에서는 이웃한 두 고조(또는 저조)의 높이 차이가 어떤지 확대 그래프로 확인하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>평형 조석론은 바다가 대륙에 막히지 않고 순식간에 반응한다고 가정하므로, 실제 조차와 유형을 맞히지 못합니다. 실제 조석은 대양 분지를 도는 거대한 파동입니다(<em>동역학적 조석론</em>). 지구 자전 때문에 조석파는 조차가 0인 <em>무조점</em>을 중심으로 돌고, 무조점 가까이는 조차가 작으며 멀어질수록, 그리고 만이 공명할수록 커집니다. 멕시코만은 반일주 분조가 거의 서로 상쇄되어 일주조가 남고, 앵커리지(쿡만)와 인천(서해)은 공명으로 조차가 8–10 m에 이릅니다. 날씨(바람, 기압)도 조위를 수십 cm 바꾸므로 하루 자료 하나로 유형을 정하면 틀릴 수 있습니다. 갯벌 조사를 할 때는 물때표를 확인하고, 사리 때 밀물은 걷는 속도보다 빠르게 들어오니 만조 2시간 전에는 물 밖으로 나와야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 검조소의 분조 진폭이 M2 0.20 m, S2 0.05 m, K1 0.40 m, O1 0.30 m입니다. 이곳의 조석에 대해 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>삭과 망 무렵 조차가 가장 크다<span class="why"><b>반일주조의 규칙입니다.</b> M2와 S2가 겹치는 삭·망에 커지는 것은 반일주 성분인데, 이곳은 반일주 성분이 작습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>F = 2.8인 혼합조(주로 일주)로, 달의 적위가 클 때 조차가 커진다<span class="why"><b>맞습니다.</b> (0.40 + 0.30) / (0.20 + 0.05) = 2.8입니다. 일주 성분이 큰 곳은 K1과 O1이 겹치는 때, 곧 달의 적위가 클 때(회귀조) 조차가 큽니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>위도만 알면 평형 조석론으로 F를 정확히 예측할 수 있다<span class="why"><b>그럴듯하지만 틀립니다.</b> 평형 조석론은 같은 위도에서 같은 F를 주지만, 실제로는 비슷한 위도에서도 F가 0.2에서 10 넘게까지 다릅니다. 해저 지형과 해안선에 따른 동역학적 반응 때문입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

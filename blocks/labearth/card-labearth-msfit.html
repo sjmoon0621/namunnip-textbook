@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/astro-ms-data.js",
+    "js/cards/labearth/astro-cluster-data.js",
+    "js/cards/labearth/msfit.js"
+  ]
+}
+-->
+<style>
+#card-labearth-msfit .msf-cmd { width: 100%; aspect-ratio: 1 / 1; display: block; }
+#card-labearth-msfit .msf-truth { margin-top: 6px; }
+</style>
+<article class="card" id="card-labearth-msfit">
+  <header class="card-head">
+    <span class="no"></span><h2>성단의 주계열을 표준 주계열에 겹치면 거리가 나올까?</h2><span class="kind">실험 · 주계열 맞추기 · 거리 지수 · Gaia 실제 측광</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="msf-cmd" aria-label="성단의 색–등급도와 표준 주계열"></canvas>
+      <div class="ctl">
+        <div class="presets msf-cl" role="group" aria-label="성단">
+          <span class="mono small dim">성단</span>
+          <button class="chip" data-c="pleiades" aria-pressed="true">플레이아데스 (M45)</button><button class="chip" data-c="m67" aria-pressed="false">M67</button>
+        </div>
+        <div><label class="mono">거리 지수 추정값 m − M = <output class="mu-out">4.00</output></label>
+          <input class="mu" type="range" min="2" max="12" step="0.05" value="4" aria-label="거리 지수 추정값"></div>
+        <div class="toggles"><label><input type="checkbox" class="red"> 성간 소광 보정 (E(B−V) = 0.04)</label></div>
+        <dl class="nums"><div><dt>맞춤 구간 별 수</dt><dd class="n-n">—</dd></div><div><dt>어긋남 (중앙값, 등급)</dt><dd class="n-off">—</dd></div><div><dt>이 추정의 거리</dt><dd class="n-d">—</dd></div></dl>
+        <div class="lab-btns"><button class="chip go rec" type="button">이 겹침 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth-b" type="button">시차 거리 보기</button></div>
+        <p class="small dim msf-truth"></p>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="기록한 거리 지수와 어긋남의 그래프"></canvas>
+        <p class="fig-note">점은 ESA Gaia DR3에서 시차·고유 운동으로 고른 실제 성단 별입니다(CC BY-SA 3.0 IGO). 실선은 태양 근처 왜성의 평균 주계열(Pecaut &amp; Mamajek 2013, Mamajek 2022판)을 m − M만큼 내린 것입니다. 초록 띠는 맞춤에 쓰는 구간입니다(M67은 전향점 근처의 진화한 별을 빼려고 G 13.8보다 어두운 별만 씁니다). 소광은 E(BP−RP) ≈ 1.34 E(B−V), A<sub>G</sub> ≈ 2.74 E(B−V)로 바꿨습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>연주 시차는 수백 pc만 넘어가도 재기 어렵습니다. 별이 수백 개 모인 성단은 사진 한 장의 색과 밝기만으로 거리를 잴 수 있을까요?</li>
+      <li><span class="tag">복원</span>같은 성단의 별은 거리가 거의 같으므로, 겉보기 등급 m과 절대 등급 M의 차인 <em>거리 지수 m − M = 5 log d − 5</em>(d는 pc)도 모두 같습니다. 주계열성은 색(표면 온도)이 같으면 절대 등급도 거의 같습니다.</li>
+      <li><span class="tag">설계</span>가로축은 색지수(BP−RP), 세로축은 겉보기 등급 G인 색–등급도를 그립니다. 거리를 아는 가까운 별들로 만든 표준 주계열(색 → 절대 등급)을 세로로만 옮겨 성단 주계열에 겹칩니다. 옮긴 양이 m − M입니다. 진화한 별(전향점 위쪽, 거성)과 쌍성은 겹침에서 빼야 하므로 맞춤 구간을 정해 둡니다.</li>
+      <li><span class="tag">분석</span>여러 m − M 값에서 '어긋남'(맞춤 구간 별들의 G와 표준선의 차이, 중앙값)을 기록하면 그래프가 0을 지나는 직선이 됩니다. 0이 되는 m − M이 가장 잘 맞는 값이고, d = 10<sup>(m−M+5)/5</sup> pc입니다.</li>
+      <li><span class="tag">측정</span>플레이아데스에서 슬라이더를 움직여 어긋남이 +와 −인 겹침을 각각 두세 개 기록하세요. 소광 보정을 켜고 다시 기록하면 거리가 어느 쪽으로 몇 % 달라지나요? M67에서도 같은 일을 하고, '시차 거리 보기'로 Gaia 시차 거리와 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>성간 티끌은 별을 어둡게(A) 하면서 동시에 붉게(색초과 E) 만들어, 성단 주계열 전체를 오른쪽 아래로 밉니다. 주계열은 비스듬히 누워 있어서 붉어진 효과가 더 크게 작용하므로, 주계열 맞추기에서 소광을 무시하면 오히려 거리가 작게 나옵니다(계통 오차). 플레이아데스에서 소광 보정을 켜고 끄며 확인하세요. 표준 주계열은 태양 근처 별의 평균이라, 금속 함량이 다른 성단(특히 구상 성단)에 그대로 쓰면 0.2~0.5등급 어긋날 수 있습니다. 같은 색에서 0.75등급쯤 위에 줄지은 별은 밝기가 비슷한 두 별이 겹친 쌍성입니다. 밤하늘 관측 자료를 직접 얻을 때는 어두운 곳에서 움직이므로 붉은 손전등을 쓰고, 망원경 주변의 전선에 걸려 넘어지지 않게 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 성단은 별의 절반쯤이 밝기가 비슷한 두 별로 된 쌍성입니다. 쌍성을 빼지 않고 모든 별의 중앙값으로 표준 주계열을 겹치면, 구한 거리는 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>쌍성도 같은 거리에 있으니 영향이 없다<span class="why"><b>거리는 같지만 밝기가 다릅니다.</b> 비슷한 두 별이 겹치면 빛이 두 배라 약 0.75등급 밝게 보이고, 색은 거의 그대로입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>성단이 실제보다 가깝게 나온다<span class="why"><b>맞습니다.</b> 쌍성이 섞이면 같은 색에서 별들이 더 밝은 쪽으로 몰려, 표준선을 덜 내려도 겹칩니다. m − M이 작아지니 거리도 작게 나옵니다. 그래서 주계열의 아래쪽(어두운) 가장자리에 맞추거나 쌍성 띠를 빼고 맞춥니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>성단이 실제보다 멀게 나온다<span class="why"><b>방향이 반대입니다.</b> 별이 더 밝아 보이면 가까이 있는 것처럼 해석됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

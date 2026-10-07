@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/gravity.js"
+  ]
+}
+-->
+<style>
+#card-labearth-gravity .key { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+</style>
+<article class="card" id="card-labearth-gravity">
+  <header class="card-head">
+    <span class="no"></span><h2>중력 측정값에서 땅속 덩어리를 찾으려면 무엇을 빼야 할까?</h2><span class="kind">실험 · 중력 측정 · 위도·프리에어·부게 보정 · 부게 이상</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="측선의 지형 단면과 땅속 구조, 중력계 위치"></canvas>
+      <div class="ctl">
+        <div class="presets scs" role="group" aria-label="탐사 지역">
+          <button class="chip" type="button" data-sc="ore" aria-pressed="true">광체 탐사 (10 km 측선)</button>
+          <button class="chip" type="button" data-sc="root" aria-pressed="false">산맥 횡단 (200 km 측선)</button>
+        </div>
+        <div class="presets insts" role="group" aria-label="측정 기구">
+          <span class="mono small dim">기구</span>
+          <button class="chip" type="button" data-inst="grav" aria-pressed="true">상대 중력계 (±0.02 mGal)</button>
+          <button class="chip" type="button" data-inst="pend" aria-pressed="false">정밀 진자 (±30 mGal)</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">측점 위치 x = <output class="x-out">2.0</output> km (고도 <output class="h-out">60</output> m)</label>
+            <input class="x" type="range" min="0" max="10" step="0.1" value="2" aria-label="측점 위치"></div>
+          <div><label class="mono">부게 보정 밀도 ρ = <output class="rho-out">2.67</output> g/cm³</label>
+            <input class="rho" type="range" min="1.8" max="3.2" step="0.01" value="2.67" aria-label="부게 보정에 쓰는 밀도"></div>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">이 측점에서 중력 측정</button><button class="chip clear" type="button">기록 지우기</button><button class="chip show-raw" type="button" aria-pressed="false">보정 전 값도 보기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="측점 위치에 따른 프리에어 이상과 부게 이상"></canvas>
+        <p class="legend"><span><i class="key" style="background:#3b7c2a"></i>부게 이상</span><span><i class="key" style="background:#e0a02a"></i>프리에어 이상</span><span><i class="key" style="background:#8d8d92"></i>보정 전 (관측 g − 측선 남쪽 끝의 정규 중력)</span></p>
+        <dl class="nums"><div><dt>부게 이상의 폭</dt><dd class="n-1">—</dd></div><div><dt>부게 이상 평균</dt><dd class="n-2">—</dd></div><div><dt>부게 이상–고도 상관</dt><dd class="n-3">—</dd></div></dl>
+        <p class="fig-note">관측 g는 정규 중력(1967 국제 정규 중력식), 고도에 따른 감소(−0.3086 mGal/m), 지형 질량의 끌림(무한 평판 근사, 2.67 g/cm³), 땅속 구조의 효과를 더해 만든 모식 자료입니다. 광체와 산맥 뿌리(에어리 모형, 맨틀 3.27 g/cm³)의 크기는 예시값입니다. 고도는 ±0.1 m 오차로 잽니다. 1 mGal = 10⁻⁵ m/s²입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>땅속에 철광석처럼 무거운 암석 덩어리가 있으면 그 위에서 중력이 아주 조금 커집니다. 하지만 중력은 위도와 높이에 따라서도 달라집니다. 측정값에서 무엇을 빼야 땅속 질량 분포만 남길 수 있을까요?</li>
+      <li><span class="tag">복원</span>중력은 자전의 원심 효과와 지구의 편평한 모양 때문에 적도에서 약 978 Gal, 극에서 약 983 Gal입니다. 지구 중심에서 멀어질수록 약해지고(1 m 높아질 때 0.3086 mGal), 발밑에 있는 암석은 질량만큼 끌어당깁니다(두께 1 m, 밀도 ρ인 평판이 0.0419ρ mGal). 중력은 진자의 주기(T = 2π√(L/g))로도, 용수철의 늘어남을 재는 상대 중력계로도 잴 수 있습니다.</li>
+      <li><span class="tag">설계</span>측선을 따라 측점 위치 x를 바꿔 가며(조작 변인) 중력 g를 잽니다(종속 변인). 각 측점의 위도와 고도를 함께 기록해야 보정할 수 있습니다. <em>위도 보정</em>: 그 위도의 정규 중력 g<sub>n</sub>을 뺍니다. <em>프리에어 보정</em>: 고도만큼 낮아진 중력 +0.3086h를 되돌립니다. <em>부게 보정</em>: 측점과 해수면 사이 암석의 끌림 −0.0419ρh를 뺍니다.</li>
+      <li><span class="tag">분석</span>프리에어 이상 = g − g<sub>n</sub> + 0.3086h, 부게 이상 = 프리에어 이상 − 0.0419ρh입니다. 광체 측선에서 보정 전 값은 북쪽으로 갈수록 커지고(위도 효과, 약 0.8 mGal/km), 언덕에서 작아집니다. 보정을 마친 부게 이상에는 광체 위에서 봉우리 하나만 남습니다. 산맥 측선의 부게 이상은 산 아래에서 크게 음수인데, 이것은 산맥 밑에 밀도가 작은 지각이 깊게 내려가 있다(뿌리)는 증거입니다.</li>
+      <li><span class="tag">측정</span>광체 측선을 0.5 km 간격으로 재고 부게 이상이 가장 큰 곳을 찾으세요. 같은 측정을 진자로 하면 광체가 보이나요? 보정 밀도를 2.0이나 3.0으로 바꾸면 부게 이상이 지형을 따라 출렁이고 상관 계수가 커집니다. 상관이 0에 가장 가까운 밀도가 지표 암석의 밀도입니다(네틀턴 방법). 산맥 측선도 재어 보세요. 거기서는 밀도를 바르게 두어도 부게 이상과 고도가 강한 음의 상관을 보이는데, 보정이 틀려서가 아니라 산이 높을수록 뿌리도 깊기 때문입니다.</li>
+      <li class="warn"><span class="tag">오차·안전</span>부게 보정은 측점 아래 지형을 끝없이 넓은 평판으로 보는 근사입니다. 실제로는 주변 봉우리와 골짜기의 효과를 따로 빼는 지형 보정이 필요합니다. 상대 중력계는 시간이 지나면 눈금이 조금씩 움직이므로(기계 드리프트), 기준점에 돌아와 다시 재서 보정합니다. 고도를 1 m 틀리면 약 0.2 mGal 틀리므로 고도도 정밀하게 재야 합니다. 산악 측선에서는 혼자 다니지 말고, 낙석과 날씨 변화에 주의합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">위도가 같은 두 측점 A(해발 0 m)와 B(해발 500 m, 아래는 밀도 2.67 g/cm³ 암석)에서 잰 중력이 똑같았습니다. 두 지점의 부게 이상은 어떻게 다를까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>관측값이 같으니 부게 이상도 같다<span class="why"><b>고도가 다르면 보정량이 다릅니다.</b> B에만 프리에어 보정 +154.3 mGal과 부게 보정 −55.9 mGal이 더해집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>B가 약 98 mGal 크다<span class="why"><b>맞습니다.</b> (0.3086 − 0.0419 × 2.67) × 500 ≈ 98.4 mGal입니다. 높이 올라갔는데도 중력이 줄지 않았다면 B 아래에 무거운 물질이 더 있다는 뜻입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>B가 약 154 mGal 크다<span class="why"><b>프리에어 이상의 차이입니다.</b> 부게 이상은 발밑 암석 평판의 끌림까지 빼야 하므로 그보다 작습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

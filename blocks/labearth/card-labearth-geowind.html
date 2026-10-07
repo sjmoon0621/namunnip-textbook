@@ -1,0 +1,51 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/geowind.js"
+  ]
+}
+-->
+<style>
+#card-labearth-geowind canvas.gw-map { width: 100%; aspect-ratio: 1 / 1; display: block; touch-action: none; cursor: crosshair; }
+#card-labearth-geowind .gw-read { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); min-height: 1.5em; margin: 4px 0; }
+</style>
+<article class="card" id="card-labearth-geowind">
+  <header class="card-head">
+    <span class="no"></span><h2>일기도의 등고선 간격만으로 바람의 세기를 잴 수 있을까?</h2><span class="kind">실험 · 상층·지상 일기도 · 지균풍과 경도풍, 지상풍</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="gw-map" aria-label="모식 일기도. 누른 점에서 등고선 간격과 곡률 반지름을 잰다"></canvas>
+      <p class="gw-read">지도에서 바람을 잴 점을 누르세요.</p>
+      <div class="ctl">
+        <div class="presets maps" role="group" aria-label="일기도">
+          <button type="button" class="chip" data-m="up" aria-pressed="true">500 hPa 상층 일기도</button>
+          <button type="button" class="chip" data-m="sfc" aria-pressed="false">지상 일기도</button>
+        </div>
+        <div class="lab-btns"><button class="chip go meas" type="button">이 점에서 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="지균풍 속력과 경도풍·관측 풍속의 비교 그래프"></canvas>
+        <p class="fig-note">모식 일기도입니다(실제 날짜의 자료가 아님). 상층은 등고선 60 m 간격, 지상은 등압선 4 hPa 간격이고 지도의 격자는 500 km입니다. 자로 잰 등고선 간격은 ±5 %, 곡률 반지름은 ±10 %쯤 오차가 납니다. '관측 풍속'은 이 기압장에서 실제로 불 바람을 흉내 낸 모식 값으로, 지상에서는 마찰로 약해지고 등압선을 비스듬히 가로지르게 했습니다. 지상 공기 밀도는 1.2 kg/m³로 둡니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>기상청 500 hPa 일기도에는 바람 대신 등고선이 그려져 있고, 지상 일기도에는 등압선이 그려져 있습니다. 선의 간격과 휘어진 정도만으로 그곳의 풍속을 계산할 수 있을까요? 그 값은 실제 바람과 얼마나 맞을까요?</li>
+      <li><span class="tag">복원</span>마찰이 없고 등압선이 곧으면 기압 경도력과 전향력이 평형을 이루는 <em>지균풍</em>이 붑니다. 등압면 일기도에서는 V<sub>g</sub> = (g/f)·Δz/Δn, 등고면(지상) 일기도에서는 V<sub>g</sub> = (1/ρf)·Δp/Δn이고, f = 2Ω sinφ입니다. 등압선이 둥글면 원운동에 필요한 구심력이 더해진 <em>경도풍</em>이 붑니다.</li>
+      <li><span class="tag">설계</span>지도에서 점을 하나 고르면, 그 점을 지나는 등고선에 수직인 방향으로 이웃 등고선까지의 거리 Δn과 등고선이 휘어진 원의 반지름 R을 잽니다. 직선에 가까운 곳, 저기압 골, 고기압 마루에서 각각 두세 점씩 재고, 상층과 지상 일기도를 모두 잽니다.</li>
+      <li><span class="tag">분석</span>저기압 둘레에서는 V = −fR/2 + √(f²R²/4 + fRV<sub>g</sub>)로 경도풍이 지균풍보다 약하고(아지균풍), 고기압 둘레에서는 V = fR/2 − √(f²R²/4 − fRV<sub>g</sub>)로 지균풍보다 강합니다(초지균풍). 그래프에서 대각선(V = V<sub>g</sub>) 아래의 점은 저기압성, 위의 점은 고기압성 곡률입니다. 지상 관측 풍속은 마찰 때문에 지균풍의 절반~70 %쯤에 그칩니다.</li>
+      <li><span class="tag">측정</span>500 hPa 일기도의 남쪽 직선 구간, 동쪽 절리 저기압 둘레, 서남쪽 고기압 둘레에서 각각 재어 V<sub>gr</sub>/V<sub>g</sub> 비를 비교하세요. 같은 Δn이라도 위도가 높은 곳에서 지균풍이 약한 까닭은 무엇인가요? 고기압 중심 가까이에서 재면 왜 경도풍 값이 나오지 않을까요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>Δn은 반드시 등고선에 수직으로 재야 합니다. 비스듬히 재면 간격이 길게 나와 지균풍이 작게 계산됩니다(계통 오차). 곡률 반지름은 일기도 위에서 눈으로 원을 맞추기 때문에 오차가 크고, 실제 바람은 공기 덩어리의 경로(유적선)의 곡률을 따르므로 기압계가 움직이면 등고선의 곡률과 다를 수 있습니다. 적도 부근(위도 약 5° 이내)에서는 f가 작아 지균풍 관계를 쓸 수 없습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">위도와 등고선 간격이 같은 두 지점 A(저기압 둘레, R = 600 km)와 B(고기압 둘레, R = 600 km)에서 지균풍 속력이 모두 15 m/s로 계산되었습니다. 실제 바람은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>두 곳 모두 15 m/s이다<span class="why"><b>등고선이 휘어 있으면</b> 원운동에 필요한 구심력 때문에 기압 경도력과 전향력이 같을 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>A는 15 m/s보다 약하고, B는 15 m/s보다 강하다<span class="why"><b>맞습니다.</b> 저기압에서는 기압 경도력 일부가 구심력으로 쓰여 전향력(풍속)이 작아도 되고, 고기압에서는 전향력이 기압 경도력보다 커야 안쪽으로 휘므로 풍속이 커야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>저기압에서는 공기가 모여들므로 A가 더 강하다<span class="why"><b>수렴은 지상 마찰층의 이야기입니다.</b> 상층에서 등고선을 따라 도는 경도풍은 같은 기압 경도라면 고기압 쪽이 더 강합니다. 다만 실제로는 저기압 둘레의 기압 경도가 훨씬 커서 저기압의 바람이 더 센 경우가 많습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

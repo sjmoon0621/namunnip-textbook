@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>일기도로 지균풍과 경도풍 비교 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="지상 일기도와 상층(500 hPa) 일기도의 등압선·등고선 간격과 곡률을 해석하여 지균풍속과 경도풍속을 계산하고, 저기압·고기압 둘레와 지상 마찰층에서 실제 바람과 비교한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labearth-geowind canvas.gw-map { width: 100%; aspect-ratio: 1 / 1; display: block; touch-action: none; cursor: crosshair; }
+    #card-labearth-geowind .gw-read { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); min-height: 1.5em; margin: 4px 0; }
+  </style>
+</head>
+<body data-course="labearth" data-sec="2-5">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>일기도로 지균풍과 경도풍 비교</h1>
+    <p class="lead">일기도에는 바람이 직접 그려져 있지 않아도 선의 간격과 휘어진 모양에 바람의 세기가 숨어 있습니다. 자와 각도기만 가지고 상층과 지상 일기도에서 풍속을 계산해, 저기압과 고기압 둘레의 바람이 어떻게 다른지 비교해 봅시다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">기압 경도력과 전향력</span><span class="p">지균풍·경도풍</span><span class="p">구심력</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-geowind"><span class="mono">2.5.1</span>일기도의 등고선 간격만으로 바람의 세기를 잴 수 있을까?</a></li>
+        <li><a href="#card-esys-winds"><span class="mono">2.5.2</span>바람은 왜 등압선을 따라, 또는 비스듬히 불까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-2-5">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-geowind">
+        <header class="card-head">
+          <span class="no">2.5.1</span><h2>일기도의 등고선 간격만으로 바람의 세기를 잴 수 있을까?</h2><span class="kind">실험 · 상층·지상 일기도 · 지균풍과 경도풍, 지상풍</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="gw-map" aria-label="모식 일기도. 누른 점에서 등고선 간격과 곡률 반지름을 잰다"></canvas>
+            <p class="gw-read">지도에서 바람을 잴 점을 누르세요.</p>
+            <div class="ctl">
+              <div class="presets maps" role="group" aria-label="일기도">
+                <button type="button" class="chip" data-m="up" aria-pressed="true">500 hPa 상층 일기도</button>
+                <button type="button" class="chip" data-m="sfc" aria-pressed="false">지상 일기도</button>
+              </div>
+              <div class="lab-btns"><button class="chip go meas" type="button">이 점에서 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <canvas class="cv-plot" aria-label="지균풍 속력과 경도풍·관측 풍속의 비교 그래프"></canvas>
+              <p class="fig-note">모식 일기도입니다(실제 날짜의 자료가 아님). 상층은 등고선 60 m 간격, 지상은 등압선 4 hPa 간격이고 지도의 격자는 500 km입니다. 자로 잰 등고선 간격은 ±5 %, 곡률 반지름은 ±10 %쯤 오차가 납니다. '관측 풍속'은 이 기압장에서 실제로 불 바람을 흉내 낸 모식 값으로, 지상에서는 마찰로 약해지고 등압선을 비스듬히 가로지르게 했습니다. 지상 공기 밀도는 1.2 kg/m³로 둡니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>기상청 500 hPa 일기도에는 바람 대신 등고선이 그려져 있고, 지상 일기도에는 등압선이 그려져 있습니다. 선의 간격과 휘어진 정도만으로 그곳의 풍속을 계산할 수 있을까요? 그 값은 실제 바람과 얼마나 맞을까요?</li>
+            <li><span class="tag">복원</span>마찰이 없고 등압선이 곧으면 기압 경도력과 전향력이 평형을 이루는 <em>지균풍</em>이 붑니다. 등압면 일기도에서는 V<sub>g</sub> = (g/f)·Δz/Δn, 등고면(지상) 일기도에서는 V<sub>g</sub> = (1/ρf)·Δp/Δn이고, f = 2Ω sinφ입니다. 등압선이 둥글면 원운동에 필요한 구심력이 더해진 <em>경도풍</em>이 붑니다.</li>
+            <li><span class="tag">설계</span>지도에서 점을 하나 고르면, 그 점을 지나는 등고선에 수직인 방향으로 이웃 등고선까지의 거리 Δn과 등고선이 휘어진 원의 반지름 R을 잽니다. 직선에 가까운 곳, 저기압 골, 고기압 마루에서 각각 두세 점씩 재고, 상층과 지상 일기도를 모두 잽니다.</li>
+            <li><span class="tag">분석</span>저기압 둘레에서는 V = −fR/2 + √(f²R²/4 + fRV<sub>g</sub>)로 경도풍이 지균풍보다 약하고(아지균풍), 고기압 둘레에서는 V = fR/2 − √(f²R²/4 − fRV<sub>g</sub>)로 지균풍보다 강합니다(초지균풍). 그래프에서 대각선(V = V<sub>g</sub>) 아래의 점은 저기압성, 위의 점은 고기압성 곡률입니다. 지상 관측 풍속은 마찰 때문에 지균풍의 절반~70 %쯤에 그칩니다.</li>
+            <li><span class="tag">측정</span>500 hPa 일기도의 남쪽 직선 구간, 동쪽 절리 저기압 둘레, 서남쪽 고기압 둘레에서 각각 재어 V<sub>gr</sub>/V<sub>g</sub> 비를 비교하세요. 같은 Δn이라도 위도가 높은 곳에서 지균풍이 약한 까닭은 무엇인가요? 고기압 중심 가까이에서 재면 왜 경도풍 값이 나오지 않을까요?</li>
+            <li class="warn"><span class="tag">오차·안전</span>Δn은 반드시 등고선에 수직으로 재야 합니다. 비스듬히 재면 간격이 길게 나와 지균풍이 작게 계산됩니다(계통 오차). 곡률 반지름은 일기도 위에서 눈으로 원을 맞추기 때문에 오차가 크고, 실제 바람은 공기 덩어리의 경로(유적선)의 곡률을 따르므로 기압계가 움직이면 등고선의 곡률과 다를 수 있습니다. 적도 부근(위도 약 5° 이내)에서는 f가 작아 지균풍 관계를 쓸 수 없습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">위도와 등고선 간격이 같은 두 지점 A(저기압 둘레, R = 600 km)와 B(고기압 둘레, R = 600 km)에서 지균풍 속력이 모두 15 m/s로 계산되었습니다. 실제 바람은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>두 곳 모두 15 m/s이다<span class="why"><b>등고선이 휘어 있으면</b> 원운동에 필요한 구심력 때문에 기압 경도력과 전향력이 같을 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>A는 15 m/s보다 약하고, B는 15 m/s보다 강하다<span class="why"><b>맞습니다.</b> 저기압에서는 기압 경도력 일부가 구심력으로 쓰여 전향력(풍속)이 작아도 되고, 고기압에서는 전향력이 기압 경도력보다 커야 안쪽으로 휘므로 풍속이 커야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>저기압에서는 공기가 모여들므로 A가 더 강하다<span class="why"><b>수렴은 지상 마찰층의 이야기입니다.</b> 상층에서 등고선을 따라 도는 경도풍은 같은 기압 경도라면 고기압 쪽이 더 강합니다. 다만 실제로는 저기압 둘레의 기압 경도가 훨씬 커서 저기압의 바람이 더 센 경우가 많습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-esys-winds">
+        <header class="card-head">
+          <span class="no">2.5.2</span><h2>바람은 왜 등압선을 따라, 또는 비스듬히 불까?</h2><span class="kind">바람을 일으키는 힘 · 지균풍, 경도풍, 지상풍</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-sq" aria-label="북반구에서 등압선과 공기 덩어리에 작용하는 힘들, 그리고 바람의 방향"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="바람의 종류">
+                <button type="button" class="chip" data-m="geo" aria-pressed="true">지균풍</button>
+                <button type="button" class="chip" data-m="low" aria-pressed="false">경도풍 (저기압)</button>
+                <button type="button" class="chip" data-m="high" aria-pressed="false">경도풍 (고기압)</button>
+                <button type="button" class="chip" data-m="sfc" aria-pressed="false">지상풍</button>
+              </div>
+              <label class="mono">기압 경도 = <output class="g-out">1.0</output> hPa / 100 km</label>
+              <input class="g" type="range" min="0.2" max="4" step="0.1" value="1" aria-label="기압 경도">
+              <label class="mono">위도 = <output class="p-out">37</output>°N</label>
+              <input class="p" type="range" min="10" max="80" step="1" value="37" aria-label="위도">
+              <label class="mono x-r">등압선의 곡률 반지름 = <output class="r-out">800</output> km</label>
+              <input class="r x-r" type="range" min="200" max="2500" step="50" value="800" aria-label="곡률 반지름">
+              <label class="mono x-f">마찰에 의한 풍향의 꺾임 = <output class="f-out">30</output>°</label>
+              <input class="f x-f" type="range" min="5" max="50" step="1" value="30" aria-label="마찰에 의한 풍향의 꺾임">
+              <dl class="nums">
+                <div><dt>지균풍 속력</dt><dd class="n-g">—</dd></div>
+                <div><dt>이 경우의 풍속</dt><dd class="n-v">—</dd></div>
+                <div><dt>힘의 관계</dt><dd class="n-b">—</dd></div>
+              </dl>
+              <p class="fig-note">공기 밀도는 1.0 kg/m³(상공 약 2 km)로 두었습니다. 지상풍은 마찰력이 풍속에 비례한다고 가정했습니다. 화살표 길이는 힘의 크기에 비례합니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>공기는 기압이 높은 곳에서 낮은 곳으로 밀립니다. 그런데 일기도를 보면 상공의 바람은 등압선과 나란하고, 지표의 바람은 등압선을 비스듬히 가로지릅니다. 왜 곧장 저기압 쪽으로 불지 않을까요?</li>
+            <li><span class="tag">복원</span>기압 차이가 공기를 미는 힘이 <em>기압 경도력</em>이고, 등압선 간격이 좁을수록 큽니다. 자전하는 지구에서는 움직이는 공기에 북반구에서 오른쪽으로 <em>전향력</em>이 작용하며, 그 크기는 풍속과 위도의 사인값에 비례합니다.</li>
+            <li><span class="tag">설명</span>마찰이 없는 상공(약 1 km 이상)에서 등압선이 곧으면, 공기는 기압 경도력으로 움직이기 시작해 전향력으로 휘다가 두 힘이 크기가 같고 방향이 반대가 될 때 등압선과 나란히 붑니다. 이것이 <em>지균풍</em>입니다. 등압선이 둥글면 원운동에 필요한 구심력이 더 필요해서, 저기압에서는 기압 경도력이 전향력보다 크고(풍속이 지균풍보다 작음), 고기압에서는 전향력이 더 큽니다(풍속이 지균풍보다 큼). 이 바람이 <em>경도풍</em>입니다.</li>
+            <li><span class="tag">연결</span>지표 근처(<em>마찰층</em>)에서는 마찰력이 바람을 느리게 합니다. 풍속이 줄면 전향력도 줄어, 기압 경도력이 이겨서 바람이 저기압 쪽으로 비스듬히 불어 들어갑니다(<em>지상풍</em>). 그래서 지상 저기압에서는 바람이 반시계 방향으로 돌며 모여들어(수렴) 상승 기류가 생기고, 고기압에서는 시계 방향으로 돌며 퍼져 나갑니다(발산). 마찰이 큰 육지에서는 꺾이는 각이 크고, 바다 위에서는 작습니다.</li>
+            <li><span class="tag">적용</span>지균풍에서 위도를 낮춰 보세요. 같은 기압 경도에서 풍속이 왜 커지나요? 고기압 경도풍에서 기압 경도를 키우면 어느 순간 계산이 성립하지 않는데, 이것이 고기압 중심 근처의 바람이 약한 까닭과 어떻게 이어질까요?</li>
+            <li class="warn"><span class="tag">판단</span>적도 근처(위도 약 5° 이내)에서는 전향력이 거의 0이라 지균풍 관계가 성립하지 않습니다. 또 “바람은 고기압에서 저기압으로 분다”는 말은 지상풍에서만 대략 맞고, 상층 바람은 등압선을 따라 붑니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">북반구 상공에서 등압선이 동서로 곧게 뻗어 있고, 북쪽이 저기압입니다. 지균풍의 방향은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>서쪽에서 동쪽으로 (서풍)<span class="why"><b>맞습니다.</b> 기압 경도력은 북쪽, 전향력은 남쪽이어야 하므로, 오른쪽이 남쪽인 동쪽 방향으로 붑니다. 저기압을 왼쪽에 두고 붑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>남쪽에서 북쪽으로<span class="why"><b>그것은 기압 경도력의 방향입니다.</b> 상공에서는 전향력과 평형을 이뤄 등압선과 나란히 붑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>동쪽에서 서쪽으로 (동풍)<span class="why"><b>이 경우 전향력이 북쪽을 향해</b> 기압 경도력과 같은 방향이 되어 평형을 이룰 수 없습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/labearth/geowind.js"></script>
+<script src="../../js/cards/esys/a-winds.js"></script>
+</body>
+</html>

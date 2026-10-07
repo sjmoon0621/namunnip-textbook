@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/crater.js"
+  ]
+}
+-->
+<style>
+#card-labearth-crater .moon { width: 100%; aspect-ratio: 420 / 250; display: block; cursor: crosshair; touch-action: none; background: #000; }
+#card-labearth-crater .cur { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); margin: 6px 0 0; min-height: 1.5em; }
+</style>
+<article class="card" id="card-labearth-crater">
+  <header class="card-head">
+    <span class="no"></span><h2>달 사진 한 장으로 크레이터의 깊이까지 잴 수 있을까?</h2><span class="kind">실험 · 시야(FOV)와 축척 · 그림자 길이 · 크레이터의 크기와 높이</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="moon" aria-label="명암 경계선 근처의 달 표면 사진(모식). 왼쪽 끝이 명암 경계선이고 크레이터와 산의 그림자가 왼쪽으로 드리움"></canvas>
+      <div class="ctl">
+        <div class="presets tgt" role="group" aria-label="잴 대상">
+          <span class="mono small dim">대상</span>
+          <button type="button" class="chip" data-c="M" aria-pressed="false">M 산</button><button type="button" class="chip" data-c="E" aria-pressed="true">E</button><button type="button" class="chip" data-c="A" aria-pressed="false">A</button><button type="button" class="chip" data-c="C" aria-pressed="false">C</button><button type="button" class="chip" data-c="D" aria-pressed="false">D</button><button type="button" class="chip" data-c="B" aria-pressed="false">B</button>
+        </div>
+        <div class="presets what" role="group" aria-label="잴 것">
+          <span class="mono small dim">끌어서 잴 것</span>
+          <button type="button" class="chip" data-w="d" aria-pressed="true">① 지름 (남북 방향)</button><button type="button" class="chip" data-w="x" aria-pressed="false">② 경계선 → 중심 거리</button><button type="button" class="chip" data-w="l" aria-pressed="false">③ 그림자 길이 (동서)</button>
+        </div>
+        <p class="cur">—</p>
+        <div class="ctl-row">
+          <div><label class="mono">달까지 거리 = <output class="r-out">384,400</output> km</label>
+            <input class="dist" type="range" min="363300" max="405500" step="100" value="384400" aria-label="촬영할 때 달까지 거리"></div>
+          <div><label class="mono small dim">사진에서 위아래가 남북, 왼쪽 끝 점선이 명암 경계선입니다</label></div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>화소 척도 206.3·p/f</dt><dd class="n-ps">—</dd></div>
+          <div><dt>센서 시야 (FOV)</dt><dd class="n-fov">—</dd></div>
+          <div><dt>1화소 = ? km (달 표면)</dt><dd class="n-km">—</dd></div>
+          <div><dt>그림 폭</dt><dd class="n-w">—</dd></div>
+        </dl>
+        <div class="lab-btns"><button class="chip go rec" type="button">세 값으로 계산해 기록</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">참값 보기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot" aria-label="크레이터의 지름과 테두리–바닥 높이차 그래프"></canvas>
+        <p class="fig-note">학교 장비 예: 초점 거리 1000 mm 망원경 + 화소 3.75 μm, 1280×960 화소 카메라. 사진은 실제 달 사진이 아니라, 크레이터 모양(지름–깊이 관계는 Pike 1977의 경험식)과 빛·그림자를 계산해 만든 모식 영상입니다. 첫 사분 무렵이라 명암 경계선이 원반 중심을 지나는 것으로 두었습니다. 마우스나 손가락으로 끌면 길이(화소)가 재어지며, 손으로 재는 만큼 오차가 생깁니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>달 크레이터는 직접 갈 수 없지만, 사진 속 그림자는 높이에 대한 정보를 담고 있습니다. 학교 망원경으로 찍은 사진 한 장으로 크레이터의 지름과 테두리 높이를 구할 수 있을까요?</li>
+      <li><span class="tag">복원</span>작은 각에서 (실제 길이) = (거리) × (각, 라디안)입니다. 망원경 사진에서 화소 하나가 보는 각은 206.3 × (화소 크기 μm) / (초점 거리 mm)″입니다. 태양이 고도 α로 비추면 높이 h인 물체의 그림자 길이 L은 h = L · tan α를 만족합니다.</li>
+      <li><span class="tag">설계</span>① 장비로 화소 척도와 시야(FOV)를 계산하고 달까지 거리로 "1화소 = 몇 km"를 정합니다. ② 남북 방향으로 크레이터 지름을 잽니다(동서 방향은 원근으로 줄어 보임). ③ 명암 경계선에서 크레이터까지 거리 x를 재면, 경계선이 원반 중심을 지날 때 그 지점의 태양 고도는 α = sin⁻¹(x/R<sub>달</sub>)입니다(R<sub>달</sub> = 1737 km). ④ 그림자 길이를 재고, 비스듬히 보이는 만큼 cos α로 나누어 실제 길이로 고칩니다.</li>
+      <li><span class="tag">분석</span>테두리–바닥 높이차 h = (L<sub>사진</sub> / cos α) × tan α입니다. 경계선에 가까울수록 태양이 낮아 그림자가 길게 늘어나므로 같은 높이도 더 정밀하게 잴 수 있습니다. 여러 크레이터의 h를 지름 D에 대해 그리면, 작은 크레이터는 h/D ≈ 0.2인 그릇 모양이고 큰 크레이터는 상대적으로 얕습니다.</li>
+      <li><span class="tag">측정</span>크레이터 하나를 고르고 ①②③을 차례로 끌어서 잰 다음 기록하세요. 다섯 개 대상을 모두 재서 지름과 높이의 관계를 보세요. 그림자 끝이 바닥을 넘어 반대쪽 벽에 닿는 크레이터는 어떻게 되나요? 달까지 거리를 근지점(363,300 km)으로 바꾸면 무엇이 달라지나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>그림자 끝의 경계는 흐릿하고, 사진 한 화소가 1.4 km쯤이라 짧은 그림자일수록 상대 오차가 큽니다. 그림자 끝이 평평한 바닥이 아니라 경사진 벽에 떨어지면 높이를 작게 계산합니다(계통 오차). 경계선에 아주 가까우면 달 표면이 둥글게 휘어 내려가는 효과 때문에 그림자가 h/tan α보다 길어져 높이를 크게 계산합니다(그림자 길이 L에서 약 L²/2R<sub>달</sub>만큼). 경계선이 원반 중심에서 벗어난 위상이면 태양 고도를 구하는 식도 바뀝니다. 해가 진 뒤 달을 찍을 때도 해가 남아 있는 서쪽 하늘로 망원경을 돌리지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 산을 며칠 뒤 다시 찍었더니 명암 경계선이 멀어져 그 산의 태양 고도가 5°에서 15°로 높아졌습니다. 그림자 길이는 대략 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1/3로 짧아진다<span class="why"><b>맞습니다.</b> L = h / tan α이고 tan 5° ≈ 0.087, tan 15° ≈ 0.268이므로 그림자는 약 0.33배가 됩니다. 그래서 높이를 재려면 경계선 근처 사진이 유리합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>그대로이다<span class="why"><b>그림자 길이는 높이만이 아니라 태양 고도에 따라 달라집니다.</b> 그래서 태양 고도를 반드시 함께 구해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3배로 길어진다<span class="why"><b>방향이 반대입니다.</b> 태양이 높을수록 그림자는 짧아집니다. 지구에서도 한낮의 그림자가 가장 짧습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

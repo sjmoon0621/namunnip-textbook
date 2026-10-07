@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/orbit-data.js",
+    "js/cards/labearth/orbit-mass.js"
+  ]
+}
+-->
+<style>
+#card-labearth-orbit-mass .sats { margin-top: 6px; }
+#card-labearth-orbit-mass [hidden] { display: none !important; }
+</style>
+<article class="card" id="card-labearth-orbit-mass">
+  <header class="card-head">
+    <span class="no"></span><h2>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</h2><span class="kind">실험 · 케플러 제3법칙 · 로그 그래프 · 행성의 질량</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <div class="presets sys" role="group" aria-label="중심 천체">
+        <button type="button" class="chip" data-s="earth" aria-pressed="true">지구 — 인공위성과 달</button>
+        <button type="button" class="chip" data-s="jupiter" aria-pressed="false">목성 — 갈릴레이 위성</button>
+      </div>
+      <canvas class="cv-wide" aria-label="중심 천체와 고른 위성의 궤도, 측정 중인 시간"></canvas>
+      <div class="ctl">
+        <div class="presets sats" role="group" aria-label="위성 고르기"></div>
+        <dl class="nums n4">
+          <div><dt class="k-a">궤도 긴반지름 a</dt><dd class="n-a">—</dd></div>
+          <div><dt>기울기 (이론 1.5)</dt><dd class="n-s">—</dd></div>
+          <div><dt>M (맞춤 절편)</dt><dd class="n-m">—</dd></div>
+          <div><dt>M (기울기 1.5 고정)</dt><dd class="n-m15">—</dd></div>
+        </dl>
+        <div class="lab-btns"><button class="chip go meas" type="button">주기 재기</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">참값 보기</button></div>
+        <div class="tbl-host t-earth"></div>
+        <div class="tbl-host t-jupiter" hidden></div>
+        <canvas class="cv-plot" aria-label="log a와 log T 그래프와 맞춤 직선"></canvas>
+        <p class="fig-note">인공위성의 주기·고도는 CelesTrak SATCAT(미 우주군 공개 궤도 자료, 2026년 10월), 달은 NASA 달 자료표, 갈릴레이 위성은 NASA·JPL 위성 궤도 요소의 실제 값입니다. 지구 위성은 지상국에서 연속 세 번 통과한 시각으로 주기를 재며(±0.03분), a는 궤도 제원표 값을 씁니다. 목성 위성은 망원경으로 잰 최대 이각(±1.5″)에 목성까지 거리 4.20 AU(예시 값)를 곱해 a를 구하고, 여러 밤의 관측으로 주기를 잽니다(±0.01일). 그림의 궤도 크기와 움직임 속도는 한 화면에 담으려고 줄인 모식입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>국제 우주 정거장은 약 93분, GPS 위성은 약 12시간, 천리안 2A는 하루에 지구를 한 바퀴 돕니다. 이 높이와 주기 자료만으로 지구의 질량을 구할 수 있을까요? 같은 방법을 목성 위성에 쓰면 목성의 질량은요?</li>
+      <li><span class="tag">복원</span>위성이 반지름 a인 원 궤도를 주기 T로 돌려면 만유인력이 구심력이 되어야 합니다. GMm/a² = m(2π/T)²a에서 <em>T² = (4π²/GM) a³</em>, 곧 케플러 제3법칙입니다. 비례 상수에 중심 천체의 질량 M만 들어 있고 위성의 질량은 없습니다.</li>
+      <li><span class="tag">설계</span>조작 변인은 궤도 긴반지름 a(위성 바꾸기), 종속 변인은 주기 T입니다. a는 지구 중심에서 잰 거리이므로 고도에 지구 반지름 6378 km를 더해야 합니다. 주기는 한 바퀴보다 여러 바퀴를 재서 나눌수록 정확합니다.</li>
+      <li><span class="tag">분석</span>양변에 로그를 취하면 <em>log T = 1.5 log a + ½ log(4π²/GM)</em>입니다. 가로축 log a, 세로축 log T(단위 m, s)로 그리면 기울기 1.5인 직선이 되고, 절편 b에서 M = 4π² / (G · 10<sup>2b</sup>)를 구합니다. 고도가 수백 km에서 38만 km까지 1000배 넘게 달라도 한 직선에 놓이는지 확인하세요. 절편은 자료에서 멀리 떨어진 log a = 0까지 직선을 늘려 읽은 값이라 기울기의 작은 오차가 크게 불어납니다. 기울기가 1.5임을 확인했다면 1.5로 고정하고 절편만 구하는 편이 정확합니다.</li>
+      <li><span class="tag">측정</span>위성을 다섯 개 이상 골라 주기를 재고 그래프의 기울기와 질량을 구하세요. 달을 넣었을 때와 뺐을 때 질량이 얼마나 달라지나요? 목성으로 바꿔 갈릴레이 위성 네 개로 목성의 질량을 구하고 지구의 몇 배인지 비교하세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>낮은 궤도의 위성은 대기 저항 때문에 고도가 조금씩 낮아지고, 지구가 완전한 구가 아니어서 궤도가 흔들립니다. 그래서 같은 위성도 날짜마다 주기가 조금 다릅니다. 달처럼 위성이 무거우면 식의 M은 실제로 M + m이 되어 결과가 약 1.2% 커집니다. 목성 위성의 a는 목성까지 거리의 오차가 그대로 들어가는 계통 오차를 가집니다. 또 공개 목록의 인공위성 고도는 주기와 같은 궤도 요소에서 계산한 값이라, 인공위성 점들은 서로 독립인 측정이 아니라 GM을 다시 확인하는 셈입니다. 독립적인 검증은 달과 목성 위성 점이 맡습니다. 야간 관측 때는 두 명 이상 함께 하고, 망원경을 태양 쪽으로 돌리지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">질량이 지구의 4배이고 반지름은 같은 행성 둘레를 같은 궤도 반지름으로 도는 위성의 주기는 지구 위성의 몇 배일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/2배<span class="why"><b>맞습니다.</b> T² ∝ a³/M이므로 a가 같으면 T ∝ 1/√M입니다. M이 4배이면 T는 1/2배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4배<span class="why"><b>제곱근을 빠뜨렸습니다.</b> 질량에 반비례하는 것은 T가 아니라 T²입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같다<span class="why"><b>케플러 제3법칙의 비례 상수는 중심 천체마다 다릅니다.</b> T²/a³ = 4π²/GM이므로 중심 천체가 무거우면 같은 거리에서 더 빨리 돕니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

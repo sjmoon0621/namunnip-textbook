@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/isochron.js"
+  ]
+}
+-->
+<style>
+#card-labearth-isochron .ic-min { display: none; }
+#card-labearth-isochron .ic-min.on { display: flex; }
+#card-labearth-isochron .ic-row label { font-size: 12.5px; display: inline-flex; gap: 6px; align-items: center; margin: 4px 0; }
+#card-labearth-isochron .ic-const { font-size: 12px; color: var(--ink-2); font-family: var(--f-mono); margin: 4px 0; line-height: 1.6; }
+</style>
+<article class="card" id="card-labearth-isochron">
+  <header class="card-head">
+    <span class="no"></span><h2>어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?</h2><span class="kind">실험 · 절대 연령 · Rb–Sr 등시선 · K–Ar · U–Pb · ¹⁴C</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide ic-cv" aria-label="질량 분석기의 동위 원소 봉우리"></canvas>
+      <div class="ctl">
+        <div class="presets ic-samp" role="group" aria-label="시료">
+          <span class="mono small dim">시료</span>
+          <button class="chip" data-s="gr" aria-pressed="true">화강암</button><button class="chip" data-s="ba" aria-pressed="false">현무암</button><button class="chip" data-s="gn" aria-pressed="false">편마암</button><button class="chip" data-s="ch" aria-pressed="false">유적의 숯</button>
+        </div>
+        <div class="presets ic-meth" role="group" aria-label="방법">
+          <span class="mono small dim">방법</span>
+          <button class="chip" data-m="rbsr" aria-pressed="true">Rb–Sr 등시선</button><button class="chip" data-m="kar" aria-pressed="false">K–Ar</button><button class="chip" data-m="upb" aria-pressed="false">U–Pb (지르콘)</button><button class="chip" data-m="c14" aria-pressed="false">¹⁴C</button>
+        </div>
+        <div class="presets ic-min on" role="group" aria-label="분리한 광물">
+          <span class="mono small dim">분리한 광물</span>
+          <button class="chip" data-x="wr" aria-pressed="true">전암</button><button class="chip" data-x="pl" aria-pressed="false">사장석</button><button class="chip" data-x="kf" aria-pressed="false">정장석</button><button class="chip" data-x="bt" aria-pressed="false">흑운모</button><button class="chip" data-x="ms" aria-pressed="false">백운모</button>
+        </div>
+        <div class="ic-row"><label><input type="checkbox" class="contam"> 숯 시료에 요즘 식물 뿌리가 섞임 (현대 탄소 2 %)</label></div>
+        <div class="lab-btns"><button class="chip go meas" type="button">질량 분석기로 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <canvas class="cv-plot ic-plot" aria-label="등시선 그래프 또는 자원소/모원소 비의 성장 곡선"></canvas>
+        <dl class="nums"><div><dt class="n1-l">등시선 기울기</dt><dd class="n1">—</dd></div><div><dt class="n2-l">초기 ⁸⁷Sr/⁸⁶Sr</dt><dd class="n2">—</dd></div><div><dt>구한 나이</dt><dd class="n3">—</dd></div></dl>
+        <p class="ic-const">반감기: ⁸⁷Rb 496억 년 (λ = 1.3972×10⁻¹¹/년) · ⁴⁰K 12.5억 년 (λ = 5.543×10⁻¹⁰/년, 이 가운데 10.5 %가 ⁴⁰Ar로) · ²³⁸U 44.68억 년 (λ = 1.55125×10⁻¹⁰/년) · ¹⁴C 5730년</p>
+        <p class="fig-note">붕괴 상수는 국제 지질 연대 학계의 권고값(Steiger &amp; Jäger 1977; Rb은 Villa 외 2015)입니다. 네 시료는 실제 암석이 아니라 우리나라 암석의 나이 범위를 본뜬 가상 시료이고, 측정값의 오차(동위 원소 비 0.5~1.5 %, ⁸⁷Sr/⁸⁶Sr ±0.00005)는 대학 실험실 수준으로 둔 모식입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>방사성 동위 원소는 정해진 반감기로 붕괴하므로 시계가 됩니다. 그런데 반감기가 5730년인 시계와 496억 년인 시계는 잴 수 있는 시간 범위가 전혀 다릅니다. 시료마다 어떤 시계를 고르고, 측정값에서 어떻게 나이를 계산할까요?</li>
+      <li><span class="tag">복원</span>모원소 P는 N = N₀e<sup>−λt</sup>로 줄고(λ = ln2 / 반감기), 그만큼 자원소 D가 생깁니다. 처음에 자원소가 없었다면 <em>D/P = e<sup>λt</sup> − 1</em>, 곧 <em>t = (1/λ)·ln(1 + D/P)</em>입니다. ¹⁴C는 살아 있을 때 대기와 같던 비율이 죽은 뒤 줄어드는 양으로 잽니다: t = −(반감기/ln2)·ln(N/N₀).</li>
+      <li><span class="tag">설계</span>시계는 측정 대상의 나이가 반감기의 약 0.001배~몇 배 사이일 때 잘 맞습니다. 너무 젊으면 자원소가 너무 적어 오차에 묻히고, 너무 늙으면 모원소가 남지 않습니다. 또 시료에 그 원소가 들어 있어야 합니다(¹⁴C는 생물 유해, K–Ar은 칼륨이 든 화산암·운모, U–Pb는 우라늄을 품은 지르콘). Rb–Sr 등시선법은 한 암석에서 Rb/Sr 비가 다른 광물 여러 개를 분리해 잽니다.</li>
+      <li><span class="tag">분석</span>처음에 ⁸⁷Sr이 얼마 있었는지 모르는 문제를 등시선이 풀어 줍니다. 같은 마그마에서 굳은 광물은 처음 ⁸⁷Sr/⁸⁶Sr이 같고, 그 뒤 Rb이 많은 광물일수록 ⁸⁷Sr이 더 늘어납니다. 그래서 가로축 ⁸⁷Rb/⁸⁶Sr, 세로축 ⁸⁷Sr/⁸⁶Sr에 찍은 점들이 직선에 놓이고, <em>기울기 = e<sup>λt</sup> − 1</em>, 세로 절편 = 처음 ⁸⁷Sr/⁸⁶Sr입니다.</li>
+      <li><span class="tag">측정</span>화강암에서 광물 다섯 가지를 Rb–Sr로 재어 등시선을 그리고 나이를 구하세요. 같은 화강암을 K–Ar, U–Pb로도 재어 비교하세요. 그다음 현무암, 편마암, 숯에서 네 방법을 모두 시도해 보고, 어느 방법이 왜 실패하는지 표에 적으세요. 편마암의 K–Ar 나이는 왜 다른 방법보다 훨씬 젊게 나올까요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>방사성 시계는 광물이 굳은 뒤 모원소와 자원소가 드나들지 않았다(닫힌 계)는 가정 위에 있습니다. 아르곤은 기체라서 암석이 나중에 300 °C 안팎으로 데워지면 빠져나가 K–Ar 나이가 젊어집니다(계통 오차). ¹⁴C 시료에 요즘 탄소가 2 %만 섞여도 수만 년 된 시료는 수천 년 젊게 나옵니다. 상자를 켜서 확인하세요. 실제 분석에서는 광물 분리에 쓰는 중액과 산(불산 등)이 매우 위험하므로 전문 실험실에서 보호 장비를 갖추고 다룹니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어떤 화산재층 바로 위의 지층에서 나온 매머드 뼈(약 3만 년 전으로 짐작)와 그 화산재층에서 나온 흑운모(약 3억 년 전으로 짐작)의 나이를 재려고 합니다. 알맞은 짝은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>뼈는 ¹⁴C, 흑운모는 K–Ar<span class="why"><b>맞습니다.</b> 3만 년은 ¹⁴C 반감기의 약 5배로 아직 잴 수 있는 범위이고, 흑운모는 칼륨이 많아 3억 년이면 ⁴⁰Ar이 충분히 쌓여 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 ¹⁴C<span class="why"><b>3억 년이면 ¹⁴C가 남지 않습니다.</b> 반감기 5만 번 이상이 지나 원자가 하나도 남지 않으므로 잴 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>뼈는 U–Pb, 흑운모는 ¹⁴C<span class="why"><b>거꾸로입니다.</b> 3만 년이면 ²³⁸U의 납은 반감기의 15만분의 1만큼밖에 쌓이지 않아 측정 오차에 묻히고, 흑운모에는 ¹⁴C가 남아 있지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

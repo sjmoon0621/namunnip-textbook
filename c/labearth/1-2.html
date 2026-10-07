@@ -1,0 +1,119 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>진앙·진원 깊이와 지각 두께 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="여러 관측소의 지진 기록에서 P파와 S파의 도달 시간을 읽어 진원 거리를 구하고, 3원법으로 진앙의 위치와 진원 깊이를 결정하며, 굴절파의 주시 곡선으로 지각의 두께를 계산한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-labearth-epicenter .cv-plot.sq { aspect-ratio: 1 / 1; }
+    #card-labearth-epicenter .pick-out { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); align-self: center; }
+    #card-labearth-epicenter .stations { flex-wrap: wrap; }
+  </style>
+</head>
+<body data-course="labearth" data-sec="1-2">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>진앙·진원 깊이와 지각 두께</h1>
+    <p class="lead">지진이 나면 몇 분 안에 진앙과 깊이가 발표됩니다. 땅속을 들여다보지 않고 어떻게 알았을까요? 2016년 경주 지진을 예로 지진 기록에서 P파와 S파를 직접 읽어 진앙과 진원 깊이를 정하고, 꺾이는 주시 곡선으로 지각이 얼마나 두꺼운지도 계산합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">P파와 S파</span><span class="p">지진파의 굴절</span><span class="p">지구 내부 구조</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-labearth-epicenter"><span class="mono">1.2.1</span>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-1-2">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-labearth-epicenter">
+        <header class="card-head">
+          <span class="no">1.2.1</span><h2>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</h2><span class="kind">실험 · PS시와 3원법 · 굴절파 주시 곡선</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="고른 관측소의 지진 기록 또는 굴절법 단면"></canvas>
+            <div class="ctl">
+              <div class="presets modes" role="group" aria-label="실험 고르기">
+                <button class="chip" type="button" data-mode="epi" aria-pressed="true">A. 2016 경주 지진의 진앙·진원</button>
+                <button class="chip" type="button" data-mode="moho" aria-pressed="false">B. 굴절파로 지각 두께</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">읽기 커서 <output class="cur-out">t = 10.00 s</output></label>
+                  <input class="cur" type="range" min="0" max="45" step="0.05" value="10" aria-label="읽기 커서 위치"></div>
+                <div class="pick-out"></div>
+              </div>
+              <div class="pane-a">
+                <div class="presets stations" role="group" aria-label="관측소"></div>
+                <div class="lab-btns"><button class="chip set-p" type="button">커서를 P 도달로</button><button class="chip set-s" type="button">커서를 S 도달로</button><button class="chip go rec-a" type="button">이 관측소 기록</button><button class="chip truth" type="button" aria-pressed="false">기상청 진앙 보기</button></div>
+                <div class="tbl-host tbl-a"></div>
+              </div>
+              <div class="pane-b" hidden>
+                <div class="lab-btns"><button class="chip go rec-b" type="button">이 거리의 초동 도달 시간 읽기</button></div>
+                <div class="tbl-host tbl-b"></div>
+                <label class="mono">직선을 나눌 거리 <output class="brk-out">180</output> km</label>
+                <input class="brk" type="range" min="80" max="260" step="5" value="180" aria-label="두 직선을 나누는 거리">
+              </div>
+              <div class="lab-btns"><button class="chip clear" type="button">이 실험 기록 지우기</button></div>
+              <canvas class="cv-plot" aria-label="진원 거리 원을 그린 지도 또는 주시 곡선"></canvas>
+              <dl class="nums"><div><dt>공통현 교점 (진앙)</dt><dd class="n-1">—</dd></div><div><dt>진원 깊이</dt><dd class="n-2">—</dd></div><div><dt>기상청 진앙과의 차이</dt><dd class="n-3">—</dd></div></dl>
+              <p class="fig-note">A의 진앙(35.76°N, 129.19°E)과 발생 시각(2016-09-12 20:32:54 KST)은 기상청 발표값이고, 진원 깊이는 약 15 km로 두었습니다. 지진 기록은 지각 평균 속도 V<sub>P</sub> = 6.0 km/s, V<sub>S</sub> = 3.5 km/s로 계산해 잡음을 섞은 모식 파형이며, 관측소 위치는 도시 중심 근처로 단순화했습니다. B는 지각 6.2 km/s, 맨틀 8.0 km/s의 두 층 모형으로 만든 모식 자료입니다(읽기 오차 ±0.08 s). 해안선: Natural Earth (퍼블릭 도메인).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>2016년 9월 12일 저녁, 경주에서 규모 5.8의 지진이 일어났습니다. 여러 관측소의 지진 기록만 가지고 진앙의 위치와 진원의 깊이를 정할 수 있을까요? 또 멀리 떨어진 관측소의 기록으로 땅속 지각의 두께까지 알 수 있을까요?</li>
+            <li><span class="tag">복원</span>P파는 S파보다 빠르므로 진원에서 멀수록 두 파의 도달 시간 차(<em>PS시</em>)가 커집니다. 두 파가 같은 거리 R을 지나므로 R/V<sub>S</sub> − R/V<sub>P</sub> = PS시, 곧 <em>R = k·PS시</em>(오모리 공식, k = V<sub>P</sub>V<sub>S</sub>/(V<sub>P</sub> − V<sub>S</sub>) = 8.4 km/s)입니다. 지진파는 속도가 다른 층의 경계에서 굴절하고, 임계각으로 들어간 파는 경계면을 따라 아래층 속도로 달리다 다시 올라옵니다(<em>굴절파</em>).</li>
+            <li><span class="tag">설계</span>A: 관측소마다 기록에서 P파와 S파가 처음 도착한 순간을 커서로 읽고, PS시로 진원 거리 R을 구합니다. 관측소를 중심으로 반지름 R인 원을 세 개 이상 그리면 원들이 겹치고, 두 원씩의 공통현이 한 점에서 만납니다. 그 점이 진앙입니다. B: 지표의 발파 지점에서 거리를 바꿔 가며 가장 먼저 도착한 파(초동)의 시간을 읽습니다.</li>
+            <li><span class="tag">분석</span>진원이 깊이 h에 있으면 R² = r² + h²(r: 진앙 거리)이므로 원이 한 점이 아니라 겹친 영역을 이룹니다. 진앙에서 h = √(R² − r²)로 깊이를 구합니다. B의 주시 곡선은 기울기 1/V₁인 직접파 직선과 기울기 1/V₂인 굴절파 직선으로 꺾입니다. 두 직선이 만나는 교차 거리 x<sub>c</sub>에서 <em>h = (x<sub>c</sub>/2)·√((V₂ − V₁)/(V₂ + V₁))</em>입니다.</li>
+            <li><span class="tag">측정</span>A: 관측소를 고르고 파형이 갑자기 커지는 첫 순간에 커서를 맞춰 P와 S를 기록하세요. 세 곳 이상 기록하면 지도에 원과 공통현이 그려집니다. 진원 깊이는 몇 km인가요? 가까운 관측소 세 곳과 먼 관측소 세 곳으로 각각 구해 비교해 보세요. B: 10 km부터 300 km까지 재고, 나누는 거리를 꺾이는 곳에 맞춰 지각 두께를 구하세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>S파는 P파 진동 위에 겹쳐 도착해서 시작점을 늦게 읽기 쉽습니다. PS시 0.1 s의 오차는 진원 거리 약 0.8 km의 오차가 되고, 깊이는 R² − r²의 작은 차이로 구하므로 오차가 훨씬 크게 불어납니다. 실제 지각은 속도가 깊이에 따라 달라서 k가 하나로 정해지지 않으며, 이것이 계통 오차가 됩니다. 실제 굴절법 탐사의 발파는 자격을 갖춘 전문가만 하며, 지진이 나면 탁자 밑으로 몸을 보호하고 흔들림이 멈춘 뒤 넓은 곳으로 대피합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">진원이 지표 바로 아래(깊이 0 km)인 지진을 세 관측소에서 기록해 진원 거리로 원을 그렸습니다. 세 원은 어떻게 만날까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>세 원이 한 점(진앙)에서 만난다<span class="why"><b>맞습니다.</b> h = 0이면 R = r이므로 모든 원이 진앙을 지납니다. 원들이 넓게 겹칠수록 진원이 깊다는 뜻입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>세 원이 넓게 겹친다<span class="why"><b>깊은 진원일 때의 모습입니다.</b> 진원 거리 R이 진앙 거리 r보다 커서 원이 진앙을 지나쳐 겹치는 것입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>세 원이 서로 만나지 않는다<span class="why"><b>측정이 맞다면 일어나지 않습니다.</b> 원이 만나지 않는다면 PS시를 너무 짧게 읽었거나 k가 실제보다 작은 것입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/earth/eastasia-land-data.js"></script>
+<script src="../../js/cards/labearth/epicenter.js"></script>
+</body>
+</html>

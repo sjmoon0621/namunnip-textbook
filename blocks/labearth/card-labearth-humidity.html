@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/labearth/thermo.js",
+    "js/cards/labearth/humidity.js"
+  ]
+}
+-->
+<style>
+#card-labearth-humidity .hm-vent { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ink-2); margin: 4px 0 2px; }
+#card-labearth-humidity .hm-state { min-height: 1.4em; }
+</style>
+<article class="card" id="card-labearth-humidity">
+  <header class="card-head">
+    <span class="no"></span><h2>공기를 압축하면 수증기량은 늘어날까, 그대로일까?</h2><span class="kind">실험 · 건습구 습도계 · 수증기압, 혼합비, 비습</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="건구와 습구 온도계, 환기팬, 기압실의 기압계"></canvas>
+      <div class="ctl">
+        <div class="presets cases" role="group" aria-label="공기 시료">
+          <button type="button" class="chip" data-c="room" aria-pressed="true">여름 교실</button>
+          <button type="button" class="chip" data-c="winter" aria-pressed="false">겨울 난방 교실</button>
+          <button type="button" class="chip" data-c="ph7" aria-pressed="false">포항 7월 27일 15시</button>
+          <button type="button" class="chip" data-c="ph1" aria-pressed="false">포항 1월 17일 09시</button>
+        </div>
+        <label class="mono">기압실의 기압 p = <output class="p-out">1010</output> hPa</label>
+        <input class="p" type="range" min="500" max="2000" step="10" value="1010" aria-label="기압실의 기압">
+        <label class="hm-vent"><input class="vent-off" type="checkbox"> 환기팬을 끄고 잰다 (계산은 통풍 건습계 상수 그대로)</label>
+        <div class="lab-btns"><button class="chip go meas" type="button">건구·습구 온도 읽기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <div class="presets ysel" role="group" aria-label="그래프 세로축">
+          <span class="mono small dim">세로축</span>
+          <button class="chip" data-y="e" aria-pressed="true">수증기압 e</button><button class="chip" data-y="w" aria-pressed="false">혼합비 w</button><button class="chip" data-y="q" aria-pressed="false">비습 q</button><button class="chip" data-y="rh" aria-pressed="false">상대 습도</button>
+        </div>
+        <canvas class="cv-plot" aria-label="지금 고른 공기 시료의 기압에 따른 측정값 그래프"></canvas>
+        <dl class="nums">
+          <div><dt>포화 수증기압 es(건구)</dt><dd class="n-es">—</dd></div>
+          <div><dt>포화 혼합비 ws(건구, p)</dt><dd class="n-ws">—</dd></div>
+          <div><dt>이슬점 (계산)</dt><dd class="n-td">—</dd></div>
+        </dl>
+        <p class="small dim hm-state"></p>
+        <p class="fig-note">온도계 눈금은 0.1 °C까지 읽고, 읽을 때마다 ±0.15 °C쯤 흔들립니다. 수증기압은 건습구 공식 e = es(t′) − A·p·(t − t′)로 구합니다(A = 6.62×10⁻⁴ /°C, 통풍 건습계). 기압실은 온도를 일정하게 유지하면서 같은 공기를 압축·팽창시킨다고 가정한 모식 장치입니다. 포항 두 시료의 기온·이슬점·기압은 실제 라디오존데 지상 관측값(NOAA IGRA2, 퍼블릭 도메인)이고, 교실 두 시료는 예시 값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>여름 교실과 겨울 교실 중 어디에 수증기가 더 많을까요? 상대 습도만 보면 답하기 어렵습니다. 또 같은 공기를 높은 산으로 가져가 기압이 낮아지면, 공기 속 수증기의 양은 어떻게 나타내야 변하지 않을까요?</li>
+      <li><span class="tag">복원</span>공기 중 수증기가 내는 부분 압력이 <em>수증기압 e</em>이고, 그 온도에서 최대인 값이 <em>포화 수증기압 es</em>입니다(약 6.11·exp(17.67t/(t+243.5)) hPa). 상대 습도는 e/es입니다. 젖은 거즈로 감싼 습구는 물이 증발하며 열을 빼앗겨 건구보다 낮은 온도를 가리키고, 공기가 건조할수록 차이가 큽니다.</li>
+      <li><span class="tag">설계</span>공기 시료를 고르고, 환기팬을 켠 채 습구 온도가 더 내려가지 않을 때 건구 t와 습구 t′를 읽습니다. 다음에는 같은 시료를 기압실에서 압축·팽창시키며(조작 변인: 기압 p, 통제 변인: 기온과 시료) 다시 잽니다. 종속 변인은 e와 그로부터 계산한 혼합비·비습입니다.</li>
+      <li><span class="tag">분석</span>건조 공기 1 kg에 섞인 수증기의 질량이 <em>혼합비</em> w = 0.622e/(p − e), 습윤 공기 1 kg에 든 수증기의 질량이 <em>비습</em> q = 0.622e/(p − 0.378e)입니다. 절대 습도는 ρv = e/(Rv·T)입니다. 같은 공기를 압축하면 e는 p에 비례해 커지지만(e–p 그래프가 원점을 지나는 직선), w와 q는 그대로입니다. 그래서 공기 덩어리가 오르내려도 응결이 없으면 혼합비가 보존되고, 단열선도의 혼합비선을 쓸 수 있습니다.</li>
+      <li><span class="tag">측정</span>여름 교실 시료를 1010, 950, 900, 850, 800, 700 hPa에서 재어 e, w, q를 비교하세요. 다음에는 2000 hPa까지 압축해 보세요. 어느 기압부터 상대 습도가 100 %가 되고, 그 뒤 혼합비는 어떻게 되나요? 포항의 여름 오후와 겨울 아침 시료의 혼합비는 몇 배 차이 나나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>환기팬을 끄면 습구 주변 공기가 습해져 증발이 덜 되므로 습구가 덜 내려가고, 통풍 상수로 계산한 e와 상대 습도가 실제보다 크게 나옵니다(계통 오차). 거즈가 마르거나 더러워도 같은 쪽으로 틀립니다. 습구가 0 °C 아래로 내려가면 얼음 위 포화 수증기압을 써야 합니다. 유리 온도계는 깨지지 않게 다루고, 수은 온도계가 깨지면 손대지 말고 선생님께 알립니다. 실제 감압·가압 용기는 정격 압력을 넘기지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">기온 20 °C, 수증기압 15 hPa인 공기가 기압 1000 hPa인 해안에 있습니다. 같은 기온과 혼합비를 유지한 채 이 공기를 기압 800 hPa인 산 위로 옮기면?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>수증기가 빠져나가지 않았으므로 수증기압도 15 hPa 그대로다<span class="why"><b>수증기압은 부분 압력입니다.</b> 공기 전체가 팽창하면 수증기 분자도 퍼져 부분 압력이 함께 줄어듭니다(약 12 hPa).</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>수증기압은 약 12 hPa로 줄고, 혼합비는 약 9.5 g/kg으로 그대로다<span class="why"><b>맞습니다.</b> w = 0.622×15/985 ≈ 9.5 g/kg은 질량의 비라서 기압이 바뀌어도 같고, e = w·p/(0.622 + w) ≈ 12 hPa입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기압이 낮아졌으니 상대 습도가 커진다<span class="why"><b>기온이 같으면 es도 같습니다.</b> e가 줄었으므로 상대 습도는 오히려 작아집니다. 실제로 산을 오른 공기는 단열 팽창으로 식어서 상대 습도가 커지는데, 이는 기온이 내려갔기 때문입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
