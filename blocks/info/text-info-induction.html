@@ -1,0 +1,81 @@
+<!--block
+{
+  "type": "text",
+  "short": "재귀 관계 찾기와 반복→재귀 변환"
+}
+-->
+<style>
+#text-info-induction pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+#text-info-induction pre.code .c { color: var(--ink-3); }
+#text-info-induction .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+#text-info-induction .pair pre.code { margin: 0; }
+#text-info-induction .pair .cap { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; }
+#text-info-induction td code, #text-info-induction p code, #text-info-induction li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+@media (max-width: 640px) { #text-info-induction .pair { grid-template-columns: 1fr; } }
+</style>
+<article class="card reading" id="text-info-induction">
+  <header class="card-head">
+    <span class="no"></span><h2>문제 속에서 재귀 관계를 어떻게 찾을까?</h2><span class="kind">읽기 · 재귀 관계 · 귀납 가정 · 반복문을 재귀로 바꾸기</span>
+  </header>
+  <div class="reading-body">
+    <p class="ask">재귀 함수는 짧고 읽기 쉽지만, 처음 보는 문제에서 “자기 자신을 어떻게 부르지?”를 떠올리기는 어렵습니다. 재귀 관계를 찾는 데 쓸 수 있는 질문이 있을까요?</p>
+
+    <h3><span class="mono">1</span>세 가지 질문</h3>
+    <ul class="dots">
+      <li><em>쪼개기</em>: 이 문제를 모양은 같고 크기만 더 작은 문제로 바꿀 수 있는가? (n → n − 1, 리스트 → 첫 원소를 뺀 리스트, n → n // 2)</li>
+      <li><em>조합하기</em>: 작은 문제의 답을 이미 안다고 <em>가정</em>하면, 그것으로 지금 문제의 답을 어떻게 만드는가?</li>
+      <li><em>멈추기</em>: 더 쪼갤 수 없는 가장 작은 문제는 무엇이고, 그 답은 바로 알 수 있는가?</li>
+    </ul>
+    <p>두 번째 질문의 “이미 안다고 가정”이 수학적 귀납법의 <em>귀납 가정</em>입니다. 귀납법에서 “n − 1일 때 성립한다고 가정하면 n일 때도 성립한다”를 보이듯, 재귀 함수에서는 “재귀 호출이 작은 문제를 맞게 풀어 준다고 믿으면 이 함수도 맞다”를 보이면 됩니다. 호출이 몇 단계로 이어지는지 머릿속으로 따라갈 필요가 없습니다.</p>
+
+    <div class="tbl"><table>
+      <thead><tr><th>문제</th><th>재귀 관계 (조합하기)</th><th>기저 조건 (멈추기)</th></tr></thead>
+      <tbody>
+        <tr><th>거듭제곱 aⁿ</th><td><code>power(a, n) = a * power(a, n - 1)</code></td><td>n == 0 → 1</td></tr>
+        <tr><th>리스트 최댓값</th><td><code>max(xs[0], biggest(xs[1:]))</code></td><td>원소가 1개 → 그 원소</td></tr>
+        <tr><th>회문 판별</th><td><code>s[0] == s[-1] and is_pal(s[1:-1])</code></td><td>길이 0 또는 1 → True</td></tr>
+        <tr><th>최대공약수</th><td><code>gcd(a, b) = gcd(b, a % b)</code> (유클리드 호제법)</td><td>b == 0 → a</td></tr>
+        <tr><th>하노이 탑 n개</th><td>위의 n − 1개를 보조 기둥으로 → 가장 큰 원판을 목표 기둥으로 → n − 1개를 목표 기둥으로. 이동 횟수 T(n) = 2T(n − 1) + 1</td><td>n == 0 → 옮길 것 없음 (T(0) = 0)</td></tr>
+      </tbody>
+    </table></div>
+    <p>하노이 탑은 재귀 관계가 특히 잘 드러나는 예입니다. 원판 n개를 옮기는 방법을 직접 떠올리기는 어렵지만, “n − 1개를 옮기는 방법은 이미 안다”고 가정하면 세 단계로 끝납니다. 관계식을 풀면 T(n) = 2ⁿ − 1이므로, 원판 20개면 1,048,575번을 옮겨야 합니다.</p>
+
+    <h3><span class="mono">2</span>회문 판별을 귀납 가정으로 읽기</h3>
+    <pre class="code">def is_pal(s):
+    if len(s) &lt;= 1:                          <span class="c"># 기저 조건: 빈 문자열과 한 글자는 회문</span>
+        return True
+    return s[0] == s[-1] and is_pal(s[1:-1])  <span class="c"># 양 끝이 같고, 가운데가 회문이면 회문</span></pre>
+    <p><code>is_pal(s[1:-1])</code>이 가운데 부분을 옳게 판정한다고 믿으면, 양 끝 글자가 같은지만 더 확인하면 됩니다. 인자의 길이가 매번 2씩 줄어 언젠가 1 이하가 되므로 반드시 기저 조건에 닿습니다. <em>옳게 조합한다</em>와 <em>반드시 끝난다</em>, 두 가지를 확인하면 재귀 함수가 옳다고 말할 수 있습니다.</p>
+
+    <h3><span class="mono">3</span>재귀 관계가 보이지 않을 때: 반복문을 재귀로 바꾸기</h3>
+    <p>관계가 바로 보이지 않으면, 먼저 반복문으로 풀고 그것을 재귀로 옮겨 보는 것도 좋은 연습입니다. 1부터 n까지의 합을 예로 들어 봅니다.</p>
+    <div class="pair">
+      <div><p class="cap">반복</p><pre class="code">def total_loop(n):
+    s = 0
+    for i in range(1, n + 1):
+        s = s + i
+    return s</pre></div>
+      <div><p class="cap">재귀</p><pre class="code">def total_rec(n):
+    if n == 0:
+        return 0
+    return n + total_rec(n - 1)</pre></div>
+    </div>
+    <ul class="dots">
+      <li>반복이 끝나는 조건(더 더할 수가 없음)이 <em>기저 조건</em>이 됩니다.</li>
+      <li>한 바퀴에 하는 일(i를 더함)이 <em>조합</em>이 되고, 남은 반복은 <em>재귀 호출</em>이 맡습니다.</li>
+      <li>반복문에서 바뀌던 변수(i)는 재귀 함수의 <em>매개변수</em>가 됩니다.</li>
+    </ul>
+    <p>누적 변수 s를 매개변수로 넘기는 방법도 있습니다. <code>def total_acc(n, s=0):</code>에서 n == 0이면 s를 돌려주고, 아니면 <code>total_acc(n - 1, s + n)</code>을 돌려줍니다. 반복문의 s를 그대로 옮긴 모양이라 변환하기 쉽습니다.</p>
+
+    <p class="judge"><b>판단</b>재귀 관계가 맞아도 효율은 따로 따져야 합니다. <code>xs[1:]</code>와 <code>s[1:-1]</code> 같은 슬라이싱은 호출할 때마다 새 리스트·문자열을 복사하므로, 길이 n이면 복사에만 n²에 비례하는 시간이 듭니다. 시작 위치를 매개변수로 넘기면(<code>biggest(xs, i)</code>) 복사를 피할 수 있습니다. 같은 작은 문제를 여러 번 푸는 재귀는 더 큰 문제가 되는데, 이것은 다음 절에서 다룹니다.</p>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">자연수 n의 각 자리 숫자의 합(예: 472 → 13)을 구하는 재귀 함수 <code>dsum(n)</code>을 만들려고 합니다. 기저 조건을 “n &lt; 10이면 n을 돌려준다”로 둘 때, 재귀 단계로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><code>return n % 10 + dsum(n // 10)</code><span class="why"><b>맞습니다.</b> 일의 자리(n % 10)를 떼고 남은 수(n // 10)의 자리 합은 재귀 호출이 구해 준다고 믿으면 됩니다. n // 10은 자릿수가 하나 줄어 반드시 10보다 작아집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><code>return n // 10 + dsum(n % 10)</code><span class="why"><b>끝나기는 하지만 답이 틀립니다.</b> n % 10은 한 자리라 곧바로 기저 조건에 닿지만, n // 10(472 → 47)을 자리 합이 아니라 수 그대로 더합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><code>return n % 10 + dsum(n)</code><span class="why"><b>문제가 작아지지 않습니다.</b> 같은 n으로 다시 부르므로 기저 조건에 닿지 못하고 RecursionError가 납니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,72 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i3-git-merge.js"],
+  "short": "브랜치와 병합 충돌"
+}
+-->
+<style>
+#card-info-git-merge canvas { width: 100%; aspect-ratio: 16 / 6; }
+#card-info-git-merge pre.code {
+  font: 12px/1.6 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 8px 0 4px;
+  overflow-x: auto;
+}
+#card-info-git-merge pre.code .l { display: block; padding: 0 12px; white-space: pre; min-height: 1.6em; }
+#card-info-git-merge pre.code .l.mk { color: var(--warn); font-weight: 600; }
+#card-info-git-merge pre.code .l.a { background: #e3ecf6; }
+#card-info-git-merge pre.code .l.b { background: #f6e6c6; }
+#card-info-git-merge pre.code .l.ok-a { box-shadow: inset 3px 0 0 #3f74b5; }
+#card-info-git-merge pre.code .l.ok-b { box-shadow: inset 3px 0 0 #e0a02a; }
+#card-info-git-merge .side { font-size: 13px; }
+#card-info-git-merge .side p { font-family: var(--f-mono); font-size: 11.5px; margin: 6px 0 2px; }
+#card-info-git-merge .side label { display: flex; gap: 7px; align-items: baseline; margin: 3px 0; cursor: pointer; line-height: 1.4; }
+#card-info-git-merge .side input { accent-color: var(--ink); }
+#card-info-git-merge .runbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 2px; }
+#card-info-git-merge .status { font-size: 13.5px; margin: 6px 0; min-height: 1.5em; }
+</style>
+<article class="card" id="card-info-git-merge">
+  <header class="card-head">
+    <span class="no"></span><h2>두 사람이 같은 파일을 고치면 git은 어떻게 합칠까?</h2><span class="kind">오픈소스 협업 · 브랜치, 병합, 충돌</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="커밋 그래프. main 브랜치와 fix-empty 브랜치가 갈라졌다가 병합된다"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div class="side sa">
+            <p style="color:#3f74b5">main 브랜치 (민지가 고침)</p>
+          </div>
+          <div class="side sb">
+            <p style="color:#b07a14">fix-empty 브랜치 (준호가 고침)</p>
+          </div>
+        </div>
+        <div class="runbar">
+          <button type="button" class="chip b-merge">git merge fix-empty</button>
+          <button type="button" class="chip b-res" data-r="a" disabled>main 쪽 선택</button>
+          <button type="button" class="chip b-res" data-r="b" disabled>fix-empty 쪽 선택</button>
+          <button type="button" class="chip b-res" data-r="both" disabled>두 변경을 직접 합치기</button>
+        </div>
+        <p class="status">브랜치마다 고칠 줄을 고른 뒤 병합하세요.</p>
+        <pre class="code" aria-label="병합 결과 파일 stats.py"></pre>
+        <p class="fig-note">stats.py의 처음 내용(공통 조상)에서 두 브랜치가 갈라졌습니다. 파란 띠는 main의 변경, 노란 띠는 fix-empty의 변경입니다. 실제 git처럼 같은 줄이나 바로 붙은 줄을 양쪽이 서로 다르게 고치면 충돌로 처리합니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>오픈소스 프로젝트에는 서로 만난 적 없는 수백 명이 코드를 고칩니다. 두 사람이 같은 파일을 동시에 고치면, 한 사람의 수정이 다른 사람의 수정을 덮어써 버리지 않을까요?</li>
+      <li><span class="tag">복원</span>git은 파일의 변경 이력을 <em>커밋</em> 단위로 저장하는 버전 관리 도구입니다. <em>브랜치</em>는 커밋 이력의 갈래로, 각자 자기 브랜치에서 작업하면 남의 작업과 섞이지 않습니다. GitHub, GitLab 같은 서비스는 git 저장소를 인터넷에 두고 함께 쓰게 해 줍니다.</li>
+      <li><span class="tag">설명</span><em>병합</em>(merge)할 때 git은 두 브랜치의 마지막 커밋과 둘이 갈라진 공통 조상, 세 가지를 비교합니다(3-way merge). 한쪽만 고친 부분은 고친 쪽을 자동으로 택하고, 양쪽이 같은 곳을 서로 다르게 고쳤으면 어느 것을 택할지 판단하지 못해 <em>충돌</em>(conflict)을 알립니다. 충돌한 곳에는 &lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt; 표시가 들어가며, 사람이 내용을 보고 고친 뒤 커밋해야 병합이 끝납니다.</li>
+      <li><span class="tag">연결</span>오픈소스 협업에서는 보통 저장소를 복제(fork)하거나 브랜치를 만들어 고친 뒤 <em>풀 리퀘스트</em>(pull request)로 병합을 요청합니다. 다른 사람이 코드를 검토(code review)하고 자동 테스트가 통과하면 병합합니다. 작은 단위로 자주 커밋하고 자주 병합할수록 충돌이 작고 풀기 쉽습니다.</li>
+      <li><span class="tag">적용</span>main에서 5줄(반올림), fix-empty에서 7줄(빈 리스트로 시험)만 고르고 병합해 보세요. 그다음 양쪽 모두 5줄을 고르고 병합하면 무엇이 달라지나요? 충돌을 세 가지 방법으로 풀어 결과를 비교하고, main의 1줄과 fix-empty의 2줄처럼 붙어 있는 두 줄을 각각 고치면 어떻게 되는지도 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>충돌이 없다고 병합 결과가 옳다는 보장은 없습니다. 두 사람이 서로 다른 줄을 고쳤어도, 합쳐진 코드가 함께 동작하지 않을 수 있습니다. 예를 들어 5줄 충돌을 ‘main 쪽 선택’으로 풀면, 충돌 없이 들어온 fix-empty의 7줄 print(average([]))는 실행하자마자 ZeroDivisionError를 냅니다. 그래서 병합한 뒤에는 반드시 테스트를 다시 돌립니다. ‘한쪽 선택’으로 충돌을 지우면 다른 사람의 수정이 조용히 사라질 수 있으니, 두 변경의 의도를 확인하고 합쳐야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">민지와 준호가 같은 파일에서 각각 10번째 줄과 40번째 줄을 고쳤고, git merge가 충돌 없이 끝났습니다. 다음 중 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>충돌이 없었으므로 병합된 프로그램은 올바르게 동작한다<span class="why"><b>git은 줄의 글자만 비교합니다.</b> 민지가 바꾼 함수 이름을 준호의 코드가 옛 이름으로 부르고 있다면 충돌 없이 합쳐져도 실행하면 오류가 납니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>두 수정이 모두 반영되었고, 함께 동작하는지는 테스트로 확인해야 한다<span class="why"><b>맞습니다.</b> 떨어진 줄의 변경은 자동으로 모두 합쳐지지만, 의미가 맞는지는 테스트와 코드 검토가 맡습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>나중에 커밋한 사람의 파일이 앞사람의 파일을 덮어썼다<span class="why"><b>3-way merge는 파일 전체를 덮어쓰지 않습니다.</b> 공통 조상과 비교해 각자 바꾼 부분을 모두 살립니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

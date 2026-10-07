@@ -1,0 +1,215 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>재귀 구조 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="주어진 문제에서 더 작은 같은 문제와의 재귀 관계를 수학적 귀납법의 관점으로 찾아내고, 기저 조건과 재귀 단계를 갖춘 재귀 함수로 프로그램을 작성한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-callstack .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+    #card-info-callstack .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-callstack .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+    #card-info-callstack .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-callstack .code .ln.off { opacity: .35; text-decoration: line-through; }
+    #card-info-callstack .code .k { color: #2f6a8a; font-weight: 600; }
+    #card-info-callstack .code .b { color: var(--forest); }
+    #card-info-callstack .code .s { color: var(--warn); }
+    #card-info-callstack .code .d { color: #8a5a00; }
+    #card-info-callstack .code .c { color: var(--ink-3); }
+    #card-info-callstack .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+    #card-info-callstack .s-pos { margin-left: auto; align-self: center; }
+    #card-info-callstack canvas { width: 100%; aspect-ratio: 16 / 10; }
+    @media (max-width: 640px) { #card-info-callstack canvas { aspect-ratio: 1 / 1; } }
+    #card-info-callstack .out-row { display: flex; gap: 10px; align-items: baseline; margin-top: 8px; font-family: var(--f-mono); font-size: 13px; }
+    #card-info-callstack .out { padding: 2px 10px; background: var(--night); color: #e6f0e2; min-width: 8em; }
+    #card-info-callstack .out.err { color: #ffb59b; }
+    #card-info-callstack .toggles { margin-top: 6px; }
+    #card-info-callstack .qcode { padding: 8px 14px; margin: 6px 0 10px; }
+    #text-info-induction pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+    #text-info-induction pre.code .c { color: var(--ink-3); }
+    #text-info-induction .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    #text-info-induction .pair pre.code { margin: 0; }
+    #text-info-induction .pair .cap { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; }
+    #text-info-induction td code, #text-info-induction p code, #text-info-induction li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+    @media (max-width: 640px) { #text-info-induction .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-course="info" data-sec="1-2">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>재귀 구조</h1>
+    <p class="lead">러시아 인형 마트료시카는 열면 더 작은 같은 인형이 나오고, 가장 작은 인형은 더 열리지 않습니다. 재귀 함수도 같은 모양의 더 작은 문제로 일을 넘기다가 가장 작은 문제에서 멈춥니다. 정렬, 탐색, 트리 처리처럼 앞으로 배울 알고리즘 상당수가 이 구조로 쓰입니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">함수의 호출과 반환값</span><span class="p">수학적 귀납법</span><span class="p">수열의 귀납적 정의</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-callstack"><span class="mono">1.2.1</span>재귀 호출 스택과 기저 조건</a></li>
+        <li><a href="#text-info-induction"><span class="mono">1.2.2</span>재귀 관계 찾기와 반복→재귀 변환</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-1-2">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-callstack">
+        <header class="card-head">
+          <span class="no">1.2.1</span><h2>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</h2><span class="kind">재귀 함수 · 기저 조건 · 호출 스택 · 수학적 귀납법</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="왼쪽: 아래에서 위로 쌓이는 호출 스택. 오른쪽: 호출마다 식이 전개되고 값이 채워지는 과정"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="재귀 함수">
+                <button type="button" class="chip" data-f="fact" aria-pressed="true">팩토리얼</button>
+                <button type="button" class="chip" data-f="rsum" aria-pressed="false">리스트 합</button>
+                <button type="button" class="chip" data-f="bin" aria-pressed="false">이진수 변환</button>
+              </div>
+              <label class="mono"><span class="av-name">n</span> = <output class="av-out">4</output></label>
+              <input class="av" type="range" min="0" max="8" step="1" value="4" aria-label="인자 크기">
+              <div class="toggles"><label><input type="checkbox" class="nobase"> 기저 조건(2–3번 줄) 지우기</label></div>
+              <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+              <div class="lab-btns i1-step">
+                <button type="button" class="chip s-first">처음</button>
+                <button type="button" class="chip s-prev">◀ 이전</button>
+                <button type="button" class="chip go s-next">다음 ▶</button>
+                <button type="button" class="chip s-play">재생</button>
+                <span class="mono small dim s-pos"></span>
+              </div>
+              <p class="note"></p>
+              <dl class="nums">
+                <div><dt>지금 스택 깊이</dt><dd class="d-now">0</dd></div>
+                <div><dt>최대 깊이</dt><dd class="d-max">0</dd></div>
+                <div><dt>호출 횟수</dt><dd class="d-calls">0</dd></div>
+              </dl>
+              <div class="out-row"><span class="dim">출력</span><span class="out">—</span></div>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span><code>fact</code> 함수는 몸체 안에서 다시 <code>fact</code>를 부릅니다. 부른 함수가 또 자기를 부르면 끝없이 이어질 것 같은데, 실제로는 24라는 답을 내고 끝납니다. 언제, 어떻게 멈추는 것일까요?</li>
+            <li><span class="tag">복원</span>함수를 호출하면 새 프레임이 생기고, 함수가 끝나면 프레임이 사라지며 값이 호출한 곳으로 돌아갑니다. 수학에서 n! = n × (n − 1)!, 0! = 1입니다.</li>
+            <li><span class="tag">설명</span>자기 자신을 호출하는 함수를 <em>재귀 함수</em>라 합니다. 재귀 함수에는 두 부분이 꼭 있어야 합니다. 더 쪼개지 않고 바로 답을 내는 <em>기저 조건</em>과, 문제를 크기가 더 작은 같은 문제로 바꾸어 자기를 부르고 그 결과를 조합하는 <em>재귀 단계</em>입니다. 호출이 이어질 때마다 프레임이 <em>호출 스택</em>에 쌓이고, 각 프레임은 자기만의 n을 가집니다. 기저 조건에 닿으면 가장 나중에 쌓인 프레임부터 값을 돌려주며 차례로 빠집니다.</li>
+            <li><span class="tag">연결</span>재귀 함수는 <em>수학적 귀납법</em>과 같은 구조입니다. 기저 조건은 귀납법의 첫 단계(n = 0일 때 성립)이고, 재귀 호출 <code>fact(n - 1)</code>은 <em>귀납 가정</em>(“n − 1에 대해서는 맞다”)에 해당합니다. 그래서 재귀 함수를 설계할 때는 호출 과정을 끝까지 따라가지 않고, “더 작은 문제의 답은 재귀 호출이 이미 맞게 구해 준다”고 믿은 뒤 그 답으로 지금 문제를 어떻게 푸는지만 정하면 됩니다. 이 관계를 식으로 쓴 것이 <em>재귀 관계</em> f(n) = n × f(n − 1)입니다.</li>
+            <li><span class="tag">적용</span>세 함수를 실행하며 오른쪽 식의 전개를 보세요. 각 함수에서 재귀 관계는 무엇인가요? 인자를 바꾸며 최대 스택 깊이를 기록하세요. 팩토리얼과 리스트 합은 인자에 비례해 깊어지는데, 이진수 변환은 n을 64까지 키워도 왜 7을 넘지 않나요? ‘기저 조건 지우기’를 켜고 세 함수가 각각 어떻게 실패하는지 비교하세요.</li>
+            <li class="warn"><span class="tag">판단</span>기저 조건이 있어도 인자가 그 조건에 <em>다가가지 않으면</em> 끝나지 않습니다. <code>fact(-1)</code>은 n이 −2, −3, …으로 작아지기만 해서 n == 0에 닿지 못합니다. 조건을 <code>n &lt;= 0</code>으로 쓰거나 음수를 미리 걸러야 합니다. 또 파이썬은 스택 깊이를 기본 1000 정도로 제한하므로, 깊이가 입력 크기에 비례하는 재귀는 큰 입력에서 RecursionError를 낼 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">print가 재귀 호출 <em>다음</em>에 있습니다. <code>count_down(3)</code>은 무엇을 출력할까요?</p>
+          <pre class="code qcode">def count_down(n):
+          if n == 0:
+              return
+          count_down(n - 1)
+          print(n)
+
+      count_down(3)</pre>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3, 2, 1 순서로 한 줄씩<span class="why"><b>print가 재귀 호출보다 앞에 있을 때의 결과입니다.</b> 여기서는 각 프레임이 아래 호출이 모두 끝난 뒤에야 print합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1, 2, 3 순서로 한 줄씩<span class="why"><b>맞습니다.</b> 스택의 맨 위(n = 1)가 가장 먼저 print를 실행하고 빠지므로, 나중에 호출된 프레임이 먼저 출력합니다(후입선출).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0, 1, 2, 3 순서로 한 줄씩<span class="why"><b>기저 조건의 동작을 놓친 답입니다.</b> n == 0이면 print에 닿기 전에 return하므로 0은 출력되지 않습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-induction">
+        <header class="card-head">
+          <span class="no">1.2.2</span><h2>문제 속에서 재귀 관계를 어떻게 찾을까?</h2><span class="kind">읽기 · 재귀 관계 · 귀납 가정 · 반복문을 재귀로 바꾸기</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">재귀 함수는 짧고 읽기 쉽지만, 처음 보는 문제에서 “자기 자신을 어떻게 부르지?”를 떠올리기는 어렵습니다. 재귀 관계를 찾는 데 쓸 수 있는 질문이 있을까요?</p>
+
+          <h3><span class="mono">1</span>세 가지 질문</h3>
+          <ul class="dots">
+            <li><em>쪼개기</em>: 이 문제를 모양은 같고 크기만 더 작은 문제로 바꿀 수 있는가? (n → n − 1, 리스트 → 첫 원소를 뺀 리스트, n → n // 2)</li>
+            <li><em>조합하기</em>: 작은 문제의 답을 이미 안다고 <em>가정</em>하면, 그것으로 지금 문제의 답을 어떻게 만드는가?</li>
+            <li><em>멈추기</em>: 더 쪼갤 수 없는 가장 작은 문제는 무엇이고, 그 답은 바로 알 수 있는가?</li>
+          </ul>
+          <p>두 번째 질문의 “이미 안다고 가정”이 수학적 귀납법의 <em>귀납 가정</em>입니다. 귀납법에서 “n − 1일 때 성립한다고 가정하면 n일 때도 성립한다”를 보이듯, 재귀 함수에서는 “재귀 호출이 작은 문제를 맞게 풀어 준다고 믿으면 이 함수도 맞다”를 보이면 됩니다. 호출이 몇 단계로 이어지는지 머릿속으로 따라갈 필요가 없습니다.</p>
+
+          <div class="tbl"><table>
+            <thead><tr><th>문제</th><th>재귀 관계 (조합하기)</th><th>기저 조건 (멈추기)</th></tr></thead>
+            <tbody>
+              <tr><th>거듭제곱 aⁿ</th><td><code>power(a, n) = a * power(a, n - 1)</code></td><td>n == 0 → 1</td></tr>
+              <tr><th>리스트 최댓값</th><td><code>max(xs[0], biggest(xs[1:]))</code></td><td>원소가 1개 → 그 원소</td></tr>
+              <tr><th>회문 판별</th><td><code>s[0] == s[-1] and is_pal(s[1:-1])</code></td><td>길이 0 또는 1 → True</td></tr>
+              <tr><th>최대공약수</th><td><code>gcd(a, b) = gcd(b, a % b)</code> (유클리드 호제법)</td><td>b == 0 → a</td></tr>
+              <tr><th>하노이 탑 n개</th><td>위의 n − 1개를 보조 기둥으로 → 가장 큰 원판을 목표 기둥으로 → n − 1개를 목표 기둥으로. 이동 횟수 T(n) = 2T(n − 1) + 1</td><td>n == 0 → 옮길 것 없음 (T(0) = 0)</td></tr>
+            </tbody>
+          </table></div>
+          <p>하노이 탑은 재귀 관계가 특히 잘 드러나는 예입니다. 원판 n개를 옮기는 방법을 직접 떠올리기는 어렵지만, “n − 1개를 옮기는 방법은 이미 안다”고 가정하면 세 단계로 끝납니다. 관계식을 풀면 T(n) = 2ⁿ − 1이므로, 원판 20개면 1,048,575번을 옮겨야 합니다.</p>
+
+          <h3><span class="mono">2</span>회문 판별을 귀납 가정으로 읽기</h3>
+          <pre class="code">def is_pal(s):
+          if len(s) &lt;= 1:                          <span class="c"># 기저 조건: 빈 문자열과 한 글자는 회문</span>
+              return True
+          return s[0] == s[-1] and is_pal(s[1:-1])  <span class="c"># 양 끝이 같고, 가운데가 회문이면 회문</span></pre>
+          <p><code>is_pal(s[1:-1])</code>이 가운데 부분을 옳게 판정한다고 믿으면, 양 끝 글자가 같은지만 더 확인하면 됩니다. 인자의 길이가 매번 2씩 줄어 언젠가 1 이하가 되므로 반드시 기저 조건에 닿습니다. <em>옳게 조합한다</em>와 <em>반드시 끝난다</em>, 두 가지를 확인하면 재귀 함수가 옳다고 말할 수 있습니다.</p>
+
+          <h3><span class="mono">3</span>재귀 관계가 보이지 않을 때: 반복문을 재귀로 바꾸기</h3>
+          <p>관계가 바로 보이지 않으면, 먼저 반복문으로 풀고 그것을 재귀로 옮겨 보는 것도 좋은 연습입니다. 1부터 n까지의 합을 예로 들어 봅니다.</p>
+          <div class="pair">
+            <div><p class="cap">반복</p><pre class="code">def total_loop(n):
+          s = 0
+          for i in range(1, n + 1):
+              s = s + i
+          return s</pre></div>
+            <div><p class="cap">재귀</p><pre class="code">def total_rec(n):
+          if n == 0:
+              return 0
+          return n + total_rec(n - 1)</pre></div>
+          </div>
+          <ul class="dots">
+            <li>반복이 끝나는 조건(더 더할 수가 없음)이 <em>기저 조건</em>이 됩니다.</li>
+            <li>한 바퀴에 하는 일(i를 더함)이 <em>조합</em>이 되고, 남은 반복은 <em>재귀 호출</em>이 맡습니다.</li>
+            <li>반복문에서 바뀌던 변수(i)는 재귀 함수의 <em>매개변수</em>가 됩니다.</li>
+          </ul>
+          <p>누적 변수 s를 매개변수로 넘기는 방법도 있습니다. <code>def total_acc(n, s=0):</code>에서 n == 0이면 s를 돌려주고, 아니면 <code>total_acc(n - 1, s + n)</code>을 돌려줍니다. 반복문의 s를 그대로 옮긴 모양이라 변환하기 쉽습니다.</p>
+
+          <p class="judge"><b>판단</b>재귀 관계가 맞아도 효율은 따로 따져야 합니다. <code>xs[1:]</code>와 <code>s[1:-1]</code> 같은 슬라이싱은 호출할 때마다 새 리스트·문자열을 복사하므로, 길이 n이면 복사에만 n²에 비례하는 시간이 듭니다. 시작 위치를 매개변수로 넘기면(<code>biggest(xs, i)</code>) 복사를 피할 수 있습니다. 같은 작은 문제를 여러 번 푸는 재귀는 더 큰 문제가 되는데, 이것은 다음 절에서 다룹니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">자연수 n의 각 자리 숫자의 합(예: 472 → 13)을 구하는 재귀 함수 <code>dsum(n)</code>을 만들려고 합니다. 기저 조건을 “n &lt; 10이면 n을 돌려준다”로 둘 때, 재귀 단계로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><code>return n % 10 + dsum(n // 10)</code><span class="why"><b>맞습니다.</b> 일의 자리(n % 10)를 떼고 남은 수(n // 10)의 자리 합은 재귀 호출이 구해 준다고 믿으면 됩니다. n // 10은 자릿수가 하나 줄어 반드시 10보다 작아집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><code>return n // 10 + dsum(n % 10)</code><span class="why"><b>끝나기는 하지만 답이 틀립니다.</b> n % 10은 한 자리라 곧바로 기저 조건에 닿지만, n // 10(472 → 47)을 자리 합이 아니라 수 그대로 더합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><code>return n % 10 + dsum(n)</code><span class="why"><b>문제가 작아지지 않습니다.</b> 같은 n으로 다시 부르므로 기저 조건에 닿지 못하고 RecursionError가 납니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/info/i1-kit.js"></script>
+<script src="../../js/cards/info/i1-callstack.js"></script>
+</body>
+</html>

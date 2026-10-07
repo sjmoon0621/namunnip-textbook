@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/fusi/f3-crowd.js"],
+  "short": "시민 과학자의 집단 분류"
+}
+-->
+<style>
+#card-fusi-crowd .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+#card-fusi-crowd .row label { font-size: 13px; display: inline-flex; gap: 6px; align-items: center; }
+</style>
+<article class="card" id="card-fusi-crowd">
+  <header class="card-head">
+    <span class="no"></span><h2>전문가가 아닌 사람 여럿이 모이면 믿을 만한 과학 자료가 될까?</h2><span class="kind">시민 과학 · 다수결과 가중 합의 · 은하 분류</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="왼쪽: 은하 100개에 대한 시민들의 합의 결과(틀린 은하 표시). 오른쪽: 은하 한 개당 분류 횟수에 따른 합의 정확도"></canvas>
+      <div class="ctl">
+        <label class="mono">성실한 참여자 한 명의 정확도 = <output class="p-out">70</output> %</label>
+        <input class="p" type="range" min="55" max="95" step="1" value="70" aria-label="성실한 참여자의 정확도">
+        <label class="mono">아무렇게나 누르는 참여자의 비율 = <output class="q-out">20</output> %</label>
+        <input class="q" type="range" min="0" max="60" step="1" value="20" aria-label="무성의한 참여자 비율">
+        <label class="mono">은하 한 개를 분류한 사람 수 = <output class="k-out">9</output>명</label>
+        <input class="k" type="range" min="0" max="20" step="1" value="4" aria-label="은하 한 개당 분류 횟수">
+        <div class="presets" role="group" aria-label="합치는 방법">
+          <button type="button" class="chip" data-w="0" aria-pressed="true">단순 다수결</button>
+          <button type="button" class="chip" data-w="1" aria-pressed="false">신뢰도 가중 (검증용 은하로 참여자 평가)</button>
+        </div>
+        <div class="row"><label><input type="checkbox" class="bias"> 어려운 은하 15 %에서 모두가 같은 쪽으로 착각함</label></div>
+        <dl class="nums">
+          <div><dt>합의의 정확도 (계산)</dt><dd class="n-a">—</dd></div>
+          <div><dt>한 사람의 평균 정확도</dt><dd class="n-1">—</dd></div>
+          <div><dt>은하 90만 개에 필요한 분류 횟수</dt><dd class="n-n">—</dd></div>
+        </dl>
+        <p class="fig-note">모식 모형입니다. 은하는 나선과 타원 두 종류로만 나누고, 참여자는 서로 독립적으로 판단한다고 보았습니다. 아무렇게나 누르는 참여자는 50 % 확률로 맞힙니다. 왼쪽 그림은 이 조건으로 한 번 시뮬레이션한 결과, 오른쪽 곡선은 확률로 계산한 정확도입니다. 90만 개는 갤럭시 주에서 처음 분류한 은하 수의 대략값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>2007년 영국 옥스퍼드 대학 등의 연구진은 슬론 디지털 전천 탐사(SDSS)가 찍은 은하 약 90만 개의 모양을 분류하기 위해 ‘갤럭시 주(Galaxy Zoo)’라는 웹사이트를 열었습니다. 첫해에만 10만 명이 넘는 시민이 참여해 수천만 건을 분류했습니다. 한 사람 한 사람은 전문가보다 자주 틀릴 텐데, 결과를 믿을 수 있을까요?</li>
+      <li><span class="tag">복원</span>서로 독립적인 시행에서 성공 확률이 p이면, k번 중 성공 횟수는 이항 분포를 따릅니다. p가 0.5보다 조금만 커도, 시행 횟수가 많아지면 성공이 과반일 확률은 1에 가까워집니다(18세기 콩도르세가 배심원 문제로 제시).</li>
+      <li><span class="tag">설명</span>그래서 시민 과학 프로젝트는 같은 대상을 여러 사람에게 맡기고 결과를 합칩니다. 정답을 아는 검증용 자료로 참여자마다 신뢰도를 매겨, 믿을 만한 사람의 판단에 더 큰 무게를 두기도 합니다. 의견이 갈린 비율 자체도 ‘이 은하는 분류하기 어렵다’는 정보가 되어 함께 공개됩니다.</li>
+      <li><span class="tag">연결</span>시민 과학은 천문학만의 것이 아닙니다. 탐조인의 관찰 기록을 모으는 이베드(eBird), 게임으로 단백질 구조를 푸는 폴드잇(Foldit)처럼, 인터넷과 스마트폰, 자료 분석 기술이 결합하면서 시민이 자료 수집과 분석에 참여하는 길이 넓어졌습니다. 기계 학습이 발달한 지금은 시민이 붙인 분류를 인공지능의 학습 자료로 쓰기도 합니다.</li>
+      <li><span class="tag">적용</span>정확도 70 %, 무성의한 참여자 20 %에서 분류한 사람 수를 1명부터 늘려 보세요. 합의 정확도가 95 %를 넘는 데 몇 명이 필요한가요? 신뢰도 가중으로 바꾸면 몇 명으로 줄어드나요? 마지막으로 ‘같은 쪽으로 착각함’을 켜고 사람 수를 최대로 늘려 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>“사람이 많으면 무조건 정확해진다”는 것은 오개념입니다. 다수결은 각자의 실수가 서로 독립적일 때만 실수를 지워 줍니다. 모두가 같은 쪽으로 착각하는 공통 편향은 사람을 늘려도 남습니다. 실제로 갤럭시 주에서는 나선 은하의 회전 방향을 한쪽으로 더 많이 고르는 편향이 발견되었고, 연구진은 좌우를 뒤집은 사진을 보여 주는 실험으로 이를 확인하고 보정했습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 시민 과학 앱에서 새 소리를 듣고 종을 고르게 했더니, 참여자 대부분이 생김새가 비슷한 두 종 X, Y를 늘 X로 고른다는 것이 밝혀졌습니다. 가장 알맞은 대응은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>참여자 수를 두 배로 늘린다<span class="why"><b>공통 편향은 사람을 늘려도 사라지지 않습니다.</b> 모두가 같은 쪽으로 틀리면 다수결도 같은 쪽으로 틀립니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>전문가가 확인한 녹음으로 편향의 크기를 재어 보정하고, 두 종을 구별하는 안내를 앱에 넣는다<span class="why"><b>맞습니다.</b> 정답을 아는 검증 자료로 편향을 재고, 참여자 교육과 자료 보정을 함께 하는 것이 시민 과학의 품질 관리 방법입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>시민의 자료는 믿을 수 없으므로 모두 버린다<span class="why"><b>지나친 결론입니다.</b> 편향이 있는 부분만 알아내 보정하면 나머지 자료는 충분히 쓸 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

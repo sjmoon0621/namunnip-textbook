@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "text",
+  "short": "스택·큐 연산 비용과 라이브러리"
+}
+-->
+<style>
+#text-info-adt pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+#text-info-adt pre.code .c { color: var(--ink-3); }
+#text-info-adt td code, #text-info-adt p code, #text-info-adt li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+</style>
+<article class="card reading" id="text-info-adt">
+  <header class="card-head">
+    <span class="no"></span><h2>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</h2><span class="kind">읽기 · 추상 자료형 · 연산 비용 · deque</span>
+  </header>
+  <div class="reading-body">
+    <p class="ask">스택과 큐는 “넣고 꺼내는 순서”만 정한 규칙입니다. 규칙은 같아도 구현에 따라 속도와 메모리가 달라집니다. 실제 프로그램에서는 무엇을 골라 써야 할까요?</p>
+
+    <h3><span class="mono">1</span>순서 규칙이 쓰이는 곳</h3>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>스택 (후입선출)</th><th>큐 (선입선출)</th></tr></thead>
+      <tbody>
+        <tr><th>규칙</th><td>가장 최근 것을 먼저 처리</td><td>가장 오래 기다린 것을 먼저 처리</td></tr>
+        <tr><th>예</th><td>함수 호출 스택, 실행 취소(Ctrl+Z), 브라우저 뒤로 가기, 괄호 짝 검사, 수식 계산, 미로의 되돌아가기</td><td>프린터 대기열, 키보드 입력 버퍼, 운영체제의 작업 대기열, 메시지 처리, 가까운 곳부터 넓혀 가는 탐색(너비 우선 탐색)</td></tr>
+        <tr><th>핵심 연산</th><td>push, pop, peek(맨 위 보기), is_empty</td><td>enqueue, dequeue, peek(맨 앞 보기), is_empty</td></tr>
+      </tbody>
+    </table></div>
+    <p>이처럼 연산의 이름과 뜻만 정하고 내부 구현은 감춘 자료 구조를 <em>추상 자료형</em>이라 합니다. 쓰는 쪽은 연산만 알면 되고, 구현은 더 빠른 것으로 바꿔도 프로그램의 나머지는 고칠 필요가 없습니다.</p>
+
+    <h3><span class="mono">2</span>구현에 따른 연산 비용</h3>
+    <p>n은 들어 있는 원소 수입니다. ‘한 번’은 원소 수와 관계없이 거의 일정한 시간, ‘n에 비례’는 원소가 많을수록 오래 걸린다는 뜻입니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>구현</th><th>뒤에 넣기</th><th>뒤에서 꺼내기</th><th>앞에서 꺼내기</th><th>i번째 보기</th></tr></thead>
+      <tbody>
+        <tr><th>파이썬 list</th><td>한 번 (평균)</td><td>한 번</td><td>n에 비례</td><td>한 번</td></tr>
+        <tr><th>원형 배열</th><td>한 번 (가득 차면 불가)</td><td>한 번</td><td>한 번</td><td>한 번</td></tr>
+        <tr><th>연결 리스트</th><td>한 번 (tail 유지)</td><td>단일 연결이면 n에 비례</td><td>한 번</td><td>n에 비례</td></tr>
+        <tr><th>collections.deque</th><td>한 번</td><td>한 번</td><td>한 번</td><td>양 끝은 빠르고 가운데는 느림</td></tr>
+      </tbody>
+    </table></div>
+    <p>list의 <code>append</code>가 ‘평균’ 한 번인 까닭은, 미리 잡아 둔 칸이 다 차면 더 큰 공간을 잡아 전체를 옮기기 때문입니다. 이 일은 가끔만 일어나서 평균을 내면 한 번 정도의 비용이 됩니다.</p>
+
+    <h3><span class="mono">3</span>문제를 풀 때는 라이브러리로</h3>
+    <pre class="code">stack = []                   <span class="c"># 스택: 리스트 그대로</span>
+stack.append('a'); stack.append('b')
+stack.pop()                  <span class="c"># 'b'</span>
+
+from collections import deque
+q = deque()                  <span class="c"># 큐: deque</span>
+q.append('a'); q.append('b')
+q.popleft()                  <span class="c"># 'a'</span>
+len(q) == 0                  <span class="c"># 비었는지 확인 (또는 not q)</span></pre>
+    <p>원리를 익힐 때는 리스트로 직접 만들어 보고, 실제 문제를 풀 때는 이렇게 검증된 라이브러리를 씁니다. <code>queue.Queue</code>도 있지만, 이것은 여러 스레드가 함께 쓰도록 잠금 장치를 더한 것이라 한 프로그램 안의 일반적인 큐로는 deque가 알맞습니다.</p>
+
+    <p class="judge"><b>판단</b>“연결 리스트가 배열보다 항상 빠르다”는 틀린 말입니다. 연결 리스트는 앞에서 넣고 빼기가 빠른 대신, i번째 원소를 찾으려면 head부터 따라가야 하고 노드마다 참조를 저장할 메모리가 더 듭니다. 어떤 연산을 자주 하는지에 따라 알맞은 구현이 달라집니다.</p>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">문서 편집기의 ‘실행 취소’ 기록을 저장하려 합니다. 기록은 최대 100개만 남기고, 넘치면 <em>가장 오래된</em> 기록을 버립니다. 가장 알맞은 구현은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>리스트를 큐로 써서 앞에서 꺼낸다<span class="why"><b>실행 취소는 가장 최근 기록부터 꺼내므로 기본은 스택입니다.</b> 큐처럼 앞에서 꺼내면 가장 오래된 작업이 취소됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>deque를 써서 뒤에 넣고 뒤에서 꺼내며, 넘치면 앞에서 버린다<span class="why"><b>맞습니다.</b> 실행 취소는 스택처럼 뒤에서 넣고 꺼내고, 오래된 기록은 앞에서 버려야 하므로 양쪽 끝이 모두 빠른 deque가 알맞습니다. <code>deque(maxlen=100)</code>은 이 일을 자동으로 해 줍니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>리스트를 스택으로 쓰고, 넘치면 <code>pop(0)</code>으로 버린다<span class="why"><b>동작은 맞지만 넘칠 때마다 원소 99개를 옮깁니다.</b> 작업이 잦으면 비효율적입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

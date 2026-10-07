@@ -1,0 +1,173 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>트리·그래프로 문제 해결 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="트리와 그래프의 탐색(너비 우선·깊이 우선)과 이진 탐색 트리를 활용해 최단 경로 찾기, 빠른 검색 같은 문제를 효율적으로 해결하는 프로그램을 작성한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-maze .cv-wide { cursor: pointer; }
+    #card-info-maze .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+    #card-info-maze .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-maze .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-maze .todo { font: 11.5px/1.5 var(--f-mono); color: var(--ink-2); margin-top: 6px; min-height: 3em; word-break: break-all; }
+    #card-info-maze .todo .end { color: var(--ink-3); }
+    #card-info-maze .key i { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--rule); vertical-align: -2px; margin: 0 4px 0 8px; }
+    #card-info-bst .cv-tree { width: 100%; aspect-ratio: 16 / 10; }
+    #card-info-bst .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+    #card-info-bst .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-bst .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-bst .ord { font: 11.5px/1.5 var(--f-mono); color: var(--ink-2); }
+  </style>
+</head>
+<body data-course="info" data-sec="2-4">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>트리·그래프로 문제 해결</h1>
+    <p class="lead">지도 앱은 수많은 교차로 가운데 가장 가까운 길을 순식간에 찾고, 사전 앱은 수십만 개의 단어에서 한 단어를 바로 꺼냅니다. 데이터를 그래프와 트리로 저장해 두면, 어떤 순서로 살펴보느냐에 따라 같은 문제를 훨씬 적은 일로 풀 수 있습니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">스택과 큐</span><span class="p">인접 리스트로 그래프 구현</span><span class="p">재귀 함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-maze"><span class="mono">2.4.1</span>미로 찾기: BFS와 DFS</a></li>
+        <li><a href="#card-info-bst"><span class="mono">2.4.2</span>이진 탐색 트리로 찾기</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-2-4">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-maze">
+        <header class="card-head">
+          <span class="no">2.4.1</span><h2>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</h2><span class="kind">그래프 탐색 · BFS와 DFS · 격자 미로</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="15×9 격자 미로. 칸을 누르면 벽을 세우거나 허뭅니다. 꺼낸 칸에는 출발점에서 그 칸까지 온 경로의 길이가 적힙니다."></canvas>
+            <p class="legend key"><i style="background:#dfe9d6"></i>꺼내서 방문한 칸(숫자 = 따라온 경로 길이)<i style="background:#f3dcb0"></i>todo에 들어 있는 칸<i style="background:var(--ink)"></i>벽</p>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="탐색 방법">
+                <button type="button" class="chip" data-mode="BFS" aria-pressed="true">BFS (큐)</button>
+                <button type="button" class="chip" data-mode="DFS" aria-pressed="false">DFS (스택)</button>
+                <span class="mono small dim">&nbsp;미로</span>
+                <button type="button" class="chip" data-map="a" aria-pressed="true">갈림길 미로</button>
+                <button type="button" class="chip" data-map="open" aria-pressed="false">빈 방</button>
+                <button type="button" class="chip" data-map="tree" aria-pressed="false">고리 없는 미로 (새로)</button>
+              </div>
+              <div class="lab-btns"><button type="button" class="chip go step">한 칸 꺼내기</button><button type="button" class="chip run" aria-pressed="false">끝까지 실행</button><button type="button" class="chip reset">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>꺼낸 횟수</dt><dd class="n-pop">0</dd></div>
+                <div><dt>todo에 든 칸 수</dt><dd class="n-todo">1</dd></div>
+                <div><dt>찾은 경로 / 최단</dt><dd class="n-len">—</dd></div>
+              </dl>
+              <div class="todo" aria-live="polite"></div>
+              <pre class="i2c" aria-label="파이썬 탐색 코드. 방금 실행한 줄이 강조됩니다."></pre>
+              <p class="fig-note">격자의 칸이 정점, 이웃한 두 빈칸 사이가 간선인 그래프입니다. 이웃은 위·오른쪽·아래·왼쪽 순서로 넣습니다. 두 방법의 코드는 꺼내는 한 줄(popleft와 pop)만 다릅니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>출발점 S에서 도착점 G까지 가장 적게 움직이는 길을 찾고 싶습니다. 사람은 눈으로 훑어보지만, 컴퓨터는 칸을 하나씩 확인할 수밖에 없습니다. 어떤 순서로 칸을 확인해야 처음 찾은 길이 곧 가장 짧은 길이 될까요?</li>
+            <li><span class="tag">복원</span>그래프는 정점과 간선으로 이루어지고, 각 정점의 이웃을 인접 리스트로 저장합니다. <em>큐</em>는 먼저 넣은 것을 먼저 꺼내고(FIFO), <em>스택</em>은 나중에 넣은 것을 먼저 꺼냅니다(LIFO). 파이썬에서는 collections.deque 하나로 둘 다 쓸 수 있습니다.</li>
+            <li><span class="tag">설명</span>탐색은 "아직 볼 칸 목록(todo)"에서 하나를 꺼내 방문하고, 그 칸의 이웃을 다시 목록에 넣는 일을 되풀이합니다. 목록을 큐로 쓰면 출발점에서 1칸 떨어진 칸을 모두 본 뒤에 2칸 떨어진 칸을 보게 되어, 물결처럼 퍼지는 <em>너비 우선 탐색(BFS)</em>이 됩니다. 스택으로 쓰면 방금 넣은 칸부터 파고드는 <em>깊이 우선 탐색(DFS)</em>이 됩니다. prev 사전에는 각 칸에 처음 들어올 때 거쳐 온 칸을 적어 두어, 도착한 뒤 거꾸로 따라가면 경로가 나옵니다.</li>
+            <li><span class="tag">연결</span>BFS는 거리 순서대로 칸을 꺼내므로, 간선의 길이가 모두 같은 그래프에서 G를 처음 꺼낸 순간의 경로가 최단 경로입니다. DFS는 길을 찾기는 하지만 가장 짧다는 보장이 없습니다. 두 방법 모두 칸 하나를 한 번만 방문하므로, 칸이 V개, 연결이 E개이면 작업량은 V + E에 비례합니다.</li>
+            <li><span class="tag">적용</span>갈림길 미로에서 BFS와 DFS를 각각 끝까지 실행하고, 찾은 경로 길이와 최단 거리를 비교하세요. 빈 방에서는 방문한 칸의 숫자가 어떻게 퍼지나요? todo에 든 칸 수가 가장 클 때는 BFS와 DFS 중 어느 쪽이 더 큰가요? 칸을 눌러 벽을 세워 DFS가 최단 경로를 찾게 만들 수 있나요? 고리 없는 미로에서는 왜 두 방법의 경로 길이가 같을까요?</li>
+            <li class="warn"><span class="tag">판단</span>"DFS는 틀린 방법"이 아닙니다. 길이 있는지 확인하거나, 연결된 부분을 모두 칠하거나, 모든 경우를 따지는 백트래킹에는 DFS가 자연스럽고 메모리도 적게 쓰는 경우가 많습니다. 또 BFS가 최단을 보장하는 것은 간선 길이가 모두 같을 때뿐입니다. 길마다 걸리는 시간이 다른 도로망에서는 데이크스트라 알고리즘처럼 우선순위 큐를 쓰는 방법이 필요합니다. 고리가 없는 미로는 그래프로 보면 트리이고, 트리에서는 두 정점을 잇는 경로가 하나뿐입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">지하철 노선도에서 "환승을 포함해 가장 적은 역을 거치는 경로"를 찾으려 합니다. 역은 정점, 이웃한 두 역은 간선입니다. 알맞은 방법은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>출발역에서 BFS를 하고 도착역을 처음 꺼낼 때 멈춘다<span class="why"><b>맞습니다.</b> 거치는 역의 수만 세면 모든 간선의 길이가 1인 그래프이므로 BFS가 최단 경로를 줍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>DFS로 처음 찾은 경로가 가장 짧다<span class="why"><b>DFS는 한 방향으로 깊이 들어가므로</b> 처음 찾은 경로가 멀리 돌아가는 길일 수 있습니다. 미로 카드에서 직접 확인할 수 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>역 사이 이동 시간이 서로 달라도 BFS의 답이 가장 빠른 경로이다<span class="why"><b>조건이 바뀌었습니다.</b> 역의 수가 가장 적은 경로와 시간이 가장 짧은 경로는 다를 수 있습니다. 간선마다 길이가 다르면 데이크스트라 같은 방법이 필요합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-info-bst">
+        <header class="card-head">
+          <span class="no">2.4.2</span><h2>15개 중 하나를 몇 번 비교해서 찾을까?</h2><span class="kind">트리 활용 · 이진 탐색 트리 · 넣는 순서와 높이</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-tree" aria-label="15개의 키로 만든 이진 탐색 트리. 찾는 값과 비교한 노드가 차례로 칠해집니다."></canvas>
+            <p class="ord"></p>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="키를 넣는 순서">
+                <button type="button" class="chip" data-ord="even" aria-pressed="true">가운데부터 넣기</button>
+                <button type="button" class="chip" data-ord="rand" aria-pressed="false">무작위 순서 (새로)</button>
+                <button type="button" class="chip" data-ord="sorted" aria-pressed="false">작은 것부터 차례로 넣기</button>
+              </div>
+              <label class="mono">찾는 값 key = <output class="k-out">65</output></label>
+              <input class="k" type="range" min="10" max="90" step="1" value="65" aria-label="찾는 값">
+              <div class="lab-btns"><button type="button" class="chip go step">한 번 비교</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">다시 찾기</button></div>
+              <dl class="nums n4">
+                <div><dt>트리에서 비교 횟수</dt><dd class="n-c">0</dd></div>
+                <div><dt>리스트를 앞에서부터 볼 때</dt><dd class="n-l">—</dd></div>
+                <div><dt>트리 높이 (층 수)</dt><dd class="n-h">—</dd></div>
+                <div><dt>평균 비교 (트리 / 리스트)</dt><dd class="n-a">—</dd></div>
+              </dl>
+              <pre class="i2c" aria-label="파이썬 탐색 코드"></pre>
+              <p class="fig-note">노드는 key, left, right 세 속성을 가진 객체입니다. 새 키는 루트에서 같은 비교를 따라 내려가 비어 있는 자리에 붙입니다. 리스트 칸은 넣은 순서 그대로 저장한 리스트를 앞에서부터 확인할 때의 비교 횟수입니다. 평균은 15개 키를 한 번씩 찾을 때의 값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>회원 번호 15개를 리스트에 넣어 두고 하나를 찾으면, 운이 나쁘면 15번을 모두 확인해야 합니다. 회원이 100만 명이면 어떨까요? 저장하는 모양을 바꾸면 확인 횟수를 줄일 수 있을까요?</li>
+            <li><span class="tag">복원</span>트리는 고리가 없는 연결 그래프이고, 이진 트리는 각 노드의 자식이 최대 둘입니다. 노드 객체가 왼쪽·오른쪽 자식을 가리키도록 하거나, 리스트의 인덱스로 자식을 표시해 구현할 수 있습니다.</li>
+            <li><span class="tag">설명</span><em>이진 탐색 트리(BST)</em>는 모든 노드에서 "왼쪽 아래의 키는 모두 작고, 오른쪽 아래의 키는 모두 크다"는 규칙을 지킵니다. 찾을 때는 루트에서 시작해 값이 같으면 멈추고, 작으면 왼쪽, 크면 오른쪽으로 내려갑니다. 한 번 비교할 때마다 남은 후보의 한쪽 가지 전체가 통째로 빠집니다.</li>
+            <li><span class="tag">연결</span>비교 횟수는 많아야 트리의 높이(층 수)입니다. 키 n개가 고르게 퍼지면 높이는 약 log₂n이라 15개는 4층, 100만 개도 약 20층이면 됩니다. 그러나 높이는 키를 넣은 순서가 정합니다. 정렬된 순서로 넣으면 한쪽으로만 자라 리스트와 같아집니다.</li>
+            <li><span class="tag">적용</span>가운데부터 넣은 트리에서 65, 15, 52를 찾아 비교 횟수를 세어 보세요. 트리에 없는 값은 어디에서 멈추나요? 같은 15개를 작은 것부터 차례로 넣으면 트리 높이와 평균 비교 횟수가 어떻게 되나요? 무작위 순서를 여러 번 눌러 높이가 대개 몇 층인지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>"트리에 넣기만 하면 빨라진다"는 틀린 생각입니다. 빠른 이유는 높이가 낮기 때문이고, 높이는 넣는 순서에 따라 4층에서 15층까지 달라집니다. 그래서 실제 데이터베이스나 언어 라이브러리는 넣고 뺄 때마다 모양을 고르게 다시 맞추는 균형 트리(AVL 트리, 레드-블랙 트리, B-트리 등)를 씁니다. 파이썬에서 값이 있는지만 빠르게 확인하려면 set이나 dict가 보통 더 간단합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">도서관이 책 번호 1023개를 <b>번호가 작은 순서대로</b> 이진 탐색 트리에 하나씩 넣었습니다(균형 맞추기 없음). 한 책을 찾을 때 비교 횟수의 최댓값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10번<span class="why"><b>고르게 퍼진 트리라면 맞습니다</b>(2¹⁰ − 1 = 1023). 하지만 정렬된 순서로 넣으면 고르게 퍼지지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1023번<span class="why"><b>맞습니다.</b> 새 키가 매번 가장 크므로 계속 오른쪽에만 붙어 높이 1023의 한 줄이 됩니다. 리스트를 앞에서부터 찾는 것과 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>512번<span class="why"><b>평균과 최댓값을 섞었습니다.</b> 한 줄 트리에서 평균은 약 512번이지만 마지막 책은 1023번 비교해야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-maze.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-bst.js"></script>
+</body>
+</html>

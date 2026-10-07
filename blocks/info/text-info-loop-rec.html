@@ -1,0 +1,73 @@
+<!--block
+{
+  "type": "text",
+  "short": "반복과 재귀, 언제 무엇을 쓸까"
+}
+-->
+<style>
+#text-info-loop-rec pre.code { margin: 0; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+#text-info-loop-rec pre.code .c { color: var(--ink-3); }
+#text-info-loop-rec .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 12px; }
+#text-info-loop-rec .pair .cap { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; }
+#text-info-loop-rec td code, #text-info-loop-rec p code, #text-info-loop-rec li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+@media (max-width: 640px) { #text-info-loop-rec .pair { grid-template-columns: 1fr; } }
+</style>
+<article class="card reading" id="text-info-loop-rec">
+  <header class="card-head">
+    <span class="no"></span><h2>반복과 재귀, 어떤 문제에 어느 쪽이 맞을까?</h2><span class="kind">읽기 · 반복구조와 재귀구조의 비교 · 명시적 스택 · 재귀 한도</span>
+  </header>
+  <div class="reading-body">
+    <p class="ask">반복으로 풀 수 있는 문제는 재귀로도 풀 수 있고, 그 반대도 마찬가지입니다. 그렇다면 둘 중 무엇을 고를지는 취향의 문제일까요?</p>
+
+    <h3><span class="mono">1</span>두 방식은 생각하는 방향이 다릅니다</h3>
+    <p><em>반복구조</em>는 “지금 상태에서 한 걸음 나아가려면 무엇을 바꾸는가”를 묻습니다. 변수(합계, 인덱스, 앞의 두 항 등)를 직접 두고, 반복할 때마다 고쳐 나갑니다. <em>재귀구조</em>는 “이 문제를 같은 모양의 더 작은 문제로 바꾸면 무엇이 남는가”를 묻습니다. 상태는 각 호출의 매개변수와 지역 변수에 나뉘어 담기고, 언어가 호출 스택으로 관리해 줍니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>반복구조</th><th>재귀구조</th></tr></thead>
+      <tbody>
+        <tr><th>설계</th><td>작은 답에서 큰 답으로 쌓아 올림(상향식)</td><td>큰 문제를 작은 문제로 쪼갬(하향식)</td></tr>
+        <tr><th>상태 관리</th><td>변수를 프로그래머가 직접 갱신</td><td>호출마다 프레임이 따로 보관</td></tr>
+        <tr><th>추가 메모리</th><td>대개 변수 몇 개</td><td>스택 깊이만큼의 프레임</td></tr>
+        <tr><th>실행 비용</th><td>반복 한 번은 가벼움</td><td>호출 한 번마다 프레임을 만들고 지우는 비용</td></tr>
+        <tr><th>잘 맞는 문제</th><td>차례로 훑기, 누적, 정해진 횟수의 갱신</td><td>트리·폴더처럼 구조가 중첩된 자료, 분할 정복, 백트래킹</td></tr>
+        <tr><th>흔한 실수</th><td>경계값(off-by-one), 갱신 순서</td><td>기저 조건 누락, 중복 계산, 깊이 초과</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3><span class="mono">2</span>구조가 중첩되면 재귀가 자연스럽습니다</h3>
+    <p><code>[1, [2, 3], [[4]], 5]</code>처럼 리스트 안에 리스트가 몇 겹으로 들어 있는지 모를 때, 안의 정수를 모두 더해 봅니다.</p>
+    <div class="pair">
+      <div><p class="cap">재귀</p><pre class="code">def deep_sum(x):
+    if isinstance(x, int):
+        return x
+    total = 0
+    for y in x:
+        total += deep_sum(y)
+    return total</pre></div>
+      <div><p class="cap">반복 + 직접 만든 스택</p><pre class="code">def deep_sum_loop(x):
+    total, stack = 0, [x]
+    while stack:
+        y = stack.pop()
+        if isinstance(y, int):
+            total += y
+        else:
+            stack.extend(y)
+    return total</pre></div>
+    </div>
+    <p>두 함수 모두 15를 돌려줍니다. 재귀 쪽은 “원소가 정수면 그 값, 리스트면 각 원소의 합”이라는 정의를 그대로 옮겼습니다. 반복 쪽은 앞으로 처리할 것을 담는 <em>스택</em>을 직접 만들었습니다. 재귀 함수가 호출 스택에 맡기던 일을 손으로 하는 것입니다. 이처럼 어떤 재귀든 명시적 스택을 쓰면 반복으로 바꿀 수 있지만, 코드가 길어지고 의도가 덜 드러날 수 있습니다. 스택은 다음 단원에서 자세히 다룹니다.</p>
+
+    <h3><span class="mono">3</span>단순히 차례로 훑는 일은 반복이 낫습니다</h3>
+    <p>1부터 n까지 더하기를 <code>return n + total_rec(n - 1)</code>로 쓰면 깊이가 n이 됩니다. 파이썬의 재귀 한도는 기본 1000이라(<code>sys.getrecursionlimit()</code>로 확인) <code>total_rec(5000)</code>은 RecursionError를 냅니다. 같은 일을 하는 <code>for</code>문은 n이 백만이어도 문제없습니다. 일부 언어는 마지막 동작이 재귀 호출뿐인 <em>꼬리 재귀</em>를 반복으로 바꿔 주지만, 파이썬은 이 최적화를 하지 않습니다.</p>
+    <p>하노이 탑은 반대 예입니다. 재귀로는 몇 줄이면 되지만, 반복으로 쓰려면 “가장 작은 원판을 한 방향으로 돌리고, 그 사이에 가능한 다른 이동을 한다” 같은 규칙을 따로 찾아내야 합니다. 이동 횟수는 두 방식 모두 2ⁿ − 1로 같고, 깊이는 n이라 한도 걱정도 없습니다.</p>
+
+    <p class="judge"><b>판단</b>선택의 기준은 취향이 아니라 문제의 구조와 크기입니다. 문제가 스스로 닮은 구조이고 깊이가 작으면 재귀가 읽기 쉽고 오류도 적습니다. 깊이가 입력 크기에 비례해 커지거나, 같은 부분 문제를 되풀이한다면 반복이나 메모이제이션으로 바꾸어야 합니다. 어느 쪽이든 <em>옳은지</em>(기저 조건·종료 조건)와 <em>얼마나 걸리는지</em>(호출 수·반복 수)를 따로 따져야 합니다.</p>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">다음 판단 중 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>폴더 안의 하위 폴더까지 모든 파일 크기를 더할 때, 폴더 깊이가 수십 단계 이하라면 재귀로 쓰는 것이 자연스럽다<span class="why"><b>맞습니다.</b> 폴더는 “폴더 안에 폴더”가 들어 있는 중첩 구조라 재귀 정의와 잘 맞고, 깊이가 작아 재귀 한도도 문제가 되지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1부터 1,000,000까지의 합은 <code>total_rec(n)</code> 재귀로 써도 문제없다<span class="why"><b>깊이가 백만이 됩니다.</b> 파이썬의 기본 재귀 한도(1000)를 훨씬 넘어 RecursionError가 납니다. 반복문이나 공식 n(n + 1)/2를 씁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>재귀로만 풀 수 있고 반복으로는 바꿀 수 없는 문제가 있다<span class="why"><b>그럴듯하지만 틀렸습니다.</b> 호출 스택이 하던 일을 리스트로 만든 스택이 대신하면 어떤 재귀도 반복으로 바꿀 수 있습니다. 다만 코드가 더 복잡해질 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

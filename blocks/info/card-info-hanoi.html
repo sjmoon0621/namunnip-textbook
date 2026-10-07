@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i2-kit.js", "js/cards/info/i2-hanoi.js"],
+  "short": "하노이 탑으로 보는 분해"
+}
+-->
+<style>
+#card-info-hanoi .cv-wide { cursor: pointer; }
+#card-info-hanoi .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin: 0; overflow-x: auto; white-space: pre; }
+#card-info-hanoi .i2c .ln { display: block; padding: 0 10px; }
+#card-info-hanoi .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-hanoi .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+#card-info-hanoi .stack { font: 11.5px/1.5 var(--f-mono); border: 1px solid var(--rule); padding: 6px 8px; min-height: 9em; display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+#card-info-hanoi .stack li.cur { color: var(--forest); font-weight: 700; }
+#card-info-hanoi .two .cap { font: 11px var(--f-mono); color: var(--ink-3); margin-bottom: 3px; }
+#card-info-hanoi .msg { font-size: 13px; color: var(--ink-2); min-height: 1.6em; }
+@media (max-width: 640px) { #card-info-hanoi .two { grid-template-columns: 1fr; } }
+</style>
+<article class="card" id="card-info-hanoi">
+  <header class="card-head">
+    <span class="no"></span><h2>원판 n개 문제를 원판 n−1개 문제로 바꿀 수 있을까?</h2><span class="kind">문제 분해 · 부분 문제와 전체 문제의 관계 · 하노이 탑</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="기둥 A, B, C와 원판. 기둥을 눌러 맨 위 원판을 고르고, 다른 기둥을 눌러 옮길 수 있습니다. 가장 큰 원판은 주황색입니다."></canvas>
+      <p class="msg" aria-live="polite"></p>
+      <div class="ctl">
+        <label class="mono">원판 수 n = <output class="n-out">3</output></label>
+        <input class="n" type="range" min="1" max="7" step="1" value="3" aria-label="원판 수">
+        <div class="lab-btns"><button type="button" class="chip go step">재귀 한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+        <dl class="nums">
+          <div><dt>옮긴 횟수 / 최소</dt><dd class="n-m">0</dd></div>
+          <div><dt>호출 스택 깊이</dt><dd class="n-d">0</dd></div>
+          <div><dt>관계</dt><dd>T(n) = 2T(n−1) + 1</dd></div>
+        </dl>
+        <div class="two">
+          <div><p class="cap">호출 스택 (아래가 먼저 부른 것)</p><ol class="stack"></ol></div>
+          <div><p class="cap">파이썬 코드</p><pre class="i2c" aria-label="파이썬 하노이 탑 코드"></pre></div>
+        </div>
+        <p class="fig-note">규칙: 한 번에 원판 하나만, 맨 위의 원판만 옮기고, 작은 원판 위에 큰 원판을 놓을 수 없습니다. 목표는 A의 원판을 모두 C로 옮기는 것입니다. 기둥을 눌러 직접 풀어 볼 수도 있습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>원판 3개는 손으로 몇 번 해 보면 풀립니다. 그런데 원판이 7개, 20개로 늘면 어떤 순서로 옮겨야 할지 막막합니다. 원판 수가 몇 개이든 통하는 풀이를 어떻게 찾을 수 있을까요?</li>
+      <li><span class="tag">복원</span>재귀 함수는 자기 자신을 더 작은 입력으로 호출하고, 기저 사례에서 멈춥니다. 함수를 부를 때마다 호출 스택에 새 칸이 쌓이고, 끝나면 빠집니다.</li>
+      <li><span class="tag">설명</span>가장 큰 원판에 주목합니다. 이것을 A에서 C로 옮기려면 그 순간 나머지 n−1개가 모두 B에 있어야 합니다. 그러면 전체 문제는 세 부분으로 <em>분해</em>됩니다. ① 원판 n−1개를 A에서 B로 옮기기, ② 가장 큰 원판을 A에서 C로 옮기기, ③ 원판 n−1개를 B에서 C로 옮기기. ①과 ③은 원판 수만 하나 적고 모양이 같은 <em>부분 문제</em>입니다. 원판 1개는 그냥 옮기면 되는 기저 사례입니다.</li>
+      <li><span class="tag">연결</span>전체 문제와 부분 문제 사이의 관계를 식으로 쓰면 이동 횟수 T(n) = 2T(n−1) + 1, T(1) = 1입니다. 이 관계를 따라가면 T(n) = 2ⁿ − 1이 되고, 이보다 적게 옮기는 방법은 없습니다. 분해할 때 찾아야 하는 것은 ① 부분 문제가 무엇인지, ② 부분 문제의 답으로 전체 답을 어떻게 만드는지, ③ 더 쪼개지 않는 가장 작은 경우가 무엇인지입니다.</li>
+      <li><span class="tag">적용</span>n = 3에서 먼저 기둥을 눌러 직접 풀어 보고, 처음부터를 누른 뒤 재귀 한 단계씩 따라가 보세요. 가장 큰 원판(주황)이 움직이는 순간 호출 스택에는 무엇이 있나요? 그때 B에는 원판이 몇 개 있나요? n을 1씩 늘리며 최소 이동 횟수가 어떻게 변하는지 표로 적어 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>분해는 아무렇게나 나눈다고 되는 것이 아닙니다. "원판을 위에서부터 하나씩 옮긴다"처럼 나누면 부분 문제가 원래 문제와 같은 모양이 아니어서 재귀로 이어지지 않습니다. 또 하노이 탑의 두 부분 문제는 기둥만 다를 뿐 같은 크기라서, 원판이 하나 늘 때마다 일이 두 배가 됩니다. 분해가 곧 빠른 풀이를 뜻하지는 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">원판 10개짜리 하노이 탑을 최소 횟수로 옮기려 합니다. 원판 9개를 옮기는 최소 횟수가 511번이라는 것을 알 때, 원판 10개의 최소 횟수는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2 × 511 + 1 = 1023번<span class="why"><b>맞습니다.</b> 9개를 B로(511), 가장 큰 원판을 C로(1), 9개를 C로(511) 옮깁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>511 + 1 = 512번<span class="why"><b>부분 문제를 한 번만 셌습니다.</b> 가장 큰 원판을 옮기기 전과 후에 원판 9개를 각각 한 번씩, 두 번 옮겨야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>511 × 10 = 5110번<span class="why"><b>관계를 잘못 세웠습니다.</b> 원판 10개 문제는 원판 9개 문제 두 개와 이동 한 번으로 이루어집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

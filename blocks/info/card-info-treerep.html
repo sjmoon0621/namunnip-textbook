@@ -1,0 +1,73 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/info/i1-kit.js",
+    "js/cards/info/i1-tree.js"
+  ],
+  "short": "이진 트리의 배열·자식 목록 표현"
+}
+-->
+<style>
+#card-info-treerep .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+#card-info-treerep .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-treerep .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+#card-info-treerep .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-treerep .code .ln.off { opacity: .35; text-decoration: line-through; }
+#card-info-treerep .code .k { color: #2f6a8a; font-weight: 600; }
+#card-info-treerep .code .b { color: var(--forest); }
+#card-info-treerep .code .s { color: var(--warn); }
+#card-info-treerep .code .d { color: #8a5a00; }
+#card-info-treerep .code .c { color: var(--ink-3); }
+#card-info-treerep .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+#card-info-treerep .s-pos { margin-left: auto; align-self: center; }
+#card-info-treerep .cv-tree { width: 100%; aspect-ratio: 16 / 9; cursor: pointer; }
+#card-info-treerep .cv-arr { width: 100%; aspect-ratio: 16 / 4.5; margin-top: 6px; }
+#card-info-treerep .sel-info { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); min-height: 2.6em; margin-top: 6px; }
+</style>
+<article class="card" id="card-info-treerep">
+  <header class="card-head">
+    <span class="no"></span><h2>이진 트리를 리스트 하나에 담을 수 있을까?</h2><span class="kind">트리의 구현 · 이진 트리 · 배열 표현 · 자식 목록(인접 리스트)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-tree" aria-label="이진 트리. 노드 옆 작은 수는 배열 인덱스이고, 점선 + 자리를 누르면 자식을 추가한다"></canvas>
+      <canvas class="cv-arr" aria-label="같은 트리를 담은 배열. 빈 자리는 빗금"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="예시 트리">
+          <button type="button" class="chip" data-p="some">예시</button>
+          <button type="button" class="chip" data-p="full">완전 이진 트리</button>
+          <button type="button" class="chip" data-p="skew">한쪽으로 치우친 트리</button>
+          <button type="button" class="chip" data-p="expr">수식 (3 + 4) * 2</button>
+          <button type="button" class="chip del" disabled>선택한 노드와 하위 트리 지우기</button>
+        </div>
+        <p class="sel-info"></p>
+        <dl class="nums n4">
+          <div><dt>노드 수</dt><dd class="r-n">0</dd></div>
+          <div><dt>높이</dt><dd class="r-h">0</dd></div>
+          <div><dt>배열 길이</dt><dd class="r-len">0</dd></div>
+          <div><dt>배열 사용률</dt><dd class="r-use">—</dd></div>
+        </dl>
+        <pre class="code" aria-label="지금 트리를 저장한 파이썬 코드"></pre>
+        <p class="fig-note">높이는 루트에서 가장 먼 잎까지의 간선 수입니다. 이 카드는 깊이 4(인덱스 30)까지만 노드를 둘 수 있습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>폴더 안의 폴더, 대회 대진표, 수식 <code>(3 + 4) * 2</code>는 모두 위에서 아래로 갈라지는 구조입니다. 이런 계층 구조를 파이썬의 리스트나 딕셔너리에 어떻게 담을 수 있을까요?</li>
+      <li><span class="tag">복원</span><em>트리</em>는 사이클이 없이 모두 이어진 그래프로, 노드가 n개면 간선은 n − 1개입니다. 맨 위 노드를 <em>루트</em>, 바로 아래 노드를 <em>자식</em>, 자식이 없는 노드를 <em>잎</em>이라 합니다. 모든 노드의 자식이 2개 이하인 트리가 <em>이진 트리</em>입니다.</li>
+      <li><span class="tag">설명</span><em>배열 표현</em>은 루트를 0번에 두고, i번 노드의 왼쪽 자식을 2i + 1번, 오른쪽 자식을 2i + 2번에 둡니다. 부모는 (i − 1) // 2번입니다. 연결 정보를 따로 저장하지 않고 인덱스 계산으로 찾으며, 노드가 없는 자리는 None으로 채웁니다. <em>자식 목록 표현</em>은 노드마다 [왼쪽 자식, 오른쪽 자식]을 저장합니다. 그래프의 인접 리스트를 트리에 쓴 것으로, 딕셔너리나 <code>left</code>, <code>right</code> 속성을 가진 노드 클래스로 만듭니다.</li>
+      <li><span class="tag">연결</span>노드가 위에서부터 왼쪽부터 빈틈없이 채워진 <em>완전 이진 트리</em>는 배열에 빈칸 없이 들어갑니다. 우선순위 큐를 만드는 힙(<code>heapq</code>)이 이 방식으로 리스트 하나에 트리를 담습니다. 수식 트리에서 왼쪽 하위 트리, 오른쪽 하위 트리, 자기 자신 순으로 방문하면 <code>3 4 + 2 *</code>, 곧 후위 표기식이 나옵니다. 트리를 방문하는 여러 순서와 탐색은 다음 절에서 다룹니다.</li>
+      <li><span class="tag">적용</span>노드를 하나씩 눌러 부모·자식 인덱스 계산이 맞는지 확인하세요. ‘한쪽으로 치우친 트리’는 노드 5개에 배열 길이가 얼마인가요? ‘예시’에서 노드를 추가해 배열 사용률을 100 %로 만들어 보세요. 그때 트리는 어떤 모양인가요?</li>
+      <li class="warn"><span class="tag">판단</span>배열 표현은 높이가 h인 트리에 최대 2<sup>h+1</sup> − 1칸이 필요합니다. 한쪽으로 치우친 트리는 노드가 적어도 칸 대부분이 비어 메모리를 낭비하므로, 이런 트리는 자식 목록 표현이 알맞습니다. 자식이 셋 이상일 수 있는 일반 트리(폴더 구조 등)는 2i + 1 공식을 쓸 수 없고, 노드마다 자식 리스트를 둡니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">배열로 표현한 이진 트리에서 인덱스 9인 노드의 부모 인덱스와 왼쪽 자식 인덱스는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>부모 4, 왼쪽 자식 19<span class="why"><b>맞습니다.</b> 부모는 (9 − 1) // 2 = 4, 왼쪽 자식은 2 × 9 + 1 = 19입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>부모 4, 왼쪽 자식 18<span class="why"><b>루트를 1번에 두는 방식의 공식(2i)을 섞은 답입니다.</b> 루트가 0번이면 왼쪽 자식은 2i + 1입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>부모 5, 왼쪽 자식 19<span class="why"><b>부모를 (i + 1) // 2로 계산한 답입니다.</b> 5번의 자식은 11, 12번이므로 9번의 부모가 될 수 없습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

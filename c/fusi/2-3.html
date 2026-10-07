@@ -1,0 +1,166 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>데이터 수집과 신뢰성 평가 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="센서, 스마트 기기 같은 디지털 탐구 도구를 포함한 여러 도구로 데이터를 수집하고, 표본을 고르는 방법과 측정 기기의 특성을 따져 수집한 데이터의 타당성과 신뢰성을 평가한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-fusi-sampling .f2-note { min-height: 1.4em; }
+    #card-fusi-sampling .nums dd.hid { color: var(--ink-3); }
+    #card-fusi-pmsensor .f2-key { display: inline-block; width: 60px; height: 8px; vertical-align: middle; margin: 0 4px; background: linear-gradient(90deg, #6f9fd0, #e0a02a, #b5532f); }
+  </style>
+</head>
+<body data-course="fusi" data-sec="2-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>데이터 수집과 신뢰성 평가</h1>
+    <p class="lead">설문에 응답한 300명, 창가에 둔 미세먼지 센서 한 대가 보낸 숫자는 정말 우리가 알고 싶은 것을 말해 줄까요? 데이터는 모으는 순간부터 치우칠 수 있습니다. 같은 값이 다시 나오는지(신뢰성), 재려던 것을 제대로 쟀는지(타당성)를 따로 따져 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">우연 오차와 계통 오차</span><span class="p">센서와 디지털 신호</span><span class="p">평균과 표준편차</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-fusi-sampling"><span class="mono">2.3.1</span>설문에 응답한 사람이 많으면 전교생을 대표할까?</a></li>
+        <li><a href="#card-fusi-pmsensor"><span class="mono">2.3.2</span>값싼 미세먼지 센서가 보낸 숫자를 믿어도 될까?</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=fusi-2-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-fusi-sampling">
+        <header class="card-head">
+          <span class="no">2.3.1</span><h2>설문에 응답한 사람이 많으면 전교생을 대표할까?</h2><span class="kind">표본 추출 · 표집 편향 · 정확도와 정밀도 (모식)</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="전교생 1200명을 칸 하나씩으로 나타낸 그림. 색이 짙을수록 수면 시간이 짧고, 이번 표본에 뽑힌 학생은 테두리로 표시"></canvas>
+            <div class="ctl">
+              <div class="presets meth" role="group" aria-label="표본을 고르는 방법">
+                <button type="button" class="chip" data-m="srs" aria-pressed="true">명단에서 무작위</button>
+                <button type="button" class="chip" data-m="strat" aria-pressed="false">학년별 무작위</button>
+                <button type="button" class="chip" data-m="room" aria-pressed="false">밤 10시 자습실</button>
+                <button type="button" class="chip" data-m="sns" aria-pressed="false">밤 11시 SNS 설문</button>
+              </div>
+              <label class="mono">표본 크기 n = <output class="n-out">30</output>명</label>
+              <input class="n" type="range" min="5" max="400" step="5" value="30" aria-label="표본 크기">
+              <div class="lab-btns"><button class="chip go one" type="button">표본 1번 뽑기</button><button class="chip many" type="button">100번 반복</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">전수 조사 결과 보기</button></div>
+              <dl class="nums n4">
+                <div><dt>이번 표본 평균</dt><dd class="v-last">—</dd></div>
+                <div><dt>표본 평균들의 평균</dt><dd class="v-mm">—</dd></div>
+                <div><dt>표본 평균들의 퍼짐 (SD)</dt><dd class="v-sd">—</dd></div>
+                <div><dt>전교생 평균</dt><dd class="v-true hid">?</dd></div>
+              </dl>
+              <p class="fig-note f2-note"></p>
+              <canvas class="cv-plot" aria-label="여러 번 뽑은 표본 평균의 히스토그램"></canvas>
+              <p class="fig-note">가상 학교의 모식 자료입니다(1200명, 학년마다 400명). 학년이 올라갈수록 평균 수면 시간이 짧고, 자습실에 남거나 늦은 밤 SNS를 보는 학생은 잠이 짧은 쪽으로 치우치게 만들었습니다. 같은 방법과 n으로 여러 번 뽑아 히스토그램을 쌓아 보세요.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>"우리 학교 학생은 하루에 몇 시간 잘까?"를 알아보려고 SNS에 설문 링크를 올렸더니 하룻밤에 200명이 응답했습니다. 전교생 1200명 가운데 6분의 1이나 답했으니, 이 평균을 학교 전체의 값이라고 해도 될까요?</li>
+            <li><span class="tag">복원</span>알고 싶은 전체 집단을 <em>모집단</em>, 실제로 조사한 일부를 <em>표본</em>이라고 합니다. 측정에는 매번 다르게 흔들리는 우연 오차와 한쪽으로 꾸준히 치우치는 계통 오차가 있습니다. 표본을 고르는 일도 같은 두 가지 오차를 만듭니다.</li>
+            <li><span class="tag">설명</span>표본마다 평균이 조금씩 다른 것은 피할 수 없는 <em>표본 오차</em>이고, n을 늘리면 줄어듭니다. 반면 특정한 사람만 뽑히기 쉬운 방법은 평균을 한쪽으로 미는 <em>표집 편향</em>을 만듭니다. 밤 11시에 SNS 설문을 보는 학생은 애초에 늦게 자는 학생일 가능성이 큽니다. 이 치우침은 n을 아무리 늘려도 줄지 않습니다.</li>
+            <li><span class="tag">연결</span>히스토그램의 폭은 <em>정밀도</em>(다시 뽑아도 비슷한 값이 나오는가, 신뢰성), 중심이 참값에서 떨어진 정도는 <em>정확도</em>(재려던 것을 제대로 쟀는가, 타당성)와 같은 뜻입니다. 무작위 표집은 모든 학생이 뽑힐 기회를 똑같이 주기 때문에 치우침이 없습니다. 학년별로 인원 비율을 맞춰 뽑으면(층화 표집) 퍼짐이 조금 더 줄어듭니다.</li>
+            <li><span class="tag">적용</span>"명단에서 무작위"로 n = 30과 n = 300을 각각 100번 반복해 퍼짐을 비교하세요. n이 10배가 되면 퍼짐은 몇 분의 1이 되나요? 이번에는 "밤 11시 SNS 설문"으로 같은 일을 하고, 전수 조사 결과를 켜서 히스토그램의 중심이 어디에 있는지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>응답자가 많다는 것은 표본이 정밀하다는 뜻일 뿐, 모집단을 대표한다는 뜻이 아닙니다. 퍼짐이 작은 편향된 표본은 틀린 값을 자신 있게 알려 줍니다. 실제 조사에서는 참값을 모르니, 보고서에 표본을 어떻게 골랐는지와 누가 빠졌을 수 있는지를 반드시 적어야 다른 사람이 타당성을 판단할 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">한 학생이 점심시간 매점 앞에서 학생 500명에게 "아침을 먹었나요?"를 물었더니 62%가 "안 먹었다"고 답했습니다. 이 결과에 대한 판단으로 가장 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>500명이면 전교생의 절반 가까이 되므로 학교 전체의 값으로 보아도 된다<span class="why"><b>크기와 대표성을 섞었습니다.</b> 많이 물어도 표본이 한쪽으로 치우치면 평균도 함께 치우칩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>매점에 오는 학생은 아침을 거른 학생이 많을 수 있어, 실제 비율보다 높게 나왔을 가능성이 있다<span class="why"><b>맞습니다.</b> 조사 장소가 응답자를 고르는 표집 편향입니다. 명단에서 무작위로 뽑아 다시 물어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같은 장소에서 다음 날 다시 조사해 비슷한 값이 나오면 결과가 타당하다는 뜻이다<span class="why"><b>신뢰성과 타당성은 다릅니다.</b> 같은 방법으로 다시 재면 같은 편향이 되풀이되어, 값은 비슷해도 여전히 치우쳐 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-fusi-pmsensor">
+        <header class="card-head">
+          <span class="no">2.3.2</span><h2>값싼 미세먼지 센서가 보낸 숫자를 믿어도 될까?</h2><span class="kind">실험 · 디지털 탐구 도구 · 신뢰성과 타당성 · 센서 보정 (모식)</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="측정소 옆에 놓은 광산란 미세먼지 센서. 습도가 높으면 입자가 물을 머금어 커지는 모습"></canvas>
+            <div class="ctl">
+              <div class="presets sens" role="group" aria-label="센서 고르기">
+                <span class="mono small dim">센서</span>
+                <button type="button" class="chip" data-s="0" aria-pressed="true">센서 1</button>
+                <button type="button" class="chip" data-s="1" aria-pressed="false">센서 2</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">실제 PM2.5 = <output class="c-out">30</output> μg/m³</label>
+                  <input class="c" type="range" min="5" max="150" step="5" value="30" aria-label="실제 PM2.5 농도"></div>
+                <div><label class="mono">상대 습도 = <output class="h-out">50</output> %</label>
+                  <input class="h" type="range" min="30" max="95" step="5" value="50" aria-label="상대 습도"></div>
+              </div>
+              <div class="toggles"><label><input type="checkbox" class="corr"> 센서 속 습도계 값으로 습도 보정하기</label></div>
+              <div class="lab-btns"><button class="chip go meas" type="button">같은 조건에서 5번 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+              <div class="tbl-host"></div>
+              <dl class="nums">
+                <div><dt>마지막 5번의 퍼짐 (SD)</dt><dd class="v-rep">—</dd></div>
+                <div><dt>평균 치우침 (센서 − 기준)</dt><dd class="v-bias">—</dd></div>
+                <div><dt>직선 맞춤 r²</dt><dd class="v-r2">—</dd></div>
+              </dl>
+              <canvas class="cv-plot" aria-label="기준 측정소 값과 센서 값의 산점도. 점 색은 습도"></canvas>
+              <p class="fig-note">점선은 센서 = 기준인 선, 주황 실선은 기록에 맞춘 직선입니다. 점 색: 습도 30 %<span class="f2-key"></span>95 %. 습도에 따른 과대 측정의 크기는 실제 광산란 센서에서 보고된 경향을 단순화한 모식입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">탐구 문제</span>교실 창가에 몇만 원짜리 미세먼지 센서를 달아 1분마다 값을 받기로 했습니다. 이 센서가 보낸 숫자로 "오늘 우리 동네 공기는 나쁘다"고 말해도 될까요? 센서의 값을 믿을 수 있는지 무엇으로 판단할까요?</li>
+            <li><span class="tag">복원</span>값싼 센서는 대부분 <em>광산란 방식</em>입니다. 공기를 빨아들여 레이저를 비추고, 입자에 부딪혀 흩어진 빛의 세기로 입자 수와 크기를 세어 질량 농도로 바꿉니다. 국가 대기 측정소는 베타선 흡수법처럼 공인된 방법으로 PM2.5를 잽니다.</li>
+            <li><span class="tag">설계</span>센서를 기준 측정소 바로 옆에 두고 함께 잽니다(동시 측정). 같은 조건에서 여러 번 재어 값이 얼마나 흔들리는지 보면 <em>신뢰성</em>을, 기준값과 얼마나 맞는지 보면 <em>타당성</em>을 평가할 수 있습니다. 농도와 습도를 하나씩 바꿔 가며 기록합니다.</li>
+            <li><span class="tag">분석</span>습도가 낮으면 점들이 점선 근처에 모입니다. 습도가 높으면 입자가 물을 머금어 커지므로, 센서는 같은 먼지를 더 많은 먼지로 셉니다. 그래서 습도가 높은 점이 점선 위로 올라갑니다. 이 치우침은 반복해도 사라지지 않는 계통 오차이고, 습도를 함께 기록해 두면 보정식으로 상당 부분 줄일 수 있습니다.</li>
+            <li><span class="tag">측정</span>센서 1로 습도 50 %에서 농도를 바꿔 가며 다섯 번 이상 재고, 다음에는 같은 농도에서 습도만 90 %로 올려 재세요. 센서 2로도 같은 일을 하세요. 퍼짐이 작은 센서와 치우침이 작은 센서는 같은가요? 마지막으로 습도 보정을 켜고 점들이 어디로 가는지 보세요.</li>
+            <li class="warn"><span class="tag">오차·안전</span>r²가 높다고 값이 맞는 것은 아닙니다. 센서 값이 늘 기준의 1.5배라도 r²는 1에 가깝습니다. 센서마다 특성이 다르니 한 대로 정한 보정식을 다른 센서에 그대로 쓰지 않습니다. 센서를 직사광선, 환기구, 주방 근처에 두면 엉뚱한 값을 잽니다. 원자료와 보정식, 설치 위치와 날짜를 함께 기록해야 다른 사람이 검증할 수 있고, 위치 정보가 담긴 자료를 공개할 때는 개인을 알아볼 수 없게 합니다. 실외 설치 시에는 전원선과 방수에 주의합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">장마철(습도 90 % 안팎)에 보정하지 않은 광산란 센서가 하루 평균 PM2.5를 48 μg/m³로 기록했습니다. 같은 날 가까운 측정소는 27 μg/m³였습니다. 가장 알맞은 해석은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>센서가 측정소보다 가까이 있으니 센서 값이 실제 우리 동네 값이다<span class="why"><b>위치 차이만으로는 설명이 부족합니다.</b> 높은 습도에서 광산란 센서가 과대 측정하는 계통 오차를 먼저 의심해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>높은 습도에서 입자가 물을 머금어 커져 센서가 과대 측정했을 가능성이 크다<span class="why"><b>맞습니다.</b> 습도를 함께 기록했다면 보정식을 적용하고, 습도가 낮은 날 측정소와 비교해 센서를 다시 점검합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>하루 동안 1440번이나 측정해 평균을 냈으므로 오차는 거의 없다<span class="why"><b>평균은 우연 오차만 줄입니다.</b> 모든 측정이 같은 방향으로 치우쳐 있으면 아무리 많이 재도 평균은 그대로 치우칩니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/fusi/f2-sampling.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/fusi/f2-pmsensor.js"></script>
+</body>
+</html>

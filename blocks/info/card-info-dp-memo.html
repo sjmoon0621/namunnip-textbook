@@ -1,0 +1,69 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i3-dp-memo.js"],
+  "short": "메모이제이션과 표 채우기"
+}
+-->
+<style>
+#card-info-dp-memo canvas { width: 100%; aspect-ratio: 16 / 10; }
+#card-info-dp-memo pre.code {
+  font: 12.5px/1.6 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 10px 0 4px;
+  overflow-x: auto; counter-reset: ln;
+}
+#card-info-dp-memo pre.code .l { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-dp-memo pre.code .l::before {
+  counter-increment: ln; content: counter(ln); position: absolute; left: 0; width: 26px;
+  text-align: right; color: var(--ink-3);
+}
+#card-info-dp-memo pre.code .l.on { background: #e1eed9; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-dp-memo .runbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+</style>
+<article class="card" id="card-info-dp-memo">
+  <header class="card-head">
+    <span class="no"></span><h2>같은 계산을 두 번 하지 않으면 얼마나 빨라질까?</h2><span class="kind">동적 계획법 · 메모이제이션과 표 채우기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="계단 오르기 함수의 호출 트리 또는 dp 배열. 같은 n을 다시 부르는 호출은 주황색으로 표시"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="풀이 방법">
+          <button type="button" class="chip" data-m="naive" aria-pressed="true">단순 재귀</button>
+          <button type="button" class="chip" data-m="memo" aria-pressed="false">메모이제이션 (하향식)</button>
+          <button type="button" class="chip" data-m="tab" aria-pressed="false">표 채우기 (상향식)</button>
+        </div>
+        <label class="mono">계단 수 n = <output class="n-out">5</output></label>
+        <input class="n" type="range" min="1" max="30" step="1" value="5" aria-label="계단 수 n">
+        <div class="runbar">
+          <button type="button" class="chip b-step">한 단계</button>
+          <button type="button" class="chip b-all">끝까지</button>
+          <button type="button" class="chip b-reset">처음부터</button>
+        </div>
+        <pre class="code" aria-label="파이썬 코드"></pre>
+        <dl class="nums">
+          <div><dt>ways(n) 호출 수</dt><dd class="n-calls">—</dd></div>
+          <div><dt>그중 다시 계산한 호출</dt><dd class="n-dup">—</dd></div>
+          <div><dt>오르는 방법의 수</dt><dd class="n-val">—</dd></div>
+        </dl>
+        <p class="fig-note">한 번에 1칸 또는 2칸 오를 때 n칸 계단을 오르는 방법의 수 ways(n)입니다. n ≤ 7이면 호출 과정을 한 단계씩 볼 수 있고, 더 크면 n에 따른 호출 수를 그래프(세로축 로그 눈금)로 보여 줍니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>계단을 한 번에 1칸이나 2칸씩 오릅니다. 30칸을 오르는 방법은 몇 가지일까요? 식은 간단한데, 그대로 재귀 함수로 짜면 n이 40 근처만 되어도 답이 한참 늦게 나옵니다. 무엇이 시간을 잡아먹을까요?</li>
+      <li><span class="tag">복원</span>마지막 한 걸음이 1칸이면 그 전까지 n−1칸, 2칸이면 n−2칸을 올라온 것입니다. 그래서 ways(n) = ways(n−1) + ways(n−2)이고, ways(0) = ways(1) = 1입니다. 큰 문제를 작은 부분 문제로 나누어 그 답을 조합한다는 점은 분할 정복과 같습니다.</li>
+      <li><span class="tag">설명</span>단순 재귀의 호출 트리를 보면 ways(3), ways(2) 같은 같은 부분 문제가 여러 번 나옵니다(<em>중복 부분 문제</em>). 한 번 구한 답을 배열이나 사전에 저장해 두고 다시 필요하면 꺼내 쓰는 방법이 <em>동적 계획법</em>입니다. 재귀 구조를 그대로 두고 저장만 덧붙이면 <em>메모이제이션</em>(하향식), 작은 답부터 차례로 표를 채우면 <em>타뷸레이션</em>(상향식)입니다.</li>
+      <li><span class="tag">연결</span>단순 재귀의 호출 수는 n이 1 늘 때마다 약 1.6배(황금비)씩 늘어나 지수적으로 커지고, 메모이제이션은 2n−1번, 표 채우기는 n−1번의 덧셈이면 끝납니다. 동적 계획법이 통하려면 큰 문제의 최적해가 부분 문제의 최적해로 만들어지고(<em>최적 부분 구조</em>), 부분 문제가 겹쳐야 합니다. 병합 정렬처럼 부분 문제가 겹치지 않으면 저장해도 얻는 것이 없습니다.</li>
+      <li><span class="tag">적용</span>n = 5에서 세 방법을 한 단계씩 실행해 보세요. 단순 재귀에서 주황색(이미 구한 값을 다시 계산)인 호출은 몇 개인가요? 메모이제이션에서는 그 호출이 어떻게 바뀌나요? 그다음 n을 30까지 올려 두 재귀 방법의 호출 수를 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>메모이제이션은 시간을 줄이는 대신 답을 저장할 <em>메모리</em>를 씁니다. 하향식은 필요한 부분 문제만 풀지만 재귀 깊이가 n까지 깊어져, 파이썬에서는 기본 재귀 한도(보통 1000) 때문에 RecursionError가 날 수 있습니다. 상향식은 재귀가 없지만, 어떤 순서로 표를 채워야 하는지 직접 정해야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">이번에는 한 번에 1칸, 2칸, 3칸 중 하나를 오를 수 있습니다. ways(n) = ways(n−1) + ways(n−2) + ways(n−3)을 메모이제이션으로 구할 때, n이 커지면 함수 호출 수는 어떻게 늘어날까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>호출마다 세 갈래로 나뉘므로 약 3ⁿ에 비례한다<span class="why"><b>단순 재귀일 때의 생각입니다.</b> 메모가 있으면 각 n은 한 번만 계산되고, 나머지 호출은 저장된 값을 바로 돌려줍니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>각 n을 한 번씩만 계산하므로 n에 비례한다 (약 3n번)<span class="why"><b>맞습니다.</b> 서로 다른 부분 문제는 n+1개뿐이고, 하나를 계산할 때 호출을 세 번 하므로 호출 수는 약 3n입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표를 채우는 것과 같으므로 n²에 비례한다<span class="why"><b>표의 칸은 n+1개이고</b> 칸 하나를 채우는 데 덧셈 두 번이면 됩니다. 2차원 표가 필요한 문제(배낭, 최장 공통 부분 수열)와 헷갈린 것입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

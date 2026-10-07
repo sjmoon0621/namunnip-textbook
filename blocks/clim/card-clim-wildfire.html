@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/clim/c3-fire.js"
+  ],
+  "short": "산불이 커지는 조건"
+}
+-->
+<style>
+#card-clim-wildfire .fi-map { aspect-ratio: 16 / 9; cursor: crosshair; image-rendering: pixelated; }
+#card-clim-wildfire .fi-sweep { aspect-ratio: 16 / 8; }
+#card-clim-wildfire .fi-tog { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 6px 0 2px; font-size: 13px; }
+#card-clim-wildfire .fi-tog label { display: inline-flex; align-items: center; gap: 6px; }
+</style>
+<article class="card" id="card-clim-wildfire">
+  <header class="card-head">
+    <span class="no"></span><h2>숲이 조금 더 마르면 산불은 왜 훨씬 크게 번질까?</h2><span class="kind">대형 산불 · 연료 건조도, 바람, 숲의 구성 · 확산 모형 (모식)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide fi-map" aria-label="나무 칸으로 된 숲. 누른 곳에 불이 붙어 이웃 나무로 번진다"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">연료 건조도 = <output class="dr-out">0.50</output></label>
+            <input class="dry" type="range" min="0" max="1" step="0.01" value="0.5" aria-label="연료 건조도"></div>
+          <div><label class="mono">바람 (서→동) = <output class="wd-out">0.0</output></label>
+            <input class="wind" type="range" min="0" max="1" step="0.05" value="0" aria-label="바람의 세기"></div>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">침엽수 비율 = <output class="cf-out">70</output> %</label>
+            <input class="conif" type="range" min="0" max="100" step="5" value="70" aria-label="침엽수 비율"></div>
+          <div class="fi-tog"><label><input type="checkbox" class="brk"> 방화선 (나무 없는 띠)</label></div>
+        </div>
+        <div class="lab-btns">
+          <button class="chip go fire" type="button">왼쪽 끝에 불씨 놓기</button><button class="chip regrow" type="button">숲 새로 만들기</button><button class="chip sweep" type="button">건조도별로 40번씩 시험</button>
+        </div>
+        <dl class="nums">
+          <div><dt>탄 나무</dt><dd class="n-b">—</dd></div>
+          <div><dt>번진 시간</dt><dd class="n-t">—</dd></div>
+          <div><dt>상태</dt><dd class="n-s">—</dd></div>
+        </dl>
+        <canvas class="cv-plot fi-sweep" aria-label="연료 건조도에 따라 평균적으로 탄 나무의 비율. 지금 설정으로 시험한 결과"></canvas>
+        <p class="fig-note">이 카드는 실제 산불을 예측하는 모형이 아니라, 불이 이웃 나무로 옮겨 붙을 확률만으로 번짐을 흉내 낸 <em>모식</em>입니다. 한 칸이 탈 때 이웃 칸에 불이 옮을 확률 = (0.2 + 0.9 × 건조도, 1을 넘으면 1) × 수종 계수(침엽수 1, 활엽수 0.55) × 바람 계수(바람이 부는 쪽 1 + 1.5 × 바람, 반대쪽 1 − 0.8 × 바람). 바람이 0.5보다 세면 불탄 침엽수에서 불티가 3~7칸 바람 쪽으로 날아가 새 불을 놓을 수 있습니다(비화). 숲의 80 %가 나무 칸이고, 나무 칸만 셉니다. 숫자는 모두 상대값입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>봄철 건조한 날에 난 산불은 하루 만에 수천 헥타르를 태우기도 하지만, 비슷한 불씨가 다른 날에는 몇 그루만 태우고 꺼집니다. 무엇이 작은 불과 대형 산불을 가를까요?</li>
+      <li><span class="tag">복원</span>불이 계속 타려면 연료, 산소, 열이 모두 있어야 합니다(연소의 3요소). 기온이 오르면 공기가 품을 수 있는 수증기량이 늘어 같은 습도에서도 땅과 낙엽, 나뭇가지에서 물이 더 빨리 증발합니다.</li>
+      <li><span class="tag">설명</span>젖은 연료에 불이 붙으려면 먼저 물을 증발시키는 데 열을 써야 하므로 불이 옮겨 붙기 어렵습니다. 연료가 마를수록 불 하나가 이웃 나무에 불을 옮길 확률이 커집니다. 이 확률이 어떤 값을 넘으면, 평균적으로 불 하나가 하나 넘는 새 불을 만들게 되어 불이 끝없이 이어집니다. 그래서 건조도가 조금 변해도 탄 면적은 갑자기 크게 바뀝니다. 이렇게 이어짐이 한꺼번에 생기는 성질을 <em>스미기(퍼콜레이션)</em>라 합니다.</li>
+      <li><span class="tag">연결</span>기후변화는 이 문턱을 넘기 쉬운 날을 늘립니다. 기온 상승과 가뭄으로 연료가 마르고, 산불이 잘 나는 계절이 길어집니다. 우리나라 동해안에서는 봄에 태백산맥을 넘어 내려오는 건조하고 강한 서풍(양간지풍)이 불티를 멀리 날려, 2000년 동해안 산불과 2022년 울진·삼척 산불처럼 큰 불로 번졌습니다. 송진이 많은 소나무 숲은 활엽수 숲보다 불이 잘 붙고 오래 탑니다.</li>
+      <li><span class="tag">적용</span>건조도를 0.3, 0.5, 0.7로 바꾸며 불씨를 놓아 보고, “건조도별로 40번씩 시험”으로 탄 비율이 갑자기 커지는 건조도를 찾으세요. 다음으로 침엽수 비율을 30 %로 낮추면 그 문턱이 어떻게 움직이나요? 마지막으로 건조도 0.7에서 방화선을 켜고, 바람을 0에서 1까지 올려 보세요. 방화선은 언제 불을 막고, 언제 뚫리나요?</li>
+      <li class="warn"><span class="tag">판단</span>실제 산불은 지형(불은 비탈을 빠르게 오릅니다), 바람의 변화, 연료의 양과 배치, 진화 작업에 따라 달라집니다. 이 모형의 문턱값은 상대값이므로 실제 산의 건조도와 짝지을 수 없습니다. 그래도 “조금 더 건조해지면 조금 더 탄다”가 아니라 “어느 선을 넘으면 훨씬 크게 탄다”는 점, 숲의 구성과 방화선 같은 관리가 문턱을 옮긴다는 점, 강풍의 비화 앞에서는 방화선도 한계가 있다는 점은 실제 산불에서도 확인됩니다. 우리나라 산불의 대부분은 사람의 부주의에서 시작되므로 불씨 관리가 가장 확실한 예방입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">어느 지역의 봄철 연료 건조도가 지금 문턱 바로 아래에 있습니다. 온난화로 봄이 더 건조해질 것으로 예상될 때, 산불 피해를 줄이는 데 가장 효과가 클 것으로 판단되는 대책은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지금은 문턱 아래이므로 따로 대비하지 않아도 된다<span class="why"><b>문턱 근처라는 점을 놓쳤습니다.</b> 문턱 바로 아래에서는 작은 변화에도 탄 면적이 갑자기 커집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>마을과 숲 사이에 방화선과 활엽수 띠를 만들고, 봄철 불씨 관리와 감시를 강화한다<span class="why"><b>맞습니다.</b> 불이 옮을 확률과 연결된 연료를 줄여 문턱을 높이는 대책이고, 불이 시작될 기회 자체도 줄입니다. 다만 강풍 때의 비화에는 대피 계획도 함께 필요합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>숲 전체를 소나무로 다시 심어 숲을 빽빽하게 만든다<span class="why"><b>반대 방향입니다.</b> 불이 잘 붙는 수종으로 이어진 빽빽한 숲은 불이 옮을 확률을 높여 대형 산불의 문턱을 낮춥니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

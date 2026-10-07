@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i3-critical-path.js"],
+  "short": "프로젝트 일정과 임계 경로"
+}
+-->
+<style>
+#card-info-critical-path canvas { width: 100%; aspect-ratio: 16 / 11; }
+#card-info-critical-path pre.code {
+  font: 12px/1.55 var(--f-mono); background: var(--paper-2); padding: 8px 12px; margin: 10px 0 4px;
+  overflow-x: auto; white-space: pre;
+}
+#card-info-critical-path .presets .chip { font-size: 12px; padding-left: 9px; padding-right: 9px; }
+</style>
+<article class="card" id="card-info-critical-path">
+  <header class="card-head">
+    <span class="no"></span><h2>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</h2><span class="kind">프로젝트 설계 · 작업 분해와 임계 경로</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="프로젝트 작업의 일정 막대 그래프. 전체 기간을 정하는 임계 경로의 작업은 주황색"></canvas>
+      <div class="ctl">
+        <div class="presets tasks" role="group" aria-label="기간을 바꿀 작업"></div>
+        <label class="mono"><output class="t-name">작업</output>의 기간 = <output class="d-out">3</output>일</label>
+        <input class="d" type="range" min="1" max="10" step="1" value="3" aria-label="선택한 작업의 기간 (일)">
+        <dl class="nums">
+          <div><dt>프로젝트 전체 기간</dt><dd class="n-total">—</dd></div>
+          <div><dt>임계 경로</dt><dd class="n-path" style="font-size:13px">—</dd></div>
+          <div><dt>선택한 작업의 여유</dt><dd class="n-slack">—</dd></div>
+        </dl>
+        <pre class="code" aria-label="파이썬 코드">def schedule(dur, pre, order):
+    # order: 선행 작업이 언제나 먼저 오도록 정렬한 작업 목록
+    start = {}
+    for t in order:
+        start[t] = max((start[p] + dur[p] for p in pre[t]),
+                       default=0)
+    return max(start[t] + dur[t] for t in order)</pre>
+        <p class="fig-note">고등학생 모둠의 정보과학 프로젝트(학교 급식 잔반 기록을 분석하는 프로그램)를 가정한 모식 일정입니다. 막대 사이의 회색 선은 “앞 작업이 끝나야 시작할 수 있다”는 선행 관계입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>모둠 프로젝트의 마감이 3주 뒤입니다. 할 일을 나누고 각자 맡았는데, 어떤 일은 하루 늦어져도 괜찮고 어떤 일은 하루 늦어지면 발표도 하루 늦어집니다. 어느 작업을 가장 신경 써야 할까요?</li>
+      <li><span class="tag">복원</span>프로그래밍으로 문제를 해결하는 절차는 문제 분석과 구조화 → 알고리즘 설계 → 프로그래밍(자동화) → 검증입니다. 작업 사이의 “먼저 끝나야 하는” 관계는 방향 그래프로 나타낼 수 있습니다.</li>
+      <li><span class="tag">설명</span>프로젝트를 크기가 작은 작업으로 나누는 것을 <em>작업 분해</em>라 합니다. 각 작업은 모든 선행 작업이 끝난 뒤에야 시작할 수 있으므로, 가장 이른 시작일은 선행 작업의 (시작일 + 기간) 중 가장 큰 값입니다. 선행 관계를 지키는 순서(<em>위상 정렬</em>)로 작업을 하나씩 계산하면 전체 기간이 나옵니다. 처음부터 끝까지 이어지는 가장 긴 작업 사슬이 <em>임계 경로</em>이며, 이 경로의 작업은 하루만 늦어져도 전체가 늦어집니다.</li>
+      <li><span class="tag">연결</span>임계 경로 밖의 작업에는 <em>여유</em>가 있어, 그만큼 늦어져도 마감에 영향이 없습니다. 모둠원은 여유가 있는 작업을 맡은 사람이 임계 경로의 작업을 돕는 식으로 역할을 조정할 수 있습니다. 코드에서 각 작업을 한 번씩만 계산하는 것은 앞에서 배운 동적 계획법과 같은 생각입니다.</li>
+      <li><span class="tag">적용</span>‘자료 수집’의 기간을 4일에서 8일로 늘려 보세요. 전체 기간이 바로 늘어나나요? 임계 경로가 바뀌는 순간은 언제인가요? 반대로 ‘프로그래밍’을 하루 줄이면 전체 기간은 몇 일 줄어드나요?</li>
+      <li class="warn"><span class="tag">판단</span>이 계산은 작업 기간을 정확히 안다고 가정하고, 한 사람이 여러 작업을 동시에 할 수 없다는 제약도 넣지 않았습니다. 실제 프로젝트에서는 예상이 자주 빗나가므로 임계 경로에 여유 기간을 두고, 중간 점검일을 정해 계획을 고칩니다. 주제와 사용할 언어처럼 모둠 전체에 영향을 주는 결정은 한 사람이 정하지 말고 함께 협의해 정합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">임계 경로에 있지 않고 여유가 3일인 작업이 2일 늦어졌습니다. 프로젝트 전체 기간은 어떻게 될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2일 늘어난다<span class="why"><b>임계 경로의 작업일 때의 결과입니다.</b> 여유가 있는 작업은 여유만큼은 늦어져도 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>변하지 않고, 그 작업의 여유가 1일로 줄어든다<span class="why"><b>맞습니다.</b> 여유를 다 쓰면 그 작업도 임계 경로에 들어갑니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>임계 경로가 그 작업 쪽으로 바뀐다<span class="why"><b>여유 3일보다 적게 늦어졌으므로</b> 그 사슬은 여전히 가장 긴 사슬보다 짧습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,73 @@
+<!--block
+{
+  "type": "text",
+  "short": "매개변수와 반환값, 유효 범위"
+}
+-->
+<style>
+#text-info-params pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+#text-info-params pre.code .c { color: var(--ink-3); }
+#text-info-params td code, #text-info-params p code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+</style>
+<article class="card reading" id="text-info-params">
+  <header class="card-head">
+    <span class="no"></span><h2>함수는 어떻게 값을 받고, 무엇을 돌려줄까?</h2><span class="kind">읽기 · 함수 정의 · 매개변수의 종류 · 반환값 · 유효 범위</span>
+  </header>
+  <div class="reading-body">
+    <p class="ask">같은 계산을 프로그램 여러 곳에서 쓰면 코드를 복사해 붙이기 쉽습니다. 그런데 계산에 실수가 있으면 붙여 넣은 곳을 모두 찾아 고쳐야 합니다. 함수는 이 문제를 어떻게 해결하고, 함수를 쓸 때 무엇을 정해야 할까요?</p>
+
+    <h3><span class="mono">1</span>함수로 나누는 까닭</h3>
+    <p>함수는 일을 하는 코드에 이름을 붙인 것입니다. 한 번 정의하면 이름으로 몇 번이든 부를 수 있고, 고칠 곳도 한 곳뿐입니다. 더 중요한 점은 <em>추상화</em>입니다. <code>sorted(xs)</code>를 쓸 때 정렬이 안에서 어떻게 일어나는지 몰라도 되는 것처럼, 함수를 쓰는 쪽은 “무엇을 넣으면 무엇이 나오는가”만 알면 됩니다. 큰 문제를 작은 함수로 나누면 각 함수를 따로 시험하고 고칠 수 있습니다.</p>
+    <pre class="code">def bmi(weight, height):          <span class="c"># 정의: 이름, 매개변수</span>
+    return weight / height ** 2    <span class="c"># 몸체와 반환값</span>
+
+print(bmi(60, 1.7))               <span class="c"># 호출: 인자 60, 1.7 → 20.76…</span></pre>
+    <p>정의할 때 괄호 안에 쓴 이름(<code>weight</code>, <code>height</code>)이 <em>매개변수</em>이고, 호출할 때 넘기는 값(<code>60</code>, <code>1.7</code>)이 <em>인자</em>입니다. 함수가 받을 값과 돌려줄 값을 먼저 정하고 나서 몸체를 쓰면, 함수의 쓰임이 분명해집니다.</p>
+
+    <h3><span class="mono">2</span>인자를 넘기는 여러 방법</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>방식</th><th>예</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><th>위치 인자</th><td><code>power(2, 10)</code></td><td>순서대로 매개변수에 짝지어집니다. base=2, exp=10</td></tr>
+        <tr><th>키워드 인자</th><td><code>power(exp=10, base=2)</code></td><td>이름으로 짝짓므로 순서를 바꿔도 됩니다.</td></tr>
+        <tr><th>기본값</th><td><code>def power(base, exp=2):</code></td><td>인자를 생략하면 기본값을 씁니다. <code>power(5)</code> → 25</td></tr>
+        <tr><th>가변 인자</th><td><code>def total(*nums):</code></td><td>넘긴 위치 인자들을 튜플 하나로 받습니다. <code>total(1, 2, 3)</code>에서 nums = (1, 2, 3)</td></tr>
+      </tbody>
+    </table></div>
+    <p>기본값이 있는 매개변수는 기본값이 없는 매개변수 뒤에 써야 합니다. <code>def f(a=1, b):</code>는 문법 오류입니다.</p>
+
+    <h3><span class="mono">3</span>반환값</h3>
+    <ul class="dots">
+      <li><code>return</code>을 만나면 함수는 그 자리에서 끝나고 값을 호출한 곳으로 돌려줍니다. 그 아래 코드는 실행되지 않습니다.</li>
+      <li><code>return</code>이 없거나 값 없이 <code>return</code>만 쓰면 <code>None</code>을 돌려줍니다. 화면에 <code>print</code>하는 것과 값을 돌려주는 것은 다릅니다. print한 값은 다른 계산에 쓸 수 없습니다.</li>
+      <li><code>return q, r</code>처럼 쓰면 튜플 하나를 돌려주고, 받는 쪽에서 <code>q, r = f(…)</code>처럼 나누어 받을 수 있습니다. 내장 함수 <code>divmod(17, 5)</code>가 <code>(3, 2)</code>를 돌려주는 것과 같은 방식입니다.</li>
+    </ul>
+
+    <h3><span class="mono">4</span>유효 범위: 이름은 어디에서 보일까</h3>
+    <p>함수 안에서 대입한 이름은 그 함수의 <em>지역 변수</em>입니다. 호출할 때 생겨서 함수가 끝나면 사라집니다. 파이썬은 이름을 찾을 때 지역 → 바깥 함수 → 전역 → 내장 순서로 찾습니다. 그래서 함수 안에서 전역 변수를 <em>읽기</em>는 할 수 있지만, 대입하는 순간 그 이름은 지역 변수가 됩니다.</p>
+    <pre class="code">count = 0
+def inc():
+    count = count + 1     <span class="c"># UnboundLocalError: 지역 변수 count를 값이 생기기 전에 읽음</span>
+
+def inc2():
+    global count          <span class="c"># 전역 count를 쓰겠다고 밝힘</span>
+    count = count + 1</pre>
+    <p><code>global</code>은 꼭 필요할 때만 씁니다. 여러 함수가 전역 변수를 고치면 어디서 값이 바뀌었는지 추적하기 어렵습니다. 대개는 값을 매개변수로 받고 결과를 <code>return</code>하는 편이 낫습니다.</p>
+
+    <p class="judge"><b>판단</b>기본값은 함수를 <em>정의할 때 한 번</em> 계산됩니다. <code>def add(x, xs=[]):</code>처럼 리스트를 기본값으로 쓰면, 호출할 때마다 같은 리스트 객체가 재사용되어 이전 호출에서 넣은 값이 남아 있습니다. 바뀔 수 있는 객체가 기본값으로 필요하면 <code>xs=None</code>으로 두고 함수 안에서 <code>if xs is None: xs = []</code>로 새로 만듭니다.</p>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">다음 코드를 실행하면 화면에 무엇이 나올까요?</p>
+    <pre class="code">def area(w, h=2):
+    print(w * h)
+
+r = area(3)
+print(r)</pre>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>6, 그다음 줄에 None<span class="why"><b>맞습니다.</b> h는 기본값 2를 쓰므로 6을 출력합니다. 하지만 return이 없으므로 r에는 None이 들어갑니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6, 그다음 줄에 6<span class="why"><b>print와 return을 같게 본 답입니다.</b> print는 화면에 보여 줄 뿐 값을 돌려주지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>인자가 하나뿐이라 오류가 난다<span class="why"><b>기본값을 놓친 답입니다.</b> h=2처럼 기본값이 있는 매개변수는 인자를 생략해도 됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

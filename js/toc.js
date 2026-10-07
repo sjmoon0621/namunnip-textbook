@@ -5703,36 +5703,106 @@ window.TOC = [
       "n": 1,
       "title": "문명의 탄생과 과학",
       "code": "12과사01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-calendar",
+        "title": "달력은 왜 계절과 어긋날까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-ancient",
+        "title": "초기 문명은 하늘과 땅을 어떻게 셈했을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "고대 그리스의 과학",
       "code": "12과사01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-eratosthenes",
+        "title": "그림자 두 개로 지구의 크기를 잴 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-greek",
+        "title": "그리스 철학자들은 세계를 어떻게 설명했고, 그 생각은 어디에 남았을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "중세 유럽·중동의 과학",
       "code": "12과사01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-aljabr",
+        "title": "기호 없이 그림만으로 이차방정식을 풀 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-medieval",
+        "title": "종교와 문화는 중세의 과학을 어떻게 키웠을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-sejong",
+        "title": "15세기 조선은 왜 하늘과 비를 재는 데 힘을 쏟았을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "르네상스와 과학혁명",
       "code": "12과사01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-venus",
+        "title": "금성의 모양 하나로 우주 모형을 가를 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie1-galileo",
+        "title": "시계 없이 낙하 법칙을 찾을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-perspective",
+        "title": "화가는 평평한 벽에 어떻게 깊이를 그렸을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-revolution",
+        "title": "과학혁명은 왜 16~17세기 유럽에서 일어났고, 예술과는 어떻게 만났을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "과학자의 신념과 세계관",
       "code": "12과사01-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-kepler-solids",
+        "title": "정다면체 다섯 개로 행성의 거리를 설명할 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-belief",
+        "title": "과학자의 믿음은 발견을 이끌었을까, 가렸을까?"
+       }
+      ]
      }
     ]
    },
@@ -5744,43 +5814,124 @@ window.TOC = [
       "n": 1,
       "title": "현대 과학과 사회문화",
       "code": "12과사02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-eclipse",
+        "title": "일식 사진 몇 장이 어떻게 아인슈타인을 세계적 유명인으로 만들었을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-modern-culture",
+        "title": "시간과 공간이 바뀌자 예술과 생각도 바뀌었을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-phy-relativity-society",
+        "title": "상대성 이론은 우리 생활과 사회를 어떻게 바꾸었을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "과학자들의 논쟁과 의사소통",
       "code": "12과사02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-pasteur",
+        "title": "같은 실험을 했는데 왜 파스퇴르와 푸셰의 결과는 달랐을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-debates",
+        "title": "과학자들은 어떻게 싸우고, 어떻게 결론에 이를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-sie1-peer",
+        "title": "놀라운 실험 결과는 바로 믿어도 될까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "예술·건축 속 과학 원리",
       "code": "12과사02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-catenary",
+        "title": "가우디는 왜 사슬을 거꾸로 매달아 성당을 설계했을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-art-science",
+        "title": "그림과 건물 속에는 어떤 과학이 숨어 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "감염병과 사회",
       "code": "12과사02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-snow",
+        "title": "1854년 런던의 콜레라는 어디에서 왔을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-epidemics",
+        "title": "감염병은 사회를 어떻게 바꾸었고, 과학은 무엇을 해냈을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-bio-herd",
+        "title": "집단 면역은 몇 %가 접종해야 생길까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "교통수단과 미래 사회",
       "code": "12과사02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-transport-energy",
+        "title": "시속 300 km 고속 열차와 시속 100 km 승용차, 한 사람을 1 km 옮기는 데 누가 에너지를 덜 쓸까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-transport",
+        "title": "증기 기관차에서 자율 주행차까지, 교통은 사회를 어떻게 바꾸었을까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "산업혁명 이후 과학기술의 명암",
       "code": "12과사02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-chain",
+        "title": "같은 핵분열인데 왜 발전소는 전기를 만들고 폭탄은 도시를 파괴할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-dual-use",
+        "title": "같은 과학기술이 왜 사람을 살리기도 하고 해치기도 할까?"
+       }
+      ]
      }
     ]
    },
@@ -5792,43 +5943,129 @@ window.TOC = [
       "n": 1,
       "title": "과학기술과 새로운 문화",
       "code": "12과사03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-hist-newculture",
+        "title": "새 기술은 어떻게 사람들이 보고, 듣고, 노는 방식을 바꾸었을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-pixel",
+        "title": "점을 찍어 그린 그림과 휴대 전화 화면은 왜 멀리서 보면 매끈할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "과학 용어와 사회",
       "code": "12과사03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-hist-terms",
+        "title": "광고 속 ‘DNA’와 ‘에너지’는 교과서 속 뜻과 같을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-quantum-leap",
+        "title": "‘양자 도약’은 정말 엄청나게 큰 도약일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "과학기술과 음악",
       "code": "12과사03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-tuning",
+        "title": "대나무 관을 3분의 1씩 자르고 늘이면 왜 12음이 나올까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-synth",
+        "title": "같은 ‘라’를 내는데 클라리넷과 바이올린은 왜 다르게 들릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-markov",
+        "title": "컴퓨터는 들은 노래로 어떻게 새 선율을 만들까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-music-tech",
+        "title": "악기, 녹음기, 컴퓨터, 로봇은 음악을 어떻게 바꾸었을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "연결되는 세상과 미래",
       "code": "12과사03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-hist-connected",
+        "title": "사람에서 기계로, 기계에서 사물로 연결이 넓어지면 사회는 어떻게 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-smallworld",
+        "title": "80억 명이 사는 세상은 왜 몇 다리만 건너면 이어질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-is2-iot",
+        "title": "사물인터넷은 무엇을 연결하고, 어디까지 믿을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "가상 현실·증강 현실",
       "code": "12과사03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-stereo",
+        "title": "평평한 화면 두 개로 가상 현실은 어떻게 깊이를 만들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-hist-latency",
+        "title": "고개를 돌렸는데 가상 세계가 늦게 따라오면 무슨 일이 생길까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-xr",
+        "title": "가상 현실과 증강 현실은 어디에 쓰이고, 우리 사회를 어떻게 바꿀까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "과학기술과 시민의 의사결정",
       "code": "12과사03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-hist-values",
+        "title": "같은 과학 자료를 보고도 시민들의 결론은 왜 다를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-hist-citizen",
+        "title": "원전, 방폐장, 자동차 안전, 시민은 어떻게 과학기술 문제를 함께 결정했을까?"
+       }
+      ]
      }
     ]
    }
@@ -5849,22 +6086,55 @@ window.TOC = [
       "n": 1,
       "title": "날씨와 기후",
       "code": "12기환01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-normals",
+        "title": "\"오늘은 평년보다 덥다\"는 말에서 평년은 무엇일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-clim-factors",
+        "title": "위도가 같은 서울과 샌프란시스코는 왜 기후가 이렇게 다를까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "기후시스템의 되먹임",
       "code": "12기환01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-feedback",
+        "title": "지구가 조금 따뜻해지면 왜 저절로 더 따뜻해질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-clim-daisy",
+        "title": "생물이 행성의 기온을 조절할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "기후변화가 생태계와 생활에 준 영향",
       "code": "12기환01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-seaice",
+        "title": "북극 바다 얼음은 어느 계절에 가장 빨리 줄고 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-impacts",
+        "title": "기후변화는 생태계와 우리 생활을 이미 어떻게 바꾸었을까?"
+       }
+      ]
      }
     ]
    },
@@ -5876,57 +6146,155 @@ window.TOC = [
       "n": 1,
       "title": "기후위기의 원인",
       "code": "12기환02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-keeling",
+        "title": "공기 중 CO₂는 왜 톱니 모양으로 늘고, 사람이 내보낸 CO₂는 얼마나 남을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-attrib",
+        "title": "지금의 온난화가 자연 때문인지 사람 때문인지 어떻게 가려낼까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-crisis",
+        "title": "지구의 기후는 원래 변해 왔는데, 지금의 변화를 왜 '위기'라고 부를까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "해수면 상승",
       "code": "12기환02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-slr",
+        "title": "해수면 상승 가운데 바닷물이 늘어난 몫과 바다에 물이 더해진 몫은 얼마일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-clim-meltheat",
+        "title": "지구가 얻은 열의 3 %만 얼음에 갔는데, 왜 해수면 상승의 절반 가까이를 얼음이 만들까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "극한 기상 현상",
       "code": "12기환02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-extremes",
+        "title": "평균은 조금 올랐을 뿐인데 왜 폭염과 폭우는 훨씬 잦아질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-extreme-cases",
+        "title": "슈퍼 태풍과 메가 가뭄은 생태계에 어떤 흔적을 남겼을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "기후변화 시나리오와 미래 생태계",
       "code": "12기환02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-is2-ssp",
+        "title": "2100년의 지구는 지금 우리가 고르는 길에 따라 얼마나 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-clim-range-shift",
+        "title": "기온이 오르면 생물은 어디로 옮겨 가고, 갈 곳이 없으면 어떻게 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-future-reports",
+        "title": "미래 생태계 예측 보고서는 어디에서 찾고, 어떻게 읽어야 할까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "꽃의 개화 시기 변화",
       "code": "12기환02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-flowering",
+        "title": "벚꽃은 달력을 보고 피는 걸까, 쌓인 따뜻함을 세고 피는 걸까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-phenology-life",
+        "title": "꽃이 일찍 피면 우리 생활에서는 무엇이 달라질까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "꿀벌과 곤충의 감소",
       "code": "12기환02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-pollinator",
+        "title": "꽃은 일찍 피는데 벌은 제때 나오지 못한다면 어떻게 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-insect-decline",
+        "title": "곤충이 줄고 있다는 말은 어디까지 사실일까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "물꽃 현상과 수생태계",
       "code": "12기환02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-algal",
+        "title": "같은 강인데 왜 어떤 여름에만 강물이 초록 페인트처럼 변할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-water-bloom",
+        "title": "녹조와 적조는 물속 생물다양성을 어떻게 바꿀까?"
+       }
+      ]
      },
      {
       "n": 8,
       "title": "곤충 매개 감염병",
       "code": "12기환02-08",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-vector",
+        "title": "모기가 옮기는 병은 왜 기온이 오르면 더 넓게, 더 오래 퍼질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-vector-cases",
+        "title": "곤충이 옮기는 감염병은 어디에서, 왜 새로 나타나고 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -5938,29 +6306,78 @@ window.TOC = [
       "n": 1,
       "title": "산호 백화와 바다 사막화",
       "code": "12기환03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-dhw",
+        "title": "바닷물이 1 °C 더 따뜻한 날이 몇 주 이어지면 산호는 왜 하얗게 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-barren",
+        "title": "바닷속 바위가 하얗게 변하는 갯녹음, 사라진 바다숲은 되살릴 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "사막화·대형 산불·가뭄과 홍수",
       "code": "12기환03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-wildfire",
+        "title": "숲이 조금 더 마르면 산불은 왜 훨씬 크게 번질까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-land-response",
+        "title": "마르는 땅과 넘치는 물, 인류는 어떻게 맞서고 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "탄소중립 기술",
       "code": "12기환03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-budget",
+        "title": "탄소중립은 왜 ‘언제까지’만큼 ‘어떻게 줄이느냐’가 중요할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-tech",
+        "title": "재생 에너지, 수소, 탄소 포집은 지금 어디까지 왔을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-earth-mitigate",
+        "title": "탄소 제거와 태양 복사 조절, 어떤 기술에 기대야 할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "국제사회의 노력과 시민 참여",
       "code": "12기환03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-clim-cooperate",
+        "title": "모두에게 이로운 감축을 왜 서로 미루고, 협약은 그것을 어떻게 바꿀까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-clim-agreements",
+        "title": "기후 위기 앞에서 세계와 우리나라, 그리고 시민은 무엇을 해 왔을까?"
+       }
+      ]
      }
     ]
    }
@@ -5981,29 +6398,78 @@ window.TOC = [
       "n": 1,
       "title": "융합적 탐구의 유용성",
       "code": "12융탐01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-helix",
+        "title": "X선 사진 한 장으로 DNA가 나선이라는 것을 어떻게 알았을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-dna",
+        "title": "한 분야의 도구가 다른 분야의 문제를 풀면 무슨 일이 생길까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "예술·사회과학과 과학 탐구 비교",
       "code": "12융탐01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-fusi-compare",
+        "title": "화가, 사회과학자, 과학자는 같은 방식으로 탐구할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-fusi-pointil",
+        "title": "물감을 섞지 않고 점으로 찍으면 색이 더 밝아질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "탐구 데이터의 종류와 가치",
       "code": "12융탐01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-scale",
+        "title": "20 °C는 10 °C보다 두 배 따뜻할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-data",
+        "title": "데이터는 어떻게 지식이 될까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "디지털 탐구 도구와 인공지능",
       "code": "12융탐01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-power",
+        "title": "스마트 플러그는 몇 초마다 재야 하루 전력량을 맞힐까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-fusi-knn",
+        "title": "인공지능은 처음 보는 광물을 어떻게 분류할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-ai",
+        "title": "인공지능과 디지털 도구는 과학 탐구를 어떻게 바꾸었을까?"
+       }
+      ]
      }
     ]
    },
@@ -6015,50 +6481,117 @@ window.TOC = [
       "n": 1,
       "title": "데이터에서 탐구 문제 찾기",
       "code": "12융탐02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-quake",
+        "title": "지진 4500개가 든 표에서 어떻게 탐구 문제를 찾을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-sie2-question",
+        "title": "\"걱정된다\"를 어떻게 탐구 문제로 바꿀까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "가설·모형과 탐구 설계",
       "code": "12융탐02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-cooling",
+        "title": "어떤 측정 계획이라야 두 가설 가운데 하나를 고를 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "데이터 수집과 신뢰성 평가",
       "code": "12융탐02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-sampling",
+        "title": "설문에 응답한 사람이 많으면 전교생을 대표할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-fusi-pmsensor",
+        "title": "값싼 미세먼지 센서가 보낸 숫자를 믿어도 될까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "데이터 시각화",
       "code": "12융탐02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-misgraph",
+        "title": "같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie1-plot",
+        "title": "같은 자료인데 왜 그래프마다 다른 이야기를 할까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "평균·표준편차로 가설 평가",
       "code": "12융탐02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-meansd",
+        "title": "두 모둠의 평균이 다르면 가설이 맞은 걸까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-dredge",
+        "title": "자료를 많이 뒤지면 우연도 규칙처럼 보일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "결론 도출과 평가",
       "code": "12융탐02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-simpson",
+        "title": "모든 집단에서 더 나은 치료가 전체로는 더 나쁠 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-confound",
+        "title": "자료가 많으면 결론도 항상 옳을까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "탐구 결과 발표와 토론",
       "code": "12융탐02-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-fusi-present",
+        "title": "탐구 결과를 3분 안에 정확하게 전하려면 무엇을 앞에 둘까?"
+       }
+      ]
      }
     ]
    },
@@ -6070,29 +6603,73 @@ window.TOC = [
       "n": 1,
       "title": "미래의 융합과학기술",
       "code": "12융탐03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-moore",
+        "title": "지난 추세만 보고 미래 기술을 얼마나 맞힐 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-future",
+        "title": "다음에 올 융합과학기술은 어떻게 내다볼까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "인류 난제와 융합과학기술",
       "code": "12융탐03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-desal",
+        "title": "바닷물에서 마실 물 1 m³를 얻는 데 에너지가 얼마나 들까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-challenges",
+        "title": "식량·물·자원·기후·싱크홀, 왜 한 분야로는 풀리지 않을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "융합과학 탐구의 윤리",
       "code": "12융탐03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-fusi-ethics",
+        "title": "여러 분야가 함께하는 탐구에서는 어떤 약속을 더 지켜야 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-fusi-fairness",
+        "title": "인공지능의 판정을 두 집단에 모두 공정하게 만들 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "시민 참여로 해결한 사회 문제",
       "code": "12융탐03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-fusi-crowd",
+        "title": "전문가가 아닌 사람 여럿이 모이면 믿을 만한 과학 자료가 될까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-fusi-citizen",
+        "title": "시민의 참여는 어떻게 과학 문제와 사회 문제를 풀었을까?"
+       }
+      ]
      }
     ]
    }
@@ -8731,29 +9308,63 @@ window.TOC = [
       "n": 1,
       "title": "귀납적 연구와 가설 연역적 연구",
       "code": "12과연01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-semmelweis",
+        "title": "왜 한쪽 병동에서만 산모가 더 많이 죽었을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-twoways",
+        "title": "자료에서 출발할까, 가설에서 출발할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "과학 탐구의 요소",
       "code": "12과연01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-elements",
+        "title": "검은 깡통의 물은 정말 더 빨리 데워질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "연구 윤리",
       "code": "12과연01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-resr-ethics",
+        "title": "연구 부정은 왜 연구자 한 사람의 잘못으로 끝나지 않을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-resr-phack",
+        "title": "유의한 결과가 나올 때까지 분석을 바꾸면 무엇이 문제일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "연구 주제 선정",
       "code": "12과연01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-topic",
+        "title": "하고 싶은 주제와 할 수 있는 주제는 어떻게 맞출까?"
+       }
+      ]
      }
     ]
    },
@@ -8765,29 +9376,78 @@ window.TOC = [
       "n": 1,
       "title": "자료와 문헌 조사",
       "code": "12과연02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-resr-literature",
+        "title": "선행 연구는 어디에서 찾고, 어떻게 밝혀 적을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-resr-source",
+        "title": "이 자료는 얼마나 믿을 만할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "연구 문제와 가설 설정",
       "code": "12과연02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-resr-hypothesis",
+        "title": "연구 문제와 연구 가설은 어떻게 다를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-resr-hypo",
+        "title": "어떤 가설이 더 좋은 가설일까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "연구 설계와 재료·기기 준비",
       "code": "12과연02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-design",
+        "title": "비료의 효과를 알아보려면 화분을 어떻게 나눠야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-plan",
+        "title": "실험을 시작하기 전에 계획서에 무엇을 적어 두어야 할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "자료 수집과 표·그래프 변환",
       "code": "12과연02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-graph",
+        "title": "기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-logbook",
+        "title": "연구 일지에는 무엇을 적고, 표는 어떻게 만들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-sie1-plot",
+        "title": "같은 자료인데 왜 그래프마다 다른 이야기를 할까?"
+       }
+      ]
      }
     ]
    },
@@ -8799,29 +9459,73 @@ window.TOC = [
       "n": 1,
       "title": "자료 해석과 가설 검증",
       "code": "12과연03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-ttest",
+        "title": "두 집단의 평균 차이는 우연일까, 효과일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-labphy-lsq",
+        "title": "흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "토론과 결론 도출",
       "code": "12과연03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-simpson",
+        "title": "전체로 보면 차이가 있는데, 나눠 보면 사라지는 까닭은?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-discuss",
+        "title": "결과와 결론은 무엇이 다르고, 토론은 어떻게 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "연구 보고서 작성",
       "code": "12과연03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-abstract",
+        "title": "이 초록과 그림, 무엇이 빠지고 무엇이 지나칠까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-report",
+        "title": "연구 보고서의 각 부분에는 무엇을 쓰고, 출처는 어떻게 밝힐까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "구두·포스터 발표",
       "code": "12과연03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-resr-poster",
+        "title": "포스터의 글자는 몇 걸음 밖에서도 읽혀야 할까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-resr-present",
+        "title": "같은 연구를 10분 발표, 포스터, 1분 영상으로 전하려면 무엇이 달라질까?"
+       }
+      ]
      }
     ]
    }
@@ -8842,22 +9546,55 @@ window.TOC = [
       "n": 1,
       "title": "함수와 매개변수",
       "code": "12정과01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-scope",
+        "title": "함수에 넘긴 리스트는 왜 함수 밖에서도 바뀔까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-params",
+        "title": "함수는 어떻게 값을 받고, 무엇을 돌려줄까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "재귀 구조",
       "code": "12정과01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-callstack",
+        "title": "자기 자신을 부르는 함수는 왜 끝날 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-induction",
+        "title": "문제 속에서 재귀 관계를 어떻게 찾을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "반복과 재귀 비교",
       "code": "12정과01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-fibtree",
+        "title": "같은 식을 재귀로 쓰면 왜 훨씬 느려질 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-loop-rec",
+        "title": "반복과 재귀, 어떤 문제에 어느 쪽이 맞을까?"
+       }
+      ]
      }
     ]
    },
@@ -8869,29 +9606,73 @@ window.TOC = [
       "n": 1,
       "title": "스택과 큐의 구현",
       "code": "12정과02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-sq",
+        "title": "스택과 큐를 리스트로 만들면 무엇이 다를까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-adt",
+        "title": "스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "스택·큐로 문제 해결",
       "code": "12정과02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-bracket",
+        "title": "괄호의 짝과 수식의 값을 스택 하나로 어떻게 판단할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-printer",
+        "title": "중요한 문서가 끼어드는 인쇄 대기열에서 내 문서는 몇 번째로 나올까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "트리와 그래프의 구현",
       "code": "12정과02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-graphrep",
+        "title": "같은 그래프를 표로 저장할까, 목록으로 저장할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-treerep",
+        "title": "이진 트리를 리스트 하나에 담을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "트리·그래프로 문제 해결",
       "code": "12정과02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-maze",
+        "title": "미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-bst",
+        "title": "15개 중 하나를 몇 번 비교해서 찾을까?"
+       }
+      ]
      }
     ]
    },
@@ -8903,43 +9684,109 @@ window.TOC = [
       "n": 1,
       "title": "상태 공간 완전 탐색",
       "code": "12정과03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-space",
+        "title": "배낭에 넣을 물건을 고르는 경우는 모두 몇 가지일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "가지치기 탐색",
       "code": "12정과03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-queens",
+        "title": "가망 없는 경우를 끝까지 확인해야 할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-bnb",
+        "title": "정답을 놓치지 않으면서 얼마나 덜 볼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "문제 분해",
       "code": "12정과03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-hanoi",
+        "title": "원판 n개 문제를 원판 n−1개 문제로 바꿀 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-decompose",
+        "title": "큰 문제 속에서 같은 모양의 작은 문제를 어떻게 찾을까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "분할 정복",
       "code": "12정과03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-sort",
+        "title": "반으로 나눠 정렬하면 왜 빨라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-power",
+        "title": "3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "동적 계획법",
       "code": "12정과03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-dp-memo",
+        "title": "같은 계산을 두 번 하지 않으면 얼마나 빨라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-dp-knapsack",
+        "title": "가방에 담을 물건을 고르는 표는 어떻게 채울까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-dp-dc",
+        "title": "분할 정복과 동적 계획법은 무엇이 다를까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "빅오 표기법과 복잡도",
       "code": "12정과03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-bigo-count",
+        "title": "입력이 두 배가 되면 연산은 몇 배가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-bigo-growth",
+        "title": "빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -8951,36 +9798,91 @@ window.TOC = [
       "n": 1,
       "title": "컴퓨터과학으로 풀 문제 발견",
       "code": "12정과04-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-info-find-problem",
+        "title": "주변의 불편함을 컴퓨터가 풀 수 있는 문제로 바꾸려면?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "프로젝트 설계",
       "code": "12정과04-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-info-project-plan",
+        "title": "코딩부터 시작하면 왜 프로젝트가 꼬일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-info-critical-path",
+        "title": "프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "오픈소스로 협력 개발",
       "code": "12정과04-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-git-merge",
+        "title": "두 사람이 같은 파일을 고치면 git은 어떻게 합칠까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-oss-license",
+        "title": "인터넷에 공개된 코드는 마음대로 가져다 써도 될까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "테스트와 디버깅",
       "code": "12정과04-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-unit-test",
+        "title": "어떤 테스트를 넣어야 숨은 버그가 드러날까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-debug",
+        "title": "버그는 어떤 순서로 잡아야 할까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "산출물 평가와 공유",
       "code": "12정과04-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-info-eval-groups",
+        "title": "정확도 95 %인 프로그램은 모두에게 잘 동작할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-is2-reident",
+        "title": "이름을 지운 자료로도 나를 찾아낼 수 있을까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-info-share",
+        "title": "완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?"
+       }
+      ]
      }
     ]
    }

@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/fusi/f2-pmsensor.js"
+  ]
+}
+-->
+<style>
+#card-fusi-pmsensor .f2-key { display: inline-block; width: 60px; height: 8px; vertical-align: middle; margin: 0 4px; background: linear-gradient(90deg, #6f9fd0, #e0a02a, #b5532f); }
+</style>
+<article class="card" id="card-fusi-pmsensor">
+  <header class="card-head">
+    <span class="no"></span><h2>값싼 미세먼지 센서가 보낸 숫자를 믿어도 될까?</h2><span class="kind">실험 · 디지털 탐구 도구 · 신뢰성과 타당성 · 센서 보정 (모식)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="측정소 옆에 놓은 광산란 미세먼지 센서. 습도가 높으면 입자가 물을 머금어 커지는 모습"></canvas>
+      <div class="ctl">
+        <div class="presets sens" role="group" aria-label="센서 고르기">
+          <span class="mono small dim">센서</span>
+          <button type="button" class="chip" data-s="0" aria-pressed="true">센서 1</button>
+          <button type="button" class="chip" data-s="1" aria-pressed="false">센서 2</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">실제 PM2.5 = <output class="c-out">30</output> μg/m³</label>
+            <input class="c" type="range" min="5" max="150" step="5" value="30" aria-label="실제 PM2.5 농도"></div>
+          <div><label class="mono">상대 습도 = <output class="h-out">50</output> %</label>
+            <input class="h" type="range" min="30" max="95" step="5" value="50" aria-label="상대 습도"></div>
+        </div>
+        <div class="toggles"><label><input type="checkbox" class="corr"> 센서 속 습도계 값으로 습도 보정하기</label></div>
+        <div class="lab-btns"><button class="chip go meas" type="button">같은 조건에서 5번 재기</button><button class="chip clear" type="button">기록 지우기</button></div>
+        <div class="tbl-host"></div>
+        <dl class="nums">
+          <div><dt>마지막 5번의 퍼짐 (SD)</dt><dd class="v-rep">—</dd></div>
+          <div><dt>평균 치우침 (센서 − 기준)</dt><dd class="v-bias">—</dd></div>
+          <div><dt>직선 맞춤 r²</dt><dd class="v-r2">—</dd></div>
+        </dl>
+        <canvas class="cv-plot" aria-label="기준 측정소 값과 센서 값의 산점도. 점 색은 습도"></canvas>
+        <p class="fig-note">점선은 센서 = 기준인 선, 주황 실선은 기록에 맞춘 직선입니다. 점 색: 습도 30 %<span class="f2-key"></span>95 %. 습도에 따른 과대 측정의 크기는 실제 광산란 센서에서 보고된 경향을 단순화한 모식입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>교실 창가에 몇만 원짜리 미세먼지 센서를 달아 1분마다 값을 받기로 했습니다. 이 센서가 보낸 숫자로 "오늘 우리 동네 공기는 나쁘다"고 말해도 될까요? 센서의 값을 믿을 수 있는지 무엇으로 판단할까요?</li>
+      <li><span class="tag">복원</span>값싼 센서는 대부분 <em>광산란 방식</em>입니다. 공기를 빨아들여 레이저를 비추고, 입자에 부딪혀 흩어진 빛의 세기로 입자 수와 크기를 세어 질량 농도로 바꿉니다. 국가 대기 측정소는 베타선 흡수법처럼 공인된 방법으로 PM2.5를 잽니다.</li>
+      <li><span class="tag">설계</span>센서를 기준 측정소 바로 옆에 두고 함께 잽니다(동시 측정). 같은 조건에서 여러 번 재어 값이 얼마나 흔들리는지 보면 <em>신뢰성</em>을, 기준값과 얼마나 맞는지 보면 <em>타당성</em>을 평가할 수 있습니다. 농도와 습도를 하나씩 바꿔 가며 기록합니다.</li>
+      <li><span class="tag">분석</span>습도가 낮으면 점들이 점선 근처에 모입니다. 습도가 높으면 입자가 물을 머금어 커지므로, 센서는 같은 먼지를 더 많은 먼지로 셉니다. 그래서 습도가 높은 점이 점선 위로 올라갑니다. 이 치우침은 반복해도 사라지지 않는 계통 오차이고, 습도를 함께 기록해 두면 보정식으로 상당 부분 줄일 수 있습니다.</li>
+      <li><span class="tag">측정</span>센서 1로 습도 50 %에서 농도를 바꿔 가며 다섯 번 이상 재고, 다음에는 같은 농도에서 습도만 90 %로 올려 재세요. 센서 2로도 같은 일을 하세요. 퍼짐이 작은 센서와 치우침이 작은 센서는 같은가요? 마지막으로 습도 보정을 켜고 점들이 어디로 가는지 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>r²가 높다고 값이 맞는 것은 아닙니다. 센서 값이 늘 기준의 1.5배라도 r²는 1에 가깝습니다. 센서마다 특성이 다르니 한 대로 정한 보정식을 다른 센서에 그대로 쓰지 않습니다. 센서를 직사광선, 환기구, 주방 근처에 두면 엉뚱한 값을 잽니다. 원자료와 보정식, 설치 위치와 날짜를 함께 기록해야 다른 사람이 검증할 수 있고, 위치 정보가 담긴 자료를 공개할 때는 개인을 알아볼 수 없게 합니다. 실외 설치 시에는 전원선과 방수에 주의합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">장마철(습도 90 % 안팎)에 보정하지 않은 광산란 센서가 하루 평균 PM2.5를 48 μg/m³로 기록했습니다. 같은 날 가까운 측정소는 27 μg/m³였습니다. 가장 알맞은 해석은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>센서가 측정소보다 가까이 있으니 센서 값이 실제 우리 동네 값이다<span class="why"><b>위치 차이만으로는 설명이 부족합니다.</b> 높은 습도에서 광산란 센서가 과대 측정하는 계통 오차를 먼저 의심해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>높은 습도에서 입자가 물을 머금어 커져 센서가 과대 측정했을 가능성이 크다<span class="why"><b>맞습니다.</b> 습도를 함께 기록했다면 보정식을 적용하고, 습도가 낮은 날 측정소와 비교해 센서를 다시 점검합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>하루 동안 1440번이나 측정해 평균을 냈으므로 오차는 거의 없다<span class="why"><b>평균은 우연 오차만 줄입니다.</b> 모든 측정이 같은 방향으로 치우쳐 있으면 아무리 많이 재도 평균은 그대로 치우칩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

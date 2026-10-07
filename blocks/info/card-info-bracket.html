@@ -1,0 +1,74 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/info/i1-kit.js",
+    "js/cards/info/i1-bracket.js"
+  ],
+  "short": "스택으로 괄호 검사·후위식 계산"
+}
+-->
+<style>
+#card-info-bracket .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+#card-info-bracket .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-bracket .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+#card-info-bracket .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-bracket .code .ln.off { opacity: .35; text-decoration: line-through; }
+#card-info-bracket .code .k { color: #2f6a8a; font-weight: 600; }
+#card-info-bracket .code .b { color: var(--forest); }
+#card-info-bracket .code .s { color: var(--warn); }
+#card-info-bracket .code .d { color: #8a5a00; }
+#card-info-bracket .code .c { color: var(--ink-3); }
+#card-info-bracket .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+#card-info-bracket .s-pos { margin-left: auto; align-self: center; }
+#card-info-bracket canvas { width: 100%; aspect-ratio: 16 / 9; }
+#card-info-bracket .expr { width: 100%; padding: 6px 10px; border: 1px solid var(--rule); background: #fff; font-family: var(--f-mono); font-size: 14px; border-radius: 2px; margin: 4px 0; }
+#card-info-bracket .ex .chip { text-transform: none; }
+</style>
+<article class="card" id="card-info-bracket">
+  <header class="card-head">
+    <span class="no"></span><h2>괄호의 짝과 수식의 값을 스택 하나로 어떻게 판단할까?</h2><span class="kind">스택 활용 · 괄호 짝 검사 · 후위 표기식 계산</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 입력을 한 글자(토큰)씩 읽는 위치. 아래: 스택에 쌓인 값"></canvas>
+      <div class="ctl">
+        <div class="presets modes" role="group" aria-label="문제">
+          <button type="button" class="chip" data-m="br" aria-pressed="true">괄호 짝 검사</button>
+          <button type="button" class="chip" data-m="pf" aria-pressed="false">후위 표기식 계산</button>
+        </div>
+        <label class="mono">입력 (직접 고쳐 써도 됩니다)</label>
+        <input class="expr" type="text" maxlength="40" spellcheck="false" aria-label="검사하거나 계산할 입력">
+        <div class="presets ex" role="group" aria-label="예시 입력"></div>
+        <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+        <div class="lab-btns i1-step">
+          <button type="button" class="chip s-first">처음</button>
+          <button type="button" class="chip s-prev">◀ 이전</button>
+          <button type="button" class="chip go s-next">다음 ▶</button>
+          <button type="button" class="chip s-play">재생</button>
+          <button type="button" class="chip s-last">끝</button>
+          <span class="mono small dim s-pos"></span>
+        </div>
+        <p class="note"></p>
+        <p class="fig-note">후위 표기식은 수와 연산자를 빈칸으로 띄어 씁니다(정수와 + − * /). 괄호 검사는 ( ) [ ] { }만 보고 나머지 글자는 건너뜁니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>코드 편집기는 괄호 짝이 틀리면 곧바로 표시합니다. 여는 괄호와 닫는 괄호의 개수만 세면 될까요? <code>([)]</code>는 개수가 맞는데도 틀린 식입니다. 또 계산기는 <code>(3 + 4) * 2</code>에서 무엇을 먼저 계산할지 어떻게 정할까요?</li>
+      <li><span class="tag">복원</span>스택은 맨 위에서만 넣고 꺼내는 후입선출 구조입니다. 보통 쓰는 수식(중위 표기)은 연산자가 두 수 사이에 있고, 곱셈이 덧셈보다 먼저라는 우선순위와 괄호로 계산 순서를 정합니다.</li>
+      <li><span class="tag">설명</span>괄호는 <em>가장 나중에 열린 것이 가장 먼저 닫혀야</em> 합니다. 이 성질이 바로 후입선출이므로, 여는 괄호는 스택에 넣고 닫는 괄호를 만나면 맨 위를 꺼내 종류가 맞는지 봅니다. 중간에 짝이 틀리거나 스택이 비어 있으면 실패, 끝까지 읽은 뒤 스택이 비어야 성공입니다. <em>후위 표기식</em>은 연산자를 두 수 뒤에 씁니다. <code>(3 + 4) * 2</code>는 <code>3 4 + 2 *</code>가 됩니다. 수는 스택에 넣고, 연산자를 만나면 두 수를 꺼내 계산한 결과를 다시 넣습니다. 괄호도 우선순위도 필요 없고, 왼쪽에서 오른쪽으로 한 번만 읽으면 됩니다.</li>
+      <li><span class="tag">연결</span>두 알고리즘 모두 입력을 한 번씩만 읽으므로 걸리는 시간이 입력 길이에 비례합니다. 계산기와 컴파일러는 중위식을 먼저 후위식으로 바꾼 뒤 이 방법으로 계산하는데, 이 변환에도 연산자를 잠시 쌓아 두는 스택이 쓰입니다. HTML 태그의 짝, 함수 호출과 반환처럼 ‘안에 같은 구조가 들어 있는’ 것을 다룰 때 스택이 쓰입니다.</li>
+      <li><span class="tag">적용</span><code>([)]</code>는 몇 번째 글자에서 실패하나요? <code>((a+b)*c</code>는 언제 실패가 드러나나요? 후위식 <code>8 2 / 3 -</code>에서 연산자를 만날 때 먼저 꺼낸 수가 왼쪽인지 오른쪽인지 확인하세요. <code>2 3 4 * +</code>를 중위식으로 바꾸어 쓰고, 직접 만든 후위식으로 시험해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>괄호가 한 종류뿐이면 개수를 세는 변수 하나로도 검사할 수 있습니다(중간에 음수가 되지 않고 끝에 0이면 성공). 여러 종류가 섞이면 어떤 괄호가 열려 있는지 순서까지 기억해야 하므로 스택이 필요합니다. 또 이 함수는 <code>print(')')</code>처럼 문자열 안에 든 괄호까지 세어 틀렸다고 판정합니다. 실제 편집기는 문자열과 주석을 먼저 구분합니다. 후위식 코드도 마지막에 스택에 값이 정확히 하나 남았는지 확인해야 잘못된 식을 걸러 낼 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">후위 표기식 <code>6 2 - 3 *</code>의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12<span class="why"><b>맞습니다.</b> − 를 만나면 2(b)와 6(a)을 꺼내 6 − 2 = 4를 넣고, * 에서 4 × 3 = 12가 됩니다. 중위식으로는 (6 − 2) × 3입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−12<span class="why"><b>꺼낸 순서를 거꾸로 쓴 답입니다.</b> 먼저 꺼낸 2가 오른쪽 수이므로 2 − 6이 아니라 6 − 2입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>중위식의 우선순위를 적용한 답입니다.</b> 6 − 2 × 3으로 읽으면 0이지만, 후위식에서는 연산자가 나오는 순서가 곧 계산 순서입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

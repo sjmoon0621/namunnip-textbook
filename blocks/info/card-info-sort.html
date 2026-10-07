@@ -1,0 +1,67 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i2-kit.js", "js/cards/info/i2-sort.js"],
+  "short": "합병 정렬과 퀵 정렬"
+}
+-->
+<style>
+#card-info-sort .cv-tree { width: 100%; aspect-ratio: 4 / 3; }
+#card-info-sort .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+#card-info-sort .i2c .ln { display: block; padding: 0 10px; }
+#card-info-sort .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-sort .note { font: 12px/1.5 var(--f-mono); color: var(--ink-2); min-height: 3em; }
+#card-info-sort .key i { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--ink-3); vertical-align: -2px; margin: 0 4px 0 8px; }
+</style>
+<article class="card" id="card-info-sort">
+  <header class="card-head">
+    <span class="no"></span><h2>반으로 나눠 정렬하면 왜 빨라질까?</h2><span class="kind">분할 정복 · 합병 정렬과 퀵 정렬 · 재귀 트리</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-tree" aria-label="정렬의 재귀 트리. 한 줄이 재귀의 한 층이며, 각 칸은 리스트의 원소입니다. 정렬이 끝난 부분은 초록, 퀵 정렬의 피벗은 노랑으로 칠해집니다."></canvas>
+      <p class="legend key"><i style="background:var(--card)"></i>아직 정렬 안 됨<i style="background:#cfe3c5"></i>정렬 끝<i style="background:#e0a02a"></i>피벗 (퀵 정렬)</p>
+      <p class="note" aria-live="polite"></p>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="정렬 방법">
+          <button type="button" class="chip" data-mode="merge" aria-pressed="true">합병 정렬</button>
+          <button type="button" class="chip" data-mode="quick" aria-pressed="false">퀵 정렬 (첫 원소 피벗)</button>
+        </div>
+        <div class="presets" role="group" aria-label="입력">
+          <span class="mono small dim">입력</span>
+          <button type="button" class="chip" data-in="rand" aria-pressed="true">무작위 (새로)</button>
+          <button type="button" class="chip" data-in="sorted" aria-pressed="false">이미 정렬됨</button>
+          <button type="button" class="chip" data-in="rev" aria-pressed="false">거꾸로 정렬됨</button>
+        </div>
+        <label class="mono">원소 수 n = <output class="n-out">8</output></label>
+        <input class="n" type="range" min="4" max="16" step="1" value="8" aria-label="원소 수">
+        <div class="lab-btns"><button type="button" class="chip go step">한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+        <dl class="nums n4">
+          <div><dt>비교 횟수 (지금 / 전체)</dt><dd class="n-c">—</dd></div>
+          <div><dt>재귀 깊이</dt><dd class="n-d">—</dd></div>
+          <div><dt>선택 정렬이라면 n(n−1)/2</dt><dd class="n-s">—</dd></div>
+          <div><dt>참고 n log₂n</dt><dd class="n-l">—</dd></div>
+        </dl>
+        <pre class="i2c" aria-label="선택한 정렬의 파이썬 코드"></pre>
+        <p class="fig-note">비교 횟수는 원소 두 개의 크기를 비교한 횟수입니다. 합병 정렬은 merge 안의 비교를, 퀵 정렬은 피벗과 비교되는 원소 수(구간 길이 − 1)를 셉니다. 위 퀵 정렬 코드는 리스트를 두 번 훑으므로 실제 비교는 그 두 배이지만, 자리를 바꾸며 한 번만 훑는 구현도 있어 한 번으로 셉니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>원소를 하나씩 보며 가장 작은 것을 골라 앞으로 보내는 선택 정렬은 원소 16개에 비교를 120번 합니다. 1000개면 약 50만 번입니다. 리스트를 반으로 나눠 각각 정렬한 뒤 합치면 비교가 줄어들까요?</li>
+      <li><span class="tag">복원</span>문제 분해는 전체 문제를 같은 모양의 부분 문제로 나누고, 부분 문제의 답으로 전체 답을 만드는 관계를 찾는 것입니다. 재귀 함수는 기저 사례에서 멈춥니다.</li>
+      <li><span class="tag">설명</span><em>분할 정복</em>은 ① 문제를 작은 부분 문제로 나누고(분할), ② 각각을 재귀로 풀고(정복), ③ 그 답을 합쳐 전체 답을 만듭니다(결합). <em>합병 정렬</em>은 무조건 반으로 나누고, 정렬된 두 리스트의 맨 앞끼리 비교하며 하나로 합칩니다. 나누기는 쉽고 합치기에서 일을 합니다. <em>퀵 정렬</em>은 피벗을 하나 골라 그보다 작은 것과 크거나 같은 것으로 나누고, 각각 정렬해 이어 붙입니다. 나누기에서 일을 하고 합치기는 이어 붙이기뿐입니다.</li>
+      <li><span class="tag">연결</span>합병 정렬은 한 층마다 합병에서 많아야 n번 비교하고, 반씩 나누므로 층은 약 log₂n개입니다. 그래서 비교 횟수는 n log₂n 정도이고, 입력이 어떻게 놓여 있든 같습니다. 퀵 정렬은 피벗이 구간을 고르게 나누면 합병 정렬과 비슷하지만, 이미 정렬된 리스트에서 첫 원소를 피벗으로 고르면 한쪽이 비어 층이 n개가 되고 비교가 n(n−1)/2번으로 늘어납니다.</li>
+      <li><span class="tag">적용</span>n = 8, 무작위 입력에서 합병 정렬을 한 단계씩 실행하며 재귀 트리가 내려갔다 올라오는 순서를 따라가세요. 이어서 n = 16에서 세 가지 입력에 대해 두 방법의 비교 횟수와 재귀 깊이를 표로 적어 보세요. 퀵 정렬이 가장 느린 입력은 무엇이고, 그때 재귀 트리는 어떤 모양인가요?</li>
+      <li class="warn"><span class="tag">판단</span>"나누기만 하면 빨라진다"는 틀린 생각입니다. 하노이 탑처럼 크기가 하나만 줄어드는 부분 문제가 둘이면 오히려 일이 두 배씩 늘고, 퀵 정렬도 나뉘는 비율이 나쁘면 느려집니다. 분할 정복이 빠른 것은 부분 문제의 크기가 일정한 비율로 줄고, 결합하는 비용이 작기 때문입니다. 실제 퀵 정렬은 피벗을 무작위로 고르거나 세 값의 중간값으로 골라 이런 최악을 피하며, 파이썬의 sorted()는 합병 정렬과 삽입 정렬을 섞은 Timsort를 씁니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">원소 1024개를 정렬합니다. 합병 정렬의 재귀 트리는 몇 층(나누는 횟수)이고, 한 층의 합병에서 비교는 최대 약 몇 번일까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10층, 층마다 약 1024번 → 전체 약 1만 번<span class="why"><b>맞습니다.</b> 1024 = 2¹⁰이라 10번 반으로 나누면 원소 1개가 됩니다. 선택 정렬의 약 52만 번과 비교해 보세요.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>512층, 층마다 2번<span class="why"><b>반으로 나누는 횟수와 원소 수의 절반을 섞었습니다.</b> 크기가 반씩 줄면 층 수는 log₂n입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10층, 하지만 아래층으로 갈수록 리스트가 많아져 층마다 비교가 두 배로 는다<span class="why"><b>리스트 개수는 두 배가 되지만 각 리스트의 길이는 절반입니다.</b> 한 층 전체의 원소 수는 늘 1024개라 비교도 많아야 약 1024번입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

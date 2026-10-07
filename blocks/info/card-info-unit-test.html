@@ -1,0 +1,89 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i3-unit-test.js"],
+  "short": "테스트로 버그 찾고 고치기"
+}
+-->
+<style>
+#card-info-unit-test pre.code {
+  font: 12px/1.6 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 8px 0 4px;
+  overflow-x: auto; counter-reset: ln;
+}
+#card-info-unit-test pre.code .l { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-unit-test pre.code .l::before {
+  counter-increment: ln; content: counter(ln); position: absolute; left: 0; width: 26px;
+  text-align: right; color: var(--ink-3);
+}
+#card-info-unit-test pre.code .l.on { background: #e1eed9; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-unit-test pre.code .l.fix { color: var(--forest); font-weight: 600; }
+#card-info-unit-test .pool { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 14px; font-size: 13px; margin: 6px 0; }
+#card-info-unit-test .pool label { display: flex; gap: 6px; align-items: baseline; cursor: pointer; }
+#card-info-unit-test .pool code { font: 12px var(--f-mono); }
+#card-info-unit-test .pool small { color: var(--ink-3); font-size: 11px; }
+#card-info-unit-test .own { display: flex; gap: 6px; align-items: center; margin: 6px 0; font-size: 13px; }
+#card-info-unit-test .own input { flex: 1; min-width: 0; font: 12.5px var(--f-mono); padding: 4px 8px; border: 1px solid var(--rule); background: var(--card); }
+#card-info-unit-test .runbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+#card-info-unit-test .res { overflow-x: auto; margin: 8px 0; border: 1px solid var(--rule); }
+#card-info-unit-test .res table { width: 100%; border-collapse: collapse; font: 12px var(--f-mono); }
+#card-info-unit-test .res th { background: var(--paper-2); color: var(--ink-2); font-weight: 500; padding: 4px 8px; text-align: left; }
+#card-info-unit-test .res td { padding: 3px 8px; border-top: 1px solid var(--grid); }
+#card-info-unit-test .res td.pass { color: var(--forest); }
+#card-info-unit-test .res td.fail { color: var(--warn); font-weight: 600; }
+#card-info-unit-test .res button { font: 11px var(--f-mono); border: 1px solid var(--rule); background: var(--card); padding: 1px 6px; }
+#card-info-unit-test .vars { font: 12px var(--f-mono); color: var(--ink-2); min-height: 1.6em; }
+@media (max-width: 560px) {
+  #card-info-unit-test .pool { grid-template-columns: 1fr; }
+}
+#card-info-unit-test .grp { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); margin-top: 8px; }
+</style>
+<article class="card" id="card-info-unit-test">
+  <header class="card-head">
+    <span class="no"></span><h2>어떤 테스트를 넣어야 숨은 버그가 드러날까?</h2><span class="kind">테스트와 디버깅 · 단위 테스트, 경계값, 추적</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <div class="presets fn" role="group" aria-label="검사할 함수">
+        <button type="button" class="chip" data-f="leap" aria-pressed="true">윤년 판별</button>
+        <button type="button" class="chip" data-f="bin" aria-pressed="false">이진 탐색</button>
+        <button type="button" class="chip" data-f="med" aria-pressed="false">중앙값</button>
+      </div>
+      <p class="spec" style="font-size:13px;margin:6px 0"></p>
+      <pre class="code" aria-label="검사할 파이썬 함수"></pre>
+      <p class="vars"></p>
+      <div class="runbar">
+        <button type="button" class="chip b-prev" disabled>◀ 이전 줄</button>
+        <button type="button" class="chip b-next" disabled>다음 줄 ▶</button>
+        <button type="button" class="chip b-fix" aria-pressed="false">고친 코드 적용</button>
+      </div>
+      <p class="grp">테스트 케이스 고르기</p>
+      <div class="pool"></div>
+      <div class="own"><span>직접:</span><input type="text" class="own-in" aria-label="직접 넣을 입력"><button type="button" class="chip b-add">추가</button></div>
+      <div class="runbar"><button type="button" class="chip b-run">테스트 실행</button></div>
+      <dl class="nums">
+        <div><dt>실행한 테스트</dt><dd class="n-run">0</dd></div>
+        <div><dt>통과</dt><dd class="n-pass good">0</dd></div>
+        <div><dt>실패</dt><dd class="n-fail">0</dd></div>
+      </dl>
+      <div class="res"></div>
+      <p class="fig-note">기대값은 명세(함수가 해야 할 일)대로 계산한 값입니다. 실패한 줄의 ‘추적’을 누르면 그 입력으로 함수를 한 줄씩 실행하며 변수 값을 볼 수 있습니다.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>윤년 판별 함수를 2024년과 2023년으로 시험했더니 둘 다 맞았습니다. 이 함수는 이제 믿어도 될까요? 어떤 입력을 더 넣어 봐야 할까요?</li>
+      <li><span class="tag">복원</span>프로그램은 명세(입력에 대해 무엇을 돌려줘야 하는가)를 만족해야 합니다. 그레고리력에서 윤년은 4로 나누어떨어지는 해 가운데, 100으로 나누어떨어지는 해는 빼고, 400으로 나누어떨어지는 해는 다시 넣습니다.</li>
+      <li><span class="tag">설명</span><em>단위 테스트</em>는 함수 하나에 입력을 넣고 결과가 기대값과 같은지 자동으로 확인하는 코드입니다. 파이썬에서는 assert is_leap(2000) == True처럼 쓰거나 unittest, pytest를 씁니다. 좋은 테스트는 평범한 값뿐 아니라 규칙이 바뀌는 <em>경계값</em>(1900, 2000, 리스트의 맨 끝 원소)과 <em>예외 경우</em>(빈 리스트, 원소가 하나인 리스트)를 고루 넣습니다. 테스트가 실패하면 <em>디버깅</em>을 합니다. 실패한 입력으로 코드를 한 줄씩 따라가며(추적) 변수 값이 예상과 처음 달라지는 곳을 찾습니다.</li>
+      <li><span class="tag">연결</span>버그를 고친 뒤에는 처음에 통과하던 테스트까지 모두 다시 돌립니다(<em>회귀 테스트</em>). 고친 부분이 다른 곳을 망가뜨리지 않았는지 확인하기 위해서입니다. 협업 저장소에서는 커밋할 때마다 테스트가 자동으로 돌도록 설정해 두기도 합니다.</li>
+      <li><span class="tag">적용</span>세 함수마다 평범한 테스트만으로 시작해 모두 통과하는지 보고, 경계값과 예외 경우를 하나씩 더해 실패하는 테스트를 찾으세요. 실패한 테스트를 추적해 버그가 있는 줄을 짚은 다음 ‘고친 코드 적용’을 누르고 모든 테스트를 다시 실행하세요.</li>
+      <li class="warn"><span class="tag">판단</span>테스트를 모두 통과해도 버그가 없다는 증명은 아닙니다. 테스트는 버그가 <em>있음</em>을 보여 줄 수는 있지만 없음을 보여 주지는 못합니다. 그래서 테스트의 개수보다 입력을 성질이 같은 묶음으로 나누어(동등 분할) 묶음마다, 그리고 그 경계마다 골고루 넣는 것이 중요합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">점수(0~100 정수)를 받아 90 이상이면 "A", 80 이상이면 "B", 나머지는 "C"를 돌려주는 함수를 시험하려 합니다. 테스트 네 개만 쓸 수 있다면 가장 좋은 묶음은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>95, 85, 50, 70<span class="why"><b>등급마다 값이 있어 그럴듯하지만</b> 경계(90, 80)를 하나도 넣지 않아 &gt;=를 &gt;로 잘못 쓴 버그를 찾지 못합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>90, 89, 80, 79<span class="why"><b>맞습니다.</b> 등급이 바뀌는 경계의 양쪽을 모두 넣어 부등호 실수를 바로 잡아냅니다. 여유가 있으면 0과 100도 넣습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>100, 99, 98, 97<span class="why"><b>모두 같은 묶음(A)</b>에 속해 새로운 정보를 주지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

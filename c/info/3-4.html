@@ -1,0 +1,175 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>분할 정복 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="합병 정렬, 퀵 정렬, 거듭제곱 등을 통해 문제를 나누고(분할) 부분 문제를 풀어(정복) 그 결과를 합치는(결합) 분할 정복의 원리를 이해하고, 이를 활용한 알고리즘을 설계한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-sort .cv-tree { width: 100%; aspect-ratio: 4 / 3; }
+    #card-info-sort .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+    #card-info-sort .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-sort .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-sort .note { font: 12px/1.5 var(--f-mono); color: var(--ink-2); min-height: 3em; }
+    #card-info-sort .key i { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--ink-3); vertical-align: -2px; margin: 0 4px 0 8px; }
+    #card-info-power .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+    #card-info-power .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-power .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-power .note { font: 12px/1.5 var(--f-mono); color: var(--ink-2); min-height: 3em; }
+  </style>
+</head>
+<body data-course="info" data-sec="3-4">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>분할 정복</h1>
+    <p class="lead">리스트를 반으로 나누는 일을 열 번만 하면 1000개가 넘는 원소도 하나씩으로 쪼개집니다. 부분 문제의 크기가 일정한 비율로 줄고 그 답을 싸게 합칠 수 있으면, 수십만 번 걸릴 일이 수만 번으로 줄어듭니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">문제 분해와 관계식</span><span class="p">재귀 호출 스택</span><span class="p">로그 함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-sort"><span class="mono">3.4.1</span>합병 정렬과 퀵 정렬</a></li>
+        <li><a href="#card-info-power"><span class="mono">3.4.2</span>분할 정복 거듭제곱</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-4">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-sort">
+        <header class="card-head">
+          <span class="no">3.4.1</span><h2>반으로 나눠 정렬하면 왜 빨라질까?</h2><span class="kind">분할 정복 · 합병 정렬과 퀵 정렬 · 재귀 트리</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-tree" aria-label="정렬의 재귀 트리. 한 줄이 재귀의 한 층이며, 각 칸은 리스트의 원소입니다. 정렬이 끝난 부분은 초록, 퀵 정렬의 피벗은 노랑으로 칠해집니다."></canvas>
+            <p class="legend key"><i style="background:var(--card)"></i>아직 정렬 안 됨<i style="background:#cfe3c5"></i>정렬 끝<i style="background:#e0a02a"></i>피벗 (퀵 정렬)</p>
+            <p class="note" aria-live="polite"></p>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="정렬 방법">
+                <button type="button" class="chip" data-mode="merge" aria-pressed="true">합병 정렬</button>
+                <button type="button" class="chip" data-mode="quick" aria-pressed="false">퀵 정렬 (첫 원소 피벗)</button>
+              </div>
+              <div class="presets" role="group" aria-label="입력">
+                <span class="mono small dim">입력</span>
+                <button type="button" class="chip" data-in="rand" aria-pressed="true">무작위 (새로)</button>
+                <button type="button" class="chip" data-in="sorted" aria-pressed="false">이미 정렬됨</button>
+                <button type="button" class="chip" data-in="rev" aria-pressed="false">거꾸로 정렬됨</button>
+              </div>
+              <label class="mono">원소 수 n = <output class="n-out">8</output></label>
+              <input class="n" type="range" min="4" max="16" step="1" value="8" aria-label="원소 수">
+              <div class="lab-btns"><button type="button" class="chip go step">한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+              <dl class="nums n4">
+                <div><dt>비교 횟수 (지금 / 전체)</dt><dd class="n-c">—</dd></div>
+                <div><dt>재귀 깊이</dt><dd class="n-d">—</dd></div>
+                <div><dt>선택 정렬이라면 n(n−1)/2</dt><dd class="n-s">—</dd></div>
+                <div><dt>참고 n log₂n</dt><dd class="n-l">—</dd></div>
+              </dl>
+              <pre class="i2c" aria-label="선택한 정렬의 파이썬 코드"></pre>
+              <p class="fig-note">비교 횟수는 원소 두 개의 크기를 비교한 횟수입니다. 합병 정렬은 merge 안의 비교를, 퀵 정렬은 피벗과 비교되는 원소 수(구간 길이 − 1)를 셉니다. 위 퀵 정렬 코드는 리스트를 두 번 훑으므로 실제 비교는 그 두 배이지만, 자리를 바꾸며 한 번만 훑는 구현도 있어 한 번으로 셉니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>원소를 하나씩 보며 가장 작은 것을 골라 앞으로 보내는 선택 정렬은 원소 16개에 비교를 120번 합니다. 1000개면 약 50만 번입니다. 리스트를 반으로 나눠 각각 정렬한 뒤 합치면 비교가 줄어들까요?</li>
+            <li><span class="tag">복원</span>문제 분해는 전체 문제를 같은 모양의 부분 문제로 나누고, 부분 문제의 답으로 전체 답을 만드는 관계를 찾는 것입니다. 재귀 함수는 기저 사례에서 멈춥니다.</li>
+            <li><span class="tag">설명</span><em>분할 정복</em>은 ① 문제를 작은 부분 문제로 나누고(분할), ② 각각을 재귀로 풀고(정복), ③ 그 답을 합쳐 전체 답을 만듭니다(결합). <em>합병 정렬</em>은 무조건 반으로 나누고, 정렬된 두 리스트의 맨 앞끼리 비교하며 하나로 합칩니다. 나누기는 쉽고 합치기에서 일을 합니다. <em>퀵 정렬</em>은 피벗을 하나 골라 그보다 작은 것과 크거나 같은 것으로 나누고, 각각 정렬해 이어 붙입니다. 나누기에서 일을 하고 합치기는 이어 붙이기뿐입니다.</li>
+            <li><span class="tag">연결</span>합병 정렬은 한 층마다 합병에서 많아야 n번 비교하고, 반씩 나누므로 층은 약 log₂n개입니다. 그래서 비교 횟수는 n log₂n 정도이고, 입력이 어떻게 놓여 있든 같습니다. 퀵 정렬은 피벗이 구간을 고르게 나누면 합병 정렬과 비슷하지만, 이미 정렬된 리스트에서 첫 원소를 피벗으로 고르면 한쪽이 비어 층이 n개가 되고 비교가 n(n−1)/2번으로 늘어납니다.</li>
+            <li><span class="tag">적용</span>n = 8, 무작위 입력에서 합병 정렬을 한 단계씩 실행하며 재귀 트리가 내려갔다 올라오는 순서를 따라가세요. 이어서 n = 16에서 세 가지 입력에 대해 두 방법의 비교 횟수와 재귀 깊이를 표로 적어 보세요. 퀵 정렬이 가장 느린 입력은 무엇이고, 그때 재귀 트리는 어떤 모양인가요?</li>
+            <li class="warn"><span class="tag">판단</span>"나누기만 하면 빨라진다"는 틀린 생각입니다. 하노이 탑처럼 크기가 하나만 줄어드는 부분 문제가 둘이면 오히려 일이 두 배씩 늘고, 퀵 정렬도 나뉘는 비율이 나쁘면 느려집니다. 분할 정복이 빠른 것은 부분 문제의 크기가 일정한 비율로 줄고, 결합하는 비용이 작기 때문입니다. 실제 퀵 정렬은 피벗을 무작위로 고르거나 세 값의 중간값으로 골라 이런 최악을 피하며, 파이썬의 sorted()는 합병 정렬과 삽입 정렬을 섞은 Timsort를 씁니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">원소 1024개를 정렬합니다. 합병 정렬의 재귀 트리는 몇 층(나누는 횟수)이고, 한 층의 합병에서 비교는 최대 약 몇 번일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10층, 층마다 약 1024번 → 전체 약 1만 번<span class="why"><b>맞습니다.</b> 1024 = 2¹⁰이라 10번 반으로 나누면 원소 1개가 됩니다. 선택 정렬의 약 52만 번과 비교해 보세요.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>512층, 층마다 2번<span class="why"><b>반으로 나누는 횟수와 원소 수의 절반을 섞었습니다.</b> 크기가 반씩 줄면 층 수는 log₂n입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10층, 하지만 아래층으로 갈수록 리스트가 많아져 층마다 비교가 두 배로 는다<span class="why"><b>리스트 개수는 두 배가 되지만 각 리스트의 길이는 절반입니다.</b> 한 층 전체의 원소 수는 늘 1024개라 비교도 많아야 약 1024번입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-info-power">
+        <header class="card-head">
+          <span class="no">3.4.2</span><h2>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</h2><span class="kind">분할 정복 · 부분 문제의 답 재사용 · 거듭제곱</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="power(a, n) 호출이 n을 반씩 줄이며 쌓이고, 기저 사례에서부터 값을 돌려주며 풀리는 모습. 오른쪽에 n의 2진수와 돌려준 값이 적힙니다."></canvas>
+            <p class="note" aria-live="polite"></p>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">밑 a = <output class="a-out">3</output></label>
+                  <input class="a" type="range" min="2" max="9" step="1" value="3" aria-label="밑"></div>
+                <div><label class="mono">지수 n = <output class="n-out">13</output></label>
+                  <input class="n" type="range" min="1" max="1000" step="1" value="13" aria-label="지수"></div>
+              </div>
+              <div class="lab-btns"><button type="button" class="chip go step">한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+              <dl class="nums n4">
+                <div><dt>반복문으로 a를 곱하기</dt><dd class="n-loop">—</dd></div>
+                <div><dt>power(n//2)를 두 번 호출</dt><dd class="n-two">—</dd></div>
+                <div><dt>half에 저장해 한 번 호출</dt><dd class="n-one">—</dd></div>
+                <div><dt>n의 2진수</dt><dd class="n-bin">—</dd></div>
+              </dl>
+              <pre class="i2c" aria-label="파이썬 거듭제곱 코드"></pre>
+              <p class="fig-note">세 칸의 숫자는 곱셈 횟수입니다. "두 번 호출"은 half를 쓰지 않고 return power(a, n // 2) * power(a, n // 2)처럼 쓴 경우입니다. 파이썬의 정수는 자릿수 제한이 없어 큰 값도 정확히 구하지만, 자릿수가 커지면 곱셈 한 번도 오래 걸립니다. 실제로는 pow(a, n) 또는 a ** n을 씁니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>3¹⁰⁰⁰을 구하려고 3을 계속 곱하면 곱셈 999번이 필요합니다. 그런데 3¹⁰⁰⁰ = (3⁵⁰⁰)²이므로 3⁵⁰⁰만 알면 곱셈 한 번으로 끝납니다. 이렇게 계속 나누면 곱셈이 몇 번으로 줄어들까요?</li>
+            <li><span class="tag">복원</span>분할 정복은 문제를 작은 부분 문제로 나누고, 그 답을 결합해 전체 답을 만듭니다. 지수 법칙에 따라 a<sup>2m</sup> = (a<sup>m</sup>)², a<sup>2m+1</sup> = (a<sup>m</sup>)² × a입니다.</li>
+            <li><span class="tag">설명</span>power(a, n)은 부분 문제 power(a, n // 2)의 답 half를 구한 뒤, n이 짝수면 half × half, 홀수면 half × half × a를 돌려줍니다. 지수가 매번 반으로 줄므로 호출은 약 log₂n번만 쌓이고, 한 층에서 곱셈은 1~2번입니다. 각 줄의 n을 2진수로 보면 한 줄 내려갈 때마다 맨 오른쪽 자리가 하나씩 떨어집니다. 그래서 곱셈을 두 번 하는 홀수 단계(주황)의 수는 n의 2진수에 있는 1의 개수와 같습니다.</li>
+            <li><span class="tag">연결</span>합병 정렬은 크기가 반인 부분 문제 <em>두 개</em>를 풀어야 하지만, 거듭제곱은 같은 부분 문제 하나의 답을 두 번 쓰면 됩니다. 그 답을 변수 half에 저장하지 않고 power(a, n // 2)를 두 번 부르면, 호출 수가 층마다 두 배로 늘어 결국 곱셈 횟수가 반복문과 비슷하거나 오히려 많아집니다. 분할 정복의 효율은 부분 문제의 개수, 크기가 줄어드는 비율, 결합 비용이 함께 정합니다.</li>
+            <li><span class="tag">적용</span>a = 3, n = 13에서 한 단계씩 실행하며 호출이 쌓였다가 아래에서부터 값이 돌아오는 순서를 확인하세요. n을 1000으로 놓고 세 방법의 곱셈 횟수를 비교하세요. n = 1023과 n = 1024 중 한 번 호출 방법의 곱셈이 더 많은 쪽은 어디이고, 왜 그런지 2진수로 설명해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>곱셈 횟수가 줄었다고 실행 시간이 꼭 그만큼 주는 것은 아닙니다. 3¹⁰⁰⁰은 478자리 수라서 곱셈 한 번도 작은 수의 곱셈보다 훨씬 오래 걸립니다. 그래도 같은 수를 반복해서 곱하는 방법보다는 훨씬 빠르며, 암호에서 쓰는 "aⁿ을 m으로 나눈 나머지" 계산은 매 단계 나머지만 남겨 수가 커지지 않게 하면서 이 방법을 그대로 씁니다(파이썬의 pow(a, n, m)).</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">행렬 거듭제곱 Mⁿ도 같은 코드로 구할 수 있습니다(1 대신 단위 행렬). n = 64일 때, half를 저장하는 방법의 행렬 곱셈 횟수에 가장 가까운 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10번 이하<span class="why"><b>맞습니다.</b> 지수가 64 → 32 → 16 → 8 → 4 → 2 → 1 → 0으로 줄어 층이 일곱 개이고, 층마다 곱셈이 1~2번입니다. 코드대로 세면 8번입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>63번<span class="why"><b>반복문으로 M을 계속 곱할 때의 횟수입니다.</b> half를 저장하지 않고 두 번 호출하면 191번으로 이보다도 많아집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>32번<span class="why"><b>한 번만 반으로 줄였을 때의 생각입니다.</b> M³²도 다시 M¹⁶으로부터 구하며, 이렇게 끝까지 줄여 나갑니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-sort.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-power.js"></script>
+</body>
+</html>

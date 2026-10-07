@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i2-kit.js", "js/cards/info/i2-power.js"],
+  "short": "분할 정복 거듭제곱"
+}
+-->
+<style>
+#card-info-power .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+#card-info-power .i2c .ln { display: block; padding: 0 10px; }
+#card-info-power .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-power .note { font: 12px/1.5 var(--f-mono); color: var(--ink-2); min-height: 3em; }
+</style>
+<article class="card" id="card-info-power">
+  <header class="card-head">
+    <span class="no"></span><h2>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</h2><span class="kind">분할 정복 · 부분 문제의 답 재사용 · 거듭제곱</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="power(a, n) 호출이 n을 반씩 줄이며 쌓이고, 기저 사례에서부터 값을 돌려주며 풀리는 모습. 오른쪽에 n의 2진수와 돌려준 값이 적힙니다."></canvas>
+      <p class="note" aria-live="polite"></p>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">밑 a = <output class="a-out">3</output></label>
+            <input class="a" type="range" min="2" max="9" step="1" value="3" aria-label="밑"></div>
+          <div><label class="mono">지수 n = <output class="n-out">13</output></label>
+            <input class="n" type="range" min="1" max="1000" step="1" value="13" aria-label="지수"></div>
+        </div>
+        <div class="lab-btns"><button type="button" class="chip go step">한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+        <dl class="nums n4">
+          <div><dt>반복문으로 a를 곱하기</dt><dd class="n-loop">—</dd></div>
+          <div><dt>power(n//2)를 두 번 호출</dt><dd class="n-two">—</dd></div>
+          <div><dt>half에 저장해 한 번 호출</dt><dd class="n-one">—</dd></div>
+          <div><dt>n의 2진수</dt><dd class="n-bin">—</dd></div>
+        </dl>
+        <pre class="i2c" aria-label="파이썬 거듭제곱 코드"></pre>
+        <p class="fig-note">세 칸의 숫자는 곱셈 횟수입니다. "두 번 호출"은 half를 쓰지 않고 return power(a, n // 2) * power(a, n // 2)처럼 쓴 경우입니다. 파이썬의 정수는 자릿수 제한이 없어 큰 값도 정확히 구하지만, 자릿수가 커지면 곱셈 한 번도 오래 걸립니다. 실제로는 pow(a, n) 또는 a ** n을 씁니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>3¹⁰⁰⁰을 구하려고 3을 계속 곱하면 곱셈 999번이 필요합니다. 그런데 3¹⁰⁰⁰ = (3⁵⁰⁰)²이므로 3⁵⁰⁰만 알면 곱셈 한 번으로 끝납니다. 이렇게 계속 나누면 곱셈이 몇 번으로 줄어들까요?</li>
+      <li><span class="tag">복원</span>분할 정복은 문제를 작은 부분 문제로 나누고, 그 답을 결합해 전체 답을 만듭니다. 지수 법칙에 따라 a<sup>2m</sup> = (a<sup>m</sup>)², a<sup>2m+1</sup> = (a<sup>m</sup>)² × a입니다.</li>
+      <li><span class="tag">설명</span>power(a, n)은 부분 문제 power(a, n // 2)의 답 half를 구한 뒤, n이 짝수면 half × half, 홀수면 half × half × a를 돌려줍니다. 지수가 매번 반으로 줄므로 호출은 약 log₂n번만 쌓이고, 한 층에서 곱셈은 1~2번입니다. 각 줄의 n을 2진수로 보면 한 줄 내려갈 때마다 맨 오른쪽 자리가 하나씩 떨어집니다. 그래서 곱셈을 두 번 하는 홀수 단계(주황)의 수는 n의 2진수에 있는 1의 개수와 같습니다.</li>
+      <li><span class="tag">연결</span>합병 정렬은 크기가 반인 부분 문제 <em>두 개</em>를 풀어야 하지만, 거듭제곱은 같은 부분 문제 하나의 답을 두 번 쓰면 됩니다. 그 답을 변수 half에 저장하지 않고 power(a, n // 2)를 두 번 부르면, 호출 수가 층마다 두 배로 늘어 결국 곱셈 횟수가 반복문과 비슷하거나 오히려 많아집니다. 분할 정복의 효율은 부분 문제의 개수, 크기가 줄어드는 비율, 결합 비용이 함께 정합니다.</li>
+      <li><span class="tag">적용</span>a = 3, n = 13에서 한 단계씩 실행하며 호출이 쌓였다가 아래에서부터 값이 돌아오는 순서를 확인하세요. n을 1000으로 놓고 세 방법의 곱셈 횟수를 비교하세요. n = 1023과 n = 1024 중 한 번 호출 방법의 곱셈이 더 많은 쪽은 어디이고, 왜 그런지 2진수로 설명해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>곱셈 횟수가 줄었다고 실행 시간이 꼭 그만큼 주는 것은 아닙니다. 3¹⁰⁰⁰은 478자리 수라서 곱셈 한 번도 작은 수의 곱셈보다 훨씬 오래 걸립니다. 그래도 같은 수를 반복해서 곱하는 방법보다는 훨씬 빠르며, 암호에서 쓰는 "aⁿ을 m으로 나눈 나머지" 계산은 매 단계 나머지만 남겨 수가 커지지 않게 하면서 이 방법을 그대로 씁니다(파이썬의 pow(a, n, m)).</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">행렬 거듭제곱 Mⁿ도 같은 코드로 구할 수 있습니다(1 대신 단위 행렬). n = 64일 때, half를 저장하는 방법의 행렬 곱셈 횟수에 가장 가까운 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10번 이하<span class="why"><b>맞습니다.</b> 지수가 64 → 32 → 16 → 8 → 4 → 2 → 1 → 0으로 줄어 층이 일곱 개이고, 층마다 곱셈이 1~2번입니다. 코드대로 세면 8번입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>63번<span class="why"><b>반복문으로 M을 계속 곱할 때의 횟수입니다.</b> half를 저장하지 않고 두 번 호출하면 191번으로 이보다도 많아집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>32번<span class="why"><b>한 번만 반으로 줄였을 때의 생각입니다.</b> M³²도 다시 M¹⁶으로부터 구하며, 이렇게 끝까지 줄여 나갑니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

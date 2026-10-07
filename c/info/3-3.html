@@ -1,0 +1,199 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>문제 분해 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="전체 문제를 같은 모양의 작은 부분 문제로 분해하고, 부분 문제의 답과 전체 문제의 답 사이의 관계(관계식)와 기저 사례를 찾는다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-hanoi .cv-wide { cursor: pointer; }
+    #card-info-hanoi .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin: 0; overflow-x: auto; white-space: pre; }
+    #card-info-hanoi .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-hanoi .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-hanoi .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    #card-info-hanoi .stack { font: 11.5px/1.5 var(--f-mono); border: 1px solid var(--rule); padding: 6px 8px; min-height: 9em; display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+    #card-info-hanoi .stack li.cur { color: var(--forest); font-weight: 700; }
+    #card-info-hanoi .two .cap { font: 11px var(--f-mono); color: var(--ink-3); margin-bottom: 3px; }
+    #card-info-hanoi .msg { font-size: 13px; color: var(--ink-2); min-height: 1.6em; }
+    @media (max-width: 640px) { #card-info-hanoi .two { grid-template-columns: 1fr; } }
+    #text-info-decompose pre.py { font: 12.5px/1.55 var(--f-mono); background: var(--paper-2); padding: 10px 14px; overflow-x: auto; margin: 10px 0 14px; }
+    #text-info-decompose figure svg { display: block; width: 100%; max-width: 640px; margin: 0 auto; }
+    #text-info-decompose svg text { font-family: var(--f-mono); font-size: 12px; fill: var(--ink); }
+    #text-info-decompose svg .cap { font-family: var(--f-sans, sans-serif); font-size: 13px; fill: var(--ink-2); }
+  </style>
+</head>
+<body data-course="info" data-sec="3-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>문제 분해</h1>
+    <p class="lead">어려운 문제도 "조금 더 작은 같은 문제의 답을 이미 안다면?"이라고 물으면 길이 보이는 경우가 많습니다. 부분 문제가 무엇이고, 그 답으로 전체 답을 어떻게 만드는지 찾는 것이 분할 정복과 동적 계획법의 출발점입니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">재귀 함수와 기저 사례</span><span class="p">수학적 귀납법</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-hanoi"><span class="mono">3.3.1</span>하노이 탑으로 보는 분해</a></li>
+        <li><a href="#text-info-decompose"><span class="mono">3.3.2</span>부분 문제와 관계식 찾기</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-hanoi">
+        <header class="card-head">
+          <span class="no">3.3.1</span><h2>원판 n개 문제를 원판 n−1개 문제로 바꿀 수 있을까?</h2><span class="kind">문제 분해 · 부분 문제와 전체 문제의 관계 · 하노이 탑</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="기둥 A, B, C와 원판. 기둥을 눌러 맨 위 원판을 고르고, 다른 기둥을 눌러 옮길 수 있습니다. 가장 큰 원판은 주황색입니다."></canvas>
+            <p class="msg" aria-live="polite"></p>
+            <div class="ctl">
+              <label class="mono">원판 수 n = <output class="n-out">3</output></label>
+              <input class="n" type="range" min="1" max="7" step="1" value="3" aria-label="원판 수">
+              <div class="lab-btns"><button type="button" class="chip go step">재귀 한 단계</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>옮긴 횟수 / 최소</dt><dd class="n-m">0</dd></div>
+                <div><dt>호출 스택 깊이</dt><dd class="n-d">0</dd></div>
+                <div><dt>관계</dt><dd>T(n) = 2T(n−1) + 1</dd></div>
+              </dl>
+              <div class="two">
+                <div><p class="cap">호출 스택 (아래가 먼저 부른 것)</p><ol class="stack"></ol></div>
+                <div><p class="cap">파이썬 코드</p><pre class="i2c" aria-label="파이썬 하노이 탑 코드"></pre></div>
+              </div>
+              <p class="fig-note">규칙: 한 번에 원판 하나만, 맨 위의 원판만 옮기고, 작은 원판 위에 큰 원판을 놓을 수 없습니다. 목표는 A의 원판을 모두 C로 옮기는 것입니다. 기둥을 눌러 직접 풀어 볼 수도 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>원판 3개는 손으로 몇 번 해 보면 풀립니다. 그런데 원판이 7개, 20개로 늘면 어떤 순서로 옮겨야 할지 막막합니다. 원판 수가 몇 개이든 통하는 풀이를 어떻게 찾을 수 있을까요?</li>
+            <li><span class="tag">복원</span>재귀 함수는 자기 자신을 더 작은 입력으로 호출하고, 기저 사례에서 멈춥니다. 함수를 부를 때마다 호출 스택에 새 칸이 쌓이고, 끝나면 빠집니다.</li>
+            <li><span class="tag">설명</span>가장 큰 원판에 주목합니다. 이것을 A에서 C로 옮기려면 그 순간 나머지 n−1개가 모두 B에 있어야 합니다. 그러면 전체 문제는 세 부분으로 <em>분해</em>됩니다. ① 원판 n−1개를 A에서 B로 옮기기, ② 가장 큰 원판을 A에서 C로 옮기기, ③ 원판 n−1개를 B에서 C로 옮기기. ①과 ③은 원판 수만 하나 적고 모양이 같은 <em>부분 문제</em>입니다. 원판 1개는 그냥 옮기면 되는 기저 사례입니다.</li>
+            <li><span class="tag">연결</span>전체 문제와 부분 문제 사이의 관계를 식으로 쓰면 이동 횟수 T(n) = 2T(n−1) + 1, T(1) = 1입니다. 이 관계를 따라가면 T(n) = 2ⁿ − 1이 되고, 이보다 적게 옮기는 방법은 없습니다. 분해할 때 찾아야 하는 것은 ① 부분 문제가 무엇인지, ② 부분 문제의 답으로 전체 답을 어떻게 만드는지, ③ 더 쪼개지 않는 가장 작은 경우가 무엇인지입니다.</li>
+            <li><span class="tag">적용</span>n = 3에서 먼저 기둥을 눌러 직접 풀어 보고, 처음부터를 누른 뒤 재귀 한 단계씩 따라가 보세요. 가장 큰 원판(주황)이 움직이는 순간 호출 스택에는 무엇이 있나요? 그때 B에는 원판이 몇 개 있나요? n을 1씩 늘리며 최소 이동 횟수가 어떻게 변하는지 표로 적어 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>분해는 아무렇게나 나눈다고 되는 것이 아닙니다. "원판을 위에서부터 하나씩 옮긴다"처럼 나누면 부분 문제가 원래 문제와 같은 모양이 아니어서 재귀로 이어지지 않습니다. 또 하노이 탑의 두 부분 문제는 기둥만 다를 뿐 같은 크기라서, 원판이 하나 늘 때마다 일이 두 배가 됩니다. 분해가 곧 빠른 풀이를 뜻하지는 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">원판 10개짜리 하노이 탑을 최소 횟수로 옮기려 합니다. 원판 9개를 옮기는 최소 횟수가 511번이라는 것을 알 때, 원판 10개의 최소 횟수는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2 × 511 + 1 = 1023번<span class="why"><b>맞습니다.</b> 9개를 B로(511), 가장 큰 원판을 C로(1), 9개를 C로(511) 옮깁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>511 + 1 = 512번<span class="why"><b>부분 문제를 한 번만 셌습니다.</b> 가장 큰 원판을 옮기기 전과 후에 원판 9개를 각각 한 번씩, 두 번 옮겨야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>511 × 10 = 5110번<span class="why"><b>관계를 잘못 세웠습니다.</b> 원판 10개 문제는 원판 9개 문제 두 개와 이동 한 번으로 이루어집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-decompose">
+        <header class="card-head">
+          <span class="no">3.3.2</span><h2>큰 문제 속에서 같은 모양의 작은 문제를 어떻게 찾을까?</h2><span class="kind">읽기 · 문제 분해 · 관계식과 기저 사례</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">"리스트에서 가장 큰 수 찾기"를 반복문 없이 풀 수 있을까요? 문제를 "앞의 n−1개에서 가장 큰 수"와 "마지막 수" 둘로 나누면, 앞쪽은 원래 문제와 똑같은 모양이고 크기만 하나 작습니다.</p>
+
+          <h3><span class="mono">1</span>분해할 때 묻는 세 가지</h3>
+          <ul class="dots">
+            <li><em>부분 문제</em>: 원래 문제와 같은 모양이면서 크기가 작은 문제는 무엇인가? 크기를 무엇으로 잴지(원소 수, 원판 수, 지수 n 등) 먼저 정합니다.</li>
+            <li><em>관계</em>: 부분 문제의 답을 알고 있다면, 그것으로 전체 문제의 답을 어떻게 만드는가? 이 관계를 식으로 적은 것이 점화식(관계식)입니다.</li>
+            <li><em>기저 사례</em>: 더 쪼개지 않고 바로 답을 아는 가장 작은 경우는 무엇인가? 크기가 매번 줄어들어 반드시 여기에 닿아야 합니다.</li>
+          </ul>
+          <pre class="py">def biggest(a):
+          if len(a) == 1:                  # 기저 사례
+              return a[0]
+          rest = biggest(a[:-1])           # 부분 문제: 앞의 n-1개
+          return max(rest, a[-1])          # 관계: 부분 답과 마지막 수 비교</pre>
+
+          <h3><span class="mono">2</span>여러 문제의 분해</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>전체 문제</th><th>부분 문제</th><th>전체와 부분의 관계</th><th>기저 사례</th></tr></thead>
+            <tbody>
+              <tr><th>1부터 n까지의 합 S(n)</th><td>S(n−1)</td><td>S(n) = S(n−1) + n</td><td>S(1) = 1</td></tr>
+              <tr><th>리스트의 최댓값</th><td>앞의 n−1개의 최댓값</td><td>max(부분 답, 마지막 원소)</td><td>원소 1개</td></tr>
+              <tr><th>하노이 탑 (원판 n개)</th><td>원판 n−1개 옮기기 (두 번)</td><td>T(n) = 2T(n−1) + 1</td><td>원판 1개: 한 번 옮김</td></tr>
+              <tr><th>거듭제곱 aⁿ</th><td>a의 (n // 2)제곱</td><td>짝수면 (부분 답)², 홀수면 a × (부분 답)²</td><td>a⁰ = 1</td></tr>
+              <tr><th>리스트 정렬</th><td>앞 절반 정렬, 뒤 절반 정렬</td><td>정렬된 두 리스트를 합병</td><td>원소 0개나 1개</td></tr>
+              <tr><th>계단을 1칸 또는 2칸씩 올라 n칸에 가는 방법 수 W(n)</th><td>W(n−1), W(n−2)</td><td>W(n) = W(n−1) + W(n−2)</td><td>W(1) = 1, W(2) = 2</td></tr>
+            </tbody>
+          </table></div>
+          <p>표의 마지막 줄은 마지막 걸음이 1칸인지 2칸인지로 경우를 나눈 것입니다. 마지막이 1칸이면 그 전까지 n−1칸을 오르는 방법 수, 2칸이면 n−2칸을 오르는 방법 수만큼 있습니다. 관계는 "마지막 한 걸음"이나 "가장 큰 원판"처럼 <em>마지막 결정 하나</em>에 주목할 때 잘 보입니다.</p>
+
+          <h3><span class="mono">3</span>관계의 세 가지 모양</h3>
+          <figure>
+            <svg viewBox="0 0 640 210" role="img" aria-label="부분 문제 관계의 세 모양: 하나씩 줄이기, 반으로 나누기, 겹치는 부분 문제">
+              <g transform="translate(20,10)">
+                <text class="cap" x="80" y="12" text-anchor="middle">① 하나씩 줄이기</text>
+                <g stroke="#8d8d92" fill="none"><line x1="80" y1="38" x2="80" y2="78"/><line x1="80" y1="98" x2="80" y2="138"/></g>
+                <g fill="#fbfbf8" stroke="#232326"><rect x="55" y="22" width="50" height="22"/><rect x="55" y="80" width="50" height="22"/><rect x="55" y="138" width="50" height="22"/></g>
+                <text x="80" y="37" text-anchor="middle">n</text><text x="80" y="95" text-anchor="middle">n−1</text><text x="80" y="153" text-anchor="middle">n−2</text>
+                <text class="cap" x="80" y="190" text-anchor="middle">합, 최댓값</text>
+              </g>
+              <g transform="translate(225,10)">
+                <text class="cap" x="95" y="12" text-anchor="middle">② 반으로 나누기</text>
+                <g stroke="#8d8d92" fill="none"><line x1="95" y1="44" x2="45" y2="80"/><line x1="95" y1="44" x2="145" y2="80"/><line x1="45" y1="102" x2="20" y2="138"/><line x1="45" y1="102" x2="70" y2="138"/><line x1="145" y1="102" x2="120" y2="138"/><line x1="145" y1="102" x2="170" y2="138"/></g>
+                <g fill="#fbfbf8" stroke="#232326"><rect x="70" y="22" width="50" height="22"/><rect x="20" y="80" width="50" height="22"/><rect x="120" y="80" width="50" height="22"/><rect x="2" y="138" width="36" height="22"/><rect x="52" y="138" width="36" height="22"/><rect x="102" y="138" width="36" height="22"/><rect x="152" y="138" width="36" height="22"/></g>
+                <text x="95" y="37" text-anchor="middle">n</text><text x="45" y="95" text-anchor="middle">n/2</text><text x="145" y="95" text-anchor="middle">n/2</text>
+                <text x="20" y="153" text-anchor="middle">n/4</text><text x="70" y="153" text-anchor="middle">n/4</text><text x="120" y="153" text-anchor="middle">n/4</text><text x="170" y="153" text-anchor="middle">n/4</text>
+                <text class="cap" x="95" y="190" text-anchor="middle">합병 정렬, 이진 탐색</text>
+              </g>
+              <g transform="translate(445,10)">
+                <text class="cap" x="90" y="12" text-anchor="middle">③ 겹치는 부분 문제</text>
+                <g stroke="#8d8d92" fill="none"><line x1="90" y1="44" x2="45" y2="80"/><line x1="90" y1="44" x2="140" y2="80"/><line x1="45" y1="102" x2="20" y2="138"/><line x1="45" y1="102" x2="75" y2="138"/><line x1="140" y1="102" x2="125" y2="138"/><line x1="140" y1="102" x2="165" y2="138"/></g>
+                <g fill="#fbfbf8" stroke="#232326"><rect x="65" y="22" width="50" height="22"/><rect x="20" y="80" width="50" height="22"/><rect x="115" y="80" width="50" height="22"/><rect x="2" y="138" width="36" height="22"/><rect x="57" y="138" width="36" height="22" fill="#f3dcb0"/><rect x="107" y="138" width="36" height="22" fill="#f3dcb0"/><rect x="147" y="138" width="36" height="22"/></g>
+                <text x="90" y="37" text-anchor="middle">n</text><text x="45" y="95" text-anchor="middle">n−1</text><text x="140" y="95" text-anchor="middle">n−2</text>
+                <text x="20" y="153" text-anchor="middle">n−2</text><text x="75" y="153" text-anchor="middle">n−3</text><text x="125" y="153" text-anchor="middle">n−3</text><text x="165" y="153" text-anchor="middle">n−4</text>
+                <text class="cap" x="90" y="190" text-anchor="middle">계단 오르기, 피보나치</text>
+              </g>
+            </svg>
+            <figcaption>세 모양은 이후 알고리즘 설계의 출발점이 됩니다. ②처럼 크기가 반씩 줄면 몇 번만 쪼개도 기저 사례에 닿습니다(분할 정복). ③처럼 같은 부분 문제(n−2가 두 번, 색칠한 n−3이 두 번)가 여러 번 나타나면 한 번 구한 답을 저장해 다시 쓰는 방법(동적 계획법)이 필요해집니다.</figcaption>
+          </figure>
+
+          <h3><span class="mono">4</span>부분 문제의 답을 믿기</h3>
+          <p>재귀 코드를 읽을 때 호출을 끝까지 따라가면 금방 길을 잃습니다. 대신 "biggest(a[:-1])는 앞의 n−1개의 최댓값을 정확히 돌려준다"고 <em>믿고</em>, 그 답으로 전체 답을 맞게 만드는지만 확인합니다. 이것은 수학적 귀납법과 같은 생각입니다. 기저 사례가 맞고, n−1에서 맞으면 n에서도 맞음을 보이면 모든 n에서 맞습니다.</p>
+          <p class="judge"><b>판단</b>부분 문제가 원래 문제보다 작아지지 않으면(예: biggest(a)가 다시 biggest(a)를 부르면) 재귀는 끝나지 않고, 파이썬은 RecursionError를 냅니다. 또 같은 모양이라고 해서 아무렇게나 나눈 것이 좋은 분해는 아닙니다. 위의 최댓값 코드는 맞지만 a[:-1]이 리스트를 매번 복사하고 재귀 깊이가 n이라, 원소가 수천 개를 넘으면 파이썬 기본 재귀 한도(보통 1000)에 걸립니다. 분해는 정확성을 생각하는 도구이고, 효율은 따로 따져야 합니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">계단을 한 번에 1칸, 2칸, <b>3칸</b> 중 하나로 오를 수 있게 바뀌었습니다. n칸에 오르는 방법 수 W(n)의 관계로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>W(n) = W(n−1) + W(n−2) + W(n−3)<span class="why"><b>맞습니다.</b> 마지막 걸음이 1칸, 2칸, 3칸인 세 경우로 나뉘고, 각 경우의 수는 남은 계단을 오르는 방법 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>W(n) = 3 × W(n−1)<span class="why"><b>세 경우가 모두 같은 크기의 부분 문제라고 보았습니다.</b> 걸음 폭에 따라 남는 계단 수가 다릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>W(n) = W(n−1) + W(n−2) + 1<span class="why"><b>3칸 걸음을 "한 가지 방법"으로만 셌습니다.</b> 마지막에 3칸을 오르기 전까지 n−3칸을 오르는 방법이 여러 가지입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-hanoi.js"></script>
+</body>
+</html>

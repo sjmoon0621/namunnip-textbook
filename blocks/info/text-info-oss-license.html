@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "short": "오픈소스 라이브러리와 라이선스"
+}
+-->
+<style>
+#text-info-oss-license pre.code {
+  font: 12.5px/1.6 var(--f-mono); background: var(--paper-2); padding: 10px 14px;
+  overflow-x: auto; white-space: pre;
+}
+</style>
+<article class="card reading" id="text-info-oss-license">
+  <header class="card-head">
+    <span class="no"></span><h2>인터넷에 공개된 코드는 마음대로 가져다 써도 될까?</h2><span class="kind">읽기 · 라이브러리 활용, 협업 흐름, 오픈소스 라이선스</span>
+  </header>
+  <div class="reading-body">
+    <p class="ask">CSV 파일 읽기, 그래프 그리기, 정렬처럼 많은 사람이 필요로 하는 기능은 이미 누군가 만들어 공개해 두었습니다. 이것을 쓰면 프로젝트의 핵심 문제에 시간을 쓸 수 있습니다. 그런데 공개되어 있다는 것과 마음대로 써도 된다는 것은 같은 뜻일까요?</p>
+    <h3><span class="mono">1</span>라이브러리를 활용해 협력하기</h3>
+    <p><em>오픈소스</em>는 소스 코드를 공개하고, 정해진 조건(라이선스) 아래에서 누구나 쓰고 고치고 다시 배포할 수 있게 한 소프트웨어입니다. 파이썬에는 설치하지 않아도 쓰는 표준 라이브러리(csv, collections, random 등)가 있고, 그 밖의 라이브러리는 PyPI 저장소에서 pip로 설치합니다.</p>
+    <pre class="code"># 터미널에서:  pip install pandas
+import pandas as pd
+from collections import Counter
+
+df = pd.read_csv("lunch.csv")              # 날짜, 메뉴, 잔반kg 열이 있는 표
+top = df.groupby("메뉴")["잔반kg"].mean().sort_values(ascending=False).head(10)
+print(top)
+print(Counter(df["메뉴"]).most_common(3))  # 가장 자주 나온 메뉴 3개</pre>
+    <p>라이브러리를 쓸 때는 공식 문서와 예제를 먼저 읽고, 프로젝트에서 쓴 라이브러리와 버전을 requirements.txt 같은 파일에 적어 둡니다. 그래야 다른 모둠원의 컴퓨터에서도 같은 결과가 나옵니다.</p>
+    <h3><span class="mono">2</span>오픈소스 프로젝트가 함께 일하는 방식</h3>
+    <ul class="dots">
+      <li><em>이슈(issue):</em> 버그 신고나 새 기능 제안을 글로 남기고 토론합니다.</li>
+      <li><em>포크·브랜치:</em> 원래 저장소를 복제하거나 브랜치를 만들어 그 안에서 고칩니다.</li>
+      <li><em>풀 리퀘스트:</em> 고친 내용을 원래 저장소에 합쳐 달라고 요청합니다. 무엇을 왜 고쳤는지 설명을 붙입니다.</li>
+      <li><em>코드 리뷰와 자동 테스트:</em> 관리자와 다른 기여자가 코드를 읽고 의견을 남기며, 테스트가 통과해야 병합됩니다.</li>
+      <li><em>문서:</em> README(무엇을 하는 프로그램이며 어떻게 쓰는가), CONTRIBUTING(기여하는 방법), LICENSE(이용 조건) 파일을 둡니다.</li>
+    </ul>
+    <h3><span class="mono">3</span>라이선스: 쓰는 조건을 읽는 법</h3>
+    <p>저작권법에 따라 코드도 만든 사람의 저작물입니다. 라이선스가 없는 코드는 웹에 공개되어 있어도 원칙적으로 저작권자의 허락 없이 복제하거나 고쳐 배포할 수 없습니다. 라이선스는 저작권자가 미리 허락해 둔 조건입니다. 코드에 쓰는 라이선스는 크게 허용형과 카피레프트 두 갈래이고, 그림·글·자료에는 주로 크리에이티브 커먼즈(CC) 라이선스를 씁니다.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>라이선스</th><th>갈래</th><th>지켜야 할 주요 조건</th><th>쓰는 예</th></tr></thead>
+      <tbody>
+        <tr><th>MIT</th><td>허용형</td><td>저작권 표시와 라이선스 전문을 함께 배포. 수정·상업적 이용 가능. 보증 없음</td><td>많은 소규모 라이브러리</td></tr>
+        <tr><th>BSD 3-Clause</th><td>허용형</td><td>MIT와 비슷하고, 원저작자의 이름을 허락 없이 홍보에 쓰지 않을 것</td><td>NumPy, pandas, scikit-learn</td></tr>
+        <tr><th>Apache 2.0</th><td>허용형</td><td>라이선스와 NOTICE 파일 포함, 수정한 파일에 변경 사실 표시. 특허 사용 허락 조항 포함</td><td>requests</td></tr>
+        <tr><th>GPL 3.0</th><td>카피레프트</td><td>이 코드를 포함한 프로그램을 배포하면 전체 소스 코드를 같은 GPL로 공개</td><td>GNU 도구들</td></tr>
+        <tr><th>CC BY, CC BY-SA</th><td>콘텐츠용</td><td>저작자 표시(BY), 같은 조건으로 공유(SA). 코드보다는 그림·글·자료에 씀</td><td>위키백과 글(CC BY-SA)</td></tr>
+      </tbody>
+    </table></div>
+    <p>프로젝트에 다른 사람의 코드나 라이브러리를 썼다면 README에 출처와 라이선스를 적습니다. 산출물을 공개할 때는 내 코드에 어떤 라이선스를 붙일지도 정합니다. 사용한 라이브러리가 GPL이면 내 프로그램을 배포할 때 GPL 조건을 따라야 하므로, 라이브러리를 고르는 단계에서 라이선스를 확인합니다.</p>
+    <p class="judge"><b>판단</b>“GitHub에 공개되어 있으니 자유롭게 써도 된다”, “오픈소스는 상업적으로 쓸 수 없다”는 둘 다 흔한 오해입니다. 공개와 이용 허락은 별개이며, 대부분의 오픈소스 라이선스는 조건만 지키면 상업적 이용도 허락합니다. 또 GPL의 소스 공개 의무는 프로그램을 다른 사람에게 배포할 때 생기며, 혼자 쓰거나 모둠 안에서 시험하는 것만으로 생기지는 않습니다. 정확한 조건은 반드시 라이선스 원문을 확인합니다.</p>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">모둠이 MIT 라이선스 라이브러리의 코드 일부를 고쳐 프로젝트 프로그램에 넣고, 이 프로그램을 학교 누리집에 공개하려 합니다. 반드시 해야 할 일은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>원래 코드의 저작권 표시와 MIT 라이선스 전문을 함께 넣는다<span class="why"><b>맞습니다.</b> MIT의 핵심 조건입니다. 고친 코드도 포함됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>프로그램 전체를 MIT로 공개해야 한다<span class="why"><b>카피레프트(GPL)와 헷갈린 것입니다.</b> MIT는 내 코드의 라이선스를 강제하지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>코드를 고쳤으므로 이제 모둠의 저작물이 되어 아무 표시도 필요 없다<span class="why"><b>일부를 고쳐도</b> 원래 코드의 저작권은 남아 있고, 라이선스 조건도 그대로 지켜야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

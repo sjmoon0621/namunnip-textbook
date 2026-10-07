@@ -1,0 +1,201 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>함수와 매개변수 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="함수를 정의하고 호출할 때 프레임과 매개변수, 반환값이 어떻게 동작하는지 이해하고, 매개변수를 활용해 함수 프로그램을 작성한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-scope .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+    #card-info-scope .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-scope .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+    #card-info-scope .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-scope .code .ln.off { opacity: .35; text-decoration: line-through; }
+    #card-info-scope .code .k { color: #2f6a8a; font-weight: 600; }
+    #card-info-scope .code .b { color: var(--forest); }
+    #card-info-scope .code .s { color: var(--warn); }
+    #card-info-scope .code .d { color: #8a5a00; }
+    #card-info-scope .code .c { color: var(--ink-3); }
+    #card-info-scope .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+    #card-info-scope .s-pos { margin-left: auto; align-self: center; }
+    #card-info-scope canvas { width: 100%; aspect-ratio: 16 / 9; }
+    #card-info-scope .qcode { padding: 8px 14px; margin: 6px 0 10px; }
+    #card-info-scope .out-row { display: flex; gap: 10px; align-items: baseline; margin-top: 8px; font-family: var(--f-mono); font-size: 13px; }
+    #card-info-scope .out { padding: 2px 10px; background: var(--night); color: #e6f0e2; min-width: 8em; }
+    @media (max-width: 640px) { #card-info-scope canvas { aspect-ratio: 4 / 3; } }
+    #text-info-params pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+    #text-info-params pre.code .c { color: var(--ink-3); }
+    #text-info-params td code, #text-info-params p code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+  </style>
+</head>
+<body data-course="info" data-sec="1-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>함수와 매개변수</h1>
+    <p class="lead">print, len, sorted처럼 이미 함수를 많이 써 왔습니다. 이제 직접 함수를 만들 차례입니다. 함수를 부르는 순간 컴퓨터 안에서는 무슨 일이 일어나고, 넘긴 값은 함수 안에서 어떻게 쓰일까요?</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">변수와 대입</span><span class="p">리스트</span><span class="p">조건문과 반복문</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-scope"><span class="mono">1.1.1</span>함수 호출과 객체 참조 전달</a></li>
+        <li><a href="#text-info-params"><span class="mono">1.1.2</span>매개변수와 반환값, 유효 범위</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-1-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-scope">
+        <header class="card-head">
+          <span class="no">1.1.1</span><h2>함수에 넘긴 리스트는 왜 함수 밖에서도 바뀔까?</h2><span class="kind">함수 정의와 호출 · 매개변수 · 지역 변수 · 객체 참조 전달</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="왼쪽: 전역 프레임과 함수 프레임의 이름표. 오른쪽: 이름표가 가리키는 객체와 화살표"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="예제 프로그램">
+                <button type="button" class="chip" data-m="append" aria-pressed="true">box.append(x)</button>
+                <button type="button" class="chip" data-m="rebind" aria-pressed="false">box = box + [x]</button>
+                <button type="button" class="chip" data-m="scope" aria-pressed="false">기본값 · 지역 변수</button>
+              </div>
+              <label class="mono">넘길 정수 n = <output class="nv-out">5</output></label>
+              <input class="nv" type="range" min="0" max="9" step="1" value="5" aria-label="넘길 정수">
+              <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+              <div class="lab-btns i1-step">
+                <button type="button" class="chip s-first">처음</button>
+                <button type="button" class="chip s-prev">◀ 이전</button>
+                <button type="button" class="chip go s-next">다음 ▶</button>
+                <button type="button" class="chip s-play">재생</button>
+                <span class="mono small dim s-pos"></span>
+              </div>
+              <p class="note"></p>
+              <div class="out-row"><span class="dim">출력</span><span class="out">—</span></div>
+              <p class="fig-note">초록 테두리 프레임이 지금 실행 중인 함수입니다. 그림에서는 값이 같은 작은 정수를 한 객체로 그렸습니다(CPython도 −5~256의 정수는 미리 만들어 둔 객체를 함께 씁니다).</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>함수 안에서 매개변수 <code>box</code>에 원소를 추가했더니, 함수 밖의 <code>nums</code>까지 바뀌었습니다. 그런데 같은 함수 안에서 <code>x</code>를 10배로 바꿔도 밖의 <code>n</code>은 그대로입니다. 무엇이 다를까요?</li>
+            <li><span class="tag">복원</span>파이썬의 변수는 값을 담는 상자가 아니라 <em>객체를 가리키는 이름표</em>입니다. <code>a = b</code>는 b가 가리키는 객체에 이름표 a를 하나 더 붙이는 일입니다. 함수는 입력을 받아 일을 하고 결과를 돌려주는 코드 묶음입니다.</li>
+            <li><span class="tag">설명</span><code>def</code>를 실행하면 함수 객체만 만들어지고 몸체는 실행되지 않습니다(<em>정의</em>). 함수를 <em>호출</em>하면 ① 새 <em>프레임</em>이 생기고 ② 매개변수 이름이 인자가 가리키는 객체를 그대로 가리키며 ③ 몸체를 실행하고 ④ <code>return</code>의 값을 호출한 자리로 돌려준 뒤 프레임이 사라집니다. 정의할 때 쓴 이름(box, x)을 <em>매개변수</em>, 호출할 때 넘긴 값(nums, n)을 <em>인자</em>라 합니다. 파이썬은 객체를 복사하지 않고 참조를 넘기므로 이를 <em>객체 참조 전달</em>(call by object reference)이라 부릅니다.</li>
+            <li><span class="tag">연결</span>리스트·딕셔너리는 고칠 수 있는(mutable) 객체라 <code>append</code>, <code>xs[0] = …</code>로 객체 자체가 바뀌고, 같은 객체를 가리키는 모든 이름에서 그 변화가 보입니다. 정수·문자열·튜플은 고칠 수 없는(immutable) 객체라 <code>x = x * 10</code>은 새 객체를 만들고 지역 이름표만 옮깁니다. 함수 안에서 대입한 이름은 그 함수의 <em>지역 변수</em>이므로, 전역에 같은 이름이 있어도 서로 다른 변수입니다.</li>
+            <li><span class="tag">적용</span>세 예제를 한 단계씩 실행하세요. <code>append</code>와 <code>box = box + [x]</code>에서 2번 줄 다음에 box의 화살표가 어디를 가리키는지 비교하세요. ‘기본값 · 지역 변수’ 예제에서 함수 안의 total과 전역 total이 같은 객체를 가리킨 적이 있는지 확인하세요. n을 바꾸면 출력은 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>“파이썬은 리스트는 참조로, 정수는 값으로 전달한다”는 설명은 틀렸습니다. 전달 방식은 언제나 같고, 차이는 객체를 고칠 수 있는지와 함수 안에서 객체를 <em>고쳤는지</em>, 이름을 <em>다시 대입했는지</em>에 있습니다. 원본을 지키려면 <code>add_item(nums.copy(), n)</code>처럼 복사본을 넘기거나, 함수가 새 값을 <code>return</code>하게 설계합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">다음 코드를 실행하면 무엇이 출력될까요?</p>
+          <pre class="code qcode">def f(xs, k):
+          xs[0] = 99
+          k = k + 1
+
+      a = [1, 2]
+      b = 3
+      f(a, b)
+      print(a, b)</pre>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>[99, 2] 3<span class="why"><b>맞습니다.</b> xs와 a는 같은 리스트를 가리키므로 xs[0] = 99가 a에도 보입니다. k = k + 1은 지역 이름 k만 새 정수 4로 옮깁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>[1, 2] 3<span class="why"><b>인자를 복사해서 넘긴다고 본 답입니다.</b> 파이썬은 리스트를 복사하지 않습니다. xs는 a와 같은 객체를 가리킵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>[99, 2] 4<span class="why"><b>대입이 호출한 쪽 변수까지 바꾼다고 본 답입니다.</b> 함수 안의 대입은 지역 이름표만 옮깁니다. 정수는 고칠 수 없으므로 b가 가리키는 3은 그대로입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-params">
+        <header class="card-head">
+          <span class="no">1.1.2</span><h2>함수는 어떻게 값을 받고, 무엇을 돌려줄까?</h2><span class="kind">읽기 · 함수 정의 · 매개변수의 종류 · 반환값 · 유효 범위</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">같은 계산을 프로그램 여러 곳에서 쓰면 코드를 복사해 붙이기 쉽습니다. 그런데 계산에 실수가 있으면 붙여 넣은 곳을 모두 찾아 고쳐야 합니다. 함수는 이 문제를 어떻게 해결하고, 함수를 쓸 때 무엇을 정해야 할까요?</p>
+
+          <h3><span class="mono">1</span>함수로 나누는 까닭</h3>
+          <p>함수는 일을 하는 코드에 이름을 붙인 것입니다. 한 번 정의하면 이름으로 몇 번이든 부를 수 있고, 고칠 곳도 한 곳뿐입니다. 더 중요한 점은 <em>추상화</em>입니다. <code>sorted(xs)</code>를 쓸 때 정렬이 안에서 어떻게 일어나는지 몰라도 되는 것처럼, 함수를 쓰는 쪽은 “무엇을 넣으면 무엇이 나오는가”만 알면 됩니다. 큰 문제를 작은 함수로 나누면 각 함수를 따로 시험하고 고칠 수 있습니다.</p>
+          <pre class="code">def bmi(weight, height):          <span class="c"># 정의: 이름, 매개변수</span>
+          return weight / height ** 2    <span class="c"># 몸체와 반환값</span>
+
+      print(bmi(60, 1.7))               <span class="c"># 호출: 인자 60, 1.7 → 20.76…</span></pre>
+          <p>정의할 때 괄호 안에 쓴 이름(<code>weight</code>, <code>height</code>)이 <em>매개변수</em>이고, 호출할 때 넘기는 값(<code>60</code>, <code>1.7</code>)이 <em>인자</em>입니다. 함수가 받을 값과 돌려줄 값을 먼저 정하고 나서 몸체를 쓰면, 함수의 쓰임이 분명해집니다.</p>
+
+          <h3><span class="mono">2</span>인자를 넘기는 여러 방법</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>방식</th><th>예</th><th>뜻</th></tr></thead>
+            <tbody>
+              <tr><th>위치 인자</th><td><code>power(2, 10)</code></td><td>순서대로 매개변수에 짝지어집니다. base=2, exp=10</td></tr>
+              <tr><th>키워드 인자</th><td><code>power(exp=10, base=2)</code></td><td>이름으로 짝짓므로 순서를 바꿔도 됩니다.</td></tr>
+              <tr><th>기본값</th><td><code>def power(base, exp=2):</code></td><td>인자를 생략하면 기본값을 씁니다. <code>power(5)</code> → 25</td></tr>
+              <tr><th>가변 인자</th><td><code>def total(*nums):</code></td><td>넘긴 위치 인자들을 튜플 하나로 받습니다. <code>total(1, 2, 3)</code>에서 nums = (1, 2, 3)</td></tr>
+            </tbody>
+          </table></div>
+          <p>기본값이 있는 매개변수는 기본값이 없는 매개변수 뒤에 써야 합니다. <code>def f(a=1, b):</code>는 문법 오류입니다.</p>
+
+          <h3><span class="mono">3</span>반환값</h3>
+          <ul class="dots">
+            <li><code>return</code>을 만나면 함수는 그 자리에서 끝나고 값을 호출한 곳으로 돌려줍니다. 그 아래 코드는 실행되지 않습니다.</li>
+            <li><code>return</code>이 없거나 값 없이 <code>return</code>만 쓰면 <code>None</code>을 돌려줍니다. 화면에 <code>print</code>하는 것과 값을 돌려주는 것은 다릅니다. print한 값은 다른 계산에 쓸 수 없습니다.</li>
+            <li><code>return q, r</code>처럼 쓰면 튜플 하나를 돌려주고, 받는 쪽에서 <code>q, r = f(…)</code>처럼 나누어 받을 수 있습니다. 내장 함수 <code>divmod(17, 5)</code>가 <code>(3, 2)</code>를 돌려주는 것과 같은 방식입니다.</li>
+          </ul>
+
+          <h3><span class="mono">4</span>유효 범위: 이름은 어디에서 보일까</h3>
+          <p>함수 안에서 대입한 이름은 그 함수의 <em>지역 변수</em>입니다. 호출할 때 생겨서 함수가 끝나면 사라집니다. 파이썬은 이름을 찾을 때 지역 → 바깥 함수 → 전역 → 내장 순서로 찾습니다. 그래서 함수 안에서 전역 변수를 <em>읽기</em>는 할 수 있지만, 대입하는 순간 그 이름은 지역 변수가 됩니다.</p>
+          <pre class="code">count = 0
+      def inc():
+          count = count + 1     <span class="c"># UnboundLocalError: 지역 변수 count를 값이 생기기 전에 읽음</span>
+
+      def inc2():
+          global count          <span class="c"># 전역 count를 쓰겠다고 밝힘</span>
+          count = count + 1</pre>
+          <p><code>global</code>은 꼭 필요할 때만 씁니다. 여러 함수가 전역 변수를 고치면 어디서 값이 바뀌었는지 추적하기 어렵습니다. 대개는 값을 매개변수로 받고 결과를 <code>return</code>하는 편이 낫습니다.</p>
+
+          <p class="judge"><b>판단</b>기본값은 함수를 <em>정의할 때 한 번</em> 계산됩니다. <code>def add(x, xs=[]):</code>처럼 리스트를 기본값으로 쓰면, 호출할 때마다 같은 리스트 객체가 재사용되어 이전 호출에서 넣은 값이 남아 있습니다. 바뀔 수 있는 객체가 기본값으로 필요하면 <code>xs=None</code>으로 두고 함수 안에서 <code>if xs is None: xs = []</code>로 새로 만듭니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">다음 코드를 실행하면 화면에 무엇이 나올까요?</p>
+          <pre class="code">def area(w, h=2):
+          print(w * h)
+
+      r = area(3)
+      print(r)</pre>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>6, 그다음 줄에 None<span class="why"><b>맞습니다.</b> h는 기본값 2를 쓰므로 6을 출력합니다. 하지만 return이 없으므로 r에는 None이 들어갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6, 그다음 줄에 6<span class="why"><b>print와 return을 같게 본 답입니다.</b> print는 화면에 보여 줄 뿐 값을 돌려주지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>인자가 하나뿐이라 오류가 난다<span class="why"><b>기본값을 놓친 답입니다.</b> h=2처럼 기본값이 있는 매개변수는 인자를 생략해도 됩니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/info/i1-kit.js"></script>
+<script src="../../js/cards/info/i1-scope.js"></script>
+</body>
+</html>

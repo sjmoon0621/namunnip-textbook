@@ -1,0 +1,68 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/is1/quake-data.js",
+    "js/cards/fusi/f1-quake.js"
+  ],
+  "short": "공개 데이터를 가공해 질문 찾기"
+}
+-->
+<style>
+#card-fusi-quake canvas { width: 100%; aspect-ratio: 16 / 11; }
+#card-fusi-quake .presets { margin: 4px 0; }
+#card-fusi-quake .qk-obs { font-size: 13.5px; line-height: 1.55; margin: 8px 0 4px; padding: 8px 10px; border-left: 3px solid var(--leaf); min-height: 3em; }
+</style>
+<article class="card" id="card-fusi-quake">
+  <header class="card-head">
+    <span class="no"></span><h2>지진 4500개가 든 표에서 어떻게 탐구 문제를 찾을까?</h2><span class="kind">실제 자료 · 공개 데이터 가공 · 거르기·묶기·눈금 바꾸기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="고른 지역과 보기 방식에 따라 지진 수를 막대그래프나 산점도로 나타낸 그림"></canvas>
+      <div class="ctl">
+        <div class="presets rsel" role="group" aria-label="지역 거르기">
+          <span class="mono small dim">거르기</span>
+          <button type="button" class="chip" data-r="all" aria-pressed="true">전 세계</button>
+          <button type="button" class="chip" data-r="jp" aria-pressed="false">일본 주변</button>
+          <button type="button" class="chip" data-r="tonga" aria-pressed="false">통가·피지</button>
+          <button type="button" class="chip" data-r="sa" aria-pressed="false">남아메리카 서해안</button>
+          <button type="button" class="chip" data-r="mh" aria-pressed="false">지중해~히말라야</button>
+        </div>
+        <div class="presets vsel" role="group" aria-label="묶는 방식">
+          <span class="mono small dim">묶기</span>
+          <button type="button" class="chip" data-v="mag" aria-pressed="true">규모별</button>
+          <button type="button" class="chip" data-v="depth" aria-pressed="false">깊이별</button>
+          <button type="button" class="chip" data-v="year" aria-pressed="false">연도별</button>
+          <button type="button" class="chip" data-v="dm" aria-pressed="false">깊이–규모</button>
+        </div>
+        <label class="mono small"><input type="checkbox" class="lg"> 세로축을 로그 눈금으로</label>
+        <p class="qk-obs">—</p>
+        <dl class="nums">
+          <div><dt>고른 지진 수</dt><dd class="n">—</dd></div>
+          <div><dt>깊이 300 km 이상</dt><dd class="deep">—</dd></div>
+          <div><dt>규모가 1 커질 때 개수</dt><dd class="gr">—</dd></div>
+        </dl>
+        <p class="fig-note">자료: 미국 지질조사국(USGS) ANSS 종합 지진 목록, 2015~2024년 전 세계 규모 5.5 이상 4,518건(퍼블릭 도메인). 지역은 경도·위도 상자로 거른 것입니다. '규모가 1 커질 때 개수'는 규모 0.2 간격 막대의 로그값에 직선을 맞춰 구했습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>지진 목록은 누구나 내려받을 수 있는 공개 데이터입니다. 한 줄에 경도, 위도, 깊이, 규모, 연도가 적힌 4500여 줄의 표를 그냥 읽어서는 아무 질문도 떠오르지 않습니다. 데이터를 어떻게 가공해야 탐구할 만한 질문이 보일까요?</li>
+      <li><span class="tag">복원</span>지진은 대부분 판의 경계에서 일어납니다. 해양판이 다른 판 아래로 섭입하는 곳에서는 비스듬히 내려가는 판을 따라 깊은 곳에서도 지진이 납니다. 규모는 에너지의 로그 값이라서, 규모가 1 커지면 방출 에너지는 약 32배가 됩니다.</li>
+      <li><span class="tag">설계</span>데이터 가공의 기본 동작은 세 가지입니다. <em>거르기</em>(관심 있는 지역·기간만 남기기), <em>묶기</em>(규모·깊이·연도 구간별로 개수 세기), <em>표현 바꾸기</em>(로그 눈금, 산점도). 한 가지 보기에서 눈에 띄는 규칙이나 예외를 찾으면, 다른 거르기로 그 규칙이 어디서나 성립하는지 확인합니다.</li>
+      <li><span class="tag">분석</span>규모별 개수를 로그 눈금으로 보면 막대 끝이 거의 직선을 이룹니다. 규모가 1 커질 때마다 개수가 약 10분의 1로 줄어드는 이 관계를 구텐베르크–리히터 법칙이라 합니다. 깊이별로 묶으면 얕은 지진이 대부분이지만, 일부 지역에서는 500~650 km에서 다시 지진이 늘어납니다.</li>
+      <li><span class="tag">측정</span>다섯 지역을 하나씩 거르며 깊이별 그래프를 비교하고, 깊은 지진이 있는 지역과 없는 지역을 표로 정리하세요. 규모별 그래프에서 지역마다 '규모가 1 커질 때 개수'가 얼마나 다른지도 적으세요. 그런 다음 "왜 ~일까?", "~와 ~는 관계가 있을까?" 꼴의 탐구 문제를 두 개 이상 써 보세요.</li>
+      <li class="warn"><span class="tag">오차·안전</span>2024년의 지진 수가 다른 해보다 적은 것은 실제로 지진이 적었기 때문인지, 자료를 받은 시점에 목록이 다 갱신되지 않았기 때문인지 이 표만으로는 알 수 없습니다. 이런 질문은 원자료의 메타데이터로 확인해야 합니다. 또 규모 5.5 미만은 처음부터 빠져 있으므로, "작은 지진은 거의 없다" 같은 결론은 이 자료로 낼 수 없습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">같은 자료에서 지중해~히말라야 지역만 거르면 깊이 300 km 이상인 지진이 거의 없습니다. 이 관찰에서 나온 탐구 문제로 가장 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지중해~히말라야에는 지진이 없을까?<span class="why"><b>관찰과 맞지 않습니다.</b> 이 지역에도 지진은 많고, 깊은 지진만 드뭅니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>대륙판끼리 충돌하는 곳에서는 왜 해양판이 섭입하는 곳과 달리 깊은 지진이 드물까?<span class="why"><b>맞습니다.</b> 관찰한 차이에서 출발하고, 판 경계의 종류라는 검증할 수 있는 원인을 가리킵니다. 섭입대의 진원 분포와 비교하면 답을 찾을 수 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지진은 왜 무서울까?<span class="why"><b>탐구 문제로는 너무 넓고 측정할 수 없습니다.</b> 데이터와 연결되지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

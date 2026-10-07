@@ -1,0 +1,71 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/resr/r2-stat.js",
+    "js/cards/resr/r2-design.js"
+  ],
+  "short": "대조군·무작위 배정·표본 크기"
+}
+-->
+<style>
+#card-resr-design .dz-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 2px; }
+#card-resr-design .dz-row > .mono { margin: 0 4px 0 0; }
+</style>
+<article class="card" id="card-resr-design">
+  <header class="card-head">
+    <span class="no"></span><h2>비료의 효과를 알아보려면 화분을 어떻게 나눠야 할까?</h2><span class="kind">실험 · 연구 설계 · 대조군 · 무작위 배정 · 표본 크기</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="창가에서 멀어질수록 햇빛이 약해지는 선반 위의 화분 48개. 처리군과 대조군 화분이 색으로 구분되고, 원의 크기는 2주 동안 자란 키"></canvas>
+      <div class="ctl">
+        <div class="dz-row" role="group" aria-label="대조군">
+          <span class="mono small dim">대조군</span>
+          <button type="button" class="chip" data-ctl="1" aria-pressed="true">비료 없는 화분을 함께 기름</button>
+          <button type="button" class="chip" data-ctl="0" aria-pressed="false">없음 (처리군 키만 잼)</button>
+        </div>
+        <div class="dz-row" role="group" aria-label="배정 방법">
+          <span class="mono small dim">배정</span>
+          <button type="button" class="chip" data-as="sys" aria-pressed="true">편한 대로 (창가 쪽에 비료)</button>
+          <button type="button" class="chip" data-as="rnd" aria-pressed="false">무작위</button>
+          <button type="button" class="chip" data-as="blk" aria-pressed="false">줄마다 나눠 무작위</button>
+        </div>
+        <label class="mono">한 집단의 화분 수 n = <output class="n-out">5</output></label>
+        <input class="n" type="range" min="2" max="20" step="1" value="5" aria-label="한 집단의 화분 수">
+        <div class="lab-btns">
+          <button type="button" class="chip go run1">실험 한 번 하기</button>
+          <button type="button" class="chip run20">20번 다시 하기</button>
+          <button type="button" class="chip clear">기록 지우기</button>
+          <button type="button" class="chip truth" aria-pressed="false">참값 보기</button>
+        </div>
+        <dl class="nums">
+          <div><dt>처리군 평균 키</dt><dd class="v-t">—</dd></div>
+          <div><dt>대조군 평균 키</dt><dd class="v-c">—</dd></div>
+          <div><dt>추정한 비료 효과 (95% 구간)</dt><dd class="v-e">—</dd></div>
+        </dl>
+        <canvas class="cv-plot" aria-label="실험을 할 때마다 얻은 비료 효과 추정값과 95% 신뢰구간"></canvas>
+        <p class="verdict small"></p>
+        <p class="fig-note">모식 실험입니다. 강낭콩 모종 48개를 선반에 놓고 2주 동안 키운다고 가정했습니다. 창가에서 멀어질수록 햇빛이 줄어 자라는 키가 최대 약 6 cm 차이 나고, 같은 자리에서도 개체마다 표준편차 2 cm쯤 차이가 납니다. 비료의 참효과는 카드 안에 숨겨 두었습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>"액체 비료를 주면 강낭콩이 더 잘 자란다"는 가설을 시험하려 합니다. 화분 48개와 창가 선반이 있습니다. 비료의 효과만 따로 떼어 내려면 화분을 어떻게 나눠야 할까요?</li>
+      <li><span class="tag">복원</span>조작 변인(비료 유무)만 다르고 나머지 조건은 같게 해야 종속 변인(자란 키)의 차이를 조작 변인 탓으로 돌릴 수 있습니다. 하지만 햇빛, 흙, 씨앗처럼 다 맞출 수 없는 조건이 늘 남습니다.</li>
+      <li><span class="tag">설계</span><em>대조군</em>은 처리만 빼고 똑같이 다룬 집단으로, "비료가 없었다면 얼마나 자랐을까"를 알려 줍니다. <em>무작위 배정</em>은 맞출 수 없는 조건이 두 집단에 고르게 나뉘도록 처리할 화분을 제비뽑기로 정하는 것입니다. 햇빛처럼 영향이 큰 것을 미리 알면 같은 줄 안에서 반반 나누고 그 안에서 무작위로 정합니다(<em>블록 설계</em>). <em>반복</em>(화분 수 n)을 늘리면 개체 차이가 평균에서 상쇄됩니다.</li>
+      <li><span class="tag">분석</span>추정한 효과는 처리군 평균 − 대조군 평균입니다. 그 불확실성은 평균의 표준오차로 나타내고, 그래프의 막대는 95% 신뢰구간입니다. 실험을 여러 번 되풀이했을 때 추정값들이 참값 둘레에 흩어지면 <em>치우침</em>이 없는 설계이고, 흩어진 폭이 좁을수록 <em>정밀한</em> 설계입니다.</li>
+      <li><span class="tag">측정</span>"편한 대로" 배정으로 20번 해 보고 참값을 확인하세요. 같은 n으로 무작위 배정, 줄마다 나눈 무작위 배정도 해 보세요. 대조군을 없애면 추정값은 어떻게 되나요? 무작위 배정에서 n을 2, 5, 20으로 바꾸면 구간의 폭은 몇 배쯤 줄어드나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>편한 대로 나눈 설계에서 생긴 치우침은 n을 늘려도 사라지지 않고, 오히려 좁은 구간으로 틀린 값을 자신 있게 알려 줍니다. 계통 오차와 같은 성질입니다. 무작위 배정도 n이 작으면 우연히 한쪽으로 쏠릴 수 있으니, 크게 영향을 주는 요인은 블록으로 맞추고 나머지를 무작위에 맡깁니다. 비료나 농약을 다룰 때는 장갑을 끼고, 쓰고 남은 용액은 하수구에 그대로 버리지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">새로 산 형광등이 식물 생장에 미치는 효과를 알아보려 합니다. 실험실에 따뜻한 쪽(난방기 옆)과 서늘한 쪽이 있습니다. 화분 20개로 할 수 있는 가장 알맞은 설계는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>새 형광등 화분 10개는 따뜻한 쪽, 옛 형광등 화분 10개는 서늘한 쪽에 둔다<span class="why"><b>온도와 형광등의 효과가 섞입니다.</b> 차이가 나도 어느 쪽 때문인지 가려낼 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>따뜻한 쪽과 서늘한 쪽에 각각 10개를 두고, 각 구역 안에서 제비뽑기로 5개씩 새 형광등을 준다<span class="why"><b>맞습니다.</b> 영향이 큰 온도는 블록으로 맞추고, 구역 안의 나머지 차이는 무작위 배정에 맡깁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>20개 모두 새 형광등 아래에서 키우고, 자란 키가 크면 효과가 있다고 본다<span class="why"><b>비교할 대조군이 없습니다.</b> 형광등이 없었어도 그만큼 자랐을 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

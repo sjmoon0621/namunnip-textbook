@@ -1,0 +1,71 @@
+<!--block
+{
+  "type": "card",
+  "scripts": ["js/lib/lab.js", "js/cards/info/i3-bigo-growth.js"],
+  "short": "증가율과 상수 계수"
+}
+-->
+<style>
+#card-info-bigo-growth canvas { width: 100%; aspect-ratio: 16 / 10; }
+#card-info-bigo-growth .res { overflow-x: auto; margin: 8px 0; border: 1px solid var(--rule); }
+#card-info-bigo-growth .res table { width: 100%; border-collapse: collapse; font: 12px var(--f-mono); }
+#card-info-bigo-growth .res th { background: var(--paper-2); color: var(--ink-2); font-weight: 500; padding: 4px 8px; text-align: left; }
+#card-info-bigo-growth .res td { padding: 3px 8px; border-top: 1px solid var(--grid); }
+#card-info-bigo-growth .res td.t { text-align: right; }
+#card-info-bigo-growth .res i { display: inline-block; width: 12px; height: 3px; vertical-align: middle; margin-right: 6px; }
+#card-info-bigo-growth .m2 { display: none; }
+#card-info-bigo-growth[data-mode="c"] .m2 { display: block; }
+#card-info-bigo-growth[data-mode="c"] .m1 { display: none; }
+</style>
+<article class="card" id="card-info-bigo-growth" data-mode="g">
+  <header class="card-head">
+    <span class="no"></span><h2>빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?</h2><span class="kind">복잡도 · 증가율 비교와 상수 계수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="입력 크기 n에 따른 연산 횟수. 가로축과 세로축 모두 로그 눈금"></canvas>
+      <div class="ctl">
+        <div class="presets mode" role="group" aria-label="보기">
+          <button type="button" class="chip" data-m="g" aria-pressed="true">증가율 비교</button>
+          <button type="button" class="chip" data-m="c" aria-pressed="false">상수 계수의 영향</button>
+        </div>
+        <div class="m1">
+          <label class="mono">입력 크기 n = <output class="n-out"></output></label>
+          <input class="n" type="range" min="0" max="6" step="0.01" value="3" aria-label="입력 크기 n (로그 눈금)">
+          <label class="mono">1초에 처리하는 연산 = <output class="s-out"></output></label>
+          <input class="s" type="range" min="6" max="12" step="1" value="9" aria-label="컴퓨터 속도 (로그 눈금)">
+          <div class="res"></div>
+        </div>
+        <div class="m2">
+          <label class="mono">알고리즘 A: 연산 <output class="a-out">50</output> × n log₂ n</label>
+          <input class="a" type="range" min="1" max="200" step="1" value="50" aria-label="A의 상수 계수">
+          <label class="mono">알고리즘 B: 연산 <output class="b-out">2</output> × n²</label>
+          <input class="b" type="range" min="1" max="200" step="1" value="2" aria-label="B의 상수 계수">
+          <dl class="nums">
+            <div><dt>A와 B가 같아지는 n</dt><dd class="n-x">—</dd></div>
+            <div><dt>n = 100에서 빠른 쪽</dt><dd class="n-100">—</dd></div>
+            <div><dt>n = 10⁶에서 B / A</dt><dd class="n-big">—</dd></div>
+          </dl>
+        </div>
+        <p class="fig-note">연산 하나에 걸리는 시간을 똑같다고 본 단순 계산입니다. 실제 프로그램의 속도는 언어, 메모리 접근, 입력 자료에 따라 달라집니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>O(n²) 정렬을 쓰는 프로그램이 느려서, 1,000배 빠른 컴퓨터를 샀습니다. 이제 O(n log n) 정렬을 쓰는 오래된 컴퓨터보다 빠를까요? 2ⁿ번 연산하는 완전 탐색은 컴퓨터가 빨라지면 얼마나 더 큰 n을 풀 수 있을까요?</li>
+      <li><span class="tag">복원</span>빅오 표기법은 n이 커질 때 연산 횟수가 늘어나는 빠르기(증가율)를 나타내며, 상수 계수와 작은 항은 버립니다. 빠른 순서는 O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)입니다.</li>
+      <li><span class="tag">설명</span>그래프는 두 축이 모두 로그 눈금이라 거듭제곱 함수 nᵏ는 기울기가 k인 직선이 됩니다. n² 직선은 n 직선보다 두 배 가파르고, 2ⁿ은 곧바로 위로 꺾여 올라갑니다. 1초에 10억 번 연산하는 컴퓨터로도 n = 100에서 2ⁿ번 연산하려면 우주의 나이보다 훨씬 긴 시간이 걸립니다.</li>
+      <li><span class="tag">연결</span>컴퓨터가 1,000배 빨라지면 1초 안에 풀 수 있는 n은 O(n)이면 1,000배, O(n²)이면 약 32배(√1000), O(2ⁿ)이면 고작 10 정도(2¹⁰ ≈ 1000) 늘어납니다. 그래서 큰 문제에서는 하드웨어보다 알고리즘을 바꾸는 효과가 훨씬 큽니다. 반면 n이 작으면 상수 계수가 작은 O(n²) 알고리즘이 더 빠를 수 있어, 실제 정렬 라이브러리 중에는 작은 구간을 삽입 정렬로 처리하는 것도 있습니다.</li>
+      <li><span class="tag">적용</span>‘증가율 비교’에서 n을 10⁶까지 올리고 표의 시간을 읽으세요. 속도를 1,000배(10⁹ → 10¹²)로 올려도 1초를 넘는 것은 무엇인가요? ‘상수 계수의 영향’에서 A의 계수를 크게 해도 아주 큰 n에서 B가 결국 느려지는지, 두 알고리즘이 같아지는 n이 어떻게 움직이는지 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>“O(n log n)이 O(n²)보다 언제나 빠르다”는 틀린 말입니다. 빅오는 충분히 큰 n에서의 비교이고, 어디서부터 큰 n인지는 상수 계수가 정합니다. 또 연산 횟수가 같아도 메모리 사용량, 구현의 단순함, 입력의 특징이 알고리즘 선택에 영향을 줍니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">2ⁿ번 연산하는 완전 탐색 프로그램이 지금 컴퓨터에서 1시간 동안 n = 40까지 풀 수 있습니다. 1,000,000배 빠른 컴퓨터가 생기면 1시간 동안 약 얼마까지 풀 수 있을까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>n = 4,000만<span class="why"><b>O(n) 알고리즘이라면 맞는 계산입니다.</b> 2ⁿ은 n이 1 늘 때마다 두 배가 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>n = 40,000<span class="why"><b>√(10⁶) = 1000배로 본 O(n²)식 계산입니다.</b></span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>n = 60 정도<span class="why"><b>맞습니다.</b> 10⁶ ≈ 2²⁰이므로 n이 약 20 늘어납니다. 지수 시간 알고리즘은 하드웨어로는 거의 구제되지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

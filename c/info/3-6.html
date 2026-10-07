@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>빅오 표기법과 복잡도 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="알고리즘의 연산 횟수를 입력 크기에 대한 함수로 세어 빅오 표기법으로 표현하고, 같은 문제를 푸는 여러 알고리즘의 효율을 비교한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-bigo-count canvas { width: 100%; aspect-ratio: 16 / 9; }
+    #card-info-bigo-count pre.code {
+      font: 12px/1.55 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 10px 0 4px;
+      overflow-x: auto; counter-reset: ln;
+    }
+    #card-info-bigo-count pre.code .l { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-bigo-count pre.code .l::before {
+      counter-increment: ln; content: counter(ln); position: absolute; left: 0; width: 26px;
+      text-align: right; color: var(--ink-3);
+    }
+    #card-info-bigo-count pre.code .l.on { background: #f6e6c6; box-shadow: inset 3px 0 0 var(--amber, #e0a02a); }
+    #card-info-bigo-count .grp { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); margin-top: 8px; }
+    #card-info-bigo-count .res { overflow-x: auto; margin: 8px 0; border: 1px solid var(--rule); }
+    #card-info-bigo-count .res table { width: 100%; border-collapse: collapse; font: 12px var(--f-mono); }
+    #card-info-bigo-count .res th { background: var(--paper-2); color: var(--ink-2); font-weight: 500; padding: 4px 8px; text-align: right; }
+    #card-info-bigo-count .res td { padding: 3px 8px; text-align: right; border-top: 1px solid var(--grid); }
+    #card-info-bigo-growth canvas { width: 100%; aspect-ratio: 16 / 10; }
+    #card-info-bigo-growth .res { overflow-x: auto; margin: 8px 0; border: 1px solid var(--rule); }
+    #card-info-bigo-growth .res table { width: 100%; border-collapse: collapse; font: 12px var(--f-mono); }
+    #card-info-bigo-growth .res th { background: var(--paper-2); color: var(--ink-2); font-weight: 500; padding: 4px 8px; text-align: left; }
+    #card-info-bigo-growth .res td { padding: 3px 8px; border-top: 1px solid var(--grid); }
+    #card-info-bigo-growth .res td.t { text-align: right; }
+    #card-info-bigo-growth .res i { display: inline-block; width: 12px; height: 3px; vertical-align: middle; margin-right: 6px; }
+    #card-info-bigo-growth .m2 { display: none; }
+    #card-info-bigo-growth[data-mode="c"] .m2 { display: block; }
+    #card-info-bigo-growth[data-mode="c"] .m1 { display: none; }
+  </style>
+</head>
+<body data-course="info" data-sec="3-6">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>빅오 표기법과 복잡도</h1>
+    <p class="lead">자료가 1,000개일 때 0.01초 걸린 프로그램이 100만 개에서는 몇 초 걸릴까요? 답은 알고리즘에 따라 두 배 남짓에서 백만 배 이상까지 달라집니다. 연산 횟수가 늘어나는 빠르기를 한 글자로 요약하는 방법이 빅오 표기법입니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">반복문</span><span class="p">정렬과 탐색 알고리즘</span><span class="p">로그와 지수 함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-bigo-count"><span class="mono">3.6.1</span>연산 횟수를 세어 빅오 찾기</a></li>
+        <li><a href="#card-info-bigo-growth"><span class="mono">3.6.2</span>증가율과 상수 계수</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-6">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-bigo-count">
+        <header class="card-head">
+          <span class="no">3.6.1</span><h2>입력이 두 배가 되면 연산은 몇 배가 될까?</h2><span class="kind">복잡도 · 연산 횟수 세기와 빅오 표기법</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="입력 크기 n에 따라 실제로 센 연산 횟수(점)와 예상 곡선 c·f(n)(점선)"></canvas>
+            <div class="ctl">
+              <p class="grp">알고리즘</p>
+              <div class="presets alg" role="group" aria-label="알고리즘">
+                <button type="button" class="chip" data-a="lin" aria-pressed="false">선형 탐색</button>
+                <button type="button" class="chip" data-a="bin" aria-pressed="false">이진 탐색</button>
+                <button type="button" class="chip" data-a="bub" aria-pressed="true">버블 정렬</button>
+                <button type="button" class="chip" data-a="mrg" aria-pressed="false">병합 정렬</button>
+                <button type="button" class="chip" data-a="sub" aria-pressed="false">부분집합 완전 탐색</button>
+              </div>
+              <p class="grp">입력 자료</p>
+              <div class="presets inp" role="group" aria-label="입력 자료의 배열 상태">
+                <button type="button" class="chip" data-i="rand" aria-pressed="true">무작위</button>
+                <button type="button" class="chip" data-i="sorted" aria-pressed="false">이미 정렬됨</button>
+                <button type="button" class="chip" data-i="rev" aria-pressed="false">거꾸로 정렬됨</button>
+              </div>
+              <p class="grp">예상 f(n) — 비율 연산 수/f(n)이 일정해지는 것을 고르세요</p>
+              <div class="presets hyp" role="group" aria-label="예상 증가 함수">
+                <button type="button" class="chip" data-f="log" aria-pressed="false">log₂ n</button>
+                <button type="button" class="chip" data-f="n" aria-pressed="true">n</button>
+                <button type="button" class="chip" data-f="nlog" aria-pressed="false">n log₂ n</button>
+                <button type="button" class="chip" data-f="n2" aria-pressed="false">n²</button>
+                <button type="button" class="chip" data-f="exp" aria-pressed="false">2ⁿ</button>
+              </div>
+              <pre class="code" aria-label="파이썬 코드. 센 연산이 있는 줄을 강조"></pre>
+              <div class="res"></div>
+              <p class="fig-note">브라우저에서 같은 알고리즘을 실제로 실행해 강조한 줄(비교 또는 검사)이 실행된 횟수를 셉니다. 탐색은 찾는 값이 없는 경우(최악)입니다. 시간은 이 컴퓨터에서 잰 값이라 매번, 기기마다 다릅니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>정렬 프로그램이 자료 1,000개를 0.01초에 처리했습니다. 자료가 100만 개가 되면 몇 초 걸릴까요? 1,000배라고 답하기 쉽지만, 알고리즘에 따라 수십 배일 수도, 100만 배일 수도 있습니다.</li>
+            <li><span class="tag">복원</span>알고리즘의 효율은 실행 시간 대신 <em>기본 연산</em>(비교, 덧셈, 배열 접근 등)의 횟수로 셉니다. 시간은 컴퓨터와 언어에 따라 달라지지만 연산 횟수는 알고리즘만으로 정해지기 때문입니다.</li>
+            <li><span class="tag">설명</span>입력 크기 n에 대한 연산 횟수 T(n)이 충분히 큰 n에서 언제나 c·f(n)보다 작거나 같도록 하는 상수 c가 있으면 T(n) = O(f(n))이라 씁니다(<em>빅오 표기법</em>). 그래서 3n² + 5n + 7은 O(n²)입니다. 가장 빨리 자라는 항만 남기고 상수 계수는 버립니다. 실제로는 T(n)/f(n)이 n이 커져도 일정한 값 근처에 머무는 f(n)을 찾으면 됩니다.</li>
+            <li><span class="tag">연결</span>n이 두 배가 될 때 연산 수가 거의 그대로면 O(log n), 2배면 O(n), 2배보다 조금 크면 O(n log n), 4배면 O(n²)입니다. O(2ⁿ)은 n이 1만 늘어도 2배가 됩니다. 이 ‘두 배 실험’은 코드를 몰라도 측정으로 복잡도를 추정하는 방법이며, 같은 문제를 푸는 두 알고리즘(버블 정렬과 병합 정렬, 선형 탐색과 이진 탐색)을 비교하는 기준이 됩니다.</li>
+            <li><span class="tag">적용</span>버블 정렬에서 예상 f(n)을 n, n log₂ n, n²로 바꿔 가며 ‘연산/f(n)’ 열이 일정해지는 것을 찾으세요. 그다음 입력을 ‘이미 정렬됨’으로 바꾸면 어떻게 되나요? 병합 정렬과 이진 탐색의 f(n)도 찾고, 측정 시간 열이 연산 수와 같은 비율로 늘어나는지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>빅오는 n이 클 때의 <em>증가율</em>만 말해 줍니다. 상수 계수와 작은 항을 버리므로, n이 작을 때는 O(n²) 알고리즘이 O(n log n)보다 빠를 수도 있습니다. 같은 알고리즘도 입력에 따라 연산 수가 달라지므로(최선·평균·최악), 보통은 최악의 경우로 표기합니다. 측정 시간은 캐시, 다른 프로그램, 타이머 해상도 때문에 흔들리므로 작은 n의 시간으로 복잡도를 판단하면 안 됩니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 프로그램의 실행 시간을 재었더니 n = 1,000에서 0.2초, n = 2,000에서 0.8초, n = 4,000에서 3.2초였습니다. n = 16,000이면 약 몇 초가 걸릴까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 12.8초<span class="why"><b>O(n)으로 본 계산입니다.</b> n이 두 배일 때 시간이 4배씩 늘었으므로 n²에 비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 51초<span class="why"><b>맞습니다.</b> 두 배마다 4배이므로 O(n²)입니다. 4,000 → 16,000은 4배이므로 시간은 16배, 3.2 × 16 ≈ 51초입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 3분 25초<span class="why"><b>4,000 → 8,000 → 16,000은 두 배를 두 번</b> 한 것입니다. 4배를 세 번 곱하면 지나칩니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-info-bigo-growth" data-mode="g">
+        <header class="card-head">
+          <span class="no">3.6.2</span><h2>빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?</h2><span class="kind">복잡도 · 증가율 비교와 상수 계수</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="입력 크기 n에 따른 연산 횟수. 가로축과 세로축 모두 로그 눈금"></canvas>
+            <div class="ctl">
+              <div class="presets mode" role="group" aria-label="보기">
+                <button type="button" class="chip" data-m="g" aria-pressed="true">증가율 비교</button>
+                <button type="button" class="chip" data-m="c" aria-pressed="false">상수 계수의 영향</button>
+              </div>
+              <div class="m1">
+                <label class="mono">입력 크기 n = <output class="n-out"></output></label>
+                <input class="n" type="range" min="0" max="6" step="0.01" value="3" aria-label="입력 크기 n (로그 눈금)">
+                <label class="mono">1초에 처리하는 연산 = <output class="s-out"></output></label>
+                <input class="s" type="range" min="6" max="12" step="1" value="9" aria-label="컴퓨터 속도 (로그 눈금)">
+                <div class="res"></div>
+              </div>
+              <div class="m2">
+                <label class="mono">알고리즘 A: 연산 <output class="a-out">50</output> × n log₂ n</label>
+                <input class="a" type="range" min="1" max="200" step="1" value="50" aria-label="A의 상수 계수">
+                <label class="mono">알고리즘 B: 연산 <output class="b-out">2</output> × n²</label>
+                <input class="b" type="range" min="1" max="200" step="1" value="2" aria-label="B의 상수 계수">
+                <dl class="nums">
+                  <div><dt>A와 B가 같아지는 n</dt><dd class="n-x">—</dd></div>
+                  <div><dt>n = 100에서 빠른 쪽</dt><dd class="n-100">—</dd></div>
+                  <div><dt>n = 10⁶에서 B / A</dt><dd class="n-big">—</dd></div>
+                </dl>
+              </div>
+              <p class="fig-note">연산 하나에 걸리는 시간을 똑같다고 본 단순 계산입니다. 실제 프로그램의 속도는 언어, 메모리 접근, 입력 자료에 따라 달라집니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>O(n²) 정렬을 쓰는 프로그램이 느려서, 1,000배 빠른 컴퓨터를 샀습니다. 이제 O(n log n) 정렬을 쓰는 오래된 컴퓨터보다 빠를까요? 2ⁿ번 연산하는 완전 탐색은 컴퓨터가 빨라지면 얼마나 더 큰 n을 풀 수 있을까요?</li>
+            <li><span class="tag">복원</span>빅오 표기법은 n이 커질 때 연산 횟수가 늘어나는 빠르기(증가율)를 나타내며, 상수 계수와 작은 항은 버립니다. 빠른 순서는 O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)입니다.</li>
+            <li><span class="tag">설명</span>그래프는 두 축이 모두 로그 눈금이라 거듭제곱 함수 nᵏ는 기울기가 k인 직선이 됩니다. n² 직선은 n 직선보다 두 배 가파르고, 2ⁿ은 곧바로 위로 꺾여 올라갑니다. 1초에 10억 번 연산하는 컴퓨터로도 n = 100에서 2ⁿ번 연산하려면 우주의 나이보다 훨씬 긴 시간이 걸립니다.</li>
+            <li><span class="tag">연결</span>컴퓨터가 1,000배 빨라지면 1초 안에 풀 수 있는 n은 O(n)이면 1,000배, O(n²)이면 약 32배(√1000), O(2ⁿ)이면 고작 10 정도(2¹⁰ ≈ 1000) 늘어납니다. 그래서 큰 문제에서는 하드웨어보다 알고리즘을 바꾸는 효과가 훨씬 큽니다. 반면 n이 작으면 상수 계수가 작은 O(n²) 알고리즘이 더 빠를 수 있어, 실제 정렬 라이브러리 중에는 작은 구간을 삽입 정렬로 처리하는 것도 있습니다.</li>
+            <li><span class="tag">적용</span>‘증가율 비교’에서 n을 10⁶까지 올리고 표의 시간을 읽으세요. 속도를 1,000배(10⁹ → 10¹²)로 올려도 1초를 넘는 것은 무엇인가요? ‘상수 계수의 영향’에서 A의 계수를 크게 해도 아주 큰 n에서 B가 결국 느려지는지, 두 알고리즘이 같아지는 n이 어떻게 움직이는지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>“O(n log n)이 O(n²)보다 언제나 빠르다”는 틀린 말입니다. 빅오는 충분히 큰 n에서의 비교이고, 어디서부터 큰 n인지는 상수 계수가 정합니다. 또 연산 횟수가 같아도 메모리 사용량, 구현의 단순함, 입력의 특징이 알고리즘 선택에 영향을 줍니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">2ⁿ번 연산하는 완전 탐색 프로그램이 지금 컴퓨터에서 1시간 동안 n = 40까지 풀 수 있습니다. 1,000,000배 빠른 컴퓨터가 생기면 1시간 동안 약 얼마까지 풀 수 있을까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>n = 4,000만<span class="why"><b>O(n) 알고리즘이라면 맞는 계산입니다.</b> 2ⁿ은 n이 1 늘 때마다 두 배가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>n = 40,000<span class="why"><b>√(10⁶) = 1000배로 본 O(n²)식 계산입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>n = 60 정도<span class="why"><b>맞습니다.</b> 10⁶ ≈ 2²⁰이므로 n이 약 20 늘어납니다. 지수 시간 알고리즘은 하드웨어로는 거의 구제되지 않습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i3-bigo-count.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i3-bigo-growth.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/fusi/f2-sampling.js"
+  ]
+}
+-->
+<style>
+#card-fusi-sampling .f2-note { min-height: 1.4em; }
+#card-fusi-sampling .nums dd.hid { color: var(--ink-3); }
+</style>
+<article class="card" id="card-fusi-sampling">
+  <header class="card-head">
+    <span class="no"></span><h2>설문에 응답한 사람이 많으면 전교생을 대표할까?</h2><span class="kind">표본 추출 · 표집 편향 · 정확도와 정밀도 (모식)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="전교생 1200명을 칸 하나씩으로 나타낸 그림. 색이 짙을수록 수면 시간이 짧고, 이번 표본에 뽑힌 학생은 테두리로 표시"></canvas>
+      <div class="ctl">
+        <div class="presets meth" role="group" aria-label="표본을 고르는 방법">
+          <button type="button" class="chip" data-m="srs" aria-pressed="true">명단에서 무작위</button>
+          <button type="button" class="chip" data-m="strat" aria-pressed="false">학년별 무작위</button>
+          <button type="button" class="chip" data-m="room" aria-pressed="false">밤 10시 자습실</button>
+          <button type="button" class="chip" data-m="sns" aria-pressed="false">밤 11시 SNS 설문</button>
+        </div>
+        <label class="mono">표본 크기 n = <output class="n-out">30</output>명</label>
+        <input class="n" type="range" min="5" max="400" step="5" value="30" aria-label="표본 크기">
+        <div class="lab-btns"><button class="chip go one" type="button">표본 1번 뽑기</button><button class="chip many" type="button">100번 반복</button><button class="chip clear" type="button">기록 지우기</button><button class="chip truth" type="button" aria-pressed="false">전수 조사 결과 보기</button></div>
+        <dl class="nums n4">
+          <div><dt>이번 표본 평균</dt><dd class="v-last">—</dd></div>
+          <div><dt>표본 평균들의 평균</dt><dd class="v-mm">—</dd></div>
+          <div><dt>표본 평균들의 퍼짐 (SD)</dt><dd class="v-sd">—</dd></div>
+          <div><dt>전교생 평균</dt><dd class="v-true hid">?</dd></div>
+        </dl>
+        <p class="fig-note f2-note"></p>
+        <canvas class="cv-plot" aria-label="여러 번 뽑은 표본 평균의 히스토그램"></canvas>
+        <p class="fig-note">가상 학교의 모식 자료입니다(1200명, 학년마다 400명). 학년이 올라갈수록 평균 수면 시간이 짧고, 자습실에 남거나 늦은 밤 SNS를 보는 학생은 잠이 짧은 쪽으로 치우치게 만들었습니다. 같은 방법과 n으로 여러 번 뽑아 히스토그램을 쌓아 보세요.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>"우리 학교 학생은 하루에 몇 시간 잘까?"를 알아보려고 SNS에 설문 링크를 올렸더니 하룻밤에 200명이 응답했습니다. 전교생 1200명 가운데 6분의 1이나 답했으니, 이 평균을 학교 전체의 값이라고 해도 될까요?</li>
+      <li><span class="tag">복원</span>알고 싶은 전체 집단을 <em>모집단</em>, 실제로 조사한 일부를 <em>표본</em>이라고 합니다. 측정에는 매번 다르게 흔들리는 우연 오차와 한쪽으로 꾸준히 치우치는 계통 오차가 있습니다. 표본을 고르는 일도 같은 두 가지 오차를 만듭니다.</li>
+      <li><span class="tag">설명</span>표본마다 평균이 조금씩 다른 것은 피할 수 없는 <em>표본 오차</em>이고, n을 늘리면 줄어듭니다. 반면 특정한 사람만 뽑히기 쉬운 방법은 평균을 한쪽으로 미는 <em>표집 편향</em>을 만듭니다. 밤 11시에 SNS 설문을 보는 학생은 애초에 늦게 자는 학생일 가능성이 큽니다. 이 치우침은 n을 아무리 늘려도 줄지 않습니다.</li>
+      <li><span class="tag">연결</span>히스토그램의 폭은 <em>정밀도</em>(다시 뽑아도 비슷한 값이 나오는가, 신뢰성), 중심이 참값에서 떨어진 정도는 <em>정확도</em>(재려던 것을 제대로 쟀는가, 타당성)와 같은 뜻입니다. 무작위 표집은 모든 학생이 뽑힐 기회를 똑같이 주기 때문에 치우침이 없습니다. 학년별로 인원 비율을 맞춰 뽑으면(층화 표집) 퍼짐이 조금 더 줄어듭니다.</li>
+      <li><span class="tag">적용</span>"명단에서 무작위"로 n = 30과 n = 300을 각각 100번 반복해 퍼짐을 비교하세요. n이 10배가 되면 퍼짐은 몇 분의 1이 되나요? 이번에는 "밤 11시 SNS 설문"으로 같은 일을 하고, 전수 조사 결과를 켜서 히스토그램의 중심이 어디에 있는지 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>응답자가 많다는 것은 표본이 정밀하다는 뜻일 뿐, 모집단을 대표한다는 뜻이 아닙니다. 퍼짐이 작은 편향된 표본은 틀린 값을 자신 있게 알려 줍니다. 실제 조사에서는 참값을 모르니, 보고서에 표본을 어떻게 골랐는지와 누가 빠졌을 수 있는지를 반드시 적어야 다른 사람이 타당성을 판단할 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">한 학생이 점심시간 매점 앞에서 학생 500명에게 "아침을 먹었나요?"를 물었더니 62%가 "안 먹었다"고 답했습니다. 이 결과에 대한 판단으로 가장 알맞은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>500명이면 전교생의 절반 가까이 되므로 학교 전체의 값으로 보아도 된다<span class="why"><b>크기와 대표성을 섞었습니다.</b> 많이 물어도 표본이 한쪽으로 치우치면 평균도 함께 치우칩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>매점에 오는 학생은 아침을 거른 학생이 많을 수 있어, 실제 비율보다 높게 나왔을 가능성이 있다<span class="why"><b>맞습니다.</b> 조사 장소가 응답자를 고르는 표집 편향입니다. 명단에서 무작위로 뽑아 다시 물어야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같은 장소에서 다음 날 다시 조사해 비슷한 값이 나오면 결과가 타당하다는 뜻이다<span class="why"><b>신뢰성과 타당성은 다릅니다.</b> 같은 방법으로 다시 재면 같은 편향이 되풀이되어, 값은 비슷해도 여전히 치우쳐 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

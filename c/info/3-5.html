@@ -1,0 +1,257 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>동적 계획법 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="부분 문제가 중복으로 계산되지 않도록 답을 배열에 저장하는 동적 계획법의 원리를 설명하고, 이를 활용한 알고리즘을 설계하며, 분할 정복 기반 알고리즘과 여러 측면에서 비교·분석한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-dp-memo canvas { width: 100%; aspect-ratio: 16 / 10; }
+    #card-info-dp-memo pre.code {
+      font: 12.5px/1.6 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 10px 0 4px;
+      overflow-x: auto; counter-reset: ln;
+    }
+    #card-info-dp-memo pre.code .l { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-dp-memo pre.code .l::before {
+      counter-increment: ln; content: counter(ln); position: absolute; left: 0; width: 26px;
+      text-align: right; color: var(--ink-3);
+    }
+    #card-info-dp-memo pre.code .l.on { background: #e1eed9; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-dp-memo .runbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+    #card-info-dp-knapsack canvas { width: 100%; aspect-ratio: 16 / 9; }
+    #card-info-dp-knapsack pre.code {
+      font: 12px/1.55 var(--f-mono); background: var(--paper-2); padding: 8px 0; margin: 10px 0 4px;
+      overflow-x: auto; counter-reset: ln;
+    }
+    #card-info-dp-knapsack pre.code .l { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-dp-knapsack pre.code .l::before {
+      counter-increment: ln; content: counter(ln); position: absolute; left: 0; width: 26px;
+      text-align: right; color: var(--ink-3);
+    }
+    #card-info-dp-knapsack pre.code .l.on { background: #e1eed9; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-dp-knapsack .runbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px; }
+    #card-info-dp-knapsack .nums dd { font-size: 14px; }
+    #text-info-dp-dc pre.code {
+      font: 12.5px/1.6 var(--f-mono); background: var(--paper-2); padding: 10px 14px;
+      overflow-x: auto; white-space: pre;
+    }
+    #text-info-dp-dc .lcs table { width: auto; font-family: var(--f-mono); text-align: center; }
+    #text-info-dp-dc .lcs th, #text-info-dp-dc .lcs td { padding: 3px 10px; text-align: center; }
+    #text-info-dp-dc .lcs td.p { background: #f6e0b8; font-weight: 700; }
+  </style>
+</head>
+<body data-course="info" data-sec="3-5">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>동적 계획법</h1>
+    <p class="lead">계단 오르기의 방법 수를 재귀 함수로 구하면 n이 40만 되어도 한참 기다려야 합니다. 같은 계산을 수없이 되풀이하기 때문입니다. 한 번 구한 답을 표에 적어 두기만 해도 계산은 눈 깜짝할 사이에 끝납니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">재귀 함수</span><span class="p">분할 정복</span><span class="p">2차원 리스트</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-dp-memo"><span class="mono">3.5.1</span>메모이제이션과 표 채우기</a></li>
+        <li><a href="#card-info-dp-knapsack"><span class="mono">3.5.2</span>배낭 문제의 표 채우기</a></li>
+        <li><a href="#text-info-dp-dc"><span class="mono">3.5.3</span>동적 계획법과 분할 정복 비교</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-5">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-dp-memo">
+        <header class="card-head">
+          <span class="no">3.5.1</span><h2>같은 계산을 두 번 하지 않으면 얼마나 빨라질까?</h2><span class="kind">동적 계획법 · 메모이제이션과 표 채우기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="계단 오르기 함수의 호출 트리 또는 dp 배열. 같은 n을 다시 부르는 호출은 주황색으로 표시"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="풀이 방법">
+                <button type="button" class="chip" data-m="naive" aria-pressed="true">단순 재귀</button>
+                <button type="button" class="chip" data-m="memo" aria-pressed="false">메모이제이션 (하향식)</button>
+                <button type="button" class="chip" data-m="tab" aria-pressed="false">표 채우기 (상향식)</button>
+              </div>
+              <label class="mono">계단 수 n = <output class="n-out">5</output></label>
+              <input class="n" type="range" min="1" max="30" step="1" value="5" aria-label="계단 수 n">
+              <div class="runbar">
+                <button type="button" class="chip b-step">한 단계</button>
+                <button type="button" class="chip b-all">끝까지</button>
+                <button type="button" class="chip b-reset">처음부터</button>
+              </div>
+              <pre class="code" aria-label="파이썬 코드"></pre>
+              <dl class="nums">
+                <div><dt>ways(n) 호출 수</dt><dd class="n-calls">—</dd></div>
+                <div><dt>그중 다시 계산한 호출</dt><dd class="n-dup">—</dd></div>
+                <div><dt>오르는 방법의 수</dt><dd class="n-val">—</dd></div>
+              </dl>
+              <p class="fig-note">한 번에 1칸 또는 2칸 오를 때 n칸 계단을 오르는 방법의 수 ways(n)입니다. n ≤ 7이면 호출 과정을 한 단계씩 볼 수 있고, 더 크면 n에 따른 호출 수를 그래프(세로축 로그 눈금)로 보여 줍니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>계단을 한 번에 1칸이나 2칸씩 오릅니다. 30칸을 오르는 방법은 몇 가지일까요? 식은 간단한데, 그대로 재귀 함수로 짜면 n이 40 근처만 되어도 답이 한참 늦게 나옵니다. 무엇이 시간을 잡아먹을까요?</li>
+            <li><span class="tag">복원</span>마지막 한 걸음이 1칸이면 그 전까지 n−1칸, 2칸이면 n−2칸을 올라온 것입니다. 그래서 ways(n) = ways(n−1) + ways(n−2)이고, ways(0) = ways(1) = 1입니다. 큰 문제를 작은 부분 문제로 나누어 그 답을 조합한다는 점은 분할 정복과 같습니다.</li>
+            <li><span class="tag">설명</span>단순 재귀의 호출 트리를 보면 ways(3), ways(2) 같은 같은 부분 문제가 여러 번 나옵니다(<em>중복 부분 문제</em>). 한 번 구한 답을 배열이나 사전에 저장해 두고 다시 필요하면 꺼내 쓰는 방법이 <em>동적 계획법</em>입니다. 재귀 구조를 그대로 두고 저장만 덧붙이면 <em>메모이제이션</em>(하향식), 작은 답부터 차례로 표를 채우면 <em>타뷸레이션</em>(상향식)입니다.</li>
+            <li><span class="tag">연결</span>단순 재귀의 호출 수는 n이 1 늘 때마다 약 1.6배(황금비)씩 늘어나 지수적으로 커지고, 메모이제이션은 2n−1번, 표 채우기는 n−1번의 덧셈이면 끝납니다. 동적 계획법이 통하려면 큰 문제의 최적해가 부분 문제의 최적해로 만들어지고(<em>최적 부분 구조</em>), 부분 문제가 겹쳐야 합니다. 병합 정렬처럼 부분 문제가 겹치지 않으면 저장해도 얻는 것이 없습니다.</li>
+            <li><span class="tag">적용</span>n = 5에서 세 방법을 한 단계씩 실행해 보세요. 단순 재귀에서 주황색(이미 구한 값을 다시 계산)인 호출은 몇 개인가요? 메모이제이션에서는 그 호출이 어떻게 바뀌나요? 그다음 n을 30까지 올려 두 재귀 방법의 호출 수를 비교하세요.</li>
+            <li class="warn"><span class="tag">판단</span>메모이제이션은 시간을 줄이는 대신 답을 저장할 <em>메모리</em>를 씁니다. 하향식은 필요한 부분 문제만 풀지만 재귀 깊이가 n까지 깊어져, 파이썬에서는 기본 재귀 한도(보통 1000) 때문에 RecursionError가 날 수 있습니다. 상향식은 재귀가 없지만, 어떤 순서로 표를 채워야 하는지 직접 정해야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">이번에는 한 번에 1칸, 2칸, 3칸 중 하나를 오를 수 있습니다. ways(n) = ways(n−1) + ways(n−2) + ways(n−3)을 메모이제이션으로 구할 때, n이 커지면 함수 호출 수는 어떻게 늘어날까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>호출마다 세 갈래로 나뉘므로 약 3ⁿ에 비례한다<span class="why"><b>단순 재귀일 때의 생각입니다.</b> 메모가 있으면 각 n은 한 번만 계산되고, 나머지 호출은 저장된 값을 바로 돌려줍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>각 n을 한 번씩만 계산하므로 n에 비례한다 (약 3n번)<span class="why"><b>맞습니다.</b> 서로 다른 부분 문제는 n+1개뿐이고, 하나를 계산할 때 호출을 세 번 하므로 호출 수는 약 3n입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표를 채우는 것과 같으므로 n²에 비례한다<span class="why"><b>표의 칸은 n+1개이고</b> 칸 하나를 채우는 데 덧셈 두 번이면 됩니다. 2차원 표가 필요한 문제(배낭, 최장 공통 부분 수열)와 헷갈린 것입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-info-dp-knapsack">
+        <header class="card-head">
+          <span class="no">3.5.2</span><h2>가방에 담을 물건을 고르는 표는 어떻게 채울까?</h2><span class="kind">동적 계획법 · 0-1 배낭 문제</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="배낭 문제의 dp 표. 행은 고려한 물건 수, 열은 가방의 허용 무게"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="물건 묶음">
+                <button type="button" class="chip" data-p="0" aria-pressed="true">묶음 1</button>
+                <button type="button" class="chip" data-p="1" aria-pressed="false">묶음 2</button>
+                <button type="button" class="chip" data-p="2" aria-pressed="false">묶음 3</button>
+              </div>
+              <label class="mono">가방이 버티는 무게 W = <output class="w-out">7</output></label>
+              <input class="w" type="range" min="1" max="10" step="1" value="7" aria-label="가방의 허용 무게">
+              <div class="runbar">
+                <button type="button" class="chip b-cell">한 칸</button>
+                <button type="button" class="chip b-row">한 줄</button>
+                <button type="button" class="chip b-all">끝까지</button>
+                <button type="button" class="chip b-reset">처음부터</button>
+              </div>
+              <pre class="code" aria-label="파이썬 코드"></pre>
+              <dl class="nums">
+                <div><dt>동적 계획법의 최대 가치</dt><dd class="n-dp">—</dd></div>
+                <div><dt>가치/무게 큰 것부터 담기 (탐욕)</dt><dd class="n-gr">—</dd></div>
+                <div><dt>채운 칸 / 완전 탐색 경우의 수</dt><dd class="n-cnt">—</dd></div>
+              </dl>
+              <p class="fig-note">물건의 무게와 가치는 계산 연습을 위한 가상의 값입니다. items는 (무게, 가치) 쌍의 리스트입니다. 표를 다 채우면 오른쪽 아래 칸에서 거꾸로 올라가며 고른 물건을 주황색으로 표시합니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>무게 7까지 버티는 가방에 물건 4개 중 몇 개를 골라 담아 가치의 합을 가장 크게 하려 합니다. 물건은 통째로 담거나 두고 가야 합니다(0-1). 가치가 무게에 비해 큰 것부터 담으면 언제나 최선일까요?</li>
+            <li><span class="tag">복원</span>모든 조합을 검사하는 완전 탐색은 물건이 n개이면 2ⁿ가지를 봐야 합니다. 동적 계획법은 겹치는 부분 문제의 답을 표에 저장해 두고 다시 씁니다.</li>
+            <li><span class="tag">설명</span>부분 문제를 “앞의 i개 물건만으로, 허용 무게 w일 때의 최대 가치” dp[i][w]로 정합니다. i번째 물건(무게 wt, 가치 val)을 <em>넣지 않으면</em> dp[i−1][w], <em>넣으면</em> dp[i−1][w−wt] + val이므로, dp[i][w] = max(dp[i−1][w], dp[i−1][w−wt] + val)입니다(wt ≤ w일 때만 넣을 수 있음). 이 식이 <em>점화식</em>이고, 위 줄만 있으면 아래 줄을 채울 수 있습니다.</li>
+            <li><span class="tag">연결</span>표의 칸은 (n+1)(W+1)개이고 칸마다 비교를 한 번 하므로 시간은 O(nW)입니다. 물건이 4개뿐이면 2⁴ = 16가지라 완전 탐색이 더 간단하지만, 물건이 40개이면 조합은 2⁴⁰ ≈ 1.1조 가지인 반면 표는 41 × (W+1)칸입니다. 오른쪽 아래 칸 dp[n][W]가 답이며, 값이 바로 위 칸과 다르면 그 물건을 넣은 것이므로 거꾸로 따라가면 고른 물건을 알 수 있습니다. 최장 공통 부분 수열(LCS)도 같은 방식으로 2차원 표를 채웁니다.</li>
+            <li><span class="tag">적용</span>묶음 1에서 ‘한 칸’을 누르며 초록 테두리 두 칸(넣지 않을 때, 넣을 때) 중 무엇이 선택되는지 보세요. 끝까지 채운 뒤 동적 계획법과 탐욕 방법의 결과를 비교하세요. 묶음 3에서 W를 바꾸면 두 결과가 같아지는 W와 달라지는 W는 각각 무엇인가요?</li>
+            <li class="warn"><span class="tag">판단</span>탐욕 방법은 빠르지만 0-1 배낭에서는 최적을 보장하지 못합니다(물건을 쪼갤 수 있는 배낭이라면 탐욕 방법이 최적입니다). 또 O(nW)는 W에 비례하므로, 허용 무게가 10억처럼 큰 수이면 표가 너무 커져 이 방법도 쓰기 어렵습니다. 동적 계획법은 부분 문제를 어떻게 정의하느냐가 핵심이며, 정의가 틀리면 표를 아무리 채워도 답이 맞지 않습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">이번에는 같은 물건을 여러 개 담을 수 있습니다(개수 제한 없음). 점화식을 어떻게 바꿔야 할까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>넣는 경우를 dp[i][w−wt] + val로 바꾼다 (같은 줄을 참조)<span class="why"><b>맞습니다.</b> i번째 물건을 하나 넣은 뒤에도 i번째 물건을 또 넣을 수 있어야 하므로, 위 줄이 아니라 같은 줄의 왼쪽 칸을 봅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>점화식은 그대로 두고 표의 줄 수만 늘린다<span class="why"><b>그럴듯하지만 개수 제한이 없으니</b> 몇 줄을 늘려야 할지 정할 수 없습니다. 같은 줄을 참조하면 표 크기를 바꾸지 않아도 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>가치/무게가 가장 큰 물건만 가득 담으면 되므로 표가 필요 없다<span class="why"><b>반례가 있습니다.</b> 무게 6짜리를 담고 남는 4를 비워 두는 것보다, 가치/무게가 조금 작더라도 무게를 꽉 채우는 조합이 더 나을 수 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-dp-dc">
+        <header class="card-head">
+          <span class="no">3.5.3</span><h2>분할 정복과 동적 계획법은 무엇이 다를까?</h2><span class="kind">읽기 · 두 설계 방법의 비교 · 최장 공통 부분 수열</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">병합 정렬도, 계단 오르기도 큰 문제를 작은 문제로 나누어 풉니다. 그런데 병합 정렬에는 메모를 붙이지 않고, 계단 오르기에는 붙입니다. 둘을 가르는 기준은 무엇일까요?</p>
+          <h3><span class="mono">1</span>공통점: 부분 문제의 답으로 전체를 만든다</h3>
+          <p>두 방법 모두 문제를 같은 모양의 작은 <em>부분 문제</em>로 나누고, 부분 문제의 답을 조합해 전체의 답을 만듭니다. 그래서 둘 다 재귀식(점화식)으로 쓸 수 있습니다. 차이는 부분 문제들이 <em>서로 겹치는가</em>에 있습니다. 병합 정렬은 배열의 왼쪽 절반과 오른쪽 절반을 따로 정렬하므로, 같은 부분 배열을 두 번 정렬하는 일이 없습니다. 계단 오르기에서는 ways(5)를 구하려고 부른 ways(4)와 ways(3)이 둘 다 다시 ways(2)를 부릅니다.</p>
+          <div class="tbl"><table>
+            <thead><tr><th>측면</th><th>분할 정복</th><th>동적 계획법</th></tr></thead>
+            <tbody>
+              <tr><th>부분 문제의 관계</th><td>서로 독립 (겹치지 않음)</td><td>같은 부분 문제가 여러 번 필요함 (중복 부분 문제)</td></tr>
+              <tr><th>답의 저장</th><td>보통 저장하지 않음</td><td>배열·사전(표)에 저장하고 다시 씀</td></tr>
+              <tr><th>계산 방향</th><td>위에서 아래로 나눈 뒤 결과를 합침 (재귀)</td><td>하향식(재귀 + 메모이제이션) 또는 상향식(작은 답부터 표 채우기)</td></tr>
+              <tr><th>시간 복잡도를 셈하는 법</th><td>나누기·합치기 비용의 점화식 (병합 정렬: T(n) = 2T(n/2) + O(n) → O(n log n))</td><td>(부분 문제의 수) × (부분 문제 하나를 푸는 비용) (배낭: (n+1)(W+1)칸 × O(1))</td></tr>
+              <tr><th>메모리</th><td>재귀 호출 스택, 합치기용 임시 공간 (병합 정렬은 O(n))</td><td>표의 크기 (필요한 줄만 남기면 줄일 수 있음)</td></tr>
+              <tr><th>주로 쓰는 문제</th><td>정렬, 탐색, 큰 수의 곱셈, 거듭제곱</td><td>최댓값·최솟값을 묻는 최적화, 경우의 수 세기</td></tr>
+              <tr><th>예</th><td>병합 정렬, 퀵 정렬, 이진 탐색</td><td>계단 오르기, 0-1 배낭, 최장 공통 부분 수열, 편집 거리, 플로이드-워셜 최단 경로</td></tr>
+            </tbody>
+          </table></div>
+          <p>단순 재귀로 짠 계단 오르기는 분할 정복처럼 생겼지만 부분 문제가 겹치기 때문에 지수 시간이 걸립니다. 반대로 이진 탐색이나 병합 정렬에 메모를 붙여도 같은 부분 문제를 다시 만나지 않으므로 메모리만 더 씁니다.</p>
+          <h3><span class="mono">2</span>예: 두 DNA 서열이 얼마나 닮았을까</h3>
+          <p>생명과학에서는 두 DNA 서열이 얼마나 닮았는지 비교합니다. 가장 간단한 척도가 <em>최장 공통 부분 수열</em>(LCS)입니다. 순서는 지키되 중간을 건너뛰어도 되는 공통 문자열 가운데 가장 긴 것입니다. GATTACA와 TACGCA의 LCS는 길이 4인 TACA입니다.</p>
+          <p>X의 앞 i글자와 Y의 앞 j글자의 LCS 길이를 L[i][j]라 하면, 두 마지막 글자가 같을 때 L[i][j] = L[i−1][j−1] + 1, 다를 때 L[i][j] = max(L[i−1][j], L[i][j−1])입니다. 한 글자를 빼고 비교하는 부분 문제들이 서로 겹치므로 표에 저장합니다.</p>
+          <div class="tbl lcs"><table>
+            <thead><tr><th></th><th>∅</th><th>T</th><th>A</th><th>C</th><th>G</th><th>C</th><th>A</th></tr></thead><tbody><tr><th>∅</th><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><th>G</th><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><th>A</th><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr><tr><th>T</th><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr><tr><th>T</th><td>0</td><td class="p">1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td></tr><tr><th>A</th><td>0</td><td>1</td><td class="p">2</td><td>2</td><td>2</td><td>2</td><td>2</td></tr><tr><th>C</th><td>0</td><td>1</td><td>2</td><td>3</td><td>3</td><td class="p">3</td><td>3</td></tr><tr><th>A</th><td>0</td><td>1</td><td>2</td><td>3</td><td>3</td><td>3</td><td class="p">4</td></tr></tbody>
+          </table></div>
+          <pre class="code">def lcs(X, Y):
+          n, m = len(X), len(Y)
+          L = [[0] * (m + 1) for _ in range(n + 1)]
+          for i in range(1, n + 1):
+              for j in range(1, m + 1):
+                  if X[i - 1] == Y[j - 1]:
+                      L[i][j] = L[i - 1][j - 1] + 1
+                  else:
+                      L[i][j] = max(L[i - 1][j], L[i][j - 1])
+          return L[n][m]
+
+      print(lcs("GATTACA", "TACGCA"))   # 4</pre>
+          <p>행은 GATTACA, 열은 TACGCA의 글자입니다. 주황 칸은 두 글자가 같아 대각선 위 칸에서 1을 더한 곳으로, 오른쪽 아래에서 거꾸로 따라가면 T, A, C, A를 얻습니다. 표의 칸은 (n+1)(m+1)개이므로 시간은 O(nm)입니다. 모든 부분 수열을 비교하는 완전 탐색이라면 길이 n인 서열의 부분 수열만 2ⁿ개입니다.</p>
+          <h3><span class="mono">3</span>동적 계획법으로 설계하는 순서</h3>
+          <ul class="dots">
+            <li><em>부분 문제 정하기:</em> “앞의 i개만 볼 때”, “허용 무게가 w일 때”처럼 표의 한 칸이 무엇을 뜻하는지 문장으로 씁니다.</li>
+            <li><em>점화식 세우기:</em> 마지막 선택(마지막 물건을 넣는가, 마지막 글자가 같은가)으로 경우를 나누어 더 작은 칸으로 표현합니다.</li>
+            <li><em>기저 조건:</em> 빈 서열, 물건 0개처럼 바로 답을 아는 칸을 채웁니다.</li>
+            <li><em>계산 순서:</em> 어떤 칸을 계산할 때 필요한 칸이 이미 채워져 있도록 순서를 정합니다.</li>
+            <li><em>답과 역추적:</em> 답이 들어 있는 칸을 찾고, 필요하면 표를 거꾸로 따라가 실제 선택을 복원합니다.</li>
+          </ul>
+          <p class="judge"><b>판단</b>‘동적 계획법(dynamic programming)’의 programming은 코드를 짜는 일이 아니라 표를 만들어 계획한다는 뜻으로, 1950년대에 리처드 벨먼이 붙인 이름입니다. 이름에 ‘동적’이 들어 있다고 실행 중에 무언가가 움직이는 방법은 아닙니다. 또 동적 계획법은 최적 부분 구조가 있을 때만 맞는 답을 줍니다. 예를 들어 같은 정점을 두 번 지나지 않는 가장 긴 경로 문제는 부분 경로의 최적해를 이어 붙여도 전체 최적해가 되지 않아 이 방법을 그대로 쓸 수 없습니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">정렬된 배열에서 이진 탐색을 재귀 함수로 짜고, 같은 구간을 다시 탐색하지 않도록 (왼쪽 끝, 오른쪽 끝)마다 결과를 사전에 저장했습니다. 효과는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>O(log n)이 O(1)에 가깝게 빨라진다<span class="why"><b>저장한 값을 다시 꺼내 쓸 일이 없습니다.</b> 한 번 탐색할 때 각 구간은 한 번씩만 방문됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>한 번의 탐색은 빨라지지 않고 메모리만 더 쓴다<span class="why"><b>맞습니다.</b> 이진 탐색의 부분 문제는 겹치지 않는 분할 정복이라 메모이제이션의 이득이 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>동적 계획법이 되었으므로 O(n)으로 느려진다<span class="why"><b>저장을 덧붙였다고 방문하는 구간 수가 늘지는 않습니다.</b> 시간은 여전히 O(log n)이고 사전에 넣는 비용이 조금 더해질 뿐입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i3-dp-memo.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i3-dp-knapsack.js"></script>
+</body>
+</html>

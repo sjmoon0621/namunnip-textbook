@@ -1,0 +1,84 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/info/i1-kit.js",
+    "js/cards/info/i1-scope.js"
+  ],
+  "short": "함수 호출과 객체 참조 전달"
+}
+-->
+<style>
+#card-info-scope .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+#card-info-scope .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-scope .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+#card-info-scope .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-scope .code .ln.off { opacity: .35; text-decoration: line-through; }
+#card-info-scope .code .k { color: #2f6a8a; font-weight: 600; }
+#card-info-scope .code .b { color: var(--forest); }
+#card-info-scope .code .s { color: var(--warn); }
+#card-info-scope .code .d { color: #8a5a00; }
+#card-info-scope .code .c { color: var(--ink-3); }
+#card-info-scope .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+#card-info-scope .s-pos { margin-left: auto; align-self: center; }
+#card-info-scope canvas { width: 100%; aspect-ratio: 16 / 9; }
+#card-info-scope .qcode { padding: 8px 14px; margin: 6px 0 10px; }
+#card-info-scope .out-row { display: flex; gap: 10px; align-items: baseline; margin-top: 8px; font-family: var(--f-mono); font-size: 13px; }
+#card-info-scope .out { padding: 2px 10px; background: var(--night); color: #e6f0e2; min-width: 8em; }
+@media (max-width: 640px) { #card-info-scope canvas { aspect-ratio: 4 / 3; } }
+</style>
+<article class="card" id="card-info-scope">
+  <header class="card-head">
+    <span class="no"></span><h2>함수에 넘긴 리스트는 왜 함수 밖에서도 바뀔까?</h2><span class="kind">함수 정의와 호출 · 매개변수 · 지역 변수 · 객체 참조 전달</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽: 전역 프레임과 함수 프레임의 이름표. 오른쪽: 이름표가 가리키는 객체와 화살표"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="예제 프로그램">
+          <button type="button" class="chip" data-m="append" aria-pressed="true">box.append(x)</button>
+          <button type="button" class="chip" data-m="rebind" aria-pressed="false">box = box + [x]</button>
+          <button type="button" class="chip" data-m="scope" aria-pressed="false">기본값 · 지역 변수</button>
+        </div>
+        <label class="mono">넘길 정수 n = <output class="nv-out">5</output></label>
+        <input class="nv" type="range" min="0" max="9" step="1" value="5" aria-label="넘길 정수">
+        <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+        <div class="lab-btns i1-step">
+          <button type="button" class="chip s-first">처음</button>
+          <button type="button" class="chip s-prev">◀ 이전</button>
+          <button type="button" class="chip go s-next">다음 ▶</button>
+          <button type="button" class="chip s-play">재생</button>
+          <span class="mono small dim s-pos"></span>
+        </div>
+        <p class="note"></p>
+        <div class="out-row"><span class="dim">출력</span><span class="out">—</span></div>
+        <p class="fig-note">초록 테두리 프레임이 지금 실행 중인 함수입니다. 그림에서는 값이 같은 작은 정수를 한 객체로 그렸습니다(CPython도 −5~256의 정수는 미리 만들어 둔 객체를 함께 씁니다).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>함수 안에서 매개변수 <code>box</code>에 원소를 추가했더니, 함수 밖의 <code>nums</code>까지 바뀌었습니다. 그런데 같은 함수 안에서 <code>x</code>를 10배로 바꿔도 밖의 <code>n</code>은 그대로입니다. 무엇이 다를까요?</li>
+      <li><span class="tag">복원</span>파이썬의 변수는 값을 담는 상자가 아니라 <em>객체를 가리키는 이름표</em>입니다. <code>a = b</code>는 b가 가리키는 객체에 이름표 a를 하나 더 붙이는 일입니다. 함수는 입력을 받아 일을 하고 결과를 돌려주는 코드 묶음입니다.</li>
+      <li><span class="tag">설명</span><code>def</code>를 실행하면 함수 객체만 만들어지고 몸체는 실행되지 않습니다(<em>정의</em>). 함수를 <em>호출</em>하면 ① 새 <em>프레임</em>이 생기고 ② 매개변수 이름이 인자가 가리키는 객체를 그대로 가리키며 ③ 몸체를 실행하고 ④ <code>return</code>의 값을 호출한 자리로 돌려준 뒤 프레임이 사라집니다. 정의할 때 쓴 이름(box, x)을 <em>매개변수</em>, 호출할 때 넘긴 값(nums, n)을 <em>인자</em>라 합니다. 파이썬은 객체를 복사하지 않고 참조를 넘기므로 이를 <em>객체 참조 전달</em>(call by object reference)이라 부릅니다.</li>
+      <li><span class="tag">연결</span>리스트·딕셔너리는 고칠 수 있는(mutable) 객체라 <code>append</code>, <code>xs[0] = …</code>로 객체 자체가 바뀌고, 같은 객체를 가리키는 모든 이름에서 그 변화가 보입니다. 정수·문자열·튜플은 고칠 수 없는(immutable) 객체라 <code>x = x * 10</code>은 새 객체를 만들고 지역 이름표만 옮깁니다. 함수 안에서 대입한 이름은 그 함수의 <em>지역 변수</em>이므로, 전역에 같은 이름이 있어도 서로 다른 변수입니다.</li>
+      <li><span class="tag">적용</span>세 예제를 한 단계씩 실행하세요. <code>append</code>와 <code>box = box + [x]</code>에서 2번 줄 다음에 box의 화살표가 어디를 가리키는지 비교하세요. ‘기본값 · 지역 변수’ 예제에서 함수 안의 total과 전역 total이 같은 객체를 가리킨 적이 있는지 확인하세요. n을 바꾸면 출력은 어떻게 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>“파이썬은 리스트는 참조로, 정수는 값으로 전달한다”는 설명은 틀렸습니다. 전달 방식은 언제나 같고, 차이는 객체를 고칠 수 있는지와 함수 안에서 객체를 <em>고쳤는지</em>, 이름을 <em>다시 대입했는지</em>에 있습니다. 원본을 지키려면 <code>add_item(nums.copy(), n)</code>처럼 복사본을 넘기거나, 함수가 새 값을 <code>return</code>하게 설계합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">다음 코드를 실행하면 무엇이 출력될까요?</p>
+    <pre class="code qcode">def f(xs, k):
+    xs[0] = 99
+    k = k + 1
+
+a = [1, 2]
+b = 3
+f(a, b)
+print(a, b)</pre>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>[99, 2] 3<span class="why"><b>맞습니다.</b> xs와 a는 같은 리스트를 가리키므로 xs[0] = 99가 a에도 보입니다. k = k + 1은 지역 이름 k만 새 정수 4로 옮깁니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>[1, 2] 3<span class="why"><b>인자를 복사해서 넘긴다고 본 답입니다.</b> 파이썬은 리스트를 복사하지 않습니다. xs는 a와 같은 객체를 가리킵니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>[99, 2] 4<span class="why"><b>대입이 호출한 쪽 변수까지 바꾼다고 본 답입니다.</b> 함수 안의 대입은 지역 이름표만 옮깁니다. 정수는 고칠 수 없으므로 b가 가리키는 3은 그대로입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

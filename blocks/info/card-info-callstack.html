@@ -1,0 +1,90 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/info/i1-kit.js",
+    "js/cards/info/i1-callstack.js"
+  ],
+  "short": "재귀 호출 스택과 기저 조건"
+}
+-->
+<style>
+#card-info-callstack .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+#card-info-callstack .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-callstack .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+#card-info-callstack .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-callstack .code .ln.off { opacity: .35; text-decoration: line-through; }
+#card-info-callstack .code .k { color: #2f6a8a; font-weight: 600; }
+#card-info-callstack .code .b { color: var(--forest); }
+#card-info-callstack .code .s { color: var(--warn); }
+#card-info-callstack .code .d { color: #8a5a00; }
+#card-info-callstack .code .c { color: var(--ink-3); }
+#card-info-callstack .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+#card-info-callstack .s-pos { margin-left: auto; align-self: center; }
+#card-info-callstack canvas { width: 100%; aspect-ratio: 16 / 10; }
+@media (max-width: 640px) { #card-info-callstack canvas { aspect-ratio: 1 / 1; } }
+#card-info-callstack .out-row { display: flex; gap: 10px; align-items: baseline; margin-top: 8px; font-family: var(--f-mono); font-size: 13px; }
+#card-info-callstack .out { padding: 2px 10px; background: var(--night); color: #e6f0e2; min-width: 8em; }
+#card-info-callstack .out.err { color: #ffb59b; }
+#card-info-callstack .toggles { margin-top: 6px; }
+#card-info-callstack .qcode { padding: 8px 14px; margin: 6px 0 10px; }
+</style>
+<article class="card" id="card-info-callstack">
+  <header class="card-head">
+    <span class="no"></span><h2>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</h2><span class="kind">재귀 함수 · 기저 조건 · 호출 스택 · 수학적 귀납법</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽: 아래에서 위로 쌓이는 호출 스택. 오른쪽: 호출마다 식이 전개되고 값이 채워지는 과정"></canvas>
+      <div class="ctl">
+        <div class="presets" role="group" aria-label="재귀 함수">
+          <button type="button" class="chip" data-f="fact" aria-pressed="true">팩토리얼</button>
+          <button type="button" class="chip" data-f="rsum" aria-pressed="false">리스트 합</button>
+          <button type="button" class="chip" data-f="bin" aria-pressed="false">이진수 변환</button>
+        </div>
+        <label class="mono"><span class="av-name">n</span> = <output class="av-out">4</output></label>
+        <input class="av" type="range" min="0" max="8" step="1" value="4" aria-label="인자 크기">
+        <div class="toggles"><label><input type="checkbox" class="nobase"> 기저 조건(2–3번 줄) 지우기</label></div>
+        <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+        <div class="lab-btns i1-step">
+          <button type="button" class="chip s-first">처음</button>
+          <button type="button" class="chip s-prev">◀ 이전</button>
+          <button type="button" class="chip go s-next">다음 ▶</button>
+          <button type="button" class="chip s-play">재생</button>
+          <span class="mono small dim s-pos"></span>
+        </div>
+        <p class="note"></p>
+        <dl class="nums">
+          <div><dt>지금 스택 깊이</dt><dd class="d-now">0</dd></div>
+          <div><dt>최대 깊이</dt><dd class="d-max">0</dd></div>
+          <div><dt>호출 횟수</dt><dd class="d-calls">0</dd></div>
+        </dl>
+        <div class="out-row"><span class="dim">출력</span><span class="out">—</span></div>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span><code>fact</code> 함수는 몸체 안에서 다시 <code>fact</code>를 부릅니다. 부른 함수가 또 자기를 부르면 끝없이 이어질 것 같은데, 실제로는 24라는 답을 내고 끝납니다. 언제, 어떻게 멈추는 것일까요?</li>
+      <li><span class="tag">복원</span>함수를 호출하면 새 프레임이 생기고, 함수가 끝나면 프레임이 사라지며 값이 호출한 곳으로 돌아갑니다. 수학에서 n! = n × (n − 1)!, 0! = 1입니다.</li>
+      <li><span class="tag">설명</span>자기 자신을 호출하는 함수를 <em>재귀 함수</em>라 합니다. 재귀 함수에는 두 부분이 꼭 있어야 합니다. 더 쪼개지 않고 바로 답을 내는 <em>기저 조건</em>과, 문제를 크기가 더 작은 같은 문제로 바꾸어 자기를 부르고 그 결과를 조합하는 <em>재귀 단계</em>입니다. 호출이 이어질 때마다 프레임이 <em>호출 스택</em>에 쌓이고, 각 프레임은 자기만의 n을 가집니다. 기저 조건에 닿으면 가장 나중에 쌓인 프레임부터 값을 돌려주며 차례로 빠집니다.</li>
+      <li><span class="tag">연결</span>재귀 함수는 <em>수학적 귀납법</em>과 같은 구조입니다. 기저 조건은 귀납법의 첫 단계(n = 0일 때 성립)이고, 재귀 호출 <code>fact(n - 1)</code>은 <em>귀납 가정</em>(“n − 1에 대해서는 맞다”)에 해당합니다. 그래서 재귀 함수를 설계할 때는 호출 과정을 끝까지 따라가지 않고, “더 작은 문제의 답은 재귀 호출이 이미 맞게 구해 준다”고 믿은 뒤 그 답으로 지금 문제를 어떻게 푸는지만 정하면 됩니다. 이 관계를 식으로 쓴 것이 <em>재귀 관계</em> f(n) = n × f(n − 1)입니다.</li>
+      <li><span class="tag">적용</span>세 함수를 실행하며 오른쪽 식의 전개를 보세요. 각 함수에서 재귀 관계는 무엇인가요? 인자를 바꾸며 최대 스택 깊이를 기록하세요. 팩토리얼과 리스트 합은 인자에 비례해 깊어지는데, 이진수 변환은 n을 64까지 키워도 왜 7을 넘지 않나요? ‘기저 조건 지우기’를 켜고 세 함수가 각각 어떻게 실패하는지 비교하세요.</li>
+      <li class="warn"><span class="tag">판단</span>기저 조건이 있어도 인자가 그 조건에 <em>다가가지 않으면</em> 끝나지 않습니다. <code>fact(-1)</code>은 n이 −2, −3, …으로 작아지기만 해서 n == 0에 닿지 못합니다. 조건을 <code>n &lt;= 0</code>으로 쓰거나 음수를 미리 걸러야 합니다. 또 파이썬은 스택 깊이를 기본 1000 정도로 제한하므로, 깊이가 입력 크기에 비례하는 재귀는 큰 입력에서 RecursionError를 낼 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">print가 재귀 호출 <em>다음</em>에 있습니다. <code>count_down(3)</code>은 무엇을 출력할까요?</p>
+    <pre class="code qcode">def count_down(n):
+    if n == 0:
+        return
+    count_down(n - 1)
+    print(n)
+
+count_down(3)</pre>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3, 2, 1 순서로 한 줄씩<span class="why"><b>print가 재귀 호출보다 앞에 있을 때의 결과입니다.</b> 여기서는 각 프레임이 아래 호출이 모두 끝난 뒤에야 print합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1, 2, 3 순서로 한 줄씩<span class="why"><b>맞습니다.</b> 스택의 맨 위(n = 1)가 가장 먼저 print를 실행하고 빠지므로, 나중에 호출된 프레임이 먼저 출력합니다(후입선출).</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0, 1, 2, 3 순서로 한 줄씩<span class="why"><b>기저 조건의 동작을 놓친 답입니다.</b> n == 0이면 print에 닿기 전에 return하므로 0은 출력되지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

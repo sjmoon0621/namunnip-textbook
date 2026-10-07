@@ -1,0 +1,81 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/resr/r2-stat.js",
+    "js/cards/resr/r2-ttest.js"
+  ],
+  "short": "t 검정 · p값 · 효과 크기"
+}
+-->
+<style>
+#card-resr-ttest .tt-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 2px; }
+#card-resr-ttest .tt-row > .mono { margin: 0 4px 0 0; }
+#card-resr-ttest .tt-hist { width: 100%; aspect-ratio: 16 / 6; display: block; margin-top: 6px; }
+#card-resr-ttest .tt-sim[hidden], #card-resr-ttest .tt-real[hidden], #card-resr-ttest .tt-hist[hidden] { display: none; }
+</style>
+<article class="card" id="card-resr-ttest">
+  <header class="card-head">
+    <span class="no"></span><h2>두 집단의 평균 차이는 우연일까, 효과일까?</h2><span class="kind">자료 해석 · t 검정 · p값 · 효과 크기 · 이상값</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <div class="tt-row" role="group" aria-label="자료">
+        <span class="mono small dim">자료</span>
+        <button type="button" class="chip" data-src="sim" aria-pressed="true">모식 실험 (비료와 키)</button>
+        <button type="button" class="chip" data-src="sleep" aria-pressed="false">실제 자료: 수면제 두 가지 (1905)</button>
+      </div>
+      <canvas class="cv-wide" aria-label="왼쪽: 두 집단의 개별 측정값, 평균과 95% 신뢰구간. 오른쪽: 효과가 없을 때 t 값의 분포와 이번에 얻은 t 값, 그보다 극단적인 쪽의 넓이(p값)"></canvas>
+      <div class="ctl">
+        <div class="tt-sim">
+          <div class="ctl-row">
+            <div><label class="mono">한 집단의 개수 n = <output class="n-out">8</output></label>
+              <input class="n" type="range" min="3" max="40" step="1" value="8" aria-label="한 집단의 개수"></div>
+            <div><label class="mono">참효과 = <output class="e-out">1.0</output> cm (개체 표준편차 2 cm)</label>
+              <input class="e" type="range" min="0" max="3" step="0.25" value="1" aria-label="참효과"></div>
+          </div>
+          <div class="lab-btns">
+            <button type="button" class="chip go again">다시 실험하기</button>
+            <button type="button" class="chip again20">20번 다시</button>
+            <button type="button" class="chip out" aria-pressed="false">처리군에 이상값 하나 (25 cm로 잘못 적힘)</button>
+            <button type="button" class="chip clear">p 기록 지우기</button>
+          </div>
+        </div>
+        <div class="tt-real" hidden>
+          <div class="tt-row" role="group" aria-label="비교 방법">
+            <span class="mono small dim">비교</span>
+            <button type="button" class="chip" data-pair="0" aria-pressed="true">독립된 두 집단처럼</button>
+            <button type="button" class="chip" data-pair="1" aria-pressed="false">같은 환자끼리 짝지어</button>
+          </div>
+        </div>
+        <dl class="nums n4">
+          <div><dt>평균 차 (95% 구간)</dt><dd class="v-d">—</dd></div>
+          <div><dt>t (자유도)</dt><dd class="v-t">—</dd></div>
+          <div><dt>p값 (양측)</dt><dd class="v-p">—</dd></div>
+          <div><dt>효과 크기 d</dt><dd class="v-es">—</dd></div>
+        </dl>
+        <canvas class="tt-hist" aria-label="다시 실험할 때마다 얻은 p값 (로그 눈금)"></canvas>
+        <p class="verdict small"></p>
+        <p class="fig-note tt-note">모식 실험은 2주 동안 자란 키를 정규 분포에서 뽑았습니다(대조군 평균 10 cm, 표준편차 2 cm). 검정은 두 집단의 분산이 다를 수 있다고 보는 웰치 t 검정입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>비료를 준 화분 8개가 대조군보다 평균 1 cm 더 자랐습니다. 비료 때문일까요, 아니면 이번에 우연히 잘 자란 화분이 처리군에 몰렸을까요? "다시 실험하기"를 여러 번 눌러 차이가 어떻게 달라지는지 보세요.</li>
+      <li><span class="tag">복원</span>평균의 표준오차는 SE = s/√n입니다. 같은 실험을 되풀이하면 평균은 대략 참값 ± 2SE 안에서 흔들립니다. 무작위 배정을 했다면 두 집단의 차이는 처리 효과와 우연, 둘 중 하나에서 옵니다.</li>
+      <li><span class="tag">설명</span><em>t = (평균 차) / (평균 차의 표준오차)</em>는 차이가 우연한 흔들림의 몇 배인지 나타냅니다. 처리 효과가 전혀 없다는 <em>귀무가설</em>이 맞다고 할 때, 이번만큼 또는 이보다 큰 |t|가 나올 확률이 <em>p값</em>입니다(오른쪽 그림의 빨간 넓이). p가 작을수록 "우연만으로는 설명하기 어렵다"고 판단하며, 흔히 0.05를 기준으로 삼습니다. <em>효과 크기 d</em> = 평균 차 / 표준편차는 차이가 개체 차이에 비해 얼마나 큰지를 나타내고, n과 거의 무관합니다. 95% 구간은 참효과가 있을 법한 범위입니다.</li>
+      <li><span class="tag">연결</span>실제 자료를 고르세요. 약리학자 커시니(A. R. Cushny)와 피블스(A. R. Peebles)가 1905년에 발표한 자료로, 환자 10명에게 두 수면제를 각각 먹이고 늘어난 수면 시간을 쟀습니다. 이 자료는 t 분포를 처음 내놓은 고셋(W. S. Gosset, 필명 Student)의 1908년 논문에 예로 실렸습니다. 같은 환자가 두 약을 모두 먹었으므로 환자 사이의 차이(잠이 많은 사람, 적은 사람)를 빼고 짝지어 비교할 수 있습니다.</li>
+      <li><span class="tag">적용</span>참효과를 0으로 두고 20번씩 몇 차례 다시 해 보세요. p &lt; 0.05가 몇 번쯤 나오나요? 참효과 1 cm에서 n을 5와 30으로 바꾸면 d와 p는 각각 어떻게 되나요? 이상값을 넣으면 평균, 구간, p가 어느 쪽으로 바뀌나요? 수면제 자료에서 짝지어 비교하면 p가 얼마로 바뀌나요?</li>
+      <li class="warn"><span class="tag">판단</span>p &lt; 0.05는 "가설이 맞을 확률이 95%"도, "효과가 크다"도 아닙니다. n이 크면 아주 작은 차이도 p가 작아지므로 효과 크기와 구간을 함께 보고합니다. p &gt; 0.05는 "효과가 없다"는 증명이 아니라 "이 자료로는 우연과 구별되지 않는다"는 뜻입니다. 이상값은 기록된 이유(잘못 적음, 기기 고장)가 있을 때만 빼고, 뺀 사실과 이유를 보고서에 밝힙니다. 결과가 마음에 들 때까지 이 값 저 값을 빼거나 비교를 바꿔 보는 것은 우연을 발견으로 만드는 일입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">학생 2000명을 무작위로 나눠 새 학습법의 효과를 시험했더니 시험 점수 평균 차가 0.4점(100점 만점, 표준편차 15점), p = 0.04였습니다. 가장 알맞은 해석은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>p &lt; 0.05이므로 새 학습법은 효과가 큰 방법이다<span class="why"><b>유의성과 크기를 혼동했습니다.</b> 효과 크기 d ≈ 0.4/15 ≈ 0.03으로 아주 작습니다. 표본이 커서 작은 차이도 우연과 구별되었을 뿐입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>우연만으로 보기는 어렵지만, 차이가 매우 작아 실제로 쓸 만한 효과인지는 따로 판단해야 한다<span class="why"><b>맞습니다.</b> p는 우연인지를, 효과 크기와 구간은 얼마나 큰지를 알려 줍니다. 둘을 함께 봐야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>새 학습법이 효과 있을 확률이 96%이다<span class="why"><b>흔한 오해입니다.</b> p값은 "효과가 없다면 이런 자료가 나올 확률"이지 가설이 참일 확률이 아닙니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,81 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/info/i1-kit.js",
+    "js/cards/info/i1-printer.js"
+  ],
+  "short": "큐 시뮬레이션: 프린터 대기열"
+}
+-->
+<style>
+#card-info-printer .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+#card-info-printer .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+#card-info-printer .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+#card-info-printer .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+#card-info-printer .code .ln.off { opacity: .35; text-decoration: line-through; }
+#card-info-printer .code .k { color: #2f6a8a; font-weight: 600; }
+#card-info-printer .code .b { color: var(--forest); }
+#card-info-printer .code .s { color: var(--warn); }
+#card-info-printer .code .d { color: #8a5a00; }
+#card-info-printer .code .c { color: var(--ink-3); }
+#card-info-printer .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+#card-info-printer .s-pos { margin-left: auto; align-self: center; }
+#card-info-printer canvas { width: 100%; aspect-ratio: 16 / 7.5; }
+@media (max-width: 640px) { #card-info-printer canvas { aspect-ratio: 4 / 3; } }
+#card-info-printer .pri { width: 100%; padding: 6px 10px; border: 1px solid var(--rule); background: #fff; font-family: var(--f-mono); font-size: 14px; border-radius: 2px; margin: 4px 0; }
+</style>
+<article class="card" id="card-info-printer">
+  <header class="card-head">
+    <span class="no"></span><h2>중요한 문서가 끼어드는 인쇄 대기열에서 내 문서는 몇 번째로 나올까?</h2><span class="kind">큐 활용 · 시뮬레이션 · 큐 회전</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: 대기 큐의 문서와 방금 꺼낸 문서. 아래: 인쇄된 순서. 빨간 테두리가 찾는 문서"></canvas>
+      <div class="ctl">
+        <label class="mono">문서 중요도 (1~9, 빈칸으로 구분, 최대 10개)</label>
+        <input class="pri" type="text" spellcheck="false" aria-label="문서 중요도 목록">
+        <div class="presets pp" role="group" aria-label="예시">
+          <button type="button" class="chip" data-v="1 1 9 1 1 1" data-t="0">1 1 9 1 1 1</button>
+          <button type="button" class="chip" data-v="1 2 3 4" data-t="0">1 2 3 4</button>
+          <button type="button" class="chip" data-v="3 3 3 3" data-t="2">모두 같음</button>
+          <button type="button" class="chip" data-v="2 5 1 5 3 2 4 1 5 2" data-t="5">10개</button>
+        </div>
+        <label class="mono">찾을 문서</label>
+        <div class="presets tg" role="group" aria-label="찾을 문서"></div>
+        <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+        <div class="lab-btns i1-step">
+          <button type="button" class="chip s-first">처음</button>
+          <button type="button" class="chip s-prev">◀ 이전</button>
+          <button type="button" class="chip go s-next">다음 ▶</button>
+          <button type="button" class="chip s-play">재생</button>
+          <button type="button" class="chip s-last">끝</button>
+          <span class="mono small dim s-pos"></span>
+        </div>
+        <p class="note"></p>
+        <dl class="nums">
+          <div><dt>popleft 횟수</dt><dd class="r-pops">0</dd></div>
+          <div><dt>중요도 비교 횟수</dt><dd class="r-cmp">0</dd></div>
+          <div><dt>찾는 문서의 인쇄 순서</dt><dd class="r-ans">—</dd></div>
+        </dl>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>공용 프린터에 문서 여러 개가 줄 서 있습니다. 프린터는 맨 앞 문서를 꺼냈을 때 뒤에 더 중요한 문서가 있으면 인쇄하지 않고 줄 맨 뒤로 보냅니다. 내 문서는 몇 번째로 인쇄될까요?</li>
+      <li><span class="tag">복원</span>큐는 앞에서 꺼내고 뒤에 넣는 선입선출 구조입니다. 파이썬에서는 <code>deque</code>의 <code>popleft()</code>와 <code>append()</code>로 씁니다.</li>
+      <li><span class="tag">설명</span>규칙을 그대로 따라 상태를 한 단계씩 바꾸며 결과를 알아내는 방법을 <em>시뮬레이션</em>이라 합니다. 이 문제에서 필요한 연산은 두 가지뿐입니다. 맨 앞을 꺼내고(popleft), 조건이 맞지 않으면 다시 맨 뒤에 넣습니다(append). 꺼내서 뒤로 보내는 것을 되풀이하면 줄이 고리처럼 돌아가는데, 이것을 <em>큐 회전</em>이라 합니다. 각 문서에 처음 위치 번호를 함께 담아 두어야 같은 중요도의 문서를 구별할 수 있습니다.</li>
+      <li><span class="tag">연결</span>운영체제는 여러 프로그램에 처리 시간을 조금씩 나눠 주고, 다 끝나지 않은 프로그램을 대기열 맨 뒤로 보내는 방식(라운드 로빈)을 씁니다. 이것도 큐 회전입니다. 순서를 지키며 기다리는 상황은 대부분 큐로 옮길 수 있습니다.</li>
+      <li><span class="tag">적용</span>첫 예시에서 A는 몇 번째로 인쇄되나요? 찾을 문서를 바꾸어 예상한 뒤 실행해 확인하세요. 중요도를 모두 같게 하면 어떤 순서가 되나요? ‘10개’ 예시의 비교 횟수를 6개 예시와 비교해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>이 코드는 문서를 꺼낼 때마다 <code>any()</code>로 남은 문서를 훑습니다. 문서가 n개면 꺼내기와 비교가 n²에 비례할 만큼 늘어날 수 있습니다. 문서가 많다면 중요도별 남은 개수를 세어 두거나 <em>우선순위 큐</em>(<code>heapq</code>)를 씁니다. 다만 우선순위 큐에서 같은 중요도의 문서가 들어온 순서를 지키려면 (−중요도, 들어온 번호)처럼 순번을 함께 저장해야 합니다. 이 카드의 결과도 회전 규칙 때문에 단순히 “중요도 순, 같으면 들어온 순”과 다를 수 있습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">중요도가 차례로 <code>2 1 3 2</code>인 문서 A, B, C, D가 있습니다. 같은 규칙에서 D는 몇 번째로 인쇄될까요?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4번째<span class="why"><b>보통 큐처럼 들어온 순서대로 본 답입니다.</b> C(3)가 먼저 인쇄되도록 A와 B가 뒤로 밀립니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2번째<span class="why"><b>맞습니다.</b> A(2)와 B(1)는 C(3) 때문에 뒤로 가서 줄이 C D A B가 됩니다. C를 인쇄한 뒤 D(2)보다 중요한 문서가 없으므로 D가 2번째입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3번째<span class="why"><b>중요도가 같으면 먼저 들어온 A가 먼저라고 본 답입니다.</b> A는 회전하며 D 뒤로 갔으므로, 줄에서 D가 앞에 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

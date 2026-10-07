@@ -1,0 +1,70 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/lib/lab.js",
+    "js/cards/resr/r2-graph.js"
+  ],
+  "short": "축 변환과 오차 막대"
+}
+-->
+<style>
+#card-resr-graph .gr-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 5px 0 2px; }
+#card-resr-graph .gr-row > .mono { margin: 0 4px 0 0; min-width: 4.5em; }
+#card-resr-graph .gr-check { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 6px 0 0; }
+</style>
+<article class="card" id="card-resr-graph">
+  <header class="card-head">
+    <span class="no"></span><h2>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</h2><span class="kind">실험 · 자료의 변환 · 축 고르기 · 오차 막대</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <div class="lab-btns"><button type="button" class="chip go redo">새로 실험하기 (거리 8곳 × 3회)</button></div>
+      <div class="tbl-host"></div>
+      <div class="gr-row" role="group" aria-label="가로축">
+        <span class="mono small dim">가로축</span>
+        <button type="button" class="chip" data-x="d" aria-pressed="true">거리 d</button>
+        <button type="button" class="chip" data-x="inv" aria-pressed="false">1/d</button>
+        <button type="button" class="chip" data-x="inv2" aria-pressed="false">1/d²</button>
+      </div>
+      <div class="gr-row" role="group" aria-label="점">
+        <span class="mono small dim">점</span>
+        <button type="button" class="chip" data-p="mean" aria-pressed="true">평균만</button>
+        <button type="button" class="chip" data-p="all" aria-pressed="false">측정값 모두</button>
+      </div>
+      <div class="gr-row" role="group" aria-label="오차 막대">
+        <span class="mono small dim">오차 막대</span>
+        <button type="button" class="chip" data-e="none" aria-pressed="true">없음</button>
+        <button type="button" class="chip" data-e="sd" aria-pressed="false">표준편차</button>
+        <button type="button" class="chip" data-e="se" aria-pressed="false">표준오차</button>
+      </div>
+      <div class="gr-row" role="group" aria-label="선">
+        <span class="mono small dim">선</span>
+        <button type="button" class="chip" data-l="none" aria-pressed="false">없음</button>
+        <button type="button" class="chip" data-l="join" aria-pressed="true">점 잇기</button>
+        <button type="button" class="chip" data-l="fit" aria-pressed="false">직선 맞춤</button>
+      </div>
+      <canvas class="cv-plot" aria-label="고른 축과 표현으로 그린 기포 수 그래프"></canvas>
+      <div class="gr-check"><label class="mono small"><input type="checkbox" class="lab" checked> 축 이름과 단위 쓰기</label></div>
+      <p class="verdict small"></p>
+      <p class="fig-note">모식 실험입니다. 검정말을 탄산수소 나트륨 용액에 넣고 램프 거리 d를 바꿔 가며 1분 동안 나온 기포 수를 셉니다. 빛의 세기는 1/d²에 비례한다고 가정했고, 빛이 아주 강하면 광합성이 포화되도록 했습니다. 기포를 세는 값은 정수이고 우연한 흩어짐이 있습니다.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">탐구 문제</span>램프를 가까이 댈수록 검정말에서 기포가 많이 나옵니다. 연구 일지에 거리마다 세 번씩 센 기포 수가 적혀 있습니다. 이 표에서 "빛의 세기와 광합성 속도의 관계"를 한눈에 보여 주려면 어떻게 그려야 할까요?</li>
+      <li><span class="tag">복원</span>점광원에서 나온 빛의 세기는 거리의 제곱에 반비례합니다. 그래프의 가로축에는 조작 변인(또는 그것을 변환한 값), 세로축에는 종속 변인을 놓습니다.</li>
+      <li><span class="tag">설계</span>표는 거리마다 한 줄, 반복 측정값을 나란히 적고 평균과 표준편차 칸을 둡니다. 열 이름에는 단위를 적습니다. 그래프로 옮길 때는 ① 무엇을 가로축으로 할지 ② 평균만 그릴지, 개별 값도 보일지 ③ 흩어짐을 어떤 막대로 보일지 ④ 점을 이을지, 직선을 맞출지를 고릅니다.</li>
+      <li><span class="tag">분석</span>d를 가로축으로 하면 곡선이라 관계를 말하기 어렵습니다. 가로축을 1/d²(빛의 세기에 비례)로 바꾸면 빛이 약한 쪽에서 점들이 직선에 놓이고, 빛이 강한 쪽에서는 직선 아래로 처집니다. 직선 구간의 기울기가 "빛의 세기 한 단위당 광합성 속도"이고, 처지는 구간은 다른 요인(CO₂, 효소)이 속도를 제한하기 시작한 곳입니다.</li>
+      <li><span class="tag">측정</span>가로축 셋을 차례로 고르고 직선 맞춤의 결정계수 r²를 비교하세요. 오차 막대를 표준편차에서 표준오차로 바꾸면 막대 길이가 몇 배가 되나요(반복 3회)? 축 이름을 끄면 이 그래프만 보고 무엇을 알 수 없게 되나요?</li>
+      <li class="warn"><span class="tag">오차·안전</span>오차 막대가 무엇인지(표준편차, 표준오차, 신뢰구간)를 범례나 캡션에 밝히지 않으면 읽는 사람이 해석할 수 없습니다. 표준편차는 개체의 흩어짐, 표준오차는 평균의 불확실성을 나타냅니다. 측정점이 셋뿐인 거리에서는 둘 다 거칠게 추정된 값입니다. 램프가 물을 데우면 온도도 함께 바뀌므로, 물이 든 비커를 사이에 두어 열을 막고 뜨거운 전구에 손을 대지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">온도를 5 °C 간격으로 바꾸며 효소의 반응 속도를 다섯 번씩 재었습니다. 속도는 어느 온도까지 오르다가 그 뒤 급히 떨어집니다. 가장 알맞은 표현은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>온도를 가로축으로 평균을 점으로 찍고, 표준오차 막대와 함께 점을 잇는다 (막대의 뜻을 캡션에 밝힌다)<span class="why"><b>맞습니다.</b> 꼭짓점이 있는 관계라 직선을 맞추면 안 되고, 반복의 불확실성은 막대로 보입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 점에 직선 하나를 맞추고 기울기를 보고한다<span class="why"><b>관계의 모양을 먼저 봐야 합니다.</b> 오르다 내려가는 자료에 직선을 맞추면 기울기가 0에 가까워져 "관계없음"처럼 보입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도별 평균을 막대그래프로 그리고 오차 막대는 생략한다<span class="why"><b>온도는 연속형 변인입니다.</b> 막대는 범주 비교에 알맞고, 반복 측정을 했다면 흩어짐도 보여야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

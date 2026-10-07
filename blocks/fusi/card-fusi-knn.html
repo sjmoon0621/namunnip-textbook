@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/fusi/f1-knn.js"
+  ],
+  "short": "기계 학습 분류기 만들어 보기"
+}
+-->
+<style>
+#card-fusi-knn canvas { width: 100%; aspect-ratio: 4 / 3; cursor: crosshair; }
+#card-fusi-knn .kn-out { min-height: 2.8em; font-size: 13.5px; line-height: 1.5; margin: 6px 0; }
+#card-fusi-knn .presets { margin: 4px 0; }
+</style>
+<article class="card" id="card-fusi-knn">
+  <header class="card-head">
+    <span class="no"></span><h2>인공지능은 처음 보는 광물을 어떻게 분류할까?</h2><span class="kind">디지털 탐구 도구 · 기계 학습 · k-최근접 이웃 분류</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="가로축 밀도, 세로축 모스 굳기인 평면에 광물 48종을 무리별 색으로 찍은 그림. 배경색은 분류기가 그 자리의 광물을 어느 무리로 예측하는지 보여 준다. 그림을 누르면 그 자리의 미지 광물을 분류한다."></canvas>
+      <div class="ctl">
+        <label class="mono">이웃의 수 k = <output class="k-out">3</output></label>
+        <input class="k" type="range" min="1" max="15" step="1" value="3" aria-label="다수결에 참여하는 이웃의 수">
+        <div class="presets tsel" role="group" aria-label="학습 데이터">
+          <span class="mono small dim">학습 데이터</span>
+          <button type="button" class="chip" data-t="all" aria-pressed="true">48종 모두</button>
+          <button type="button" class="chip" data-t="nosulf" aria-pressed="false">황화물 빼기</button>
+          <button type="button" class="chip" data-t="few" aria-pressed="false">무리마다 3종만</button>
+        </div>
+        <div class="presets usel" role="group" aria-label="밀도 단위">
+          <span class="mono small dim">밀도 단위</span>
+          <button type="button" class="chip" data-u="1" aria-pressed="true">g/cm³</button>
+          <button type="button" class="chip" data-u="1000" aria-pressed="false">kg/m³ (수만 바꿈)</button>
+        </div>
+        <p class="kn-out">그림을 눌러 미지 광물의 밀도와 굳기를 정하면, 가까운 이웃 k개의 다수결로 무리를 예측합니다.</p>
+        <dl class="nums">
+          <div><dt>하나씩 빼고 맞혀 본 정확도</dt><dd class="acc">—</dd></div>
+          <div><dt>학습한 광물 수</dt><dd class="ntr">—</dd></div>
+          <div><dt>틀린 광물 (예)</dt><dd class="miss small">—</dd></div>
+        </dl>
+        <p class="fig-note">밀도와 굳기는 광물 도감에 실린 값의 대표값(범위의 가운데)입니다. 같은 광물도 산지와 성분에 따라 값이 조금씩 다릅니다. 정확도는 한 종을 빼고 나머지로 학습해 그 종을 맞혀 보는 방법(하나씩 빼기 검증)으로 셌습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>사람이 "규칙"을 알려 주지 않아도 컴퓨터가 예시만 보고 분류를 배울 수 있을까요? 무리(규산염, 탄산염, 황화물, 산화물)를 알고 있는 광물 48종의 밀도와 굳기만 주고, 처음 보는 광물의 무리를 맞히게 해 봅시다.</li>
+      <li><span class="tag">복원</span>광물의 밀도는 구성 원소의 원자량과 원자가 쌓인 방식에, 굳기(모스 굳기 1~10)는 결합의 세기에 달려 있습니다. 납, 수은 같은 무거운 금속과 황이 만나는 황화물은 무겁고 무른 편이고, 규산염은 가볍고 단단한 편입니다.</li>
+      <li><span class="tag">설명</span><em>k-최근접 이웃</em> 분류기는 새 자료가 들어오면 학습 데이터 가운데 가장 가까운 k개를 찾아 다수결로 무리를 정합니다. 무리가 이미 붙어 있는 예시로 배우는 이런 방식을 <em>지도 학습</em>이라 하고, 분류에 쓰는 성질(밀도, 굳기)을 <em>특징</em>이라 합니다. 실력은 학습에 쓰지 않은 자료로 확인해야 합니다.</li>
+      <li><span class="tag">연결</span>은하 사진을 모양에 따라 나누는 분류기, 위성 사진에서 산불을 찾는 분류기도 같은 생각에서 출발합니다. 특징이 수천 개, 학습 데이터가 수백만 개로 커지고 계산 방법이 복잡해질 뿐, "답이 붙은 예시에서 배우고, 학습하지 않은 자료로 검증한다"는 원리는 같습니다.</li>
+      <li><span class="tag">적용</span>k를 1에서 15까지 바꾸며 배경의 경계와 정확도가 어떻게 변하는지 보세요. '황화물 빼기'를 누른 뒤 밀도 7.5, 굳기 2.5 근처(방연석 자리)를 눌러 보세요. 마지막으로 밀도 단위만 kg/m³로 바꿨을 때 경계가 왜 세로줄 모양이 되는지 설명해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>분류기는 배운 적 없는 무리를 절대 답하지 못하고, 학습 데이터의 치우침을 그대로 물려받습니다. 거리로 판단하는 분류기는 단위처럼 사소해 보이는 선택에도 결과가 크게 달라지므로, 특징의 크기를 맞추는 전처리가 필요합니다. 또 백연석처럼 무거운 탄산염은 늘 틀립니다. 밀도와 굳기만으로는 화학 조성을 알 수 없기 때문이며, 실제 감정에서는 화학 분석이나 X선 회절로 확인합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">피부 사진으로 피부 질환을 찾는 인공지능을 만들었는데, 학습 사진의 대부분이 밝은 피부색인 사람의 것이었습니다. 하나씩 빼기 검증의 정확도는 95 %였습니다. 이 인공지능에 대한 판단으로 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>정확도가 95 %이므로 누구에게 써도 95 %를 맞힌다<span class="why"><b>검증 자료도 같은 치우침을 가지고 있습니다.</b> 학습 데이터에 드문 집단에서의 정확도는 따로 확인해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>어두운 피부색의 사진에서는 성능이 낮을 수 있으므로, 집단별 정확도를 따로 확인하고 데이터를 보충해야 한다<span class="why"><b>맞습니다.</b> '황화물 빼기'에서 본 것처럼, 분류기는 학습 데이터에 적게 나온 경우를 잘 다루지 못합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>k를 크게 하면 치우침이 사라진다<span class="why"><b>k는 이웃을 몇 개 보느냐일 뿐입니다.</b> 오히려 다수인 집단 쪽으로 더 끌려갈 수 있습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

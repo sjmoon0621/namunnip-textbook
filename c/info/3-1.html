@@ -1,0 +1,113 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>상태 공간 완전 탐색 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="문제를 분석해 상태와 상태를 바꾸는 결정으로 상태 공간을 구조화하고, 상태 공간을 모두 탐색하여 답을 찾는 완전 탐색 알고리즘을 설계한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-space .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin-top: 10px; overflow-x: auto; white-space: pre; }
+    #card-info-space .i2c .ln { display: block; padding: 0 10px; }
+    #card-info-space .i2c .ln.on { background: #d6e6cc; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-space .items { display: flex; flex-wrap: wrap; gap: 4px 12px; font: 12px var(--f-mono); color: var(--ink-2); margin: 4px 0; }
+    #card-info-space .state { font: 11.5px/1.5 var(--f-mono); color: var(--ink-2); min-height: 3em; }
+  </style>
+</head>
+<body data-course="info" data-sec="3-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>상태 공간 완전 탐색</h1>
+    <p class="lead">가능한 경우를 모두 따져 보면 답이 틀릴 수 없습니다. 문제는 "모든 경우"를 빠짐없이, 겹치지 않게 늘어놓는 방법입니다. 문제를 상태와 결정으로 나타내면 모든 경우가 하나의 트리가 되고, 컴퓨터는 그 트리를 차례로 훑습니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">재귀 함수</span><span class="p">트리와 깊이 우선 탐색</span><span class="p">경우의 수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-space"><span class="mono">3.1.1</span>상태 공간 트리와 완전 탐색</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-space">
+        <header class="card-head">
+          <span class="no">3.1.1</span><h2>배낭에 넣을 물건을 고르는 경우는 모두 몇 가지일까?</h2><span class="kind">상태 공간 · 완전 탐색 · 0/1 배낭 문제</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="물건마다 넣을지 말지를 정하는 상태 공간 트리. 잎은 완성된 선택이며, 무게 제한 안이면 초록, 넘으면 주황으로 칠해집니다."></canvas>
+            <div class="items" aria-label="물건 목록"></div>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono">물건 수 n = <output class="n-out">4</output></label>
+                  <input class="n" type="range" min="2" max="6" step="1" value="4" aria-label="물건 수"></div>
+                <div><label class="mono">배낭 제한 cap = <output class="cap-out">10</output> kg</label>
+                  <input class="cap" type="range" min="3" max="20" step="1" value="10" aria-label="무게 제한"></div>
+              </div>
+              <div class="lab-btns"><button type="button" class="chip go step">다음 상태로</button><button type="button" class="chip run" aria-pressed="false">끝까지</button><button type="button" class="chip again">처음부터</button></div>
+              <dl class="nums">
+                <div><dt>방문한 상태 (노드)</dt><dd class="n-node">—</dd></div>
+                <div><dt>확인한 완성 상태 (잎)</dt><dd class="n-leaf">—</dd></div>
+                <div><dt>지금까지 최고 가치</dt><dd class="n-best">—</dd></div>
+              </dl>
+              <p class="state" aria-live="polite"></p>
+              <pre class="i2c" aria-label="파이썬 완전 탐색 코드"></pre>
+              <p class="fig-note">물건의 무게와 가치는 설명을 위해 정한 예시입니다. 코드는 처음에 best = −1, n·cap·W·V가 정해져 있다고 보고 search(0, 0, 0)으로 시작합니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>무게 제한이 10 kg인 배낭에 물건 네 개 중 몇 개를 골라 넣어, 가치의 합을 가장 크게 하려 합니다. 눈으로 몇 가지 조합을 해 보면 그럴듯한 답은 나옵니다. 그 답이 정말 가장 좋은지 어떻게 확신할 수 있을까요?</li>
+            <li><span class="tag">복원</span>재귀 함수는 같은 모양의 더 작은 문제를 스스로 호출하고, 더 쪼갤 수 없는 기저 사례에서 멈춥니다. 트리는 뿌리에서 갈라져 내려가는 구조이고, 깊이 우선으로 훑을 수 있습니다.</li>
+            <li><span class="tag">설명</span>문제를 <em>상태</em>로 나타내면 탐색할 수 있습니다. 여기서 상태는 "i번째 물건까지 정했고, 지금까지 무게 w, 가치 v"입니다. 처음 상태는 (0, 0, 0)이고, 한 번의 결정(넣는다/안 넣는다)이 상태를 다음 상태로 바꿉니다. 가능한 상태를 모두 모은 것이 <em>상태 공간</em>이고, 결정을 가지로 그리면 상태 공간 트리가 됩니다. <em>완전 탐색</em>은 이 트리의 모든 잎을 확인해 가장 좋은 것을 고릅니다. 모든 경우를 보므로 답이 틀릴 수 없습니다.</li>
+            <li><span class="tag">연결</span>물건마다 선택지가 2개이므로 잎은 2ⁿ개, 노드는 2ⁿ⁺¹ − 1개입니다. n = 20이면 잎이 1,048,576개, n = 30이면 약 10억 개, n = 40이면 약 1조 개입니다. 순서를 정하는 문제(예: 도시 n곳을 도는 순서)는 상태 수가 n!로, 2ⁿ보다도 빨리 커집니다(10! = 3,628,800).</li>
+            <li><span class="tag">적용</span>n = 4, cap = 10에서 끝까지 실행해 최고 가치와 그 조합을 확인하세요. 잎 몇 개가 무게를 넘었나요? cap을 바꿔도 방문하는 노드 수는 달라지나요? n을 하나 늘릴 때마다 노드 수는 몇 배가 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>완전 탐색은 "느리고 쓸모없는 방법"이 아닙니다. 경우가 적으면 가장 확실하고 빨리 짤 수 있는 방법이고, 더 똑똑한 알고리즘의 답이 맞는지 검사하는 기준으로도 씁니다. 다만 상태 수가 지수적으로 늘기 때문에 n이 조금만 커져도 끝나지 않습니다. 이 카드의 탐색은 무게가 이미 넘은 상태에서도 계속 내려갑니다. 이런 쓸데없는 가지를 잘라 내는 방법은 가지치기에서 다룹니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">물건마다 "안 넣음, 1개 넣음, 2개 넣음" 세 가지를 고를 수 있게 바꾸었습니다. 물건이 5개일 때 완전 탐색이 확인할 완성 상태(잎)의 수는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2⁵ = 32<span class="why"><b>선택지가 둘일 때의 식입니다.</b> 가지가 셋으로 늘었습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>3⁵ = 243<span class="why"><b>맞습니다.</b> 단계마다 가지가 3개이고 5단계를 내려가므로 잎은 3⁵개입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5 × 3 = 15<span class="why"><b>더하듯 셌습니다.</b> 각 물건의 선택은 다른 물건의 선택과 독립이라 경우의 수는 곱해집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/lib/lab.js"></script>
+<script src="../../js/cards/info/i2-kit.js"></script>
+<script src="../../js/cards/info/i2-space.js"></script>
+</body>
+</html>

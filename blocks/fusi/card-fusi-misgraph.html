@@ -1,0 +1,68 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/fusi/f2-misgraph.js"
+  ]
+}
+-->
+<style>
+#card-fusi-misgraph .f2-pane[hidden] { display: none; }
+</style>
+<article class="card" id="card-fusi-misgraph">
+  <header class="card-head">
+    <span class="no"></span><h2>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</h2><span class="kind">데이터 시각화 · 세로축 자르기 · 넓이 왜곡 · 이중 축 (가상 자료)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="고른 방식으로 그린 그래프"></canvas>
+      <div class="ctl">
+        <div class="presets mode" role="group" aria-label="그래프 방식">
+          <button type="button" class="chip" data-m="axis" aria-pressed="true">세로축 자르기</button>
+          <button type="button" class="chip" data-m="area" aria-pressed="false">넓이 그림</button>
+          <button type="button" class="chip" data-m="dual" aria-pressed="false">이중 축</button>
+        </div>
+        <div class="f2-pane" data-p="axis">
+          <label class="mono">세로축 시작값 = <output class="y0-out">0</output> %</label>
+          <input class="y0" type="range" min="0" max="90" step="1" value="0" aria-label="세로축 시작값">
+        </div>
+        <div class="f2-pane" data-p="area" hidden>
+          <label class="mono">B / A 값의 비 = <output class="r-out">2.0</output></label>
+          <input class="r" type="range" min="1" max="4" step="0.1" value="2" aria-label="두 값의 비">
+          <div class="toggles"><label><input type="checkbox" class="byarea"> 넓이가 값에 비례하게 그리기</label></div>
+        </div>
+        <div class="f2-pane" data-p="dual" hidden>
+          <div class="ctl-row">
+            <div><label class="mono">오른쪽 축 최솟값 = <output class="lo-out">60</output></label>
+              <input class="lo" type="range" min="0" max="68" step="1" value="60" aria-label="오른쪽 축 최솟값"></div>
+            <div><label class="mono">오른쪽 축 최댓값 = <output class="hi-out">72</output></label>
+              <input class="hi" type="range" min="72" max="140" step="1" value="72" aria-label="오른쪽 축 최댓값"></div>
+          </div>
+        </div>
+        <dl class="nums">
+          <div><dt class="k1">자료에서 B는 A보다</dt><dd class="v1">—</dd></div>
+          <div><dt class="k2">그림에서 B는 A보다</dt><dd class="v2">—</dd></div>
+          <div><dt class="k3">거짓말 지수</dt><dd class="v3">—</dd></div>
+        </dl>
+        <p class="fig-note">세 그래프의 자료는 설명을 위해 만든 가상 자료입니다. 거짓말 지수 = 그림에서 보이는 차이 ÷ 자료의 실제 차이(터프티, 1983). 1이면 정직한 그림이고, 1에서 멀수록 차이를 부풀리거나 줄입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>정수 필터 광고에 "B 필터는 A 필터보다 납을 훨씬 많이 걸러 냅니다"라는 말과 함께, B의 막대가 A의 세 배쯤 되는 그래프가 실렸습니다. 숫자를 보니 A는 91 %, B는 94 %였습니다. 그래프가 거짓말을 한 걸까요?</li>
+      <li><span class="tag">복원</span>막대그래프는 막대의 <em>길이</em>로, 그림 그래프는 그림의 <em>넓이</em>로, 꺾은선그래프는 선의 <em>위치와 기울기</em>로 값을 전합니다. 눈은 숫자보다 길이와 넓이를 먼저 읽습니다.</li>
+      <li><span class="tag">설명</span>막대의 바닥을 0이 아닌 곳에서 자르면 막대 길이가 값에 비례하지 않게 됩니다. 원이나 그림의 지름(높이)을 값에 비례하게 그리면 넓이는 값의 제곱으로 커집니다. 이중 축 그래프에서는 두 축의 범위를 마음대로 정할 수 있어서, 두 선이 겹치거나 교차하는 위치를 그리는 사람이 고를 수 있습니다.</li>
+      <li><span class="tag">연결</span>그래프는 목적에 맞게 고릅니다. 정확한 값을 전할 때는 <em>표</em>, 범주끼리 크기를 비교할 때는 0에서 시작하는 <em>막대그래프</em>, 한 변인의 값이 어떻게 분포하는지 볼 때는 <em>히스토그램</em>, 두 연속 변인의 관계를 볼 때는 <em>분산형 그래프</em>(산점도), 시간에 따른 변화는 <em>꺾은선그래프</em>가 알맞습니다. 단위가 다른 두 변인은 이중 축 대신 위아래로 나란히 놓은 두 그래프로 그리는 편이 안전합니다.</li>
+      <li><span class="tag">적용</span>세로축 시작값을 0에서 89까지 올리며 거짓말 지수를 읽으세요. 넓이 그림에서 비를 2로 두고 "넓이가 값에 비례" 상자를 껐다 켜 보세요. 이중 축에서는 오른쪽 축의 최솟값과 최댓값만 바꿔 두 선이 교차하는 해를 2008년, 2015년, 2020년으로 옮겨 보세요. 자료는 하나도 바뀌지 않았습니다.</li>
+      <li class="warn"><span class="tag">판단</span>세로축을 자르는 것이 언제나 잘못은 아닙니다. 체온이나 기온 변화처럼 0이 의미 없는 값을 꺾은선으로 그릴 때는 0을 빼야 변화가 보입니다. 다만 길이로 크기를 비교하는 막대그래프는 0에서 시작해야 하고, 축을 자르면 물결 표시나 눈금으로 분명히 알려야 합니다. 이중 축에서 두 선이 함께 움직이는 것처럼 보여도, 그 모양은 축 설정이 만든 것이지 두 변인이 관계있다는 증거가 아닙니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">한 보고서가 학교의 연간 전기 사용량이 2배가 된 것을 전구 그림으로 나타냈습니다. 나중 전구의 높이와 너비를 모두 처음의 2배로 그렸습니다. 독자가 그림에서 받는 인상은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>높이가 2배이므로 정확히 2배로 보인다<span class="why"><b>높이만 보면 맞지만,</b> 너비도 2배라서 그림의 넓이는 4배가 됩니다. 사람은 그림의 넓이로 크기를 느낍니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>넓이가 4배라서 실제보다 훨씬 크게 늘어난 것처럼 보인다<span class="why"><b>맞습니다.</b> 거짓말 지수는 (4 − 1) ÷ (2 − 1) = 3입니다. 넓이를 값에 비례하게 하려면 높이와 너비를 각각 √2 ≈ 1.41배로 그려야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전구가 입체처럼 보이면 부피로 느끼므로 2배보다 작게 보인다<span class="why"><b>방향이 반대입니다.</b> 입체로 느낀다면 부피는 8배라서 차이가 더 크게 부풀려집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

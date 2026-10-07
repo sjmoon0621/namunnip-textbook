@@ -1,0 +1,198 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>반복과 재귀 비교 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="같은 문제를 반복구조와 재귀구조로 각각 해결하고, 설계 방식·호출 수·스택 메모리·재귀 한도 면에서 두 방식의 차이를 비교·분석한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-fibtree .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+    #card-info-fibtree .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-fibtree .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+    #card-info-fibtree .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-fibtree .code .ln.off { opacity: .35; text-decoration: line-through; }
+    #card-info-fibtree .code .k { color: #2f6a8a; font-weight: 600; }
+    #card-info-fibtree .code .b { color: var(--forest); }
+    #card-info-fibtree .code .s { color: var(--warn); }
+    #card-info-fibtree .code .d { color: #8a5a00; }
+    #card-info-fibtree .code .c { color: var(--ink-3); }
+    #card-info-fibtree .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+    #card-info-fibtree .s-pos { margin-left: auto; align-self: center; }
+    #card-info-fibtree .cv-tree { width: 100%; aspect-ratio: 16 / 9; }
+    #card-info-fibtree .cv-plot { width: 100%; aspect-ratio: 16 / 8; margin-top: 10px; }
+    #card-info-fibtree .toggles { margin-top: 6px; }
+    #text-info-loop-rec pre.code { margin: 0; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+    #text-info-loop-rec pre.code .c { color: var(--ink-3); }
+    #text-info-loop-rec .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 12px; }
+    #text-info-loop-rec .pair .cap { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); margin-bottom: 4px; }
+    #text-info-loop-rec td code, #text-info-loop-rec p code, #text-info-loop-rec li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+    @media (max-width: 640px) { #text-info-loop-rec .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body data-course="info" data-sec="1-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>반복과 재귀 비교</h1>
+    <p class="lead">피보나치 수를 재귀로 짜면 n = 40에서 컴퓨터가 한참을 멈춰 있지만, 반복문으로 짜면 눈 깜짝할 사이에 끝납니다. 같은 정의를 옮긴 두 프로그램이 왜 이렇게 다를까요? 이 차이를 알면 문제마다 알맞은 방식을 고를 수 있습니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">재귀 함수와 기저 조건</span><span class="p">호출 스택</span><span class="p">반복문</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-fibtree"><span class="mono">1.3.1</span>피보나치: 재귀·메모·반복 비교</a></li>
+        <li><a href="#text-info-loop-rec"><span class="mono">1.3.2</span>반복과 재귀, 언제 무엇을 쓸까</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-1-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-fibtree">
+        <header class="card-head">
+          <span class="no">1.3.1</span><h2>같은 식을 재귀로 쓰면 왜 훨씬 느려질 수 있을까?</h2><span class="kind">반복과 재귀 비교 · 호출 트리 · 메모이제이션 · 스택 깊이</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-tree" aria-label="fib(n)의 호출 트리. 원 안의 수는 fib(k)의 k이고, 초록 경로가 지금 호출 스택"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="구현 방식">
+                <button type="button" class="chip" data-m="naive" aria-pressed="true">단순 재귀</button>
+                <button type="button" class="chip" data-m="memo" aria-pressed="false">메모 재귀</button>
+                <button type="button" class="chip" data-m="loop" aria-pressed="false">반복</button>
+              </div>
+              <label class="mono">n = <output class="nv-out">5</output></label>
+              <input class="nv" type="range" min="1" max="30" step="1" value="5" aria-label="n">
+              <div class="toggles"><label><input type="checkbox" class="same" checked> 지금 호출과 같은 부분 문제 표시</label></div>
+              <pre class="code" aria-label="파이썬 코드, 지금 실행하는 줄 강조"></pre>
+              <div class="lab-btns i1-step">
+                <button type="button" class="chip s-first">처음</button>
+                <button type="button" class="chip s-prev">◀ 이전</button>
+                <button type="button" class="chip go s-next">다음 ▶</button>
+                <button type="button" class="chip s-play">재생</button>
+                <button type="button" class="chip s-last">끝</button>
+                <span class="mono small dim s-pos"></span>
+              </div>
+              <p class="note"></p>
+              <dl class="nums">
+                <div><dt>fib 호출 횟수</dt><dd class="r-calls">—</dd></div>
+                <div><dt>최대 스택 깊이</dt><dd class="r-depth">—</dd></div>
+                <div><dt>fib(n)</dt><dd class="r-val">—</dd></div>
+              </dl>
+              <canvas class="cv-plot" aria-label="n에 따른 세 방식의 호출 횟수, 로그 눈금"></canvas>
+              <p class="fig-note">호출 수는 코드대로 센 정확한 값입니다(단순 재귀 2·fib(n+1) − 1, 메모 재귀 2n − 1). 트리는 단순 재귀 n ≤ 7, 메모 재귀 n ≤ 12에서만 그립니다. 점선 원은 memo에서 꺼낸 호출입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>피보나치 수 fib(n) = fib(n − 1) + fib(n − 2)를 정의 그대로 재귀 함수로 쓰면, n = 35쯤에서 파이썬이 몇 초씩 걸립니다. 같은 정의를 반복문으로 쓰면 n = 10000도 순식간입니다. 무엇이 이런 차이를 만들까요?</li>
+            <li><span class="tag">복원</span>재귀 함수는 기저 조건(fib(0) = 0, fib(1) = 1)과 재귀 관계로 이루어집니다. 호출마다 프레임이 하나씩 스택에 쌓였다가 반환하면 빠집니다.</li>
+            <li><span class="tag">설명</span>단순 재귀의 <em>호출 트리</em>를 보면 fib(3), fib(2) 같은 같은 부분 문제가 여러 가지에서 되풀이해 계산됩니다. 호출 수는 2·fib(n + 1) − 1로, n이 1 늘 때마다 약 1.6배씩 늘어납니다(지수적 증가). <em>메모 재귀</em>는 한 번 구한 값을 딕셔너리에 저장해 두고 다시 쓰므로 호출이 2n − 1번으로 줄어듭니다. <em>반복</em>은 fib(0), fib(1)에서 시작해 두 변수만 들고 n번 앞으로 나아갑니다. 스택 깊이는 두 재귀 방식이 모두 n이고, 반복은 프레임 하나로 충분합니다.</li>
+            <li><span class="tag">연결</span>재귀는 큰 문제를 위에서 아래로 쪼개는 설계라 정의를 그대로 옮기기 쉽고, 반복은 작은 답에서 큰 답을 아래에서 위로 쌓는 설계라 상태 변수를 직접 관리해야 합니다. 같은 계산을 되풀이하지 않는다면 두 방식의 걸음 수는 비슷하고, 차이는 호출 비용과 스택 메모리에서 생깁니다. 값을 저장해 다시 쓰는 생각은 뒤에서 배울 동적 계획법의 바탕입니다.</li>
+            <li><span class="tag">적용</span>단순 재귀에서 n = 5로 두고 끝까지 실행하세요. ‘같은 부분 문제 표시’를 켠 채 단계를 넘기며, fib(3)과 fib(2)가 각각 몇 번 계산되는지 세어 보세요. 메모 재귀로 바꾸면 몇 번으로 줄어드나요? n을 20, 25, 30으로 늘리며 세 방식의 호출 수를 기록하고, 단순 재귀의 호출 수가 n이 5 늘 때 몇 배가 되는지 구하세요.</li>
+            <li class="warn"><span class="tag">판단</span>“재귀는 반복보다 항상 느리다”는 틀린 일반화입니다. 이 카드의 느림은 재귀 자체가 아니라 <em>중복 계산</em> 때문이고, 메모 재귀는 반복과 같은 차수의 시간이 걸립니다. 다만 파이썬은 재귀 깊이를 기본 1000으로 제한하고(<code>sys.getrecursionlimit()</code>), 꼬리 재귀를 반복으로 바꿔 주는 최적화도 하지 않습니다. 그래서 메모 재귀로 fib(5000)을 처음 부르면 RecursionError가 납니다. 한도를 <code>sys.setrecursionlimit</code>로 크게 올리면 실제 스택 메모리가 넘쳐 프로그램이 비정상 종료될 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">계단을 한 번에 1칸 또는 2칸씩 오를 때 n칸을 오르는 방법의 수는 ways(n) = ways(n − 1) + ways(n − 2)입니다. ways(40)을 이 식 그대로 단순 재귀로 계산하면 매우 오래 걸립니다. 원인과 처방으로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>스택 깊이가 한도를 넘기 때문이므로 재귀 한도를 늘린다<span class="why"><b>깊이는 40 정도라 한도 1000보다 훨씬 작습니다.</b> 오래 걸리는 까닭은 깊이가 아니라 호출 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>같은 부분 문제를 되풀이해 계산하기 때문이므로 메모 재귀나 반복으로 바꾼다<span class="why"><b>맞습니다.</b> 피보나치와 같은 재귀 관계라서 호출 수가 지수적으로 늘어납니다. 값을 저장하거나 아래에서 위로 쌓으면 약 40번의 계산으로 끝납니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>결과가 너무 큰 정수라 계산이 느리기 때문이므로 실수로 계산한다<span class="why"><b>파이썬 정수는 크기 제한이 없고, ways(40)은 165,580,141로 크지 않습니다.</b> 실수로 바꾸면 큰 수에서 오차만 생깁니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-loop-rec">
+        <header class="card-head">
+          <span class="no">1.3.2</span><h2>반복과 재귀, 어떤 문제에 어느 쪽이 맞을까?</h2><span class="kind">읽기 · 반복구조와 재귀구조의 비교 · 명시적 스택 · 재귀 한도</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">반복으로 풀 수 있는 문제는 재귀로도 풀 수 있고, 그 반대도 마찬가지입니다. 그렇다면 둘 중 무엇을 고를지는 취향의 문제일까요?</p>
+
+          <h3><span class="mono">1</span>두 방식은 생각하는 방향이 다릅니다</h3>
+          <p><em>반복구조</em>는 “지금 상태에서 한 걸음 나아가려면 무엇을 바꾸는가”를 묻습니다. 변수(합계, 인덱스, 앞의 두 항 등)를 직접 두고, 반복할 때마다 고쳐 나갑니다. <em>재귀구조</em>는 “이 문제를 같은 모양의 더 작은 문제로 바꾸면 무엇이 남는가”를 묻습니다. 상태는 각 호출의 매개변수와 지역 변수에 나뉘어 담기고, 언어가 호출 스택으로 관리해 줍니다.</p>
+          <div class="tbl"><table>
+            <thead><tr><th></th><th>반복구조</th><th>재귀구조</th></tr></thead>
+            <tbody>
+              <tr><th>설계</th><td>작은 답에서 큰 답으로 쌓아 올림(상향식)</td><td>큰 문제를 작은 문제로 쪼갬(하향식)</td></tr>
+              <tr><th>상태 관리</th><td>변수를 프로그래머가 직접 갱신</td><td>호출마다 프레임이 따로 보관</td></tr>
+              <tr><th>추가 메모리</th><td>대개 변수 몇 개</td><td>스택 깊이만큼의 프레임</td></tr>
+              <tr><th>실행 비용</th><td>반복 한 번은 가벼움</td><td>호출 한 번마다 프레임을 만들고 지우는 비용</td></tr>
+              <tr><th>잘 맞는 문제</th><td>차례로 훑기, 누적, 정해진 횟수의 갱신</td><td>트리·폴더처럼 구조가 중첩된 자료, 분할 정복, 백트래킹</td></tr>
+              <tr><th>흔한 실수</th><td>경계값(off-by-one), 갱신 순서</td><td>기저 조건 누락, 중복 계산, 깊이 초과</td></tr>
+            </tbody>
+          </table></div>
+
+          <h3><span class="mono">2</span>구조가 중첩되면 재귀가 자연스럽습니다</h3>
+          <p><code>[1, [2, 3], [[4]], 5]</code>처럼 리스트 안에 리스트가 몇 겹으로 들어 있는지 모를 때, 안의 정수를 모두 더해 봅니다.</p>
+          <div class="pair">
+            <div><p class="cap">재귀</p><pre class="code">def deep_sum(x):
+          if isinstance(x, int):
+              return x
+          total = 0
+          for y in x:
+              total += deep_sum(y)
+          return total</pre></div>
+            <div><p class="cap">반복 + 직접 만든 스택</p><pre class="code">def deep_sum_loop(x):
+          total, stack = 0, [x]
+          while stack:
+              y = stack.pop()
+              if isinstance(y, int):
+                  total += y
+              else:
+                  stack.extend(y)
+          return total</pre></div>
+          </div>
+          <p>두 함수 모두 15를 돌려줍니다. 재귀 쪽은 “원소가 정수면 그 값, 리스트면 각 원소의 합”이라는 정의를 그대로 옮겼습니다. 반복 쪽은 앞으로 처리할 것을 담는 <em>스택</em>을 직접 만들었습니다. 재귀 함수가 호출 스택에 맡기던 일을 손으로 하는 것입니다. 이처럼 어떤 재귀든 명시적 스택을 쓰면 반복으로 바꿀 수 있지만, 코드가 길어지고 의도가 덜 드러날 수 있습니다. 스택은 다음 단원에서 자세히 다룹니다.</p>
+
+          <h3><span class="mono">3</span>단순히 차례로 훑는 일은 반복이 낫습니다</h3>
+          <p>1부터 n까지 더하기를 <code>return n + total_rec(n - 1)</code>로 쓰면 깊이가 n이 됩니다. 파이썬의 재귀 한도는 기본 1000이라(<code>sys.getrecursionlimit()</code>로 확인) <code>total_rec(5000)</code>은 RecursionError를 냅니다. 같은 일을 하는 <code>for</code>문은 n이 백만이어도 문제없습니다. 일부 언어는 마지막 동작이 재귀 호출뿐인 <em>꼬리 재귀</em>를 반복으로 바꿔 주지만, 파이썬은 이 최적화를 하지 않습니다.</p>
+          <p>하노이 탑은 반대 예입니다. 재귀로는 몇 줄이면 되지만, 반복으로 쓰려면 “가장 작은 원판을 한 방향으로 돌리고, 그 사이에 가능한 다른 이동을 한다” 같은 규칙을 따로 찾아내야 합니다. 이동 횟수는 두 방식 모두 2ⁿ − 1로 같고, 깊이는 n이라 한도 걱정도 없습니다.</p>
+
+          <p class="judge"><b>판단</b>선택의 기준은 취향이 아니라 문제의 구조와 크기입니다. 문제가 스스로 닮은 구조이고 깊이가 작으면 재귀가 읽기 쉽고 오류도 적습니다. 깊이가 입력 크기에 비례해 커지거나, 같은 부분 문제를 되풀이한다면 반복이나 메모이제이션으로 바꾸어야 합니다. 어느 쪽이든 <em>옳은지</em>(기저 조건·종료 조건)와 <em>얼마나 걸리는지</em>(호출 수·반복 수)를 따로 따져야 합니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">다음 판단 중 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>폴더 안의 하위 폴더까지 모든 파일 크기를 더할 때, 폴더 깊이가 수십 단계 이하라면 재귀로 쓰는 것이 자연스럽다<span class="why"><b>맞습니다.</b> 폴더는 “폴더 안에 폴더”가 들어 있는 중첩 구조라 재귀 정의와 잘 맞고, 깊이가 작아 재귀 한도도 문제가 되지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1부터 1,000,000까지의 합은 <code>total_rec(n)</code> 재귀로 써도 문제없다<span class="why"><b>깊이가 백만이 됩니다.</b> 파이썬의 기본 재귀 한도(1000)를 훨씬 넘어 RecursionError가 납니다. 반복문이나 공식 n(n + 1)/2를 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>재귀로만 풀 수 있고 반복으로는 바꿀 수 없는 문제가 있다<span class="why"><b>그럴듯하지만 틀렸습니다.</b> 호출 스택이 하던 일을 리스트로 만든 스택이 대신하면 어떤 재귀도 반복으로 바꿀 수 있습니다. 다만 코드가 더 복잡해질 수 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/info/i1-kit.js"></script>
+<script src="../../js/cards/info/i1-fibtree.js"></script>
+</body>
+</html>

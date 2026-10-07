@@ -1,0 +1,185 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>스택과 큐의 구현 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="후입선출 구조인 스택과 선입선출 구조인 큐의 원리를 이해하고, 리스트(배열)와 연결 구조를 이용해 스택과 큐를 직접 구현하며 구현 방식에 따른 효율을 비교한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-info-sq .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
+    #card-info-sq .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
+    #card-info-sq .code .ln::before { counter-increment: ln; content: counter(ln); position: absolute; left: 6px; width: 22px; text-align: right; color: var(--ink-3); }
+    #card-info-sq .code .ln.on { background: #dcebd6; box-shadow: inset 3px 0 0 var(--forest); }
+    #card-info-sq .code .ln.off { opacity: .35; text-decoration: line-through; }
+    #card-info-sq .code .k { color: #2f6a8a; font-weight: 600; }
+    #card-info-sq .code .b { color: var(--forest); }
+    #card-info-sq .code .s { color: var(--warn); }
+    #card-info-sq .code .d { color: #8a5a00; }
+    #card-info-sq .code .c { color: var(--ink-3); }
+    #card-info-sq .note { min-height: 3.4em; margin-top: 8px; padding: 8px 12px; border-left: 3px solid var(--leaf); background: var(--paper); font-size: 13.5px; line-height: 1.55; }
+    #card-info-sq .s-pos { margin-left: auto; align-self: center; }
+    #card-info-sq canvas { width: 100%; aspect-ratio: 16 / 9; }
+    #card-info-sq .code { max-height: 250px; overflow-y: auto; }
+    #text-info-adt pre.code { margin: 10px 0 12px; padding: 10px 14px; background: var(--paper-2); font-family: var(--f-mono); font-size: 13px; line-height: 1.6; overflow-x: auto; white-space: pre; }
+    #text-info-adt pre.code .c { color: var(--ink-3); }
+    #text-info-adt td code, #text-info-adt p code, #text-info-adt li code { font-family: var(--f-mono); font-size: .92em; background: var(--paper-2); padding: 0 4px; }
+  </style>
+</head>
+<body data-course="info" data-sec="2-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>스택과 큐의 구현</h1>
+    <p class="lead">쌓아 둔 접시는 맨 위부터 꺼내고, 매표소 줄은 앞사람부터 빠져나갑니다. 넣고 꺼내는 순서만 정해 둔 이 두 규칙이 함수 호출, 실행 취소, 인쇄 대기열을 움직입니다. 리스트로 두 구조를 직접 만들어 보면, 같은 규칙도 구현에 따라 속도가 크게 달라진다는 것을 알 수 있습니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">리스트와 인덱스</span><span class="p">클래스와 메서드</span><span class="p">호출 스택</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-info-sq"><span class="mono">2.1.1</span>스택·큐를 리스트로 구현하기</a></li>
+        <li><a href="#text-info-adt"><span class="mono">2.1.2</span>스택·큐 연산 비용과 라이브러리</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=info-2-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-info-sq">
+        <header class="card-head">
+          <span class="no">2.1.1</span><h2>스택과 큐를 리스트로 만들면 무엇이 다를까?</h2><span class="kind">스택(LIFO) · 큐(FIFO) · 배열과 연결 리스트 · 원형 큐</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="고른 구현 방식에 따라 원소가 담긴 칸, top·front·rear 위치, 원소 이동을 그린 그림"></canvas>
+            <div class="ctl">
+              <div class="presets" role="group" aria-label="구현 방식">
+                <button type="button" class="chip" data-m="stack" aria-pressed="true">스택: 리스트</button>
+                <button type="button" class="chip" data-m="listq" aria-pressed="false">큐: 리스트 pop(0)</button>
+                <button type="button" class="chip" data-m="circ" aria-pressed="false">큐: 원형 배열</button>
+                <button type="button" class="chip" data-m="link" aria-pressed="false">큐: 연결 리스트</button>
+              </div>
+              <div class="lab-btns">
+                <button type="button" class="chip go push">push (넣기)</button>
+                <button type="button" class="chip go pop">pop (꺼내기)</button>
+                <button type="button" class="chip clr">비우고 다시</button>
+              </div>
+              <p class="note"></p>
+              <dl class="nums n4">
+                <div><dt>원소 수</dt><dd class="r-size">0</dd></div>
+                <div><dt>연산 횟수</dt><dd class="r-ops">0</dd></div>
+                <div><dt>이번에 옮긴 원소</dt><dd class="r-last">0</dd></div>
+                <div><dt>누적 옮긴 원소</dt><dd class="r-total">0</dd></div>
+              </dl>
+              <pre class="code" aria-label="고른 구현의 파이썬 코드, 방금 실행한 메서드 강조"></pre>
+              <p class="fig-note">‘옮긴 원소’는 꺼내기 때문에 메모리 안에서 자리를 옮겨야 하는 원소 수입니다. 원형 큐는 칸 8개, 그림의 리스트는 칸 11개까지만 그립니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>은행 번호표는 먼저 뽑은 사람이 먼저 불리고, 웹 브라우저의 ‘뒤로 가기’는 가장 최근에 본 페이지부터 돌아갑니다. 두 규칙을 모두 파이썬 리스트로 만들 수 있을까요? 만든다면 효율도 같을까요?</li>
+            <li><span class="tag">복원</span>파이썬 리스트는 원소를 메모리에 차례로 이어 놓은 <em>배열</em>(순차 구조)입니다. 인덱스로 어느 칸이든 바로 찾을 수 있고, 맨 뒤에 붙이거나 빼는 일은 빠릅니다. 그러나 앞이나 중간에서 빼면 뒤의 원소들을 한 칸씩 당겨야 합니다.</li>
+            <li><span class="tag">설명</span><em>스택</em>은 한쪽 끝(top)에서만 넣고(push) 꺼내는(pop) 구조로, 나중에 넣은 것이 먼저 나옵니다(후입선출, LIFO). 리스트의 맨 뒤를 top으로 쓰면 <code>append</code>와 <code>pop()</code>만으로 원소 이동 없이 구현됩니다. <em>큐</em>는 뒤(rear)에 넣고(enqueue) 앞(front)에서 꺼내는(dequeue) 구조로, 먼저 넣은 것이 먼저 나옵니다(선입선출, FIFO). 리스트로 큐를 만들어 <code>pop(0)</code>으로 꺼내면 남은 원소를 모두 옮겨야 합니다. 이를 피하는 방법이 두 가지 있습니다. <em>원형 큐</em>는 크기가 정해진 배열에서 front 번호만 옮기고, 끝에 닿으면 % 연산으로 0번 칸으로 돌아갑니다. <em>연결 리스트</em>는 각 노드가 다음 노드를 가리키게 하여, head를 다음 노드로 바꾸기만 하면 꺼내기가 끝납니다.</li>
+            <li><span class="tag">연결</span>실제로 문제를 풀 때는 라이브러리를 씁니다. 스택은 리스트 그대로, 큐는 <code>collections.deque</code>의 <code>append</code>와 <code>popleft</code>를 씁니다. deque는 양쪽 끝에서 넣고 빼는 일을 원소 이동 없이 처리합니다. ‘무엇을 하는가’(push, pop, enqueue, dequeue)와 ‘어떻게 구현하는가’를 나누어 생각하는 것을 <em>추상 자료형</em>이라 합니다.</li>
+            <li><span class="tag">적용</span>네 가지 방식에서 각각 7개를 넣은 뒤 모두 꺼내고, 누적 옮긴 원소 수를 비교하세요. 리스트 pop(0) 큐에서 n개를 넣고 모두 꺼내면 옮기는 원소는 몇 개인가요? 원형 큐에서 6개 넣고 4개 꺼낸 뒤 다시 5개를 넣으면 rear는 몇 번 칸을 지나가나요?</li>
+            <li class="warn"><span class="tag">판단</span>원형 큐에서 front와 다음 rear가 같은 칸을 가리키는 경우는 큐가 비었을 때와 꽉 찼을 때 두 가지입니다. 그래서 위 코드는 size를 따로 셉니다(한 칸을 늘 비워 두는 방법도 있습니다). 연결 리스트는 원소를 옮기지 않는 대신 노드마다 참조를 하나 더 저장하고, i번째 원소를 바로 찾을 수 없습니다. 어떤 구현이든 비어 있을 때 꺼내면 오류가 나므로 먼저 확인해야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">원소 10,000개가 들어 있는 리스트 큐에서 <code>pop(0)</code>으로 원소를 모두 꺼냅니다. 그동안 자리를 옮기는 원소는 모두 몇 개쯤일까요?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0개<span class="why"><b>스택의 pop()과 혼동한 답입니다.</b> 맨 뒤에서 꺼내면 이동이 없지만, 맨 앞에서 꺼내면 나머지를 모두 당겨야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 1만 개<span class="why"><b>꺼낼 때마다 한 칸만 옮긴다고 본 답입니다.</b> 꺼낼 때마다 남은 원소 전체가 한 칸씩 움직입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 5천만 개<span class="why"><b>맞습니다.</b> 9,999 + 9,998 + … + 1 + 0 = 49,995,000입니다. 원소 수의 제곱에 비례하므로, 큰 큐는 deque나 원형 큐로 만들어야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-info-adt">
+        <header class="card-head">
+          <span class="no">2.1.2</span><h2>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</h2><span class="kind">읽기 · 추상 자료형 · 연산 비용 · deque</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">스택과 큐는 “넣고 꺼내는 순서”만 정한 규칙입니다. 규칙은 같아도 구현에 따라 속도와 메모리가 달라집니다. 실제 프로그램에서는 무엇을 골라 써야 할까요?</p>
+
+          <h3><span class="mono">1</span>순서 규칙이 쓰이는 곳</h3>
+          <div class="tbl"><table>
+            <thead><tr><th></th><th>스택 (후입선출)</th><th>큐 (선입선출)</th></tr></thead>
+            <tbody>
+              <tr><th>규칙</th><td>가장 최근 것을 먼저 처리</td><td>가장 오래 기다린 것을 먼저 처리</td></tr>
+              <tr><th>예</th><td>함수 호출 스택, 실행 취소(Ctrl+Z), 브라우저 뒤로 가기, 괄호 짝 검사, 수식 계산, 미로의 되돌아가기</td><td>프린터 대기열, 키보드 입력 버퍼, 운영체제의 작업 대기열, 메시지 처리, 가까운 곳부터 넓혀 가는 탐색(너비 우선 탐색)</td></tr>
+              <tr><th>핵심 연산</th><td>push, pop, peek(맨 위 보기), is_empty</td><td>enqueue, dequeue, peek(맨 앞 보기), is_empty</td></tr>
+            </tbody>
+          </table></div>
+          <p>이처럼 연산의 이름과 뜻만 정하고 내부 구현은 감춘 자료 구조를 <em>추상 자료형</em>이라 합니다. 쓰는 쪽은 연산만 알면 되고, 구현은 더 빠른 것으로 바꿔도 프로그램의 나머지는 고칠 필요가 없습니다.</p>
+
+          <h3><span class="mono">2</span>구현에 따른 연산 비용</h3>
+          <p>n은 들어 있는 원소 수입니다. ‘한 번’은 원소 수와 관계없이 거의 일정한 시간, ‘n에 비례’는 원소가 많을수록 오래 걸린다는 뜻입니다.</p>
+          <div class="tbl"><table>
+            <thead><tr><th>구현</th><th>뒤에 넣기</th><th>뒤에서 꺼내기</th><th>앞에서 꺼내기</th><th>i번째 보기</th></tr></thead>
+            <tbody>
+              <tr><th>파이썬 list</th><td>한 번 (평균)</td><td>한 번</td><td>n에 비례</td><td>한 번</td></tr>
+              <tr><th>원형 배열</th><td>한 번 (가득 차면 불가)</td><td>한 번</td><td>한 번</td><td>한 번</td></tr>
+              <tr><th>연결 리스트</th><td>한 번 (tail 유지)</td><td>단일 연결이면 n에 비례</td><td>한 번</td><td>n에 비례</td></tr>
+              <tr><th>collections.deque</th><td>한 번</td><td>한 번</td><td>한 번</td><td>양 끝은 빠르고 가운데는 느림</td></tr>
+            </tbody>
+          </table></div>
+          <p>list의 <code>append</code>가 ‘평균’ 한 번인 까닭은, 미리 잡아 둔 칸이 다 차면 더 큰 공간을 잡아 전체를 옮기기 때문입니다. 이 일은 가끔만 일어나서 평균을 내면 한 번 정도의 비용이 됩니다.</p>
+
+          <h3><span class="mono">3</span>문제를 풀 때는 라이브러리로</h3>
+          <pre class="code">stack = []                   <span class="c"># 스택: 리스트 그대로</span>
+      stack.append('a'); stack.append('b')
+      stack.pop()                  <span class="c"># 'b'</span>
+
+      from collections import deque
+      q = deque()                  <span class="c"># 큐: deque</span>
+      q.append('a'); q.append('b')
+      q.popleft()                  <span class="c"># 'a'</span>
+      len(q) == 0                  <span class="c"># 비었는지 확인 (또는 not q)</span></pre>
+          <p>원리를 익힐 때는 리스트로 직접 만들어 보고, 실제 문제를 풀 때는 이렇게 검증된 라이브러리를 씁니다. <code>queue.Queue</code>도 있지만, 이것은 여러 스레드가 함께 쓰도록 잠금 장치를 더한 것이라 한 프로그램 안의 일반적인 큐로는 deque가 알맞습니다.</p>
+
+          <p class="judge"><b>판단</b>“연결 리스트가 배열보다 항상 빠르다”는 틀린 말입니다. 연결 리스트는 앞에서 넣고 빼기가 빠른 대신, i번째 원소를 찾으려면 head부터 따라가야 하고 노드마다 참조를 저장할 메모리가 더 듭니다. 어떤 연산을 자주 하는지에 따라 알맞은 구현이 달라집니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">문서 편집기의 ‘실행 취소’ 기록을 저장하려 합니다. 기록은 최대 100개만 남기고, 넘치면 <em>가장 오래된</em> 기록을 버립니다. 가장 알맞은 구현은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>리스트를 큐로 써서 앞에서 꺼낸다<span class="why"><b>실행 취소는 가장 최근 기록부터 꺼내므로 기본은 스택입니다.</b> 큐처럼 앞에서 꺼내면 가장 오래된 작업이 취소됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>deque를 써서 뒤에 넣고 뒤에서 꺼내며, 넘치면 앞에서 버린다<span class="why"><b>맞습니다.</b> 실행 취소는 스택처럼 뒤에서 넣고 꺼내고, 오래된 기록은 앞에서 버려야 하므로 양쪽 끝이 모두 빠른 deque가 알맞습니다. <code>deque(maxlen=100)</code>은 이 일을 자동으로 해 줍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>리스트를 스택으로 쓰고, 넘치면 <code>pop(0)</code>으로 버린다<span class="why"><b>동작은 맞지만 넘칠 때마다 원소 99개를 옮깁니다.</b> 작업이 잦으면 비효율적입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/info/i1-kit.js"></script>
+<script src="../../js/cards/info/i1-sq.js"></script>
+</body>
+</html>
