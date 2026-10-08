@@ -1,0 +1,67 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/geo/vec-kit.js",
+    "js/cards/geo/dot-space.js"
+  ],
+  "short": "공간벡터의 내적과 수직"
+}
+-->
+<style>
+#card-geo-dot-space .vec { display: inline-block; position: relative; padding-top: .3em; line-height: 1; }
+#card-geo-dot-space .vec::before { content: ""; position: absolute; left: .08em; right: .2em; top: .12em; border-top: 1px solid currentColor; }
+#card-geo-dot-space .vec::after { content: ""; position: absolute; right: 0; top: -.06em; border-style: solid; border-width: .18em 0 .18em .32em; border-color: transparent transparent transparent currentColor; }
+#card-geo-dot-space canvas { width: 100%; aspect-ratio: 4 / 3; touch-action: none; cursor: grab; }
+#card-geo-dot-space .nums dd { overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-geo-dot-space">
+  <header class="card-head">
+    <span class="no"></span><h2>공간에서 두 벡터가 수직인지 어떻게 알까?</h2><span class="kind">벡터의 내적 · 공간벡터, 이루는 각</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="좌표공간에서 원점에서 나가는 두 벡터 a, b와 그 사이의 각. 끌어서 돌려 볼 수 있다"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-a="1,2,2" aria-pressed="true"><span class="vec"><i>a</i></span> = (1, 2, 2)</button>
+          <button class="chip" type="button" data-a="2,-1,0"><span class="vec"><i>a</i></span> = (2, −1, 0)</button>
+          <button class="chip" type="button" data-a="1,1,1"><span class="vec"><i>a</i></span> = (1, 1, 1)</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono"><i>b</i><sub>1</sub> = <output class="o1">2</output></label>
+          <input class="s1" type="range" min="-3" max="3" step="1" value="2" aria-label="b의 x성분"></div>
+          <div><label class="mono"><i>b</i><sub>2</sub> = <output class="o2">0</output></label>
+          <input class="s2" type="range" min="-3" max="3" step="1" value="0" aria-label="b의 y성분"></div>
+          <div><label class="mono"><i>b</i><sub>3</sub> = <output class="o3">1</output></label>
+          <input class="s3" type="range" min="-3" max="3" step="1" value="1" aria-label="b의 z성분"></div>
+        </div>
+        <p class="mono eq">—</p>
+        <dl class="nums">
+          <div><dt><span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span></dt><dd class="n-d">—</dd></div>
+          <div><dt>cos θ</dt><dd class="n-c">—</dd></div>
+          <div><dt>θ</dt><dd class="n-t">—</dd></div>
+        </dl>
+        <p class="fig-note"><span class="vec"><i>b</i></span>의 성분을 바꾸어 내적이 0이 되는 경우를 찾고, 그림을 끌어 돌려서 정말 직각인지 보세요.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>공간에서는 화면에 비친 각이 실제 각과 다르게 보입니다. 두 막대가 수직인지 눈으로 확신하기 어렵다면 무엇으로 판단할까요?</li>
+      <li><span class="tag">복원</span>평면에서 <span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span> = |<span class="vec"><i>a</i></span>||<span class="vec"><i>b</i></span>|cos θ = <i>a</i><sub>1</sub><i>b</i><sub>1</sub> + <i>a</i><sub>2</sub><i>b</i><sub>2</sub>였습니다. 공간벡터의 크기는 √(<i>a</i><sub>1</sub><sup>2</sup> + <i>a</i><sub>2</sub><sup>2</sup> + <i>a</i><sub>3</sub><sup>2</sup>)입니다.</li>
+      <li><span class="tag">설명</span>두 공간벡터도 시점을 맞추면 한 평면 위에 놓이므로 내적의 정의 <span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span> = |<span class="vec"><i>a</i></span>||<span class="vec"><i>b</i></span>|cos θ가 그대로 쓰입니다. 코사인법칙으로 같은 계산을 하면 <span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span> = <i>a</i><sub>1</sub><i>b</i><sub>1</sub> + <i>a</i><sub>2</sub><i>b</i><sub>2</sub> + <i>a</i><sub>3</sub><i>b</i><sub>3</sub>입니다. 따라서 영벡터가 아닌 두 벡터에 대하여<br>cos θ = (<span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span>) / (|<span class="vec"><i>a</i></span>||<span class="vec"><i>b</i></span>|),<br><span class="vec"><i>a</i></span> ⊥ <span class="vec"><i>b</i></span> ⇔ <span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span> = 0, <span class="vec"><i>a</i></span> ∥ <span class="vec"><i>b</i></span> ⇔ <span class="vec"><i>b</i></span> = <i>k</i><span class="vec"><i>a</i></span>(<i>k</i> ≠ 0)입니다.</li>
+      <li><span class="tag">연결</span>공간에서 수직 조건을 수식 하나로 확인할 수 있으므로, 다음 절들에서 직선의 방향벡터와 평면의 법선벡터가 수직인지 판단할 때 이 식을 씁니다.</li>
+      <li><span class="tag">적용</span><span class="vec"><i>a</i></span> = (1, 2, 2)에서 내적이 0이 되는 <span class="vec"><i>b</i></span>를 두 개 이상 찾아보세요. 예를 들어 (2, −1, 0), (0, 1, −1)은 어떤가요? <span class="vec"><i>b</i></span>를 <span class="vec"><i>a</i></span>의 2배로 두면 θ는 얼마가 되나요? 그림을 돌려서 같은 θ가 화면에서는 다르게 보이는 것도 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>한 벡터에 수직인 벡터가 하나뿐이라고 생각하기 쉽습니다. 공간에서 <span class="vec"><i>a</i></span>에 수직인 벡터는 한 평면을 이룰 만큼 많습니다. 이 사실이 다음 절의 '법선벡터 하나로 평면을 정한다'는 생각의 바탕입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">두 벡터 <span class="vec"><i>a</i></span> = (1, −2, 2), <span class="vec"><i>b</i></span> = (2, <i>k</i>, 1)이 서로 수직일 때 실수 <i>k</i>의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<span class="why"><b>맞습니다.</b> <span class="vec"><i>a</i></span>·<span class="vec"><i>b</i></span> = 2 − 2<i>k</i> + 2 = 0에서 <i>k</i> = 2입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−2<span class="why"><b>부호를 바꾸었습니다.</b> −2<i>k</i> 항을 옮길 때 부호가 바뀌었습니다. <i>k</i> = −2이면 내적은 8입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>마지막 성분의 곱을 빠뜨렸습니다.</b> 2 − 2<i>k</i> = 0만 풀었습니다. 공간벡터는 세 성분의 곱을 모두 더합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>−4<span class="why"><b>평행 조건과 섞었습니다.</b> 성분의 비를 맞추는 것은 평행 조건입니다. 수직 조건은 내적이 0인 것입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -38,8 +38,8 @@
     K.curve(ctx, gr, p.f, C.forest);
     xs.slice(1, -1).forEach((x) => K.dot(ctx, gr, x, p.f(x), C.warn, false, 4));
     I.vline(ctx, gr, b, C.warn);
-    K.tag(ctx, gr, p.fl, gr.x0 + gr.w - 4, gr.y0 + 10, C.forest, "right");
-    K.tag(ctx, gr, p.gl, gr.x0 + gr.w - 4, gr.y0 + 28, K.BLUE, "right");
+    K.tag(ctx, gr, p.fl, gr.x0 + 8, gr.y0 + gr.h - 28, C.forest);
+    K.tag(ctx, gr, p.gl, gr.x0 + 8, gr.y0 + gr.h - 10, K.BLUE);
   }
 
   function update() {

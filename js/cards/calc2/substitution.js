@@ -38,7 +38,6 @@
     I.vline(ctx, top, b, C.warn);
     I.vline(ctx, bot, p.g(0), C.ink3); I.vline(ctx, bot, p.g(b), C.warn);
     K.tag(ctx, top, p.xl, top.x0 + top.w - 4, top.y0 + 10, C.forest, "right");
-    K.tag(ctx, top, "x", top.x0 + top.w - 4, top.Y(0) + 12, C.ink3, "right");
     K.tag(ctx, bot, p.ul, bot.x0 + bot.w - 4, bot.y0 + 10, C.forest, "right");
     K.tag(ctx, bot, `u: ${n(p.g(0), 2)} → ${n(p.g(b), 2)}`, bot.x0 + bot.w - 4, bot.y0 + 28, C.warn, "right");
   }

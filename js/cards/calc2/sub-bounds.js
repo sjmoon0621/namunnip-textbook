@@ -24,6 +24,7 @@
       xl: "y = cos²x sin x", ul: "y = −u²",
       walk: ["<i>u</i> = cos <i>x</i>로 놓습니다.", "d<i>u</i> = −sin <i>x</i> d<i>x</i>이므로 cos<sup>2</sup><i>x</i> sin <i>x</i> d<i>x</i> = −<i>u</i><sup>2</sup> d<i>u</i>", "<i>x</i> = 0 → <i>u</i> = 1, <i>x</i> = π/2 → <i>u</i> = 0 (위아래가 바뀜)", "∫<sub>1</sub><sup>0</sup> (−<i>u</i><sup>2</sup>) d<i>u</i> = ∫<sub>0</sub><sup>1</sup> <i>u</i><sup>2</sup> d<i>u</i> = 1/3"] },
   ];
+  const NAMES = ["<i>u</i> 고르기", "d<i>u</i>로 바꾸기", "끝 바꾸기", "<i>u</i>로 계산하기"];
   let k = 0, step = 0;
   const { ctx, size } = NM.fit($("canvas"), () => draw());
 
@@ -53,7 +54,7 @@
 
   function update() {
     const p = P[k];
-    root.querySelectorAll(".walk li").forEach((li, i) => { li.innerHTML = i < step ? p.walk[i] : "…"; li.classList.toggle("off", i >= step); });
+    root.querySelectorAll(".walk li").forEach((li, i) => { li.innerHTML = i < step ? p.walk[i] : NAMES[i]; li.classList.toggle("off", i >= step); });
     $(".go-step").disabled = step >= 4;
     $(".n-x").textContent = n(I.simp(p.h, p.a, p.b, 2000), 4);
     if (step < 4) { $(".n-new").textContent = "—"; $(".n-old").textContent = "—"; }

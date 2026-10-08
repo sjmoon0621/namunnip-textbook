@@ -34,12 +34,15 @@
     const { w, h } = size; if (!w) return;
     ctx.clearRect(0, 0, w, h);
     const s = +ss.value, m = +sn.value, cut = +sy.value, p = P[k];
-    const base = h - 30, colW = w / 2;
-    const sc = Math.min((h - 54) / (H + 0.3), (colW - 16) / (2 * p.rmax + 1.5));
+    // 가로 단위: 왼쪽 입체 2r + 간격 0.5 + 오른쪽 입체 2r + 최대 밀림(슬라이더 최댓값 × H). 왼쪽 54px는 y 표시 자리.
+    const L = 54, units = 4 * p.rmax + 0.5 + +ss.max * H;
+    const base = h - 30;
+    const sc = Math.min((h - 54) / (H + 0.3), (w - L - 10) / units);
+    const x0 = L + (w - L - 10 - units * sc) / 2;
     ctx.strokeStyle = C.rule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(8, base); ctx.lineTo(w - 8, base); ctx.stroke();
     const yc = base - cut * sc;
     ctx.save(); ctx.strokeStyle = C.warn; ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(8, yc); ctx.lineTo(w - 8, yc); ctx.stroke(); ctx.restore();
-    const leftC = colW / 2, rightC = colW + 16 + p.rmax * sc;
+    const leftC = x0 + p.rmax * sc, rightC = leftC + (2 * p.rmax + 0.5) * sc;
     stack(leftC, base, sc, () => 0, m, cut, "똑바로");
     stack(rightC, base, sc, (y) => SHIFT[bend](y, s), m, cut, bend === "tilt" ? "기울임" : "휨");
     ctx.font = `600 11px ${F.sans}`; ctx.fillStyle = C.warn; ctx.textAlign = "left";

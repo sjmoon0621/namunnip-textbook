@@ -52,7 +52,7 @@
     });
     p.vx.forEach((x) => {
       ctx.save(); ctx.strokeStyle = C.forest; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.moveTo(g.X(x), g.Y(p.yr[0])); ctx.lineTo(g.X(x), g.Y(p.yr[1])); ctx.stroke(); ctx.restore();
-      K.tag(ctx, g, p.lab2, g.X(x) + 6, g.y0 + 12, C.forest);
+      K.tag(ctx, g, p.lab2, g.X(x) + 6, g.y0 + g.h - 12, C.forest);
     });
   }
 

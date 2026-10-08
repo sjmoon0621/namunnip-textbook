@@ -142,6 +142,11 @@ window.NMGeoVec = (() => {
     v.depth = (p) => rot(p)[2];
     return v;
   }
+  /* 축 길이 L인 장면이 캔버스에 꽉 차도록 축척과 중심을 정한다 (위 3.65L, 아래 1.35L, 좌우 3.6L 정도) */
+  function fit3(v, w, h, L = 3.6) {
+    v.s = Math.min((h - 26) / (1.4 * L), w / (2.2 * L));
+    v.cx = w / 2; v.cy = 13 + 1.04 * L * v.s;
+  }
   /* 축과 xy평면 격자 */
   function axes3(ctx, v, L = 4, o = {}) {
     ctx.save();
@@ -155,11 +160,11 @@ window.NMGeoVec = (() => {
     }
     const names = ["x", "y", "z"];
     for (let k = 0; k < 3; k++) {
-      const e = [0, 0, 0]; e[k] = L; const m = [0, 0, 0]; m[k] = -L * (o.neg ?? 0.6);
+      const e = [0, 0, 0]; e[k] = L; const m = [0, 0, 0]; m[k] = -L * (o.neg ?? 0.35);
       const O = v.P([0, 0, 0]), A = v.P(e), M = v.P(m);
       line(ctx, O[0], O[1], M[0], M[1], C.ink3, 1, [3, 3]);
       arrow(ctx, O[0], O[1], A[0], A[1], C.ink3, 1.2, 7);
-      const t = [0, 0, 0]; t[k] = L * 1.09; const T = v.P(t);
+      const t = [0, 0, 0]; t[k] = L * 1.08; const T = v.P(t);
       ctx.fillStyle = C.ink2; ctx.font = `italic 13px ${F.serif}`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(names[k], T[0], T[1]);
       ctx.fillStyle = C.ink3;
       for (let i = 1; i < L; i++) { const q = [0, 0, 0]; q[k] = i; const Q = v.P(q); ctx.beginPath(); ctx.arc(Q[0], Q[1], 1.6, 0, 7); ctx.fill(); }
@@ -192,5 +197,5 @@ window.NMGeoVec = (() => {
   const deg = (r) => r * 180 / Math.PI;
   const angle = (a, b) => { const d = norm(a) * norm(b); return d ? Math.acos(clamp(dotp(a, b) / d, -1, 1)) : NaN; };
 
-  return { n, tup, surd, len, lin, shift, line, arrow, dot, text, vlabel, plane, grid, drag, view3, axes3, line3, arrow3, orbit, add, sub, mul, dotp, norm, cross, deg, angle };
+  return { n, tup, surd, len, lin, shift, line, arrow, dot, text, vlabel, plane, grid, drag, view3, fit3, axes3, line3, arrow3, orbit, add, sub, mul, dotp, norm, cross, deg, angle };
 })();

@@ -14622,29 +14622,78 @@ window.TOC = [
       "n": 1,
       "title": "포물선",
       "code": "12기하01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-parabola-def",
+        "title": "초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-parabola-shift",
+        "title": "꼭짓점을 옮기면 초점과 준선은 어디로 갈까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "타원",
       "code": "12기하01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-ellipse-def",
+        "title": "두 핀과 끈으로 그린 곡선은 무엇일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-ellipse-eq",
+        "title": "방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "쌍곡선",
       "code": "12기하01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-hyperbola-def",
+        "title": "두 초점까지 거리의 차가 일정한 점은 어떤 곡선을 이룰까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-hyperbola-asym",
+        "title": "쌍곡선은 어떤 직선에 한없이 가까워질까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "이차곡선의 접선",
       "code": "12기하01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-tangent-slope",
+        "title": "기울기가 정해진 접선은 어떻게 찾을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-tangent-point",
+        "title": "곡선 위의 점에서 그은 접선은 어떤 식일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-geo-conic-uses",
+        "title": "이차곡선은 어디에 쓰일까?"
+       }
+      ]
      }
     ]
    },
@@ -14662,6 +14711,21 @@ window.TOC = [
         "kind": "card",
         "id": "card-geo-line-pos",
         "title": "만나지 않는 두 직선은 언제나 평행할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-line-plane",
+        "title": "평면 위의 직선 몇 개에 수직이면 평면에 수직일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-plane-cut",
+        "title": "평행한 두 평면을 한 평면으로 자르면 교선은 어떻게 놓일까?"
+       },
+       {
+        "kind": "text",
+        "id": "text-geo-plane-determine",
+        "title": "평면 하나를 정하려면 무엇이 주어져야 할까?"
        }
       ]
      },
@@ -14669,29 +14733,83 @@ window.TOC = [
       "n": 2,
       "title": "삼수선 정리",
       "code": "12기하02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-three-perp",
+        "title": "평면 위에 그은 수선 하나로 공중의 수선을 찾을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-dihedral",
+        "title": "두 평면이 벌어진 정도는 어떤 각으로 재야 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "정사영",
       "code": "12기하02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-proj-segment",
+        "title": "막대를 기울이면 그림자 길이는 어떤 규칙으로 줄어들까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-proj-area",
+        "title": "기울어진 판의 그림자 넓이는 어떻게 구할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "공간좌표",
       "code": "12기하02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-coord-point",
+        "title": "공간의 점 하나를 수 몇 개로 나타낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-dist3",
+        "title": "공간에서 두 점 사이의 거리는 피타고라스 정리를 몇 번 쓰면 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-section3",
+        "title": "공간의 선분을 m : n으로 나누는 점은 좌표마다 따로 구해도 될까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "구의 방정식",
       "code": "12기하02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-sphere-eq",
+        "title": "중심과 반지름을 알면 구를 식 하나로 쓸 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-sphere-complete",
+        "title": "전개된 식에서 구의 중심과 반지름을 되찾을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-sphere-section",
+        "title": "구를 평면 z = k로 자르면 단면의 크기는 어떻게 정해질까?"
+       }
+      ]
      }
     ]
    },
@@ -14726,29 +14844,83 @@ window.TOC = [
       "n": 2,
       "title": "위치벡터",
       "code": "12기하03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-pos-section",
+        "title": "두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-components",
+        "title": "화살표를 수 두 개로 바꿀 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-space-components",
+        "title": "공간의 화살표는 수 몇 개로 정해질까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "벡터의 내적",
       "code": "12기하03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-dot-angle",
+        "title": "두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-dot-space",
+        "title": "공간에서 두 벡터가 수직인지 어떻게 알까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "직선의 방정식",
       "code": "12기하03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-line-dir",
+        "title": "한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-line-normal",
+        "title": "방향 대신 수직인 벡터로 직선을 정할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-line-space",
+        "title": "공간의 직선도 같은 식으로 나타낼 수 있을까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "평면과 구의 방정식",
       "code": "12기하03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-plane-normal",
+        "title": "공간에서 수직인 벡터 하나는 무엇을 정할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-sphere-vec",
+        "title": "중심에서 거리가 같은 점을 벡터로 쓰면?"
+       }
+      ]
      }
     ]
    }

@@ -19,6 +19,17 @@
     #card-geo-line-pos .pick { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 8px 0 2px; font-size: 13px; }
     #card-geo-line-pos .pick select { font: inherit; font-family: var(--f-mono); background: var(--card); color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: 2px 4px; }
     #card-geo-line-pos .nums dd { font-size: 14px; }
+    #card-geo-line-plane canvas { aspect-ratio: 5 / 4; }
+    #card-geo-line-plane .nums dd { font-size: 14px; }
+    #card-geo-plane-cut canvas { aspect-ratio: 5 / 4; }
+    #card-geo-plane-cut .nums dd { font-size: 14px; }
+    #text-geo-plane-determine svg { width: 100%; height: auto; display: block; }
+    #text-geo-plane-determine svg .pl { fill: #b5d7ac; fill-opacity: .55; stroke: #8d8d92; stroke-width: 1; }
+    #text-geo-plane-determine svg .ln { stroke: #232326; stroke-width: 2; fill: none; }
+    #text-geo-plane-determine svg .pt { fill: #232326; }
+    #text-geo-plane-determine svg text { fill: #5d5d61; font-size: 13px; font-family: var(--f-kr); }
+    #text-geo-plane-determine svg text.cap { font-size: 12.5px; text-anchor: middle; }
+    #text-geo-plane-determine td, #text-geo-plane-determine th { font-size: 13.5px; }
   </style>
 </head>
 <body data-course="geo" data-sec="2-1">
@@ -45,6 +56,9 @@
       <p class="mono small">이 절의 카드</p>
       <ol>
         <li><a href="#card-geo-line-pos"><span class="mono">2.1.1</span>두 직선의 위치 관계</a></li>
+        <li><a href="#card-geo-line-plane"><span class="mono">2.1.2</span>직선과 평면의 수직</a></li>
+        <li><a href="#card-geo-plane-cut"><span class="mono">2.1.3</span>두 평면의 위치 관계와 교선</a></li>
+        <li><a href="#text-geo-plane-determine"><span class="mono">2.1.4</span>평면의 결정 조건과 위치 관계 정리</a></li>
       </ol>
       <p class="progress mono small"></p>
       <p class="toc-links mono small"><a href="../../graph.html?sec=geo-2-1">이 절을 개념 지도에서 보기</a></p>
@@ -57,7 +71,7 @@
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <canvas aria-label="정육면체 ABCD-EFGH와 꼭짓점 두 개씩으로 정한 두 직선 l, m. 두 직선이 만나는지, 평행한지, 꼬인 위치인지 보여 준다"></canvas>
+            <canvas class="cv-wide" aria-label="정육면체 ABCD-EFGH와 꼭짓점 두 개씩으로 정한 두 직선 l, m. 두 직선이 만나는지, 평행한지, 꼬인 위치인지 보여 준다"></canvas>
             <div class="ctl">
               <div class="presets">
                 <button class="chip" type="button" data-l="AB,HG" aria-pressed="true">AB와 HG</button>
@@ -99,6 +113,153 @@
         </div>
       </article>
 
+      <article class="card" id="card-geo-line-plane">
+        <header class="card-head">
+          <span class="no">2.1.2</span><h2>평면 위의 직선 몇 개에 수직이면 평면에 수직일까?</h2><span class="kind">직선과 평면의 수직 · 판정 조건</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="평면 α와 그 위의 점 O를 지나는 직선 l, 평면 위에서 O를 지나는 직선 m, n, k. 세 직선과 l이 이루는 각을 보여 준다"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono"><i>l</i>을 <i>m</i> 방향으로 기울이기 <output class="a-out">20°</output></label>
+                <input class="a" type="range" min="-40" max="40" step="1" value="20" aria-label="직선 l을 m 방향으로 기울인 각"></div>
+                <div><label class="mono"><i>l</i>을 옆으로 기울이기 <output class="b-out">−15°</output></label>
+                <input class="b" type="range" min="-40" max="40" step="1" value="-15" aria-label="직선 l을 옆으로 기울인 각"></div>
+              </div>
+              <label class="mono">평면 위의 직선 <i>k</i>의 방향 <output class="k-out">120°</output></label>
+              <input class="k" type="range" min="0" max="180" step="5" value="120" aria-label="평면 위 직선 k의 방향">
+              <dl class="nums">
+                <div><dt><i>l</i>과 <i>m</i>이 이루는 각</dt><dd class="n-m">—</dd></div>
+                <div><dt><i>l</i>과 <i>n</i>이 이루는 각</dt><dd class="n-n">—</dd></div>
+                <div><dt><i>l</i>과 <i>k</i>가 이루는 각</dt><dd class="n-k">—</dd></div>
+              </dl>
+              <p class="fig-note"><i>m</i>과 <i>n</i>은 평면 α 위에서 점 O를 지나며 60°로 만나는 두 직선입니다. <i>k</i>는 O를 지나는 평면 위의 아무 직선입니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>깃대가 땅에 똑바로 섰는지 확인하려면, 땅 위의 모든 방향에서 각을 재야 할까요? 몇 방향만 재어도 될까요?</li>
+            <li><span class="tag">복원</span>직선 <i>l</i>이 평면 α와 한 점 O에서 만나고, O를 지나는 α 위의 <b>모든</b> 직선과 수직일 때 <i>l</i>과 α는 <em>수직</em>이라 하고 <i>l</i> ⊥ α로 씁니다. 이때 <i>l</i>을 α의 <em>수선</em>, O를 <em>수선의 발</em>이라고 합니다. 점과 선분의 수직이등분선, 이등변삼각형의 성질, 삼각형의 합동 조건을 씁니다.</li>
+            <li><span class="tag">설명</span><b>판정 조건:</b> <i>l</i>이 α 위의 <b>만나는 두 직선</b> <i>m</i>, <i>n</i>에 모두 수직이면 <i>l</i> ⊥ α입니다. 증명의 뼈대는 이렇습니다. α 위에서 O를 지나는 임의의 직선 <i>k</i>에 대하여, <i>m</i>, <i>n</i> 위에 점 A, B를 잡아 선분 AB가 <i>k</i>와 점 C에서 만나게 합니다. <i>l</i> 위에 OP = OP′인 두 점 P, P′을 O의 양쪽에 잡으면, <i>m</i>과 <i>n</i>이 선분 PP′의 수직이등분선이므로 PA = P′A, PB = P′B입니다. 그러면 △PAB ≡ △P′AB(SSS 합동)이고 ∠PAC = ∠P′AC입니다. 다시 △PAC ≡ △P′AC(SAS 합동)이므로 PC = P′C입니다. △CPP′은 이등변삼각형이고 O는 PP′의 중점이므로 CO ⊥ PP′, 곧 <i>k</i> ⊥ <i>l</i>입니다.</li>
+            <li><span class="tag">연결</span>이 판정 조건은 다음 절의 삼수선 정리를 증명하는 열쇠입니다. "평면 위 두 직선에 수직임을 보이면 평면 위 모든 직선에 수직"이라는 생각을 계속 쓰게 됩니다.</li>
+            <li><span class="tag">적용</span>두 기울기 막대를 움직여 <i>l</i>을 <i>m</i>에만 수직이 되게 만들어 보세요. 그 상태에서 <i>k</i>의 방향을 돌리면 <i>l</i>과 <i>k</i>의 각이 90°가 아닌 때가 있나요? 이번에는 <i>m</i>, <i>n</i> 둘 다에 수직이 되게 맞추고 <i>k</i>를 돌려 보세요. 어떤 방향이든 90°가 유지되나요?</li>
+            <li class="warn"><span class="tag">판단</span>평면 위의 직선 <b>하나</b>에 수직인 것으로는 부족합니다. <i>l</i>을 <i>m</i> 둘레로 기울여도 <i>m</i>과의 각은 90°로 남기 때문입니다. 또 두 직선이 <b>평행</b>하면 둘 다에 수직이어도 부족합니다. 평행한 두 직선은 같은 방향 하나만 알려 주기 때문입니다. 판정에는 <b>만나는</b> 두 직선이 필요합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">직선 <i>l</i>이 평면 α 위의 서로 <b>평행한</b> 두 직선 <i>m</i>, <i>n</i>에 모두 수직입니다. 이것만으로 말할 수 있는 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>l</i> ⊥ α이다.<span class="why"><b>판정 조건을 잘못 썼습니다.</b> 판정 조건의 두 직선은 만나야 합니다. 평행한 두 직선은 방향이 하나뿐이라, <i>l</i>을 그 방향 둘레로 기울여도 두 직선과의 각은 90°로 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span><i>l</i> ⊥ α라고 단정할 수 없다.<span class="why"><b>맞습니다.</b> <i>l</i>이 <i>m</i>에 수직인 채로 <i>m</i>을 축 삼아 기울면 <i>n</i>과도 계속 수직이지만 α와는 수직이 아닙니다. 그림에서 <i>l</i>을 <i>m</i>에만 수직으로 맞춘 경우와 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>l</i>은 α와 평행하다.<span class="why"><b>지나친 결론입니다.</b> <i>l</i>이 α에 수직일 수도, 비스듬히 만날 수도, 평행할 수도 있습니다. 주어진 조건으로는 하나로 정해지지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>l</i>은 α 위에 있다.<span class="why"><b>가능한 경우 하나일 뿐입니다.</b> α 위에서 <i>m</i>에 수직인 직선도 조건을 만족하지만, α를 뚫고 지나는 직선도 조건을 만족할 수 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-geo-plane-cut">
+        <header class="card-head">
+          <span class="no">2.1.3</span><h2>평행한 두 평면을 한 평면으로 자르면 교선은 어떻게 놓일까?</h2><span class="kind">두 평면의 위치 관계 · 교선</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="아래 평면 α, 위 평면 β, 둘을 세로로 자르는 평면 γ. γ와 α의 교선, γ와 β의 교선을 보여 준다"></canvas>
+            <div class="ctl">
+              <label class="mono">평면 β의 기울기 <output class="t-out">0°</output></label>
+              <input class="t" type="range" min="-35" max="35" step="1" value="0" aria-label="평면 β의 기울기">
+              <label class="mono">자르는 평면 γ의 방향 <output class="p-out">30°</output></label>
+              <input class="p" type="range" min="0" max="180" step="5" value="30" aria-label="자르는 평면 γ의 방향">
+              <dl class="nums">
+                <div><dt>α와 β</dt><dd class="n-ab">—</dd></div>
+                <div><dt>교선 <i>l</i>₁(γ∩α), <i>l</i>₂(γ∩β)</dt><dd class="n-l">—</dd></div>
+                <div><dt><i>l</i>₁과 <i>l</i>₂가 이루는 각</dt><dd class="n-ang">—</dd></div>
+              </dl>
+              <p class="fig-note">γ는 α에 수직으로 세운 평면입니다. α와 β가 만나면 두 평면의 교선을 굵은 점선으로 그립니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>책장 선반 두 개는 서로 평행합니다. 옆판 하나가 두 선반과 만나는 선을 보면 서로 평행해 보입니다. 늘 그럴까요? 선반 하나가 기울면 어떻게 될까요?</li>
+            <li><span class="tag">복원</span>서로 다른 두 평면은 만나거나 만나지 않습니다. 만나면 공통 부분은 한 직선이고, 이 직선을 두 평면의 <em>교선</em>이라고 합니다. 만나지 않으면 두 평면은 <em>평행</em>하다고 하고 α ∥ β로 씁니다. 같은 평면 위에 있으면서 만나지 않는 두 직선은 평행합니다.</li>
+            <li><span class="tag">설명</span><b>성질:</b> 평행한 두 평면 α, β가 다른 평면 γ와 만나서 생기는 교선 <i>l</i>₁, <i>l</i>₂는 평행합니다. <b>증명:</b> <i>l</i>₁과 <i>l</i>₂는 모두 γ 위에 있습니다. <i>l</i>₁은 α 위에, <i>l</i>₂는 β 위에 있는데 α와 β는 공통인 점이 없으므로 <i>l</i>₁과 <i>l</i>₂도 만나지 않습니다. 한 평면 γ 위에서 만나지 않는 두 직선이므로 <i>l</i>₁ ∥ <i>l</i>₂입니다. 이 증명에는 "한 평면 위에 있다"는 사실이 꼭 필요합니다. 그래서 꼬인 위치는 생길 수 없습니다.</li>
+            <li><span class="tag">연결</span>두 직선의 위치 관계에서 본 "같은 평면 위 + 만나지 않음 → 평행"이 그대로 쓰였습니다. 평면 β를 기울여 생기는 α와 β의 교선, 그리고 두 평면이 이루는 각(이면각)은 다음 절에서 다룹니다.</li>
+            <li><span class="tag">적용</span>β의 기울기를 0°에 두고 γ의 방향을 여러 번 바꾸어 보세요. <i>l</i>₁과 <i>l</i>₂는 언제나 평행한가요? 이제 β를 기울이면 <i>l</i>₁과 <i>l</i>₂가 만나는 점이 생깁니다. 그 점은 어느 직선 위에 있나요? β가 기운 채로 γ의 방향을 90°에 맞추면 무슨 일이 생기는지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>거꾸로 "교선 <i>l</i>₁, <i>l</i>₂가 평행하면 α ∥ β"는 성립하지 않습니다. β가 기울어도 γ가 α와 β의 교선에 평행하게 놓이면 <i>l</i>₁ ∥ <i>l</i>₂가 됩니다. 그림에서 γ의 방향을 90°로 맞추었을 때가 그 경우입니다. 하나의 예로 성질의 역을 단정하지 않도록 주의합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">평행한 두 평면 α, β가 있습니다. 직선 <i>l</i>이 α와 한 점에서 만날 때, <i>l</i>과 β의 위치 관계는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>반드시 한 점에서 만난다.<span class="why"><b>맞습니다.</b> <i>l</i>을 품는 평면 δ를 하나 잡으면, δ는 α, β와 만나 평행한 두 교선을 만듭니다(위의 성질). δ 위에서 <i>l</i>은 α 쪽 교선과 한 점에서 만나므로, 그와 평행한 β 쪽 교선과도 한 점에서 만납니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>β와 평행할 수도 있다.<span class="why"><b>그럴듯하지만 틀렸습니다.</b> <i>l</i>이 β와 평행하면 <i>l</i>은 β에 평행한 평면 α 안에 들어가거나 α와도 평행해야 합니다. <i>l</i>은 α와 한 점에서만 만나므로 둘 다 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>β 위에 있을 수도 있다.<span class="why"><b>모순이 생깁니다.</b> <i>l</i>이 β 위에 있으면 <i>l</i>과 α의 교점이 β 위의 점이 되어, α와 β가 공통인 점을 갖게 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>꼬인 위치에 있다.<span class="why"><b>용어를 잘못 썼습니다.</b> 꼬인 위치는 두 직선 사이의 관계입니다. 직선과 평면 사이에는 포함, 한 점에서 만남, 평행의 세 경우만 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card reading" id="text-geo-plane-determine">
+        <header class="card-head">
+          <span class="no">2.1.4</span><h2>평면 하나를 정하려면 무엇이 주어져야 할까?</h2><span class="kind">읽기 · 평면의 결정 조건 · 위치 관계 정리</span>
+        </header>
+        <div class="reading-body">
+          <p class="ask">다리가 세 개인 의자는 울퉁불퉁한 바닥에서도 흔들리지 않지만, 다리가 네 개인 의자는 자주 덜컹거립니다. 이 차이는 "세 점이 평면을 정한다"는 사실에서 나옵니다.</p>
+          <h3><span class="mono">1</span>평면의 결정 조건</h3>
+          <p>서로 다른 두 점을 지나는 직선은 하나뿐입니다. 그런데 두 점을 지나는 평면은 그 직선을 축으로 얼마든지 돌릴 수 있습니다. 한 점을 더 주어야 평면이 하나로 정해집니다. 평면이 하나로 정해지는 경우를 <em>평면의 결정 조건</em>이라고 하며, 다음 네 가지가 있습니다.</p>
+          <figure>
+            <svg viewBox="0 0 640 170" role="img" aria-label="평면의 결정 조건 네 가지 그림">
+              <g transform="translate(0,0)">
+                <polygon class="pl" points="20,110 120,110 150,40 50,40"/>
+                <circle class="pt" cx="55" cy="90" r="4"/><circle class="pt" cx="110" cy="95" r="4"/><circle class="pt" cx="95" cy="55" r="4"/>
+                <text class="cap" x="85" y="140">① 한 직선 위에 있지 않은</text><text class="cap" x="85" y="158">서로 다른 세 점</text>
+              </g>
+              <g transform="translate(160,0)">
+                <polygon class="pl" points="20,110 120,110 150,40 50,40"/>
+                <line class="ln" x1="30" y1="95" x2="140" y2="70"/><circle class="pt" cx="80" cy="52" r="4"/>
+                <text class="cap" x="85" y="140">② 한 직선과 그 위에</text><text class="cap" x="85" y="158">있지 않은 한 점</text>
+              </g>
+              <g transform="translate(320,0)">
+                <polygon class="pl" points="20,110 120,110 150,40 50,40"/>
+                <line class="ln" x1="35" y1="100" x2="135" y2="50"/><line class="ln" x1="40" y1="55" x2="130" y2="100"/>
+                <text class="cap" x="85" y="140">③ 한 점에서</text><text class="cap" x="85" y="158">만나는 두 직선</text>
+              </g>
+              <g transform="translate(480,0)">
+                <polygon class="pl" points="20,110 120,110 150,40 50,40"/>
+                <line class="ln" x1="30" y1="95" x2="125" y2="95"/><line class="ln" x1="50" y1="60" x2="140" y2="60"/>
+                <text class="cap" x="85" y="140">④ 평행한</text><text class="cap" x="85" y="158">두 직선</text>
+              </g>
+            </svg>
+            <figcaption>②, ③, ④는 모두 ①로 바꿀 수 있습니다. 예를 들어 ③에서는 교점과 두 직선 위의 점을 하나씩 더 잡으면 한 직선 위에 있지 않은 세 점이 됩니다.</figcaption>
+          </figure>
+          <p>꼬인 위치에 있는 두 직선은 이 목록에 없습니다. 두 직선을 함께 담는 평면이 아예 없기 때문입니다. 세 다리 의자의 발끝 세 점은 한 직선 위에 있지 않으므로 늘 한 평면을 정하지만, 네 번째 발끝이 그 평면 위에 있으리라는 보장은 없습니다.</p>
+          <h3><span class="mono">2</span>위치 관계 한눈에 보기</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>대상</th><th>만나는 경우</th><th>만나지 않는 경우</th></tr></thead>
+            <tbody>
+              <tr><td>두 직선</td><td>한 점에서 만난다</td><td>평행하다 · 꼬인 위치에 있다</td></tr>
+              <tr><td>직선과 평면</td><td>직선이 평면에 포함된다 · 한 점에서 만난다</td><td>평행하다</td></tr>
+              <tr><td>두 평면</td><td>만난다(공통 부분은 교선)</td><td>평행하다</td></tr>
+            </tbody>
+          </table></div>
+          <h3><span class="mono">3</span>간단한 증명 하나: 직선과 평면이 평행할 조건</h3>
+          <p><b>성질.</b> 평면 α 밖의 직선 <i>l</i>이 α 위의 한 직선 <i>m</i>과 평행하면 <i>l</i> ∥ α입니다.</p>
+          <p><b>증명(귀류법).</b> <i>l</i>과 <i>m</i>은 평행하므로 한 평면 β를 정합니다(결정 조건 ④). <i>l</i>이 α와 한 점 P에서 만난다고 가정합니다. P는 <i>l</i> 위에 있으므로 β 위의 점이고, α 위의 점이기도 합니다. 그런데 α와 β의 공통 부분은 교선 <i>m</i>뿐이므로 P는 <i>m</i> 위에 있어야 합니다. 그러면 <i>l</i>과 <i>m</i>이 점 P를 공유하게 되어 평행하다는 조건에 어긋납니다. 따라서 <i>l</i>은 α와 만나지 않고, <i>l</i> ∥ α입니다.</p>
+          <p>공간도형의 증명은 이처럼 ① 평면의 결정 조건으로 평면을 하나 만들고, ② 그 평면 안에서 평면기하의 사실(평행선, 합동)을 쓰고, ③ 두 평면의 공통 부분이 교선이라는 사실로 다시 공간으로 돌아오는 순서를 자주 밟습니다.</p>
+          <p class="judge"><b>판단</b>"서로 다른 세 점은 평면을 하나 정한다"는 말은 조건이 빠졌습니다. 세 점이 한 직선 위에 있으면 그 직선을 담는 평면이 무수히 많습니다. 또 "평면 밖의 직선이 평면 위의 한 직선과 만나지 않으면 평면과 평행하다"도 틀린 말입니다. 꼬인 위치에 있어도 만나지 않기 때문입니다. 평행 판정에는 만나지 않음이 아니라 <b>평행</b>이 필요합니다.</p>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">공간에 서로 다른 네 점이 있고, 어느 세 점도 한 직선 위에 있지 않으며, 네 점이 한 평면 위에 있지도 않습니다. 이 가운데 세 점으로 정해지는 평면은 모두 몇 개입니까?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1개<span class="why"><b>네 점이 한 평면 위에 있을 때의 답입니다.</b> 문제에서 네 점은 한 평면 위에 있지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3개<span class="why"><b>한 점을 고정하고 센 것 같습니다.</b> 세 점을 고르는 방법은 네 점 중 하나를 빼는 방법과 같으므로 4가지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4개<span class="why"><b>맞습니다.</b> 세 점을 고르는 방법은 <sub>4</sub>C<sub>3</sub> = 4가지이고, 네 점이 한 평면 위에 있지 않으므로 네 평면은 모두 다릅니다. 사면체의 네 면과 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6개<span class="why"><b>두 점을 고르는 수를 세었습니다.</b> <sub>4</sub>C<sub>2</sub> = 6은 네 점으로 만드는 직선(사면체의 모서리)의 개수입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
       <a class="px-go" href="../../practice.html?sec=geo-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
@@ -112,5 +273,9 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/cards/geo/space3d.js"></script>
 <script src="../../js/cards/geo/sp-line-pos.js"></script>
+<script src="../../js/cards/geo/space3d.js"></script>
+<script src="../../js/cards/geo/sp-line-plane.js"></script>
+<script src="../../js/cards/geo/space3d.js"></script>
+<script src="../../js/cards/geo/sp-plane-cut.js"></script>
 </body>
 </html>
