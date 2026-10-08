@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/stat-lib.js",
+    "js/cards/stat/phat-dist.js"
+  ],
+  "short": "표본비율의 분포"
+}
+-->
+<style>
+#card-stat-phat-dist .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+</style>
+<article class="card" id="card-stat-phat-dist">
+  <header class="card-head">
+    <span class="no"></span><h2>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</h2><span class="kind">표본비율의 분포 · √(pq/n)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="표본비율 p̂들의 히스토그램과 정규분포 N(p, pq/n)의 곡선, 모비율 p의 위치"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-n="25">n = 25</button>
+          <button class="chip" type="button" data-n="100" aria-pressed="true">n = 100</button>
+          <button class="chip" type="button" data-n="400">n = 400</button>
+        </div>
+        <label class="mono">모비율 <i>p</i> = <output class="p-out">0.30</output></label>
+        <input class="p" type="range" min="0.1" max="0.9" step="0.05" value="0.3" aria-label="모비율 p">
+        <div class="go-row">
+          <button class="chip go-one" type="button">표본 1개</button>
+          <button class="chip go-100" type="button">표본 100개</button>
+          <button class="chip go-reset" type="button">처음부터</button>
+        </div>
+        <dl class="nums n4">
+          <div><dt>뽑은 표본 수</dt><dd class="n-c">—</dd></div>
+          <div><dt><i>p̂</i>들의 평균</dt><dd class="n-a">—</dd></div>
+          <div><dt><i>p̂</i>들의 표준편차</dt><dd class="n-s">—</dd></div>
+          <div><dt>√(<i>pq</i>/<i>n</i>)</dt><dd class="n-t">—</dd></div>
+        </dl>
+        <p class="fig-note">모비율이 <i>p</i>인 모집단에서 크기가 <i>n</i>인 표본을 임의추출해 표본비율 <i>p̂</i>를 기록합니다. 막대는 <i>p̂</i>들의 히스토그램(넓이 합 1), 초록 곡선은 N(<i>p</i>, <i>pq</i>/<i>n</i>), 주황 점선은 <i>p</i>의 위치입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>어느 도시 유권자의 30%가 한 정책에 찬성한다고 합시다. 100명을 임의추출해 물으면 찬성 비율이 꼭 30%로 나올까요? 몇 %p 정도까지 벗어날 수 있을까요?</li>
+      <li><span class="tag">복원</span>성공 확률이 <i>p</i>인 독립시행을 <i>n</i>번 할 때 성공 횟수 <i>X</i>는 B(<i>n</i>, <i>p</i>)를 따르고 E(<i>X</i>) = <i>np</i>, V(<i>X</i>) = <i>npq</i>입니다(<i>q</i> = 1 − <i>p</i>). <i>n</i>이 충분히 크면 B(<i>n</i>, <i>p</i>)는 N(<i>np</i>, <i>npq</i>)에 가깝습니다.</li>
+      <li><span class="tag">설명</span>모집단에서 어떤 특성을 가진 대상의 비율을 <em>모비율</em> <i>p</i>, 크기가 <i>n</i>인 표본에서 그 특성을 가진 대상의 비율을 <em>표본비율</em> <i>p̂</i> = <i>X</i>/<i>n</i>이라고 합니다. <i>X</i>가 B(<i>n</i>, <i>p</i>)를 따르므로 <b>E(<i>p̂</i>) = <i>p</i>, V(<i>p̂</i>) = <i>pq</i>/<i>n</i>, σ(<i>p̂</i>) = √(<i>pq</i>/<i>n</i>)</b>입니다. V(<i>p̂</i>) = V(<i>X</i>)/<i>n</i><sup>2</sup> = <i>npq</i>/<i>n</i><sup>2</sup>이기 때문입니다. <i>n</i>이 충분히 크면 <i>p̂</i>는 근사적으로 정규분포 N(<i>p</i>, <i>pq</i>/<i>n</i>)을 따릅니다.</li>
+      <li><span class="tag">연결</span>표본평균과 마찬가지로 표본비율도 평균은 모비율과 같고, 표준편차는 √<i>n</i>에 반비례합니다. 여론조사가 결과와 함께 '표본 오차'를 밝히는 까닭이 이것이며, 다음 절에서 이 값으로 모비율의 범위를 추정합니다.</li>
+      <li><span class="tag">적용</span><i>n</i> = 25와 <i>n</i> = 400에서 <i>p̂</i>들의 표준편차를 비교해 보세요. 몇 배 차이가 나나요? <i>p</i>를 0.5와 0.1로 바꾸면 같은 <i>n</i>에서 더 넓게 퍼지는 쪽은 어디인가요? <i>n</i> = 25, <i>p</i> = 0.1일 때 막대가 곡선과 잘 맞나요?</li>
+      <li class="warn"><span class="tag">판단</span>정규분포 근사는 <i>n</i>이 클 때만 씁니다. <i>np</i>나 <i>nq</i>가 작으면(대략 5보다 작으면) <i>p̂</i>의 분포는 한쪽으로 치우쳐 종 모양이 아닙니다. 또 <i>p̂</i>의 퍼짐은 표본의 크기 <i>n</i>에 달려 있고 모집단의 크기와는 거의 상관없습니다. 모집단이 표본보다 충분히 크다면, 같은 <i>n</i>으로 조사할 때 나라 전체와 한 도시의 정밀도가 비슷합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">모비율이 0.2인 모집단에서 크기가 100인 표본을 임의추출하면 σ(<i>p̂</i>) = 0.04입니다. 표본의 크기를 400으로 늘리면 σ(<i>p̂</i>)는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.02<span class="why"><b>맞습니다.</b> √(0.2 × 0.8/400) = √0.0004 = 0.02입니다. <i>n</i>이 4배이면 표준편차는 1/√4 = 1/2배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.01<span class="why"><b>분산과 표준편차를 섞었습니다.</b> <i>n</i>이 4배일 때 1/4배가 되는 것은 분산 <i>pq</i>/<i>n</i>입니다. 표준편차는 제곱근이므로 1/2배입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.04<span class="why"><b>모비율만 보고 판단했습니다.</b> 모비율이 같아도 표본이 커지면 <i>p̂</i>가 <i>p</i> 근처에 더 모입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.08<span class="why"><b>방향이 반대입니다.</b> 표본에 많은 사람이 들어갈수록 비율의 우연한 흔들림은 작아집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/at-least.js"
+  ],
+  "short": "여사건: 적어도 하나"
+}
+-->
+<style>
+#card-stat-at-least canvas { width: 100%; aspect-ratio: 4 / 3; }
+#card-stat-at-least .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+#card-stat-at-least .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-stat-at-least">
+  <header class="card-head">
+    <span class="no"></span><h2>불량품이 적어도 한 개 섞일 확률은 어떻게 구할까?</h2><span class="kind">여사건 · 조합</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="제품 10개 중 불량품 d개가 든 상자, 그리고 r개를 뽑을 때 불량품이 k개일 확률 막대와 k가 1 이상인 막대를 쌓은 막대"></canvas>
+      <div class="ctl">
+        <label class="mono">불량품 수 <i>d</i> = <output class="d-out">3</output> (전체 10개)</label>
+        <input class="d" type="range" min="1" max="5" step="1" value="3" aria-label="불량품 수 d">
+        <label class="mono">뽑는 개수 <i>r</i> = <output class="r-out">3</output></label>
+        <input class="r" type="range" min="1" max="6" step="1" value="3" aria-label="뽑는 개수 r">
+        <div class="go-row">
+          <button class="chip go-one" type="button">한 번 뽑기</button>
+          <button class="chip go-many" type="button">100번 뽑기</button>
+        </div>
+        <p class="mono eq">—</p>
+        <dl class="nums">
+          <div><dt>P(불량품 0개)</dt><dd class="n-0">—</dd></div>
+          <div><dt>P(적어도 1개)</dt><dd class="n-1">—</dd></div>
+          <div><dt>모의실험 비율</dt><dd class="n-s">—</dd></div>
+        </dl>
+        <p class="fig-note">위는 상자 속 제품 10개이고 주황이 불량품, 테두리가 마지막으로 뽑은 제품입니다. 아래 막대는 뽑은 <i>r</i>개 중 불량품이 <i>k</i>개일 확률입니다. 맨 오른쪽 막대는 <i>k</i> ≥ 1인 막대를 모두 쌓은 것입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>제품 10개 중 불량품이 3개 있습니다. 3개를 함께 뽑을 때 불량품이 적어도 1개 섞일 확률은 얼마일까요?</li>
+      <li><span class="tag">복원</span>서로 다른 <i>n</i>개에서 <i>r</i>개를 순서 없이 뽑는 경우의 수는 <sub><i>n</i></sub>C<sub><i>r</i></sub>입니다. 10개에서 3개를 뽑는 120가지는 모두 같은 정도로 기대되므로 수학적 확률을 씁니다.</li>
+      <li><span class="tag">설명</span>직접 구하려면 불량품이 1개, 2개, 3개인 경우를 각각 세어 더해야 합니다. 세 사건은 서로 배반이므로 더할 수 있지만 계산이 세 번 필요합니다. 여사건 '불량품이 0개'는 정상품 7개에서만 3개를 뽑는 한 가지 경우입니다. P(0개) = <sub>7</sub>C<sub>3</sub>/<sub>10</sub>C<sub>3</sub> = 35/120 = 7/24이므로 P(적어도 1개) = 1 − 7/24 = 17/24입니다.</li>
+      <li><span class="tag">연결</span>제품 몇 개만 뽑아 검사하는 표본 검사도 이 계산에 기대고 있습니다. 불량품이 섞여 있으면, 뽑는 수를 늘릴수록 적어도 하나가 걸릴 확률이 커집니다.</li>
+      <li><span class="tag">적용</span>오른쪽에 쌓은 막대의 높이가 1 − P(0개)와 같은지 보세요. <i>r</i>을 1부터 6까지 늘리면 P(적어도 1개)가 어떻게 변하나요? 불량품 수 <i>d</i>를 바꾸면 어떻게 되나요? '100번 뽑기'로 모의실험 비율도 비교하세요. <i>d</i> = 5, <i>r</i> = 6이면 왜 P(0개) = 0일까요?</li>
+      <li class="warn"><span class="tag">판단</span>"한 개가 불량일 확률이 3/10이니 3개를 뽑으면 3 × 3/10 = 9/10"은 틀린 계산입니다. '첫째가 불량', '둘째가 불량', '셋째가 불량'은 함께 일어날 수 있어 배반이 아니므로, 그냥 더하면 겹친 부분을 여러 번 셉니다. 이 방식으로 4개를 뽑으면 12/10이 되어 확률이 1을 넘습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">제품 12개 중 불량품이 3개 있습니다. 3개를 함께 뽑을 때 불량품이 적어도 1개 섞일 확률은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>34/55<span class="why"><b>맞습니다.</b> 불량품이 없는 경우는 <sub>9</sub>C<sub>3</sub> = 84가지, 전체는 <sub>12</sub>C<sub>3</sub> = 220가지이므로 1 − 84/220 = 136/220 = 34/55입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>21/55<span class="why"><b>여사건의 확률입니다.</b> 84/220 = 21/55는 불량품이 하나도 없을 확률입니다. 1에서 빼야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3/4<span class="why"><b>한 개의 확률을 세 번 더했습니다.</b> 3 × 3/12는 서로 배반이 아닌 사건들을 더해 겹친 경우를 여러 번 센 값입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>27/55<span class="why"><b>정확히 1개일 확률입니다.</b> 3 × <sub>9</sub>C<sub>2</sub> = 108가지이므로 108/220 = 27/55입니다. 2개, 3개인 경우가 빠졌습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

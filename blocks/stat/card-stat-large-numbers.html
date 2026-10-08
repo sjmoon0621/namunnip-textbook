@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/stat-lib.js",
+    "js/cards/stat/large-numbers.js"
+  ],
+  "short": "큰 수의 법칙"
+}
+-->
+<style>
+#card-stat-large-numbers .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+</style>
+<article class="card" id="card-stat-large-numbers">
+  <header class="card-head">
+    <span class="no"></span><h2>많이 던질수록 비율은 확률에 다가갈까?</h2><span class="kind">큰 수의 법칙 · 상대도수</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="시행 횟수 n(로그 눈금)에 따른 성공의 상대도수 X/n의 변화와 p ± 0.05 띠"></canvas>
+      <div class="ctl">
+        <label class="mono">한 번 성공할 확률 <i>p</i> = <output class="p-out">0.30</output></label>
+        <input class="p" type="range" min="0.05" max="0.95" step="0.05" value="0.3" aria-label="성공 확률 p">
+        <div class="go-row">
+          <button class="chip go-10" type="button">10번 더</button>
+          <button class="chip go-100" type="button">100번 더</button>
+          <button class="chip go-1000" type="button">1000번 더</button>
+          <button class="chip go-reset" type="button">처음부터</button>
+        </div>
+        <dl class="nums n4">
+          <div><dt>시행 횟수 n</dt><dd class="n-n">—</dd></div>
+          <div><dt>상대도수 X/n</dt><dd class="n-f">—</dd></div>
+          <div><dt>|X/n − p|</dt><dd class="n-d">—</dd></div>
+          <div><dt>P(|X/n − p| &lt; 0.05)</dt><dd class="n-q">—</dd></div>
+        </dl>
+        <p class="fig-note">마지막 값은 실험 결과가 아니라, 지금의 <i>n</i>에서 <i>X</i>가 B(<i>n</i>, <i>p</i>)를 따른다고 보고 계산한 확률입니다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>성공 확률이 0.3인 시행을 10번 하면 성공이 3번이 아닐 때가 많습니다. 그렇다면 '확률이 0.3'이라는 말은 실제로 무엇을 보장할까요?</li>
+      <li><span class="tag">복원</span>성공 확률이 <i>p</i>인 독립시행을 <i>n</i>번 할 때 성공 횟수 <i>X</i>는 B(<i>n</i>, <i>p</i>)를 따르고, E(<i>X</i>) = <i>np</i>, σ(<i>X</i>) = √<i>npq</i>입니다. 통계적 확률은 시행을 많이 했을 때의 상대도수로 정했습니다.</li>
+      <li><span class="tag">설명</span>상대도수 <i>X</i>/<i>n</i>의 평균은 <i>np</i>/<i>n</i> = <i>p</i>이고, 표준편차는 √<i>npq</i>/<i>n</i> = √(<i>pq</i>/<i>n</i>)입니다. <i>n</i>이 커지면 표준편차가 0에 가까워지므로, 아무리 작은 양수 <i>h</i>를 잡아도 P(|<i>X</i>/<i>n</i> − <i>p</i>| &lt; <i>h</i>)는 1에 가까워집니다. 이것이 <em>큰 수의 법칙</em>입니다. 시행 횟수를 충분히 늘리면 상대도수가 수학적 확률에 가까워진다는 뜻이며, 통계적 확률을 확률로 쓸 수 있는 근거입니다.</li>
+      <li><span class="tag">연결</span>보험 회사가 많은 가입자를 모아 사고율을 예측하고, 카지노가 한 판의 결과와 상관없이 긴 시간 동안 이익을 얻는 것도 이 법칙 때문입니다. 뒤에서 배우는 표본비율이 모비율에 가까워지는 원리도 같습니다.</li>
+      <li><span class="tag">적용</span>'처음부터'를 누르고 '10번 더'를 몇 번 눌러 보세요. 곡선이 띠 밖으로 자주 나가나요? '1000번 더'를 여러 번 누른 뒤 |<i>X</i>/<i>n</i> − <i>p</i>|와 P(|<i>X</i>/<i>n</i> − <i>p</i>| &lt; 0.05)는 어떻게 되나요? <i>p</i>를 0.5로 바꾸면 같은 <i>n</i>에서 그 확률이 커지나요, 작아지나요?</li>
+      <li class="warn"><span class="tag">판단</span>큰 수의 법칙은 '비율'이 다가간다는 말이지, 성공 횟수 <i>X</i>가 <i>np</i>에 다가간다는 말이 아닙니다. |<i>X</i> − <i>np</i>|는 오히려 √<i>n</i> 정도로 커집니다. 또 앞에서 실패가 많이 나왔다고 다음 시행에서 성공 확률이 커지지 않습니다. 각 시행은 독립이고, 앞의 치우침은 갚아지는 것이 아니라 뒤의 많은 시행 속에 묻힐 뿐입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">공정한 동전을 <i>n</i>번 던져 앞면이 나온 횟수를 <i>X</i>라 할 때, 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>n</i>이 커질수록 P(|<i>X</i>/<i>n</i> − 1/2| &lt; 0.01)은 1에 가까워진다.<span class="why"><b>맞습니다.</b> <i>X</i>/<i>n</i>의 표준편차 √(1/(4<i>n</i>))이 0에 가까워지므로, 폭이 0.01처럼 작은 구간이라도 그 안에 들어갈 확률이 1에 다가갑니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>앞면이 5번 연속 나왔다면 다음에는 뒷면이 나올 확률이 1/2보다 크다.<span class="why"><b>도박사의 오류입니다.</b> 동전은 앞의 결과를 기억하지 않으므로 다음에 뒷면이 나올 확률은 여전히 1/2입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>n</i>이 커질수록 |<i>X</i> − <i>n</i>/2|도 0에 가까워진다.<span class="why"><b>비율과 횟수를 섞었습니다.</b> σ(<i>X</i>) = √<i>n</i>/2이므로 횟수의 차는 오히려 커지는 경향이 있습니다. 0에 가까워지는 것은 그 차를 <i>n</i>으로 나눈 비율입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>n</i> = 1000이면 앞면은 반드시 500번 나온다.<span class="why"><b>평균과 실제 결과를 섞었습니다.</b> E(<i>X</i>) = 500이지만 P(<i>X</i> = 500)은 약 0.025에 불과합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

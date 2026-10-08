@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/stat-lib.js",
+    "js/cards/stat/ci-mean.js"
+  ],
+  "short": "모평균의 추정"
+}
+-->
+<style>
+#card-stat-ci-mean canvas { width: 100%; aspect-ratio: 4 / 3; }
+#card-stat-ci-mean .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+</style>
+<article class="card" id="card-stat-ci-mean">
+  <header class="card-head">
+    <span class="no"></span><h2>신뢰도 95%의 신뢰구간은 무엇을 95% 믿는 것일까?</h2><span class="kind">모평균의 추정 · 신뢰구간</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="표본마다 만든 신뢰구간 x̄ ± kσ/√n을 가로 선분으로 쌓은 그림. 모평균 m = 300의 세로선. m을 포함하지 못한 구간은 주황색"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-k="1.96" aria-pressed="true">신뢰도 95%</button>
+          <button class="chip" type="button" data-k="2.58">신뢰도 99%</button>
+        </div>
+        <label class="mono">표본의 크기 <i>n</i> = <output class="n-out">16</output></label>
+        <input class="n" type="range" min="4" max="100" step="1" value="16" aria-label="표본의 크기 n">
+        <div class="go-row">
+          <button class="chip go-one" type="button">구간 1개</button>
+          <button class="chip go-20" type="button">구간 20개</button>
+          <button class="chip go-reset" type="button">처음부터</button>
+        </div>
+        <dl class="nums n4">
+          <div><dt>만든 구간 수</dt><dd class="n-c">—</dd></div>
+          <div><dt><i>m</i>을 포함한 비율</dt><dd class="n-r">—</dd></div>
+          <div><dt>구간의 길이 2<i>k</i>σ/√<i>n</i></dt><dd class="n-l">—</dd></div>
+          <div><dt>마지막 <i>x̄</i></dt><dd class="n-x">—</dd></div>
+        </dl>
+        <p class="fig-note">모평균 <i>m</i> = 300, 모표준편차 σ = 20인 정규분포 모집단(사과 무게, 단위 g, 모식)에서 표본을 뽑아 구간 <i>x̄</i> ± <i>k</i>σ/√<i>n</i>을 만듭니다. 실제 조사에서는 <i>m</i>을 모르지만 여기서는 확인을 위해 세로선으로 보여 줍니다. <i>m</i>을 포함하지 못한 구간은 주황색이고, 최근 40개만 그립니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>사과 16개를 임의추출해 무게를 쟀더니 평균이 304 g이었습니다. 과수원 전체의 평균 무게 <i>m</i>이 304 g이라고 단정해도 될까요? 그렇지 않다면 무엇이라고 말해야 할까요?</li>
+      <li><span class="tag">복원</span>모집단이 N(<i>m</i>, σ<sup>2</sup>)을 따르면 크기가 <i>n</i>인 표본의 평균 <i>X̄</i>는 N(<i>m</i>, σ<sup>2</sup>/<i>n</i>)을 따릅니다. 표준정규분포에서 P(|<i>Z</i>| ≤ 1.96) = 0.95, P(|<i>Z</i>| ≤ 2.58) = 0.99입니다.</li>
+      <li><span class="tag">설명</span>표본에서 모집단의 값을 짐작하는 것을 <em>추정</em>이라고 합니다. <i>Z</i> = (<i>X̄</i> − <i>m</i>)/(σ/√<i>n</i>)이므로 P(|<i>X̄</i> − <i>m</i>| ≤ 1.96 · σ/√<i>n</i>) = 0.95입니다. 이 부등식을 <i>m</i>에 대해 풀고 <i>X̄</i>에 실제로 얻은 값 <i>x̄</i>를 넣으면 <b><i>x̄</i> − 1.96 · σ/√<i>n</i> ≤ <i>m</i> ≤ <i>x̄</i> + 1.96 · σ/√<i>n</i></b>입니다. 이것을 모평균 <i>m</i>에 대한 <em>신뢰도</em> 95%의 <em>신뢰구간</em>이라고 합니다. 신뢰도 99%이면 1.96 대신 2.58을 씁니다. 모표준편차 σ를 모르더라도 <i>n</i>이 충분히 크면 σ 대신 표본표준편차 <i>s</i>를 씁니다. 앞의 사과는 σ = 20이면 304 ± 1.96 × 5, 곧 294.2 ≤ <i>m</i> ≤ 313.8입니다.</li>
+      <li><span class="tag">연결</span>신뢰구간의 길이는 2<i>k</i> · σ/√<i>n</i>입니다. 신뢰도를 높이면 <i>k</i>가 커져 구간이 길어지고, 표본을 4배로 늘리면 길이가 절반이 됩니다. '더 확실하게'와 '더 좁게'를 함께 얻으려면 표본을 늘려야 합니다.</li>
+      <li><span class="tag">적용</span>신뢰도 95%로 '구간 20개'를 여러 번 눌러 <i>m</i>을 포함한 비율이 어느 값에 다가가는지 보세요. 99%로 바꾸면 그 비율과 구간의 길이가 어떻게 달라지나요? <i>n</i>을 16에서 64로 바꾸면 구간의 길이는 몇 배가 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>한 번 만든 구간을 두고 '<i>m</i>이 이 구간에 있을 확률이 95%'라고 말하지 않습니다. <i>m</i>은 정해진 하나의 수라서 구간 안에 있거나 없거나 둘 중 하나입니다. 95%는 같은 방법으로 구간을 수없이 만들 때 <i>m</i>을 포함하는 구간의 비율, 곧 방법의 믿을 만한 정도입니다. 그림의 주황 구간처럼 <i>m</i>을 놓치는 구간도 반드시 생깁니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">모표준편차가 8인 정규분포 모집단에서 크기가 64인 표본을 임의추출했더니 표본평균이 50이었습니다. 모평균 <i>m</i>에 대한 신뢰도 95%의 신뢰구간에 대하여 옳은 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>m</i>이 48.04 이상 51.96 이하일 확률이 0.95이다.<span class="why"><b>흔한 오해입니다.</b> 구간의 계산은 맞지만 <i>m</i>은 변하지 않는 수입니다. 이 구간은 <i>m</i>을 포함하거나 포함하지 않거나 둘 중 하나입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>신뢰구간은 48.04 ≤ <i>m</i> ≤ 51.96이고, 같은 방법으로 만든 구간들의 약 95%가 <i>m</i>을 포함한다.<span class="why"><b>맞습니다.</b> σ/√<i>n</i> = 8/8 = 1이므로 50 ± 1.96입니다. 95%는 구간을 만드는 방법에 대한 말입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표본 64개 값 중 약 95%가 48.04와 51.96 사이에 있다.<span class="why"><b>개별 값과 평균을 섞었습니다.</b> 개별 값의 표준편차는 8이라 대부분 34~66 근처에 흩어집니다. 신뢰구간은 모평균에 대한 구간입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>신뢰도를 99%로 높이면 구간의 길이가 짧아진다.<span class="why"><b>반대입니다.</b> 99%에서는 2.58을 쓰므로 길이가 2 × 1.96 = 3.92에서 2 × 2.58 = 5.16으로 길어집니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

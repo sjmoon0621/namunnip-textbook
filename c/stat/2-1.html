@@ -1,0 +1,165 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>확률의 뜻과 기본 성질 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="시행, 표본공간, 사건, 수학적 확률과 통계적 확률, 확률의 기본 성질. 상대도수가 확률로 다가가는 모의실험과 두 주사위 표본공간을 칠해 보는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-stat-freq-prob canvas { width: 100%; aspect-ratio: 16 / 11; }
+    #card-stat-freq-prob .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+    #card-stat-sample-grid canvas { width: 100%; aspect-ratio: 5 / 6; touch-action: none; cursor: pointer; }
+    #card-stat-sample-grid .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="stat" data-sec="2-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>확률의 뜻과 기본 성질</h1>
+    <p class="lead">주사위에서 6이 나올 가능성, 압정을 던져 바늘이 위로 향할 가능성처럼 우리는 '가능성'을 자주 말합니다. 이 절에서는 가능성을 0부터 1까지의 수로 정하는 두 방법을 봅니다. 결과가 모두 같은 정도로 기대될 때는 경우의 수를 세는 수학적 확률을 쓰고, 그렇지 않을 때는 충분히 많이 되풀이한 시행의 상대도수인 통계적 확률을 씁니다. 그리고 어떤 사건이든 확률이 지키는 기본 성질을 확인합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">경우의 수</span><span class="p">상대도수</span><span class="p">집합과 원소의 개수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-stat-freq-prob"><span class="mono">2.1.1</span>수학적 확률과 통계적 확률</a></li>
+        <li><a href="#card-stat-sample-grid"><span class="mono">2.1.2</span>확률의 기본 성질</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=stat-2-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-stat-freq-prob">
+        <header class="card-head">
+          <span class="no">2.1.1</span><h2>많이 던질수록 상대도수는 어디로 갈까?</h2><span class="kind">통계적 확률 · 모의실험</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="시행 횟수 n을 로그 눈금 가로축에, 사건이 일어난 상대도수를 세로축에 그린 꺾은선과 수학적 확률을 나타내는 점선"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-e="0" aria-pressed="true">동전 앞면</button>
+                <button class="chip" type="button" data-e="1">주사위 3의 배수</button>
+                <button class="chip" type="button" data-e="2">두 주사위 합 7</button>
+                <button class="chip" type="button" data-e="3">동전 셋 모두 앞면</button>
+              </div>
+              <div class="go-row">
+                <button class="chip go-10" type="button">10번 더</button>
+                <button class="chip go-100" type="button">100번 더</button>
+                <button class="chip go-1000" type="button">1000번 더</button>
+                <button class="chip go-new" type="button">새로 시작</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>시행 횟수 n</dt><dd class="n-n">—</dd></div>
+                <div><dt>일어난 횟수 r</dt><dd class="n-r">—</dd></div>
+                <div><dt>상대도수 r/n</dt><dd class="n-f">—</dd></div>
+                <div><dt>수학적 확률</dt><dd class="n-p">—</dd></div>
+              </dl>
+              <p class="fig-note">초록 선이 지금 기록, 회색 선은 '새로 시작' 전의 기록입니다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금이며, 시행은 10000번까지 할 수 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>동전을 10번 던져 앞면이 7번 나왔다면, 앞면이 나올 확률은 7/10일까요? 압정처럼 결과가 같은 정도로 기대되지 않는 물체는 확률을 어떻게 정할까요?</li>
+            <li><span class="tag">복원</span>같은 조건에서 되풀이할 수 있고 결과가 우연에 의해 정해지는 실험이나 관찰을 <em>시행</em>이라고 합니다. 시행에서 일어날 수 있는 모든 결과의 집합이 <em>표본공간</em> S이고, 그 부분집합이 <em>사건</em>입니다. 상대도수는 (일어난 횟수) ÷ (전체 횟수)입니다.</li>
+            <li><span class="tag">설명</span>표본공간의 결과가 모두 같은 정도로 기대될 때, 사건 A의 <em>수학적 확률</em>은 P(A) = n(A)/n(S)입니다. 그렇지 않을 때는 같은 시행을 <i>n</i>번 되풀이해 A가 <i>r</i>번 일어났다고 합시다. <i>n</i>을 충분히 크게 하면 상대도수 <i>r</i>/<i>n</i>이 일정한 값 <i>p</i>에 가까워집니다. 이 <i>p</i>를 A의 <em>통계적 확률</em>이라 하고, 실제로는 충분히 큰 <i>n</i>에서의 상대도수를 통계적 확률로 씁니다. 수학적 확률을 알 수 있는 시행에서는 <i>n</i>이 커질수록 상대도수가 수학적 확률에 가까워집니다. 이를 큰수의 법칙이라고 합니다.</li>
+            <li><span class="tag">연결</span>야구 선수의 타율이나 자동차 보험의 사고율은 오랜 기록에서 얻은 상대도수입니다. 통계 단원에서 표본의 비율로 모집단의 비율을 추정할 때 이 생각을 다시 씁니다.</li>
+            <li><span class="tag">적용</span>사건을 고르고 '10번 더'를 몇 번 눌러 보세요. 처음 몇십 번은 그래프가 크게 흔들립니다. '1000번 더'로 <i>n</i>을 수천까지 늘리면 그래프가 점선에 붙나요? '새로 시작'으로 다른 기록을 겹쳐 그리고, 왼쪽(작은 <i>n</i>)과 오른쪽(큰 <i>n</i>)에서 선들이 흩어진 정도를 비교하세요.</li>
+            <li class="warn"><span class="tag">판단</span>상대도수는 확률에 가까워질 뿐, 어떤 <i>n</i>에서 정확히 같아진다는 뜻은 아닙니다. "앞면이 다섯 번 연속 나왔으니 이번에는 뒷면이 나올 차례"라는 생각도 틀립니다. 동전은 앞의 결과를 기억하지 않습니다. 앞쪽의 치우침은 뒤에서 되갚아지는 것이 아니라, 많은 시행 속에 묻혀 비율에 주는 영향이 작아지는 것입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">어떤 압정을 2000번 던졌더니 바늘이 위로 향한 것이 1240번이었습니다. 이 압정을 한 번 던질 때 바늘이 위로 향할 확률로 알맞은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/2<span class="why"><b>결과가 두 가지라서 1/2로 보았습니다.</b> 수학적 확률은 결과들이 같은 정도로 기대될 때만 씁니다. 압정은 모양이 비대칭이라 그렇지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.62<span class="why"><b>맞습니다.</b> 수학적 확률을 쓸 수 없으므로, 충분히 많이 던진 상대도수 1240/2000 = 0.62를 통계적 확률로 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.38<span class="why"><b>반대 결과의 비율입니다.</b> 760/2000 = 0.38은 바늘이 위로 향하지 않은 상대도수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>정할 수 없다<span class="why"><b>통계적 확률을 잊었습니다.</b> 경우의 수로 셀 수 없어도, 많은 시행의 상대도수로 확률을 정할 수 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-stat-sample-grid">
+        <header class="card-head">
+          <span class="no">2.1.2</span><h2>두 눈의 합이 11가지이면 확률은 각각 1/11일까?</h2><span class="kind">수학적 확률 · 기본 성질</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="주사위 두 개의 결과 36가지를 6×6 칸으로 그린 표본공간. 칸을 눌러 사건 A를 칠하고, 아래 막대에서 두 눈의 합으로 묶은 결과 수를 본다."></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="none">비우기 (∅)</button>
+                <button class="chip" type="button" data-k="s7">합이 7</button>
+                <button class="chip" type="button" data-k="dbl">두 눈이 같음</button>
+                <button class="chip" type="button" data-k="le4">합이 4 이하</button>
+                <button class="chip" type="button" data-k="all">전체 (S)</button>
+              </div>
+              <p class="mono eq">—</p>
+              <dl class="nums">
+                <div><dt>n(A)</dt><dd class="n-a">—</dd></div>
+                <div><dt>P(A)</dt><dd class="n-p">—</dd></div>
+                <div><dt>P(A) 소수</dt><dd class="n-d">—</dd></div>
+              </dl>
+              <p class="fig-note">칸을 누르거나 끌어서 사건 A에 넣고 뺄 수 있습니다. 칸 안의 수는 두 눈의 합입니다. 아래 막대는 합이 같은 결과를 한 묶음으로 모은 것이고, 칠한 부분이 A에 든 결과입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>주사위 두 개를 던질 때 두 눈의 합은 2부터 12까지 11가지입니다. 그러면 합이 7일 확률은 1/11일까요?</li>
+            <li><span class="tag">복원</span>확률은 사건이 일어날 가능성을 0부터 1까지의 수로 나타낸 것입니다. 사건은 표본공간의 부분집합이고, 결과 한 개로만 이루어진 사건을 <em>근원사건</em>이라고 합니다.</li>
+            <li><span class="tag">설명</span>수학적 확률 P(A) = n(A)/n(S)는 근원사건이 모두 같은 정도로 기대될 때만 씁니다. 두 주사위를 구별해 (첫째 눈, 둘째 눈)으로 적은 36가지가 그런 표본공간입니다. 합 11가지로 묶으면 묶음마다 든 결과가 1개부터 6개까지 달라서 같은 정도로 기대되지 않습니다. 어떤 사건 A든 0 ≤ n(A) ≤ n(S)이므로 다음 <em>기본 성질</em>이 나옵니다. ① 0 ≤ P(A) ≤ 1 ② 반드시 일어나는 사건 S는 P(S) = 1 ③ 절대로 일어나지 않는 사건 ∅는 P(∅) = 0. 상대도수도 0과 1 사이이므로 통계적 확률도 같은 성질을 갖습니다.</li>
+            <li><span class="tag">연결</span>기본 성질은 계산이 맞았는지 점검하는 첫 기준입니다. 확률이 1보다 크거나 음수로 나왔다면 어딘가 잘못 센 것입니다. 다음 절의 덧셈정리와 여사건의 확률도 이 성질에서 출발합니다.</li>
+            <li><span class="tag">적용</span>'합이 7'을 누르고 칠해진 칸을 세어 보세요. 아래 막대에서 합 7의 묶음과 합 2의 묶음에는 결과가 몇 개씩 있나요? 칸을 하나씩 더하며 P(A)가 1/36씩 커지는 것을 보고, '비우기'와 '전체'에서 P(A)가 각각 얼마인지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>두 주사위가 똑같이 생겨도 (1, 2)와 (2, 1)은 다른 결과입니다. 한 주사위에 색을 칠했다고 생각해 보세요. 색을 칠한다고 주사위가 다르게 구르지는 않으므로 확률도 달라지지 않습니다. 결과를 셀 때는 '각 결과가 같은 정도로 기대되는가'를 먼저 확인합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">주사위 두 개를 던질 때, 두 눈의 곱이 홀수일 확률은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/4<span class="why"><b>맞습니다.</b> 곱이 홀수이려면 두 눈이 모두 홀수여야 합니다. 3 × 3 = 9가지이므로 9/36 = 1/4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/2<span class="why"><b>결과를 '홀수, 짝수' 두 가지로 보았습니다.</b> 두 묶음에 든 결과는 9개와 27개로, 같은 정도로 기대되지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3/4<span class="why"><b>곱이 짝수일 확률입니다.</b> 한 눈이라도 짝수이면 곱은 짝수이므로 27/36 = 3/4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/6<span class="why"><b>곱의 값의 종류를 셌습니다.</b> 홀수인 곱은 1, 3, 5, 9, 15, 25의 6가지이지만, 곱이 3인 결과는 (1, 3), (3, 1)의 2개이고 곱이 9인 결과는 (3, 3) 1개입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=stat-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/stat/freq-prob.js"></script>
+<script src="../../js/cards/stat/dice-grid.js"></script>
+<script src="../../js/cards/stat/sample-grid.js"></script>
+</body>
+</html>

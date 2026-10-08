@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>독립과 종속 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="두 사건의 독립과 종속, P(B|A) = P(B)와 P(A∩B) = P(A)P(B)로 판단하기, 배반과 독립의 차이. 주사위 표본공간과 넓이 모형에서 독립을 찾아보는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-stat-indep-dice canvas { width: 100%; aspect-ratio: 1 / 1; }
+    #card-stat-indep-dice .ctl label.mono { margin-top: 6px; }
+    #card-stat-indep-dice .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+    #card-stat-indep-area canvas { width: 100%; aspect-ratio: 1 / 1; touch-action: none; }
+    #card-stat-indep-area .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="stat" data-sec="2-5">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>독립과 종속</h1>
+    <p class="lead">주사위 두 개를 던질 때 첫째 눈을 알면 '두 눈의 합이 7'일 가능성이 달라질까요? 어떤 사건이 일어났다는 정보가 다른 사건의 확률을 바꾸지 않을 때 두 사건은 독립입니다. 이 절에서는 조건부확률로 독립과 종속을 정의하고, 곱으로 판단하는 방법을 익히고, 자주 헷갈리는 배반과 독립을 구별합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">조건부확률</span><span class="p">확률의 덧셈정리</span><span class="p">배반사건</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-stat-indep-dice"><span class="mono">2.5.1</span>독립과 종속의 판단</a></li>
+        <li><a href="#card-stat-indep-area"><span class="mono">2.5.2</span>독립: 넓이 모형</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=stat-2-5">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-stat-indep-dice">
+        <header class="card-head">
+          <span class="no">2.5.1</span><h2>'합이 7'은 첫째 눈의 영향을 받을까?</h2><span class="kind">독립 · 종속 판단</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="주사위 두 개의 표본공간 36칸에 사건 A는 연두색, 사건 B는 주황 점, A∩B는 진한 테두리로 표시한 그림"></canvas>
+            <div class="ctl">
+              <label class="mono">사건 A</label>
+              <div class="presets pa">
+                <button class="chip" type="button" data-a="0">첫째 눈이 짝수</button>
+                <button class="chip" type="button" data-a="1" aria-pressed="true">첫째 눈이 1</button>
+                <button class="chip" type="button" data-a="2">두 눈이 같음</button>
+              </div>
+              <label class="mono">사건 B</label>
+              <div class="presets pb">
+                <button class="chip" type="button" data-b="0">둘째 눈이 5 이상</button>
+                <button class="chip" type="button" data-b="1" aria-pressed="true">합이 7</button>
+                <button class="chip" type="button" data-b="2">합이 8</button>
+                <button class="chip" type="button" data-b="3">첫째 눈이 2 이하</button>
+              </div>
+              <p class="mono eq">—</p>
+              <dl class="nums n4">
+                <div><dt>P(B)</dt><dd class="n-b">—</dd></div>
+                <div><dt>P(B|A)</dt><dd class="n-ba">—</dd></div>
+                <div><dt>P(A∩B)</dt><dd class="n-ab">—</dd></div>
+                <div><dt>P(A)P(B)</dt><dd class="n-pp">—</dd></div>
+              </dl>
+              <p class="fig-note">A가 일어났다고 하면 연두색 칸만 남습니다. 그 안에서 점이 있는 칸의 비율이 P(B|A), 36칸 전체에서 점이 있는 칸의 비율이 P(B)입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>주사위 두 개를 던져 첫째 눈이 1임을 알았습니다. 두 눈의 합이 7일 확률은 이 정보를 알기 전과 달라질까요? 합이 8이라면 어떨까요?</li>
+            <li><span class="tag">복원</span>P(B|A) = P(A∩B)/P(A)는 A가 일어났을 때 B의 확률입니다. 표본공간을 A로 줄이고, 그 안에서 B가 차지하는 비율을 봅니다.</li>
+            <li><span class="tag">설명</span>P(B|A) = P(B)이면 A가 일어났다는 정보가 B의 확률을 바꾸지 않습니다. 이때 두 사건 A와 B는 서로 <em>독립</em>이라 하고, 독립이 아니면 <em>종속</em>이라고 합니다. P(B|A) = P(A∩B)/P(A)이므로, P(A) &gt; 0, P(B) &gt; 0일 때 A와 B가 서로 독립일 필요충분조건은 P(A∩B) = P(A)P(B)입니다. 이 식은 A와 B를 바꿔도 같으므로 P(A|B) = P(A)와도 같습니다. 또 A와 B가 독립이면 A와 B<sup>c</sup>, A<sup>c</sup>와 B, A<sup>c</sup>와 B<sup>c</sup>도 각각 독립입니다.</li>
+            <li><span class="tag">연결</span>서로 다른 동전이나 주사위처럼 따로 일어나는 시행의 사건은 독립입니다. 그런데 이 카드에서 보듯 같은 시행 안의 두 사건도 독립일 수 있습니다. 독립인 사건에서는 곱셈정리가 P(A∩B) = P(A)P(B)로 간단해지고, 이것이 독립시행의 확률로 이어집니다.</li>
+            <li><span class="tag">적용</span>A = '첫째 눈이 1', B = '합이 7'에서 A의 여섯 칸 중 점이 있는 칸을 세어 보세요. B를 '합이 8'로 바꾸면 어떻게 되나요? A = '두 눈이 같음', B = '둘째 눈이 5 이상'은 판정이 무엇인가요? 모든 조합에서 P(B|A) = P(B)와 P(A∩B) = P(A)P(B)의 판정이 늘 일치하는지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>"배반사건이면 서로 관계가 없으니 독립"이라는 생각은 틀립니다. P(A) &gt; 0, P(B) &gt; 0인 두 사건이 배반이면, A가 일어났을 때 B는 절대 일어나지 않으므로 P(B|A) = 0 ≠ P(B)입니다. 배반은 '함께 일어날 수 없다', 독립은 '한쪽의 정보가 다른 쪽의 확률을 바꾸지 않는다'는 서로 다른 개념입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">주사위 한 개를 던질 때 짝수의 눈이 나오는 사건을 A라 합시다. 다음 중 A와 서로 독립인 사건 B는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>B = {1, 3, 5}<span class="why"><b>배반이므로 종속입니다.</b> A∩B = ∅이므로 P(A∩B) = 0이지만 P(A)P(B) = 1/4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>B = {2, 4}<span class="why"><b>종속입니다.</b> A가 일어나면 B의 확률이 1/3에서 2/3로 커집니다. P(A∩B) = 1/3, P(A)P(B) = 1/6입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>B = {1, 2}<span class="why"><b>맞습니다.</b> P(A∩B) = P({2}) = 1/6이고 P(A)P(B) = 1/2 × 1/3 = 1/6입니다. 주사위 한 번을 던지는 같은 시행 안에서도 독립일 수 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>B = {1, 2, 3}<span class="why"><b>종속입니다.</b> P(A∩B) = P({2}) = 1/6이지만 P(A)P(B) = 1/2 × 1/2 = 1/4입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-stat-indep-area">
+        <header class="card-head">
+          <span class="no">2.5.2</span><h2>두 사각형이 어떻게 겹치면 독립일까?</h2><span class="kind">독립 · 넓이 모형</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="넓이가 1인 정사각형 안의 두 직사각형 A와 B. 끌어서 옮기고 모서리를 끌어 크기를 바꾸며, 겹친 부분의 넓이와 두 넓이의 곱을 비교한다."></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="strip">세로 띠와 가로 띠</button>
+                <button class="chip" type="button" data-k="apart">떨어진 두 사각형</button>
+                <button class="chip" type="button" data-k="inside">B가 A 안에</button>
+              </div>
+              <p class="mono eq">—</p>
+              <dl class="nums n4">
+                <div><dt>P(A)</dt><dd class="n-a">—</dd></div>
+                <div><dt>P(B)</dt><dd class="n-b">—</dd></div>
+                <div><dt>P(A∩B)</dt><dd class="n-ab">—</dd></div>
+                <div><dt>P(A)P(B)</dt><dd class="n-pp">—</dd></div>
+              </dl>
+              <p class="fig-note">정사각형 안에 점 하나를 아무 곳에나 찍는 시행입니다. 전체 넓이가 1이므로 영역의 넓이가 곧 확률입니다. 사각형 안을 끌어 옮기고, 오른쪽 아래 모서리의 네모를 끌어 크기를 바꿉니다. 눈금 한 칸은 0.05입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>넓이가 1인 정사각형 안에 점 하나를 아무 곳에나 찍습니다. 점이 사각형 A에 들어가는 사건과 사각형 B에 들어가는 사건은 언제 독립일까요?</li>
+            <li><span class="tag">복원</span>점을 고르게 찍으면 어떤 영역에 들어갈 확률은 그 영역의 넓이입니다. 두 사건 A, B가 독립일 조건은 P(A∩B) = P(A)P(B)입니다.</li>
+            <li><span class="tag">설명</span>P(B|A) = P(A∩B)/P(A)는 'A 안에서 B가 차지하는 비율'입니다. 독립이려면 이 비율이 정사각형 전체에서 B가 차지하는 비율 P(B)와 같아야 합니다. A가 세로 띠, B가 가로 띠이면 A 안에서도 전체에서도 B는 같은 높이 비율을 차지하므로 언제나 독립입니다. 두 사각형이 떨어져 있으면 P(A∩B) = 0이므로 종속입니다. B가 A 안에 들어가 있으면 P(B|A) = P(B)/P(A)가 P(B)보다 커지므로(P(A) &lt; 1일 때) 역시 종속입니다.</li>
+            <li><span class="tag">연결</span>두 사건이 독립이면 덧셈정리는 P(A∪B) = P(A) + P(B) − P(A)P(B)가 됩니다. 넓이로 확률을 재는 생각은 통계 단원에서 연속확률변수의 확률을 넓이로 구할 때 다시 씁니다.</li>
+            <li><span class="tag">적용</span>'세로 띠와 가로 띠'에서 띠를 옮기거나 폭을 바꿔도 판정이 독립으로 남는지 확인하세요. 그다음 띠가 아닌 두 사각형을 일부만 겹치게 하면서 P(A∩B) = P(A)P(B)가 되는 위치를 찾아보세요. 예를 들어 A가 정사각형의 절반을 차지하면, B는 A 안에 얼마만큼 들어가야 할까요?</li>
+            <li class="warn"><span class="tag">판단</span>독립은 그림의 모양이 아니라 수치로 판단합니다. 겹쳐 있다고 독립인 것도 아니고, 떨어져 있다고 서로 무관한 것도 아닙니다. 떨어진 두 사각형은 '한쪽이 일어나면 다른 쪽은 절대 일어나지 않는다'는 강한 관계, 곧 종속입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">두 사건 A, B가 서로 독립이고 P(A) = 0.4, P(B) = 0.5일 때, P(A∪B)는?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.9<span class="why"><b>배반처럼 더했습니다.</b> 독립인 두 사건은 P(A∩B) = 0.2 &gt; 0이므로 겹친 부분을 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.7<span class="why"><b>맞습니다.</b> 독립이므로 P(A∩B) = 0.4 × 0.5 = 0.2이고, P(A∪B) = 0.4 + 0.5 − 0.2 = 0.7입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.2<span class="why"><b>P(A∩B)입니다.</b> '그리고'의 확률을 구했습니다. '또는'은 합집합입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.8<span class="why"><b>1 − P(A∩B)입니다.</b> 이것은 A와 B가 함께 일어나지 않을 확률입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=stat-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">1문항</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/stat/dice-grid.js"></script>
+<script src="../../js/cards/stat/indep-dice.js"></script>
+<script src="../../js/cards/stat/indep-area.js"></script>
+</body>
+</html>

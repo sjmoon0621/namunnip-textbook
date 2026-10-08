@@ -1,0 +1,51 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/stat-lib.js",
+    "js/cards/stat/binom-normal.js"
+  ],
+  "short": "이항분포와 정규분포의 관계"
+}
+-->
+<article class="card" id="card-stat-binom-normal">
+  <header class="card-head">
+    <span class="no"></span><h2>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</h2><span class="kind">이항분포 · 정규분포 근사</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas class="cv-wide" aria-label="이항분포 B(n, p)의 막대그래프와 평균, 표준편차가 같은 정규분포 N(np, npq)의 곡선. X ≤ k인 막대를 진하게 칠함"></canvas>
+      <div class="ctl">
+        <label class="mono">시행 횟수 <i>n</i> = <output class="n-out">10</output></label>
+        <input class="n" type="range" min="5" max="200" step="1" value="10" aria-label="시행 횟수 n">
+        <label class="mono">성공 확률 <i>p</i> = <output class="p-out">0.20</output></label>
+        <input class="p" type="range" min="0.05" max="0.95" step="0.05" value="0.2" aria-label="성공 확률 p">
+        <dl class="nums n4">
+          <div><dt>평균 <i>np</i></dt><dd class="n-m">—</dd></div>
+          <div><dt>표준편차 √<i>npq</i></dt><dd class="n-s">—</dd></div>
+          <div><dt class="d-ex">P(X ≤ k)</dt><dd class="n-ex">—</dd></div>
+          <div><dt>정규분포 근사</dt><dd class="n-ap">—</dd></div>
+        </dl>
+        <p class="fig-note">막대는 B(<i>n</i>, <i>p</i>)의 확률, 곡선은 평균과 표준편차가 같은 정규분포 N(<i>np</i>, <i>npq</i>)입니다. 진한 막대는 <i>X</i> ≤ <i>k</i>인 부분이고, <i>k</i>는 <i>np</i> + √<i>npq</i>를 넘지 않는 가장 큰 정수입니다. P(<i>X</i> ≤ <i>k</i>)는 이항분포로 계산한 정확한 값, 근사값은 P(<i>Z</i> ≤ (<i>k</i> − <i>np</i>)/√<i>npq</i>)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>동전을 100번 던져 앞면이 60번 이하로 나올 확률을 이항분포로 구하려면 <sub>100</sub>C<sub><i>k</i></sub>(1/2)<sup>100</sup>을 61개나 더해야 합니다. 더 간단한 방법은 없을까요?</li>
+      <li><span class="tag">복원</span>B(<i>n</i>, <i>p</i>)의 평균은 <i>np</i>, 표준편차는 √<i>npq</i>입니다(<i>q</i> = 1 − <i>p</i>). 정규분포 N(<i>m</i>, σ<sup>2</sup>)의 확률은 <i>Z</i> = (<i>X</i> − <i>m</i>)/σ로 표준화해 표준정규분포표에서 읽습니다.</li>
+      <li><span class="tag">설명</span><i>n</i>이 커지면 이항분포의 막대그래프는 평균 <i>np</i>를 중심으로 좌우가 거의 대칭인 종 모양이 됩니다. 그래서 <i>X</i>가 B(<i>n</i>, <i>p</i>)를 따르고 <i>n</i>이 충분히 크면, <i>X</i>는 근사적으로 정규분포 <b>N(<i>np</i>, <i>npq</i>)</b>를 따른다고 봅니다. 확률은 <i>Z</i> = (<i>X</i> − <i>np</i>)/√<i>npq</i>로 표준화해 구합니다. 앞의 동전은 <i>m</i> = 50, σ = 5이므로 P(<i>X</i> ≤ 60) ≈ P(<i>Z</i> ≤ 2) = 0.9772입니다.</li>
+      <li><span class="tag">연결</span>이 근사 덕분에 표본비율처럼 '성공 횟수를 센 값'도 정규분포로 다룰 수 있습니다. 모비율을 추정하고 여론조사의 오차 범위를 계산하는 바탕이 이것입니다.</li>
+      <li><span class="tag">적용</span><i>p</i> = 0.2로 두고 <i>n</i>을 5에서 100까지 천천히 키워 보세요. <i>n</i>이 작을 때 막대는 어느 쪽으로 치우쳐 있나요? P(<i>X</i> ≤ <i>k</i>)와 '정규분포 근사'의 차이는 <i>n</i>이 커질수록 어떻게 되나요? <i>p</i>를 0.5로 바꾸면 더 작은 <i>n</i>에서도 곡선이 잘 맞나요?</li>
+      <li class="warn"><span class="tag">판단</span>근사는 <i>n</i>이 충분히 클 때만 씁니다. 흔히 <i>np</i> ≥ 5, <i>nq</i> ≥ 5를 기준으로 삼으며, <i>p</i>가 0이나 1에 가까울수록 더 큰 <i>n</i>이 필요합니다. 또 이항분포는 정수에만 확률이 있지만 정규분포는 연속이므로, <i>n</i>이 작으면 근사값이 정확한 값과 꽤 다릅니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">확률변수 <i>X</i>가 이항분포 B(100, 0.2)를 따를 때, 정규분포로 근사하여 구한 P(<i>X</i> ≥ 24)는? (단, P(0 ≤ <i>Z</i> ≤ 0.25) = 0.0987, P(0 ≤ <i>Z</i> ≤ 1) = 0.3413)</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.1587<span class="why"><b>맞습니다.</b> <i>m</i> = 100 × 0.2 = 20, σ = √(100 × 0.2 × 0.8) = 4이므로 P(<i>X</i> ≥ 24) ≈ P(<i>Z</i> ≥ 1) = 0.5 − 0.3413 = 0.1587입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.3413<span class="why"><b>20부터 24까지의 확률입니다.</b> 표에서 읽은 값은 P(0 ≤ <i>Z</i> ≤ 1)이므로 0.5에서 빼야 24 이상의 확률이 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.8413<span class="why"><b>반대쪽 넓이입니다.</b> 0.5 + 0.3413은 P(<i>Z</i> ≤ 1), 곧 <i>X</i>가 24 이하일 확률에 해당합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.4013<span class="why"><b>분산을 표준편차로 썼습니다.</b> <i>npq</i> = 16은 분산입니다. 16으로 나누면 <i>Z</i> = 0.25가 되지만, 표준편차는 √16 = 4입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

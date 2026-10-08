@@ -13429,29 +13429,88 @@ window.TOC = [
       "n": 1,
       "title": "함수의 극한",
       "code": "12미적Ⅰ-01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc1-lim-approach",
+        "title": "x가 1에 다가가면 f(x)는 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-one-sided",
+        "title": "왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-infinity",
+        "title": "함숫값이 한없이 커지는 것도 극한이라고 할까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "극한의 성질과 극한값",
       "code": "12미적Ⅰ-01-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc1-lim-laws",
+        "title": "두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-indeterminate",
+        "title": "대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-lim-coef",
+        "title": "분모가 0으로 가는데 극한값이 있다면 분자는?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "함수의 연속",
       "code": "12미적Ⅰ-01-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc1-cont-three",
+        "title": "그래프가 '이어져 있다'는 것을 극한으로 어떻게 말할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-cont-interval",
+        "title": "구간의 끝점까지 연속이라는 것은 무슨 뜻일까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "연속함수의 성질",
       "code": "12미적Ⅰ-01-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-calc1-cont-props",
+        "title": "연속함수끼리 더하고 곱하고 나누어도 연속일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-evt",
+        "title": "연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc1-ivt",
+        "title": "그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?"
+       }
+      ]
      }
     ]
    },
@@ -13678,43 +13737,109 @@ window.TOC = [
       "n": 1,
       "title": "확률의 뜻과 기본 성질",
       "code": "12확통02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-freq-prob",
+        "title": "많이 던질수록 상대도수는 어디로 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-sample-grid",
+        "title": "두 눈의 합이 11가지이면 확률은 각각 1/11일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "확률의 덧셈정리",
       "code": "12확통02-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-add-rule",
+        "title": "'A 또는 B'의 확률은 두 확률의 합일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-add-multiples",
+        "title": "4의 배수와 6의 배수는 어디에서 겹칠까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "여사건의 확률",
       "code": "12확통02-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-birthday",
+        "title": "몇 명이 모이면 생일이 같은 두 사람이 있을 확률이 1/2을 넘을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-at-least",
+        "title": "불량품이 적어도 한 개 섞일 확률은 어떻게 구할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "조건부확률",
       "code": "12확통02-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-cond-table",
+        "title": "버스로 오는 학생만 보면 지각할 확률이 달라질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-cond-test",
+        "title": "검사에서 양성이 나오면 정말 병에 걸린 것일까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "독립과 종속",
       "code": "12확통02-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-indep-dice",
+        "title": "'합이 7'은 첫째 눈의 영향을 받을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-indep-area",
+        "title": "두 사각형이 어떻게 겹치면 독립일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "확률의 곱셈정리",
       "code": "12확통02-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-tree-draw",
+        "title": "두 번째 공이 빨간 공일 확률은 첫 번째 공에 달려 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-indep-trials",
+        "title": "동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?"
+       }
+      ]
      }
     ]
    },
@@ -13744,43 +13869,114 @@ window.TOC = [
       "n": 2,
       "title": "기댓값과 표준편차",
       "code": "12확통03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-balance",
+        "title": "확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-linear-rv",
+        "title": "점수를 두 배 하고 5점을 더하면 표준편차는?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "이항분포",
       "code": "12확통03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-binom-shape",
+        "title": "자유투 10번 중 몇 번 들어갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-large-numbers",
+        "title": "많이 던질수록 비율은 확률에 다가갈까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "정규분포",
       "code": "12확통03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-normal-curve",
+        "title": "평균과 표준편차만으로 종 모양이 정해질까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-standardize",
+        "title": "정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-binom-normal",
+        "title": "시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "모집단과 표본",
       "code": "12확통03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-random-sample",
+        "title": "정문 앞에서 만난 학생 20명으로 평균 통학 시간을 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-draw-replace",
+        "title": "공 4개에서 2개를 뽑는 방법은 몇 가지일까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "표본평균과 표본비율",
       "code": "12확통03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-xbar-dist",
+        "title": "표본을 크게 뽑으면 표본평균은 덜 흔들릴까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-phat-dist",
+        "title": "100명에게 물으면 찬성 비율은 얼마나 흔들릴까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "모평균과 모비율의 추정",
       "code": "12확통03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-stat-ci-mean",
+        "title": "신뢰도 95%의 신뢰구간은 무엇을 95% 믿는 것일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-stat-ci-prop",
+        "title": "여론조사의 '오차 범위 ±3.1%p'는 어디서 나올까?"
+       }
+      ]
      }
     ]
    }
@@ -13801,8 +13997,19 @@ window.TOC = [
       "n": 1,
       "title": "수열의 수렴과 발산",
       "code": "12미적Ⅱ-01-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-seq-converge",
+        "title": "수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-seq-far",
+        "title": "처음 몇 항만 보고 수렴·발산을 판정해도 될까?"
+       }
+      ]
      },
      {
       "n": 2,

@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>기댓값과 표준편차 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="이산확률변수의 기댓값(평균), 분산, 표준편차와 aX + b의 평균·분산·표준편차. 막대를 끌어 무게중심과 흩어짐을 보는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-stat-balance canvas { width: 100%; aspect-ratio: 4 / 3; touch-action: none; cursor: ns-resize; }
+  </style>
+</head>
+<body data-course="stat" data-sec="3-2">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>기댓값과 표준편차</h1>
+    <p class="lead">복권 한 장을 사면 평균 얼마를 받을까요? 확률분포를 알면 값마다 확률을 곱해 더하는 것으로 '평균적으로 기대되는 값'을 구할 수 있습니다. 이 절에서는 기댓값을 분포의 무게중심으로 보고, 값들이 평균에서 얼마나 퍼져 있는지를 분산과 표준편차로 잽니다. 단위를 바꾸거나 점수를 환산할 때 이 값들이 어떻게 변하는지도 확인합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">확률변수와 확률분포</span><span class="p">자료의 평균과 분산</span><span class="p">∑ 기호</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-stat-balance"><span class="mono">3.2.1</span>기댓값과 표준편차</a></li>
+        <li><a href="#card-stat-linear-rv"><span class="mono">3.2.2</span>aX + b의 평균과 표준편차</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=stat-3-2">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-stat-balance">
+        <header class="card-head">
+          <span class="no">3.2.1</span><h2>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</h2><span class="kind">기댓값 · 분산 · 표준편차</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="X = 0, 1, 2, 3, 4의 확률 막대와 그 아래 시소. 받침점은 기댓값, 위의 띠는 평균 ± 표준편차"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-w="1,4,6,4,1" aria-pressed="true">대칭</button>
+                <button class="chip" type="button" data-w="6,4,2,1,1">한쪽으로 치우침</button>
+                <button class="chip" type="button" data-w="5,0,0,0,5">양 끝</button>
+                <button class="chip" type="button" data-w="0,0,1,0,0">한 값</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>E(X) = ∑xP</dt><dd class="n-e">—</dd></div>
+                <div><dt>E(X²) = ∑x²P</dt><dd class="n-e2">—</dd></div>
+                <div><dt>V(X)</dt><dd class="n-v">—</dd></div>
+                <div><dt>σ(X) = √V(X)</dt><dd class="n-s">—</dd></div>
+              </dl>
+              <p class="fig-note">막대를 위아래로 끌어 비율을 바꿉니다. 막대 위의 수가 확률이며, 모든 막대의 확률 합은 늘 1이 되도록 맞춥니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>값이 0부터 4까지인 두 확률변수가 있습니다. 어느 쪽이 '평균적으로' 더 큰 값을 내고, 어느 쪽이 더 들쑥날쑥한지 확률분포만 보고 수 하나로 말할 수 있을까요?</li>
+            <li><span class="tag">복원</span>자료의 평균은 (변량의 합) ÷ (자료 수)이고, 도수분포표에서는 ∑(계급값 × 도수) ÷ (도수의 합)입니다. 분산은 편차의 제곱의 평균, 표준편차는 그 양의 제곱근입니다.</li>
+            <li><span class="tag">설명</span>이산확률변수 <i>X</i>가 <i>x</i><sub>1</sub>, …, <i>x<sub>n</sub></i>을 확률 <i>p</i><sub>1</sub>, …, <i>p<sub>n</sub></i>로 가질 때, <em>기댓값</em>(평균)은 E(<i>X</i>) = ∑<i>x<sub>i</sub>p<sub>i</sub></i>입니다. 상대도수가 확률로 바뀐 평균이라고 보면 됩니다. 평균을 <i>m</i>이라 하면 <em>분산</em>은 V(<i>X</i>) = ∑(<i>x<sub>i</sub></i> − <i>m</i>)<sup>2</sup><i>p<sub>i</sub></i>이고, 전개하면 V(<i>X</i>) = E(<i>X</i><sup>2</sup>) − {E(<i>X</i>)}<sup>2</sup>입니다. <em>표준편차</em>는 σ(<i>X</i>) = √V(<i>X</i>)로, <i>X</i>와 단위가 같습니다. 막대를 무게로 보면 E(<i>X</i>)는 시소가 수평을 이루는 받침점, 곧 무게중심입니다.</li>
+            <li><span class="tag">연결</span>기댓값은 게임이 공정한지, 보험료가 적절한지 판단하는 데 씁니다. 뒤에서 배울 이항분포와 정규분포도 평균과 표준편차 두 수로 모양이 정해집니다.</li>
+            <li><span class="tag">적용</span>'대칭'에서 <i>x</i> = 0과 <i>x</i> = 4의 막대만 같은 만큼 키워 보세요. 받침점은 그대로인데 무엇이 커지나요? '한쪽으로 치우침'에서 받침점은 가장 높은 막대와 같은 곳에 있나요? '한 값'에서 σ(<i>X</i>)는 얼마인가요?</li>
+            <li class="warn"><span class="tag">판단</span>기댓값은 '가장 자주 나오는 값'이나 '실제로 나올 수 있는 값'이 아닙니다. 주사위 눈의 기댓값 3.5는 한 번도 나오지 않습니다. 또 V(<i>X</i>) = E(<i>X</i><sup>2</sup>) − {E(<i>X</i>)}<sup>2</sup>에서 E(<i>X</i><sup>2</sup>)를 {E(<i>X</i>)}<sup>2</sup>로 착각하면 분산이 늘 0이 되는 이상한 결과가 나옵니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">확률변수 <i>X</i>가 0, 1, 2를 각각 확률 1/2, 1/4, 1/4로 가질 때, V(<i>X</i>)는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>11/16<span class="why"><b>맞습니다.</b> E(<i>X</i>) = 1/4 + 2/4 = 3/4, E(<i>X</i><sup>2</sup>) = 1/4 + 4/4 = 5/4이므로 V(<i>X</i>) = 5/4 − 9/16 = 11/16입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5/4<span class="why"><b>E(<i>X</i><sup>2</sup>)에서 멈췄습니다.</b> 분산은 E(<i>X</i><sup>2</sup>)에서 평균의 제곱 9/16을 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/2<span class="why"><b>평균을 제곱하지 않고 뺐습니다.</b> 5/4 − 3/4가 아니라 5/4 − (3/4)<sup>2</sup>입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3/4<span class="why"><b>기댓값입니다.</b> 3/4는 분포의 무게중심이고, 분산은 그 주변으로 퍼진 정도입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-stat-linear-rv">
+        <header class="card-head">
+          <span class="no">3.2.2</span><h2>점수를 두 배 하고 5점을 더하면 표준편차는?</h2><span class="kind">E(aX + b) · σ(aX + b)</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="주사위 눈 X의 분포와 Y = aX + b의 분포를 같은 수직선 위에 나란히 그린 그림. 각 분포의 평균과 평균 ± 표준편차 표시"></canvas>
+            <div class="ctl">
+              <label class="mono">곱하는 수 <i>a</i> = <output class="a-out">2</output></label>
+              <input class="a" type="range" min="-3" max="3" step="0.5" value="2" aria-label="곱하는 수 a">
+              <label class="mono">더하는 수 <i>b</i> = <output class="b-out">−5</output></label>
+              <input class="b" type="range" min="-8" max="8" step="1" value="-5" aria-label="더하는 수 b">
+              <dl class="nums n4">
+                <div><dt>E(Y)</dt><dd class="n-e">—</dd></div>
+                <div><dt>aE(X) + b</dt><dd class="n-e2">—</dd></div>
+                <div><dt>σ(Y)</dt><dd class="n-s">—</dd></div>
+                <div><dt>|a|σ(X)</dt><dd class="n-s2">—</dd></div>
+              </dl>
+              <p class="fig-note"><i>X</i>는 주사위 한 개의 눈으로 E(<i>X</i>) = 3.5, V(<i>X</i>) = 35/12, σ(<i>X</i>) ≈ 1.708입니다. E(<i>Y</i>)와 σ(<i>Y</i>)는 <i>Y</i>의 여섯 값으로 직접 계산한 값입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>시험 점수를 모두 2배로 하고 5점을 빼서 환산하면 평균은 쉽게 짐작됩니다. 점수가 흩어진 정도, 곧 표준편차도 2배에서 5를 뺀 값이 될까요?</li>
+            <li><span class="tag">복원</span>E(<i>X</i>) = ∑<i>x<sub>i</sub>p<sub>i</sub></i>, V(<i>X</i>) = ∑(<i>x<sub>i</sub></i> − <i>m</i>)<sup>2</sup><i>p<sub>i</sub></i>, σ(<i>X</i>) = √V(<i>X</i>)입니다. 확률의 합 ∑<i>p<sub>i</sub></i>는 1입니다.</li>
+            <li><span class="tag">설명</span><i>Y</i> = <i>aX</i> + <i>b</i>는 <i>X</i>의 값마다 <i>ax<sub>i</sub></i> + <i>b</i>를 같은 확률 <i>p<sub>i</sub></i>로 갖습니다. 그래서 E(<i>Y</i>) = ∑(<i>ax<sub>i</sub></i> + <i>b</i>)<i>p<sub>i</sub></i> = <i>a</i>∑<i>x<sub>i</sub>p<sub>i</sub></i> + <i>b</i>∑<i>p<sub>i</sub></i> = <b><i>a</i>E(<i>X</i>) + <i>b</i></b>입니다. 편차는 (<i>ax<sub>i</sub></i> + <i>b</i>) − (<i>am</i> + <i>b</i>) = <i>a</i>(<i>x<sub>i</sub></i> − <i>m</i>)로 <i>b</i>가 사라지므로 <b>V(<i>aX</i> + <i>b</i>) = <i>a</i><sup>2</sup>V(<i>X</i>)</b>, <b>σ(<i>aX</i> + <i>b</i>) = |<i>a</i>|σ(<i>X</i>)</b>입니다. 모든 값을 똑같이 옮기는 <i>b</i>는 퍼짐을 바꾸지 못하고, 간격을 늘리는 <i>a</i>만 퍼짐을 바꿉니다.</li>
+            <li><span class="tag">연결</span>섭씨온도를 화씨온도로 바꾸는 F = 1.8C + 32, 원을 달러로 바꾸는 환산도 모두 <i>aX</i> + <i>b</i> 꼴입니다. 뒤에서 정규분포를 표준화할 때 쓰는 <i>Z</i> = (<i>X</i> − <i>m</i>)/σ도 <i>a</i> = 1/σ, <i>b</i> = −<i>m</i>/σ인 경우로, 평균 0, 표준편차 1이 되는 까닭이 이 성질입니다.</li>
+            <li><span class="tag">적용</span><i>a</i>를 1에 두고 <i>b</i>만 움직여 보세요. 분포는 어떻게 움직이고, σ(<i>Y</i>)는 변하나요? <i>a</i>를 −2로 하면 분포가 어떻게 놓이고, σ(<i>Y</i>)는 음수가 되나요? <i>a</i> = 0이면 무엇이 보이나요?</li>
+            <li class="warn"><span class="tag">판단</span>"σ(2<i>X</i> − 5) = 2σ(<i>X</i>) − 5"나 "V(2<i>X</i>) = 2V(<i>X</i>)"는 흔한 실수입니다. 더하는 수는 퍼짐과 무관하고, 분산은 제곱 단위라서 <i>a</i><sup>2</sup>배가 됩니다. 표준편차는 0 이상이므로 <i>a</i>가 음수여도 |<i>a</i>|배입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">E(<i>X</i>) = 10, V(<i>X</i>) = 4인 확률변수 <i>X</i>에 대하여 <i>Y</i> = −3<i>X</i> + 5일 때, σ(<i>Y</i>)는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>6<span class="why"><b>맞습니다.</b> σ(<i>X</i>) = √4 = 2이므로 σ(<i>Y</i>) = |−3| × 2 = 6입니다. 평균은 E(<i>Y</i>) = −25입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−6<span class="why"><b>절댓값을 빠뜨렸습니다.</b> 표준편차는 퍼진 정도이므로 음수가 될 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>36<span class="why"><b>분산입니다.</b> V(<i>Y</i>) = (−3)<sup>2</sup> × 4 = 36이고, 표준편차는 그 제곱근입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>11<span class="why"><b>더하는 수까지 반영했습니다.</b> 3 × 2 + 5로 계산했지만, 모든 값에 5를 더해도 퍼짐은 그대로입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=stat-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">1문항</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/stat/stat-lib.js"></script>
+<script src="../../js/cards/stat/balance.js"></script>
+<script src="../../js/cards/stat/stat-lib.js"></script>
+<script src="../../js/cards/stat/linear-rv.js"></script>
+</body>
+</html>

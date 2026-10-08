@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc1/ivt.js"
+  ],
+  "short": "사잇값 정리와 실근의 존재"
+}
+-->
+<style>
+#card-calc1-ivt canvas { aspect-ratio: 16 / 11; }
+#card-calc1-ivt .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc1-ivt .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+#card-calc1-ivt .btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+#card-calc1-ivt .log { font-family: var(--f-mono); font-size: 12px; line-height: 1.55; color: var(--ink-2); margin: 4px 0; min-height: 3.1em; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc1-ivt">
+  <header class="card-head">
+    <span class="no"></span><h2>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</h2><span class="kind">사잇값 정리 · 이분법</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="고른 함수의 그래프와 높이 k의 가로선, 반으로 줄여 가는 구간"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="cub" aria-pressed="true"><i>x</i><sup>3</sup> + <i>x</i> − 1, [0, 1]</button>
+          <button class="chip" type="button" data-k="sq"><i>x</i><sup>2</sup> − 2, [1, 2]</button>
+          <button class="chip" type="button" data-k="pole">1/(<i>x</i> − 1), [0, 2]</button>
+        </div>
+        <label class="mono">높이 <i>k</i> = <output class="k-out">0</output></label>
+        <input class="sk" type="range" min="-1" max="1" step="0.1" value="0" aria-label="f(c) = k가 되는 c를 찾을 높이 k">
+        <div class="btns">
+          <button class="chip go-half" type="button">구간을 반으로</button>
+          <button class="chip go-reset" type="button">처음 구간으로</button>
+        </div>
+        <dl class="nums">
+          <div><dt>지금 구간</dt><dd class="n-i">—</dd></div>
+          <div><dt>구간의 폭</dt><dd class="n-w">—</dd></div>
+          <div><dt>f(c) = k인 c</dt><dd class="n-c">—</dd></div>
+        </dl>
+        <p class="log">—</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>방정식 <i>x</i><sup>3</sup> + <i>x</i> − 1 = 0은 인수분해가 되지 않습니다. 그래도 f(0) = −1 &lt; 0, f(1) = 1 &gt; 0이라는 것만으로 0과 1 사이에 근이 있다고 말할 수 있을까요? 그 근을 원하는 만큼 정확하게 찾으려면 어떻게 해야 할까요?</li>
+      <li><span class="tag">복원</span>다항함수는 모든 실수에서 연속입니다. 연속인 함수의 그래프는 구간 안에서 끊어지지 않습니다. 방정식 f(<i>x</i>) = 0의 실근은 그래프가 <i>x</i>축과 만나는 점의 <i>x</i>좌표입니다.</li>
+      <li><span class="tag">설명</span><em>사잇값 정리</em>: 함수 f(<i>x</i>)가 닫힌구간 [<i>a</i>, <i>b</i>]에서 연속이고 f(<i>a</i>) ≠ f(<i>b</i>)이면, f(<i>a</i>)와 f(<i>b</i>) 사이의 임의의 값 <i>k</i>에 대하여 f(<i>c</i>) = <i>k</i>인 <i>c</i>가 열린구간 (<i>a</i>, <i>b</i>)에 적어도 하나 존재합니다. 특히 f(<i>a</i>)와 f(<i>b</i>)의 부호가 다르면(f(<i>a</i>)f(<i>b</i>) &lt; 0), <i>k</i> = 0으로 두어 방정식 f(<i>x</i>) = 0이 (<i>a</i>, <i>b</i>)에서 적어도 하나의 실근을 가집니다.</li>
+      <li><span class="tag">연결</span>이 정리를 되풀이하면 근의 위치를 좁힐 수 있습니다. 구간의 가운데 <i>m</i>에서 f(<i>m</i>) − <i>k</i>의 부호를 보고, 부호가 바뀌는 절반을 남깁니다. 한 번에 폭이 절반이 되므로 10번이면 처음 폭의 1/1024 안에 근이 있습니다. 이 방법을 <em>이분법</em>이라 합니다.</li>
+      <li><span class="tag">적용</span>첫째 함수에서 '구간을 반으로'를 여러 번 눌러 근을 소수 셋째 자리까지 찾으세요. 둘째 함수로 바꾸면 그 근이 어떤 수인지 알아보세요. <i>k</i>를 움직여 f(<i>a</i>)와 f(<i>b</i>) 사이의 높이마다 <i>c</i>가 있는지도 보세요. 셋째 함수에서는 같은 일을 하면 무엇이 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>1/(<i>x</i> − 1)은 f(0) = −1, f(2) = 1로 부호가 다르지만 0과 2 사이에서 0이 되는 점이 없습니다. <i>x</i> = 1에서 정의되지 않아 [0, 2]에서 연속이 아니므로 사잇값 정리를 쓸 수 없습니다. 이분법은 근 대신 끊어진 점 1로 좁혀 들어갑니다. 또 정리는 근이 '적어도 하나' 있다고 할 뿐, 몇 개인지는 알려 주지 않습니다. 부호가 같다고 근이 없다는 뜻도 아닙니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">사잇값 정리로 방정식 <i>x</i><sup>3</sup> − 3<i>x</i> + 1 = 0의 실근이 존재함을 보장할 수 있는 구간은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>(−1, 0)<span class="why"><b>부호가 바뀌지 않습니다.</b> f(−1) = 3, f(0) = 1로 둘 다 양수입니다. 이것만으로는 근이 있다고 보장할 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>(0, 1)<span class="why"><b>맞습니다.</b> f(0) = 1 &gt; 0, f(1) = −1 &lt; 0이고 f는 다항함수라 [0, 1]에서 연속이므로 (0, 1)에 실근이 적어도 하나 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(2, 3)<span class="why"><b>부호가 바뀌지 않습니다.</b> f(2) = 3, f(3) = 19로 둘 다 양수입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>인수분해가 되지 않아 알 수 없다<span class="why"><b>정리의 쓰임을 놓쳤습니다.</b> 사잇값 정리는 근을 직접 구하지 않고 끝점의 함숫값 부호만으로 근의 존재를 보장합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

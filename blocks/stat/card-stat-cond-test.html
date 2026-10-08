@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/stat/cond-test.js"
+  ],
+  "short": "조건부확률: 진단 검사"
+}
+-->
+<style>
+#card-stat-cond-test canvas { width: 100%; aspect-ratio: 8 / 5; }
+#card-stat-cond-test .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-stat-cond-test">
+  <header class="card-head">
+    <span class="no"></span><h2>검사에서 양성이 나오면 정말 병에 걸린 것일까?</h2><span class="kind">조건부확률 · 실생활</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="1000명을 점 하나씩으로 그린 그림. 채운 초록 점은 양성인 환자, 빈 초록 점은 음성인 환자, 채운 주황 점은 양성인 비환자, 회색 점은 음성인 비환자"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip go-pos" type="button" aria-pressed="false">양성만 보기</button>
+        </div>
+        <label class="mono">유병률 P(D) = <output class="p-out">1</output>%</label>
+        <input class="p" type="range" min="0" max="7" step="1" value="3" aria-label="유병률">
+        <label class="mono">민감도 P(T|D) = <output class="se-out">90</output>%</label>
+        <input class="se" type="range" min="50" max="99" step="1" value="90" aria-label="민감도">
+        <label class="mono">특이도 P(Tᶜ|Dᶜ) = <output class="sp-out">95.0</output>%</label>
+        <input class="sp" type="range" min="80" max="99.9" step="0.1" value="95" aria-label="특이도">
+        <p class="mono eq">—</p>
+        <dl class="nums n4">
+          <div><dt>양성 (1000명당)</dt><dd class="n-t">—</dd></div>
+          <div><dt>그중 환자</dt><dd class="n-dt">—</dd></div>
+          <div><dt>P(D|T)</dt><dd class="n-ppv">—</dd></div>
+          <div><dt>P(T|D)</dt><dd class="n-se">—</dd></div>
+        </dl>
+        <p class="fig-note">수치는 설명을 위한 모식입니다. D는 환자인 사건, T는 양성 판정을 받는 사건입니다. 점의 수는 1000명 기준 기댓값을 반올림했고, 아래 수치는 반올림하지 않고 계산했습니다. 채운 점이 양성 판정이고, 초록은 환자, 주황은 환자가 아닌 사람입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>어떤 검사가 환자의 90%를 양성으로, 환자가 아닌 사람의 95%를 음성으로 가려냅니다. 이 검사에서 양성이 나온 사람이 실제 환자일 확률은 90%일까요?</li>
+      <li><span class="tag">복원</span>P(B|A) = P(A∩B)/P(A)이고, 일반적으로 P(B|A) ≠ P(A|B)입니다. 전체 집단을 두 기준으로 나누면 네 묶음이 생깁니다.</li>
+      <li><span class="tag">설명</span>환자인 사건을 D, 양성인 사건을 T라 합시다. <em>민감도</em>는 P(T|D), <em>특이도</em>는 P(T<sup>c</sup>|D<sup>c</sup>)입니다. 우리가 알고 싶은 것은 P(D|T) = P(D∩T)/P(T)입니다. 유병률이 1%이면 1000명 중 환자 10명에서 양성 9명, 환자가 아닌 990명에서 양성 49.5명이 기대됩니다. 그래서 P(D|T) = 9/(9 + 49.5) ≈ 0.154입니다. 양성 판정을 받은 사람의 대부분은 환자가 아닙니다. 환자가 아닌 사람이 훨씬 많아서 5%의 거짓 양성도 수가 많기 때문입니다.</li>
+      <li><span class="tag">연결</span>선별 검사에서 양성이 나오면 더 정확한 검사로 다시 확인하는 이유가 여기에 있습니다. 스팸 메일 거르기나 보안 검색의 오경보도 같은 구조로 해석합니다. P(T)는 환자와 비환자 두 경로의 확률을 더해 구하는데, 이 계산은 확률의 곱셈정리에서 다시 정리합니다.</li>
+      <li><span class="tag">적용</span>'양성만 보기'를 켜고 채운 점 중 초록 점의 비율을 눈으로 어림한 뒤 P(D|T)와 비교하세요. 민감도와 특이도는 그대로 두고 유병률만 0.1%에서 20%까지 바꾸면 P(D|T)가 어떻게 달라지나요? 특이도를 99%로 올리면 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>"검사 정확도가 90%이니 양성이면 90% 확률로 환자"라는 해석은 P(T|D)와 P(D|T)를 바꿔 읽은 것입니다. 또 이 카드의 수치는 설명용 모식입니다. 실제 검사의 민감도·특이도와 유병률은 질병과 검사 대상 집단마다 다릅니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">유병률 2%인 집단에서 민감도 90%, 특이도 95%인 검사를 했습니다. 양성이 나온 사람이 실제 환자일 확률에 가장 가까운 것은?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>90%<span class="why"><b>민감도 P(T|D)입니다.</b> 환자일 때 양성일 확률이지, 양성일 때 환자일 확률이 아닙니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 27%<span class="why"><b>맞습니다.</b> P(D∩T) = 0.02 × 0.9 = 0.018, P(T) = 0.018 + 0.98 × 0.05 = 0.067이므로 P(D|T) = 0.018/0.067 ≈ 0.269입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>95%<span class="why"><b>특이도입니다.</b> 환자가 아닌 사람이 음성으로 나올 확률 P(T<sup>c</sup>|D<sup>c</sup>)입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 6.7%<span class="why"><b>양성 판정을 받을 확률입니다.</b> 0.067은 P(T)이고, 구하는 값은 이것을 분모로 쓰는 P(D∩T)/P(T)입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>
