@@ -14,7 +14,7 @@
       task: "과제: 물 25 mL를 비커에서 삼각 플라스크로 옮깁니다. 기준값 25.00 mL.",
       tools: [
         { id: "beaker", name: "비커 50 mL", res: 0.01, sd: 0.9, b: 1.0, tol: 1.25, tl: "±5% (어림 눈금)" },
-        { id: "cyl", name: "눈금 실린더 50 mL", res: 0.01, sd: 0.12, b: 0.18, tol: 0.25, tl: "A급 ±0.25 mL" },
+        { id: "cyl", name: "눈금 실린더 50 mL", res: 0.01, sd: 0.12, b: 0.18, tol: 0.5, tl: "A급 ±0.5 mL" },
         { id: "pip", name: "부피 피펫 25 mL", res: 0.01, sd: 0.012, b: 0.02, tol: 0.03, tl: "A급 ±0.03 mL" },
         { id: "bur", name: "뷰렛 50 mL", res: 0.01, sd: 0.025, b: 0.035, tol: 0.05, tl: "A급 ±0.05 mL" },
       ],

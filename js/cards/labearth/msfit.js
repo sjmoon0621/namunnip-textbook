@@ -9,7 +9,7 @@
   const EBV = 0.04, kE = 1.339, kA = 2.74;
   const CL = {
     pleiades: { name: "플레이아데스", plx: 7.36, dTxt: "약 136 pc (Gaia 시차 ϖ ≈ 7.36 mas)", fitR: [0.35, 1.9], gMin: 0, gr: [-0.3, 3.2], Gr: [2.5, 19] },
-    m67: { name: "M67", plx: 1.15, dTxt: "약 0.86 kpc (Gaia 시차 ϖ ≈ 1.15 mas)", fitR: [0.95, 1.9], gMin: 13.8, gr: [0.3, 3.2], Gr: [9, 19] },
+    m67: { name: "M67", plx: 1.15, dTxt: "약 0.87 kpc (Gaia 시차 ϖ ≈ 1.15 mas)", fitR: [0.95, 1.9], gMin: 13.8, gr: [0.3, 3.2], Gr: [9, 19] },
   };
   let key = "pleiades";
 

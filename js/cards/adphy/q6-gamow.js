@@ -10,7 +10,7 @@
   /* E_G (keV) = 2 m_r c² (π α Z1 Z2)², 쿨롱 장벽 (keV) */
   const RX = {
     pp: { eg: 493, ec: 600, col: "#3f6fa3", name: "p + p" },
-    cno: { eg: 45080, ec: 2440, col: "#d7263d", name: "p + ¹⁴N" },
+    cno: { eg: 45080, ec: 2460, col: "#d7263d", name: "p + ¹⁴N" },
     dt: { eg: 1182, ec: 444, col: "#3b7c2a", name: "²H + ³H" },
   };
   let rx = "pp";

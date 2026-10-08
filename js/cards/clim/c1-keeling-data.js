@@ -1,7 +1,7 @@
 /* 마우나로아 월평균 CO₂와 전 지구 CO₂ 배출량 (자동 변환, 직접 고치지 말 것)
    CO₂: NOAA GML, Mauna Loa monthly mean CO₂ (ppm), 1958년 3월–2026년 8월
         https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv  (2026-10-07 받음, 미국 정부 자료·자유 이용, 인용: Lan, Tans & Thoning, NOAA GML)
-        1958–1974년 3월은 Scripps(C. D. Keeling) 자료. 2022년 12월–2023년 7월 4일은 마우나로아 화산 분화로 마우나케아 관측값.
+        1958년 3월–1974년 4월은 Scripps(C. D. Keeling) 자료. 2022년 12월–2023년 7월 4일은 마우나로아 화산 분화로 마우나케아 관측값.
         avg = 월평균, des = 계절 변동을 뺀 값(NOAA 제공)
    배출: Global Carbon Budget 2025를 정리한 Our World in Data co2-data (CC BY 4.0)
         https://github.com/owid/co2-data  (2026-10-07 받음). fos = 화석 연료·시멘트, luc = 토지 이용 변화. 단위 GtC/년 (MtCO₂ ÷ 3664) */

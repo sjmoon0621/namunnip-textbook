@@ -8,7 +8,7 @@
   const G = 6.674e-11, SI2MGAL = 1e5;
 
   /* 정규 중력 (1967 국제 정규 중력식, mGal) */
-  const gNormal = (phi) => { const s = Math.sin(phi * Math.PI / 180), s2 = Math.sin(2 * phi * Math.PI / 180); return 978032.7 * (1 + 0.0053024 * s * s - 0.0000058 * s2 * s2); };
+  const gNormal = (phi) => { const s = Math.sin(phi * Math.PI / 180), s2 = Math.sin(2 * phi * Math.PI / 180); return 978031.8 * (1 + 0.0053024 * s * s - 0.0000058 * s2 * s2); };
 
   /* 두 가지 모식 지역 */
   const SC = {
