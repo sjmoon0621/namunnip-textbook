@@ -1,8 +1,12 @@
 /* 1854년 런던 소호 콜레라 자료 (h2-snow-data)
    출처: John Snow, "On the Mode of Communication of Cholera" 2판(1855)의 지도와 표 1 (퍼블릭 도메인).
-   좌표는 R. Dodson·W. Tobler(NCGIA, 1992)가 Snow 지도를 디지털화한 것으로, R 패키지 HistData
-   (Friendly 외)의 Snow.deaths, Snow.pumps, Snow.streets, Snow.dates (GPL-2|GPL-3)를 Rdatasets
-   (vincentarelbundock.github.io/Rdatasets)에서 2026-10-07에 내려받아 소수 둘째 자리로 반올림했다.
+   좌표 원출처: Rusty Dodson(NCGIA, UC Santa Barbara, 1992)이 Snow 지도(1936년 재간본, 축척 약 1:2000)를
+   디지털화하고 Waldo Tobler가 1994년 NCGIA에서 배포한 "Snow's Cholera Map" 자료(별도 이용 조건 표기 없음;
+   http://www.ncgia.ucsb.edu/pubs/snow/snow.html, 현재는 web.archive.org 사본만 남음).
+   받은 경로: R 패키지 HistData (Friendly 외; 패키지 라이선스 GPL-2 | GPL-3)의 Snow.deaths, Snow.pumps,
+   Snow.streets, Snow.dates를 Rdatasets(vincentarelbundock.github.io/Rdatasets)에서 2026-10-07에 내려받았다.
+   바꾼 점: 소수 둘째 자리로 반올림하고 JS 배열로 바꿨다. 이 파일은 HistData에서 가져온 부분이므로 GPL-3 조건으로
+   배포한다(https://www.gnu.org/licenses/gpl-3.0.html). 이 파일만 해당하며 교과서의 다른 글·코드에는 적용되지 않는다.
    좌표 단위는 약 100 m, 원점은 임의. deaths: 사망자 578명의 [x, y] (한 집의 여러 사망자는 지도처럼 길에서
    바깥쪽으로 쌓아 찍힘). pumps: [이름, x, y]. streets: 길 조각마다 [x1, y1, x2, y2, …].
    dates: Snow 표 1의 [월-일, 발병 수, 사망 수] (8월 19일~9월 30일; 발병일 모르는 45명은 빠짐). */

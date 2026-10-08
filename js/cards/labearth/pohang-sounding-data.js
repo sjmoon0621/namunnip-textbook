@@ -1,7 +1,9 @@
 /* 포항(47138) 라디오존데 관측 자료 (자동 변환, 직접 고치지 말 것)
    출처: NOAA NCEI Integrated Global Radiosonde Archive v2 (IGRA2), 관측소 KSM00047138 POHANG (36.03°N, 129.38°E, 해발 4 m)
          https://www.ncei.noaa.gov/data/integrated-global-radiosonde-archive/access/data-y2d/KSM00047138-data-beg2026.txt.zip
-         (2026-10-07 받음. 미국 정부 자료·퍼블릭 도메인. 원 관측은 기상청이 WMO 전지구 통신망으로 공유한 자료)
+         (2026-10-07 받음. 원 관측은 기상청: 출처 기상청, 공공누리 제1유형(https://data.kma.go.kr/cmmn/static/staticPage.do?page=pageCr).
+          IGRA2는 받은 경로일 뿐이며 미국 정부 자료가 아님. NOAA는 미국 밖 관측소 자료가 WMO 결의 40에 따라 상업적 재배포가 제한될 수 있다고 밝힘.
+          인용: Durre, I., X. Yin, R. S. Vose, S. Applequist, J. Arnfield, 2018, J. Atmos. Oceanic Technol. 35, 1753–1770.)
    골라 담은 관측: 2026-07-27 00 UTC(09시 KST), 2026-07-27 06 UTC(15시 KST), 2026-01-17 00 UTC(09시 KST).
    lv: [기압 hPa, 높이 m, 기온 °C, 이슬점 °C(없으면 null)] — 100 hPa까지, 기온이 있는 층만.
    높이는 관측소 고도 4 m에서 가온도로 측고 공식을 적분해 다시 계산했다(지정 기압면 관측 지오퍼텐셜 고도와 10 m 안쪽으로 일치). */
