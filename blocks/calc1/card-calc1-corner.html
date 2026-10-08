@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc1/corner.js"
+  ],
+  "short": "꺾인 점의 미분가능성"
+}
+-->
+<style>
+#card-calc1-corner canvas { aspect-ratio: 16 / 11; touch-action: pan-y; cursor: ew-resize; }
+#card-calc1-corner .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc1-corner .msg { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 6px 0 0; min-height: 3em; }
+</style>
+<article class="card" id="card-calc1-corner">
+  <header class="card-head">
+    <span class="no"></span><h2>왼쪽에서 본 기울기와 오른쪽에서 본 기울기가 다르면?</h2><span class="kind">미분가능성 · 좌우 극한</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="x = 1 근처의 그래프와, 점 P에서 왼쪽 점 L과 오른쪽 점 R로 그은 두 할선"></canvas>
+      <div class="ctl">
+        <div class="presets ex">
+          <button class="chip" type="button" data-k="abs" aria-pressed="true">|<i>x</i> − 1|</button>
+          <button class="chip" type="button" data-k="smooth">(<i>x</i> − 1)|<i>x</i> − 1|</button>
+          <button class="chip" type="button" data-k="jump"><i>x</i> (<i>x</i> &lt; 1), <i>x</i> + 1 (<i>x</i> ≥ 1)</button>
+        </div>
+        <label class="mono">P(1, f(1))에서 떨어진 거리 <i>h</i> = <output class="h-out">1</output></label>
+        <input class="st" type="range" min="0" max="4" step="0.1" value="0" aria-label="h를 줄이는 단계 (h = 10의 −t제곱)">
+        <dl class="nums">
+          <div><dt>왼쪽 (f(1 − h) − f(1))/(−h)</dt><dd class="n-l">—</dd></div>
+          <div><dt>오른쪽 (f(1 + h) − f(1))/h</dt><dd class="n-r">—</dd></div>
+          <div><dt>x = 1에서 연속인가</dt><dd class="n-c">—</dd></div>
+        </dl>
+        <p class="msg">—</p>
+        <p class="fig-note">슬라이더를 오른쪽으로 밀면 <i>h</i>가 1, 0.1, 0.01, …로 줄어듭니다. 그림을 끌어도 L과 R이 함께 움직입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>y = |<i>x</i> − 1|의 그래프는 <i>x</i> = 1에서 V자로 꺾입니다. 이 점에서 접선의 기울기, 곧 미분계수를 하나로 정할 수 있을까요?</li>
+      <li><span class="tag">복원</span>극한값 lim<sub><i>x</i>→<i>a</i></sub> g(<i>x</i>)가 있으려면 좌극한과 우극한이 모두 있고 서로 같아야 합니다. 미분계수 f′(<i>a</i>)는 g(<i>h</i>) = (f(<i>a</i> + <i>h</i>) − f(<i>a</i>))/<i>h</i>의 <i>h</i> → 0일 때의 극한값입니다.</li>
+      <li><span class="tag">설명</span>그래서 f′(<i>a</i>)가 있으려면 <i>h</i> → 0− (왼쪽 점 L에서 그은 할선)과 <i>h</i> → 0+ (오른쪽 점 R에서 그은 할선)의 극한이 모두 있고 같아야 합니다. |<i>x</i> − 1|에서는 왼쪽 값이 늘 −1, 오른쪽 값이 늘 1이라 극한이 서로 다릅니다. 따라서 <i>x</i> = 1에서 <em>연속이지만 미분가능하지 않습니다</em>. (<i>x</i> − 1)|<i>x</i> − 1|에서는 두 값이 모두 0에 다가가므로 미분가능하고 f′(1) = 0입니다. 그래프가 끊어진 세 번째 함수는 왼쪽 값이 한없이 커져 극한이 없습니다.</li>
+      <li><span class="tag">연결</span>그래프로 보면 미분가능한 점은 매끄럽게 이어진 점이고, 미분가능하지 않은 점은 꺾인 점이나 끊어진 점입니다. 함수가 열린구간의 모든 점에서 미분가능하면 그 구간에서 <em>미분가능한 함수</em>라고 합니다. 다항함수는 모든 실수에서 미분가능합니다.</li>
+      <li><span class="tag">적용</span>세 함수 각각에서 <i>h</i>를 0.0001까지 줄이며 왼쪽 값과 오른쪽 값이 어디로 가는지 보세요. 연속인데 미분가능하지 않은 함수, 연속이면서 미분가능한 함수, 연속도 아닌 함수는 각각 어느 것인가요?</li>
+      <li class="warn"><span class="tag">판단</span>'그래프가 이어져 있으면 미분가능하다'는 틀린 말입니다. |<i>x</i> − 1|처럼 이어져 있어도 꺾이면 미분가능하지 않습니다. 또 끊어진 함수에서 오른쪽 값만 보고 "f′(1) = 1"이라 하면 안 됩니다. 양쪽 극한이 모두 있고 같아야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">f(<i>x</i>) = |<i>x</i><sup>2</sup> − 4|는 <i>x</i> = 2에서 어떠한가요?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>연속이지만 미분가능하지 않다<span class="why"><b>맞습니다.</b> f(2) = 0이고 양쪽 극한도 0이라 연속입니다. 그러나 왼쪽에서는 f(<i>x</i>) = −(<i>x</i><sup>2</sup> − 4)라 기울기가 −4로, 오른쪽에서는 4로 다가가 서로 다릅니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연속이 아니다<span class="why"><b>꺾인 것을 끊어진 것으로 보았습니다.</b> 절댓값은 그래프를 접을 뿐 끊지 않습니다. <i>x</i> → 2이면 f(<i>x</i>) → 0 = f(2)입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>미분가능하고 f′(2) = 0이다<span class="why"><b>가장 낮은 점이라 기울기가 0이라고 보았습니다.</b> 매끄러운 바닥이면 그렇지만, 여기서는 뾰족하게 꺾여 좌우 기울기가 −4와 4입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>미분가능하고 f′(2) = 4이다<span class="why"><b>오른쪽 극한만 보았습니다.</b> 왼쪽에서 다가가면 −4이므로 극한값이 하나로 정해지지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

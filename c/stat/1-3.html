@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>이항정리 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="이항정리 (a + b)^n = Σ nCr a^(n−r) b^r, 이항계수, 파스칼의 삼각형과 그 성질(두 수의 합, 행의 합 2^n, 대각선 합), 특정 항의 계수와 계수의 합, 근삿값. 인수마다 a, b를 골라 보고 삼각형을 눌러 보는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-stat-binom-expand canvas { aspect-ratio: 16 / 11; cursor: pointer; }
+    #card-stat-binom-expand .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
+    #card-stat-binom-expand .nums dd { overflow-wrap: anywhere; }
+    #card-stat-pascal canvas { aspect-ratio: 5 / 4; cursor: pointer; }
+    #card-stat-pascal .msg { min-height: 2.8em; font-size: 13px; color: var(--ink-2); margin: 6px 0 2px; line-height: 1.5; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="stat" data-sec="1-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>이항정리</h1>
+    <p class="lead">(<i>a</i> + <i>b</i>)<sup>2</sup>, (<i>a</i> + <i>b</i>)<sup>3</sup>은 직접 전개할 수 있습니다. 그러나 (<i>a</i> + <i>b</i>)<sup>10</sup>을 하나씩 곱해 나가기는 어렵습니다. 그런데 전개식의 계수는 사실 경우의 수입니다. 열 개의 인수에서 <i>a</i>와 <i>b</i> 가운데 무엇을 고를지 세면 계수가 나옵니다. 이 절에서는 이 생각으로 이항정리를 얻고, 계수들을 쌓은 파스칼의 삼각형의 성질을 찾은 뒤 특정한 항의 계수와 근삿값 계산에 써 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">다항식의 곱셈과 곱셈 공식</span><span class="p">조합 <sub><i>n</i></sub>C<sub><i>r</i></sub>와 그 성질</span><span class="p">같은 것이 있는 순열</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-stat-binom-expand"><span class="mono">1.3.1</span>이항정리</a></li>
+        <li><a href="#card-stat-pascal"><span class="mono">1.3.2</span>파스칼의 삼각형</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=stat-1-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-stat-binom-expand">
+        <header class="card-head">
+          <span class="no">1.3.1</span><h2>(<i>a</i> + <i>b</i>)<sup><i>n</i></sup>의 계수는 왜 조합의 수일까?</h2><span class="kind">이항정리 · 인수마다 고르기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="n개의 인수 (a + b)마다 a 또는 b를 고르는 칸과, b를 k번 고른 선택의 수를 k별로 나타낸 막대그래프. 칸을 누르면 고른 문자가 바뀐다"></canvas>
+            <div class="ctl">
+              <label class="mono">지수 <i>n</i> = <output class="n-out">4</output></label>
+              <input class="n" type="range" min="1" max="8" step="1" value="4" aria-label="지수 n">
+              <div class="presets">
+                <button class="chip go-next" type="button">다음 선택</button>
+                <button class="chip go-reset" type="button">모두 a로</button>
+              </div>
+              <dl class="nums">
+                <div><dt>지금 고른 문자</dt><dd class="n-pick">—</dd></div>
+                <div><dt>이 선택이 만드는 항</dt><dd class="n-term">—</dd></div>
+                <div><dt>같은 항이 나오는 선택의 수</dt><dd class="n-same">—</dd></div>
+                <div><dt>선택 전체의 수</dt><dd class="n-all">—</dd></div>
+              </dl>
+              <p class="mono eq">—</p>
+              <p class="fig-note">위 칸 하나가 인수 (<i>a</i> + <i>b</i>) 하나입니다. 칸을 누르면 그 인수에서 고르는 문자가 바뀝니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>(<i>a</i> + <i>b</i>)<sup>4</sup>를 전개하면 <i>a</i><sup>2</sup><i>b</i><sup>2</sup>의 계수는 얼마일까요? 곱셈을 끝까지 하지 않고 알 수 있을까요?</li>
+            <li><span class="tag">복원</span>(<i>a</i> + <i>b</i>)(<i>c</i> + <i>d</i>) = <i>ac</i> + <i>ad</i> + <i>bc</i> + <i>bd</i>처럼, 다항식의 곱을 전개하면 인수마다 항을 하나씩 골라 곱한 것이 모두 나옵니다. 서로 다른 <i>n</i>개에서 순서 없이 <i>r</i>개를 고르는 방법은 <sub><i>n</i></sub>C<sub><i>r</i></sub>가지입니다.</li>
+            <li><span class="tag">설명</span>(<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = (<i>a</i> + <i>b</i>)(<i>a</i> + <i>b</i>)⋯(<i>a</i> + <i>b</i>)에서 인수 <i>n</i>개마다 <i>a</i>나 <i>b</i>를 하나씩 골라 곱하면 항이 하나 생깁니다. 선택은 모두 2<sup><i>n</i></sup>가지입니다. <i>b</i>를 <i>r</i>번, <i>a</i>를 <i>n</i> − <i>r</i>번 고르면 항은 <i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup>이고, <i>b</i>를 고를 인수 <i>r</i>개를 정하는 방법이 <sub><i>n</i></sub>C<sub><i>r</i></sub>가지이므로 이 항은 <sub><i>n</i></sub>C<sub><i>r</i></sub>번 나옵니다. 따라서 <b>(<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = <sub><i>n</i></sub>C<sub>0</sub><i>a</i><sup><i>n</i></sup> + <sub><i>n</i></sub>C<sub>1</sub><i>a</i><sup><i>n</i>−1</sup><i>b</i> + ⋯ + <sub><i>n</i></sub>C<sub><i>r</i></sub><i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup> + ⋯ + <sub><i>n</i></sub>C<sub><i>n</i></sub><i>b</i><sup><i>n</i></sup></b>입니다. 이것을 <em>이항정리</em>라 하고, 계수 <sub><i>n</i></sub>C<sub><i>r</i></sub>를 <em>이항계수</em>, <sub><i>n</i></sub>C<sub><i>r</i></sub><i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup>를 <em>일반항</em>이라고 합니다. ∑ 기호로는 (<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = ∑<sub><i>r</i>=0</sub><sup><i>n</i></sup> <sub><i>n</i></sub>C<sub><i>r</i></sub><i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup>로 씁니다.</li>
+            <li><span class="tag">연결</span>고른 문자를 늘어놓은 abba 같은 문자열은 <i>a</i>가 <i>n</i> − <i>r</i>개, <i>b</i>가 <i>r</i>개인 같은 것이 있는 순열입니다. 그래서 계수는 <i>n</i>!/((<i>n</i> − <i>r</i>)!<i>r</i>!) = <sub><i>n</i></sub>C<sub><i>r</i></sub>로도 구해집니다. 바둑판 길의 최단 경로 수와 같은 수인 것도 이 때문입니다. 막대 높이를 <i>n</i>마다 한 줄씩 쌓으면 파스칼의 삼각형이 됩니다.</li>
+            <li><span class="tag">적용</span><i>n</i> = 4에서 칸을 눌러 <i>b</i>를 두 번 고르는 선택을 서로 다르게 여러 개 만들어 보세요. 모두 몇 가지이고, 가운데 막대의 높이와 같나요? '다음 선택'을 2<sup><i>n</i></sup>번 누르면 모든 선택을 한 번씩 지나갑니다. 그동안 막대마다 몇 번씩 강조되나요? <i>n</i>을 바꾸며 막대 높이의 합이 얼마인지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>(<i>a</i> + <i>b</i>)<sup><i>n</i></sup>을 <i>a</i><sup><i>n</i></sup> + <i>b</i><sup><i>n</i></sup>으로 쓰는 실수가 흔합니다. 그것은 인수마다 모두 <i>a</i>를 고르거나 모두 <i>b</i>를 고르는 두 경우만 센 것입니다. 또 일반항의 <i>r</i>는 <i>b</i>의 지수이므로 '<i>r</i>번째 항'이 아니라 '<i>r</i> + 1번째 항'입니다. <i>a</i>, <i>b</i> 자리에 2<i>x</i>, −1 같은 식이 들어가면 계수에 2<sup><i>n</i>−<i>r</i></sup>와 (−1)<sup><i>r</i></sup>도 곱해집니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">(<i>a</i> + <i>b</i>)<sup>6</sup>의 전개식에서 <i>a</i><sup>2</sup><i>b</i><sup>4</sup>의 계수는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15<span class="why"><b>맞습니다.</b> 인수 6개 가운데 <i>b</i>를 고를 4개를 정하는 방법이 <sub>6</sub>C<sub>4</sub> = <sub>6</sub>C<sub>2</sub> = 15가지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>20<span class="why"><b>가운데 항 <i>a</i><sup>3</sup><i>b</i><sup>3</sup>의 계수 <sub>6</sub>C<sub>3</sub>입니다.</b> 가장 큰 계수라서 떠올리기 쉽지만, <i>b</i>를 4번 고르는 경우를 세어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>지수 <i>n</i>을 계수로 썼습니다.</b> <sub><i>n</i></sub>C<sub>1</sub> = <i>n</i>은 <i>a</i><sup>5</sup><i>b</i>처럼 <i>b</i>를 한 번 고르는 항의 계수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>64<span class="why"><b>선택 전체의 수 2<sup>6</sup>입니다.</b> 모든 계수를 더한 값이고, <i>a</i><sup>2</sup><i>b</i><sup>4</sup>가 나오는 선택만 세야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-stat-pascal">
+        <header class="card-head">
+          <span class="no">1.3.2</span><h2>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</h2><span class="kind">파스칼의 삼각형 · 이항계수의 성질</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="0행부터 N행까지의 파스칼의 삼각형. 수를 누르면 고른 보기 방식에 따라 위의 두 수, 같은 행, 대각선의 수들이 강조된다"></canvas>
+            <div class="ctl">
+              <label class="mono">마지막 행 <i>N</i> = <output class="N-out">8</output></label>
+              <input class="N" type="range" min="4" max="12" step="1" value="8" aria-label="마지막 행 번호 N">
+              <div class="presets">
+                <button class="chip" type="button" data-mode="sum" aria-pressed="true">위의 두 수</button>
+                <button class="chip" type="button" data-mode="row" aria-pressed="false">행의 합</button>
+                <button class="chip" type="button" data-mode="stick" aria-pressed="false">대각선 합</button>
+                <button class="chip" type="button" data-mode="odd" aria-pressed="false">홀수만 칠하기</button>
+              </div>
+              <p class="msg">—</p>
+              <p class="fig-note">삼각형의 수를 눌러 고르세요. <i>n</i>행의 왼쪽에서 <i>r</i>번째(0부터 셈) 수가 <sub><i>n</i></sub>C<sub><i>r</i></sub>입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>(<i>a</i> + <i>b</i>)<sup>0</sup>, (<i>a</i> + <i>b</i>)<sup>1</sup>, (<i>a</i> + <i>b</i>)<sup>2</sup>, …의 계수를 한 줄씩 쌓으면, 전개하지 않고도 다음 줄을 쓸 수 있을까요?</li>
+            <li><span class="tag">복원</span>(<i>a</i> + <i>b</i>)<sup><i>n</i></sup>의 전개식에서 <i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup>의 계수는 이항계수 <sub><i>n</i></sub>C<sub><i>r</i></sub>입니다. 또 <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>n</i>−<i>r</i></sub>입니다.</li>
+            <li><span class="tag">설명</span>이항계수를 <i>n</i> = 0부터 차례로 쌓은 것을 <em>파스칼의 삼각형</em>이라고 합니다. 각 행의 양 끝은 1이고, 나머지 수는 바로 위 왼쪽과 오른쪽 두 수의 합입니다. 이것이 <b><sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i>−1</sub>C<sub><i>r</i>−1</sub> + <sub><i>n</i>−1</sub>C<sub><i>r</i></sub></b>입니다. (<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = (<i>a</i> + <i>b</i>)<sup><i>n</i>−1</sup>(<i>a</i> + <i>b</i>)에서 <i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i></sup>는 앞 줄의 <i>a</i><sup><i>n</i>−<i>r</i></sup><i>b</i><sup><i>r</i>−1</sup>에 <i>b</i>를 곱하거나 <i>a</i><sup><i>n</i>−1−<i>r</i></sup><i>b</i><sup><i>r</i></sup>에 <i>a</i>를 곱해서만 생기기 때문입니다. 각 행이 좌우 대칭인 것은 <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>n</i>−<i>r</i></sub>를 뜻합니다.</li>
+            <li><span class="tag">연결</span>이항정리에 <i>a</i> = <i>b</i> = 1을 넣으면 <sub><i>n</i></sub>C<sub>0</sub> + <sub><i>n</i></sub>C<sub>1</sub> + ⋯ + <sub><i>n</i></sub>C<sub><i>n</i></sub> = 2<sup><i>n</i></sup>이고, <i>a</i> = 1, <i>b</i> = −1을 넣으면 번갈아 더하고 뺀 값이 0입니다(<i>n</i> ≥ 1). 두 식을 더하고 2로 나누면 짝수 번째 수들의 합이 2<sup><i>n</i>−1</sup>입니다. 대각선을 따라 더한 합은 그 끝에서 한 칸 아래 오른쪽(또는 왼쪽)의 수가 됩니다. 예를 들어 <sub>2</sub>C<sub>2</sub> + <sub>3</sub>C<sub>2</sub> + <sub>4</sub>C<sub>2</sub> = <sub>5</sub>C<sub>3</sub>입니다. 위의 두 수 규칙을 맨 아래 칸부터 거듭 쓰면 이 식이 나옵니다.</li>
+            <li><span class="tag">적용</span>'위의 두 수'에서 여러 수를 눌러 덧셈 규칙을 확인하세요. '행의 합'으로 바꾸어 <i>N</i>을 늘리면서 합이 어떻게 변하는지, 번갈아 더한 값은 얼마인지 보세요. '대각선 합'에서는 아래쪽 수를 눌러 위로 이어지는 대각선의 합이 어느 수와 같은지 찾으세요. '홀수만 칠하기'를 켜고 <i>N</i>을 12까지 늘리면 어떤 무늬가 보이나요?</li>
+            <li class="warn"><span class="tag">판단</span>행 번호와 자리 번호는 0부터 셉니다. 맨 위 1은 0행이고, 각 행의 첫 1은 <sub><i>n</i></sub>C<sub>0</sub>입니다. 1부터 세면 계수가 한 칸씩 어긋납니다. 또 홀수 무늬는 <i>N</i>이 작을 때 보이는 모양에서 짐작한 것입니다. 그림에서 짐작한 규칙은 덧셈 규칙이나 이항정리로 따져 보아야 성질이라고 말할 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><sub>2</sub>C<sub>2</sub> + <sub>3</sub>C<sub>2</sub> + <sub>4</sub>C<sub>2</sub> + <sub>5</sub>C<sub>2</sub> + <sub>6</sub>C<sub>2</sub>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>21<span class="why"><b><sub>7</sub>C<sub>2</sub>입니다.</b> 대각선 합이 다음 행에 있다는 것은 맞지만, 합은 한 칸 오른쪽인 <sub>7</sub>C<sub>3</sub>에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>35<span class="why"><b>맞습니다.</b> 1 + 3 + 6 + 10 + 15 = 35이고, 대각선 합 규칙으로 <sub>7</sub>C<sub>3</sub> = 35입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>56<span class="why"><b><sub>8</sub>C<sub>3</sub>입니다.</b> 한 행을 더 내려갔습니다. 마지막 항이 6행이므로 합은 7행에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>64<span class="why"><b>6행 전체의 합 2<sup>6</sup>입니다.</b> 한 행의 수를 모두 더한 것과 대각선을 따라 더한 것은 다릅니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=stat-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/stat/binom-expand.js"></script>
+<script src="../../js/cards/stat/pascal.js"></script>
+</body>
+</html>

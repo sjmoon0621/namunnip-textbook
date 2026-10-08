@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/root-count.js"
+  ],
+  "short": "방정식의 실근의 개수"
+}
+-->
+<style>
+#card-calc2-root-count canvas { width: 100%; aspect-ratio: 4 / 3; }
+#card-calc2-root-count .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-root-count .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-root-count">
+  <header class="card-head">
+    <span class="no"></span><h2>풀 수 없는 방정식의 근은 몇 개일까?</h2><span class="kind">방정식의 실근 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: y = ln x와 직선 y = kx의 교점. 아래: y = (ln x)/x와 가로선 y = k의 교점"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-k="0.2" aria-pressed="true"><i>k</i> = 0.2</button>
+          <button class="chip" type="button" data-k="e"><i>k</i> = 1/<i>e</i></button>
+          <button class="chip" type="button" data-k="-0.3"><i>k</i> = −0.3</button>
+        </div>
+        <label class="mono"><i>k</i> = <output class="k-out">0.2</output></label>
+        <input class="sk" type="range" min="-0.6" max="0.7" step="0.01" value="0.2" aria-label="k">
+        <dl class="nums">
+          <div><dt>k</dt><dd class="n-k">—</dd></div>
+          <div><dt>1/e (최댓값)</dt><dd class="n-m">0.3679</dd></div>
+          <div><dt>실근의 개수</dt><dd class="n-c good">—</dd></div>
+        </dl>
+        <p class="mono eq">—</p>
+        <p class="fig-note">근은 이분법으로 수치 계산한 값입니다. 근이 그림 밖(<i>x</i> &gt; 10)에 있으면 표시만 하고 그리지 않습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>방정식 ln <i>x</i> = <i>kx</i>는 식을 변형해 풀 수 없습니다. 그래도 <i>k</i>의 값에 따라 실근이 몇 개인지 알 수 있을까요?</li>
+      <li><span class="tag">복원</span>방정식 <i>f</i>(<i>x</i>) = <i>g</i>(<i>x</i>)의 실근은 두 그래프의 교점의 <i>x</i>좌표입니다. 앞 절에서 <i>y</i> = (ln <i>x</i>)/<i>x</i>는 <i>x</i> = <i>e</i>에서 최댓값 1/<i>e</i>를 갖고, <i>x</i> → 0+이면 −∞로, <i>x</i> → ∞이면 0으로 간다는 것을 보았습니다.</li>
+      <li><span class="tag">설명</span>위 그림처럼 곡선과 기울어진 직선의 교점을 세면 <i>k</i>가 바뀔 때마다 직선이 돌아가서 판단하기 어렵습니다. <i>x</i> &gt; 0이므로 양변을 <i>x</i>로 나누어 <b>(ln <i>x</i>)/<i>x</i> = <i>k</i></b>로 바꿉니다. 이렇게 <i>k</i>를 한쪽으로 떼어 내면 고정된 곡선과 가로선 <i>y</i> = <i>k</i>의 교점만 세면 됩니다. 결과는 <i>k</i> ≤ 0이면 1개, 0 &lt; <i>k</i> &lt; 1/<i>e</i>이면 2개, <i>k</i> = 1/<i>e</i>이면 1개, <i>k</i> &gt; 1/<i>e</i>이면 0개입니다.</li>
+      <li><span class="tag">연결</span>근이 2개에서 0개로 바뀌는 경계 <i>k</i> = 1/<i>e</i>에서 직선 <i>y</i> = <i>x</i>/<i>e</i>는 곡선 <i>y</i> = ln <i>x</i>에 점 (<i>e</i>, 1)에서 접합니다. 근의 개수가 바뀌는 순간은 두 그래프가 접하는 순간이고, 이는 접선 문제와 같은 계산입니다.</li>
+      <li><span class="tag">적용</span><i>k</i>를 움직이며 위아래 그림의 교점이 늘 같은 <i>x</i>에서 생기는지 확인하세요. 근의 개수가 바뀌는 <i>k</i>를 모두 찾으세요. <i>k</i> = 0.05처럼 작은 양수에서는 위 그림에 교점이 하나만 보이는데 셋째 칸은 2입니다. 나머지 근은 어디에 있나요?</li>
+      <li class="warn"><span class="tag">판단</span>양변을 <i>x</i>로 나눌 수 있었던 것은 정의역이 <i>x</i> &gt; 0이기 때문입니다. <i>x</i>가 0이나 음수가 될 수 있으면 나누기 전에 따로 확인해야 합니다. 또 그림의 범위 안에서만 교점을 세면 멀리 있는 근을 놓칩니다. 끝에서의 극한을 함께 봅니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">방정식 <i>e</i><sup><i>x</i></sup> = <i>kx</i>가 서로 다른 두 실근을 갖도록 하는 실수 <i>k</i>의 범위는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>k</i> &gt; <i>e</i><span class="why"><b>맞습니다.</b> <i>x</i> = 0은 근이 아니므로 <i>e</i><sup><i>x</i></sup>/<i>x</i> = <i>k</i>로 바꿉니다. <i>x</i> &gt; 0에서 이 함수는 <i>x</i> = 1에서 최솟값 <i>e</i>를 갖고 양 끝에서 ∞로 가므로, <i>k</i> &gt; <i>e</i>일 때 교점이 둘입니다. <i>x</i> &lt; 0에서는 값이 음수입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0 &lt; <i>k</i> &lt; <i>e</i><span class="why"><b>최댓값 문제와 뒤집었습니다.</b> <i>e</i><sup><i>x</i></sup>/<i>x</i>는 <i>x</i> &gt; 0에서 최솟값을 가지므로 가로선이 그보다 위에 있어야 두 번 만납니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0 &lt; <i>k</i> &lt; 1/<i>e</i><span class="why"><b>ln <i>x</i> = <i>kx</i>의 결과를 옮겨 왔습니다.</b> 곡선이 바뀌면 고정된 함수의 개형부터 다시 그려야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>k</i> &lt; 0<span class="why"><b>음수 쪽 근을 둘로 셌습니다.</b> <i>x</i> &lt; 0에서 <i>e</i><sup><i>x</i></sup>/<i>x</i>는 0에서 −∞까지 감소하므로 <i>k</i> &lt; 0이면 근은 하나뿐입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

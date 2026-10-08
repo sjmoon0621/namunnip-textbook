@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>급수 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="급수 ∑aₙ과 부분합 Sₙ, 급수의 합(부분합의 극한), 급수의 수렴·발산의 뜻, 분수를 두 분수의 차로 나누어 소거하는 부분합, 급수의 성질, 급수가 수렴하면 lim aₙ = 0, lim aₙ ≠ 0이면 발산, 조화급수 ∑1/n의 발산. 항을 하나씩 더해 부분합을 쌓는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-calc2-partial-sum canvas { width: 100%; aspect-ratio: 16 / 10; }
+    #card-calc2-partial-sum .eq { margin: 6px 0 2px; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+    #card-calc2-partial-sum .btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+    #card-calc2-partial-sum .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-nth-term canvas { width: 100%; aspect-ratio: 16 / 10; }
+    #card-calc2-nth-term .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-nth-term .nums + .nums { grid-template-columns: 1fr; margin-top: 0; }
+  </style>
+</head>
+<body data-course="calc2" data-sec="1-4">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>급수</h1>
+    <p class="lead">1/2 + 1/4 + 1/8 + …처럼 끝없이 더하는 식은 끝까지 더해 볼 수 없습니다. 이 절에서는 처음 <i>n</i>개 항까지의 합인 부분합을 만들고, 부분합의 수열이 수렴하는지로 끝없는 덧셈의 값을 정합니다. 더하는 항이 0으로 가는지가 판정에 어떤 역할을 하는지, 그리고 그것만으로는 왜 부족한지도 살펴봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">합의 기호 ∑</span><span class="p">분수식의 소거(부분분수)</span><span class="p">수열의 극한에 대한 성질</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-calc2-partial-sum"><span class="mono">1.4.1</span>급수의 합 = 부분합의 극한</a></li>
+        <li><a href="#card-calc2-nth-term"><span class="mono">1.4.2</span>급수와 일반항의 극한</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-1-4">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-calc2-partial-sum">
+        <header class="card-head">
+          <span class="no">1.4.1</span><h2>끝없이 더한 값은 어떻게 정할까?</h2><span class="kind">급수 · 부분합 · 급수의 합</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="더한 항 aₖ를 주황 막대로, 부분합 Sₖ를 초록 점으로 나타낸 그래프와 급수의 합 높이의 점선"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="tel" aria-pressed="true">∑ 1/{<i>n</i>(<i>n</i> + 1)}</button>
+                <button class="chip" type="button" data-k="tel2">∑ 2/{<i>n</i>(<i>n</i> + 2)}</button>
+                <button class="chip" type="button" data-k="sqrt">∑ (√(<i>n</i> + 1) − √<i>n</i>)</button>
+                <button class="chip" type="button" data-k="alt">∑ (−1)<sup><i>n</i>+1</sup></button>
+              </div>
+              <label class="mono">더한 항의 개수 <i>n</i> = <output class="nn-out">5</output></label>
+              <input class="nn" type="range" min="1" max="40" step="1" value="5" aria-label="더한 항의 개수 n">
+              <div class="btns">
+                <button class="chip go-add" type="button">한 항 더하기</button>
+                <button class="chip go-reset" type="button">처음부터</button>
+              </div>
+              <p class="mono eq">—</p>
+              <dl class="nums">
+                <div><dt>마지막 항 aₙ</dt><dd class="n-a">—</dd></div>
+                <div><dt>부분합 Sₙ</dt><dd class="n-s">—</dd></div>
+                <div><dt>급수</dt><dd class="n-j">—</dd></div>
+              </dl>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1/2 + 1/6 + 1/12 + 1/20 + …처럼 끝없이 이어지는 덧셈은 끝까지 더할 수 없습니다. 그렇다면 이 덧셈의 '값'은 무엇으로 정해야 할까요?</li>
+            <li><span class="tag">복원</span>수열의 합 ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> <i>a<sub>k</sub></i>는 유한 개를 더한 값입니다. 1/{<i>k</i>(<i>k</i> + 1)} = 1/<i>k</i> − 1/(<i>k</i> + 1)처럼 분수를 두 분수의 차로 나누면, 이웃한 항이 지워지며 합이 간단해집니다.</li>
+            <li><span class="tag">설명</span>수열 {<i>a<sub>n</sub></i>}의 각 항을 차례로 덧셈 기호로 이은 식 <i>a</i><sub>1</sub> + <i>a</i><sub>2</sub> + <i>a</i><sub>3</sub> + … 을 <em>급수</em>라 하고 ∑<sub><i>n</i>=1</sub><sup>∞</sup> <i>a<sub>n</sub></i>으로 씁니다. 첫째항부터 제<i>n</i>항까지의 합 <i>S<sub>n</sub></i> = <i>a</i><sub>1</sub> + … + <i>a<sub>n</sub></i>을 <em>부분합</em>이라 합니다. 부분합의 수열 {<i>S<sub>n</sub></i>}이 S에 수렴하면 급수는 <em>수렴</em>한다고 하고, S를 <em>급수의 합</em>이라 합니다. 이때 ∑<sub><i>n</i>=1</sub><sup>∞</sup> <i>a<sub>n</sub></i> = S로 씁니다. {<i>S<sub>n</sub></i>}이 발산하면 급수도 <em>발산</em>합니다. 곧 급수의 합은 '끝까지 더한 값'이 아니라 <b>부분합의 극한</b>입니다.</li>
+            <li><span class="tag">연결</span>수렴하는 두 급수 ∑<i>a<sub>n</sub></i> = S, ∑<i>b<sub>n</sub></i> = T에 대해 ∑<i>ka<sub>n</sub></i> = <i>k</i>S, ∑(<i>a<sub>n</sub></i> ± <i>b<sub>n</sub></i>) = S ± T가 성립합니다. 부분합에 수열의 극한에 대한 성질을 쓴 결과입니다. 부분합을 식으로 구하기 어려운 급수는 다음 카드처럼 일반항을 먼저 살펴봅니다.</li>
+            <li><span class="tag">적용</span>'한 항 더하기'를 눌러 첫 번째 급수의 부분합을 쌓아 보세요. 막대(더한 항)는 점점 짧아지고 초록 점(부분합)은 1에 다가갑니다. 아래 식에서 지워지지 않고 남는 항은 무엇인가요? 두 번째 급수에서는 왜 두 항(1과 1/2)이 남나요? 세 번째 급수는 더하는 항이 0에 가까워지는데도 부분합이 √(<i>n</i> + 1) − 1로 끝없이 커집니다. 네 번째 급수의 부분합은 1과 0을 오갑니다.</li>
+            <li class="warn"><span class="tag">판단</span>1 − 1 + 1 − 1 + … 을 (1 − 1) + (1 − 1) + … 으로 묶어 0이라고 하거나, 1 + (−1 + 1) + … 로 묶어 1이라고 하면 안 됩니다. 괄호를 마음대로 넣으면 다른 급수가 됩니다. 급수의 수렴·발산은 반드시 부분합의 수열로 판정합니다. 또 소거할 때 앞에서 남는 항과 뒤에서 남는 항의 개수가 같은지 확인해야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">급수 ∑<sub><i>n</i>=1</sub><sup>∞</sup> 1/{(2<i>n</i> − 1)(2<i>n</i> + 1)}의 합은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/2<span class="why"><b>맞습니다.</b> 1/{(2<i>n</i> − 1)(2<i>n</i> + 1)} = (1/2){1/(2<i>n</i> − 1) − 1/(2<i>n</i> + 1)}이므로 <i>S<sub>n</sub></i> = (1/2){1 − 1/(2<i>n</i> + 1)} → 1/2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>앞의 1/2을 빠뜨렸습니다.</b> 1/(2<i>n</i> − 1) − 1/(2<i>n</i> + 1)을 통분하면 2/{(2<i>n</i> − 1)(2<i>n</i> + 1)}이라 1/2을 곱해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/3<span class="why"><b>첫째항만 보았습니다.</b> 1/3은 <i>S</i><sub>1</sub>이고, 부분합은 그 뒤로도 계속 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>항이 끝없이 많아서 발산한다고 보았습니다.</b> 항의 개수가 무한해도 부분합이 한 값에 수렴하면 급수는 수렴합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc2-nth-term">
+        <header class="card-head">
+          <span class="no">1.4.2</span><h2>더하는 항이 0으로 가면 급수는 수렴할까?</h2><span class="kind">급수의 수렴·발산 판정 · 일반항의 극한</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="부분합 Sₙ을 n이 1부터 10의 6제곱까지인 범위에서 찍은 그래프. 가로축은 10배씩 늘어나는 눈금이고, 고른 n의 부분합을 큰 점으로 표시"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="hm" aria-pressed="true">∑ 1/<i>n</i></button>
+                <button class="chip" type="button" data-k="sq">∑ 1/<i>n</i><sup>2</sup></button>
+                <button class="chip" type="button" data-k="ratio">∑ <i>n</i>/(<i>n</i> + 1)</button>
+              </div>
+              <label class="mono">더한 항의 개수 <i>n</i> = <output class="t-out">1000</output></label>
+              <input class="t" type="range" min="0" max="6" step="0.5" value="3" aria-label="더한 항의 개수 n (10의 t제곱)">
+              <dl class="nums">
+                <div><dt>aₙ</dt><dd class="n-a">—</dd></div>
+                <div><dt>Sₙ</dt><dd class="n-s">—</dd></div>
+                <div><dt>Sₙ − S(n/10)</dt><dd class="n-d">—</dd></div>
+              </dl>
+              <dl class="nums">
+                <div><dt>급수</dt><dd class="n-j">—</dd></div>
+              </dl>
+              <p class="fig-note">부분합은 첫째항부터 10<sup>6</sup>번째 항까지 실제로 더해 계산했습니다. Sₙ − S(<i>n</i>/10)은 <i>n</i>/10번째 항 다음부터 <i>n</i>번째 항까지 더한 양입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1 + 1/2 + 1/3 + 1/4 + …에서 더하는 항은 0에 한없이 가까워집니다. 더하는 양이 거의 0이면 부분합은 어떤 값에서 멈출까요?</li>
+            <li><span class="tag">복원</span>급수가 수렴한다는 것은 부분합의 수열 {<i>S<sub>n</sub></i>}이 수렴한다는 뜻입니다. 또 <i>S<sub>n</sub></i> − <i>S</i><sub><i>n</i>−1</sub> = <i>a<sub>n</sub></i>(<i>n</i> ≥ 2)입니다.</li>
+            <li><span class="tag">설명</span>급수 ∑<i>a<sub>n</sub></i>이 S에 수렴하면 lim <i>S<sub>n</sub></i> = lim <i>S</i><sub><i>n</i>−1</sub> = S이므로 lim <i>a<sub>n</sub></i> = lim (<i>S<sub>n</sub></i> − <i>S</i><sub><i>n</i>−1</sub>) = S − S = 0입니다. 곧 <b>급수가 수렴하면 lim <i>a<sub>n</sub></i> = 0</b>입니다. 이 명제의 대우를 쓰면 판정법이 됩니다. <b>lim <i>a<sub>n</sub></i> ≠ 0이면(또는 수렴하지 않으면) 급수는 발산합니다.</b> 그러나 거꾸로 lim <i>a<sub>n</sub></i> = 0이라고 급수가 수렴하는 것은 아닙니다. ∑ 1/<i>n</i>이 그 예입니다. 항을 1/2, 1/3 + 1/4, 1/5 + … + 1/8, … 처럼 2배 길이로 묶으면 묶음마다 1/2 이상이므로, 부분합은 1/2씩 끝없이 쌓입니다.</li>
+            <li><span class="tag">연결</span>lim <i>a<sub>n</sub></i> = 0은 급수가 수렴하기 위한 필요조건일 뿐 충분조건이 아닙니다. 그래서 일반항이 0으로 가는 급수는 부분합을 직접 구하거나, 다음 절의 등비급수처럼 부분합의 식을 아는 꼴로 바꾸어 판정합니다.</li>
+            <li><span class="tag">적용</span>∑ 1/<i>n</i>에서 <i>n</i>을 10배씩 늘리며 <i>S<sub>n</sub></i> − S(<i>n</i>/10)을 보세요. 10배 구간마다 늘어나는 양은 거의 일정합니다(약 2.3). 이 양이 줄지 않는다면 부분합은 어디로 가나요? ∑ 1/<i>n</i><sup>2</sup>에서는 같은 양이 어떻게 변하나요? ∑ <i>n</i>/(<i>n</i> + 1)은 <i>a<sub>n</sub></i>만 보고도 판정할 수 있습니다.</li>
+            <li class="warn"><span class="tag">판단</span>"lim <i>a<sub>n</sub></i> = 0이므로 ∑<i>a<sub>n</sub></i>은 수렴한다"는 흔한 잘못입니다. 일반항의 극한은 발산을 판정할 때만 결론을 줍니다. 또 ∑ 1/<i>n</i>의 부분합은 10<sup>6</sup>항을 더해도 약 14.39에 불과해서, 화면만 보면 수렴하는 것처럼 보일 수 있습니다. 그래서 판정은 묶어서 비교하는 것처럼 식으로 해야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">급수 ∑<sub><i>n</i>=1</sub><sup>∞</sup> <i>a<sub>n</sub></i>이 수렴할 때, lim<sub><i>n</i>→∞</sub> (<i>a<sub>n</sub></i> + 3)/(2 − <i>a<sub>n</sub></i>)의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3/2<span class="why"><b>맞습니다.</b> 급수가 수렴하므로 lim <i>a<sub>n</sub></i> = 0이고, 극한의 성질로 (0 + 3)/(2 − 0) = 3/2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>알 수 없다. <i>a<sub>n</sub></i>의 식이 없다<span class="why"><b>판정법을 거꾸로 쓰지 않았습니다.</b> 급수가 수렴한다는 조건만으로 lim <i>a<sub>n</sub></i> = 0이 정해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−1<span class="why"><b><i>a<sub>n</sub></i>이 한없이 커진다고 보았습니다.</b> 그러면 급수는 발산하므로 조건과 맞지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>급수의 합을 알아야 구할 수 있다<span class="why"><b>급수의 합 S와 일반항의 극한을 섞었습니다.</b> 극한값은 S와 상관없이 lim <i>a<sub>n</sub></i> = 0으로 정해집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=calc2-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/calc2/seq.js"></script>
+<script src="../../js/cards/calc2/partial-sum.js"></script>
+<script src="../../js/cards/calc2/seq.js"></script>
+<script src="../../js/cards/calc2/nth-term.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>지수·로그함수의 극한과 미분 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="자연상수 e = lim (1 + h)^(1/h)의 정의와 자연로그 ln x, 극한 ln(1 + h)/h → 1, (e^h − 1)/h → 1, 지수함수 e^x, a^x와 로그함수 ln x, log_a x의 도함수. h를 10분의 1씩 줄여 보고, 밑을 바꾸며 접선의 기울기를 재는 카드.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-calc2-e-limit canvas { width: 100%; aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
+    #card-calc2-e-limit .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-e-limit .hist { font-size: 12.5px; color: var(--ink-2); line-height: 1.6; margin-top: 6px; overflow-wrap: anywhere; }
+    #card-calc2-exp-slope canvas { width: 100%; aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
+    #card-calc2-exp-slope .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-exp-slope .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+    #card-calc2-log-deriv canvas { width: 100%; aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
+    #card-calc2-log-deriv .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-log-deriv .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="calc2" data-sec="2-1">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>지수·로그함수의 극한과 미분</h1>
+    <p class="lead">미적분Ⅰ에서는 다항함수만 미분했습니다. 이 절에서는 지수함수와 로그함수를 미분합니다. 먼저 (1 + <i>h</i>)<sup>1/<i>h</i></sup>의 극한으로 새로운 수 <i>e</i>를 정의하고, 밑이 <i>e</i>인 자연로그 ln <i>x</i>를 도입합니다. 그러면 <i>e</i><sup><i>x</i></sup>는 도함수가 자기 자신인 함수가 되고, ln <i>x</i>의 도함수는 1/<i>x</i>가 됩니다. 다른 밑의 지수·로그함수는 ln <i>a</i>를 곱하거나 나누어 처리합니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">지수함수와 로그함수</span><span class="p">함수의 극한</span><span class="p">미분계수와 도함수</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-calc2-e-limit"><span class="mono">2.1.1</span>자연상수 e와 자연로그</a></li>
+        <li><a href="#card-calc2-exp-slope"><span class="mono">2.1.2</span>지수함수의 도함수</a></li>
+        <li><a href="#card-calc2-log-deriv"><span class="mono">2.1.3</span>로그함수의 도함수</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-2-1">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-calc2-e-limit">
+        <header class="card-head">
+          <span class="no">2.1.1</span><h2>(1 + h)<sup>1/h</sup>는 h가 0에 가까워지면 어디로 갈까?</h2><span class="kind">자연상수 e · 자연로그</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="y = (1 + x)^(1/x)의 그래프, x = 0의 빈 점, 점선 y = e, 지금의 h에서의 점"></canvas>
+            <div class="ctl">
+              <label class="mono"><i>h</i> = <output class="h-out">1</output></label>
+              <input class="sh" type="range" min="-0.7" max="3" step="0.001" value="1" aria-label="h의 값">
+              <div class="presets">
+                <button class="chip go-div" type="button">h ÷ 10</button>
+                <button class="chip go-neg" type="button">h의 부호 바꾸기</button>
+                <button class="chip go-one" type="button">h = 1로</button>
+              </div>
+              <dl class="nums n4">
+                <div><dt>(1+h)^(1/h)</dt><dd class="n-v">—</dd></div>
+                <div><dt>e − (1+h)^(1/h)</dt><dd class="n-gap">—</dd></div>
+                <div><dt>ln(1+h)/h</dt><dd class="n-ln">—</dd></div>
+                <div><dt>(e^h − 1)/h</dt><dd class="n-ex">—</dd></div>
+              </dl>
+              <p class="hist">—</p>
+              <p class="fig-note"><i>h</i> = 1/<i>n</i>로 놓으면 (1 + <i>h</i>)<sup>1/<i>h</i></sup> = (1 + 1/<i>n</i>)<sup><i>n</i></sup>입니다. 그림을 가로로 끌어도 <i>h</i>가 바뀝니다. <i>e</i> = 2.718281828…</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>연이율 100%를 1년에 <i>n</i>번 나누어 복리로 주면 원금 1은 1년 뒤 (1 + 1/<i>n</i>)<sup><i>n</i></sup>이 됩니다. <i>n</i>을 한없이 키우면 원리합계도 한없이 커질까요?</li>
+            <li><span class="tag">복원</span>lim<sub><i>h</i>→0</sub>는 <i>h</i> = 0에서의 값이 아니라, <i>h</i>가 0에 한없이 가까워질 때 값이 다가가는 곳입니다. 로그에서는 log<sub><i>a</i></sub> <i>M</i><sup><i>k</i></sup> = <i>k</i> log<sub><i>a</i></sub> <i>M</i>, log<sub><i>a</i></sub> <i>a</i> = 1입니다.</li>
+            <li><span class="tag">설명</span><i>h</i> → 0일 때 (1 + <i>h</i>)<sup>1/<i>h</i></sup>은 한 값 2.71828…에 수렴합니다. 이 값을 <i>e</i>로 나타냅니다. <b><i>e</i> = lim<sub><i>h</i>→0</sub> (1 + <i>h</i>)<sup>1/<i>h</i></sup> = lim<sub><i>n</i>→∞</sub> (1 + 1/<i>n</i>)<sup><i>n</i></sup></b>이고, <i>e</i>는 무리수입니다. 밑이 <i>e</i>인 로그 log<sub><i>e</i></sub> <i>x</i>를 <em>자연로그</em>라 하고 ln <i>x</i>로 씁니다. 그러면 ln(1 + <i>h</i>)/<i>h</i> = ln (1 + <i>h</i>)<sup>1/<i>h</i></sup> → ln <i>e</i> = 1입니다. 또 <i>e</i><sup><i>h</i></sup> − 1 = <i>t</i>로 놓으면 <i>h</i> = ln(1 + <i>t</i>)이고, <i>h</i> → 0일 때 <i>t</i> → 0이므로 (<i>e</i><sup><i>h</i></sup> − 1)/<i>h</i> = <i>t</i>/ln(1 + <i>t</i>) → 1입니다. 같은 방법으로 <i>a</i> &gt; 0, <i>a</i> ≠ 1일 때 (<i>a</i><sup><i>h</i></sup> − 1)/<i>h</i> → ln <i>a</i>, log<sub><i>a</i></sub>(1 + <i>h</i>)/<i>h</i> → 1/ln <i>a</i>입니다.</li>
+            <li><span class="tag">연결</span>(<i>e</i><sup><i>h</i></sup> − 1)/<i>h</i>는 곡선 <i>y</i> = <i>e</i><sup><i>x</i></sup> 위의 점 (0, 1)에서 그은 할선의 기울기입니다. 그래서 이 극한이 1이라는 것은 <i>y</i> = <i>e</i><sup><i>x</i></sup>의 <i>x</i> = 0에서의 접선의 기울기가 1이라는 뜻입니다. 이 사실에서 <i>e</i><sup><i>x</i></sup>와 ln <i>x</i>의 도함수가 나옵니다.</li>
+            <li><span class="tag">적용</span>'h ÷ 10'을 여러 번 누르며 <i>e</i>와의 차이가 어떻게 줄어드는지 보세요. <i>h</i>가 10분의 1이 되면 차이는 대략 얼마가 되나요? 부호를 바꾸어 <i>h</i> &lt; 0에서도 같은 값으로 가는지 확인하세요. 아래 두 칸의 값은 어디로 가나요?</li>
+            <li class="warn"><span class="tag">판단</span>"밑 1 + <i>h</i>가 1로 가니까 1을 몇 번 곱해도 1"이라는 추론은 틀립니다. 밑이 1로 가는 동안 지수 1/<i>h</i>는 한없이 커지므로, 이런 1<sup>∞</sup> 꼴은 값이 미리 정해지지 않습니다. 또 <i>h</i> = 0을 넣을 수는 없으므로 그래프에서 <i>x</i> = 0은 빈 점입니다. <i>e</i>는 함숫값이 아니라 극한값입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">lim<sub><i>x</i>→0</sub> (1 + 2<i>x</i>)<sup>1/<i>x</i></sup>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>e</i><sup>2</sup><span class="why"><b>맞습니다.</b> 2<i>x</i> = <i>h</i>로 놓으면 (1 + <i>h</i>)<sup>2/<i>h</i></sup> = {(1 + <i>h</i>)<sup>1/<i>h</i></sup>}<sup>2</sup>이고 <i>x</i> → 0일 때 <i>h</i> → 0이므로 <i>e</i><sup>2</sup>입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i><span class="why"><b>안쪽의 2를 놓쳤습니다.</b> 밑의 2<i>x</i>와 지수의 1/<i>x</i>가 서로 역수가 아니므로 정의의 꼴로 바꾸어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<i>e</i><span class="why"><b>2를 밖으로 곱했습니다.</b> 2는 지수 자리로 나오므로 곱이 아니라 거듭제곱이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>1<sup>∞</sup>을 1로 보았습니다.</b> 밑이 1로 가도 지수가 한없이 커지면 극한은 1이 아닐 수 있습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc2-exp-slope">
+        <header class="card-head">
+          <span class="no">2.1.2</span><h2>접선의 기울기가 높이와 같은 지수함수의 밑은?</h2><span class="kind">지수함수의 도함수 · 조작</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="y = a^x의 그래프와 끌 수 있는 점 P, P에서의 접선"></canvas>
+            <div class="ctl">
+              <label class="mono">밑 <i>a</i> = <output class="a-out">2</output></label>
+              <input class="sa" type="range" min="1.2" max="4" step="0.01" value="2" aria-label="지수함수의 밑 a">
+              <div class="presets">
+                <button class="chip" type="button" data-a="2" aria-pressed="true"><i>a</i> = 2</button>
+                <button class="chip" type="button" data-a="3"><i>a</i> = 3</button>
+                <button class="chip" type="button" data-a="e"><i>a</i> = <i>e</i></button>
+              </div>
+              <label class="mono">점 P의 <i>x</i>좌표 = <output class="x-out">1</output></label>
+              <input class="sx" type="range" min="-2.5" max="1.8" step="0.05" value="1" aria-label="점 P의 x좌표">
+              <dl class="nums n4">
+                <div><dt>높이 a^x</dt><dd class="n-y">—</dd></div>
+                <div><dt>접선의 기울기</dt><dd class="n-m">—</dd></div>
+                <div><dt>기울기 ÷ 높이</dt><dd class="n-r">—</dd></div>
+                <div><dt>ln a</dt><dd class="n-ln">—</dd></div>
+              </dl>
+              <p class="mono eq">—</p>
+              <p class="fig-note">접선의 기울기는 아주 작은 <i>h</i>(0.00001)로 잰 할선의 기울기입니다. 점 P는 그림을 가로로 끌어도 움직입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>지수함수 <i>y</i> = <i>a</i><sup><i>x</i></sup>는 높을수록 가파릅니다. 접선의 기울기와 높이 사이에는 어떤 관계가 있을까요? 기울기가 높이와 꼭 같은 밑도 있을까요?</li>
+            <li><span class="tag">복원</span>도함수는 <i>f</i>′(<i>x</i>) = lim<sub><i>h</i>→0</sub> {<i>f</i>(<i>x</i> + <i>h</i>) − <i>f</i>(<i>x</i>)}/<i>h</i>입니다. 앞에서 lim<sub><i>h</i>→0</sub> (<i>e</i><sup><i>h</i></sup> − 1)/<i>h</i> = 1, lim<sub><i>h</i>→0</sub> (<i>a</i><sup><i>h</i></sup> − 1)/<i>h</i> = ln <i>a</i>를 얻었습니다.</li>
+            <li><span class="tag">설명</span>{<i>a</i><sup><i>x</i>+<i>h</i></sup> − <i>a</i><sup><i>x</i></sup>}/<i>h</i> = <i>a</i><sup><i>x</i></sup> · (<i>a</i><sup><i>h</i></sup> − 1)/<i>h</i>입니다. <i>a</i><sup><i>x</i></sup>는 <i>h</i>와 관계없으므로 극한을 취하면 <b>(<i>a</i><sup><i>x</i></sup>)′ = <i>a</i><sup><i>x</i></sup> ln <i>a</i></b>입니다. 곧 어느 점에서나 기울기 ÷ 높이가 같은 값 ln <i>a</i>입니다. ln <i>e</i> = 1이므로 밑이 <i>e</i>이면 <b>(<i>e</i><sup><i>x</i></sup>)′ = <i>e</i><sup><i>x</i></sup></b>, 기울기가 높이와 같습니다.</li>
+            <li><span class="tag">연결</span>변화율이 지금의 양에 비례하는 현상, 예를 들어 세균의 증식이나 방사성 붕괴가 지수함수로 표현되는 까닭이 여기에 있습니다. 이 성질 때문에 미적분에서는 밑이 <i>e</i>인 지수함수를 주로 씁니다.</li>
+            <li><span class="tag">적용</span>밑을 2로 두고 점 P를 여러 곳으로 옮겨 보세요. 기울기 ÷ 높이는 바뀌나요? 그 값은 ln 2와 같나요? 이번에는 밑을 움직여 기울기 ÷ 높이가 1이 되는 <i>a</i>를 찾아보세요. 그 값은 어떤 수에 가깝나요?</li>
+            <li class="warn"><span class="tag">판단</span>(<i>a</i><sup><i>x</i></sup>)′을 <i>x</i>·<i>a</i><sup><i>x</i>−1</sup>로 쓰는 실수가 흔합니다. 거듭제곱 공식 (<i>x</i><sup><i>n</i></sup>)′ = <i>nx</i><sup><i>n</i>−1</sup>은 밑이 변수이고 지수가 상수일 때의 공식입니다. 지수함수는 반대로 밑이 상수이고 지수가 변수입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><i>f</i>(<i>x</i>) = 2<sup><i>x</i></sup>일 때 <i>f</i>′(3)의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>8 ln 2<span class="why"><b>맞습니다.</b> <i>f</i>′(<i>x</i>) = 2<sup><i>x</i></sup> ln 2이므로 <i>f</i>′(3) = 8 ln 2 ≈ 5.545입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12<span class="why"><b>거듭제곱 공식을 썼습니다.</b> 3·2<sup>2</sup> = 12는 <i>x</i>·<i>a</i><sup><i>x</i>−1</sup> 꼴로 계산한 값입니다. 지수가 변수인 함수에는 맞지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b><i>e</i><sup><i>x</i></sup>의 성질을 그대로 옮겼습니다.</b> 도함수가 자기 자신인 것은 밑이 <i>e</i>일 때뿐입니다. 밑이 2이면 ln 2를 곱합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>8/ln 2<span class="why"><b>로그함수의 공식과 섞었습니다.</b> ln <i>a</i>로 나누는 것은 log<sub><i>a</i></sub> <i>x</i>를 미분할 때입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc2-log-deriv">
+        <header class="card-head">
+          <span class="no">2.1.3</span><h2>y = ln x의 접선의 기울기는 왜 1/x일까?</h2><span class="kind">로그함수의 도함수 · 조작</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="로그함수의 그래프와 끌 수 있는 점 P, P에서의 접선"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="ln" aria-pressed="true">ln <i>x</i></button>
+                <button class="chip" type="button" data-k="log2">log<sub>2</sub> <i>x</i></button>
+                <button class="chip" type="button" data-k="abs">ln |<i>x</i>|</button>
+              </div>
+              <label class="mono">점 P의 <i>x</i>좌표 = <output class="x-out">2</output></label>
+              <input class="sx" type="range" min="0.2" max="6" step="0.05" value="2" aria-label="점 P의 x좌표">
+              <dl class="nums n4">
+                <div><dt>x</dt><dd class="n-x">—</dd></div>
+                <div><dt>높이 f(x)</dt><dd class="n-y">—</dd></div>
+                <div><dt>접선의 기울기</dt><dd class="n-m">—</dd></div>
+                <div><dt>x × 기울기</dt><dd class="n-xm">—</dd></div>
+              </dl>
+              <p class="mono eq">—</p>
+              <p class="fig-note">접선의 기울기는 아주 작은 <i>h</i>(0.00001)로 잰 할선의 기울기입니다. 점 P는 그림을 가로로 끌어도 움직입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span><i>y</i> = ln <i>x</i>는 <i>x</i>가 커질수록 점점 완만해집니다. 접선의 기울기는 <i>x</i>와 어떤 관계로 줄어들까요?</li>
+            <li><span class="tag">복원</span>lim<sub><i>t</i>→0</sub> ln(1 + <i>t</i>)/<i>t</i> = 1이었습니다. 로그의 성질 ln <i>M</i> − ln <i>N</i> = ln(<i>M</i>/<i>N</i>)과 밑 변환 공식 log<sub><i>a</i></sub> <i>x</i> = ln <i>x</i>/ln <i>a</i>도 씁니다.</li>
+            <li><span class="tag">설명</span><i>x</i> &gt; 0일 때 {ln(<i>x</i> + <i>h</i>) − ln <i>x</i>}/<i>h</i> = (1/<i>x</i>) · ln(1 + <i>h</i>/<i>x</i>)/(<i>h</i>/<i>x</i>)입니다. <i>h</i> → 0이면 <i>t</i> = <i>h</i>/<i>x</i> → 0이므로 뒤의 분수는 1로 갑니다. 그래서 <b>(ln <i>x</i>)′ = 1/<i>x</i></b>입니다. 밑 변환 공식으로 <b>(log<sub><i>a</i></sub> <i>x</i>)′ = 1/(<i>x</i> ln <i>a</i>)</b>입니다. 또 <i>x</i> &lt; 0이면 ln|<i>x</i>| = ln(−<i>x</i>)이고 그래프가 ln <i>x</i>를 <i>y</i>축에 대칭시킨 것이므로, <b>(ln|<i>x</i>|)′ = 1/<i>x</i></b>가 <i>x</i> ≠ 0인 모든 곳에서 성립합니다.</li>
+            <li><span class="tag">연결</span><i>x</i> × 기울기가 일정하다는 것은 <i>x</i>를 몇 배로 늘리든 ln <i>x</i>가 같은 양만큼 늘어난다는 로그의 성질과 같은 이야기입니다. 1/<i>x</i>는 미적분Ⅰ의 거듭제곱 공식으로는 얻을 수 없던 도함수입니다. 적분에서 ∫(1/<i>x</i>)<i>dx</i> = ln|<i>x</i>| + C로 다시 만납니다.</li>
+            <li><span class="tag">적용</span>ln <i>x</i>에서 점 P를 옮기며 <i>x</i> × 기울기를 보세요. 어떤 값으로 일정한가요? log<sub>2</sub> <i>x</i>로 바꾸면 그 값은 무엇이 되고, 1/ln 2와 비교하면 어떤가요? ln|<i>x</i>|에서 P를 음수 쪽으로 옮기면 기울기의 부호는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>(ln|<i>x</i>|)′을 1/|<i>x</i>|로 쓰는 실수가 흔합니다. <i>x</i> &lt; 0인 쪽에서는 <i>x</i>가 커질수록 그래프가 내려가므로 기울기가 음수입니다. 또 ln <i>x</i>는 <i>x</i> &gt; 0에서만 정의되므로 1/<i>x</i>라는 식이 음수에서도 계산된다고 해서 ln <i>x</i>의 도함수가 음수 쪽에 있는 것은 아닙니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><i>f</i>(<i>x</i>) = log<sub>3</sub> <i>x</i>일 때 <i>f</i>′(2)의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/(2 ln 3)<span class="why"><b>맞습니다.</b> log<sub>3</sub> <i>x</i> = ln <i>x</i>/ln 3이므로 <i>f</i>′(<i>x</i>) = 1/(<i>x</i> ln 3)이고 <i>f</i>′(2) = 1/(2 ln 3) ≈ 0.455입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/2<span class="why"><b>밑을 <i>e</i>로 보았습니다.</b> 1/<i>x</i>는 자연로그의 도함수입니다. 밑이 3이면 ln 3으로 한 번 더 나눕니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(ln 3)/2<span class="why"><b>ln 3을 곱했습니다.</b> 곱하는 것은 지수함수 3<sup><i>x</i></sup>를 미분할 때입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/(3 ln 2)<span class="why"><b>밑과 <i>x</i>의 자리를 바꾸었습니다.</b> 분모에는 <i>x</i>의 값 2와 밑의 자연로그 ln 3이 들어갑니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=calc2-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">1문항</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc2/e-limit.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc2/exp-slope.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc2/log-deriv.js"></script>
+</body>
+</html>

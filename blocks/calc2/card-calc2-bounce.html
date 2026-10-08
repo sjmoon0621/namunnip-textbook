@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc2/seq.js",
+    "js/cards/calc2/bounce.js"
+  ],
+  "short": "등비급수의 활용: 튀는 공"
+}
+-->
+<style>
+#card-calc2-bounce canvas { width: 100%; aspect-ratio: 16 / 9; }
+#card-calc2-bounce .btns { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+#card-calc2-bounce .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-bounce">
+  <header class="card-head">
+    <span class="no"></span><h2>끝없이 튀는 공은 모두 얼마나 움직일까?</h2><span class="kind">등비급수의 활용 · 모식</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="높이 h에서 떨어진 공이 매번 이전 높이의 r배만큼 튀어 오르는 경로. 지금까지 튄 경로는 초록, 남은 경로는 옅은 선"></canvas>
+      <div class="ctl">
+        <div class="ctl-row">
+          <div><label class="mono">처음 높이 <i>h</i> = <output class="h-out">10</output> m</label><input class="h" type="range" min="1" max="10" step="1" value="10" aria-label="처음 높이 h (m)"></div>
+          <div><label class="mono">튀어 오르는 비율 <i>r</i> = <output class="r-out">0.6</output></label><input class="r" type="range" min="0.1" max="0.9" step="0.05" value="0.6" aria-label="튀어 오르는 비율 r"></div>
+        </div>
+        <label class="mono">튄 횟수 <i>k</i> = <output class="kk-out">0</output></label>
+        <input class="kk" type="range" min="0" max="20" step="1" value="0" aria-label="튄 횟수 k">
+        <div class="btns">
+          <button class="chip go-bounce" type="button">한 번 더 튀기</button>
+          <button class="chip go-reset" type="button">처음부터</button>
+        </div>
+        <dl class="nums">
+          <div><dt>지금까지 거리</dt><dd class="n-d">—</dd></div>
+          <div><dt>전체 거리</dt><dd class="n-t">—</dd></div>
+          <div><dt>남은 거리</dt><dd class="n-g">—</dd></div>
+        </dl>
+        <p class="fig-note">모식입니다. 공기 저항을 무시하고, 공이 매번 정확히 이전 높이의 <i>r</i>배까지 튀어 오른다고 가정했습니다. 가로 방향은 시간의 흐름을 나타내며, 각 포물선의 폭은 그 높이를 오르내리는 시간(√높이에 비례)에 맞췄습니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>10 m 높이에서 떨어뜨린 공이 매번 이전 높이의 0.6배까지 튀어 오른다면, 공은 끝없이 튑니다. 그렇다면 공이 움직인 전체 거리도 끝없이 커질까요?</li>
+      <li><span class="tag">복원</span>|<i>r</i>| &lt; 1이면 등비급수 <i>a</i> + <i>ar</i> + <i>ar</i><sup>2</sup> + …은 <i>a</i>/(1 − <i>r</i>)에 수렴합니다. 공식의 <i>a</i>는 급수의 첫째항입니다.</li>
+      <li><span class="tag">설명</span>처음 낙하 거리는 <i>h</i>입니다. <i>i</i>번째로 튈 때는 <i>hr<sup>i</sup></i>만큼 올라갔다 같은 거리만큼 내려오므로 2<i>hr<sup>i</sup></i>를 움직입니다. 그래서 전체 거리는 <i>h</i> + (2<i>hr</i> + 2<i>hr</i><sup>2</sup> + …)이고, 괄호 안은 첫째항 2<i>hr</i>, 공비 <i>r</i>인 등비급수입니다. 0 &lt; <i>r</i> &lt; 1이므로 전체 거리는 <b><i>h</i> + 2<i>hr</i>/(1 − <i>r</i>) = <i>h</i>(1 + <i>r</i>)/(1 − <i>r</i>)</b>로 유한합니다. <i>h</i> = 10, <i>r</i> = 0.6이면 10 × 1.6/0.4 = 40 m입니다. 첫 낙하만 공비를 따르지 않으므로 따로 떼어 더하는 것이 핵심입니다.</li>
+      <li><span class="tag">연결</span>순환소수도 같은 방법으로 분수로 바꿉니다. 0.363636… = 0.36 + 0.0036 + … 은 첫째항 0.36, 공비 0.01인 등비급수이므로 0.36/0.99 = 4/11입니다. 정사각형의 각 변의 중점을 이어 새 정사각형을 끝없이 그리는 문제에서도 넓이가 매번 1/2배가 되므로 넓이의 합은 등비급수가 됩니다.</li>
+      <li><span class="tag">적용</span>'한 번 더 튀기'를 눌러 지금까지 거리가 40 m에 다가가는지 보세요. 남은 거리는 한 번 튈 때마다 몇 배가 되나요? <i>r</i>을 0.9로 올리면 전체 거리는 어떻게 바뀌나요? <i>h</i>를 절반으로 줄이면 전체 거리도 절반이 되는지 식으로 확인해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>모든 거리를 <i>h</i>/(1 − <i>r</i>)이나 2<i>h</i>/(1 − <i>r</i>)로 한꺼번에 계산하는 실수가 흔합니다. 첫 낙하는 내려가기만 하고, 그 뒤로는 오르내림이 짝을 이룹니다. 또 이것은 모식입니다. 실제 공은 튀는 높이의 비율이 일정하지 않고, 높이가 아주 작아지면 튀지 않고 멈춥니다. 무한 번 튄다는 것은 모형 안에서의 이야기입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">6 m 높이에서 떨어뜨린 공이 매번 이전 높이의 2/3까지 튀어 오른다고 할 때(모식), 공이 움직인 전체 거리는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>30 m<span class="why"><b>맞습니다.</b> 6 + 2 × 6 × (2/3)/(1 − 2/3) = 6 + 24 = 30, 곧 6(1 + 2/3)/(1 − 2/3) = 30입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>18 m<span class="why"><b>내려간 거리만 더했습니다.</b> 6/(1 − 2/3) = 18은 낙하 거리의 합이고, 올라간 거리 12 m가 빠졌습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>36 m<span class="why"><b>첫 낙하도 오르내림으로 셌습니다.</b> 2 × 6/(1 − 2/3) = 36은 처음에 올라간 적 없는 6 m를 한 번 더 더한 값입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>한없이 커진다<span class="why"><b>튀는 횟수와 거리를 섞었습니다.</b> 횟수는 끝이 없지만, 거리는 공비 2/3인 등비급수라 수렴합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

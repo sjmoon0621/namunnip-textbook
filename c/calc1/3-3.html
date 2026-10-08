@@ -1,0 +1,228 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>정적분 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="곡선 아래 넓이로 정적분을 정의하고, 함숫값이 음수인 경우와 끝이 바뀐 경우로 넓히며, 실수배·합·차와 구간 나누기 성질을 탐구한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-calc1-riemann .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc1-riemann .presets + .presets { margin-top: 6px; }
+    #card-calc1-signed-area canvas { aspect-ratio: 4 / 3; }
+    #card-calc1-signed-area .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc1-signed-area .rel { font-size: 13px; color: var(--ink-2); min-height: 2.8em; margin: 4px 0; }
+    #card-calc1-int-props canvas { aspect-ratio: 4 / 3; }
+    #card-calc1-int-props .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc1-int-props .kline { font-size: 13px; color: var(--ink-2); margin: 4px 0; line-height: 1.6; overflow-wrap: anywhere; }
+    #card-calc1-int-props .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  </style>
+</head>
+<body data-course="calc1" data-sec="3-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>정적분</h1>
+    <p class="lead">곡선으로 둘러싸인 도형의 넓이를 잴 공식은 없습니다. 이 절에서는 곡선 아래 넓이를 직사각형으로 메워 가며 정적분이라는 개념을 세우고, 그래프가 <i>x</i>축 아래로 내려가는 경우까지 정의를 넓힌 뒤 그 성질을 살펴봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">연속함수</span><span class="p">수열의 극한</span><span class="p">다항함수의 그래프</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-calc1-riemann"><span class="mono">3.3.1</span>곡선 아래 넓이와 정적분</a></li>
+        <li><a href="#card-calc1-signed-area"><span class="mono">3.3.2</span>정적분의 정의 넓히기</a></li>
+        <li><a href="#card-calc1-int-props"><span class="mono">3.3.3</span>정적분의 성질</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-3-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-calc1-riemann">
+        <header class="card-head">
+          <span class="no">3.3.1</span><h2>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</h2><span class="kind">정적분 · 넓이로 정의하기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="곡선 아래 영역을 폭이 같은 직사각형 n개로 덮은 그림"></canvas>
+            <div class="ctl">
+              <div class="presets fx">
+                <button class="chip" type="button" data-ex="[[0,0,1],0,2,4.5]" aria-pressed="true"><i>x</i><sup>2</sup>, 0 ≤ <i>x</i> ≤ 2</button>
+                <button class="chip" type="button" data-ex="[[0,4,-1],0,3,4.5]">−<i>x</i><sup>2</sup> + 4<i>x</i>, 0 ≤ <i>x</i> ≤ 3</button>
+                <button class="chip" type="button" data-ex="[[1,0,0,0.25],0,2,3.5]">¼<i>x</i><sup>3</sup> + 1, 0 ≤ <i>x</i> ≤ 2</button>
+              </div>
+              <div class="presets mode">
+                <button class="chip" type="button" data-m="left">왼쪽 끝 높이</button>
+                <button class="chip" type="button" data-m="right" aria-pressed="true">오른쪽 끝 높이</button>
+                <button class="chip" type="button" data-m="mid">가운데 높이</button>
+              </div>
+              <label class="mono">직사각형 개수 <i>n</i> = <output class="n-out">4</output></label>
+              <input class="n" type="range" min="1" max="60" step="1" value="4" aria-label="직사각형 개수 n">
+              <dl class="nums">
+                <div><dt>직사각형 넓이의 합</dt><dd class="n-s">—</dd></div>
+                <div><dt>곡선 아래 넓이</dt><dd class="n-a">—</dd></div>
+                <div><dt>차이</dt><dd class="n-e">—</dd></div>
+              </dl>
+              <p class="fig-note">'곡선 아래 넓이'의 값을 계산하는 방법은 부정적분과 정적분의 관계에서 다룹니다. 여기서는 직사각형 합이 그 값에 다가가는지만 보세요.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>직사각형, 삼각형의 넓이는 공식으로 구합니다. 그러면 <i>y</i> = <i>x</i><sup>2</sup>과 <i>x</i>축, 직선 <i>x</i> = 2로 둘러싸인 도형처럼 한쪽이 곡선인 도형의 넓이는 어떻게 잴까요?</li>
+            <li><span class="tag">복원</span>함수 <i>f</i>가 닫힌구간 [<i>a</i>, <i>b</i>]에서 연속이면 그래프가 끊어지지 않습니다. 직사각형의 넓이는 밑변 × 높이입니다. 수열의 극한에서는 <i>n</i>이 한없이 커질 때 값이 다가가는 수를 생각했습니다.</li>
+            <li><span class="tag">설명</span>구간을 폭이 같은 직사각형 <i>n</i>개로 나누고, 각 직사각형의 높이를 그 칸 안의 함숫값으로 잡아 넓이를 더하면 곡선 아래 넓이의 근삿값을 얻습니다. <i>n</i>을 크게 할수록 남거나 모자라는 조각이 줄어, 높이를 어디서 잡든 합이 같은 값에 다가갑니다. 그 값이 곡선 아래의 넓이입니다. 닫힌구간 [<i>a</i>, <i>b</i>]에서 연속이고 <i>f</i>(<i>x</i>) ≥ 0인 함수에 대해, <i>y</i> = <i>f</i>(<i>x</i>)의 그래프와 <i>x</i>축 및 두 직선 <i>x</i> = <i>a</i>, <i>x</i> = <i>b</i>로 둘러싸인 도형의 넓이를 <i>f</i>(<i>x</i>)의 <i>a</i>에서 <i>b</i>까지의 <em>정적분</em>이라 하고 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>로 씁니다. <i>a</i>를 아래끝, <i>b</i>를 위끝이라 합니다.</li>
+            <li><span class="tag">연결</span>기호 ∫는 합(sum)의 첫 글자 S를 길게 늘인 모양이고, <i>f</i>(<i>x</i>)<i>dx</i>는 높이 <i>f</i>(<i>x</i>), 폭 <i>dx</i>인 아주 가는 직사각형을 떠올리게 합니다. 직사각형의 합을 극한으로 보내는 방법(구분구적법)은 미적분Ⅱ에서 정적분과 급수의 관계로 다시 다룹니다.</li>
+            <li><span class="tag">적용</span><i>x</i><sup>2</sup>에서 '오른쪽 끝 높이'와 '왼쪽 끝 높이'를 번갈아 고르면 합이 참값보다 큰가요, 작은가요? 그 까닭을 그래프의 증가와 연결해 보세요. 차이가 0.01보다 작아지려면 <i>n</i>이 얼마쯤이어야 하나요? '가운데 높이'에서는 어떤가요?</li>
+            <li class="warn"><span class="tag">판단</span>직사각형 합은 어디까지나 근삿값입니다. <i>n</i>을 아무리 크게 해도 유한한 <i>n</i>에서는 대개 오차가 남고, 정적분은 그 합이 다가가는 극한값입니다. 또 이 정의는 <i>f</i>(<i>x</i>) ≥ 0인 경우의 것입니다. 함숫값이 음수인 곳이 있으면 '넓이'를 그대로 쓸 수 없어서 정의를 넓혀야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><i>y</i> = <i>x</i><sup>2</sup>, 0 ≤ <i>x</i> ≤ 2를 폭 1인 직사각형 2개로 덮되 각 칸의 <b>왼쪽 끝</b> 높이를 쓰면, 직사각형 넓이의 합은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 높이가 <i>f</i>(0) = 0, <i>f</i>(1) = 1이므로 0 × 1 + 1 × 1 = 1입니다. 증가하는 함수라 참값 8/3보다 작습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>오른쪽 끝 높이를 썼습니다.</b> <i>f</i>(1) + <i>f</i>(2) = 1 + 4 = 5입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8/3<span class="why"><b>참값입니다.</b> 직사각형 2개의 합은 근삿값이라 참값과 다릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5<span class="why"><b>가운데 높이를 썼습니다.</b> <i>f</i>(0.5) + <i>f</i>(1.5) = 0.25 + 2.25 = 2.5입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc1-signed-area">
+        <header class="card-head">
+          <span class="no">3.3.2</span><h2>그래프가 <i>x</i>축 아래로 내려가면 정적분은 어떻게 될까?</h2><span class="kind">정적분 · 일반적인 연속함수로 확장</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="곡선과 x축 사이를 x축 위는 파랑, 아래는 주황으로 칠한 그림. 아래끝 a와 위끝 b를 끌 수 있음"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-p="-1,0,1" aria-pressed="true"><i>x</i><sup>2</sup> − 1</button>
+                <button class="chip" type="button" data-p="0,-4,0,1"><i>x</i><sup>3</sup> − 4<i>x</i></button>
+                <button class="chip" type="button" data-p="3,2,-1">−<i>x</i><sup>2</sup> + 2<i>x</i> + 3</button>
+              </div>
+              <label class="mono">아래끝 <i>a</i> = <output class="a-out">0</output></label>
+              <input class="a" type="range" min="-3" max="3" step="0.1" value="0" aria-label="아래끝 a">
+              <label class="mono">위끝 <i>b</i> = <output class="b-out">2</output></label>
+              <input class="b" type="range" min="-3" max="3" step="0.1" value="2" aria-label="위끝 b">
+              <dl class="nums">
+                <div><dt>x축 위쪽 넓이</dt><dd class="n-up">—</dd></div>
+                <div><dt>x축 아래쪽 넓이</dt><dd class="n-dn">—</dd></div>
+                <div><dt>∫ₐᵇ f(x)dx</dt><dd class="n-v">—</dd></div>
+              </dl>
+              <p class="rel">—</p>
+              <p class="fig-note"><i>x</i>축 위의 점 <i>a</i>(검정)와 <i>b</i>(주황)를 끌어 옮길 수 있습니다. <i>b</i>를 <i>a</i>보다 왼쪽으로 보내 보세요.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>정적분을 '곡선 아래 넓이'로 정했습니다. 그런데 <i>y</i> = <i>x</i><sup>2</sup> − 1처럼 그래프가 <i>x</i>축 아래로 내려가는 함수, 또 위끝이 아래끝보다 작은 경우에는 정적분을 어떻게 정해야 할까요?</li>
+            <li><span class="tag">복원</span><i>f</i>(<i>x</i>) ≥ 0이고 <i>f</i>가 [<i>a</i>, <i>b</i>]에서 연속이면 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>는 그래프와 <i>x</i>축, <i>x</i> = <i>a</i>, <i>x</i> = <i>b</i>로 둘러싸인 넓이입니다. 넓이는 언제나 0 이상입니다.</li>
+            <li><span class="tag">설명</span>직사각형 합으로 생각하면 함숫값이 음수인 칸은 높이가 음수이므로 넓이를 빼는 셈이 됩니다. 그래서 일반적인 연속함수에 대해 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = (<i>x</i>축 위쪽 넓이) − (<i>x</i>축 아래쪽 넓이)</b> (<i>a</i> &lt; <i>b</i>)로 정의를 넓힙니다. 또 끝이 같거나 거꾸로인 경우를 다음과 같이 약속합니다. <b>∫<sub><i>a</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0</b>, <b>∫<sub><i>b</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = −∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b> (<i>a</i> &lt; <i>b</i>). 이렇게 정하면 정적분은 넓이가 아니라 부호가 있는 값이 됩니다.</li>
+            <li><span class="tag">연결</span>속도–시간 그래프에서 시간축 아래 넓이가 반대 방향의 변위를 뜻했던 것과 같은 생각입니다. 넓이 자체를 구하는 문제에서는 위쪽과 아래쪽을 모두 더해야 하고, 이것은 넓이 절에서 다시 다룹니다.</li>
+            <li><span class="tag">적용</span><i>x</i><sup>2</sup> − 1에서 <i>a</i> = −1, <i>b</i> = 1로 두면 정적분의 부호는 무엇인가요? <i>x</i><sup>3</sup> − 4<i>x</i>에서 <i>a</i> = −2, <i>b</i> = 2로 두면 위·아래 넓이와 정적분은 각각 얼마인가요? 그다음 <i>a</i>와 <i>b</i>를 바꾸어 놓으면 정적분은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>"정적분 = 넓이"는 <i>f</i>(<i>x</i>) ≥ 0이고 <i>a</i> &lt; <i>b</i>일 때만 맞습니다. 정적분이 0이어도 둘러싸인 도형의 넓이는 0이 아닐 수 있습니다. 위쪽 넓이와 아래쪽 넓이가 같아서 서로 지워졌을 뿐입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">∫<sub>0</sub><sup>3</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 5일 때, ∫<sub>3</sub><sup>0</sup> <i>f</i>(<i>x</i>)<i>dx</i> + ∫<sub>2</sub><sup>2</sup> <i>f</i>(<i>x</i>)<i>dx</i>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−5<span class="why"><b>맞습니다.</b> 끝을 바꾸면 부호가 바뀌어 −5이고, 끝이 같은 정적분은 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>순서를 무시했습니다.</b> 정적분은 넓이가 아니라 방향이 있는 값이라 위끝과 아래끝을 바꾸면 부호가 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−5 + 2<i>f</i>(2)<span class="why"><b>끝이 같은 정적분을 값이 있는 것으로 보았습니다.</b> 폭이 0이므로 ∫<sub>2</sub><sup>2</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>함수를 몰라도 됩니다.</b> 정적분의 약속만으로 값이 정해집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc1-int-props">
+        <header class="card-head">
+          <span class="no">3.3.3</span><h2>구간을 둘로 나누어 적분해도 값이 같을까?</h2><span class="kind">정적분 · 성질</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="a에서 c까지는 파랑, c에서 b까지는 노랑으로 칠한 곡선 아래 영역. 점 c를 끌 수 있음"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-p="0,-2,1" aria-pressed="true"><i>f</i>(<i>x</i>) = <i>x</i><sup>2</sup> − 2<i>x</i></button>
+                <button class="chip" type="button" data-p="1,0.5">½<i>x</i> + 1</button>
+                <button class="chip" type="button" data-p="0,-3,0,1"><i>x</i><sup>3</sup> − 3<i>x</i></button>
+              </div>
+              <div class="two">
+                <div><label class="mono"><i>a</i> = <output class="a-out">−1</output></label><input class="a" type="range" min="-3" max="3" step="0.5" value="-1" aria-label="아래끝 a"></div>
+                <div><label class="mono"><i>b</i> = <output class="b-out">2</output></label><input class="b" type="range" min="-3" max="3" step="0.5" value="2" aria-label="위끝 b"></div>
+                <div><label class="mono">나누는 점 <i>c</i> = <output class="c-out">0.5</output></label><input class="c" type="range" min="-3" max="3" step="0.5" value="0.5" aria-label="나누는 점 c"></div>
+                <div><label class="mono">실수배 <i>k</i> = <output class="k-out">1</output></label><input class="k" type="range" min="-2" max="2" step="0.5" value="1" aria-label="실수배 k"></div>
+              </div>
+              <dl class="nums n4">
+                <div><dt>∫<sub>a</sub><sup>c</sup> 파랑</dt><dd class="n-ac">—</dd></div>
+                <div><dt>∫<sub>c</sub><sup>b</sup> 노랑</dt><dd class="n-cb">—</dd></div>
+                <div><dt>두 값의 합</dt><dd class="n-sum">—</dd></div>
+                <div><dt>∫<sub>a</sub><sup>b</sup></dt><dd class="n-ab">—</dd></div>
+              </dl>
+              <p class="mono kline">—</p>
+              <p class="fig-note">표의 정적분은 모두 초록 곡선 <i>y</i> = <i>k</i>·<i>f</i>(<i>x</i>)의 값입니다. 회색 점선은 <i>k</i> = 1일 때의 <i>f</i>(<i>x</i>)입니다. 주황 점 <i>c</i>는 끌어서 옮길 수 있습니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>[−1, 2]에서의 정적분을 [−1, 0.5]와 [0.5, 2] 두 조각으로 나누어 구한 뒤 더해도 될까요? 나누는 점 <i>c</i>가 구간 밖에 있으면 어떻게 될까요?</li>
+            <li><span class="tag">복원</span><i>a</i> &lt; <i>b</i>일 때 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>는 (<i>x</i>축 위쪽 넓이) − (아래쪽 넓이)이고, ∫<sub><i>b</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = −∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>, ∫<sub><i>a</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0으로 약속했습니다.</li>
+            <li><span class="tag">설명</span>연속함수 <i>f</i>, <i>g</i>와 실수 <i>k</i>에 대해 다음이 성립합니다. ① <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>kf</i>(<i>x</i>)<i>dx</i> = <i>k</i>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>: 높이가 모두 <i>k</i>배가 되면 넓이도 <i>k</i>배이고, <i>k</i> &lt; 0이면 위아래가 뒤집혀 부호가 바뀝니다. ② <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) ± <i>g</i>(<i>x</i>)}<i>dx</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> ± ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>g</i>(<i>x</i>)<i>dx</i></b>: 높이를 더하면 넓이도 더해집니다. ③ <b>∫<sub><i>a</i></sub><sup><i>c</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> + ∫<sub><i>c</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>: <i>c</i>가 <i>a</i>와 <i>b</i> 사이면 도형을 둘로 자른 것이고, 밖에 있어도 끝을 바꾸면 부호가 바뀐다는 약속 덕분에 그대로 성립합니다.</li>
+            <li><span class="tag">연결</span>성질 ③은 그래프가 <i>x</i>축과 만나는 점에서 구간을 잘라 넓이를 구할 때, 또 구간마다 식이 다른 함수를 적분할 때 씁니다. 성질 ①, ②는 다항함수의 정적분을 항마다 나누어 계산하는 근거입니다.</li>
+            <li><span class="tag">적용</span><i>c</i>를 <i>a</i>와 <i>b</i> 사이에서 움직일 때 '두 값의 합'이 바뀌나요? <i>c</i>를 <i>b</i>보다 오른쪽으로 끌어 보세요. 노란 영역이 겹쳐 칠해지는데도 합이 ∫<sub><i>a</i></sub><sup><i>b</i></sup>와 같은 까닭은 무엇인가요? <i>k</i>를 −1로 하면 그래프와 값이 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>곱에는 이런 성질이 없습니다. ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>g</i>(<i>x</i>)<i>dx</i>는 대개 (∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>)(∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>g</i>(<i>x</i>)<i>dx</i>)와 다릅니다. 예를 들어 <i>f</i>(<i>x</i>) = <i>g</i>(<i>x</i>) = <i>x</i>, [0, 1]에서 왼쪽은 1/3, 오른쪽은 1/4입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">∫<sub>0</sub><sup>5</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 7, ∫<sub>3</sub><sup>5</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 2일 때 ∫<sub>0</sub><sup>3</sup> 2<i>f</i>(<i>x</i>)<i>dx</i>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10<span class="why"><b>맞습니다.</b> ∫<sub>0</sub><sup>3</sup> = ∫<sub>0</sub><sup>5</sup> − ∫<sub>3</sub><sup>5</sup> = 7 − 2 = 5이고, 2배 하면 10입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>18<span class="why"><b>두 조각을 더했습니다.</b> [0, 3]과 [3, 5]를 이으면 [0, 5]이므로, [0, 3]의 값은 빼서 구해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>실수배를 빠뜨렸습니다.</b> ∫<sub>0</sub><sup>3</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 5이고, 문제는 2<i>f</i>(<i>x</i>)의 정적분입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>구간 나누기 성질로 구할 수 있습니다.</b> <i>f</i>(<i>x</i>)의 식을 몰라도 ③과 ①로 값이 정해집니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=calc1-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">1문항</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc1/int-lib.js"></script>
+<script src="../../js/cards/calc1/riemann.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc1/int-lib.js"></script>
+<script src="../../js/cards/calc1/signed-area.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc1/int-lib.js"></script>
+<script src="../../js/cards/calc1/int-props.js"></script>
+</body>
+</html>

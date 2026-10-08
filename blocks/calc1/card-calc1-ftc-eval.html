@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc1/int-lib.js",
+    "js/cards/calc1/ftc-eval.js"
+  ],
+  "short": "다항함수의 정적분 계산"
+}
+-->
+<style>
+#card-calc1-ftc-eval canvas { aspect-ratio: 1 / 1; }
+#card-calc1-ftc-eval .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+#card-calc1-ftc-eval .F-eq { font-size: 13.5px; margin: 6px 0 2px; overflow-wrap: anywhere; }
+#card-calc1-ftc-eval .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc1-ftc-eval">
+  <header class="card-head">
+    <span class="no"></span><h2>넓이를 재지 않고 정적분을 구할 수 있을까?</h2><span class="kind">부정적분과 정적분 · F(b) − F(a)</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: y = f(x)와 a부터 b까지 칠한 영역. 아래: 부정적분 y = F(x) + C와 x = a, x = b에서의 높이 차"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-ex="[[0,-2,3],[-2,14,4],[-9,13,4]]" aria-pressed="true"><i>f</i>(<i>x</i>) = 3<i>x</i><sup>2</sup> − 2<i>x</i></button>
+          <button class="chip" type="button" data-ex="[[1,1],[-1,4,1],[-4,10,2]]"><i>x</i> + 1</button>
+          <button class="chip" type="button" data-ex="[[4,0,-1],[-3,5,1],[-8,9,4]]">4 − <i>x</i><sup>2</sup></button>
+        </div>
+        <div class="two">
+          <div><label class="mono">아래끝 <i>a</i> = <output class="a-out">0</output></label><input class="a" type="range" min="-1.5" max="2.5" step="0.5" value="0" aria-label="아래끝 a"></div>
+          <div><label class="mono">위끝 <i>b</i> = <output class="b-out">2</output></label><input class="b" type="range" min="-1.5" max="2.5" step="0.5" value="2" aria-label="위끝 b"></div>
+        </div>
+        <label class="mono">적분상수 <i>C</i> = <output class="c-out">0</output></label>
+        <input class="c" type="range" min="-3" max="3" step="0.5" value="0" aria-label="적분상수 C">
+        <p class="mono F-eq">—</p>
+        <dl class="nums n4">
+          <div><dt>F(b) + C</dt><dd class="n-fb">—</dd></div>
+          <div><dt>F(a) + C</dt><dd class="n-fa">—</dd></div>
+          <div><dt>차 = 정적분</dt><dd class="n-d">—</dd></div>
+          <div><dt>직사각형 2000개 합</dt><dd class="n-r">—</dd></div>
+        </dl>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>∫<sub>0</sub><sup>2</sup> (3<i>x</i><sup>2</sup> − 2<i>x</i>)<i>dx</i>를 구하려고 직사각형을 수천 개 더할 수는 없습니다. 부정적분을 알면 정적분을 바로 구할 수 있을까요?</li>
+      <li><span class="tag">복원</span>S(<i>x</i>) = ∫<sub><i>a</i></sub><sup><i>x</i></sup> <i>f</i>(<i>t</i>)<i>dt</i>는 <i>f</i>(<i>x</i>)의 부정적분이고 S(<i>a</i>) = 0입니다. 같은 함수의 두 부정적분은 상수만큼 다릅니다.</li>
+      <li><span class="tag">설명</span>F(<i>x</i>)를 <i>f</i>(<i>x</i>)의 한 부정적분이라 하면 S(<i>x</i>) = F(<i>x</i>) + <i>k</i> (<i>k</i>는 상수)입니다. <i>x</i> = <i>a</i>를 넣으면 0 = F(<i>a</i>) + <i>k</i>, 곧 <i>k</i> = −F(<i>a</i>)이므로 S(<i>x</i>) = F(<i>x</i>) − F(<i>a</i>)입니다. <i>x</i> = <i>b</i>를 넣으면 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = [F(<i>x</i>)]<sub><i>a</i></sub><sup><i>b</i></sup> = F(<i>b</i>) − F(<i>a</i>)</b>입니다. 기호 [F(<i>x</i>)]<sub><i>a</i></sub><sup><i>b</i></sup>는 F(<i>b</i>) − F(<i>a</i>)를 줄여 쓴 것입니다. 예: ∫<sub>0</sub><sup>2</sup> (3<i>x</i><sup>2</sup> − 2<i>x</i>)<i>dx</i> = [<i>x</i><sup>3</sup> − <i>x</i><sup>2</sup>]<sub>0</sub><sup>2</sup> = (8 − 4) − 0 = 4.</li>
+      <li><span class="tag">연결</span>넓이를 직접 재던 일이 부정적분의 두 함숫값의 차로 바뀌었습니다. 아래 그래프에서 이 차는 <i>x</i> = <i>a</i>와 <i>x</i> = <i>b</i>에서의 높이 차입니다. 위치 함수의 높이 차가 변위인 것처럼, 부정적분의 높이 차가 정적분입니다.</li>
+      <li><span class="tag">적용</span><i>C</i>를 바꾸어도 '차 = 정적분'이 바뀌지 않는지 확인하세요. 그 값이 '직사각형 2000개 합'과 같은가요? 4 − <i>x</i><sup>2</sup>에서 <i>a</i> = −1.5, <i>b</i> = 2.5로 두면 정적분이 음수가 됩니다. 위 그래프의 어느 부분 때문인가요? <i>a</i>와 <i>b</i>를 바꾸면 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>정적분은 부정적분과 달리 하나의 수입니다. F(<i>b</i>) + <i>C</i>와 F(<i>a</i>) + <i>C</i>를 빼면 <i>C</i>가 지워지므로 계산할 때 적분상수는 0으로 두면 됩니다. 흔한 실수는 F가 아닌 <i>f</i>에 <i>b</i>, <i>a</i>를 넣는 것과, F(<i>a</i>)를 뺄 때 괄호를 빠뜨려 부호를 틀리는 것입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">∫<sub>1</sub><sup>3</sup> (3<i>x</i><sup>2</sup> − 2<i>x</i>)<i>dx</i>의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>18<span class="why"><b>맞습니다.</b> [<i>x</i><sup>3</sup> − <i>x</i><sup>2</sup>]<sub>1</sub><sup>3</sup> = (27 − 9) − (1 − 1) = 18입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>20<span class="why"><b>피적분함수에 값을 넣었습니다.</b> <i>f</i>(3) − <i>f</i>(1) = 21 − 1 = 20입니다. 부정적분 F에 넣어야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>26<span class="why"><b>−2<i>x</i> 항을 빠뜨렸습니다.</b> [<i>x</i><sup>3</sup>]<sub>1</sub><sup>3</sup> = 26이고, −[<i>x</i><sup>2</sup>]<sub>1</sub><sup>3</sup> = −8을 더해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>18 + <i>C</i><span class="why"><b>적분상수를 남겼습니다.</b> 정적분에서는 <i>C</i>가 빼는 과정에서 지워져 하나의 수가 됩니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

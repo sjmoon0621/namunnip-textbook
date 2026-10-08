@@ -1,0 +1,68 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/chain-lines.js"
+  ],
+  "short": "합성함수의 미분법"
+}
+-->
+<style>
+#card-calc2-chain-lines canvas { width: 100%; aspect-ratio: 16 / 9; }
+#card-calc2-chain-lines .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-chain-lines .nums + .nums { margin-top: 0; }
+</style>
+<article class="card" id="card-calc2-chain-lines">
+  <header class="card-head">
+    <span class="no"></span><h2>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</h2><span class="kind">합성함수의 미분법 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="왼쪽: u = g(x)의 그래프와 Δx, Δu. 오른쪽: y = f(u)의 그래프와 같은 Δu, Δy"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-k="cube" aria-pressed="true">(2<i>x</i> − 1)<sup>3</sup></button>
+          <button class="chip" type="button" data-k="sin">sin(<i>x</i><sup>2</sup>)</button>
+          <button class="chip" type="button" data-k="exp"><i>e</i><sup>−<i>x</i><sup>2</sup></sup></button>
+        </div>
+        <label class="mono"><i>x</i> = <output class="x-out">1</output></label>
+        <input class="sx" type="range" min="-0.5" max="1.5" step="0.05" value="1" aria-label="x의 값">
+        <label class="mono">Δ<i>x</i> = <output class="d-out">0.4</output></label>
+        <input class="sd" type="range" min="0.005" max="0.8" step="0.005" value="0.4" aria-label="x의 증분 Δx">
+        <div class="presets">
+          <button class="chip go-half" type="button">Δx ÷ 2</button>
+        </div>
+        <dl class="nums">
+          <div><dt>Δu/Δx</dt><dd class="n-ux">—</dd></div>
+          <div><dt>Δy/Δu</dt><dd class="n-yu">—</dd></div>
+          <div><dt>곱 = Δy/Δx</dt><dd class="n-yx">—</dd></div>
+        </dl>
+        <dl class="nums">
+          <div><dt>g′(x)</dt><dd class="n-gp good">—</dd></div>
+          <div><dt>f′(g(x))</dt><dd class="n-fp good">—</dd></div>
+          <div><dt>f′(g(x))·g′(x)</dt><dd class="n-pr good">—</dd></div>
+        </dl>
+        <p class="fig-note">왼쪽 그림의 세로 증분 Δ<i>u</i>(주황)가 오른쪽 그림에서는 가로 증분이 됩니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span><i>y</i> = (2<i>x</i> − 1)<sup>3</sup>에서 <i>x</i>가 조금 변하면 <i>y</i>는 몇 배로 변할까요? 전개하지 않고 안쪽 2<i>x</i> − 1과 바깥 세제곱의 변화율만으로 알 수 있을까요?</li>
+      <li><span class="tag">복원</span><i>y</i> = <i>f</i>(<i>g</i>(<i>x</i>))는 <i>u</i> = <i>g</i>(<i>x</i>)를 먼저 계산하고 그 값을 <i>f</i>에 넣은 합성함수입니다. 미분계수는 평균변화율 Δ<i>y</i>/Δ<i>x</i>의 극한이고, 미분가능한 함수는 연속입니다.</li>
+      <li><span class="tag">설명</span><i>x</i>가 Δ<i>x</i>만큼 변하면 <i>u</i>가 Δ<i>u</i> = <i>g</i>(<i>x</i> + Δ<i>x</i>) − <i>g</i>(<i>x</i>)만큼, 그에 따라 <i>y</i>가 Δ<i>y</i> = <i>f</i>(<i>u</i> + Δ<i>u</i>) − <i>f</i>(<i>u</i>)만큼 변합니다. Δ<i>u</i> ≠ 0이면 Δ<i>y</i>/Δ<i>x</i> = (Δ<i>y</i>/Δ<i>u</i>)(Δ<i>u</i>/Δ<i>x</i>)입니다. Δ<i>x</i> → 0이면 <i>g</i>가 연속이므로 Δ<i>u</i> → 0이고, <b><i>dy</i>/<i>dx</i> = (<i>dy</i>/<i>du</i>)(<i>du</i>/<i>dx</i>)</b>, 곧 <b>{<i>f</i>(<i>g</i>(<i>x</i>))}′ = <i>f</i>′(<i>g</i>(<i>x</i>)) <i>g</i>′(<i>x</i>)</b>입니다. 예를 들어 {(2<i>x</i> − 1)<sup>3</sup>}′ = 3(2<i>x</i> − 1)<sup>2</sup> · 2, {sin(<i>x</i><sup>2</sup>)}′ = cos(<i>x</i><sup>2</sup>) · 2<i>x</i>, (<i>e</i><sup>−<i>x</i><sup>2</sup></sup>)′ = <i>e</i><sup>−<i>x</i><sup>2</sup></sup> · (−2<i>x</i>)입니다. 바깥 함수가 ln|<i>u</i>|이면 <b>{ln|<i>f</i>(<i>x</i>)|}′ = <i>f</i>′(<i>x</i>)/<i>f</i>(<i>x</i>)</b>입니다.</li>
+      <li><span class="tag">연결</span><i>dy</i>/<i>dx</i>를 분수처럼 약분하는 모양이 되는 것은 변화율이 단계마다 곱해지기 때문입니다. 톱니바퀴 세 개가 맞물려 돌 때 회전 비율이 곱해지는 것과 같습니다. 이 생각으로 다음 카드에서 실수 지수의 거듭제곱을, 다음 절에서 매개변수로 나타낸 함수를 미분합니다.</li>
+      <li><span class="tag">적용</span>'Δx ÷ 2'를 여러 번 눌러 위 세 칸이 아래 세 칸에 다가가는지 보세요. 첫 번째 식에서 Δ<i>u</i>/Δ<i>x</i>는 왜 처음부터 2인가요? sin(<i>x</i><sup>2</sup>)에서 <i>x</i>를 음수로 옮기고 Δ<i>x</i>를 조절해 Δ<i>u</i> = 0이 되는 경우를 찾아보세요. 그때 Δ<i>y</i>/Δ<i>u</i>는 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>가장 흔한 실수는 안쪽 함수의 도함수 <i>g</i>′(<i>x</i>)를 곱하지 않는 것입니다. 또 <i>f</i>′는 <i>x</i>가 아니라 <i>g</i>(<i>x</i>)에서 계산합니다. {sin(<i>x</i><sup>2</sup>)}′을 cos <i>x</i> · 2<i>x</i>로 쓰면 틀립니다. 위의 설명은 Δ<i>u</i> ≠ 0일 때만 나눌 수 있으므로, Δ<i>u</i> = 0이 되는 경우까지 다루려면 더 세밀한 증명이 필요합니다. 결론인 공식은 그 경우에도 성립합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q"><i>f</i>(<i>x</i>) = (<i>x</i><sup>2</sup> + 1)<sup>3</sup>일 때 <i>f</i>′(1)의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>24<span class="why"><b>맞습니다.</b> <i>f</i>′(<i>x</i>) = 3(<i>x</i><sup>2</sup> + 1)<sup>2</sup> · 2<i>x</i>이고 <i>f</i>′(1) = 3 · 4 · 2 = 24입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12<span class="why"><b>안쪽의 도함수를 빠뜨렸습니다.</b> 3(<i>x</i><sup>2</sup> + 1)<sup>2</sup> = 12에 (<i>x</i><sup>2</sup> + 1)′ = 2<i>x</i> = 2를 곱해야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>함숫값을 구했습니다.</b> <i>f</i>(1) = 2<sup>3</sup> = 8은 높이이지 기울기가 아닙니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>48<span class="why"><b>지수를 낮추지 않았습니다.</b> 3(<i>x</i><sup>2</sup> + 1)<sup>3</sup> · 2<i>x</i>로 계산하면 48이 됩니다. 바깥 함수 <i>u</i><sup>3</sup>의 도함수는 3<i>u</i><sup>2</sup>입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

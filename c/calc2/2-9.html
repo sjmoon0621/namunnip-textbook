@@ -1,0 +1,167 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>그래프의 개형 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="이계도함수 f″(x), y″, d²y/dx²의 뜻과 기하적 의미(접선의 기울기가 변하는 방향), 아래로 볼록과 위로 볼록, 곡선과 접선의 위치, 변곡점과 판정(f″의 부호 변화), 이계도함수를 이용한 극대·극소 판정, 정의역·절편·증감·볼록·점근선으로 지수·로그·분수함수의 그래프 개형 그리기.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-calc2-concavity canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-calc2-concavity .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-calc2-curve-sketch canvas { width: 100%; aspect-ratio: 16 / 10; }
+    #card-calc2-curve-sketch .go-row { display: flex; align-items: center; gap: 8px; margin: 8px 0 4px; }
+    #card-calc2-curve-sketch .go-row .stp { flex: 1; font-size: 13px; color: var(--ink-2); }
+    #card-calc2-curve-sketch .eq { font-size: 13px; margin: 6px 0 4px; line-height: 1.6; overflow-wrap: anywhere; }
+    #card-calc2-curve-sketch .sk-tbl { overflow-x: auto; margin: 6px 0; }
+    #card-calc2-curve-sketch .sk-tbl table { border-collapse: collapse; font-family: var(--f-mono); font-size: 12px; width: 100%; }
+    #card-calc2-curve-sketch .sk-tbl th, #card-calc2-curve-sketch .sk-tbl td { border: 1px solid var(--rule); padding: 3px 4px; text-align: center; white-space: nowrap; color: var(--ink); }
+    #card-calc2-curve-sketch .sk-tbl th { color: var(--ink-3); font-weight: 500; }
+  </style>
+</head>
+<body data-course="calc2" data-sec="2-9">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>그래프의 개형</h1>
+    <p class="lead">증가와 감소만으로는 그래프의 모양이 다 정해지지 않습니다. 똑같이 증가하는 곡선도 점점 가파르게 오를 수 있고, 점점 완만하게 오를 수도 있습니다. 이 절에서는 도함수를 한 번 더 미분한 이계도함수로 곡선이 휘는 방향(볼록)과 휘는 방향이 바뀌는 점(변곡점)을 찾습니다. 그다음 증감, 볼록, 점근선을 모아 지수함수, 로그함수가 섞인 함수의 그래프 개형을 그립니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">함수의 증가·감소와 극값</span><span class="p">여러 가지 함수의 도함수</span><span class="p">함수의 극한과 점근선</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-calc2-concavity"><span class="mono">2.9.1</span>이계도함수와 볼록, 변곡점</a></li>
+        <li><a href="#card-calc2-curve-sketch"><span class="mono">2.9.2</span>그래프의 개형 그리기</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-2-9">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-calc2-concavity">
+        <header class="card-head">
+          <span class="no">2.9.1</span><h2>곡선이 휘는 방향을 무엇으로 알 수 있을까?</h2><span class="kind">이계도함수 · 조작</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="위: y = f(x)와 점 P에서의 접선. 아래: 기울기 함수 y = f′(x), 배경색은 f″의 부호"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="gauss" aria-pressed="true"><i>e</i><sup>−<i>x</i><sup>2</sup>/2</sup></button>
+                <button class="chip" type="button" data-k="xexp"><i>xe</i><sup>−<i>x</i></sup></button>
+                <button class="chip" type="button" data-k="sin">sin <i>x</i></button>
+                <button class="chip go-ip" type="button" aria-pressed="false">변곡점 보기</button>
+              </div>
+              <label class="mono">점 P의 <i>x</i>좌표 <i>a</i> = <output class="a-out">0</output></label>
+              <input class="sa" type="range" min="-3" max="3" step="0.01" value="-1.6" aria-label="점 P의 x좌표 a">
+              <dl class="nums n4">
+                <div><dt>f′(a) 접선 기울기</dt><dd class="n-1">—</dd></div>
+                <div><dt>f″(a)</dt><dd class="n-2">—</dd></div>
+                <div><dt>볼록</dt><dd class="n-c">—</dd></div>
+                <div><dt>P 근처의 곡선</dt><dd class="n-t">—</dd></div>
+              </dl>
+              <p class="fig-note">아래 그림은 기울기 함수 <i>y</i> = <i>f</i>′(<i>x</i>)입니다. 연두 배경은 <i>f</i>″ &gt; 0, 주황 배경은 <i>f</i>″ &lt; 0인 구간입니다. 넷째 칸은 P의 양옆 0.2만큼 떨어진 곳에서 곡선과 접선의 높이를 비교한 결과입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>종 모양 곡선 <i>y</i> = <i>e</i><sup>−<i>x</i><sup>2</sup>/2</sup>는 가운데에서는 위로 불룩하고 양쪽 끝에서는 아래로 처집니다. 휘는 방향이 바뀌는 곳을 계산으로 찾을 수 있을까요?</li>
+            <li><span class="tag">복원</span><i>f</i>′(<i>x</i>)는 접선의 기울기입니다. 어떤 함수가 증가하는지 감소하는지는 그 함수의 도함수의 부호로 압니다.</li>
+            <li><span class="tag">설명</span><i>f</i>′(<i>x</i>)의 도함수를 <em>이계도함수</em>라 하고 <i>f</i>″(<i>x</i>), <i>y</i>″, <i>d</i><sup>2</sup><i>y</i>/<i>dx</i><sup>2</sup>으로 씁니다. 어떤 구간에서 <i>f</i>″(<i>x</i>) &gt; 0이면 접선의 기울기 <i>f</i>′이 증가합니다. 그러면 곡선은 접선보다 위에 놓이고 <b>아래로 볼록</b>합니다. <i>f</i>″(<i>x</i>) &lt; 0이면 기울기가 감소하고 곡선은 <b>위로 볼록</b>합니다. 볼록한 방향이 바뀌는 곡선 위의 점을 <em>변곡점</em>이라고 합니다. <i>f</i>″(<i>a</i>) = 0이고 <i>x</i> = <i>a</i>의 좌우에서 <i>f</i>″의 부호가 바뀌면 점 (<i>a</i>, <i>f</i>(<i>a</i>))는 변곡점입니다. 종 모양 곡선은 <i>f</i>″(<i>x</i>) = (<i>x</i><sup>2</sup> − 1)<i>e</i><sup>−<i>x</i><sup>2</sup>/2</sup>이므로 <i>x</i> = ±1에서 휘는 방향이 바뀝니다.</li>
+            <li><span class="tag">연결</span>변곡점에서는 기울기 <i>f</i>′이 극대나 극소가 됩니다. 아래 그림에서 확인할 수 있습니다. 또 <i>f</i>′(<i>a</i>) = 0이고 <i>f</i>″(<i>a</i>) &lt; 0이면 위로 볼록한 곳의 꼭대기이므로 <i>f</i>(<i>a</i>)는 극댓값입니다. <i>f</i>″(<i>a</i>) &gt; 0이면 극솟값입니다. 이계도함수로 극값을 판정하는 방법입니다.</li>
+            <li><span class="tag">적용</span><i>a</i>를 움직이며 넷째 칸이 '접선을 가로지름'으로 바뀌는 곳을 찾으세요. 그곳에서 아래 그림의 <i>f</i>′은 어떤 모양인가요? 찾은 뒤 '변곡점 보기'로 확인하세요. <i>xe</i><sup>−<i>x</i></sup>에서는 변곡점이 극대점과 다른 곳에 있습니다. 두 점의 <i>x</i>좌표는 각각 얼마인가요?</li>
+            <li class="warn"><span class="tag">판단</span><i>f</i>″(<i>a</i>) = 0이라고 해서 언제나 변곡점은 아닙니다. <i>y</i> = <i>x</i><sup>4</sup>은 <i>x</i> = 0에서 <i>y</i>″ = 0이지만 양쪽 모두 아래로 볼록하므로 변곡점이 없습니다. 좌우에서 부호가 바뀌는지 꼭 확인합니다. 또 변곡점은 <i>x</i>값이 아니라 곡선 위의 점 (<i>a</i>, <i>f</i>(<i>a</i>))로 답합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">곡선 <i>y</i> = ln(<i>x</i><sup>2</sup> + 1)의 변곡점을 모두 고르면?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(−1, ln 2), (1, ln 2)<span class="why"><b>맞습니다.</b> <i>y</i>′ = 2<i>x</i>/(<i>x</i><sup>2</sup> + 1), <i>y</i>″ = 2(1 − <i>x</i><sup>2</sup>)/(<i>x</i><sup>2</sup> + 1)<sup>2</sup>입니다. <i>x</i> = ±1의 좌우에서 부호가 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(0, 0)<span class="why"><b>극소점과 헷갈렸습니다.</b> <i>x</i> = 0에서는 <i>y</i>′ = 0이고 <i>y</i>″ = 2 &gt; 0이라 아래로 볼록한 곳의 바닥, 곧 극소점입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(1, ln 2)만<span class="why"><b>음수 쪽을 빠뜨렸습니다.</b> 이 곡선은 <i>y</i>축에 대칭이므로 변곡점도 대칭으로 하나씩 더 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>없다<span class="why"><b>로그 곡선이라 늘 위로 볼록하다고 보았습니다.</b> 가운데 부분은 <i>y</i>″ &gt; 0이라 아래로 볼록합니다. 바깥쪽에서만 위로 볼록합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-calc2-curve-sketch">
+        <header class="card-head">
+          <span class="no">2.9.2</span><h2>점을 찍지 않고 그래프의 모양을 알 수 있을까?</h2><span class="kind">그래프의 개형 · 단계별</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="단계마다 정의역, 절편, 극값, 변곡점, 점근선을 표시하고 마지막에 그래프를 그림"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-k="lnx" aria-pressed="true">(ln <i>x</i>)/<i>x</i></button>
+                <button class="chip" type="button" data-k="x2e"><i>x</i><sup>2</sup><i>e</i><sup>−<i>x</i></sup></button>
+                <button class="chip" type="button" data-k="ex"><i>e</i><sup><i>x</i></sup>/<i>x</i></button>
+              </div>
+              <div class="go-row">
+                <button class="chip go-prev" type="button">이전</button>
+                <span class="mono stp">1/5</span>
+                <button class="chip go-step" type="button">다음 단계</button>
+              </div>
+              <p class="eq">—</p>
+              <div class="sk-tbl"></div>
+              <p class="fig-note">단계를 넘기기 전에 그래프가 어떻게 생겼을지 먼저 짐작해 보세요. 그래프 곡선은 마지막 단계에서만 그립니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span><i>y</i> = (ln <i>x</i>)/<i>x</i>의 그래프를 점 몇 개만 찍어 이으면 될까요? 극댓값이 어디인지, 곡선이 어디서 휘는 방향을 바꾸는지, 끝에서 어디로 가는지는 점 몇 개로 알 수 없습니다.</li>
+            <li><span class="tag">복원</span><i>f</i>′의 부호로 증가·감소와 극값을, <i>f</i>″의 부호로 볼록과 변곡점을 압니다. <i>x</i> → ∞일 때 <i>f</i>(<i>x</i>)가 어떤 수에 다가가면 그 높이의 가로선이, <i>x</i> → <i>a</i>일 때 <i>f</i>(<i>x</i>)가 ±∞로 가면 세로선 <i>x</i> = <i>a</i>가 점근선입니다.</li>
+            <li><span class="tag">설명</span>개형은 다섯 단계로 그립니다. ① 정의역, 대칭, 절편을 찾습니다. ② <i>f</i>′(<i>x</i>) = 0인 곳과 <i>f</i>′의 부호로 증감과 극값을 정합니다. ③ <i>f</i>″(<i>x</i>) = 0인 곳과 <i>f</i>″의 부호로 볼록과 변곡점을 정합니다. ④ 정의역의 끝과 정의되지 않는 점 근처에서 극한을 구해 점근선을 찾습니다. ⑤ 이 정보를 <em>증감표</em>에 모아 잇습니다. (ln <i>x</i>)/<i>x</i>는 <i>x</i> = <i>e</i>에서 극댓값 1/<i>e</i>를 갖고, 점 (<i>e</i><sup>3/2</sup>, 3/(2<i>e</i><sup>3/2</sup>))에서 휘는 방향이 바뀌며, 두 축이 점근선입니다.</li>
+            <li><span class="tag">연결</span>그래프의 개형을 알면 방정식 <i>f</i>(<i>x</i>) = <i>k</i>의 실근의 개수를 가로선과의 교점으로 셀 수 있고, 최댓값과 최솟값도 바로 읽을 수 있습니다. 다음 절의 방정식과 부등식 문제는 이 개형에서 출발합니다.</li>
+            <li><span class="tag">적용</span>세 함수 각각에서 단계를 하나씩 넘기며 표를 채워 보세요. <i>e</i><sup><i>x</i></sup>/<i>x</i>는 <i>x</i> = 0의 좌우에서 볼록한 방향이 바뀌는데도 변곡점이 없습니다. 왜 그런가요? <i>x</i><sup>2</sup><i>e</i><sup>−<i>x</i></sup>에서 변곡점은 몇 개인가요?</li>
+            <li class="warn"><span class="tag">판단</span><i>f</i>″의 부호가 바뀌어도 그 <i>x</i>가 정의역에 없으면 변곡점이 아닙니다. 또 점근선은 '그래프가 절대 만나지 않는 선'이 아닙니다. <i>x</i><sup>2</sup><i>e</i><sup>−<i>x</i></sup>는 점근선 <i>y</i> = 0과 원점에서 만납니다. 점근선은 <i>x</i>가 끝으로 갈 때 그래프가 다가가는 선입니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">함수 <i>y</i> = <i>xe</i><sup><i>x</i></sup>의 그래프에 대한 설명으로 옳은 것은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>x</i> = −1에서 극솟값 −1/<i>e</i>를 갖고, 점 (−2, −2/<i>e</i><sup>2</sup>)이 변곡점이다.<span class="why"><b>맞습니다.</b> <i>y</i>′ = (<i>x</i> + 1)<i>e</i><sup><i>x</i></sup>, <i>y</i>″ = (<i>x</i> + 2)<i>e</i><sup><i>x</i></sup>입니다. 두 식의 부호가 각각 <i>x</i> = −1, <i>x</i> = −2에서 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>x</i> → −∞일 때 <i>y</i> → −∞이다.<span class="why"><b><i>x</i>만 보았습니다.</b> <i>x</i>는 −∞로 가지만 <i>e</i><sup><i>x</i></sup>가 훨씬 빠르게 0으로 가서 곱은 0에 다가갑니다. 직선 <i>y</i> = 0이 점근선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>모든 실수 <i>x</i>에서 아래로 볼록하다.<span class="why"><b>극소점 근처만 보았습니다.</b> <i>x</i> &lt; −2에서는 <i>y</i>″ &lt; 0이라 위로 볼록합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>x</i> = −2에서 극댓값을 갖는다.<span class="why"><b>변곡점을 극점으로 보았습니다.</b> <i>x</i> = −2에서 0이 되는 것은 <i>y</i>″입니다. <i>y</i>′은 그곳에서 음수라 함수는 계속 감소합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=calc2-2-9"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">1문항</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc2/concavity.js"></script>
+<script src="../../js/cards/calc1/plot.js"></script>
+<script src="../../js/cards/calc2/curve-sketch.js"></script>
+</body>
+</html>
