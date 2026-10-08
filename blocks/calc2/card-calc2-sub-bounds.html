@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/sub-bounds.js"
+  ],
+  "short": "정적분의 치환과 적분 구간"
+}
+-->
+<style>
+#card-calc2-sub-bounds canvas { width: 100%; aspect-ratio: 16 / 15; }
+#card-calc2-sub-bounds .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-sub-bounds .walk { margin: 8px 0 4px; padding-left: 1.4em; font-size: 13.5px; line-height: 1.6; }
+#card-calc2-sub-bounds .walk li { overflow-wrap: anywhere; }
+#card-calc2-sub-bounds .walk li.off { opacity: .35; }
+</style>
+<article class="card" id="card-calc2-sub-bounds">
+  <header class="card-head">
+    <span class="no"></span><h2>치환할 때 적분 구간도 바꾸어야 할까?</h2><span class="kind">정적분의 치환적분 · 단계</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="위: x에 대한 정적분의 넓이. 아래: u로 바꾼 함수와 새 구간(초록)과 x의 끝을 그대로 쓴 구간(주황 점선)"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true">sin<sup>3</sup><i>x</i> cos <i>x</i></button>
+          <button class="chip" type="button" data-k="1">(ln <i>x</i>)<sup>2</sup>/<i>x</i></button>
+          <button class="chip" type="button" data-k="2"><i>x</i>/(<i>x</i><sup>2</sup> + 1)</button>
+          <button class="chip" type="button" data-k="3">cos<sup>2</sup><i>x</i> sin <i>x</i></button>
+        </div>
+        <ol class="walk"><li></li><li></li><li></li><li></li></ol>
+        <div class="presets">
+          <button class="chip go-step" type="button">다음 단계</button>
+          <button class="chip go-reset" type="button">처음부터</button>
+        </div>
+        <dl class="nums">
+          <div><dt>원래 정적분 (<i>x</i>로 잰 넓이)</dt><dd class="n-x">—</dd></div>
+          <div><dt>새 끝으로 계산</dt><dd class="n-new">—</dd></div>
+          <div><dt><i>x</i>의 끝을 그대로 쓰면</dt><dd class="n-old">—</dd></div>
+        </dl>
+        <p class="fig-note">'다음 단계'를 누를 때마다 풀이가 한 줄씩 열립니다. 셋째 단계부터 아래 그림에 <i>u</i>의 함수가 나타납니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>∫<sub>0</sub><sup>π/2</sup> sin<sup>3</sup><i>x</i> cos <i>x</i> d<i>x</i>를 <i>u</i> = sin <i>x</i>로 치환해 ∫<i>u</i><sup>3</sup> d<i>u</i>로 바꾸었습니다. 이때 적분 구간은 여전히 0부터 π/2일까요?</li>
+      <li><span class="tag">복원</span>치환적분법은 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>g</i>(<i>x</i>))<i>g</i>′(<i>x</i>) d<i>x</i> = ∫<sub><i>g</i>(<i>a</i>)</sub><sup><i>g</i>(<i>b</i>)</sup> <i>f</i>(<i>u</i>) d<i>u</i>입니다. 정적분의 끝은 그 적분 변수가 움직이는 범위입니다.</li>
+      <li><span class="tag">설명</span>풀이는 네 단계입니다. ① 속함수 <i>u</i> = <i>g</i>(<i>x</i>)를 고릅니다. ② d<i>u</i> = <i>g</i>′(<i>x</i>) d<i>x</i>를 써서 피적분함수를 모두 <i>u</i>로 바꿉니다. ③ <i>x</i> = <i>a</i>, <i>x</i> = <i>b</i>일 때의 <i>u</i> 값 <i>g</i>(<i>a</i>), <i>g</i>(<i>b</i>)를 새 끝으로 삼습니다. ④ <i>u</i>에 대한 정적분을 계산합니다. 셋째 단계를 건너뛰면 <i>u</i>가 실제로 지나지 않는 구간의 넓이를 재게 됩니다. 새 끝을 쓰면 원래 변수 <i>x</i>로 되돌아갈 필요가 없습니다.</li>
+      <li><span class="tag">연결</span>부정적분이라면 마지막에 <i>u</i> 대신 <i>g</i>(<i>x</i>)를 넣어 <i>x</i>의 식으로 되돌립니다. 정적분은 끝을 바꾸거나, 부정적분을 <i>x</i>로 되돌린 뒤 원래 끝을 넣는 두 방법 중 하나를 쓰면 같은 값이 나옵니다. 넷째 보기처럼 <i>g</i>가 감소하면 새 끝의 위아래가 뒤바뀌는데, 이 순서를 그대로 지켜야 부호가 맞습니다.</li>
+      <li><span class="tag">적용</span>보기마다 네 단계를 끝까지 넘겨 세 값을 비교하세요. 셋째 보기에서 <i>x</i>의 끝을 그대로 쓰면 왜 값이 나오지 않나요? 넷째 보기에서 새 끝은 1에서 0으로 내려갑니다. 위아래를 바꾸어 0에서 1로 쓰려면 무엇을 바꾸어야 하나요?</li>
+      <li class="warn"><span class="tag">판단</span>가장 흔한 실수는 피적분함수만 <i>u</i>로 바꾸고 끝은 <i>x</i>의 값으로 두는 것입니다. 또 새 끝의 순서를 '작은 수가 아래'로 마음대로 바꾸면 부호가 틀립니다. 바꾸려면 ∫<sub>1</sub><sup>0</sup> = −∫<sub>0</sub><sup>1</sup>을 써서 앞에 −를 붙입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q"><i>u</i> = cos <i>x</i>로 치환해 ∫<sub>0</sub><sup>π/3</sup> tan <i>x</i> d<i>x</i>를 구하면?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>ln 2<span class="why"><b>맞습니다.</b> d<i>u</i> = −sin <i>x</i> d<i>x</i>이고 끝은 1에서 1/2입니다. ∫<sub>1</sub><sup>1/2</sup> (−1/<i>u</i>) d<i>u</i> = −ln(1/2) = ln 2입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−ln 2<span class="why"><b>끝의 순서를 마음대로 바꾸었습니다.</b> 새 끝을 1/2에서 1로 바꾸어 쓰면서 앞에 −를 붙이지 않으면 부호가 뒤집힙니다. 0 &lt; <i>x</i> &lt; π/3에서 tan <i>x</i> &gt; 0이므로 값은 양수여야 합니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√3<span class="why"><b>함숫값을 적분값으로 보았습니다.</b> tan(π/3) = √3은 위끝에서의 높이일 뿐 넓이가 아닙니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/path-length.js"
+  ],
+  "short": "평면 위에서 움직인 거리"
+}
+-->
+<style>
+#card-calc2-path-length canvas { width: 100%; aspect-ratio: 16 / 10; }
+#card-calc2-path-length .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-path-length">
+  <header class="card-head">
+    <span class="no"></span><h2>평면 위를 움직인 점은 얼마나 먼 길을 갔을까?</h2><span class="kind">평면 운동의 거리 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="점 P가 지나간 곡선, 곡선 위에 찍은 점들을 이은 꺾은선, 시각 t에서의 점과 속도 벡터"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true">원 (cos <i>t</i>, sin <i>t</i>)</button>
+          <button class="chip" type="button" data-k="1">사이클로이드</button>
+          <button class="chip" type="button" data-k="2">포물선 (<i>t</i>, <i>t</i><sup>2</sup>/2)</button>
+        </div>
+        <label class="mono">꺾은선 마디 수 = <output class="n-out">6</output></label>
+        <input class="sn" type="range" min="1" max="64" step="1" value="6" aria-label="꺾은선의 마디 수">
+        <label class="mono">시각 <i>t</i> = <output class="t-out">6.28</output></label>
+        <input class="st" type="range" min="0.05" max="6.28" step="0.01" value="6.28" aria-label="시각 t">
+        <dl class="nums">
+          <div><dt>속도 (d<i>x</i>/d<i>t</i>, d<i>y</i>/d<i>t</i>)</dt><dd class="n-v">—</dd></div>
+          <div><dt>속력 √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>)</dt><dd class="n-sp">—</dd></div>
+          <div><dt>꺾은선의 길이</dt><dd class="n-p">—</dd></div>
+          <div><dt>∫<sub>0</sub><sup><i>t</i></sup> 속력 d<i>t</i></dt><dd class="n-i">—</dd></div>
+        </dl>
+        <p class="fig-note">꺾은선은 0부터 <i>t</i>까지의 시간을 같은 간격으로 나누어 그 시각의 위치를 이은 것입니다. 화살표는 속도 벡터입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>점 P(<i>x</i>, <i>y</i>)가 <i>x</i> = <i>t</i> − sin <i>t</i>, <i>y</i> = 1 − cos <i>t</i>를 따라 굴러갈 때, 0 ≤ <i>t</i> ≤ 2π 동안 움직인 거리를 어떻게 잴까요?</li>
+      <li><span class="tag">복원</span>평면 위를 움직이는 점의 속도는 (d<i>x</i>/d<i>t</i>, d<i>y</i>/d<i>t</i>)이고 속력은 √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>)입니다. 수직선 위에서는 움직인 거리가 ∫|<i>v</i>| d<i>t</i>였습니다.</li>
+      <li><span class="tag">설명</span>짧은 시간 Δ<i>t</i> 동안 점은 거의 직선으로 움직이므로 그 거리는 √((Δ<i>x</i>)<sup>2</sup> + (Δ<i>y</i>)<sup>2</sup>) ≈ √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>) Δ<i>t</i>입니다. 이것을 모두 더한 극한이 <b>움직인 거리 s = ∫<sub><i>a</i></sub><sup><i>b</i></sup> √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>) d<i>t</i></b>입니다. 꺾은선의 길이는 이 합에 해당합니다. 원 (cos <i>t</i>, sin <i>t</i>)는 속력이 늘 1이므로 0 ≤ <i>t</i> ≤ 2π에서 2π입니다. 사이클로이드는 속력이 √(2 − 2cos <i>t</i>) = 2 sin(<i>t</i>/2)이므로 ∫<sub>0</sub><sup>2π</sup> 2 sin(<i>t</i>/2) d<i>t</i> = 8입니다.</li>
+      <li><span class="tag">연결</span>점이 같은 곳을 되짚지 않으면 움직인 거리는 지나간 곡선의 길이와 같습니다. 곡선 <i>y</i> = <i>f</i>(<i>x</i>)는 <i>x</i> = <i>t</i>, <i>y</i> = <i>f</i>(<i>t</i>)로 보면 길이가 ∫√(1 + {<i>f</i>′(<i>x</i>)}<sup>2</sup>) d<i>x</i>입니다. 셋째 보기의 포물선이 이 경우로, 길이는 (2√5 + ln(2 + √5))/2 ≈ 2.958입니다.</li>
+      <li><span class="tag">적용</span>마디를 1개에서 64개로 늘리며 꺾은선의 길이가 넷째 값으로 다가가는지 보세요. 꺾은선은 늘 곡선보다 짧은가요, 길 수도 있나요? 사이클로이드에서 속력이 0이 되는 시각은 언제이고, 그때 곡선은 어떤 모양인가요?</li>
+      <li class="warn"><span class="tag">판단</span>∫(d<i>x</i>/d<i>t</i> + d<i>y</i>/d<i>t</i>) d<i>t</i>처럼 성분을 그냥 더하면 길이가 아닙니다. 피타고라스 정리처럼 제곱해 더한 뒤 제곱근을 씌운 속력을 적분해야 합니다. 또 시작점과 끝점 사이의 직선거리는 변위의 크기일 뿐, 움직인 거리가 아닙니다. 원을 한 바퀴 돌면 변위는 0이지만 거리는 2π입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">점 P의 위치가 <i>x</i> = <i>e</i><sup><i>t</i></sup> cos <i>t</i>, <i>y</i> = <i>e</i><sup><i>t</i></sup> sin <i>t</i>일 때, 0 ≤ <i>t</i> ≤ 1에서 P가 움직인 거리는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>√2(<i>e</i> − 1)<span class="why"><b>맞습니다.</b> d<i>x</i>/d<i>t</i> = <i>e</i><sup><i>t</i></sup>(cos <i>t</i> − sin <i>t</i>), d<i>y</i>/d<i>t</i> = <i>e</i><sup><i>t</i></sup>(sin <i>t</i> + cos <i>t</i>)이고 제곱의 합은 2<i>e</i><sup>2<i>t</i></sup>입니다. 속력 √2 <i>e</i><sup><i>t</i></sup>을 적분하면 √2(<i>e</i> − 1)입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i> − 1<span class="why"><b>√2를 빠뜨렸습니다.</b> 반지름 <i>e</i><sup><i>t</i></sup>만 보고 속력을 <i>e</i><sup><i>t</i></sup>로 생각하면 이렇게 됩니다. 점은 바깥으로 멀어지면서 동시에 돌기 때문에 더 빠릅니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√2 <i>e</i><span class="why"><b>아래끝을 빼지 않았습니다.</b> ∫<sub>0</sub><sup>1</sup> √2 <i>e</i><sup><i>t</i></sup> d<i>t</i> = √2(<i>e</i><sup>1</sup> − <i>e</i><sup>0</sup>)입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

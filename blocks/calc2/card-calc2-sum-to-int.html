@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/sum-to-int.js"
+  ],
+  "short": "같은 합, 여러 정적분"
+}
+-->
+<style>
+#card-calc2-sum-to-int canvas { width: 100%; aspect-ratio: 16 / 11; }
+#card-calc2-sum-to-int .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-sum-to-int .given { font-size: 14px; margin: 4px 0 8px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-sum-to-int">
+  <header class="card-head">
+    <span class="no"></span><h2>같은 합을 서로 다른 정적분으로 읽어도 될까?</h2><span class="kind">정적분과 급수의 합 · 비교</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="고른 해석에 따른 피적분함수의 그래프와 직사각형 n개"></canvas>
+      <div class="ctl">
+        <p class="mono given">S<sub><i>n</i></sub> = ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> (2/<i>n</i>)(1 + 2<i>k</i>/<i>n</i>)<sup>2</sup></p>
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true">∫<sub>1</sub><sup>3</sup> <i>x</i><sup>2</sup> d<i>x</i></button>
+          <button class="chip" type="button" data-k="1">∫<sub>0</sub><sup>2</sup> (1 + <i>x</i>)<sup>2</sup> d<i>x</i></button>
+          <button class="chip" type="button" data-k="2">∫<sub>0</sub><sup>1</sup> 2(1 + 2<i>x</i>)<sup>2</sup> d<i>x</i></button>
+          <button class="chip" type="button" data-k="3">∫<sub>0</sub><sup>2</sup> <i>x</i><sup>2</sup> d<i>x</i></button>
+        </div>
+        <label class="mono">항의 개수 <i>n</i> = <output class="n-out">5</output></label>
+        <input class="sn" type="range" min="1" max="60" step="1" value="5" aria-label="항의 개수 n">
+        <dl class="nums">
+          <div><dt>주어진 합 S<sub><i>n</i></sub></dt><dd class="n-s">—</dd></div>
+          <div><dt>이 해석의 직사각형 넓이 합</dt><dd class="n-r">—</dd></div>
+          <div><dt>이 해석의 정적분 값</dt><dd class="n-i">—</dd></div>
+          <div><dt>판정</dt><dd class="n-ok">—</dd></div>
+        </dl>
+        <p class="fig-note">직사각형은 고른 정적분의 구간을 <i>n</i>등분하고 오른쪽 끝의 높이를 쓴 것입니다. 첫째 값과 둘째 값이 <i>n</i>마다 똑같은지 보세요.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>lim ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> (2/<i>n</i>)(1 + 2<i>k</i>/<i>n</i>)<sup>2</sup>를 정적분으로 바꾸는 방법은 하나뿐일까요?</li>
+      <li><span class="tag">복원</span>구간 [<i>a</i>, <i>b</i>]를 <i>n</i>등분하면 Δ<i>x</i> = (<i>b</i> − <i>a</i>)/<i>n</i>, <i>x<sub>k</sub></i> = <i>a</i> + <i>k</i>Δ<i>x</i>이고 lim ∑ <i>f</i>(<i>x<sub>k</sub></i>)Δ<i>x</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>) d<i>x</i>입니다.</li>
+      <li><span class="tag">설명</span>2/<i>n</i>을 Δ<i>x</i>로 보면 구간 길이는 2입니다. <i>x<sub>k</sub></i> = 1 + 2<i>k</i>/<i>n</i>으로 읽으면 <i>x</i>는 1에서 3까지 움직이고 높이는 <i>x</i><sup>2</sup>이므로 ∫<sub>1</sub><sup>3</sup> <i>x</i><sup>2</sup> d<i>x</i>입니다. <i>x<sub>k</sub></i> = 2<i>k</i>/<i>n</i>으로 읽으면 높이는 (1 + <i>x</i>)<sup>2</sup>이고 구간은 [0, 2]입니다. 1/<i>n</i>을 Δ<i>x</i>로 보면 남은 2는 높이에 들어가 ∫<sub>0</sub><sup>1</sup> 2(1 + 2<i>x</i>)<sup>2</sup> d<i>x</i>가 됩니다. 세 해석은 <b>직사각형의 넓이가 하나하나 같으므로</b> 모두 같은 값 26/3을 줍니다. 핵심은 Δ<i>x</i>, <i>x<sub>k</sub></i>, <i>f</i>를 하나의 짝으로 맞추어 읽는 것입니다.</li>
+      <li><span class="tag">연결</span>세 정적분이 같은 것은 치환적분으로도 확인됩니다. ∫<sub>1</sub><sup>3</sup> <i>x</i><sup>2</sup> d<i>x</i>에서 <i>x</i> = 1 + <i>t</i>로 놓으면 ∫<sub>0</sub><sup>2</sup> (1 + <i>t</i>)<sup>2</sup> d<i>t</i>, <i>x</i> = 1 + 2<i>s</i>로 놓으면 ∫<sub>0</sub><sup>1</sup> 2(1 + 2<i>s</i>)<sup>2</sup> d<i>s</i>입니다. 급수의 합을 정적분으로 바꾸는 일과 변수를 바꾸는 일은 같은 생각입니다.</li>
+      <li><span class="tag">적용</span>네 해석을 차례로 골라 첫째 값과 둘째 값을 비교하세요. 어느 해석에서 두 값이 어긋나나요? <i>n</i>을 60까지 늘리면 S<sub><i>n</i></sub>는 어떤 수에 다가가나요? 26/3 ≈ 8.667과 비교해 보세요.</li>
+      <li class="warn"><span class="tag">판단</span>2/<i>n</i>을 너비로 정했다면 구간 길이는 2이고 <i>x<sub>k</sub></i>도 2/<i>n</i> 간격으로 움직여야 합니다. 넷째 해석처럼 구간만 [0, 2]로 정하고 높이에서 1을 빠뜨리면 다른 값 8/3이 됩니다. 너비와 구간 길이, <i>x<sub>k</sub></i>의 간격이 서로 맞는지 꼭 확인하세요.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">lim<sub><i>n</i>→∞</sub> ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> (1/<i>n</i>)(1 + <i>k</i>/<i>n</i>)<sup>3</sup>의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15/4<span class="why"><b>맞습니다.</b> <i>x<sub>k</sub></i> = 1 + <i>k</i>/<i>n</i>, Δ<i>x</i> = 1/<i>n</i>으로 읽으면 ∫<sub>1</sub><sup>2</sup> <i>x</i><sup>3</sup> d<i>x</i> = (16 − 1)/4 = 15/4입니다. ∫<sub>0</sub><sup>1</sup> (1 + <i>x</i>)<sup>3</sup> d<i>x</i>로 읽어도 같은 값입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4<span class="why"><b>높이에서 1을 빠뜨렸습니다.</b> 구간을 [0, 1]로 두고 높이를 <i>x</i><sup>3</sup>으로 쓰면 ∫<sub>0</sub><sup>1</sup> <i>x</i><sup>3</sup> d<i>x</i>가 됩니다. <i>x</i> = <i>k</i>/<i>n</i>이면 높이는 (1 + <i>x</i>)<sup>3</sup>입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>구간을 [0, 2]로 읽었습니다.</b> ∫<sub>0</sub><sup>2</sup> <i>x</i><sup>3</sup> d<i>x</i> = 4입니다. 너비가 1/<i>n</i>이므로 구간 길이는 1입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

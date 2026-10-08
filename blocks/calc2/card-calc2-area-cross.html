@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/area-cross.js"
+  ],
+  "short": "엇갈리는 두 곡선 사이의 넓이"
+}
+-->
+<style>
+#card-calc2-area-cross canvas { width: 100%; aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
+#card-calc2-area-cross .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-area-cross">
+  <header class="card-head">
+    <span class="no"></span><h2>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</h2><span class="kind">두 곡선 사이의 넓이 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="두 삼각함수 그래프와 0부터 b까지 그 사이의 영역. 초록은 첫 곡선이 위, 파랑은 둘째 곡선이 위인 부분"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true">sin <i>x</i>와 cos <i>x</i></button>
+          <button class="chip" type="button" data-k="1">sin <i>x</i>와 sin 2<i>x</i></button>
+        </div>
+        <label class="mono">오른쪽 끝 <i>b</i> = <output class="b-out">3.14</output></label>
+        <input class="sb" type="range" min="0.05" max="6.28" step="0.01" value="3.14" aria-label="구간의 오른쪽 끝 b">
+        <dl class="nums">
+          <div><dt>∫<sub>0</sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i></dt><dd class="n-s">—</dd></div>
+          <div><dt>넓이 ∫<sub>0</sub><sup><i>b</i></sup> |<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)| d<i>x</i></dt><dd class="n-a">—</dd></div>
+          <div><dt>구간 안의 교점</dt><dd class="n-c">—</dd></div>
+        </dl>
+        <p class="fig-note"><i>f</i>는 첫째 곡선, <i>g</i>는 둘째 곡선입니다. 그림을 끌어도 <i>b</i>가 바뀝니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>0 ≤ <i>x</i> ≤ π에서 <i>y</i> = sin <i>x</i>와 <i>y</i> = cos <i>x</i> 사이의 넓이를 ∫<sub>0</sub><sup>π</sup> (sin <i>x</i> − cos <i>x</i>) d<i>x</i> 하나로 구해도 될까요?</li>
+      <li><span class="tag">복원</span><i>f</i>(<i>x</i>) ≥ <i>g</i>(<i>x</i>)인 구간에서 두 곡선 사이의 넓이는 ∫ {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i>입니다. ∫sin <i>x</i> d<i>x</i> = −cos <i>x</i> + C, ∫cos <i>x</i> d<i>x</i> = sin <i>x</i> + C입니다.</li>
+      <li><span class="tag">설명</span>두 곡선 사이의 넓이는 어느 쪽이 위에 있든 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> |<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)| d<i>x</i></b>입니다. 절댓값을 풀려면 교점에서 구간을 나눕니다. sin <i>x</i> = cos <i>x</i>인 <i>x</i> = π/4에서 위아래가 바뀌므로 ∫<sub>0</sub><sup>π/4</sup> (cos <i>x</i> − sin <i>x</i>) d<i>x</i> + ∫<sub>π/4</sub><sup>π</sup> (sin <i>x</i> − cos <i>x</i>) d<i>x</i> = (√2 − 1) + (1 + √2) = 2√2입니다. 나누지 않고 한 번에 적분하면 위아래가 바뀐 부분이 빼져서 2가 됩니다.</li>
+      <li><span class="tag">연결</span>부호 있는 적분 ∫(<i>f</i> − <i>g</i>) d<i>x</i>도 쓸모가 있습니다. 다음 절들의 변위처럼 '얼마나 앞섰는지'를 셀 때는 빼지는 것이 맞습니다. 넓이, 움직인 거리처럼 '얼마나 되는지'를 셀 때는 절댓값을 씌웁니다.</li>
+      <li><span class="tag">적용</span>첫째 보기에서 <i>b</i>를 π/4(약 0.79)보다 작게 하면 두 값이 같은지, 크게 하면 언제부터 달라지는지 보세요. <i>b</i> = 2π(약 6.28)이면 부호 있는 적분은 얼마인가요? 둘째 보기의 교점 π/3(약 1.05)을 찾고, <i>b</i> = π에서 두 값 2와 5/2를 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>"넓이 = 위 곡선의 적분 − 아래 곡선의 적분"은 위아래가 끝까지 바뀌지 않을 때만 맞습니다. 교점이 구간 안에 있는지 먼저 확인하세요. 또 <i>x</i>축과의 교점이 아니라 두 곡선의 교점에서 나누어야 합니다. 두 곡선이 모두 <i>x</i>축 아래로 내려가도 차 <i>f</i> − <i>g</i>의 부호만 보면 됩니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">0 ≤ <i>x</i> ≤ π/2에서 <i>y</i> = sin <i>x</i>와 <i>y</i> = cos <i>x</i>로 둘러싸인 부분의 넓이의 합은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2√2 − 2<span class="why"><b>맞습니다.</b> π/4에서 나누면 두 조각이 각각 √2 − 1이므로 합은 2√2 − 2 ≈ 0.828입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>교점에서 나누지 않았습니다.</b> ∫<sub>0</sub><sup>π/2</sup> (cos <i>x</i> − sin <i>x</i>) d<i>x</i> = 0은 두 조각이 서로 지워진 값입니다. 넓이는 0이 될 수 없습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√2 − 1<span class="why"><b>한 조각만 구했습니다.</b> π/4의 왼쪽과 오른쪽에 같은 크기의 조각이 하나씩 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>두 곡선 아래 넓이를 더했습니다.</b> ∫sin <i>x</i> d<i>x</i> + ∫cos <i>x</i> d<i>x</i> = 1 + 1은 각 곡선과 <i>x</i>축 사이의 넓이입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

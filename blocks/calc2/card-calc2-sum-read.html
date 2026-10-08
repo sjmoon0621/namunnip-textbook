@@ -1,0 +1,64 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/sum-read.js"
+  ],
+  "short": "급수의 합을 정적분으로"
+}
+-->
+<style>
+#card-calc2-sum-read canvas { width: 100%; aspect-ratio: 16 / 11; }
+#card-calc2-sum-read .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-sum-read .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-sum-read">
+  <header class="card-head">
+    <span class="no"></span><h2>항이 <i>n</i>개인 합의 극한을 넓이로 읽을 수 있을까?</h2><span class="kind">정적분과 급수의 합 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="합의 각 항을 넓이로 갖는 직사각형 n개와 그 위를 지나는 곡선"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true">∑ <i>k</i><sup>2</sup>/<i>n</i><sup>3</sup></button>
+          <button class="chip" type="button" data-k="1">∑ 1/(<i>n</i> + <i>k</i>)</button>
+          <button class="chip" type="button" data-k="2">∑ (π/<i>n</i>) sin(<i>k</i>π/<i>n</i>)</button>
+          <button class="chip" type="button" data-k="3">∑ (1/<i>n</i>) <i>e</i><sup><i>k</i>/<i>n</i></sup></button>
+        </div>
+        <div class="presets side">
+          <button class="chip" type="button" data-s="1" aria-pressed="true"><i>k</i> = 1, …, <i>n</i></button>
+          <button class="chip" type="button" data-s="0"><i>k</i> = 0, …, <i>n</i> − 1</button>
+        </div>
+        <p class="mono eq">—</p>
+        <label class="mono">항의 개수 <i>n</i> = <output class="n-out">6</output></label>
+        <input class="sn" type="range" min="1" max="80" step="1" value="6" aria-label="항의 개수 n">
+        <dl class="nums">
+          <div><dt>합 S<sub><i>n</i></sub></dt><dd class="n-s">—</dd></div>
+          <div><dt>정적분 값</dt><dd class="n-i">—</dd></div>
+          <div><dt>차이</dt><dd class="n-d">—</dd></div>
+        </dl>
+        <p class="fig-note">합 S<sub><i>n</i></sub>는 주어진 식에 <i>k</i>를 차례로 넣어 더한 값입니다. 직사각형 하나의 넓이가 항 하나입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>lim<sub><i>n</i>→∞</sub> {1/(<i>n</i> + 1) + 1/(<i>n</i> + 2) + ⋯ + 1/(2<i>n</i>)}은 얼마일까요? 항은 점점 작아지지만 개수는 늘어납니다.</li>
+      <li><span class="tag">복원</span><i>f</i>가 [<i>a</i>, <i>b</i>]에서 연속이면 구간을 <i>n</i>등분해 Δ<i>x</i> = (<i>b</i> − <i>a</i>)/<i>n</i>, <i>x<sub>k</sub></i> = <i>a</i> + <i>k</i>Δ<i>x</i>로 둘 때 lim<sub><i>n</i>→∞</sub> ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> <i>f</i>(<i>x<sub>k</sub></i>)Δ<i>x</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>) d<i>x</i>입니다.</li>
+      <li><span class="tag">설명</span>합의 각 항을 '높이 × 너비'로 쪼개 봅니다. 1/(<i>n</i> + <i>k</i>) = (1/<i>n</i>) · 1/(1 + <i>k</i>/<i>n</i>)이므로 너비는 1/<i>n</i>, 높이는 <i>f</i>(<i>k</i>/<i>n</i>) = 1/(1 + <i>k</i>/<i>n</i>)입니다. <i>k</i>/<i>n</i>이 0에서 1까지 움직이므로 <b>lim ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> (1/<i>n</i>) <i>f</i>(<i>k</i>/<i>n</i>) = ∫<sub>0</sub><sup>1</sup> <i>f</i>(<i>x</i>) d<i>x</i></b>를 써서 ∫<sub>0</sub><sup>1</sup> 1/(1 + <i>x</i>) d<i>x</i> = ln 2를 얻습니다. 일반적으로 1/<i>n</i> 또는 (<i>b</i> − <i>a</i>)/<i>n</i>은 d<i>x</i>, <i>k</i>/<i>n</i>을 포함한 식은 <i>x</i>, <i>k</i> = 1과 <i>k</i> = <i>n</i>일 때의 값은 적분 구간의 끝으로 읽습니다.</li>
+      <li><span class="tag">연결</span><i>k</i>를 0부터 <i>n</i> − 1까지 더하면 직사각형의 왼쪽 끝 높이를 쓰는 셈입니다. 두 합의 차는 맨 끝 직사각형 두 개의 차 {<i>f</i>(<i>b</i>) − <i>f</i>(<i>a</i>)}Δ<i>x</i>뿐이므로 <i>n</i> → ∞이면 0이 되어 극한은 같습니다. 이 생각은 부피, 움직인 거리처럼 '잘게 나누어 더하는' 모든 계산의 바탕이 됩니다.</li>
+      <li><span class="tag">적용</span>둘째 보기에서 <i>n</i>을 1, 10, 80으로 바꾸며 S<sub><i>n</i></sub>가 ln 2 ≈ 0.6931로 다가가는지 보세요. 오른쪽 끝과 왼쪽 끝 중 어느 합이 더 큰가요? 함수가 감소하는 것과 어떤 관계인가요? 셋째 보기는 너비가 π/<i>n</i>입니다. 적분 구간은 어떻게 되나요?</li>
+      <li class="warn"><span class="tag">판단</span>각 항이 0으로 간다고 합도 0으로 간다고 생각하면 안 됩니다. 항의 개수가 함께 늘어나기 때문입니다. 또 너비를 잘못 읽기 쉽습니다. (π/<i>n</i>) sin(<i>k</i>π/<i>n</i>)을 ∫<sub>0</sub><sup>1</sup> sin(π<i>x</i>) d<i>x</i>로 읽으면 너비 π/<i>n</i>과 1/<i>n</i>의 차이인 π배만큼 틀립니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">lim<sub><i>n</i>→∞</sub> ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> (<i>k</i>/<i>n</i><sup>2</sup>) <i>e</i><sup><i>k</i>/<i>n</i></sup>의 값은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> (1/<i>n</i>) · (<i>k</i>/<i>n</i>)<i>e</i><sup><i>k</i>/<i>n</i></sup>이므로 ∫<sub>0</sub><sup>1</sup> <i>x</i> <i>e</i><sup><i>x</i></sup> d<i>x</i>이고, 부분적분으로 [(<i>x</i> − 1)<i>e</i><sup><i>x</i></sup>]<sub>0</sub><sup>1</sup> = 0 − (−1) = 1입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i> − 1<span class="why"><b><i>k</i>/<i>n</i>을 너비로 써 버렸습니다.</b> <i>k</i>/<i>n</i><sup>2</sup>에서 1/<i>n</i>만 너비이고 남은 <i>k</i>/<i>n</i>은 높이의 일부인 <i>x</i>입니다. 이 값은 ∫<sub>0</sub><sup>1</sup> <i>e</i><sup><i>x</i></sup> d<i>x</i>입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>항만 보고 판단했습니다.</b> 각 항은 0으로 가지만 항의 개수 <i>n</i>이 함께 늘어납니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

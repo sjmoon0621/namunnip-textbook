@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc2/integ.js",
+    "js/cards/calc2/area-slices.js"
+  ],
+  "short": "세로 띠와 가로 띠로 넓이 구하기"
+}
+-->
+<style>
+#card-calc2-area-slices canvas { width: 100%; aspect-ratio: 16 / 11; }
+#card-calc2-area-slices .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+#card-calc2-area-slices .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-calc2-area-slices">
+  <header class="card-head">
+    <span class="no"></span><h2>세로로 자를까, 가로로 자를까?</h2><span class="kind">곡선으로 둘러싸인 넓이 · 조작</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="곡선으로 둘러싸인 도형과 그것을 자른 세로 띠 또는 가로 띠"></canvas>
+      <div class="ctl">
+        <div class="presets fn">
+          <button class="chip" type="button" data-k="0" aria-pressed="true"><i>y</i> = ln <i>x</i>, <i>x</i>축, <i>x</i> = <i>e</i></button>
+          <button class="chip" type="button" data-k="1"><i>y</i> = √<i>x</i>, <i>y</i> = <i>x</i> − 2, <i>x</i>축</button>
+        </div>
+        <div class="presets dir">
+          <button class="chip" type="button" data-d="x" aria-pressed="true">세로 띠 (d<i>x</i>)</button>
+          <button class="chip" type="button" data-d="y">가로 띠 (d<i>y</i>)</button>
+        </div>
+        <p class="mono eq">—</p>
+        <label class="mono">띠의 개수 = <output class="n-out">8</output></label>
+        <input class="sn" type="range" min="1" max="40" step="1" value="8" aria-label="띠의 개수">
+        <dl class="nums">
+          <div><dt>띠 넓이의 합</dt><dd class="n-s">—</dd></div>
+          <div><dt>정확한 넓이</dt><dd class="n-e">—</dd></div>
+        </dl>
+        <p class="fig-note">띠의 길이는 띠 가운데에서 잰 값입니다. 세로 띠는 (위 곡선 − 아래 곡선), 가로 띠는 (오른쪽 곡선 − 왼쪽 곡선)입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span><i>y</i> = ln <i>x</i>, <i>x</i>축, 직선 <i>x</i> = <i>e</i>로 둘러싸인 도형의 넓이를 구하려면 꼭 <i>x</i>에 대해 적분해야 할까요?</li>
+      <li><span class="tag">복원</span>[<i>a</i>, <i>b</i>]에서 <i>f</i>(<i>x</i>) ≥ <i>g</i>(<i>x</i>)이면 두 곡선 사이의 넓이는 ∫<sub><i>a</i></sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i>입니다. <i>y</i> = ln <i>x</i>는 <i>x</i> = <i>e</i><sup><i>y</i></sup>와 같은 곡선입니다.</li>
+      <li><span class="tag">설명</span>세로 띠는 너비 d<i>x</i>, 길이 (위 − 아래)이므로 넓이는 ∫<sub>1</sub><sup><i>e</i></sup> ln <i>x</i> d<i>x</i>이고, 부분적분으로 [<i>x</i> ln <i>x</i> − <i>x</i>]<sub>1</sub><sup><i>e</i></sup> = 1입니다. 가로 띠는 높이 d<i>y</i>, 길이 (오른쪽 − 왼쪽) = <i>e</i> − <i>e</i><sup><i>y</i></sup>이므로 <b>∫<sub><i>c</i></sub><sup><i>d</i></sup> {(오른쪽 <i>x</i>) − (왼쪽 <i>x</i>)} d<i>y</i></b> = ∫<sub>0</sub><sup>1</sup> (<i>e</i> − <i>e</i><sup><i>y</i></sup>) d<i>y</i> = <i>e</i> − (<i>e</i> − 1) = 1입니다. 같은 도형이므로 값이 같고, 둘째 방법은 지수함수만 적분하면 됩니다. 둘째 보기는 세로로 자르면 <i>x</i> = 2에서 아래 경계가 <i>x</i>축에서 직선으로 바뀌어 두 조각으로 나누어야 하지만, 가로로 자르면 왼쪽은 늘 <i>x</i> = <i>y</i><sup>2</sup>, 오른쪽은 늘 <i>x</i> = <i>y</i> + 2이므로 한 번에 됩니다.</li>
+      <li><span class="tag">연결</span><i>y</i>에 대해 적분하려면 경계 곡선을 <i>x</i> = (<i>y</i>의 식)으로 나타내야 하므로 역함수가 필요합니다. 다음 절의 부피에서도 '어느 방향으로 자를지'를 먼저 정하고, 자른 조각의 넓이를 적분합니다.</li>
+      <li><span class="tag">적용</span>두 보기에서 방향을 바꾸어 띠를 늘려 보세요. 띠 넓이의 합이 같은 값으로 다가가나요? 둘째 보기의 세로 띠에서 아래 경계가 바뀌는 곳은 어디인가요? 띠가 1개일 때 어느 방향의 어림이 더 정확한가요?</li>
+      <li class="warn"><span class="tag">판단</span>가로 띠에서 '위 − 아래'를 쓰면 안 됩니다. <i>y</i>에 대해 적분할 때는 <i>x</i>값의 차인 '오른쪽 − 왼쪽'이 띠의 길이입니다. 또 세로 띠에서 경계가 중간에 바뀌는데도 한 식으로 적분하면, 도형 밖의 부분을 더하거나 빼게 됩니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">곡선 <i>y</i> = <i>e</i><sup><i>x</i></sup>, 직선 <i>y</i> = <i>e</i>, <i>y</i>축으로 둘러싸인 도형의 넓이는?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 세로로 자르면 ∫<sub>0</sub><sup>1</sup> (<i>e</i> − <i>e</i><sup><i>x</i></sup>) d<i>x</i> = <i>e</i> − (<i>e</i> − 1) = 1입니다. 가로로 자르면 ∫<sub>1</sub><sup><i>e</i></sup> ln <i>y</i> d<i>y</i> = 1로 같습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i> − 1<span class="why"><b>곡선 아래의 넓이를 구했습니다.</b> ∫<sub>0</sub><sup>1</sup> <i>e</i><sup><i>x</i></sup> d<i>x</i>는 곡선과 <i>x</i>축 사이입니다. 이 도형은 곡선 위, 직선 <i>y</i> = <i>e</i> 아래에 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>e</i><span class="why"><b>직사각형 전체를 구했습니다.</b> 가로 1, 세로 <i>e</i>인 직사각형에서 곡선 아래의 넓이 <i>e</i> − 1을 빼야 합니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -14481,50 +14481,127 @@ window.TOC = [
       "n": 1,
       "title": "여러 가지 함수의 적분",
       "code": "12미적Ⅱ-03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-xn-integral",
+        "title": "xn의 적분 공식은 n = −1에서 왜 멈출까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-antideriv-check",
+        "title": "어느 후보가 ex, sin x의 진짜 원시함수일까?"
+       }
+      ]
      },
      {
       "n": 2,
       "title": "치환적분법",
       "code": "12미적Ⅱ-03-02",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-substitution",
+        "title": "속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-sub-bounds",
+        "title": "치환할 때 적분 구간도 바꾸어야 할까?"
+       }
+      ]
      },
      {
       "n": 3,
       "title": "부분적분법",
       "code": "12미적Ⅱ-03-03",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-parts-area",
+        "title": "넓이 두 조각을 합치면 왜 직사각형이 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-parts-choice",
+        "title": "어느 쪽을 미분하고 어느 쪽을 적분해야 할까?"
+       }
+      ]
      },
      {
       "n": 4,
       "title": "정적분과 급수의 합",
       "code": "12미적Ⅱ-03-04",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-sum-read",
+        "title": "항이 n개인 합의 극한을 넓이로 읽을 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-sum-to-int",
+        "title": "같은 합을 서로 다른 정적분으로 읽어도 될까?"
+       }
+      ]
      },
      {
       "n": 5,
       "title": "넓이",
       "code": "12미적Ⅱ-03-05",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-area-slices",
+        "title": "세로로 자를까, 가로로 자를까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-area-cross",
+        "title": "두 곡선이 엇갈리면 넓이는 어떻게 구할까?"
+       }
+      ]
      },
      {
       "n": 6,
       "title": "부피",
       "code": "12미적Ⅱ-03-06",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-cross-section",
+        "title": "얇게 썬 조각을 모으면 부피를 구할 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-cavalieri",
+        "title": "입체를 비스듬히 밀면 부피가 바뀔까?"
+       }
+      ]
      },
      {
       "n": 7,
       "title": "속도와 거리",
       "code": "12미적Ⅱ-03-07",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-calc2-distance-area",
+        "title": "속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-calc2-path-length",
+        "title": "평면 위를 움직인 점은 얼마나 먼 길을 갔을까?"
+       }
+      ]
      }
     ]
    }
@@ -14579,8 +14656,14 @@ window.TOC = [
       "n": 1,
       "title": "직선과 평면의 위치 관계",
       "code": "12기하02-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "card",
+        "id": "card-geo-line-pos",
+        "title": "만나지 않는 두 직선은 언제나 평행할까?"
+       }
+      ]
      },
      {
       "n": 2,
@@ -14620,8 +14703,24 @@ window.TOC = [
       "n": 1,
       "title": "벡터의 연산",
       "code": "12기하03-01",
-      "page": false,
-      "items": []
+      "page": true,
+      "items": [
+       {
+        "kind": "text",
+        "id": "text-geo-vec-terms",
+        "title": "크기만으로는 왜 부족할까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-vec-add",
+        "title": "두 이동을 하나로 합치면 어떤 화살표가 될까?"
+       },
+       {
+        "kind": "card",
+        "id": "card-geo-vec-scalar",
+        "title": "벡터에 음수를 곱하면 무엇이 바뀔까?"
+       }
+      ]
      },
      {
       "n": 2,
