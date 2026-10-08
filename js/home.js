@@ -38,7 +38,8 @@
       <div class="tree-cols">${TRACKS.map(([t, nm]) => `
         <div class="tree-col" data-track="${t}"><h3>${nm}</h3>${pick((c) => c.track === t).map(box).join("")}</div>`).join("")}
       </div>
-      <div class="tree-band" data-track="fusion"><span class="band-lb mono">융합</span><div>${pick((c) => c.track === "fusion").map(box).join("")}</div></div>`;
+      <div class="tree-band" data-track="fusion"><span class="band-lb mono">융합</span><div>${pick((c) => c.track === "fusion").map(box).join("")}</div></div>
+      <div class="tree-band" data-track="math"><span class="band-lb mono">수학</span><div>${pick((c) => c.track === "math").map(box).join("")}</div></div>`;
     host.innerHTML = TOC.map((c) => {
       const n = count(c);
       const chapters = c.chapters.map((ch) => `
@@ -69,7 +70,7 @@
 
     const chips = document.getElementById("chips");
     chips.innerHTML = `<button class="chip" data-course="all" aria-pressed="true">전체</button>` +
-      [...TRACKS, ["common", "공통"], ["fusion", "융합"]].map(([t, nm]) => `<button class="chip" data-course="${t}" aria-pressed="false">${nm}</button>`).join("");
+      [...TRACKS, ["common", "공통"], ["fusion", "융합"], ["math", "수학"]].map(([t, nm]) => `<button class="chip" data-course="${t}" aria-pressed="false">${nm}</button>`).join("");
     const q = document.getElementById("q"), empty = document.getElementById("empty");
     let course = "all";
     function apply() {
