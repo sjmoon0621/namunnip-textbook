@@ -1,0 +1,65 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/calc1/plot.js",
+    "js/cards/calc1/mvt.js"
+  ],
+  "short": "평균값 정리"
+}
+-->
+<style>
+#card-calc1-mvt canvas { aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
+#card-calc1-mvt .nums dd { font-size: 14px; }
+#card-calc1-mvt .go-show { margin-top: 4px; }
+</style>
+<article class="card" id="card-calc1-mvt">
+  <header class="card-head">
+    <span class="no"></span><h2>평균 기울기와 같은 순간 기울기는 어디에 있을까?</h2><span class="kind">평균값 정리 · 할선과 접선</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="곡선 위 두 점 A, B를 잇는 할선과, 움직일 수 있는 점 C에서의 접선"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-p="0,-3,0,1" aria-pressed="true"><i>x</i><sup>3</sup> − 3<i>x</i></button>
+          <button class="chip" type="button" data-p="0,0,1,0"><i>x</i><sup>2</sup></button>
+          <button class="chip" type="button" data-p="1,1,0,-0.5">−0.5<i>x</i><sup>3</sup> + <i>x</i> + 1</button>
+        </div>
+        <div class="ctl-row">
+          <div><label class="mono">왼쪽 끝 <i>a</i> = <output class="a-out">−1.5</output></label>
+          <input class="sa" type="range" min="-2.5" max="2" step="0.1" value="-1.5" aria-label="구간의 왼쪽 끝 a"></div>
+          <div><label class="mono">오른쪽 끝 <i>b</i> = <output class="b-out">2</output></label>
+          <input class="sb" type="range" min="-2" max="2.5" step="0.1" value="2" aria-label="구간의 오른쪽 끝 b"></div>
+        </div>
+        <label class="mono">접선을 그을 점 <i>c</i> = <output class="c-out">0</output></label>
+        <input class="sc" type="range" min="-2.5" max="2.5" step="0.01" value="0" aria-label="접선을 그을 점 c">
+        <dl class="nums">
+          <div><dt>평균변화율 (할선)</dt><dd class="n-m">—</dd></div>
+          <div><dt>f′(c) (접선)</dt><dd class="n-d">—</dd></div>
+          <div><dt>차이</dt><dd class="n-e">—</dd></div>
+        </dl>
+        <button class="chip go-show" type="button" aria-pressed="false">조건을 만족하는 c 모두 보기</button>
+        <p class="fig-note">그림 위를 끌어도 점 C가 움직입니다. 접선이 할선과 나란해지면 초록색으로 바뀝니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>구간단속 카메라는 두 지점 사이를 지난 시간만으로 과속을 판정합니다. 20 km를 10분에 지났다면 평균 속력은 시속 120 km입니다. 그렇다면 어느 순간에는 속도계가 정확히 120을 가리켰다고 말할 수 있을까요?</li>
+      <li><span class="tag">복원</span>구간 [<i>a</i>, <i>b</i>]에서 f의 평균변화율 (f(<i>b</i>) − f(<i>a</i>))/(<i>b</i> − <i>a</i>)는 두 점 A, B를 잇는 할선의 기울기이고, f′(<i>c</i>)는 점 C에서 그은 접선의 기울기입니다.</li>
+      <li><span class="tag">설명</span>f가 [<i>a</i>, <i>b</i>]에서 연속이고 (<i>a</i>, <i>b</i>)에서 미분가능하면, <b>(f(<i>b</i>) − f(<i>a</i>))/(<i>b</i> − <i>a</i>) = f′(<i>c</i>)</b>인 <i>c</i>가 <i>a</i>와 <i>b</i> 사이에 적어도 하나 있습니다. 이것이 <em>평균값 정리</em>입니다. 증명은 롤의 정리로 돌아갑니다. 곡선에서 할선을 뺀 함수 g(<i>x</i>) = f(<i>x</i>) − {f(<i>a</i>) + <i>m</i>(<i>x</i> − <i>a</i>)} (<i>m</i>은 할선의 기울기)는 g(<i>a</i>) = g(<i>b</i>) = 0이므로, 롤의 정리에 따라 g′(<i>c</i>) = f′(<i>c</i>) − <i>m</i> = 0인 <i>c</i>가 있습니다. 곧 그림을 기울여 할선을 수평으로 만든 것이 롤의 정리입니다.</li>
+      <li><span class="tag">연결</span>위치를 f(<i>t</i>)로 보면 평균변화율은 평균 속도, f′(<i>c</i>)는 순간 속도입니다. 그래서 질문의 답은 "그렇다"입니다. 또 평균값 정리에서 "어떤 구간에서 늘 f′ &gt; 0이면 f(<i>b</i>) − f(<i>a</i>) = f′(<i>c</i>)(<i>b</i> − <i>a</i>) &gt; 0"이라는 결론이 나오는데, 이것이 다음 절에서 증가와 감소를 판정하는 근거입니다.</li>
+      <li><span class="tag">적용</span>첫 번째 함수에서 C를 움직여 접선과 할선이 나란해지는 곳을 찾으세요. 몇 개인가요? <i>a</i>와 <i>b</i>를 바꾸면 그 수가 어떻게 달라지나요? 두 번째 함수 <i>x</i><sup>2</sup>에서는 찾은 <i>c</i>가 언제나 <i>a</i>와 <i>b</i>의 어디에 있나요? 찾은 뒤 "모두 보기"로 확인하세요.</li>
+      <li class="warn"><span class="tag">판단</span>"<i>c</i>는 구간의 한가운데"라는 생각은 이차함수에서만 맞습니다. 삼차함수 <i>x</i><sup>3</sup>에서는 [0, 3]의 <i>c</i>가 √3 ≈ 1.73으로 가운데가 아닙니다. 또 평균값 정리는 <i>c</i>가 끝점이 아닌 열린 구간 안에 있다고 말하므로, 방정식을 풀어 나온 값 가운데 구간 밖의 것은 버려야 합니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">f(<i>x</i>) = <i>x</i><sup>3</sup>에 대하여 구간 [0, 3]에서 평균값 정리를 만족하는 <i>c</i>는?</p>
+    <ol>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3/2<span class="why"><b>이차함수에서만 맞는 지름길입니다.</b> 가운데 점에서 f′(3/2) = 27/4 = 6.75인데, 평균변화율은 (27 − 0)/3 = 9입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>√3<span class="why"><b>맞습니다.</b> 평균변화율은 9이고, f′(<i>c</i>) = 3<i>c</i><sup>2</sup> = 9에서 <i>c</i> = ±√3입니다. 이 가운데 (0, 3) 안에 있는 것은 √3뿐입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√3과 −√3<span class="why"><b>구간 밖의 해를 버리지 않았습니다.</b> −√3은 방정식의 해이지만 (0, 3)에 들어 있지 않습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3<span class="why"><b>평균변화율 9를 f(<i>c</i>)와 같게 놓았습니다.</b> <i>c</i><sup>3</sup> = 9가 아니라 f′(<i>c</i>) = 9를 풀어야 하고, 끝점 3은 열린 구간 (0, 3)에 들지 않습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/alg/seq-lib.js",
+    "js/cards/alg/arith-sum.js"
+  ],
+  "short": "등차수열의 합"
+}
+-->
+<style>
+#card-alg-arith-sum canvas { width: 100%; aspect-ratio: 4 / 3; }
+#card-alg-arith-sum .nums dd { font-size: 14px; }
+</style>
+<article class="card" id="card-alg-arith-sum">
+  <header class="card-head">
+    <span class="no"></span><h2>1부터 100까지 더하는 빠른 방법은?</h2><span class="kind">등차수열 · 첫째항부터 제n항까지의 합</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="등차수열의 각 항을 막대로 세우고, 같은 막대들을 거꾸로 뒤집어 위에 붙여 직사각형을 만드는 그림"></canvas>
+      <div class="ctl">
+        <div class="presets"><button class="chip go-flip" type="button" aria-pressed="false">거꾸로 한 벌 더 붙이기</button></div>
+        <div class="ctl-row">
+          <div><label class="mono">첫째항 <i>a</i> = <output class="a-out">2</output></label>
+          <input class="a" type="range" min="1" max="8" step="1" value="2" aria-label="첫째항 a"></div>
+          <div><label class="mono">공차 <i>d</i> = <output class="d-out">3</output></label>
+          <input class="d" type="range" min="-1" max="3" step="1" value="3" aria-label="공차 d"></div>
+        </div>
+        <label class="mono">항의 개수 <i>n</i> = <output class="n-out">6</output></label>
+        <input class="n" type="range" min="2" max="10" step="1" value="6" aria-label="더하는 항의 개수 n">
+        <dl class="nums">
+          <div><dt>하나씩 더한 <i>S</i><sub><i>n</i></sub></dt><dd class="v-s">—</dd></div>
+          <div><dt><i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub></dt><dd class="v-p">—</dd></div>
+          <div><dt><i>n</i>(<i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>)/2</dt><dd class="v-f">—</dd></div>
+        </dl>
+        <p class="fig-note">공차가 음수일 때는 모든 항이 양수가 되도록 <i>n</i>의 최댓값이 첫째항으로 제한됩니다(막대 길이로 보이기 위한 제한입니다).</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span>가우스는 어린 시절 1 + 2 + … + 100을 순식간에 구했다고 전해집니다. 100개를 하나씩 더하지 않고 어떻게 구할 수 있었을까요?</li>
+      <li><span class="tag">복원</span>등차수열의 일반항은 <i>a</i><sub><i>n</i></sub> = <i>a</i> + (<i>n</i> − 1)<i>d</i>입니다. 항을 앞에서 하나씩 갈 때마다 <i>d</i>씩 늘고, 뒤에서 하나씩 올 때마다 <i>d</i>씩 줄어듭니다.</li>
+      <li><span class="tag">설명</span>첫째항부터 제<i>n</i>항까지의 합을 <i>S</i><sub><i>n</i></sub>이라 합니다. <i>S</i><sub><i>n</i></sub>을 앞에서부터 한 번, 뒤에서부터 한 번 적어 위아래로 더하면, 짝마다 앞쪽 항은 <i>d</i> 늘고 뒤쪽 항은 <i>d</i> 줄어 합이 늘 <i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>입니다. 이런 짝이 <i>n</i>개이므로 2<i>S</i><sub><i>n</i></sub> = <i>n</i>(<i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>), 곧 <b><i>S</i><sub><i>n</i></sub> = <i>n</i>(<i>a</i> + <i>l</i>)/2</b>입니다(<i>l</i>은 끝항). <i>l</i> = <i>a</i> + (<i>n</i> − 1)<i>d</i>를 넣으면 <b><i>S</i><sub><i>n</i></sub> = <i>n</i>{2<i>a</i> + (<i>n</i> − 1)<i>d</i>}/2</b>입니다. 1 + 2 + … + 100 = 100 × 101/2 = 5050입니다.</li>
+      <li><span class="tag">연결</span>그림에서 막대 <i>n</i>개를 거꾸로 한 벌 더 붙이면 가로 <i>n</i>, 세로 <i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>인 직사각형이 됩니다. 넓이의 절반이 <i>S</i><sub><i>n</i></sub>입니다. 사다리꼴 넓이 공식 (윗변 + 아랫변) × 높이 ÷ 2와 같은 생각입니다. <i>S</i><sub><i>n</i></sub>은 <i>n</i>의 이차식이 되고, 상수항이 없습니다.</li>
+      <li><span class="tag">적용</span>'거꾸로 한 벌 더 붙이기'를 눌러 보세요. 모든 기둥의 높이가 같아지나요? <i>a</i>, <i>d</i>, <i>n</i>을 바꾸어도 기둥 높이가 늘 <i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>인지, 하나씩 더한 값과 공식 값이 같은지 확인하세요. 공차를 −1로 하면 막대가 어떻게 바뀌나요?</li>
+      <li class="warn"><span class="tag">판단</span><i>S</i><sub><i>n</i></sub> = <i>n</i>(<i>a</i><sub>1</sub> + <i>a</i><sub><i>n</i></sub>)/2에서 2로 나누는 것을 잊는 실수가 흔합니다. 직사각형은 막대 두 벌이므로 반만 취해야 합니다. 또 이 공식은 등차수열에서만 성립합니다. 짝의 합이 늘 같다는 성질이 공차가 일정한 데서 나오기 때문입니다. 항의 개수 <i>n</i>도 정확히 세야 합니다. 5부터 20까지의 자연수는 15개가 아니라 16개입니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">첫째항이 20, 공차가 −3인 등차수열의 첫째항부터 제10항까지의 합은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>65<span class="why"><b>맞습니다.</b> <i>a</i><sub>10</sub> = 20 + 9 × (−3) = −7이므로 <i>S</i><sub>10</sub> = 10 × (20 + (−7))/2 = 65입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>135<span class="why"><b>끝항의 부호를 놓쳤습니다.</b> <i>a</i><sub>10</sub> = −7을 7로 놓으면 10 × 27/2 = 135가 됩니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>130<span class="why"><b>2로 나누지 않았습니다.</b> 10 × 13 = 130은 막대 두 벌의 넓이입니다. 그 절반이 합입니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>72<span class="why"><b>제9항까지만 더했습니다.</b> <i>a</i><sub>9</sub> = −4로 9 × 16/2 = 72를 얻습니다. 제10항까지는 항이 10개입니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

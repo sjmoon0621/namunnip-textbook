@@ -1,0 +1,168 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>수열의 귀납적 정의 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="첫째항과 이웃한 항 사이의 관계식으로 수열을 정하는 귀납적 정의, 등차·등비수열의 귀납적 표현, 실제 문제를 관계식으로 나타내기.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-alg-recur-rule .rule { font-size: 13.5px; margin: 6px 0 2px; overflow-wrap: anywhere; }
+    #card-alg-recur-rule .msg { min-height: 1.6em; font-size: 13px; color: var(--ink-2); margin: 4px 0; }
+    #card-alg-recur-rule .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+    #card-alg-recur-tiling canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-alg-recur-tiling .nums dd { font-size: 14px; }
+    #card-alg-recur-tiling .legend i.sw { display: inline-block; width: 12px; height: 10px; }
+  </style>
+</head>
+<body data-course="alg" data-sec="3-6">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>수열의 귀납적 정의</h1>
+    <p class="lead">도미노의 첫 조각과 '앞 조각이 넘어지면 다음 조각이 넘어진다'는 규칙만 알면 모든 조각의 운명이 정해집니다. 수열도 그렇습니다. 이 절에서는 일반항 대신 첫째항과 이웃한 항 사이의 관계로 수열을 정하는 방법을 익히고, 세는 문제를 이런 관계식으로 나타내 봅니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">수열과 일반항</span><span class="p">등차수열과 등비수열</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-alg-recur-rule"><span class="mono">3.6.1</span>귀납적 정의</a></li>
+        <li><a href="#card-alg-recur-tiling"><span class="mono">3.6.2</span>관계식으로 세기</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=alg-3-6">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-alg-recur-rule">
+        <header class="card-head">
+          <span class="no">3.6.1</span><h2>첫째항과 규칙만으로 수열이 정해질까?</h2><span class="kind">수열의 귀납적 정의 · 첫째항과 관계식</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="첫째항에서 시작해 관계식 a n+1 = p a n + q를 한 번씩 적용할 때마다 다음 항의 점이 생기는 그래프"></canvas>
+            <div class="ctl">
+              <div class="presets run">
+                <button class="chip go-step" type="button">다음 항 만들기</button>
+                <button class="chip go-all" type="button">끝까지</button>
+                <button class="chip go-reset" type="button">처음부터</button>
+              </div>
+              <p class="mono rule">—</p>
+              <p class="msg">—</p>
+              <div class="presets ex">
+                <button class="chip" type="button" data-s="1,1,2" aria-pressed="true">등차: 더하기</button>
+                <button class="chip" type="button" data-s="1,2,0">등비: 곱하기</button>
+                <button class="chip" type="button" data-s="-4,0.5,2">곱하고 더하기</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">첫째항 <i>a</i><sub>1</sub> = <output class="a-out">1</output></label>
+                <input class="a" type="range" min="-4" max="4" step="1" value="1" aria-label="첫째항"></div>
+                <div><label class="mono">곱하는 수 <i>p</i> = <output class="p-out">1</output></label>
+                <input class="p" type="range" min="-2" max="2" step="0.5" value="1" aria-label="곱하는 수 p"></div>
+              </div>
+              <label class="mono">더하는 수 <i>q</i> = <output class="q-out">2</output></label>
+              <input class="q" type="range" min="-3" max="3" step="1" value="2" aria-label="더하는 수 q">
+              <dl class="nums">
+                <div><dt>만든 항의 수</dt><dd class="v-c">—</dd></div>
+                <div><dt>마지막 계산</dt><dd class="v-l">—</dd></div>
+                <div><dt>이 수열은</dt><dd class="v-k">—</dd></div>
+              </dl>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>일반항 식이 없어도 '첫째항은 1이고, 각 항에 2를 더하면 다음 항이 된다'고 하면 수열이 하나로 정해질까요?</li>
+            <li><span class="tag">복원</span>등차수열은 이웃한 항의 차가 공차 <i>d</i>로 일정하고, 등비수열은 이웃한 항의 비가 공비 <i>r</i>로 일정합니다.</li>
+            <li><span class="tag">설명</span>수열을 ① 첫째항 <i>a</i><sub>1</sub>의 값과 ② 이웃한 항 사이의 관계식(예: <i>a</i><sub><i>n</i>+1</sub> = 2<i>a</i><sub><i>n</i></sub> + 1, <i>n</i> = 1, 2, 3, …)으로 정하는 것을 수열의 <em>귀납적 정의</em>라고 합니다. <i>a</i><sub>1</sub>에서 관계식으로 <i>a</i><sub>2</sub>를, <i>a</i><sub>2</sub>에서 <i>a</i><sub>3</sub>을 차례로 얻으므로 모든 항이 하나로 정해집니다. 등차수열은 <b><i>a</i><sub><i>n</i>+1</sub> = <i>a</i><sub><i>n</i></sub> + <i>d</i></b>, 등비수열은 <b><i>a</i><sub><i>n</i>+1</sub> = <i>r</i><i>a</i><sub><i>n</i></sub></b>으로 나타냅니다. 또 2<i>a</i><sub><i>n</i>+1</sub> = <i>a</i><sub><i>n</i></sub> + <i>a</i><sub><i>n</i>+2</sub>는 등차수열, <i>a</i><sub><i>n</i>+1</sub><sup>2</sup> = <i>a</i><sub><i>n</i></sub><i>a</i><sub><i>n</i>+2</sub>는 등비수열의 귀납적 표현입니다(등차중항·등비중항).</li>
+            <li><span class="tag">연결</span>일반항은 <i>n</i>을 넣으면 바로 그 항을 주는 '직접 계산', 귀납적 정의는 앞 항에서 다음 항을 만드는 '한 단계씩 계산'입니다. 컴퓨터 프로그램의 반복문과 같은 생각이고, 다음 카드처럼 세는 문제를 나타내는 데 특히 편합니다.</li>
+            <li><span class="tag">적용</span>'다음 항 만들기'를 여러 번 눌러 보세요. 세 가지 규칙에서 점들이 어떻게 놓이나요? 같은 관계식에서 첫째항만 바꾸면 어떻게 되나요? '곱하고 더하기'에서 첫째항을 4로 바꾸면 무엇이 보이나요?</li>
+            <li class="warn"><span class="tag">판단</span>관계식만 있고 첫째항이 없으면 수열이 정해지지 않습니다. 같은 <i>a</i><sub><i>n</i>+1</sub> = <i>a</i><sub><i>n</i></sub> + 2라도 첫째항이 1이면 홀수, 2이면 짝수의 수열입니다. 또 관계식의 <i>n</i>이 어디서부터 성립하는지(<i>n</i> = 1, 2, 3, …)도 함께 밝혀야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><i>a</i><sub>1</sub> = 2, <i>a</i><sub><i>n</i>+1</sub> = 3<i>a</i><sub><i>n</i></sub> − 1 (<i>n</i> = 1, 2, 3, …)로 정의된 수열에서 <i>a</i><sub>4</sub>는?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>41<span class="why"><b>맞습니다.</b> <i>a</i><sub>2</sub> = 3 · 2 − 1 = 5, <i>a</i><sub>3</sub> = 3 · 5 − 1 = 14, <i>a</i><sub>4</sub> = 3 · 14 − 1 = 41입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14<span class="why"><b>한 단계 덜 갔습니다.</b> 14는 <i>a</i><sub>3</sub>입니다. <i>a</i><sub>4</sub>는 한 번 더 계산합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>관계식의 <i>a</i><sub><i>n</i></sub> 자리에 번호를 넣었습니다.</b> 3 · 3 − 1 = 8은 <i>n</i> = 3을 넣은 것입니다. 넣을 것은 앞 항의 값 <i>a</i><sub>3</sub> = 14입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>122<span class="why"><b>한 단계 더 갔습니다.</b> 122는 <i>a</i><sub>5</sub>입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-alg-recur-tiling">
+        <header class="card-head">
+          <span class="no">3.6.2</span><h2>2×n 판을 덮는 방법은 몇 가지일까?</h2><span class="kind">수열의 귀납적 정의 · 세는 문제를 관계식으로</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="가로 n, 세로 2인 판을 1×2 도미노로 덮는 모든 방법. 맨 왼쪽에 세로 도미노 하나를 둔 경우와 가로 도미노 두 개를 둔 경우로 나누어 늘어놓았다"></canvas>
+            <div class="ctl">
+              <p class="legend"><i class="sw" style="background: var(--leaf)"></i>맨 왼쪽이 세로 하나 <i class="sw" style="background: var(--warn)"></i>맨 왼쪽이 가로 둘</p>
+              <label class="mono">판의 가로 길이 <i>n</i> = <output class="n-out">5</output></label>
+              <input class="n" type="range" min="1" max="6" step="1" value="5" aria-label="판의 가로 길이 n">
+              <dl class="nums">
+                <div><dt class="d-1">세로로 시작</dt><dd class="v-1">—</dd></div>
+                <div><dt class="d-2">가로로 시작</dt><dd class="v-2">—</dd></div>
+                <div><dt class="d-n">전체</dt><dd class="v-n">—</dd></div>
+              </dl>
+              <p class="fig-note">작은 그림 하나가 덮는 방법 하나입니다. 맨 왼쪽 조각을 지우고 남은 부분을 보세요.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>가로 <i>n</i>, 세로 2인 판을 1 × 2 도미노로 빈틈없이 덮는 방법의 수를 <i>a</i><sub><i>n</i></sub>이라 합시다. <i>n</i> = 10일 때 모든 방법을 그려 보지 않고 셀 수 있을까요?</li>
+            <li><span class="tag">복원</span>수열은 첫째항과 이웃한 항 사이의 관계식으로 정할 수 있습니다. 경우의 수를 셀 때는 겹치지 않고 빠짐없이 나누어 더합니다(합의 법칙).</li>
+            <li><span class="tag">설명</span>맨 왼쪽 칸을 덮는 방법은 두 가지뿐입니다. ① 세로 도미노 하나를 두면 남은 부분은 가로 <i>n</i> − 1인 판이고, 덮는 방법은 <i>a</i><sub><i>n</i>−1</sub>가지입니다. ② 가로 도미노 두 개를 위아래로 두면 남은 부분은 가로 <i>n</i> − 2인 판이고, <i>a</i><sub><i>n</i>−2</sub>가지입니다. 두 경우는 겹치지 않으므로 <b><i>a</i><sub><i>n</i></sub> = <i>a</i><sub><i>n</i>−1</sub> + <i>a</i><sub><i>n</i>−2</sub> (<i>n</i> ≥ 3)</b>, 그리고 <b><i>a</i><sub>1</sub> = 1, <i>a</i><sub>2</sub> = 2</b>입니다. 이 귀납적 정의로 1, 2, 3, 5, 8, 13, …을 차례로 얻고, <i>a</i><sub>10</sub> = 89입니다.</li>
+            <li><span class="tag">연결</span>이 관계식은 이웃한 두 항으로 다음 항을 정하므로 첫째항과 둘째항이 모두 필요합니다. 계단을 한 번에 한 칸 또는 두 칸씩 오르는 방법의 수도 같은 관계를 따릅니다. 이렇게 문제의 구조에서 관계식을 세우는 것이 귀납적 정의의 쓰임입니다. 일반항을 구하는 것은 이 과목의 범위를 넘지만, 관계식만으로도 원하는 항을 계산할 수 있습니다.</li>
+            <li><span class="tag">적용</span><i>n</i>을 바꾸며 초록 묶음과 주황 묶음의 개수가 각각 <i>a</i><sub><i>n</i>−1</sub>, <i>a</i><sub><i>n</i>−2</sub>인지 세어 보세요. 초록 묶음에서 맨 왼쪽 세로 조각을 지우면 남는 그림들은 무엇과 같나요?</li>
+            <li class="warn"><span class="tag">판단</span><i>a</i><sub><i>n</i></sub> = <i>a</i><sub><i>n</i>−1</sub> + 1처럼 '조각 하나를 더 놓는 방법은 하나'라고 세는 실수가 흔합니다. 새 조각을 어디에 놓느냐가 아니라 맨 왼쪽을 어떻게 덮느냐로 나누어야 겹치거나 빠지는 경우가 없습니다. 또 관계식이 <i>n</i> ≥ 3에서만 쓰인다는 것과 처음 두 항을 함께 밝혀야 합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">계단을 한 번에 1칸 또는 3칸씩 오릅니다. 7칸을 오르는 방법의 수는? (<i>b</i><sub>1</sub> = 1, <i>b</i><sub>2</sub> = 1, <i>b</i><sub>3</sub> = 2이고, 마지막 걸음이 1칸인지 3칸인지로 나눕니다.)</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>9<span class="why"><b>맞습니다.</b> <i>b</i><sub><i>n</i></sub> = <i>b</i><sub><i>n</i>−1</sub> + <i>b</i><sub><i>n</i>−3</sub>이므로 <i>b</i><sub>4</sub> = 3, <i>b</i><sub>5</sub> = 4, <i>b</i><sub>6</sub> = 6, <i>b</i><sub>7</sub> = 9입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>21<span class="why"><b>1칸 또는 2칸으로 세었습니다.</b> <i>b</i><sub><i>n</i></sub> = <i>b</i><sub><i>n</i>−1</sub> + <i>b</i><sub><i>n</i>−2</sub>를 쓰면 21이 나옵니다. 3칸 걸음은 세 칸 전에서 옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>한 단계 덜 계산했습니다.</b> 6은 6칸을 오르는 방법의 수 <i>b</i><sub>6</sub>입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=alg-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/alg/seq-lib.js"></script>
+<script src="../../js/cards/alg/recur-rule.js"></script>
+<script src="../../js/cards/alg/seq-lib.js"></script>
+<script src="../../js/cards/alg/recur-tiling.js"></script>
+</body>
+</html>

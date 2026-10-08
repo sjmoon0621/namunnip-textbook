@@ -1,0 +1,63 @@
+<!--block
+{
+  "type": "card",
+  "scripts": [
+    "js/cards/alg/seq-lib.js",
+    "js/cards/alg/induct-domino.js"
+  ],
+  "short": "도미노와 귀납법"
+}
+-->
+<style>
+#card-alg-induct-domino canvas { width: 100%; aspect-ratio: 2 / 1; }
+#card-alg-induct-domino .stmt { font-size: 13.5px; margin: 6px 0 2px; overflow-wrap: anywhere; }
+#card-alg-induct-domino .nums dd { font-size: 13.5px; overflow-wrap: anywhere; }
+</style>
+<article class="card" id="card-alg-induct-domino">
+  <header class="card-head">
+    <span class="no"></span><h2>몇 개를 확인하면 모든 자연수에서 참일까?</h2><span class="kind">수학적 귀납법 · 원리</span>
+  </header>
+  <div class="card-body">
+    <div class="card-fig">
+      <canvas aria-label="번호가 붙은 도미노 줄. 명제 P(n)이 참인 도미노는 쓰러질 수 있고, 첫 도미노부터 연쇄로 어디까지 쓰러지는지 보여 준다"></canvas>
+      <div class="ctl">
+        <div class="presets">
+          <button class="chip" type="button" data-s="odd" aria-pressed="true">홀수의 합</button>
+          <button class="chip" type="button" data-s="prime"><i>n</i><sup>2</sup> + <i>n</i> + 41은 소수</button>
+          <button class="chip" type="button" data-s="pow">2<sup><i>n</i></sup> &gt; <i>n</i><sup>2</sup></button>
+        </div>
+        <p class="mono stmt">—</p>
+        <div class="ctl-row">
+          <div><label class="mono">처음 미는 도미노 <i>m</i> = <output class="m-out">1</output></label>
+          <input class="m" type="range" min="1" max="8" step="1" value="1" aria-label="처음 미는 도미노 번호 m"></div>
+          <div><label class="mono">보는 구간 시작 = <output class="s-out">1</output></label>
+          <input class="s" type="range" min="1" max="36" step="1" value="1" aria-label="화면에 보이는 도미노의 시작 번호"></div>
+        </div>
+        <dl class="nums">
+          <div><dt>쓰러진 도미노</dt><dd class="v-f">—</dd></div>
+          <div><dt>처음 멈춘 곳</dt><dd class="v-x">—</dd></div>
+          <div><dt>P(<i>k</i>) ⇒ P(<i>k</i>+1)</dt><dd class="v-i">—</dd></div>
+        </dl>
+        <p class="fig-note">도미노 사이의 초록 점은 'P(<i>k</i>)가 참이면 P(<i>k</i> + 1)도 참'이 그 자리에서 성립함을, 주황 ×는 깨짐을 뜻합니다. 화면에는 12개씩 보입니다.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      <li><span class="tag">질문</span><i>n</i><sup>2</sup> + <i>n</i> + 41은 <i>n</i> = 1, 2, 3, …, 39에서 모두 소수입니다. 39개나 확인했으니 모든 자연수 <i>n</i>에서 소수라고 해도 될까요?</li>
+      <li><span class="tag">복원</span>명제 P(<i>n</i>)은 자연수 <i>n</i>마다 참 또는 거짓이 정해지는 문장입니다. 수열의 귀납적 정의에서는 첫째항과 '앞 항에서 다음 항'의 규칙으로 모든 항이 정해졌습니다.</li>
+      <li><span class="tag">설명</span>자연수 <i>n</i>에 대한 명제 P(<i>n</i>)이 모든 자연수에서 참임을 보이려면 다음 두 가지를 보이면 됩니다. <b>① <i>n</i> = 1일 때 P(1)이 참이다. ② <i>n</i> = <i>k</i>일 때 P(<i>k</i>)가 참이라고 가정하면 <i>n</i> = <i>k</i> + 1일 때 P(<i>k</i> + 1)도 참이다.</b> 이것을 <em>수학적 귀납법</em>이라고 합니다. ①로 1번 도미노가 쓰러지고, ②로 1번이 2번을, 2번이 3번을 쓰러뜨리므로 모든 도미노가 쓰러집니다. ②는 특정한 <i>k</i>가 아니라 <b>모든 자연수 <i>k</i></b>에 대해 보여야 합니다.</li>
+      <li><span class="tag">연결</span>수열의 귀납적 정의가 '첫째항 + 관계식'으로 모든 항을 정하듯, 수학적 귀납법은 '첫 경우 + 이어지는 규칙'으로 모든 경우의 참을 보장합니다. ①을 <i>n</i> = <i>m</i>으로 바꾸면 <i>n</i> ≥ <i>m</i>인 모든 자연수에서 참임을 보일 수 있습니다.</li>
+      <li><span class="tag">적용</span>세 명제를 차례로 고르고 보는 구간을 옮겨 보세요. 소수 명제는 어디서 멈추나요? 그 앞의 39개는 무엇을 증명하지 못했나요? 2<sup><i>n</i></sup> &gt; <i>n</i><sup>2</sup>에서 처음 미는 도미노를 1과 5로 바꾸면 무엇이 달라지나요?</li>
+      <li class="warn"><span class="tag">판단</span>몇 개의 예를 확인하는 것은 증명이 아닙니다. 소수 명제는 <i>n</i> = 40에서 40<sup>2</sup> + 40 + 41 = 41<sup>2</sup>이 되어 거짓입니다. 반대로 ②만 보이고 ①을 빠뜨려도 안 됩니다. 'P(<i>k</i>)이면 P(<i>k</i> + 1)'은 '<i>n</i> = <i>n</i> + 1'처럼 거짓인 명제에서도 성립할 수 있지만, 첫 도미노가 쓰러지지 않으면 아무것도 쓰러지지 않습니다.</li>
+    </ol>
+  </div>
+  <div class="quiz">
+    <h3><span class="mono">확인</span>조건이 달라지면</h3>
+    <p class="q">명제 P(<i>n</i>)에 대해 P(1)이 참이고, P(<i>k</i>)가 참이면 P(<i>k</i> + 2)가 참임을 보였습니다. 이것만으로 참임이 보장되는 <i>n</i>은?</p>
+    <ol>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>모든 홀수<span class="why"><b>맞습니다.</b> 1번이 3번을, 3번이 5번을 쓰러뜨립니다. 짝수 번호로 건너가는 연결은 보이지 않았습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 자연수<span class="why"><b>한 칸씩 이어진다고 보았습니다.</b> 보인 것은 두 칸씩 건너뛰는 연결이라 2번 도미노는 쓰러지지 않을 수 있습니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>n</i> = 1뿐<span class="why"><b>②의 역할을 놓쳤습니다.</b> P(1)에서 P(3), P(5), …로 이어집니다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모든 짝수<span class="why"><b>시작점을 잘못 보았습니다.</b> 출발이 P(1)이고 두 칸씩 가므로 홀수에만 닿습니다.</span></span></button></li>
+    </ol>
+  </div>
+</article>

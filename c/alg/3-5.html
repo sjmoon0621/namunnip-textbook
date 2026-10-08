@@ -1,0 +1,206 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>여러 가지 수열의 합 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="자연수의 거듭제곱의 합 ∑k, ∑k², ∑k³의 공식과 그 유도, 분수 꼴 등 이웃 항이 지워지는 수열의 합.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-alg-sum-square canvas { width: 100%; aspect-ratio: 4 / 3; }
+    #card-alg-sum-square .msg { min-height: 3.2em; font-size: 13px; color: var(--ink-2); margin: 6px 0; line-height: 1.55; }
+    #card-alg-sum-square .nums dd { font-size: 14px; }
+    #card-alg-sum-cube canvas { width: 100%; aspect-ratio: 1 / 1; max-width: 400px; margin: 0 auto; display: block; }
+    #card-alg-sum-cube .nums dd { font-size: 14px; }
+    #card-alg-sum-telescope canvas { width: 100%; aspect-ratio: 16 / 9; }
+    #card-alg-sum-telescope .nums dd { font-size: 14px; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="alg" data-sec="3-5">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>여러 가지 수열의 합</h1>
+    <p class="lead">1 + 2 + … + <i>n</i>은 등차수열의 합으로 구했습니다. 그렇다면 1<sup>2</sup> + 2<sup>2</sup> + … + <i>n</i><sup>2</sup>이나 1<sup>3</sup> + 2<sup>3</sup> + … + <i>n</i><sup>3</sup>은 어떻게 구할까요? 이 절에서는 이웃한 항끼리 지워지게 늘어놓는 방법과 정사각형 그림으로 이 합들의 공식을 찾고, 분수 꼴 수열의 합에도 같은 생각을 씁니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">∑의 뜻과 성질</span><span class="p">등차수열의 합</span><span class="p">곱셈 공식 (a + b)³</span><span class="p">분수식의 계산</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-alg-sum-square"><span class="mono">3.5.1</span>제곱의 합</a></li>
+        <li><a href="#card-alg-sum-cube"><span class="mono">3.5.2</span>세제곱의 합</a></li>
+        <li><a href="#card-alg-sum-telescope"><span class="mono">3.5.3</span>지워지는 합</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=alg-3-5">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-alg-sum-square">
+        <header class="card-head">
+          <span class="no">3.5.1</span><h2>1² + 2² + … + n²은 어떻게 구할까?</h2><span class="kind">여러 가지 수열의 합 · 자연수의 제곱의 합</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="k = 1부터 n까지 (k + 1)³ − k³ = 3k² + 3k + 1을 한 줄씩 적고, 위아래 줄에서 같은 세제곱이 지워지는 그림"></canvas>
+            <div class="ctl">
+              <div class="presets run">
+                <button class="chip go-step" type="button">다음 단계</button>
+                <button class="chip go-reset" type="button">처음부터</button>
+              </div>
+              <p class="msg">—</p>
+              <label class="mono">줄의 개수 <i>n</i> = <output class="n-out">4</output></label>
+              <input class="n" type="range" min="1" max="6" step="1" value="4" aria-label="줄의 개수 n">
+              <dl class="nums">
+                <div><dt>하나씩 더한 ∑<i>k</i><sup>2</sup></dt><dd class="v-s">—</dd></div>
+                <div><dt><i>n</i>(<i>n</i>+1)(2<i>n</i>+1)/6</dt><dd class="v-f">—</dd></div>
+                <div><dt>(<i>n</i>+1)<sup>3</sup> − 1</dt><dd class="v-c">—</dd></div>
+              </dl>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1 + 2 + … + <i>n</i>은 거꾸로 더해 짝을 지으면 구할 수 있었습니다. 그런데 1<sup>2</sup> + 2<sup>2</sup> + … + <i>n</i><sup>2</sup>은 짝의 합이 같지 않습니다. 어떻게 구할까요?</li>
+            <li><span class="tag">복원</span>(<i>a</i> + <i>b</i>)<sup>3</sup> = <i>a</i><sup>3</sup> + 3<i>a</i><sup>2</sup><i>b</i> + 3<i>a</i><i>b</i><sup>2</sup> + <i>b</i><sup>3</sup>입니다. 그리고 ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> <i>k</i> = <i>n</i>(<i>n</i> + 1)/2, ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> 1 = <i>n</i>입니다.</li>
+            <li><span class="tag">설명</span>항등식 <b>(<i>k</i> + 1)<sup>3</sup> − <i>k</i><sup>3</sup> = 3<i>k</i><sup>2</sup> + 3<i>k</i> + 1</b>에 <i>k</i> = 1, 2, …, <i>n</i>을 넣어 <i>n</i>개의 줄을 만들고 모두 더합니다. 왼쪽은 위 줄의 (<i>k</i> + 1)<sup>3</sup>과 아래 줄의 <i>k</i><sup>3</sup>이 같아서 서로 지워지고 (<i>n</i> + 1)<sup>3</sup> − 1<sup>3</sup>만 남습니다. 오른쪽은 3∑<i>k</i><sup>2</sup> + 3∑<i>k</i> + <i>n</i>입니다. 따라서 3∑<i>k</i><sup>2</sup> = (<i>n</i> + 1)<sup>3</sup> − 1 − 3<i>n</i>(<i>n</i> + 1)/2 − <i>n</i>이고, 정리하면 <b>∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> <i>k</i><sup>2</sup> = <i>n</i>(<i>n</i> + 1)(2<i>n</i> + 1)/6</b>입니다.</li>
+            <li><span class="tag">연결</span>같은 방법으로 (<i>k</i> + 1)<sup>2</sup> − <i>k</i><sup>2</sup> = 2<i>k</i> + 1을 쓰면 ∑<i>k</i> = <i>n</i>(<i>n</i> + 1)/2를, (<i>k</i> + 1)<sup>4</sup> − <i>k</i><sup>4</sup>을 쓰면 ∑<i>k</i><sup>3</sup>을 얻습니다. 이웃한 줄끼리 지워지게 만드는 이 생각은 등비수열의 합에서 <i>S</i> − <i>r</i>S를 계산한 것과 같은 뿌리입니다.</li>
+            <li><span class="tag">적용</span>'다음 단계'를 눌러 줄을 적고, 지워지는 세제곱을 확인하세요. <i>n</i>을 바꾸어도 남는 것이 늘 (<i>n</i> + 1)<sup>3</sup>과 1<sup>3</sup>뿐인가요? 마지막 단계에서 하나씩 더한 값과 공식 값이 같은지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>∑<i>k</i><sup>2</sup>을 (∑<i>k</i>)<sup>2</sup>으로 계산하는 실수가 흔합니다. <i>n</i> = 3이면 1 + 4 + 9 = 14이지만 (1 + 2 + 3)<sup>2</sup> = 36입니다. 또 공식은 <i>k</i> = 1부터의 합입니다. 다른 번호에서 시작하면 1부터의 합 두 개의 차로 구합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">∑<sub><i>k</i>=1</sub><sup>10</sup> (<i>k</i><sup>2</sup> + <i>k</i>)의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>440<span class="why"><b>맞습니다.</b> ∑<i>k</i><sup>2</sup> = 10 · 11 · 21/6 = 385, ∑<i>k</i> = 55이므로 440입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>385<span class="why"><b>∑<i>k</i>를 빠뜨렸습니다.</b> 385는 ∑<i>k</i><sup>2</sup>만의 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>395<span class="why"><b>∑<i>k</i>를 10으로 보았습니다.</b> ∑<sub><i>k</i>=1</sub><sup>10</sup> <i>k</i>는 1부터 10까지의 합 55입니다. 10은 ∑ 1입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3080<span class="why"><b>∑<i>k</i><sup>2</sup>을 (∑<i>k</i>)<sup>2</sup>으로 계산했습니다.</b> 55<sup>2</sup> = 3025는 제곱의 합이 아니라 합의 제곱입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-alg-sum-cube">
+        <header class="card-head">
+          <span class="no">3.5.2</span><h2>세제곱을 모으면 왜 정사각형이 될까?</h2><span class="kind">여러 가지 수열의 합 · 자연수의 세제곱의 합</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="한 변이 1 + 2 + … + n인 정사각형을 ㄱ자 모양 띠로 나눈 그림. k번째 띠의 넓이가 k³이다"></canvas>
+            <div class="ctl">
+              <div class="ctl-row">
+                <div><label class="mono"><i>n</i> = <output class="n-out">4</output></label>
+                <input class="n" type="range" min="1" max="6" step="1" value="4" aria-label="더하는 마지막 번호 n"></div>
+                <div><label class="mono">살펴볼 띠 <i>k</i> = <output class="k-out">3</output></label>
+                <input class="k" type="range" min="1" max="6" step="1" value="3" aria-label="살펴볼 띠의 번호 k"></div>
+              </div>
+              <dl class="nums">
+                <div><dt class="d-g">k번째 띠의 넓이</dt><dd class="v-g">—</dd></div>
+                <div><dt>1<sup>3</sup> + … + <i>n</i><sup>3</sup></dt><dd class="v-s">—</dd></div>
+                <div><dt>(1 + … + <i>n</i>)<sup>2</sup></dt><dd class="v-q">—</dd></div>
+              </dl>
+              <p class="fig-note">작은 칸 하나의 넓이가 1입니다. 띠는 한 변이 1 + … + (<i>k</i> − 1)인 정사각형을 1 + … + <i>k</i>인 정사각형으로 키울 때 덧붙는 부분입니다.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1<sup>3</sup> = 1, 1<sup>3</sup> + 2<sup>3</sup> = 9, 1<sup>3</sup> + 2<sup>3</sup> + 3<sup>3</sup> = 36, 1<sup>3</sup> + 2<sup>3</sup> + 3<sup>3</sup> + 4<sup>3</sup> = 100. 합이 모두 제곱수입니다. 우연일까요?</li>
+            <li><span class="tag">복원</span>1 + 2 + … + <i>n</i> = <i>n</i>(<i>n</i> + 1)/2입니다. 한 변이 <i>a</i>인 정사각형을 한 변이 <i>b</i>인 정사각형으로 키우면 덧붙는 ㄱ자 모양의 넓이는 <i>b</i><sup>2</sup> − <i>a</i><sup>2</sup>입니다.</li>
+            <li><span class="tag">설명</span><i>T</i><sub><i>k</i></sub> = 1 + 2 + … + <i>k</i> = <i>k</i>(<i>k</i> + 1)/2라 하면 한 변이 <i>T</i><sub><i>k</i>−1</sub>인 정사각형에서 <i>T</i><sub><i>k</i></sub>인 정사각형으로 키울 때 덧붙는 띠의 넓이는 <i>T</i><sub><i>k</i></sub><sup>2</sup> − <i>T</i><sub><i>k</i>−1</sub><sup>2</sup> = (<i>T</i><sub><i>k</i></sub> − <i>T</i><sub><i>k</i>−1</sub>)(<i>T</i><sub><i>k</i></sub> + <i>T</i><sub><i>k</i>−1</sub>) = <i>k</i> · <i>k</i><sup>2</sup> = <b><i>k</i><sup>3</sup></b>입니다. (<i>T</i><sub><i>k</i></sub> − <i>T</i><sub><i>k</i>−1</sub> = <i>k</i>, <i>T</i><sub><i>k</i></sub> + <i>T</i><sub><i>k</i>−1</sub> = <i>k</i><sup>2</sup>) 이 띠를 1번부터 <i>n</i>번까지 모으면 한 변이 <i>T</i><sub><i>n</i></sub>인 정사각형이 되므로 <b>∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> <i>k</i><sup>3</sup> = {<i>n</i>(<i>n</i> + 1)/2}<sup>2</sup></b>입니다.</li>
+            <li><span class="tag">연결</span>이 공식은 제곱의 합처럼 (<i>k</i> + 1)<sup>4</sup> − <i>k</i><sup>4</sup> = 4<i>k</i><sup>3</sup> + 6<i>k</i><sup>2</sup> + 4<i>k</i> + 1을 <i>k</i> = 1부터 <i>n</i>까지 더해서도 얻을 수 있습니다. 그림은 그 결과가 왜 (∑<i>k</i>)<sup>2</sup>이라는 깔끔한 모양이 되는지 보여 줍니다. 세 공식 ∑<i>k</i>, ∑<i>k</i><sup>2</sup>, ∑<i>k</i><sup>3</sup>과 ∑의 성질을 함께 쓰면 일반항이 <i>n</i>의 다항식인 수열의 합을 구할 수 있습니다.</li>
+            <li><span class="tag">적용</span><i>k</i>를 움직이며 띠의 넓이가 <i>k</i><sup>3</sup>인지 칸을 세어 보세요. <i>n</i>을 늘리면 정사각형의 한 변은 얼마씩 커지나요? 두 수치 1<sup>3</sup> + … + <i>n</i><sup>3</sup>과 (1 + … + <i>n</i>)<sup>2</sup>이 늘 같은지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>∑<i>k</i><sup>3</sup> = (∑<i>k</i>)<sup>2</sup>은 세제곱에서만 성립하는 특별한 관계입니다. ∑<i>k</i><sup>2</sup> = (∑<i>k</i>)<sup>2</sup>이나 ∑<i>k</i><sup>4</sup> = (∑<i>k</i><sup>2</sup>)<sup>2</sup>처럼 일반화하면 틀립니다. 또 그림은 공식이 왜 맞는지 보여 주지만, 모든 <i>n</i>에 대한 증명은 위의 넓이 계산(또는 수학적 귀납법)이 맡습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">∑<sub><i>k</i>=11</sub><sup>20</sup> <i>k</i><sup>3</sup>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>41075<span class="why"><b>맞습니다.</b> (20 · 21/2)<sup>2</sup> − (10 · 11/2)<sup>2</sup> = 44100 − 3025 = 41075입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>44100<span class="why"><b>1부터 더했습니다.</b> 44100은 ∑<sub><i>k</i>=1</sub><sup>20</sup> <i>k</i><sup>3</sup>입니다. 1부터 10까지의 합을 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>24025<span class="why"><b>11부터 20까지의 합을 제곱했습니다.</b> (11 + … + 20)<sup>2</sup> = 155<sup>2</sup>입니다. ∑<i>k</i><sup>3</sup> = (∑<i>k</i>)<sup>2</sup>은 1부터 더할 때만 맞습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>39744<span class="why"><b>11까지 뺐습니다.</b> ∑<sub><i>k</i>=1</sub><sup>11</sup> <i>k</i><sup>3</sup> = 4356을 빼면 11<sup>3</sup>도 빠집니다. 10까지를 빼야 합니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-alg-sum-telescope">
+        <header class="card-head">
+          <span class="no">3.5.3</span><h2>분수를 차로 쪼개면 무엇이 남을까?</h2><span class="kind">여러 가지 수열의 합 · 분수 꼴 수열의 합</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas aria-label="각 항을 두 수의 차로 쪼개 한 줄씩 적고, 이웃한 줄에서 같은 수가 지워져 처음과 끝만 남는 그림. 아래 띠는 부분합의 크기"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip" type="button" data-m="1" aria-pressed="true">1/{<i>k</i>(<i>k</i> + 1)}</button>
+                <button class="chip" type="button" data-m="2">1/{<i>k</i>(<i>k</i> + 2)}</button>
+                <button class="chip" type="button" data-m="r">1/(√(<i>k</i> + 1) + √<i>k</i>)</button>
+              </div>
+              <label class="mono">더하는 항의 개수 <i>n</i> = <output class="n-out">4</output></label>
+              <input class="n" type="range" min="1" max="6" step="1" value="4" aria-label="더하는 항의 개수 n">
+              <dl class="nums">
+                <div><dt>하나씩 더한 합</dt><dd class="v-s">—</dd></div>
+                <div><dt>남는 항</dt><dd class="v-r">—</dd></div>
+                <div><dt>남는 항의 값</dt><dd class="v-f">—</dd></div>
+              </dl>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>1/(1 · 2) + 1/(2 · 3) + 1/(3 · 4) + …처럼 분모가 이웃한 수의 곱인 분수를 더하면, 통분할수록 분모가 커집니다. 더 쉬운 길이 있을까요?</li>
+            <li><span class="tag">복원</span>1/<i>k</i> − 1/(<i>k</i> + 1) = {(<i>k</i> + 1) − <i>k</i>}/{<i>k</i>(<i>k</i> + 1)} = 1/{<i>k</i>(<i>k</i> + 1)}입니다. 분모를 유리화할 때 (√<i>a</i> + √<i>b</i>)(√<i>a</i> − √<i>b</i>) = <i>a</i> − <i>b</i>를 씁니다.</li>
+            <li><span class="tag">설명</span>항을 <b>1/{<i>k</i>(<i>k</i> + 1)} = 1/<i>k</i> − 1/(<i>k</i> + 1)</b>처럼 두 수의 차로 쪼개면 앞 줄의 뒤쪽 수와 다음 줄의 앞쪽 수가 같아 지워집니다. 그래서 ∑<sub><i>k</i>=1</sub><sup><i>n</i></sup> 1/{<i>k</i>(<i>k</i> + 1)} = 1 − 1/(<i>n</i> + 1) = <i>n</i>/(<i>n</i> + 1)입니다. 분모의 두 수가 2만큼 차이 나면 1/{<i>k</i>(<i>k</i> + 2)} = (1/2)(1/<i>k</i> − 1/(<i>k</i> + 2))처럼 앞에 1/(차)를 곱하고, 두 줄 건너 지워지므로 처음 두 개와 끝 두 개가 남습니다. 1/(√(<i>k</i> + 1) + √<i>k</i>)는 유리화하면 √(<i>k</i> + 1) − √<i>k</i>이므로 합은 √(<i>n</i> + 1) − 1입니다.</li>
+            <li><span class="tag">연결</span>합을 '지워지는 차'의 모양으로 바꾸는 생각은 제곱의 합 공식을 구할 때 (<i>k</i> + 1)<sup>3</sup> − <i>k</i><sup>3</sup>을 더한 것과 같습니다. 이런 합은 여러 줄을 더해도 처음과 끝만 남기 때문에 항의 개수와 상관없이 짧은 식이 됩니다.</li>
+            <li><span class="tag">적용</span>세 가지 수열을 차례로 고르고 <i>n</i>을 늘려 보세요. 각 경우 몇 개의 수가 남나요? 첫 번째 수열의 아래 띠는 <i>n</i>이 커지면 어디에 가까워지나요?</li>
+            <li class="warn"><span class="tag">판단</span>1/{<i>k</i>(<i>k</i> + 2)}을 1/<i>k</i> − 1/(<i>k</i> + 2)로만 쪼개는 실수가 흔합니다. 이 차는 2/{<i>k</i>(<i>k</i> + 2)}이므로 1/2을 곱해야 합니다. 또 남는 항을 셀 때 앞에서 남는 것과 뒤에서 남는 것을 모두 적어야 합니다. 쪼갠 뒤 몇 개를 적어 보고 지워지는 짝을 직접 확인하는 습관이 안전합니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">∑<sub><i>k</i>=1</sub><sup>20</sup> 1/{<i>k</i>(<i>k</i> + 1)}의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>20/21<span class="why"><b>맞습니다.</b> 1 − 1/21 = 20/21입니다. 처음의 1/1과 끝의 −1/21만 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/21<span class="why"><b>남는 두 수 중 하나만 보았습니다.</b> 첫 줄의 1/1도 지워지지 않고 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>21/22<span class="why"><b>끝 번호를 하나 더 갔습니다.</b> <i>k</i> = 20인 줄의 뒤쪽 수는 1/21입니다. 21/22는 21개를 더한 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>마지막 −1/21을 지웠습니다.</b> −1/21은 짝이 될 다음 줄이 없어 남습니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=alg-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/alg/seq-lib.js"></script>
+<script src="../../js/cards/alg/sum-square.js"></script>
+<script src="../../js/cards/alg/seq-lib.js"></script>
+<script src="../../js/cards/alg/sum-cube.js"></script>
+<script src="../../js/cards/alg/seq-lib.js"></script>
+<script src="../../js/cards/alg/sum-telescope.js"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>조합 — 나뭇잎 과학 교과서</title>
+  <meta name="description" content="순서를 생각하지 않고 r개를 택하는 조합의 수 nCr을 순열 목록을 같은 모임끼리 묶어 nPr ÷ r!로 이끌어 내고, nCr = nCn−r와 nCr = n−1Cr−1 + n−1Cr의 뜻을 막대그래프로 확인한다.">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <meta name="theme-color" content="#f3f4ef">
+  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>
+  <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
+  <link rel="stylesheet" href="../../css/fonts.css">
+  <link rel="stylesheet" href="../../css/tb.css">
+  <style>
+    #card-cm1-comb-group canvas { cursor: pointer; }
+    #card-cm1-comb-group .msg { min-height: 2.8em; font-size: 13px; color: var(--ink-2); margin: 6px 0 2px; line-height: 1.5; }
+    #card-cm1-comb-group .nums dd { overflow-wrap: anywhere; }
+    #card-cm1-comb-bars canvas { aspect-ratio: 8 / 5; }
+    #card-cm1-comb-bars .msg { min-height: 2.8em; font-size: 13px; color: var(--ink-2); margin: 6px 0 2px; line-height: 1.5; }
+    #card-cm1-comb-bars .nums dd { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body data-course="cm1" data-sec="3-3">
+
+<header class="top">
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <nav class="crumbs" aria-label="위치"></nav>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a><button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+</header>
+
+<main class="wrap">
+  <section class="topic-hero">
+    <div class="meta"></div>
+    <h1>조합</h1>
+    <p class="lead">대표 3명을 뽑을 때는 누가 먼저 뽑혔는지가 중요하지 않습니다. 이렇게 순서를 따지지 않고 뽑는 경우의 수가 조합입니다. 이 절에서는 순열 목록에서 같은 사람들로 이루어진 나열을 한데 묶어, 조합의 수가 순열의 수를 <i>r</i>!로 나눈 값인 까닭을 확인합니다. 이어서 <i>r</i>를 바꿀 때 조합의 수가 어떻게 변하는지 보고, 대칭과 '특정한 하나를 넣느냐 빼느냐'로 나누는 관계를 찾습니다.</p>
+    <div class="prereq">
+      <span class="mono">먼저 알면 좋은 것</span>
+      <span class="p">순열의 수 <sub><i>n</i></sub>P<sub><i>r</i></sub></span><span class="p">계승 <i>n</i>!</span><span class="p">합의 법칙</span><span class="p">곱의 법칙</span>
+    </div>
+  </section>
+
+  <div class="topic-layout">
+    <aside class="toc" aria-label="이 절의 카드">
+      <p class="mono small">이 절의 카드</p>
+      <ol>
+        <li><a href="#card-cm1-comb-group"><span class="mono">3.3.1</span>조합의 수</a></li>
+        <li><a href="#card-cm1-comb-bars"><span class="mono">3.3.2</span>조합의 성질</a></li>
+      </ol>
+      <p class="progress mono small"></p>
+      <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-3-3">이 절을 개념 지도에서 보기</a></p>
+    </aside>
+
+    <div>
+      <article class="card" id="card-cm1-comb-group">
+        <header class="card-head">
+          <span class="no">3.3.1</span><h2>순서 없이 뽑는 수는 왜 순열의 수를 r!로 나눌까?</h2><span class="kind">조합 · 순열 묶기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="n명에서 r명을 뽑아 나열한 순열을 칸 하나씩 늘어놓고, 같은 사람들로 이루어진 칸끼리 묶는 그림"></canvas>
+            <div class="ctl">
+              <div class="presets run">
+                <button class="chip go-group" type="button" aria-pressed="false">같은 모임끼리 묶기</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">사람 수 <i>n</i> = <output class="n-out">5</output></label>
+                <input class="n" type="range" min="3" max="5" step="1" value="5" aria-label="사람 수 n"></div>
+                <div><label class="mono">뽑는 수 <i>r</i> = <output class="r-out">3</output></label>
+                <input class="r" type="range" min="1" max="3" step="1" value="3" aria-label="뽑는 수 r"></div>
+              </div>
+              <dl class="nums">
+                <div><dt class="d-p">nPr</dt><dd class="n-p">—</dd></div>
+                <div><dt class="d-f">r!</dt><dd class="n-f">—</dd></div>
+                <div><dt class="d-c">nCr</dt><dd class="n-c">—</dd></div>
+              </dl>
+              <p class="msg">칸 하나를 눌러 보세요.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>A, B, C, D, E 다섯 명 가운데 대표 3명을 뽑는 방법은 몇 가지일까요? 세 명을 뽑아 한 줄로 세우는 방법 60가지와는 어떻게 다를까요?</li>
+            <li><span class="tag">복원</span>5명 가운데 3명을 뽑아 한 줄로 세우는 방법은 <sub>5</sub>P<sub>3</sub> = 5 × 4 × 3 = 60가지입니다. 3명을 한 줄로 세우는 방법은 3! = 6가지입니다.</li>
+            <li><span class="tag">설명</span>서로 다른 <i>n</i>개에서 순서를 생각하지 않고 <i>r</i>개를 택하는 것을 <i>n</i>개에서 <i>r</i>개를 택하는 <em>조합</em>이라 하고, 그 수를 <sub><i>n</i></sub>C<sub><i>r</i></sub>로 나타냅니다. 같은 <i>r</i>명으로 이루어진 조합 하나는 줄 세우는 방법이 <i>r</i>!가지이므로, 순열 목록에 정확히 <i>r</i>!번 나타납니다. 그래서 <sub><i>n</i></sub>P<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>r</i></sub> × <i>r</i>!이고 <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i></sub>P<sub><i>r</i></sub>/<i>r</i>! = <i>n</i>!/(<i>r</i>!(<i>n</i> − <i>r</i>)!) (단, 0 ≤ <i>r</i> ≤ <i>n</i>)입니다. 0! = 1로 정했으므로 <sub><i>n</i></sub>C<sub>0</sub> = <sub><i>n</i></sub>C<sub><i>n</i></sub> = 1입니다.</li>
+            <li><span class="tag">연결</span>식 <sub><i>n</i></sub>P<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>r</i></sub> × <i>r</i>!은 곱의 법칙 그대로입니다. 순서대로 세우는 일은 '누구를 뽑을지 정하기'(<sub><i>n</i></sub>C<sub><i>r</i></sub>가지)와 '뽑은 사람을 줄 세우기'(<i>r</i>!가지)를 잇달아 하는 일이기 때문입니다.</li>
+            <li><span class="tag">적용</span><i>n</i> = 5, <i>r</i> = 3에서 ACE 칸을 누르면 같은 세 사람으로 된 칸이 모두 표시됩니다. 몇 칸인가요? '같은 모임끼리 묶기'를 눌러 묶음이 몇 개 생기는지 세고 <sub>5</sub>P<sub>3</sub> ÷ 3!과 비교하세요. <i>r</i>를 바꾸어도 묶음 하나의 크기가 늘 <i>r</i>!인지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>대표 3명을 뽑는 것과 회장·부회장·총무를 뽑는 것은 다릅니다. 역할이 정해지면 순서가 생기므로 순열입니다. 뽑힌 것끼리 자리를 바꾸어도 같은 결과인지 물어보면 순열과 조합을 가를 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q">8명 가운데 청소 당번 3명을 뽑는 방법은 몇 가지일까요? (당번끼리는 역할 구분이 없습니다.)</p>
+          <ol>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>336가지<span class="why"><b>순서를 따졌습니다.</b> <sub>8</sub>P<sub>3</sub> = 336은 같은 세 사람을 뽑은 순서에 따라 3! = 6번씩 센 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>56가지<span class="why"><b>맞습니다.</b> <sub>8</sub>C<sub>3</sub> = <sub>8</sub>P<sub>3</sub>/3! = 336/6 = 56입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>512가지<span class="why"><b>같은 사람을 다시 뽑았습니다.</b> 8<sup>3</sup>은 한 사람이 여러 번 뽑혀도 되고 순서도 따질 때의 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>112가지<span class="why"><b>3!이 아니라 3으로 나누었습니다.</b> 세 사람을 줄 세우는 방법은 3가지가 아니라 3 × 2 × 1 = 6가지입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card" id="card-cm1-comb-bars">
+        <header class="card-head">
+          <span class="no">3.3.2</span><h2>뽑는 수 r가 바뀌면 조합의 수는 어떻게 변할까?</h2><span class="kind">조합 · 대칭과 나누어 세기</span>
+        </header>
+        <div class="card-body">
+          <div class="card-fig">
+            <canvas class="cv-wide" aria-label="r = 0부터 n까지 조합의 수 nCr을 막대로 나타낸 그래프. 고른 r와 n − r의 막대를 강조하고, 특정한 한 사람 A를 넣는 경우와 빼는 경우로 막대를 나눌 수 있다"></canvas>
+            <div class="ctl">
+              <div class="presets">
+                <button class="chip go-split" type="button" aria-pressed="false">A를 넣느냐 빼느냐로 나누기</button>
+              </div>
+              <div class="ctl-row">
+                <div><label class="mono">사람 수 <i>n</i> = <output class="n-out">6</output></label>
+                <input class="n" type="range" min="1" max="10" step="1" value="6" aria-label="사람 수 n"></div>
+                <div><label class="mono">뽑는 수 <i>r</i> = <output class="r-out">2</output></label>
+                <input class="r" type="range" min="0" max="6" step="1" value="2" aria-label="뽑는 수 r"></div>
+              </div>
+              <dl class="nums">
+                <div><dt class="d-a">nCr</dt><dd class="n-a">—</dd></div>
+                <div><dt class="d-b">nCn−r</dt><dd class="n-b">—</dd></div>
+                <div><dt>막대 높이의 합</dt><dd class="n-s">—</dd></div>
+              </dl>
+              <p class="msg">—</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li><span class="tag">질문</span>10명 가운데 2명을 뽑는 방법과 8명을 뽑는 방법은 어느 쪽이 더 많을까요? 많이 뽑을수록 방법도 많아질까요?</li>
+            <li><span class="tag">복원</span><sub><i>n</i></sub>C<sub><i>r</i></sub> = <i>n</i>!/(<i>r</i>!(<i>n</i> − <i>r</i>)!)이고, 서로 겹치지 않는 경우로 나누어 세면 합의 법칙으로 더할 수 있습니다.</li>
+            <li><span class="tag">설명</span>① <i>r</i>명을 뽑는 일은 뽑히지 않을 <i>n</i> − <i>r</i>명을 정하는 일과 같습니다. 그래서 <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>n</i>−<i>r</i></sub>입니다. 공식에서도 <i>r</i>!과 (<i>n</i> − <i>r</i>)!이 자리만 바꿉니다. ② 특정한 한 사람 A를 기준으로 나누면, A가 뽑히는 경우는 나머지 <i>n</i> − 1명에서 <i>r</i> − 1명을 더 뽑는 <sub><i>n</i>−1</sub>C<sub><i>r</i>−1</sub>가지이고, A가 빠지는 경우는 <sub><i>n</i>−1</sub>C<sub><i>r</i></sub>가지입니다. 두 경우는 겹치지 않으므로 <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i>−1</sub>C<sub><i>r</i>−1</sub> + <sub><i>n</i>−1</sub>C<sub><i>r</i></sub> (1 ≤ <i>r</i> ≤ <i>n</i> − 1)입니다. ③ 막대를 모두 더하면 몇 명을 뽑든 상관없이 뽑는 방법 전체입니다. 사람마다 '뽑힘'과 '빠짐' 2가지를 고르므로 곱의 법칙에 따라 2<sup><i>n</i></sup>입니다.</li>
+            <li><span class="tag">연결</span>②의 관계로 수를 한 줄씩 쌓은 표가 파스칼의 삼각형입니다. 이 수들은 다음 과목에서 (<i>a</i> + <i>b</i>)<sup><i>n</i></sup>을 전개할 때 계수(이항정리)로 다시 나옵니다.</li>
+            <li><span class="tag">적용</span><i>n</i>을 바꾸며 막대 모양이 좌우 대칭인지 보고, <i>r</i>와 <i>n</i> − <i>r</i>의 막대 높이를 비교하세요. 'A를 넣느냐 빼느냐로 나누기'를 켜고 두 조각의 값을 적은 뒤, <i>n</i>을 1 줄여 그 값이 어느 막대에 있는지 찾아보세요. <i>n</i>이 1 늘 때 막대 높이의 합은 어떻게 변하나요?</li>
+            <li class="warn"><span class="tag">판단</span><sub><i>n</i></sub>C<sub><i>r</i></sub>는 <i>r</i>가 <i>n</i>/2에 가까울 때 가장 큽니다. '많이 뽑을수록 방법이 많다'는 생각은 <i>r</i> ≤ <i>n</i>/2인 범위에서만 맞습니다. <sub><i>n</i></sub>C<sub><i>r</i></sub> = <sub><i>n</i></sub>C<sub><i>n</i>−<i>r</i></sub>를 쓰면 <sub>20</sub>C<sub>18</sub> 같은 계산을 <sub>20</sub>C<sub>2</sub> = 190으로 줄일 수 있습니다.</li>
+          </ol>
+        </div>
+        <div class="quiz">
+          <h3><span class="mono">확인</span>조건이 달라지면</h3>
+          <p class="q"><sub>15</sub>C<sub>13</sub>의 값은?</p>
+          <ol>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>105<span class="why"><b>맞습니다.</b> <sub>15</sub>C<sub>13</sub> = <sub>15</sub>C<sub>2</sub> = (15 × 14)/2 = 105입니다. 13명을 뽑는 것은 남길 2명을 고르는 것과 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>210<span class="why"><b>2!로 나누지 않았습니다.</b> 15 × 14 = 210은 <sub>15</sub>P<sub>2</sub>, 곧 남길 2명에 순서를 붙인 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>455<span class="why"><b>15 − 13을 잘못 계산했습니다.</b> 455는 <sub>15</sub>C<sub>3</sub>입니다. <i>n</i> − <i>r</i> = 15 − 13 = 2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b><sub><i>n</i></sub>C<sub><i>n</i></sub>과 헷갈렸습니다.</b> 값이 1인 것은 전원을 뽑는 <sub>15</sub>C<sub>15</sub>와 아무도 뽑지 않는 <sub>15</sub>C<sub>0</sub>입니다.</span></span></button></li>
+          </ol>
+        </div>
+      </article>
+
+      <a class="px-go" href="../../practice.html?sec=cm1-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+
+      <nav class="next" aria-label="절 이동"></nav>
+    </div>
+  </div>
+</main>
+
+<script src="../../js/toc.js"></script>
+<script src="../../js/core.js"></script>
+<script src="../../js/store.js"></script>
+<script src="../../js/notes.js"></script>
+<script src="../../js/cards/cm1/comb-group.js"></script>
+<script src="../../js/cards/cm1/comb-bars.js"></script>
+</body>
+</html>
