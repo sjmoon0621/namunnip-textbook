@@ -13,7 +13,15 @@
     where[it.id] = { c, ch, s, it, order: order++ };
     if (it.kind !== "video") total++;
   }))));
-  const link = (id) => { const w = where[id]; return w ? `c/${w.c.id}/${w.ch.n}-${w.s.n}.html#${id}` : null; };
+  // 연습문제(기출) 기록은 블록이 아니라 문항 id(ex-…)로 저장되고, 기록의 extra.sec("phy-1-2")로 그 절에 묶는다
+  const secAt = {};
+  TOC.forEach((c) => c.chapters.forEach((ch) => ch.sections.forEach((s) => { secAt[`${c.id}-${ch.n}-${s.n}`] = { c, ch, s }; })));
+  const exOf = (id) => (S.get(id)?.quiz || []).find((r) => r && r.extra)?.extra;
+  Object.keys(S.all().blocks).forEach((id) => {
+    const x = !where[id] && exOf(id), at = x && secAt[x.sec];
+    if (at) where[id] = { ...at, it: { id, title: x.src, kind: "exam" }, order: order++, ex: x };
+  });
+  const link = (id) => { const w = where[id]; return !w ? null : w.ex ? w.ex.href : `c/${w.c.id}/${w.ch.n}-${w.s.n}.html#${id}`; };
   const date = (t) => t ? new Date(t).toLocaleDateString("ko-KR", { month: "short", day: "numeric" }) : "";
 
   // 기록이 있는 블록을 과목·절 순서로 묶는다
@@ -66,7 +74,7 @@
     document.getElementById("v-wrong").innerHTML = bar + (gs.length ? gs.map((g) => groupHead(g) + g.ids.map((id) =>
       (S.get(id).quiz || []).map((r, qi) => isWrong(r) ? `
         <article class="nb-item nb-wrong${r.resolved ? " done" : ""}">${title(id)}<span class="mono nb-date">${date(r.at)} · ${r.tries}번 시도${r.ok ? " · 결국 맞힘" : ""}</span>
-          <p class="nb-q">${esc(r.q)}</p>
+          <p class="nb-q">${esc(r.q)}</p>${r.extra && r.extra.img ? `<img class="nb-exam" src="${esc(r.extra.img)}" alt="${esc(r.extra.src)} 문항" loading="lazy">` : ""}
           <ul class="nb-chosen">${r.wrong.map((w) => `<li><span class="mono">내가 고른 답</span><b>${esc(w.t)}</b><span class="why-t">${esc(w.why)}</span></li>`).join("")}</ul>
           <details><summary>정답 보기</summary><p><b>${esc(r.answer)}</b> — ${esc(r.why)}</p></details>
           <div class="nb-actions"><a href="${link(id) || "#"}">다시 풀어 보기</a>
@@ -79,7 +87,7 @@
 
   function renderStats() {
     const bs = Object.values(S.all().blocks);
-    const seen = Object.entries(S.all().blocks).filter(([id, b]) => b.seen && where[id] && where[id].it.kind !== "video").length;
+    const seen = Object.entries(S.all().blocks).filter(([id, b]) => b.seen && where[id] && !["video", "exam"].includes(where[id].it.kind)).length;
     const qs = bs.flatMap((b) => (b.quiz || []).filter(Boolean));
     const first = qs.filter((r) => r.firstOk).length;
     document.getElementById("nb-stats").innerHTML = `

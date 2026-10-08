@@ -45,12 +45,22 @@ def load_blocks():
     return blocks
 
 
+# 다크 모드: 첫 그리기 전에 <html data-theme>을 정한다. ?theme=dark|light(저장 안 함) > 저장값 > 운영체제 설정.
+# 손으로 쓴 페이지(index·graph·notes·c/*/index.html)에도 같은 줄이 있다. 고치면 함께 고칠 것.
+THEME_SCRIPT = '''  <script>(function(){var d=document.documentElement,q=/[?&]theme=(dark|light)\\b/.exec(location.search),t=q&&q[1];if(!t)try{t=localStorage.getItem("namunnip-theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.dataset.theme=t;if(t==="dark")document.querySelector('meta[name="theme-color"]').content="#17181a"})()</script>'''
+# 상단바 .top-right 끝의 다크 모드 버튼 (js/core.js가 누름을 잇는다)
+THEME_BTN = ('<button type="button" class="theme-btn" aria-label="다크 모드" aria-pressed="false" title="다크 모드 켜고 끄기">'
+             '<svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>'
+             '<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>')
+
+
 def pwa_head(p):
-    """모든 페이지 <head>에 들어가는 아이콘·글꼴·앱 설치(PWA) 태그. p는 최상위까지의 상대 경로('', '../../')."""
+    """모든 페이지 <head>에 들어가는 아이콘·글꼴·앱 설치(PWA)·다크 모드 태그. p는 최상위까지의 상대 경로('', '../../')."""
     return f'''  <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="{p}manifest.webmanifest">
   <meta name="theme-color" content="#f3f4ef">
+{THEME_SCRIPT}
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="{p}css/fonts.css">'''
 
@@ -80,6 +90,19 @@ def build_sw():
 def indent(text, n):
     pad = " " * n
     return "\n".join(pad + l if l.strip() else "" for l in text.split("\n"))
+
+
+EXAM_INDEX = ROOT / "exams" / "index.json"   # {"<과목>-<대단원>-<절>": 문항 수} — 기출 처리 도구가 만든다
+_exam_counts = None
+
+
+def exam_count(course, ch, sec):
+    """절 끝 연습문제 버튼에 적을 문항 수 문구."""
+    global _exam_counts
+    if _exam_counts is None:
+        _exam_counts = json.loads(EXAM_INDEX.read_text()) if EXAM_INDEX.exists() else {}
+    n = _exam_counts.get(f'{course["id"]}-{ch["n"]}-{sec["n"]}', 0)
+    return f"{n}문항" if n else "준비 중"
 
 
 def page_html(course, ch, sec, blocks):
@@ -122,7 +145,7 @@ def page_html(course, ch, sec, blocks):
 <header class="top">
   <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
   <nav class="crumbs" aria-label="위치"></nav>
-  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a></div>
+  <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a>{THEME_BTN}</div>
 </header>
 
 <main class="wrap">
@@ -143,6 +166,8 @@ def page_html(course, ch, sec, blocks):
 
     <div>
 {(chr(10) + chr(10)).join(bodies)}
+
+      <a class="px-go" href="../../practice.html?sec={course["id"]}-{ch["n"]}-{sec["n"]}"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">{exam_count(course, ch, sec)}</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>

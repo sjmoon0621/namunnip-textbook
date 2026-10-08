@@ -49,6 +49,7 @@ window.NMStore = (() => {
       const b = block(id); b.quiz ||= [];
       const r = (b.quiz[qi] ||= { tries: 0, wrong: [] });
       r.q = info.q; r.answer = info.answer; r.why = info.why; r.at = Date.now();
+      if (info.extra) r.extra = info.extra;   // 연습문제(기출): { src, sec, img, href }
       if (r.tries === 0) r.firstOk = info.ok;
       r.tries++;
       if (info.ok) r.ok = true;
