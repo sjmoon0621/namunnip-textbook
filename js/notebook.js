@@ -74,7 +74,7 @@
     document.getElementById("v-wrong").innerHTML = bar + (gs.length ? gs.map((g) => groupHead(g) + g.ids.map((id) =>
       (S.get(id).quiz || []).map((r, qi) => isWrong(r) ? `
         <article class="nb-item nb-wrong${r.resolved ? " done" : ""}">${title(id)}<span class="mono nb-date">${date(r.at)} · ${r.tries}번 시도${r.ok ? " · 결국 맞힘" : ""}</span>
-          <p class="nb-q">${esc(r.q)}</p>${r.extra && r.extra.img ? `<img class="nb-exam" src="${esc(r.extra.img)}" alt="${esc(r.extra.src)} 문항" loading="lazy">` : ""}
+          ${r.extra ? "" : `<p class="nb-q">${esc(r.q)}</p>`}${r.extra && r.extra.img ? `<img class="nb-exam" src="${esc(r.extra.img)}" alt="${esc(r.extra.src)} 문항" loading="lazy">` : ""}
           <ul class="nb-chosen">${r.wrong.map((w) => `<li><span class="mono">내가 고른 답</span><b>${esc(w.t)}</b><span class="why-t">${esc(w.why)}</span></li>`).join("")}</ul>
           <details><summary>정답 보기</summary><p><b>${esc(r.answer)}</b> — ${esc(r.why)}</p></details>
           <div class="nb-actions"><a href="${link(id) || "#"}">다시 풀어 보기</a>

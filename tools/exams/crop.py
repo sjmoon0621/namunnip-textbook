@@ -16,8 +16,44 @@ from PIL import Image
 NUM = re.compile(r"^(\d{1,2})\.$")
 
 
+OCR_BIN = pathlib.Path("/tmp/ulw-math/ocr_lines")   # tools/exams/ocr_lines.swift 를 swiftc 로 빌드한 것
+OCR_DPI = 150
+
+
+def ocr_pages(pdf):
+    """글자층이 없는 스캔 시험지: 쪽을 렌더해 macOS Vision 으로 줄을 읽고 pdftotext 와 같은 (x0, y0, x1, y1, 글자) 목록(pt)으로 바꾼다.
+    줄 맨 앞의 '12.' 은 따로 떼서 문항 번호 후보가 되게 한다."""
+    if not OCR_BIN.exists():
+        subprocess.run(["swiftc", "-O", "-o", str(OCR_BIN), str(pathlib.Path(__file__).with_name("ocr_lines.swift"))], check=True)
+    s = 72 / OCR_DPI
+    pages = []
+    with tempfile.TemporaryDirectory() as tmp:
+        subprocess.run(["pdftoppm", "-r", str(OCR_DPI), "-png", str(pdf), f"{tmp}/p"], check=True)
+        files = sorted(pathlib.Path(tmp).glob("p-*.png"))
+        out = subprocess.run([str(OCR_BIN), *map(str, files)], capture_output=True, text=True, check=True).stdout
+        for line in out.splitlines():
+            pg = json.loads(line)
+            ws = []
+            for ln in pg["lines"]:
+                x0, y0, x1, y1, t = ln["x0"] * s, ln["y0"] * s, ln["x1"] * s, ln["y1"] * s, ln["t"].strip()
+                m = re.match(r"^(\d{1,2})\s*\.\s*(.*)$", t)
+                if m:
+                    ws.append((x0, y0, x0 + 12, y1, m.group(1) + "."))
+                    t, x0 = m.group(2), x0 + 14
+                if t:
+                    ws.append((x0, y0, x1, y1, t))
+            pages.append({"w": pg["w"] * s, "h": pg["h"] * s, "words": ws})
+    return pages
+
+
 def words_by_page(pdf):
-    html = subprocess.run(["pdftotext", "-bbox", str(pdf), "-"], capture_output=True, text=True, check=True).stdout
+    r = subprocess.run(["pdftotext", "-bbox", str(pdf), "-"], capture_output=True, text=True)
+    if r.returncode:   # 일부 PDF에서 pdftotext가 죽는다(SIGABRT) — pdftocairo로 다시 써서 한 번 더
+        with tempfile.TemporaryDirectory() as tmp:
+            fixed = pathlib.Path(tmp) / "fixed.pdf"
+            subprocess.run(["pdftocairo", "-pdf", str(pdf), str(fixed)], capture_output=True, check=True)
+            r = subprocess.run(["pdftotext", "-bbox", str(fixed), "-"], capture_output=True, text=True, check=True)
+    html = r.stdout
     pages = []
     for pm in re.finditer(r'<page width="([\d.]+)" height="([\d.]+)">(.*?)</page>', html, re.S):
         ws = [(float(a), float(b), float(c), float(d), unescape(t)) for a, b, c, d, t in
@@ -50,6 +86,9 @@ def find_markers(pages):
     for i, c in enumerate(cands):
         if c["no"] == want:
             out.append({**c, "part": part}); want += 1
+        elif c["no"] == want + 1 and not any(d["no"] == want for d in cands[i:]):
+            # 글자 인식(OCR)이 번호 하나를 놓친 경우: 그 문항만 빠지고 뒤 문항은 살린다
+            out.append({**c, "part": part}); want = c["no"] + 1
         elif c["no"] < want and not any(d["no"] == want for d in cands[i:]) \
                 and any(d["no"] == c["no"] + 1 for d in cands[i + 1:]):
             if restart is None and c["no"] > 1:
@@ -84,7 +123,9 @@ def trim_bottom(img, pad=10):
     """아래쪽의 흰 줄(그림 아래 여백, 단 끝 빈칸)을 잘라 낸다."""
     px = img.load()
     w, h = img.size
-    ink = [y for y in range(h) if any(px[x, y] < 200 for x in range(0, w, 2))]
+    # 단 구분선처럼 위에서 아래로 이어지는 세로줄은 빈 줄 판정에서 뺀다(그렇지 않으면 끝까지 잌크가 있는 것으로 보인다)
+    cols = [x for x in range(0, w, 2) if sum(px[x, y] < 200 for y in range(0, h, 4)) < 0.6 * (h / 4)]
+    ink = [y for y in range(h) if any(px[x, y] < 200 for x in cols)]
     if not ink:
         return img
     # 맨 아래 잇크가 큰 빈칸 뒤의 얇은 가로줄(다음 상자의 윗변)이면 버린다
@@ -107,8 +148,14 @@ def main():
         i = args.index("--dpi"); dpi = int(args[i + 1]); del args[i:i + 2]
     pdf, out = pathlib.Path(args[0]), pathlib.Path(args[1])
     out.mkdir(parents=True, exist_ok=True)
-    pages = words_by_page(pdf)
-    marks = find_markers(pages)
+    try:
+        pages = words_by_page(pdf)
+        marks = find_markers(pages)
+    except subprocess.CalledProcessError:
+        marks = []
+    if not marks:
+        pages = ocr_pages(pdf)
+        marks = find_markers(pages)
     if not marks:
         raise SystemExit(f"문항 번호를 찾지 못함: {pdf}")
     items, cache = [], {}
@@ -121,10 +168,12 @@ def main():
             x1 = mid - 4 if mk["col"] == 0 else p["w"] - 20
             x0 = min(x0, mk["x"] - 8)
             y0 = mk["y"] - 6
-            foot = [w for w in p["words"] if w[1] > p["h"] * 0.9 and re.fullmatch(r"\d+|수학|영역", w[4])]
+            foot = [w for w in p["words"] if w[1] > p["h"] * 0.9 and w[1] > mk["y"] + 20 and re.fullmatch(r"\d+|수학|영역", w[4])]
             notice = [w for w in p["words"] if w[4] == "확인" and w[1] > mk["y"] and (w[0] < mid) == (mk["col"] == 0)]
             bottom = min([w[1] for w in foot] + [w[1] - 26 for w in notice] or [p["h"] * 0.95]) - 3
             y1 = (nxt["y"] - 6) if nxt else bottom
+            if y1 <= y0 + 10:   # 번호가 쪽 맨 아래에 걸린 경우
+                y1 = p["h"] * 0.97
             inside = [w for w in p["words"] if w[0] >= x0 - 2 and w[2] <= x1 + 2 and w[1] >= y0 and w[3] <= y1 + 2]
             inside.sort(key=lambda w: (round(w[1] / 6), w[0]))
             text = " ".join(w[4] for w in inside)

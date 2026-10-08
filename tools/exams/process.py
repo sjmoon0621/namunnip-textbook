@@ -17,11 +17,37 @@ import crop  # noqa: E402
 KIND = {"csat": "csat", "mock": "mock", "hakp": "hakp"}
 
 
-def prepare():
+def contact_sheets(work, per=6):
+    """분류 작업자가 이미지를 덜 열도록 문항 여러 개를 이름표와 함께 세로로 잇는다 → sheet-1.png, sheet-2.png …"""
+    from PIL import Image, ImageDraw
+    imgs = sorted(p for p in work.glob("*.webp"))
+    for k in range(0, len(imgs), per):
+        group = [Image.open(p).convert("L") for p in imgs[k:k + per]]
+        w = max(i.width for i in group)
+        h = sum(i.height + 34 for i in group)
+        sheet = Image.new("L", (w, h), 255)
+        d, y = ImageDraw.Draw(sheet), 0
+        for p, im in zip(imgs[k:k + per], group):
+            d.rectangle([0, y, w, y + 30], fill=0)
+            d.text((8, y + 8), f"FILE {p.name}", fill=255)
+            sheet.paste(im, (0, y + 32)); y += im.height + 34
+        sheet.save(work / f"sheet-{k // per + 1}.png")
+
+
+def group_of(subject):
+    for key, g in (("수학", "math"), ("확률", "math"), ("미적분", "math"), ("기하", "math"), ("물리", "phy"), ("화학", "chem"),
+                   ("생명", "bio"), ("지구", "earth")):
+        if key in subject:
+            return g
+    return "gosci"   # 고1 과학·통합과학
+
+
+def prepare(shard="0/1"):
+    k, n = map(int, shard.split("/"))
     man = json.loads((EX / "manifest.json").read_text())
     done = skipped = failed = 0
-    for e in man["exams"]:
-        if e.get("status") != "ok":
+    for i, e in enumerate(man["exams"]):
+        if e.get("status") != "ok" or i % n != k:
             continue
         work = EX / "work" / e["id"]
         if (work / "items.json").exists():
@@ -33,7 +59,8 @@ def prepare():
             if e.get("hsj_path") and (ROOT / e["hsj_path"]).exists():
                 subprocess.run(["pdftoppm", "-r", "110", "-f", "1", "-l", "1", "-png", "-singlefile",
                                 str(ROOT / e["hsj_path"]), str(work / "answer")], check=True)
-            (work / "task.json").write_text(json.dumps(e, ensure_ascii=False, indent=1))
+            contact_sheets(work)
+            (work / "task.json").write_text(json.dumps({**e, "group": group_of(e["subject"])}, ensure_ascii=False, indent=1))
             done += 1
         except (SystemExit, Exception) as err:   # 한 시험지가 깨져도 나머지는 계속
             failed += 1
@@ -76,4 +103,4 @@ def publish():
 
 
 if __name__ == "__main__":
-    {"prepare": prepare, "publish": publish}[sys.argv[1]]()
+    {"prepare": prepare, "publish": publish}[sys.argv[1]](*sys.argv[2:3])
