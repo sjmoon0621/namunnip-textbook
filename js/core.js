@@ -138,7 +138,7 @@ window.NM = (() => {
           (/\d/.test(s.code) ? `<span class="tag-pill">[${s.code}]</span>` : "") +
           `<span class="tag-pill">${[nc && `카드 ${nc}장`, nt && `읽기 ${nt}편`, nv && `영상 ${nv}편`].filter(Boolean).join(" · ")}</span>`;
       }
-      document.title = `${ch.n}.${s.n} ${s.title} — ${course.name} · 나뭇잎 과학 교과서`;
+      document.title = `${ch.n}.${s.n} ${s.title} — ${course.name} · 나뭇잎 디지털 교과서`;
       const nav = document.querySelector("nav.next");
       if (nav) {
         const link = (x, dir) => {

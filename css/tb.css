@@ -554,17 +554,32 @@ a.nb-title:hover { text-decoration: underline; }
 .tree-col { position: relative; display: flex; flex-direction: column; gap: 10px; }
 .tree-col::before { content: ""; position: absolute; left: 50%; top: -14px; bottom: -14px; width: 2px; background: var(--tc); opacity: .35; z-index: 0; }
 .tree-col h3 { position: relative; margin: 0; padding: 4px 0; text-align: center; font-size: 15px; font-weight: 800; color: var(--tc); background: var(--paper); }
-.tbox { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1px; padding: 9px 12px 12px; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--tc); text-decoration: none; color: var(--ink); overflow: hidden; }
-.tbox:hover { border-color: var(--tc); }
-.tbox .lv { font-size: 11px; color: var(--ink-3); }
+.tbox { --tint: 5%; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1px; padding: 10px 12px 11px; background: var(--card); background: color-mix(in srgb, var(--tc) var(--tint), var(--card)); border: 1px solid var(--rule); text-decoration: none; color: var(--ink); }
+.tbox:hover { border-color: color-mix(in srgb, var(--tc) 55%, var(--rule)); }
+.tbox .lv { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-3); }
+.tbox .lv::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--tc); }
 .tbox b { font-size: 15px; letter-spacing: -.02em; line-height: 1.35; }
 .tbox .pg { font-size: 11.5px; color: var(--ink-2); }
-.tbox .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--rule); }
-.tbox .bar::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--p) * 100%); background: var(--tc); }
-.tbox.soon { background: var(--paper); border-style: dashed; border-left-style: solid; }
+.tbox.soon { background: var(--paper); border-style: dashed; }
+
+/* 메인: 과학/수학 분야 탭 — 고른 분야만 체계도·과목 목록에 남긴다(home.js가 body[data-domain]을 정한다) */
+.dom-tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--ink); }
+.dom-tabs button { font: inherit; font-size: 16px; font-weight: 700; letter-spacing: -.01em; padding: 10px 26px; margin-bottom: -2px; color: var(--ink-3); background: none; border: 1px solid transparent; border-bottom: 0; cursor: pointer; }
+.dom-tabs button:hover { color: var(--ink); }
+.dom-tabs button[aria-selected="true"] { color: var(--ink); background: var(--card); border-color: var(--ink); border-bottom: 2px solid var(--card); }
+.dom-tabs button:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+.dom-tabs + .tree { border-top: 0; }
+body[data-domain="sci"] .tree [data-track="math"],
+body[data-domain="math"] .tree-band:not([data-track="math"]),
+body[data-domain="math"] .tree-cols,
+body[data-domain="math"] .tree-head p,
+body[data-domain="math"] #chips .chip,
+body[data-domain="math"] .tree-band .band-lb { display: none; }
+body[data-domain="math"] .tree-band { grid-template-columns: 1fr; }
 .tbox.soon b { color: var(--ink-2); }
 .tbox.soon .pg { color: var(--ink-3); }
 @media (max-width: 640px) {
+  .dom-tabs button { flex: 1; padding: 10px 0; }
   .tree-cols { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
   .tree-band { grid-template-columns: 1fr; gap: 6px; }
   .tree-band > div { grid-template-columns: repeat(2, 1fr); }
@@ -651,6 +666,7 @@ a.nb-title:hover { text-decoration: underline; }
 [data-theme="dark"] .tree [data-track="earth"] { --tc: #c4a172; }
 [data-theme="dark"] .tree [data-track="fusion"] { --tc: #e083a6; }
 [data-theme="dark"] .tree [data-track="math"] { --tc: #e0aa3e; }
+[data-theme="dark"] .tbox { --tint: 9%; }
 
 /* 카드 그림: 카드 스크립트는 밝은 종이 색으로 그리므로 밝기만 뒤집고 색상은 되돌린다.
    사진(img), 개념 지도(#gv-canvas), 영상(.video-block — 이미 어두운 화면으로 그린다)은 그대로. */

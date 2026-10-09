@@ -135,7 +135,7 @@ def page_html(course, ch, sec, blocks):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{H.escape(sec["title"], quote=False)} — 나뭇잎 과학 교과서</title>
+  <title>{H.escape(sec["title"], quote=False)} — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="{H.escape(desc)}">
 {pwa_head("../../")}
   <link rel="stylesheet" href="../../css/tb.css">
@@ -143,7 +143,7 @@ def page_html(course, ch, sec, blocks):
 <body data-course="{course["id"]}" data-sec="{ch["n"]}-{sec["n"]}">
 
 <header class="top">
-  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 과학 교과서</a>
+  <a class="brand" href="../../"><svg class="brand-mark"><use href="#nm"/></svg>나뭇잎 디지털 교과서</a>
   <nav class="crumbs" aria-label="위치"></nav>
   <div class="top-right"><a href="../../graph.html">개념 지도</a><a href="../../notes.html">내 노트</a><a href="./">← 과목 목차</a>{THEME_BTN}</div>
 </header>

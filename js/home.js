@@ -24,11 +24,10 @@
     const LV = { 공통: "공통", 일반: "일반선택", 진로: "진로선택", 고급: "과학계열 진로", 실험: "과학계열 융합", 융합: "융합선택" };
     const RANK = ["공통", "일반", "진로", "고급", "실험", "융합"];
     const box = (c) => {
-      const n = count(c), p = n.sec ? n.open / n.sec : 0;
+      const n = count(c);
       return `<a class="tbox${n.open ? "" : " soon"}" href="${base}${c.id}/" data-track="${c.track}">
         <span class="lv mono">${LV[c.level]}</span><b>${esc(c.name)}</b>
-        <span class="pg mono">${n.open ? `절 ${n.open}/${n.sec}` : `준비 중 · 절 ${n.sec}`}</span>
-        <i class="bar" style="--p:${p.toFixed(3)}"></i></a>`;
+        <span class="pg mono">${n.open ? `절 ${n.open}/${n.sec}` : `준비 중 · 절 ${n.sec}`}</span></a>`;
     };
     const pick = (f) => TOC.filter(f).sort((a, b) => RANK.indexOf(a.level) - RANK.indexOf(b.level));
     const tree = document.getElementById("tree");
@@ -69,10 +68,15 @@
     }).join("");
 
     const chips = document.getElementById("chips");
+    /* 분야 탭(과학/수학): 체계도·과목 목록·칩을 그 분야만 보인다. 마지막 탭은 localStorage에 둔다(?tab=은 스크린샷용) */
+    const domainOf = (track) => (track === "math" ? "math" : "sci");
+    const TAB_KEY = "namunnip-home-tab";
     chips.innerHTML = `<button class="chip" data-course="all" aria-pressed="true">전체</button>` +
-      [...TRACKS, ["common", "공통"], ["fusion", "융합"], ["math", "수학"]].map(([t, nm]) => `<button class="chip" data-course="${t}" aria-pressed="false">${nm}</button>`).join("");
+      [...TRACKS, ["common", "공통"], ["fusion", "융합"]].map(([t, nm]) => `<button class="chip" data-course="${t}" aria-pressed="false">${nm}</button>`).join("");
     const q = document.getElementById("q"), empty = document.getElementById("empty");
-    let course = "all";
+    const tabs = document.getElementById("dom-tabs");
+    const HINT = { sci: "절·카드 찾기 — 예: 중력, 스펙트럼, pH", math: "절·카드 찾기 — 예: 이차방정식, 미분, 확률" };
+    let course = "all", domain = "sci";
     function apply() {
       const term = q.value.trim().toLowerCase();
       document.body.classList.toggle("searching", !!term);
@@ -88,7 +92,7 @@
           });
           ch.hidden = !chAny; if (chAny) any = true;
         });
-        sec.hidden = !(any && (course === "all" || sec.dataset.track === course));
+        sec.hidden = !(any && domainOf(sec.dataset.track) === domain && (course === "all" || sec.dataset.track === course));
         if (!sec.hidden) shown++;
       });
       empty.style.display = shown ? "none" : "block";
@@ -100,6 +104,27 @@
       apply();
     });
     q.addEventListener("input", apply);
+    function setDomain(d, save) {
+      domain = d === "math" ? "math" : "sci";
+      document.body.dataset.domain = domain;
+      tabs.querySelectorAll("[role=tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.domain === domain)));
+      if (domain === "math" && course !== "all") {
+        course = "all";
+        chips.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.course === "all")));
+      }
+      q.placeholder = HINT[domain];
+      if (save) try { localStorage.setItem(TAB_KEY, domain); } catch (e) { console.warn("탭을 저장하지 못함", e); }
+      apply();
+    }
+    tabs.addEventListener("click", (e) => { const b = e.target.closest("[role=tab]"); if (b) setDomain(b.dataset.domain, true); });
+    tabs.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      setDomain(domain === "sci" ? "math" : "sci", true);
+      tabs.querySelector("[aria-selected=true]").focus();
+    });
+    let saved = new URLSearchParams(location.search).get("tab");
+    if (!saved) try { saved = localStorage.getItem(TAB_KEY); } catch (e) { saved = null; }
+    setDomain(saved, false);
     const total = TOC.reduce((a, c) => { const n = count(c); a.cards += n.cards; a.vids += n.vids; a.open += n.open; return a; }, { cards: 0, vids: 0, open: 0 });
     const stat = document.getElementById("stat");
     const live = TOC.filter((c) => c.id !== "extra" && count(c).open).length;
@@ -111,7 +136,7 @@
     const c = TOC.find((x) => x.id === document.body.dataset.course);
     if (!c) return;
     const n = count(c);
-    document.title = `${c.name} — 나뭇잎 과학 교과서`;
+    document.title = `${c.name} — 나뭇잎 디지털 교과서`;
     document.getElementById("c-meta").textContent = c.meta;
     document.getElementById("c-name").textContent = c.name;
     document.getElementById("c-stat").textContent = `대단원 ${c.chapters.length} · 절 ${n.open}/${n.sec} · 카드 ${n.cards} · 영상 ${n.vids}`;
