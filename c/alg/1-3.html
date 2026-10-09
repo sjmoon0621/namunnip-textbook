@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-exp-law-count .eq { font-size: 14px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
     #card-alg-exp-simplify canvas { width: 100%; aspect-ratio: 2 / 1; }
@@ -36,14 +37,14 @@
     <p class="lead">곱하는 수를 일일이 세던 거듭제곱은 지수끼리 더하고 곱하는 계산으로 바뀝니다. 이 절에서는 자연수 지수에서 인수를 세어 얻은 네 가지 지수법칙이 실수 지수에서도 그대로 성립하는 것을 그래프로 확인하고, 이 법칙으로 복잡한 식을 밑 하나의 거듭제곱으로 간단히 나타냅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">거듭제곱근의 성질</span><span class="p">0, 음의 정수, 유리수 지수의 뜻</span><span class="p">소인수분해</span>
+      <a class="p p-card" href="../../c/alg/1-1.html#card-alg-root-rules" title="대수 1.1 · 거듭제곱근끼리 곱하면 왜 근호 하나로 합쳐질까?">거듭제곱근의 성질</a><a class="p p-card" href="../../c/alg/1-2.html#card-alg-rational-exp" title="대수 1.2 · 8²/³은 무엇을 뜻하고, 밑은 왜 양수여야 할까?">0, 음의 정수, 유리수 지수의 뜻</a><a class="p p-card" href="../../c/cm1/3-1.html#card-cm1-divisors" title="공통수학1 3.1 · 약수의 개수는 왜 지수에 1을 더해 곱할까?">소인수분해</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-alg-exp-law-count"><span class="mono">1.3.1</span>지수법칙 — 인수 세기</a></li>
         <li><a href="#card-alg-exp-law-graph"><span class="mono">1.3.2</span>실수 지수의 지수법칙</a></li>
         <li><a href="#card-alg-exp-simplify"><span class="mono">1.3.3</span>지수법칙으로 간단히 하기</a></li>
@@ -62,43 +63,44 @@
             <canvas class="cv-wide" aria-label="거듭제곱을 이루는 인수 a와 b를 동그라미로 늘어놓은 그림"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-r="0" aria-pressed="true"><i>a</i><sup><i>m</i></sup> × <i>a</i><sup><i>n</i></sup></button>
-                <button class="chip" type="button" data-r="1"><i>a</i><sup><i>m</i></sup> ÷ <i>a</i><sup><i>n</i></sup></button>
-                <button class="chip" type="button" data-r="2">(<i>a</i><sup><i>m</i></sup>)<sup><i>n</i></sup></button>
-                <button class="chip" type="button" data-r="3">(<i>ab</i>)<sup><i>n</i></sup></button>
+                <button class="chip" type="button" data-r="0" aria-pressed="true">\(a^m \times a^n\)</button>
+                <button class="chip" type="button" data-r="1">\(a^m \div a^n\)</button>
+                <button class="chip" type="button" data-r="2">\((a^m)^n\)</button>
+                <button class="chip" type="button" data-r="3">\((ab)^n\)</button>
               </div>
-              <label class="mono"><i>m</i> = <output class="m-out">3</output></label>
+              <label class="mono">\(m\) = <output class="m-out">3</output></label>
               <input class="m" type="range" min="1" max="6" step="1" value="3" aria-label="m">
-              <label class="mono"><i>n</i> = <output class="n-out">2</output></label>
+              <label class="mono">\(n\) = <output class="n-out">2</output></label>
               <input class="n" type="range" min="1" max="5" step="1" value="2" aria-label="n">
               <p class="mono eq">—</p>
               <dl class="nums">
                 <div><dt>남은 인수의 개수</dt><dd class="n-c">—</dd></div>
-                <div><dt>법칙으로 계산 (<i>a</i> = 2, <i>b</i> = 3)</dt><dd class="n-l">—</dd></div>
+                <div><dt>법칙으로 계산 (\(a = 2\), \(b = 3\))</dt><dd class="n-l">—</dd></div>
                 <div><dt>직접 계산</dt><dd class="n-d">—</dd></div>
               </dl>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>2<sup>3</sup> × 2<sup>4</sup>을 계산할 때 8 × 16 = 128을 구한 뒤 2의 몇 제곱인지 다시 찾아야 할까요? 지수만 보고 바로 답할 수는 없을까요?</li>
-            <li><span class="tag">복원</span><i>a</i><sup><i>n</i></sup>은 <i>a</i>를 <i>n</i>번 곱한 수입니다. 곱셈은 순서를 바꾸어도, 괄호를 다시 묶어도 결과가 같습니다(교환법칙, 결합법칙).</li>
-            <li><span class="tag">설명</span>그림의 동그라미 하나가 곱해지는 인수 하나입니다. <i>a</i><sup><i>m</i></sup> × <i>a</i><sup><i>n</i></sup>은 <i>a</i>가 <i>m</i>개 뒤에 <i>n</i>개 더 붙으므로 <i>a</i><sup><i>m</i>+<i>n</i></sup>, (<i>a</i><sup><i>m</i></sup>)<sup><i>n</i></sup>은 <i>m</i>개짜리 묶음이 <i>n</i>줄이므로 <i>a</i><sup><i>mn</i></sup>, (<i>ab</i>)<sup><i>n</i></sup>은 짝 <i>ab</i>를 <i>n</i>번 곱한 것을 <i>a</i>끼리, <i>b</i>끼리 다시 모으면 <i>a</i><sup><i>n</i></sup><i>b</i><sup><i>n</i></sup>입니다. 나눗셈은 분자와 분모에서 같은 인수를 지우므로 <i>a</i><sup><i>m</i>−<i>n</i></sup>이고, 분모 쪽이 많이 남으면 음의 지수가 됩니다. 앞 절에서 지수를 넓힐 때 이 법칙이 깨지지 않도록 뜻을 정했으므로, <em><i>a</i> &gt; 0, <i>b</i> &gt; 0이고 <i>x</i>, <i>y</i>가 실수</em>일 때도 다음이 성립합니다. <i>a</i><sup><i>x</i></sup><i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>+<i>y</i></sup>, <i>a</i><sup><i>x</i></sup> ÷ <i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>−<i>y</i></sup>, (<i>a</i><sup><i>x</i></sup>)<sup><i>y</i></sup> = <i>a</i><sup><i>xy</i></sup>, (<i>ab</i>)<sup><i>x</i></sup> = <i>a</i><sup><i>x</i></sup><i>b</i><sup><i>x</i></sup>.</li>
-            <li><span class="tag">연결</span>컴퓨터의 저장 용량 2<sup>10</sup> × 2<sup>10</sup> = 2<sup>20</sup>, 과학 표기 (3 × 10<sup>8</sup>)<sup>2</sup> = 9 × 10<sup>16</sup>처럼 큰 수의 곱셈은 지수의 덧셈과 곱셈으로 바뀝니다. 이 생각을 거꾸로 쓰는 것이 로그입니다.</li>
-            <li><span class="tag">적용</span>네 법칙을 하나씩 골라 <i>m</i>, <i>n</i>을 바꾸며 동그라미 수와 지수가 늘 일치하는지 확인하세요. 나눗셈에서 <i>n</i>을 <i>m</i>보다 크게 하면 남은 인수는 어디에 있고, 지수는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span><i>a</i><sup><i>m</i></sup> + <i>a</i><sup><i>n</i></sup> = <i>a</i><sup><i>m</i>+<i>n</i></sup>, (<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = <i>a</i><sup><i>n</i></sup> + <i>b</i><sup><i>n</i></sup>은 틀린 식입니다. 지수법칙은 곱셈과 나눗셈에서만 성립합니다. 2<sup>3</sup> + 2<sup>4</sup> = 24이지만 2<sup>7</sup> = 128입니다. 또 (<i>a</i><sup><i>m</i></sup>)<sup><i>n</i></sup>과 <i>a</i><sup><i>m</i><sup><i>n</i></sup></sup>은 다릅니다. (2<sup>3</sup>)<sup>2</sup> = 64, 2<sup>9</sup> = 512입니다.</li>
+            <li><span class="tag">질문</span>\(2^3 \times 2^4\)을 계산할 때 \(8 \times 16 = 128\)을 구한 뒤 2의 몇 제곱인지 다시 찾아야 할까요? 지수만 보고 바로 답할 수는 없을까요?</li>
+            <li><span class="tag">복원</span>\(a^n\)은 \(a\)를 \(n\)번 곱한 수입니다. 곱셈은 순서를 바꾸어도, 괄호를 다시 묶어도 결과가 같습니다(교환법칙, 결합법칙).</li>
+            <li><span class="tag">설명</span>그림의 동그라미 하나가 곱해지는 인수 하나입니다. \(a^m \times a^n\)은 \(a\)가 \(m\)개 뒤에 \(n\)개 더 붙으므로 \(a^{m+n}, (a^m)^n\)은 \(m\)개짜리 묶음이 \(n\)줄이므로 \(a^{mn}, (ab)^n\)은 짝 \(ab\)를 \(n\)번 곱한 것을 \(a\)끼리, \(b\)끼리 다시 모으면 \(a^nb^n\)입니다. 나눗셈은 분자와 분모에서 같은 인수를 지우므로 \(a^{m-n}\)이고, 분모 쪽이 많이 남으면 음의 지수가 됩니다. 앞 절에서 지수를 넓힐 때 이 법칙이 깨지지 않도록 뜻을 정했으므로, <em>\(a &gt; 0\), \(b &gt; 0\)이고 \(x, y\)가 실수</em>일 때도 다음이 성립합니다. \(a^xa^y = a^{x+y}\), \(a^x \div a^y = a^{x-y}\), \((a^x)^y = a^{xy}\), \((ab)^x = a^xb^x\).</li>
+            <li><span class="tag">연결</span>컴퓨터의 저장 용량 \(2^{10} \times 2^{10} = 2^{20}\), 과학 표기 \((3 \times 10^8)^2 = 9 \times 10^{16}\)처럼 큰 수의 곱셈은 지수의 덧셈과 곱셈으로 바뀝니다. 이 생각을 거꾸로 쓰는 것이 로그입니다.</li>
+            <li><span class="tag">적용</span>네 법칙을 하나씩 골라 \(m, n\)을 바꾸며 동그라미 수와 지수가 늘 일치하는지 확인하세요. 나눗셈에서 \(n\)을 \(m\)보다 크게 하면 남은 인수는 어디에 있고, 지수는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(a^m + a^n = a^{m+n}\), \((a + b)^n = a^n + b^n\)은 틀린 식입니다. 지수법칙은 곱셈과 나눗셈에서만 성립합니다. \(2^3 + 2^4 = 24\)이지만 \(2^7 = 128\)입니다. 또 \((a^m)^n\)과 \(a^{m^n}\)은 다릅니다. \((2^3)^2 = 64\), \(2^9 = 512\)입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>a</i> &gt; 0일 때 (<i>a</i><sup>2</sup>)<sup>3</sup> × <i>a</i><sup>−4</sup> ÷ <i>a</i>를 간단히 하면?</p>
+          <p class="q">\(a &gt; 0\)일 때 \((a^2)^3 \times a^{-4} \div a\)를 간단히 하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>a</i><span class="why"><b>맞습니다.</b> 지수만 계산하면 2 × 3 − 4 − 1 = 1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>a</i><sup>0</sup> = 1<span class="why"><b>(<i>a</i><sup>2</sup>)<sup>3</sup>을 <i>a</i><sup>5</sup>로 계산했습니다.</b> 거듭제곱의 거듭제곱은 지수를 곱합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>a</i><sup>3</sup><span class="why"><b>÷ <i>a</i>를 곱셈으로 보았습니다.</b> 6 − 4 + 1 = 3입니다. <i>a</i>로 나누면 지수에서 1을 뺍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>a</i><sup>−24</sup><span class="why"><b>지수를 모두 곱했습니다.</b> 곱셈과 나눗셈으로 이어진 부분은 지수를 더하고 뺍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(a\)<span class="why"><b>맞습니다.</b> 지수만 계산하면 \(2 \times 3 - 4 - 1 = 1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(a^0 = 1\)<span class="why"><b>\((a^2)^3\)을 \(a^5\)로 계산했습니다.</b> 거듭제곱의 거듭제곱은 지수를 곱합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(a^3\)<span class="why"><b>\(\div a\)를 곱셈으로 보았습니다.</b> \(6 - 4 + 1 = 3\)입니다. \(a\)로 나누면 지수에서 1을 뺍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(a^{-24}\)<span class="why"><b>지수를 모두 곱했습니다.</b> 곱셈과 나눗셈으로 이어진 부분은 지수를 더하고 뺍니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div></nav>
 
       <article class="card" id="card-alg-exp-law-graph">
         <header class="card-head">
@@ -108,40 +110,41 @@
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="y = a의 x제곱 그래프에서 x, y, x + y에서의 높이를 막대로 보인 그림"></canvas>
             <div class="ctl">
-              <label class="mono">밑 <i>a</i> = <output class="a-out">2</output></label>
+              <label class="mono">밑 \(a\) = <output class="a-out">2</output></label>
               <input class="a" type="range" min="1.2" max="3" step="0.1" value="2" aria-label="밑 a">
-              <label class="mono">지수 <i>x</i> = <output class="x-out">0.7</output></label>
+              <label class="mono">지수 \(x\) = <output class="x-out">0.7</output></label>
               <input class="x" type="range" min="-1.5" max="2" step="0.1" value="0.7" aria-label="지수 x">
-              <label class="mono">지수 <i>y</i> = <output class="y-out">1.6</output></label>
+              <label class="mono">지수 \(y\) = <output class="y-out">1.6</output></label>
               <input class="y" type="range" min="-1.5" max="2" step="0.1" value="1.6" aria-label="지수 y">
               <dl class="nums">
-                <div><dt><i>a</i><sup><i>x</i></sup> × <i>a</i><sup><i>y</i></sup></dt><dd class="n-p">—</dd></div>
-                <div><dt><i>a</i><sup><i>x</i>+<i>y</i></sup></dt><dd class="n-s">—</dd></div>
-                <div><dt><i>a</i><sup><i>x</i></sup> + <i>a</i><sup><i>y</i></sup></dt><dd class="n-a">—</dd></div>
+                <div><dt>\(a^x \times a^y\)</dt><dd class="n-p">—</dd></div>
+                <div><dt>\(a^{x+y}\)</dt><dd class="n-s">—</dd></div>
+                <div><dt>\(a^x + a^y\)</dt><dd class="n-a">—</dd></div>
               </dl>
-              <p class="fig-note">초록 막대는 <i>a</i><sup><i>x</i></sup>, 파란 막대는 <i>a</i><sup><i>y</i></sup>, 주황 막대는 <i>a</i><sup><i>x</i>+<i>y</i></sup>의 높이입니다. 그림을 좌우로 끌면 <i>x</i>가 움직입니다.</p>
+              <p class="fig-note">초록 막대는 \(a^x\), 파란 막대는 \(a^y\), 주황 막대는 \(a^{x+y}\)의 높이입니다. 그림을 좌우로 끌면 \(x\)가 움직입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>2<sup>3</sup> × 2<sup>4</sup> = 2<sup>7</sup>은 인수를 세어 확인할 수 있습니다. 그런데 2<sup>0.7</sup> × 2<sup>1.6</sup>은 인수를 셀 수 없습니다. 이때도 2<sup>2.3</sup>이 될까요?</li>
-            <li><span class="tag">복원</span>앞 절에서 지수를 0, 음의 정수, 유리수, 실수로 넓힐 때마다 <i>a</i><sup><i>m</i></sup><i>a</i><sup><i>n</i></sup> = <i>a</i><sup><i>m</i>+<i>n</i></sup>이 깨지지 않도록 뜻을 정했습니다. 밑이 양수이면 <i>a</i><sup><i>x</i></sup>는 모든 실수 <i>x</i>에서 하나로 정해집니다.</li>
-            <li><span class="tag">설명</span>그래프 <i>y</i> = <i>a</i><sup><i>x</i></sup> 위에서 <i>x</i>와 <i>y</i>의 높이를 곱한 값은 <i>x</i> + <i>y</i>에서의 높이와 언제나 같습니다. 지수가 정수일 때는 인수를 세어 보였고, 유리수일 때는 거듭제곱근의 성질로, 실수일 때는 유리수로 감싸는 방법으로 같은 결론을 얻습니다. 그래서 <i>a</i> &gt; 0, <i>b</i> &gt; 0이고 <i>x</i>, <i>y</i>가 실수일 때 <em><i>a</i><sup><i>x</i></sup><i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>+<i>y</i></sup>, <i>a</i><sup><i>x</i></sup> ÷ <i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>−<i>y</i></sup>, (<i>a</i><sup><i>x</i></sup>)<sup><i>y</i></sup> = <i>a</i><sup><i>xy</i></sup>, (<i>ab</i>)<sup><i>x</i></sup> = <i>a</i><sup><i>x</i></sup><i>b</i><sup><i>x</i></sup></em>가 모두 성립합니다. 높이를 곱하는 일이 가로 위치를 더하는 일로 바뀐다는 점이 지수법칙의 그림입니다.</li>
-            <li><span class="tag">연결</span>세균이 하루에 2배로 늘면 0.7일 뒤에는 2<sup>0.7</sup>배, 다시 1.6일 뒤에는 그 2<sup>1.6</sup>배가 되어 합계 2<sup>2.3</sup>배입니다. 시간을 더하면 배율은 곱해집니다. 이 관계가 지수함수를 성장과 감소의 모형으로 쓰는 까닭입니다.</li>
-            <li><span class="tag">적용</span><i>x</i>, <i>y</i>를 바꾸며 처음 두 값이 늘 같은지 확인하세요. <i>x</i> = −<i>y</i>로 두면 주황 막대의 높이는 얼마인가요? <i>a</i><sup><i>x</i></sup> + <i>a</i><sup><i>y</i></sup>가 <i>a</i><sup><i>x</i>+<i>y</i></sup>와 같아지는 경우가 있는지도 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>지수법칙은 밑이 양수일 때로 약속한 것입니다. 밑이 음수이면 ((−8)<sup>2</sup>)<sup>1/6</sup> = 2인데 (−8)<sup>2 × 1/6</sup> = (−8)<sup>1/3</sup>으로 계산하면 −2가 되어 법칙이 깨집니다. 또 덧셈 <i>a</i><sup><i>x</i></sup> + <i>a</i><sup><i>y</i></sup>에는 지수법칙이 없습니다. 우연히 같아지는 값이 있더라도 법칙이 아닙니다.</li>
+            <li><span class="tag">질문</span>\(2^3 \times 2^4 = 2^7\)은 인수를 세어 확인할 수 있습니다. 그런데 \(2^{0.7} \times 2^{1.6}\)은 인수를 셀 수 없습니다. 이때도 \(2^{2.3}\)이 될까요?</li>
+            <li><span class="tag">복원</span>앞 절에서 지수를 0, 음의 정수, 유리수, 실수로 넓힐 때마다 \(a^ma^n = a^{m+n}\)이 깨지지 않도록 뜻을 정했습니다. 밑이 양수이면 \(a^x\)는 모든 실수 \(x\)에서 하나로 정해집니다.</li>
+            <li><span class="tag">설명</span>그래프 \(y = a^x\) 위에서 \(x\)와 \(y\)의 높이를 곱한 값은 \(x + y\)에서의 높이와 언제나 같습니다. 지수가 정수일 때는 인수를 세어 보였고, 유리수일 때는 거듭제곱근의 성질로, 실수일 때는 유리수로 감싸는 방법으로 같은 결론을 얻습니다. 그래서 \(a &gt; 0\), \(b &gt; 0\)이고 \(x, y\)가 실수일 때 <em>\(a^xa^y = a^{x+y}\), \(a^x \div a^y = a^{x-y}\), \((a^x)^y = a^{xy}\), \((ab)^x = a^xb^x\)</em>가 모두 성립합니다. 높이를 곱하는 일이 가로 위치를 더하는 일로 바뀐다는 점이 지수법칙의 그림입니다.</li>
+            <li><span class="tag">연결</span>세균이 하루에 2배로 늘면 0.7일 뒤에는 \(2^{0.7}\)배, 다시 1.6일 뒤에는 그 \(2^{1.6}\)배가 되어 합계 \(2^{2.3}\)배입니다. 시간을 더하면 배율은 곱해집니다. 이 관계가 지수함수를 성장과 감소의 모형으로 쓰는 까닭입니다.</li>
+            <li><span class="tag">적용</span>\(x, y\)를 바꾸며 처음 두 값이 늘 같은지 확인하세요. \(x = -y\)로 두면 주황 막대의 높이는 얼마인가요? \(a^x + a^y\)가 \(a^{x+y}\)와 같아지는 경우가 있는지도 찾아보세요.</li>
+            <li class="warn"><span class="tag">판단</span>지수법칙은 밑이 양수일 때로 약속한 것입니다. 밑이 음수이면 \(((-8)^2)^{1/6} = 2\)인데 \((-8)^{2 \times 1/6} = (-8)^{1/3}\)으로 계산하면 \(-2\)가 되어 법칙이 깨집니다. 또 덧셈 \(a^x + a^y\)에는 지수법칙이 없습니다. 우연히 같아지는 값이 있더라도 법칙이 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">3<sup>√2</sup> × 3<sup>2 − √2</sup>의 값은?</p>
+          <p class="q">\(3^{\sqrt{2}} \times 3^{2 - \sqrt{2}}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>9<span class="why"><b>맞습니다.</b> 지수가 무리수여도 지수법칙이 성립하므로 3<sup>√2 + 2 − √2</sup> = 3<sup>2</sup> = 9입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3<sup>2√2 − 2</sup><span class="why"><b>지수를 곱했습니다.</b> √2 × (2 − √2) = 2√2 − 2입니다. 곱셈에서는 지수를 더합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>9<span class="why"><b>맞습니다.</b> 지수가 무리수여도 지수법칙이 성립하므로 \(3^{\sqrt{2} + 2 - \sqrt{2}} = 3^2 = 9\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(3^{2\sqrt{2} - 2}\)<span class="why"><b>지수를 곱했습니다.</b> \(\sqrt{2} \times (2 - \sqrt{2}) = 2\sqrt{2} - 2\)입니다. 곱셈에서는 지수를 더합니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>무리수 지수라서 값을 구할 수 없다.<span class="why"><b>지수법칙이 실수에서도 성립한다는 점을 놓쳤습니다.</b> 무리수끼리 지워져 정수 지수가 남습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>지수를 밑에 곱했습니다.</b> 3 × 2 = 6은 3<sup>2</sup>이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>지수를 밑에 곱했습니다.</b> \(3 \times 2 = 6\)은 \(3^2\)이 아닙니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div></nav>
 
       <article class="card" id="card-alg-exp-simplify">
         <header class="card-head">
@@ -152,9 +155,9 @@
             <canvas aria-label="밑 2와 밑 3의 지수를 수직선 위의 화살표로 더해 가는 지수 장부"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-e="0" aria-pressed="true">4<sup>3/2</sup> × 8<sup>−1/3</sup> ÷ √2</button>
-                <button class="chip" type="button" data-e="1">(27<sup>2/3</sup>)<sup>1/2</sup> × 9<sup>−1/4</sup></button>
-                <button class="chip" type="button" data-e="2">√6 × √12</button>
+                <button class="chip" type="button" data-e="0" aria-pressed="true">\(4^{3/2} \times 8^{-1/3} \div \sqrt{2}\)</button>
+                <button class="chip" type="button" data-e="1">\((27^{2/3})^{1/2} \times 9^{-1/4}\)</button>
+                <button class="chip" type="button" data-e="2">\(\sqrt{6} \times \sqrt{12}\)</button>
               </div>
               <div class="presets">
                 <button class="chip go-next" type="button">다음 단계</button>
@@ -170,25 +173,26 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>4<sup>3/2</sup> × 8<sup>−1/3</sup> ÷ √2는 밑도 지수도 제각각입니다. 계산기 없이 정리할 수 있을까요?</li>
-            <li><span class="tag">복원</span>밑이 양수이고 지수가 실수일 때 <i>a</i><sup><i>x</i></sup><i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>+<i>y</i></sup>, <i>a</i><sup><i>x</i></sup> ÷ <i>a</i><sup><i>y</i></sup> = <i>a</i><sup><i>x</i>−<i>y</i></sup>, (<i>a</i><sup><i>x</i></sup>)<sup><i>y</i></sup> = <i>a</i><sup><i>xy</i></sup>, (<i>ab</i>)<sup><i>x</i></sup> = <i>a</i><sup><i>x</i></sup><i>b</i><sup><i>x</i></sup>입니다. 거듭제곱근은 <sup><i>n</i></sup>√<i>a</i> = <i>a</i><sup>1/<i>n</i></sup>입니다.</li>
-            <li><span class="tag">설명</span>정리하는 순서는 늘 같습니다. 첫째, 근호를 유리수 지수로 바꿉니다. 둘째, 밑을 소인수의 거듭제곱으로 바꿉니다(4 = 2<sup>2</sup>, 8 = 2<sup>3</sup>, 27 = 3<sup>3</sup>). 셋째, (<i>a</i><sup><i>x</i></sup>)<sup><i>y</i></sup> = <i>a</i><sup><i>xy</i></sup>로 지수를 곱하고, (<i>ab</i>)<sup><i>x</i></sup> = <i>a</i><sup><i>x</i></sup><i>b</i><sup><i>x</i></sup>로 밑을 나눕니다. 넷째, 같은 밑끼리 곱셈은 지수를 더하고 나눗셈은 지수를 뺍니다. 그림의 수직선은 밑마다 지수를 적어 두는 장부입니다. 곱하면 오른쪽, 나누면 왼쪽으로 화살표가 이어지고, 마지막 위치가 답의 지수입니다.</li>
-            <li><span class="tag">연결</span>이 방법은 단위 환산(1 km<sup>2</sup> = (10<sup>3</sup> m)<sup>2</sup> = 10<sup>6</sup> m<sup>2</sup>)이나 과학 표기 계산에서 그대로 쓰입니다. 밑을 하나로 맞추는 생각은 지수방정식을 풀 때도 첫 단계가 됩니다.</li>
+            <li><span class="tag">질문</span>\(4^{3/2} \times 8^{-1/3} \div \sqrt{2}\)는 밑도 지수도 제각각입니다. 계산기 없이 정리할 수 있을까요?</li>
+            <li><span class="tag">복원</span>밑이 양수이고 지수가 실수일 때 \(a^xa^y = a^{x+y}\), \(a^x \div a^y = a^{x-y}\), \((a^x)^y = a^{xy}\), \((ab)^x = a^xb^x\)입니다. 거듭제곱근은 \(\sqrt[n]{a} = a^{1/n}\)입니다.</li>
+            <li><span class="tag">설명</span>정리하는 순서는 늘 같습니다. 첫째, 근호를 유리수 지수로 바꿉니다. 둘째, 밑을 소인수의 거듭제곱으로 바꿉니다(\(4 = 2^2\), \(8 = 2^3\), \(27 = 3^3\)). 셋째, \((a^x)^y = a^{xy}\)로 지수를 곱하고, \((ab)^x = a^xb^x\)로 밑을 나눕니다. 넷째, 같은 밑끼리 곱셈은 지수를 더하고 나눗셈은 지수를 뺍니다. 그림의 수직선은 밑마다 지수를 적어 두는 장부입니다. 곱하면 오른쪽, 나누면 왼쪽으로 화살표가 이어지고, 마지막 위치가 답의 지수입니다.</li>
+            <li><span class="tag">연결</span>이 방법은 단위 환산(\(1\,\text{km}^2 = (10^3\,\text{m})^2 = 10^6\,\text{m}^2\))이나 과학 표기 계산에서 그대로 쓰입니다. 밑을 하나로 맞추는 생각은 지수방정식을 풀 때도 첫 단계가 됩니다.</li>
             <li><span class="tag">적용</span>세 식을 하나씩 골라 "다음 단계"를 누르며 화살표가 어느 쪽으로 얼마나 움직이는지 보세요. 마지막 값이 처음 식을 직접 계산한 값과 같은지 아래 수치에서 확인하세요. 세 번째 식은 왜 장부가 두 줄 필요한가요?</li>
-            <li class="warn"><span class="tag">판단</span>4<sup>3/2</sup>을 (4<sup>3</sup>)/2 = 32나 4 × 3/2 = 6으로 계산하는 실수가 흔합니다. 4<sup>3/2</sup> = (2<sup>2</sup>)<sup>3/2</sup> = 2<sup>3</sup> = 8입니다. 또 밑이 다른 거듭제곱(2<sup>3</sup> × 3<sup>2</sup>)은 지수를 더해 합칠 수 없습니다. 밑이 같아질 때까지 소인수로 나눈 뒤에만 지수를 더합니다.</li>
+            <li class="warn"><span class="tag">판단</span>\(4^{3/2}\)을 \(\frac{4^3}{2} = 32\)나 \(4 \times \frac{3}{2} = 6\)으로 계산하는 실수가 흔합니다. \(4^{3/2} = (2^2)^{3/2} = 2^3 = 8\)입니다. 또 밑이 다른 거듭제곱(\(2^3 \times 3^2\))은 지수를 더해 합칠 수 없습니다. 밑이 같아질 때까지 소인수로 나눈 뒤에만 지수를 더합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">16<sup>3/4</sup> ÷ 32<sup>2/5</sup> × <sup>3</sup>√4를 2<sup><i>k</i></sup> 꼴로 나타낼 때 <i>k</i>는?</p>
+          <p class="q">\(16^{3/4} \div 32^{2/5} \times \sqrt[3]{4}\)를 \(2^k\) 꼴로 나타낼 때 \(k\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5/3<span class="why"><b>맞습니다.</b> 16<sup>3/4</sup> = 2<sup>3</sup>, 32<sup>2/5</sup> = 2<sup>2</sup>, <sup>3</sup>√4 = 2<sup>2/3</sup>이므로 <i>k</i> = 3 − 2 + 2/3 = 5/3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>17/3<span class="why"><b>나눗셈을 곱셈으로 보았습니다.</b> 3 + 2 + 2/3입니다. ÷ 2<sup>2</sup>는 지수에서 2를 뺍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4/3<span class="why"><b><sup>3</sup>√4를 2<sup>1/3</sup>로 보았습니다.</b> 4 = 2<sup>2</sup>이므로 <sup>3</sup>√4 = 2<sup>2/3</sup>입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b><sup>3</sup>√4를 빠뜨렸습니다.</b> 2<sup>3</sup> ÷ 2<sup>2</sup>까지만 계산하면 1이지만, 마지막에 2<sup>2/3</sup>을 곱해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{5}{3}\)<span class="why"><b>맞습니다.</b> \(16^{3/4} = 2^3\), \(32^{2/5} = 2^2\), \(\sqrt[3]{4} = 2^{2/3}\)이므로 \(k = 3 - 2 + \frac{2}{3} = \frac{5}{3}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{17}{3}\)<span class="why"><b>나눗셈을 곱셈으로 보았습니다.</b> \(3 + 2 + \frac{2}{3}\)입니다. \(\div 2^2\)는 지수에서 2를 뺍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{4}{3}\)<span class="why"><b>\(\sqrt[3]{4}\)를 \(2^{1/3}\)로 보았습니다.</b> \(4 = 2^2\)이므로 \(\sqrt[3]{4} = 2^{2/3}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(\sqrt[3]{4}\)를 빠뜨렸습니다.</b> \(2^3 \div 2^2\)까지만 계산하면 1이지만, 마지막에 \(2^{2/3}\)을 곱해야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=alg-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">245문항</span></a>
 
@@ -199,8 +203,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>
 <script src="../../js/cards/alg/exp-law-count.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>

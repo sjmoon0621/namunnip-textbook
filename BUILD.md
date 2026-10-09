@@ -96,7 +96,7 @@
 - 카드 스크립트는 `(() => { const root = document.getElementById("card-…"); if (!root) return; … })();` 형태로 쓰고, 요소는 `root.querySelector`로만 찾는다.
 - 공용 도구 `window.NM`: `C`(색), `F`(글꼴), `fit(canvas, draw)`(DPR 맞춤, 첫 그리기는 비동기라 `draw` 안에서 `if (!w) return;`), `loop(el, frame)`(보일 때만 도는 애니메이션), `axes(ctx, {...})`, `clamp`, `ease`, `reduce`.
 - 캔버스 크기: `.cv-wide`(16:9), `.cv-sq`(1:1), 두 캔버스 나란히 `.card-fig.fig-2`. 카드 그림 칸은 넓은 화면에서도 폭이 430px 안팎이다.
-- 외부 라이브러리는 쓰지 않는다.
+- 외부 라이브러리는 쓰지 않는다. 예외는 수식을 그리는 KaTeX 하나다(`assets/katex/`, MIT). 블록 본문의 수식은 `\( … \)`(글 속)·`\[ … \]`(따로 한 줄)로 쓰고 `js/math.js`가 그린다. 한글 조사는 수식 밖에, 수식 속 한글은 `\text{}`로, 태그 속성(aria-label 등)에는 수식을 넣지 않는다. 카드 스크립트가 `textContent`로 읽는 요소는 수식으로 바꾸지 않는다. 검사: `node tools/check_math.mjs blocks/<과목>/*.html`.
 
 ### 3-1. 실험 카드
 

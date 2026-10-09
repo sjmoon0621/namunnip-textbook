@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-line-dir .vec { display: inline-block; position: relative; padding-top: .3em; line-height: 1; }
     #card-geo-line-dir .vec::before { content: ""; position: absolute; left: .08em; right: .2em; top: .12em; border-top: 1px solid currentColor; }
@@ -44,17 +45,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>직선의 방정식</h1>
-    <p class="lead">직선은 '한 점'과 '나아가는 방향'만 알면 정해집니다. 이 두 가지를 위치벡터와 방향벡터로 쓰면 직선 위의 모든 점을 실수 하나 <i>t</i>로 나타낼 수 있습니다. 이 절에서는 좌표평면에서 직선을 벡터로 표현하는 두 방법을 익히고, 같은 식이 좌표공간의 직선에도 그대로 쓰인다는 것을 확인합니다.</p>
+    <p class="lead">직선은 '한 점'과 '나아가는 방향'만 알면 정해집니다. 이 두 가지를 위치벡터와 방향벡터로 쓰면 직선 위의 모든 점을 실수 하나 \(t\)로 나타낼 수 있습니다. 이 절에서는 좌표평면에서 직선을 벡터로 표현하는 두 방법을 익히고, 같은 식이 좌표공간의 직선에도 그대로 쓰인다는 것을 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">위치벡터</span><span class="p">벡터의 실수배</span><span class="p">벡터의 내적과 수직 조건</span>
+      <a class="p p-card" href="../../c/geo/3-2.html#card-geo-pos-section" title="기하 3.2 · 두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?">위치벡터</a><a class="p p-card" href="../../c/geo/3-1.html#card-geo-vec-scalar" title="기하 3.1 · 벡터에 음수를 곱하면 무엇이 바뀔까?">벡터의 실수배</a><a class="p p-card" href="../../c/geo/3-3.html#card-geo-dot-space" title="기하 3.3 · 공간에서 두 벡터가 수직인지 어떻게 알까?">벡터의 내적과 수직 조건</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-geo-line-dir"><span class="mono">3.4.1</span>방향벡터와 직선</a></li>
         <li><a href="#card-geo-line-normal"><span class="mono">3.4.2</span>법선벡터와 직선</a></li>
         <li><a href="#card-geo-line-space"><span class="mono">3.4.3</span>좌표공간의 직선</a></li>
@@ -72,37 +73,38 @@
           <div class="card-fig">
             <canvas aria-label="점 A를 지나고 방향벡터 u에 평행한 직선과, t에 따라 움직이는 점 P. 점 A와 u의 끝점을 끌어 바꿀 수 있다"></canvas>
             <div class="ctl">
-              <label class="mono">매개변수 <i>t</i> = <output class="t-out">1.5</output></label>
+              <label class="mono">매개변수 \(t\) = <output class="t-out">1.5</output></label>
               <input class="t" type="range" min="-3" max="3" step="0.1" value="1.5" aria-label="매개변수 t">
               <p class="mono eq">—</p>
               <dl class="nums">
                 <div><dt>점 P</dt><dd class="n-p">—</dd></div>
-                <div><dt><span class="vec">AP</span> = <i>t</i><span class="vec"><i>u</i></span></dt><dd class="n-ap">—</dd></div>
+                <div><dt>\(\overrightarrow{AP} = t\vec{u}\)</dt><dd class="n-ap">—</dd></div>
                 <div><dt>지나온 자취</dt><dd class="n-tr">—</dd></div>
               </dl>
-              <p class="fig-note">점 A와 <span class="vec"><i>u</i></span>의 끝점을 끌고, <i>t</i>를 움직여 보세요. <i>t</i>를 바꾼 자리마다 P가 남긴 점이 쌓입니다.</p>
+              <p class="fig-note">점 A와 \(\vec{u}\)의 끝점을 끌고, \(t\)를 움직여 보세요. \(t\)를 바꾼 자리마다 P가 남긴 점이 쌓입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점 A(1, 2)를 지나고 오른쪽으로 2, 위로 1씩 나아가는 직선이 있습니다. 이 직선 위의 점을 모두, 빠짐없이 나타내는 식은 무엇일까요?</li>
-            <li><span class="tag">복원</span>점 A의 위치벡터를 <span class="vec"><i>a</i></span>라고 합니다. 영벡터가 아닌 두 벡터 <span class="vec">AP</span>, <span class="vec"><i>u</i></span>가 평행하면 <span class="vec">AP</span> = <i>t</i><span class="vec"><i>u</i></span>인 실수 <i>t</i>가 있습니다. 또 <span class="vec">AP</span> = <span class="vec"><i>p</i></span> − <span class="vec"><i>a</i></span>입니다.</li>
-            <li><span class="tag">설명</span>점 A를 지나고 <span class="vec"><i>u</i></span>에 평행한 직선을 <i>l</i>이라 합니다. 점 P가 <i>l</i> 위에 있을 필요충분조건은 <span class="vec">AP</span> = <i>t</i><span class="vec"><i>u</i></span>인 실수 <i>t</i>가 있는 것이므로<br><span class="vec"><i>p</i></span> = <span class="vec"><i>a</i></span> + <i>t</i><span class="vec"><i>u</i></span> (<i>t</i>는 실수)<br>입니다. 이것을 직선의 <em>벡터방정식</em>, <span class="vec"><i>u</i></span>를 <em>방향벡터</em>라고 합니다. A(<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>), <span class="vec"><i>u</i></span> = (<i>u</i><sub>1</sub>, <i>u</i><sub>2</sub>)로 성분을 쓰면 <i>x</i> = <i>x</i><sub>1</sub> + <i>u</i><sub>1</sub><i>t</i>, <i>y</i> = <i>y</i><sub>1</sub> + <i>u</i><sub>2</sub><i>t</i>(매개변수 방정식)이고, <i>u</i><sub>1</sub><i>u</i><sub>2</sub> ≠ 0이면 <i>t</i>를 없애 (<i>x</i> − <i>x</i><sub>1</sub>)/<i>u</i><sub>1</sub> = (<i>y</i> − <i>y</i><sub>1</sub>)/<i>u</i><sub>2</sub>를 얻습니다. 두 점 A, B를 지나는 직선은 <span class="vec"><i>u</i></span> = <span class="vec"><i>b</i></span> − <span class="vec"><i>a</i></span>로 두면 됩니다.</li>
-            <li><span class="tag">연결</span>기울기 <i>m</i>인 직선의 방향벡터는 (1, <i>m</i>)입니다. 그런데 방향벡터는 기울기가 없는 세로 직선도 (0, 1)로 똑같이 다루고, 성분을 하나 늘리기만 하면 좌표공간의 직선에도 그대로 쓰입니다. 매개변수 <i>t</i>를 시간으로 보면 P는 속도 <span class="vec"><i>u</i></span>로 움직이는 물체의 위치입니다.</li>
-            <li><span class="tag">적용</span><i>t</i>를 −3에서 3까지 끝까지 움직여 P의 자취가 직선이 되는지 보세요. <i>t</i> = 0, 1일 때 P는 어디인가요? <span class="vec"><i>u</i></span>의 길이를 2배로 늘리면 같은 <i>t</i>에서 P는 어떻게 되고, 직선 자체는 바뀌나요? <span class="vec"><i>u</i></span>를 세로 방향으로 두면 식이 어떻게 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>한 직선의 방향벡터는 하나가 아닙니다. <span class="vec"><i>u</i></span> 대신 2<span class="vec"><i>u</i></span>나 −<span class="vec"><i>u</i></span>를 써도 같은 직선이고, 지나는 점도 직선 위의 어느 점이든 됩니다. 그래서 겉모양이 다른 두 식이 같은 직선일 수 있습니다. 또 대칭형 식에서 분모가 0인 경우는 쓸 수 없으므로 <i>u</i><sub>1</sub> = 0이면 <i>x</i> = <i>x</i><sub>1</sub>로 따로 씁니다.</li>
+            <li><span class="tag">질문</span>점 \(A(1, 2)\)를 지나고 오른쪽으로 2, 위로 1씩 나아가는 직선이 있습니다. 이 직선 위의 점을 모두, 빠짐없이 나타내는 식은 무엇일까요?</li>
+            <li><span class="tag">복원</span>점 A의 위치벡터를 \(\vec{a}\)라고 합니다. 영벡터가 아닌 두 벡터 \(\overrightarrow{AP}, \vec{u}\)가 평행하면 \(\overrightarrow{AP} = t\vec{u}\)인 실수 \(t\)가 있습니다. 또 \(\overrightarrow{AP} = \vec{p} - \vec{a}\)입니다.</li>
+            <li><span class="tag">설명</span>점 A를 지나고 \(\vec{u}\)에 평행한 직선을 \(l\)이라 합니다. 점 P가 \(l\) 위에 있을 필요충분조건은 \(\overrightarrow{AP} = t\vec{u}\)인 실수 \(t\)가 있는 것이므로<br>\(\vec{p} = \vec{a} + t\vec{u}\) (\(t\)는 실수)<br>입니다. 이것을 직선의 <em>벡터방정식</em>, \(\vec{u}\)를 <em>방향벡터</em>라고 합니다. \(A(x_1, y_1), \vec{u} = (u_1, u_2)\)로 성분을 쓰면 \(x = x_1 + u_1t, y = y_1 + u_2t\)(매개변수 방정식)이고, \(u_1u_2 \ne 0\)이면 \(t\)를 없애 \(\frac{x - x_1}{u_1} = \frac{y - y_1}{u_2}\)를 얻습니다. 두 점 A, B를 지나는 직선은 \(\vec{u} = \vec{b} - \vec{a}\)로 두면 됩니다.</li>
+            <li><span class="tag">연결</span>기울기 \(m\)인 직선의 방향벡터는 \((1, m)\)입니다. 그런데 방향벡터는 기울기가 없는 세로 직선도 \((0, 1)\)로 똑같이 다루고, 성분을 하나 늘리기만 하면 좌표공간의 직선에도 그대로 쓰입니다. 매개변수 \(t\)를 시간으로 보면 P는 속도 \(\vec{u}\)로 움직이는 물체의 위치입니다.</li>
+            <li><span class="tag">적용</span>\(t\)를 \(-3\)에서 3까지 끝까지 움직여 P의 자취가 직선이 되는지 보세요. \(t = 0, 1\)일 때 P는 어디인가요? \(\vec{u}\)의 길이를 2배로 늘리면 같은 \(t\)에서 P는 어떻게 되고, 직선 자체는 바뀌나요? \(\vec{u}\)를 세로 방향으로 두면 식이 어떻게 바뀌나요?</li>
+            <li class="warn"><span class="tag">판단</span>한 직선의 방향벡터는 하나가 아닙니다. \(\vec{u}\) 대신 \(2\vec{u}\)나 \(-\vec{u}\)를 써도 같은 직선이고, 지나는 점도 직선 위의 어느 점이든 됩니다. 그래서 겉모양이 다른 두 식이 같은 직선일 수 있습니다. 또 대칭형 식에서 분모가 0인 경우는 쓸 수 없으므로 \(u_1 = 0\)이면 \(x = x_1\)로 따로 씁니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점 (2, −1)을 지나고 방향벡터가 (3, 2)인 직선 위의 점은?</p>
+          <p class="q">점 \((2, -1)\)을 지나고 방향벡터가 \((3, 2)\)인 직선 위의 점은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(5, 1)<span class="why"><b>맞습니다.</b> <i>t</i> = 1일 때 (2 + 3, −1 + 2) = (5, 1)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(3, 2)<span class="why"><b>방향벡터를 점으로 보았습니다.</b> (3, 2) = (2, −1) + <i>t</i>(3, 2)이면 <i>x</i>에서 <i>t</i> = 1/3, <i>y</i>에서 <i>t</i> = 3/2로 서로 달라서 직선 위에 있지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(5, −3)<span class="why"><b>한 성분의 부호가 틀렸습니다.</b> <i>y</i> = −1 + 2<i>t</i>에서 <i>t</i> = 1이면 1입니다. −3이 되려면 <i>t</i> = −1이어야 하는데 그때 <i>x</i>는 −1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(−1, 1)<span class="why"><b>두 성분에 서로 다른 <i>t</i>를 썼습니다.</b> <i>x</i> = −1은 <i>t</i> = −1, <i>y</i> = 1은 <i>t</i> = 1일 때입니다. 한 점의 두 성분은 같은 <i>t</i>로 정해져야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((5, 1)\)<span class="why"><b>맞습니다.</b> \(t = 1\)일 때 \((2 + 3, -1 + 2) = (5, 1)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((3, 2)\)<span class="why"><b>방향벡터를 점으로 보았습니다.</b> \((3, 2) = (2, -1) + t(3, 2)\)이면 \(x\)에서 \(t = \frac{1}{3}\), y에서 \(t = \frac{3}{2}\)로 서로 달라서 직선 위에 있지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((5, -3)\)<span class="why"><b>한 성분의 부호가 틀렸습니다.</b> \(y = -1 + 2t\)에서 \(t = 1\)이면 1입니다. \(-3\)이 되려면 \(t = -1\)이어야 하는데 그때 \(x\)는 \(-1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((-1, 1)\)<span class="why"><b>두 성분에 서로 다른 \(t\)를 썼습니다.</b> \(x = -1\)은 \(t = -1, y = 1\)은 \(t = 1\)일 때입니다. 한 점의 두 성분은 같은 \(t\)로 정해져야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div></nav>
 
       <article class="card" id="card-geo-line-normal">
         <header class="card-head">
@@ -114,33 +116,34 @@
             <div class="ctl">
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt><span class="vec"><i>n</i></span>·(<span class="vec"><i>q</i></span> − <span class="vec"><i>a</i></span>)</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(\vec{n}\cdot(\vec{q} - \vec{a})\)</dt><dd class="n-d">—</dd></div>
                 <div><dt>점 Q의 위치</dt><dd class="n-s">—</dd></div>
                 <div><dt>Q에서 직선까지 거리</dt><dd class="n-h">—</dd></div>
               </dl>
-              <p class="fig-note">점 A, <span class="vec"><i>n</i></span>의 끝점, 그리고 시험점 Q를 끌어 보세요. Q가 직선 위에 오면 내적이 0이 됩니다.</p>
+              <p class="fig-note">점 A, \(\vec{n}\)의 끝점, 그리고 시험점 Q를 끌어 보세요. Q가 직선 위에 오면 내적이 0이 됩니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>직선 위의 점 A에서 직선 위의 다른 점 P로 가는 벡터는 모두 같은 방향(또는 반대 방향)입니다. 그렇다면 이 벡터들과 모두 수직인 벡터 하나로 직선을 정할 수 있지 않을까요?</li>
-            <li><span class="tag">복원</span>영벡터가 아닌 두 벡터가 수직일 필요충분조건은 내적이 0인 것입니다. <span class="vec">AP</span> = <span class="vec"><i>p</i></span> − <span class="vec"><i>a</i></span>이고, 내적은 성분으로 <i>a</i><sub>1</sub><i>b</i><sub>1</sub> + <i>a</i><sub>2</sub><i>b</i><sub>2</sub>입니다.</li>
-            <li><span class="tag">설명</span>점 A를 지나고 영벡터가 아닌 벡터 <span class="vec"><i>n</i></span>에 수직인 직선 위의 점 P는 <span class="vec">AP</span> ⊥ <span class="vec"><i>n</i></span> 또는 P = A이므로<br><span class="vec"><i>n</i></span>·(<span class="vec"><i>p</i></span> − <span class="vec"><i>a</i></span>) = 0<br>을 만족합니다. 이런 <span class="vec"><i>n</i></span>을 직선의 <em>법선벡터</em>라고 합니다. <span class="vec"><i>n</i></span> = (<i>a</i>, <i>b</i>), A(<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>)로 쓰면 <i>a</i>(<i>x</i> − <i>x</i><sub>1</sub>) + <i>b</i>(<i>y</i> − <i>y</i><sub>1</sub>) = 0, 곧 <i>ax</i> + <i>by</i> + <i>c</i> = 0 꼴입니다. 거꾸로 직선 <i>ax</i> + <i>by</i> + <i>c</i> = 0을 보면 계수 (<i>a</i>, <i>b</i>)가 바로 법선벡터입니다. 방향벡터는 법선벡터에 수직이므로 (<i>b</i>, −<i>a</i>)로 잡을 수 있습니다.</li>
-            <li><span class="tag">연결</span>두 직선이 이루는 각은 두 방향벡터(또는 두 법선벡터)가 이루는 각으로 구합니다. 두 직선이 수직이면 법선벡터끼리 내적이 0입니다. 다음 절에서는 같은 식 <span class="vec"><i>n</i></span>·(<span class="vec"><i>p</i></span> − <span class="vec"><i>a</i></span>) = 0이 좌표공간에서는 직선이 아니라 평면을 나타냅니다.</li>
-            <li><span class="tag">적용</span>Q를 직선의 한쪽에서 반대쪽으로 끌어 보세요. 내적의 부호는 어떻게 바뀌나요? <span class="vec"><i>n</i></span>을 2배로 늘리면 직선은 바뀌나요, 식은 어떻게 바뀌나요? A를 직선을 따라 옮기면 식의 상수항은 그대로인가요?</li>
-            <li class="warn"><span class="tag">판단</span><i>ax</i> + <i>by</i> + <i>c</i> = 0에서 (<i>a</i>, <i>b</i>)를 방향벡터로 착각하는 실수가 많습니다. (<i>a</i>, <i>b</i>)는 직선에 수직입니다. 또 이 그림의 내적 값 자체는 거리가 아닙니다. Q에서 직선까지의 거리는 |<span class="vec"><i>n</i></span>·(<span class="vec"><i>q</i></span> − <span class="vec"><i>a</i></span>)| / |<span class="vec"><i>n</i></span>|입니다.</li>
+            <li><span class="tag">복원</span>영벡터가 아닌 두 벡터가 수직일 필요충분조건은 내적이 0인 것입니다. \(\overrightarrow{AP} = \vec{p} - \vec{a}\)이고, 내적은 성분으로 \(a_1b_1 + a_2b_2\)입니다.</li>
+            <li><span class="tag">설명</span>점 A를 지나고 영벡터가 아닌 벡터 \(\vec{n}\)에 수직인 직선 위의 점 P는 \(\overrightarrow{AP} \perp \vec{n}\) 또는 \(P = A\)이므로<br>\(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\)<br>을 만족합니다. 이런 \(\vec{n}\)을 직선의 <em>법선벡터</em>라고 합니다. \(\vec{n} = (a, b), A(x_1, y_1)\)로 쓰면 \(a(x - x_1) + b(y - y_1) = 0\), 곧 \(ax + by + c = 0\) 꼴입니다. 거꾸로 직선 \(ax + by + c = 0\)을 보면 계수 \((a, b)\)가 바로 법선벡터입니다. 방향벡터는 법선벡터에 수직이므로 \((b, -a)\)로 잡을 수 있습니다.</li>
+            <li><span class="tag">연결</span>두 직선이 이루는 각은 두 방향벡터(또는 두 법선벡터)가 이루는 각으로 구합니다. 두 직선이 수직이면 법선벡터끼리 내적이 0입니다. 다음 절에서는 같은 식 \(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\)이 좌표공간에서는 직선이 아니라 평면을 나타냅니다.</li>
+            <li><span class="tag">적용</span>Q를 직선의 한쪽에서 반대쪽으로 끌어 보세요. 내적의 부호는 어떻게 바뀌나요? \(\vec{n}\)을 2배로 늘리면 직선은 바뀌나요, 식은 어떻게 바뀌나요? A를 직선을 따라 옮기면 식의 상수항은 그대로인가요?</li>
+            <li class="warn"><span class="tag">판단</span>\(ax + by + c = 0\)에서 \((a, b)\)를 방향벡터로 착각하는 실수가 많습니다. \((a, b)\)는 직선에 수직입니다. 또 이 그림의 내적 값 자체는 거리가 아닙니다. Q에서 직선까지의 거리는 \(\frac{|\vec{n}\cdot(\vec{q} - \vec{a})|}{|\vec{n}|}\)입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점 (1, 3)을 지나고 벡터 (2, −1)에 수직인 직선의 방정식은?</p>
+          <p class="q">점 \((1, 3)\)을 지나고 벡터 \((2, -1)\)에 수직인 직선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<i>x</i> − <i>y</i> + 1 = 0<span class="why"><b>맞습니다.</b> 2(<i>x</i> − 1) − (<i>y</i> − 3) = 0을 정리하면 2<i>x</i> − <i>y</i> + 1 = 0입니다. (1, 3)을 넣으면 2 − 3 + 1 = 0입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>x</i> + 2<i>y</i> − 7 = 0<span class="why"><b>(2, −1)을 방향벡터로 썼습니다.</b> 이 직선은 (1, 3)을 지나지만 (2, −1)과 평행합니다. 문제는 수직인 직선입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<i>x</i> − <i>y</i> − 1 = 0<span class="why"><b>상수항의 부호가 틀렸습니다.</b> (1, 3)을 넣으면 2 − 3 − 1 = −2 ≠ 0이므로 이 점을 지나지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<i>x</i> + <i>y</i> − 5 = 0<span class="why"><b>법선벡터의 성분 하나를 바꾸었습니다.</b> (1, 3)은 지나지만 법선벡터가 (2, 1)인 직선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2x - y + 1 = 0\)<span class="why"><b>맞습니다.</b> \(2(x - 1) - (y - 3) = 0\)을 정리하면 \(2x - y + 1 = 0\)입니다. \((1, 3)\)을 넣으면 \(2 - 3 + 1 = 0\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x + 2y - 7 = 0\)<span class="why"><b>\((2, -1)\)을 방향벡터로 썼습니다.</b> 이 직선은 \((1, 3)\)을 지나지만 \((2, -1)\)과 평행합니다. 문제는 수직인 직선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2x - y - 1 = 0\)<span class="why"><b>상수항의 부호가 틀렸습니다.</b> \((1, 3)\)을 넣으면 \(2 - 3 - 1 = -2 \ne 0\)이므로 이 점을 지나지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(2x + y - 5 = 0\)<span class="why"><b>법선벡터의 성분 하나를 바꾸었습니다.</b> \((1, 3)\)은 지나지만 법선벡터가 \((2, 1)\)인 직선입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a></div></nav>
 
       <article class="card" id="card-geo-line-space">
         <header class="card-head">
@@ -151,44 +154,45 @@
             <canvas aria-label="좌표공간에서 점 A를 지나고 방향벡터 u에 평행한 직선과 그 위를 움직이는 점 P. 끌어서 돌려 볼 수 있다"></canvas>
             <div class="ctl">
               <div class="ctl-row">
-                <div><label class="mono"><i>u</i><sub>1</sub> = <output class="o1">1</output></label>
+                <div><label class="mono">\(u_1\) = <output class="o1">1</output></label>
                 <input class="s1" type="range" min="-2" max="2" step="1" value="1" aria-label="방향벡터 x성분"></div>
-                <div><label class="mono"><i>u</i><sub>2</sub> = <output class="o2">−1</output></label>
+                <div><label class="mono">\(u_2\) = <output class="o2">−1</output></label>
                 <input class="s2" type="range" min="-2" max="2" step="1" value="-1" aria-label="방향벡터 y성분"></div>
-                <div><label class="mono"><i>u</i><sub>3</sub> = <output class="o3">2</output></label>
+                <div><label class="mono">\(u_3\) = <output class="o3">2</output></label>
                 <input class="s3" type="range" min="-2" max="2" step="1" value="2" aria-label="방향벡터 z성분"></div>
-                <div><label class="mono"><i>t</i> = <output class="t-out">1</output></label>
+                <div><label class="mono">\(t\) = <output class="t-out">1</output></label>
                 <input class="t" type="range" min="-2" max="2" step="0.1" value="1" aria-label="매개변수 t"></div>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
                 <div><dt>점 P</dt><dd class="n-p">—</dd></div>
-                <div><dt><i>xy</i>평면과 만나는 점</dt><dd class="n-xy">—</dd></div>
-                <div><dt>|<span class="vec"><i>u</i></span>|</dt><dd class="n-u">—</dd></div>
+                <div><dt>\(xy\)평면과 만나는 점</dt><dd class="n-xy">—</dd></div>
+                <div><dt>\(|\vec{u}|\)</dt><dd class="n-u">—</dd></div>
               </dl>
-              <p class="fig-note">점 A(1, 2, 1)은 고정입니다. 방향벡터의 성분과 <i>t</i>를 바꾸고, 그림을 끌어 돌려 보세요.</p>
+              <p class="fig-note">점 \(A(1, 2, 1)\)은 고정입니다. 방향벡터의 성분과 \(t\)를 바꾸고, 그림을 끌어 돌려 보세요.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>공간에서는 기울기 하나로 직선의 방향을 나타낼 수 없습니다. 그러면 공간의 직선은 무엇으로 정할까요?</li>
-            <li><span class="tag">복원</span>좌표평면에서 점 A를 지나고 방향벡터가 <span class="vec"><i>u</i></span>인 직선은 <span class="vec"><i>p</i></span> = <span class="vec"><i>a</i></span> + <i>t</i><span class="vec"><i>u</i></span>였습니다. 공간벡터의 연산도 성분끼리 합니다.</li>
-            <li><span class="tag">설명</span>벡터방정식 <span class="vec"><i>p</i></span> = <span class="vec"><i>a</i></span> + <i>t</i><span class="vec"><i>u</i></span>에는 차원이 들어 있지 않으므로 좌표공간에서도 그대로 성립합니다. A(<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>, <i>z</i><sub>1</sub>), <span class="vec"><i>u</i></span> = (<i>u</i><sub>1</sub>, <i>u</i><sub>2</sub>, <i>u</i><sub>3</sub>)이면<br><i>x</i> = <i>x</i><sub>1</sub> + <i>u</i><sub>1</sub><i>t</i>, <i>y</i> = <i>y</i><sub>1</sub> + <i>u</i><sub>2</sub><i>t</i>, <i>z</i> = <i>z</i><sub>1</sub> + <i>u</i><sub>3</sub><i>t</i><br>이고, <i>u</i><sub>1</sub><i>u</i><sub>2</sub><i>u</i><sub>3</sub> ≠ 0이면 (<i>x</i> − <i>x</i><sub>1</sub>)/<i>u</i><sub>1</sub> = (<i>y</i> − <i>y</i><sub>1</sub>)/<i>u</i><sub>2</sub> = (<i>z</i> − <i>z</i><sub>1</sub>)/<i>u</i><sub>3</sub>입니다. 공간에서 등호가 두 개인 이 식은 방정식 두 개, 곧 두 평면의 교선을 뜻합니다.</li>
-            <li><span class="tag">연결</span>두 직선이 이루는 각은 방향벡터의 내적으로 구하고, 직선과 평면의 관계는 방향벡터와 법선벡터의 내적으로 판단합니다. 다음 절에서 평면의 방정식을 배우면 직선과 평면의 교점도 <i>t</i>를 대입해 구할 수 있습니다.</li>
-            <li><span class="tag">적용</span><i>t</i>를 움직여 P가 직선 위를 지나가는지 보고, P가 <i>xy</i>평면에 닿는 <i>t</i>를 찾아 표의 교점과 비교하세요. <i>u</i><sub>3</sub> = 0으로 두면 직선은 어떻게 놓이고, 교점은 어떻게 되나요? 성분 하나가 0일 때 식의 모양도 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>평면에서 (<i>x</i> − <i>x</i><sub>1</sub>)/<i>u</i><sub>1</sub> = (<i>y</i> − <i>y</i><sub>1</sub>)/<i>u</i><sub>2</sub>는 직선이었지만, 공간에서 이 식 하나만 쓰면 <i>z</i>가 자유로워서 평면이 됩니다. 공간의 직선에는 조건이 두 개 필요합니다. 그림은 평면에 비친 모습이라 직선이 축과 만나 보여도 실제로는 만나지 않을 수 있으니, 교점은 식으로 확인하세요.</li>
+            <li><span class="tag">복원</span>좌표평면에서 점 A를 지나고 방향벡터가 \(\vec{u}\)인 직선은 \(\vec{p} = \vec{a} + t\vec{u}\)였습니다. 공간벡터의 연산도 성분끼리 합니다.</li>
+            <li><span class="tag">설명</span>벡터방정식 \(\vec{p} = \vec{a} + t\vec{u}\)에는 차원이 들어 있지 않으므로 좌표공간에서도 그대로 성립합니다. \(A(x_1, y_1, z_1), \vec{u} = (u_1, u_2, u_3)\)이면<br>\(x = x_1 + u_1t, y = y_1 + u_2t, z = z_1 + u_3t\)<br>이고, \(u_1u_2u_3 \ne 0\)이면 \(\frac{x - x_1}{u_1} = \frac{y - y_1}{u_2} = \frac{z - z_1}{u_3}\)입니다. 공간에서 등호가 두 개인 이 식은 방정식 두 개, 곧 두 평면의 교선을 뜻합니다.</li>
+            <li><span class="tag">연결</span>두 직선이 이루는 각은 방향벡터의 내적으로 구하고, 직선과 평면의 관계는 방향벡터와 법선벡터의 내적으로 판단합니다. 다음 절에서 평면의 방정식을 배우면 직선과 평면의 교점도 \(t\)를 대입해 구할 수 있습니다.</li>
+            <li><span class="tag">적용</span>\(t\)를 움직여 P가 직선 위를 지나가는지 보고, P가 \(xy\)평면에 닿는 \(t\)를 찾아 표의 교점과 비교하세요. \(u_3 = 0\)으로 두면 직선은 어떻게 놓이고, 교점은 어떻게 되나요? 성분 하나가 0일 때 식의 모양도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>평면에서 \(\frac{x - x_1}{u_1} = \frac{y - y_1}{u_2}\)는 직선이었지만, 공간에서 이 식 하나만 쓰면 \(z\)가 자유로워서 평면이 됩니다. 공간의 직선에는 조건이 두 개 필요합니다. 그림은 평면에 비친 모습이라 직선이 축과 만나 보여도 실제로는 만나지 않을 수 있으니, 교점은 식으로 확인하세요.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">직선 (<i>x</i> − 1)/2 = (<i>y</i> + 1)/(−1) = <i>z</i>/3과 <i>xy</i>평면의 교점은?</p>
+          <p class="q">직선 \(\frac{x - 1}{2} = \frac{y + 1}{-1} = \frac{z}{3}\)과 \(xy\)평면의 교점은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>(2, −1, 3)<span class="why"><b>방향벡터를 점으로 보았습니다.</b> (2, −1, 3)은 분모를 모은 방향벡터입니다. 이 점은 <i>z</i> = 3이므로 <i>xy</i>평면 위에 있지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(−1, 1, 0)<span class="why"><b>지나는 점의 부호를 바꾸었습니다.</b> (<i>x</i> − 1), (<i>y</i> + 1)에서 지나는 점은 (1, −1, 0)입니다. 괄호 안 수의 부호를 반대로 읽어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>(1, −1, 0)<span class="why"><b>맞습니다.</b> <i>xy</i>평면은 <i>z</i> = 0이므로 세 비의 값이 0, 곧 <i>t</i> = 0입니다. 그러면 <i>x</i> = 1, <i>y</i> = −1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(3, −2, 0)<span class="why"><b><i>z</i>만 0으로 바꾸었습니다.</b> <i>t</i> = 1의 점 (3, −2, 3)에서 <i>z</i>만 지웠습니다. <i>z</i> = 0이 되는 <i>t</i>를 먼저 구해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\((2, -1, 3)\)<span class="why"><b>방향벡터를 점으로 보았습니다.</b> \((2, -1, 3)\)은 분모를 모은 방향벡터입니다. 이 점은 \(z = 3\)이므로 \(xy\)평면 위에 있지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((-1, 1, 0)\)<span class="why"><b>지나는 점의 부호를 바꾸었습니다.</b> \((x - 1), (y + 1)\)에서 지나는 점은 \((1, -1, 0)\)입니다. 괄호 안 수의 부호를 반대로 읽어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\((1, -1, 0)\)<span class="why"><b>맞습니다.</b> \(xy\)평면은 \(z = 0\)이므로 세 비의 값이 0, 곧 \(t = 0\)입니다. 그러면 \(x = 1, y = -1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, -2, 0)\)<span class="why"><b>\(z\)만 0으로 바꾸었습니다.</b> \(t = 1\)의 점 \((3, -2, 3)\)에서 \(z\)만 지웠습니다. \(z = 0\)이 되는 \(t\)를 먼저 구해야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=geo-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">22문항</span></a>
 
@@ -199,8 +203,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/geo/vec-kit.js"></script>
 <script src="../../js/cards/geo/line-dir.js"></script>
 <script src="../../js/cards/geo/vec-kit.js"></script>

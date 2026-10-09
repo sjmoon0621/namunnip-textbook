@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-area-slices canvas { width: 100%; aspect-ratio: 16 / 11; }
     #card-calc2-area-slices .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -37,14 +38,14 @@
     <p class="lead">미적분Ⅰ에서는 다항함수의 그래프로 둘러싸인 넓이를 구했습니다. 이 절에서는 앞에서 배운 적분법을 써서 지수함수, 로그함수, 삼각함수의 그래프로 둘러싸인 넓이를 구합니다. 같은 도형을 세로로 자를지 가로로 자를지에 따라 계산이 얼마나 쉬워지는지 비교하고, 두 곡선이 서로 엇갈릴 때는 교점에서 구간을 나누어야 하는 까닭을 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">정적분과 넓이</span><span class="p">두 곡선 사이의 넓이</span><span class="p">부분적분법</span><span class="p">역함수</span>
+      <a class="p p-card" href="../../c/calc1/3-5.html#card-calc1-area-axis" title="미적분Ⅰ 3.5 · 정적분이 0이면 넓이도 0일까?">정적분과 넓이</a><a class="p p-card" href="../../c/calc2/3-5.html#card-calc2-area-cross" title="미적분Ⅱ 3.5 · 두 곡선이 엇갈리면 넓이는 어떻게 구할까?">두 곡선 사이의 넓이</a><a class="p p-card" href="../../c/calc2/3-3.html#card-calc2-parts-choice" title="미적분Ⅱ 3.3 · 어느 쪽을 미분하고 어느 쪽을 적분해야 할까?">부분적분법</a><a class="p p-card" href="../../c/cm2/3-3.html#card-cm2-inverse-map" title="공통수학2 3.3 · 화살표를 거꾸로 돌리면 언제 함수가 될까?">역함수</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc2-area-slices"><span class="mono">3.5.1</span>세로 띠와 가로 띠로 넓이 구하기</a></li>
         <li><a href="#card-calc2-area-cross"><span class="mono">3.5.2</span>엇갈리는 두 곡선 사이의 넓이</a></li>
       </ol>
@@ -62,12 +63,12 @@
             <canvas aria-label="곡선으로 둘러싸인 도형과 그것을 자른 세로 띠 또는 가로 띠"></canvas>
             <div class="ctl">
               <div class="presets fn">
-                <button class="chip" type="button" data-k="0" aria-pressed="true"><i>y</i> = ln <i>x</i>, <i>x</i>축, <i>x</i> = <i>e</i></button>
-                <button class="chip" type="button" data-k="1"><i>y</i> = √<i>x</i>, <i>y</i> = <i>x</i> − 2, <i>x</i>축</button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">\(y = \ln x\), \(x\)축, \(x = e\)</button>
+                <button class="chip" type="button" data-k="1">\(y = \sqrt{x}\), \(y = x - 2\), \(x\)축</button>
               </div>
               <div class="presets dir">
-                <button class="chip" type="button" data-d="x" aria-pressed="true">세로 띠 (d<i>x</i>)</button>
-                <button class="chip" type="button" data-d="y">가로 띠 (d<i>y</i>)</button>
+                <button class="chip" type="button" data-d="x" aria-pressed="true">세로 띠 \((dx)\)</button>
+                <button class="chip" type="button" data-d="y">가로 띠 \((dy)\)</button>
               </div>
               <p class="mono eq">—</p>
               <label class="mono">띠의 개수 = <output class="n-out">8</output></label>
@@ -80,24 +81,25 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>y</i> = ln <i>x</i>, <i>x</i>축, 직선 <i>x</i> = <i>e</i>로 둘러싸인 도형의 넓이를 구하려면 꼭 <i>x</i>에 대해 적분해야 할까요?</li>
-            <li><span class="tag">복원</span>[<i>a</i>, <i>b</i>]에서 <i>f</i>(<i>x</i>) ≥ <i>g</i>(<i>x</i>)이면 두 곡선 사이의 넓이는 ∫<sub><i>a</i></sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i>입니다. <i>y</i> = ln <i>x</i>는 <i>x</i> = <i>e</i><sup><i>y</i></sup>와 같은 곡선입니다.</li>
-            <li><span class="tag">설명</span>세로 띠는 너비 d<i>x</i>, 길이 (위 − 아래)이므로 넓이는 ∫<sub>1</sub><sup><i>e</i></sup> ln <i>x</i> d<i>x</i>이고, 부분적분으로 [<i>x</i> ln <i>x</i> − <i>x</i>]<sub>1</sub><sup><i>e</i></sup> = 1입니다. 가로 띠는 높이 d<i>y</i>, 길이 (오른쪽 − 왼쪽) = <i>e</i> − <i>e</i><sup><i>y</i></sup>이므로 <b>∫<sub><i>c</i></sub><sup><i>d</i></sup> {(오른쪽 <i>x</i>) − (왼쪽 <i>x</i>)} d<i>y</i></b> = ∫<sub>0</sub><sup>1</sup> (<i>e</i> − <i>e</i><sup><i>y</i></sup>) d<i>y</i> = <i>e</i> − (<i>e</i> − 1) = 1입니다. 같은 도형이므로 값이 같고, 둘째 방법은 지수함수만 적분하면 됩니다. 둘째 보기는 세로로 자르면 <i>x</i> = 2에서 아래 경계가 <i>x</i>축에서 직선으로 바뀌어 두 조각으로 나누어야 하지만, 가로로 자르면 왼쪽은 늘 <i>x</i> = <i>y</i><sup>2</sup>, 오른쪽은 늘 <i>x</i> = <i>y</i> + 2이므로 한 번에 됩니다.</li>
-            <li><span class="tag">연결</span><i>y</i>에 대해 적분하려면 경계 곡선을 <i>x</i> = (<i>y</i>의 식)으로 나타내야 하므로 역함수가 필요합니다. 다음 절의 부피에서도 '어느 방향으로 자를지'를 먼저 정하고, 자른 조각의 넓이를 적분합니다.</li>
+            <li><span class="tag">질문</span>\(y = \ln x\), \(x\)축, 직선 \(x = e\)로 둘러싸인 도형의 넓이를 구하려면 꼭 \(x\)에 대해 적분해야 할까요?</li>
+            <li><span class="tag">복원</span>\([a, b]\)에서 \(f(x) \ge g(x)\)이면 두 곡선 사이의 넓이는 \(\int_a^b \{f(x) - g(x)\}\,dx\)입니다. \(y = \ln x\)는 \(x = e^y\)와 같은 곡선입니다.</li>
+            <li><span class="tag">설명</span>세로 띠는 너비 \(dx\), 길이 (위 − 아래)이므로 넓이는 \(\int_1^e \ln x\,dx\)이고, 부분적분으로 \([x \ln x - x]_1^e = 1\)입니다. 가로 띠는 높이 \(dy\), 길이 (오른쪽 − 왼쪽) = \(e - e^y\)이므로 <b>\(\int_c^d \{(\text{오른쪽 } x) - (\text{왼쪽 } x)\}\,dy\)</b> = \(\int_0^1 (e - e^y)\,dy = e - (e - 1) = 1\)입니다. 같은 도형이므로 값이 같고, 둘째 방법은 지수함수만 적분하면 됩니다. 둘째 보기는 세로로 자르면 \(x = 2\)에서 아래 경계가 \(x\)축에서 직선으로 바뀌어 두 조각으로 나누어야 하지만, 가로로 자르면 왼쪽은 늘 \(x = y^2\), 오른쪽은 늘 \(x = y + 2\)이므로 한 번에 됩니다.</li>
+            <li><span class="tag">연결</span>\(y\)에 대해 적분하려면 경계 곡선을 \(x\) = (\(y\)의 식)으로 나타내야 하므로 역함수가 필요합니다. 다음 절의 부피에서도 '어느 방향으로 자를지'를 먼저 정하고, 자른 조각의 넓이를 적분합니다.</li>
             <li><span class="tag">적용</span>두 보기에서 방향을 바꾸어 띠를 늘려 보세요. 띠 넓이의 합이 같은 값으로 다가가나요? 둘째 보기의 세로 띠에서 아래 경계가 바뀌는 곳은 어디인가요? 띠가 1개일 때 어느 방향의 어림이 더 정확한가요?</li>
-            <li class="warn"><span class="tag">판단</span>가로 띠에서 '위 − 아래'를 쓰면 안 됩니다. <i>y</i>에 대해 적분할 때는 <i>x</i>값의 차인 '오른쪽 − 왼쪽'이 띠의 길이입니다. 또 세로 띠에서 경계가 중간에 바뀌는데도 한 식으로 적분하면, 도형 밖의 부분을 더하거나 빼게 됩니다.</li>
+            <li class="warn"><span class="tag">판단</span>가로 띠에서 '위 − 아래'를 쓰면 안 됩니다. \(y\)에 대해 적분할 때는 \(x\)값의 차인 '오른쪽 − 왼쪽'이 띠의 길이입니다. 또 세로 띠에서 경계가 중간에 바뀌는데도 한 식으로 적분하면, 도형 밖의 부분을 더하거나 빼게 됩니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">곡선 <i>y</i> = <i>e</i><sup><i>x</i></sup>, 직선 <i>y</i> = <i>e</i>, <i>y</i>축으로 둘러싸인 도형의 넓이는?</p>
+          <p class="q">곡선 \(y = e^x\), 직선 \(y = e\), \(y\)축으로 둘러싸인 도형의 넓이는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 세로로 자르면 ∫<sub>0</sub><sup>1</sup> (<i>e</i> − <i>e</i><sup><i>x</i></sup>) d<i>x</i> = <i>e</i> − (<i>e</i> − 1) = 1입니다. 가로로 자르면 ∫<sub>1</sub><sup><i>e</i></sup> ln <i>y</i> d<i>y</i> = 1로 같습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i> − 1<span class="why"><b>곡선 아래의 넓이를 구했습니다.</b> ∫<sub>0</sub><sup>1</sup> <i>e</i><sup><i>x</i></sup> d<i>x</i>는 곡선과 <i>x</i>축 사이입니다. 이 도형은 곡선 위, 직선 <i>y</i> = <i>e</i> 아래에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>e</i><span class="why"><b>직사각형 전체를 구했습니다.</b> 가로 1, 세로 <i>e</i>인 직사각형에서 곡선 아래의 넓이 <i>e</i> − 1을 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 세로로 자르면 \(\int_0^1 (e - e^x)\,dx = e - (e - 1) = 1\)입니다. 가로로 자르면 \(\int_1^e \ln y\,dy = 1\)로 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>곡선 아래의 넓이를 구했습니다.</b> \(\int_0^1 e^x\,dx\)는 곡선과 \(x\)축 사이입니다. 이 도형은 곡선 위, 직선 \(y = e\) 아래에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(e\)<span class="why"><b>직사각형 전체를 구했습니다.</b> 가로 1, 세로 \(e\)인 직사각형에서 곡선 아래의 넓이 \(e - 1\)을 빼야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-choice"><small class="mono">미적분Ⅱ 3.3</small>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</a></div></nav>
 
       <article class="card" id="card-calc2-area-cross">
         <header class="card-head">
@@ -108,39 +110,40 @@
             <canvas aria-label="두 삼각함수 그래프와 0부터 b까지 그 사이의 영역. 초록은 첫 곡선이 위, 파랑은 둘째 곡선이 위인 부분"></canvas>
             <div class="ctl">
               <div class="presets fn">
-                <button class="chip" type="button" data-k="0" aria-pressed="true">sin <i>x</i>와 cos <i>x</i></button>
-                <button class="chip" type="button" data-k="1">sin <i>x</i>와 sin 2<i>x</i></button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">\(\sin x\)와 \(\cos x\)</button>
+                <button class="chip" type="button" data-k="1">\(\sin x\)와 \(\sin 2x\)</button>
               </div>
-              <label class="mono">오른쪽 끝 <i>b</i> = <output class="b-out">3.14</output></label>
+              <label class="mono">오른쪽 끝 \(b\) = <output class="b-out">3.14</output></label>
               <input class="sb" type="range" min="0.05" max="6.28" step="0.01" value="3.14" aria-label="구간의 오른쪽 끝 b">
               <dl class="nums">
-                <div><dt>∫<sub>0</sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i></dt><dd class="n-s">—</dd></div>
-                <div><dt>넓이 ∫<sub>0</sub><sup><i>b</i></sup> |<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)| d<i>x</i></dt><dd class="n-a">—</dd></div>
+                <div><dt>\(\int_0^b \{f(x) - g(x)\}\,dx\)</dt><dd class="n-s">—</dd></div>
+                <div><dt>넓이 \(\int_0^b |f(x) - g(x)|\,dx\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>구간 안의 교점</dt><dd class="n-c">—</dd></div>
               </dl>
-              <p class="fig-note"><i>f</i>는 첫째 곡선, <i>g</i>는 둘째 곡선입니다. 그림을 끌어도 <i>b</i>가 바뀝니다.</p>
+              <p class="fig-note">\(f\)는 첫째 곡선, \(g\)는 둘째 곡선입니다. 그림을 끌어도 \(b\)가 바뀝니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>0 ≤ <i>x</i> ≤ π에서 <i>y</i> = sin <i>x</i>와 <i>y</i> = cos <i>x</i> 사이의 넓이를 ∫<sub>0</sub><sup>π</sup> (sin <i>x</i> − cos <i>x</i>) d<i>x</i> 하나로 구해도 될까요?</li>
-            <li><span class="tag">복원</span><i>f</i>(<i>x</i>) ≥ <i>g</i>(<i>x</i>)인 구간에서 두 곡선 사이의 넓이는 ∫ {<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)} d<i>x</i>입니다. ∫sin <i>x</i> d<i>x</i> = −cos <i>x</i> + C, ∫cos <i>x</i> d<i>x</i> = sin <i>x</i> + C입니다.</li>
-            <li><span class="tag">설명</span>두 곡선 사이의 넓이는 어느 쪽이 위에 있든 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> |<i>f</i>(<i>x</i>) − <i>g</i>(<i>x</i>)| d<i>x</i></b>입니다. 절댓값을 풀려면 교점에서 구간을 나눕니다. sin <i>x</i> = cos <i>x</i>인 <i>x</i> = π/4에서 위아래가 바뀌므로 ∫<sub>0</sub><sup>π/4</sup> (cos <i>x</i> − sin <i>x</i>) d<i>x</i> + ∫<sub>π/4</sub><sup>π</sup> (sin <i>x</i> − cos <i>x</i>) d<i>x</i> = (√2 − 1) + (1 + √2) = 2√2입니다. 나누지 않고 한 번에 적분하면 위아래가 바뀐 부분이 빼져서 2가 됩니다.</li>
-            <li><span class="tag">연결</span>부호 있는 적분 ∫(<i>f</i> − <i>g</i>) d<i>x</i>도 쓸모가 있습니다. 다음 절들의 변위처럼 '얼마나 앞섰는지'를 셀 때는 빼지는 것이 맞습니다. 넓이, 움직인 거리처럼 '얼마나 되는지'를 셀 때는 절댓값을 씌웁니다.</li>
-            <li><span class="tag">적용</span>첫째 보기에서 <i>b</i>를 π/4(약 0.79)보다 작게 하면 두 값이 같은지, 크게 하면 언제부터 달라지는지 보세요. <i>b</i> = 2π(약 6.28)이면 부호 있는 적분은 얼마인가요? 둘째 보기의 교점 π/3(약 1.05)을 찾고, <i>b</i> = π에서 두 값 2와 5/2를 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"넓이 = 위 곡선의 적분 − 아래 곡선의 적분"은 위아래가 끝까지 바뀌지 않을 때만 맞습니다. 교점이 구간 안에 있는지 먼저 확인하세요. 또 <i>x</i>축과의 교점이 아니라 두 곡선의 교점에서 나누어야 합니다. 두 곡선이 모두 <i>x</i>축 아래로 내려가도 차 <i>f</i> − <i>g</i>의 부호만 보면 됩니다.</li>
+            <li><span class="tag">질문</span>\(0 \le x \le \pi\)에서 \(y = \sin x\)와 \(y = \cos x\) 사이의 넓이를 \(\int_0^\pi (\sin x - \cos x)\,dx\) 하나로 구해도 될까요?</li>
+            <li><span class="tag">복원</span>\(f(x) \ge g(x)\)인 구간에서 두 곡선 사이의 넓이는 \(\int \{f(x) - g(x)\}\,dx\)입니다. \(\int \sin x\,dx = -\cos x + C\), \(\int \cos x\,dx = \sin x + C\)입니다.</li>
+            <li><span class="tag">설명</span>두 곡선 사이의 넓이는 어느 쪽이 위에 있든 <b>\(\int_a^b |f(x) - g(x)|\,dx\)</b>입니다. 절댓값을 풀려면 교점에서 구간을 나눕니다. \(\sin x = \cos x\)인 \(x = \frac{\pi}{4}\)에서 위아래가 바뀌므로 \(\int_0^{\frac{\pi}{4}} (\cos x - \sin x)\,dx + \int_{\frac{\pi}{4}}^\pi (\sin x - \cos x)\,dx = (\sqrt{2} - 1) + (1 + \sqrt{2}) = 2\sqrt{2}\)입니다. 나누지 않고 한 번에 적분하면 위아래가 바뀐 부분이 빼져서 2가 됩니다.</li>
+            <li><span class="tag">연결</span>부호 있는 적분 \(\int(f - g)\,dx\)도 쓸모가 있습니다. 다음 절들의 변위처럼 '얼마나 앞섰는지'를 셀 때는 빼지는 것이 맞습니다. 넓이, 움직인 거리처럼 '얼마나 되는지'를 셀 때는 절댓값을 씌웁니다.</li>
+            <li><span class="tag">적용</span>첫째 보기에서 \(b\)를 \(\frac{\pi}{4}\)(약 0.79)보다 작게 하면 두 값이 같은지, 크게 하면 언제부터 달라지는지 보세요. \(b = 2\pi\)(약 6.28)이면 부호 있는 적분은 얼마인가요? 둘째 보기의 교점 \(\frac{\pi}{3}\)(약 1.05)을 찾고, \(b = \pi\)에서 두 값 2와 \(\frac{5}{2}\)를 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>"넓이 = 위 곡선의 적분 − 아래 곡선의 적분"은 위아래가 끝까지 바뀌지 않을 때만 맞습니다. 교점이 구간 안에 있는지 먼저 확인하세요. 또 \(x\)축과의 교점이 아니라 두 곡선의 교점에서 나누어야 합니다. 두 곡선이 모두 \(x\)축 아래로 내려가도 차 \(f - g\)의 부호만 보면 됩니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">0 ≤ <i>x</i> ≤ π/2에서 <i>y</i> = sin <i>x</i>와 <i>y</i> = cos <i>x</i>로 둘러싸인 부분의 넓이의 합은?</p>
+          <p class="q">\(0 \le x \le \frac{\pi}{2}\)에서 \(y = \sin x\)와 \(y = \cos x\)로 둘러싸인 부분의 넓이의 합은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2√2 − 2<span class="why"><b>맞습니다.</b> π/4에서 나누면 두 조각이 각각 √2 − 1이므로 합은 2√2 − 2 ≈ 0.828입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>교점에서 나누지 않았습니다.</b> ∫<sub>0</sub><sup>π/2</sup> (cos <i>x</i> − sin <i>x</i>) d<i>x</i> = 0은 두 조각이 서로 지워진 값입니다. 넓이는 0이 될 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√2 − 1<span class="why"><b>한 조각만 구했습니다.</b> π/4의 왼쪽과 오른쪽에 같은 크기의 조각이 하나씩 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>두 곡선 아래 넓이를 더했습니다.</b> ∫sin <i>x</i> d<i>x</i> + ∫cos <i>x</i> d<i>x</i> = 1 + 1은 각 곡선과 <i>x</i>축 사이의 넓이입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\sqrt{2} - 2\)<span class="why"><b>맞습니다.</b> \(\frac{\pi}{4}\)에서 나누면 두 조각이 각각 \(\sqrt{2} - 1\)이므로 합은 \(2\sqrt{2} - 2 \approx 0.828\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>교점에서 나누지 않았습니다.</b> \(\int_0^{\frac{\pi}{2}} (\cos x - \sin x)\,dx = 0\)은 두 조각이 서로 지워진 값입니다. 넓이는 0이 될 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\sqrt{2} - 1\)<span class="why"><b>한 조각만 구했습니다.</b> \(\frac{\pi}{4}\)의 왼쪽과 오른쪽에 같은 크기의 조각이 하나씩 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>두 곡선 아래 넓이를 더했습니다.</b> \(\int \sin x\,dx + \int \cos x\,dx = 1 + 1\)은 각 곡선과 \(x\)축 사이의 넓이입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-choice"><small class="mono">미적분Ⅱ 3.3</small>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc2-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">24문항</span></a>
 
@@ -151,8 +154,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/area-slices.js"></script>

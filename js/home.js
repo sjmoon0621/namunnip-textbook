@@ -23,11 +23,20 @@
     const TRACKS = [["phy", "물리"], ["chem", "화학"], ["bio", "생명과학"], ["earth", "지구과학"]];
     const LV = { 공통: "공통", 일반: "일반선택", 진로: "진로선택", 고급: "과학계열 진로", 실험: "과학계열 융합", 융합: "융합선택" };
     const RANK = ["공통", "일반", "진로", "고급", "실험", "융합"];
+    /* 학습률: 이 브라우저 기록(NMStore)에서 본(seen) 카드·읽기·영상 수 ÷ 전체 */
+    const S = window.NMStore;
+    const learn = (c) => {
+      const ids = c.chapters.flatMap((ch) => ch.sections.flatMap((s) => s.items.map((i) => i.id)));
+      const seen = S ? ids.filter((id) => (S.get(id) || {}).seen).length : 0;
+      return { seen, total: ids.length, p: ids.length ? seen / ids.length : 0 };
+    };
+    const pct = (l) => `${Math.round(l.p * 100)}%`;
     const box = (c) => {
-      const n = count(c);
-      return `<a class="tbox${n.open ? "" : " soon"}" href="${base}${c.id}/" data-track="${c.track}">
+      const n = count(c), l = learn(c);
+      return `<a class="tbox${n.open ? "" : " soon"}" href="${base}${c.id}/" data-track="${c.track}" data-cid="${c.id}">
         <span class="lv mono">${LV[c.level]}</span><b>${esc(c.name)}</b>
-        <span class="pg mono">${n.open ? `절 ${n.open}/${n.sec}` : `준비 중 · 절 ${n.sec}`}</span></a>`;
+        <span class="pg mono">${n.open ? `절 ${n.open} · 학습 <span class="lp-n">${pct(l)}</span>` : `준비 중 · 절 ${n.sec}`}</span>
+        ${n.open ? `<span class="lp" aria-hidden="true"><i style="--p:${l.p.toFixed(3)}"></i></span>` : ""}</a>`;
     };
     const pick = (f) => TOC.filter(f).sort((a, b) => RANK.indexOf(a.level) - RANK.indexOf(b.level));
     const tree = document.getElementById("tree");
@@ -40,7 +49,7 @@
       <div class="tree-band" data-track="fusion"><span class="band-lb mono">융합</span><div>${pick((c) => c.track === "fusion").map(box).join("")}</div></div>
       <div class="tree-band" data-track="math"><span class="band-lb mono">수학</span><div>${pick((c) => c.track === "math").map(box).join("")}</div></div>`;
     host.innerHTML = TOC.map((c) => {
-      const n = count(c);
+      const n = count(c), l = learn(c);
       const chapters = c.chapters.map((ch) => `
         <div class="chapter">
           <h3><span class="mono">${R[ch.n]}</span>${esc(ch.title)}</h3>
@@ -61,6 +70,7 @@
           <span class="mono">${esc(c.meta)}</span>
           <h2><a href="${base}${c.id}/">${esc(c.name)}</a></h2>
           <p class="count mono dim">절 ${n.open}/${n.sec} · 카드 ${n.cards} · 영상 ${n.vids}</p>
+          <p class="learn mono small" data-cid="${c.id}"><span class="lp" aria-hidden="true"><i style="--p:${l.p.toFixed(3)}"></i></span>학습 <span class="lp-n">${pct(l)}</span> <span class="dim lp-c">(${l.seen}/${l.total})</span></p>
           <p><a class="link" href="${base}${c.id}/">과목 목차 →</a></p>
         </div>
         <div class="chapters">${chapters}</div>
@@ -122,6 +132,16 @@
       setDomain(domain === "sci" ? "math" : "sci", true);
       tabs.querySelector("[aria-selected=true]").focus();
     });
+    /* 다른 탭에서 카드를 보면(storage 이벤트) 학습률을 다시 적는다 */
+    if (S) S.onChange(() => TOC.forEach((c) => {
+      const l = learn(c);
+      document.querySelectorAll(`[data-cid="${c.id}"]`).forEach((el) => {
+        const i = el.querySelector(".lp i"), nEl = el.querySelector(".lp-n"), cEl = el.querySelector(".lp-c");
+        if (i) i.style.setProperty("--p", l.p.toFixed(3));
+        if (nEl) nEl.textContent = pct(l);
+        if (cEl) cEl.textContent = `(${l.seen}/${l.total})`;
+      });
+    }));
     let saved = new URLSearchParams(location.search).get("tab");
     if (!saved) try { saved = localStorage.getItem(TAB_KEY); } catch (e) { saved = null; }
     setDomain(saved, false);

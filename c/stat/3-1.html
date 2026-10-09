@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-rv-coins canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-stat-rv-coins .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
@@ -37,14 +38,14 @@
     <p class="lead">동전 세 개를 던진 결과는 '앞뒤앞' 같은 글자입니다. 그런데 우리가 궁금한 것은 대개 '앞면이 몇 개인가' 같은 수입니다. 이 절에서는 결과마다 수를 하나씩 붙이는 확률변수를 만들고, 그 수가 어떤 확률로 나오는지 정리한 확률분포를 표와 그래프로 봅니다. 대기 시간처럼 값이 연속으로 변하면 확률을 넓이로 잽니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">표본공간과 사건</span><span class="p">수학적 확률</span><span class="p">함수의 뜻</span>
+      <a class="p p-card" href="../../c/stat/2-1.html#card-stat-sample-grid" title="확률과 통계 2.1 · 두 눈의 합이 11가지이면 확률은 각각 1/11일까?">표본공간과 사건</a><a class="p p-card" href="../../c/stat/3-3.html#card-stat-large-numbers" title="확률과 통계 3.3 · 많이 던질수록 비율은 확률에 다가갈까?">수학적 확률</a><a class="p p-card" href="../../c/alg/1-6.html#card-alg-log-func-def" title="대수 1.6 · 지수함수의 화살표를 거꾸로 하면 함수가 될까?">함수의 뜻</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-rv-coins"><span class="mono">3.1.1</span>확률변수와 확률분포</a></li>
         <li><a href="#card-stat-density"><span class="mono">3.1.2</span>연속확률변수와 확률밀도함수</a></li>
       </ol>
@@ -63,7 +64,7 @@
             <div class="ctl">
               <div class="presets">
                 <button class="chip" type="button" data-v="0" aria-pressed="true">앞면의 개수</button>
-                <button class="chip" type="button" data-v="1">앞면 수 − 뒷면 수</button>
+                <button class="chip" type="button" data-v="1">\(\text{앞면 수} - \text{뒷면 수}\)</button>
                 <button class="chip" type="button" data-v="2">처음 앞면이 나온 순서</button>
               </div>
               <div class="go-row">
@@ -71,7 +72,7 @@
                 <button class="chip go-many" type="button">100번 던지기</button>
                 <button class="chip go-reset" type="button">처음부터</button>
               </div>
-              <table class="dist"><tbody><tr class="r-x"><th><i>X</i> = <i>x</i></th></tr><tr class="r-p"><th>P(<i>X</i> = <i>x</i>)</th></tr></tbody></table>
+              <table class="dist"><tbody><tr class="r-x"><th>\(X = x\)</th></tr><tr class="r-p"><th>\(P(X = x)\)</th></tr></tbody></table>
               <dl class="nums">
                 <div><dt>던진 횟수</dt><dd class="n-n">0</dd></div>
                 <div><dt>마지막 결과</dt><dd class="n-last">—</dd></div>
@@ -82,24 +83,25 @@
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>동전 세 개를 던지면 결과는 '앞앞뒤', '뒤앞뒤' 같은 글자 8가지입니다. 이 글자들로 평균이나 그래프를 만들 수 있을까요?</li>
-            <li><span class="tag">복원</span>시행에서 일어날 수 있는 모든 결과의 집합이 표본공간입니다. 동전 세 개의 표본공간은 원소가 8개이고, 각 결과의 확률은 1/8로 같습니다. 함수는 정의역의 원소마다 값을 하나씩 정해 주는 대응입니다.</li>
-            <li><span class="tag">설명</span>표본공간의 각 결과에 실수 하나를 대응시키는 함수를 <em>확률변수</em>라 하고 대문자 <i>X</i>로 씁니다. 같은 표본공간에서도 무엇을 세느냐에 따라 확률변수가 달라집니다. <i>X</i>가 0, 1, 2, 3처럼 셀 수 있는 값을 가지면 <em>이산확률변수</em>입니다. 값 <i>x</i>마다 그 값을 갖는 결과들의 확률을 더한 P(<i>X</i> = <i>x</i>)를 정리한 것이 <em>확률분포</em>이고, 이 대응을 함수로 보면 <em>확률질량함수</em>라고 합니다. 확률분포는 언제나 0 ≤ P(<i>X</i> = <i>x</i>) ≤ 1이고, 모든 값의 확률을 더하면 1입니다. 또 P(<i>a</i> ≤ <i>X</i> ≤ <i>b</i>)는 <i>a</i>부터 <i>b</i>까지의 값의 확률을 더한 것입니다.</li>
+            <li><span class="tag">복원</span>시행에서 일어날 수 있는 모든 결과의 집합이 표본공간입니다. 동전 세 개의 표본공간은 원소가 8개이고, 각 결과의 확률은 \(\frac{1}{8}\)로 같습니다. 함수는 정의역의 원소마다 값을 하나씩 정해 주는 대응입니다.</li>
+            <li><span class="tag">설명</span>표본공간의 각 결과에 실수 하나를 대응시키는 함수를 <em>확률변수</em>라 하고 대문자 \(X\)로 씁니다. 같은 표본공간에서도 무엇을 세느냐에 따라 확률변수가 달라집니다. \(X\)가 0, 1, 2, 3처럼 셀 수 있는 값을 가지면 <em>이산확률변수</em>입니다. 값 \(x\)마다 그 값을 갖는 결과들의 확률을 더한 \(P(X = x)\)를 정리한 것이 <em>확률분포</em>이고, 이 대응을 함수로 보면 <em>확률질량함수</em>라고 합니다. 확률분포는 언제나 \(0 \le P(X = x) \le 1\)이고, 모든 값의 확률을 더하면 1입니다. 또 \(P(a \le X \le b)\)는 \(a\)부터 \(b\)까지의 값의 확률을 더한 것입니다.</li>
             <li><span class="tag">연결</span>확률분포를 알면 결과를 일일이 보지 않고 수만으로 평균과 흩어진 정도를 계산할 수 있습니다. 시행을 많이 되풀이하면 상대도수가 확률에 가까워지므로, 실제 자료의 도수분포와 확률분포를 나란히 비교할 수 있습니다.</li>
-            <li><span class="tag">적용</span>세 확률변수를 차례로 고르고 화살표를 따라가 보세요. 여러 결과가 같은 값으로 모이는 곳의 막대가 깁니다. '앞면 수 − 뒷면 수'는 어떤 값을 가질 수 없나요? '100번 던지기'를 여러 번 눌러 상대도수의 눈금이 막대 끝으로 다가가는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"<i>X</i>의 값이 0, 1, 2, 3의 네 가지이므로 확률은 각각 1/4"이라고 생각하기 쉽습니다. 값마다 대응되는 결과의 개수가 다르므로 확률도 다릅니다. 또 확률변수는 이름과 달리 '변하는 수'가 아니라 결과에 수를 붙이는 함수입니다.</li>
+            <li><span class="tag">적용</span>세 확률변수를 차례로 고르고 화살표를 따라가 보세요. 여러 결과가 같은 값으로 모이는 곳의 막대가 깁니다. '\(\text{앞면 수} - \text{뒷면 수}\)'는 어떤 값을 가질 수 없나요? '100번 던지기'를 여러 번 눌러 상대도수의 눈금이 막대 끝으로 다가가는지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>"\(X\)의 값이 0, 1, 2, 3의 네 가지이므로 확률은 각각 \(\frac{1}{4}\)"이라고 생각하기 쉽습니다. 값마다 대응되는 결과의 개수가 다르므로 확률도 다릅니다. 또 확률변수는 이름과 달리 '변하는 수'가 아니라 결과에 수를 붙이는 함수입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">주사위 두 개를 던져 나온 두 눈의 차(큰 수 − 작은 수)를 <i>X</i>라 할 때, P(<i>X</i> = 1)은?</p>
+          <p class="q">주사위 두 개를 던져 나온 두 눈의 차(\(\text{큰 수} - \text{작은 수}\))를 \(X\)라 할 때, \(P(X = 1)\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5/18<span class="why"><b>맞습니다.</b> 차가 1인 순서쌍은 (1, 2), (2, 1)부터 (5, 6), (6, 5)까지 10개이므로 10/36 = 5/18입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5/36<span class="why"><b>순서를 빠뜨렸습니다.</b> (1, 2)와 (2, 1)은 다른 결과입니다. 두 주사위를 구별하면 36가지 결과가 모두 같은 확률을 갖습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/6<span class="why"><b>값의 개수로 나누었습니다.</b> <i>X</i>는 0부터 5까지 6가지 값을 갖지만, 값마다 대응되는 결과의 수가 달라 확률이 같지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/36<span class="why"><b>결과 하나의 확률입니다.</b> <i>X</i> = 1에 대응되는 결과는 10개이므로 확률을 모두 더해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{5}{18}\)<span class="why"><b>맞습니다.</b> 차가 1인 순서쌍은 \((1, 2), (2, 1)\)부터 \((5, 6), (6, 5)\)까지 10개이므로 \(\frac{10}{36} = \frac{5}{18}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{5}{36}\)<span class="why"><b>순서를 빠뜨렸습니다.</b> \((1, 2)\)와 \((2, 1)\)은 다른 결과입니다. 두 주사위를 구별하면 36가지 결과가 모두 같은 확률을 갖습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{6}\)<span class="why"><b>값의 개수로 나누었습니다.</b> \(X\)는 0부터 5까지 6가지 값을 갖지만, 값마다 대응되는 결과의 수가 달라 확률이 같지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{36}\)<span class="why"><b>결과 하나의 확률입니다.</b> \(X = 1\)에 대응되는 결과는 10개이므로 확률을 모두 더해야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 더하면 표준편차는?</a></div></nav>
 
       <article class="card" id="card-stat-density">
         <header class="card-head">
@@ -110,41 +112,42 @@
             <canvas class="cv-wide" aria-label="대기 시간 X의 확률밀도함수 그래프와, 구간 a ≤ X ≤ b에 해당하는 넓이"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="0" aria-pressed="true">균등: <i>f</i>(<i>x</i>) = 1/10</button>
-                <button class="chip" type="button" data-k="1">감소: <i>f</i>(<i>x</i>) = (10 − <i>x</i>)/50</button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">균등: \(f(x) = \frac{1}{10}\)</button>
+                <button class="chip" type="button" data-k="1">감소: \(f(x) = \frac{10 - x}{50}\)</button>
               </div>
-              <label class="mono">구간의 시작 <i>a</i> = <output class="a-out">3.0</output>분</label>
+              <label class="mono">구간의 시작 \(a\) = <output class="a-out">3.0</output>분</label>
               <input class="a" type="range" min="0" max="10" step="0.1" value="3" aria-label="구간의 시작 a">
-              <label class="mono">구간의 폭 <i>b</i> − <i>a</i> = <output class="d-out">2.0</output>분</label>
+              <label class="mono">구간의 폭 \(b - a\) = <output class="d-out">2.0</output>분</label>
               <input class="d" type="range" min="0" max="10" step="0.1" value="2" aria-label="구간의 폭">
               <dl class="nums">
-                <div><dt class="d-p">P(a ≤ X ≤ b)</dt><dd class="n-p">—</dd></div>
-                <div><dt>높이 f(a)</dt><dd class="n-f">—</dd></div>
+                <div><dt class="d-p">\(P(a \le X \le b)\)</dt><dd class="n-p">—</dd></div>
+                <div><dt>높이 \(f(a)\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>전체 넓이</dt><dd class="n-all">1</dd></div>
               </dl>
-              <p class="fig-note">버스가 10분 간격으로 오는 정류장에서 기다리는 시간 <i>X</i>(분)입니다. '감소' 그래프는 짧게 기다리는 경우가 많은 상황을 나타낸 모식입니다.</p>
+              <p class="fig-note">버스가 10분 간격으로 오는 정류장에서 기다리는 시간 \(X\)(분)입니다. '감소' 그래프는 짧게 기다리는 경우가 많은 상황을 나타낸 모식입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>버스를 기다리는 시간은 0분과 10분 사이의 어떤 값이든 될 수 있습니다. 가능한 값이 셀 수 없이 많으면, 값 하나하나에 확률을 어떻게 나누어 줄 수 있을까요?</li>
             <li><span class="tag">복원</span>이산확률변수는 값마다 확률이 있고, 그 합이 1입니다. 그래프 아래 넓이는 직사각형, 삼각형, 사다리꼴로 계산할 수 있습니다.</li>
-            <li><span class="tag">설명</span>시간, 길이, 무게처럼 어떤 구간의 모든 실수 값을 가질 수 있는 확률변수를 <em>연속확률변수</em>라고 합니다. 연속확률변수는 값 하나가 아니라 구간에 확률을 줍니다. 함수 <i>f</i>(<i>x</i>)가 (1) <i>f</i>(<i>x</i>) ≥ 0이고 (2) 그래프와 <i>x</i>축 사이의 전체 넓이가 1이며 (3) P(<i>a</i> ≤ <i>X</i> ≤ <i>b</i>)가 <i>x</i> = <i>a</i>부터 <i>x</i> = <i>b</i>까지 그래프 아래 넓이와 같을 때, <i>f</i>(<i>x</i>)를 <i>X</i>의 <em>확률밀도함수</em>라고 합니다. 폭이 0인 구간의 넓이는 0이므로 P(<i>X</i> = <i>a</i>) = 0이고, 그래서 P(<i>a</i> ≤ <i>X</i> ≤ <i>b</i>) = P(<i>a</i> &lt; <i>X</i> &lt; <i>b</i>)입니다.</li>
+            <li><span class="tag">설명</span>시간, 길이, 무게처럼 어떤 구간의 모든 실수 값을 가질 수 있는 확률변수를 <em>연속확률변수</em>라고 합니다. 연속확률변수는 값 하나가 아니라 구간에 확률을 줍니다. 함수 \(f(x)\)가 (1) \(f(x) \ge 0\)이고 (2) 그래프와 \(x\)축 사이의 전체 넓이가 1이며 (3) \(P(a \le X \le b)\)가 \(x = a\)부터 \(x = b\)까지 그래프 아래 넓이와 같을 때, \(f(x)\)를 \(X\)의 <em>확률밀도함수</em>라고 합니다. 폭이 0인 구간의 넓이는 0이므로 \(P(X = a) = 0\)이고, 그래서 \(P(a \le X \le b) = P(a &lt; X &lt; b)\)입니다.</li>
             <li><span class="tag">연결</span>도수분포다각형에서 계급의 폭을 줄이고 자료 수를 늘리면 매끄러운 곡선에 가까워집니다. 그 곡선이 확률밀도함수입니다. 키, 측정 오차처럼 종 모양을 이루는 연속확률변수는 이 단원 뒤쪽의 정규분포로 다룹니다.</li>
-            <li><span class="tag">적용</span>폭을 2분으로 두고 <i>a</i>를 옮겨 보세요. 균등 그래프에서는 확률이 바뀌나요? 감소 그래프에서는 어떤가요? 폭을 0까지 줄이면 확률은 얼마가 되나요? 폭을 10으로 하고 <i>a</i> = 0이면 무엇이 보이나요?</li>
-            <li class="warn"><span class="tag">판단</span>높이 <i>f</i>(<i>a</i>)를 P(<i>X</i> = <i>a</i>)로 읽는 실수가 많습니다. 높이는 '그 근처에 값이 얼마나 몰려 있는가'를 나타낼 뿐 확률이 아닙니다. 값의 범위가 0부터 0.5까지처럼 좁으면 넓이가 1이 되도록 높이가 2가 되기도 하므로, 높이는 1보다 클 수도 있습니다.</li>
+            <li><span class="tag">적용</span>폭을 2분으로 두고 \(a\)를 옮겨 보세요. 균등 그래프에서는 확률이 바뀌나요? 감소 그래프에서는 어떤가요? 폭을 0까지 줄이면 확률은 얼마가 되나요? 폭을 10으로 하고 \(a = 0\)이면 무엇이 보이나요?</li>
+            <li class="warn"><span class="tag">판단</span>높이 \(f(a)\)를 \(P(X = a)\)로 읽는 실수가 많습니다. 높이는 '그 근처에 값이 얼마나 몰려 있는가'를 나타낼 뿐 확률이 아닙니다. 값의 범위가 0부터 0.5까지처럼 좁으면 넓이가 1이 되도록 높이가 2가 되기도 하므로, 높이는 1보다 클 수도 있습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">지하철이 20분 간격으로 오고, 기다리는 시간 <i>X</i>(분)의 확률밀도함수가 0 ≤ <i>x</i> ≤ 20에서 <i>f</i>(<i>x</i>) = 1/20일 때, P(5 ≤ <i>X</i> ≤ 12)는?</p>
+          <p class="q">지하철이 20분 간격으로 오고, 기다리는 시간 \(X\)(분)의 확률밀도함수가 \(0 \le x \le 20\)에서 \(f(x) = \frac{1}{20}\)일 때, \(P(5 \le X \le 12)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.35<span class="why"><b>맞습니다.</b> 밑변 12 − 5 = 7, 높이 1/20인 직사각형의 넓이이므로 7/20 = 0.35입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.05<span class="why"><b>높이를 확률로 읽었습니다.</b> 1/20은 그래프의 높이이고, 확률은 구간의 폭을 곱한 넓이입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.6<span class="why"><b>P(<i>X</i> ≤ 12)를 구했습니다.</b> 0부터 12까지의 넓이 12/20에서 0부터 5까지의 넓이 5/20을 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>값 하나의 확률과 섞었습니다.</b> P(<i>X</i> = 5)는 0이지만, 폭이 있는 구간의 확률은 0이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.35<span class="why"><b>맞습니다.</b> 밑변 \(12 - 5 = 7\), 높이 \(\frac{1}{20}\)인 직사각형의 넓이이므로 \(\frac{7}{20} = 0.35\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.05<span class="why"><b>높이를 확률로 읽었습니다.</b> \(\frac{1}{20}\)은 그래프의 높이이고, 확률은 구간의 폭을 곱한 넓이입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.6<span class="why"><b>\(P(X \le 12)\)를 구했습니다.</b> 0부터 12까지의 넓이 \(\frac{12}{20}\)에서 0부터 5까지의 넓이 \(\frac{5}{20}\)을 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>값 하나의 확률과 섞었습니다.</b> \(P(X = 5)\)는 0이지만, 폭이 있는 구간의 확률은 0이 아닙니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">17문항</span></a>
 
@@ -155,8 +158,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/rv-coins.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>

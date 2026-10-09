@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-riemann .nums dd { font-size: 14px; overflow-wrap: anywhere; }
     #card-calc1-riemann .presets + .presets { margin-top: 6px; }
@@ -38,17 +39,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>정적분</h1>
-    <p class="lead">곡선으로 둘러싸인 도형의 넓이를 잴 공식은 없습니다. 이 절에서는 곡선 아래 넓이를 직사각형으로 메워 가며 정적분이라는 개념을 세우고, 그래프가 <i>x</i>축 아래로 내려가는 경우까지 정의를 넓힌 뒤 그 성질을 살펴봅니다.</p>
+    <p class="lead">곡선으로 둘러싸인 도형의 넓이를 잴 공식은 없습니다. 이 절에서는 곡선 아래 넓이를 직사각형으로 메워 가며 정적분이라는 개념을 세우고, 그래프가 \(x\)축 아래로 내려가는 경우까지 정의를 넓힌 뒤 그 성질을 살펴봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">연속함수</span><span class="p">수열의 극한</span><span class="p">다항함수의 그래프</span>
+      <a class="p p-card" href="../../c/calc1/1-4.html#text-calc1-cont-props" title="미적분Ⅰ 1.4 · 연속함수끼리 더하고 곱하고 나누어도 연속일까?">연속함수</a><a class="p p-card" href="../../c/calc2/1-2.html#card-calc2-squeeze" title="미적분Ⅱ 1.2 · 위아래에서 조이면 가운데 수열의 극한도 정해질까?">수열의 극한</a><a class="p p-card" href="../../c/calc1/2-8.html#card-calc1-sketch" title="미적분Ⅰ 2.8 · 점 몇 개로 그래프의 뼈대를 세울 수 있을까?">다항함수의 그래프</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc1-riemann"><span class="mono">3.3.1</span>곡선 아래 넓이와 정적분</a></li>
         <li><a href="#card-calc1-signed-area"><span class="mono">3.3.2</span>정적분의 정의 넓히기</a></li>
         <li><a href="#card-calc1-int-props"><span class="mono">3.3.3</span>정적분의 성질</a></li>
@@ -67,16 +68,16 @@
             <canvas class="cv-wide" aria-label="곡선 아래 영역을 폭이 같은 직사각형 n개로 덮은 그림"></canvas>
             <div class="ctl">
               <div class="presets fx">
-                <button class="chip" type="button" data-ex="[[0,0,1],0,2,4.5]" aria-pressed="true"><i>x</i><sup>2</sup>, 0 ≤ <i>x</i> ≤ 2</button>
-                <button class="chip" type="button" data-ex="[[0,4,-1],0,3,4.5]">−<i>x</i><sup>2</sup> + 4<i>x</i>, 0 ≤ <i>x</i> ≤ 3</button>
-                <button class="chip" type="button" data-ex="[[1,0,0,0.25],0,2,3.5]">¼<i>x</i><sup>3</sup> + 1, 0 ≤ <i>x</i> ≤ 2</button>
+                <button class="chip" type="button" data-ex="[[0,0,1],0,2,4.5]" aria-pressed="true">\(x^2, 0 \le x \le 2\)</button>
+                <button class="chip" type="button" data-ex="[[0,4,-1],0,3,4.5]">\(-x^2 + 4x, 0 \le x \le 3\)</button>
+                <button class="chip" type="button" data-ex="[[1,0,0,0.25],0,2,3.5]">\(\frac{1}{4}x^3 + 1, 0 \le x \le 2\)</button>
               </div>
               <div class="presets mode">
                 <button class="chip" type="button" data-m="left">왼쪽 끝 높이</button>
                 <button class="chip" type="button" data-m="right" aria-pressed="true">오른쪽 끝 높이</button>
                 <button class="chip" type="button" data-m="mid">가운데 높이</button>
               </div>
-              <label class="mono">직사각형 개수 <i>n</i> = <output class="n-out">4</output></label>
+              <label class="mono">직사각형 개수 \(n\) = <output class="n-out">4</output></label>
               <input class="n" type="range" min="1" max="60" step="1" value="4" aria-label="직사각형 개수 n">
               <dl class="nums">
                 <div><dt>직사각형 넓이의 합</dt><dd class="n-s">—</dd></div>
@@ -87,68 +88,68 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>직사각형, 삼각형의 넓이는 공식으로 구합니다. 그러면 <i>y</i> = <i>x</i><sup>2</sup>과 <i>x</i>축, 직선 <i>x</i> = 2로 둘러싸인 도형처럼 한쪽이 곡선인 도형의 넓이는 어떻게 잴까요?</li>
-            <li><span class="tag">복원</span>함수 <i>f</i>가 닫힌구간 [<i>a</i>, <i>b</i>]에서 연속이면 그래프가 끊어지지 않습니다. 직사각형의 넓이는 밑변 × 높이입니다. 수열의 극한에서는 <i>n</i>이 한없이 커질 때 값이 다가가는 수를 생각했습니다.</li>
-            <li><span class="tag">설명</span>구간을 폭이 같은 직사각형 <i>n</i>개로 나누고, 각 직사각형의 높이를 그 칸 안의 함숫값으로 잡아 넓이를 더하면 곡선 아래 넓이의 근삿값을 얻습니다. <i>n</i>을 크게 할수록 남거나 모자라는 조각이 줄어, 높이를 어디서 잡든 합이 같은 값에 다가갑니다. 그 값이 곡선 아래의 넓이입니다. 닫힌구간 [<i>a</i>, <i>b</i>]에서 연속이고 <i>f</i>(<i>x</i>) ≥ 0인 함수에 대해, <i>y</i> = <i>f</i>(<i>x</i>)의 그래프와 <i>x</i>축 및 두 직선 <i>x</i> = <i>a</i>, <i>x</i> = <i>b</i>로 둘러싸인 도형의 넓이를 <i>f</i>(<i>x</i>)의 <i>a</i>에서 <i>b</i>까지의 <em>정적분</em>이라 하고 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>로 씁니다. <i>a</i>를 아래끝, <i>b</i>를 위끝이라 합니다.</li>
-            <li><span class="tag">연결</span>기호 ∫는 합(sum)의 첫 글자 S를 길게 늘인 모양이고, <i>f</i>(<i>x</i>)<i>dx</i>는 높이 <i>f</i>(<i>x</i>), 폭 <i>dx</i>인 아주 가는 직사각형을 떠올리게 합니다. 직사각형의 합을 극한으로 보내는 방법(구분구적법)은 미적분Ⅱ에서 정적분과 급수의 관계로 다시 다룹니다.</li>
-            <li><span class="tag">적용</span><i>x</i><sup>2</sup>에서 '오른쪽 끝 높이'와 '왼쪽 끝 높이'를 번갈아 고르면 합이 참값보다 큰가요, 작은가요? 그 까닭을 그래프의 증가와 연결해 보세요. 차이가 0.01보다 작아지려면 <i>n</i>이 얼마쯤이어야 하나요? '가운데 높이'에서는 어떤가요?</li>
-            <li class="warn"><span class="tag">판단</span>직사각형 합은 어디까지나 근삿값입니다. <i>n</i>을 아무리 크게 해도 유한한 <i>n</i>에서는 대개 오차가 남고, 정적분은 그 합이 다가가는 극한값입니다. 또 이 정의는 <i>f</i>(<i>x</i>) ≥ 0인 경우의 것입니다. 함숫값이 음수인 곳이 있으면 '넓이'를 그대로 쓸 수 없어서 정의를 넓혀야 합니다.</li>
+            <li><span class="tag">질문</span>직사각형, 삼각형의 넓이는 공식으로 구합니다. 그러면 \(y = x^2\)과 \(x\)축, 직선 \(x = 2\)로 둘러싸인 도형처럼 한쪽이 곡선인 도형의 넓이는 어떻게 잴까요?</li>
+            <li><span class="tag">복원</span>함수 \(f\)가 닫힌구간 \([a, b]\)에서 연속이면 그래프가 끊어지지 않습니다. 직사각형의 넓이는 밑변 × 높이입니다. 수열의 극한에서는 \(n\)이 한없이 커질 때 값이 다가가는 수를 생각했습니다.</li>
+            <li><span class="tag">설명</span>구간을 폭이 같은 직사각형 \(n\)개로 나누고, 각 직사각형의 높이를 그 칸 안의 함숫값으로 잡아 넓이를 더하면 곡선 아래 넓이의 근삿값을 얻습니다. \(n\)을 크게 할수록 남거나 모자라는 조각이 줄어, 높이를 어디서 잡든 합이 같은 값에 다가갑니다. 그 값이 곡선 아래의 넓이입니다. 닫힌구간 \([a, b]\)에서 연속이고 \(f(x) \ge 0\)인 함수에 대해, \(y = f(x)\)의 그래프와 \(x\)축 및 두 직선 \(x = a, x = b\)로 둘러싸인 도형의 넓이를 \(f(x)\)의 \(a\)에서 \(b\)까지의 <em>정적분</em>이라 하고 <b>\(\int_a^b f(x)\,dx\)</b>로 씁니다. \(a\)를 아래끝, \(b\)를 위끝이라 합니다.</li>
+            <li><span class="tag">연결</span>기호 \(\int\)는 합(sum)의 첫 글자 \(S\)를 길게 늘인 모양이고, \(f(x)dx\)는 높이 \(f(x)\), 폭 \(dx\)인 아주 가는 직사각형을 떠올리게 합니다. 직사각형의 합을 극한으로 보내는 방법(구분구적법)은 미적분Ⅱ에서 정적분과 급수의 관계로 다시 다룹니다.</li>
+            <li><span class="tag">적용</span>\(x^2\)에서 '오른쪽 끝 높이'와 '왼쪽 끝 높이'를 번갈아 고르면 합이 참값보다 큰가요, 작은가요? 그 까닭을 그래프의 증가와 연결해 보세요. 차이가 0.01보다 작아지려면 \(n\)이 얼마쯤이어야 하나요? '가운데 높이'에서는 어떤가요?</li>
+            <li class="warn"><span class="tag">판단</span>직사각형 합은 어디까지나 근삿값입니다. \(n\)을 아무리 크게 해도 유한한 \(n\)에서는 대개 오차가 남고, 정적분은 그 합이 다가가는 극한값입니다. 또 이 정의는 \(f(x) \ge 0\)인 경우의 것입니다. 함숫값이 음수인 곳이 있으면 '넓이'를 그대로 쓸 수 없어서 정의를 넓혀야 합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>y</i> = <i>x</i><sup>2</sup>, 0 ≤ <i>x</i> ≤ 2를 폭 1인 직사각형 2개로 덮되 각 칸의 <b>왼쪽 끝</b> 높이를 쓰면, 직사각형 넓이의 합은?</p>
+          <p class="q">\(y = x^2, 0 \le x \le 2\)를 폭 1인 직사각형 2개로 덮되 각 칸의 <b>왼쪽 끝</b> 높이를 쓰면, 직사각형 넓이의 합은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 높이가 <i>f</i>(0) = 0, <i>f</i>(1) = 1이므로 0 × 1 + 1 × 1 = 1입니다. 증가하는 함수라 참값 8/3보다 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>오른쪽 끝 높이를 썼습니다.</b> <i>f</i>(1) + <i>f</i>(2) = 1 + 4 = 5입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8/3<span class="why"><b>참값입니다.</b> 직사각형 2개의 합은 근삿값이라 참값과 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5<span class="why"><b>가운데 높이를 썼습니다.</b> <i>f</i>(0.5) + <i>f</i>(1.5) = 0.25 + 2.25 = 2.5입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> 높이가 \(f(0) = 0, f(1) = 1\)이므로 \(0 \times 1 + 1 \times 1 = 1\)입니다. 증가하는 함수라 참값 \(\frac{8}{3}\)보다 작습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>오른쪽 끝 높이를 썼습니다.</b> \(f(1) + f(2) = 1 + 4 = 5\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{8}{3}\)<span class="why"><b>참값입니다.</b> 직사각형 2개의 합은 근삿값이라 참값과 다릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5<span class="why"><b>가운데 높이를 썼습니다.</b> \(f(0.5) + f(1.5) = 0.25 + 2.25 = 2.5\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-calc1-signed-area">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>그래프가 <i>x</i>축 아래로 내려가면 정적분은 어떻게 될까?</h2><span class="kind">정적분 · 일반적인 연속함수로 확장</span>
+          <span class="no">3.3.2</span><h2>그래프가 \(x\)축 아래로 내려가면 정적분은 어떻게 될까?</h2><span class="kind">정적분 · 일반적인 연속함수로 확장</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="곡선과 x축 사이를 x축 위는 파랑, 아래는 주황으로 칠한 그림. 아래끝 a와 위끝 b를 끌 수 있음"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-p="-1,0,1" aria-pressed="true"><i>x</i><sup>2</sup> − 1</button>
-                <button class="chip" type="button" data-p="0,-4,0,1"><i>x</i><sup>3</sup> − 4<i>x</i></button>
-                <button class="chip" type="button" data-p="3,2,-1">−<i>x</i><sup>2</sup> + 2<i>x</i> + 3</button>
+                <button class="chip" type="button" data-p="-1,0,1" aria-pressed="true">\(x^2 - 1\)</button>
+                <button class="chip" type="button" data-p="0,-4,0,1">\(x^3 - 4x\)</button>
+                <button class="chip" type="button" data-p="3,2,-1">\(-x^2 + 2x + 3\)</button>
               </div>
-              <label class="mono">아래끝 <i>a</i> = <output class="a-out">0</output></label>
+              <label class="mono">아래끝 \(a\) = <output class="a-out">0</output></label>
               <input class="a" type="range" min="-3" max="3" step="0.1" value="0" aria-label="아래끝 a">
-              <label class="mono">위끝 <i>b</i> = <output class="b-out">2</output></label>
+              <label class="mono">위끝 \(b\) = <output class="b-out">2</output></label>
               <input class="b" type="range" min="-3" max="3" step="0.1" value="2" aria-label="위끝 b">
               <dl class="nums">
-                <div><dt>x축 위쪽 넓이</dt><dd class="n-up">—</dd></div>
-                <div><dt>x축 아래쪽 넓이</dt><dd class="n-dn">—</dd></div>
-                <div><dt>∫ₐᵇ f(x)dx</dt><dd class="n-v">—</dd></div>
+                <div><dt>\(x\)축 위쪽 넓이</dt><dd class="n-up">—</dd></div>
+                <div><dt>\(x\)축 아래쪽 넓이</dt><dd class="n-dn">—</dd></div>
+                <div><dt>\(\int_a^b f(x)\,dx\)</dt><dd class="n-v">—</dd></div>
               </dl>
               <p class="rel">—</p>
-              <p class="fig-note"><i>x</i>축 위의 점 <i>a</i>(검정)와 <i>b</i>(주황)를 끌어 옮길 수 있습니다. <i>b</i>를 <i>a</i>보다 왼쪽으로 보내 보세요.</p>
+              <p class="fig-note">\(x\)축 위의 점 \(a\)(검정)와 \(b\)(주황)를 끌어 옮길 수 있습니다. \(b\)를 \(a\)보다 왼쪽으로 보내 보세요.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>정적분을 '곡선 아래 넓이'로 정했습니다. 그런데 <i>y</i> = <i>x</i><sup>2</sup> − 1처럼 그래프가 <i>x</i>축 아래로 내려가는 함수, 또 위끝이 아래끝보다 작은 경우에는 정적분을 어떻게 정해야 할까요?</li>
-            <li><span class="tag">복원</span><i>f</i>(<i>x</i>) ≥ 0이고 <i>f</i>가 [<i>a</i>, <i>b</i>]에서 연속이면 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>는 그래프와 <i>x</i>축, <i>x</i> = <i>a</i>, <i>x</i> = <i>b</i>로 둘러싸인 넓이입니다. 넓이는 언제나 0 이상입니다.</li>
-            <li><span class="tag">설명</span>직사각형 합으로 생각하면 함숫값이 음수인 칸은 높이가 음수이므로 넓이를 빼는 셈이 됩니다. 그래서 일반적인 연속함수에 대해 <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = (<i>x</i>축 위쪽 넓이) − (<i>x</i>축 아래쪽 넓이)</b> (<i>a</i> &lt; <i>b</i>)로 정의를 넓힙니다. 또 끝이 같거나 거꾸로인 경우를 다음과 같이 약속합니다. <b>∫<sub><i>a</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0</b>, <b>∫<sub><i>b</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = −∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b> (<i>a</i> &lt; <i>b</i>). 이렇게 정하면 정적분은 넓이가 아니라 부호가 있는 값이 됩니다.</li>
+            <li><span class="tag">질문</span>정적분을 '곡선 아래 넓이'로 정했습니다. 그런데 \(y = x^2 - 1\)처럼 그래프가 \(x\)축 아래로 내려가는 함수, 또 위끝이 아래끝보다 작은 경우에는 정적분을 어떻게 정해야 할까요?</li>
+            <li><span class="tag">복원</span>\(f(x) \ge 0\)이고 \(f\)가 \([a, b]\)에서 연속이면 \(\int_a^b f(x)\,dx\)는 그래프와 \(x\)축, \(x = a, x = b\)로 둘러싸인 넓이입니다. 넓이는 언제나 0 이상입니다.</li>
+            <li><span class="tag">설명</span>직사각형 합으로 생각하면 함숫값이 음수인 칸은 높이가 음수이므로 넓이를 빼는 셈이 됩니다. 그래서 일반적인 연속함수에 대해 <b>\(\int_a^b f(x)\,dx\) = (\(x\)축 위쪽 넓이) − (\(x\)축 아래쪽 넓이)</b> \((a &lt; b)\)로 정의를 넓힙니다. 또 끝이 같거나 거꾸로인 경우를 다음과 같이 약속합니다. <b>\(\int_a^a f(x)\,dx = 0\)</b>, <b>\(\int_b^a f(x)\,dx = -\int_a^b f(x)\,dx\)</b> \((a &lt; b)\). 이렇게 정하면 정적분은 넓이가 아니라 부호가 있는 값이 됩니다.</li>
             <li><span class="tag">연결</span>속도–시간 그래프에서 시간축 아래 넓이가 반대 방향의 변위를 뜻했던 것과 같은 생각입니다. 넓이 자체를 구하는 문제에서는 위쪽과 아래쪽을 모두 더해야 하고, 이것은 넓이 절에서 다시 다룹니다.</li>
-            <li><span class="tag">적용</span><i>x</i><sup>2</sup> − 1에서 <i>a</i> = −1, <i>b</i> = 1로 두면 정적분의 부호는 무엇인가요? <i>x</i><sup>3</sup> − 4<i>x</i>에서 <i>a</i> = −2, <i>b</i> = 2로 두면 위·아래 넓이와 정적분은 각각 얼마인가요? 그다음 <i>a</i>와 <i>b</i>를 바꾸어 놓으면 정적분은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>"정적분 = 넓이"는 <i>f</i>(<i>x</i>) ≥ 0이고 <i>a</i> &lt; <i>b</i>일 때만 맞습니다. 정적분이 0이어도 둘러싸인 도형의 넓이는 0이 아닐 수 있습니다. 위쪽 넓이와 아래쪽 넓이가 같아서 서로 지워졌을 뿐입니다.</li>
+            <li><span class="tag">적용</span>\(x^2 - 1\)에서 \(a = -1, b = 1\)로 두면 정적분의 부호는 무엇인가요? \(x^3 - 4x\)에서 \(a = -2, b = 2\)로 두면 위·아래 넓이와 정적분은 각각 얼마인가요? 그다음 \(a\)와 \(b\)를 바꾸어 놓으면 정적분은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>"정적분 = 넓이"는 \(f(x) \ge 0\)이고 \(a &lt; b\)일 때만 맞습니다. 정적분이 0이어도 둘러싸인 도형의 넓이는 0이 아닐 수 있습니다. 위쪽 넓이와 아래쪽 넓이가 같아서 서로 지워졌을 뿐입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">∫<sub>0</sub><sup>3</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 5일 때, ∫<sub>3</sub><sup>0</sup> <i>f</i>(<i>x</i>)<i>dx</i> + ∫<sub>2</sub><sup>2</sup> <i>f</i>(<i>x</i>)<i>dx</i>의 값은?</p>
+          <p class="q">\(\int_0^3 f(x)\,dx = 5\)일 때, \(\int_3^0 f(x)\,dx + \int_2^2 f(x)\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−5<span class="why"><b>맞습니다.</b> 끝을 바꾸면 부호가 바뀌어 −5이고, 끝이 같은 정적분은 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-5\)<span class="why"><b>맞습니다.</b> 끝을 바꾸면 부호가 바뀌어 \(-5\)이고, 끝이 같은 정적분은 0입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>순서를 무시했습니다.</b> 정적분은 넓이가 아니라 방향이 있는 값이라 위끝과 아래끝을 바꾸면 부호가 바뀝니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−5 + 2<i>f</i>(2)<span class="why"><b>끝이 같은 정적분을 값이 있는 것으로 보았습니다.</b> 폭이 0이므로 ∫<sub>2</sub><sup>2</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-5 + 2f(2)\)<span class="why"><b>끝이 같은 정적분을 값이 있는 것으로 보았습니다.</b> 폭이 0이므로 \(\int_2^2 f(x)\,dx = 0\)입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>함수를 몰라도 됩니다.</b> 정적분의 약속만으로 값이 정해집니다.</span></span></button></li>
           </ol>
         </div>
@@ -163,46 +164,47 @@
             <canvas aria-label="a에서 c까지는 파랑, c에서 b까지는 노랑으로 칠한 곡선 아래 영역. 점 c를 끌 수 있음"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-p="0,-2,1" aria-pressed="true"><i>f</i>(<i>x</i>) = <i>x</i><sup>2</sup> − 2<i>x</i></button>
-                <button class="chip" type="button" data-p="1,0.5">½<i>x</i> + 1</button>
-                <button class="chip" type="button" data-p="0,-3,0,1"><i>x</i><sup>3</sup> − 3<i>x</i></button>
+                <button class="chip" type="button" data-p="0,-2,1" aria-pressed="true">\(f(x) = x^2 - 2x\)</button>
+                <button class="chip" type="button" data-p="1,0.5">\(\frac{1}{2}x + 1\)</button>
+                <button class="chip" type="button" data-p="0,-3,0,1">\(x^3 - 3x\)</button>
               </div>
               <div class="two">
-                <div><label class="mono"><i>a</i> = <output class="a-out">−1</output></label><input class="a" type="range" min="-3" max="3" step="0.5" value="-1" aria-label="아래끝 a"></div>
-                <div><label class="mono"><i>b</i> = <output class="b-out">2</output></label><input class="b" type="range" min="-3" max="3" step="0.5" value="2" aria-label="위끝 b"></div>
-                <div><label class="mono">나누는 점 <i>c</i> = <output class="c-out">0.5</output></label><input class="c" type="range" min="-3" max="3" step="0.5" value="0.5" aria-label="나누는 점 c"></div>
-                <div><label class="mono">실수배 <i>k</i> = <output class="k-out">1</output></label><input class="k" type="range" min="-2" max="2" step="0.5" value="1" aria-label="실수배 k"></div>
+                <div><label class="mono">\(a\) = <output class="a-out">−1</output></label><input class="a" type="range" min="-3" max="3" step="0.5" value="-1" aria-label="아래끝 a"></div>
+                <div><label class="mono">\(b\) = <output class="b-out">2</output></label><input class="b" type="range" min="-3" max="3" step="0.5" value="2" aria-label="위끝 b"></div>
+                <div><label class="mono">나누는 점 \(c\) = <output class="c-out">0.5</output></label><input class="c" type="range" min="-3" max="3" step="0.5" value="0.5" aria-label="나누는 점 c"></div>
+                <div><label class="mono">실수배 \(k\) = <output class="k-out">1</output></label><input class="k" type="range" min="-2" max="2" step="0.5" value="1" aria-label="실수배 k"></div>
               </div>
               <dl class="nums n4">
-                <div><dt>∫<sub>a</sub><sup>c</sup> 파랑</dt><dd class="n-ac">—</dd></div>
-                <div><dt>∫<sub>c</sub><sup>b</sup> 노랑</dt><dd class="n-cb">—</dd></div>
+                <div><dt>\(\int_a^c\) 파랑</dt><dd class="n-ac">—</dd></div>
+                <div><dt>\(\int_c^b\) 노랑</dt><dd class="n-cb">—</dd></div>
                 <div><dt>두 값의 합</dt><dd class="n-sum">—</dd></div>
-                <div><dt>∫<sub>a</sub><sup>b</sup></dt><dd class="n-ab">—</dd></div>
+                <div><dt>\(\int_a^b\)</dt><dd class="n-ab">—</dd></div>
               </dl>
               <p class="mono kline">—</p>
-              <p class="fig-note">표의 정적분은 모두 초록 곡선 <i>y</i> = <i>k</i>·<i>f</i>(<i>x</i>)의 값입니다. 회색 점선은 <i>k</i> = 1일 때의 <i>f</i>(<i>x</i>)입니다. 주황 점 <i>c</i>는 끌어서 옮길 수 있습니다.</p>
+              <p class="fig-note">표의 정적분은 모두 초록 곡선 \(y = k \cdot f(x)\)의 값입니다. 회색 점선은 \(k = 1\)일 때의 \(f(x)\)입니다. 주황 점 \(c\)는 끌어서 옮길 수 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>[−1, 2]에서의 정적분을 [−1, 0.5]와 [0.5, 2] 두 조각으로 나누어 구한 뒤 더해도 될까요? 나누는 점 <i>c</i>가 구간 밖에 있으면 어떻게 될까요?</li>
-            <li><span class="tag">복원</span><i>a</i> &lt; <i>b</i>일 때 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>는 (<i>x</i>축 위쪽 넓이) − (아래쪽 넓이)이고, ∫<sub><i>b</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = −∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>, ∫<sub><i>a</i></sub><sup><i>a</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = 0으로 약속했습니다.</li>
-            <li><span class="tag">설명</span>연속함수 <i>f</i>, <i>g</i>와 실수 <i>k</i>에 대해 다음이 성립합니다. ① <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>kf</i>(<i>x</i>)<i>dx</i> = <i>k</i>∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>: 높이가 모두 <i>k</i>배가 되면 넓이도 <i>k</i>배이고, <i>k</i> &lt; 0이면 위아래가 뒤집혀 부호가 바뀝니다. ② <b>∫<sub><i>a</i></sub><sup><i>b</i></sup> {<i>f</i>(<i>x</i>) ± <i>g</i>(<i>x</i>)}<i>dx</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> ± ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>g</i>(<i>x</i>)<i>dx</i></b>: 높이를 더하면 넓이도 더해집니다. ③ <b>∫<sub><i>a</i></sub><sup><i>c</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> + ∫<sub><i>c</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i> = ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i></b>: <i>c</i>가 <i>a</i>와 <i>b</i> 사이면 도형을 둘로 자른 것이고, 밖에 있어도 끝을 바꾸면 부호가 바뀐다는 약속 덕분에 그대로 성립합니다.</li>
-            <li><span class="tag">연결</span>성질 ③은 그래프가 <i>x</i>축과 만나는 점에서 구간을 잘라 넓이를 구할 때, 또 구간마다 식이 다른 함수를 적분할 때 씁니다. 성질 ①, ②는 다항함수의 정적분을 항마다 나누어 계산하는 근거입니다.</li>
-            <li><span class="tag">적용</span><i>c</i>를 <i>a</i>와 <i>b</i> 사이에서 움직일 때 '두 값의 합'이 바뀌나요? <i>c</i>를 <i>b</i>보다 오른쪽으로 끌어 보세요. 노란 영역이 겹쳐 칠해지는데도 합이 ∫<sub><i>a</i></sub><sup><i>b</i></sup>와 같은 까닭은 무엇인가요? <i>k</i>를 −1로 하면 그래프와 값이 어떻게 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>곱에는 이런 성질이 없습니다. ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>g</i>(<i>x</i>)<i>dx</i>는 대개 (∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>f</i>(<i>x</i>)<i>dx</i>)(∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>g</i>(<i>x</i>)<i>dx</i>)와 다릅니다. 예를 들어 <i>f</i>(<i>x</i>) = <i>g</i>(<i>x</i>) = <i>x</i>, [0, 1]에서 왼쪽은 1/3, 오른쪽은 1/4입니다.</li>
+            <li><span class="tag">질문</span>\([-1, 2]\)에서의 정적분을 \([-1, 0.5]\)와 [0.5, 2] 두 조각으로 나누어 구한 뒤 더해도 될까요? 나누는 점 \(c\)가 구간 밖에 있으면 어떻게 될까요?</li>
+            <li><span class="tag">복원</span>\(a &lt; b\)일 때 \(\int_a^b f(x)\,dx\)는 (\(x\)축 위쪽 넓이) − (아래쪽 넓이)이고, \(\int_b^a f(x)\,dx = -\int_a^b f(x)\,dx, \int_a^a f(x)\,dx = 0\)으로 약속했습니다.</li>
+            <li><span class="tag">설명</span>연속함수 \(f, g\)와 실수 \(k\)에 대해 다음이 성립합니다. ① <b>\(\int_a^b kf(x)\,dx = k\int_a^b f(x)\,dx\)</b>: 높이가 모두 \(k\)배가 되면 넓이도 \(k\)배이고, \(k &lt; 0\)이면 위아래가 뒤집혀 부호가 바뀝니다. ② <b>\(\int_a^b \{f(x) \pm g(x)\}\,dx = \int_a^b f(x)\,dx \pm \int_a^b g(x)\,dx\)</b>: 높이를 더하면 넓이도 더해집니다. ③ <b>\(\int_a^c f(x)\,dx + \int_c^b f(x)\,dx = \int_a^b f(x)\,dx\)</b>: \(c\)가 \(a\)와 \(b\) 사이면 도형을 둘로 자른 것이고, 밖에 있어도 끝을 바꾸면 부호가 바뀐다는 약속 덕분에 그대로 성립합니다.</li>
+            <li><span class="tag">연결</span>성질 ③은 그래프가 \(x\)축과 만나는 점에서 구간을 잘라 넓이를 구할 때, 또 구간마다 식이 다른 함수를 적분할 때 씁니다. 성질 ①, ②는 다항함수의 정적분을 항마다 나누어 계산하는 근거입니다.</li>
+            <li><span class="tag">적용</span>\(c\)를 \(a\)와 \(b\) 사이에서 움직일 때 '두 값의 합'이 바뀌나요? \(c\)를 \(b\)보다 오른쪽으로 끌어 보세요. 노란 영역이 겹쳐 칠해지는데도 합이 \(\int_a^b\)와 같은 까닭은 무엇인가요? \(k\)를 \(-1\)로 하면 그래프와 값이 어떻게 달라지나요?</li>
+            <li class="warn"><span class="tag">판단</span>곱에는 이런 성질이 없습니다. \(\int_a^b f(x)g(x)\,dx\)는 대개 \((\int_a^b f(x)\,dx)(\int_a^b g(x)\,dx)\)와 다릅니다. 예를 들어 \(f(x) = g(x) = x, [0, 1]\)에서 왼쪽은 \(\frac{1}{3}\), 오른쪽은 \(\frac{1}{4}\)입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">∫<sub>0</sub><sup>5</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 7, ∫<sub>3</sub><sup>5</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 2일 때 ∫<sub>0</sub><sup>3</sup> 2<i>f</i>(<i>x</i>)<i>dx</i>의 값은?</p>
+          <p class="q">\(\int_0^5 f(x)\,dx = 7, \int_3^5 f(x)\,dx = 2\)일 때 \(\int_0^3 2f(x)\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10<span class="why"><b>맞습니다.</b> ∫<sub>0</sub><sup>3</sup> = ∫<sub>0</sub><sup>5</sup> − ∫<sub>3</sub><sup>5</sup> = 7 − 2 = 5이고, 2배 하면 10입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>10<span class="why"><b>맞습니다.</b> \(\int_0^3 = \int_0^5 - \int_3^5 = 7 - 2 = 5\)이고, 2배 하면 10입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>18<span class="why"><b>두 조각을 더했습니다.</b> [0, 3]과 [3, 5]를 이으면 [0, 5]이므로, [0, 3]의 값은 빼서 구해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>실수배를 빠뜨렸습니다.</b> ∫<sub>0</sub><sup>3</sup> <i>f</i>(<i>x</i>)<i>dx</i> = 5이고, 문제는 2<i>f</i>(<i>x</i>)의 정적분입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>구간 나누기 성질로 구할 수 있습니다.</b> <i>f</i>(<i>x</i>)의 식을 몰라도 ③과 ①로 값이 정해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>실수배를 빠뜨렸습니다.</b> \(\int_0^3 f(x)\,dx = 5\)이고, 문제는 \(2f(x)\)의 정적분입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>구간 나누기 성질로 구할 수 있습니다.</b> \(f(x)\)의 식을 몰라도 ③과 ①로 값이 정해집니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc1-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">148문항</span></a>
 
@@ -213,8 +215,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/riemann.js"></script>

@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-sphere-eq canvas { aspect-ratio: 5 / 4; }
     #card-geo-sphere-eq .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
@@ -41,14 +42,14 @@
     <p class="lead">원은 한 점에서 거리가 같은 평면 위의 점들이었고, 거리 공식으로 원의 방정식을 얻었습니다. 공간에서 한 점까지 거리가 같은 점들은 구를 이룹니다. 이 절에서는 공간의 거리 공식으로 구의 방정식을 세우고, 전개된 식에서 중심과 반지름을 되찾으며, 구를 평면으로 자른 단면이 어떤 원인지 계산합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">원의 방정식</span><span class="p">완전제곱식</span><span class="p">좌표공간의 두 점 사이의 거리</span>
+      <a class="p p-card" href="../../c/cm2/1-4.html#card-cm2-circle-eq" title="공통수학2 1.4 · 원 위의 점들은 어떤 식을 만족할까?">원의 방정식</a><a class="p p-card" href="../../c/cm2/1-4.html#card-cm2-general-circle" title="공통수학2 1.4 · x² + y² + Ax + By + C = 0은 언제 원이 될까?">완전제곱식</a><a class="p p-card" href="../../c/geo/2-4.html#card-geo-dist3" title="기하 2.4 · 공간에서 두 점 사이의 거리는 피타고라스 정리를 몇 번 쓰면 될까?">좌표공간의 두 점 사이의 거리</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-geo-sphere-eq"><span class="mono">2.5.1</span>구의 방정식</a></li>
         <li><a href="#card-geo-sphere-complete"><span class="mono">2.5.2</span>구의 방정식의 일반형</a></li>
         <li><a href="#card-geo-sphere-section"><span class="mono">2.5.3</span>구와 평면이 만나서 생기는 원</a></li>
@@ -67,49 +68,50 @@
             <canvas class="cv-wide" aria-label="좌표공간에 중심 C(a, b, c), 반지름 r인 구와 시험할 점 Q, 선분 CQ"></canvas>
             <div class="ctl">
               <div class="ctl-row">
-                <div><label class="mono">중심 <i>a</i> <output class="a-out">1</output></label>
+                <div><label class="mono">중심 \(a\) <output class="a-out">1</output></label>
                 <input class="a" type="range" min="-2" max="2" step="0.5" value="1" aria-label="중심의 x좌표 a"></div>
-                <div><label class="mono">중심 <i>b</i> <output class="b-out">0</output></label>
+                <div><label class="mono">중심 \(b\) <output class="b-out">0</output></label>
                 <input class="b" type="range" min="-2" max="2" step="0.5" value="0" aria-label="중심의 y좌표 b"></div>
-                <div><label class="mono">중심 <i>c</i> <output class="c-out">1</output></label>
+                <div><label class="mono">중심 \(c\) <output class="c-out">1</output></label>
                 <input class="c" type="range" min="-2" max="2" step="0.5" value="1" aria-label="중심의 z좌표 c"></div>
-                <div><label class="mono">반지름 <i>r</i> <output class="r-out">2</output></label>
+                <div><label class="mono">반지름 \(r\) <output class="r-out">2</output></label>
                 <input class="r" type="range" min="0.5" max="3" step="0.5" value="2" aria-label="반지름 r"></div>
               </div>
               <div class="presets">
-                <button class="chip" type="button" data-q="3,2,2" aria-pressed="true">Q(3, 2, 2)</button>
-                <button class="chip" type="button" data-q="0,0,0">Q(0, 0, 0)</button>
-                <button class="chip" type="button" data-q="2,-1,3">Q(2, −1, 3)</button>
+                <button class="chip" type="button" data-q="3,2,2" aria-pressed="true">\(Q(3, 2, 2)\)</button>
+                <button class="chip" type="button" data-q="0,0,0">\(Q(0, 0, 0)\)</button>
+                <button class="chip" type="button" data-q="2,-1,3">\(Q(2, -1, 3)\)</button>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
                 <div><dt>CQ</dt><dd class="n-d">—</dd></div>
-                <div><dt>반지름 <i>r</i></dt><dd class="n-r">—</dd></div>
+                <div><dt>반지름 \(r\)</dt><dd class="n-r">—</dd></div>
                 <div><dt>Q의 위치</dt><dd class="n-w">—</dd></div>
               </dl>
-              <p class="fig-note">Q의 좌표를 식의 좌변에 넣은 값과 <i>r</i><sup>2</sup>을 비교해 보세요. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
+              <p class="fig-note">Q의 좌표를 식의 좌변에 넣은 값과 \(r^2\)을 비교해 보세요. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원은 "중심에서 거리가 <i>r</i>인 점들"이라는 말을 (<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> = <i>r</i><sup>2</sup>으로 바꾸어 썼습니다. 공간에서 같은 말을 하면 어떤 식이 될까요?</li>
-            <li><span class="tag">복원</span>좌표공간의 두 점 A(<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>, <i>z</i><sub>1</sub>), B(<i>x</i><sub>2</sub>, <i>y</i><sub>2</sub>, <i>z</i><sub>2</sub>) 사이의 거리는 √((<i>x</i><sub>2</sub> − <i>x</i><sub>1</sub>)<sup>2</sup> + (<i>y</i><sub>2</sub> − <i>y</i><sub>1</sub>)<sup>2</sup> + (<i>z</i><sub>2</sub> − <i>z</i><sub>1</sub>)<sup>2</sup>)입니다.</li>
-            <li><span class="tag">설명</span>공간에서 한 점 C로부터 일정한 거리 <i>r</i>에 있는 점 전체의 도형을 <em>구</em>라 하고, C를 구의 중심, <i>r</i>을 반지름이라고 합니다. 점 P(<i>x</i>, <i>y</i>, <i>z</i>)가 중심 C(<i>a</i>, <i>b</i>, <i>c</i>), 반지름 <i>r</i>인 구 위에 있을 조건은 CP = <i>r</i>, 곧 CP<sup>2</sup> = <i>r</i><sup>2</sup>이므로<br><b>(<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> + (<i>z</i> − <i>c</i>)<sup>2</sup> = <i>r</i><sup>2</sup></b>입니다. 이것을 <em>구의 방정식</em>이라고 합니다. 중심이 원점이면 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> = <i>r</i><sup>2</sup>입니다. 거꾸로 이 식을 만족하는 점은 모두 구 위에 있으므로, 식과 도형이 정확히 대응합니다.</li>
-            <li><span class="tag">연결</span>식을 전개하면 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> + <i>Ax</i> + <i>By</i> + <i>Cz</i> + <i>D</i> = 0 꼴이 됩니다. 다음 카드에서는 이 꼴에서 거꾸로 중심과 반지름을 찾습니다. 또 점 Q에 대하여 CQ와 <i>r</i>을 비교하면 Q가 구의 안쪽(CQ &lt; <i>r</i>), 구 위(CQ = <i>r</i>), 바깥쪽(CQ &gt; <i>r</i>) 중 어디에 있는지 알 수 있습니다.</li>
-            <li><span class="tag">적용</span>Q(3, 2, 2)를 고르고 중심을 (1, 0, 1)로 둔 채 반지름을 바꾸어, Q가 구 위에 놓이는 반지름을 찾으세요. 그때 CQ는 얼마인가요? 이번에는 반지름 3인 구가 원점을 지나도록 중심을 움직여 보세요. 중심의 좌표에 어떤 조건이 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>(<i>x</i> + 1)<sup>2</sup>은 <i>x</i> − (−1)의 제곱이므로 중심의 <i>x</i>좌표는 −1입니다. 부호를 그대로 읽는 실수가 흔합니다. 또 우변은 반지름이 아니라 반지름의 제곱입니다. 우변이 8이면 반지름은 8이 아니라 2√2입니다.</li>
+            <li><span class="tag">질문</span>원은 "중심에서 거리가 \(r\)인 점들"이라는 말을 \((x - a)^2 + (y - b)^2 = r^2\)으로 바꾸어 썼습니다. 공간에서 같은 말을 하면 어떤 식이 될까요?</li>
+            <li><span class="tag">복원</span>좌표공간의 두 점 \(A(x_1, y_1, z_1), B(x_2, y_2, z_2)\) 사이의 거리는 \(\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}\)입니다.</li>
+            <li><span class="tag">설명</span>공간에서 한 점 C로부터 일정한 거리 \(r\)에 있는 점 전체의 도형을 <em>구</em>라 하고, C를 구의 중심, \(r\)을 반지름이라고 합니다. 점 \(P(x, y, z)\)가 중심 \(C(a, b, c)\), 반지름 \(r\)인 구 위에 있을 조건은 \(CP = r\), 곧 \(CP^2 = r^2\)이므로<br><b>\((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)</b>입니다. 이것을 <em>구의 방정식</em>이라고 합니다. 중심이 원점이면 \(x^2 + y^2 + z^2 = r^2\)입니다. 거꾸로 이 식을 만족하는 점은 모두 구 위에 있으므로, 식과 도형이 정확히 대응합니다.</li>
+            <li><span class="tag">연결</span>식을 전개하면 \(x^2 + y^2 + z^2 + Ax + By + Cz + D = 0\) 꼴이 됩니다. 다음 카드에서는 이 꼴에서 거꾸로 중심과 반지름을 찾습니다. 또 점 Q에 대하여 CQ와 \(r\)을 비교하면 Q가 구의 안쪽(CQ &lt; \(r\)), 구 위\((CQ = r)\), 바깥쪽(CQ &gt; \(r\)) 중 어디에 있는지 알 수 있습니다.</li>
+            <li><span class="tag">적용</span>\(Q(3, 2, 2)\)를 고르고 중심을 \((1, 0, 1)\)로 둔 채 반지름을 바꾸어, Q가 구 위에 놓이는 반지름을 찾으세요. 그때 CQ는 얼마인가요? 이번에는 반지름 3인 구가 원점을 지나도록 중심을 움직여 보세요. 중심의 좌표에 어떤 조건이 있나요?</li>
+            <li class="warn"><span class="tag">판단</span>\((x + 1)^2\)은 \(x - (-1)\)의 제곱이므로 중심의 \(x\)좌표는 \(-1\)입니다. 부호를 그대로 읽는 실수가 흔합니다. 또 우변은 반지름이 아니라 반지름의 제곱입니다. 우변이 8이면 반지름은 8이 아니라 \(2\sqrt{2}\)입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">두 점 A(1, 2, −1), B(3, 0, 3)을 지름의 양 끝으로 하는 구의 방정식은?</p>
+          <p class="q">두 점 \(A(1, 2, -1), B(3, 0, 3)\)을 지름의 양 끝으로 하는 구의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(<i>x</i> − 2)<sup>2</sup> + (<i>y</i> − 1)<sup>2</sup> + (<i>z</i> − 1)<sup>2</sup> = 6<span class="why"><b>맞습니다.</b> 중심은 AB의 중점 (2, 1, 1)이고, AB = √(4 + 4 + 16) = 2√6이므로 반지름은 √6, 반지름의 제곱은 6입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(<i>x</i> − 2)<sup>2</sup> + (<i>y</i> − 1)<sup>2</sup> + (<i>z</i> − 1)<sup>2</sup> = 24<span class="why"><b>지름의 제곱을 썼습니다.</b> 24 = AB<sup>2</sup>입니다. 반지름은 지름의 절반이므로 제곱은 24 ÷ 4 = 6입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(<i>x</i> + 2)<sup>2</sup> + (<i>y</i> + 1)<sup>2</sup> + (<i>z</i> + 1)<sup>2</sup> = 6<span class="why"><b>부호가 반대입니다.</b> 이 식의 중심은 (−2, −1, −1)입니다. 중심 (2, 1, 1)은 <i>x</i> − 2, <i>y</i> − 1, <i>z</i> − 1로 씁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(<i>x</i> − 2)<sup>2</sup> + (<i>y</i> − 1)<sup>2</sup> + (<i>z</i> − 1)<sup>2</sup> = √6<span class="why"><b>우변에 반지름을 그대로 썼습니다.</b> 우변은 반지름의 제곱이므로 (√6)<sup>2</sup> = 6입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((x - 2)^2 + (y - 1)^2 + (z - 1)^2 = 6\)<span class="why"><b>맞습니다.</b> 중심은 AB의 중점 \((2, 1, 1)\)이고, \(AB = \sqrt{4 + 4 + 16} = 2\sqrt{6}\)이므로 반지름은 \(\sqrt{6}\), 반지름의 제곱은 6입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((x - 2)^2 + (y - 1)^2 + (z - 1)^2 = 24\)<span class="why"><b>지름의 제곱을 썼습니다.</b> \(24 = AB^2\)입니다. 반지름은 지름의 절반이므로 제곱은 \(24 \div 4 = 6\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((x + 2)^2 + (y + 1)^2 + (z + 1)^2 = 6\)<span class="why"><b>부호가 반대입니다.</b> 이 식의 중심은 \((-2, -1, -1)\)입니다. 중심 \((2, 1, 1)\)은 \(x - 2, y - 1, z - 1\)로 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((x - 2)^2 + (y - 1)^2 + (z - 1)^2 = \sqrt{6}\)<span class="why"><b>우변에 반지름을 그대로 썼습니다.</b> 우변은 반지름의 제곱이므로 \((\sqrt{6})^2 = 6\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/2-4.html#card-geo-dist3"><small class="mono">기하 2.4</small>공간에서 두 점 사이의 거리는 피타고라스 정리를 몇 번 쓰면 될까?</a></div></nav>
 
       <article class="card" id="card-geo-sphere-complete">
         <header class="card-head">
@@ -120,11 +122,11 @@
             <canvas class="cv-wide" aria-label="일반형 방정식이 나타내는 구. 상수항에 따라 구, 한 점, 또는 아무 도형도 나타나지 않는다"></canvas>
             <div class="ctl">
               <div class="presets ex">
-                <button class="chip" type="button" data-p="-2,4,-6" aria-pressed="true">A, B, C = −2, 4, −6</button>
-                <button class="chip" type="button" data-p="4,0,-2">4, 0, −2</button>
-                <button class="chip" type="button" data-p="0,-6,2">0, −6, 2</button>
+                <button class="chip" type="button" data-p="-2,4,-6" aria-pressed="true">\(A, B, C = -2, 4, -6\)</button>
+                <button class="chip" type="button" data-p="4,0,-2">\(4, 0, -2\)</button>
+                <button class="chip" type="button" data-p="0,-6,2">\(0, -6, 2\)</button>
               </div>
-              <label class="mono">상수항 <i>D</i> = <output class="d-out">5</output></label>
+              <label class="mono">상수항 \(D\) = <output class="d-out">5</output></label>
               <input class="d" type="range" min="-6" max="18" step="1" value="5" aria-label="상수항 D">
               <div class="presets run">
                 <button class="chip go-next" type="button">다음 단계</button>
@@ -133,77 +135,78 @@
               <p class="mono eq">—</p>
               <dl class="nums">
                 <div><dt>중심</dt><dd class="n-c">—</dd></div>
-                <div><dt><i>r</i><sup>2</sup> = (<i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup>)/4 − <i>D</i></dt><dd class="n-r2">—</dd></div>
+                <div><dt>\(r^2 = \frac{A^2 + B^2 + C^2}{4} - D\)</dt><dd class="n-r2">—</dd></div>
                 <div><dt>나타내는 도형</dt><dd class="n-f">—</dd></div>
               </dl>
-              <p class="fig-note">식은 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> + <i>Ax</i> + <i>By</i> + <i>Cz</i> + <i>D</i> = 0입니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
+              <p class="fig-note">식은 \(x^2 + y^2 + z^2 + Ax + By + Cz + D = 0\)입니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> − 2<i>x</i> + 4<i>y</i> − 6<i>z</i> + 5 = 0은 구일까요? 구라면 중심과 반지름은 무엇일까요? 상수항이 커지면 무슨 일이 생길까요?</li>
-            <li><span class="tag">복원</span><i>x</i><sup>2</sup> + <i>px</i> = (<i>x</i> + <i>p</i>/2)<sup>2</sup> − <i>p</i><sup>2</sup>/4처럼 이차식은 완전제곱식과 상수로 바꿀 수 있습니다. 원의 방정식 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>Ax</i> + <i>By</i> + <i>C</i> = 0에서도 같은 방법으로 중심과 반지름을 찾았습니다.</li>
-            <li><span class="tag">설명</span><i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> + <i>Ax</i> + <i>By</i> + <i>Cz</i> + <i>D</i> = 0을 문자별로 묶어 완전제곱식을 만들면<br>(<i>x</i> + <i>A</i>/2)<sup>2</sup> + (<i>y</i> + <i>B</i>/2)<sup>2</sup> + (<i>z</i> + <i>C</i>/2)<sup>2</sup> = (<i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup> − 4<i>D</i>)/4입니다. 우변이 양수이면 이 식은 중심 (−<i>A</i>/2, −<i>B</i>/2, −<i>C</i>/2), 반지름 √(<i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup> − 4<i>D</i>)/2인 구입니다. 따라서 이 꼴의 식이 구를 나타낼 조건은 <b><i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup> − 4<i>D</i> &gt; 0</b>입니다.</li>
-            <li><span class="tag">연결</span><i>x</i><sup>2</sup>, <i>y</i><sup>2</sup>, <i>z</i><sup>2</sup>의 계수가 모두 같고 <i>xy</i>, <i>yz</i>, <i>zx</i> 항이 없어야 이 방법을 씁니다. 계수가 모두 2이면 먼저 양변을 2로 나눕니다. 네 점을 지나는 구를 구할 때는 이 일반형에 네 점을 넣어 <i>A</i>, <i>B</i>, <i>C</i>, <i>D</i>에 대한 연립방정식을 풉니다.</li>
-            <li><span class="tag">적용</span>첫 번째 식을 고르고 "다음 단계"를 눌러 완전제곱식을 만드는 과정을 따라가세요. 그다음 <i>D</i>를 키우며 구의 크기가 어떻게 변하는지 보세요. <i>r</i><sup>2</sup>이 0이 되는 <i>D</i>는 얼마이고, 그때 그림에는 무엇이 남나요? <i>D</i>가 그보다 크면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>모든 이차식이 구를 나타내지는 않습니다. 우변이 0이면 중심 한 점만 식을 만족하고, 우변이 음수이면 제곱의 합이 음수가 될 수 없으므로 식을 만족하는 점이 없습니다. 반지름을 구할 때 <i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup>을 4로 나누는 것을 잊으면 조건이 크게 틀어집니다.</li>
+            <li><span class="tag">질문</span>\(x^2 + y^2 + z^2 - 2x + 4y - 6z + 5 = 0\)은 구일까요? 구라면 중심과 반지름은 무엇일까요? 상수항이 커지면 무슨 일이 생길까요?</li>
+            <li><span class="tag">복원</span>\(x^2 + px = (x + \frac{p}{2})^2 - \frac{p^2}{4}\)처럼 이차식은 완전제곱식과 상수로 바꿀 수 있습니다. 원의 방정식 \(x^2 + y^2 + Ax + By + C = 0\)에서도 같은 방법으로 중심과 반지름을 찾았습니다.</li>
+            <li><span class="tag">설명</span>\(x^2 + y^2 + z^2 + Ax + By + Cz + D = 0\)을 문자별로 묶어 완전제곱식을 만들면<br>\((x + \frac{A}{2})^2 + (y + \frac{B}{2})^2 + (z + \frac{C}{2})^2 = \frac{A^2 + B^2 + C^2 - 4D}{4}\)입니다. 우변이 양수이면 이 식은 중심 \((-\frac{A}{2}, -\frac{B}{2}, -\frac{C}{2})\), 반지름 \(\frac{\sqrt{A^2 + B^2 + C^2 - 4D}}{2}\)인 구입니다. 따라서 이 꼴의 식이 구를 나타낼 조건은 <b>\(A^2 + B^2 + C^2 - 4D\) &gt; 0</b>입니다.</li>
+            <li><span class="tag">연결</span>\(x^2, y^2, z^2\)의 계수가 모두 같고 \(xy, yz, zx\) 항이 없어야 이 방법을 씁니다. 계수가 모두 2이면 먼저 양변을 2로 나눕니다. 네 점을 지나는 구를 구할 때는 이 일반형에 네 점을 넣어 \(A, B, C, D\)에 대한 연립방정식을 풉니다.</li>
+            <li><span class="tag">적용</span>첫 번째 식을 고르고 "다음 단계"를 눌러 완전제곱식을 만드는 과정을 따라가세요. 그다음 \(D\)를 키우며 구의 크기가 어떻게 변하는지 보세요. \(r^2\)이 0이 되는 \(D\)는 얼마이고, 그때 그림에는 무엇이 남나요? \(D\)가 그보다 크면 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>모든 이차식이 구를 나타내지는 않습니다. 우변이 0이면 중심 한 점만 식을 만족하고, 우변이 음수이면 제곱의 합이 음수가 될 수 없으므로 식을 만족하는 점이 없습니다. 반지름을 구할 때 \(A^2 + B^2 + C^2\)을 4로 나누는 것을 잊으면 조건이 크게 틀어집니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">방정식 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup> − 4<i>x</i> + 2<i>y</i> − 6<i>z</i> + <i>k</i> = 0이 구를 나타내도록 하는 실수 <i>k</i>의 값의 범위는?</p>
+          <p class="q">방정식 \(x^2 + y^2 + z^2 - 4x + 2y - 6z + k = 0\)이 구를 나타내도록 하는 실수 \(k\)의 값의 범위는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>k</i> &lt; 14<span class="why"><b>맞습니다.</b> (<i>x</i> − 2)<sup>2</sup> + (<i>y</i> + 1)<sup>2</sup> + (<i>z</i> − 3)<sup>2</sup> = 4 + 1 + 9 − <i>k</i> = 14 − <i>k</i>이고, 이 값이 양수여야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>k</i> ≤ 14<span class="why"><b>등호를 넣었습니다.</b> <i>k</i> = 14이면 우변이 0이라 점 (2, −1, 3) 하나만 나타냅니다. 반지름이 0인 구는 구로 보지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>k</i> &lt; 56<span class="why"><b>4로 나누지 않았습니다.</b> 16 + 4 + 36 = 56은 <i>A</i><sup>2</sup> + <i>B</i><sup>2</sup> + <i>C</i><sup>2</sup>입니다. 완전제곱식을 만들 때 더하는 수는 (계수/2)<sup>2</sup>입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>k</i> &gt; 14<span class="why"><b>부등호 방향이 반대입니다.</b> <i>k</i>가 커질수록 우변 14 − <i>k</i>가 줄어들어 음수가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(k\) &lt; 14<span class="why"><b>맞습니다.</b> \((x - 2)^2 + (y + 1)^2 + (z - 3)^2 = 4 + 1 + 9 - k = 14 - k\)이고, 이 값이 양수여야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(k \le 14\)<span class="why"><b>등호를 넣었습니다.</b> \(k = 14\)이면 우변이 0이라 점 \((2, -1, 3)\) 하나만 나타냅니다. 반지름이 0인 구는 구로 보지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(k\) &lt; 56<span class="why"><b>4로 나누지 않았습니다.</b> \(16 + 4 + 36 = 56\)은 \(A^2 + B^2 + C^2\)입니다. 완전제곱식을 만들 때 더하는 수는 (계수/2)\({}^2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k\) &gt; 14<span class="why"><b>부등호 방향이 반대입니다.</b> \(k\)가 커질수록 우변 \(14 - k\)가 줄어들어 음수가 됩니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/2-4.html#card-geo-dist3"><small class="mono">기하 2.4</small>공간에서 두 점 사이의 거리는 피타고라스 정리를 몇 번 쓰면 될까?</a></div></nav>
 
       <article class="card" id="card-geo-sphere-section">
         <header class="card-head">
-          <span class="no">2.5.3</span><h2>구를 평면 z = k로 자르면 단면의 크기는 어떻게 정해질까?</h2><span class="kind">구의 단면 · 좌표평면과 접하는 구</span>
+          <span class="no">2.5.3</span><h2>구를 평면 \(z = k\)로 자르면 단면의 크기는 어떻게 정해질까?</h2><span class="kind">구의 단면 · 좌표평면과 접하는 구</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="중심 C, 반지름 r인 구와 평면 z = k, 두 도형이 만나서 생기는 원과 그 반지름"></canvas>
             <div class="ctl">
               <div class="presets ex">
-                <button class="chip" type="button" data-c="1,-1,2" aria-pressed="true">C(1, −1, 2)</button>
-                <button class="chip" type="button" data-c="0,0,0">C(0, 0, 0)</button>
-                <button class="chip" type="button" data-c="-1,1,-1">C(−1, 1, −1)</button>
+                <button class="chip" type="button" data-c="1,-1,2" aria-pressed="true">\(C(1, -1, 2)\)</button>
+                <button class="chip" type="button" data-c="0,0,0">\(C(0, 0, 0)\)</button>
+                <button class="chip" type="button" data-c="-1,1,-1">\(C(-1, 1, -1)\)</button>
               </div>
               <div class="ctl-row">
-                <div><label class="mono">반지름 <i>r</i> <output class="r-out">2.5</output></label>
+                <div><label class="mono">반지름 \(r\) <output class="r-out">2.5</output></label>
                 <input class="r" type="range" min="1" max="3" step="0.5" value="2.5" aria-label="구의 반지름 r"></div>
-                <div><label class="mono">평면 <i>z</i> = <i>k</i> <output class="k-out">0</output></label>
+                <div><label class="mono">평면 \(z = k\) <output class="k-out">0</output></label>
                 <input class="k" type="range" min="-4" max="4" step="0.25" value="0" aria-label="자르는 평면의 높이 k"></div>
               </div>
               <dl class="nums">
-                <div><dt>중심과 평면 사이 거리 <i>d</i></dt><dd class="n-d">—</dd></div>
-                <div><dt>단면의 반지름 √(<i>r</i><sup>2</sup> − <i>d</i><sup>2</sup>)</dt><dd class="n-rho">—</dd></div>
+                <div><dt>중심과 평면 사이 거리 \(d\)</dt><dd class="n-d">—</dd></div>
+                <div><dt>단면의 반지름 \(\sqrt{r^2 - d^2}\)</dt><dd class="n-rho">—</dd></div>
                 <div><dt>단면의 넓이</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note"><i>k</i> = 0이면 자르는 평면은 <i>xy</i>평면입니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
+              <p class="fig-note">\(k = 0\)이면 자르는 평면은 \(xy\)평면입니다. 그림을 옆으로 끌면 돌려 볼 수 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>수박을 바닥과 평행하게 썰면 단면은 원입니다. 중심에서 멀리 썰수록 원이 작아집니다. 썬 높이와 단면의 반지름 사이에는 어떤 식이 있을까요?</li>
-            <li><span class="tag">복원</span>중심이 C(<i>a</i>, <i>b</i>, <i>c</i>)이고 반지름이 <i>r</i>인 구의 방정식은 (<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> + (<i>z</i> − <i>c</i>)<sup>2</sup> = <i>r</i><sup>2</sup>입니다. 평면 <i>z</i> = <i>k</i> 위의 점은 <i>z</i>좌표가 모두 <i>k</i>입니다.</li>
-            <li><span class="tag">설명</span>구의 방정식에 <i>z</i> = <i>k</i>를 넣으면 (<i>x</i> − <i>a</i>)<sup>2</sup> + (<i>y</i> − <i>b</i>)<sup>2</sup> = <i>r</i><sup>2</sup> − (<i>k</i> − <i>c</i>)<sup>2</sup>입니다. 중심에서 평면까지의 거리를 <i>d</i> = |<i>k</i> − <i>c</i>|라 하면 ① <i>d</i> &lt; <i>r</i>일 때 단면은 평면 <i>z</i> = <i>k</i> 위에서 중심이 (<i>a</i>, <i>b</i>, <i>k</i>), 반지름이 <b>√(<i>r</i><sup>2</sup> − <i>d</i><sup>2</sup>)</b>인 원입니다. ② <i>d</i> = <i>r</i>이면 한 점에서 만나고, 구는 평면에 <em>접한다</em>고 합니다. ③ <i>d</i> &gt; <i>r</i>이면 만나지 않습니다. 반지름 공식은 구의 중심, 단면의 중심, 단면 위의 한 점이 이루는 직각삼각형의 피타고라스 정리와 같습니다.</li>
-            <li><span class="tag">연결</span>구가 <i>xy</i>평면에 접하면 |<i>c</i>| = <i>r</i>, <i>yz</i>평면에 접하면 |<i>a</i>| = <i>r</i>, <i>zx</i>평면에 접하면 |<i>b</i>| = <i>r</i>입니다. 세 좌표평면에 모두 접하는 구는 |<i>a</i>| = |<i>b</i>| = |<i>c</i>| = <i>r</i>입니다. 구를 <i>x</i> = <i>k</i>, <i>y</i> = <i>k</i>로 잘라도 같은 방법으로 단면을 구합니다.</li>
-            <li><span class="tag">적용</span>C(1, −1, 2)에서 <i>k</i>를 움직여 단면이 가장 큰 높이를 찾으세요. 그때 단면의 반지름은 얼마인가요? 반지름을 2로 두고 <i>k</i> = 0으로 맞추면 무슨 일이 생기나요? 구가 <i>xy</i>평면과 만나지 않게 하려면 <i>r</i>이 어떤 범위여야 하는지도 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>단면의 반지름을 <i>r</i> − <i>d</i>로 계산하는 실수가 흔합니다. <i>r</i>, <i>d</i>, 단면의 반지름은 직각삼각형의 세 변이므로 제곱끼리 빼야 합니다. 또 구가 <i>xy</i>평면에 접할 조건은 중심의 <i>z</i>좌표가 반지름과 같은 것이지, 중심이 원점에서 <i>r</i>만큼 떨어진 것이 아닙니다.</li>
+            <li><span class="tag">복원</span>중심이 \(C(a, b, c)\)이고 반지름이 \(r\)인 구의 방정식은 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)입니다. 평면 \(z = k\) 위의 점은 \(z\)좌표가 모두 \(k\)입니다.</li>
+            <li><span class="tag">설명</span>구의 방정식에 \(z = k\)를 넣으면 \((x - a)^2 + (y - b)^2 = r^2 - (k - c)^2\)입니다. 중심에서 평면까지의 거리를 \(d = |k - c|\)라 하면 ① \(d\) &lt; \(r\)일 때 단면은 평면 \(z = k\) 위에서 중심이 \((a, b, k)\), 반지름이 <b>\(\sqrt{r^2 - d^2}\)</b>인 원입니다. ② \(d = r\)이면 한 점에서 만나고, 구는 평면에 <em>접한다</em>고 합니다. ③ \(d\) &gt; \(r\)이면 만나지 않습니다. 반지름 공식은 구의 중심, 단면의 중심, 단면 위의 한 점이 이루는 직각삼각형의 피타고라스 정리와 같습니다.</li>
+            <li><span class="tag">연결</span>구가 \(xy\)평면에 접하면 \(|c| = r\), yz평면에 접하면 \(|a| = r\), zx평면에 접하면 \(|b| = r\)입니다. 세 좌표평면에 모두 접하는 구는 \(|a| = |b| = |c| = r\)입니다. 구를 \(x = k, y = k\)로 잘라도 같은 방법으로 단면을 구합니다.</li>
+            <li><span class="tag">적용</span>\(C(1, -1, 2)\)에서 \(k\)를 움직여 단면이 가장 큰 높이를 찾으세요. 그때 단면의 반지름은 얼마인가요? 반지름을 2로 두고 \(k = 0\)으로 맞추면 무슨 일이 생기나요? 구가 \(xy\)평면과 만나지 않게 하려면 \(r\)이 어떤 범위여야 하는지도 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>단면의 반지름을 \(r - d\)로 계산하는 실수가 흔합니다. \(r, d\), 단면의 반지름은 직각삼각형의 세 변이므로 제곱끼리 빼야 합니다. 또 구가 \(xy\)평면에 접할 조건은 중심의 \(z\)좌표가 반지름과 같은 것이지, 중심이 원점에서 \(r\)만큼 떨어진 것이 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">구 (<i>x</i> − 1)<sup>2</sup> + (<i>y</i> + 2)<sup>2</sup> + (<i>z</i> − 3)<sup>2</sup> = 25와 <i>xy</i>평면이 만나서 생기는 원의 반지름은?</p>
+          <p class="q">구 \((x - 1)^2 + (y + 2)^2 + (z - 3)^2 = 25\)와 \(xy\)평면이 만나서 생기는 원의 반지름은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>5<span class="why"><b>구의 반지름입니다.</b> 단면이 구의 반지름과 같은 원(대원)이 되려면 평면이 중심을 지나야 합니다. <i>xy</i>평면은 중심에서 3만큼 떨어져 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>길이를 그대로 뺐습니다.</b> 5 − 3 = 2가 아니라 제곱을 빼야 합니다. 단면의 반지름은 직각삼각형의 한 변입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4<span class="why"><b>맞습니다.</b> <i>z</i> = 0을 넣으면 (<i>x</i> − 1)<sup>2</sup> + (<i>y</i> + 2)<sup>2</sup> = 25 − 9 = 16이므로 반지름은 4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>√21<span class="why"><b>다른 좌표를 썼습니다.</b> 25 − 4 = 21은 <i>y</i>좌표 −2를 거리로 쓴 값으로, <i>zx</i>평면(<i>y</i> = 0)으로 자른 단면의 반지름입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>5<span class="why"><b>구의 반지름입니다.</b> 단면이 구의 반지름과 같은 원(대원)이 되려면 평면이 중심을 지나야 합니다. \(xy\)평면은 중심에서 3만큼 떨어져 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>길이를 그대로 뺐습니다.</b> \(5 - 3 = 2\)가 아니라 제곱을 빼야 합니다. 단면의 반지름은 직각삼각형의 한 변입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4<span class="why"><b>맞습니다.</b> \(z = 0\)을 넣으면 \((x - 1)^2 + (y + 2)^2 = 25 - 9 = 16\)이므로 반지름은 4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\sqrt{21}\)<span class="why"><b>다른 좌표를 썼습니다.</b> \(25 - 4 = 21\)은 \(y\)좌표 \(-2\)를 거리로 쓴 값으로, \(zx\)평면\((y = 0)\)으로 자른 단면의 반지름입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -217,8 +220,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/geo/space3d.js"></script>
 <script src="../../js/cards/geo/sp-sphere-eq.js"></script>
 <script src="../../js/cards/geo/space3d.js"></script>

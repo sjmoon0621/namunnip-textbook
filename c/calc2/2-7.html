@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-implicit-slope canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-calc2-implicit-slope .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -35,17 +36,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>음함수와 역함수의 미분</h1>
-    <p class="lead">원 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = 25나 <i>x</i><sup>3</sup> + <i>x</i>의 역함수처럼, <i>x</i>와 <i>y</i>의 관계는 알지만 <i>y</i>를 <i>x</i>의 식으로 깔끔하게 풀기 어려운 경우가 많습니다. 이 절에서는 식을 풀지 않고 관계식 그대로 미분해 접선의 기울기를 얻습니다. 열쇠는 <i>y</i>를 <i>x</i>의 함수로 보고 합성함수의 미분법을 쓰는 것입니다. 다루는 음함수는 간단한 것으로 한정합니다.</p>
+    <p class="lead">원 \(x^2 + y^2 = 25\)나 \(x^3 + x\)의 역함수처럼, \(x\)와 \(y\)의 관계는 알지만 \(y\)를 \(x\)의 식으로 깔끔하게 풀기 어려운 경우가 많습니다. 이 절에서는 식을 풀지 않고 관계식 그대로 미분해 접선의 기울기를 얻습니다. 열쇠는 \(y\)를 \(x\)의 함수로 보고 합성함수의 미분법을 쓰는 것입니다. 다루는 음함수는 간단한 것으로 한정합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">합성함수의 미분법</span><span class="p">역함수와 그 그래프</span><span class="p">지수함수와 로그함수의 도함수</span>
+      <a class="p p-card" href="../../c/calc2/2-5.html#card-calc2-chain-lines" title="미적분Ⅱ 2.5 · 안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?">합성함수의 미분법</a><a class="p p-card" href="../../c/cm2/3-3.html#card-cm2-inverse-graph" title="공통수학2 3.3 · 역함수는 어떻게 구하고, 그래프는 어디에 있을까?">역함수와 그 그래프</a><a class="p p-card" href="../../c/calc2/2-1.html#card-calc2-exp-slope" title="미적분Ⅱ 2.1 · 접선의 기울기가 높이와 같은 지수함수의 밑은?">지수함수와 로그함수의 도함수</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc2-implicit-slope"><span class="mono">2.7.1</span>음함수의 미분법</a></li>
         <li><a href="#card-calc2-inverse-slope"><span class="mono">2.7.2</span>역함수의 미분법</a></li>
       </ol>
@@ -56,49 +57,50 @@
     <div>
       <article class="card" id="card-calc2-implicit-slope">
         <header class="card-head">
-          <span class="no">2.7.1</span><h2>y를 x의 식으로 풀지 않고 접선의 기울기를 구할 수 있을까?</h2><span class="kind">음함수의 미분 · 조작</span>
+          <span class="no">2.7.1</span><h2>\(y\)를 \(x\)의 식으로 풀지 않고 접선의 기울기를 구할 수 있을까?</h2><span class="kind">음함수의 미분 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="곡선 F(x, y) = 0 위의 점 P와 접선. 점 P와 같은 쪽 가지는 초록, 나머지는 회색"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="circle" aria-pressed="true"><i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = 25</button>
-                <button class="chip" type="button" data-k="ellipse"><i>x</i><sup>2</sup>/9 + <i>y</i><sup>2</sup>/4 = 1</button>
-                <button class="chip" type="button" data-k="tilt"><i>x</i><sup>2</sup> + <i>xy</i> + <i>y</i><sup>2</sup> = 3</button>
+                <button class="chip" type="button" data-k="circle" aria-pressed="true">\(x^2 + y^2 = 25\)</button>
+                <button class="chip" type="button" data-k="ellipse">\(\frac{x^2}{9} + \frac{y^2}{4} = 1\)</button>
+                <button class="chip" type="button" data-k="tilt">\(x^2 + xy + y^2 = 3\)</button>
               </div>
-              <label class="mono">점 P의 방향각 = <output class="t-out">53</output>°</label>
+              <label class="mono">점 \(P\)의 방향각 = <output class="t-out">53</output>°</label>
               <input class="st" type="range" min="0" max="360" step="0.5" value="53" aria-label="점 P의 방향각">
               <dl class="nums n4">
-                <div><dt>P(x, y)</dt><dd class="n-p">—</dd></div>
-                <div><dt>음함수 미분 dy/dx</dt><dd class="n-m good">—</dd></div>
-                <div><dt>Δy/Δx (가까운 점)</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(P(x, y)\)</dt><dd class="n-p">—</dd></div>
+                <div><dt>음함수 미분 \(\frac{dy}{dx}\)</dt><dd class="n-m good">—</dd></div>
+                <div><dt>\(\frac{\Delta y}{\Delta x}\) (가까운 점)</dt><dd class="n-d">—</dd></div>
                 <div><dt>접선</dt><dd class="n-l">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">초록 부분은 점 P 근처에서 <i>y</i>를 <i>x</i>의 함수로 볼 수 있는 가지입니다. 회색 부분은 같은 관계식에서 나온 다른 가지입니다. 점선은 P에서의 접선입니다.</p>
+              <p class="fig-note">초록 부분은 점 \(P\) 근처에서 \(y\)를 \(x\)의 함수로 볼 수 있는 가지입니다. 회색 부분은 같은 관계식에서 나온 다른 가지입니다. 점선은 \(P\)에서의 접선입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = 25 위의 점 (3, 4)에서 접선의 기울기를, <i>y</i> = √(25 − <i>x</i><sup>2</sup>)처럼 식을 풀지 않고 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span><i>y</i>가 <i>x</i>의 함수이면 <i>y</i><sup>2</sup>은 합성함수입니다. 그래서 <i>d</i>/<i>dx</i>(<i>y</i><sup>2</sup>) = 2<i>y</i> · <i>dy</i>/<i>dx</i>입니다. 바깥 함수 <i>u</i><sup>2</sup>을 미분한 뒤 속 함수 <i>y</i>의 도함수를 곱합니다.</li>
-            <li><span class="tag">설명</span><i>x</i>와 <i>y</i>의 관계가 <i>F</i>(<i>x</i>, <i>y</i>) = 0 꼴로 주어지고, 이 관계가 <i>y</i>를 <i>x</i>의 함수로 정할 때 그 함수를 <em>음함수</em>라고 합니다. 식을 풀지 않고 양변을 <i>x</i>로 미분하면 됩니다. 원에서는 2<i>x</i> + 2<i>y</i> · <i>y</i>′ = 0이므로 <b><i>y</i>′ = −<i>x</i>/<i>y</i> (<i>y</i> ≠ 0)</b>입니다. 점 (3, 4)에서 기울기는 −3/4입니다. 위쪽 반원 <i>y</i> = √(25 − <i>x</i><sup>2</sup>)을 직접 미분해도 −<i>x</i>/√(25 − <i>x</i><sup>2</sup>) = −3/4로 같습니다. <i>xy</i> 같은 항은 곱의 미분법으로 (<i>xy</i>)′ = <i>y</i> + <i>x</i><i>y</i>′입니다.</li>
-            <li><span class="tag">연결</span>같은 방법으로 <i>y</i> = <i>x</i><sup><i>p</i>/<i>q</i></sup>를 <i>y</i><sup><i>q</i></sup> = <i>x</i><sup><i>p</i></sup>로 바꾸어 미분하면, 유리수 지수에서도 (<i>x</i><sup><i>r</i></sup>)′ = <i>r</i><i>x</i><sup><i>r</i> − 1</sup>임을 얻습니다. 기울기를 얻으면 곧바로 접선의 방정식을 쓸 수 있습니다.</li>
-            <li><span class="tag">적용</span>원에서 방향각을 움직여 넷째 칸의 접선이 수평, 수직이 되는 점을 찾으세요. 둘째 칸과 셋째 칸은 늘 같은가요? 방향각 0°를 지날 때 초록 가지는 어떻게 바뀌나요? 셋째 식 <i>x</i><sup>2</sup> + <i>xy</i> + <i>y</i><sup>2</sup> = 3에서는 접선이 수직인 점이 직선 <i>x</i> + 2<i>y</i> = 0 위에 있는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span><i>y</i>′의 식에 <i>x</i>와 <i>y</i>가 함께 들어 있습니다. 그래서 같은 <i>x</i>라도 위쪽 점과 아래쪽 점의 기울기가 다릅니다. 분모가 0인 점에서는 접선이 세로선이어서 기울기가 없습니다. 또 이 방법은 그 점 근처에서 <i>y</i>가 <i>x</i>의 미분가능한 함수라는 가정 위에서 씁니다. <i>y</i><sup>2</sup>을 미분해 2<i>y</i>만 쓰고 <i>y</i>′를 빠뜨리는 실수가 가장 흔합니다.</li>
+            <li><span class="tag">질문</span>원 \(x^2 + y^2 = 25\) 위의 점 \((3, 4)\)에서 접선의 기울기를, \(y = \sqrt{25 - x^2}\)처럼 식을 풀지 않고 구할 수 있을까요?</li>
+            <li><span class="tag">복원</span>\(y\)가 \(x\)의 함수이면 \(y^2\)은 합성함수입니다. 그래서 \(\frac{d}{dx}(y^2) = 2y \cdot \frac{dy}{dx}\)입니다. 바깥 함수 \(u^2\)을 미분한 뒤 속 함수 \(y\)의 도함수를 곱합니다.</li>
+            <li><span class="tag">설명</span>\(x\)와 \(y\)의 관계가 \(F(x, y) = 0\) 꼴로 주어지고, 이 관계가 \(y\)를 \(x\)의 함수로 정할 때 그 함수를 <em>음함수</em>라고 합니다. 식을 풀지 않고 양변을 \(x\)로 미분하면 됩니다. 원에서는 \(2x + 2y \cdot y' = 0\)이므로 <b>\(y' = -\frac{x}{y} (y \ne 0)\)</b>입니다. 점 \((3, 4)\)에서 기울기는 \(-\frac{3}{4}\)입니다. 위쪽 반원 \(y = \sqrt{25 - x^2}\)을 직접 미분해도 \(-\frac{x}{\sqrt{25 - x^2}} = -\frac{3}{4}\)로 같습니다. \(xy\) 같은 항은 곱의 미분법으로 \((xy)' = y + xy'\)입니다.</li>
+            <li><span class="tag">연결</span>같은 방법으로 \(y = x^{\frac{p}{q}}\)를 \(y^q = x^p\)로 바꾸어 미분하면, 유리수 지수에서도 \((x^r)' = rx^{r - 1}\)임을 얻습니다. 기울기를 얻으면 곧바로 접선의 방정식을 쓸 수 있습니다.</li>
+            <li><span class="tag">적용</span>원에서 방향각을 움직여 넷째 칸의 접선이 수평, 수직이 되는 점을 찾으세요. 둘째 칸과 셋째 칸은 늘 같은가요? 방향각 \(0^\circ\)를 지날 때 초록 가지는 어떻게 바뀌나요? 셋째 식 \(x^2 + xy + y^2 = 3\)에서는 접선이 수직인 점이 직선 \(x + 2y = 0\) 위에 있는지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>\(y'\)의 식에 \(x\)와 \(y\)가 함께 들어 있습니다. 그래서 같은 \(x\)라도 위쪽 점과 아래쪽 점의 기울기가 다릅니다. 분모가 0인 점에서는 접선이 세로선이어서 기울기가 없습니다. 또 이 방법은 그 점 근처에서 \(y\)가 \(x\)의 미분가능한 함수라는 가정 위에서 씁니다. \(y^2\)을 미분해 \(2y\)만 쓰고 \(y'\)를 빠뜨리는 실수가 가장 흔합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">곡선 <i>x</i><sup>3</sup> + <i>y</i><sup>3</sup> = 9 위의 점 (1, 2)에서 접선의 기울기는?</p>
+          <p class="q">곡선 \(x^3 + y^3 = 9\) 위의 점 \((1, 2)\)에서 접선의 기울기는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−1/4<span class="why"><b>맞습니다.</b> 3<i>x</i><sup>2</sup> + 3<i>y</i><sup>2</sup><i>y</i>′ = 0이므로 <i>y</i>′ = −<i>x</i><sup>2</sup>/<i>y</i><sup>2</sup> = −1/4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−4<span class="why"><b>분자와 분모를 바꾸었습니다.</b> <i>y</i>′가 붙은 항은 3<i>y</i><sup>2</sup><i>y</i>′이므로 <i>y</i><sup>2</sup>이 분모로 갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−1/2<span class="why"><b>원의 공식 −<i>x</i>/<i>y</i>를 그대로 썼습니다.</b> 그 식은 <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>r</i><sup>2</sup>에서만 나옵니다. 세제곱을 미분하면 제곱이 남습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/4<span class="why"><b>부호를 놓쳤습니다.</b> 3<i>x</i><sup>2</sup>을 반대쪽으로 넘기면 음수가 됩니다. 그림에서도 이 곡선은 제1사분면에서 오른쪽으로 내려갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-\frac{1}{4}\)<span class="why"><b>맞습니다.</b> \(3x^2 + 3y^2y' = 0\)이므로 \(y' = -\frac{x^2}{y^2} = -\frac{1}{4}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-4\)<span class="why"><b>분자와 분모를 바꾸었습니다.</b> \(y'\)가 붙은 항은 \(3y^2y'\)이므로 \(y^2\)이 분모로 갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-\frac{1}{2}\)<span class="why"><b>원의 공식 \(-\frac{x}{y}\)를 그대로 썼습니다.</b> 그 식은 \(x^2 + y^2 = r^2\)에서만 나옵니다. 세제곱을 미분하면 제곱이 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{4}\)<span class="why"><b>부호를 놓쳤습니다.</b> \(3x^2\)을 반대쪽으로 넘기면 음수가 됩니다. 그림에서도 이 곡선은 제1사분면에서 오른쪽으로 내려갑니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a></div></nav>
 
       <article class="card" id="card-calc2-inverse-slope">
         <header class="card-head">
@@ -109,39 +111,39 @@
             <canvas aria-label="y = f(x)(초록)와 역함수 y = f⁻¹(x)(파랑), 직선 y = x에 대칭인 두 점 A, B와 두 접선, 기울기 삼각형"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="cub" aria-pressed="true"><i>f</i>(<i>x</i>) = <i>x</i><sup>3</sup> + <i>x</i></button>
-                <button class="chip" type="button" data-k="exp"><i>f</i>(<i>x</i>) = <i>e</i><sup><i>x</i></sup></button>
-                <button class="chip" type="button" data-k="cube"><i>f</i>(<i>x</i>) = <i>x</i><sup>3</sup></button>
+                <button class="chip" type="button" data-k="cub" aria-pressed="true">\(f(x) = x^3 + x\)</button>
+                <button class="chip" type="button" data-k="exp">\(f(x) = e^x\)</button>
+                <button class="chip" type="button" data-k="cube">\(f(x) = x^3\)</button>
               </div>
-              <label class="mono">점 A의 <i>x</i>좌표 <i>a</i> = <output class="a-out">1</output></label>
+              <label class="mono">점 \(A\)의 \(x\)좌표 \(a\) = <output class="a-out">1</output></label>
               <input class="sa" type="range" min="-1.2" max="1.2" step="0.01" value="1" aria-label="점 A의 x좌표 a">
               <dl class="nums n4">
-                <div><dt>b = f(a)</dt><dd class="n-b">—</dd></div>
-                <div><dt>f′(a)</dt><dd class="n-f">—</dd></div>
-                <div><dt>1/f′(a)</dt><dd class="n-r good">—</dd></div>
-                <div><dt>f⁻¹의 Δy/Δx (b 근처)</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(b = f(a)\)</dt><dd class="n-b">—</dd></div>
+                <div><dt>\(f'(a)\)</dt><dd class="n-f">—</dd></div>
+                <div><dt>\(\frac{1}{f'(a)}\)</dt><dd class="n-r good">—</dd></div>
+                <div><dt>\(f^{-1}\)의 \(\frac{\Delta y}{\Delta x}\) (\(b\) 근처)</dt><dd class="n-d">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">A(<i>a</i>, <i>b</i>)는 <i>y</i> = <i>f</i>(<i>x</i>) 위에, B(<i>b</i>, <i>a</i>)는 역함수의 그래프 위에 있습니다. 두 기울기 삼각형은 가로와 세로가 서로 바뀐 모양입니다. 넷째 칸은 역함수를 수치로 풀어 가까운 두 점으로 잰 기울기입니다.</p>
+              <p class="fig-note">\(A(a, b)\)는 \(y = f(x)\) 위에, \(B(b, a)\)는 역함수의 그래프 위에 있습니다. 두 기울기 삼각형은 가로와 세로가 서로 바뀐 모양입니다. 넷째 칸은 역함수를 수치로 풀어 가까운 두 점으로 잰 기울기입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>f</i>(<i>x</i>) = <i>x</i><sup>3</sup> + <i>x</i>의 역함수 <i>g</i>는 식으로 쓰기 어렵습니다. 그래도 <i>g</i>′(2)를 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span><i>f</i>가 일대일대응이면 역함수 <i>g</i> = <i>f</i><sup>−1</sup>가 있고, 두 그래프는 직선 <i>y</i> = <i>x</i>에 대하여 대칭입니다. 또 모든 <i>x</i>에 대하여 <i>f</i>(<i>g</i>(<i>x</i>)) = <i>x</i>입니다.</li>
-            <li><span class="tag">설명</span>직선 <i>y</i> = <i>x</i>에 대해 대칭이동하면 가로와 세로가 바뀌므로 기울기는 역수가 됩니다. 식으로는 <i>f</i>(<i>g</i>(<i>x</i>)) = <i>x</i>의 양변을 미분해 <i>f</i>′(<i>g</i>(<i>x</i>)) · <i>g</i>′(<i>x</i>) = 1을 얻습니다. 따라서 <i>b</i> = <i>f</i>(<i>a</i>)이고 <i>f</i>′(<i>a</i>) ≠ 0이면 <b><i>g</i>′(<i>b</i>) = 1/<i>f</i>′(<i>a</i>)</b>입니다. <i>dx</i>/<i>dy</i> = 1/(<i>dy</i>/<i>dx</i>)로 써도 같습니다. 질문에서는 <i>f</i>(1) = 2, <i>f</i>′(1) = 4이므로 <i>g</i>′(2) = 1/4입니다.</li>
-            <li><span class="tag">연결</span><i>y</i> = ln <i>x</i>는 <i>x</i> = <i>e</i><sup><i>y</i></sup>의 역함수입니다. <i>dx</i>/<i>dy</i> = <i>e</i><sup><i>y</i></sup> = <i>x</i>이므로 (ln <i>x</i>)′ = 1/<i>x</i>를 다시 얻습니다. <i>x</i> = <i>e</i><sup><i>y</i></sup>의 양변을 <i>x</i>로 미분해도 같은 결과가 나오므로, 역함수의 미분은 음함수의 미분과 같은 생각입니다.</li>
-            <li><span class="tag">적용</span>첫 함수에서 <i>a</i> = 1에 맞추어 셋째 칸과 넷째 칸이 1/4로 같은지 보세요. <i>e</i><sup><i>x</i></sup>에서는 <i>a</i>를 바꾸며 셋째 칸이 늘 1/<i>b</i>인지 확인하세요. <i>x</i><sup>3</sup>에서 <i>a</i>를 0에 가깝게 보내면 B에서의 접선과 넷째 칸은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span><i>g</i>′(<i>b</i>) = 1/<i>f</i>′(<i>b</i>)로 쓰는 실수가 흔합니다. 넣는 값은 <i>b</i>가 아니라 <i>f</i>(<i>a</i>) = <i>b</i>를 만족하는 <i>a</i>입니다. <i>f</i>′(<i>a</i>) = 0이면 역함수의 접선은 세로선이 되어 <i>g</i>는 <i>b</i>에서 미분가능하지 않습니다. <i>x</i><sup>3</sup>의 역함수 ∛<i>x</i>가 <i>x</i> = 0에서 그렇습니다. 또 <i>f</i><sup>−1</sup>(<i>x</i>)는 1/<i>f</i>(<i>x</i>)가 아닙니다.</li>
+            <li><span class="tag">질문</span>\(f(x) = x^3 + x\)의 역함수 \(g\)는 식으로 쓰기 어렵습니다. 그래도 \(g'(2)\)를 구할 수 있을까요?</li>
+            <li><span class="tag">복원</span>\(f\)가 일대일대응이면 역함수 \(g = f^{-1}\)가 있고, 두 그래프는 직선 \(y = x\)에 대하여 대칭입니다. 또 모든 \(x\)에 대하여 \(f(g(x)) = x\)입니다.</li>
+            <li><span class="tag">설명</span>직선 \(y = x\)에 대해 대칭이동하면 가로와 세로가 바뀌므로 기울기는 역수가 됩니다. 식으로는 \(f(g(x)) = x\)의 양변을 미분해 \(f'(g(x)) \cdot g'(x) = 1\)을 얻습니다. 따라서 \(b = f(a)\)이고 \(f'(a) \ne 0\)이면 <b>\(g'(b) = \frac{1}{f'(a)}\)</b>입니다. \(\frac{dx}{dy} = \frac{1}{\frac{dy}{dx}}\)로 써도 같습니다. 질문에서는 \(f(1) = 2\), \(f'(1) = 4\)이므로 \(g'(2) = \frac{1}{4}\)입니다.</li>
+            <li><span class="tag">연결</span>\(y = \ln x\)는 \(x = e^y\)의 역함수입니다. \(\frac{dx}{dy} = e^y = x\)이므로 \((\ln x)' = \frac{1}{x}\)를 다시 얻습니다. \(x = e^y\)의 양변을 \(x\)로 미분해도 같은 결과가 나오므로, 역함수의 미분은 음함수의 미분과 같은 생각입니다.</li>
+            <li><span class="tag">적용</span>첫 함수에서 \(a = 1\)에 맞추어 셋째 칸과 넷째 칸이 \(\frac{1}{4}\)로 같은지 보세요. \(e^x\)에서는 \(a\)를 바꾸며 셋째 칸이 늘 \(\frac{1}{b}\)인지 확인하세요. \(x^3\)에서 \(a\)를 0에 가깝게 보내면 \(B\)에서의 접선과 넷째 칸은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(g'(b) = \frac{1}{f'(b)}\)로 쓰는 실수가 흔합니다. 넣는 값은 \(b\)가 아니라 \(f(a) = b\)를 만족하는 \(a\)입니다. \(f'(a) = 0\)이면 역함수의 접선은 세로선이 되어 \(g\)는 \(b\)에서 미분가능하지 않습니다. \(x^3\)의 역함수 \(\sqrt[3]{x}\)가 \(x = 0\)에서 그렇습니다. 또 \(f^{-1}(x)\)는 \(\frac{1}{f(x)}\)가 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>f</i>(<i>x</i>) = <i>x</i><sup>3</sup> + 2<i>x</i> − 1의 역함수를 <i>g</i>라 할 때, <i>g</i>′(2)의 값은?</p>
+          <p class="q">\(f(x) = x^3 + 2x - 1\)의 역함수를 \(g\)라 할 때, \(g'(2)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/5<span class="why"><b>맞습니다.</b> <i>f</i>(1) = 2이므로 <i>g</i>(2) = 1이고, <i>f</i>′(1) = 3 + 2 = 5이므로 <i>g</i>′(2) = 1/5입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/14<span class="why"><b><i>f</i>′(2)에 넣었습니다.</b> <i>f</i>′(2) = 14는 <i>x</i> = 2인 점의 기울기입니다. 역함수 위의 점 (2, 1)에 대응하는 <i>f</i> 위의 점은 (1, 2)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>역수를 취하지 않았습니다.</b> 5는 <i>f</i> 위의 점 (1, 2)에서의 기울기입니다. 대칭이동하면 가로와 세로가 바뀌므로 역수가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/11<span class="why"><b>역함수를 역수로 보았습니다.</b> 1/<i>f</i>(2) = 1/11은 <i>f</i>의 값을 뒤집은 것일 뿐 역함수의 기울기와 관계가 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{5}\)<span class="why"><b>맞습니다.</b> \(f(1) = 2\)이므로 \(g(2) = 1\)이고, \(f'(1) = 3 + 2 = 5\)이므로 \(g'(2) = \frac{1}{5}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{14}\)<span class="why"><b>\(f'(2)\)에 넣었습니다.</b> \(f'(2) = 14\)는 \(x = 2\)인 점의 기울기입니다. 역함수 위의 점 \((2, 1)\)에 대응하는 \(f\) 위의 점은 \((1, 2)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>역수를 취하지 않았습니다.</b> 5는 \(f\) 위의 점 \((1, 2)\)에서의 기울기입니다. 대칭이동하면 가로와 세로가 바뀌므로 역수가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{11}\)<span class="why"><b>역함수를 역수로 보았습니다.</b> \(\frac{1}{f(2)} = \frac{1}{11}\)은 \(f\)의 값을 뒤집은 것일 뿐 역함수의 기울기와 관계가 없습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -155,8 +157,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/implicit-slope.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>

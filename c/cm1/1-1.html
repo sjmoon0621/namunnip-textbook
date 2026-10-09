@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-poly-mult canvas { aspect-ratio: 5 / 4; }
     #card-cm1-poly-mult .res { font-size: 14px; margin: 8px 0 2px; line-height: 1.5; overflow-wrap: anywhere; }
@@ -38,14 +39,14 @@
     <p class="lead">다항식은 수처럼 더하고 빼고 곱하고 나눌 수 있습니다. 수의 계산에서 자리를 맞추듯 다항식에서는 차수를 맞추고, 분배법칙으로 곱한 뒤 같은 차수끼리 모읍니다. 이 절에서는 곱셈표로 동류항이 모이는 까닭을 보고, 자연수의 나눗셈과 같은 방식으로 다항식을 나누어 몫과 나머지를 구합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">동류항</span><span class="p">분배법칙</span><span class="p">지수법칙</span><span class="p">중학교 곱셈 공식</span>
+      <button type="button" class="p p-basic" data-basic="b-m-like-terms" title="중학교 개념 설명 보기">동류항</button><a class="p p-card" href="../../c/cm1/1-1.html#card-cm1-poly-mult" title="공통수학1 1.1 · 다항식을 곱하면 왜 같은 차수끼리 모일까?">분배법칙</a><a class="p p-card" href="../../c/alg/1-3.html#card-alg-exp-law-count" title="대수 1.3 · 거듭제곱끼리 곱하면 지수는 왜 더해질까?">지수법칙</a><button type="button" class="p p-basic" data-basic="b-m-product-formulas" title="중학교 개념 설명 보기">중학교 곱셈 공식</button>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-cm1-poly-mult"><span class="mono">1.1.1</span>다항식의 덧셈·뺄셈·곱셈</a></li>
         <li><a href="#card-cm1-poly-div"><span class="mono">1.1.2</span>다항식의 나눗셈</a></li>
       </ol>
@@ -63,56 +64,57 @@
             <canvas class="cv-sq" aria-label="두 다항식의 항을 차수별 색으로 나눈 덧셈표 또는 곱셈표와, 동류항을 모은 결과"></canvas>
             <div class="ctl">
               <div class="presets mode">
-                <button class="chip" type="button" data-mode="add">덧셈 A + B</button>
-                <button class="chip" type="button" data-mode="sub">뺄셈 A − B</button>
-                <button class="chip" type="button" data-mode="mul" aria-pressed="true">곱셈 A × B</button>
+                <button class="chip" type="button" data-mode="add">덧셈 \(A + B\)</button>
+                <button class="chip" type="button" data-mode="sub">뺄셈 \(A - B\)</button>
+                <button class="chip" type="button" data-mode="mul" aria-pressed="true">곱셈 \(A \times B\)</button>
               </div>
               <div class="presets ex">
-                <button class="chip" type="button" data-set="2,1,0;2,1,0">(<i>x</i> + 2)<sup>2</sup></button>
-                <button class="chip" type="button" data-set="3,1,0;-3,1,0">(<i>x</i> + 3)(<i>x</i> − 3)</button>
-                <button class="chip" type="button" data-set="1,1,0;1,2,1">(<i>x</i> + 1)(<i>x</i> + 1)<sup>2</sup></button>
-                <button class="chip" type="button" data-set="1,1,0;1,-1,1">(<i>x</i> + 1)(<i>x</i><sup>2</sup> − <i>x</i> + 1)</button>
-                <button class="chip" type="button" data-set="-1,1,0;1,1,1">(<i>x</i> − 1)(<i>x</i><sup>2</sup> + <i>x</i> + 1)</button>
+                <button class="chip" type="button" data-set="2,1,0;2,1,0">\((x + 2)^2\)</button>
+                <button class="chip" type="button" data-set="3,1,0;-3,1,0">\((x + 3)(x - 3)\)</button>
+                <button class="chip" type="button" data-set="1,1,0;1,2,1">\((x + 1)(x + 1)^2\)</button>
+                <button class="chip" type="button" data-set="1,1,0;1,-1,1">\((x + 1)(x^2 - x + 1)\)</button>
+                <button class="chip" type="button" data-set="-1,1,0;1,1,1">\((x - 1)(x^2 + x + 1)\)</button>
               </div>
-              <label class="mono">A의 계수 (<i>x</i><sup>2</sup> · <i>x</i> · 상수) = <output class="a2-out">0</output> · <output class="a1-out">2</output> · <output class="a0-out">3</output></label>
+              <label class="mono">\(A\)의 계수 (\(x^2 \cdot x\) · 상수) = <output class="a2-out">0</output> · <output class="a1-out">2</output> · <output class="a0-out">3</output></label>
               <input class="a2" type="range" min="-4" max="4" step="1" value="0" aria-label="A의 이차항 계수">
               <input class="a1" type="range" min="-4" max="4" step="1" value="2" aria-label="A의 일차항 계수">
               <input class="a0" type="range" min="-4" max="4" step="1" value="3" aria-label="A의 상수항">
-              <label class="mono">B의 계수 (<i>x</i><sup>2</sup> · <i>x</i> · 상수) = <output class="b2-out">1</output> · <output class="b1-out">-1</output> · <output class="b0-out">1</output></label>
+              <label class="mono">\(B\)의 계수 (\(x^2 \cdot x\) · 상수) = <output class="b2-out">1</output> · <output class="b1-out">\(-1\)</output> · <output class="b0-out">1</output></label>
               <input class="b2" type="range" min="-4" max="4" step="1" value="1" aria-label="B의 이차항 계수">
               <input class="b1" type="range" min="-4" max="4" step="1" value="-1" aria-label="B의 일차항 계수">
               <input class="b0" type="range" min="-4" max="4" step="1" value="1" aria-label="B의 상수항">
               <p class="mono res">—</p>
-              <label class="mono">검산할 <i>x</i> = <output class="t-out">2</output></label>
+              <label class="mono">검산할 \(x\) = <output class="t-out">2</output></label>
               <input class="t" type="range" min="-3" max="3" step="1" value="2" aria-label="검산에 넣을 x의 값">
               <dl class="nums">
-                <div><dt class="d1">A에 x 대입</dt><dd class="n-a">—</dd></div>
-                <div><dt class="d2">B에 x 대입</dt><dd class="n-b">—</dd></div>
-                <div><dt class="d3">결과식에 x 대입</dt><dd class="n-r">—</dd></div>
+                <div><dt class="d1">\(A\)에 \(x\) 대입</dt><dd class="n-a">—</dd></div>
+                <div><dt class="d2">\(B\)에 \(x\) 대입</dt><dd class="n-b">—</dd></div>
+                <div><dt class="d3">결과식에 \(x\) 대입</dt><dd class="n-r">—</dd></div>
               </dl>
               <p class="fig-note">표의 칸 색은 차수를 나타냅니다. 같은 색 칸이 동류항이며, 아래 줄에서 계수를 모읍니다. 계수가 0인 항은 표에서 뺍니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>2<i>x</i> + 3과 <i>x</i><sup>2</sup> − <i>x</i> + 1을 곱하면 처음에는 항이 여섯 개 생깁니다. 그런데 정리한 결과는 네 항입니다. 나머지 두 항은 어디로 갔을까요?</li>
-            <li><span class="tag">복원</span>중학교에서 (<i>a</i> + <i>b</i>)(<i>c</i> + <i>d</i>) = <i>ac</i> + <i>ad</i> + <i>bc</i> + <i>bd</i>(분배법칙)와 <i>x</i><sup><i>m</i></sup> · <i>x</i><sup><i>n</i></sup> = <i>x</i><sup><i>m</i>+<i>n</i></sup>(지수법칙)를 배웠습니다. 문자와 차수가 같은 항을 <em>동류항</em>이라 하고, 동류항끼리만 계수를 더할 수 있습니다.</li>
-            <li><span class="tag">설명</span>다항식의 <em>덧셈</em>은 동류항끼리 계수를 더하는 것입니다. <em>뺄셈</em> A − B는 B의 모든 항의 부호를 바꾸어 A에 더하는 것입니다. <em>곱셈</em>은 분배법칙으로 A의 각 항과 B의 각 항을 빠짐없이 곱한 뒤 동류항을 모읍니다. A에 항이 <i>m</i>개, B에 <i>n</i>개 있으면 곱은 <i>mn</i>칸이고, <i>x</i><sup><i>i</i></sup> · <i>x</i><sup><i>j</i></sup>의 차수는 <i>i</i> + <i>j</i>이므로 같은 차수의 칸은 표의 대각선 위에 놓입니다. 결과는 보통 차수가 높은 항부터(내림차순) 씁니다. 수처럼 다항식의 덧셈과 곱셈에도 교환법칙, 결합법칙, 분배법칙이 성립하므로 어떤 순서로 묶어 계산해도 결과가 같습니다. 이 표에서 나오는 곱셈 공식은 (<i>a</i> + <i>b</i>)<sup>3</sup> = <i>a</i><sup>3</sup> + 3<i>a</i><sup>2</sup><i>b</i> + 3<i>ab</i><sup>2</sup> + <i>b</i><sup>3</sup>, (<i>a</i> + <i>b</i>)(<i>a</i><sup>2</sup> − <i>ab</i> + <i>b</i><sup>2</sup>) = <i>a</i><sup>3</sup> + <i>b</i><sup>3</sup>, (<i>a</i> − <i>b</i>)(<i>a</i><sup>2</sup> + <i>ab</i> + <i>b</i><sup>2</sup>) = <i>a</i><sup>3</sup> − <i>b</i><sup>3</sup>, (<i>a</i> + <i>b</i> + <i>c</i>)<sup>2</sup> = <i>a</i><sup>2</sup> + <i>b</i><sup>2</sup> + <i>c</i><sup>2</sup> + 2<i>ab</i> + 2<i>bc</i> + 2<i>ca</i>입니다.</li>
-            <li><span class="tag">연결</span>23 × 11은 (2 · 10 + 3)(1 · 10 + 1)이므로 <i>x</i> 자리에 10을 넣은 다항식 곱셈과 같은 표가 됩니다. 수에서는 한 자리가 10을 넘으면 받아올림을 하지만, 다항식에서는 계수가 얼마나 크든 그 차수 칸에 그대로 둡니다. 검산 칸에서 <i>x</i>에 어떤 수를 넣어도 A · B와 결과식의 값이 같은 것은, 전개가 모든 <i>x</i>에서 성립하는 등식(항등식)이기 때문입니다.</li>
-            <li><span class="tag">적용</span>(<i>x</i> + 1)(<i>x</i><sup>2</sup> − <i>x</i> + 1)을 누르고 아래 줄에서 계수가 0이 되어 지워지는 차수를 찾아보세요. 그다음 B의 일차항 계수를 −1에서 1로 바꾸면 결과가 어떻게 달라지나요? 덧셈과 뺄셈 모드에서는 이차항 계수를 서로 반대로 맞추어 결과의 차수가 낮아지는 경우를 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>(<i>x</i> + 2)<sup>2</sup> = <i>x</i><sup>2</sup> + 4로 쓰는 실수가 흔합니다. 표로 보면 2<i>x</i> 칸 두 개를 빠뜨린 것입니다. 또 곱의 차수는 두 차수의 합이지만, 합과 차의 차수는 최고차항이 지워질 수 있으므로 두 차수 중 큰 것보다 낮아질 수 있습니다.</li>
+            <li><span class="tag">질문</span>\(2x + 3\)과 \(x^2 - x + 1\)을 곱하면 처음에는 항이 여섯 개 생깁니다. 그런데 정리한 결과는 네 항입니다. 나머지 두 항은 어디로 갔을까요?</li>
+            <li><span class="tag">복원</span>중학교에서 \((a + b)(c + d) = ac + ad + bc + bd\)(분배법칙)와 \(x^m \cdot x^n = x^{m+n}\)(지수법칙)를 배웠습니다. 문자와 차수가 같은 항을 <em>동류항</em>이라 하고, 동류항끼리만 계수를 더할 수 있습니다.</li>
+            <li><span class="tag">설명</span>다항식의 <em>덧셈</em>은 동류항끼리 계수를 더하는 것입니다. <em>뺄셈</em> \(A - B\)는 \(B\)의 모든 항의 부호를 바꾸어 \(A\)에 더하는 것입니다. <em>곱셈</em>은 분배법칙으로 \(A\)의 각 항과 \(B\)의 각 항을 빠짐없이 곱한 뒤 동류항을 모읍니다. \(A\)에 항이 \(m\)개, \(B\)에 \(n\)개 있으면 곱은 \(mn\)칸이고, \(x^i \cdot x^j\)의 차수는 \(i + j\)이므로 같은 차수의 칸은 표의 대각선 위에 놓입니다. 결과는 보통 차수가 높은 항부터(내림차순) 씁니다. 수처럼 다항식의 덧셈과 곱셈에도 교환법칙, 결합법칙, 분배법칙이 성립하므로 어떤 순서로 묶어 계산해도 결과가 같습니다. 이 표에서 나오는 곱셈 공식은 \((a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\), \((a + b)(a^2 - ab + b^2) = a^3 + b^3\), \((a - b)(a^2 + ab + b^2) = a^3 - b^3\), \((a + b + c)^2 = a^2 + b^2 + c^2 + 2ab + 2bc + 2ca\)입니다.</li>
+            <li><span class="tag">연결</span>\(23 \times 11\)은 \((2 \cdot 10 + 3)(1 \cdot 10 + 1)\)이므로 \(x\) 자리에 10을 넣은 다항식 곱셈과 같은 표가 됩니다. 수에서는 한 자리가 10을 넘으면 받아올림을 하지만, 다항식에서는 계수가 얼마나 크든 그 차수 칸에 그대로 둡니다. 검산 칸에서 \(x\)에 어떤 수를 넣어도 \(A \cdot B\)와 결과식의 값이 같은 것은, 전개가 모든 \(x\)에서 성립하는 등식(항등식)이기 때문입니다.</li>
+            <li><span class="tag">적용</span>\((x + 1)(x^2 - x + 1)\)을 누르고 아래 줄에서 계수가 0이 되어 지워지는 차수를 찾아보세요. 그다음 \(B\)의 일차항 계수를 \(-1\)에서 1로 바꾸면 결과가 어떻게 달라지나요? 덧셈과 뺄셈 모드에서는 이차항 계수를 서로 반대로 맞추어 결과의 차수가 낮아지는 경우를 만들어 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>\((x + 2)^2 = x^2 + 4\)로 쓰는 실수가 흔합니다. 표로 보면 \(2x\) 칸 두 개를 빠뜨린 것입니다. 또 곱의 차수는 두 차수의 합이지만, 합과 차의 차수는 최고차항이 지워질 수 있으므로 두 차수 중 큰 것보다 낮아질 수 있습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">(2<i>x</i><sup>2</sup> − <i>x</i> + 3)(<i>x</i> − 2)를 전개했을 때 <i>x</i><sup>2</sup>의 계수는 얼마입니까?</p>
+          <p class="q">\((2x^2 - x + 3)(x - 2)\)를 전개했을 때 \(x^2\)의 계수는 얼마입니까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>−4<span class="why"><b>칸 하나만 셌습니다.</b> 2<i>x</i><sup>2</sup> × (−2) = −4<i>x</i><sup>2</sup>뿐 아니라 (−<i>x</i>) × <i>x</i> = −<i>x</i><sup>2</sup>도 이차항입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>−5<span class="why"><b>맞습니다.</b> 이차항이 나오는 칸은 2<i>x</i><sup>2</sup> × (−2) = −4<i>x</i><sup>2</sup>와 (−<i>x</i>) × <i>x</i> = −<i>x</i><sup>2</sup> 두 개이므로 −4 − 1 = −5입니다. 전체는 2<i>x</i><sup>3</sup> − 5<i>x</i><sup>2</sup> + 5<i>x</i> − 6입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−3<span class="why"><b>부호를 하나 놓쳤습니다.</b> (−<i>x</i>) × <i>x</i>를 +<i>x</i><sup>2</sup>로 계산하면 −4 + 1 = −3이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>A의 이차항 계수를 그대로 옮겼습니다.</b> 곱하면 이차항은 A의 이차항 × B의 상수항, A의 일차항 × B의 일차항에서 나옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(-4\)<span class="why"><b>칸 하나만 셌습니다.</b> \(2x^2 \times (-2) = -4x^2\)뿐 아니라 \((-x) \times x = -x^2\)도 이차항입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-5\)<span class="why"><b>맞습니다.</b> 이차항이 나오는 칸은 \(2x^2 \times (-2) = -4x^2\)와 \((-x) \times x = -x^2\) 두 개이므로 \(-4 - 1 = -5\)입니다. 전체는 \(2x^3 - 5x^2 + 5x - 6\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-3\)<span class="why"><b>부호를 하나 놓쳤습니다.</b> \((-x) \times x\)를 +\(x^2\)로 계산하면 \(-4 + 1 = -3\)이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>\(A\)의 이차항 계수를 그대로 옮겼습니다.</b> 곱하면 이차항은 \(A\)의 이차항 \(\times B\)의 상수항, \(A\)의 일차항 \(\times B\)의 일차항에서 나옵니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/1-2.html#card-cm1-identity"><small class="mono">공통수학1 1.2</small>어떤 x를 넣어도 성립하는 등식은 무엇이 다를까?</a><a href="../../c/cm1/1-3.html#card-cm1-sq3"><small class="mono">공통수학1 1.3</small>(a + b + c)²의 아홉 조각은 어떻게 모일까?</a><a href="../../c/cm1/1-3.html#card-cm1-cube-diff"><small class="mono">공통수학1 1.3</small>a³ − b³은 왜 (a − b)(a² + ab + b²)일까?</a></div></nav>
 
       <article class="card" id="card-cm1-poly-div">
         <header class="card-head">
@@ -129,44 +131,45 @@
               </div>
               <p class="msg">—</p>
               <div class="presets dv">
-                <button class="chip" type="button" data-d="1" aria-pressed="true">일차식 <i>x</i> + <i>q</i>로 나누기</button>
-                <button class="chip" type="button" data-d="2">이차식 <i>x</i><sup>2</sup> + <i>px</i> + <i>q</i>로 나누기</button>
+                <button class="chip" type="button" data-d="1" aria-pressed="true">일차식 \(x + q\)로 나누기</button>
+                <button class="chip" type="button" data-d="2">이차식 \(x^2 + px + q\)로 나누기</button>
               </div>
-              <label class="mono">A의 계수 (<i>x</i><sup>3</sup> · <i>x</i><sup>2</sup> · <i>x</i> · 상수) = <output class="a3-out">1</output> · <output class="a2-out">2</output> · <output class="a1-out">-5</output> · <output class="a0-out">3</output></label>
+              <label class="mono">\(A\)의 계수 (\(x^3 \cdot x^2 \cdot x\) · 상수) = <output class="a3-out">1</output> · <output class="a2-out">2</output> · <output class="a1-out">\(-5\)</output> · <output class="a0-out">3</output></label>
               <input class="a3" type="range" min="1" max="3" step="1" value="1" aria-label="A의 삼차항 계수">
               <input class="a2" type="range" min="-6" max="6" step="1" value="2" aria-label="A의 이차항 계수">
               <input class="a1" type="range" min="-6" max="6" step="1" value="-5" aria-label="A의 일차항 계수">
               <input class="a0" type="range" min="-6" max="6" step="1" value="3" aria-label="A의 상수항">
-              <label class="mono">B의 계수 <span class="p-lab"><i>p</i> = <output class="p-out">1</output> · </span><i>q</i> = <output class="q-out">-2</output></label>
+              <label class="mono">\(B\)의 계수 <span class="p-lab">\(p\) = <output class="p-out">1</output> · </span>\(q\) = <output class="q-out">\(-2\)</output></label>
               <input class="p" type="range" min="-4" max="4" step="1" value="1" aria-label="B의 일차항 계수 p">
               <input class="q" type="range" min="-4" max="4" step="1" value="-2" aria-label="B의 상수항 q">
               <dl class="nums">
-                <div><dt>몫 Q</dt><dd class="n-q">—</dd></div>
-                <div><dt>나머지 R</dt><dd class="n-r">—</dd></div>
+                <div><dt>몫 \(Q\)</dt><dd class="n-q">—</dd></div>
+                <div><dt>나머지 \(R\)</dt><dd class="n-r">—</dd></div>
               </dl>
               <p class="fig-note chk">—</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>17을 5로 나누면 몫이 3, 나머지가 2입니다. 다항식도 다항식으로 나누면 몫과 나머지가 생길까요? 그렇다면 나눗셈은 언제 멈출까요?</li>
-            <li><span class="tag">복원</span>자연수의 나눗셈은 17 = 5 × 3 + 2처럼 (나누어지는 수) = (나누는 수) × (몫) + (나머지), 0 ≤ (나머지) &lt; (나누는 수)로 정리됩니다. 중학교에서는 다항식을 단항식으로 나눌 때 각 항을 따로 나누었습니다.</li>
-            <li><span class="tag">설명</span>다항식 A를 B로 나눌 때는 ① 남은 식의 최고차항을 B의 최고차항으로 나누어 몫의 한 항을 얻고, ② B에 그 항을 곱해 남은 식에서 뺍니다. 이 과정을 남은 식의 차수가 B의 차수보다 작아질 때까지 되풀이합니다. 마지막에 남은 식이 나머지 R입니다. 그러면 <b>A = BQ + R</b>, (R의 차수) &lt; (B의 차수)가 됩니다. 일차식으로 나누면 나머지는 상수이고, 이차식으로 나누면 나머지는 일차 이하의 식입니다. R = 0이면 A는 B로 <em>나누어떨어진다</em>고 합니다. 차수가 빠진 항이 있으면 그 칸을 비워 두거나 0을 적어 자리를 맞춥니다.</li>
-            <li><span class="tag">연결</span>자연수 나눗셈의 '자리'가 다항식에서는 '차수 칸'입니다. A = BQ + R은 <i>x</i>에 어떤 수를 넣어도 성립하는 등식이므로, 나눗셈을 하지 않고 <i>x</i>에 알맞은 수를 넣어 나머지만 구하는 방법(나머지정리)으로 이어집니다.</li>
-            <li><span class="tag">적용</span>'처음부터'를 누르고 한 단계씩 진행하며 몫의 각 항이 어디서 나오는지 보세요. 그다음 이차식으로 나누기를 골라 단계 수와 나머지의 꼴이 어떻게 달라지는지 비교하세요. 일차식으로 나눌 때 A의 상수항을 바꾸어 나머지가 0이 되게 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>자연수에서는 나머지의 <em>크기</em>가 나누는 수보다 작아야 하지만, 다항식에서는 나머지의 <em>차수</em>가 작아야 합니다. 나머지의 계수가 B의 계수보다 커도 됩니다. 이 카드는 B의 최고차항 계수를 1로 두었습니다. 최고차항 계수가 1이 아니면 몫의 계수가 분수가 될 수 있습니다.</li>
+            <li><span class="tag">복원</span>자연수의 나눗셈은 \(17 = 5 \times 3 + 2\)처럼 (나누어지는 수) = (나누는 수) × (몫) + (나머지), 0 ≤ (나머지) &lt; (나누는 수)로 정리됩니다. 중학교에서는 다항식을 단항식으로 나눌 때 각 항을 따로 나누었습니다.</li>
+            <li><span class="tag">설명</span>다항식 \(A\)를 \(B\)로 나눌 때는 ① 남은 식의 최고차항을 \(B\)의 최고차항으로 나누어 몫의 한 항을 얻고, ② \(B\)에 그 항을 곱해 남은 식에서 뺍니다. 이 과정을 남은 식의 차수가 \(B\)의 차수보다 작아질 때까지 되풀이합니다. 마지막에 남은 식이 나머지 \(R\)입니다. 그러면 <b>\(A = BQ + R\)</b>, (\(R\)의 차수) &lt; (\(B\)의 차수)가 됩니다. 일차식으로 나누면 나머지는 상수이고, 이차식으로 나누면 나머지는 일차 이하의 식입니다. \(R = 0\)이면 \(A\)는 \(B\)로 <em>나누어떨어진다</em>고 합니다. 차수가 빠진 항이 있으면 그 칸을 비워 두거나 0을 적어 자리를 맞춥니다.</li>
+            <li><span class="tag">연결</span>자연수 나눗셈의 '자리'가 다항식에서는 '차수 칸'입니다. \(A = BQ + R\)은 \(x\)에 어떤 수를 넣어도 성립하는 등식이므로, 나눗셈을 하지 않고 \(x\)에 알맞은 수를 넣어 나머지만 구하는 방법(나머지정리)으로 이어집니다.</li>
+            <li><span class="tag">적용</span>'처음부터'를 누르고 한 단계씩 진행하며 몫의 각 항이 어디서 나오는지 보세요. 그다음 이차식으로 나누기를 골라 단계 수와 나머지의 꼴이 어떻게 달라지는지 비교하세요. 일차식으로 나눌 때 \(A\)의 상수항을 바꾸어 나머지가 0이 되게 만들어 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>자연수에서는 나머지의 <em>크기</em>가 나누는 수보다 작아야 하지만, 다항식에서는 나머지의 <em>차수</em>가 작아야 합니다. 나머지의 계수가 \(B\)의 계수보다 커도 됩니다. 이 카드는 \(B\)의 최고차항 계수를 1로 두었습니다. 최고차항 계수가 1이 아니면 몫의 계수가 분수가 될 수 있습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>x</i><sup>3</sup> − 2<i>x</i> + 4를 <i>x</i><sup>2</sup> + <i>x</i> − 1로 나눈 몫과 나머지는?</p>
+          <p class="q">\(x^3 - 2x + 4\)를 \(x^2 + x - 1\)로 나눈 몫과 나머지는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>몫 <i>x</i> − 1, 나머지 3<span class="why"><b>맞습니다.</b> <i>x</i><sup>3</sup> ÷ <i>x</i><sup>2</sup> = <i>x</i>, 빼면 −<i>x</i><sup>2</sup> − <i>x</i> + 4가 남고, 다시 −<i>x</i><sup>2</sup> ÷ <i>x</i><sup>2</sup> = −1, 빼면 3이 남습니다. (<i>x</i><sup>2</sup> + <i>x</i> − 1)(<i>x</i> − 1) + 3 = <i>x</i><sup>3</sup> − 2<i>x</i> + 4로 검산됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>몫 <i>x</i> + 1, 나머지 −2<i>x</i> + 5<span class="why"><b>빼기에서 부호를 놓쳤습니다.</b> <i>x</i><sup>3</sup> − (<i>x</i><sup>3</sup> + <i>x</i><sup>2</sup> − <i>x</i>)에서 이차항은 −<i>x</i><sup>2</sup>이므로 몫의 둘째 항은 −1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>몫 <i>x</i> − 1, 나머지 0<span class="why"><b>나누어떨어진다고 가정했습니다.</b> 몫은 맞지만, 마지막에 상수 3이 남습니다. 4 − 1 = 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>몫 <i>x</i>, 나머지 −<i>x</i><sup>2</sup> − <i>x</i> + 4<span class="why"><b>너무 일찍 멈췄습니다.</b> 남은 식이 이차식이라 B와 차수가 같으므로 한 번 더 나눌 수 있습니다. 나머지의 차수가 B보다 작아야 멈춥니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>몫 \(x - 1\), 나머지 3<span class="why"><b>맞습니다.</b> \(x^3 \div x^2 = x\), 빼면 \(-x^2 - x + 4\)가 남고, 다시 \(-x^2 \div x^2 = -1\), 빼면 3이 남습니다. \((x^2 + x - 1)(x - 1) + 3 = x^3 - 2x + 4\)로 검산됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>몫 \(x + 1\), 나머지 \(-2x + 5\)<span class="why"><b>빼기에서 부호를 놓쳤습니다.</b> \(x^3 - (x^3 + x^2 - x)\)에서 이차항은 \(-x^2\)이므로 몫의 둘째 항은 \(-1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>몫 \(x - 1\), 나머지 0<span class="why"><b>나누어떨어진다고 가정했습니다.</b> 몫은 맞지만, 마지막에 상수 3이 남습니다. \(4 - 1 = 3\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>몫 \(x\), 나머지 \(-x^2 - x + 4\)<span class="why"><b>너무 일찍 멈췄습니다.</b> 남은 식이 이차식이라 \(B\)와 차수가 같으므로 한 번 더 나눌 수 있습니다. 나머지의 차수가 \(B\)보다 작아야 멈춥니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/1-2.html#card-cm1-remainder"><small class="mono">공통수학1 1.2</small>나누어 보지 않고 나머지를 알 수 있을까?</a><a href="../../c/cm1/1-2.html#card-cm1-synthetic"><small class="mono">공통수학1 1.2</small>조립제법은 나눗셈의 어느 부분을 줄여 쓴 걸까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=cm1-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">150문항</span></a>
 
@@ -177,8 +180,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm1/poly.js"></script>
 <script src="../../js/cards/cm1/poly-mult.js"></script>
 <script src="../../js/cards/cm1/poly.js"></script>

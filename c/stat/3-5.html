@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-random-sample .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
     #card-stat-draw-replace canvas { touch-action: manipulation; cursor: pointer; }
@@ -35,14 +36,14 @@
     <p class="lead">전국 고등학생의 하루 수면 시간을 알고 싶다고 모든 학생에게 물어볼 수는 없습니다. 일부만 조사해서 전체를 짐작해야 하는데, 그 일부를 어떻게 고르느냐에 따라 짐작이 크게 빗나갈 수 있습니다. 이 절에서는 조사 대상 전체인 모집단과 그 일부인 표본을 구별하고, 표본이 모집단을 고르게 대표하도록 뽑는 임의추출을 익힙니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">수학적 확률</span><span class="p">자료의 평균</span><span class="p">중복순열과 순열</span>
+      <a class="p p-card" href="../../c/stat/3-3.html#card-stat-large-numbers" title="확률과 통계 3.3 · 많이 던질수록 비율은 확률에 다가갈까?">수학적 확률</a><a class="p p-card" href="../../c/fusi/2-5.html#card-fusi-meansd" title="융합과학 탐구 2.5 · 두 모둠의 평균이 다르면 가설이 맞은 걸까?">자료의 평균</a><a class="p p-card" href="../../c/stat/1-1.html#card-stat-rep-perm" title="확률과 통계 1.1 · 같은 것을 여러 번 골라도 되면 경우의 수는 어떻게 될까?">중복순열과 순열</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-random-sample"><span class="mono">3.5.1</span>모집단과 표본, 임의추출</a></li>
         <li><a href="#card-stat-draw-replace"><span class="mono">3.5.2</span>복원추출과 비복원추출</a></li>
       </ol>
@@ -63,7 +64,7 @@
                 <button class="chip" type="button" data-m="rand" aria-pressed="true">임의추출</button>
                 <button class="chip" type="button" data-m="near">앞쪽 두 줄에서만</button>
               </div>
-              <label class="mono">표본의 크기 <i>n</i> = <output class="n-out">20</output></label>
+              <label class="mono">표본의 크기 \(n\) = <output class="n-out">20</output></label>
               <input class="n" type="range" min="5" max="40" step="1" value="20" aria-label="표본의 크기 n">
               <div class="go-row">
                 <button class="chip go-one" type="button">표본 뽑기</button>
@@ -71,10 +72,10 @@
                 <button class="chip go-reset" type="button">처음부터</button>
               </div>
               <dl class="nums n4">
-                <div><dt>모평균 <i>m</i></dt><dd class="n-m">—</dd></div>
-                <div><dt>이번 표본평균 <i>x̄</i></dt><dd class="n-x">—</dd></div>
+                <div><dt>모평균 \(m\)</dt><dd class="n-m">—</dd></div>
+                <div><dt>이번 표본평균 \(\bar{x}\)</dt><dd class="n-x">—</dd></div>
                 <div><dt>뽑은 횟수</dt><dd class="n-c">—</dd></div>
-                <div><dt><i>x̄</i>들의 평균</dt><dd class="n-a">—</dd></div>
+                <div><dt>\(\bar{x}\)들의 평균</dt><dd class="n-a">—</dd></div>
               </dl>
               <p class="fig-note">가상 자료(모식)입니다. 칸 하나가 학생 한 명이고, 색이 진할수록 통학 시간(분)이 깁니다. 위쪽 줄일수록 학교에 가까운 동네에 삽니다. 오른쪽 점은 방법별로 뽑을 때마다 기록한 표본평균(처음에 12번씩 뽑아 둠), 짧은 가로선은 그 점들의 평균입니다. 아래 수치는 고른 방법의 기록입니다.</p>
             </div>
@@ -84,7 +85,7 @@
             <li><span class="tag">복원</span>자료의 평균은 값을 모두 더해 개수로 나눈 값입니다. 수학적 확률은 모든 근원사건이 일어날 가능성이 같을 때 정의했습니다.</li>
             <li><span class="tag">설명</span>조사하려는 대상 전체를 <em>모집단</em>, 실제로 조사하는 모집단의 일부를 <em>표본</em>이라고 합니다. 모집단 전체를 조사하는 것은 <em>전수조사</em>, 표본만 조사하는 것은 <em>표본조사</em>입니다. 전수조사는 시간과 비용이 많이 들고, 전구의 수명처럼 조사하면 대상이 망가지는 경우에는 할 수 없습니다. 표본으로 모집단을 짐작하려면 표본이 모집단을 고르게 대표해야 합니다. 그래서 모집단의 각 대상이 같은 확률로 뽑히도록 하는 <em>임의추출</em>을 씁니다. 제비뽑기, 난수표, 계산기나 컴퓨터의 난수가 그 방법입니다.</li>
             <li><span class="tag">연결</span>임의추출한 표본의 평균은 뽑을 때마다 달라지지만, 그 흔들림은 확률로 계산할 수 있습니다. 다음 절에서는 표본평균을 확률변수로 보고 분포를 구하며, 그 뒤에 표본평균으로 모평균을 추정합니다.</li>
-            <li><span class="tag">적용</span>'임의추출'로 '20번 뽑기'를 눌러 보세요. 오른쪽 점들이 모평균 선 위아래로 고르게 흩어지나요? '앞쪽 두 줄에서만'으로 바꿔 같은 일을 해 보세요. 횟수를 늘리면 <i>x̄</i>들의 평균이 <i>m</i>에 다가가나요? <i>n</i>을 40으로 키우면 어느 방법의 치우침이 사라지나요?</li>
+            <li><span class="tag">적용</span>'임의추출'로 '20번 뽑기'를 눌러 보세요. 오른쪽 점들이 모평균 선 위아래로 고르게 흩어지나요? '앞쪽 두 줄에서만'으로 바꿔 같은 일을 해 보세요. 횟수를 늘리면 \(\bar{x}\)들의 평균이 \(m\)에 다가가나요? \(n\)을 40으로 키우면 어느 방법의 치우침이 사라지나요?</li>
             <li class="warn"><span class="tag">판단</span>표본을 크게 뽑는다고 치우침이 고쳐지지 않습니다. 치우친 방법으로 뽑은 표본은 크기를 키워도 같은 쪽으로 빗나갑니다. 또 사람이 '아무렇게나' 고른 것은 임의추출이 아닙니다. 눈에 잘 띄거나 가까이 있는 사람이 더 자주 뽑히기 때문입니다. 각 대상이 뽑힐 확률이 같도록 난수 같은 장치를 써야 합니다.</li>
           </ol>
         </div>
@@ -99,6 +100,7 @@
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-6.html#card-stat-xbar-dist"><small class="mono">확률과 통계 3.6</small>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</a><a href="../../c/stat/3-6.html#card-stat-phat-dist"><small class="mono">확률과 통계 3.6</small>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</a></div></nav>
 
       <article class="card" id="card-stat-draw-replace">
         <header class="card-head">
@@ -120,18 +122,18 @@
               <dl class="nums n4">
                 <div><dt>가능한 표본 수</dt><dd class="n-k">—</dd></div>
                 <div><dt>고른 표본</dt><dd class="n-sel">—</dd></div>
-                <div><dt>E(<i>X̄</i>)</dt><dd class="n-e">—</dd></div>
-                <div><dt>V(<i>X̄</i>)</dt><dd class="n-v">—</dd></div>
+                <div><dt>\(E(\bar{X})\)</dt><dd class="n-e">—</dd></div>
+                <div><dt>\(V(\bar{X})\)</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">주머니에 1, 2, 3, 4가 적힌 공이 하나씩 있습니다. 표의 행은 첫째 공, 열은 둘째 공이고 칸의 수는 두 수의 평균 <i>x̄</i>입니다. 칸을 누르면 그 표본을 고릅니다. 오른쪽 막대는 <i>X̄</i>의 확률분포, 주황 점은 뽑기 결과의 상대도수입니다.</p>
+              <p class="fig-note">주머니에 1, 2, 3, 4가 적힌 공이 하나씩 있습니다. 표의 행은 첫째 공, 열은 둘째 공이고 칸의 수는 두 수의 평균 \(\bar{x}\)입니다. 칸을 누르면 그 표본을 고릅니다. 오른쪽 막대는 \(\bar{X}\)의 확률분포, 주황 점은 뽑기 결과의 상대도수입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>1, 2, 3, 4가 적힌 공 4개가 든 주머니에서 공 2개를 차례로 꺼냅니다. 꺼낸 공을 다시 넣고 꺼낼 때와 넣지 않고 꺼낼 때, 만들 수 있는 표본은 각각 몇 가지일까요?</li>
-            <li><span class="tag">복원</span>서로 다른 <i>n</i>개에서 <i>r</i>개를 택하는 중복순열의 수는 <i>n</i><sup><i>r</i></sup>, 순열의 수는 <sub><i>n</i></sub>P<sub><i>r</i></sub>입니다.</li>
-            <li><span class="tag">설명</span>한 번 뽑은 대상을 되돌려 놓고 다시 뽑는 것을 <em>복원추출</em>, 되돌려 놓지 않고 뽑는 것을 <em>비복원추출</em>이라고 합니다. 크기가 <i>N</i>인 모집단에서 크기가 <i>n</i>인 표본을 순서를 생각해 뽑으면, 복원추출의 표본은 <i>N</i><sup><i>n</i></sup>가지, 비복원추출의 표본은 <sub><i>N</i></sub>P<sub><i>n</i></sub>가지입니다. 임의추출이면 이 표본들이 모두 같은 확률로 뽑힙니다. 공 4개에서 2개를 뽑으면 복원추출은 4<sup>2</sup> = 16가지, 비복원추출은 <sub>4</sub>P<sub>2</sub> = 12가지이고, 비복원추출에서는 같은 공이 두 번 나오는 대각선 칸이 빠집니다.</li>
-            <li><span class="tag">연결</span>표본마다 평균 <i>x̄</i>를 구해 모으면 표본평균 <i>X̄</i>의 확률분포가 됩니다. 두 방법 모두 E(<i>X̄</i>)가 모평균 2.5와 같다는 사실이 다음 절의 출발점입니다. 교과서의 표본평균 공식은 복원추출을 기준으로 합니다.</li>
-            <li><span class="tag">적용</span>두 방법에서 오른쪽 막대의 모양을 비교해 보세요. <i>x̄</i> = 1과 <i>x̄</i> = 4가 사라지는 쪽은 어느 방법인가요? E(<i>X̄</i>)와 V(<i>X̄</i>)는 어떻게 다른가요? '100번 뽑기'를 여러 번 눌러 주황 점이 막대 끝으로 다가가는지 확인해 보세요.</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 \(r\)개를 택하는 중복순열의 수는 \(n^r\), 순열의 수는 \({}_{n}\mathrm{P}_{r}\)입니다.</li>
+            <li><span class="tag">설명</span>한 번 뽑은 대상을 되돌려 놓고 다시 뽑는 것을 <em>복원추출</em>, 되돌려 놓지 않고 뽑는 것을 <em>비복원추출</em>이라고 합니다. 크기가 \(N\)인 모집단에서 크기가 \(n\)인 표본을 순서를 생각해 뽑으면, 복원추출의 표본은 \(N^n\)가지, 비복원추출의 표본은 \({}_{N}\mathrm{P}_{n}\)가지입니다. 임의추출이면 이 표본들이 모두 같은 확률로 뽑힙니다. 공 4개에서 2개를 뽑으면 복원추출은 \(4^2 = 16\)가지, 비복원추출은 \({}_{4}\mathrm{P}_{2} = 12\)가지이고, 비복원추출에서는 같은 공이 두 번 나오는 대각선 칸이 빠집니다.</li>
+            <li><span class="tag">연결</span>표본마다 평균 \(\bar{x}\)를 구해 모으면 표본평균 \(\bar{X}\)의 확률분포가 됩니다. 두 방법 모두 \(E(\bar{X})\)가 모평균 2.5와 같다는 사실이 다음 절의 출발점입니다. 교과서의 표본평균 공식은 복원추출을 기준으로 합니다.</li>
+            <li><span class="tag">적용</span>두 방법에서 오른쪽 막대의 모양을 비교해 보세요. \(\bar{x} = 1\)과 \(\bar{x} = 4\)가 사라지는 쪽은 어느 방법인가요? \(E(\bar{X})\)와 \(V(\bar{X})\)는 어떻게 다른가요? '100번 뽑기'를 여러 번 눌러 주황 점이 막대 끝으로 다가가는지 확인해 보세요.</li>
             <li class="warn"><span class="tag">판단</span>비복원추출은 같은 대상을 두 번 조사하지 않으므로 실제 조사에서 더 자연스럽고, 표본평균의 퍼짐도 조금 작습니다. 그런데 모집단이 표본보다 아주 크면 몇 명을 빼도 남은 모집단이 거의 바뀌지 않아 두 방법의 차이를 무시할 수 있습니다. 그래서 큰 모집단에서 비복원추출을 해도 복원추출처럼 계산합니다.</li>
           </ol>
         </div>
@@ -139,13 +141,14 @@
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">1부터 5까지의 수가 하나씩 적힌 공 5개에서 크기가 3인 표본을 복원추출합니다. 뽑은 순서를 생각할 때 가능한 표본은 몇 가지인가?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>60<span class="why"><b>비복원추출의 수입니다.</b> <sub>5</sub>P<sub>3</sub> = 60은 같은 공이 다시 나올 수 없을 때의 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>125<span class="why"><b>맞습니다.</b> 매번 공 5개 중 하나가 나올 수 있으므로 5<sup>3</sup> = 125가지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>순서도 무시하고 중복도 막았습니다.</b> <sub>5</sub>C<sub>3</sub> = 10은 서로 다른 공 3개의 묶음 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>35<span class="why"><b>순서를 무시했습니다.</b> <sub>5</sub>H<sub>3</sub> = 35는 중복을 허락한 묶음 수이지만, 문제는 뽑은 순서를 생각하라고 했습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>60<span class="why"><b>비복원추출의 수입니다.</b> \({}_{5}\mathrm{P}_{3} = 60\)은 같은 공이 다시 나올 수 없을 때의 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>125<span class="why"><b>맞습니다.</b> 매번 공 5개 중 하나가 나올 수 있으므로 \(5^3 = 125\)가지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>순서도 무시하고 중복도 막았습니다.</b> \({}_{5}\mathrm{C}_{3} = 10\)은 서로 다른 공 3개의 묶음 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>35<span class="why"><b>순서를 무시했습니다.</b> \({}_{5}\mathrm{H}_{3} = 35\)는 중복을 허락한 묶음 수이지만, 문제는 뽑은 순서를 생각하라고 했습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-6.html#card-stat-xbar-dist"><small class="mono">확률과 통계 3.6</small>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</a><a href="../../c/stat/3-6.html#card-stat-phat-dist"><small class="mono">확률과 통계 3.6</small>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
 
@@ -156,8 +159,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/random-sample.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>

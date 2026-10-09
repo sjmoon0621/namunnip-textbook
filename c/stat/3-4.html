@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body data-course="stat" data-sec="3-4">
 
@@ -30,14 +31,14 @@
     <p class="lead">키, 측정 오차, 시험 점수처럼 많은 자료가 평균 근처에 몰리고 양쪽으로 갈수록 드물어지는 종 모양을 이룹니다. 이 절에서는 이런 모양을 나타내는 정규분포가 평균과 표준편차 두 수로 정해지는 것을 보고, 어떤 정규분포든 표준정규분포 하나로 바꾸어 확률을 구하는 방법을 익힙니다. 시행 횟수가 많은 이항분포가 정규분포에 가까워지는 것도 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">확률밀도함수와 넓이</span><span class="p">aX + b의 평균과 표준편차</span><span class="p">이항분포</span>
+      <a class="p p-card" href="../../c/stat/3-1.html#card-stat-density" title="확률과 통계 3.1 · 정확히 3분을 기다릴 확률은 얼마일까?">확률밀도함수와 넓이</a><span class="p">\(aX + b\)의 평균과 표준편차</span><a class="p p-card" href="../../c/stat/3-3.html#card-stat-binom-shape" title="확률과 통계 3.3 · 자유투 10번 중 몇 번 들어갈까?">이항분포</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-normal-curve"><span class="mono">3.4.1</span>정규분포 곡선의 성질</a></li>
         <li><a href="#card-stat-standardize"><span class="mono">3.4.2</span>표준화와 표준정규분포</a></li>
         <li><a href="#card-stat-binom-normal"><span class="mono">3.4.3</span>이항분포와 정규분포의 관계</a></li>
@@ -56,42 +57,43 @@
             <canvas class="cv-wide" aria-label="정규분포 N(m, σ²)의 곡선과 m − kσ부터 m + kσ까지 칠한 넓이. 비교용 N(60, 10²) 점선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="1" aria-pressed="true">m ± σ</button>
-                <button class="chip" type="button" data-k="2">m ± 2σ</button>
-                <button class="chip" type="button" data-k="3">m ± 3σ</button>
+                <button class="chip" type="button" data-k="1" aria-pressed="true">\(m \pm \sigma\)</button>
+                <button class="chip" type="button" data-k="2">\(m \pm 2\sigma\)</button>
+                <button class="chip" type="button" data-k="3">\(m \pm 3\sigma\)</button>
               </div>
-              <label class="mono">평균 <i>m</i> = <output class="m-out">60</output></label>
+              <label class="mono">평균 \(m\) = <output class="m-out">60</output></label>
               <input class="m" type="range" min="40" max="80" step="1" value="60" aria-label="평균 m">
-              <label class="mono">표준편차 σ = <output class="s-out">10.0</output></label>
+              <label class="mono">표준편차 \(\sigma\) = <output class="s-out">10.0</output></label>
               <input class="s" type="range" min="4" max="16" step="0.5" value="10" aria-label="표준편차 σ">
               <dl class="nums">
-                <div><dt>곡선의 최댓값 1/(σ√2π)</dt><dd class="n-h">—</dd></div>
-                <div><dt class="d-p">P(m − σ ≤ X ≤ m + σ)</dt><dd class="n-p">—</dd></div>
+                <div><dt>곡선의 최댓값 \(\frac{1}{\sigma\sqrt{2\pi}}\)</dt><dd class="n-h">—</dd></div>
+                <div><dt class="d-p">\(P(m - \sigma \le X \le m + \sigma)\)</dt><dd class="n-p">—</dd></div>
                 <div><dt>전체 넓이</dt><dd>1</dd></div>
               </dl>
-              <p class="fig-note">점선은 비교를 위해 고정한 N(60, 10<sup>2</sup>)입니다. 칠한 넓이는 수치 적분으로 계산합니다.</p>
+              <p class="fig-note">점선은 비교를 위해 고정한 \(N(60, 10^2)\)입니다. 칠한 넓이는 수치 적분으로 계산합니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>두 반의 수학 점수 분포가 모두 종 모양인데, 한 반은 평균이 더 높고 다른 반은 더 넓게 퍼져 있습니다. 이 두 종 모양은 서로 다른 모양일까요, 같은 모양을 옮기고 늘인 것일까요?</li>
-            <li><span class="tag">복원</span>연속확률변수의 확률은 확률밀도함수 그래프 아래의 넓이이고, 전체 넓이는 1입니다. σ(<i>aX</i> + <i>b</i>) = |<i>a</i>|σ(<i>X</i>)이므로, 더하는 수는 위치만 옮기고 곱하는 수는 폭을 바꿉니다.</li>
-            <li><span class="tag">설명</span>평균이 <i>m</i>, 표준편차가 σ인 연속확률변수 <i>X</i>의 확률밀도함수가 <i>f</i>(<i>x</i>) = 1/(σ√2π) · <i>e</i><sup>−(<i>x</i>−<i>m</i>)²/(2σ²)</sup>일 때, <i>X</i>는 <em>정규분포</em> <b>N(<i>m</i>, σ<sup>2</sup>)</b>을 따른다고 합니다. 곡선은 (1) 직선 <i>x</i> = <i>m</i>에 대하여 대칭이고 (2) <i>x</i> = <i>m</i>에서 최댓값을 가지며 (3) <i>x</i>축을 점근선으로 하고 (4) <i>x</i>축과의 사이 넓이가 1입니다. <i>m</i>이 바뀌면 곡선은 모양 그대로 옆으로 옮겨지고, σ가 커지면 낮고 넓게 퍼집니다. 넓이가 1로 고정되어 있으니 폭이 두 배가 되면 높이는 절반이 됩니다.</li>
+            <li><span class="tag">복원</span>연속확률변수의 확률은 확률밀도함수 그래프 아래의 넓이이고, 전체 넓이는 1입니다. \(\sigma(aX + b) = |a|\sigma(X)\)이므로, 더하는 수는 위치만 옮기고 곱하는 수는 폭을 바꿉니다.</li>
+            <li><span class="tag">설명</span>평균이 \(m\), 표준편차가 \(\sigma\)인 연속확률변수 \(X\)의 확률밀도함수가 \(f(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-m)^2}{2\sigma^2}}\)일 때, \(X\)는 <em>정규분포</em> <b>\(N(m, \sigma^2)\)</b>을 따른다고 합니다. 곡선은 (1) 직선 \(x = m\)에 대하여 대칭이고 (2) \(x = m\)에서 최댓값을 가지며 (3) \(x\)축을 점근선으로 하고 (4) \(x\)축과의 사이 넓이가 1입니다. \(m\)이 바뀌면 곡선은 모양 그대로 옆으로 옮겨지고, \(\sigma\)가 커지면 낮고 넓게 퍼집니다. 넓이가 1로 고정되어 있으니 폭이 두 배가 되면 높이는 절반이 됩니다.</li>
             <li><span class="tag">연결</span>평균에서 표준편차의 몇 배 안에 있는지만 같으면 확률도 같다는 성질 덕분에, 모든 정규분포를 평균 0, 표준편차 1인 표준정규분포 하나로 바꾸어 다룰 수 있습니다. 이것이 표준화이며, 다음 카드에서 다룹니다.</li>
-            <li><span class="tag">적용</span>'<i>m</i> ± σ'를 고른 채 <i>m</i>과 σ를 마음대로 바꾸어 보세요. 칠한 넓이의 확률은 바뀌나요? '<i>m</i> ± 2σ', '<i>m</i> ± 3σ'에서도 값이 각각 몇으로 고정되는지 읽어 보세요. σ를 4와 16으로 바꾸면 최댓값은 몇 배가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>N(<i>m</i>, σ<sup>2</sup>)의 둘째 자리는 분산입니다. N(50, 16)은 표준편차가 4이지 16이 아닙니다. 또 실제 자료가 정확히 정규분포인 경우는 드물고, 키나 측정값이 종 모양에 가깝다는 것을 정규분포로 근사하는 것입니다. 양 끝의 아주 드문 값까지 정규분포가 잘 맞는다고 믿으면 위험을 작게 볼 수 있습니다.</li>
+            <li><span class="tag">적용</span>'\(m \pm \sigma\)'를 고른 채 \(m\)과 \(\sigma\)를 마음대로 바꾸어 보세요. 칠한 넓이의 확률은 바뀌나요? '\(m \pm 2\sigma\)', '\(m \pm 3\sigma\)'에서도 값이 각각 몇으로 고정되는지 읽어 보세요. \(\sigma\)를 4와 16으로 바꾸면 최댓값은 몇 배가 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(N(m, \sigma^2)\)의 둘째 자리는 분산입니다. \(N(50, 16)\)은 표준편차가 4이지 16이 아닙니다. 또 실제 자료가 정확히 정규분포인 경우는 드물고, 키나 측정값이 종 모양에 가깝다는 것을 정규분포로 근사하는 것입니다. 양 끝의 아주 드문 값까지 정규분포가 잘 맞는다고 믿으면 위험을 작게 볼 수 있습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>X</i>가 정규분포 N(50, 4<sup>2</sup>)을 따를 때 P(42 ≤ <i>X</i> ≤ 58)은? (단, P(0 ≤ <i>Z</i> ≤ 0.5) = 0.1915, P(0 ≤ <i>Z</i> ≤ 2) = 0.4772)</p>
+          <p class="q">\(X\)가 정규분포 \(N(50, 4^2)\)을 따를 때 \(P(42 \le X \le 58)\)은? (단, \(P(0 \le Z \le 0.5) = 0.1915\), \(P(0 \le Z \le 2) = 0.4772\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.9544<span class="why"><b>맞습니다.</b> 42와 58은 평균 50에서 8 = 2σ만큼 떨어져 있으므로 P(|<i>Z</i>| ≤ 2) = 2 × 0.4772 = 0.9544입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.9544<span class="why"><b>맞습니다.</b> 42와 58은 평균 50에서 \(8 = 2\sigma\)만큼 떨어져 있으므로 \(P(|Z| \le 2) = 2 \times 0.4772 = 0.9544\)입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.4772<span class="why"><b>한쪽만 구했습니다.</b> 곡선이 평균에 대해 대칭이므로 42부터 50까지의 넓이도 똑같이 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.3830<span class="why"><b>4<sup>2</sup> = 16을 표준편차로 썼습니다.</b> 그러면 8은 0.5σ가 되지만, N(50, 4<sup>2</sup>)의 표준편차는 4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.0456<span class="why"><b>구간 밖의 확률입니다.</b> 1 − 0.9544 = 0.0456은 42보다 작거나 58보다 클 확률입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.3830<span class="why"><b>\(4^2 = 16\)을 표준편차로 썼습니다.</b> 그러면 8은 \(0.5\sigma\)가 되지만, \(N(50, 4^2)\)의 표준편차는 4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.0456<span class="why"><b>구간 밖의 확률입니다.</b> \(1 - 0.9544 = 0.0456\)은 42보다 작거나 58보다 클 확률입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-1.html#card-stat-density"><small class="mono">확률과 통계 3.1</small>정확히 3분을 기다릴 확률은 얼마일까?</a><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 더하면 표준편차는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-6.html#card-stat-xbar-dist"><small class="mono">확률과 통계 3.6</small>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</a></div></nav>
 
       <article class="card" id="card-stat-standardize">
         <header class="card-head">
@@ -101,41 +103,42 @@
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="위: N(m, σ²)를 따르는 키 X의 곡선과 X ≤ a의 넓이. 아래: 표준정규분포 N(0, 1)과 Z ≤ z의 넓이. 두 그림 사이를 잇는 대응선"></canvas>
             <div class="ctl">
-              <label class="mono">평균 <i>m</i> = <output class="m-out">170</output> cm</label>
+              <label class="mono">평균 \(m\) = <output class="m-out">170</output> cm</label>
               <input class="m" type="range" min="160" max="180" step="1" value="170" aria-label="평균 m">
-              <label class="mono">표준편차 σ = <output class="s-out">6.0</output> cm</label>
+              <label class="mono">표준편차 \(\sigma\) = <output class="s-out">6.0</output> cm</label>
               <input class="s" type="range" min="3" max="10" step="0.5" value="6" aria-label="표준편차 σ">
-              <label class="mono">기준 키 <i>a</i> = <output class="a-out">179.0</output> cm</label>
+              <label class="mono">기준 키 \(a\) = <output class="a-out">179.0</output> cm</label>
               <input class="a" type="range" min="145" max="195" step="0.5" value="179" aria-label="기준 키 a">
               <dl class="nums n4">
-                <div><dt>z = (a − m)/σ</dt><dd class="n-z">—</dd></div>
-                <div><dt class="d-t">P(0 ≤ Z ≤ z)</dt><dd class="n-t">—</dd></div>
-                <div><dt>P(X ≤ a)</dt><dd class="n-l">—</dd></div>
-                <div><dt>P(X ≥ a)</dt><dd class="n-g">—</dd></div>
+                <div><dt>\(z = \frac{a - m}{\sigma}\)</dt><dd class="n-z">—</dd></div>
+                <div><dt class="d-t">\(P(0 \le Z \le z)\)</dt><dd class="n-t">—</dd></div>
+                <div><dt>\(P(X \le a)\)</dt><dd class="n-l">—</dd></div>
+                <div><dt>\(P(X \ge a)\)</dt><dd class="n-g">—</dd></div>
               </dl>
-              <p class="fig-note">어느 학교 학생의 키 <i>X</i>가 정규분포를 따른다고 가정한 예입니다. 두 번째 값은 표준정규분포표에서 읽는 값(<i>z</i>를 소수 둘째 자리까지)입니다.</p>
+              <p class="fig-note">어느 학교 학생의 키 \(X\)가 정규분포를 따른다고 가정한 예입니다. 두 번째 값은 표준정규분포표에서 읽는 값(\(z\)를 소수 둘째 자리까지)입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>키가 N(170, 6<sup>2</sup>)을 따르는 학교에서 179 cm 이상인 학생의 비율을 알고 싶습니다. 평균과 표준편차가 다른 학교마다 표를 따로 만들어야 할까요?</li>
-            <li><span class="tag">복원</span>E(<i>aX</i> + <i>b</i>) = <i>a</i>E(<i>X</i>) + <i>b</i>, σ(<i>aX</i> + <i>b</i>) = |<i>a</i>|σ(<i>X</i>)입니다. 정규분포에서 평균으로부터 표준편차의 몇 배 안에 들어갈 확률은 <i>m</i>, σ와 관계없이 같습니다.</li>
-            <li><span class="tag">설명</span>평균이 0, 표준편차가 1인 정규분포 <b>N(0, 1)</b>을 <em>표준정규분포</em>라 하고, 이를 따르는 확률변수를 <i>Z</i>로 씁니다. <i>X</i>가 N(<i>m</i>, σ<sup>2</sup>)을 따르면 <b><i>Z</i> = (<i>X</i> − <i>m</i>)/σ</b>는 N(0, 1)을 따릅니다. 이렇게 바꾸는 것을 <em>표준화</em>라고 합니다. 그러면 P(<i>X</i> ≤ <i>a</i>) = P(<i>Z</i> ≤ (<i>a</i> − <i>m</i>)/σ)이고, 값은 P(0 ≤ <i>Z</i> ≤ <i>z</i>)를 모아 둔 <em>표준정규분포표</em>에서 읽습니다. 표에는 양수 <i>z</i>만 있으므로, 곡선이 0에 대해 대칭이고 0의 양쪽 넓이가 각각 0.5라는 것을 함께 씁니다.</li>
-            <li><span class="tag">연결</span><i>z</i>는 '평균에서 표준편차 몇 개만큼 떨어져 있는가'를 나타내는 수라서, 평균과 표준편차가 다른 두 시험의 점수를 비교할 때도 씁니다. 다음 카드에서 이항분포의 확률을 근사할 때, 그리고 모평균을 추정할 때도 모두 이 표준화를 거칩니다.</li>
-            <li><span class="tag">적용</span>처음 상태에서 <i>z</i>와 P(<i>X</i> ≥ 179)를 읽어 보세요. 대응선을 보면 <i>m</i>은 <i>Z</i>의 어디로 가나요? <i>a</i>를 평균보다 작게 하면 <i>z</i>는 음수가 되는데, 표 값으로 P(<i>X</i> ≤ <i>a</i>)를 어떻게 구하나요? <i>m</i>과 σ를 바꾸면서 <i>z</i>가 같게 유지되도록 <i>a</i>를 맞추면 확률은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>표준화할 때 분산으로 나누는 실수가 잦습니다. N(170, 36)이면 σ = 6으로 나눠야 합니다. 또 표의 값 P(0 ≤ <i>Z</i> ≤ <i>z</i>)를 그대로 P(<i>Z</i> ≤ <i>z</i>)로 쓰면 0.5가 빠집니다. 그림으로 넓이를 먼저 그려 보면 이런 실수를 줄일 수 있습니다.</li>
+            <li><span class="tag">질문</span>키가 \(N(170, 6^2)\)을 따르는 학교에서 179 cm 이상인 학생의 비율을 알고 싶습니다. 평균과 표준편차가 다른 학교마다 표를 따로 만들어야 할까요?</li>
+            <li><span class="tag">복원</span>\(E(aX + b) = aE(X) + b\), \(\sigma(aX + b) = |a|\sigma(X)\)입니다. 정규분포에서 평균으로부터 표준편차의 몇 배 안에 들어갈 확률은 \(m, \sigma\)와 관계없이 같습니다.</li>
+            <li><span class="tag">설명</span>평균이 0, 표준편차가 1인 정규분포 <b>\(N(0, 1)\)</b>을 <em>표준정규분포</em>라 하고, 이를 따르는 확률변수를 \(Z\)로 씁니다. \(X\)가 \(N(m, \sigma^2)\)을 따르면 <b>\(Z = \frac{X - m}{\sigma}\)</b>는 \(N(0, 1)\)을 따릅니다. 이렇게 바꾸는 것을 <em>표준화</em>라고 합니다. 그러면 \(P(X \le a) = P(Z \le \frac{a - m}{\sigma})\)이고, 값은 \(P(0 \le Z \le z)\)를 모아 둔 <em>표준정규분포표</em>에서 읽습니다. 표에는 양수 \(z\)만 있으므로, 곡선이 0에 대해 대칭이고 0의 양쪽 넓이가 각각 0.5라는 것을 함께 씁니다.</li>
+            <li><span class="tag">연결</span>\(z\)는 '평균에서 표준편차 몇 개만큼 떨어져 있는가'를 나타내는 수라서, 평균과 표준편차가 다른 두 시험의 점수를 비교할 때도 씁니다. 다음 카드에서 이항분포의 확률을 근사할 때, 그리고 모평균을 추정할 때도 모두 이 표준화를 거칩니다.</li>
+            <li><span class="tag">적용</span>처음 상태에서 \(z\)와 \(P(X \ge 179)\)를 읽어 보세요. 대응선을 보면 \(m\)은 \(Z\)의 어디로 가나요? \(a\)를 평균보다 작게 하면 \(z\)는 음수가 되는데, 표 값으로 \(P(X \le a)\)를 어떻게 구하나요? \(m\)과 \(\sigma\)를 바꾸면서 \(z\)가 같게 유지되도록 \(a\)를 맞추면 확률은 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>표준화할 때 분산으로 나누는 실수가 잦습니다. \(N(170, 36)\)이면 \(\sigma = 6\)으로 나눠야 합니다. 또 표의 값 \(P(0 \le Z \le z)\)를 그대로 \(P(Z \le z)\)로 쓰면 0.5가 빠집니다. 그림으로 넓이를 먼저 그려 보면 이런 실수를 줄일 수 있습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">시험 점수 <i>X</i>가 N(65, 10<sup>2</sup>)을 따를 때 P(55 ≤ <i>X</i> ≤ 80)은? (단, P(0 ≤ <i>Z</i> ≤ 1) = 0.3413, P(0 ≤ <i>Z</i> ≤ 1.5) = 0.4332)</p>
+          <p class="q">시험 점수 \(X\)가 \(N(65, 10^2)\)을 따를 때 \(P(55 \le X \le 80)\)은? (단, \(P(0 \le Z \le 1) = 0.3413\), \(P(0 \le Z \le 1.5) = 0.4332\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.7745<span class="why"><b>맞습니다.</b> 표준화하면 P(−1 ≤ <i>Z</i> ≤ 1.5)이고, 0을 사이에 두므로 0.3413 + 0.4332 = 0.7745입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.0919<span class="why"><b>두 넓이를 뺐습니다.</b> 빼는 것은 두 끝이 0의 같은 쪽에 있을 때입니다. 여기서는 −1과 1.5가 0의 양쪽에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.4332<span class="why"><b>0부터 1.5까지만 구했습니다.</b> 55는 평균보다 작으므로 −1부터 0까지의 넓이 0.3413도 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.8664<span class="why"><b>양쪽을 모두 1.5로 보았습니다.</b> 55는 평균에서 10, 곧 1σ 떨어져 있어 <i>z</i> = −1입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.7745<span class="why"><b>맞습니다.</b> 표준화하면 \(P(-1 \le Z \le 1.5)\)이고, 0을 사이에 두므로 \(0.3413 + 0.4332 = 0.7745\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.0919<span class="why"><b>두 넓이를 뺐습니다.</b> 빼는 것은 두 끝이 0의 같은 쪽에 있을 때입니다. 여기서는 \(-1\)과 1.5가 0의 양쪽에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.4332<span class="why"><b>0부터 1.5까지만 구했습니다.</b> 55는 평균보다 작으므로 \(-1\)부터 0까지의 넓이 0.3413도 들어갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.8664<span class="why"><b>양쪽을 모두 1.5로 보았습니다.</b> 55는 평균에서 10, 곧 \(1\sigma\) 떨어져 있어 \(z = -1\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-1.html#card-stat-density"><small class="mono">확률과 통계 3.1</small>정확히 3분을 기다릴 확률은 얼마일까?</a><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 더하면 표준편차는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-6.html#card-stat-xbar-dist"><small class="mono">확률과 통계 3.6</small>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</a></div></nav>
 
       <article class="card" id="card-stat-binom-normal">
         <header class="card-head">
@@ -145,39 +148,40 @@
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="이항분포 B(n, p)의 막대그래프와 평균, 표준편차가 같은 정규분포 N(np, npq)의 곡선. X ≤ k인 막대를 진하게 칠함"></canvas>
             <div class="ctl">
-              <label class="mono">시행 횟수 <i>n</i> = <output class="n-out">10</output></label>
+              <label class="mono">시행 횟수 \(n\) = <output class="n-out">10</output></label>
               <input class="n" type="range" min="5" max="200" step="1" value="10" aria-label="시행 횟수 n">
-              <label class="mono">성공 확률 <i>p</i> = <output class="p-out">0.20</output></label>
+              <label class="mono">성공 확률 \(p\) = <output class="p-out">0.20</output></label>
               <input class="p" type="range" min="0.05" max="0.95" step="0.05" value="0.2" aria-label="성공 확률 p">
               <dl class="nums n4">
-                <div><dt>평균 <i>np</i></dt><dd class="n-m">—</dd></div>
-                <div><dt>표준편차 √<i>npq</i></dt><dd class="n-s">—</dd></div>
-                <div><dt class="d-ex">P(X ≤ k)</dt><dd class="n-ex">—</dd></div>
+                <div><dt>평균 \(np\)</dt><dd class="n-m">—</dd></div>
+                <div><dt>표준편차 \(\sqrt{npq}\)</dt><dd class="n-s">—</dd></div>
+                <div><dt class="d-ex">\(P(X \le k)\)</dt><dd class="n-ex">—</dd></div>
                 <div><dt>정규분포 근사</dt><dd class="n-ap">—</dd></div>
               </dl>
-              <p class="fig-note">막대는 B(<i>n</i>, <i>p</i>)의 확률, 곡선은 평균과 표준편차가 같은 정규분포 N(<i>np</i>, <i>npq</i>)입니다. 진한 막대는 <i>X</i> ≤ <i>k</i>인 부분이고, <i>k</i>는 <i>np</i> + √<i>npq</i>를 넘지 않는 가장 큰 정수입니다. P(<i>X</i> ≤ <i>k</i>)는 이항분포로 계산한 정확한 값, 근사값은 P(<i>Z</i> ≤ (<i>k</i> − <i>np</i>)/√<i>npq</i>)입니다.</p>
+              <p class="fig-note">막대는 \(B(n, p)\)의 확률, 곡선은 평균과 표준편차가 같은 정규분포 \(N(np, npq)\)입니다. 진한 막대는 \(X \le k\)인 부분이고, \(k\)는 \(np + \sqrt{npq}\)를 넘지 않는 가장 큰 정수입니다. \(P(X \le k)\)는 이항분포로 계산한 정확한 값, 근사값은 \(P(Z \le \frac{k - np}{\sqrt{npq}})\)입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전을 100번 던져 앞면이 60번 이하로 나올 확률을 이항분포로 구하려면 <sub>100</sub>C<sub><i>k</i></sub>(1/2)<sup>100</sup>을 61개나 더해야 합니다. 더 간단한 방법은 없을까요?</li>
-            <li><span class="tag">복원</span>B(<i>n</i>, <i>p</i>)의 평균은 <i>np</i>, 표준편차는 √<i>npq</i>입니다(<i>q</i> = 1 − <i>p</i>). 정규분포 N(<i>m</i>, σ<sup>2</sup>)의 확률은 <i>Z</i> = (<i>X</i> − <i>m</i>)/σ로 표준화해 표준정규분포표에서 읽습니다.</li>
-            <li><span class="tag">설명</span><i>n</i>이 커지면 이항분포의 막대그래프는 평균 <i>np</i>를 중심으로 좌우가 거의 대칭인 종 모양이 됩니다. 그래서 <i>X</i>가 B(<i>n</i>, <i>p</i>)를 따르고 <i>n</i>이 충분히 크면, <i>X</i>는 근사적으로 정규분포 <b>N(<i>np</i>, <i>npq</i>)</b>를 따른다고 봅니다. 확률은 <i>Z</i> = (<i>X</i> − <i>np</i>)/√<i>npq</i>로 표준화해 구합니다. 앞의 동전은 <i>m</i> = 50, σ = 5이므로 P(<i>X</i> ≤ 60) ≈ P(<i>Z</i> ≤ 2) = 0.9772입니다.</li>
+            <li><span class="tag">질문</span>동전을 100번 던져 앞면이 60번 이하로 나올 확률을 이항분포로 구하려면 \({}_{100}\mathrm{C}_{k}(\frac{1}{2})^{100}\)을 61개나 더해야 합니다. 더 간단한 방법은 없을까요?</li>
+            <li><span class="tag">복원</span>\(B(n, p)\)의 평균은 \(np\), 표준편차는 \(\sqrt{npq}\)입니다\((q = 1 - p)\). 정규분포 \(N(m, \sigma^2)\)의 확률은 \(Z = \frac{X - m}{\sigma}\)로 표준화해 표준정규분포표에서 읽습니다.</li>
+            <li><span class="tag">설명</span>\(n\)이 커지면 이항분포의 막대그래프는 평균 \(np\)를 중심으로 좌우가 거의 대칭인 종 모양이 됩니다. 그래서 \(X\)가 \(B(n, p)\)를 따르고 \(n\)이 충분히 크면, \(X\)는 근사적으로 정규분포 <b>\(N(np, npq)\)</b>를 따른다고 봅니다. 확률은 \(Z = \frac{X - np}{\sqrt{npq}}\)로 표준화해 구합니다. 앞의 동전은 \(m = 50\), \(\sigma = 5\)이므로 \(P(X \le 60) \approx P(Z \le 2) = 0.9772\)입니다.</li>
             <li><span class="tag">연결</span>이 근사 덕분에 표본비율처럼 '성공 횟수를 센 값'도 정규분포로 다룰 수 있습니다. 모비율을 추정하고 여론조사의 오차 범위를 계산하는 바탕이 이것입니다.</li>
-            <li><span class="tag">적용</span><i>p</i> = 0.2로 두고 <i>n</i>을 5에서 100까지 천천히 키워 보세요. <i>n</i>이 작을 때 막대는 어느 쪽으로 치우쳐 있나요? P(<i>X</i> ≤ <i>k</i>)와 '정규분포 근사'의 차이는 <i>n</i>이 커질수록 어떻게 되나요? <i>p</i>를 0.5로 바꾸면 더 작은 <i>n</i>에서도 곡선이 잘 맞나요?</li>
-            <li class="warn"><span class="tag">판단</span>근사는 <i>n</i>이 충분히 클 때만 씁니다. 흔히 <i>np</i> ≥ 5, <i>nq</i> ≥ 5를 기준으로 삼으며, <i>p</i>가 0이나 1에 가까울수록 더 큰 <i>n</i>이 필요합니다. 또 이항분포는 정수에만 확률이 있지만 정규분포는 연속이므로, <i>n</i>이 작으면 근사값이 정확한 값과 꽤 다릅니다.</li>
+            <li><span class="tag">적용</span>\(p = 0.2\)로 두고 \(n\)을 5에서 100까지 천천히 키워 보세요. \(n\)이 작을 때 막대는 어느 쪽으로 치우쳐 있나요? \(P(X \le k)\)와 '정규분포 근사'의 차이는 \(n\)이 커질수록 어떻게 되나요? \(p\)를 0.5로 바꾸면 더 작은 \(n\)에서도 곡선이 잘 맞나요?</li>
+            <li class="warn"><span class="tag">판단</span>근사는 \(n\)이 충분히 클 때만 씁니다. 흔히 \(np \ge 5\), \(nq \ge 5\)를 기준으로 삼으며, \(p\)가 0이나 1에 가까울수록 더 큰 \(n\)이 필요합니다. 또 이항분포는 정수에만 확률이 있지만 정규분포는 연속이므로, \(n\)이 작으면 근사값이 정확한 값과 꽤 다릅니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">확률변수 <i>X</i>가 이항분포 B(100, 0.2)를 따를 때, 정규분포로 근사하여 구한 P(<i>X</i> ≥ 24)는? (단, P(0 ≤ <i>Z</i> ≤ 0.25) = 0.0987, P(0 ≤ <i>Z</i> ≤ 1) = 0.3413)</p>
+          <p class="q">확률변수 \(X\)가 이항분포 \(B(100, 0.2)\)를 따를 때, 정규분포로 근사하여 구한 \(P(X \ge 24)\)는? (단, \(P(0 \le Z \le 0.25) = 0.0987\), \(P(0 \le Z \le 1) = 0.3413\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.1587<span class="why"><b>맞습니다.</b> <i>m</i> = 100 × 0.2 = 20, σ = √(100 × 0.2 × 0.8) = 4이므로 P(<i>X</i> ≥ 24) ≈ P(<i>Z</i> ≥ 1) = 0.5 − 0.3413 = 0.1587입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.3413<span class="why"><b>20부터 24까지의 확률입니다.</b> 표에서 읽은 값은 P(0 ≤ <i>Z</i> ≤ 1)이므로 0.5에서 빼야 24 이상의 확률이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.8413<span class="why"><b>반대쪽 넓이입니다.</b> 0.5 + 0.3413은 P(<i>Z</i> ≤ 1), 곧 <i>X</i>가 24 이하일 확률에 해당합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.4013<span class="why"><b>분산을 표준편차로 썼습니다.</b> <i>npq</i> = 16은 분산입니다. 16으로 나누면 <i>Z</i> = 0.25가 되지만, 표준편차는 √16 = 4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.1587<span class="why"><b>맞습니다.</b> \(m = 100 \times 0.2 = 20\), \(\sigma = \sqrt{100 \times 0.2 \times 0.8} = 4\)이므로 \(P(X \ge 24) \approx P(Z \ge 1) = 0.5 - 0.3413 = 0.1587\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.3413<span class="why"><b>20부터 24까지의 확률입니다.</b> 표에서 읽은 값은 \(P(0 \le Z \le 1)\)이므로 0.5에서 빼야 24 이상의 확률이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.8413<span class="why"><b>반대쪽 넓이입니다.</b> \(0.5 + 0.3413\)은 \(P(Z \le 1)\), 곧 \(X\)가 24 이하일 확률에 해당합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.4013<span class="why"><b>분산을 표준편차로 썼습니다.</b> \(npq = 16\)은 분산입니다. 16으로 나누면 \(Z = 0.25\)가 되지만, 표준편차는 \(\sqrt{16} = 4\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-6.html#card-stat-phat-dist"><small class="mono">확률과 통계 3.6</small>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">58문항</span></a>
 
@@ -188,8 +192,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/normal-curve.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>

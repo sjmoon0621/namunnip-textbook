@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-distance-area canvas { width: 100%; aspect-ratio: 16 / 15; touch-action: pan-y; cursor: ew-resize; }
     #card-calc2-distance-area .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -36,14 +37,14 @@
     <p class="lead">앞 단원에서는 위치를 미분해 속도를 구했습니다. 이 절에서는 거꾸로 속도를 적분해 위치와 움직인 거리를 구합니다. 수직선 위에서 방향을 바꾸는 운동은 변위와 움직인 거리가 왜 다른지 넓이로 확인합니다. 평면 위를 움직이는 점은 속력을 적분해 움직인 거리, 곧 지나간 곡선의 길이를 구합니다. 계기판의 속력만 기록해도 달린 거리를 알 수 있다는 것이 적분의 쓸모입니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">속도와 가속도</span><span class="p">평면 위의 운동</span><span class="p">두 곡선 사이의 넓이</span><span class="p">치환적분법</span>
+      <a class="p p-card" href="../../c/labphy/2-1.html#card-labphy-ticker" title="물리학 실험 2.1 · 종이테이프에 찍힌 점만으로 가속도를 구할 수 있을까?">속도와 가속도</a><a class="p p-card" href="../../c/calc2/2-11.html#card-calc2-plane-motion" title="미적분Ⅱ 2.11 · 일정한 빠르기로 원을 도는 점에도 가속도가 있을까?">평면 위의 운동</a><a class="p p-card" href="../../c/calc2/3-5.html#card-calc2-area-cross" title="미적분Ⅱ 3.5 · 두 곡선이 엇갈리면 넓이는 어떻게 구할까?">두 곡선 사이의 넓이</a><a class="p p-card" href="../../c/calc2/3-2.html#card-calc2-substitution" title="미적분Ⅱ 3.2 · 속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?">치환적분법</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc2-distance-area"><span class="mono">3.7.1</span>변위와 움직인 거리</a></li>
         <li><a href="#card-calc2-path-length"><span class="mono">3.7.2</span>평면 위에서 움직인 거리</a></li>
       </ol>
@@ -61,41 +62,42 @@
             <canvas aria-label="위: 속도-시간 그래프와 0부터 t까지 칠한 넓이. 아래: 수직선 위 점의 위치와, 시간이 위에서 아래로 흐르며 남긴 자취"></canvas>
             <div class="ctl">
               <div class="presets fn">
-                <button class="chip" type="button" data-k="0" aria-pressed="true"><i>v</i> = cos <i>t</i></button>
-                <button class="chip" type="button" data-k="1"><i>v</i> = 2 − <i>e</i><sup><i>t</i>/2</sup></button>
-                <button class="chip" type="button" data-k="2"><i>v</i> = (<i>t</i> − 1)<i>e</i><sup>−<i>t</i></sup></button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">\(v = \cos t\)</button>
+                <button class="chip" type="button" data-k="1">\(v = 2 - e^{\frac{t}{2}}\)</button>
+                <button class="chip" type="button" data-k="2">\(v = (t - 1)e^{-t}\)</button>
               </div>
-              <label class="mono">시각 <i>t</i> = <output class="t-out">2</output></label>
+              <label class="mono">시각 \(t\) = <output class="t-out">2</output></label>
               <input class="st" type="range" min="0" max="6.28" step="0.01" value="2" aria-label="시각 t">
               <div class="presets"><button class="chip go-play" type="button">처음부터 움직이기</button></div>
               <dl class="nums">
-                <div><dt>속도 <i>v</i>(<i>t</i>)</dt><dd class="n-v">—</dd></div>
-                <div><dt>위치 <i>x</i>(<i>t</i>) (<i>x</i>(0) = 0)</dt><dd class="n-x">—</dd></div>
-                <div><dt>변위 ∫<sub>0</sub><sup><i>t</i></sup> <i>v</i> d<i>t</i></dt><dd class="n-d">—</dd></div>
-                <div><dt>움직인 거리 ∫<sub>0</sub><sup><i>t</i></sup> |<i>v</i>| d<i>t</i></dt><dd class="n-s">—</dd></div>
+                <div><dt>속도 \(v(t)\)</dt><dd class="n-v">—</dd></div>
+                <div><dt>위치 \(x(t) (x(0) = 0)\)</dt><dd class="n-x">—</dd></div>
+                <div><dt>변위 \(\int_0^t v\,dt\)</dt><dd class="n-d">—</dd></div>
+                <div><dt>움직인 거리 \(\int_0^t |v|\,dt\)</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">초록은 앞으로(<i>v</i> &gt; 0), 주황은 뒤로(<i>v</i> &lt; 0) 간 부분입니다. 아래 자취는 가로가 위치, 세로가 시간입니다. 위 그림을 끌어도 시각이 바뀝니다.</p>
+              <p class="fig-note">초록은 앞으로\((v &gt; 0)\), 주황은 뒤로\((v &lt; 0)\) 간 부분입니다. 아래 자취는 가로가 위치, 세로가 시간입니다. 위 그림을 끌어도 시각이 바뀝니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수직선 위를 움직이는 점의 속도가 <i>v</i>(<i>t</i>) = cos <i>t</i>입니다. 속도 그래프만으로 시각 <i>t</i>에서의 위치와, 그때까지 실제로 움직인 거리를 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>위치 <i>x</i>(<i>t</i>)를 미분하면 속도 <i>v</i>(<i>t</i>)입니다. 그래서 <i>x</i>(<i>t</i>)는 <i>v</i>(<i>t</i>)의 원시함수이고, ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>v</i>(<i>t</i>) d<i>t</i> = <i>x</i>(<i>b</i>) − <i>x</i>(<i>a</i>)입니다.</li>
-            <li><span class="tag">설명</span>위치는 <b><i>x</i>(<i>t</i>) = <i>x</i>(0) + ∫<sub>0</sub><sup><i>t</i></sup> <i>v</i>(<i>s</i>) d<i>s</i></b>입니다. 시각 <i>a</i>부터 <i>b</i>까지 위치의 변화량(변위)은 ∫<sub><i>a</i></sub><sup><i>b</i></sup> <i>v</i>(<i>t</i>) d<i>t</i>로, 뒤로 간 부분이 빼집니다. 실제로 <b>움직인 거리는 ∫<sub><i>a</i></sub><sup><i>b</i></sup> |<i>v</i>(<i>t</i>)| d<i>t</i></b>로, 속도가 0이 되어 방향이 바뀌는 시각에서 구간을 나누어 계산합니다. <i>v</i> = cos <i>t</i>이면 <i>x</i>(<i>t</i>) = sin <i>t</i>이고, 0 ≤ <i>t</i> ≤ π에서 변위는 0이지만 움직인 거리는 1 + 1 = 2입니다.</li>
-            <li><span class="tag">연결</span>속도가 지수함수이면 치환적분법이, (<i>t</i> − 1)<i>e</i><sup>−<i>t</i></sup>처럼 곱이면 부분적분법이 필요합니다. 셋째 보기에서는 (−<i>t</i> <i>e</i><sup>−<i>t</i></sup>)′ = (<i>t</i> − 1)<i>e</i><sup>−<i>t</i></sup>이므로 <i>x</i>(<i>t</i>) = −<i>t</i> <i>e</i><sup>−<i>t</i></sup>입니다. 평면 위의 운동에서는 속도가 벡터이므로, 다음 카드에서처럼 속력을 적분해 움직인 거리를 구합니다.</li>
-            <li><span class="tag">적용</span>'처음부터 움직이기'를 눌러 점이 방향을 바꾸는 순간 속도 그래프가 어디에 있는지 보세요. 첫째 보기에서 <i>t</i> = 2π(약 6.28)일 때 변위와 거리는 각각 얼마인가요? 둘째 보기에서 점은 언제 되돌아오고, <i>t</i> = 3에서 출발점의 어느 쪽에 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>변위와 움직인 거리를 섞어 쓰는 실수가 흔합니다. 출발점으로 돌아오면 변위는 0이지만 거리는 0이 아닙니다. 또 ∫|<i>v</i>| d<i>t</i>를 |∫<i>v</i> d<i>t</i>|로 계산하면 안 됩니다. 절댓값은 적분하기 전에, 속도의 부호가 바뀌는 곳마다 씌워야 합니다.</li>
+            <li><span class="tag">질문</span>수직선 위를 움직이는 점의 속도가 \(v(t) = \cos t\)입니다. 속도 그래프만으로 시각 \(t\)에서의 위치와, 그때까지 실제로 움직인 거리를 구할 수 있을까요?</li>
+            <li><span class="tag">복원</span>위치 \(x(t)\)를 미분하면 속도 \(v(t)\)입니다. 그래서 \(x(t)\)는 \(v(t)\)의 원시함수이고, \(\int_a^b v(t)\,dt = x(b) - x(a)\)입니다.</li>
+            <li><span class="tag">설명</span>위치는 <b>\(x(t) = x(0) + \int_0^t v(s)\,ds\)</b>입니다. 시각 \(a\)부터 \(b\)까지 위치의 변화량(변위)은 \(\int_a^b v(t)\,dt\)로, 뒤로 간 부분이 빼집니다. 실제로 <b>움직인 거리는 \(\int_a^b |v(t)|\,dt\)</b>로, 속도가 0이 되어 방향이 바뀌는 시각에서 구간을 나누어 계산합니다. \(v = \cos t\)이면 \(x(t) = \sin t\)이고, \(0 \le t \le \pi\)에서 변위는 0이지만 움직인 거리는 \(1 + 1 = 2\)입니다.</li>
+            <li><span class="tag">연결</span>속도가 지수함수이면 치환적분법이, \((t - 1)e^{-t}\)처럼 곱이면 부분적분법이 필요합니다. 셋째 보기에서는 \((-t e^{-t})' = (t - 1)e^{-t}\)이므로 \(x(t) = -t e^{-t}\)입니다. 평면 위의 운동에서는 속도가 벡터이므로, 다음 카드에서처럼 속력을 적분해 움직인 거리를 구합니다.</li>
+            <li><span class="tag">적용</span>'처음부터 움직이기'를 눌러 점이 방향을 바꾸는 순간 속도 그래프가 어디에 있는지 보세요. 첫째 보기에서 \(t = 2\pi\)(약 6.28)일 때 변위와 거리는 각각 얼마인가요? 둘째 보기에서 점은 언제 되돌아오고, \(t = 3\)에서 출발점의 어느 쪽에 있나요?</li>
+            <li class="warn"><span class="tag">판단</span>변위와 움직인 거리를 섞어 쓰는 실수가 흔합니다. 출발점으로 돌아오면 변위는 0이지만 거리는 0이 아닙니다. 또 \(\int|v|\,dt\)를 \(|\int v\,dt|\)로 계산하면 안 됩니다. 절댓값은 적분하기 전에, 속도의 부호가 바뀌는 곳마다 씌워야 합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">수직선 위를 움직이는 점의 속도가 <i>v</i>(<i>t</i>) = cos <i>t</i>일 때, <i>t</i> = 0부터 <i>t</i> = 3π/2까지 움직인 거리는?</p>
+          <p class="q">수직선 위를 움직이는 점의 속도가 \(v(t) = \cos t\)일 때, \(t = 0\)부터 \(t = \frac{3\pi}{2}\)까지 움직인 거리는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> <i>t</i> = π/2에서 방향이 바뀝니다. ∫<sub>0</sub><sup>π/2</sup> cos <i>t</i> d<i>t</i> = 1, ∫<sub>π/2</sub><sup>3π/2</sup> |cos <i>t</i>| d<i>t</i> = 2이므로 합은 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−1<span class="why"><b>변위를 구했습니다.</b> ∫<sub>0</sub><sup>3π/2</sup> cos <i>t</i> d<i>t</i> = sin(3π/2) = −1은 출발점에서 1만큼 뒤에 있다는 뜻입니다. 거리는 음수가 될 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>적분한 뒤 절댓값을 씌웠습니다.</b> |∫<i>v</i> d<i>t</i>| = 1은 앞으로 간 1과 뒤로 간 2가 서로 지워진 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> \(t = \frac{\pi}{2}\)에서 방향이 바뀝니다. \(\int_0^{\frac{\pi}{2}} \cos t\,dt = 1\), \(\int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} |\cos t|\,dt = 2\)이므로 합은 3입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-1\)<span class="why"><b>변위를 구했습니다.</b> \(\int_0^{\frac{3\pi}{2}} \cos t\,dt = \sin(\frac{3\pi}{2}) = -1\)은 출발점에서 1만큼 뒤에 있다는 뜻입니다. 거리는 음수가 될 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>적분한 뒤 절댓값을 씌웠습니다.</b> \(|\int v\,dt| = 1\)은 앞으로 간 1과 뒤로 간 2가 서로 지워진 값입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a></div></nav>
 
       <article class="card" id="card-calc2-path-length">
         <header class="card-head">
@@ -106,42 +108,43 @@
             <canvas aria-label="점 P가 지나간 곡선, 곡선 위에 찍은 점들을 이은 꺾은선, 시각 t에서의 점과 속도 벡터"></canvas>
             <div class="ctl">
               <div class="presets fn">
-                <button class="chip" type="button" data-k="0" aria-pressed="true">원 (cos <i>t</i>, sin <i>t</i>)</button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">원 \((\cos t, \sin t)\)</button>
                 <button class="chip" type="button" data-k="1">사이클로이드</button>
-                <button class="chip" type="button" data-k="2">포물선 (<i>t</i>, <i>t</i><sup>2</sup>/2)</button>
+                <button class="chip" type="button" data-k="2">포물선 \((t, \frac{t^2}{2})\)</button>
               </div>
               <label class="mono">꺾은선 마디 수 = <output class="n-out">6</output></label>
               <input class="sn" type="range" min="1" max="64" step="1" value="6" aria-label="꺾은선의 마디 수">
-              <label class="mono">시각 <i>t</i> = <output class="t-out">6.28</output></label>
+              <label class="mono">시각 \(t\) = <output class="t-out">6.28</output></label>
               <input class="st" type="range" min="0.05" max="6.28" step="0.01" value="6.28" aria-label="시각 t">
               <dl class="nums">
-                <div><dt>속도 (d<i>x</i>/d<i>t</i>, d<i>y</i>/d<i>t</i>)</dt><dd class="n-v">—</dd></div>
-                <div><dt>속력 √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>)</dt><dd class="n-sp">—</dd></div>
+                <div><dt>속도 \((\frac{dx}{dt}, \frac{dy}{dt})\)</dt><dd class="n-v">—</dd></div>
+                <div><dt>속력 \(\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\)</dt><dd class="n-sp">—</dd></div>
                 <div><dt>꺾은선의 길이</dt><dd class="n-p">—</dd></div>
-                <div><dt>∫<sub>0</sub><sup><i>t</i></sup> 속력 d<i>t</i></dt><dd class="n-i">—</dd></div>
+                <div><dt>\(\int_0^t\) 속력 \(dt\)</dt><dd class="n-i">—</dd></div>
               </dl>
-              <p class="fig-note">꺾은선은 0부터 <i>t</i>까지의 시간을 같은 간격으로 나누어 그 시각의 위치를 이은 것입니다. 화살표는 속도 벡터입니다.</p>
+              <p class="fig-note">꺾은선은 0부터 \(t\)까지의 시간을 같은 간격으로 나누어 그 시각의 위치를 이은 것입니다. 화살표는 속도 벡터입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점 P(<i>x</i>, <i>y</i>)가 <i>x</i> = <i>t</i> − sin <i>t</i>, <i>y</i> = 1 − cos <i>t</i>를 따라 굴러갈 때, 0 ≤ <i>t</i> ≤ 2π 동안 움직인 거리를 어떻게 잴까요?</li>
-            <li><span class="tag">복원</span>평면 위를 움직이는 점의 속도는 (d<i>x</i>/d<i>t</i>, d<i>y</i>/d<i>t</i>)이고 속력은 √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>)입니다. 수직선 위에서는 움직인 거리가 ∫|<i>v</i>| d<i>t</i>였습니다.</li>
-            <li><span class="tag">설명</span>짧은 시간 Δ<i>t</i> 동안 점은 거의 직선으로 움직이므로 그 거리는 √((Δ<i>x</i>)<sup>2</sup> + (Δ<i>y</i>)<sup>2</sup>) ≈ √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>) Δ<i>t</i>입니다. 이것을 모두 더한 극한이 <b>움직인 거리 s = ∫<sub><i>a</i></sub><sup><i>b</i></sup> √((d<i>x</i>/d<i>t</i>)<sup>2</sup> + (d<i>y</i>/d<i>t</i>)<sup>2</sup>) d<i>t</i></b>입니다. 꺾은선의 길이는 이 합에 해당합니다. 원 (cos <i>t</i>, sin <i>t</i>)는 속력이 늘 1이므로 0 ≤ <i>t</i> ≤ 2π에서 2π입니다. 사이클로이드는 속력이 √(2 − 2cos <i>t</i>) = 2 sin(<i>t</i>/2)이므로 ∫<sub>0</sub><sup>2π</sup> 2 sin(<i>t</i>/2) d<i>t</i> = 8입니다.</li>
-            <li><span class="tag">연결</span>점이 같은 곳을 되짚지 않으면 움직인 거리는 지나간 곡선의 길이와 같습니다. 곡선 <i>y</i> = <i>f</i>(<i>x</i>)는 <i>x</i> = <i>t</i>, <i>y</i> = <i>f</i>(<i>t</i>)로 보면 길이가 ∫√(1 + {<i>f</i>′(<i>x</i>)}<sup>2</sup>) d<i>x</i>입니다. 셋째 보기의 포물선이 이 경우로, 길이는 (2√5 + ln(2 + √5))/2 ≈ 2.958입니다.</li>
+            <li><span class="tag">질문</span>점 \(P(x, y)\)가 \(x = t - \sin t\), \(y = 1 - \cos t\)를 따라 굴러갈 때, \(0 \le t \le 2\pi\) 동안 움직인 거리를 어떻게 잴까요?</li>
+            <li><span class="tag">복원</span>평면 위를 움직이는 점의 속도는 \((\frac{dx}{dt}, \frac{dy}{dt})\)이고 속력은 \(\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\)입니다. 수직선 위에서는 움직인 거리가 \(\int|v|\,dt\)였습니다.</li>
+            <li><span class="tag">설명</span>짧은 시간 \(\Delta t\) 동안 점은 거의 직선으로 움직이므로 그 거리는 \(\sqrt{(\Delta x)^2 + (\Delta y)^2} \approx \sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2} \Delta t\)입니다. 이것을 모두 더한 극한이 <b>움직인 거리 \(s = \int_a^b \sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\,dt\)</b>입니다. 꺾은선의 길이는 이 합에 해당합니다. 원 \((\cos t, \sin t)\)는 속력이 늘 1이므로 \(0 \le t \le 2\pi\)에서 \(2\pi\)입니다. 사이클로이드는 속력이 \(\sqrt{2 - 2\cos t} = 2 \sin(\frac{t}{2})\)이므로 \(\int_0^{2\pi} 2 \sin(\frac{t}{2})\,dt = 8\)입니다.</li>
+            <li><span class="tag">연결</span>점이 같은 곳을 되짚지 않으면 움직인 거리는 지나간 곡선의 길이와 같습니다. 곡선 \(y = f(x)\)는 \(x = t\), \(y = f(t)\)로 보면 길이가 \(\int \sqrt{1 + \{f'(x)\}^2}\,dx\)입니다. 셋째 보기의 포물선이 이 경우로, 길이는 \(\frac{2\sqrt{5} + \ln(2 + \sqrt{5})}{2} \approx 2.958\)입니다.</li>
             <li><span class="tag">적용</span>마디를 1개에서 64개로 늘리며 꺾은선의 길이가 넷째 값으로 다가가는지 보세요. 꺾은선은 늘 곡선보다 짧은가요, 길 수도 있나요? 사이클로이드에서 속력이 0이 되는 시각은 언제이고, 그때 곡선은 어떤 모양인가요?</li>
-            <li class="warn"><span class="tag">판단</span>∫(d<i>x</i>/d<i>t</i> + d<i>y</i>/d<i>t</i>) d<i>t</i>처럼 성분을 그냥 더하면 길이가 아닙니다. 피타고라스 정리처럼 제곱해 더한 뒤 제곱근을 씌운 속력을 적분해야 합니다. 또 시작점과 끝점 사이의 직선거리는 변위의 크기일 뿐, 움직인 거리가 아닙니다. 원을 한 바퀴 돌면 변위는 0이지만 거리는 2π입니다.</li>
+            <li class="warn"><span class="tag">판단</span>\(\int(\frac{dx}{dt} + \frac{dy}{dt})\,dt\)처럼 성분을 그냥 더하면 길이가 아닙니다. 피타고라스 정리처럼 제곱해 더한 뒤 제곱근을 씌운 속력을 적분해야 합니다. 또 시작점과 끝점 사이의 직선거리는 변위의 크기일 뿐, 움직인 거리가 아닙니다. 원을 한 바퀴 돌면 변위는 0이지만 거리는 \(2\pi\)입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점 P의 위치가 <i>x</i> = <i>e</i><sup><i>t</i></sup> cos <i>t</i>, <i>y</i> = <i>e</i><sup><i>t</i></sup> sin <i>t</i>일 때, 0 ≤ <i>t</i> ≤ 1에서 P가 움직인 거리는?</p>
+          <p class="q">점 \(P\)의 위치가 \(x = e^t \cos t\), \(y = e^t \sin t\)일 때, \(0 \le t \le 1\)에서 \(P\)가 움직인 거리는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>√2(<i>e</i> − 1)<span class="why"><b>맞습니다.</b> d<i>x</i>/d<i>t</i> = <i>e</i><sup><i>t</i></sup>(cos <i>t</i> − sin <i>t</i>), d<i>y</i>/d<i>t</i> = <i>e</i><sup><i>t</i></sup>(sin <i>t</i> + cos <i>t</i>)이고 제곱의 합은 2<i>e</i><sup>2<i>t</i></sup>입니다. 속력 √2 <i>e</i><sup><i>t</i></sup>을 적분하면 √2(<i>e</i> − 1)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>e</i> − 1<span class="why"><b>√2를 빠뜨렸습니다.</b> 반지름 <i>e</i><sup><i>t</i></sup>만 보고 속력을 <i>e</i><sup><i>t</i></sup>로 생각하면 이렇게 됩니다. 점은 바깥으로 멀어지면서 동시에 돌기 때문에 더 빠릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√2 <i>e</i><span class="why"><b>아래끝을 빼지 않았습니다.</b> ∫<sub>0</sub><sup>1</sup> √2 <i>e</i><sup><i>t</i></sup> d<i>t</i> = √2(<i>e</i><sup>1</sup> − <i>e</i><sup>0</sup>)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{2}(e - 1)\)<span class="why"><b>맞습니다.</b> \(\frac{dx}{dt} = e^t(\cos t - \sin t)\), \(\frac{dy}{dt} = e^t(\sin t + \cos t)\)이고 제곱의 합은 \(2e^{2t}\)입니다. 속력 \(\sqrt{2} e^t\)을 적분하면 \(\sqrt{2}(e - 1)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>\(\sqrt{2}\)를 빠뜨렸습니다.</b> 반지름 \(e^t\)만 보고 속력을 \(e^t\)로 생각하면 이렇게 됩니다. 점은 바깥으로 멀어지면서 동시에 돌기 때문에 더 빠릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\sqrt{2} e\)<span class="why"><b>아래끝을 빼지 않았습니다.</b> \(\int_0^1 \sqrt{2} e^t\,dt = \sqrt{2}(e^1 - e^0)\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc2-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">4문항</span></a>
 
@@ -152,8 +155,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/distance-area.js"></script>

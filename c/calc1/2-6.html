@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-rolle canvas { aspect-ratio: 16 / 10; touch-action: pan-y; cursor: ew-resize; }
     #card-calc1-rolle .nums dd { font-size: 14px; }
@@ -37,14 +38,14 @@
     <p class="lead">고속도로 두 요금소를 지나는 데 걸린 시간으로 평균 속력을 계산하면, 그 사이 어느 순간에는 속도계가 정확히 그 값을 가리켰다고 말할 수 있습니다. 이 절에서는 이 직관을 정리로 다듬습니다. 먼저 양 끝 높이가 같은 곡선에는 수평인 접선이 있다는 롤의 정리를 보고, 이를 기울여 평균값 정리를 얻습니다. 두 정리가 성립하려면 어떤 조건이 필요한지도 함께 따져 봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">평균변화율과 미분계수</span><span class="p">접선의 기울기</span><span class="p">최대·최소 정리</span><span class="p">연속과 미분가능</span>
+      <a class="p p-card" href="../../c/calc1/2-1.html#card-calc1-secant" title="미적분Ⅰ 2.1 · 할선의 기울기는 h가 0에 가까워지면 어디로 갈까?">평균변화율과 미분계수</a><a class="p p-card" href="../../c/calc1/2-3.html#card-calc1-deriv-graph" title="미적분Ⅰ 2.3 · 접선의 기울기를 모으면 어떤 그래프가 될까?">접선의 기울기</a><a class="p p-card" href="../../c/calc1/1-4.html#card-calc1-evt" title="미적분Ⅰ 1.4 · 연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?">최대·최소 정리</a><a class="p p-card" href="../../c/calc1/2-2.html#card-calc1-corner" title="미적분Ⅰ 2.2 · 왼쪽에서 본 기울기와 오른쪽에서 본 기울기가 다르면?">연속과 미분가능</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc1-rolle"><span class="mono">2.6.1</span>롤의 정리</a></li>
         <li><a href="#card-calc1-mvt"><span class="mono">2.6.2</span>평균값 정리</a></li>
       </ol>
@@ -62,38 +63,38 @@
             <canvas aria-label="구간 0 ≤ x ≤ 3에서 양 끝 높이가 같은 함수의 그래프와, 움직일 수 있는 점에서의 접선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="0" aria-pressed="true"><i>x</i><sup>3</sup> − 6<i>x</i><sup>2</sup> + 9<i>x</i> + 1</button>
-                <button class="chip" type="button" data-k="1">2|<i>x</i> − 1.5| + 1</button>
+                <button class="chip" type="button" data-k="0" aria-pressed="true">\(x^3 - 6x^2 + 9x + 1\)</button>
+                <button class="chip" type="button" data-k="1">\(2|x - 1.5| + 1\)</button>
                 <button class="chip" type="button" data-k="2">끝에서 끊긴 함수</button>
               </div>
-              <label class="mono">접선을 그을 점 <i>x</i> = <output class="x-out">0.5</output></label>
+              <label class="mono">접선을 그을 점 \(x\) = <output class="x-out">0.5</output></label>
               <input class="px" type="range" min="0.05" max="2.95" step="0.05" value="0.5" aria-label="접선을 그을 점의 x좌표">
               <dl class="nums n4">
-                <div><dt>f(0), f(3)</dt><dd class="n-ab">—</dd></div>
+                <div><dt>\(f(0), f(3)\)</dt><dd class="n-ab">—</dd></div>
                 <div><dt>[0, 3]에서 연속</dt><dd class="n-c">—</dd></div>
                 <div><dt>(0, 3)에서 미분가능</dt><dd class="n-d">—</dd></div>
-                <div><dt>접선 기울기 f′(x)</dt><dd class="n-s">—</dd></div>
+                <div><dt>접선 기울기 \(f'(x)\)</dt><dd class="n-s">—</dd></div>
               </dl>
               <p class="fig-note">그림 위를 좌우로 끌어도 점이 움직입니다. 점선은 두 끝점을 잇는 수평선입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>공을 던졌다가 같은 높이에서 받으면, 공이 가장 높이 올라간 순간에는 위아래 움직임이 멈춥니다. 양 끝 높이가 같은 곡선에는 언제나 접선이 수평인 곳이 있을까요?</li>
-            <li><span class="tag">복원</span>닫힌 구간 [<i>a</i>, <i>b</i>]에서 연속인 함수는 그 구간에서 최댓값과 최솟값을 가집니다(최대·최소 정리). 또 미분계수 f′(<i>c</i>)는 점 (<i>c</i>, f(<i>c</i>))에서 그은 접선의 기울기입니다.</li>
-            <li><span class="tag">설명</span>함수 f가 닫힌 구간 [<i>a</i>, <i>b</i>]에서 연속이고 열린 구간 (<i>a</i>, <i>b</i>)에서 미분가능하며 f(<i>a</i>) = f(<i>b</i>)이면, f′(<i>c</i>) = 0인 <i>c</i>가 <i>a</i>와 <i>b</i> 사이에 적어도 하나 있습니다. 이것이 <em>롤의 정리</em>입니다. 까닭은 이렇습니다. f가 상수함수이면 모든 점에서 f′ = 0입니다. 상수함수가 아니면 최댓값이나 최솟값 가운데 하나는 끝점이 아닌 안쪽의 점 <i>c</i>에서 생깁니다. 최댓값이 <i>c</i>에서 생겼다고 하면, <i>c</i>의 오른쪽에서는 평균변화율 (f(<i>x</i>) − f(<i>c</i>))/(<i>x</i> − <i>c</i>)가 0 이하이고 왼쪽에서는 0 이상입니다. 두 쪽의 극한이 같은 값 f′(<i>c</i>)이므로 f′(<i>c</i>) = 0입니다.</li>
+            <li><span class="tag">복원</span>닫힌 구간 \([a, b]\)에서 연속인 함수는 그 구간에서 최댓값과 최솟값을 가집니다(최대·최소 정리). 또 미분계수 \(f'(c)\)는 점 \((c, f(c))\)에서 그은 접선의 기울기입니다.</li>
+            <li><span class="tag">설명</span>함수 \(f\)가 닫힌 구간 \([a, b]\)에서 연속이고 열린 구간 \((a, b)\)에서 미분가능하며 \(f(a) = f(b)\)이면, \(f'(c) = 0\)인 \(c\)가 \(a\)와 \(b\) 사이에 적어도 하나 있습니다. 이것이 <em>롤의 정리</em>입니다. 까닭은 이렇습니다. \(f\)가 상수함수이면 모든 점에서 \(f' = 0\)입니다. 상수함수가 아니면 최댓값이나 최솟값 가운데 하나는 끝점이 아닌 안쪽의 점 \(c\)에서 생깁니다. 최댓값이 \(c\)에서 생겼다고 하면, \(c\)의 오른쪽에서는 평균변화율 \(\frac{f(x) - f(c)}{x - c}\)가 0 이하이고 왼쪽에서는 0 이상입니다. 두 쪽의 극한이 같은 값 \(f'(c)\)이므로 \(f'(c) = 0\)입니다.</li>
             <li><span class="tag">연결</span>롤의 정리는 양 끝 높이가 같은 특별한 경우입니다. 그림을 기울여 양 끝 높이가 다른 경우로 넓히면 평균값 정리가 됩니다. 또 이 정리는 뒤에서 도함수의 부호로 함수의 증가와 감소를 판정하는 근거가 됩니다.</li>
-            <li><span class="tag">적용</span>첫 번째 함수에서 점을 움직여 접선이 수평이 되는 <i>x</i>를 찾으세요. 그 점은 그래프에서 어떤 곳인가요? 두 번째 함수에서도 양 끝 높이는 같습니다. 기울기 0인 곳을 찾을 수 있나요? 세 번째 함수에서는 f(0) = f(3)인데도 기울기가 계속 1입니다. 네 칸의 조건 가운데 무엇이 깨졌는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>롤의 정리는 <i>c</i>가 있다는 것만 보장하고, 어디에 있는지나 몇 개인지는 알려 주지 않습니다. 조건 하나만 빠져도 결론이 틀릴 수 있습니다. 뾰족점이 있으면(미분가능하지 않으면) 꼭대기에서도 접선이 없고, 끝점에서 끊기면(연속이 아니면) 최댓값이 안쪽에 생기지 않을 수 있습니다. 반대로 조건이 깨졌다고 해서 기울기 0인 점이 반드시 없는 것도 아닙니다.</li>
+            <li><span class="tag">적용</span>첫 번째 함수에서 점을 움직여 접선이 수평이 되는 \(x\)를 찾으세요. 그 점은 그래프에서 어떤 곳인가요? 두 번째 함수에서도 양 끝 높이는 같습니다. 기울기 0인 곳을 찾을 수 있나요? 세 번째 함수에서는 \(f(0) = f(3)\)인데도 기울기가 계속 1입니다. 네 칸의 조건 가운데 무엇이 깨졌는지 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>롤의 정리는 \(c\)가 있다는 것만 보장하고, 어디에 있는지나 몇 개인지는 알려 주지 않습니다. 조건 하나만 빠져도 결론이 틀릴 수 있습니다. 뾰족점이 있으면(미분가능하지 않으면) 꼭대기에서도 접선이 없고, 끝점에서 끊기면(연속이 아니면) 최댓값이 안쪽에 생기지 않을 수 있습니다. 반대로 조건이 깨졌다고 해서 기울기 0인 점이 반드시 없는 것도 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">구간 [−1, 1]에서 롤의 정리를 그대로 쓸 수 있는 함수는?</p>
+          <p class="q">구간 \([-1, 1]\)에서 롤의 정리를 그대로 쓸 수 있는 함수는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>f(<i>x</i>) = |<i>x</i>|<span class="why"><b>미분가능 조건이 깨집니다.</b> f(−1) = f(1) = 1이고 연속이지만, <i>x</i> = 0에서 뾰족해 미분가능하지 않습니다. 실제로 f′(<i>x</i>) = 0인 점도 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>f(<i>x</i>) = <i>x</i><sup>3</sup><span class="why"><b>양 끝 높이가 다릅니다.</b> 다항함수라 연속이고 미분가능하지만 f(−1) = −1, f(1) = 1입니다. f′(0) = 0인 점이 있기는 해도, 롤의 정리로 얻은 결론은 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>f(<i>x</i>) = <i>x</i><sup>4</sup> − <i>x</i><sup>2</sup><span class="why"><b>맞습니다.</b> 다항함수라 연속이고 미분가능하며 f(−1) = f(1) = 0입니다. 실제로 f′(<i>x</i>) = 4<i>x</i><sup>3</sup> − 2<i>x</i> = 0에서 <i>x</i> = 0, ±1/√2가 모두 (−1, 1) 안에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>f(<i>x</i>) = <i>x</i><sup>2</sup> + <i>x</i><span class="why"><b>양 끝 높이가 다릅니다.</b> f(−1) = 0, f(1) = 2입니다. 이차함수라 꼭짓점 <i>x</i> = −1/2에서 기울기가 0이지만, 롤의 정리의 조건을 갖춘 것은 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(f(x) = |x|\)<span class="why"><b>미분가능 조건이 깨집니다.</b> \(f(-1) = f(1) = 1\)이고 연속이지만, \(x = 0\)에서 뾰족해 미분가능하지 않습니다. 실제로 \(f'(x) = 0\)인 점도 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(f(x) = x^3\)<span class="why"><b>양 끝 높이가 다릅니다.</b> 다항함수라 연속이고 미분가능하지만 \(f(-1) = -1, f(1) = 1\)입니다. \(f'(0) = 0\)인 점이 있기는 해도, 롤의 정리로 얻은 결론은 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(f(x) = x^4 - x^2\)<span class="why"><b>맞습니다.</b> 다항함수라 연속이고 미분가능하며 \(f(-1) = f(1) = 0\)입니다. 실제로 \(f'(x) = 4x^3 - 2x = 0\)에서 \(x = 0, \pm \frac{1}{\sqrt{2}}\)가 모두 \((-1, 1)\) 안에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(f(x) = x^2 + x\)<span class="why"><b>양 끝 높이가 다릅니다.</b> \(f(-1) = 0, f(1) = 2\)입니다. 이차함수라 꼭짓점 \(x = -\frac{1}{2}\)에서 기울기가 0이지만, 롤의 정리의 조건을 갖춘 것은 아닙니다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -107,47 +108,48 @@
             <canvas aria-label="곡선 위 두 점 A, B를 잇는 할선과, 움직일 수 있는 점 C에서의 접선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-p="0,-3,0,1" aria-pressed="true"><i>x</i><sup>3</sup> − 3<i>x</i></button>
-                <button class="chip" type="button" data-p="0,0,1,0"><i>x</i><sup>2</sup></button>
-                <button class="chip" type="button" data-p="1,1,0,-0.5">−0.5<i>x</i><sup>3</sup> + <i>x</i> + 1</button>
+                <button class="chip" type="button" data-p="0,-3,0,1" aria-pressed="true">\(x^3 - 3x\)</button>
+                <button class="chip" type="button" data-p="0,0,1,0">\(x^2\)</button>
+                <button class="chip" type="button" data-p="1,1,0,-0.5">\(-0.5x^3 + x + 1\)</button>
               </div>
               <div class="ctl-row">
-                <div><label class="mono">왼쪽 끝 <i>a</i> = <output class="a-out">−1.5</output></label>
+                <div><label class="mono">왼쪽 끝 \(a\) = <output class="a-out">−1.5</output></label>
                 <input class="sa" type="range" min="-2.5" max="2" step="0.1" value="-1.5" aria-label="구간의 왼쪽 끝 a"></div>
-                <div><label class="mono">오른쪽 끝 <i>b</i> = <output class="b-out">2</output></label>
+                <div><label class="mono">오른쪽 끝 \(b\) = <output class="b-out">2</output></label>
                 <input class="sb" type="range" min="-2" max="2.5" step="0.1" value="2" aria-label="구간의 오른쪽 끝 b"></div>
               </div>
-              <label class="mono">접선을 그을 점 <i>c</i> = <output class="c-out">0</output></label>
+              <label class="mono">접선을 그을 점 \(c\) = <output class="c-out">0</output></label>
               <input class="sc" type="range" min="-2.5" max="2.5" step="0.01" value="0" aria-label="접선을 그을 점 c">
               <dl class="nums">
                 <div><dt>평균변화율 (할선)</dt><dd class="n-m">—</dd></div>
-                <div><dt>f′(c) (접선)</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(f'(c)\) (접선)</dt><dd class="n-d">—</dd></div>
                 <div><dt>차이</dt><dd class="n-e">—</dd></div>
               </dl>
               <button class="chip go-show" type="button" aria-pressed="false">조건을 만족하는 c 모두 보기</button>
-              <p class="fig-note">그림 위를 끌어도 점 C가 움직입니다. 접선이 할선과 나란해지면 초록색으로 바뀝니다.</p>
+              <p class="fig-note">그림 위를 끌어도 점 \(C\)가 움직입니다. 접선이 할선과 나란해지면 초록색으로 바뀝니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>구간단속 카메라는 두 지점 사이를 지난 시간만으로 과속을 판정합니다. 20 km를 10분에 지났다면 평균 속력은 시속 120 km입니다. 그렇다면 어느 순간에는 속도계가 정확히 120을 가리켰다고 말할 수 있을까요?</li>
-            <li><span class="tag">복원</span>구간 [<i>a</i>, <i>b</i>]에서 f의 평균변화율 (f(<i>b</i>) − f(<i>a</i>))/(<i>b</i> − <i>a</i>)는 두 점 A, B를 잇는 할선의 기울기이고, f′(<i>c</i>)는 점 C에서 그은 접선의 기울기입니다.</li>
-            <li><span class="tag">설명</span>f가 [<i>a</i>, <i>b</i>]에서 연속이고 (<i>a</i>, <i>b</i>)에서 미분가능하면, <b>(f(<i>b</i>) − f(<i>a</i>))/(<i>b</i> − <i>a</i>) = f′(<i>c</i>)</b>인 <i>c</i>가 <i>a</i>와 <i>b</i> 사이에 적어도 하나 있습니다. 이것이 <em>평균값 정리</em>입니다. 증명은 롤의 정리로 돌아갑니다. 곡선에서 할선을 뺀 함수 g(<i>x</i>) = f(<i>x</i>) − {f(<i>a</i>) + <i>m</i>(<i>x</i> − <i>a</i>)} (<i>m</i>은 할선의 기울기)는 g(<i>a</i>) = g(<i>b</i>) = 0이므로, 롤의 정리에 따라 g′(<i>c</i>) = f′(<i>c</i>) − <i>m</i> = 0인 <i>c</i>가 있습니다. 곧 그림을 기울여 할선을 수평으로 만든 것이 롤의 정리입니다.</li>
-            <li><span class="tag">연결</span>위치를 f(<i>t</i>)로 보면 평균변화율은 평균 속도, f′(<i>c</i>)는 순간 속도입니다. 그래서 질문의 답은 "그렇다"입니다. 또 평균값 정리에서 "어떤 구간에서 늘 f′ &gt; 0이면 f(<i>b</i>) − f(<i>a</i>) = f′(<i>c</i>)(<i>b</i> − <i>a</i>) &gt; 0"이라는 결론이 나오는데, 이것이 다음 절에서 증가와 감소를 판정하는 근거입니다.</li>
-            <li><span class="tag">적용</span>첫 번째 함수에서 C를 움직여 접선과 할선이 나란해지는 곳을 찾으세요. 몇 개인가요? <i>a</i>와 <i>b</i>를 바꾸면 그 수가 어떻게 달라지나요? 두 번째 함수 <i>x</i><sup>2</sup>에서는 찾은 <i>c</i>가 언제나 <i>a</i>와 <i>b</i>의 어디에 있나요? 찾은 뒤 "모두 보기"로 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"<i>c</i>는 구간의 한가운데"라는 생각은 이차함수에서만 맞습니다. 삼차함수 <i>x</i><sup>3</sup>에서는 [0, 3]의 <i>c</i>가 √3 ≈ 1.73으로 가운데가 아닙니다. 또 평균값 정리는 <i>c</i>가 끝점이 아닌 열린 구간 안에 있다고 말하므로, 방정식을 풀어 나온 값 가운데 구간 밖의 것은 버려야 합니다.</li>
+            <li><span class="tag">복원</span>구간 \([a, b]\)에서 \(f\)의 평균변화율 \(\frac{f(b) - f(a)}{b - a}\)는 두 점 \(A, B\)를 잇는 할선의 기울기이고, \(f'(c)\)는 점 \(C\)에서 그은 접선의 기울기입니다.</li>
+            <li><span class="tag">설명</span>\(f\)가 \([a, b]\)에서 연속이고 \((a, b)\)에서 미분가능하면, <b>\(\frac{f(b) - f(a)}{b - a} = f'(c)\)</b>인 \(c\)가 \(a\)와 \(b\) 사이에 적어도 하나 있습니다. 이것이 <em>평균값 정리</em>입니다. 증명은 롤의 정리로 돌아갑니다. 곡선에서 할선을 뺀 함수 \(g(x) = f(x) - \{f(a) + m(x - a)\}\) (\(m\)은 할선의 기울기)는 \(g(a) = g(b) = 0\)이므로, 롤의 정리에 따라 \(g'(c) = f'(c) - m = 0\)인 \(c\)가 있습니다. 곧 그림을 기울여 할선을 수평으로 만든 것이 롤의 정리입니다.</li>
+            <li><span class="tag">연결</span>위치를 \(f(t)\)로 보면 평균변화율은 평균 속도, \(f'(c)\)는 순간 속도입니다. 그래서 질문의 답은 "그렇다"입니다. 또 평균값 정리에서 "어떤 구간에서 늘 \(f' &gt; 0\)이면 \(f(b) - f(a) = f'(c)(b - a) &gt; 0\)"이라는 결론이 나오는데, 이것이 다음 절에서 증가와 감소를 판정하는 근거입니다.</li>
+            <li><span class="tag">적용</span>첫 번째 함수에서 \(C\)를 움직여 접선과 할선이 나란해지는 곳을 찾으세요. 몇 개인가요? \(a\)와 \(b\)를 바꾸면 그 수가 어떻게 달라지나요? 두 번째 함수 \(x^2\)에서는 찾은 \(c\)가 언제나 \(a\)와 \(b\)의 어디에 있나요? 찾은 뒤 "모두 보기"로 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>"\(c\)는 구간의 한가운데"라는 생각은 이차함수에서만 맞습니다. 삼차함수 \(x^3\)에서는 [0, 3]의 \(c\)가 \(\sqrt{3} \approx 1.73\)으로 가운데가 아닙니다. 또 평균값 정리는 \(c\)가 끝점이 아닌 열린 구간 안에 있다고 말하므로, 방정식을 풀어 나온 값 가운데 구간 밖의 것은 버려야 합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">f(<i>x</i>) = <i>x</i><sup>3</sup>에 대하여 구간 [0, 3]에서 평균값 정리를 만족하는 <i>c</i>는?</p>
+          <p class="q">\(f(x) = x^3\)에 대하여 구간 [0, 3]에서 평균값 정리를 만족하는 \(c\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3/2<span class="why"><b>이차함수에서만 맞는 지름길입니다.</b> 가운데 점에서 f′(3/2) = 27/4 = 6.75인데, 평균변화율은 (27 − 0)/3 = 9입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>√3<span class="why"><b>맞습니다.</b> 평균변화율은 9이고, f′(<i>c</i>) = 3<i>c</i><sup>2</sup> = 9에서 <i>c</i> = ±√3입니다. 이 가운데 (0, 3) 안에 있는 것은 √3뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>√3과 −√3<span class="why"><b>구간 밖의 해를 버리지 않았습니다.</b> −√3은 방정식의 해이지만 (0, 3)에 들어 있지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3<span class="why"><b>평균변화율 9를 f(<i>c</i>)와 같게 놓았습니다.</b> <i>c</i><sup>3</sup> = 9가 아니라 f′(<i>c</i>) = 9를 풀어야 하고, 끝점 3은 열린 구간 (0, 3)에 들지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{3}{2}\)<span class="why"><b>이차함수에서만 맞는 지름길입니다.</b> 가운데 점에서 \(f'(\frac{3}{2}) = \frac{27}{4} = 6.75\)인데, 평균변화율은 \(\frac{27 - 0}{3} = 9\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\sqrt{3}\)<span class="why"><b>맞습니다.</b> 평균변화율은 9이고, \(f'(c) = 3c^2 = 9\)에서 \(c = \pm \sqrt{3}\)입니다. 이 가운데 (0, 3) 안에 있는 것은 \(\sqrt{3}\)뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\sqrt{3}\)과 \(-\sqrt{3}\)<span class="why"><b>구간 밖의 해를 버리지 않았습니다.</b> \(-\sqrt{3}\)은 방정식의 해이지만 (0, 3)에 들어 있지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3<span class="why"><b>평균변화율 9를 \(f(c)\)와 같게 놓았습니다.</b> \(c^3 = 9\)가 아니라 \(f'(c) = 9\)를 풀어야 하고, 끝점 3은 열린 구간 (0, 3)에 들지 않습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-7.html#card-calc1-incdec"><small class="mono">미적분Ⅰ 2.7</small>그래프를 그리지 않고 오르막을 알 수 있을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc1-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">12문항</span></a>
 
@@ -158,8 +160,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/rolle.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>

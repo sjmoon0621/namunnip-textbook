@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm2-set-roster canvas { width: 100%; aspect-ratio: 9 / 4.8; cursor: pointer; }
     #card-cm2-set-roster .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -38,14 +39,14 @@
     <p class="lead">수학은 "이런 성질을 가진 것들"을 한 덩어리로 묶어 다루는 일이 많습니다. 방정식의 해, 함수의 정의역, 확률의 사건이 모두 그렇습니다. 이 절에서는 그런 묶음을 집합이라는 이름으로 정확히 정하고, 원소를 늘어놓거나 조건으로 적어 나타내는 방법을 익힙니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">약수와 배수</span><span class="p">소수</span><span class="p">부등식과 수직선</span>
+      <a class="p p-card" href="../../c/cm1/3-1.html#card-cm1-divisors" title="공통수학1 3.1 · 약수의 개수는 왜 지수에 1을 더해 곱할까?">약수와 배수</a><button type="button" class="p p-basic" data-basic="b-m-prime-number" title="중학교 개념 설명 보기">소수</button><a class="p p-card" href="../../c/cm1/2-10.html#card-cm1-abs-dist" title="공통수학1 2.10 · |x − a| &lt; r은 수직선에서 어떤 범위일까?">부등식과 수직선</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-cm2-set-roster"><span class="mono">2.1.1</span>집합의 뜻과 표현법</a></li>
         <li><a href="#card-cm2-set-interval"><span class="mono">2.1.2</span>유한집합·무한집합·공집합</a></li>
       </ol>
@@ -63,43 +64,44 @@
             <canvas aria-label="1부터 36까지의 자연수 칸. 집합 A의 원소인 칸이 칠해진다"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="div" aria-pressed="true"><i>n</i>의 약수</button>
-                <button class="chip" type="button" data-k="mul">36 이하 <i>n</i>의 배수</button>
-                <button class="chip" type="button" data-k="mulall"><i>n</i>의 배수 전체</button>
-                <button class="chip" type="button" data-k="prime"><i>n</i> 이하의 소수</button>
-                <button class="chip" type="button" data-k="lt"><i>n</i>보다 작은 자연수</button>
+                <button class="chip" type="button" data-k="div" aria-pressed="true">\(n\)의 약수</button>
+                <button class="chip" type="button" data-k="mul">36 이하 \(n\)의 배수</button>
+                <button class="chip" type="button" data-k="mulall">\(n\)의 배수 전체</button>
+                <button class="chip" type="button" data-k="prime">\(n\) 이하의 소수</button>
+                <button class="chip" type="button" data-k="lt">\(n\)보다 작은 자연수</button>
               </div>
-              <label class="mono">기준이 되는 수 <i>n</i> = <output class="n-out">12</output></label>
+              <label class="mono">기준이 되는 수 \(n =\) <output class="n-out">12</output></label>
               <input class="n" type="range" min="1" max="36" step="1" value="12" aria-label="기준이 되는 수 n">
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>원소의 개수 n(A)</dt><dd class="n-c">—</dd></div>
+                <div><dt>원소의 개수 \(n(A)\)</dt><dd class="n-c">—</dd></div>
                 <div><dt>집합의 종류</dt><dd class="n-k">—</dd></div>
                 <div><dt>고른 수</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">칸을 누르면 그 수가 A의 원소인지(∈) 아닌지(∉) 알려 줍니다.</p>
+              <p class="fig-note">칸을 누르면 그 수가 \(A\)의 원소인지(\(\in\)) 아닌지(\(\notin\)) 알려 줍니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>'12의 약수의 모임'과 '키가 큰 학생의 모임'은 무엇이 다를까요? 어느 쪽을 수학에서 하나의 대상으로 다룰 수 있을까요?</li>
             <li><span class="tag">복원</span>약수는 어떤 수를 나누어떨어지게 하는 자연수이고, 배수는 어떤 수에 자연수를 곱한 수입니다. 소수는 1과 자기 자신만을 약수로 가지는 1보다 큰 자연수입니다.</li>
-            <li><span class="tag">설명</span>대상을 분명하게 정할 수 있는 기준이 있을 때, 그 기준에 맞는 것들의 모임을 <em>집합</em>이라 하고, 집합을 이루는 대상 하나하나를 <em>원소</em>라고 합니다. '키가 큰'은 사람마다 기준이 달라 집합이 되지 않습니다. <i>a</i>가 집합 A의 원소이면 <i>a</i> ∈ A, 아니면 <i>a</i> ∉ A로 씁니다. 집합은 원소를 모두 늘어놓는 <em>원소나열법</em> {1, 2, 3, 4, 6, 12}나, 원소의 조건을 적는 <em>조건제시법</em> {<i>x</i> | <i>x</i>는 12의 약수}로 나타냅니다. 원소가 유한개이면 <em>유한집합</em>, 무한히 많으면 <em>무한집합</em>입니다. 원소가 하나도 없는 집합은 <em>공집합</em> ∅입니다. 유한집합 A의 원소의 개수는 n(A)로 쓰고, n(∅) = 0입니다.</li>
+            <li><span class="tag">설명</span>대상을 분명하게 정할 수 있는 기준이 있을 때, 그 기준에 맞는 것들의 모임을 <em>집합</em>이라 하고, 집합을 이루는 대상 하나하나를 <em>원소</em>라고 합니다. '키가 큰'은 사람마다 기준이 달라 집합이 되지 않습니다. \(a\)가 집합 \(A\)의 원소이면 \(a \in A\), 아니면 \(a \notin A\)로 씁니다. 집합은 원소를 모두 늘어놓는 <em>원소나열법</em> {1, 2, 3, 4, 6, 12}나, 원소의 조건을 적는 <em>조건제시법</em> \(\{x \mid x\)는 12의 약수\(\}\)로 나타냅니다. 원소가 유한개이면 <em>유한집합</em>, 무한히 많으면 <em>무한집합</em>입니다. 원소가 하나도 없는 집합은 <em>공집합</em> \(\varnothing\)입니다. 유한집합 \(A\)의 원소의 개수는 \(n(A)\)로 쓰고, \(n(\varnothing) = 0\)입니다.</li>
             <li><span class="tag">연결</span>방정식의 해 전체, 함수의 정의역과 치역, 확률에서 일어날 수 있는 결과 전체가 모두 집합입니다. 벤 다이어그램은 집합을 그림으로 나타내는 셋째 방법으로, 다음 절부터 씁니다.</li>
-            <li><span class="tag">적용</span><i>n</i> = 12로 두고 '약수'와 '36 이하의 배수'를 번갈아 눌러 원소나열법이 어떻게 바뀌는지 보세요. '<i>n</i>의 배수 전체'에서는 원소를 모두 적을 수 없습니다. 원소나열법은 어떻게 적혀 있나요? '<i>n</i>보다 작은 자연수'에서 <i>n</i> = 1로 두면 무엇이 나오나요?</li>
-            <li class="warn"><span class="tag">판단</span>{0}은 공집합이 아닙니다. 원소 0이 하나 있으므로 n({0}) = 1입니다. 원소나열법에서는 같은 원소를 두 번 쓰지 않고, 원소의 순서는 상관이 없습니다. {1, 2, 3}과 {3, 1, 2}는 같은 집합입니다.</li>
+            <li><span class="tag">적용</span>\(n = 12\)로 두고 '약수'와 '36 이하의 배수'를 번갈아 눌러 원소나열법이 어떻게 바뀌는지 보세요. '\(n\)의 배수 전체'에서는 원소를 모두 적을 수 없습니다. 원소나열법은 어떻게 적혀 있나요? '\(n\)보다 작은 자연수'에서 \(n = 1\)로 두면 무엇이 나오나요?</li>
+            <li class="warn"><span class="tag">판단</span>{0}은 공집합이 아닙니다. 원소 0이 하나 있으므로 \(n(\{0\}) = 1\)입니다. 원소나열법에서는 같은 원소를 두 번 쓰지 않고, 원소의 순서는 상관이 없습니다. {1, 2, 3}과 {3, 1, 2}는 같은 집합입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">A = {<i>x</i> | <i>x</i>는 20 이하의 소수}일 때 n(A)는?</p>
+          <p class="q">\(A = \{x \mid x\)는 20 이하의 소수\(\}\)일 때 \(n(A)\)는?</p>
           <ol>
             <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>7<span class="why"><b>2를 빠뜨렸습니다.</b> 소수를 홀수로 착각하기 쉽지만, 2는 약수가 1과 2뿐인 소수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>8<span class="why"><b>맞습니다.</b> A = {2, 3, 5, 7, 11, 13, 17, 19}이므로 원소는 8개입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>8<span class="why"><b>맞습니다.</b> \(A = \{2, 3, 5, 7, 11, 13, 17, 19\}\)이므로 원소는 8개입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>1을 넣었습니다.</b> 1은 약수가 하나뿐이어서 소수가 아닙니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10<span class="why"><b>20 이하의 홀수를 셌습니다.</b> 홀수 1, 9, 15는 소수가 아니고, 짝수 2는 소수입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/2-2.html#card-cm2-subset-venn"><small class="mono">공통수학2 2.2</small>한 집합이 다른 집합 안에 들어 있는지 어떻게 판단할까?</a><a href="../../c/cm2/2-2.html#card-cm2-subset-count"><small class="mono">공통수학2 2.2</small>원소가 하나 늘면 부분집합은 몇 개 늘까?</a></div></nav>
 
       <article class="card" id="card-cm2-set-interval">
         <header class="card-head">
@@ -110,47 +112,48 @@
             <canvas aria-label="수직선 위의 범위 a부터 b까지와, 그 안에 든 정수 원소"></canvas>
             <div class="ctl">
               <div class="presets kind">
-                <button class="chip" type="button" data-t="int" aria-pressed="true"><i>x</i>는 정수</button>
-                <button class="chip" type="button" data-t="real"><i>x</i>는 실수</button>
+                <button class="chip" type="button" data-t="int" aria-pressed="true">\(x\)는 정수</button>
+                <button class="chip" type="button" data-t="real">\(x\)는 실수</button>
               </div>
               <div class="presets ends">
-                <button class="chip" type="button" data-e="cc" aria-pressed="true"><i>a</i> ≤ <i>x</i> ≤ <i>b</i></button>
-                <button class="chip" type="button" data-e="oo"><i>a</i> &lt; <i>x</i> &lt; <i>b</i></button>
+                <button class="chip" type="button" data-e="cc" aria-pressed="true">\(a \le x \le b\)</button>
+                <button class="chip" type="button" data-e="oo">\(a &lt; x &lt; b\)</button>
               </div>
               <div class="ctl-row">
-                <div><label class="mono"><i>a</i> = <output class="a-out">−2</output></label>
+                <div><label class="mono">\(a =\) <output class="a-out">−2</output></label>
                 <input class="a" type="range" min="-5" max="5" step="0.5" value="-2" aria-label="범위의 왼쪽 끝 a"></div>
-                <div><label class="mono"><i>b</i> = <output class="b-out">3</output></label>
+                <div><label class="mono">\(b =\) <output class="b-out">3</output></label>
                 <input class="b" type="range" min="-5" max="5" step="0.5" value="3" aria-label="범위의 오른쪽 끝 b"></div>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>n(A)</dt><dd class="n-c">—</dd></div>
+                <div><dt>\(n(A)\)</dt><dd class="n-c">—</dd></div>
                 <div><dt>집합의 종류</dt><dd class="n-k">—</dd></div>
-                <div><dt>b − a</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(b - a\)</dt><dd class="n-d">—</dd></div>
               </dl>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>−2 ≤ <i>x</i> ≤ 3을 만족하는 정수는 몇 개일까요? 정수가 아니라 실수라면요?</li>
-            <li><span class="tag">복원</span>부등식 <i>a</i> ≤ <i>x</i> ≤ <i>b</i>는 수직선에서 <i>a</i>와 <i>b</i>를 포함하는 범위이고, <i>a</i> &lt; <i>x</i> &lt; <i>b</i>는 양 끝을 빼는 범위입니다. 끝을 포함하면 속이 찬 점, 빼면 빈 점으로 그립니다.</li>
-            <li><span class="tag">설명</span>조건이 같은 모양이어도 <i>x</i>가 어떤 수인지에 따라 집합이 달라집니다. 정수만 고르면 범위 안의 눈금만 원소가 되어 유한집합이고, <i>a</i>, <i>b</i>가 정수이면 n(A) = <i>b</i> − <i>a</i> + 1입니다. 실수를 고르면 아무리 좁은 범위에도 수가 끝없이 있어 무한집합입니다. <i>a</i> &gt; <i>b</i>이면 조건을 만족하는 수가 없어 공집합 ∅입니다.</li>
-            <li><span class="tag">연결</span>부등식의 해를 집합으로 적는 일, 함수의 정의역을 정하는 일이 이 생각을 그대로 씁니다. 원소의 개수 n(A)는 경우의 수와 확률을 셀 때 다시 나옵니다.</li>
-            <li><span class="tag">적용</span><i>a</i> = −2, <i>b</i> = 3에서 정수의 개수를 세고 <i>b</i> − <i>a</i>와 비교하세요. 끝을 빼면 몇 개가 줄어드나요? <i>a</i> = 0.5처럼 끝이 정수가 아니면 공식이 그대로 맞나요? '실수'로 바꾸고 <i>a</i> = <i>b</i>로 맞추면 두 끝 모양에서 각각 무엇이 남나요?</li>
-            <li class="warn"><span class="tag">판단</span>"범위가 짧으면 유한집합"은 틀린 생각입니다. 0 &lt; <i>x</i> &lt; 0.001인 실수도 무한히 많습니다. 유한과 무한을 가르는 것은 범위의 길이가 아니라 원소를 끝까지 셀 수 있는지입니다. 또 n(A) = <i>b</i> − <i>a</i> + 1은 양 끝이 정수이고 끝을 포함할 때만 맞습니다.</li>
+            <li><span class="tag">질문</span>\(-2 \le x \le 3\)을 만족하는 정수는 몇 개일까요? 정수가 아니라 실수라면요?</li>
+            <li><span class="tag">복원</span>부등식 \(a \le x \le b\)는 수직선에서 \(a\)와 \(b\)를 포함하는 범위이고, \(a &lt; x &lt; b\)는 양 끝을 빼는 범위입니다. 끝을 포함하면 속이 찬 점, 빼면 빈 점으로 그립니다.</li>
+            <li><span class="tag">설명</span>조건이 같은 모양이어도 \(x\)가 어떤 수인지에 따라 집합이 달라집니다. 정수만 고르면 범위 안의 눈금만 원소가 되어 유한집합이고, \(a, b\)가 정수이면 \(n(A) = b - a + 1\)입니다. 실수를 고르면 아무리 좁은 범위에도 수가 끝없이 있어 무한집합입니다. \(a &gt; b\)이면 조건을 만족하는 수가 없어 공집합 \(\varnothing\)입니다.</li>
+            <li><span class="tag">연결</span>부등식의 해를 집합으로 적는 일, 함수의 정의역을 정하는 일이 이 생각을 그대로 씁니다. 원소의 개수 \(n(A)\)는 경우의 수와 확률을 셀 때 다시 나옵니다.</li>
+            <li><span class="tag">적용</span>\(a = -2, b = 3\)에서 정수의 개수를 세고 \(b - a\)와 비교하세요. 끝을 빼면 몇 개가 줄어드나요? \(a = 0.5\)처럼 끝이 정수가 아니면 공식이 그대로 맞나요? '실수'로 바꾸고 \(a = b\)로 맞추면 두 끝 모양에서 각각 무엇이 남나요?</li>
+            <li class="warn"><span class="tag">판단</span>"범위가 짧으면 유한집합"은 틀린 생각입니다. \(0 &lt; x &lt; 0.001\)인 실수도 무한히 많습니다. 유한과 무한을 가르는 것은 범위의 길이가 아니라 원소를 끝까지 셀 수 있는지입니다. 또 \(n(A) = b - a + 1\)은 양 끝이 정수이고 끝을 포함할 때만 맞습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">A = {<i>x</i> | −2 &lt; <i>x</i> ≤ 3, <i>x</i>는 정수}일 때 n(A)는?</p>
+          <p class="q">\(A = \{x \mid -2 &lt; x \le 3, x\)는 정수\(\}\)일 때 \(n(A)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>6<span class="why"><b>−2를 넣었습니다.</b> −2 &lt; <i>x</i>이므로 −2는 원소가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>5<span class="why"><b>맞습니다.</b> A = {−1, 0, 1, 2, 3}입니다. 왼쪽 끝만 빠지므로 3 − (−2) + 1에서 1을 뺀 5입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>3까지 뺐습니다.</b> <i>x</i> ≤ 3은 3을 포함합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무수히 많다<span class="why"><b>실수로 보았습니다.</b> 조건에 '<i>x</i>는 정수'가 있으므로 유한집합입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>6<span class="why"><b>\(-2\)를 넣었습니다.</b> \(-2 &lt; x\)이므로 \(-2\)는 원소가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>5<span class="why"><b>맞습니다.</b> \(A = \{-1, 0, 1, 2, 3\}\)입니다. 왼쪽 끝만 빠지므로 \(3 - (-2) + 1\)에서 1을 뺀 5입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>3까지 뺐습니다.</b> \(x \le 3\)은 3을 포함합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무수히 많다<span class="why"><b>실수로 보았습니다.</b> 조건에 '\(x\)는 정수'가 있으므로 유한집합입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/2-2.html#card-cm2-subset-venn"><small class="mono">공통수학2 2.2</small>한 집합이 다른 집합 안에 들어 있는지 어떻게 판단할까?</a><a href="../../c/cm2/2-2.html#card-cm2-subset-count"><small class="mono">공통수학2 2.2</small>원소가 하나 늘면 부분집합은 몇 개 늘까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=cm2-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">5문항</span></a>
 
@@ -161,8 +164,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm2/sets.js"></script>
 <script src="../../js/cards/cm2/set-roster.js"></script>
 <script src="../../js/cards/cm2/sets.js"></script>

@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-cond-table canvas { width: 100%; aspect-ratio: 4 / 3; touch-action: none; }
     #card-stat-cond-table .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -39,14 +40,14 @@
     <p class="lead">같은 '지각할 확률'이라도 버스로 다니는 학생만 놓고 보면 값이 달라질 수 있습니다. 어떤 사건이 일어났다는 정보가 주어지면, 따져 볼 대상이 그 사건 안으로 좁혀지기 때문입니다. 이 절에서는 조건이 주어진 상황의 가능성을 수로 나타낸 조건부확률을 정의하고, 의료 검사처럼 실생활에서 조건부확률을 잘못 읽기 쉬운 경우를 살펴봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">확률의 덧셈정리</span><span class="p">두 사건의 교집합</span><span class="p">비율과 백분율</span>
+      <a class="p p-card" href="../../c/stat/2-2.html#card-stat-add-rule" title="확률과 통계 2.2 · &#x27;A 또는 B&#x27;의 확률은 두 확률의 합일까?">확률의 덧셈정리</a><a class="p p-card" href="../../c/stat/2-2.html#card-stat-add-multiples" title="확률과 통계 2.2 · 4의 배수와 6의 배수는 어디에서 겹칠까?">두 사건의 교집합</a><button type="button" class="p p-basic" data-basic="b-m-ratio-percent" title="중학교 개념 설명 보기">비율과 백분율</button>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-cond-table"><span class="mono">2.4.1</span>조건부확률의 뜻</a></li>
         <li><a href="#card-stat-cond-test"><span class="mono">2.4.2</span>조건부확률: 진단 검사</a></li>
       </ol>
@@ -71,34 +72,35 @@
               <table class="tb2"><tbody></tbody></table>
               <p class="mono eq">—</p>
               <dl class="nums n4">
-                <div><dt>P(B)</dt><dd class="n-b">—</dd></div>
-                <div><dt>P(B|A)</dt><dd class="n-ba">—</dd></div>
-                <div><dt>P(B|Aᶜ)</dt><dd class="n-bc">—</dd></div>
-                <div><dt>P(A|B)</dt><dd class="n-ab">—</dd></div>
+                <div><dt>\(P(B)\)</dt><dd class="n-b">—</dd></div>
+                <div><dt>\(P(B\mid A)\)</dt><dd class="n-ba">—</dd></div>
+                <div><dt>\(P(B\mid A^c)\)</dt><dd class="n-bc">—</dd></div>
+                <div><dt>\(P(A\mid B)\)</dt><dd class="n-ab">—</dd></div>
               </dl>
               <p class="fig-note">설명을 위해 만든 가상의 학생 200명 자료입니다. 넓이가 인원에 비례하고, 연두색이 B(지각한 적 있음)입니다. 세로 경계 아래의 동그라미와 두 가로 경계의 동그라미를 끌어 인원을 바꿀 수 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>학생 200명 중 지각한 적이 있는 학생은 36명입니다. 그런데 버스로 통학하는 80명만 보면 그중 24명이 지각했습니다. 버스 통학생이 지각할 확률은 36/200일까요, 24/80일까요?</li>
-            <li><span class="tag">복원</span>P(A∩B)는 A와 B가 함께 일어날 확률입니다. 띠그림에서는 넓이가 인원, 곧 확률에 비례합니다.</li>
-            <li><span class="tag">설명</span>사건 A가 일어났을 때 사건 B가 일어날 확률을 A가 일어났을 때의 B의 <em>조건부확률</em>이라 하고 P(B|A)로 씁니다. A가 일어났다는 것을 알면 표본공간이 S에서 A로 줄어듭니다. 그래서 P(B|A) = n(A∩B)/n(A)이고, 분모와 분자를 n(S)로 나누면 P(B|A) = P(A∩B)/P(A) (단, P(A) &gt; 0)입니다. 버스 통학생의 지각 확률은 24/80 = 0.3으로, 전체의 36/200 = 0.18보다 큽니다.</li>
-            <li><span class="tag">연결</span>조건부확률의 식을 곱셈 꼴로 바꾸면 P(A∩B) = P(A)P(B|A)이고, 이것이 확률의 곱셈정리입니다. 또 P(B|A)가 P(B)와 같은지로 두 사건의 독립과 종속을 판단합니다.</li>
-            <li><span class="tag">적용</span>'조건: A'를 누르고 흐려지지 않은 부분만 보세요. 그 안에서 연두색이 차지하는 비율이 P(B|A)입니다. '조건: B'를 눌러 P(A|B)를 읽고 P(B|A)와 비교하세요. 두 가로 경계를 같은 높이로 맞추면 P(B|A), P(B|A<sup>c</sup>), P(B)는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>P(B|A)와 P(A|B)는 다릅니다. 분모가 각각 n(A), n(B)이기 때문입니다. 또 조건부확률은 시간 순서나 원인을 뜻하지 않습니다. 버스 통학생의 지각 확률이 높다는 자료만으로 버스가 지각의 원인이라고 말할 수 없습니다. 나중에 일어난 일을 조건으로 삼을 수도 있습니다. 두 번째로 꺼낸 공이 빨간 공일 때 첫 번째 공이 빨간 공일 확률도 조건부확률입니다.</li>
+            <li><span class="tag">질문</span>학생 200명 중 지각한 적이 있는 학생은 36명입니다. 그런데 버스로 통학하는 80명만 보면 그중 24명이 지각했습니다. 버스 통학생이 지각할 확률은 \(\frac{36}{200}\)일까요, \(\frac{24}{80}\)일까요?</li>
+            <li><span class="tag">복원</span>\(P(A\cap B)\)는 A와 B가 함께 일어날 확률입니다. 띠그림에서는 넓이가 인원, 곧 확률에 비례합니다.</li>
+            <li><span class="tag">설명</span>사건 A가 일어났을 때 사건 B가 일어날 확률을 A가 일어났을 때의 B의 <em>조건부확률</em>이라 하고 \(P(B\mid A)\)로 씁니다. A가 일어났다는 것을 알면 표본공간이 S에서 A로 줄어듭니다. 그래서 \(P(B\mid A) = \frac{n(A\cap B)}{n(A)}\)이고, 분모와 분자를 \(n(S)\)로 나누면 \(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\) (단, \(P(A) &gt; 0\))입니다. 버스 통학생의 지각 확률은 \(\frac{24}{80} = 0.3\)으로, 전체의 \(\frac{36}{200} = 0.18\)보다 큽니다.</li>
+            <li><span class="tag">연결</span>조건부확률의 식을 곱셈 꼴로 바꾸면 \(P(A\cap B) = P(A)P(B\mid A)\)이고, 이것이 확률의 곱셈정리입니다. 또 \(P(B\mid A)\)가 \(P(B)\)와 같은지로 두 사건의 독립과 종속을 판단합니다.</li>
+            <li><span class="tag">적용</span>'조건: A'를 누르고 흐려지지 않은 부분만 보세요. 그 안에서 연두색이 차지하는 비율이 \(P(B\mid A)\)입니다. '조건: B'를 눌러 \(P(A\mid B)\)를 읽고 \(P(B\mid A)\)와 비교하세요. 두 가로 경계를 같은 높이로 맞추면 \(P(B\mid A), P(B\mid A^c), P(B)\)는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(P(B\mid A)\)와 \(P(A\mid B)\)는 다릅니다. 분모가 각각 \(n(A), n(B)\)이기 때문입니다. 또 조건부확률은 시간 순서나 원인을 뜻하지 않습니다. 버스 통학생의 지각 확률이 높다는 자료만으로 버스가 지각의 원인이라고 말할 수 없습니다. 나중에 일어난 일을 조건으로 삼을 수도 있습니다. 두 번째로 꺼낸 공이 빨간 공일 때 첫 번째 공이 빨간 공일 확률도 조건부확률입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">어느 동아리 회원 50명 중 남학생은 20명이고 그중 8명이 안경을 씁니다. 여학생 30명 중에서는 6명이 안경을 씁니다. 회원 한 명을 뽑았더니 안경을 쓴 학생이었을 때, 이 학생이 남학생일 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2/5<span class="why"><b>조건과 사건을 바꿨습니다.</b> 8/20은 남학생일 때 안경을 쓸 확률 P(안경|남)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4/25<span class="why"><b>표본공간을 줄이지 않았습니다.</b> 8/50은 남학생이면서 안경을 쓸 확률 P(남∩안경)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4/7<span class="why"><b>맞습니다.</b> 안경을 쓴 학생 8 + 6 = 14명으로 표본공간을 줄이면 그중 남학생은 8명이므로 8/14 = 4/7입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>7/25<span class="why"><b>조건이 되는 사건의 확률입니다.</b> 14/50은 안경을 쓸 확률 P(안경)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{2}{5}\)<span class="why"><b>조건과 사건을 바꿨습니다.</b> \(\frac{8}{20}\)은 남학생일 때 안경을 쓸 확률 \(P(\text{안경}\mid\text{남})\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{4}{25}\)<span class="why"><b>표본공간을 줄이지 않았습니다.</b> \(\frac{8}{50}\)은 남학생이면서 안경을 쓸 확률 \(P(\text{남}\cap\text{안경})\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(\frac{4}{7}\)<span class="why"><b>맞습니다.</b> 안경을 쓴 학생 \(8 + 6 = 14\)명으로 표본공간을 줄이면 그중 남학생은 8명이므로 \(\frac{8}{14} = \frac{4}{7}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{7}{25}\)<span class="why"><b>조건이 되는 사건의 확률입니다.</b> \(\frac{14}{50}\)은 안경을 쓸 확률 \(P(\text{안경})\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-1.html#card-stat-freq-prob"><small class="mono">확률과 통계 2.1</small>많이 던질수록 상대도수는 어디로 갈까?</a><a href="../../c/stat/2-1.html#card-stat-sample-grid"><small class="mono">확률과 통계 2.1</small>두 눈의 합이 11가지이면 확률은 각각 1/11일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-5.html#card-stat-indep-dice"><small class="mono">확률과 통계 2.5</small>'합이 7'은 첫째 눈의 영향을 받을까?</a><a href="../../c/stat/2-5.html#card-stat-indep-area"><small class="mono">확률과 통계 2.5</small>두 사각형이 어떻게 겹치면 독립일까?</a><a href="../../c/stat/2-6.html#card-stat-tree-draw"><small class="mono">확률과 통계 2.6</small>두 번째 공이 빨간 공일 확률은 첫 번째 공에 달려 있을까?</a></div></nav>
 
       <article class="card" id="card-stat-cond-test">
         <header class="card-head">
@@ -111,42 +113,43 @@
               <div class="presets">
                 <button class="chip go-pos" type="button" aria-pressed="false">양성만 보기</button>
               </div>
-              <label class="mono">유병률 P(D) = <output class="p-out">1</output>%</label>
+              <label class="mono">유병률 \(P(D)\) = <output class="p-out">1</output>%</label>
               <input class="p" type="range" min="0" max="7" step="1" value="3" aria-label="유병률">
-              <label class="mono">민감도 P(T|D) = <output class="se-out">90</output>%</label>
+              <label class="mono">민감도 \(P(T\mid D)\) = <output class="se-out">90</output>%</label>
               <input class="se" type="range" min="50" max="99" step="1" value="90" aria-label="민감도">
-              <label class="mono">특이도 P(Tᶜ|Dᶜ) = <output class="sp-out">95.0</output>%</label>
+              <label class="mono">특이도 \(P(T^c\mid D^c)\) = <output class="sp-out">95.0</output>%</label>
               <input class="sp" type="range" min="80" max="99.9" step="0.1" value="95" aria-label="특이도">
               <p class="mono eq">—</p>
               <dl class="nums n4">
                 <div><dt>양성 (1000명당)</dt><dd class="n-t">—</dd></div>
                 <div><dt>그중 환자</dt><dd class="n-dt">—</dd></div>
-                <div><dt>P(D|T)</dt><dd class="n-ppv">—</dd></div>
-                <div><dt>P(T|D)</dt><dd class="n-se">—</dd></div>
+                <div><dt>\(P(D\mid T)\)</dt><dd class="n-ppv">—</dd></div>
+                <div><dt>\(P(T\mid D)\)</dt><dd class="n-se">—</dd></div>
               </dl>
               <p class="fig-note">수치는 설명을 위한 모식입니다. D는 환자인 사건, T는 양성 판정을 받는 사건입니다. 점의 수는 1000명 기준 기댓값을 반올림했고, 아래 수치는 반올림하지 않고 계산했습니다. 채운 점이 양성 판정이고, 초록은 환자, 주황은 환자가 아닌 사람입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>어떤 검사가 환자의 90%를 양성으로, 환자가 아닌 사람의 95%를 음성으로 가려냅니다. 이 검사에서 양성이 나온 사람이 실제 환자일 확률은 90%일까요?</li>
-            <li><span class="tag">복원</span>P(B|A) = P(A∩B)/P(A)이고, 일반적으로 P(B|A) ≠ P(A|B)입니다. 전체 집단을 두 기준으로 나누면 네 묶음이 생깁니다.</li>
-            <li><span class="tag">설명</span>환자인 사건을 D, 양성인 사건을 T라 합시다. <em>민감도</em>는 P(T|D), <em>특이도</em>는 P(T<sup>c</sup>|D<sup>c</sup>)입니다. 우리가 알고 싶은 것은 P(D|T) = P(D∩T)/P(T)입니다. 유병률이 1%이면 1000명 중 환자 10명에서 양성 9명, 환자가 아닌 990명에서 양성 49.5명이 기대됩니다. 그래서 P(D|T) = 9/(9 + 49.5) ≈ 0.154입니다. 양성 판정을 받은 사람의 대부분은 환자가 아닙니다. 환자가 아닌 사람이 훨씬 많아서 5%의 거짓 양성도 수가 많기 때문입니다.</li>
-            <li><span class="tag">연결</span>선별 검사에서 양성이 나오면 더 정확한 검사로 다시 확인하는 이유가 여기에 있습니다. 스팸 메일 거르기나 보안 검색의 오경보도 같은 구조로 해석합니다. P(T)는 환자와 비환자 두 경로의 확률을 더해 구하는데, 이 계산은 확률의 곱셈정리에서 다시 정리합니다.</li>
-            <li><span class="tag">적용</span>'양성만 보기'를 켜고 채운 점 중 초록 점의 비율을 눈으로 어림한 뒤 P(D|T)와 비교하세요. 민감도와 특이도는 그대로 두고 유병률만 0.1%에서 20%까지 바꾸면 P(D|T)가 어떻게 달라지나요? 특이도를 99%로 올리면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>"검사 정확도가 90%이니 양성이면 90% 확률로 환자"라는 해석은 P(T|D)와 P(D|T)를 바꿔 읽은 것입니다. 또 이 카드의 수치는 설명용 모식입니다. 실제 검사의 민감도·특이도와 유병률은 질병과 검사 대상 집단마다 다릅니다.</li>
+            <li><span class="tag">복원</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)이고, 일반적으로 \(P(B\mid A) \ne P(A\mid B)\)입니다. 전체 집단을 두 기준으로 나누면 네 묶음이 생깁니다.</li>
+            <li><span class="tag">설명</span>환자인 사건을 D, 양성인 사건을 T라 합시다. <em>민감도</em>는 \(P(T\mid D)\), <em>특이도</em>는 \(P(T^c\mid D^c)\)입니다. 우리가 알고 싶은 것은 \(P(D\mid T) = \frac{P(D\cap T)}{P(T)}\)입니다. 유병률이 1%이면 1000명 중 환자 10명에서 양성 9명, 환자가 아닌 990명에서 양성 49.5명이 기대됩니다. 그래서 \(P(D\mid T) = \frac{9}{9 + 49.5} \approx 0.154\)입니다. 양성 판정을 받은 사람의 대부분은 환자가 아닙니다. 환자가 아닌 사람이 훨씬 많아서 5%의 거짓 양성도 수가 많기 때문입니다.</li>
+            <li><span class="tag">연결</span>선별 검사에서 양성이 나오면 더 정확한 검사로 다시 확인하는 이유가 여기에 있습니다. 스팸 메일 거르기나 보안 검색의 오경보도 같은 구조로 해석합니다. \(P(T)\)는 환자와 비환자 두 경로의 확률을 더해 구하는데, 이 계산은 확률의 곱셈정리에서 다시 정리합니다.</li>
+            <li><span class="tag">적용</span>'양성만 보기'를 켜고 채운 점 중 초록 점의 비율을 눈으로 어림한 뒤 \(P(D\mid T)\)와 비교하세요. 민감도와 특이도는 그대로 두고 유병률만 0.1%에서 20%까지 바꾸면 \(P(D\mid T)\)가 어떻게 달라지나요? 특이도를 99%로 올리면 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>"검사 정확도가 90%이니 양성이면 90% 확률로 환자"라는 해석은 \(P(T\mid D)\)와 \(P(D\mid T)\)를 바꿔 읽은 것입니다. 또 이 카드의 수치는 설명용 모식입니다. 실제 검사의 민감도·특이도와 유병률은 질병과 검사 대상 집단마다 다릅니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">유병률 2%인 집단에서 민감도 90%, 특이도 95%인 검사를 했습니다. 양성이 나온 사람이 실제 환자일 확률에 가장 가까운 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>90%<span class="why"><b>민감도 P(T|D)입니다.</b> 환자일 때 양성일 확률이지, 양성일 때 환자일 확률이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 27%<span class="why"><b>맞습니다.</b> P(D∩T) = 0.02 × 0.9 = 0.018, P(T) = 0.018 + 0.98 × 0.05 = 0.067이므로 P(D|T) = 0.018/0.067 ≈ 0.269입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>95%<span class="why"><b>특이도입니다.</b> 환자가 아닌 사람이 음성으로 나올 확률 P(T<sup>c</sup>|D<sup>c</sup>)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 6.7%<span class="why"><b>양성 판정을 받을 확률입니다.</b> 0.067은 P(T)이고, 구하는 값은 이것을 분모로 쓰는 P(D∩T)/P(T)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>90%<span class="why"><b>민감도 \(P(T\mid D)\)입니다.</b> 환자일 때 양성일 확률이지, 양성일 때 환자일 확률이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 27%<span class="why"><b>맞습니다.</b> \(P(D\cap T) = 0.02 \times 0.9 = 0.018\), \(P(T) = 0.018 + 0.98 \times 0.05 = 0.067\)이므로 \(P(D\mid T) = \frac{0.018}{0.067} \approx 0.269\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>95%<span class="why"><b>특이도입니다.</b> 환자가 아닌 사람이 음성으로 나올 확률 \(P(T^c\mid D^c)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 6.7%<span class="why"><b>양성 판정을 받을 확률입니다.</b> 0.067은 \(P(T)\)이고, 구하는 값은 이것을 분모로 쓰는 \(\frac{P(D\cap T)}{P(T)}\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-1.html#card-stat-freq-prob"><small class="mono">확률과 통계 2.1</small>많이 던질수록 상대도수는 어디로 갈까?</a><a href="../../c/stat/2-1.html#card-stat-sample-grid"><small class="mono">확률과 통계 2.1</small>두 눈의 합이 11가지이면 확률은 각각 1/11일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-5.html#card-stat-indep-dice"><small class="mono">확률과 통계 2.5</small>'합이 7'은 첫째 눈의 영향을 받을까?</a><a href="../../c/stat/2-5.html#card-stat-indep-area"><small class="mono">확률과 통계 2.5</small>두 사각형이 어떻게 겹치면 독립일까?</a><a href="../../c/stat/2-6.html#card-stat-tree-draw"><small class="mono">확률과 통계 2.6</small>두 번째 공이 빨간 공일 확률은 첫 번째 공에 달려 있을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">87문항</span></a>
 
@@ -157,8 +160,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/cond-table.js"></script>
 <script src="../../js/cards/stat/cond-test.js"></script>
 </body>

@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-chain-lines canvas { width: 100%; aspect-ratio: 16 / 9; }
     #card-calc2-chain-lines .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -34,17 +35,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>합성함수의 미분법</h1>
-    <p class="lead">(2<i>x</i> − 1)<sup>10</sup>을 미분하려고 전개하는 것은 너무 깁니다. 이 함수는 <i>u</i> = 2<i>x</i> − 1과 <i>y</i> = <i>u</i><sup>10</sup>을 이어 붙인 합성함수입니다. 이 절에서는 <i>x</i>의 작은 변화가 <i>u</i>를 거쳐 <i>y</i>로 전달될 때 변화율이 곱해진다는 사실에서 합성함수의 미분법을 얻습니다. 그리고 이를 써서 <i>x</i><sup>√2</sup>처럼 지수가 실수인 거듭제곱과 ln|<i>f</i>(<i>x</i>)|를 미분합니다.</p>
+    <p class="lead">\((2x - 1)^{10}\)을 미분하려고 전개하는 것은 너무 깁니다. 이 함수는 \(u = 2x - 1\)과 \(y = u^{10}\)을 이어 붙인 합성함수입니다. 이 절에서는 \(x\)의 작은 변화가 \(u\)를 거쳐 \(y\)로 전달될 때 변화율이 곱해진다는 사실에서 합성함수의 미분법을 얻습니다. 그리고 이를 써서 \(x^{\sqrt{2}}\)처럼 지수가 실수인 거듭제곱과 \(\ln|f(x)|\)를 미분합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">합성함수</span><span class="p">평균변화율과 미분계수</span><span class="p">지수·로그함수의 도함수</span>
+      <a class="p p-card" href="../../c/cm2/3-2.html#card-cm2-compose-arrow" title="공통수학2 3.2 · 두 함수를 이어 붙이면 무엇이 될까?">합성함수</a><a class="p p-card" href="../../c/calc1/2-1.html#card-calc1-secant" title="미적분Ⅰ 2.1 · 할선의 기울기는 h가 0에 가까워지면 어디로 갈까?">평균변화율과 미분계수</a><a class="p p-card" href="../../c/calc2/2-1.html#card-calc2-exp-slope" title="미적분Ⅱ 2.1 · 접선의 기울기가 높이와 같은 지수함수의 밑은?">지수·로그함수의 도함수</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc2-chain-lines"><span class="mono">2.5.1</span>합성함수의 미분법</a></li>
         <li><a href="#card-calc2-power-real"><span class="mono">2.5.2</span>실수 지수의 도함수</a></li>
       </ol>
@@ -62,98 +63,100 @@
             <canvas aria-label="왼쪽: u = g(x)의 그래프와 Δx, Δu. 오른쪽: y = f(u)의 그래프와 같은 Δu, Δy"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="cube" aria-pressed="true">(2<i>x</i> − 1)<sup>3</sup></button>
-                <button class="chip" type="button" data-k="sin">sin(<i>x</i><sup>2</sup>)</button>
-                <button class="chip" type="button" data-k="exp"><i>e</i><sup>−<i>x</i><sup>2</sup></sup></button>
+                <button class="chip" type="button" data-k="cube" aria-pressed="true">\((2x - 1)^3\)</button>
+                <button class="chip" type="button" data-k="sin">\(\sin(x^2)\)</button>
+                <button class="chip" type="button" data-k="exp">\(e^{-x^2}\)</button>
               </div>
-              <label class="mono"><i>x</i> = <output class="x-out">1</output></label>
+              <label class="mono">\(x\) = <output class="x-out">1</output></label>
               <input class="sx" type="range" min="-0.5" max="1.5" step="0.05" value="1" aria-label="x의 값">
-              <label class="mono">Δ<i>x</i> = <output class="d-out">0.4</output></label>
+              <label class="mono">\(\Delta x\) = <output class="d-out">0.4</output></label>
               <input class="sd" type="range" min="0.005" max="0.8" step="0.005" value="0.4" aria-label="x의 증분 Δx">
               <div class="presets">
-                <button class="chip go-half" type="button">Δx ÷ 2</button>
+                <button class="chip go-half" type="button">\(\Delta x \div 2\)</button>
               </div>
               <dl class="nums">
-                <div><dt>Δu/Δx</dt><dd class="n-ux">—</dd></div>
-                <div><dt>Δy/Δu</dt><dd class="n-yu">—</dd></div>
-                <div><dt>곱 = Δy/Δx</dt><dd class="n-yx">—</dd></div>
+                <div><dt>\(\frac{\Delta u}{\Delta x}\)</dt><dd class="n-ux">—</dd></div>
+                <div><dt>\(\frac{\Delta y}{\Delta u}\)</dt><dd class="n-yu">—</dd></div>
+                <div><dt>곱 = \(\frac{\Delta y}{\Delta x}\)</dt><dd class="n-yx">—</dd></div>
               </dl>
               <dl class="nums">
-                <div><dt>g′(x)</dt><dd class="n-gp good">—</dd></div>
-                <div><dt>f′(g(x))</dt><dd class="n-fp good">—</dd></div>
-                <div><dt>f′(g(x))·g′(x)</dt><dd class="n-pr good">—</dd></div>
+                <div><dt>\(g'(x)\)</dt><dd class="n-gp good">—</dd></div>
+                <div><dt>\(f'(g(x))\)</dt><dd class="n-fp good">—</dd></div>
+                <div><dt>\(f'(g(x))\cdot g'(x)\)</dt><dd class="n-pr good">—</dd></div>
               </dl>
-              <p class="fig-note">왼쪽 그림의 세로 증분 Δ<i>u</i>(주황)가 오른쪽 그림에서는 가로 증분이 됩니다.</p>
+              <p class="fig-note">왼쪽 그림의 세로 증분 \(\Delta u\)(주황)가 오른쪽 그림에서는 가로 증분이 됩니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>y</i> = (2<i>x</i> − 1)<sup>3</sup>에서 <i>x</i>가 조금 변하면 <i>y</i>는 몇 배로 변할까요? 전개하지 않고 안쪽 2<i>x</i> − 1과 바깥 세제곱의 변화율만으로 알 수 있을까요?</li>
-            <li><span class="tag">복원</span><i>y</i> = <i>f</i>(<i>g</i>(<i>x</i>))는 <i>u</i> = <i>g</i>(<i>x</i>)를 먼저 계산하고 그 값을 <i>f</i>에 넣은 합성함수입니다. 미분계수는 평균변화율 Δ<i>y</i>/Δ<i>x</i>의 극한이고, 미분가능한 함수는 연속입니다.</li>
-            <li><span class="tag">설명</span><i>x</i>가 Δ<i>x</i>만큼 변하면 <i>u</i>가 Δ<i>u</i> = <i>g</i>(<i>x</i> + Δ<i>x</i>) − <i>g</i>(<i>x</i>)만큼, 그에 따라 <i>y</i>가 Δ<i>y</i> = <i>f</i>(<i>u</i> + Δ<i>u</i>) − <i>f</i>(<i>u</i>)만큼 변합니다. Δ<i>u</i> ≠ 0이면 Δ<i>y</i>/Δ<i>x</i> = (Δ<i>y</i>/Δ<i>u</i>)(Δ<i>u</i>/Δ<i>x</i>)입니다. Δ<i>x</i> → 0이면 <i>g</i>가 연속이므로 Δ<i>u</i> → 0이고, <b><i>dy</i>/<i>dx</i> = (<i>dy</i>/<i>du</i>)(<i>du</i>/<i>dx</i>)</b>, 곧 <b>{<i>f</i>(<i>g</i>(<i>x</i>))}′ = <i>f</i>′(<i>g</i>(<i>x</i>)) <i>g</i>′(<i>x</i>)</b>입니다. 예를 들어 {(2<i>x</i> − 1)<sup>3</sup>}′ = 3(2<i>x</i> − 1)<sup>2</sup> · 2, {sin(<i>x</i><sup>2</sup>)}′ = cos(<i>x</i><sup>2</sup>) · 2<i>x</i>, (<i>e</i><sup>−<i>x</i><sup>2</sup></sup>)′ = <i>e</i><sup>−<i>x</i><sup>2</sup></sup> · (−2<i>x</i>)입니다. 바깥 함수가 ln|<i>u</i>|이면 <b>{ln|<i>f</i>(<i>x</i>)|}′ = <i>f</i>′(<i>x</i>)/<i>f</i>(<i>x</i>)</b>입니다.</li>
-            <li><span class="tag">연결</span><i>dy</i>/<i>dx</i>를 분수처럼 약분하는 모양이 되는 것은 변화율이 단계마다 곱해지기 때문입니다. 톱니바퀴 세 개가 맞물려 돌 때 회전 비율이 곱해지는 것과 같습니다. 이 생각으로 다음 카드에서 실수 지수의 거듭제곱을, 다음 절에서 매개변수로 나타낸 함수를 미분합니다.</li>
-            <li><span class="tag">적용</span>'Δx ÷ 2'를 여러 번 눌러 위 세 칸이 아래 세 칸에 다가가는지 보세요. 첫 번째 식에서 Δ<i>u</i>/Δ<i>x</i>는 왜 처음부터 2인가요? sin(<i>x</i><sup>2</sup>)에서 <i>x</i>를 음수로 옮기고 Δ<i>x</i>를 조절해 Δ<i>u</i> = 0이 되는 경우를 찾아보세요. 그때 Δ<i>y</i>/Δ<i>u</i>는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>가장 흔한 실수는 안쪽 함수의 도함수 <i>g</i>′(<i>x</i>)를 곱하지 않는 것입니다. 또 <i>f</i>′는 <i>x</i>가 아니라 <i>g</i>(<i>x</i>)에서 계산합니다. {sin(<i>x</i><sup>2</sup>)}′을 cos <i>x</i> · 2<i>x</i>로 쓰면 틀립니다. 위의 설명은 Δ<i>u</i> ≠ 0일 때만 나눌 수 있으므로, Δ<i>u</i> = 0이 되는 경우까지 다루려면 더 세밀한 증명이 필요합니다. 결론인 공식은 그 경우에도 성립합니다.</li>
+            <li><span class="tag">질문</span>\(y = (2x - 1)^3\)에서 \(x\)가 조금 변하면 \(y\)는 몇 배로 변할까요? 전개하지 않고 안쪽 \(2x - 1\)과 바깥 세제곱의 변화율만으로 알 수 있을까요?</li>
+            <li><span class="tag">복원</span>\(y = f(g(x))\)는 \(u = g(x)\)를 먼저 계산하고 그 값을 \(f\)에 넣은 합성함수입니다. 미분계수는 평균변화율 \(\frac{\Delta y}{\Delta x}\)의 극한이고, 미분가능한 함수는 연속입니다.</li>
+            <li><span class="tag">설명</span>\(x\)가 \(\Delta x\)만큼 변하면 \(u\)가 \(\Delta u = g(x + \Delta x) - g(x)\)만큼, 그에 따라 \(y\)가 \(\Delta y = f(u + \Delta u) - f(u)\)만큼 변합니다. \(\Delta u \ne 0\)이면 \(\frac{\Delta y}{\Delta x} = (\frac{\Delta y}{\Delta u})(\frac{\Delta u}{\Delta x})\)입니다. \(\Delta x \to 0\)이면 \(g\)가 연속이므로 \(\Delta u \to 0\)이고, <b>\(\frac{dy}{dx} = (\frac{dy}{du})(\frac{du}{dx})\)</b>, 곧 <b>\(\{f(g(x))\}' = f'(g(x)) g'(x)\)</b>입니다. 예를 들어 \(\{(2x - 1)^3\}' = 3(2x - 1)^2 \cdot 2\), \(\{\sin(x^2)\}' = \cos(x^2) \cdot 2x\), \((e^{-x^2})' = e^{-x^2} \cdot (-2x)\)입니다. 바깥 함수가 \(\ln|u|\)이면 <b>\(\{\ln|f(x)|\}' = \frac{f'(x)}{f(x)}\)</b>입니다.</li>
+            <li><span class="tag">연결</span>\(\frac{dy}{dx}\)를 분수처럼 약분하는 모양이 되는 것은 변화율이 단계마다 곱해지기 때문입니다. 톱니바퀴 세 개가 맞물려 돌 때 회전 비율이 곱해지는 것과 같습니다. 이 생각으로 다음 카드에서 실수 지수의 거듭제곱을, 다음 절에서 매개변수로 나타낸 함수를 미분합니다.</li>
+            <li><span class="tag">적용</span>'\(\Delta x \div 2\)'를 여러 번 눌러 위 세 칸이 아래 세 칸에 다가가는지 보세요. 첫 번째 식에서 \(\frac{\Delta u}{\Delta x}\)는 왜 처음부터 2인가요? \(\sin(x^2)\)에서 \(x\)를 음수로 옮기고 \(\Delta x\)를 조절해 \(\Delta u = 0\)이 되는 경우를 찾아보세요. 그때 \(\frac{\Delta y}{\Delta u}\)는 어떻게 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>가장 흔한 실수는 안쪽 함수의 도함수 \(g'(x)\)를 곱하지 않는 것입니다. 또 \(f'\)는 \(x\)가 아니라 \(g(x)\)에서 계산합니다. \(\{\sin(x^2)\}'\)을 \(\cos x \cdot 2x\)로 쓰면 틀립니다. 위의 설명은 \(\Delta u \ne 0\)일 때만 나눌 수 있으므로, \(\Delta u = 0\)이 되는 경우까지 다루려면 더 세밀한 증명이 필요합니다. 결론인 공식은 그 경우에도 성립합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>f</i>(<i>x</i>) = (<i>x</i><sup>2</sup> + 1)<sup>3</sup>일 때 <i>f</i>′(1)의 값은?</p>
+          <p class="q">\(f(x) = (x^2 + 1)^3\)일 때 \(f'(1)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>24<span class="why"><b>맞습니다.</b> <i>f</i>′(<i>x</i>) = 3(<i>x</i><sup>2</sup> + 1)<sup>2</sup> · 2<i>x</i>이고 <i>f</i>′(1) = 3 · 4 · 2 = 24입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12<span class="why"><b>안쪽의 도함수를 빠뜨렸습니다.</b> 3(<i>x</i><sup>2</sup> + 1)<sup>2</sup> = 12에 (<i>x</i><sup>2</sup> + 1)′ = 2<i>x</i> = 2를 곱해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>함숫값을 구했습니다.</b> <i>f</i>(1) = 2<sup>3</sup> = 8은 높이이지 기울기가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>48<span class="why"><b>지수를 낮추지 않았습니다.</b> 3(<i>x</i><sup>2</sup> + 1)<sup>3</sup> · 2<i>x</i>로 계산하면 48이 됩니다. 바깥 함수 <i>u</i><sup>3</sup>의 도함수는 3<i>u</i><sup>2</sup>입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>24<span class="why"><b>맞습니다.</b> \(f'(x) = 3(x^2 + 1)^2 \cdot 2x\)이고 \(f'(1) = 3 \cdot 4 \cdot 2 = 24\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>12<span class="why"><b>안쪽의 도함수를 빠뜨렸습니다.</b> \(3(x^2 + 1)^2 = 12\)에 \((x^2 + 1)' = 2x = 2\)를 곱해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>함숫값을 구했습니다.</b> \(f(1) = 2^3 = 8\)은 높이이지 기울기가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>48<span class="why"><b>지수를 낮추지 않았습니다.</b> \(3(x^2 + 1)^3 \cdot 2x\)로 계산하면 48이 됩니다. 바깥 함수 \(u^3\)의 도함수는 \(3u^2\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/2-6.html#card-calc2-param-tangent"><small class="mono">미적분Ⅱ 2.6</small>x와 y가 모두 t의 함수일 때 접선의 기울기는?</a><a href="../../c/calc2/2-6.html#card-calc2-param-reparam"><small class="mono">미적분Ⅱ 2.6</small>같은 곡선을 다른 매개변수로 나타내면 기울기도 달라질까?</a></div></nav>
 
       <article class="card" id="card-calc2-power-real">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>지수가 √2여도 (xʳ)′ = r xʳ⁻¹일까?</h2><span class="kind">합성함수의 미분법 · 로그미분법</span>
+          <span class="no">2.5.2</span><h2>지수가 \(\sqrt{2}\)여도 \((x^r)' = r x^{r-1}\)일까?</h2><span class="kind">합성함수의 미분법 · 로그미분법</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="x > 0에서 y = x^r의 그래프와 끌 수 있는 점 P에서의 접선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-r="0.5"><i>r</i> = 1/2</button>
-                <button class="chip" type="button" data-r="s2" aria-pressed="true"><i>r</i> = √2</button>
-                <button class="chip" type="button" data-r="-1"><i>r</i> = −1</button>
-                <button class="chip" type="button" data-r="pi"><i>r</i> = π</button>
+                <button class="chip" type="button" data-r="0.5">\(r = \frac{1}{2}\)</button>
+                <button class="chip" type="button" data-r="s2" aria-pressed="true">\(r = \sqrt{2}\)</button>
+                <button class="chip" type="button" data-r="-1">\(r = -1\)</button>
+                <button class="chip" type="button" data-r="pi">\(r = \pi\)</button>
               </div>
-              <label class="mono">지수 <i>r</i> = <output class="r-out">√2</output></label>
+              <label class="mono">지수 \(r\) = <output class="r-out">\(\sqrt{2}\)</output></label>
               <input class="sr" type="range" min="-2" max="3" step="0.05" value="1.4" aria-label="지수 r">
-              <label class="mono">점 P의 <i>x</i>좌표 = <output class="x-out">2</output></label>
+              <label class="mono">점 \(P\)의 \(x\)좌표 = <output class="x-out">2</output></label>
               <input class="sx" type="range" min="0.2" max="4" step="0.05" value="2" aria-label="점 P의 x좌표">
               <dl class="nums n4">
-                <div><dt>높이 x^r</dt><dd class="n-y">—</dd></div>
+                <div><dt>높이 \(x^r\)</dt><dd class="n-y">—</dd></div>
                 <div><dt>접선의 기울기</dt><dd class="n-m">—</dd></div>
-                <div><dt>r·x^(r−1)</dt><dd class="n-f good">—</dd></div>
-                <div><dt>x·기울기 ÷ 높이</dt><dd class="n-k">—</dd></div>
+                <div><dt>\(r\cdot x^{r-1}\)</dt><dd class="n-f good">—</dd></div>
+                <div><dt>\(x\)·기울기 ÷ 높이</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">접선의 기울기는 아주 작은 <i>h</i>(0.00001)로 잰 할선의 기울기입니다. 점 P는 그림을 가로로 끌어도 움직입니다.</p>
+              <p class="fig-note">접선의 기울기는 아주 작은 \(h(0.00001)\)로 잰 할선의 기울기입니다. 점 \(P\)는 그림을 가로로 끌어도 움직입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>(<i>x</i><sup><i>n</i></sup>)′ = <i>nx</i><sup><i>n</i>−1</sup>은 <i>n</i>이 정수일 때 확인했습니다. 지수가 1/2이나 √2, π처럼 정수가 아니어도 같은 공식이 맞을까요?</li>
-            <li><span class="tag">복원</span><i>x</i> &gt; 0이면 <i>x</i> = <i>e</i><sup>ln <i>x</i></sup>이므로 <i>x</i><sup><i>r</i></sup> = <i>e</i><sup><i>r</i> ln <i>x</i></sup>입니다. (<i>e</i><sup><i>u</i></sup>)′ = <i>e</i><sup><i>u</i></sup>, (ln <i>x</i>)′ = 1/<i>x</i>, 그리고 합성함수의 미분법을 씁니다.</li>
-            <li><span class="tag">설명</span><i>y</i> = <i>e</i><sup><i>r</i> ln <i>x</i></sup>에서 바깥 함수는 <i>e</i><sup><i>u</i></sup>, 안쪽 함수는 <i>u</i> = <i>r</i> ln <i>x</i>입니다. 따라서 <i>y</i>′ = <i>e</i><sup><i>r</i> ln <i>x</i></sup> · <i>r</i>/<i>x</i> = <i>x</i><sup><i>r</i></sup> · <i>r</i>/<i>x</i>, 곧 <b>(<i>x</i><sup><i>r</i></sup>)′ = <i>rx</i><sup><i>r</i>−1</sup></b>(<i>r</i>는 실수, <i>x</i> &gt; 0)입니다. 같은 계산을 양변에 ln을 취해서 할 수도 있습니다. ln <i>y</i> = <i>r</i> ln <i>x</i>의 양변을 미분하면 <i>y</i>′/<i>y</i> = <i>r</i>/<i>x</i>입니다. 이렇게 로그를 취해 미분하는 방법을 <em>로그미분법</em>이라고 합니다.</li>
-            <li><span class="tag">연결</span><i>x</i> × 기울기 ÷ 높이 = <i>r</i>는 "<i>x</i>가 1% 늘면 <i>y</i>는 약 <i>r</i>% 는다"는 뜻입니다. 지수와 밑이 모두 변하는 <i>y</i> = <i>x</i><sup><i>x</i></sup>도 ln <i>y</i> = <i>x</i> ln <i>x</i>로 바꾸어 미분하면 <i>y</i>′ = <i>x</i><sup><i>x</i></sup>(ln <i>x</i> + 1)입니다.</li>
-            <li><span class="tag">적용</span>√2와 π에서 P를 옮기며 접선의 기울기와 <i>rx</i><sup><i>r</i>−1</sup>을 비교하세요. 넷째 칸의 값은 P의 위치에 따라 바뀌나요? <i>r</i>를 움직여 <i>r</i> &lt; 0, 0 &lt; <i>r</i> &lt; 1, <i>r</i> &gt; 1일 때 그래프가 각각 어떻게 휘는지, 기울기의 부호가 어떤지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span><i>x</i><sup><i>r</i></sup>(밑이 변수, 지수가 상수)과 <i>a</i><sup><i>x</i></sup>(밑이 상수, 지수가 변수)를 섞지 않습니다. (<i>x</i><sup>π</sup>)′ = π<i>x</i><sup>π−1</sup>이지만 (π<sup><i>x</i></sup>)′ = π<sup><i>x</i></sup> ln π입니다. 또 지수가 무리수이면 <i>x</i><sup><i>r</i></sup>은 <i>x</i> &gt; 0에서만 정의하므로 공식도 그 범위에서 씁니다.</li>
+            <li><span class="tag">질문</span>\((x^n)' = nx^{n-1}\)은 \(n\)이 정수일 때 확인했습니다. 지수가 \(\frac{1}{2}\)이나 \(\sqrt{2}\), \(\pi\)처럼 정수가 아니어도 같은 공식이 맞을까요?</li>
+            <li><span class="tag">복원</span>\(x &gt; 0\)이면 \(x = e^{\ln x}\)이므로 \(x^r = e^{r \ln x}\)입니다. \((e^u)' = e^u\), \((\ln x)' = \frac{1}{x}\), 그리고 합성함수의 미분법을 씁니다.</li>
+            <li><span class="tag">설명</span>\(y = e^{r \ln x}\)에서 바깥 함수는 \(e^u\), 안쪽 함수는 \(u = r \ln x\)입니다. 따라서 \(y' = e^{r \ln x} \cdot \frac{r}{x} = x^r \cdot \frac{r}{x}\), 곧 <b>\((x^r)' = rx^{r-1}\)</b>(\(r\)는 실수, \(x &gt; 0\))입니다. 같은 계산을 양변에 \(\ln\)을 취해서 할 수도 있습니다. \(\ln y = r \ln x\)의 양변을 미분하면 \(\frac{y'}{y} = \frac{r}{x}\)입니다. 이렇게 로그를 취해 미분하는 방법을 <em>로그미분법</em>이라고 합니다.</li>
+            <li><span class="tag">연결</span>\(x\) × 기울기 ÷ 높이 = \(r\)는 "\(x\)가 1% 늘면 \(y\)는 약 \(r\)% 는다"는 뜻입니다. 지수와 밑이 모두 변하는 \(y = x^x\)도 \(\ln y = x \ln x\)로 바꾸어 미분하면 \(y' = x^x(\ln x + 1)\)입니다.</li>
+            <li><span class="tag">적용</span>\(\sqrt{2}\)와 \(\pi\)에서 \(P\)를 옮기며 접선의 기울기와 \(rx^{r-1}\)을 비교하세요. 넷째 칸의 값은 \(P\)의 위치에 따라 바뀌나요? \(r\)를 움직여 \(r &lt; 0\), \(0 &lt; r &lt; 1\), \(r &gt; 1\)일 때 그래프가 각각 어떻게 휘는지, 기울기의 부호가 어떤지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>\(x^r\)(밑이 변수, 지수가 상수)과 \(a^x\)(밑이 상수, 지수가 변수)를 섞지 않습니다. \((x^\pi)' = \pi x^{\pi-1}\)이지만 \((\pi^x)' = \pi^x \ln \pi\)입니다. 또 지수가 무리수이면 \(x^r\)은 \(x &gt; 0\)에서만 정의하므로 공식도 그 범위에서 씁니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>f</i>(<i>x</i>) = <i>x</i>√<i>x</i> (<i>x</i> &gt; 0)일 때 <i>f</i>′(4)의 값은?</p>
+          <p class="q">\(f(x) = x\sqrt{x} (x &gt; 0)\)일 때 \(f'(4)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> <i>x</i>√<i>x</i> = <i>x</i><sup>3/2</sup>이므로 <i>f</i>′(<i>x</i>) = (3/2)<i>x</i><sup>1/2</sup>이고 <i>f</i>′(4) = (3/2) · 2 = 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>8<span class="why"><b>함숫값을 구했습니다.</b> <i>f</i>(4) = 4 · 2 = 8은 높이입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3/4<span class="why"><b>지수를 하나 더 낮추었습니다.</b> (3/2)<i>x</i><sup>−1/2</sup>로 쓰면 3/4이 됩니다. 3/2 − 1 = 1/2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>계수를 잘못 옮겼습니다.</b> 3<i>x</i><sup>1/2</sup>로 쓰면 6이 됩니다. 내려오는 수는 지수 3/2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> \(x\sqrt{x} = x^{\frac{3}{2}}\)이므로 \(f'(x) = (\frac{3}{2})x^{\frac{1}{2}}\)이고 \(f'(4) = (\frac{3}{2}) \cdot 2 = 3\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>8<span class="why"><b>함숫값을 구했습니다.</b> \(f(4) = 4 \cdot 2 = 8\)은 높이입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3}{4}\)<span class="why"><b>지수를 하나 더 낮추었습니다.</b> \((\frac{3}{2})x^{-\frac{1}{2}}\)로 쓰면 \(\frac{3}{4}\)이 됩니다. \(\frac{3}{2} - 1 = \frac{1}{2}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>계수를 잘못 옮겼습니다.</b> \(3x^{\frac{1}{2}}\)로 쓰면 6이 됩니다. 내려오는 수는 지수 \(\frac{3}{2}\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a><a href="../../c/calc2/2-1.html#card-calc2-log-deriv"><small class="mono">미적분Ⅱ 2.1</small>y = ln x의 접선의 기울기는 왜 1/x일까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc2-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">45문항</span></a>
 
@@ -164,8 +167,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/chain-lines.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>

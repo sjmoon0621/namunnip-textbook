@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-seq-func canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-alg-seq-func .gen { font-size: 14px; margin: 6px 0 2px; }
@@ -35,17 +36,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>수열의 뜻</h1>
-    <p class="lead">1, 3, 5, 7, …처럼 수를 차례로 늘어놓은 것을 수열이라고 합니다. 이 절에서는 '차례'가 무엇을 뜻하는지 함수로 다시 보고, 수열을 기호 <i>a</i><sub><i>n</i></sub>으로 적는 방법을 익힙니다. 처음 몇 항만 보고 다음 항을 단정할 수 있는지도 따져 봅니다.</p>
+    <p class="lead">\(1, 3, 5, 7, \cdots\)처럼 수를 차례로 늘어놓은 것을 수열이라고 합니다. 이 절에서는 '차례'가 무엇을 뜻하는지 함수로 다시 보고, 수열을 기호 \(a_n\)으로 적는 방법을 익힙니다. 처음 몇 항만 보고 다음 항을 단정할 수 있는지도 따져 봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">함수의 뜻</span><span class="p">정의역과 치역</span><span class="p">일차함수와 이차함수의 그래프</span>
+      <a class="p p-card" href="../../c/alg/1-6.html#card-alg-log-func-def" title="대수 1.6 · 지수함수의 화살표를 거꾸로 하면 함수가 될까?">함수의 뜻</a><a class="p p-card" href="../../c/cm2/3-1.html#card-cm2-func-map" title="공통수학2 3.1 · 어떤 대응을 함수라고 부를까?">정의역과 치역</a><a class="p p-card" href="../../c/cm1/2-5.html#card-cm1-line-parabola" title="공통수학1 2.5 · 포물선과 직선이 만나는지 그림 없이 알 수 있을까?">일차함수와 이차함수의 그래프</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-alg-seq-func"><span class="mono">3.1.1</span>수열과 함수</a></li>
         <li><a href="#card-alg-seq-guess"><span class="mono">3.1.2</span>처음 몇 항과 규칙</a></li>
       </ol>
@@ -63,45 +64,46 @@
             <canvas aria-label="위에는 자연수 n에서 항 a n으로 가는 대응 화살표, 아래에는 점 (n, a n)을 찍은 수열의 그래프"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-r="odd" aria-pressed="true">2<i>n</i> − 1</button>
-                <button class="chip" type="button" data-r="sq"><i>n</i><sup>2</sup></button>
-                <button class="chip" type="button" data-r="alt">(−1)<sup><i>n</i></sup></button>
-                <button class="chip" type="button" data-r="inv">1/<i>n</i></button>
-                <button class="chip" type="button" data-r="geo">3 · 2<sup><i>n</i>−1</sup></button>
-                <button class="chip" type="button" data-r="prime"><i>n</i>번째 소수</button>
+                <button class="chip" type="button" data-r="odd" aria-pressed="true">\(2n - 1\)</button>
+                <button class="chip" type="button" data-r="sq">\(n^2\)</button>
+                <button class="chip" type="button" data-r="alt">\((-1)^n\)</button>
+                <button class="chip" type="button" data-r="inv">\(\frac{1}{n}\)</button>
+                <button class="chip" type="button" data-r="geo">\(3 \cdot 2^{n-1}\)</button>
+                <button class="chip" type="button" data-r="prime">\(n\)번째 소수</button>
               </div>
               <p class="gen mono">—</p>
-              <label class="mono">항의 번호 <i>n</i> = <output class="n-out">3</output></label>
+              <label class="mono">항의 번호 \(n\) = <output class="n-out">3</output></label>
               <input class="n" type="range" min="1" max="8" step="1" value="3" aria-label="항의 번호 n">
               <label class="chk"><input type="checkbox" class="link"> 점 사이를 선으로 이어 보기</label>
               <dl class="nums">
                 <div><dt>번호 n</dt><dd class="v-n">—</dd></div>
-                <div><dt>항 <i>a</i><sub><i>n</i></sub></dt><dd class="v-a">—</dd></div>
-                <div><dt><i>a</i><sub><i>n</i>+1</sub> − <i>a</i><sub><i>n</i></sub></dt><dd class="v-d">—</dd></div>
+                <div><dt>항 \(a_n\)</dt><dd class="v-a">—</dd></div>
+                <div><dt>\(a_{n+1} - a_n\)</dt><dd class="v-d">—</dd></div>
               </dl>
-              <p class="fig-note">위 줄은 대응, 아래는 같은 대응을 점 (<i>n</i>, <i>a</i><sub><i>n</i></sub>)으로 찍은 그래프입니다. 점 사이에는 항이 없습니다.</p>
+              <p class="fig-note">위 줄은 대응, 아래는 같은 대응을 점 \((n, a_n)\)으로 찍은 그래프입니다. 점 사이에는 항이 없습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>1, 3, 5, 7, …처럼 수를 차례로 늘어놓으면 '첫째', '둘째' 같은 순서가 생깁니다. 순서가 있다는 것을 수학의 말로 하면 무엇일까요?</li>
-            <li><span class="tag">복원</span>함수 <i>f</i> : X → Y는 X의 원소 하나하나에 Y의 원소를 오직 하나씩 대응시킵니다. 정의역이 실수 전체인 일차함수의 그래프는 끊김 없는 직선입니다.</li>
-            <li><span class="tag">설명</span>차례로 늘어놓은 수의 열을 <em>수열</em>, 각 수를 <em>항</em>이라고 합니다. 첫째항, 둘째항, …, <i>n</i>번째 항을 <i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, …, <i>a</i><sub><i>n</i></sub>으로 적습니다. 번호 1에는 <i>a</i><sub>1</sub>, 번호 2에는 <i>a</i><sub>2</sub>가 하나씩 정해지므로, 수열은 <b>자연수 <i>n</i>에 수 <i>a</i><sub><i>n</i></sub>을 하나씩 대응시킨 함수</b>입니다. <i>a</i><sub><i>n</i></sub>을 <i>n</i>의 식으로 나타낸 것을 <em>일반항</em>이라 하고, 일반항이 <i>a</i><sub><i>n</i></sub>인 수열을 {<i>a</i><sub><i>n</i></sub>}으로 씁니다. 항이 끝없이 이어지면 무한수열, 끝이 있으면 유한수열입니다.</li>
-            <li><span class="tag">연결</span>정의역을 자연수로 줄였기 때문에 그래프가 점으로 끊어집니다. 같은 식 2<i>x</i> − 1이라도 일차함수 <i>y</i> = 2<i>x</i> − 1의 그래프는 직선이고, 수열 <i>a</i><sub><i>n</i></sub> = 2<i>n</i> − 1의 그래프는 그 직선 위의 점들입니다. 다음 절의 등차수열은 일차함수, 등비수열은 지수함수를 자연수에서만 본 것입니다.</li>
-            <li><span class="tag">적용</span>규칙을 바꾸며 <i>n</i>을 움직여 보세요. (−1)<sup><i>n</i></sup>은 어떤 값을 되풀이하나요? 1/<i>n</i>은 <i>n</i>이 커질수록 어디에 가까워지나요? 소수의 수열처럼 간단한 식이 없어도 수열일까요? '점 사이를 선으로 이어 보기'를 켜고, 선 위의 점이 수열의 항인지 생각해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>수열의 그래프를 곡선으로 이어 그리고 그 위의 모든 점을 항으로 여기면 안 됩니다. 2.5번째 항 같은 것은 없습니다. 또 일반항이 식으로 주어져야만 수열인 것도 아닙니다. 각 번호에 값이 하나씩 정해지면 수열입니다. 같은 값이 여러 번 나와도(예: −1, 1, −1, 1, …) 됩니다.</li>
+            <li><span class="tag">질문</span>\(1, 3, 5, 7, \cdots\)처럼 수를 차례로 늘어놓으면 '첫째', '둘째' 같은 순서가 생깁니다. 순서가 있다는 것을 수학의 말로 하면 무엇일까요?</li>
+            <li><span class="tag">복원</span>함수 \(f : X \to Y\)는 X의 원소 하나하나에 Y의 원소를 오직 하나씩 대응시킵니다. 정의역이 실수 전체인 일차함수의 그래프는 끊김 없는 직선입니다.</li>
+            <li><span class="tag">설명</span>차례로 늘어놓은 수의 열을 <em>수열</em>, 각 수를 <em>항</em>이라고 합니다. 첫째항, 둘째항, \(\cdots, n\)번째 항을 \(a_1, a_2, \cdots, a_n\)으로 적습니다. 번호 1에는 \(a_1\), 번호 2에는 \(a_2\)가 하나씩 정해지므로, 수열은 <b>자연수 \(n\)에 수 \(a_n\)을 하나씩 대응시킨 함수</b>입니다. \(a_n\)을 \(n\)의 식으로 나타낸 것을 <em>일반항</em>이라 하고, 일반항이 \(a_n\)인 수열을 \(\{a_n\}\)으로 씁니다. 항이 끝없이 이어지면 무한수열, 끝이 있으면 유한수열입니다.</li>
+            <li><span class="tag">연결</span>정의역을 자연수로 줄였기 때문에 그래프가 점으로 끊어집니다. 같은 식 \(2x - 1\)이라도 일차함수 \(y = 2x - 1\)의 그래프는 직선이고, 수열 \(a_n = 2n - 1\)의 그래프는 그 직선 위의 점들입니다. 다음 절의 등차수열은 일차함수, 등비수열은 지수함수를 자연수에서만 본 것입니다.</li>
+            <li><span class="tag">적용</span>규칙을 바꾸며 \(n\)을 움직여 보세요. \((-1)^n\)은 어떤 값을 되풀이하나요? \(\frac{1}{n}\)은 \(n\)이 커질수록 어디에 가까워지나요? 소수의 수열처럼 간단한 식이 없어도 수열일까요? '점 사이를 선으로 이어 보기'를 켜고, 선 위의 점이 수열의 항인지 생각해 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>수열의 그래프를 곡선으로 이어 그리고 그 위의 모든 점을 항으로 여기면 안 됩니다. 2.5번째 항 같은 것은 없습니다. 또 일반항이 식으로 주어져야만 수열인 것도 아닙니다. 각 번호에 값이 하나씩 정해지면 수열입니다. 같은 값이 여러 번 나와도(예: \(-1, 1, -1, 1, \cdots\)) 됩니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">일반항이 <i>a</i><sub><i>n</i></sub> = <i>n</i><sup>2</sup> − 5<i>n</i>인 수열에서 값이 음수인 항은 모두 몇 개인가요?</p>
+          <p class="q">일반항이 \(a_n = n^2 - 5n\)인 수열에서 값이 음수인 항은 모두 몇 개인가요?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4개<span class="why"><b>맞습니다.</b> <i>a</i><sub>1</sub> = −4, <i>a</i><sub>2</sub> = −6, <i>a</i><sub>3</sub> = −6, <i>a</i><sub>4</sub> = −4이고 <i>a</i><sub>5</sub> = 0, <i>a</i><sub>6</sub> = 6입니다. <i>n</i> ≥ 5이면 0 이상입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5개<span class="why"><b>0을 음수로 셌습니다.</b> <i>a</i><sub>5</sub> = 25 − 25 = 0은 음수가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>무수히 많다<span class="why"><b>함수 <i>y</i> = <i>x</i><sup>2</sup> − 5<i>x</i>로 보았습니다.</b> 0 &lt; <i>x</i> &lt; 5인 실수 <i>x</i>는 무수히 많지만, 수열의 항은 자연수 번호에만 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2개<span class="why"><b>가장 작은 값 근처만 보았습니다.</b> <i>a</i><sub>2</sub>와 <i>a</i><sub>3</sub>이 가장 작을 뿐, <i>a</i><sub>1</sub>과 <i>a</i><sub>4</sub>도 음수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4개<span class="why"><b>맞습니다.</b> \(a_1 = -4\), \(a_2 = -6\), \(a_3 = -6\), \(a_4 = -4\)이고 \(a_5 = 0\), \(a_6 = 6\)입니다. \(n \ge 5\)이면 0 이상입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5개<span class="why"><b>0을 음수로 셌습니다.</b> \(a_5 = 25 - 25 = 0\)은 음수가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>무수히 많다<span class="why"><b>함수 \(y = x^2 - 5x\)로 보았습니다.</b> \(0 &lt; x &lt; 5\)인 실수 \(x\)는 무수히 많지만, 수열의 항은 자연수 번호에만 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2개<span class="why"><b>가장 작은 값 근처만 보았습니다.</b> \(a_2\)와 \(a_3\)이 가장 작을 뿐, \(a_1\)과 \(a_4\)도 음수입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div></nav>
 
       <article class="card" id="card-alg-seq-guess">
         <header class="card-head">
@@ -111,43 +113,44 @@
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="처음 네 항 1, 2, 4, 8과 끌어서 바꾸는 다섯째 항, 그리고 다섯 점을 지나는 다항식 규칙의 곡선과 여섯째 항"></canvas>
             <div class="ctl">
-              <p class="legend"><i class="sw" style="background: var(--forest)"></i>주어진 네 항 <i class="sw" style="background: var(--warn)"></i>끌어서 정하는 다섯째 항 <i class="sw" style="border: 2px solid var(--ink-2)"></i>이 규칙의 여섯째 항 <i class="sw" style="background: var(--memo-rule)"></i>2<sup><i>n</i>−1</sup></p>
+              <p class="legend"><i class="sw" style="background: var(--forest)"></i>주어진 네 항 <i class="sw" style="background: var(--warn)"></i>끌어서 정하는 다섯째 항 <i class="sw" style="border: 2px solid var(--ink-2)"></i>이 규칙의 여섯째 항 <i class="sw" style="background: var(--memo-rule)"></i>\(2^{n-1}\)</p>
               <div class="presets">
-                <button class="chip" type="button" data-v="16"><i>a</i><sub>5</sub> = 16</button>
-                <button class="chip" type="button" data-v="15" aria-pressed="true"><i>a</i><sub>5</sub> = 15</button>
-                <button class="chip" type="button" data-v="10"><i>a</i><sub>5</sub> = 10</button>
+                <button class="chip" type="button" data-v="16">\(a_5 = 16\)</button>
+                <button class="chip" type="button" data-v="15" aria-pressed="true">\(a_5 = 15\)</button>
+                <button class="chip" type="button" data-v="10">\(a_5 = 10\)</button>
               </div>
-              <label class="mono">다섯째 항 <i>a</i><sub>5</sub> = <output class="a5-out">15</output></label>
+              <label class="mono">다섯째 항 \(a_5\) = <output class="a5-out">15</output></label>
               <input class="a5" type="range" min="8" max="24" step="1" value="15" aria-label="다섯째 항 a5">
               <p class="mono rule">—</p>
               <dl class="nums">
-                <div><dt>이 규칙의 <i>a</i><sub>6</sub></dt><dd class="v-6">—</dd></div>
-                <div><dt>이 규칙의 <i>a</i><sub>7</sub></dt><dd class="v-7">—</dd></div>
-                <div><dt>2<sup><i>n</i>−1</sup>의 <i>a</i><sub>6</sub></dt><dd>32</dd></div>
+                <div><dt>이 규칙의 \(a_6\)</dt><dd class="v-6">—</dd></div>
+                <div><dt>이 규칙의 \(a_7\)</dt><dd class="v-7">—</dd></div>
+                <div><dt>\(2^{n-1}\)의 \(a_6\)</dt><dd>32</dd></div>
               </dl>
               <p class="fig-note">곡선은 다섯 점을 모두 지나는 사차 이하의 다항식입니다. 다섯째 점을 위아래로 끌거나 슬라이더를 움직여 보세요.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>1, 2, 4, 8, …의 다음 항을 물으면 대부분 16이라고 답합니다. 처음 네 항만 보고 다섯째 항을 정할 수 있을까요?</li>
-            <li><span class="tag">복원</span>수열은 자연수 <i>n</i>에 값 <i>a</i><sub><i>n</i></sub>을 하나씩 대응시킨 것입니다. 대응을 정하는 것은 일반항이나 규칙이고, 처음 몇 항은 그 규칙을 짐작하게 하는 단서입니다.</li>
-            <li><span class="tag">설명</span><i>a</i><sub><i>n</i></sub> = 2<sup><i>n</i>−1</sup>도, <i>a</i><sub><i>n</i></sub> = (<i>n</i><sup>3</sup> − 3<i>n</i><sup>2</sup> + 8<i>n</i>)/6도 처음 네 항은 1, 2, 4, 8입니다. 그런데 뒤의 규칙은 <i>a</i><sub>5</sub> = 15입니다. 또 (<i>n</i> − 1)(<i>n</i> − 2)(<i>n</i> − 3)(<i>n</i> − 4)는 <i>n</i> = 1, 2, 3, 4에서 0이므로, 이것의 몇 배를 더해도 처음 네 항은 그대로입니다. 그러니 <b>다섯째 항은 어떤 값이든 될 수 있습니다.</b> 수열을 정하려면 처음 몇 항이 아니라 일반항이나 규칙을 주어야 합니다.</li>
-            <li><span class="tag">연결</span>1, 2, 4, 8, 15, 26, …은 케이크를 칼로 <i>n</i> − 1번 잘라 얻을 수 있는 가장 많은 조각 수입니다. 원 위에 점 <i>n</i>개를 찍어 모두 이을 때 원이 나뉘는 가장 많은 조각 수는 1, 2, 4, 8, 16, 31, …입니다. 이 수열은 다섯째 항까지 2<sup><i>n</i>−1</sup>과 같다가 여섯째 항에서 갈라집니다. 두 수열 모두 실제로 셀 수 있는 대상에서 나왔습니다.</li>
-            <li><span class="tag">적용</span>다섯째 점을 끌어 보세요. 처음 네 점은 그대로인데 곡선과 여섯째 항이 어떻게 바뀌나요? <i>a</i><sub>5</sub> = 16으로 맞추면 다섯 항이 2<sup><i>n</i>−1</sup>과 모두 같습니다. 그때 이 규칙의 여섯째 항은 32인가요?</li>
-            <li class="warn"><span class="tag">판단</span>'처음 몇 항이 맞으니 이 규칙이 맞다'는 증명이 아닙니다. 다섯 항이 같아도 여섯째 항에서 다를 수 있습니다. 문제에서 '규칙을 찾으라'고 하면 가장 자연스러운 규칙을 짐작하라는 뜻이고, 그 규칙이 모든 <i>n</i>에서 맞는지는 따로 보여야 합니다. 이 문제의식은 수학적 귀납법으로 이어집니다.</li>
+            <li><span class="tag">질문</span>\(1, 2, 4, 8, \cdots\)의 다음 항을 물으면 대부분 16이라고 답합니다. 처음 네 항만 보고 다섯째 항을 정할 수 있을까요?</li>
+            <li><span class="tag">복원</span>수열은 자연수 \(n\)에 값 \(a_n\)을 하나씩 대응시킨 것입니다. 대응을 정하는 것은 일반항이나 규칙이고, 처음 몇 항은 그 규칙을 짐작하게 하는 단서입니다.</li>
+            <li><span class="tag">설명</span>\(a_n = 2^{n-1}\)도, \(a_n = \frac{n^3 - 3n^2 + 8n}{6}\)도 처음 네 항은 1, 2, 4, 8입니다. 그런데 뒤의 규칙은 \(a_5 = 15\)입니다. 또 \((n - 1)(n - 2)(n - 3)(n - 4)\)는 \(n = 1, 2, 3, 4\)에서 0이므로, 이것의 몇 배를 더해도 처음 네 항은 그대로입니다. 그러니 <b>다섯째 항은 어떤 값이든 될 수 있습니다.</b> 수열을 정하려면 처음 몇 항이 아니라 일반항이나 규칙을 주어야 합니다.</li>
+            <li><span class="tag">연결</span>\(1, 2, 4, 8, 15, 26, \cdots\)은 케이크를 칼로 \(n - 1\)번 잘라 얻을 수 있는 가장 많은 조각 수입니다. 원 위에 점 \(n\)개를 찍어 모두 이을 때 원이 나뉘는 가장 많은 조각 수는 \(1, 2, 4, 8, 16, 31, \cdots\)입니다. 이 수열은 다섯째 항까지 \(2^{n-1}\)과 같다가 여섯째 항에서 갈라집니다. 두 수열 모두 실제로 셀 수 있는 대상에서 나왔습니다.</li>
+            <li><span class="tag">적용</span>다섯째 점을 끌어 보세요. 처음 네 점은 그대로인데 곡선과 여섯째 항이 어떻게 바뀌나요? \(a_5 = 16\)으로 맞추면 다섯 항이 \(2^{n-1}\)과 모두 같습니다. 그때 이 규칙의 여섯째 항은 32인가요?</li>
+            <li class="warn"><span class="tag">판단</span>'처음 몇 항이 맞으니 이 규칙이 맞다'는 증명이 아닙니다. 다섯 항이 같아도 여섯째 항에서 다를 수 있습니다. 문제에서 '규칙을 찾으라'고 하면 가장 자연스러운 규칙을 짐작하라는 뜻이고, 그 규칙이 모든 \(n\)에서 맞는지는 따로 보여야 합니다. 이 문제의식은 수학적 귀납법으로 이어집니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">일반항이 <i>a</i><sub><i>n</i></sub> = 2<i>n</i> + (<i>n</i> − 1)(<i>n</i> − 2)(<i>n</i> − 3)인 수열의 처음 세 항은 2, 4, 6입니다. 이 수열의 넷째 항 <i>a</i><sub>4</sub>는?</p>
+          <p class="q">일반항이 \(a_n = 2n + (n - 1)(n - 2)(n - 3)\)인 수열의 처음 세 항은 2, 4, 6입니다. 이 수열의 넷째 항 \(a_4\)는?</p>
           <ol>
             <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>8<span class="why"><b>처음 세 항의 규칙을 그대로 이었습니다.</b> 2, 4, 6 다음을 8로 짐작했지만, 이 수열은 넷째 항부터 덧붙인 곱이 0이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>14<span class="why"><b>맞습니다.</b> <i>a</i><sub>4</sub> = 8 + 3 · 2 · 1 = 14입니다. 덧붙인 곱은 <i>n</i> = 1, 2, 3에서만 0입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>덧붙인 곱만 계산했습니다.</b> (4 − 1)(4 − 2)(4 − 3) = 6에 2<i>n</i> = 8을 더해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>14<span class="why"><b>맞습니다.</b> \(a_4 = 8 + 3 \cdot 2 \cdot 1 = 14\)입니다. 덧붙인 곱은 \(n = 1, 2, 3\)에서만 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>덧붙인 곱만 계산했습니다.</b> \((4 - 1)(4 - 2)(4 - 3) = 6\)에 \(2n = 8\)을 더해야 합니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>값을 정할 수 없다<span class="why"><b>일반항이 주어졌는데 처음 세 항만 보았습니다.</b> 일반항이 주어지면 모든 항이 하나로 정해집니다. 정할 수 없는 것은 처음 몇 항만 주어졌을 때입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=alg-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">8문항</span></a>
 
@@ -158,8 +161,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/alg/seq-lib.js"></script>
 <script src="../../js/cards/alg/seq-func.js"></script>
 <script src="../../js/cards/alg/seq-lib.js"></script>

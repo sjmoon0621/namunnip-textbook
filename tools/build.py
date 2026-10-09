@@ -66,7 +66,7 @@ def pwa_head(p):
 
 
 # 오프라인 저장 목록(sw-files.js)에 넣을 파일: 실행에 필요한 것만. blocks/·tools/·graph/·curricula/는 빌드 재료라 뺀다.
-PRECACHE_DIRS = ("c", "css", "js", "assets")
+PRECACHE_DIRS = ("c", "css", "js", "assets", "basics")
 PRECACHE_SKIP = {".DS_Store"}
 
 
@@ -105,8 +105,139 @@ def exam_count(course, ch, sec):
     return f"{n}문항" if n else "준비 중"
 
 
+REL, USED, NAMES = {}, {}, {}   # main()이 채운다: 카드별 연관 카드, 블록 배치 위치, 과목 이름
+
+
+def related_map(blocks, used):
+    """graph/concepts.txt의 개념·선수 관계로 카드마다 먼저 볼 카드·같은 개념의 다른 과목 카드·이어지는 카드를 고른다.
+    검사는 build_graph가 한다. 여기서는 읽기만 한다."""
+    src = ROOT / "graph" / "concepts.txt"
+    if not src.exists():
+        return {}
+    cons = {}
+    for line in src.read_text().splitlines():
+        parts = [p.strip() for p in line.split("|")]
+        if line.strip() and not line.lstrip().startswith("#") and len(parts) == 4:
+            cons[parts[0]] = (parts[2].split(), parts[3].split())
+    of_block, next_of = {}, {}
+    for cid, (bl, req) in cons.items():
+        for b in bl:
+            of_block.setdefault(b, []).append(cid)
+        for r in req:
+            next_of.setdefault(r, []).append(cid)
+    def cards(cids, me):
+        out = []
+        for cid in cids:
+            for b in cons.get(cid, ((), ()))[0]:
+                if b != me and b in used and blocks[b]["type"] in NUMBERED and b not in out:
+                    out.append(b)
+        return out
+    rel = {}
+    for b, cids in of_block.items():
+        if b not in used or blocks[b]["type"] not in NUMBERED:
+            continue
+        home = used[b][0].split()[0]
+        rel[b] = {
+            "before": cards([r for c in cids for r in cons[c][1]], b),
+            "same": [x for x in cards(cids, b) if used[x][0].split()[0] != home],
+            "after": cards([n for c in cids for n in next_of.get(c, [])], b),
+        }
+    return rel
+
+
+def rel_html(bid, here):
+    """카드 바로 아래에 붙는 연관 카드 링크 상자. 같은 절에 있는 카드는 뺀다."""
+    r = REL.get(bid)
+    if not r:
+        return ""
+    def link(x):
+        cid, chsec = USED[x][0].split()
+        return (f'<a href="../../c/{cid}/{chsec}.html#{x}"><small class="mono">{H.escape(NAMES[cid])} {chsec.replace("-", ".")}</small>'
+                f'{H.escape(tex_plain(re.sub(r"<[^>]+>", "", blocks_title(x))), quote=False)}</a>')
+    rows = []
+    for key, label in (("before", "먼저 볼 카드"), ("same", "다른 과목에서"), ("after", "이어지는 카드")):
+        xs = [x for x in r[key] if here not in USED[x]][:4]
+        if xs:
+            rows.append(f'<div><span class="mono">{label}</span>{"".join(link(x) for x in xs)}</div>')
+    return f'\n      <nav class="rel" aria-label="연관 카드">{"".join(rows)}</nav>' if rows else ""
+
+
+_SUP = str.maketrans("0123456789+-n()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻ⁿ⁽⁾")
+_SUB = str.maketrans("0123456789+-n()", "₀₁₂₃₄₅₆₇₈₉₊₋ₙ₍₎")
+_TEX_SYM = {"times": "×", "div": "÷", "cdot": "·", "le": "≤", "leq": "≤", "ge": "≥", "geq": "≥", "ne": "≠", "neq": "≠",
+            "approx": "≈", "pi": "π", "infty": "∞", "cdots": "…", "ldots": "…", "pm": "±", "theta": "θ", "alpha": "α", "beta": "β",
+            "sigma": "σ", "mu": "μ", "lambda": "λ", "Delta": "Δ", "sum": "Σ", "int": "∫", "to": "→", "rightarrow": "→", "lt": "<", "gt": ">"}
+
+
+def tex_plain(s):
+    """제목·링크처럼 KaTeX가 돌지 않는 곳(toc.js, 다른 절의 연관 링크, title 속성)에 쓸 때 \\( … \\)를 읽을 수 있는 글자로 바꾼다."""
+    def plain(t):
+        t = re.sub(r"\\(" + "|".join(sorted(_TEX_SYM, key=len, reverse=True)) + r")(?![A-Za-z])", lambda m: _TEX_SYM[m.group(1)], t)
+        t = re.sub(r"\\(?:mathrm|text|mathbf|operatorname)\{([^{}]*)\}", r"\1", t)
+        grp = lambda x: f"({x})" if re.search(r"[-+− ]", x.strip()) else x
+        t = re.sub(r"\\frac\{([^{}]*)\}\{([^{}]*)\}", lambda m: f"{grp(m.group(1))}/{grp(m.group(2))}", t)
+        t = re.sub(r"\\sqrt\{([^{}]*)\}", lambda m: "√" + grp(m.group(1)), t)
+        t = re.sub(r"\\(?:vec|overrightarrow)\{([^{}]*)\}", r"\1⃗", t)
+        t = re.sub(r"\\bar\{([^{}]*)\}", r"\1̄", t)
+        t = re.sub(r"\^\{([^{}]*)\}|\^(.)", lambda m: (m.group(1) or m.group(2)).translate(_SUP), t)
+        t = re.sub(r"_\{([^{}]*)\}|_(.)", lambda m: (m.group(1) or m.group(2)).translate(_SUB), t)
+        t = re.sub(r"\\([A-Za-z]+)", r"\1", t)
+        return t.replace("\\,", " ").replace("{", "").replace("}", "").replace(" - ", " − ")
+    return re.sub(r"\\\(([\s\S]+?)\\\)|\\\[([\s\S]+?)\\\]", lambda m: plain(m.group(1) or m.group(2)), s)
+
+
+_TITLES = {}
+PREREQ = {}   # graph/prereqs.txt: '먼저 알면 좋은 것' 라벨 → ('card', 블록 id) 또는 ('basic', basics/ 파일 이름)
+
+
+def load_prereqs(used):
+    """graph/prereqs.txt → PREREQ. 한 줄: 라벨 | 블록 id  또는  라벨 | basics/<id>. 없는 대상은 오류로 멈춘다."""
+    src = ROOT / "graph" / "prereqs.txt"
+    if not src.exists():
+        return
+    errors = []
+    for ln, line in enumerate(src.read_text().splitlines(), 1):
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        label, sep, target = (x.strip() for x in line.partition("|"))
+        if not sep or not label or not target:
+            errors.append(f"{ln}행: '라벨 | 대상' 형식이 아님"); continue
+        if target.startswith("basics/"):
+            name = target[len("basics/"):]
+            if not (ROOT / "basics" / f"{name}.html").exists():
+                errors.append(f"{ln}행: 없는 설명 카드 {target}"); continue
+            PREREQ[label] = ("basic", name)
+        elif target in used:
+            PREREQ[label] = ("card", target)
+        else:
+            errors.append(f"{ln}행: 배치되지 않은 블록 {target}")
+    if errors:
+        raise SystemExit("graph/prereqs.txt 오류:\n  " + "\n  ".join(errors))
+
+
+def link_prereqs(html):
+    """절 소개의 <span class="p">라벨</span>을 카드 링크나 설명 카드 버튼으로 바꾼다(블록 원본은 그대로)."""
+    def sub(m):
+        label = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        hit = PREREQ.get(label)
+        if not hit:
+            return m.group(0)
+        kind, target = hit
+        if kind == "basic":
+            return f'<button type="button" class="p p-basic" data-basic="{target}" title="중학교 개념 설명 보기">{m.group(1)}</button>'
+        cid, chsec = USED[target][0].split()
+        where = f'{NAMES[cid]} {chsec.replace("-", ".")} · {tex_plain(re.sub(r"<[^>]+>", "", blocks_title(target)))}'
+        return f'<a class="p p-card" href="../../c/{cid}/{chsec}.html#{target}" title="{H.escape(where)}">{m.group(1)}</a>'
+    return re.sub(r'<span class="p">(.*?)</span>', sub, html, flags=re.S)
+
+
+def blocks_title(bid):
+    return _TITLES.get(bid, bid)
+
+
 def page_html(course, ch, sec, blocks):
     ids = sec["blocks"]
+    here = f'{course["id"]} {ch["n"]}-{sec["n"]}'
     intro = [blocks[i] for i in ids if blocks[i]["type"] == "intro"]
     items = [blocks[i] for i in ids if blocks[i]["type"] != "intro"]
     no, toc, bodies, styles, scripts = 0, [], [], [], []
@@ -119,15 +250,18 @@ def page_html(course, ch, sec, blocks):
             toc.append(f'        <li><a href="#{b["id"]}"><span class="mono">{label}</span>{b["toc_title"]}</a></li>')
         elif b["type"] == "video":
             toc.append(f'        <li><a href="#{b["id"]}"><span class="mono">영상</span>{b["toc_title"]}</a></li>')
-        bodies.append(indent(body, 6))
+        bodies.append(indent(body, 6) + (rel_html(b["id"], here) if b["type"] in NUMBERED else ""))
         if b["style"]:
             styles.append(b["style"])
         scripts += b.get("scripts", [])
     for b in intro:
         if b["style"]:
             styles.insert(0, b["style"])
+    has_math = any("\\(" in b["body"] or "\\[" in b["body"] for b in intro + items)   # \( … \) · \[ … \] → KaTeX
+    math_css = '  <link rel="stylesheet" href="../../assets/katex/katex.min.css">\n' if has_math else ""
+    math_js = '<script src="../../assets/katex/katex.min.js"></script>\n<script src="../../js/math.js"></script>\n' if has_math else ""
     desc = intro[0]["description"] if intro else ""
-    hero = indent(intro[0]["body"], 4) + "\n" if intro else ""
+    hero = indent(link_prereqs(intro[0]["body"]), 4) + "\n" if intro else ""
     style = ("  <style>\n" + indent("\n".join(styles), 4) + "\n  </style>\n") if styles else ""
     return f'''<!doctype html>
 <!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
@@ -139,7 +273,7 @@ def page_html(course, ch, sec, blocks):
   <meta name="description" content="{H.escape(desc)}">
 {pwa_head("../../")}
   <link rel="stylesheet" href="../../css/tb.css">
-{style}</head>
+{math_css}{style}</head>
 <body data-course="{course["id"]}" data-sec="{ch["n"]}-{sec["n"]}">
 
 <header class="top">
@@ -156,8 +290,8 @@ def page_html(course, ch, sec, blocks):
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
 {chr(10).join(toc)}
       </ol>
       <p class="progress mono small"></p>
@@ -176,8 +310,10 @@ def page_html(course, ch, sec, blocks):
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
-<script src="../../js/store.js"></script>
+{math_js}<script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 {"".join(f'<script src="../../{s}"></script>{chr(10)}' for s in scripts)}</body>
 </html>
 '''
@@ -257,7 +393,9 @@ def main():
 
     used = {}
     toc = []
+    pages = []
     for c in cur["courses"]:
+        NAMES[c["id"]] = c["name"]
         tc = {"id": c["id"], "name": c["name"], "meta": c["meta"], "track": c["track"], "level": c["level"], "chapters": []}
         toc.append(tc)
         for ch in c["chapters"]:
@@ -271,13 +409,21 @@ def main():
                     if here in used.get(bid, []):
                         raise SystemExit(f"한 절에 같은 블록이 두 번 배치됨: {bid} ({here})")
                     used.setdefault(bid, []).append(here)   # 한 블록을 여러 과목·절에 재사용할 수 있다
-                items = [{"kind": TOC_KIND[blocks[b]["type"]], "id": b, "title": blocks[b]["title"]}
+                items = [{"kind": TOC_KIND[blocks[b]["type"]], "id": b, "title": tex_plain(blocks[b]["title"])}
                          for b in s["blocks"] if blocks[b]["type"] in TOC_KIND]
                 tch["sections"].append({"n": s["n"], "title": s["title"], "code": s["code"], "page": bool(s["blocks"]), "items": items})
                 if s["blocks"]:
-                    p = out / "c" / c["id"] / f'{ch["n"]}-{s["n"]}.html'
-                    p.parent.mkdir(parents=True, exist_ok=True)
-                    p.write_text(page_html(c, ch, s, blocks))
+                    pages.append((c, ch, s))
+
+    # 연관 카드는 모든 배치를 알아야 고를 수 있으므로 페이지는 배치표를 다 읽은 뒤에 쓴다
+    USED.update(used)
+    _TITLES.update({b: blocks[b]["title"] for b in used})
+    REL.update(related_map(blocks, used))
+    load_prereqs(used)
+    for c, ch, s in pages:
+        p = out / "c" / c["id"] / f'{ch["n"]}-{s["n"]}.html'
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(page_html(c, ch, s, blocks))
 
     (out / "js").mkdir(parents=True, exist_ok=True)
     (out / "js" / "toc.js").write_text("/* 자동 생성: python3 tools/build.py — 직접 고치지 말 것 */\nwindow.TOC = " + json.dumps(toc, ensure_ascii=False, indent=1) + ";\n")

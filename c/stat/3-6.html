@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-xbar-dist .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
     #card-stat-phat-dist .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
@@ -34,14 +35,14 @@
     <p class="lead">같은 모집단에서 표본을 다시 뽑으면 표본평균은 조금 다른 값이 나옵니다. 표본평균은 정해진 수가 아니라 뽑힌 표본에 따라 값이 달라지는 확률변수입니다. 이 절에서는 표본을 수없이 뽑아 표본평균과 표본비율의 분포를 직접 쌓아 보고, 그 분포의 평균과 표준편차가 모평균, 모비율, 표본의 크기와 어떤 관계인지 찾습니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">임의추출</span><span class="p">이항분포의 평균과 표준편차</span><span class="p">정규분포와 표준화</span>
+      <a class="p p-card" href="../../c/stat/3-5.html#card-stat-random-sample" title="확률과 통계 3.5 · 정문 앞에서 만난 학생 20명으로 평균 통학 시간을 알 수 있을까?">임의추출</a><a class="p p-card" href="../../c/stat/3-2.html#card-stat-balance" title="확률과 통계 3.2 · 확률분포의 &#x27;가운데&#x27;와 &#x27;퍼짐&#x27;은 어디서 읽을까?">이항분포의 평균과 표준편차</a><a class="p p-card" href="../../c/stat/3-4.html#card-stat-standardize" title="확률과 통계 3.4 · 정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?">정규분포와 표준화</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-xbar-dist"><span class="mono">3.6.1</span>표본평균의 분포</a></li>
         <li><a href="#card-stat-phat-dist"><span class="mono">3.6.2</span>표본비율의 분포</a></li>
       </ol>
@@ -52,13 +53,13 @@
     <div>
       <article class="card" id="card-stat-xbar-dist">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</h2><span class="kind">표본평균의 분포 · σ/√n</span>
+          <span class="no">3.6.1</span><h2>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</h2><span class="kind">표본평균의 분포 · \(\frac{\sigma}{\sqrt{n}}\)</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="모집단 N(300, 20²)의 곡선(점선), 지금까지 뽑은 표본평균들의 히스토그램, 정규분포 N(300, 20²/n)의 곡선"></canvas>
             <div class="ctl">
-              <label class="mono">표본의 크기 <i>n</i> = <output class="n-out">4</output></label>
+              <label class="mono">표본의 크기 \(n\) = <output class="n-out">4</output></label>
               <input class="n" type="range" min="1" max="64" step="1" value="4" aria-label="표본의 크기 n">
               <div class="go-row">
                 <button class="chip go-one" type="button">표본 1개</button>
@@ -67,48 +68,49 @@
               </div>
               <dl class="nums n4">
                 <div><dt>뽑은 표본 수</dt><dd class="n-c">—</dd></div>
-                <div><dt><i>x̄</i>들의 평균</dt><dd class="n-a">—</dd></div>
-                <div><dt><i>x̄</i>들의 표준편차</dt><dd class="n-s">—</dd></div>
-                <div><dt>σ/√<i>n</i></dt><dd class="n-t">—</dd></div>
+                <div><dt>\(\bar{x}\)들의 평균</dt><dd class="n-a">—</dd></div>
+                <div><dt>\(\bar{x}\)들의 표준편차</dt><dd class="n-s">—</dd></div>
+                <div><dt>\(\frac{\sigma}{\sqrt{n}}\)</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">사과 한 개의 무게(g)가 정규분포 N(300, 20<sup>2</sup>)을 따른다고 가정한 모식입니다. 점선은 모집단의 분포, 막대는 지금까지 뽑은 <i>x̄</i>들의 히스토그램(넓이 합 1), 초록 곡선은 N(300, 20<sup>2</sup>/<i>n</i>)입니다. 주황 삼각형은 마지막 <i>x̄</i>입니다.</p>
+              <p class="fig-note">사과 한 개의 무게(g)가 정규분포 \(N(300, 20^2)\)을 따른다고 가정한 모식입니다. 점선은 모집단의 분포, 막대는 지금까지 뽑은 \(\bar{x}\)들의 히스토그램(넓이 합 1), 초록 곡선은 \(N(300, \frac{20^2}{n})\)입니다. 주황 삼각형은 마지막 \(\bar{x}\)입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>사과 4개의 평균 무게와 64개의 평균 무게 중 어느 쪽이 과수원 전체의 평균 무게에 더 가까울까요? '더 가깝다'를 수로 나타낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>확률변수의 평균, 분산, 표준편차를 구할 수 있고, E(<i>aX</i> + <i>b</i>) = <i>a</i>E(<i>X</i>) + <i>b</i>, V(<i>aX</i> + <i>b</i>) = <i>a</i><sup>2</sup>V(<i>X</i>)입니다. 정규분포의 확률은 표준화해서 구합니다.</li>
-            <li><span class="tag">설명</span>모집단의 평균, 분산, 표준편차를 각각 <em>모평균</em> <i>m</i>, <em>모분산</em> σ<sup>2</sup>, <em>모표준편차</em> σ라고 합니다. 모집단에서 임의추출한 크기가 <i>n</i>인 표본 <i>X</i><sub>1</sub>, <i>X</i><sub>2</sub>, …, <i>X<sub>n</sub></i>에 대하여 <i>X̄</i> = (<i>X</i><sub>1</sub> + <i>X</i><sub>2</sub> + ⋯ + <i>X<sub>n</sub></i>)/<i>n</i>을 <em>표본평균</em>, <i>S</i><sup>2</sup> = {(<i>X</i><sub>1</sub> − <i>X̄</i>)<sup>2</sup> + ⋯ + (<i>X<sub>n</sub></i> − <i>X̄</i>)<sup>2</sup>}/(<i>n</i> − 1)을 <em>표본분산</em>, <i>S</i>를 <em>표본표준편차</em>라고 합니다. <i>X̄</i>는 표본마다 값이 다른 확률변수이며 <b>E(<i>X̄</i>) = <i>m</i>, V(<i>X̄</i>) = σ<sup>2</sup>/<i>n</i>, σ(<i>X̄</i>) = σ/√<i>n</i></b>입니다. 특히 모집단이 정규분포 N(<i>m</i>, σ<sup>2</sup>)을 따르면 <i>X̄</i>는 정규분포 N(<i>m</i>, σ<sup>2</sup>/<i>n</i>)을 따릅니다.</li>
-            <li><span class="tag">연결</span>표본의 크기를 4배로 늘리면 σ(<i>X̄</i>)는 절반이 됩니다. 임의추출한 표본이면 <i>x̄</i>가 <i>n</i>이 클수록 <i>m</i> 가까이 모이므로, 다음 절에서는 <i>x̄</i> 하나로 <i>m</i>이 있을 만한 범위를 추정합니다.</li>
-            <li><span class="tag">적용</span><i>n</i> = 4에서 '표본 100개'를 여러 번 눌러 <i>x̄</i>들의 표준편차를 σ/√<i>n</i>과 비교해 보세요. <i>n</i>을 16, 64로 바꾸면 표준편차는 몇 배가 되나요? <i>x̄</i>들의 평균은 <i>n</i>에 따라 달라지나요? <i>n</i> = 1이면 막대는 어느 곡선과 겹치나요?</li>
-            <li class="warn"><span class="tag">판단</span>표본분산은 <i>n</i>이 아니라 <i>n</i> − 1로 나눕니다. <i>n</i>으로 나누면 평균적으로 모분산보다 작게 나오기 때문입니다. 또 σ(<i>X̄</i>) = σ/√<i>n</i>은 복원추출이거나 모집단이 표본보다 충분히 클 때의 식입니다. 모집단이 정규분포가 아니어도 <i>n</i>이 크면 <i>X̄</i>의 분포는 정규분포에 가까워지지만, 여기서는 모집단이 정규분포인 경우만 다룹니다.</li>
+            <li><span class="tag">복원</span>확률변수의 평균, 분산, 표준편차를 구할 수 있고, \(E(aX + b) = aE(X) + b\), \(V(aX + b) = a^2V(X)\)입니다. 정규분포의 확률은 표준화해서 구합니다.</li>
+            <li><span class="tag">설명</span>모집단의 평균, 분산, 표준편차를 각각 <em>모평균</em> \(m\), <em>모분산</em> \(\sigma^2\), <em>모표준편차</em> \(\sigma\)라고 합니다. 모집단에서 임의추출한 크기가 \(n\)인 표본 \(X_1, X_2, \cdots, X_n\)에 대하여 \(\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n}\)을 <em>표본평균</em>, \(S^2 = \frac{(X_1 - \bar{X})^2 + \cdots + (X_n - \bar{X})^2}{n - 1}\)을 <em>표본분산</em>, \(S\)를 <em>표본표준편차</em>라고 합니다. \(\bar{X}\)는 표본마다 값이 다른 확률변수이며 <b>\(E(\bar{X}) = m\), \(V(\bar{X}) = \frac{\sigma^2}{n}\), \(\sigma(\bar{X}) = \frac{\sigma}{\sqrt{n}}\)</b>입니다. 특히 모집단이 정규분포 \(N(m, \sigma^2)\)을 따르면 \(\bar{X}\)는 정규분포 \(N(m, \frac{\sigma^2}{n})\)을 따릅니다.</li>
+            <li><span class="tag">연결</span>표본의 크기를 4배로 늘리면 \(\sigma(\bar{X})\)는 절반이 됩니다. 임의추출한 표본이면 \(\bar{x}\)가 \(n\)이 클수록 \(m\) 가까이 모이므로, 다음 절에서는 \(\bar{x}\) 하나로 \(m\)이 있을 만한 범위를 추정합니다.</li>
+            <li><span class="tag">적용</span>\(n = 4\)에서 '표본 100개'를 여러 번 눌러 \(\bar{x}\)들의 표준편차를 \(\frac{\sigma}{\sqrt{n}}\)과 비교해 보세요. \(n\)을 16, 64로 바꾸면 표준편차는 몇 배가 되나요? \(\bar{x}\)들의 평균은 \(n\)에 따라 달라지나요? \(n = 1\)이면 막대는 어느 곡선과 겹치나요?</li>
+            <li class="warn"><span class="tag">판단</span>표본분산은 \(n\)이 아니라 \(n - 1\)로 나눕니다. \(n\)으로 나누면 평균적으로 모분산보다 작게 나오기 때문입니다. 또 \(\sigma(\bar{X}) = \frac{\sigma}{\sqrt{n}}\)은 복원추출이거나 모집단이 표본보다 충분히 클 때의 식입니다. 모집단이 정규분포가 아니어도 \(n\)이 크면 \(\bar{X}\)의 분포는 정규분포에 가까워지지만, 여기서는 모집단이 정규분포인 경우만 다룹니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">정규분포 N(60, 10<sup>2</sup>)을 따르는 모집단에서 크기가 25인 표본을 임의추출할 때, 표본평균 <i>X̄</i>에 대하여 P(<i>X̄</i> ≥ 64)는? (단, P(0 ≤ <i>Z</i> ≤ 0.4) = 0.1554, P(0 ≤ <i>Z</i> ≤ 1) = 0.3413, P(0 ≤ <i>Z</i> ≤ 2) = 0.4772)</p>
+          <p class="q">정규분포 \(N(60, 10^2)\)을 따르는 모집단에서 크기가 25인 표본을 임의추출할 때, 표본평균 \(\bar{X}\)에 대하여 \(P(\bar{X} \ge 64)\)는? (단, \(P(0 \le Z \le 0.4) = 0.1554\), \(P(0 \le Z \le 1) = 0.3413\), \(P(0 \le Z \le 2) = 0.4772\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.0228<span class="why"><b>맞습니다.</b> <i>X̄</i>는 N(60, 10<sup>2</sup>/25) = N(60, 2<sup>2</sup>)을 따르므로 P(<i>X̄</i> ≥ 64) = P(<i>Z</i> ≥ 2) = 0.5 − 0.4772 = 0.0228입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.3446<span class="why"><b>모표준편차를 그대로 썼습니다.</b> 사과 한 개처럼 하나의 값이면 (64 − 60)/10 = 0.4이지만, 25개의 평균은 표준편차가 10/√25 = 2로 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.1587<span class="why"><b>분산을 표준편차로 썼습니다.</b> 10<sup>2</sup>/25 = 4는 V(<i>X̄</i>)입니다. 4로 나누면 <i>Z</i> = 1이 되지만 σ(<i>X̄</i>) = √4 = 2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.4772<span class="why"><b>60부터 64까지의 확률입니다.</b> 표의 값 P(0 ≤ <i>Z</i> ≤ 2)를 0.5에서 빼야 64 이상의 확률입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.0228<span class="why"><b>맞습니다.</b> \(\bar{X}\)는 \(N(60, \frac{10^2}{25}) = N(60, 2^2)\)을 따르므로 \(P(\bar{X} \ge 64) = P(Z \ge 2) = 0.5 - 0.4772 = 0.0228\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.3446<span class="why"><b>모표준편차를 그대로 썼습니다.</b> 사과 한 개처럼 하나의 값이면 \(\frac{64 - 60}{10} = 0.4\)이지만, 25개의 평균은 표준편차가 \(\frac{10}{\sqrt{25}} = 2\)로 줄어듭니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.1587<span class="why"><b>분산을 표준편차로 썼습니다.</b> \(\frac{10^2}{25} = 4\)는 \(V(\bar{X})\)입니다. 4로 나누면 \(Z = 1\)이 되지만 \(\sigma(\bar{X}) = \sqrt{4} = 2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.4772<span class="why"><b>60부터 64까지의 확률입니다.</b> 표의 값 \(P(0 \le Z \le 2)\)를 0.5에서 빼야 64 이상의 확률입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-5.html#card-stat-random-sample"><small class="mono">확률과 통계 3.5</small>정문 앞에서 만난 학생 20명으로 평균 통학 시간을 알 수 있을까?</a><a href="../../c/stat/3-5.html#card-stat-draw-replace"><small class="mono">확률과 통계 3.5</small>공 4개에서 2개를 뽑는 방법은 몇 가지일까?</a><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-7.html#card-stat-ci-mean"><small class="mono">확률과 통계 3.7</small>신뢰도 95%의 신뢰구간은 무엇을 95% 믿는 것일까?</a></div></nav>
 
       <article class="card" id="card-stat-phat-dist">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</h2><span class="kind">표본비율의 분포 · √(pq/n)</span>
+          <span class="no">3.6.2</span><h2>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</h2><span class="kind">표본비율의 분포 · \(\sqrt{\frac{pq}{n}}\)</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas class="cv-wide" aria-label="표본비율 p̂들의 히스토그램과 정규분포 N(p, pq/n)의 곡선, 모비율 p의 위치"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-n="25">n = 25</button>
-                <button class="chip" type="button" data-n="100" aria-pressed="true">n = 100</button>
-                <button class="chip" type="button" data-n="400">n = 400</button>
+                <button class="chip" type="button" data-n="25">\(n = 25\)</button>
+                <button class="chip" type="button" data-n="100" aria-pressed="true">\(n = 100\)</button>
+                <button class="chip" type="button" data-n="400">\(n = 400\)</button>
               </div>
-              <label class="mono">모비율 <i>p</i> = <output class="p-out">0.30</output></label>
+              <label class="mono">모비율 \(p\) = <output class="p-out">0.30</output></label>
               <input class="p" type="range" min="0.1" max="0.9" step="0.05" value="0.3" aria-label="모비율 p">
               <div class="go-row">
                 <button class="chip go-one" type="button">표본 1개</button>
@@ -117,33 +119,34 @@
               </div>
               <dl class="nums n4">
                 <div><dt>뽑은 표본 수</dt><dd class="n-c">—</dd></div>
-                <div><dt><i>p̂</i>들의 평균</dt><dd class="n-a">—</dd></div>
-                <div><dt><i>p̂</i>들의 표준편차</dt><dd class="n-s">—</dd></div>
-                <div><dt>√(<i>pq</i>/<i>n</i>)</dt><dd class="n-t">—</dd></div>
+                <div><dt>\(\hat{p}\)들의 평균</dt><dd class="n-a">—</dd></div>
+                <div><dt>\(\hat{p}\)들의 표준편차</dt><dd class="n-s">—</dd></div>
+                <div><dt>\(\sqrt{\frac{pq}{n}}\)</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">모비율이 <i>p</i>인 모집단에서 크기가 <i>n</i>인 표본을 임의추출해 표본비율 <i>p̂</i>를 기록합니다. 막대는 <i>p̂</i>들의 히스토그램(넓이 합 1), 초록 곡선은 N(<i>p</i>, <i>pq</i>/<i>n</i>), 주황 점선은 <i>p</i>의 위치입니다.</p>
+              <p class="fig-note">모비율이 \(p\)인 모집단에서 크기가 \(n\)인 표본을 임의추출해 표본비율 \(\hat{p}\)를 기록합니다. 막대는 \(\hat{p}\)들의 히스토그램(넓이 합 1), 초록 곡선은 \(N(p, \frac{pq}{n})\), 주황 점선은 \(p\)의 위치입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>어느 도시 유권자의 30%가 한 정책에 찬성한다고 합시다. 100명을 임의추출해 물으면 찬성 비율이 꼭 30%로 나올까요? 몇 %p 정도까지 벗어날 수 있을까요?</li>
-            <li><span class="tag">복원</span>성공 확률이 <i>p</i>인 독립시행을 <i>n</i>번 할 때 성공 횟수 <i>X</i>는 B(<i>n</i>, <i>p</i>)를 따르고 E(<i>X</i>) = <i>np</i>, V(<i>X</i>) = <i>npq</i>입니다(<i>q</i> = 1 − <i>p</i>). <i>n</i>이 충분히 크면 B(<i>n</i>, <i>p</i>)는 N(<i>np</i>, <i>npq</i>)에 가깝습니다.</li>
-            <li><span class="tag">설명</span>모집단에서 어떤 특성을 가진 대상의 비율을 <em>모비율</em> <i>p</i>, 크기가 <i>n</i>인 표본에서 그 특성을 가진 대상의 비율을 <em>표본비율</em> <i>p̂</i> = <i>X</i>/<i>n</i>이라고 합니다. <i>X</i>가 B(<i>n</i>, <i>p</i>)를 따르므로 <b>E(<i>p̂</i>) = <i>p</i>, V(<i>p̂</i>) = <i>pq</i>/<i>n</i>, σ(<i>p̂</i>) = √(<i>pq</i>/<i>n</i>)</b>입니다. V(<i>p̂</i>) = V(<i>X</i>)/<i>n</i><sup>2</sup> = <i>npq</i>/<i>n</i><sup>2</sup>이기 때문입니다. <i>n</i>이 충분히 크면 <i>p̂</i>는 근사적으로 정규분포 N(<i>p</i>, <i>pq</i>/<i>n</i>)을 따릅니다.</li>
-            <li><span class="tag">연결</span>표본평균과 마찬가지로 표본비율도 평균은 모비율과 같고, 표준편차는 √<i>n</i>에 반비례합니다. 여론조사가 결과와 함께 '표본 오차'를 밝히는 까닭이 이것이며, 다음 절에서 이 값으로 모비율의 범위를 추정합니다.</li>
-            <li><span class="tag">적용</span><i>n</i> = 25와 <i>n</i> = 400에서 <i>p̂</i>들의 표준편차를 비교해 보세요. 몇 배 차이가 나나요? <i>p</i>를 0.5와 0.1로 바꾸면 같은 <i>n</i>에서 더 넓게 퍼지는 쪽은 어디인가요? <i>n</i> = 25, <i>p</i> = 0.1일 때 막대가 곡선과 잘 맞나요?</li>
-            <li class="warn"><span class="tag">판단</span>정규분포 근사는 <i>n</i>이 클 때만 씁니다. <i>np</i>나 <i>nq</i>가 작으면(대략 5보다 작으면) <i>p̂</i>의 분포는 한쪽으로 치우쳐 종 모양이 아닙니다. 또 <i>p̂</i>의 퍼짐은 표본의 크기 <i>n</i>에 달려 있고 모집단의 크기와는 거의 상관없습니다. 모집단이 표본보다 충분히 크다면, 같은 <i>n</i>으로 조사할 때 나라 전체와 한 도시의 정밀도가 비슷합니다.</li>
+            <li><span class="tag">복원</span>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 성공 횟수 \(X\)는 \(B(n, p)\)를 따르고 \(E(X) = np\), \(V(X) = npq\)입니다\((q = 1 - p)\). \(n\)이 충분히 크면 \(B(n, p)\)는 \(N(np, npq)\)에 가깝습니다.</li>
+            <li><span class="tag">설명</span>모집단에서 어떤 특성을 가진 대상의 비율을 <em>모비율</em> \(p\), 크기가 \(n\)인 표본에서 그 특성을 가진 대상의 비율을 <em>표본비율</em> \(\hat{p} = \frac{X}{n}\)이라고 합니다. \(X\)가 \(B(n, p)\)를 따르므로 <b>\(E(\hat{p}) = p\), \(V(\hat{p}) = \frac{pq}{n}\), \(\sigma(\hat{p}) = \sqrt{\frac{pq}{n}}\)</b>입니다. \(V(\hat{p}) = \frac{V(X)}{n^2} = \frac{npq}{n^2}\)이기 때문입니다. \(n\)이 충분히 크면 \(\hat{p}\)는 근사적으로 정규분포 \(N(p, \frac{pq}{n})\)을 따릅니다.</li>
+            <li><span class="tag">연결</span>표본평균과 마찬가지로 표본비율도 평균은 모비율과 같고, 표준편차는 \(\sqrt{n}\)에 반비례합니다. 여론조사가 결과와 함께 '표본 오차'를 밝히는 까닭이 이것이며, 다음 절에서 이 값으로 모비율의 범위를 추정합니다.</li>
+            <li><span class="tag">적용</span>\(n = 25\)와 \(n = 400\)에서 \(\hat{p}\)들의 표준편차를 비교해 보세요. 몇 배 차이가 나나요? \(p\)를 0.5와 0.1로 바꾸면 같은 \(n\)에서 더 넓게 퍼지는 쪽은 어디인가요? \(n = 25\), \(p = 0.1\)일 때 막대가 곡선과 잘 맞나요?</li>
+            <li class="warn"><span class="tag">판단</span>정규분포 근사는 \(n\)이 클 때만 씁니다. \(np\)나 \(nq\)가 작으면(대략 5보다 작으면) \(\hat{p}\)의 분포는 한쪽으로 치우쳐 종 모양이 아닙니다. 또 \(\hat{p}\)의 퍼짐은 표본의 크기 \(n\)에 달려 있고 모집단의 크기와는 거의 상관없습니다. 모집단이 표본보다 충분히 크다면, 같은 \(n\)으로 조사할 때 나라 전체와 한 도시의 정밀도가 비슷합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">모비율이 0.2인 모집단에서 크기가 100인 표본을 임의추출하면 σ(<i>p̂</i>) = 0.04입니다. 표본의 크기를 400으로 늘리면 σ(<i>p̂</i>)는?</p>
+          <p class="q">모비율이 0.2인 모집단에서 크기가 100인 표본을 임의추출하면 \(\sigma(\hat{p}) = 0.04\)입니다. 표본의 크기를 400으로 늘리면 \(\sigma(\hat{p})\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.02<span class="why"><b>맞습니다.</b> √(0.2 × 0.8/400) = √0.0004 = 0.02입니다. <i>n</i>이 4배이면 표준편차는 1/√4 = 1/2배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.01<span class="why"><b>분산과 표준편차를 섞었습니다.</b> <i>n</i>이 4배일 때 1/4배가 되는 것은 분산 <i>pq</i>/<i>n</i>입니다. 표준편차는 제곱근이므로 1/2배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.04<span class="why"><b>모비율만 보고 판단했습니다.</b> 모비율이 같아도 표본이 커지면 <i>p̂</i>가 <i>p</i> 근처에 더 모입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.02<span class="why"><b>맞습니다.</b> \(\sqrt{0.2 \times \frac{0.8}{400}} = \sqrt{0.0004} = 0.02\)입니다. \(n\)이 4배이면 표준편차는 \(\frac{1}{\sqrt{4}} = \frac{1}{2}\)배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.01<span class="why"><b>분산과 표준편차를 섞었습니다.</b> \(n\)이 4배일 때 \(\frac{1}{4}\)배가 되는 것은 분산 \(\frac{pq}{n}\)입니다. 표준편차는 제곱근이므로 \(\frac{1}{2}\)배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.04<span class="why"><b>모비율만 보고 판단했습니다.</b> 모비율이 같아도 표본이 커지면 \(\hat{p}\)가 \(p\) 근처에 더 모입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.08<span class="why"><b>방향이 반대입니다.</b> 표본에 많은 사람이 들어갈수록 비율의 우연한 흔들림은 작아집니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-5.html#card-stat-random-sample"><small class="mono">확률과 통계 3.5</small>정문 앞에서 만난 학생 20명으로 평균 통학 시간을 알 수 있을까?</a><a href="../../c/stat/3-5.html#card-stat-draw-replace"><small class="mono">확률과 통계 3.5</small>공 4개에서 2개를 뽑는 방법은 몇 가지일까?</a><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-7.html#card-stat-ci-prop"><small class="mono">확률과 통계 3.7</small>여론조사의 '오차 범위 ±3.1%p'는 어디서 나올까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">33문항</span></a>
 
@@ -154,8 +157,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/xbar-dist.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>

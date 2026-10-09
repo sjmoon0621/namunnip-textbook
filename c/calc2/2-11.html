@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-line-motion canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-calc2-line-motion .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -38,14 +39,14 @@
     <p class="lead">미적분Ⅰ에서는 다항함수로 나타낸 직선 운동의 속도와 가속도를 구했습니다. 그런데 용수철에 매달린 물체, 서서히 멈추는 진자, 원을 도는 물체의 위치는 삼각함수와 지수함수로 나타납니다. 이 절에서는 지금까지 배운 미분법으로 이런 운동의 속도와 가속도를 구하고, 평면 위의 운동까지 넓혀 봅니다. 미분 한 번으로 '가속도가 위치에 비례하고 방향은 반대'라는 물리 법칙이 드러나는 것을 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">직선 운동의 속도와 가속도</span><span class="p">삼각함수·지수함수의 도함수</span><span class="p">매개변수로 나타낸 함수의 미분</span>
+      <a class="p p-card" href="../../c/calc1/2-10.html#card-calc1-motion" title="미적분Ⅰ 2.10 · 점은 언제 방향을 바꿀까?">직선 운동의 속도와 가속도</a><span class="p">삼각함수·지수함수의 도함수</span><a class="p p-card" href="../../c/calc2/2-6.html#card-calc2-param-tangent" title="미적분Ⅱ 2.6 · x와 y가 모두 t의 함수일 때 접선의 기울기는?">매개변수로 나타낸 함수의 미분</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc2-line-motion"><span class="mono">2.11.1</span>진동하는 점의 속도와 가속도</a></li>
         <li><a href="#card-calc2-plane-motion"><span class="mono">2.11.2</span>평면 위의 운동</a></li>
       </ol>
@@ -63,44 +64,45 @@
             <canvas aria-label="위: 수직선 위의 점과 속도(주황), 가속도(파랑) 화살표. 아래: 위치 x(t)의 그래프와 시각 t에서의 접선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="shm" aria-pressed="true"><i>x</i> = 2sin <i>t</i></button>
-                <button class="chip" type="button" data-k="damp"><i>x</i> = 2<i>e</i><sup>−0.3<i>t</i></sup>cos 2<i>t</i></button>
-                <button class="chip" type="button" data-k="log"><i>x</i> = <i>t</i> − 2ln(<i>t</i> + 1)</button>
+                <button class="chip" type="button" data-k="shm" aria-pressed="true">\(x = 2\sin t\)</button>
+                <button class="chip" type="button" data-k="damp">\(x = 2e^{-0.3t}\cos 2t\)</button>
+                <button class="chip" type="button" data-k="log">\(x = t - 2\ln(t + 1)\)</button>
               </div>
-              <label class="mono">시각 <i>t</i> = <output class="t-out">0</output></label>
+              <label class="mono">시각 \(t\) = <output class="t-out">0</output></label>
               <div class="go-row">
                 <input class="st" type="range" min="0" max="12.56" step="0.01" value="0.6" aria-label="시각 t">
                 <button class="chip go-play" type="button" aria-pressed="false">재생</button>
               </div>
               <dl class="nums n4">
-                <div><dt>위치 x</dt><dd class="n-x">—</dd></div>
-                <div><dt>속도 v = dx/dt</dt><dd class="n-v">—</dd></div>
-                <div><dt>가속도 a = dv/dt</dt><dd class="n-a">—</dd></div>
+                <div><dt>위치 \(x\)</dt><dd class="n-x">—</dd></div>
+                <div><dt>속도 \(v = \frac{dx}{dt}\)</dt><dd class="n-v">—</dd></div>
+                <div><dt>가속도 \(a = \frac{dv}{dt}\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>속력</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">주황 화살표는 속도, 파랑 화살표는 가속도입니다(길이는 크기에 비례, 모식). 넷째 칸은 <i>v</i>와 <i>a</i>의 부호를 비교해 속력이 커지는지 작아지는지 알려 줍니다.</p>
+              <p class="fig-note">주황 화살표는 속도, 파랑 화살표는 가속도입니다(길이는 크기에 비례, 모식). 넷째 칸은 \(v\)와 \(a\)의 부호를 비교해 속력이 커지는지 작아지는지 알려 줍니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>용수철 끝에 매달린 물체의 위치가 <i>x</i> = 2sin <i>t</i>일 때, 물체는 어디에서 가장 빠를까요? 가속도는 어디에서 가장 클까요?</li>
-            <li><span class="tag">복원</span>수직선 위를 움직이는 점의 위치가 <i>x</i>(<i>t</i>)이면 속도는 <i>v</i> = <i>dx</i>/<i>dt</i>, 가속도는 <i>a</i> = <i>dv</i>/<i>dt</i> = <i>d</i><sup>2</sup><i>x</i>/<i>dt</i><sup>2</sup>입니다. 속력은 |<i>v</i>|입니다.</li>
-            <li><span class="tag">설명</span>삼각함수의 도함수로 <i>v</i> = 2cos <i>t</i>, <i>a</i> = −2sin <i>t</i>를 얻습니다. 곧 <b><i>a</i> = −<i>x</i></b>입니다. 가속도는 늘 원점을 향하고 원점에서 멀수록 큽니다. 원점(<i>x</i> = 0)을 지날 때 속력이 최대 2이고 가속도는 0입니다. 양 끝(<i>x</i> = ±2)에서는 <i>v</i> = 0이고 |<i>a</i>|가 최대 2입니다. 또 <i>v</i>와 <i>a</i>의 부호가 같으면 속력이 커지고, 다르면 작아집니다.</li>
-            <li><span class="tag">연결</span>일반적으로 <i>x</i> = <i>A</i> sin ω<i>t</i>이면 <i>a</i> = −ω<sup>2</sup><i>x</i>입니다. 용수철의 힘 <i>F</i> = −<i>kx</i>와 뉴턴의 운동 법칙 <i>F</i> = <i>ma</i>를 함께 쓰면 바로 이 꼴이 나옵니다. 위치를 두 번 미분하는 것만으로 진동의 원리를 읽어 낼 수 있습니다. 공기 저항이 있으면 <i>e</i><sup>−<i>bt</i></sup>가 곱해진 감쇠 진동이 됩니다.</li>
-            <li><span class="tag">적용</span><i>t</i>를 움직이며 속도가 0인 순간과 가속도가 0인 순간을 찾으세요. 두 순간에 점은 각각 어디에 있나요? 감쇠 진동에서는 끝점에 이를 때마다 무엇이 줄어드나요? 셋째 식에서 점이 방향을 바꾸는 시각을 찾고, 그 시각을 <i>v</i> = 0으로 계산해 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>가속도가 음수라고 느려지는 것이 아닙니다. 속도도 음수이면 음의 방향으로 점점 빨라집니다. 또 <i>v</i> = 0인 순간에도 <i>a</i> ≠ 0이면 점은 멈춰 있지 않고 곧 반대 방향으로 움직입니다. '정지'는 순간의 속도가 0이라는 뜻일 뿐입니다.</li>
+            <li><span class="tag">질문</span>용수철 끝에 매달린 물체의 위치가 \(x = 2\sin t\)일 때, 물체는 어디에서 가장 빠를까요? 가속도는 어디에서 가장 클까요?</li>
+            <li><span class="tag">복원</span>수직선 위를 움직이는 점의 위치가 \(x(t)\)이면 속도는 \(v = \frac{dx}{dt}\), 가속도는 \(a = \frac{dv}{dt} = \frac{d^2x}{dt^2}\)입니다. 속력은 \(|v|\)입니다.</li>
+            <li><span class="tag">설명</span>삼각함수의 도함수로 \(v = 2\cos t\), \(a = -2\sin t\)를 얻습니다. 곧 <b>\(a = -x\)</b>입니다. 가속도는 늘 원점을 향하고 원점에서 멀수록 큽니다. 원점\((x = 0)\)을 지날 때 속력이 최대 2이고 가속도는 0입니다. 양 끝\((x = \pm 2)\)에서는 \(v = 0\)이고 \(|a|\)가 최대 2입니다. 또 \(v\)와 \(a\)의 부호가 같으면 속력이 커지고, 다르면 작아집니다.</li>
+            <li><span class="tag">연결</span>일반적으로 \(x = A \sin \omega t\)이면 \(a = -\omega^2x\)입니다. 용수철의 힘 \(F = -kx\)와 뉴턴의 운동 법칙 \(F = ma\)를 함께 쓰면 바로 이 꼴이 나옵니다. 위치를 두 번 미분하는 것만으로 진동의 원리를 읽어 낼 수 있습니다. 공기 저항이 있으면 \(e^{-bt}\)가 곱해진 감쇠 진동이 됩니다.</li>
+            <li><span class="tag">적용</span>\(t\)를 움직이며 속도가 0인 순간과 가속도가 0인 순간을 찾으세요. 두 순간에 점은 각각 어디에 있나요? 감쇠 진동에서는 끝점에 이를 때마다 무엇이 줄어드나요? 셋째 식에서 점이 방향을 바꾸는 시각을 찾고, 그 시각을 \(v = 0\)으로 계산해 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>가속도가 음수라고 느려지는 것이 아닙니다. 속도도 음수이면 음의 방향으로 점점 빨라집니다. 또 \(v = 0\)인 순간에도 \(a \ne 0\)이면 점은 멈춰 있지 않고 곧 반대 방향으로 움직입니다. '정지'는 순간의 속도가 0이라는 뜻일 뿐입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">수직선 위를 움직이는 점의 위치가 <i>x</i> = <i>t</i> + 2cos <i>t</i> (0 &lt; <i>t</i> &lt; 2π)일 때, 점이 처음으로 운동 방향을 바꾸는 시각은?</p>
+          <p class="q">수직선 위를 움직이는 점의 위치가 \(x = t + 2\cos t (0 &lt; t &lt; 2\pi)\)일 때, 점이 처음으로 운동 방향을 바꾸는 시각은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>π/6<span class="why"><b>맞습니다.</b> <i>v</i> = 1 − 2sin <i>t</i>는 sin <i>t</i> = 1/2인 <i>t</i> = π/6에서 0이 되고, 그 좌우에서 부호가 +에서 −로 바뀝니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>π/2<span class="why"><b>가속도가 0인 순간을 골랐습니다.</b> <i>a</i> = −2cos <i>t</i>가 0이 되는 이 순간은 속도가 가장 작은(−1) 때이지 방향이 바뀌는 때가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5π/6<span class="why"><b>두 번째로 방향을 바꾸는 시각입니다.</b> <i>v</i>는 π/6에서 먼저 0이 되어 음수가 되고, 5π/6에서 다시 양수로 돌아옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>π<span class="why"><b>위치의 cos 부분만 보았습니다.</b> 2cos <i>t</i>는 π에서 최소이지만, <i>t</i>가 더해져 있어 <i>x</i>는 그때 이미 다시 증가하고 있습니다(<i>v</i>(π) = 1).</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\pi}{6}\)<span class="why"><b>맞습니다.</b> \(v = 1 - 2\sin t\)는 \(\sin t = \frac{1}{2}\)인 \(t = \frac{\pi}{6}\)에서 0이 되고, 그 좌우에서 부호가 +에서 −로 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{\pi}{2}\)<span class="why"><b>가속도가 0인 순간을 골랐습니다.</b> \(a = -2\cos t\)가 0이 되는 이 순간은 속도가 가장 작은\((-1)\) 때이지 방향이 바뀌는 때가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{5\pi}{6}\)<span class="why"><b>두 번째로 방향을 바꾸는 시각입니다.</b> \(v\)는 \(\frac{\pi}{6}\)에서 먼저 0이 되어 음수가 되고, \(\frac{5\pi}{6}\)에서 다시 양수로 돌아옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\pi\)<span class="why"><b>위치의 \(\cos\) 부분만 보았습니다.</b> \(2\cos t\)는 \(\pi\)에서 최소이지만, \(t\)가 더해져 있어 \(x\)는 그때 이미 다시 증가하고 있습니다\((v(\pi) = 1)\).</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div></nav>
 
       <article class="card" id="card-calc2-plane-motion">
         <header class="card-head">
@@ -111,41 +113,42 @@
             <canvas aria-label="평면 위를 움직이는 점 P의 경로와 속도 벡터(주황), 가속도 벡터(파랑)"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-k="circle" aria-pressed="true">원 (2cos <i>t</i>, 2sin <i>t</i>)</button>
-                <button class="chip" type="button" data-k="ellipse">타원 (3cos <i>t</i>, 2sin <i>t</i>)</button>
-                <button class="chip" type="button" data-k="throw">던진 공 (2<i>t</i>, 4<i>t</i> − 2<i>t</i><sup>2</sup>)</button>
+                <button class="chip" type="button" data-k="circle" aria-pressed="true">원 \((2\cos t, 2\sin t)\)</button>
+                <button class="chip" type="button" data-k="ellipse">타원 \((3\cos t, 2\sin t)\)</button>
+                <button class="chip" type="button" data-k="throw">던진 공 \((2t, 4t - 2t^2)\)</button>
               </div>
-              <label class="mono">시각 <i>t</i> = <output class="t-out">0.5</output></label>
+              <label class="mono">시각 \(t\) = <output class="t-out">0.5</output></label>
               <input class="st" type="range" min="0" max="6.28" step="0.01" value="0.5" aria-label="시각 t">
               <dl class="nums n4">
-                <div><dt>속도 (dx/dt, dy/dt)</dt><dd class="n-v">—</dd></div>
+                <div><dt>속도 \((\frac{dx}{dt}, \frac{dy}{dt})\)</dt><dd class="n-v">—</dd></div>
                 <div><dt>속력</dt><dd class="n-s">—</dd></div>
-                <div><dt>가속도 (x″, y″)</dt><dd class="n-a">—</dd></div>
+                <div><dt>가속도 \((x'', y'')\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>가속도의 크기</dt><dd class="n-m">—</dd></div>
               </dl>
               <p class="fig-note">화살표는 벡터를 0.5배로 줄여 그렸습니다. 주황은 속도, 파랑은 가속도입니다. 속도는 늘 경로의 접선 방향입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점 P(2cos <i>t</i>, 2sin <i>t</i>)는 원 위를 일정한 빠르기로 돕니다. 빠르기가 변하지 않으니 가속도는 0일까요?</li>
-            <li><span class="tag">복원</span>매개변수로 나타낸 곡선 위의 점에서 (<i>dx</i>/<i>dt</i>, <i>dy</i>/<i>dt</i>)는 접선 방향을 가리킵니다. 직선 운동에서는 위치를 미분하면 속도, 한 번 더 미분하면 가속도입니다.</li>
-            <li><span class="tag">설명</span>평면 위를 움직이는 점 P(<i>x</i>(<i>t</i>), <i>y</i>(<i>t</i>))의 <em>속도</em>는 (<i>dx</i>/<i>dt</i>, <i>dy</i>/<i>dt</i>), <em>속력</em>은 √((<i>dx</i>/<i>dt</i>)<sup>2</sup> + (<i>dy</i>/<i>dt</i>)<sup>2</sup>), <em>가속도</em>는 (<i>d</i><sup>2</sup><i>x</i>/<i>dt</i><sup>2</sup>, <i>d</i><sup>2</sup><i>y</i>/<i>dt</i><sup>2</sup>)입니다. 원에서는 속도 (−2sin <i>t</i>, 2cos <i>t</i>), 속력 2로 일정합니다. 그러나 가속도는 (−2cos <i>t</i>, −2sin <i>t</i>)로 <b>P의 위치 벡터의 −1배</b>입니다. 크기 2로 늘 원의 중심을 향합니다. 속도의 크기는 그대로여도 방향이 바뀌므로 가속도가 있습니다.</li>
-            <li><span class="tag">연결</span>물리에서 등속 원운동의 가속도는 중심을 향하고 크기가 <i>v</i><sup>2</sup>/<i>r</i>입니다. 여기서는 2<sup>2</sup>/2 = 2로 맞습니다. 던진 공의 경로 (2<i>t</i>, 4<i>t</i> − 2<i>t</i><sup>2</sup>)는 가속도가 (0, −4)로 늘 일정한 아래 방향입니다. 중력만 받는 운동이 이런 모양입니다.</li>
-            <li><span class="tag">적용</span>원에서 <i>t</i>를 움직이며 속력이 정말 바뀌지 않는지, 파랑 화살표가 늘 중심을 향하는지 확인하세요. 타원에서는 속력이 가장 큰 곳과 가장 작은 곳을 찾으세요. 던진 공이 가장 높이 올라간 순간 속력은 0인가요?</li>
+            <li><span class="tag">질문</span>점 \(P(2\cos t, 2\sin t)\)는 원 위를 일정한 빠르기로 돕니다. 빠르기가 변하지 않으니 가속도는 0일까요?</li>
+            <li><span class="tag">복원</span>매개변수로 나타낸 곡선 위의 점에서 \((\frac{dx}{dt}, \frac{dy}{dt})\)는 접선 방향을 가리킵니다. 직선 운동에서는 위치를 미분하면 속도, 한 번 더 미분하면 가속도입니다.</li>
+            <li><span class="tag">설명</span>평면 위를 움직이는 점 \(P(x(t), y(t))\)의 <em>속도</em>는 \((\frac{dx}{dt}, \frac{dy}{dt})\), <em>속력</em>은 \(\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\), <em>가속도</em>는 \((\frac{d^2x}{dt^2}, \frac{d^2y}{dt^2})\)입니다. 원에서는 속도 \((-2\sin t, 2\cos t)\), 속력 2로 일정합니다. 그러나 가속도는 \((-2\cos t, -2\sin t)\)로 <b>\(P\)의 위치 벡터의 \(-1\)배</b>입니다. 크기 2로 늘 원의 중심을 향합니다. 속도의 크기는 그대로여도 방향이 바뀌므로 가속도가 있습니다.</li>
+            <li><span class="tag">연결</span>물리에서 등속 원운동의 가속도는 중심을 향하고 크기가 \(\frac{v^2}{r}\)입니다. 여기서는 \(\frac{2^2}{2} = 2\)로 맞습니다. 던진 공의 경로 \((2t, 4t - 2t^2)\)는 가속도가 \((0, -4)\)로 늘 일정한 아래 방향입니다. 중력만 받는 운동이 이런 모양입니다.</li>
+            <li><span class="tag">적용</span>원에서 \(t\)를 움직이며 속력이 정말 바뀌지 않는지, 파랑 화살표가 늘 중심을 향하는지 확인하세요. 타원에서는 속력이 가장 큰 곳과 가장 작은 곳을 찾으세요. 던진 공이 가장 높이 올라간 순간 속력은 0인가요?</li>
             <li class="warn"><span class="tag">판단</span>'속력이 일정하면 가속도가 0'은 직선 운동에서만 맞습니다. 평면에서는 방향만 바뀌어도 가속도가 생깁니다. 또 가속도의 방향은 속도의 방향과 다를 수 있습니다. 던진 공의 꼭대기에서는 세로 속도만 0이고 가로 속도 2가 남아 있어 속력은 2입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">평면 위를 움직이는 점 P의 시각 <i>t</i>에서의 위치가 (<i>e</i><sup><i>t</i></sup>, <i>e</i><sup>−<i>t</i></sup>)일 때, <i>t</i> = 0에서 P의 속력은?</p>
+          <p class="q">평면 위를 움직이는 점 \(P\)의 시각 \(t\)에서의 위치가 \((e^t, e^{-t})\)일 때, \(t = 0\)에서 \(P\)의 속력은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>√2<span class="why"><b>맞습니다.</b> 속도는 (<i>e</i><sup><i>t</i></sup>, −<i>e</i><sup>−<i>t</i></sup>)이고 <i>t</i> = 0에서 (1, −1)이므로 속력은 √(1 + 1) = √2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>두 성분을 더했습니다.</b> 1 + (−1) = 0이지만, 속력은 성분의 합이 아니라 속도 벡터의 크기입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>성분의 절댓값을 더했습니다.</b> |1| + |−1| = 2는 가로·세로로 따로 간 거리의 합입니다. 실제로 움직이는 방향은 대각선입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>한 성분만 보았습니다.</b> <i>dx</i>/<i>dt</i> = 1이지만 세로 방향으로도 같은 빠르기로 움직이고 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{2}\)<span class="why"><b>맞습니다.</b> 속도는 \((e^t, -e^{-t})\)이고 \(t = 0\)에서 \((1, -1)\)이므로 속력은 \(\sqrt{1 + 1} = \sqrt{2}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>두 성분을 더했습니다.</b> \(1 + (-1) = 0\)이지만, 속력은 성분의 합이 아니라 속도 벡터의 크기입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>성분의 절댓값을 더했습니다.</b> \(|1| + |-1| = 2\)는 가로·세로로 따로 간 거리의 합입니다. 실제로 움직이는 방향은 대각선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>한 성분만 보았습니다.</b> \(\frac{dx}{dt} = 1\)이지만 세로 방향으로도 같은 빠르기로 움직이고 있습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc2-2-11"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">21문항</span></a>
 
@@ -156,8 +159,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/line-motion.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>

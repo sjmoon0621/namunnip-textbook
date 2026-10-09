@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-ci-mean canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-stat-ci-mean .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
@@ -32,17 +33,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>모평균과 모비율의 추정</h1>
-    <p class="lead">표본을 조사해 얻은 <i>x̄</i> 하나로 '모평균은 이 값입니다'라고 단정하면 거의 틀립니다. 대신 '모평균은 이 구간 안에 있다고 95% 신뢰할 수 있습니다'처럼 범위로 말하면, 그 말을 얼마나 믿을 수 있는지도 수로 나타낼 수 있습니다. 이 절에서는 표본평균과 표본비율의 분포를 이용해 모평균과 모비율의 신뢰구간을 구하고, 신뢰도 95%가 정확히 무엇을 뜻하는지 확인합니다.</p>
+    <p class="lead">표본을 조사해 얻은 \(\bar{x}\) 하나로 '모평균은 이 값입니다'라고 단정하면 거의 틀립니다. 대신 '모평균은 이 구간 안에 있다고 95% 신뢰할 수 있습니다'처럼 범위로 말하면, 그 말을 얼마나 믿을 수 있는지도 수로 나타낼 수 있습니다. 이 절에서는 표본평균과 표본비율의 분포를 이용해 모평균과 모비율의 신뢰구간을 구하고, 신뢰도 95%가 정확히 무엇을 뜻하는지 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">표본평균의 분포</span><span class="p">표본비율의 분포</span><span class="p">표준정규분포표</span>
+      <a class="p p-card" href="../../c/stat/3-6.html#card-stat-xbar-dist" title="확률과 통계 3.6 · 표본을 크게 뽑으면 표본평균은 덜 흔들릴까?">표본평균의 분포</a><a class="p p-card" href="../../c/stat/3-6.html#card-stat-phat-dist" title="확률과 통계 3.6 · 100명에게 물으면 찬성 비율은 얼마나 흔들릴까?">표본비율의 분포</a><a class="p p-card" href="../../c/stat/3-4.html#card-stat-standardize" title="확률과 통계 3.4 · 정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?">표준정규분포표</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-ci-mean"><span class="mono">3.7.1</span>모평균의 추정</a></li>
         <li><a href="#card-stat-ci-prop"><span class="mono">3.7.2</span>모비율의 추정</a></li>
       </ol>
@@ -63,7 +64,7 @@
                 <button class="chip" type="button" data-k="1.96" aria-pressed="true">신뢰도 95%</button>
                 <button class="chip" type="button" data-k="2.58">신뢰도 99%</button>
               </div>
-              <label class="mono">표본의 크기 <i>n</i> = <output class="n-out">16</output></label>
+              <label class="mono">표본의 크기 \(n\) = <output class="n-out">16</output></label>
               <input class="n" type="range" min="4" max="100" step="1" value="16" aria-label="표본의 크기 n">
               <div class="go-row">
                 <button class="chip go-one" type="button">구간 1개</button>
@@ -72,33 +73,34 @@
               </div>
               <dl class="nums n4">
                 <div><dt>만든 구간 수</dt><dd class="n-c">—</dd></div>
-                <div><dt><i>m</i>을 포함한 비율</dt><dd class="n-r">—</dd></div>
-                <div><dt>구간의 길이 2<i>k</i>σ/√<i>n</i></dt><dd class="n-l">—</dd></div>
-                <div><dt>마지막 <i>x̄</i></dt><dd class="n-x">—</dd></div>
+                <div><dt>\(m\)을 포함한 비율</dt><dd class="n-r">—</dd></div>
+                <div><dt>구간의 길이 \(\frac{2k\sigma}{\sqrt{n}}\)</dt><dd class="n-l">—</dd></div>
+                <div><dt>마지막 \(\bar{x}\)</dt><dd class="n-x">—</dd></div>
               </dl>
-              <p class="fig-note">모평균 <i>m</i> = 300, 모표준편차 σ = 20인 정규분포 모집단(사과 무게, 단위 g, 모식)에서 표본을 뽑아 구간 <i>x̄</i> ± <i>k</i>σ/√<i>n</i>을 만듭니다. 실제 조사에서는 <i>m</i>을 모르지만 여기서는 확인을 위해 세로선으로 보여 줍니다. <i>m</i>을 포함하지 못한 구간은 주황색이고, 최근 40개만 그립니다.</p>
+              <p class="fig-note">모평균 \(m = 300\), 모표준편차 \(\sigma = 20\)인 정규분포 모집단(사과 무게, 단위 g, 모식)에서 표본을 뽑아 구간 \(\bar{x} \pm \frac{k\sigma}{\sqrt{n}}\)을 만듭니다. 실제 조사에서는 \(m\)을 모르지만 여기서는 확인을 위해 세로선으로 보여 줍니다. \(m\)을 포함하지 못한 구간은 주황색이고, 최근 40개만 그립니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사과 16개를 임의추출해 무게를 쟀더니 평균이 304 g이었습니다. 과수원 전체의 평균 무게 <i>m</i>이 304 g이라고 단정해도 될까요? 그렇지 않다면 무엇이라고 말해야 할까요?</li>
-            <li><span class="tag">복원</span>모집단이 N(<i>m</i>, σ<sup>2</sup>)을 따르면 크기가 <i>n</i>인 표본의 평균 <i>X̄</i>는 N(<i>m</i>, σ<sup>2</sup>/<i>n</i>)을 따릅니다. 표준정규분포에서 P(|<i>Z</i>| ≤ 1.96) = 0.95, P(|<i>Z</i>| ≤ 2.58) = 0.99입니다.</li>
-            <li><span class="tag">설명</span>표본에서 모집단의 값을 짐작하는 것을 <em>추정</em>이라고 합니다. <i>Z</i> = (<i>X̄</i> − <i>m</i>)/(σ/√<i>n</i>)이므로 P(|<i>X̄</i> − <i>m</i>| ≤ 1.96 · σ/√<i>n</i>) = 0.95입니다. 이 부등식을 <i>m</i>에 대해 풀고 <i>X̄</i>에 실제로 얻은 값 <i>x̄</i>를 넣으면 <b><i>x̄</i> − 1.96 · σ/√<i>n</i> ≤ <i>m</i> ≤ <i>x̄</i> + 1.96 · σ/√<i>n</i></b>입니다. 이것을 모평균 <i>m</i>에 대한 <em>신뢰도</em> 95%의 <em>신뢰구간</em>이라고 합니다. 신뢰도 99%이면 1.96 대신 2.58을 씁니다. 모표준편차 σ를 모르더라도 <i>n</i>이 충분히 크면 σ 대신 표본표준편차 <i>s</i>를 씁니다. 앞의 사과는 σ = 20이면 304 ± 1.96 × 5, 곧 294.2 ≤ <i>m</i> ≤ 313.8입니다.</li>
-            <li><span class="tag">연결</span>신뢰구간의 길이는 2<i>k</i> · σ/√<i>n</i>입니다. 신뢰도를 높이면 <i>k</i>가 커져 구간이 길어지고, 표본을 4배로 늘리면 길이가 절반이 됩니다. '더 확실하게'와 '더 좁게'를 함께 얻으려면 표본을 늘려야 합니다.</li>
-            <li><span class="tag">적용</span>신뢰도 95%로 '구간 20개'를 여러 번 눌러 <i>m</i>을 포함한 비율이 어느 값에 다가가는지 보세요. 99%로 바꾸면 그 비율과 구간의 길이가 어떻게 달라지나요? <i>n</i>을 16에서 64로 바꾸면 구간의 길이는 몇 배가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>한 번 만든 구간을 두고 '<i>m</i>이 이 구간에 있을 확률이 95%'라고 말하지 않습니다. <i>m</i>은 정해진 하나의 수라서 구간 안에 있거나 없거나 둘 중 하나입니다. 95%는 같은 방법으로 구간을 수없이 만들 때 <i>m</i>을 포함하는 구간의 비율, 곧 방법의 믿을 만한 정도입니다. 그림의 주황 구간처럼 <i>m</i>을 놓치는 구간도 반드시 생깁니다.</li>
+            <li><span class="tag">질문</span>사과 16개를 임의추출해 무게를 쟀더니 평균이 304 g이었습니다. 과수원 전체의 평균 무게 \(m\)이 304 g이라고 단정해도 될까요? 그렇지 않다면 무엇이라고 말해야 할까요?</li>
+            <li><span class="tag">복원</span>모집단이 \(N(m, \sigma^2)\)을 따르면 크기가 \(n\)인 표본의 평균 \(\bar{X}\)는 \(N(m, \frac{\sigma^2}{n})\)을 따릅니다. 표준정규분포에서 \(P(|Z| \le 1.96) = 0.95\), \(P(|Z| \le 2.58) = 0.99\)입니다.</li>
+            <li><span class="tag">설명</span>표본에서 모집단의 값을 짐작하는 것을 <em>추정</em>이라고 합니다. \(Z = \frac{\bar{X} - m}{\frac{\sigma}{\sqrt{n}}}\)이므로 \(P(|\bar{X} - m| \le 1.96 \cdot \frac{\sigma}{\sqrt{n}}) = 0.95\)입니다. 이 부등식을 \(m\)에 대해 풀고 \(\bar{X}\)에 실제로 얻은 값 \(\bar{x}\)를 넣으면 <b>\(\bar{x} - 1.96 \cdot \frac{\sigma}{\sqrt{n}} \le m \le \bar{x} + 1.96 \cdot \frac{\sigma}{\sqrt{n}}\)</b>입니다. 이것을 모평균 \(m\)에 대한 <em>신뢰도</em> 95%의 <em>신뢰구간</em>이라고 합니다. 신뢰도 99%이면 1.96 대신 2.58을 씁니다. 모표준편차 \(\sigma\)를 모르더라도 \(n\)이 충분히 크면 \(\sigma\) 대신 표본표준편차 \(s\)를 씁니다. 앞의 사과는 \(\sigma = 20\)이면 \(304 \pm 1.96 \times 5\), 곧 \(294.2 \le m \le 313.8\)입니다.</li>
+            <li><span class="tag">연결</span>신뢰구간의 길이는 \(2k \cdot \frac{\sigma}{\sqrt{n}}\)입니다. 신뢰도를 높이면 \(k\)가 커져 구간이 길어지고, 표본을 4배로 늘리면 길이가 절반이 됩니다. '더 확실하게'와 '더 좁게'를 함께 얻으려면 표본을 늘려야 합니다.</li>
+            <li><span class="tag">적용</span>신뢰도 95%로 '구간 20개'를 여러 번 눌러 \(m\)을 포함한 비율이 어느 값에 다가가는지 보세요. 99%로 바꾸면 그 비율과 구간의 길이가 어떻게 달라지나요? \(n\)을 16에서 64로 바꾸면 구간의 길이는 몇 배가 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>한 번 만든 구간을 두고 '\(m\)이 이 구간에 있을 확률이 95%'라고 말하지 않습니다. \(m\)은 정해진 하나의 수라서 구간 안에 있거나 없거나 둘 중 하나입니다. 95%는 같은 방법으로 구간을 수없이 만들 때 \(m\)을 포함하는 구간의 비율, 곧 방법의 믿을 만한 정도입니다. 그림의 주황 구간처럼 \(m\)을 놓치는 구간도 반드시 생깁니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">모표준편차가 8인 정규분포 모집단에서 크기가 64인 표본을 임의추출했더니 표본평균이 50이었습니다. 모평균 <i>m</i>에 대한 신뢰도 95%의 신뢰구간에 대하여 옳은 것은?</p>
+          <p class="q">모표준편차가 8인 정규분포 모집단에서 크기가 64인 표본을 임의추출했더니 표본평균이 50이었습니다. 모평균 \(m\)에 대한 신뢰도 95%의 신뢰구간에 대하여 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>m</i>이 48.04 이상 51.96 이하일 확률이 0.95이다.<span class="why"><b>흔한 오해입니다.</b> 구간의 계산은 맞지만 <i>m</i>은 변하지 않는 수입니다. 이 구간은 <i>m</i>을 포함하거나 포함하지 않거나 둘 중 하나입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>신뢰구간은 48.04 ≤ <i>m</i> ≤ 51.96이고, 같은 방법으로 만든 구간들의 약 95%가 <i>m</i>을 포함한다.<span class="why"><b>맞습니다.</b> σ/√<i>n</i> = 8/8 = 1이므로 50 ± 1.96입니다. 95%는 구간을 만드는 방법에 대한 말입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(m\)이 48.04 이상 51.96 이하일 확률이 0.95이다.<span class="why"><b>흔한 오해입니다.</b> 구간의 계산은 맞지만 \(m\)은 변하지 않는 수입니다. 이 구간은 \(m\)을 포함하거나 포함하지 않거나 둘 중 하나입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>신뢰구간은 \(48.04 \le m \le 51.96\)이고, 같은 방법으로 만든 구간들의 약 95%가 \(m\)을 포함한다.<span class="why"><b>맞습니다.</b> \(\frac{\sigma}{\sqrt{n}} = \frac{8}{8} = 1\)이므로 \(50 \pm 1.96\)입니다. 95%는 구간을 만드는 방법에 대한 말입니다.</span></span></button></li>
             <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>표본 64개 값 중 약 95%가 48.04와 51.96 사이에 있다.<span class="why"><b>개별 값과 평균을 섞었습니다.</b> 개별 값의 표준편차는 8이라 대부분 34~66 근처에 흩어집니다. 신뢰구간은 모평균에 대한 구간입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>신뢰도를 99%로 높이면 구간의 길이가 짧아진다.<span class="why"><b>반대입니다.</b> 99%에서는 2.58을 쓰므로 길이가 2 × 1.96 = 3.92에서 2 × 2.58 = 5.16으로 길어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>신뢰도를 99%로 높이면 구간의 길이가 짧아진다.<span class="why"><b>반대입니다.</b> 99%에서는 2.58을 쓰므로 길이가 \(2 \times 1.96 = 3.92\)에서 \(2 \times 2.58 = 5.16\)으로 길어집니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-6.html#card-stat-xbar-dist"><small class="mono">확률과 통계 3.6</small>표본을 크게 뽑으면 표본평균은 덜 흔들릴까?</a></div></nav>
 
       <article class="card" id="card-stat-ci-prop">
         <header class="card-head">
@@ -112,38 +114,39 @@
                 <button class="chip" type="button" data-k="1.96" aria-pressed="true">신뢰도 95%</button>
                 <button class="chip" type="button" data-k="2.58">신뢰도 99%</button>
               </div>
-              <label class="mono">표본의 크기 <i>n</i> = <output class="n-out">1000</output></label>
+              <label class="mono">표본의 크기 \(n\) = <output class="n-out">1000</output></label>
               <input class="n" type="range" min="100" max="4000" step="100" value="1000" aria-label="표본의 크기 n">
-              <label class="mono">찬성 응답 비율 <i>p̂</i> = <output class="ph-out">0.50</output></label>
+              <label class="mono">찬성 응답 비율 \(\hat{p}\) = <output class="ph-out">0.50</output></label>
               <input class="ph" type="range" min="0.05" max="0.95" step="0.01" value="0.5" aria-label="표본비율 p̂">
               <dl class="nums">
                 <div><dt>찬성 응답 수</dt><dd class="n-y">—</dd></div>
-                <div><dt>√(<i>p̂q̂</i>/<i>n</i>)</dt><dd class="n-s">—</dd></div>
+                <div><dt>\(\sqrt{\frac{\hat{p}\hat{q}}{n}}\)</dt><dd class="n-s">—</dd></div>
                 <div><dt>오차 한계</dt><dd class="n-e">—</dd></div>
               </dl>
-              <p class="fig-note">설문 결과는 슬라이더로 넣는 가상의 예입니다. 카드가 계산기처럼 신뢰구간 <i>p̂</i> ± <i>k</i>√(<i>p̂q̂</i>/<i>n</i>)을 계산합니다. 아래 그래프를 가로로 끌어 <i>n</i>을 바꿀 수도 있습니다.</p>
+              <p class="fig-note">설문 결과는 슬라이더로 넣는 가상의 예입니다. 카드가 계산기처럼 신뢰구간 \(\hat{p} \pm k\sqrt{\frac{\hat{p}\hat{q}}{n}}\)을 계산합니다. 아래 그래프를 가로로 끌어 \(n\)을 바꿀 수도 있습니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>여론조사 기사에는 흔히 '전국 성인 1000명 대상, 95% 신뢰수준에서 표본 오차 ±3.1%p'라는 문장이 붙습니다. 3.1은 어디서 나온 수이고, 이 문장은 무엇을 보장할까요?</li>
-            <li><span class="tag">복원</span><i>n</i>이 충분히 크면 표본비율 <i>p̂</i>는 근사적으로 N(<i>p</i>, <i>pq</i>/<i>n</i>)을 따르고, 표준정규분포에서 P(|<i>Z</i>| ≤ 1.96) = 0.95입니다.</li>
-            <li><span class="tag">설명</span>P(|<i>p̂</i> − <i>p</i>| ≤ 1.96√(<i>pq</i>/<i>n</i>)) ≈ 0.95입니다. 그런데 모비율 <i>p</i>를 모르므로, <i>n</i>이 충분히 클 때는 √(<i>pq</i>/<i>n</i>)의 <i>p</i>, <i>q</i> 자리에 표본비율 <i>p̂</i>와 <i>q̂</i> = 1 − <i>p̂</i>를 넣습니다. 그러면 모비율 <i>p</i>에 대한 신뢰도 95%의 신뢰구간은 <b><i>p̂</i> − 1.96√(<i>p̂q̂</i>/<i>n</i>) ≤ <i>p</i> ≤ <i>p̂</i> + 1.96√(<i>p̂q̂</i>/<i>n</i>)</b>이고, 신뢰도 99%이면 2.58을 씁니다. <i>p̂</i> = 0.5, <i>n</i> = 1000이면 1.96 × √(0.25/1000) ≈ 0.031이므로 '±3.1%p'가 나옵니다. 여론조사는 <i>p̂q̂</i>가 가장 큰 <i>p̂</i> = 0.5를 기준으로 오차를 밝힙니다.</li>
-            <li><span class="tag">연결</span>오차 한계는 √<i>n</i>에 반비례합니다. 오차를 절반으로 줄이려면 표본을 4배로 늘려야 하므로, 조사 비용과 정밀도를 함께 따져 표본의 크기를 정합니다. 모평균의 추정에서 σ/√<i>n</i>이 하던 역할을 여기서는 √(<i>p̂q̂</i>/<i>n</i>)이 맡습니다.</li>
-            <li><span class="tag">적용</span><i>n</i> = 1000, <i>p̂</i> = 0.50, 신뢰도 95%에서 오차 한계가 3.1%p인지 확인하세요. 아래 그래프를 끌어 오차 한계가 그 절반인 1.55%p 근처가 되는 <i>n</i>을 찾아 보세요. <i>n</i>은 몇 배가 되었나요? <i>p̂</i>를 0.10으로 바꾸면 오차 한계는 커지나요, 작아지나요?</li>
+            <li><span class="tag">복원</span>\(n\)이 충분히 크면 표본비율 \(\hat{p}\)는 근사적으로 \(N(p, \frac{pq}{n})\)을 따르고, 표준정규분포에서 \(P(|Z| \le 1.96) = 0.95\)입니다.</li>
+            <li><span class="tag">설명</span>\(P(|\hat{p} - p| \le 1.96\sqrt{\frac{pq}{n}}) \approx 0.95\)입니다. 그런데 모비율 \(p\)를 모르므로, \(n\)이 충분히 클 때는 \(\sqrt{\frac{pq}{n}}\)의 \(p, q\) 자리에 표본비율 \(\hat{p}\)와 \(\hat{q} = 1 - \hat{p}\)를 넣습니다. 그러면 모비율 \(p\)에 대한 신뢰도 95%의 신뢰구간은 <b>\(\hat{p} - 1.96\sqrt{\frac{\hat{p}\hat{q}}{n}} \le p \le \hat{p} + 1.96\sqrt{\frac{\hat{p}\hat{q}}{n}}\)</b>이고, 신뢰도 99%이면 2.58을 씁니다. \(\hat{p} = 0.5\), \(n = 1000\)이면 \(1.96 \times \sqrt{\frac{0.25}{1000}} \approx 0.031\)이므로 '±3.1%p'가 나옵니다. 여론조사는 \(\hat{p}\hat{q}\)가 가장 큰 \(\hat{p} = 0.5\)를 기준으로 오차를 밝힙니다.</li>
+            <li><span class="tag">연결</span>오차 한계는 \(\sqrt{n}\)에 반비례합니다. 오차를 절반으로 줄이려면 표본을 4배로 늘려야 하므로, 조사 비용과 정밀도를 함께 따져 표본의 크기를 정합니다. 모평균의 추정에서 \(\frac{\sigma}{\sqrt{n}}\)이 하던 역할을 여기서는 \(\sqrt{\frac{\hat{p}\hat{q}}{n}}\)이 맡습니다.</li>
+            <li><span class="tag">적용</span>\(n = 1000\), \(\hat{p} = 0.50\), 신뢰도 95%에서 오차 한계가 3.1%p인지 확인하세요. 아래 그래프를 끌어 오차 한계가 그 절반인 1.55%p 근처가 되는 \(n\)을 찾아 보세요. \(n\)은 몇 배가 되었나요? \(\hat{p}\)를 0.10으로 바꾸면 오차 한계는 커지나요, 작아지나요?</li>
             <li class="warn"><span class="tag">판단</span>두 후보의 지지율이 41%와 38%처럼 오차 범위 안에서 차이가 나면, 표본만으로 누가 앞선다고 단정하기 어렵습니다. 또 신뢰구간은 임의추출에서 생기는 우연한 오차만 반영합니다. 응답을 거부한 사람이 많거나 질문이 한쪽으로 유도되어 생기는 치우침은 표본을 아무리 늘려도 이 구간에 나타나지 않습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어느 지역 고등학생 400명을 임의추출해 조사했더니 80명이 매일 아침을 거른다고 답했습니다. 이 지역 고등학생 중 아침을 거르는 학생의 비율 <i>p</i>에 대한 신뢰도 95%의 신뢰구간은?</p>
+          <p class="q">어느 지역 고등학생 400명을 임의추출해 조사했더니 80명이 매일 아침을 거른다고 답했습니다. 이 지역 고등학생 중 아침을 거르는 학생의 비율 \(p\)에 대한 신뢰도 95%의 신뢰구간은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.1608 ≤ <i>p</i> ≤ 0.2392<span class="why"><b>맞습니다.</b> <i>p̂</i> = 80/400 = 0.2이고 √(0.2 × 0.8/400) = 0.02이므로 0.2 ± 1.96 × 0.02 = 0.2 ± 0.0392입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.1992 ≤ <i>p</i> ≤ 0.2008<span class="why"><b>제곱근을 빠뜨렸습니다.</b> 0.16/400 = 0.0004는 분산입니다. 표준편차는 √0.0004 = 0.02입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.1484 ≤ <i>p</i> ≤ 0.2516<span class="why"><b>신뢰도 99%의 구간입니다.</b> 2.58 × 0.02 = 0.0516을 썼습니다. 95%에서는 1.96을 씁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.1216 ≤ <i>p</i> ≤ 0.2784<span class="why"><b>구간의 길이를 오차 한계로 썼습니다.</b> 2 × 1.96 × 0.02 = 0.0784는 구간 전체의 길이이므로 <i>p̂</i>의 양쪽에 그 절반씩만 더하고 뺍니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(0.1608 \le p \le 0.2392\)<span class="why"><b>맞습니다.</b> \(\hat{p} = \frac{80}{400} = 0.2\)이고 \(\sqrt{0.2 \times \frac{0.8}{400}} = 0.02\)이므로 \(0.2 \pm 1.96 \times 0.02 = 0.2 \pm 0.0392\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0.1992 \le p \le 0.2008\)<span class="why"><b>제곱근을 빠뜨렸습니다.</b> \(\frac{0.16}{400} = 0.0004\)는 분산입니다. 표준편차는 \(\sqrt{0.0004} = 0.02\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(0.1484 \le p \le 0.2516\)<span class="why"><b>신뢰도 99%의 구간입니다.</b> \(2.58 \times 0.02 = 0.0516\)을 썼습니다. 95%에서는 1.96을 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(0.1216 \le p \le 0.2784\)<span class="why"><b>구간의 길이를 오차 한계로 썼습니다.</b> \(2 \times 1.96 \times 0.02 = 0.0784\)는 구간 전체의 길이이므로 \(\hat{p}\)의 양쪽에 그 절반씩만 더하고 뺍니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-6.html#card-stat-phat-dist"><small class="mono">확률과 통계 3.6</small>100명에게 물으면 찬성 비율은 얼마나 흔들릴까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">29문항</span></a>
 
@@ -154,8 +157,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/ci-mean.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>

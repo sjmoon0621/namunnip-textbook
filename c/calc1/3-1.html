@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-antideriv-family .nums dd { font-size: 14px; overflow-wrap: anywhere; }
     #card-calc1-slope-field canvas { aspect-ratio: 6 / 5; }
@@ -35,14 +36,14 @@
     <p class="lead">지금까지는 함수가 주어지면 도함수를 구했습니다. 이번에는 거꾸로, 도함수를 알 때 원래 함수를 찾습니다. 답이 하나로 정해지지 않는 까닭과, 조건 하나로 답을 고르는 방법을 살펴봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">도함수</span><span class="p">다항함수의 미분</span><span class="p">접선의 기울기</span><span class="p">평균값 정리</span>
+      <a class="p p-card" href="../../c/calc1/3-1.html#card-calc1-antideriv-family" title="미적분Ⅰ 3.1 · 도함수가 같은 함수는 몇 개일까?">도함수</a><a class="p p-card" href="../../c/calc1/2-4.html#card-calc1-sum-rule" title="미적분Ⅰ 2.4 · 두 함수를 더하면 기울기도 더해질까?">다항함수의 미분</a><a class="p p-card" href="../../c/calc1/2-3.html#card-calc1-deriv-graph" title="미적분Ⅰ 2.3 · 접선의 기울기를 모으면 어떤 그래프가 될까?">접선의 기울기</a><a class="p p-card" href="../../c/calc1/2-6.html#card-calc1-mvt" title="미적분Ⅰ 2.6 · 평균 기울기와 같은 순간 기울기는 어디에 있을까?">평균값 정리</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-calc1-antideriv-family"><span class="mono">3.1.1</span>부정적분과 적분상수</a></li>
         <li><a href="#card-calc1-slope-field"><span class="mono">3.1.2</span>조건으로 적분상수 정하기</a></li>
       </ol>
@@ -60,42 +61,43 @@
             <canvas class="cv-wide" aria-label="도함수가 같은 곡선들이 위아래로 나란히 놓인 그림과, 같은 x에서 그은 평행한 접선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-p="0,2" aria-pressed="true"><i>f</i>(<i>x</i>) = 2<i>x</i></button>
-                <button class="chip" type="button" data-p="-3,0,3"><i>f</i>(<i>x</i>) = 3<i>x</i><sup>2</sup> − 3</button>
-                <button class="chip" type="button" data-p="-1,1"><i>f</i>(<i>x</i>) = <i>x</i> − 1</button>
+                <button class="chip" type="button" data-p="0,2" aria-pressed="true">\(f(x) = 2x\)</button>
+                <button class="chip" type="button" data-p="-3,0,3">\(f(x) = 3x^2 - 3\)</button>
+                <button class="chip" type="button" data-p="-1,1">\(f(x) = x - 1\)</button>
               </div>
-              <label class="mono">적분상수 <i>C</i> = <output class="c-out">0</output></label>
+              <label class="mono">적분상수 \(C\) = <output class="c-out">0</output></label>
               <input class="c" type="range" min="-4" max="4" step="0.5" value="0" aria-label="적분상수 C">
-              <label class="mono">접선을 그을 곳 <i>x</i> = <output class="x0-out">1</output></label>
+              <label class="mono">접선을 그을 곳 \(x\) = <output class="x0-out">1</output></label>
               <input class="x0" type="range" min="-2.5" max="2.5" step="0.1" value="1" aria-label="접선을 그을 x 값">
               <dl class="nums">
-                <div><dt>초록 곡선 F(x) + C</dt><dd class="n-F">—</dd></div>
+                <div><dt>초록 곡선 \(F(x) + C\)</dt><dd class="n-F">—</dd></div>
                 <div><dt>초록 곡선의 접선 기울기</dt><dd class="n-s">—</dd></div>
-                <div><dt>f(x)의 값</dt><dd class="n-f">—</dd></div>
+                <div><dt>\(f(x)\)의 값</dt><dd class="n-f">—</dd></div>
               </dl>
-              <p class="fig-note">초록 점을 끌면 곡선이 위아래로, 접점이 좌우로 움직입니다. 회색 곡선은 <i>C</i>만 다른 다른 부정적분들입니다.</p>
+              <p class="fig-note">초록 점을 끌면 곡선이 위아래로, 접점이 좌우로 움직입니다. 회색 곡선은 \(C\)만 다른 다른 부정적분들입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>미분해서 2<i>x</i>가 되는 함수를 하나 찾으면 <i>x</i><sup>2</sup>입니다. 그런데 미분해서 2<i>x</i>가 되는 함수가 이것 하나뿐일까요?</li>
-            <li><span class="tag">복원</span>(<i>x</i><sup>2</sup>)′ = 2<i>x</i>이고, 상수함수의 도함수는 0입니다. 미분계수 <i>f</i>′(<i>a</i>)는 <i>x</i> = <i>a</i>에서 그은 접선의 기울기입니다. 또 평균값 정리에서, 어떤 구간에서 도함수가 늘 0인 함수는 그 구간에서 상수함수입니다.</li>
-            <li><span class="tag">설명</span>함수 F(<i>x</i>)의 도함수가 <i>f</i>(<i>x</i>)일 때, 곧 F′(<i>x</i>) = <i>f</i>(<i>x</i>)일 때 F(<i>x</i>)를 <i>f</i>(<i>x</i>)의 <em>부정적분</em>이라 합니다. 부정적분은 하나가 아닙니다. G(<i>x</i>)도 <i>f</i>(<i>x</i>)의 부정적분이면 (G − F)′ = <i>f</i> − <i>f</i> = 0이므로 G(<i>x</i>) − F(<i>x</i>)는 상수입니다. 그래서 부정적분 전체를 <b>∫<i>f</i>(<i>x</i>)<i>dx</i> = F(<i>x</i>) + <i>C</i></b>로 씁니다. <i>C</i>를 <em>적분상수</em>, <i>f</i>(<i>x</i>)를 피적분함수라 하고, 부정적분을 구하는 것을 '<i>f</i>(<i>x</i>)를 <i>x</i>에 대하여 적분한다'고 합니다. 부정적분과 미분은 서로 거꾸로 가는 계산이므로 (<i>d</i>/<i>dx</i>)∫<i>f</i>(<i>x</i>)<i>dx</i> = <i>f</i>(<i>x</i>)이고, ∫{(<i>d</i>/<i>dx</i>)<i>f</i>(<i>x</i>)}<i>dx</i> = <i>f</i>(<i>x</i>) + <i>C</i>입니다.</li>
-            <li><span class="tag">연결</span>그림에서 <i>C</i>를 바꾸면 곡선이 위아래로만 평행이동합니다. 평행이동해도 같은 <i>x</i>에서 접선 기울기는 그대로이므로 도함수가 같습니다. 속도를 알고 위치를 구할 때도 같은 일이 생깁니다. 속도만으로는 출발 위치를 알 수 없고, 출발 위치가 <i>C</i> 역할을 합니다.</li>
-            <li><span class="tag">적용</span><i>C</i>를 바꾸어도 '초록 곡선의 접선 기울기'가 변하지 않는지 확인하세요. 그 값이 언제나 <i>f</i>(<i>x</i>)와 같은지도 <i>x</i>를 움직여 보세요. <i>f</i>(<i>x</i>) = 3<i>x</i><sup>2</sup> − 3에서 접선이 모두 가로로 눕는 <i>x</i>는 어디이고, 그곳에서 <i>f</i>(<i>x</i>)는 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>"∫2<i>x</i> <i>dx</i> = <i>x</i><sup>2</sup>"처럼 적분상수를 빼고 쓰면 부정적분 가운데 하나만 적은 것입니다. 하나의 함수가 아니라 함수의 모임을 나타낸다는 뜻에서 + <i>C</i>를 꼭 붙입니다. 또 미분한 뒤 적분하면 원래 함수로 돌아오지 않고 상수만큼의 차이가 남습니다. 미분하면서 상수항의 정보가 사라지기 때문입니다.</li>
+            <li><span class="tag">질문</span>미분해서 \(2x\)가 되는 함수를 하나 찾으면 \(x^2\)입니다. 그런데 미분해서 \(2x\)가 되는 함수가 이것 하나뿐일까요?</li>
+            <li><span class="tag">복원</span>\((x^2)' = 2x\)이고, 상수함수의 도함수는 0입니다. 미분계수 \(f'(a)\)는 \(x = a\)에서 그은 접선의 기울기입니다. 또 평균값 정리에서, 어떤 구간에서 도함수가 늘 0인 함수는 그 구간에서 상수함수입니다.</li>
+            <li><span class="tag">설명</span>함수 \(F(x)\)의 도함수가 \(f(x)\)일 때, 곧 \(F'(x) = f(x)\)일 때 \(F(x)\)를 \(f(x)\)의 <em>부정적분</em>이라 합니다. 부정적분은 하나가 아닙니다. \(G(x)\)도 \(f(x)\)의 부정적분이면 \((G - F)' = f - f = 0\)이므로 \(G(x) - F(x)\)는 상수입니다. 그래서 부정적분 전체를 <b>\(\int f(x)\,dx = F(x) + C\)</b>로 씁니다. \(C\)를 <em>적분상수</em>, \(f(x)\)를 피적분함수라 하고, 부정적분을 구하는 것을 '\(f(x)\)를 \(x\)에 대하여 적분한다'고 합니다. 부정적분과 미분은 서로 거꾸로 가는 계산이므로 \((\frac{d}{dx})\int f(x)\,dx = f(x)\)이고, \(\int\{(\frac{d}{dx})f(x)\}\,dx = f(x) + C\)입니다.</li>
+            <li><span class="tag">연결</span>그림에서 \(C\)를 바꾸면 곡선이 위아래로만 평행이동합니다. 평행이동해도 같은 \(x\)에서 접선 기울기는 그대로이므로 도함수가 같습니다. 속도를 알고 위치를 구할 때도 같은 일이 생깁니다. 속도만으로는 출발 위치를 알 수 없고, 출발 위치가 \(C\) 역할을 합니다.</li>
+            <li><span class="tag">적용</span>\(C\)를 바꾸어도 '초록 곡선의 접선 기울기'가 변하지 않는지 확인하세요. 그 값이 언제나 \(f(x)\)와 같은지도 \(x\)를 움직여 보세요. \(f(x) = 3x^2 - 3\)에서 접선이 모두 가로로 눕는 \(x\)는 어디이고, 그곳에서 \(f(x)\)는 얼마인가요?</li>
+            <li class="warn"><span class="tag">판단</span>"\(\int 2x\,dx = x^2\)"처럼 적분상수를 빼고 쓰면 부정적분 가운데 하나만 적은 것입니다. 하나의 함수가 아니라 함수의 모임을 나타낸다는 뜻에서 \(+ C\)를 꼭 붙입니다. 또 미분한 뒤 적분하면 원래 함수로 돌아오지 않고 상수만큼의 차이가 남습니다. 미분하면서 상수항의 정보가 사라지기 때문입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">다음 중 <i>f</i>(<i>x</i>) = 3<i>x</i><sup>2</sup> + 2의 부정적분이 <b>아닌</b> 것은?</p>
+          <p class="q">다음 중 \(f(x) = 3x^2 + 2\)의 부정적분이 <b>아닌</b> 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>x</i><sup>3</sup> + 2<i>x</i> + 7<span class="why"><b>부정적분입니다.</b> 미분하면 3<i>x</i><sup>2</sup> + 2입니다. 상수 7은 미분하면 0이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>x</i><sup>3</sup> + 2<i>x</i> − √2<span class="why"><b>부정적분입니다.</b> −√2도 상수이므로 적분상수 자리에 올 수 있습니다. 적분상수가 정수일 필요는 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span><i>x</i><sup>3</sup> + 2<i>x</i><sup>2</sup><span class="why"><b>맞습니다.</b> 미분하면 3<i>x</i><sup>2</sup> + 4<i>x</i>로 <i>f</i>(<i>x</i>)와 다릅니다. 상수항 2를 적분하면 2<i>x</i>이지 2<i>x</i><sup>2</sup>이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>x</i>(<i>x</i><sup>2</sup> + 2)<span class="why"><b>부정적분입니다.</b> 전개하면 <i>x</i><sup>3</sup> + 2<i>x</i>이고, 적분상수가 0인 경우입니다. 모양이 달라 보여도 미분해서 확인해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(x^3 + 2x + 7\)<span class="why"><b>부정적분입니다.</b> 미분하면 \(3x^2 + 2\)입니다. 상수 7은 미분하면 0이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x^3 + 2x - \sqrt{2}\)<span class="why"><b>부정적분입니다.</b> \(-\sqrt{2}\)도 상수이므로 적분상수 자리에 올 수 있습니다. 적분상수가 정수일 필요는 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(x^3 + 2x^2\)<span class="why"><b>맞습니다.</b> 미분하면 \(3x^2 + 4x\)로 \(f(x)\)와 다릅니다. 상수항 2를 적분하면 \(2x\)이지 \(2x^2\)이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x(x^2 + 2)\)<span class="why"><b>부정적분입니다.</b> 전개하면 \(x^3 + 2x\)이고, 적분상수가 0인 경우입니다. 모양이 달라 보여도 미분해서 확인해야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a></div></nav>
 
       <article class="card" id="card-calc1-slope-field">
         <header class="card-head">
@@ -106,42 +108,43 @@
             <canvas aria-label="각 점에서 기울기 f(x)를 짧은 선분으로 그린 기울기장과, 끌어 옮기는 점을 지나는 부정적분 곡선"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip" type="button" data-p="0,2" aria-pressed="true">F′(<i>x</i>) = 2<i>x</i></button>
-                <button class="chip" type="button" data-p="1,-1">F′(<i>x</i>) = 1 − <i>x</i></button>
-                <button class="chip" type="button" data-p="-1,0,1">F′(<i>x</i>) = <i>x</i><sup>2</sup> − 1</button>
+                <button class="chip" type="button" data-p="0,2" aria-pressed="true">\(F'(x) = 2x\)</button>
+                <button class="chip" type="button" data-p="1,-1">\(F'(x) = 1 - x\)</button>
+                <button class="chip" type="button" data-p="-1,0,1">\(F'(x) = x^2 - 1\)</button>
               </div>
-              <label class="mono">지나는 점의 <i>x</i> = <output class="px-out">1</output></label>
+              <label class="mono">지나는 점의 \(x\) = <output class="px-out">1</output></label>
               <input class="px" type="range" min="-2.5" max="2.5" step="0.5" value="1" aria-label="지나는 점의 x좌표">
-              <label class="mono">지나는 점의 <i>y</i> = <output class="py-out">3</output></label>
+              <label class="mono">지나는 점의 \(y\) = <output class="py-out">3</output></label>
               <input class="py" type="range" min="-4.5" max="4.5" step="0.5" value="3" aria-label="지나는 점의 y좌표">
               <dl class="nums">
                 <div><dt>조건</dt><dd class="n-p">—</dd></div>
-                <div><dt>정해진 C</dt><dd class="n-c">—</dd></div>
-                <div><dt>구한 함수 F(x)</dt><dd class="n-F">—</dd></div>
+                <div><dt>정해진 \(C\)</dt><dd class="n-c">—</dd></div>
+                <div><dt>구한 함수 \(F(x)\)</dt><dd class="n-F">—</dd></div>
               </dl>
-              <p class="fig-note">짧은 선분은 그 자리에서 곡선이 가져야 할 기울기 F′(<i>x</i>)입니다. 주황 점을 끌어 옮겨 보세요.</p>
+              <p class="fig-note">짧은 선분은 그 자리에서 곡선이 가져야 할 기울기 \(F'(x)\)입니다. 주황 점을 끌어 옮겨 보세요.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>F′(<i>x</i>) = 2<i>x</i>를 만족하는 함수는 <i>x</i><sup>2</sup> + <i>C</i> 꼴로 끝없이 많습니다. 그 가운데 점 (1, 3)을 지나는 것은 몇 개일까요?</li>
-            <li><span class="tag">복원</span>F′(<i>x</i>) = <i>f</i>(<i>x</i>)인 F(<i>x</i>)가 <i>f</i>(<i>x</i>)의 부정적분이고, 모든 부정적분은 ∫<i>f</i>(<i>x</i>)<i>dx</i> = F(<i>x</i>) + <i>C</i>처럼 상수만큼씩 다릅니다.</li>
-            <li><span class="tag">설명</span>각 점 (<i>x</i>, <i>y</i>)에 기울기 <i>f</i>(<i>x</i>)인 짧은 선분을 그리면 <em>기울기장</em>이 됩니다. 부정적분의 그래프는 이 선분들을 따라 흐르는 곡선입니다. 기울기가 <i>x</i>에만 달려 있으므로 같은 세로줄의 선분은 모두 평행하고, 곡선 하나를 위아래로 옮기면 다른 곡선이 됩니다. 한 점 (<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)을 지나야 한다는 조건을 주면 F(<i>x</i><sub>0</sub>) + <i>C</i> = <i>y</i><sub>0</sub>에서 <b><i>C</i> = <i>y</i><sub>0</sub> − F(<i>x</i><sub>0</sub>)</b>로 하나가 정해집니다. 예를 들어 F′(<i>x</i>) = 2<i>x</i>, F(1) = 3이면 1 + <i>C</i> = 3에서 <i>C</i> = 2, 곧 F(<i>x</i>) = <i>x</i><sup>2</sup> + 2입니다.</li>
+            <li><span class="tag">질문</span>\(F'(x) = 2x\)를 만족하는 함수는 \(x^2 + C\) 꼴로 끝없이 많습니다. 그 가운데 점 (1, 3)을 지나는 것은 몇 개일까요?</li>
+            <li><span class="tag">복원</span>\(F'(x) = f(x)\)인 \(F(x)\)가 \(f(x)\)의 부정적분이고, 모든 부정적분은 \(\int f(x)\,dx = F(x) + C\)처럼 상수만큼씩 다릅니다.</li>
+            <li><span class="tag">설명</span>각 점 \((x, y)\)에 기울기 \(f(x)\)인 짧은 선분을 그리면 <em>기울기장</em>이 됩니다. 부정적분의 그래프는 이 선분들을 따라 흐르는 곡선입니다. 기울기가 \(x\)에만 달려 있으므로 같은 세로줄의 선분은 모두 평행하고, 곡선 하나를 위아래로 옮기면 다른 곡선이 됩니다. 한 점 \((x_0, y_0)\)을 지나야 한다는 조건을 주면 \(F(x_0) + C = y_0\)에서 <b>\(C = y_0 - F(x_0)\)</b>로 하나가 정해집니다. 예를 들어 \(F'(x) = 2x, F(1) = 3\)이면 \(1 + C = 3\)에서 \(C = 2\), 곧 \(F(x) = x^2 + 2\)입니다.</li>
             <li><span class="tag">연결</span>물체의 속도를 알면 위치 함수를 부정적분으로 구할 수 있고, 처음 위치 하나가 적분상수를 정합니다. 기울기장은 나중에 미분방정식을 풀 때 그림으로 답의 모양을 미리 보는 도구로도 쓰입니다.</li>
-            <li><span class="tag">적용</span>점을 같은 세로줄에서 위아래로만 옮기면 곡선의 모양이 바뀌나요, 위치만 바뀌나요? F′(<i>x</i>) = <i>x</i><sup>2</sup> − 1에서 점 (0, 0)을 지나는 곡선의 <i>C</i>는 얼마이고, 곡선 위의 어느 점에서 선분이 가로로 눕나요?</li>
-            <li class="warn"><span class="tag">판단</span>조건을 쓸 때 F′(<i>x</i><sub>0</sub>)에 값을 넣는 실수가 흔합니다. '점 (1, 3)을 지난다'는 F(1) = 3이라는 함수값 조건이고, F′(1)은 그 점에서의 기울기입니다. 기울기 조건으로는 <i>C</i>가 정해지지 않습니다. 모든 부정적분이 같은 <i>x</i>에서 같은 기울기를 가지기 때문입니다.</li>
+            <li><span class="tag">적용</span>점을 같은 세로줄에서 위아래로만 옮기면 곡선의 모양이 바뀌나요, 위치만 바뀌나요? \(F'(x) = x^2 - 1\)에서 점 (0, 0)을 지나는 곡선의 \(C\)는 얼마이고, 곡선 위의 어느 점에서 선분이 가로로 눕나요?</li>
+            <li class="warn"><span class="tag">판단</span>조건을 쓸 때 \(F'(x_0)\)에 값을 넣는 실수가 흔합니다. '점 (1, 3)을 지난다'는 \(F(1) = 3\)이라는 함수값 조건이고, \(F'(1)\)은 그 점에서의 기울기입니다. 기울기 조건으로는 \(C\)가 정해지지 않습니다. 모든 부정적분이 같은 \(x\)에서 같은 기울기를 가지기 때문입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>f</i>′(<i>x</i>) = 2<i>x</i> − 4이고 <i>f</i>(1) = 0일 때, <i>f</i>(2)의 값은?</p>
+          <p class="q">\(f'(x) = 2x - 4\)이고 \(f(1) = 0\)일 때, \(f(2)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−1<span class="why"><b>맞습니다.</b> <i>f</i>(<i>x</i>) = <i>x</i><sup>2</sup> − 4<i>x</i> + <i>C</i>이고 <i>f</i>(1) = 1 − 4 + <i>C</i> = 0에서 <i>C</i> = 3입니다. <i>f</i>(2) = 4 − 8 + 3 = −1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−4<span class="why"><b>적분상수를 0으로 두었습니다.</b> <i>f</i>(1) = 0이라는 조건으로 <i>C</i>를 먼저 정해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−7<span class="why"><b><i>C</i>의 부호를 반대로 구했습니다.</b> −3 + <i>C</i> = 0이므로 <i>C</i> = 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b><i>f</i>′(2)를 계산했습니다.</b> <i>x</i> = 2에서 기울기가 0일 뿐, 함숫값은 따로 구해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1\)<span class="why"><b>맞습니다.</b> \(f(x) = x^2 - 4x + C\)이고 \(f(1) = 1 - 4 + C = 0\)에서 \(C = 3\)입니다. \(f(2) = 4 - 8 + 3 = -1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-4\)<span class="why"><b>적분상수를 0으로 두었습니다.</b> \(f(1) = 0\)이라는 조건으로 \(C\)를 먼저 정해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-7\)<span class="why"><b>\(C\)의 부호를 반대로 구했습니다.</b> \(-3 + C = 0\)이므로 \(C = 3\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(f'(2)\)를 계산했습니다.</b> \(x = 2\)에서 기울기가 0일 뿐, 함숫값은 따로 구해야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=calc1-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">7문항</span></a>
 
@@ -152,8 +155,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/antideriv-family.js"></script>

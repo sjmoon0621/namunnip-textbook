@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-discriminant .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; min-height: 3.4em; }
     #card-cm1-discriminant .nums dd { overflow-wrap: anywhere; }
@@ -33,17 +34,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>이차방정식의 판별식</h1>
-    <p class="lead">근의 공식에서 √ 안의 값이 음수가 되면 실수 범위에서는 근이 없습니다. 하지만 복소수까지 수를 넓히면 그 이차방정식도 근을 갖습니다. 이 절에서는 √ 안의 값 <i>b</i><sup>2</sup> − 4<i>ac</i> 하나로 근이 실근인지 허근인지, 서로 다른지 같은지를 판별하고, 계수를 바꿀 때 두 실근이 만나 허근으로 갈라지는 모습을 봅니다.</p>
+    <p class="lead">근의 공식에서 √ 안의 값이 음수가 되면 실수 범위에서는 근이 없습니다. 하지만 복소수까지 수를 넓히면 그 이차방정식도 근을 갖습니다. 이 절에서는 √ 안의 값 \(b^2 - 4ac\) 하나로 근이 실근인지 허근인지, 서로 다른지 같은지를 판별하고, 계수를 바꿀 때 두 실근이 만나 허근으로 갈라지는 모습을 봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">근의 공식과 완전제곱식</span><span class="p">복소수와 허수단위</span><span class="p">켤레복소수</span>
+      <a class="p p-card" href="../../c/cm1/2-2.html#card-cm1-discriminant" title="공통수학1 2.2 · 근의 공식의 √ 안이 음수이면 근이 없는 걸까?">근의 공식과 완전제곱식</a><a class="p p-card" href="../../c/cm1/2-1.html#card-cm1-imag-unit" title="공통수학1 2.1 · 제곱해서 -1이 되는 수에 i를 계속 곱하면 어디로 갈까?">복소수와 허수단위</a><a class="p p-card" href="../../c/cm1/2-1.html#card-cm1-complex-arith" title="공통수학1 2.1 · 복소수로 나눗셈은 어떻게 할까?">켤레복소수</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-cm1-discriminant"><span class="mono">2.2.1</span>판별식</a></li>
         <li><a href="#card-cm1-root-path"><span class="mono">2.2.2</span>실근에서 허근으로</a></li>
       </ol>
@@ -61,44 +62,45 @@
             <canvas class="cv-wide" aria-label="이차함수 y = ax² + bx + c의 그래프. 실근은 x축 위의 점으로 표시"></canvas>
             <div class="ctl">
               <div class="presets ex">
-                <button class="chip" type="button" data-p="1,-2,-3" aria-pressed="true"><i>x</i><sup>2</sup> − 2<i>x</i> − 3</button>
-                <button class="chip" type="button" data-p="1,-2,1"><i>x</i><sup>2</sup> − 2<i>x</i> + 1</button>
-                <button class="chip" type="button" data-p="1,-2,5"><i>x</i><sup>2</sup> − 2<i>x</i> + 5</button>
+                <button class="chip" type="button" data-p="1,-2,-3" aria-pressed="true">\(x^2 - 2x - 3\)</button>
+                <button class="chip" type="button" data-p="1,-2,1">\(x^2 - 2x + 1\)</button>
+                <button class="chip" type="button" data-p="1,-2,5">\(x^2 - 2x + 5\)</button>
               </div>
               <div class="ctl-row">
-                <div><label class="mono"><i>a</i> = <output class="a-out">1</output></label><input class="a" type="range" min="-3" max="3" step="0.5" value="1" aria-label="이차항의 계수 a"></div>
-                <div><label class="mono"><i>b</i> = <output class="b-out">-2</output></label><input class="b" type="range" min="-6" max="6" step="0.5" value="-2" aria-label="일차항의 계수 b"></div>
-                <div><label class="mono"><i>c</i> = <output class="c-out">-3</output></label><input class="c" type="range" min="-6" max="6" step="0.5" value="-3" aria-label="상수항 c"></div>
+                <div><label class="mono">\(a\) = <output class="a-out">1</output></label><input class="a" type="range" min="-3" max="3" step="0.5" value="1" aria-label="이차항의 계수 a"></div>
+                <div><label class="mono">\(b\) = <output class="b-out">\(-2\)</output></label><input class="b" type="range" min="-6" max="6" step="0.5" value="-2" aria-label="일차항의 계수 b"></div>
+                <div><label class="mono">\(c\) = <output class="c-out">\(-3\)</output></label><input class="c" type="range" min="-6" max="6" step="0.5" value="-3" aria-label="상수항 c"></div>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>판별식 D = <i>b</i><sup>2</sup> − 4<i>ac</i></dt><dd class="n-d">—</dd></div>
+                <div><dt>판별식 \(D = b^2 - 4ac\)</dt><dd class="n-d">—</dd></div>
                 <div><dt>근의 종류</dt><dd class="n-k">—</dd></div>
                 <div><dt>근</dt><dd class="n-r">—</dd></div>
               </dl>
-              <p class="fig-note">그래프는 <i>y</i> = <i>ax</i><sup>2</sup> + <i>bx</i> + <i>c</i>입니다. 실근은 그래프가 <i>x</i>축과 만나는 점으로 보이지만, 허근은 그래프에 나타나지 않습니다.</p>
+              <p class="fig-note">그래프는 \(y = ax^2 + bx + c\)입니다. 실근은 그래프가 \(x\)축과 만나는 점으로 보이지만, 허근은 그래프에 나타나지 않습니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>x</i><sup>2</sup> − 2<i>x</i> + 5 = 0을 근의 공식에 넣으면 <i>x</i> = (2 ± √−16)/2가 됩니다. √ 안이 음수이면 이 방정식은 근이 없다고 해야 할까요?</li>
-            <li><span class="tag">복원</span><i>ax</i><sup>2</sup> + <i>bx</i> + <i>c</i> = 0(<i>a</i> ≠ 0)을 완전제곱식으로 고치면 (<i>x</i> + <i>b</i>/2<i>a</i>)<sup>2</sup> = (<i>b</i><sup>2</sup> − 4<i>ac</i>)/4<i>a</i><sup>2</sup>이고, 여기서 근의 공식 <i>x</i> = (−<i>b</i> ± √(<i>b</i><sup>2</sup> − 4<i>ac</i>))/2<i>a</i>가 나옵니다. 음수 −<i>k</i>의 제곱근은 ±√<i>k</i> <i>i</i>입니다.</li>
-            <li><span class="tag">설명</span>복소수 범위에서는 √−16 = 4<i>i</i>이므로 <i>x</i> = 1 ± 2<i>i</i>입니다. 실수인 근을 <em>실근</em>, 허수인 근을 <em>허근</em>이라 합니다. 근이 어떤 수인지는 √ 안의 값 D = <i>b</i><sup>2</sup> − 4<i>ac</i>가 정하므로 이것을 <em>판별식</em>이라 합니다. 계수가 실수일 때 D &gt; 0이면 서로 다른 두 실근, D = 0이면 중근(서로 같은 두 실근), D &lt; 0이면 서로 다른 두 허근을 가집니다. <i>b</i> = 2<i>b</i>′처럼 일차항의 계수가 짝수이면 D/4 = <i>b</i>′<sup>2</sup> − <i>ac</i>로 계산해도 부호가 같습니다.</li>
-            <li><span class="tag">연결</span>어떤 경우든 근의 공식으로 근이 나오므로, 계수가 실수인 이차방정식은 복소수 범위에서 항상 근을 가집니다(중근은 두 번 셉니다). D &lt; 0일 때 두 허근 <i>p</i> + <i>qi</i>, <i>p</i> − <i>qi</i>는 서로 켤레복소수입니다. D의 부호는 그래프가 <i>x</i>축과 만나는 점의 개수와도 이어집니다.</li>
-            <li><span class="tag">적용</span>세 번째 예(<i>x</i><sup>2</sup> − 2<i>x</i> + 5)에서 <i>c</i>를 줄이며 D가 0이 되는 <i>c</i>를 찾으세요. 그때 그래프는 <i>x</i>축과 어떻게 만나나요? <i>c</i>를 더 줄이면 근은 어떻게 바뀌나요? <i>a</i>를 음수로 바꾸어도 같은 판별이 통하는지, <i>a</i> = 0이면 무엇이 달라지는지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"D &lt; 0이면 근이 없다"는 실수 범위에서만 맞는 말입니다. 복소수 범위에서는 두 허근이 있습니다. 또 판별식으로 근을 가르는 방법은 계수가 실수인 이차방정식에만 씁니다. <i>a</i> = 0이면 이차방정식이 아니므로 판별식을 쓰지 않습니다. 실근을 가질 조건은 D ≥ 0입니다. 중근도 실근입니다.</li>
+            <li><span class="tag">질문</span>\(x^2 - 2x + 5 = 0\)을 근의 공식에 넣으면 \(x = (2 \pm \sqrt{-16})/2\)가 됩니다. √ 안이 음수이면 이 방정식은 근이 없다고 해야 할까요?</li>
+            <li><span class="tag">복원</span>\(ax^2 + bx + c = 0(a \ne 0)\)을 완전제곱식으로 고치면 \((x + b/2a)^2 = (b^2 - 4ac)/4a^2\)이고, 여기서 근의 공식 \(x = (-b \pm \sqrt{b^2 - 4ac})/2a\)가 나옵니다. 음수 \(-k\)의 제곱근은 \(\pm\sqrt{k} i\)입니다.</li>
+            <li><span class="tag">설명</span>복소수 범위에서는 \(\sqrt{-16} = 4i\)이므로 \(x = 1 \pm 2i\)입니다. 실수인 근을 <em>실근</em>, 허수인 근을 <em>허근</em>이라 합니다. 근이 어떤 수인지는 √ 안의 값 \(D = b^2 - 4ac\)가 정하므로 이것을 <em>판별식</em>이라 합니다. 계수가 실수일 때 \(D &gt; 0\)이면 서로 다른 두 실근, \(D = 0\)이면 중근(서로 같은 두 실근), \(D &lt; 0\)이면 서로 다른 두 허근을 가집니다. \(b = 2b'\)처럼 일차항의 계수가 짝수이면 \(D/4 = b'^2 - ac\)로 계산해도 부호가 같습니다.</li>
+            <li><span class="tag">연결</span>어떤 경우든 근의 공식으로 근이 나오므로, 계수가 실수인 이차방정식은 복소수 범위에서 항상 근을 가집니다(중근은 두 번 셉니다). \(D &lt; 0\)일 때 두 허근 \(p + qi\), \(p - qi\)는 서로 켤레복소수입니다. \(D\)의 부호는 그래프가 \(x\)축과 만나는 점의 개수와도 이어집니다.</li>
+            <li><span class="tag">적용</span>세 번째 예\((x^2 - 2x + 5)\)에서 \(c\)를 줄이며 \(D\)가 0이 되는 \(c\)를 찾으세요. 그때 그래프는 \(x\)축과 어떻게 만나나요? \(c\)를 더 줄이면 근은 어떻게 바뀌나요? \(a\)를 음수로 바꾸어도 같은 판별이 통하는지, \(a = 0\)이면 무엇이 달라지는지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>"\(D &lt; 0\)이면 근이 없다"는 실수 범위에서만 맞는 말입니다. 복소수 범위에서는 두 허근이 있습니다. 또 판별식으로 근을 가르는 방법은 계수가 실수인 이차방정식에만 씁니다. \(a = 0\)이면 이차방정식이 아니므로 판별식을 쓰지 않습니다. 실근을 가질 조건은 \(D \ge 0\)입니다. 중근도 실근입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>x</i><sup>2</sup> + 4<i>x</i> + <i>k</i> = 0이 서로 다른 두 허근을 가지도록 하는 실수 <i>k</i>의 범위는?</p>
+          <p class="q">\(x^2 + 4x + k = 0\)이 서로 다른 두 허근을 가지도록 하는 실수 \(k\)의 범위는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>k</i> &gt; 4<span class="why"><b>맞습니다.</b> D/4 = 2<sup>2</sup> − <i>k</i> = 4 − <i>k</i> &lt; 0이므로 <i>k</i> &gt; 4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>k</i> &lt; 4<span class="why"><b>서로 다른 두 실근의 조건입니다.</b> 허근은 D &lt; 0일 때입니다. 부등호 방향을 확인하세요.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>k</i> &gt; 16<span class="why"><b>판별식에서 4를 빠뜨렸습니다.</b> <i>b</i><sup>2</sup> − <i>ac</i> = 16 − <i>k</i>로 계산했습니다. D = <i>b</i><sup>2</sup> − 4<i>ac</i> = 16 − 4<i>k</i>, 또는 D/4 = 4 − <i>k</i>입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>k</i> = 4<span class="why"><b>중근의 조건입니다.</b> <i>k</i> = 4이면 D = 0이고 근은 <i>x</i> = −2 하나(중근)이며 실근입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(k &gt; 4\)<span class="why"><b>맞습니다.</b> \(D/4 = 2^2 - k = 4 - k &lt; 0\)이므로 \(k &gt; 4\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(k &lt; 4\)<span class="why"><b>서로 다른 두 실근의 조건입니다.</b> 허근은 \(D &lt; 0\)일 때입니다. 부등호 방향을 확인하세요.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(k &gt; 16\)<span class="why"><b>판별식에서 4를 빠뜨렸습니다.</b> \(b^2 - ac = 16 - k\)로 계산했습니다. \(D = b^2 - 4ac = 16 - 4k\), 또는 \(D/4 = 4 - k\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k = 4\)<span class="why"><b>중근의 조건입니다.</b> \(k = 4\)이면 \(D = 0\)이고 근은 \(x = -2\) 하나(중근)이며 실근입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-1.html#card-cm1-complex-arith"><small class="mono">공통수학1 2.1</small>복소수로 나눗셈은 어떻게 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/2-3.html#card-cm1-vieta"><small class="mono">공통수학1 2.3</small>두 근의 합과 곱은 계수 어디에 숨어 있을까?</a><a href="../../c/cm1/2-3.html#card-cm1-sum-product"><small class="mono">공통수학1 2.3</small>둘레와 넓이만 알면 직사각형의 가로, 세로를 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div></nav>
 
       <article class="card" id="card-cm1-root-path">
         <header class="card-head">
@@ -109,40 +111,41 @@
             <canvas aria-label="왼쪽: y = x² + bx + c의 그래프. 오른쪽: 두 근을 실수부분·허수부분 좌표의 점으로 나타낸 평면과 c가 변할 때 근이 지나는 길"></canvas>
             <div class="ctl">
               <div class="presets ex">
-                <button class="chip" type="button" data-b="-2" aria-pressed="true"><i>b</i> = −2</button>
-                <button class="chip" type="button" data-b="0"><i>b</i> = 0</button>
-                <button class="chip" type="button" data-b="3"><i>b</i> = 3</button>
+                <button class="chip" type="button" data-b="-2" aria-pressed="true">\(b = -2\)</button>
+                <button class="chip" type="button" data-b="0">\(b = 0\)</button>
+                <button class="chip" type="button" data-b="3">\(b = 3\)</button>
               </div>
-              <label class="mono"><i>x</i><sup>2</sup> + <i>bx</i> + <i>c</i> = 0에서 <i>c</i> = <output class="c-out">-3</output></label>
+              <label class="mono">\(x^2 + bx + c = 0\)에서 \(c\) = <output class="c-out">\(-3\)</output></label>
               <input class="c" type="range" min="-4" max="6" step="0.25" value="-3" aria-label="상수항 c">
               <dl class="nums">
-                <div><dt>판별식 D</dt><dd class="n-d">—</dd></div>
+                <div><dt>판별식 \(D\)</dt><dd class="n-d">—</dd></div>
                 <div><dt>두 근</dt><dd class="n-r">—</dd></div>
                 <div><dt>두 근의 합 · 곱</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">오른쪽 평면의 가로는 실수부분, 세로는 허수부분입니다. 회색 선은 <i>c</i>가 −4에서 6까지 변할 때 두 근이 지나는 길입니다.</p>
+              <p class="fig-note">오른쪽 평면의 가로는 실수부분, 세로는 허수부분입니다. 회색 선은 \(c\)가 \(-4\)에서 6까지 변할 때 두 근이 지나는 길입니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span><i>x</i><sup>2</sup> − 2<i>x</i> + <i>c</i> = 0에서 <i>c</i>를 조금씩 키우면 두 실근은 어떻게 움직일까요? D가 0을 지나 음수가 되는 순간, 근이 갑자기 사라지는 걸까요?</li>
-            <li><span class="tag">복원</span>근의 공식으로 <i>x</i> = −<i>b</i>/2 ± √D/2(D = <i>b</i><sup>2</sup> − 4<i>c</i>)입니다. D &lt; 0이면 √D = √(−D) <i>i</i>입니다.</li>
-            <li><span class="tag">설명</span>두 근의 가운데는 언제나 −<i>b</i>/2이고, 가운데에서 떨어진 거리는 √D/2입니다. <i>c</i>가 커지면 D가 줄어 두 실근이 가운데로 모이고, D = 0에서 하나(중근)로 만납니다. D &lt; 0이 되면 떨어진 거리가 허수 √(−D)/2 · <i>i</i>가 되어, 두 근은 실수축을 벗어나 위아래로 갈라집니다. 이때 두 근은 −<i>b</i>/2 + <i>qi</i>, −<i>b</i>/2 − <i>qi</i>로 서로 켤레복소수입니다. 근은 사라지지 않고 실수가 아닌 곳으로 옮겨 갈 뿐입니다.</li>
-            <li><span class="tag">연결</span>근이 어디에 있든 두 근의 합은 −<i>b</i>, 곱은 <i>c</i>로 계수와 같습니다. 이 관계는 다음 절의 근과 계수의 관계입니다. 또 근의 가운데 −<i>b</i>/2는 포물선의 축이므로, 허근의 실수부분도 그래프에서 읽을 수 있습니다.</li>
-            <li><span class="tag">적용</span><i>c</i>를 −4에서 6까지 천천히 움직이며 오른쪽 점 두 개가 어디서 만나고 어느 방향으로 갈라지는지 보세요. <i>b</i>를 바꾸면 만나는 자리는 어디로 옮겨 가나요? 근이 어디에 있든 "두 근의 합"이 바뀌지 않는지 확인하세요.</li>
+            <li><span class="tag">질문</span>\(x^2 - 2x + c = 0\)에서 \(c\)를 조금씩 키우면 두 실근은 어떻게 움직일까요? \(D\)가 0을 지나 음수가 되는 순간, 근이 갑자기 사라지는 걸까요?</li>
+            <li><span class="tag">복원</span>근의 공식으로 \(x = -b/2 \pm \sqrt{D}/2(D = b^2 - 4c)\)입니다. \(D &lt; 0\)이면 \(\sqrt{D} = \sqrt{-D} i\)입니다.</li>
+            <li><span class="tag">설명</span>두 근의 가운데는 언제나 \(-b/2\)이고, 가운데에서 떨어진 거리는 \(\sqrt{D}/2\)입니다. \(c\)가 커지면 \(D\)가 줄어 두 실근이 가운데로 모이고, \(D = 0\)에서 하나(중근)로 만납니다. \(D &lt; 0\)이 되면 떨어진 거리가 허수 \(\sqrt{-D}/2 \cdot i\)가 되어, 두 근은 실수축을 벗어나 위아래로 갈라집니다. 이때 두 근은 \(-b/2 + qi\), \(-b/2 - qi\)로 서로 켤레복소수입니다. 근은 사라지지 않고 실수가 아닌 곳으로 옮겨 갈 뿐입니다.</li>
+            <li><span class="tag">연결</span>근이 어디에 있든 두 근의 합은 \(-b\), 곱은 \(c\)로 계수와 같습니다. 이 관계는 다음 절의 근과 계수의 관계입니다. 또 근의 가운데 \(-b/2\)는 포물선의 축이므로, 허근의 실수부분도 그래프에서 읽을 수 있습니다.</li>
+            <li><span class="tag">적용</span>\(c\)를 \(-4\)에서 6까지 천천히 움직이며 오른쪽 점 두 개가 어디서 만나고 어느 방향으로 갈라지는지 보세요. \(b\)를 바꾸면 만나는 자리는 어디로 옮겨 가나요? 근이 어디에 있든 "두 근의 합"이 바뀌지 않는지 확인하세요.</li>
             <li class="warn"><span class="tag">판단</span>허근이 켤레로 짝지어 나오는 것은 계수가 모두 실수이기 때문입니다. 계수에 허수가 있으면 짝이 맞지 않을 수 있지만, 고등학교에서는 계수가 실수인 경우만 다룹니다. 복소수를 평면의 점으로 나타내는 것은 이해를 돕는 그림이고, 허근의 크기를 비교한다는 뜻은 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>x</i><sup>2</sup> − 6<i>x</i> + 13 = 0의 두 근은?</p>
+          <p class="q">\(x^2 - 6x + 13 = 0\)의 두 근은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3 ± 2<i>i</i><span class="why"><b>맞습니다.</b> D/4 = 9 − 13 = −4이므로 <i>x</i> = 3 ± √−4 = 3 ± 2<i>i</i>입니다. 두 근은 서로 켤레입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−3 ± 2<i>i</i><span class="why"><b>가운데의 부호가 바뀌었습니다.</b> 가운데는 −<i>b</i>/2 = −(−6)/2 = 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3 ± 4<i>i</i><span class="why"><b>√D를 2로 나누지 않았습니다.</b> D = 36 − 52 = −16, √D = 4<i>i</i>이고 근은 (6 ± 4<i>i</i>)/2 = 3 ± 2<i>i</i>입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>근이 없다<span class="why"><b>실수 범위만 생각했습니다.</b> D &lt; 0이면 실근은 없지만, 복소수 범위에서는 서로 다른 두 허근이 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(3 \pm 2i\)<span class="why"><b>맞습니다.</b> \(D/4 = 9 - 13 = -4\)이므로 \(x = 3 \pm \sqrt{-4} = 3 \pm 2i\)입니다. 두 근은 서로 켤레입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-3 \pm 2i\)<span class="why"><b>가운데의 부호가 바뀌었습니다.</b> 가운데는 \(-b/2 = -(-6)/2 = 3\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(3 \pm 4i\)<span class="why"><b>\(\sqrt{D}\)를 2로 나누지 않았습니다.</b> \(D = 36 - 52 = -16\), \(\sqrt{D} = 4i\)이고 근은 \((6 \pm 4i)/2 = 3 \pm 2i\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>근이 없다<span class="why"><b>실수 범위만 생각했습니다.</b> \(D &lt; 0\)이면 실근은 없지만, 복소수 범위에서는 서로 다른 두 허근이 있습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-1.html#card-cm1-complex-arith"><small class="mono">공통수학1 2.1</small>복소수로 나눗셈은 어떻게 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/2-3.html#card-cm1-vieta"><small class="mono">공통수학1 2.3</small>두 근의 합과 곱은 계수 어디에 숨어 있을까?</a><a href="../../c/cm1/2-3.html#card-cm1-sum-product"><small class="mono">공통수학1 2.3</small>둘레와 넓이만 알면 직사각형의 가로, 세로를 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=cm1-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">34문항</span></a>
 
@@ -153,8 +156,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm1/eqplot.js"></script>
 <script src="../../js/cards/cm1/discriminant.js"></script>
 <script src="../../js/cards/cm1/eqplot.js"></script>

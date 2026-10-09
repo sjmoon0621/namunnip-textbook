@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm2-parallel canvas { aspect-ratio: 4 / 3; }
     #card-cm2-parallel .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -33,17 +34,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>두 직선의 평행과 수직</h1>
-    <p class="lead">중학교에서 일차함수의 그래프는 기울기와 <i>y</i>절편으로 정해진다고 배웠습니다. 이 절에서는 두 직선의 기울기를 비교해서 평행한지, 겹치는지, 수직으로 만나는지를 판단합니다. 그리고 <i>ax</i> + <i>by</i> + <i>c</i> = 0 꼴로 쓴 직선에서도 같은 판단을 할 수 있게 조건을 넓힙니다.</p>
+    <p class="lead">중학교에서 일차함수의 그래프는 기울기와 \(y\)절편으로 정해진다고 배웠습니다. 이 절에서는 두 직선의 기울기를 비교해서 평행한지, 겹치는지, 수직으로 만나는지를 판단합니다. 그리고 \(ax + by + c = 0\) 꼴로 쓴 직선에서도 같은 판단을 할 수 있게 조건을 넓힙니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">일차함수의 기울기와 y절편</span><span class="p">연립일차방정식</span><span class="p">직선의 방정식</span>
+      <span class="p">일차함수의 기울기와 \(y\)절편</span><a class="p p-card" href="../../c/cm1/2-8.html#card-cm1-line-conic" title="공통수학1 2.8 · 일차식과 이차식을 함께 만족하는 해는 몇 개일까?">연립일차방정식</a><a class="p p-card" href="../../c/cm2/1-2.html#card-cm2-perp" title="공통수학2 1.2 · 수직인 두 직선의 기울기는 어떤 관계일까?">직선의 방정식</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-cm2-parallel"><span class="mono">1.2.1</span>두 직선의 평행</a></li>
         <li><a href="#card-cm2-perp"><span class="mono">1.2.2</span>두 직선의 수직</a></li>
       </ol>
@@ -65,13 +66,13 @@
                 <button class="chip" type="button" data-p="2,1,-0.5,-2">수직인 예</button>
                 <button class="chip" type="button" data-p="1,2,-1,-1">만나는 예</button>
               </div>
-              <label class="mono">ℓ₁ 기울기 <i>m</i>₁ = <output class="o-m1">1</output></label>
+              <label class="mono">\(\ell_1\) 기울기 \(m_1 =\) <output class="o-m1">1</output></label>
               <input class="m1" type="range" min="-3" max="3" step="0.5" value="1" aria-label="직선 ℓ₁의 기울기">
-              <label class="mono">ℓ₁ <i>y</i>절편 <i>n</i>₁ = <output class="o-k1">2</output></label>
+              <label class="mono">\(\ell_1\) \(y\)절편 \(n_1 =\) <output class="o-k1">2</output></label>
               <input class="k1" type="range" min="-4" max="4" step="1" value="2" aria-label="직선 ℓ₁의 y절편">
-              <label class="mono">ℓ₂ 기울기 <i>m</i>₂ = <output class="o-m2">−1</output></label>
+              <label class="mono">\(\ell_2\) 기울기 \(m_2 =\) <output class="o-m2">−1</output></label>
               <input class="m2" type="range" min="-3" max="3" step="0.5" value="-1" aria-label="직선 ℓ₂의 기울기">
-              <label class="mono">ℓ₂ <i>y</i>절편 <i>n</i>₂ = <output class="o-k2">−1</output></label>
+              <label class="mono">\(\ell_2\) \(y\)절편 \(n_2 =\) <output class="o-k2">−1</output></label>
               <input class="k2" type="range" min="-4" max="4" step="1" value="-1" aria-label="직선 ℓ₂의 y절편">
               <p class="mono eq">—</p>
               <dl class="nums">
@@ -82,24 +83,25 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>두 직선 <i>y</i> = 2<i>x</i> + 1과 <i>y</i> = 2<i>x</i> − 3은 아무리 길게 그어도 만나지 않습니다. 두 직선이 만나지 않으려면, 또 완전히 겹치려면 무엇이 같아야 할까요?</li>
-            <li><span class="tag">복원</span>직선 <i>y</i> = <i>mx</i> + <i>n</i>에서 <i>m</i>은 <i>x</i>가 1 늘 때 <i>y</i>가 늘어나는 양(기울기)이고, <i>n</i>은 <i>y</i>축과 만나는 점의 <i>y</i>좌표(<i>y</i>절편)입니다. 두 직선의 교점은 두 방정식을 연립한 해입니다.</li>
-            <li><span class="tag">설명</span>두 직선 <i>y</i> = <i>m</i>₁<i>x</i> + <i>n</i>₁, <i>y</i> = <i>m</i>₂<i>x</i> + <i>n</i>₂를 연립하면 (<i>m</i>₁ − <i>m</i>₂)<i>x</i> = <i>n</i>₂ − <i>n</i>₁입니다. <i>m</i>₁ ≠ <i>m</i>₂이면 해가 하나라서 한 점에서 만납니다. <i>m</i>₁ = <i>m</i>₂이면 좌변이 0이 되므로, <i>n</i>₁ ≠ <i>n</i>₂일 때는 해가 없어 <em>평행</em>하고, <i>n</i>₁ = <i>n</i>₂일 때는 모든 <i>x</i>가 해여서 <em>일치</em>합니다. 정리하면 <b>평행 ⇔ <i>m</i>₁ = <i>m</i>₂, <i>n</i>₁ ≠ <i>n</i>₂</b>입니다. 직선을 <i>ax</i> + <i>by</i> + <i>c</i> = 0, <i>a</i>′<i>x</i> + <i>b</i>′<i>y</i> + <i>c</i>′ = 0으로 쓰면 평행 조건은 <i>a</i>/<i>a</i>′ = <i>b</i>/<i>b</i>′ ≠ <i>c</i>/<i>c</i>′, 일치 조건은 <i>a</i>/<i>a</i>′ = <i>b</i>/<i>b</i>′ = <i>c</i>/<i>c</i>′입니다.</li>
-            <li><span class="tag">연결</span>평행·일치·한 점에서 만남은 연립일차방정식의 해가 없음·무수히 많음·하나인 경우와 정확히 대응합니다. 그래프와 방정식이 같은 사실을 두 가지 말로 하고 있는 것입니다. 기울기의 곱이 −1이면 두 직선은 수직으로 만나는데, 그 까닭은 다음 카드에서 봅니다.</li>
-            <li><span class="tag">적용</span>'평행한 예'를 누른 뒤 <i>n</i>₂만 바꾸어 보세요. 교점이 생기나요? <i>n</i>₂를 <i>n</i>₁과 같게 하면 무엇이 달라지나요? 이번에는 <i>m</i>₂를 <i>m</i>₁에 조금씩 가까이 가져가면서 교점이 어디로 달아나는지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span><i>y</i>축에 평행한 직선 <i>x</i> = <i>k</i>는 기울기가 없어서 <i>y</i> = <i>mx</i> + <i>n</i> 꼴로 쓸 수 없습니다. 그래도 두 직선 <i>x</i> = 1과 <i>x</i> = 3은 평행합니다. 일반형 조건을 쓰면 이런 경우도 다룰 수 있습니다. 다만 분모가 0이 되는 계수가 있으면 비의 꼴 대신 <i>ab</i>′ − <i>a</i>′<i>b</i> = 0처럼 곱의 꼴로 확인합니다.</li>
+            <li><span class="tag">질문</span>두 직선 \(y = 2x + 1\)과 \(y = 2x - 3\)은 아무리 길게 그어도 만나지 않습니다. 두 직선이 만나지 않으려면, 또 완전히 겹치려면 무엇이 같아야 할까요?</li>
+            <li><span class="tag">복원</span>직선 \(y = mx + n\)에서 \(m\)은 \(x\)가 1 늘 때 \(y\)가 늘어나는 양(기울기)이고, \(n\)은 \(y\)축과 만나는 점의 \(y\)좌표(\(y\)절편)입니다. 두 직선의 교점은 두 방정식을 연립한 해입니다.</li>
+            <li><span class="tag">설명</span>두 직선 \(y = m_1x + n_1, y = m_2x + n_2\)를 연립하면 \((m_1 - m_2)x = n_2 - n_1\)입니다. \(m_1 \ne m_2\)이면 해가 하나라서 한 점에서 만납니다. \(m_1 = m_2\)이면 좌변이 0이 되므로, \(n_1 \ne n_2\)일 때는 해가 없어 <em>평행</em>하고, \(n_1 = n_2\)일 때는 모든 \(x\)가 해여서 <em>일치</em>합니다. 정리하면 <b>평행 \(\Leftrightarrow m_1 = m_2, n_1 \ne n_2\)</b>입니다. 직선을 \(ax + by + c = 0, a'x + b'y + c' = 0\)으로 쓰면 평행 조건은 \(\frac{a}{a'} = \frac{b}{b'} \ne \frac{c}{c'}\), 일치 조건은 \(\frac{a}{a'} = \frac{b}{b'} = \frac{c}{c'}\)입니다.</li>
+            <li><span class="tag">연결</span>평행·일치·한 점에서 만남은 연립일차방정식의 해가 없음·무수히 많음·하나인 경우와 정확히 대응합니다. 그래프와 방정식이 같은 사실을 두 가지 말로 하고 있는 것입니다. 기울기의 곱이 \(-1\)이면 두 직선은 수직으로 만나는데, 그 까닭은 다음 카드에서 봅니다.</li>
+            <li><span class="tag">적용</span>'평행한 예'를 누른 뒤 \(n_2\)만 바꾸어 보세요. 교점이 생기나요? \(n_2\)를 \(n_1\)과 같게 하면 무엇이 달라지나요? 이번에는 \(m_2\)를 \(m_1\)에 조금씩 가까이 가져가면서 교점이 어디로 달아나는지 보세요.</li>
+            <li class="warn"><span class="tag">판단</span>\(y\)축에 평행한 직선 \(x = k\)는 기울기가 없어서 \(y = mx + n\) 꼴로 쓸 수 없습니다. 그래도 두 직선 \(x = 1\)과 \(x = 3\)은 평행합니다. 일반형 조건을 쓰면 이런 경우도 다룰 수 있습니다. 다만 분모가 0이 되는 계수가 있으면 비의 꼴 대신 \(ab' - a'b = 0\)처럼 곱의 꼴로 확인합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">두 직선 2<i>x</i> + <i>ay</i> − 1 = 0과 <i>x</i> − 3<i>y</i> + 2 = 0이 평행하도록 하는 상수 <i>a</i>의 값은?</p>
+          <p class="q">두 직선 \(2x + ay - 1 = 0\)과 \(x - 3y + 2 = 0\)이 평행하도록 하는 상수 \(a\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>−6<span class="why"><b>맞습니다.</b> 2/1 = <i>a</i>/(−3)에서 <i>a</i> = −6이고, 이때 상수항의 비 −1/2는 2와 다르므로 일치하지 않고 평행합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6<span class="why"><b>부호를 놓쳤습니다.</b> <i>a</i> = 6이면 첫 직선의 기울기가 −1/3, 둘째 직선의 기울기가 1/3이 되어 평행하지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2/3<span class="why"><b>수직 조건을 썼습니다.</b> 2·1 + <i>a</i>·(−3) = 0에서 나온 값으로, 두 직선이 수직이 되는 조건입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-6\)<span class="why"><b>맞습니다.</b> \(\frac{2}{1} = \frac{a}{-3}\)에서 \(a = -6\)이고, 이때 상수항의 비 \(-\frac{1}{2}\)는 2와 다르므로 일치하지 않고 평행합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6<span class="why"><b>부호를 놓쳤습니다.</b> \(a = 6\)이면 첫 직선의 기울기가 \(-\frac{1}{3}\), 둘째 직선의 기울기가 \(\frac{1}{3}\)이 되어 평행하지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{2}{3}\)<span class="why"><b>수직 조건을 썼습니다.</b> \(2\cdot1 + a\cdot(-3) = 0\)에서 나온 값으로, 두 직선이 수직이 되는 조건입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/1-3.html#card-cm2-point-line"><small class="mono">공통수학2 1.3</small>점에서 직선까지 가장 짧은 길은 어디일까?</a><a href="../../c/cm2/1-3.html#card-cm2-tri-area"><small class="mono">공통수학2 1.3</small>꼭짓점의 좌표만으로 삼각형의 넓이를 구할 수 있을까?</a><a href="../../c/cm2/1-7.html#card-cm2-reflect"><small class="mono">공통수학2 1.7</small>거울에 비친 점의 좌표는 어떻게 될까?</a><a href="../../c/cm2/1-7.html#card-cm2-reflect-graph"><small class="mono">공통수학2 1.7</small>대칭이동한 도형의 방정식은 어떻게 구할까?</a></div></nav>
 
       <article class="card" id="card-cm2-perp">
         <header class="card-head">
@@ -111,33 +113,34 @@
             <div class="ctl">
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>ℓ₁ 기울기 <i>m</i>₁</dt><dd class="n-m1">—</dd></div>
-                <div><dt>ℓ₂ 기울기 <i>m</i>₂</dt><dd class="n-m2">—</dd></div>
-                <div><dt><i>m</i>₁ × <i>m</i>₂</dt><dd class="n-pr">—</dd></div>
+                <div><dt>\(\ell_1\) 기울기 \(m_1\)</dt><dd class="n-m1">—</dd></div>
+                <div><dt>\(\ell_2\) 기울기 \(m_2\)</dt><dd class="n-m2">—</dd></div>
+                <div><dt>\(m_1 \times m_2\)</dt><dd class="n-pr">—</dd></div>
               </dl>
-              <p class="fig-note">점 Q를 끌어 직선 ℓ₁의 방향을 바꾸세요. Q′은 Q를 원점을 중심으로 90° 돌린 점이고, ℓ₂는 원점과 Q′을 지납니다.</p>
+              <p class="fig-note">점 \(Q\)를 끌어 직선 \(\ell_1\)의 방향을 바꾸세요. \(Q'\)은 \(Q\)를 원점을 중심으로 \(90^\circ\) 돌린 점이고, \(\ell_2\)는 원점과 \(Q'\)을 지납니다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>기울기가 2인 직선에 수직인 직선의 기울기는 얼마일까요? −2일까요, 1/2일까요, 아니면 다른 수일까요?</li>
-            <li><span class="tag">복원</span>기울기는 (세로 변화량)/(가로 변화량)입니다. 직각삼각형을 90° 돌리면 가로 변과 세로 변이 서로 자리를 바꾼, 합동인 직각삼각형이 됩니다.</li>
-            <li><span class="tag">설명</span>원점을 지나는 직선 ℓ₁ 위의 점 Q(<i>p</i>, <i>q</i>)를 원점을 중심으로 90° 돌리면 Q′(−<i>q</i>, <i>p</i>)가 됩니다. 그림의 두 직각삼각형은 합동이고, 가로와 세로가 바뀌면서 한쪽 부호가 바뀝니다. 그래서 <i>m</i>₁ = <i>q</i>/<i>p</i>, <i>m</i>₂ = <i>p</i>/(−<i>q</i>)이고 <b><i>m</i>₁<i>m</i>₂ = −1</b>입니다. 거꾸로 기울기의 곱이 −1이면 두 직선은 수직입니다. 원점을 지나지 않는 직선도 평행이동하면 기울기가 그대로이므로 같은 조건이 성립합니다. 일반형 <i>ax</i> + <i>by</i> + <i>c</i> = 0과 <i>a</i>′<i>x</i> + <i>b</i>′<i>y</i> + <i>c</i>′ = 0에서는 <b>수직 ⇔ <i>aa</i>′ + <i>bb</i>′ = 0</b>입니다.</li>
+            <li><span class="tag">질문</span>기울기가 2인 직선에 수직인 직선의 기울기는 얼마일까요? \(-2\)일까요, \(\frac{1}{2}\)일까요, 아니면 다른 수일까요?</li>
+            <li><span class="tag">복원</span>기울기는 (세로 변화량)/(가로 변화량)입니다. 직각삼각형을 \(90^\circ\) 돌리면 가로 변과 세로 변이 서로 자리를 바꾼, 합동인 직각삼각형이 됩니다.</li>
+            <li><span class="tag">설명</span>원점을 지나는 직선 \(\ell_1\) 위의 점 \(Q(p, q)\)를 원점을 중심으로 \(90^\circ\) 돌리면 \(Q'(-q, p)\)가 됩니다. 그림의 두 직각삼각형은 합동이고, 가로와 세로가 바뀌면서 한쪽 부호가 바뀝니다. 그래서 \(m_1 = \frac{q}{p}, m_2 = \frac{p}{-q}\)이고 <b>\(m_1m_2 = -1\)</b>입니다. 거꾸로 기울기의 곱이 \(-1\)이면 두 직선은 수직입니다. 원점을 지나지 않는 직선도 평행이동하면 기울기가 그대로이므로 같은 조건이 성립합니다. 일반형 \(ax + by + c = 0\)과 \(a'x + b'y + c' = 0\)에서는 <b>수직 \(\Leftrightarrow aa' + bb' = 0\)</b>입니다.</li>
             <li><span class="tag">연결</span>수직 조건은 선분의 수직이등분선을 구할 때, 점에서 직선에 내린 수선의 발을 구할 때 쓰입니다. 점과 직선 사이의 거리, 원의 접선(접점에서 반지름과 수직), 대칭이동에서 대칭축을 찾는 일이 모두 이 조건 위에 있습니다.</li>
-            <li><span class="tag">적용</span>Q를 (2, 1), (1, 3), (−3, 2)로 옮기며 <i>m</i>₁ × <i>m</i>₂가 늘 −1인지 보세요. Q를 <i>x</i>축 위 (3, 0)으로 옮기면 무엇이 달라지나요? 아래 식에서 <i>aa</i>′ + <i>bb</i>′도 함께 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>역수만 취해 1/2로 답하는 실수가 흔합니다. 수직인 직선의 기울기는 역수에 부호까지 바꾼 −1/<i>m</i>₁입니다. 또 <i>m</i>₁<i>m</i>₂ = −1은 두 기울기가 모두 있을 때만 쓸 수 있습니다. <i>x</i>축(기울기 0)과 <i>y</i>축(기울기 없음)도 수직이지만 곱을 만들 수 없습니다. 이럴 때는 <i>aa</i>′ + <i>bb</i>′ = 0으로 확인합니다.</li>
+            <li><span class="tag">적용</span>\(Q\)를 \((2, 1), (1, 3), (-3, 2)\)로 옮기며 \(m_1 \times m_2\)가 늘 \(-1\)인지 보세요. \(Q\)를 \(x\)축 위 \((3, 0)\)으로 옮기면 무엇이 달라지나요? 아래 식에서 \(aa' + bb'\)도 함께 확인하세요.</li>
+            <li class="warn"><span class="tag">판단</span>역수만 취해 \(\frac{1}{2}\)로 답하는 실수가 흔합니다. 수직인 직선의 기울기는 역수에 부호까지 바꾼 \(-\frac{1}{m_1}\)입니다. 또 \(m_1m_2 = -1\)은 두 기울기가 모두 있을 때만 쓸 수 있습니다. \(x\)축(기울기 0)과 \(y\)축(기울기 없음)도 수직이지만 곱을 만들 수 없습니다. 이럴 때는 \(aa' + bb' = 0\)으로 확인합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점 (2, 1)을 지나고 직선 <i>x</i> − 3<i>y</i> + 5 = 0에 수직인 직선의 방정식은?</p>
+          <p class="q">점 \((2, 1)\)을 지나고 직선 \(x - 3y + 5 = 0\)에 수직인 직선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>y</i> = −3<i>x</i> + 7<span class="why"><b>맞습니다.</b> 주어진 직선의 기울기는 1/3이므로 수직인 직선의 기울기는 −3입니다. <i>y</i> − 1 = −3(<i>x</i> − 2)를 정리하면 <i>y</i> = −3<i>x</i> + 7입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>y</i> = 3<i>x</i> − 5<span class="why"><b>역수만 취했습니다.</b> 기울기 3과 1/3의 곱은 1이지 −1이 아닙니다. 부호도 바꿔야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>y</i> = (1/3)<i>x</i> + 1/3<span class="why"><b>평행한 직선을 구했습니다.</b> 기울기가 같은 1/3이므로 주어진 직선과 평행합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>y</i> = −(1/3)<i>x</i> + 5/3<span class="why"><b>부호만 바꾸었습니다.</b> 기울기의 곱이 (1/3)·(−1/3) = −1/9이므로 수직이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = -3x + 7\)<span class="why"><b>맞습니다.</b> 주어진 직선의 기울기는 \(\frac{1}{3}\)이므로 수직인 직선의 기울기는 \(-3\)입니다. \(y - 1 = -3(x - 2)\)를 정리하면 \(y = -3x + 7\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = 3x - 5\)<span class="why"><b>역수만 취했습니다.</b> 기울기 3과 \(\frac{1}{3}\)의 곱은 1이지 \(-1\)이 아닙니다. 부호도 바꿔야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = (\frac{1}{3})x + \frac{1}{3}\)<span class="why"><b>평행한 직선을 구했습니다.</b> 기울기가 같은 \(\frac{1}{3}\)이므로 주어진 직선과 평행합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = -(\frac{1}{3})x + \frac{5}{3}\)<span class="why"><b>부호만 바꾸었습니다.</b> 기울기의 곱이 \((\frac{1}{3})\cdot(-\frac{1}{3}) = -\frac{1}{9}\)이므로 수직이 아닙니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/1-3.html#card-cm2-point-line"><small class="mono">공통수학2 1.3</small>점에서 직선까지 가장 짧은 길은 어디일까?</a><a href="../../c/cm2/1-3.html#card-cm2-tri-area"><small class="mono">공통수학2 1.3</small>꼭짓점의 좌표만으로 삼각형의 넓이를 구할 수 있을까?</a><a href="../../c/cm2/1-7.html#card-cm2-reflect"><small class="mono">공통수학2 1.7</small>거울에 비친 점의 좌표는 어떻게 될까?</a><a href="../../c/cm2/1-7.html#card-cm2-reflect-graph"><small class="mono">공통수학2 1.7</small>대칭이동한 도형의 방정식은 어떻게 구할까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=cm2-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">46문항</span></a>
 
@@ -148,8 +151,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm2/coord.js"></script>
 <script src="../../js/cards/cm2/parallel.js"></script>
 <script src="../../js/cards/cm2/coord.js"></script>

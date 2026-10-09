@@ -15,6 +15,12 @@
   // 블록이 하나라도 배치된 과목만 지도에 (뼈대만 있는 과목은 범례·칩·과목 노드에서 뺀다)
   const LIVE = TOC.filter((c) => c.chapters.some((ch) => ch.sections.some((x) => x.page)));
   const ACCENT = "#a78bfa";
+  // 배경·선·글자 색은 테마를 따른다(과목 색 COLORS는 두 테마 공통). 배경 자체는 CSS(.gv-stage)가 칠한다
+  const PAL = {
+    dark: { bg: "#1c1c1f", edge: "200,200,210", ring: "rgba(255,255,255,.85)", seen: "rgba(255,255,255,.9)", sel: "#fff", lab: ["#ffffff", "#e4e4e8", "#b9b9c1"], unseen: "#5c5c63", lo: "#6b7a5e" },
+    light: { bg: "#f3f4ef", edge: "70,72,64", ring: "rgba(20,20,18,.7)", seen: "rgba(20,20,18,.75)", sel: "#16161a", lab: ["#16161a", "#2c2d29", "#55574f"], unseen: "#c9cbc2", lo: "#b9c7ad" },
+  };
+  const pal = () => PAL[document.documentElement.dataset.theme === "light" ? "light" : "dark"];
   const KIND = { card: "카드", text: "읽기", video: "영상" };
 
   /* ───── 설정 (이 브라우저에만 기억) ───── */
@@ -117,7 +123,7 @@
   }
   const mix = (a, b, t) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const A = p(a), B = p(b); return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(",")})`; };
   function nodeColor(n) {
-    if (set.color === "progress") { const s = st(n); if (n.type === "block" && s.wrong) return "#ff7b73"; return s.p <= 0 ? "#5c5c63" : mix("#6b7a5e", "#8fd16f", s.p); }
+    if (set.color === "progress") { const s = st(n); if (n.type === "block" && s.wrong) return "#ff7b73"; return s.p <= 0 ? pal().unseen : mix(pal().lo, "#8fd16f", s.p); }
     return COLORS[n.main];
   }
 
@@ -206,6 +212,7 @@
 
   function draw() {
     const { w, h } = size; if (!w) return;
+    const P = pal();
     ctx.clearRect(0, 0, w, h);
     const f = focusOf();
     // 선
@@ -215,7 +222,7 @@
       const hot = (f && (a === f || b === f)) || (pathSet && pathSet.has(a) && pathSet.has(b));
       const [x1, y1] = toS(a.x, a.y), [x2, y2] = toS(b.x, b.y);
       const baseA = kind === "req" ? 0.1 + 0.25 * e : kind === "course" ? 0.03 + 0.07 * e : 0.05 + 0.13 * e;
-      ctx.strokeStyle = hot ? ACCENT : kind === "course" ? hexA(COLORS[a.type === "course" ? a.main : b.main], baseA * 1.6) : `rgba(200,200,210,${baseA})`;
+      ctx.strokeStyle = hot ? ACCENT : kind === "course" ? hexA(COLORS[a.type === "course" ? a.main : b.main], baseA * 1.6) : `rgba(${P.edge},${baseA})`;
       ctx.lineWidth = (hot ? 1.5 : kind === "req" ? 1 : 0.7) * set.linkWidth * Math.min(1.6, Math.max(0.6, view.k));
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       if (kind === "req" && (set.arrows || hot)) {
@@ -233,18 +240,18 @@
       const col = n === f ? ACCENT : nodeColor(n);
       if (n.type === "course") {
         ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = Math.max(1.5, r * 0.12); ctx.stroke();
+        ctx.strokeStyle = P.ring; ctx.lineWidth = Math.max(1.5, r * 0.12); ctx.stroke();
         if (s.p > 0) { ctx.strokeStyle = "#8fd16f"; ctx.lineWidth = Math.max(2, r * 0.2); ctx.beginPath(); ctx.arc(x, y, r + ctx.lineWidth, -Math.PI / 2, -Math.PI / 2 + s.p * Math.PI * 2); ctx.stroke(); }
       } else if (n.type === "hub") {
-        ctx.fillStyle = "#1c1c1f"; shape(n, x, y, r); ctx.fill();
+        ctx.fillStyle = P.bg; shape(n, x, y, r); ctx.fill();
         ctx.strokeStyle = col; ctx.lineWidth = Math.max(1.3, r * 0.38); shape(n, x, y, r); ctx.stroke();
       } else {
         ctx.fillStyle = col; shape(n, x, y, r); ctx.fill();
-        if (set.color === "course" && s.seen) { ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = Math.max(1.1, r * 0.3); shape(n, x, y, r + ctx.lineWidth * 0.8); ctx.stroke(); }
+        if (set.color === "course" && s.seen) { ctx.strokeStyle = P.seen; ctx.lineWidth = Math.max(1.1, r * 0.3); shape(n, x, y, r + ctx.lineWidth * 0.8); ctx.stroke(); }
         if (s.wrong && set.color === "course") { ctx.fillStyle = "#ff5f57"; ctx.beginPath(); ctx.arc(x + r * 0.85, y - r * 0.85, Math.max(2.2, r * 0.42), 0, Math.PI * 2); ctx.fill(); }
         if (s.noted) { ctx.fillStyle = "#e0b400"; ctx.beginPath(); ctx.arc(x + r * 0.85, y + r * 0.85, Math.max(1.8, r * 0.34), 0, Math.PI * 2); ctx.fill(); }
       }
-      if (n === selected) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, r + 5, 0, Math.PI * 2); ctx.stroke(); }
+      if (n === selected) { ctx.strokeStyle = P.sel; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, r + 5, 0, Math.PI * 2); ctx.stroke(); }
       ctx.globalAlpha = 1;
     });
     // 글자: 허브 이름은 조금만 확대해도, 블록 제목은 더 확대해야 나타난다. 초점과 이웃은 항상
@@ -263,7 +270,7 @@
       const tw = ctx.measureText(label).width, bx = [x - tw / 2, x + tw / 2, y + r + 3, y + r + 5 + fs];
       if (!forced && boxes.some((b) => bx[0] < b[1] && bx[1] > b[0] && bx[2] < b[3] && bx[3] > b[2])) return;
       boxes.push(bx);
-      ctx.globalAlpha = a; ctx.fillStyle = n === f || n.type === "course" ? "#ffffff" : n.type === "hub" ? "#e4e4e8" : "#b9b9c1";
+      ctx.globalAlpha = a; ctx.fillStyle = n === f || n.type === "course" ? P.lab[0] : n.type === "hub" ? P.lab[1] : P.lab[2];
       ctx.fillText(label, x, y + r + 4);
       ctx.globalAlpha = 1;
     });
@@ -275,6 +282,7 @@
 
   /* ───── 애니메이션 루프 ───── */
   let raf = 0;
+  new MutationObserver(() => draw()).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   // 헤드리스 시험(?test)에서는 가상 시간이 requestAnimationFrame을 거의 돌리지 않아 타이머로 대신한다
   const TEST = /[?&]test\b/.test(location.search);
   const nextFrame = TEST ? (f) => setTimeout(f, 16) : requestAnimationFrame;
@@ -374,7 +382,7 @@
     sp.querySelectorAll("[data-color]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.color === set.color)));
     document.getElementById("gv-groups").innerHTML = legendShapes + (set.color === "course"
       ? LIVE.map((c) => `<li><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</li>`).join("") + `<li><i class="ring"></i>흰 테두리: 본 블록</li><li><i style="background:#ff5f57"></i>오답노트에 있음</li><li><i style="background:#e0b400"></i>메모·형광펜</li>`
-      : `<li><i style="background:#5c5c63"></i>아직 안 봄</li><li><i style="background:#8fd16f"></i>봄</li><li><i style="background:#ff7b73"></i>오답노트에 있음</li>`);
+      : `<li><i style="background:${pal().unseen}"></i>아직 안 봄</li><li><i style="background:#8fd16f"></i>봄</li><li><i style="background:#ff7b73"></i>오답노트에 있음</li>`);
   }
   sp.addEventListener("input", (e) => {
     const el = e.target.closest("[data-set]"); if (!el) return;

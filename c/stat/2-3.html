@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-birthday canvas { width: 100%; aspect-ratio: 16 / 11; }
     #card-stat-birthday .go-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
@@ -35,17 +36,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>여사건의 확률</h1>
-    <p class="lead">'적어도 한 명', '적어도 한 개'가 들어간 확률은 경우를 하나하나 나누면 계산이 길어집니다. 그 반대쪽인 '한 명도 없다', '하나도 없다'는 대개 한 가지 경우뿐입니다. 이 절에서는 사건 A가 일어나지 않는 사건인 여사건을 정의하고, P(A<sup>c</sup>) = 1 − P(A)를 써서 어려운 계산을 쉬운 계산으로 바꿉니다.</p>
+    <p class="lead">'적어도 한 명', '적어도 한 개'가 들어간 확률은 경우를 하나하나 나누면 계산이 길어집니다. 그 반대쪽인 '한 명도 없다', '하나도 없다'는 대개 한 가지 경우뿐입니다. 이 절에서는 사건 A가 일어나지 않는 사건인 여사건을 정의하고, \(P(A^c) = 1 - P(A)\)를 써서 어려운 계산을 쉬운 계산으로 바꿉니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">확률의 덧셈정리</span><span class="p">배반사건</span><span class="p">순열과 조합</span>
+      <a class="p p-card" href="../../c/stat/2-2.html#card-stat-add-rule" title="확률과 통계 2.2 · &#x27;A 또는 B&#x27;의 확률은 두 확률의 합일까?">확률의 덧셈정리</a><a class="p p-card" href="../../c/stat/2-2.html#card-stat-add-rule" title="확률과 통계 2.2 · &#x27;A 또는 B&#x27;의 확률은 두 확률의 합일까?">배반사건</a><a class="p p-card" href="../../c/cm1/3-3.html#card-cm1-comb-group" title="공통수학1 3.3 · 순서 없이 뽑는 수는 왜 순열의 수를 r!로 나눌까?">순열과 조합</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-stat-birthday"><span class="mono">2.3.1</span>여사건: 생일 문제</a></li>
         <li><a href="#card-stat-at-least"><span class="mono">2.3.2</span>여사건: 적어도 하나</a></li>
       </ol>
@@ -56,21 +57,21 @@
     <div>
       <article class="card" id="card-stat-birthday">
         <header class="card-head">
-          <span class="no">2.3.1</span><h2>몇 명이 모이면 생일이 같은 두 사람이 있을 확률이 1/2을 넘을까?</h2><span class="kind">여사건 · 생일 문제</span>
+          <span class="no">2.3.1</span><h2>몇 명이 모이면 생일이 같은 두 사람이 있을 확률이 \(\frac{1}{2}\)을 넘을까?</h2><span class="kind">여사건 · 생일 문제</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="사람 수 n에 따라 생일이 같은 사람이 적어도 한 쌍 있을 확률과 모두 다를 확률을 그린 두 곡선, 그리고 모의실험 결과 점"></canvas>
             <div class="ctl">
-              <label class="mono">사람 수 <i>n</i> = <output class="n-out">23</output></label>
+              <label class="mono">사람 수 \(n\) = <output class="n-out">23</output></label>
               <input class="n" type="range" min="2" max="80" step="1" value="23" aria-label="사람 수 n">
               <div class="go-row">
                 <button class="chip go-sim" type="button">모의 학급 200개 만들기</button>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>P(모두 다름)</dt><dd class="n-d">—</dd></div>
-                <div><dt>P(적어도 한 쌍)</dt><dd class="n-a">—</dd></div>
+                <div><dt>\(P(\text{모두 다름})\)</dt><dd class="n-d">—</dd></div>
+                <div><dt>\(P(\text{적어도 한 쌍})\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>모의실험 비율</dt><dd class="n-s">—</dd></div>
               </dl>
               <p class="fig-note">1년을 365일로 보고, 모든 날짜에 태어날 가능성이 같다고 가정한 모형입니다. 실제 출생일은 날짜마다 조금씩 다르고 2월 29일도 있습니다. 주황 점은 모의 학급 200개 중 생일이 겹친 학급의 비율입니다.</p>
@@ -78,24 +79,25 @@
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>한 반에 23명이 있을 때, 생일이 같은 두 사람이 적어도 한 쌍 있을 확률은 얼마일까요? 365일에 비하면 23명은 적어 보입니다.</li>
-            <li><span class="tag">복원</span>표본공간 S에서 사건 A가 일어나지 않는 사건을 A의 <em>여사건</em>이라 하고 A<sup>c</sup>로 씁니다. A와 A<sup>c</sup>는 서로 배반이고 A ∪ A<sup>c</sup> = S입니다.</li>
-            <li><span class="tag">설명</span>덧셈정리로 P(A) + P(A<sup>c</sup>) = P(S) = 1이므로 P(A<sup>c</sup>) = 1 − P(A)입니다. '적어도 한 쌍이 같다'를 직접 세려면 한 쌍, 두 쌍, 세 명이 같은 경우…를 모두 나눠야 합니다. 그 여사건 '모두 다르다'는 한 가지 경우입니다. <i>n</i>명의 생일을 차례로 정하면 모두 다른 경우는 365 × 364 × ⋯ × (365 − <i>n</i> + 1) = <sub>365</sub>P<sub><i>n</i></sub>가지이고, 전체는 365<sup><i>n</i></sup>가지입니다. 따라서 P(적어도 한 쌍) = 1 − <sub>365</sub>P<sub><i>n</i></sub>/365<sup><i>n</i></sup>입니다.</li>
+            <li><span class="tag">복원</span>표본공간 S에서 사건 A가 일어나지 않는 사건을 A의 <em>여사건</em>이라 하고 \(A^c\)로 씁니다. A와 \(A^c\)는 서로 배반이고 \(A \cup A^c = S\)입니다.</li>
+            <li><span class="tag">설명</span>덧셈정리로 \(P(A) + P(A^c) = P(S) = 1\)이므로 \(P(A^c) = 1 - P(A)\)입니다. '적어도 한 쌍이 같다'를 직접 세려면 한 쌍, 두 쌍, 세 명이 같은 경우…를 모두 나눠야 합니다. 그 여사건 '모두 다르다'는 한 가지 경우입니다. \(n\)명의 생일을 차례로 정하면 모두 다른 경우는 \(365 \times 364 \times \cdots \times (365 - n + 1) = {}_{365}\mathrm{P}_{n}\)가지이고, 전체는 \(365^n\)가지입니다. 따라서 \(P(\text{적어도 한 쌍}) = 1 - \frac{{}_{365}\mathrm{P}_{n}}{365^n}\)입니다.</li>
             <li><span class="tag">연결</span>'적어도', '이상', '아닌'이 들어간 문제에서는 여사건을 먼저 떠올립니다. 같은 생각으로 학번이나 비밀번호처럼 무작위로 정한 번호가 우연히 겹칠 확률도 어림할 수 있습니다.</li>
-            <li><span class="tag">적용</span><i>n</i>을 움직여 곡선이 1/2을 넘는 첫 <i>n</i>을 찾으세요. 그 <i>n</i>에서 '모의 학급 200개 만들기'를 여러 번 눌러 주황 점이 곡선 근처에 모이는지 보세요. 확률이 0.99를 넘는 것은 몇 명부터인가요? 두 곡선의 높이를 더하면 언제나 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>"365일의 절반인 183명은 있어야 1/2이 된다"는 직관은 '내 생일과 같은 사람이 있는가'를 생각한 것입니다. 이 문제는 어느 두 사람이든 같으면 되므로, 23명이면 비교할 쌍이 <sub>23</sub>C<sub>2</sub> = 253쌍이나 됩니다. 또 계산값은 모든 날짜의 가능성이 같다는 가정 위에서만 정확합니다.</li>
+            <li><span class="tag">적용</span>\(n\)을 움직여 곡선이 \(\frac{1}{2}\)을 넘는 첫 \(n\)을 찾으세요. 그 \(n\)에서 '모의 학급 200개 만들기'를 여러 번 눌러 주황 점이 곡선 근처에 모이는지 보세요. 확률이 0.99를 넘는 것은 몇 명부터인가요? 두 곡선의 높이를 더하면 언제나 얼마인가요?</li>
+            <li class="warn"><span class="tag">판단</span>"365일의 절반인 183명은 있어야 \(\frac{1}{2}\)이 된다"는 직관은 '내 생일과 같은 사람이 있는가'를 생각한 것입니다. 이 문제는 어느 두 사람이든 같으면 되므로, 23명이면 비교할 쌍이 \({}_{23}\mathrm{C}_{2} = 253\)쌍이나 됩니다. 또 계산값은 모든 날짜의 가능성이 같다는 가정 위에서만 정확합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">주사위 한 개를 네 번 던질 때, 6의 눈이 적어도 한 번 나올 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2/3<span class="why"><b>1/6을 네 번 더했습니다.</b> '첫째에 6', '둘째에 6' 같은 사건은 함께 일어날 수 있어 배반이 아니므로 그냥 더할 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>625/1296<span class="why"><b>여사건의 확률입니다.</b> 6이 한 번도 나오지 않는 경우가 5<sup>4</sup> = 625가지이므로 이 값은 P(A<sup>c</sup>)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>671/1296<span class="why"><b>맞습니다.</b> 전체 6<sup>4</sup> = 1296가지 중 6이 한 번도 없는 경우가 625가지이므로 1 − 625/1296 = 671/1296 ≈ 0.518입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1/1296<span class="why"><b>네 번 모두 6일 확률입니다.</b> '적어도 한 번'은 한 번, 두 번, 세 번, 네 번인 경우를 모두 포함합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{2}{3}\)<span class="why"><b>\(\frac{1}{6}\)을 네 번 더했습니다.</b> '첫째에 6', '둘째에 6' 같은 사건은 함께 일어날 수 있어 배반이 아니므로 그냥 더할 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{625}{1296}\)<span class="why"><b>여사건의 확률입니다.</b> 6이 한 번도 나오지 않는 경우가 \(5^4 = 625\)가지이므로 이 값은 \(P(A^c)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(\frac{671}{1296}\)<span class="why"><b>맞습니다.</b> 전체 \(6^4 = 1296\)가지 중 6이 한 번도 없는 경우가 625가지이므로 \(1 - \frac{625}{1296} = \frac{671}{1296} \approx 0.518\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{1296}\)<span class="why"><b>네 번 모두 6일 확률입니다.</b> '적어도 한 번'은 한 번, 두 번, 세 번, 네 번인 경우를 모두 포함합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a></div></nav>
 
       <article class="card" id="card-stat-at-least">
         <header class="card-head">
@@ -105,9 +107,9 @@
           <div class="card-fig">
             <canvas aria-label="제품 10개 중 불량품 d개가 든 상자, 그리고 r개를 뽑을 때 불량품이 k개일 확률 막대와 k가 1 이상인 막대를 쌓은 막대"></canvas>
             <div class="ctl">
-              <label class="mono">불량품 수 <i>d</i> = <output class="d-out">3</output> (전체 10개)</label>
+              <label class="mono">불량품 수 \(d\) = <output class="d-out">3</output> (전체 10개)</label>
               <input class="d" type="range" min="1" max="5" step="1" value="3" aria-label="불량품 수 d">
-              <label class="mono">뽑는 개수 <i>r</i> = <output class="r-out">3</output></label>
+              <label class="mono">뽑는 개수 \(r\) = <output class="r-out">3</output></label>
               <input class="r" type="range" min="1" max="6" step="1" value="3" aria-label="뽑는 개수 r">
               <div class="go-row">
                 <button class="chip go-one" type="button">한 번 뽑기</button>
@@ -115,33 +117,34 @@
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>P(불량품 0개)</dt><dd class="n-0">—</dd></div>
-                <div><dt>P(적어도 1개)</dt><dd class="n-1">—</dd></div>
+                <div><dt>\(P(\text{불량품 }0\text{개})\)</dt><dd class="n-0">—</dd></div>
+                <div><dt>\(P(\text{적어도 }1\text{개})\)</dt><dd class="n-1">—</dd></div>
                 <div><dt>모의실험 비율</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">위는 상자 속 제품 10개이고 주황이 불량품, 테두리가 마지막으로 뽑은 제품입니다. 아래 막대는 뽑은 <i>r</i>개 중 불량품이 <i>k</i>개일 확률입니다. 맨 오른쪽 막대는 <i>k</i> ≥ 1인 막대를 모두 쌓은 것입니다.</p>
+              <p class="fig-note">위는 상자 속 제품 10개이고 주황이 불량품, 테두리가 마지막으로 뽑은 제품입니다. 아래 막대는 뽑은 \(r\)개 중 불량품이 \(k\)개일 확률입니다. 맨 오른쪽 막대는 \(k \ge 1\)인 막대를 모두 쌓은 것입니다.</p>
             </div>
           </div>
           <ol class="steps">
             <li><span class="tag">질문</span>제품 10개 중 불량품이 3개 있습니다. 3개를 함께 뽑을 때 불량품이 적어도 1개 섞일 확률은 얼마일까요?</li>
-            <li><span class="tag">복원</span>서로 다른 <i>n</i>개에서 <i>r</i>개를 순서 없이 뽑는 경우의 수는 <sub><i>n</i></sub>C<sub><i>r</i></sub>입니다. 10개에서 3개를 뽑는 120가지는 모두 같은 정도로 기대되므로 수학적 확률을 씁니다.</li>
-            <li><span class="tag">설명</span>직접 구하려면 불량품이 1개, 2개, 3개인 경우를 각각 세어 더해야 합니다. 세 사건은 서로 배반이므로 더할 수 있지만 계산이 세 번 필요합니다. 여사건 '불량품이 0개'는 정상품 7개에서만 3개를 뽑는 한 가지 경우입니다. P(0개) = <sub>7</sub>C<sub>3</sub>/<sub>10</sub>C<sub>3</sub> = 35/120 = 7/24이므로 P(적어도 1개) = 1 − 7/24 = 17/24입니다.</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 \(r\)개를 순서 없이 뽑는 경우의 수는 \({}_{n}\mathrm{C}_{r}\)입니다. 10개에서 3개를 뽑는 120가지는 모두 같은 정도로 기대되므로 수학적 확률을 씁니다.</li>
+            <li><span class="tag">설명</span>직접 구하려면 불량품이 1개, 2개, 3개인 경우를 각각 세어 더해야 합니다. 세 사건은 서로 배반이므로 더할 수 있지만 계산이 세 번 필요합니다. 여사건 '불량품이 0개'는 정상품 7개에서만 3개를 뽑는 한 가지 경우입니다. \(P(0\text{개}) = \frac{{}_{7}\mathrm{C}_{3}}{{}_{10}\mathrm{C}_{3}} = \frac{35}{120} = \frac{7}{24}\)이므로 \(P(\text{적어도 }1\text{개}) = 1 - \frac{7}{24} = \frac{17}{24}\)입니다.</li>
             <li><span class="tag">연결</span>제품 몇 개만 뽑아 검사하는 표본 검사도 이 계산에 기대고 있습니다. 불량품이 섞여 있으면, 뽑는 수를 늘릴수록 적어도 하나가 걸릴 확률이 커집니다.</li>
-            <li><span class="tag">적용</span>오른쪽에 쌓은 막대의 높이가 1 − P(0개)와 같은지 보세요. <i>r</i>을 1부터 6까지 늘리면 P(적어도 1개)가 어떻게 변하나요? 불량품 수 <i>d</i>를 바꾸면 어떻게 되나요? '100번 뽑기'로 모의실험 비율도 비교하세요. <i>d</i> = 5, <i>r</i> = 6이면 왜 P(0개) = 0일까요?</li>
-            <li class="warn"><span class="tag">판단</span>"한 개가 불량일 확률이 3/10이니 3개를 뽑으면 3 × 3/10 = 9/10"은 틀린 계산입니다. '첫째가 불량', '둘째가 불량', '셋째가 불량'은 함께 일어날 수 있어 배반이 아니므로, 그냥 더하면 겹친 부분을 여러 번 셉니다. 이 방식으로 4개를 뽑으면 12/10이 되어 확률이 1을 넘습니다.</li>
+            <li><span class="tag">적용</span>오른쪽에 쌓은 막대의 높이가 \(1 - P(0\text{개})\)와 같은지 보세요. \(r\)을 1부터 6까지 늘리면 \(P(\text{적어도 }1\text{개})\)가 어떻게 변하나요? 불량품 수 \(d\)를 바꾸면 어떻게 되나요? '100번 뽑기'로 모의실험 비율도 비교하세요. \(d = 5\), \(r = 6\)이면 왜 \(P(0\text{개}) = 0\)일까요?</li>
+            <li class="warn"><span class="tag">판단</span>"한 개가 불량일 확률이 \(\frac{3}{10}\)이니 3개를 뽑으면 \(3 \times \frac{3}{10} = \frac{9}{10}\)"은 틀린 계산입니다. '첫째가 불량', '둘째가 불량', '셋째가 불량'은 함께 일어날 수 있어 배반이 아니므로, 그냥 더하면 겹친 부분을 여러 번 셉니다. 이 방식으로 4개를 뽑으면 \(\frac{12}{10}\)이 되어 확률이 1을 넘습니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">제품 12개 중 불량품이 3개 있습니다. 3개를 함께 뽑을 때 불량품이 적어도 1개 섞일 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>34/55<span class="why"><b>맞습니다.</b> 불량품이 없는 경우는 <sub>9</sub>C<sub>3</sub> = 84가지, 전체는 <sub>12</sub>C<sub>3</sub> = 220가지이므로 1 − 84/220 = 136/220 = 34/55입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>21/55<span class="why"><b>여사건의 확률입니다.</b> 84/220 = 21/55는 불량품이 하나도 없을 확률입니다. 1에서 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3/4<span class="why"><b>한 개의 확률을 세 번 더했습니다.</b> 3 × 3/12는 서로 배반이 아닌 사건들을 더해 겹친 경우를 여러 번 센 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>27/55<span class="why"><b>정확히 1개일 확률입니다.</b> 3 × <sub>9</sub>C<sub>2</sub> = 108가지이므로 108/220 = 27/55입니다. 2개, 3개인 경우가 빠졌습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{34}{55}\)<span class="why"><b>맞습니다.</b> 불량품이 없는 경우는 \({}_{9}\mathrm{C}_{3} = 84\)가지, 전체는 \({}_{12}\mathrm{C}_{3} = 220\)가지이므로 \(1 - \frac{84}{220} = \frac{136}{220} = \frac{34}{55}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{21}{55}\)<span class="why"><b>여사건의 확률입니다.</b> \(\frac{84}{220} = \frac{21}{55}\)는 불량품이 하나도 없을 확률입니다. 1에서 빼야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3}{4}\)<span class="why"><b>한 개의 확률을 세 번 더했습니다.</b> \(3 \times \frac{3}{12}\)는 서로 배반이 아닌 사건들을 더해 겹친 경우를 여러 번 센 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{27}{55}\)<span class="why"><b>정확히 1개일 확률입니다.</b> \(3 \times {}_{9}\mathrm{C}_{2} = 108\)가지이므로 \(\frac{108}{220} = \frac{27}{55}\)입니다. 2개, 3개인 경우가 빠졌습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=stat-2-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">34문항</span></a>
 
@@ -152,8 +155,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/stat/birthday.js"></script>
 <script src="../../js/cards/stat/at-least.js"></script>
 </body>

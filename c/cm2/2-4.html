@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm2-all-some canvas { width: 100%; aspect-ratio: 16 / 5; cursor: pointer; }
     #card-cm2-all-some .presets + .presets { margin-top: 6px; }
@@ -39,17 +40,17 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>명제와 조건</h1>
-    <p class="lead">"6은 짝수이다"는 참이고 "<i>x</i>는 짝수이다"는 <i>x</i>를 정해야 참·거짓이 갈립니다. 이 절에서는 참과 거짓을 가릴 수 있는 문장인 명제와, 변수에 따라 참·거짓이 바뀌는 조건을 구분하고, 조건을 집합으로 바꾸어 명제가 참인지 판단합니다.</p>
+    <p class="lead">"6은 짝수이다"는 참이고 "\(x\)는 짝수이다"는 \(x\)를 정해야 참·거짓이 갈립니다. 이 절에서는 참과 거짓을 가릴 수 있는 문장인 명제와, 변수에 따라 참·거짓이 바뀌는 조건을 구분하고, 조건을 집합으로 바꾸어 명제가 참인지 판단합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">부분집합</span><span class="p">여집합</span><span class="p">부등식과 수직선</span>
+      <a class="p p-card" href="../../c/cm2/2-2.html#card-cm2-subset-count" title="공통수학2 2.2 · 원소가 하나 늘면 부분집합은 몇 개 늘까?">부분집합</a><a class="p p-card" href="../../c/cm2/2-3.html#card-cm2-set-ops" title="공통수학2 2.3 · 두 집합으로 새 집합을 만드는 방법은 몇 가지일까?">여집합</a><a class="p p-card" href="../../c/cm1/2-10.html#card-cm1-abs-dist" title="공통수학1 2.10 · |x − a| &lt; r은 수직선에서 어떤 범위일까?">부등식과 수직선</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-cm2-all-some"><span class="mono">2.4.1</span>'모든'과 '어떤'을 포함한 명제</a></li>
         <li><a href="#card-cm2-prop-truthset"><span class="mono">2.4.2</span>명제 p → q와 진리집합</a></li>
         <li><a href="#text-cm2-prop-terms"><span class="mono">2.4.3</span>정의·정리·증명과 부정</a></li>
@@ -68,137 +69,140 @@
             <canvas aria-label="전체집합의 원소를 칸으로 늘어놓고 조건 p(x)가 참인 칸을 칠한다. 칸을 누르면 그 값에서의 계산을 보여 준다"></canvas>
             <div class="ctl">
               <div class="presets uset">
-                <button class="chip" type="button" data-u="pos" aria-pressed="true">U = {1, 2, …, 10}</button>
-                <button class="chip" type="button" data-u="int">U = {−3, −2, …, 3}</button>
+                <button class="chip" type="button" data-u="pos" aria-pressed="true">\(U = \{1, 2, \cdots, 10\}\)</button>
+                <button class="chip" type="button" data-u="int">\(U = \{-3, -2, \cdots, 3\}\)</button>
               </div>
               <div class="presets conds">
-                <button class="chip" type="button" data-c="sq" aria-pressed="true"><i>x</i><sup>2</sup> ≥ <i>x</i></button>
-                <button class="chip" type="button" data-c="gt"><i>x</i> + 1 &gt; 3</button>
-                <button class="chip" type="button" data-c="eq4"><i>x</i><sup>2</sup> = 4</button>
-                <button class="chip" type="button" data-c="pr"><i>x</i>는 소수</button>
-                <button class="chip" type="button" data-c="neg"><i>x</i><sup>2</sup> &lt; 0</button>
+                <button class="chip" type="button" data-c="sq" aria-pressed="true">\(x^2 \ge x\)</button>
+                <button class="chip" type="button" data-c="gt">\(x + 1 &gt; 3\)</button>
+                <button class="chip" type="button" data-c="eq4">\(x^2 = 4\)</button>
+                <button class="chip" type="button" data-c="pr">\(x\)는 소수</button>
+                <button class="chip" type="button" data-c="neg">\(x^2 &lt; 0\)</button>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt class="d-all">모든 x에 대하여 p(x)</dt><dd class="n-all">—</dd></div>
-                <div><dt class="d-some">어떤 x에 대하여 p(x)</dt><dd class="n-some">—</dd></div>
+                <div><dt class="d-all">모든 \(x\)에 대하여 \(p(x)\)</dt><dd class="n-all">—</dd></div>
+                <div><dt class="d-some">어떤 \(x\)에 대하여 \(p(x)\)</dt><dd class="n-some">—</dd></div>
               </dl>
               <p class="fig-note neg">—</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>"<i>x</i><sup>2</sup> ≥ <i>x</i>"는 참일까요, 거짓일까요? 앞에 '모든 자연수 <i>x</i>에 대하여'를 붙이면 어떻게 되고, '어떤 정수 <i>x</i>에 대하여'를 붙이면 어떻게 될까요?</li>
-            <li><span class="tag">복원</span>집합 U의 원소 가운데 어떤 성질을 만족하는 것만 모으면 U의 부분집합이 됩니다. 여집합 P<sup>C</sup>는 U에서 P에 속하지 않는 원소 전체입니다.</li>
-            <li><span class="tag">설명</span>참인지 거짓인지 분명하게 판별할 수 있는 문장이나 식을 <em>명제</em>, 변수의 값에 따라 참·거짓이 정해지는 문장이나 식을 <em>조건</em>이라 합니다. 전체집합 U의 원소 가운데 조건 <i>p</i>(<i>x</i>)를 참이 되게 하는 것 전체를 <i>p</i>의 <em>진리집합</em> P라 합니다. '<i>p</i>가 아니다'를 <i>p</i>의 <em>부정</em> ~<i>p</i>라 하고, ~<i>p</i>의 진리집합은 P<sup>C</sup>입니다. 조건 앞에 '모든'이나 '어떤'을 붙이면 명제가 됩니다. "모든 <i>x</i>에 대하여 <i>p</i>(<i>x</i>)"는 P = U일 때만 참이고, 거짓임을 보이려면 반례 하나면 됩니다. "어떤 <i>x</i>에 대하여 <i>p</i>(<i>x</i>)"는 P ≠ ∅이면 참이고, 참임을 보이려면 예 하나면 됩니다.</li>
-            <li><span class="tag">연결</span>"모든 <i>x</i>에 대하여 <i>p</i>(<i>x</i>)"의 부정은 "어떤 <i>x</i>에 대하여 ~<i>p</i>(<i>x</i>)"이고, "어떤 <i>x</i>에 대하여 <i>p</i>(<i>x</i>)"의 부정은 "모든 <i>x</i>에 대하여 ~<i>p</i>(<i>x</i>)"입니다. 집합으로 쓰면 P = U의 부정이 P<sup>C</sup> ≠ ∅입니다. 이 장 끝의 절대부등식은 '모든 실수 <i>x</i>에 대하여' 성립하는 부등식입니다.</li>
-            <li><span class="tag">적용</span>조건 <i>x</i><sup>2</sup> ≥ <i>x</i>에서 두 전체집합을 비교해 보세요. 칸을 눌러 <i>x</i> = 0, −2에서의 계산을 확인하세요. <i>x</i><sup>2</sup> = 4는 전체집합에 따라 진리집합이 어떻게 달라지나요? <i>x</i><sup>2</sup> &lt; 0에서 '모든'과 '어떤' 명제는 각각 참인가요?</li>
-            <li class="warn"><span class="tag">판단</span>조건의 참·거짓은 전체집합을 정해야 결정됩니다. 같은 조건도 U가 바뀌면 진리집합이 바뀝니다. 또 "모든 <i>x</i>에 대하여 <i>p</i>"의 부정을 "모든 <i>x</i>에 대하여 ~<i>p</i>"로 쓰는 실수가 많습니다. '모두 그렇다'를 부정하면 '그렇지 않은 것이 하나는 있다'입니다.</li>
+            <li><span class="tag">질문</span>"\(x^2 \ge x\)"는 참일까요, 거짓일까요? 앞에 '모든 자연수 \(x\)에 대하여'를 붙이면 어떻게 되고, '어떤 정수 \(x\)에 대하여'를 붙이면 어떻게 될까요?</li>
+            <li><span class="tag">복원</span>집합 \(U\)의 원소 가운데 어떤 성질을 만족하는 것만 모으면 \(U\)의 부분집합이 됩니다. 여집합 \(P^C\)는 \(U\)에서 \(P\)에 속하지 않는 원소 전체입니다.</li>
+            <li><span class="tag">설명</span>참인지 거짓인지 분명하게 판별할 수 있는 문장이나 식을 <em>명제</em>, 변수의 값에 따라 참·거짓이 정해지는 문장이나 식을 <em>조건</em>이라 합니다. 전체집합 \(U\)의 원소 가운데 조건 \(p(x)\)를 참이 되게 하는 것 전체를 \(p\)의 <em>진리집합</em> \(P\)라 합니다. '\(p\)가 아니다'를 \(p\)의 <em>부정</em> \({\sim}p\)라 하고, \({\sim}p\)의 진리집합은 \(P^C\)입니다. 조건 앞에 '모든'이나 '어떤'을 붙이면 명제가 됩니다. "모든 \(x\)에 대하여 \(p(x)\)"는 \(P = U\)일 때만 참이고, 거짓임을 보이려면 반례 하나면 됩니다. "어떤 \(x\)에 대하여 \(p(x)\)"는 \(P \ne \varnothing\)이면 참이고, 참임을 보이려면 예 하나면 됩니다.</li>
+            <li><span class="tag">연결</span>"모든 \(x\)에 대하여 \(p(x)\)"의 부정은 "어떤 \(x\)에 대하여 \({\sim}p(x)\)"이고, "어떤 \(x\)에 대하여 \(p(x)\)"의 부정은 "모든 \(x\)에 대하여 \({\sim}p(x)\)"입니다. 집합으로 쓰면 \(P = U\)의 부정이 \(P^C \ne \varnothing\)입니다. 이 장 끝의 절대부등식은 '모든 실수 \(x\)에 대하여' 성립하는 부등식입니다.</li>
+            <li><span class="tag">적용</span>조건 \(x^2 \ge x\)에서 두 전체집합을 비교해 보세요. 칸을 눌러 \(x = 0, -2\)에서의 계산을 확인하세요. \(x^2 = 4\)는 전체집합에 따라 진리집합이 어떻게 달라지나요? \(x^2 &lt; 0\)에서 '모든'과 '어떤' 명제는 각각 참인가요?</li>
+            <li class="warn"><span class="tag">판단</span>조건의 참·거짓은 전체집합을 정해야 결정됩니다. 같은 조건도 \(U\)가 바뀌면 진리집합이 바뀝니다. 또 "모든 \(x\)에 대하여 \(p\)"의 부정을 "모든 \(x\)에 대하여 \({\sim}p\)"로 쓰는 실수가 많습니다. '모두 그렇다'를 부정하면 '그렇지 않은 것이 하나는 있다'입니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">전체집합 U = {−1, 0, 1}일 때 참인 명제는?</p>
+          <p class="q">전체집합 \(U = \{-1, 0, 1\}\)일 때 참인 명제는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모든 <i>x</i>에 대하여 <i>x</i><sup>2</sup> = <i>x</i><span class="why"><b>0과 1만 보았습니다.</b> <i>x</i> = −1이면 (−1)<sup>2</sup> = 1 ≠ −1이므로 반례가 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>어떤 <i>x</i>에 대하여 <i>x</i><sup>2</sup> &lt; 0<span class="why"><b>진리집합이 공집합입니다.</b> 실수의 제곱은 음수가 될 수 없으므로 예가 하나도 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>모든 <i>x</i>에 대하여 <i>x</i><sup>3</sup> = <i>x</i><span class="why"><b>맞습니다.</b> (−1)<sup>3</sup> = −1, 0<sup>3</sup> = 0, 1<sup>3</sup> = 1이므로 진리집합이 U 전체입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 <i>x</i>에 대하여 <i>x</i> + 1 &gt; 2<span class="why"><b>U 밖의 수를 떠올렸습니다.</b> <i>x</i> &gt; 1이어야 하는데 U에서 가장 큰 원소는 1입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모든 \(x\)에 대하여 \(x^2 = x\)<span class="why"><b>0과 1만 보았습니다.</b> \(x = -1\)이면 \((-1)^2 = 1 \ne -1\)이므로 반례가 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>어떤 \(x\)에 대하여 \(x^2 &lt; 0\)<span class="why"><b>진리집합이 공집합입니다.</b> 실수의 제곱은 음수가 될 수 없으므로 예가 하나도 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>모든 \(x\)에 대하여 \(x^3 = x\)<span class="why"><b>맞습니다.</b> \((-1)^3 = -1, 0^3 = 0, 1^3 = 1\)이므로 진리집합이 \(U\) 전체입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(x\)에 대하여 \(x + 1 &gt; 2\)<span class="why"><b>\(U\) 밖의 수를 떠올렸습니다.</b> \(x &gt; 1\)이어야 하는데 \(U\)에서 가장 큰 원소는 1입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-2.html#card-cm2-subset-venn"><small class="mono">공통수학2 2.2</small>한 집합이 다른 집합 안에 들어 있는지 어떻게 판단할까?</a><a href="../../c/cm2/2-2.html#card-cm2-subset-count"><small class="mono">공통수학2 2.2</small>원소가 하나 늘면 부분집합은 몇 개 늘까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-6.html#card-cm2-suff-nec"><small class="mono">공통수학2 2.6</small>조건 p가 q에 대해 넉넉한지, 꼭 필요한지 어떻게 가릴까?</a><a href="../../c/cm2/2-6.html#card-cm2-cond-plane"><small class="mono">공통수학2 2.6</small>두 변수의 조건은 반례를 어디에서 찾을까?</a></div></nav>
 
       <article class="card" id="card-cm2-prop-truthset">
         <header class="card-head">
-          <span class="no">2.4.2</span><h2>'<i>p</i>이면 <i>q</i>이다'가 참인지 집합으로 어떻게 판단할까?</h2><span class="kind">명제 p → q · 진리집합의 포함관계</span>
+          <span class="no">2.4.2</span><h2>'\(p\)이면 \(q\)이다'가 참인지 집합으로 어떻게 판단할까?</h2><span class="kind">명제 \(p \to q\) · 진리집합의 포함관계</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="수직선 위에 가정 p의 진리집합 P와 결론 q의 진리집합 Q를 그리고, P에는 있지만 Q에는 없는 반례 구간을 붉게 표시한다"></canvas>
             <div class="ctl">
               <div class="presets qs">
-                <button class="chip" type="button" data-q="sq4" aria-pressed="true"><i>q</i>: <i>x</i><sup>2</sup> ≤ 4</button>
-                <button class="chip" type="button" data-q="pos"><i>q</i>: <i>x</i> &gt; 0</button>
-                <button class="chip" type="button" data-q="mid"><i>q</i>: −1 &lt; <i>x</i> &lt; 3</button>
-                <button class="chip" type="button" data-q="out"><i>q</i>: <i>x</i><sup>2</sup> − 1 &gt; 0</button>
+                <button class="chip" type="button" data-q="sq4" aria-pressed="true">\(q: x^2 \le 4\)</button>
+                <button class="chip" type="button" data-q="pos">\(q: x &gt; 0\)</button>
+                <button class="chip" type="button" data-q="mid">\(q: -1 &lt; x &lt; 3\)</button>
+                <button class="chip" type="button" data-q="out">\(q: x^2 - 1 &gt; 0\)</button>
               </div>
               <div class="ctl-row">
-                <div><label class="mono"><i>p</i>: <i>a</i> ≤ <i>x</i> ≤ <i>b</i>, <i>a</i> = <output class="a-out">−1</output></label>
+                <div><label class="mono">\(p: a \le x \le b, a =\) <output class="a-out">−1</output></label>
                 <input class="a" type="range" min="-4" max="4" step="0.5" value="-1" aria-label="가정의 왼쪽 끝 a"></div>
-                <div><label class="mono"><i>b</i> = <output class="b-out">1</output></label>
+                <div><label class="mono">\(b =\) <output class="b-out">1</output></label>
                 <input class="b" type="range" min="-4" max="4" step="0.5" value="1" aria-label="가정의 오른쪽 끝 b"></div>
               </div>
               <p class="mono eq">—</p>
               <dl class="nums">
-                <div><dt>P ⊂ Q</dt><dd class="n-sub">—</dd></div>
-                <div><dt>명제 p → q</dt><dd class="n-tf">—</dd></div>
+                <div><dt>\(P \subset Q\)</dt><dd class="n-sub">—</dd></div>
+                <div><dt>명제 \(p \to q\)</dt><dd class="n-tf">—</dd></div>
               </dl>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>"−1 ≤ <i>x</i> ≤ 1이면 <i>x</i><sup>2</sup> ≤ 4이다"는 참일까요? 무한히 많은 실수를 하나씩 넣어 볼 수 없는데 어떻게 확신할 수 있을까요?</li>
-            <li><span class="tag">복원</span>조건 <i>p</i>를 참이 되게 하는 값 전체가 진리집합 P입니다. 부등식의 해는 수직선 위의 구간으로 나타납니다. 끝점이 포함되면 속이 찬 점, 포함되지 않으면 빈 점으로 그립니다.</li>
-            <li><span class="tag">설명</span>'<i>p</i>이면 <i>q</i>이다'를 기호로 <i>p</i> → <i>q</i>라 쓰고, <i>p</i>를 <em>가정</em>, <i>q</i>를 <em>결론</em>이라 합니다. 이 명제는 <i>p</i>를 만족하는 값이 언제나 <i>q</i>도 만족할 때 참입니다. 진리집합으로 말하면 <b>P ⊂ Q일 때 참</b>이고, P ⊄ Q일 때 거짓입니다. 거짓일 때 P에는 속하지만 Q에는 속하지 않는 값, 곧 P ∩ Q<sup>C</sup>의 원소가 <em>반례</em>입니다. 명제가 참이면 <i>p</i> ⇒ <i>q</i>로 씁니다.</li>
+            <li><span class="tag">질문</span>"\(-1 \le x \le 1\)이면 \(x^2 \le 4\)이다"는 참일까요? 무한히 많은 실수를 하나씩 넣어 볼 수 없는데 어떻게 확신할 수 있을까요?</li>
+            <li><span class="tag">복원</span>조건 \(p\)를 참이 되게 하는 값 전체가 진리집합 \(P\)입니다. 부등식의 해는 수직선 위의 구간으로 나타납니다. 끝점이 포함되면 속이 찬 점, 포함되지 않으면 빈 점으로 그립니다.</li>
+            <li><span class="tag">설명</span>'\(p\)이면 \(q\)이다'를 기호로 \(p \to q\)라 쓰고, \(p\)를 <em>가정</em>, \(q\)를 <em>결론</em>이라 합니다. 이 명제는 \(p\)를 만족하는 값이 언제나 \(q\)도 만족할 때 참입니다. 진리집합으로 말하면 <b>\(P \subset Q\)일 때 참</b>이고, \(P \not\subset Q\)일 때 거짓입니다. 거짓일 때 \(P\)에는 속하지만 \(Q\)에는 속하지 않는 값, 곧 \(P \cap Q^C\)의 원소가 <em>반례</em>입니다. 명제가 참이면 \(p \Rightarrow q\)로 씁니다.</li>
             <li><span class="tag">연결</span>이 판단법은 다음 절의 역과 대우, 그 다음 절의 충분조건·필요조건에서 그대로 쓰입니다. 모두 진리집합 사이의 포함관계를 묻는 질문입니다.</li>
-            <li><span class="tag">적용</span><i>q</i>: <i>x</i><sup>2</sup> ≤ 4에서 명제가 참이 되도록 <i>b</i>를 가장 크게 하면 얼마인가요? <i>q</i>: <i>x</i> &gt; 0에서 <i>a</i> = 0, <i>b</i> = 2로 두면 반례는 무엇인가요? <i>q</i>: <i>x</i><sup>2</sup> − 1 &gt; 0에서 명제가 참이 되는 구간은 어디에 있어야 하나요?</li>
-            <li class="warn"><span class="tag">판단</span>P에 속하는 값 몇 개가 Q에 들어간다고 명제가 참이 되지는 않습니다. P의 모든 원소가 Q에 있어야 합니다. 반대로 거짓임을 보일 때는 반례 하나로 충분합니다. 끝점 하나가 반례가 되는 경우를 특히 조심해야 합니다. 또 가정이 공집합이면(P = ∅) 반례가 없으므로 명제는 참으로 봅니다.</li>
+            <li><span class="tag">적용</span>\(q: x^2 \le 4\)에서 명제가 참이 되도록 \(b\)를 가장 크게 하면 얼마인가요? \(q: x &gt; 0\)에서 \(a = 0, b = 2\)로 두면 반례는 무엇인가요? \(q: x^2 - 1 &gt; 0\)에서 명제가 참이 되는 구간은 어디에 있어야 하나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(P\)에 속하는 값 몇 개가 \(Q\)에 들어간다고 명제가 참이 되지는 않습니다. \(P\)의 모든 원소가 \(Q\)에 있어야 합니다. 반대로 거짓임을 보일 때는 반례 하나로 충분합니다. 끝점 하나가 반례가 되는 경우를 특히 조심해야 합니다. 또 가정이 공집합이면\((P = \varnothing)\) 반례가 없으므로 명제는 참으로 봅니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q"><i>p</i>: −1 ≤ <i>x</i> ≤ 2일 때 명제 <i>p</i> → <i>q</i>가 참이 되는 조건 <i>q</i>는?</p>
+          <p class="q">\(p: -1 \le x \le 2\)일 때 명제 \(p \to q\)가 참이 되는 조건 \(q\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>q</i>: <i>x</i> &gt; −1<span class="why"><b>끝점이 반례입니다.</b> <i>x</i> = −1은 P에 속하지만 −1 &gt; −1은 거짓입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span><i>q</i>: <i>x</i><sup>2</sup> ≤ 4<span class="why"><b>맞습니다.</b> Q = {<i>x</i> | −2 ≤ <i>x</i> ≤ 2}이고 P = {<i>x</i> | −1 ≤ <i>x</i> ≤ 2}는 Q 안에 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>q</i>: <i>x</i> &lt; 2<span class="why"><b>오른쪽 끝점을 놓쳤습니다.</b> <i>x</i> = 2가 반례입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>q</i>: <i>x</i> ≥ 0<span class="why"><b>P의 일부만 Q에 들어갑니다.</b> −1 ≤ <i>x</i> &lt; 0인 값이 모두 반례입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(q: x &gt; -1\)<span class="why"><b>끝점이 반례입니다.</b> \(x = -1\)은 \(P\)에 속하지만 \(-1 &gt; -1\)은 거짓입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(q: x^2 \le 4\)<span class="why"><b>맞습니다.</b> \(Q = \{x \mid -2 \le x \le 2\}\)이고 \(P = \{x \mid -1 \le x \le 2\}\)는 \(Q\) 안에 들어갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(q: x &lt; 2\)<span class="why"><b>오른쪽 끝점을 놓쳤습니다.</b> \(x = 2\)가 반례입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(q: x \ge 0\)<span class="why"><b>\(P\)의 일부만 \(Q\)에 들어갑니다.</b> \(-1 \le x &lt; 0\)인 값이 모두 반례입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-2.html#card-cm2-subset-venn"><small class="mono">공통수학2 2.2</small>한 집합이 다른 집합 안에 들어 있는지 어떻게 판단할까?</a><a href="../../c/cm2/2-2.html#card-cm2-subset-count"><small class="mono">공통수학2 2.2</small>원소가 하나 늘면 부분집합은 몇 개 늘까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-6.html#card-cm2-suff-nec"><small class="mono">공통수학2 2.6</small>조건 p가 q에 대해 넉넉한지, 꼭 필요한지 어떻게 가릴까?</a><a href="../../c/cm2/2-6.html#card-cm2-cond-plane"><small class="mono">공통수학2 2.6</small>두 변수의 조건은 반례를 어디에서 찾을까?</a></div></nav>
 
       <article class="card reading" id="text-cm2-prop-terms">
         <header class="card-head"><span class="no">2.4.3</span><h2>정의와 정리는 어떻게 다르고, 조건은 어떻게 부정할까?</h2><span class="kind">읽기 · 정의 · 정리 · 부정</span></header>
         <div class="reading-body">
           <p class="ask">교과서의 문장은 "~라 한다"로 끝나기도 하고 "~이다"로 끝나기도 합니다. 두 문장은 하는 일이 다릅니다. 수학의 문장을 읽고 부정하는 규칙을 정리해 봅니다.</p>
           <h3><span class="mono">1</span>정의는 약속, 정리는 증명된 참인 명제</h3>
-          <p>용어의 뜻을 명확하게 정한 문장을 <em>정의</em>라 합니다. "2로 나누어떨어지는 정수를 짝수라 한다"는 정의입니다. 정의는 약속이므로 증명하지 않습니다. 정의와 이미 참으로 밝혀진 성질을 근거로 어떤 명제가 참임을 논리적으로 밝히는 과정을 <em>증명</em>이라 하고, 증명된 명제 가운데 기본이 되는 것을 <em>정리</em>라 합니다. "두 짝수의 합은 짝수이다"는 정리입니다. 2<i>m</i> + 2<i>n</i> = 2(<i>m</i> + <i>n</i>)으로 증명됩니다.</p>
+          <p>용어의 뜻을 명확하게 정한 문장을 <em>정의</em>라 합니다. "2로 나누어떨어지는 정수를 짝수라 한다"는 정의입니다. 정의는 약속이므로 증명하지 않습니다. 정의와 이미 참으로 밝혀진 성질을 근거로 어떤 명제가 참임을 논리적으로 밝히는 과정을 <em>증명</em>이라 하고, 증명된 명제 가운데 기본이 되는 것을 <em>정리</em>라 합니다. "두 짝수의 합은 짝수이다"는 정리입니다. \(2m + 2n = 2(m + n)\)으로 증명됩니다.</p>
           <h3><span class="mono">2</span>가정과 결론</h3>
-          <p>명제 '<i>p</i>이면 <i>q</i>이다'(<i>p</i> → <i>q</i>)에서 <i>p</i>가 <em>가정</em>, <i>q</i>가 <em>결론</em>입니다. 정리를 쓸 때는 가정이 성립하는지 먼저 확인해야 합니다. 예를 들어 "삼각형이 직각삼각형이면 <i>a</i><sup>2</sup> + <i>b</i><sup>2</sup> = <i>c</i><sup>2</sup>이다"를 직각삼각형이 아닌 삼각형에 쓸 수 없습니다.</p>
+          <p>명제 '\(p\)이면 \(q\)이다'\((p \to q)\)에서 \(p\)가 <em>가정</em>, \(q\)가 <em>결론</em>입니다. 정리를 쓸 때는 가정이 성립하는지 먼저 확인해야 합니다. 예를 들어 "삼각형이 직각삼각형이면 \(a^2 + b^2 = c^2\)이다"를 직각삼각형이 아닌 삼각형에 쓸 수 없습니다.</p>
           <figure>
             <svg viewBox="0 0 320 150" role="img" aria-label="전체집합 U 안에서 P가 Q 안에 들어 있는 벤 다이어그램">
               <rect x="6" y="6" width="308" height="138" fill="#fbfbf8" stroke="#232326" stroke-width="1.2"/>
-              <text x="16" y="26" font-size="14" fill="#232326">U</text>
+              <text x="16" y="26" font-size="14" fill="#232326">\(U\)</text>
               <ellipse cx="165" cy="78" rx="110" ry="58" fill="#f6e7c6" stroke="#e0a02a" stroke-width="1.8"/>
               <ellipse cx="135" cy="80" rx="52" ry="34" fill="#b5d7ac" stroke="#3b7c2a" stroke-width="1.8"/>
-              <text x="128" y="85" font-size="15" fill="#3b7c2a">P</text>
-              <text x="228" y="85" font-size="15" fill="#9a6a10">Q</text>
+              <text x="128" y="85" font-size="15" fill="#3b7c2a">\(P\)</text>
+              <text x="228" y="85" font-size="15" fill="#9a6a10">\(Q\)</text>
             </svg>
-            <figcaption>P ⊂ Q이면 명제 <i>p</i> → <i>q</i>는 참입니다. P 밖으로 나간 부분이 없으므로 반례가 없습니다.</figcaption>
+            <figcaption>\(P \subset Q\)이면 명제 \(p \to q\)는 참입니다. \(P\) 밖으로 나간 부분이 없으므로 반례가 없습니다.</figcaption>
           </figure>
           <h3><span class="mono">3</span>부정하는 규칙</h3>
-          <p>조건 <i>p</i>의 부정 ~<i>p</i>의 진리집합은 P<sup>C</sup>이고, ~(~<i>p</i>)는 다시 <i>p</i>입니다. '그리고'와 '또는'이 들어간 조건은 드모르간의 법칙대로 부정합니다. (P ∩ Q)<sup>C</sup> = P<sup>C</sup> ∪ Q<sup>C</sup>이므로 '<i>p</i> 그리고 <i>q</i>'의 부정은 '~<i>p</i> 또는 ~<i>q</i>'입니다.</p>
+          <p>조건 \(p\)의 부정 \({\sim}p\)의 진리집합은 \(P^C\)이고, \({\sim}({\sim}p)\)는 다시 \(p\)입니다. '그리고'와 '또는'이 들어간 조건은 드모르간의 법칙대로 부정합니다. \((P \cap Q)^C = P^C \cup Q^C\)이므로 '\(p\) 그리고 \(q\)'의 부정은 '\({\sim}p\) 또는 \({\sim}q\)'입니다.</p>
           <div class="tbl"><table>
             <thead><tr><th>조건 또는 명제</th><th>부정</th></tr></thead>
             <tbody>
-              <tr><td><i>x</i> = 1</td><td><i>x</i> ≠ 1</td></tr>
-              <tr><td><i>x</i> &gt; 2</td><td><i>x</i> ≤ 2</td></tr>
-              <tr><td><i>x</i> &gt; 0 그리고 <i>y</i> &gt; 0</td><td><i>x</i> ≤ 0 또는 <i>y</i> ≤ 0</td></tr>
-              <tr><td><i>x</i> = 0 또는 <i>y</i> = 0</td><td><i>x</i> ≠ 0 그리고 <i>y</i> ≠ 0</td></tr>
-              <tr><td>모든 <i>x</i>에 대하여 <i>p</i>(<i>x</i>)</td><td>어떤 <i>x</i>에 대하여 ~<i>p</i>(<i>x</i>)</td></tr>
+              <tr><td>\(x = 1\)</td><td>\(x \ne 1\)</td></tr>
+              <tr><td>\(x &gt; 2\)</td><td>\(x \le 2\)</td></tr>
+              <tr><td>\(x &gt; 0\) 그리고 \(y &gt; 0\)</td><td>\(x \le 0\) 또는 \(y \le 0\)</td></tr>
+              <tr><td>\(x = 0\) 또는 \(y = 0\)</td><td>\(x \ne 0\) 그리고 \(y \ne 0\)</td></tr>
+              <tr><td>모든 \(x\)에 대하여 \(p(x)\)</td><td>어떤 \(x\)에 대하여 \({\sim}p(x)\)</td></tr>
             </tbody>
           </table></div>
-          <p class="judge"><b>판단</b>"<i>x</i> &gt; 2"의 부정을 "<i>x</i> &lt; 2"로 쓰면 <i>x</i> = 2가 어느 쪽에도 속하지 않습니다. 조건과 그 부정의 진리집합은 합치면 전체집합, 겹치면 공집합이 되어야 합니다.</p>
+          <p class="judge"><b>판단</b>"\(x &gt; 2\)"의 부정을 "\(x &lt; 2\)"로 쓰면 \(x = 2\)가 어느 쪽에도 속하지 않습니다. 조건과 그 부정의 진리집합은 합치면 전체집합, 겹치면 공집합이 되어야 합니다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">실수 <i>x</i>, <i>y</i>에 대하여 조건 '<i>x</i> &gt; 0 그리고 <i>y</i> &gt; 0'의 부정은?</p>
+          <p class="q">실수 \(x, y\)에 대하여 조건 '\(x &gt; 0\) 그리고 \(y &gt; 0\)'의 부정은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span><i>x</i> &lt; 0 그리고 <i>y</i> &lt; 0<span class="why"><b>부등호만 뒤집었습니다.</b> <i>x</i> = 1, <i>y</i> = −1은 원래 조건도, 이 조건도 만족하지 않아 두 진리집합의 합이 전체가 되지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>x</i> ≤ 0 그리고 <i>y</i> ≤ 0<span class="why"><b>'그리고'를 그대로 두었습니다.</b> 드모르간의 법칙에 따라 '그리고'의 부정은 '또는'이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span><i>x</i> ≤ 0 또는 <i>y</i> ≤ 0<span class="why"><b>맞습니다.</b> 두 조건 가운데 하나라도 깨지면 원래 조건은 거짓입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>x</i> &lt; 0 또는 <i>y</i> &lt; 0<span class="why"><b>0을 빠뜨렸습니다.</b> <i>x</i> = 0, <i>y</i> = 1은 원래 조건을 만족하지 않는데 이 조건도 만족하지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(x &lt; 0\) 그리고 \(y &lt; 0\)<span class="why"><b>부등호만 뒤집었습니다.</b> \(x = 1, y = -1\)은 원래 조건도, 이 조건도 만족하지 않아 두 진리집합의 합이 전체가 되지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x \le 0\) 그리고 \(y \le 0\)<span class="why"><b>'그리고'를 그대로 두었습니다.</b> 드모르간의 법칙에 따라 '그리고'의 부정은 '또는'이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(x \le 0\) 또는 \(y \le 0\)<span class="why"><b>맞습니다.</b> 두 조건 가운데 하나라도 깨지면 원래 조건은 거짓입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x &lt; 0\) 또는 \(y &lt; 0\)<span class="why"><b>0을 빠뜨렸습니다.</b> \(x = 0, y = 1\)은 원래 조건을 만족하지 않는데 이 조건도 만족하지 않습니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-2.html#card-cm2-subset-venn"><small class="mono">공통수학2 2.2</small>한 집합이 다른 집합 안에 들어 있는지 어떻게 판단할까?</a><a href="../../c/cm2/2-2.html#card-cm2-subset-count"><small class="mono">공통수학2 2.2</small>원소가 하나 늘면 부분집합은 몇 개 늘까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-6.html#card-cm2-suff-nec"><small class="mono">공통수학2 2.6</small>조건 p가 q에 대해 넉넉한지, 꼭 필요한지 어떻게 가릴까?</a><a href="../../c/cm2/2-6.html#card-cm2-cond-plane"><small class="mono">공통수학2 2.6</small>두 변수의 조건은 반례를 어디에서 찾을까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=cm2-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">42문항</span></a>
 
@@ -209,8 +213,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm2/sets.js"></script>
 <script src="../../js/cards/cm2/all-some.js"></script>
 <script src="../../js/cards/cm2/sets.js"></script>

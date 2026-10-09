@@ -14,6 +14,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-parabola-def .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
     #card-geo-parabola-shift .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -35,14 +36,14 @@
     <p class="lead">원은 한 점에서 거리가 일정한 점의 모임이었습니다. 이번에는 한 점과 한 직선에서 거리가 같은 점을 모아 봅니다. 그 모양이 포물선이고, 이차함수의 그래프도 그 가운데 하나입니다. 이 절에서는 자취를 직접 찾아 방정식을 세우고, 꼭짓점을 옮긴 포물선의 식에서 초점과 준선을 읽어 냅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <span class="p">두 점 사이의 거리</span><span class="p">원의 방정식</span><span class="p">도형의 평행이동</span><span class="p">완전제곱식</span>
+      <a class="p p-card" href="../../c/cm2/1-1.html#card-cm2-distance" title="공통수학2 1.1 · 두 점 사이의 거리는 어떻게 잴까?">두 점 사이의 거리</a><a class="p p-card" href="../../c/cm2/1-4.html#card-cm2-circle-eq" title="공통수학2 1.4 · 원 위의 점들은 어떤 식을 만족할까?">원의 방정식</a><a class="p p-card" href="../../c/cm2/1-6.html#card-cm2-translate-graph" title="공통수학2 1.6 · 도형을 옮기면 방정식의 부호는 왜 반대로 바뀔까?">도형의 평행이동</a><a class="p p-card" href="../../c/cm2/1-4.html#card-cm2-general-circle" title="공통수학2 1.4 · x² + y² + Ax + By + C = 0은 언제 원이 될까?">완전제곱식</a>
     </div>
   </section>
 
   <div class="topic-layout">
     <aside class="toc" aria-label="이 절의 카드">
-      <p class="mono small">이 절의 카드</p>
-      <ol>
+      <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
+      <ol id="toc-list">
         <li><a href="#card-geo-parabola-def"><span class="mono">1.1.1</span>포물선의 뜻과 방정식</a></li>
         <li><a href="#card-geo-parabola-shift"><span class="mono">1.1.2</span>평행이동한 포물선</a></li>
       </ol>
@@ -60,8 +61,8 @@
             <canvas class="cv-wide" aria-label="초점 F와 준선, 끌어 옮길 수 있는 점 P, P에서 F까지의 선분과 준선에 내린 수선 PH"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip c-ax" type="button" data-ax="x" aria-pressed="true">초점이 <i>x</i>축 위</button>
-                <button class="chip c-ax" type="button" data-ax="y" aria-pressed="false">초점이 <i>y</i>축 위</button>
+                <button class="chip c-ax" type="button" data-ax="x" aria-pressed="true">초점이 \(x\)축 위</button>
+                <button class="chip c-ax" type="button" data-ax="y" aria-pressed="false">초점이 \(y\)축 위</button>
               </div>
               <div class="presets">
                 <button class="chip c-mode" type="button" data-mode="free" aria-pressed="true">자유롭게 끌기</button>
@@ -69,7 +70,7 @@
                 <button class="chip go-show" type="button" aria-pressed="false">곡선 보기</button>
                 <button class="chip go-clear" type="button">표시 지우기</button>
               </div>
-              <label class="mono">초점까지의 거리 <i>p</i> = <output class="p-out">1</output></label>
+              <label class="mono">초점까지의 거리 \(p\) = <output class="p-out">1</output></label>
               <input class="s-p" type="range" min="-3" max="3" step="0.5" value="1" aria-label="꼭짓점에서 초점까지의 거리 p (음수면 반대쪽)">
               <p class="mono eq">—</p>
               <dl class="nums n4">
@@ -82,25 +83,26 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점 F(1, 0)과 직선 <i>x</i> = −1이 있습니다. F까지의 거리와 이 직선까지의 거리가 같은 점을 모두 모으면 어떤 모양이 될까요? 그 점들이 만족하는 식은 무엇일까요?</li>
-            <li><span class="tag">복원</span>두 점 사이의 거리는 √((<i>x</i><sub>2</sub> − <i>x</i><sub>1</sub>)<sup>2</sup> + (<i>y</i><sub>2</sub> − <i>y</i><sub>1</sub>)<sup>2</sup>)입니다. 점 (<i>x</i>, <i>y</i>)에서 직선 <i>x</i> = <i>k</i>까지의 거리는 수선의 길이 |<i>x</i> − <i>k</i>|입니다. 또 원처럼 조건을 만족하는 점의 모임(자취)은 방정식으로 나타낼 수 있습니다.</li>
-            <li><span class="tag">설명</span>평면 위의 한 점 F와 F를 지나지 않는 한 직선 <i>l</i>에서 같은 거리에 있는 점들의 모임을 <em>포물선</em>이라고 합니다. F를 <em>초점</em>, <i>l</i>을 <em>준선</em>이라고 합니다. 초점을 지나고 준선에 수직인 직선을 포물선의 <em>축</em>, 축과 포물선이 만나는 점을 <em>꼭짓점</em>이라고 합니다. 초점이 F(<i>p</i>, 0), 준선이 <i>x</i> = −<i>p</i>(<i>p</i> ≠ 0)일 때 포물선 위의 점 P(<i>x</i>, <i>y</i>)는 PF = PH를 만족합니다. 곧 √((<i>x</i> − <i>p</i>)<sup>2</sup> + <i>y</i><sup>2</sup>) = |<i>x</i> + <i>p</i>|입니다. 양변이 0 이상이므로 제곱하면 <i>x</i><sup>2</sup> − 2<i>px</i> + <i>p</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>x</i><sup>2</sup> + 2<i>px</i> + <i>p</i><sup>2</sup>이고, 정리하면 <b><i>y</i><sup>2</sup> = 4<i>px</i></b>입니다. 꼭짓점은 원점, 축은 <i>x</i>축입니다. 같은 방법으로 초점이 F(0, <i>p</i>), 준선이 <i>y</i> = −<i>p</i>이면 <b><i>x</i><sup>2</sup> = 4<i>py</i></b>입니다.</li>
-            <li><span class="tag">연결</span><i>x</i><sup>2</sup> = 4<i>py</i>는 <i>y</i> = <i>x</i><sup>2</sup>/(4<i>p</i>)이므로 중학교와 공통수학에서 본 이차함수의 그래프도 포물선입니다. 예를 들어 <i>y</i> = <i>x</i><sup>2</sup>은 4<i>p</i> = 1이므로 초점이 (0, 1/4), 준선이 <i>y</i> = −1/4입니다. 다만 <i>y</i><sup>2</sup> = 4<i>px</i>는 <i>y</i>가 <i>x</i>의 함수가 아니므로 이차함수의 그래프가 아닙니다.</li>
-            <li><span class="tag">적용</span>'자유롭게 끌기'로 PF = PH인 점을 다섯 개 이상 찾아보세요. 초록 점들이 어떤 모양으로 늘어서나요? 그다음 '곡선 보기'를 눌러 비교하고, '곡선 위에서만'으로 P를 곡선을 따라 움직이며 PF와 PH가 늘 같은지 확인하세요. <i>p</i>를 키우면 포물선의 벌어진 정도는 어떻게 바뀌나요? <i>p</i>를 음수로 하면 어느 쪽으로 열리나요?</li>
-            <li class="warn"><span class="tag">판단</span><i>y</i><sup>2</sup> = 8<i>x</i>의 초점을 (8, 0)으로 읽는 실수가 많습니다. 4<i>p</i> = 8이므로 <i>p</i> = 2이고 초점은 (2, 0)입니다. 또 꼭짓점은 초점과 준선의 한가운데에 있으므로 초점에서 꼭짓점까지 거리와 꼭짓점에서 준선까지 거리는 모두 |<i>p</i>|입니다. 초점이 준선 위에 있으면 조건을 만족하는 점은 초점을 지나고 준선에 수직인 직선이 되므로 포물선이 아닙니다.</li>
+            <li><span class="tag">질문</span>점 \(F(1, 0)\)과 직선 \(x = -1\)이 있습니다. F까지의 거리와 이 직선까지의 거리가 같은 점을 모두 모으면 어떤 모양이 될까요? 그 점들이 만족하는 식은 무엇일까요?</li>
+            <li><span class="tag">복원</span>두 점 사이의 거리는 \(\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}\)입니다. 점 \((x, y)\)에서 직선 \(x = k\)까지의 거리는 수선의 길이 \(|x - k|\)입니다. 또 원처럼 조건을 만족하는 점의 모임(자취)은 방정식으로 나타낼 수 있습니다.</li>
+            <li><span class="tag">설명</span>평면 위의 한 점 F와 F를 지나지 않는 한 직선 \(l\)에서 같은 거리에 있는 점들의 모임을 <em>포물선</em>이라고 합니다. F를 <em>초점</em>, \(l\)을 <em>준선</em>이라고 합니다. 초점을 지나고 준선에 수직인 직선을 포물선의 <em>축</em>, 축과 포물선이 만나는 점을 <em>꼭짓점</em>이라고 합니다. 초점이 \(F(p, 0)\), 준선이 \(x = -p(p \ne 0)\)일 때 포물선 위의 점 \(P(x, y)\)는 \(PF = PH\)를 만족합니다. 곧 \(\sqrt{(x - p)^2 + y^2} = |x + p|\)입니다. 양변이 0 이상이므로 제곱하면 \(x^2 - 2px + p^2 + y^2 = x^2 + 2px + p^2\)이고, 정리하면 <b>\(y^2 = 4px\)</b>입니다. 꼭짓점은 원점, 축은 \(x\)축입니다. 같은 방법으로 초점이 \(F(0, p)\), 준선이 \(y = -p\)이면 <b>\(x^2 = 4py\)</b>입니다.</li>
+            <li><span class="tag">연결</span>\(x^2 = 4py\)는 \(y = \frac{x^2}{4p}\)이므로 중학교와 공통수학에서 본 이차함수의 그래프도 포물선입니다. 예를 들어 \(y = x^2\)은 \(4p = 1\)이므로 초점이 \((0, \frac{1}{4})\), 준선이 \(y = -\frac{1}{4}\)입니다. 다만 \(y^2 = 4px\)는 \(y\)가 \(x\)의 함수가 아니므로 이차함수의 그래프가 아닙니다.</li>
+            <li><span class="tag">적용</span>'자유롭게 끌기'로 \(PF = PH\)인 점을 다섯 개 이상 찾아보세요. 초록 점들이 어떤 모양으로 늘어서나요? 그다음 '곡선 보기'를 눌러 비교하고, '곡선 위에서만'으로 P를 곡선을 따라 움직이며 PF와 PH가 늘 같은지 확인하세요. \(p\)를 키우면 포물선의 벌어진 정도는 어떻게 바뀌나요? \(p\)를 음수로 하면 어느 쪽으로 열리나요?</li>
+            <li class="warn"><span class="tag">판단</span>\(y^2 = 8x\)의 초점을 \((8, 0)\)으로 읽는 실수가 많습니다. \(4p = 8\)이므로 \(p = 2\)이고 초점은 \((2, 0)\)입니다. 또 꼭짓점은 초점과 준선의 한가운데에 있으므로 초점에서 꼭짓점까지 거리와 꼭짓점에서 준선까지 거리는 모두 \(|p|\)입니다. 초점이 준선 위에 있으면 조건을 만족하는 점은 초점을 지나고 준선에 수직인 직선이 되므로 포물선이 아닙니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">초점이 (0, −2)이고 준선이 <i>y</i> = 2인 포물선의 방정식은?</p>
+          <p class="q">초점이 \((0, -2)\)이고 준선이 \(y = 2\)인 포물선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span><i>x</i><sup>2</sup> = −8<i>y</i><span class="why"><b>맞습니다.</b> 초점이 <i>y</i>축 위에 있고 <i>p</i> = −2입니다. <i>x</i><sup>2</sup> = 4<i>py</i>에 넣으면 <i>x</i><sup>2</sup> = −8<i>y</i>이고, 아래로 열린 포물선입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span><i>x</i><sup>2</sup> = 8<i>y</i><span class="why"><b>부호를 놓쳤습니다.</b> 이 포물선은 초점이 (0, 2), 준선이 <i>y</i> = −2입니다. 포물선은 초점 쪽으로 열리므로 초점이 아래에 있으면 <i>y</i> ≤ 0인 쪽에 그려집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span><i>y</i><sup>2</sup> = −8<i>x</i><span class="why"><b>축을 바꿔 썼습니다.</b> 이 식은 초점이 (−2, 0)으로 <i>x</i>축 위에 있습니다. 준선이 <i>y</i> = 2처럼 가로 직선이면 축은 <i>y</i>축입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span><i>x</i><sup>2</sup> = −2<i>y</i><span class="why"><b>4<i>p</i> 대신 <i>p</i>를 썼습니다.</b> 이 식은 4<i>p</i> = −2, 곧 <i>p</i> = −1/2이므로 초점이 (0, −1/2)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x^2 = -8y\)<span class="why"><b>맞습니다.</b> 초점이 \(y\)축 위에 있고 \(p = -2\)입니다. \(x^2 = 4py\)에 넣으면 \(x^2 = -8y\)이고, 아래로 열린 포물선입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x^2 = 8y\)<span class="why"><b>부호를 놓쳤습니다.</b> 이 포물선은 초점이 \((0, 2)\), 준선이 \(y = -2\)입니다. 포물선은 초점 쪽으로 열리므로 초점이 아래에 있으면 \(y \le 0\)인 쪽에 그려집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y^2 = -8x\)<span class="why"><b>축을 바꿔 썼습니다.</b> 이 식은 초점이 \((-2, 0)\)으로 \(x\)축 위에 있습니다. 준선이 \(y = 2\)처럼 가로 직선이면 축은 \(y\)축입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x^2 = -2y\)<span class="why"><b>\(4p\) 대신 \(p\)를 썼습니다.</b> 이 식은 \(4p = -2\), 곧 \(p = -\frac{1}{2}\)이므로 초점이 \((0, -\frac{1}{2})\)입니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/1-4.html#card-geo-tangent-slope"><small class="mono">기하 1.4</small>기울기가 정해진 접선은 어떻게 찾을까?</a><a href="../../c/geo/1-4.html#card-geo-tangent-point"><small class="mono">기하 1.4</small>곡선 위의 점에서 그은 접선은 어떤 식일까?</a><a href="../../c/geo/1-4.html#text-geo-conic-uses"><small class="mono">기하 1.4</small>이차곡선은 어디에 쓰일까?</a></div></nav>
 
       <article class="card" id="card-geo-parabola-shift">
         <header class="card-head">
@@ -111,10 +113,10 @@
             <canvas class="cv-wide" aria-label="원점이 꼭짓점인 포물선(점선)과 꼭짓점을 옮긴 포물선, 초점 F와 준선, 축"></canvas>
             <div class="ctl">
               <div class="presets">
-                <button class="chip c-ax" type="button" data-ax="x" aria-pressed="true">축이 <i>x</i>축에 평행</button>
-                <button class="chip c-ax" type="button" data-ax="y" aria-pressed="false">축이 <i>y</i>축에 평행</button>
+                <button class="chip c-ax" type="button" data-ax="x" aria-pressed="true">축이 \(x\)축에 평행</button>
+                <button class="chip c-ax" type="button" data-ax="y" aria-pressed="false">축이 \(y\)축에 평행</button>
               </div>
-              <label class="mono"><i>p</i> = <output class="p-out">1</output></label>
+              <label class="mono">\(p\) = <output class="p-out">1</output></label>
               <input class="s-p" type="range" min="-3" max="3" step="0.5" value="1" aria-label="꼭짓점에서 초점까지의 거리 p">
               <p class="mono eq">—</p>
               <dl class="nums">
@@ -127,25 +129,26 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>방정식 <i>y</i><sup>2</sup> − 4<i>y</i> − 8<i>x</i> + 20 = 0이 나타내는 곡선은 무엇일까요? 초점과 준선은 어디에 있을까요?</li>
-            <li><span class="tag">복원</span>도형 <i>f</i>(<i>x</i>, <i>y</i>) = 0을 <i>x</i>축 방향으로 <i>m</i>, <i>y</i>축 방향으로 <i>n</i>만큼 평행이동하면 <i>f</i>(<i>x</i> − <i>m</i>, <i>y</i> − <i>n</i>) = 0이 됩니다. 또 <i>y</i><sup>2</sup> = 4<i>px</i>는 꼭짓점이 원점, 초점이 (<i>p</i>, 0), 준선이 <i>x</i> = −<i>p</i>인 포물선입니다.</li>
-            <li><span class="tag">설명</span>포물선을 평행이동하면 꼭짓점, 초점, 준선, 축이 모두 함께 움직이고 모양(<i>p</i>)은 그대로입니다. 그래서 <i>y</i><sup>2</sup> = 4<i>px</i>를 (<i>m</i>, <i>n</i>)만큼 옮긴 포물선 <b>(<i>y</i> − <i>n</i>)<sup>2</sup> = 4<i>p</i>(<i>x</i> − <i>m</i>)</b>은 꼭짓점 (<i>m</i>, <i>n</i>), 초점 (<i>m</i> + <i>p</i>, <i>n</i>), 준선 <i>x</i> = <i>m</i> − <i>p</i>, 축 <i>y</i> = <i>n</i>입니다. 축이 <i>y</i>축에 평행한 <b>(<i>x</i> − <i>m</i>)<sup>2</sup> = 4<i>p</i>(<i>y</i> − <i>n</i>)</b>도 같은 방법으로 읽습니다. 이 꼴을 전개하면 <i>y</i><sup>2</sup> + <i>Ay</i> + <i>Bx</i> + <i>C</i> = 0(<i>B</i> ≠ 0)처럼 한 문자만 제곱인 식이 됩니다. 거꾸로 이런 식이 주어지면 완전제곱식으로 고쳐 표준형으로 바꾸고, 꼭짓점과 <i>p</i>를 읽습니다.</li>
-            <li><span class="tag">연결</span>질문의 식은 <i>y</i><sup>2</sup> − 4<i>y</i> = 8<i>x</i> − 20에서 (<i>y</i> − 2)<sup>2</sup> − 4 = 8<i>x</i> − 20, 곧 (<i>y</i> − 2)<sup>2</sup> = 8(<i>x</i> − 2)입니다. 꼭짓점 (2, 2), 4<i>p</i> = 8에서 <i>p</i> = 2이므로 초점은 (4, 2), 준선은 <i>x</i> = 0입니다. 이차함수 <i>y</i> = <i>a</i>(<i>x</i> − <i>m</i>)<sup>2</sup> + <i>n</i>의 꼭짓점을 찾던 방법과 같습니다.</li>
-            <li><span class="tag">적용</span>꼭짓점을 (2, 2)로 옮기고 <i>p</i>를 2로 맞추어 전개한 식이 질문의 식과 같은지 확인하세요. 꼭짓점을 옮길 때 전개한 식에서 바뀌는 계수와 바뀌지 않는 계수는 무엇인가요? <i>p</i>를 바꾸면 초점과 준선 사이의 거리는 얼마가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>(<i>y</i> − 2)<sup>2</sup> = 8(<i>x</i> − 2)의 초점을 원점 기준 그대로 (2, 0)이라고 하거나, 꼭짓점 (2, 2)에 8을 더해 (10, 2)라고 하는 실수가 있습니다. 초점은 꼭짓점에서 축 방향으로 <i>p</i> = 2만큼 간 (4, 2)입니다. 또 <i>x</i><sup>2</sup>항과 <i>y</i><sup>2</sup>항이 함께 있으면 포물선이 아니라 다른 이차곡선을 먼저 의심해야 합니다.</li>
+            <li><span class="tag">질문</span>방정식 \(y^2 - 4y - 8x + 20 = 0\)이 나타내는 곡선은 무엇일까요? 초점과 준선은 어디에 있을까요?</li>
+            <li><span class="tag">복원</span>도형 \(f(x, y) = 0\)을 \(x\)축 방향으로 \(m, y\)축 방향으로 \(n\)만큼 평행이동하면 \(f(x - m, y - n) = 0\)이 됩니다. 또 \(y^2 = 4px\)는 꼭짓점이 원점, 초점이 \((p, 0)\), 준선이 \(x = -p\)인 포물선입니다.</li>
+            <li><span class="tag">설명</span>포물선을 평행이동하면 꼭짓점, 초점, 준선, 축이 모두 함께 움직이고 모양\((p)\)은 그대로입니다. 그래서 \(y^2 = 4px\)를 \((m, n)\)만큼 옮긴 포물선 <b>\((y - n)^2 = 4p(x - m)\)</b>은 꼭짓점 \((m, n)\), 초점 \((m + p, n)\), 준선 \(x = m - p\), 축 \(y = n\)입니다. 축이 \(y\)축에 평행한 <b>\((x - m)^2 = 4p(y - n)\)</b>도 같은 방법으로 읽습니다. 이 꼴을 전개하면 \(y^2 + Ay + Bx + C = 0(B \ne 0)\)처럼 한 문자만 제곱인 식이 됩니다. 거꾸로 이런 식이 주어지면 완전제곱식으로 고쳐 표준형으로 바꾸고, 꼭짓점과 \(p\)를 읽습니다.</li>
+            <li><span class="tag">연결</span>질문의 식은 \(y^2 - 4y = 8x - 20\)에서 \((y - 2)^2 - 4 = 8x - 20\), 곧 \((y - 2)^2 = 8(x - 2)\)입니다. 꼭짓점 \((2, 2), 4p = 8\)에서 \(p = 2\)이므로 초점은 \((4, 2)\), 준선은 \(x = 0\)입니다. 이차함수 \(y = a(x - m)^2 + n\)의 꼭짓점을 찾던 방법과 같습니다.</li>
+            <li><span class="tag">적용</span>꼭짓점을 \((2, 2)\)로 옮기고 \(p\)를 2로 맞추어 전개한 식이 질문의 식과 같은지 확인하세요. 꼭짓점을 옮길 때 전개한 식에서 바뀌는 계수와 바뀌지 않는 계수는 무엇인가요? \(p\)를 바꾸면 초점과 준선 사이의 거리는 얼마가 되나요?</li>
+            <li class="warn"><span class="tag">판단</span>\((y - 2)^2 = 8(x - 2)\)의 초점을 원점 기준 그대로 \((2, 0)\)이라고 하거나, 꼭짓점 \((2, 2)\)에 8을 더해 \((10, 2)\)라고 하는 실수가 있습니다. 초점은 꼭짓점에서 축 방향으로 \(p = 2\)만큼 간 \((4, 2)\)입니다. 또 \(x^2\)항과 \(y^2\)항이 함께 있으면 포물선이 아니라 다른 이차곡선을 먼저 의심해야 합니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">포물선 <i>x</i><sup>2</sup> + 4<i>x</i> + 4<i>y</i> − 8 = 0의 초점은?</p>
+          <p class="q">포물선 \(x^2 + 4x + 4y - 8 = 0\)의 초점은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(−2, 2)<span class="why"><b>맞습니다.</b> (<i>x</i> + 2)<sup>2</sup> − 4 = −4<i>y</i> + 8에서 (<i>x</i> + 2)<sup>2</sup> = −4(<i>y</i> − 3)입니다. 꼭짓점 (−2, 3), <i>p</i> = −1이므로 초점은 (−2, 3 − 1) = (−2, 2)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(−2, 3)<span class="why"><b>꼭짓점입니다.</b> 초점은 꼭짓점에서 축을 따라 <i>p</i>만큼 떨어져 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(−2, 4)<span class="why"><b><i>p</i>의 부호를 놓쳤습니다.</b> 4<i>p</i> = −4이므로 <i>p</i> = −1이고, 포물선은 아래로 열립니다. 초점도 꼭짓점보다 아래에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(0, −1)<span class="why"><b>평행이동을 빠뜨렸습니다.</b> <i>x</i><sup>2</sup> = −4<i>y</i>의 초점입니다. 꼭짓점이 (−2, 3)으로 옮겨 갔으므로 초점도 같이 옮겨야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((-2, 2)\)<span class="why"><b>맞습니다.</b> \((x + 2)^2 - 4 = -4y + 8\)에서 \((x + 2)^2 = -4(y - 3)\)입니다. 꼭짓점 \((-2, 3), p = -1\)이므로 초점은 \((-2, 3 - 1) = (-2, 2)\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((-2, 3)\)<span class="why"><b>꼭짓점입니다.</b> 초점은 꼭짓점에서 축을 따라 \(p\)만큼 떨어져 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((-2, 4)\)<span class="why"><b>\(p\)의 부호를 놓쳤습니다.</b> \(4p = -4\)이므로 \(p = -1\)이고, 포물선은 아래로 열립니다. 초점도 꼭짓점보다 아래에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((0, -1)\)<span class="why"><b>평행이동을 빠뜨렸습니다.</b> \(x^2 = -4y\)의 초점입니다. 꼭짓점이 \((-2, 3)\)으로 옮겨 갔으므로 초점도 같이 옮겨야 합니다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/1-4.html#card-geo-tangent-slope"><small class="mono">기하 1.4</small>기울기가 정해진 접선은 어떻게 찾을까?</a><a href="../../c/geo/1-4.html#card-geo-tangent-point"><small class="mono">기하 1.4</small>곡선 위의 점에서 그은 접선은 어떤 식일까?</a><a href="../../c/geo/1-4.html#text-geo-conic-uses"><small class="mono">기하 1.4</small>이차곡선은 어디에 쓰일까?</a></div></nav>
 
       <a class="px-go" href="../../practice.html?sec=geo-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">66문항</span></a>
 
@@ -156,8 +159,12 @@
 
 <script src="../../js/toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
+<script src="../../js/reader.js"></script>
+<script src="../../js/prereq.js"></script>
 <script src="../../js/cards/cm2/coord.js"></script>
 <script src="../../js/cards/geo/conic.js"></script>
 <script src="../../js/cards/geo/parabola-def.js"></script>

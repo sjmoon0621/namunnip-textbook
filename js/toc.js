@@ -12297,12 +12297,12 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-cm1-sq3",
-        "title": "(a + b + c)2의 아홉 조각은 어떻게 모일까?"
+        "title": "(a + b + c)²의 아홉 조각은 어떻게 모일까?"
        },
        {
         "kind": "card",
         "id": "card-cm1-cube-diff",
-        "title": "a3 − b3은 왜 (a − b)(a2 + ab + b2)일까?"
+        "title": "a³ − b³은 왜 (a − b)(a² + ab + b²)일까?"
        },
        {
         "kind": "card",
@@ -12326,7 +12326,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-cm1-imag-unit",
-        "title": "제곱해서 −1이 되는 수에 i를 계속 곱하면 어디로 갈까?"
+        "title": "제곱해서 -1이 되는 수에 i를 계속 곱하면 어디로 갈까?"
        },
        {
         "kind": "card",
@@ -12385,7 +12385,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-cm1-level-line",
-        "title": "x2 − 4x + 1 = k의 실근은 k에 따라 몇 개일까?"
+        "title": "x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?"
        }
       ]
      },
@@ -12896,7 +12896,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-cm2-contra-square",
-        "title": "n2이 짝수이면 n도 짝수임을 어떻게 증명할까?"
+        "title": "n²이 짝수이면 n도 짝수임을 어떻게 증명할까?"
        },
        {
         "kind": "card",
@@ -13066,17 +13066,17 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-exp-zero-neg",
-        "title": "20은 왜 0이 아니라 1일까?"
+        "title": "2⁰은 왜 0이 아니라 1일까?"
        },
        {
         "kind": "card",
         "id": "card-alg-rational-exp",
-        "title": "82/3은 무엇을 뜻하고, 밑은 왜 양수여야 할까?"
+        "title": "8²/³은 무엇을 뜻하고, 밑은 왜 양수여야 할까?"
        },
        {
         "kind": "card",
         "id": "card-alg-real-exp",
-        "title": "2√2처럼 지수가 무리수인 수는 어떻게 정할까?"
+        "title": "2√²처럼 지수가 무리수인 수는 어떻게 정할까?"
        }
       ]
      },
@@ -13135,7 +13135,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-log-digits",
-        "title": "250은 몇 자리 수일까?"
+        "title": "2⁵⁰은 몇 자리 수일까?"
        },
        {
         "kind": "card",
@@ -13213,7 +13213,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-general-angle",
-        "title": "두 바퀴 돈 각은 720°일까, 0°일까?"
+        "title": "두 바퀴 돈 각은 720circ일까, 0circ일까?"
        },
        {
         "kind": "card",
@@ -13231,7 +13231,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-trig-def",
-        "title": "150°나 −60°의 사인은 무엇일까?"
+        "title": "150circ나 -60circ의 사인은 무엇일까?"
        },
        {
         "kind": "card",
@@ -13342,12 +13342,12 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-sigma-read",
-        "title": "∑ 기호 하나에는 무엇이 들어 있을까?"
+        "title": "Σ 기호 하나에는 무엇이 들어 있을까?"
        },
        {
         "kind": "card",
         "id": "card-alg-sigma-rules",
-        "title": "∑끼리 더하고 곱해도 될까?"
+        "title": "Σ끼리 더하고 곱해도 될까?"
        }
       ]
      },
@@ -13388,7 +13388,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-alg-recur-tiling",
-        "title": "2×n 판을 덮는 방법은 몇 가지일까?"
+        "title": "2× n 판을 덮는 방법은 몇 가지일까?"
        }
       ]
      },
@@ -13586,7 +13586,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc1-product-rule",
-        "title": "곱의 미분은 왜 f′g + fg′일까?"
+        "title": "곱의 미분은 왜 f'g + fg'일까?"
        }
       ]
      },
@@ -13736,7 +13736,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc1-power-int",
-        "title": "xn을 적분하면 왜 n + 1로 나눌까?"
+        "title": "xⁿ을 적분하면 왜 n + 1로 나눌까?"
        },
        {
         "kind": "card",
@@ -13887,7 +13887,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-stat-binom-expand",
-        "title": "(a + b)n의 계수는 왜 조합의 수일까?"
+        "title": "(a + b)ⁿ의 계수는 왜 조합의 수일까?"
        },
        {
         "kind": "card",
@@ -14212,7 +14212,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-geo-ratio",
-        "title": "공비 r에 따라 rn은 어디로 갈까?"
+        "title": "공비 r에 따라 rⁿ은 어디로 갈까?"
        },
        {
         "kind": "card",
@@ -14272,7 +14272,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-e-limit",
-        "title": "(1 + h)1/h는 h가 0에 가까워지면 어디로 갈까?"
+        "title": "(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?"
        },
        {
         "kind": "card",
@@ -14318,7 +14318,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-sinx-x",
-        "title": "x가 0에 가까워질 때 sin x / x는 어디로 갈까?"
+        "title": "x가 0에 가까워질 때 (sin x)/x는 어디로 갈까?"
        },
        {
         "kind": "card",
@@ -14336,7 +14336,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-quotient",
-        "title": "몫 f/g의 도함수는 f′/g′일까?"
+        "title": "몫 f/g의 도함수는 f'/g'일까?"
        },
        {
         "kind": "card",
@@ -14359,7 +14359,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-power-real",
-        "title": "지수가 √2여도 (xʳ)′ = r xʳ⁻¹일까?"
+        "title": "지수가 √2여도 (xr)' = r xr⁻¹일까?"
        }
       ]
      },
@@ -14449,7 +14449,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-exp-bound",
-        "title": "eˣ ≥ kx가 모든 x에서 성립하려면 k는 얼마까지 될까?"
+        "title": "ex ≥ kx가 모든 x에서 성립하려면 k는 얼마까지 될까?"
        }
       ]
      },
@@ -14486,7 +14486,7 @@ window.TOC = [
        {
         "kind": "card",
         "id": "card-calc2-xn-integral",
-        "title": "xn의 적분 공식은 n = −1에서 왜 멈출까?"
+        "title": "xⁿ의 적분 공식은 n = -1에서 왜 멈출까?"
        },
        {
         "kind": "card",
