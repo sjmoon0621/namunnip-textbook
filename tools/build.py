@@ -257,11 +257,12 @@ def page_html(course, ch, sec, blocks):
     for b in intro:
         if b["style"]:
             styles.insert(0, b["style"])
-    has_math = any("\\(" in b["body"] or "\\[" in b["body"] for b in intro + items)   # \( … \) · \[ … \] → KaTeX
+    hero = indent(link_prereqs(intro[0]["body"]), 4) + "\n" if intro else ""
+    # \( … \) · \[ … \] → KaTeX. 중학교 개념 설명 창(basics/)에도 수식이 있어 설명 버튼이 있는 절은 항상 불러온다
+    has_math = "p-basic" in hero or any("\\(" in b["body"] or "\\[" in b["body"] for b in intro + items)
     math_css = '  <link rel="stylesheet" href="../../assets/katex/katex.min.css">\n' if has_math else ""
     math_js = '<script src="../../assets/katex/katex.min.js"></script>\n<script src="../../js/math.js"></script>\n' if has_math else ""
     desc = intro[0]["description"] if intro else ""
-    hero = indent(link_prereqs(intro[0]["body"]), 4) + "\n" if intro else ""
     style = ("  <style>\n" + indent("\n".join(styles), 4) + "\n  </style>\n") if styles else ""
     return f'''<!doctype html>
 <!-- 자동 생성: python3 tools/build.py — 직접 고치지 말고 blocks/ 와 curricula/ 를 고칠 것 -->
