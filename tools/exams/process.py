@@ -7,7 +7,7 @@
 meta.json(분류 작업자가 쓴다) = [{"img": "07.webp", "answer": "3", "sec": "phy-1-2" 또는 null, "conf": "high"|"low"}]
   answer: 객관식은 보기 번호 1~5, 단답형은 숫자 그대로. sec: 2022 개정 교과서의 절(<과목>-<대단원>-<절>), 맞는 절이 없으면 null.
 """
-import json, pathlib, shutil, subprocess, sys
+import json, pathlib, re, shutil, subprocess, sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 EX = ROOT / "exams"
@@ -15,6 +15,12 @@ sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import crop  # noqa: E402
 
 KIND = {"csat": "csat", "mock": "mock", "hakp": "hakp"}
+# 수식 글꼴은 pdftotext에서 사용자 정의 영역(PUA) 문자로 나온다. 검색에 쓸모가 없으므로 지운다.
+PUA = re.compile(r"[\ue000-\uf8ff]+")
+
+
+def search_text(s):
+    return re.sub(r"\s+", " ", PUA.sub(" ", s)).strip()
 
 
 def contact_sheets(work, per=6):
@@ -89,7 +95,7 @@ def publish():
                 "id": f"ex-{work.name}-{m['img'].rsplit('.', 1)[0]}", "src": task["id"],
                 "year": task.get("school_year") or task["year_admin"], "grade": task["grade"], "month": task["month"],
                 "kind": KIND[task["kind"]], "subject": subj, "no": it["no"], "pts": it.get("pts"),
-                "img": f"exams/img/{work.name}/{m['img']}", "text": it.get("text", ""), "type": it["type"],
+                "img": f"exams/img/{work.name}/{m['img']}", "text": search_text(it.get("text", "")), "type": it["type"],
                 "answer": str(m["answer"]), "conf": m.get("conf", "high")})
             total += 1
     sec_dir = EX / "sec"
