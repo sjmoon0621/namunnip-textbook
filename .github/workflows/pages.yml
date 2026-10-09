@@ -28,12 +28,13 @@ jobs:
           lfs: false
 
       - name: LFS 객체 목록(캐시 키)
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > "$RUNNER_TEMP/lfs-oids.txt"
+        id: lfs
+        run: echo "key=lfs-$(git lfs ls-files --long | cut -d ' ' -f1 | sort | sha256sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v4
         with:
           path: .git/lfs
-          key: lfs-${{ hashFiles(format('{0}/lfs-oids.txt', runner.temp)) }}
+          key: ${{ steps.lfs.outputs.key }}
           restore-keys: lfs-
 
       - name: LFS 실제 파일 받기
