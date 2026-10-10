@@ -17,6 +17,8 @@
   const secAt = {};
   TOC.forEach((c) => c.chapters.forEach((ch) => ch.sections.forEach((s) => { secAt[`${c.id}-${ch.n}-${s.n}`] = { c, ch, s }; })));
   const exOf = (id) => (S.get(id)?.quiz || []).find((r) => r && r.extra)?.extra;
+  /* 텍스트로 옮겨 쓴 기출(practice.js가 extra.html·shared·choices·figs를 저장): 공통 지문·본문·그림·보기 */
+  const examText = (x) => `<div class="nb-exam-text">${x.shared ? `<div class="px-shared">${x.shared}</div>` : ""}<div class="px-stem">${x.html}</div>${(x.figs || []).map((s) => `<figure class="px-figimg"><img src="${esc(s)}" alt="${esc(x.src)} 그림" loading="lazy"></figure>`).join("")}${Array.isArray(x.choices) ? `<ol class="nb-choices">${x.choices.map((c) => `<li>${c}</li>`).join("")}</ol>` : ""}</div>`;
   Object.keys(S.all().blocks).forEach((id) => {
     const x = !where[id] && exOf(id), at = x && secAt[x.sec];
     if (at) where[id] = { ...at, it: { id, title: x.src, kind: "exam" }, order: order++, ex: x };
@@ -74,7 +76,7 @@
     document.getElementById("v-wrong").innerHTML = bar + (gs.length ? gs.map((g) => groupHead(g) + g.ids.map((id) =>
       (S.get(id).quiz || []).map((r, qi) => isWrong(r) ? `
         <article class="nb-item nb-wrong${r.resolved ? " done" : ""}">${title(id)}<span class="mono nb-date">${date(r.at)} · ${r.tries}번 시도${r.ok ? " · 결국 맞힘" : ""}</span>
-          ${r.extra ? "" : `<p class="nb-q">${esc(r.q)}</p>`}${r.extra && r.extra.img ? `<img class="nb-exam" src="${esc(r.extra.img)}" alt="${esc(r.extra.src)} 문항" loading="lazy">` : ""}
+          ${r.extra ? "" : `<p class="nb-q">${esc(r.q)}</p>`}${r.extra && r.extra.html ? examText(r.extra) : r.extra && r.extra.img ? `<img class="nb-exam" src="${esc(r.extra.img)}" alt="${esc(r.extra.src)} 문항" loading="lazy">` : ""}
           <ul class="nb-chosen">${r.wrong.map((w) => `<li><span class="mono">내가 고른 답</span><b>${esc(w.t)}</b><span class="why-t">${esc(w.why)}</span></li>`).join("")}</ul>
           <details><summary>정답 보기</summary><p><b>${esc(r.answer)}</b> — ${esc(r.why)}</p></details>
           <div class="nb-actions"><a href="${link(id) || "#"}">다시 풀어 보기</a>
@@ -83,6 +85,7 @@
         </article>` : "").join("")).join("")).join("")
       : empty(all.length ? "남은 오답이 없습니다. 모두 해결했어요." : "처음 풀 때 틀린 확인 문제가 여기에 모입니다. 틀린 보기와 그 이유, 정답을 다시 볼 수 있습니다."));
     document.getElementById("nb-show-resolved").addEventListener("change", (e) => { showResolved = e.target.checked; renderWrong(); });
+    if (window.NMMath) NMMath.render(document.getElementById("v-wrong"));
   }
 
   function renderStats() {

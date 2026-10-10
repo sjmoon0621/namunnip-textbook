@@ -41,16 +41,23 @@
       const r = recOf(it);
       const state = r ? (r.firstOk ? "ok" : "bad") : "";
       const ans = it.type === "mc"
-        ? `<div class="px-opts" role="group" aria-label="답 고르기">${CIRCLE.map((t, i) => `<button type="button" class="px-opt" data-v="${i + 1}">${t}</button>`).join("")}</div>`
+        ? (Array.isArray(it.choices) && it.choices.length === 5
+          ? `<div class="px-opts long" role="group" aria-label="답 고르기">${CIRCLE.map((t, i) => `<button type="button" class="px-opt" data-v="${i + 1}"><span class="n">${t}</span><span class="c">${it.choices[i]}</span></button>`).join("")}</div>`
+          : `<div class="px-opts" role="group" aria-label="답 고르기">${CIRCLE.map((t, i) => `<button type="button" class="px-opt" data-v="${i + 1}">${t}</button>`).join("")}</div>`)
         : `<form class="px-short"><input type="text" inputmode="numeric" aria-label="답 쓰기" placeholder="답"><button type="submit" class="btn">확인</button></form>`;
       return `<article class="px-item ${state}" id="${esc(it.id)}" data-id="${esc(it.id)}">
         <header><span class="mono">${esc(label(it))}</span>${it.pts ? `<span class="mono dim">${it.pts}점</span>` : ""}${r ? `<span class="mono px-prev ${state}">${r.firstOk ? "처음에 맞힘" : "오답노트에 있음"}</span>` : ""}</header>
-        <figure class="px-fig"><img src="${esc(it.img)}" alt="${esc(label(it))} 문항: ${esc((it.text || "").slice(0, 120))}" loading="lazy"></figure>
+        ${it.html ? textBody(it) : `<figure class="px-fig"><img src="${esc(it.img)}" alt="${esc(label(it))} 문항: ${esc((it.text || "").slice(0, 120))}" loading="lazy"></figure>`}
         ${ans}
         <p class="px-result" aria-live="polite"></p>
       </article>`;
     }).join("") : `<p class="px-empty">${items.length ? "조건에 맞는 문항이 없습니다." : "아직 이 절에 분류된 기출 문항이 없습니다."}</p>`;
+    if (window.NMMath) NMMath.render(host);
   }
+
+  /* 텍스트로 옮겨 쓴 문항(tools/exams/process.py publish가 html·choices·shared·figs를 넣음): 공통 지문 → 본문 → 그림. 수식은 NMMath가 그린다 */
+  const figs = (fs, lab) => (fs || []).map((f) => `<figure class="px-figimg"><img src="${esc(f.src)}" alt="${esc(f.alt || lab)}" loading="lazy"></figure>`).join("");
+  const textBody = (it) => `<div class="px-text">${it.shared ? `<div class="px-shared">${it.shared}${figs(it.sfigs, "공통 지문 그림")}</div>` : ""}<div class="px-stem">${it.html}</div>${figs(it.figs, label(it))}</div>`;
 
   function answer(card, chosen) {
     const it = items.find((x) => x.id === card.dataset.id);
@@ -67,7 +74,8 @@
       S.recordAnswer(it.id, 0, {
         ok, q: label(it), answer: shownAnswer(it), why: `${label(it)}의 정답입니다.`,
         chosen: it.type === "mc" ? CIRCLE[+chosen - 1] || String(chosen) : String(chosen), chosenWhy: "",
-        extra: { src: label(it), sec, img: it.img, href: `practice.html?sec=${sec}#${it.id}` },
+        extra: { src: label(it), sec, img: it.img, href: `practice.html?sec=${sec}#${it.id}`,
+          ...(it.html ? { html: it.html, shared: it.shared || null, choices: it.choices || null, figs: [...(it.sfigs || []), ...(it.figs || [])].map((f) => f.src) } : {}) },
       });
       S.markSeen(it.id);
     }

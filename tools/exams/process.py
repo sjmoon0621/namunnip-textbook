@@ -74,17 +74,55 @@ def prepare(shard="0/1"):
     print(f"prepare: 새로 {done}, 이미 있음 {skipped}, 실패 {failed}")
 
 
+def text_of(work, img_dir, items_order):
+    """exams/text-work/<시험>/text.json(검사 통과한 것만) → 문항 이미지 이름별 {html, choices, shared, figs, sfigs}. 그림은 상자대로 잘라 img_dir에 저장."""
+    from PIL import Image
+    tw = EX / "text-work" / work.name
+    st = tw / "status.json"
+    if not st.exists() or not json.loads(st.read_text()).get("ok"):
+        return {}
+    lst = json.loads((tw / "list.json").read_text())
+    txt = json.loads((tw / "text.json").read_text())
+    def crop(png, boxes, stem):
+        out = []
+        if not boxes:
+            return out
+        im = Image.open(tw / png)
+        for k, f in enumerate(boxes):
+            x, y, w, h = (int(v) for v in f["box"])
+            name = f"{stem}-f{k + 1}.webp"
+            im.crop((max(0, x), max(0, y), min(im.width, x + w), min(im.height, y + h))).save(img_dir / name, "WEBP", quality=80, method=6)
+            out.append({"src": f"exams/img/{work.name}/{name}", "alt": f.get("alt", "")})
+        return out
+    shared = {}
+    for e, t in zip(lst, txt):
+        if e.get("shared") and t.get("shared"):
+            s = e["shared"]["img"]
+            shared[s] = {"html": t["shared"], "figs": crop(s, t.get("shared_figs"), s.rsplit(".", 1)[0])}
+    res = {}
+    for i, (e, t) in enumerate(zip(lst, txt)):
+        img = items_order[i] if i < len(items_order) else None
+        if not img:
+            continue
+        sh = shared.get((e.get("shared") or {}).get("img"), {})
+        res[img] = {"html": t["stem"], "choices": t.get("choices"), "shared": sh.get("html"), "sfigs": sh.get("figs", []),
+                    "figs": crop(e["img"], t.get("figs"), img.rsplit(".", 1)[0]), "tconf": t.get("conf", "high")}
+    return res
+
+
 def publish():
-    by_sec, total, missing = {}, 0, []
+    by_sec, total, missing, texted = {}, 0, [], 0
     for work in sorted((EX / "work").iterdir()):
         meta_p = work / "meta.json"
         if not meta_p.exists():
             missing.append(work.name)
             continue
         task = json.loads((work / "task.json").read_text())
-        items = {it["img"]: it for it in json.loads((work / "items.json").read_text())}
+        items_list = json.loads((work / "items.json").read_text())
+        items = {it["img"]: it for it in items_list}
         img_dir = EX / "img" / work.name
         img_dir.mkdir(parents=True, exist_ok=True)
+        texts = text_of(work, img_dir, [it["img"] for it in items_list])
         for m in json.loads(meta_p.read_text()):
             it = items.get(m["img"])
             if not it or not m.get("sec") or m.get("answer") in (None, ""):
@@ -95,9 +133,11 @@ def publish():
                 "id": f"ex-{work.name}-{m['img'].rsplit('.', 1)[0]}", "src": task["id"],
                 "year": task.get("school_year") or task["year_admin"], "grade": task["grade"], "month": task["month"],
                 "kind": KIND[task["kind"]], "subject": subj, "no": it["no"], "pts": it.get("pts"),
-                "img": f"exams/img/{work.name}/{m['img']}", "text": search_text(it.get("text", "")), "type": it["type"],
-                "answer": str(m["answer"]), "conf": m.get("conf", "high")})
+                "img": f"exams/img/{work.name}/{m['img']}", "text": search_text(it.get("text", "")),
+                "type": "mc" if len(texts.get(m["img"], {}).get("choices") or []) == 5 else it["type"],
+                "answer": str(m["answer"]), "conf": m.get("conf", "high"), **texts.get(m["img"], {})})
             total += 1
+            texted += m["img"] in texts
     sec_dir = EX / "sec"
     if sec_dir.exists():
         shutil.rmtree(sec_dir)
@@ -105,7 +145,7 @@ def publish():
     for sec, items in by_sec.items():
         (sec_dir / f"{sec}.json").write_text(json.dumps({"sec": sec, "items": items}, ensure_ascii=False))
     (EX / "index.json").write_text(json.dumps({k: len(v) for k, v in sorted(by_sec.items())}, ensure_ascii=False, indent=0))
-    print(f"publish: 문항 {total}개, 절 {len(by_sec)}개, 분류 안 된 시험 {len(missing)}개")
+    print(f"publish: 문항 {total}개(텍스트 {texted}개), 절 {len(by_sec)}개, 분류 안 된 시험 {len(missing)}개")
 
 
 if __name__ == "__main__":
