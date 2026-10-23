@@ -400,36 +400,49 @@
     set.color = b.dataset.color; saveSet(); syncControls(); wake();
   });
   document.getElementById("gv-reset").addEventListener("click", () => { set = { ...DEFAULTS }; saveSet(); syncControls(); rebuild(); });
-  // 분야 전환: 전체 / 과학 / 수학 (수학 과목은 track "math"). 주소 ?d=math|sci 로도 고를 수 있다.
-  const domainOf = (id) => (TOC.find((c) => c.id === id)?.track === "math" ? "math" : "sci");
+  // 분야 전환: 과학 / 수학. 두 분야는 한 화면에 함께 나오지 않는다(수학 과목은 track "math", 교양·심화도 수학 쪽).
+  // 처음 분야는 주소 ?d=math|sci → ?sec·?n·?c가 가리키는 과목 → 지난번 고른 분야 → 과학 순으로 정한다.
+  const domainOf = (id) => (id === "extra" || TOC.find((c) => c.id === id)?.track === "math" ? "math" : "sci");
+  const DOM_KEY = "namunnip-graph-domain";
   const dbox = document.getElementById("gv-domain");
-  let domain = "all";
-  function setDomain(d) {
-    domain = d;
+  const cbox = document.getElementById("gv-courses");
+  let domain = "sci";
+  // 한 분야 안의 과목을 모두 숨기면 그 분야의 과목을 다시 모두 보인다
+  const fixEmpty = () => { if (LIVE.every((c) => domainOf(c.id) !== domain || hiddenCourses.has(c.id))) LIVE.forEach((c) => { if (domainOf(c.id) === domain) hiddenCourses.delete(c.id); }); };
+  function setDomain(d, save) {
+    domain = d === "math" ? "math" : "sci";
     hiddenCourses.clear();
-    if (d !== "all") LIVE.forEach((c) => { if (domainOf(c.id) !== d) hiddenCourses.add(c.id); });
-    if (hiddenCourses.size === LIVE.length) hiddenCourses.clear();
-    dbox.querySelectorAll("[data-d]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.d === d)));
-    cbox.querySelectorAll("[data-c]").forEach((x) => x.setAttribute("aria-pressed", String(!hiddenCourses.has(x.dataset.c))));
+    LIVE.forEach((c) => { if (domainOf(c.id) !== domain) hiddenCourses.add(c.id); });
+    dbox.querySelectorAll("[data-d]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.d === domain)));
+    cbox.querySelectorAll("[data-c]").forEach((x) => {
+      x.hidden = domainOf(x.dataset.c) !== domain;
+      x.setAttribute("aria-pressed", String(!hiddenCourses.has(x.dataset.c)));
+    });
+    if (save) try { localStorage.setItem(DOM_KEY, domain); } catch (e) { /* 저장 못 해도 동작은 한다 */ }
   }
   dbox.addEventListener("click", (e) => {
     const b = e.target.closest("[data-d]"); if (!b) return;
-    setDomain(b.dataset.d); refilter(); setTimeout(() => fitTo([...shown], 50), 700);
+    setDomain(b.dataset.d, true); refilter(); setTimeout(() => fitTo([...shown], 50), 700);
   });
-  const cbox = document.getElementById("gv-courses");
   cbox.innerHTML = LIVE.map((c) => `<button type="button" class="gv-course-chip" aria-pressed="true" data-c="${c.id}"><i style="background:${COLORS[c.id]}"></i>${esc(c.name)}</button>`).join("");
   cbox.addEventListener("click", (e) => {
     const b = e.target.closest("[data-c]"); if (!b) return;
     const c = b.dataset.c;
     hiddenCourses.has(c) ? hiddenCourses.delete(c) : hiddenCourses.add(c);
-    if (hiddenCourses.size === LIVE.length) hiddenCourses.clear();
+    fixEmpty();
     cbox.querySelectorAll("[data-c]").forEach((x) => x.setAttribute("aria-pressed", String(!hiddenCourses.has(x.dataset.c))));
-    domain = "custom";
-    dbox.querySelectorAll("[data-d]").forEach((x) => x.setAttribute("aria-pressed", "false"));
     refilter(); setTimeout(() => fitTo([...shown], 50), 700);
   });
-  const d0 = new URLSearchParams(location.search).get("d");
-  setDomain(d0 === "math" || d0 === "sci" ? d0 : "all");
+  const q0 = new URLSearchParams(location.search);
+  let d0 = q0.get("d");
+  if (d0 !== "math" && d0 !== "sci") {
+    const sec0 = q0.get("sec"), n0 = q0.get("n"), c0 = q0.get("c");
+    const hub0 = c0 && concepts.find((h) => h.cid === c0);
+    const course0 = sec0 ? sec0.split("-")[0] : n0 && where[n0] ? where[n0].c.id : hub0 ? hub0.main : null;
+    if (course0) d0 = domainOf(course0);
+    else try { d0 = localStorage.getItem(DOM_KEY); } catch (e) { d0 = null; }
+  }
+  setDomain(d0);
   syncControls();
 
   const hint = document.getElementById("gv-hint");

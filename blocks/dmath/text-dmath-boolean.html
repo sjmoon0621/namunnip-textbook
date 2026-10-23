@@ -1,0 +1,66 @@
+<!--block
+{
+  "type": "text",
+  "sec": "3-3",
+  "short": "본문 · 부울 함수와 간소화"
+}
+-->
+<article class="card reading" id="text-dmath-boolean" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>부울 함수와 간소화</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">학급 회의에서 세 대표 A, B, C가 찬성(1)이나 반대(0)를 누르면, 둘 이상이 찬성할 때 안건이 통과(1)되는 장치를 만들려 한다. 찬성과 반대의 경우는 \(2^3 = 8\)가지이고, 통과되는 경우를 하나씩 적으면 \(\bar ABC + A\bar BC + AB\bar C + ABC\)라는 식이 된다. 이 식대로 회로를 만들면 부품이 많이 든다. 같은 일을 하는 더 짧은 식이 있을까? 그리고 그 식이 정말 같은 일을 하는지는 어떻게 확인할까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 200" role="img" aria-label="다수결 함수의 진리표">
+        <g class="s">
+          <text x="40" y="22">A</text><text x="90" y="22">B</text><text x="140" y="22">C</text><text x="200" y="22">통과 f</text><text x="290" y="22">AB + BC + CA</text>
+          <line x1="20" y1="30" x2="400" y2="30" class="gd"/>
+          <text x="40" y="48">0</text><text x="90" y="48">0</text><text x="140" y="48">0</text><text x="200" y="48">0</text><text x="290" y="48">0</text>
+          <text x="40" y="66">0</text><text x="90" y="66">0</text><text x="140" y="66">1</text><text x="200" y="66">0</text><text x="290" y="66">0</text>
+          <text x="40" y="84">0</text><text x="90" y="84">1</text><text x="140" y="84">0</text><text x="200" y="84">0</text><text x="290" y="84">0</text>
+          <text x="40" y="102">0</text><text x="90" y="102">1</text><text x="140" y="102">1</text><text x="200" y="102" class="td">1</text><text x="290" y="102" class="td">1</text>
+          <text x="40" y="120">1</text><text x="90" y="120">0</text><text x="140" y="120">0</text><text x="200" y="120">0</text><text x="290" y="120">0</text>
+          <text x="40" y="138">1</text><text x="90" y="138">0</text><text x="140" y="138">1</text><text x="200" y="138" class="td">1</text><text x="290" y="138" class="td">1</text>
+          <text x="40" y="156">1</text><text x="90" y="156">1</text><text x="140" y="156">0</text><text x="200" y="156" class="td">1</text><text x="290" y="156" class="td">1</text>
+          <text x="40" y="174">1</text><text x="90" y="174">1</text><text x="140" y="174">1</text><text x="200" y="174" class="td">1</text><text x="290" y="174" class="td">1</text>
+        </g>
+      </svg>
+      <figcaption>그림 1. 여덟 가지 입력 모두에서 \(AB + BC + CA\)의 값이 통과 여부와 같다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>명제와 조건, 그리고와 또는, 이진수(<a href="3-2.html">이진수의 사칙연산</a>).</div>
+
+    <h3><span class="no">3.3.1</span>참과 거짓의 계산</h3>
+    <p>0과 1만을 값으로 갖는 변수와, 그 변수들에 대한 연산 그리고(곱 \(AB\)), 또는(합 \(A + B\)), 부정(\(\bar A\))으로 만든 함수를 부울 함수라 한다. \(AB\)는 둘 다 1일 때만 1이고, \(A + B\)는 하나라도 1이면 1이며, \(\bar A\)는 \(A\)를 뒤집는다. 부울 함수는 모든 입력에 대한 출력을 적은 진리표로 완전히 정해진다. 진리표에서 출력이 1인 행마다, 그 행의 입력과 정확히 일치할 때만 1이 되는 곱을 만들어 모두 더하면 그 함수의 식이 된다. 이것을 곱의 합 꼴이라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">부울 대수의 법칙</span></span>
+      <p>교환법칙, 결합법칙, 분배법칙 \(A(B + C) = AB + AC\)와 함께 \(A + A = A\), \(A + \bar A = 1\), \(A\bar A = 0\), \(A + AB = A\)가 성립한다. 드모르간의 법칙은 \(\overline{A + B} = \bar A\,\bar B\), \(\overline{AB} = \bar A + \bar B\)이다. 두 부울 함수가 같은지는 진리표의 모든 행을 비교해 확인한다.</p>
+    </div>
+    <p>보통의 수와 달리 \(A + A = A\)이고, 또는 연산에 대해서도 분배법칙 \(A + BC = (A + B)(A + C)\)이 성립한다. 이 법칙들로 식을 바꾸어 같은 진리표를 갖는 더 짧은 식을 찾는 것을 간소화라 한다. 간소화의 기본 요령은 한 변수만 다르고 나머지가 같은 두 곱을 찾는 것이다. 예를 들어 \(ABC + AB\bar C = AB(C + \bar C) = AB\)처럼, 그 변수가 지워진다. 또 \(A + A = A\)를 써서 한 곱을 여러 번 짝짓는 데 쓸 수 있다.<sup class="fn"><a href="#fn-dmath-boolean-1">1</a></sup></p>
+
+    <h3><span class="no">3.3.2</span>그림으로 묶는 간소화</h3>
+    <p>카르노 맵은 진리표의 칸을 이웃한 칸끼리 한 변수만 다르도록 늘어놓은 표이다. 출력이 1인 칸들을 2개, 4개처럼 2의 거듭제곱 개씩 직사각형으로 묶으면, 묶음 안에서 바뀌는 변수가 지워진 곱 하나가 된다. 묶음은 클수록, 개수는 적을수록 식이 짧아지고, 한 칸을 여러 묶음에 함께 넣어도 된다. 그래서 대수 법칙을 하나하나 쓰는 대신 그림에서 묶음을 찾아 간소화한다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="다수결 함수의 간소화">
+        <g class="s">
+          <text x="20" y="22">짝지은 두 곱</text><text x="240" y="22">지워지는 변수</text><text x="400" y="22">결과</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">ABC̄ + ABC</text><text x="240" y="52">C</text><text x="400" y="52">AB</text>
+          <text x="20" y="74">ĀBC + ABC</text><text x="240" y="74">A</text><text x="400" y="74">BC</text>
+          <text x="20" y="96">AB̄C + ABC</text><text x="240" y="96">B</text><text x="400" y="96" class="td">CA</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. \(ABC\)를 세 번 복제해 다른 세 곱과 하나씩 짝지으면 각각 한 변수가 지워진다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>처음 질문의 식 \(\bar ABC + A\bar BC + AB\bar C + ABC\)를 부울 대수의 법칙으로 \(AB + BC + CA\)로 간소화하여라. 각 식을 회로로 만들 때 필요한 그리고 게이트와 또는 게이트의 입력 수를 비교하여라.</p>
+    </div>
+    <p>\(ABC = ABC + ABC + ABC\)이므로 식을 \((AB\bar C + ABC) + (\bar ABC + ABC) + (A\bar BC + ABC)\)로 다시 묶는다. 각 괄호는 한 변수만 다른 두 곱이어서 \(AB(\bar C + C) = AB\), \(BC(\bar A + A) = BC\), \(CA(\bar B + B) = CA\)가 된다. 그래서 \(f = AB + BC + CA\)이고, 그림 1의 진리표로 여덟 경우가 모두 같음을 확인할 수 있다.</p>
+    <p>원래 식은 세 입력 그리고 게이트 4개와 네 입력 또는 게이트 하나, 부정 게이트 3개가 필요하다. 간소화한 식은 두 입력 그리고 게이트 3개와 세 입력 또는 게이트 하나로 충분하다. 식으로 보면 "어느 두 사람이든 함께 찬성하면 통과"라는 뜻이 그대로 드러난다. 즉 부울 함수는 진리표로 정해지고 곱의 합 꼴로 쓸 수 있으며, 한 변수만 다른 곱을 짝지어 그 변수를 지우는 간소화로 같은 일을 하는 더 짧은 식을 얻는다.</p>
+    <p>아래 탐구 카드에서 "셋 중 둘 이상"의 진리표를 만들어 식으로 써 보고, 카르노 맵으로 긴 부울 식을 묶어 줄여 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-dmath-boolean-1">1854년 영국의 불은 논리를 0과 1의 계산으로 다루는 대수를 만들었다. 80여 년 뒤인 1937년 미국의 섀넌은 대학원 논문에서 전기 스위치 회로가 불의 대수를 따른다는 것을 보여, 디지털 회로 설계의 바탕을 놓았다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>0과 1만을 값으로 하고 그리고, 또는, 부정으로 만든 부울 함수는 진리표로 완전히 정해지며, 출력이 1인 행마다 곱을 만들어 더한 곱의 합 꼴로 쓸 수 있다. 분배법칙, \(A + \bar A = 1\), 드모르간의 법칙 같은 부울 대수의 법칙으로, 한 변수만 다른 곱을 짝지어 그 변수를 지우면 식을 간소화할 수 있다. 처음 질문의 통과 조건은 \(AB + BC + CA\)로 간소화되어, 어느 두 사람이든 함께 찬성하면 통과라는 뜻을 짧은 식과 작은 회로로 나타낸다.</p></div>
+  </div>
+</article>

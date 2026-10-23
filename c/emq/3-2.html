@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>중첩과 측정, 양자 기술 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="양자 상태의 중첩과 측정에 의한 확률적 상태 변화를 이해하고, 이를 이용한 양자 컴퓨터, 양자 암호 통신 등의 양자 기술이 미래 사회에 미칠 영향을 인식한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-emq-qubit .btns { display: flex; gap: .4rem; flex-wrap: wrap; margin: .4rem 0; }
   </style>
@@ -41,18 +47,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-emq-qubit"><span class="mono">3.2.1</span>측정하기 전의 양자 상태는 0일까, 1일까?</a></li>
-        <li><a href="#text-emq-quantum-tech"><span class="mono">3.2.2</span>양자 컴퓨터와 양자 암호는 세상을 어떻게 바꿀까?</a></li>
+        <li><a href="#text-emq-superposition"><span class="mono">본문</span>중첩과 측정, 양자 기술</a></li>
+        <li><a href="#card-emq-qubit"><span class="mono">탐구 1</span>측정하기 전의 양자 상태는 0일까, 1일까?</a></li>
+        <li><a href="#text-emq-quantum-tech"><span class="mono">읽기 2</span>양자 컴퓨터와 양자 암호는 세상을 어떻게 바꿀까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=emq-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=emq&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=emq-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-emq-superposition" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>중첩과 측정, 양자 기술</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">컴퓨터의 비트는 0이나 1 가운데 하나이다. 그런데 양자 컴퓨터의 큐비트는 0과 1이 겹친 상태에 있을 수 있다고 한다. 그렇다면 측정하면 0.5가 나올까? 아니다. 측정하면 늘 0이나 1 가운데 하나가 나온다. 겹쳐 있다는 말은 무슨 뜻이며, 이 성질로 어떻게 새로운 계산과 도청할 수 없는 암호를 만들까?</p>
+          <figure class="q-fig" data-q="emq-qubit">
+            <svg viewBox="0 0 520 225" role="img" aria-label="큐비트 상태와 반복 측정 결과"></svg>
+            <div class="q-ctl"><label>상태 각 \(\theta\) (°) <input type="range" data-k="th" min="0" max="180" step="5" value="90"><output data-k="th"></output></label><label>측정 횟수 <input type="range" data-k="n" min="10" max="1000" step="10" value="100"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 큐비트의 상태를 원 위의 화살표로 나타낸다. 위쪽 끝은 0, 아래쪽 끝은 1이다. 같은 상태로 준비한 큐비트를 여러 번 측정하면 각 결과가 나오는 비율이 화살표의 각도로 정해진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>확률로 해석한 물질파와 측정이 간섭을 지우는 현상(<a href="3-1.html">단일 양자의 이중 슬릿 실험</a>), 편광(<a href="2-3.html">편광</a>), 확률(수학).</div>
+
+          <h3><span class="no">3.2.1</span>중첩 상태</h3>
+          <p>전자가 두 슬릿을 동시에 지나는 것처럼, 양자 세계의 대상은 두 상태가 겹친 상태에 있을 수 있다. 이를 중첩이라 한다. 큐비트는 0 상태와 1 상태를 가진 양자계로, 일반적인 상태는 \(\alpha|0\rangle + \beta|1\rangle\)로 쓴다. \(\alpha\), \(\beta\)는 각 상태의 진폭이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">측정과 확률</span></span>
+            <p>상태 \(\alpha|0\rangle + \beta|1\rangle\)인 큐비트를 측정하면 0이 나올 확률은 \(|\alpha|^2\), 1이 나올 확률은 \(|\beta|^2\)이며 \(|\alpha|^2 + |\beta|^2 = 1\)이다. 측정한 뒤의 큐비트는 나온 결과의 상태로 바뀐다.</p>
+          </div>
+          <p>그러므로 중첩은 '0과 1의 중간값'이 아니라, 측정하면 어느 쪽이 나올지 확률로만 정해진 상태이다. 그리고 한 번 측정하면 중첩이 깨져 다시 측정해도 같은 값만 나온다. 그림 1에서 \(\theta = 90°\)이면 0과 1이 반반으로 나오고, \(\theta = 60°\)이면 0이 75% 나온다. 측정 횟수가 적으면 비율이 출렁이지만 많을수록 확률에 가까워진다.</p>
+
+          <h3><span class="no">3.2.2</span>양자 기술</h3>
+          <p>큐비트 \(n\)개는 \(2^n\)가지 상태의 중첩을 한꺼번에 가질 수 있다. 양자 컴퓨터는 간섭을 이용해 틀린 답의 진폭은 서로 지우고 맞는 답의 진폭은 키워, 측정할 때 맞는 답이 나올 확률을 높인다. 그래서 큰 수의 소인수 분해나 분자 구조 계산처럼 일반 컴퓨터로 매우 오래 걸리는 문제를 빠르게 풀 가능성이 있다.</p>
+          <p>한편 양자 암호는 측정이 상태를 바꾼다는 성질을 쓴다. 광자의 편광에 열쇠를 실어 보내면, 도청자가 중간에 측정하는 순간 일부 광자의 상태가 바뀌어 오류가 생긴다. 보내는 쪽과 받는 쪽이 일부를 비교하면 도청을 알아챌 수 있다.<sup class="fn"><a href="#fn-emq-superposition-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="큐비트 수에 따른 상태 수">
+              <g class="s">
+                <text x="20" y="22">큐비트 수</text><text x="150" y="22">동시에 다루는 상태 수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">10</text><text x="150" y="52">2¹⁰ = 1024</text>
+                <text x="20" y="74">50</text><text x="150" y="74">약 10¹⁵ (천조)</text>
+                <text x="20" y="96">300</text><text x="150" y="96">약 10⁹⁰ (관측 가능한 우주의 원자 수보다 많음)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 큐비트가 하나 늘 때마다 중첩할 수 있는 상태의 수가 두 배가 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+            <p>큐비트의 상태가 \(0.6|0\rangle + 0.8|1\rangle\)이다. 측정할 때 0과 1이 나올 확률을 구하여라. 같은 상태로 준비한 큐비트 1000개를 측정하면 0은 대략 몇 번 나오는가? 첫 측정에서 1이 나온 큐비트를 바로 다시 측정하면 어떻게 되는가?</p>
+          </div>
+          <p>0이 나올 확률은 \(0.6^2 = 0.36\), 1이 나올 확률은 \(0.8^2 = 0.64\)이고, 합은 1이다. 1000개를 측정하면 0은 대략 360번 나온다. 실제로는 이항 분포에 따라 표준편차 \(\sqrt{1000 \times 0.36 \times 0.64} \approx 15\)만큼 출렁여 345~375번 정도가 흔하다.</p>
+          <p>첫 측정에서 1이 나온 큐비트는 이미 \(|1\rangle\) 상태로 바뀌었으므로, 다시 측정하면 반드시 1이 나온다. 즉 측정 전의 진폭 0.6과 0.8은 한 번의 측정으로 알아낼 수 없고, 같은 상태를 많이 준비해 통계를 내야만 알 수 있다.</p>
+          <p>아래 탐구 카드에서 큐비트의 상태를 바꾸며 측정 결과의 비율을 직접 확인하고, 양자 컴퓨터와 양자 암호가 하는 일을 살펴보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-emq-superposition-1">양자 상태는 복제할 수 없다는 '복제 불가 정리'가 있다. 그래서 도청자는 광자를 몰래 복사해 두고 원본을 그대로 보낼 수 없다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>큐비트는 0과 1이 겹친 중첩 상태 \(\alpha|0\rangle + \beta|1\rangle\)에 있을 수 있고, 측정하면 확률 \(|\alpha|^2\), \(|\beta|^2\)로 0이나 1 가운데 하나가 나오며 상태가 그 결과로 바뀐다. 그래서 처음 질문의 답은 '둘 다 아니다'이다. 측정 전의 큐비트는 어느 쪽이 나올지 확률만 정해진 중첩 상태이고, 이 성질이 양자 계산과 양자 암호의 바탕이 된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-1.html#card-emq-single-photon"><small class="mono">전자기와 양자 3.1</small>전자를 하나씩 쏘아도 간섭무늬가 생길까?</a><a href="../../c/adphy/4-4.html#text-adphy-uncertainty"><small class="mono">고급 물리학 4.4</small>상보성 원리와 불확정성 원리</a><a href="../../c/emq/2-3.html#card-emq-polarizer"><small class="mono">전자기와 양자 2.3</small>편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?</a><a href="../../c/emq/2-3.html#text-emq-polarize"><small class="mono">전자기와 양자 2.3</small>편광</a></div></nav>
+
       <article class="card" id="card-emq-qubit">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>측정하기 전의 양자 상태는 0일까, 1일까?</h2><span class="kind">중첩과 측정 · 큐비트</span>
+          <span class="no">탐구 1</span><h2>측정하기 전의 양자 상태는 0일까, 1일까?</h2><span class="kind">중첩과 측정 · 큐비트</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,40 +132,40 @@
                 <div><dt>측정 결과 (횟수)</dt><dd class="n-c">—</dd></div>
                 <div><dt>마지막 측정 직후 상태</dt><dd class="n-l">—</dd></div>
               </dl>
-              <p class="fig-note">편광된 광자처럼 상태를 평면의 화살표로 나타냈습니다: |ψ⟩ = cos(θ/2)|0⟩ + sin(θ/2)|1⟩. 측정 결과가 나올 확률은 해당 기준 방향과 이루는 각의 cos²입니다.</p>
+              <p class="fig-note">편광된 광자처럼 상태를 평면의 화살표 |ψ⟩ = cos(θ/2)|0⟩ + sin(θ/2)|1⟩로 나타냈다. 측정 결과가 나올 확률은 해당 기준 방향과 이루는 각의 cos²이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전은 던지기 전에도 앞이나 뒤 중 하나로 정해져 있고, 우리가 모를 뿐입니다. 양자 상태도 측정 전에 이미 0 또는 1로 정해져 있는데 우리가 모르는 것일까요?</li>
-            <li><span class="tag">복원</span>전자 하나는 두 슬릿의 경로가 겹친 확률 파동처럼 행동했고, 어느 슬릿을 지났는지 측정하면 간섭이 사라졌습니다(단일 광자·전자의 간섭). 편광판을 지난 광자가 다음 편광판을 지날 확률은 cos²θ입니다.</li>
-            <li><span class="tag">설명</span>양자 상태는 두 상태 |0⟩과 |1⟩이 겹친 <em>중첩</em> 상태일 수 있습니다. 측정하면 결과는 0 또는 1 하나로만 나오며, 각각의 확률은 중첩의 계수를 제곱한 값입니다. 측정 직후 상태는 나온 결과의 상태로 바뀌므로, 곧바로 같은 측정을 다시 하면 같은 결과가 나옵니다. 측정 전 상태가 0이나 1로 이미 정해진 것이 아니라는 점은 다른 기준(대각선)으로 측정했을 때 간섭처럼 드러납니다.</li>
-            <li><span class="tag">연결</span>0과 1의 중첩 상태를 가진 정보 단위가 <em>큐비트</em>입니다. 큐비트 n개는 2ⁿ개 상태의 중첩을 다룰 수 있어, 특정 문제(소인수분해, 분자 시뮬레이션 등)에서 기존 컴퓨터보다 훨씬 빠른 <em>양자 컴퓨터</em>를 만들 수 있습니다. 측정이 상태를 바꾼다는 성질은 도청을 반드시 흔적으로 남기는 <em>양자 암호 통신</em>에 쓰입니다(읽기).</li>
-            <li><span class="tag">적용</span>θ = 60°로 준비해 100번 측정하고 비율을 예측 확률과 비교하세요. 한 번 측정한 뒤 같은 기준으로 다시 측정하면 어떻게 되나요? θ = 90°인 상태를 0/1 기준과 대각선 기준으로 각각 측정해 보세요. 어느 쪽 결과가 확실한가요?</li>
-            <li class="warn"><span class="tag">판단</span>“중첩은 0과 1을 동시에 가진다”는 설명은 오해를 부르기 쉽습니다. 측정 결과는 언제나 하나이고, 중첩은 여러 가능성이 확률 진폭으로 겹쳐 간섭할 수 있는 상태라는 뜻입니다. 또 양자 컴퓨터가 모든 계산을 빠르게 하는 것은 아니며, 간섭을 잘 이용하는 알고리즘이 있는 문제에서만 이점이 있습니다.</li>
+            <li><span class="tag">질문</span>동전은 던지기 전에도 앞이나 뒤 중 하나로 정해져 있고, 우리가 모를 뿐이다. 양자 상태도 측정 전에 이미 0 또는 1로 정해져 있는데 우리가 모르는 것일까?</li>
+            <li><span class="tag">복원</span>전자 하나는 두 슬릿의 경로가 겹친 확률 파동처럼 행동했고, 어느 슬릿을 지났는지 측정하면 간섭이 사라졌다(단일 광자와 전자의 간섭). 또 편광판을 지난 광자가 다음 편광판을 지날 확률은 cos²θ이다.</li>
+            <li><span class="tag">설명</span>양자 상태는 두 상태 |0⟩과 |1⟩이 겹친 <em>중첩</em> 상태일 수 있다. 측정하면 결과는 0 또는 1 하나로만 나오고 각각의 확률은 중첩의 계수를 제곱한 값이며, 측정 직후 상태는 나온 결과의 상태로 바뀌므로 곧바로 같은 측정을 다시 하면 같은 결과가 나온다. 그리고 측정 전 상태가 0이나 1로 이미 정해진 것이 아니라는 사실은 다른 기준(대각선)으로 측정했을 때 간섭처럼 드러난다.</li>
+            <li><span class="tag">연결</span>0과 1의 중첩 상태를 가진 정보 단위가 <em>큐비트</em>이다. 큐비트 n개는 2ⁿ개 상태의 중첩을 다룰 수 있어, 소인수분해나 분자 시뮬레이션 같은 특정 문제에서 기존 컴퓨터보다 훨씬 빠른 <em>양자 컴퓨터</em>를 만들 수 있다. 또 측정이 상태를 바꾼다는 성질은 도청을 반드시 흔적으로 남기는 <em>양자 암호 통신</em>에 쓰인다(읽기).</li>
+            <li><span class="tag">적용</span>θ = 60°로 준비해 100번 측정하고 비율을 예측 확률과 비교해 보자. 한 번 측정한 뒤 같은 기준으로 다시 측정하면 어떻게 되는지 보고, θ = 90°인 상태를 0/1 기준과 대각선 기준으로 각각 측정해 어느 쪽 결과가 확실한지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>중첩은 0과 1을 동시에 가진다는 설명은 오해를 부르기 쉽다. 측정 결과는 언제나 하나이고, 중첩은 여러 가능성이 확률 진폭으로 겹쳐 간섭할 수 있는 상태라는 뜻이다. 또 양자 컴퓨터가 모든 계산을 빠르게 하는 것은 아니며, 간섭을 잘 이용하는 알고리즘이 있는 문제에서만 이점이 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">θ = 90°로 준비한 큐비트를 0/1 기준으로 측정했더니 1이 나왔습니다. 곧바로 같은 기준으로 다시 측정하면?</p>
+          <p class="q">θ = 90°로 준비한 큐비트를 0/1 기준으로 측정했더니 1이 나왔다. 곧바로 같은 기준으로 다시 측정하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>반드시 1이 나온다<span class="why"><b>맞습니다.</b> 첫 측정으로 상태가 |1⟩로 바뀌었으므로 같은 측정은 같은 결과를 줍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0과 1이 반반의 확률로 나온다<span class="why"><b>처음 준비한 상태의 확률입니다.</b> 측정 뒤에는 상태가 바뀌었습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>반드시 0이 나온다<span class="why"><b>측정 직후 상태는 측정 결과의 상태입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>반드시 1이 나온다<span class="why"><b>맞다.</b> 첫 측정으로 상태가 |1⟩로 바뀌었으므로 같은 측정은 같은 결과를 준다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0과 1이 반반의 확률로 나온다<span class="why"><b>처음 준비한 상태의 확률이다.</b> 측정 뒤에는 상태가 바뀌었다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>반드시 0이 나온다<span class="why"><b>측정 직후 상태는 측정 결과의 상태이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-1.html#card-emq-single-photon"><small class="mono">전자기와 양자 3.1</small>전자를 하나씩 쏘아도 간섭무늬가 생길까?</a><a href="../../c/emq/2-3.html#card-emq-polarizer"><small class="mono">전자기와 양자 2.3</small>편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-1.html#card-emq-single-photon"><small class="mono">전자기와 양자 3.1</small>전자를 하나씩 쏘아도 간섭무늬가 생길까?</a><a href="../../c/adphy/4-4.html#text-adphy-uncertainty"><small class="mono">고급 물리학 4.4</small>상보성 원리와 불확정성 원리</a><a href="../../c/emq/2-3.html#card-emq-polarizer"><small class="mono">전자기와 양자 2.3</small>편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?</a><a href="../../c/emq/2-3.html#text-emq-polarize"><small class="mono">전자기와 양자 2.3</small>편광</a></div></nav>
 
       <article class="card reading" id="text-emq-quantum-tech">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>양자 컴퓨터와 양자 암호는 세상을 어떻게 바꿀까?</h2><span class="kind">읽기 · 양자 기술과 미래 사회</span>
+          <span class="no">읽기 2</span><h2>양자 컴퓨터와 양자 암호는 세상을 어떻게 바꿀까?</h2><span class="kind">읽기 · 양자 기술과 미래 사회</span>
         </header>
         <div class="reading-body">
-          <p class="ask">양자 역학은 100년 전에 태어났지만, 중첩과 측정을 직접 다루는 기술은 최근에야 실험실을 벗어나고 있습니다. 이 기술이 우리 삶에 어떤 영향을 줄까요?</p>
-          <h3><span class="mono">1</span>양자 암호 통신: 도청하면 들킨다</h3>
-          <p>BB84라 불리는 방식에서 보내는 사람은 광자 하나하나를 0/1 기준이나 대각선 기준 중 무작위로 골라 편광시켜 보냅니다. 받는 사람도 기준을 무작위로 골라 측정한 뒤, 기준만 공개해서 같은 기준을 쓴 광자의 결과만 비밀 키로 씁니다. 도청자가 중간에서 광자를 측정하면 기준이 틀린 경우 상태가 바뀌어(측정이 상태를 바꿈), 두 사람이 키의 일부를 비교했을 때 오류율이 올라갑니다. 복사하는 것도 불가능합니다(복제 불가 정리). 그래서 도청 시도가 반드시 드러납니다.</p>
-          <h3><span class="mono">2</span>양자 컴퓨터: 간섭으로 답을 골라낸다</h3>
-          <p>큐비트를 중첩시키고 서로 얽히게 한 뒤, 틀린 답의 확률 진폭은 상쇄되고 맞는 답은 보강되도록 연산을 설계합니다. 쇼어 알고리즘은 큰 수의 소인수분해를 기존 컴퓨터보다 엄청나게 빨리 할 수 있어, 지금 인터넷 보안에 쓰이는 RSA 암호를 위협합니다. 신약·신소재를 위한 분자 시뮬레이션, 최적화 문제에도 기대를 모읍니다.</p>
+          <p class="ask">양자 역학은 100년 전에 태어났지만, 중첩과 측정을 직접 다루는 기술은 최근에야 실험실을 벗어나고 있다. 이 기술이 우리 삶에 어떤 영향을 줄까?</p>
+          <h3><span class="mono">1</span>도청하면 들키는 양자 암호 통신</h3>
+          <p>BB84라 불리는 방식에서 보내는 사람은 광자 하나하나를 0/1 기준이나 대각선 기준 중 무작위로 골라 편광시켜 보낸다. 받는 사람도 기준을 무작위로 골라 측정한 뒤, 기준만 공개해서 같은 기준을 쓴 광자의 결과만 비밀 키로 쓴다. 그런데 도청자가 중간에서 광자를 측정하면 기준이 틀린 경우 상태가 바뀌어(측정이 상태를 바꿈), 두 사람이 키의 일부를 비교했을 때 오류율이 올라간다. 광자를 복사하는 것도 불가능하므로(복제 불가 정리), 도청 시도가 반드시 드러난다.</p>
+          <h3><span class="mono">2</span>간섭으로 답을 골라내는 양자 컴퓨터</h3>
+          <p>양자 컴퓨터는 큐비트를 중첩시키고 서로 얽히게 한 뒤, 틀린 답의 확률 진폭은 상쇄되고 맞는 답은 보강되도록 연산을 설계한다. 쇼어 알고리즘은 큰 수의 소인수분해를 기존 컴퓨터보다 엄청나게 빨리 할 수 있어, 지금 인터넷 보안에 쓰이는 RSA 암호를 위협한다. 또 신약과 신소재를 위한 분자 시뮬레이션, 최적화 문제에도 기대를 모은다.</p>
           <div class="tbl"><table>
             <thead><tr><th>기대되는 영향</th><th>걱정과 과제</th></tr></thead>
             <tbody>
@@ -116,37 +174,41 @@
               <tr><td>초정밀 양자 센서 (원자시계, 자기장 측정)</td><td>기술을 가진 나라와 기업에 힘이 쏠릴 수 있음</td></tr>
             </tbody>
           </table></div>
-          <p class="judge"><b>판단</b>“양자 컴퓨터가 곧 모든 컴퓨터를 대체한다”는 기사는 과장입니다. 양자 컴퓨터는 특정한 종류의 문제에서만 빠르고, 이메일이나 게임 같은 일상 작업에는 이점이 없습니다. 반대로 “아직 먼 이야기”라고 무시하기에도, 지금 가로채 저장한 암호문을 훗날 양자 컴퓨터로 풀 수 있다는 위험 때문에 암호 교체는 이미 시작되었습니다.</p>
+          <p class="judge"><b>판단</b>‘양자 컴퓨터가 곧 모든 컴퓨터를 대체한다’는 기사는 과장이다. 양자 컴퓨터는 특정한 종류의 문제에서만 빠르고, 이메일이나 게임 같은 일상 작업에는 이점이 없기 때문이다. 반대로 아직 먼 이야기라고 무시하기에도, 지금 가로채 저장한 암호문을 훗날 양자 컴퓨터로 풀 수 있다는 위험 때문에 암호 교체는 이미 시작되었다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">BB84 양자 암호에서 도청자가 광자를 측정하지 않고 몰래 복사만 해 두었다가 나중에 측정하려 한다면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>알려지지 않은 양자 상태는 완벽하게 복사할 수 없어 이 방법은 불가능하다<span class="why"><b>맞습니다.</b> 복제 불가 정리 때문에 도청자는 측정해야 하고, 측정은 흔적을 남깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>복사는 상태를 바꾸지 않으므로 들키지 않고 도청할 수 있다<span class="why"><b>양자 상태의 완벽한 복사는 원리적으로 불가능합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기준을 공개하기 때문에 도청자도 키를 알 수 있다<span class="why"><b>기준만 공개하고 결과(0/1)는 공개하지 않습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>알려지지 않은 양자 상태는 완벽하게 복사할 수 없어 이 방법은 불가능하다<span class="why"><b>맞다.</b> 복제 불가 정리 때문에 도청자는 측정해야 하고, 측정은 흔적을 남긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>복사는 상태를 바꾸지 않으므로 들키지 않고 도청할 수 있다<span class="why"><b>양자 상태의 완벽한 복사는 원리적으로 불가능하다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기준을 공개하기 때문에 도청자도 키를 알 수 있다<span class="why"><b>기준만 공개하고 결과(0/1)는 공개하지 않는다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-1.html#card-emq-single-photon"><small class="mono">전자기와 양자 3.1</small>전자를 하나씩 쏘아도 간섭무늬가 생길까?</a><a href="../../c/emq/2-3.html#card-emq-polarizer"><small class="mono">전자기와 양자 2.3</small>편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-1.html#card-emq-single-photon"><small class="mono">전자기와 양자 3.1</small>전자를 하나씩 쏘아도 간섭무늬가 생길까?</a><a href="../../c/adphy/4-4.html#text-adphy-uncertainty"><small class="mono">고급 물리학 4.4</small>상보성 원리와 불확정성 원리</a><a href="../../c/emq/2-3.html#card-emq-polarizer"><small class="mono">전자기와 양자 2.3</small>편광판 두 장 사이에 한 장을 더 끼우면 왜 빛이 다시 나올까?</a><a href="../../c/emq/2-3.html#text-emq-polarize"><small class="mono">전자기와 양자 2.3</small>편광</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=emq-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=emq&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/emq/body.js"></script>
 <script src="../../js/cards/emq/q-qubit.js"></script>
 </body>
 </html>

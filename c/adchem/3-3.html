@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>엔트로피 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="엔트로피를 가역 과정의 열(ΔS = q가역/T)과 경우의 수(S = k ln W)로 정의하고, 표준 몰 엔트로피로 화학 변화의 엔트로피 변화를 예측한다. 반응열이 주위의 엔트로피를 바꾸므로(ΔS주위 = −ΔH/T) 자발성은 계와 주위를 합친 우주의 엔트로피로 판단함을 이해한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adchem-suniv .eq { font-family: var(--f-mono); font-size: 13px; margin: 4px 0 2px; color: var(--ink); }
     #card-adchem-suniv .s-tbl { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); margin: 2px 0 6px; }
@@ -42,18 +48,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-entropy"><span class="mono">3.3.1</span>퍼진 기체는 왜 저절로 다시 모이지 않을까?</a></li>
-        <li><a href="#card-adchem-suniv"><span class="mono">3.3.2</span>계와 주위의 엔트로피</a></li>
+        <li><a href="#text-adchem-microstates"><span class="mono">본문</span>엔트로피</a></li>
+        <li><a href="#card-mech-entropy"><span class="mono">탐구 1</span>퍼진 기체는 왜 저절로 다시 모이지 않을까?</a></li>
+        <li><a href="#card-adchem-suniv"><span class="mono">탐구 2</span>계와 주위의 엔트로피</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adchem-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adchem&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">7문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adchem-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">50문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adchem-microstates" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>엔트로피</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">뜨거운 쇠구슬을 찬물에 넣으면 구슬은 식고 물은 데워져 결국 같은 온도가 된다. 그 반대, 곧 미지근한 물속의 구슬이 저절로 더 뜨거워지고 물이 더 차가워지는 일은 한 번도 본 적이 없다. 에너지 보존 법칙은 두 방향을 모두 허락하는데, 자연은 왜 한쪽만 고를까? 금지하는 법칙이 따로 있는 것일까, 아니면 단지 한쪽이 압도적으로 일어나기 쉬운 것일까? 에너지를 나누어 갖는 방법의 수를 세어 보면 답이 보인다.</p>
+          <figure class="q-fig" data-q="adchem-micro">
+            <svg viewBox="0 0 520 230" role="img" aria-label="두 아인슈타인 고체가 에너지를 나누어 가지는 방법의 확률"></svg>
+            <div class="q-ctl"><label>A가 가진 에너지 양자 수 <input type="range" data-k="qa" min="0" max="60" step="1" value="45"><output data-k="qa"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 진동자 30개씩으로 된 두 고체 A와 B가 에너지 양자 60개를 나누어 가질 때, A가 가진 양자 수에 따른 확률. 모든 미시 상태가 똑같이 일어나기 쉽다고 하면, 고르게 나누는 상태가 압도적으로 흔하다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>경우의 수와 조합(수학), 내부 에너지(<a href="3-1.html">내부 에너지와 열역학 제1법칙</a>), 엔탈피(<a href="3-2.html">엔탈피와 헤스 법칙</a>).</div>
+
+          <h3><span class="no">3.3.1</span>미시 상태와 엔트로피</h3>
+          <p>고체 속의 원자는 제자리에서 진동하며, 진동 에너지는 양자라는 일정한 덩어리 단위로만 주고받는다. 진동자 \(N\)개가 양자 \(q\)개를 나누어 갖는 방법의 수는 \(q\)개의 공을 \(N\)개의 상자에 넣는 경우의 수와 같다. 원자들이 에너지를 정확히 어떻게 나누어 가졌는지를 하나하나 정한 것을 미시 상태라 한다. 겉으로 보기에 같은 상태도 그 속의 미시 상태 수는 엄청나게 많을 수 있다. 볼츠만은 이 수의 로그로 엔트로피를 정의했다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">볼츠만의 엔트로피</span></span>
+            <p>진동자 \(N\)개가 양자 \(q\)개를 나누어 갖는 미시 상태 수는 \(W = \dbinom{q + N - 1}{q}\)이다. 엔트로피는 \(S = k\ln W\)이며, \(k\)는 볼츠만 상수이다. 고립된 계는 미시 상태 수가 가장 많은 상태, 곧 엔트로피가 가장 큰 상태로 간다.</p>
+          </div>
+          <p>그림 1에서 A가 가진 양자 수를 바꾸어 보자. A가 45개, B가 15개를 가진 상태는 A가 뜨겁고 B가 차가운 상태이다. 그 확률은 고르게 30개씩 나눈 상태의 약 50분의 1에 불과하고, A가 55개를 가지면 약 40만분의 1로 떨어진다. 그래서 두 고체가 에너지를 자유롭게 주고받으면 에너지는 거의 확실하게 고르게 나뉘는 쪽으로 옮겨 간다. 진동자가 30개만 되어도 이렇게 치우치는데, 실제 물체에는 \(10^{23}\)개가 넘는 원자가 있다. 그래서 반대 방향의 변화는 금지된 것이 아니라, 우주의 나이 동안 한 번도 일어나지 않을 만큼 드물다.<sup class="fn"><a href="#fn-adchem-microstates-1">1</a></sup></p>
+
+          <h3><span class="no">3.3.2</span>엔트로피를 늘리는 변화</h3>
+          <p>미시 상태 수가 늘어나는 변화는 엔트로피를 늘린다. 고체가 녹아 액체가 되거나 액체가 기체가 되면 분자가 움직일 수 있는 방법이 크게 늘어 엔트로피가 커진다. 기체가 더 넓은 공간으로 퍼지거나, 두 기체가 섞이는 것도 마찬가지이다. 반응에서 기체 분자의 수가 늘면 대개 엔트로피가 커진다. 그리고 열을 받으면 에너지 양자가 늘어 미시 상태 수가 늘어난다. 온도 \(T\)에서 열 \(q\)를 가역적으로 받으면 엔트로피는 \(q/T\)만큼 는다. 같은 열이라도 차가운 물체에 들어갈 때 엔트로피가 더 크게 는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="엔트로피가 늘어나는 변화">
+              <g class="s">
+                <text x="20" y="22">변화</text><text x="200" y="22">미시 상태 수</text><text x="380" y="22">엔트로피</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">고체 → 액체 → 기체</text><text x="200" y="52">분자의 움직임이 자유로워짐</text><text x="380" y="52">증가</text>
+                <text x="20" y="74">기체의 확산, 혼합</text><text x="200" y="74">분자가 있을 곳이 늘어남</text><text x="380" y="74">증가</text>
+                <text x="20" y="96">열이 차가운 쪽으로 흐름</text><text x="200" y="96">에너지가 고르게 나뉨</text><text x="380" y="96">증가</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 저절로 일어나는 변화는 우주 전체의 미시 상태 수, 곧 엔트로피를 늘리는 쪽으로 간다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+            <p>진동자 3개로 된 고체 A와 B가 에너지 양자 4개를 나누어 가진다. A가 가진 양자 수가 0, 1, 2, 3, 4일 때 전체 미시 상태 수를 각각 구하고, 가장 일어나기 쉬운 나눔과 한쪽에 모두 몰린 나눔의 확률을 구하여라.</p>
+          </div>
+          <p>진동자 3개가 양자 \(q\)개를 갖는 방법은 \(\dbinom{q+2}{2}\)이므로, \(q = 0, 1, 2, 3, 4\)에 대해 1, 3, 6, 10, 15이다. A가 \(q_A\)개, B가 \(4 - q_A\)개를 가질 때 전체 미시 상태 수는 두 수의 곱이라 차례로 \(1 \times 15 = 15\), \(3 \times 10 = 30\), \(6 \times 6 = 36\), \(10 \times 3 = 30\), \(15 \times 1 = 15\)이다. 모두 합하면 126이다.</p>
+          <p>가장 일어나기 쉬운 나눔은 2개씩 고르게 나눈 것으로 확률이 \(36 \div 126 \approx 29\)%이다. A에 4개가 모두 몰린 나눔은 \(15 \div 126 \approx 12\)%이다. 이렇게 작은 계에서는 치우친 상태도 꽤 자주 일어난다. 그런데 진동자와 양자가 늘수록 고른 나눔 근처의 미시 상태가 압도적으로 많아진다. 즉 열역학 제2법칙은 수많은 입자가 있을 때 확률이 사실상 확실성으로 바뀐 결과이다.</p>
+          <p>아래 탐구 카드에서 미시 상태의 수를 직접 세어 보고, 여러 변화에서 엔트로피가 늘어나는지 줄어드는지 예측해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adchem-microstates-1">볼츠만의 묘비에는 그의 엔트로피 식 \(S = k\log W\)가 새겨져 있다. 그가 살던 때에는 원자의 존재를 의심하는 과학자가 많아, 이 생각은 오랫동안 받아들여지지 않았다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>엔트로피는 계가 가질 수 있는 미시 상태 수의 로그에 비례하며, 고립된 계는 미시 상태 수가 가장 많은 상태로 간다. 입자가 많을수록 에너지가 고르게 나뉜 상태의 미시 상태 수가 압도적으로 많아져, 반대 방향의 변화는 사실상 일어나지 않는다. 그래서 처음 질문의 두 물체는 에너지가 고르게 나뉘는 상태가 압도적으로 일어나기 쉬우므로 늘 온도가 같아지는 쪽으로만 간다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a><a href="../../c/adphy/1-6.html#text-adphy-entropy-flow"><small class="mono">고급 물리학 1.6</small>열효율과 엔트로피</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mech/2-5.html#text-mech-entropy"><small class="mono">역학과 에너지 2.5</small>엔트로피와 비가역 현상</a><a href="../../c/mateng/3-3.html#text-mateng-spontaneity"><small class="mono">물질과 에너지 3.3</small>엔트로피와 자발성</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mateng/3-3.html#card-mateng-spont"><small class="mono">물질과 에너지 3.3</small>열을 흡수하는 변화도 저절로 일어날 수 있을까?</a><a href="../../c/adchem/3-4.html#text-adchem-gibbs-dissolve"><small class="mono">고급 화학 3.4</small>깁스 자유 에너지와 자발성</a><a href="../../c/labchem/2-12.html#card-labchem-raoult"><small class="mono">화학 실험 2.12</small>설탕물의 증기압은 맹물보다 얼마나 낮을까?</a><a href="../../c/labchem/2-12.html#text-labchem-raoult"><small class="mono">화학 실험 2.12</small>증기압 내림</a></div></nav>
+
       <article class="card" id="card-mech-entropy">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>퍼진 기체는 왜 저절로 다시 모이지 않을까?</h2><span class="kind">엔트로피 · 경우의 수</span>
+          <span class="no">탐구 1</span><h2>퍼진 기체는 왜 저절로 다시 모이지 않을까?</h2><span class="kind">엔트로피 · 경우의 수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -68,33 +126,33 @@
                 <div><dt>이 상태의 경우의 수 W</dt><dd class="n-w">—</dd></div>
                 <div><dt>모두 왼쪽에 있을 확률</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">입자는 서로 부딪치지 않고 무작위로 움직이며, 각 입자가 왼쪽에 있을 확률은 1/2입니다. 경우의 수 W = (N개 중 왼쪽에 있을 입자를 고르는 방법의 수), 엔트로피 S = k ln W.</p>
+              <p class="fig-note">입자는 서로 부딪치지 않고 무작위로 움직이며, 각 입자가 왼쪽에 있을 확률은 1/2이다. 경우의 수 W는 N개 중 왼쪽에 있을 입자를 고르는 방법의 수이고, 엔트로피는 S = k ln W이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>상자 왼쪽에 기체를 모아 두고 칸막이를 치우면 기체는 상자 전체로 퍼집니다. 분자들은 무작위로 움직일 뿐인데, 왜 다시 왼쪽에 모이는 일은 일어나지 않을까요?</li>
-            <li><span class="tag">복원</span>열역학 제1법칙은 에너지가 보존된다고 말할 뿐, 변화가 어느 방향으로 일어날지는 말하지 않습니다. 퍼진 기체가 다시 모여도 에너지 보존에는 어긋나지 않습니다.</li>
-            <li><span class="tag">설명</span>입자 N개가 왼쪽과 오른쪽에 나뉘는 방법의 수를 세어 보면, 모두 왼쪽에 있는 경우는 딱 1가지인데 반씩 나뉜 경우는 엄청나게 많습니다. 입자들이 무작위로 움직이면 경우의 수가 많은 상태가 압도적으로 자주 나타납니다. 이 경우의 수 W의 로그에 비례하는 양이 <em>엔트로피</em> S = k ln W입니다.</li>
-            <li><span class="tag">연결</span>고립된 계는 엔트로피가 커지는 쪽, 곧 더 흔한 상태 쪽으로 변합니다(열역학 제2법칙). 열이 뜨거운 곳에서 차가운 곳으로 흐르는 것도, 에너지가 고르게 나뉘는 방법의 수가 더 많기 때문입니다. 이렇게 저절로 거꾸로 일어나지 않는 변화를 <em>비가역 현상</em>이라고 합니다.</li>
-            <li><span class="tag">적용</span>입자 4개로 시작해 한동안 지켜보면 모두 왼쪽에 모이는 순간이 가끔 옵니다. 10개, 40개, 200개로 늘리면 어떻게 되나요? 오른쪽 분포가 입자 수에 따라 어떻게 뾰족해지는지 보세요. 실제 기체 1 mol(6 × 10²³개)이라면 어떨까요?</li>
-            <li class="warn"><span class="tag">판단</span>제2법칙은 거꾸로 가는 일이 ‘불가능’하다기보다 ‘확률이 터무니없이 작다’는 법칙입니다. 입자 100개가 모두 왼쪽에 모일 확률은 약 10³⁰분의 1이라, 우주의 나이 동안 기다려도 볼 수 없습니다. 또 냉장고처럼 바깥에서 일을 해 주면 한쪽의 엔트로피를 줄일 수 있지만, 그만큼 주변의 엔트로피가 더 크게 늘어납니다.</li>
+            <li><span class="tag">질문</span>상자 왼쪽에 기체를 모아 두고 칸막이를 치우면 기체는 상자 전체로 퍼진다. 분자들은 무작위로 움직일 뿐인데, 왜 다시 왼쪽에 모이는 일은 일어나지 않을까?</li>
+            <li><span class="tag">복원</span>열역학 제1법칙은 에너지가 보존된다고 말할 뿐, 변화가 어느 방향으로 일어날지는 말하지 않는다. 그래서 퍼진 기체가 다시 모여도 에너지 보존에는 어긋나지 않는다.</li>
+            <li><span class="tag">설명</span>입자 N개가 왼쪽과 오른쪽에 나뉘는 방법의 수를 세어 보면, 모두 왼쪽에 있는 경우는 딱 1가지인데 반씩 나뉜 경우는 엄청나게 많다. 그래서 입자들이 무작위로 움직이면 경우의 수가 많은 상태가 압도적으로 자주 나타나며, 이 경우의 수 W의 로그에 비례하는 양이 <em>엔트로피</em> S = k ln W이다.</li>
+            <li><span class="tag">연결</span>고립된 계는 엔트로피가 커지는 쪽, 곧 더 흔한 상태 쪽으로 변한다(열역학 제2법칙). 열이 뜨거운 곳에서 차가운 곳으로 흐르는 것도 에너지가 고르게 나뉘는 방법의 수가 더 많기 때문이며, 이렇게 저절로 거꾸로 일어나지 않는 변화를 <em>비가역 현상</em>이라고 한다.</li>
+            <li><span class="tag">적용</span>입자 4개로 시작해 한동안 지켜보면 모두 왼쪽에 모이는 순간이 가끔 온다. 10개, 40개, 200개로 늘리면 어떻게 되는지, 오른쪽 분포가 입자 수에 따라 어떻게 뾰족해지는지 보고, 실제 기체 1 mol(6 × 10²³개)이라면 어떨지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>제2법칙은 거꾸로 가는 일이 불가능하다기보다 확률이 터무니없이 작다는 법칙이다. 입자 100개가 모두 왼쪽에 모일 확률은 약 10³⁰분의 1이라 우주의 나이 동안 기다려도 볼 수 없다. 또 냉장고처럼 바깥에서 일을 해 주면 한쪽의 엔트로피를 줄일 수 있지만, 그만큼 주변의 엔트로피가 더 크게 늘어난다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">입자 10개가 들어 있는 상자에서, 왼쪽 칸에 5개가 있는 상태와 10개가 모두 있는 상태의 경우의 수는 각각 몇 가지일까요?</p>
+          <p class="q">입자 10개가 들어 있는 상자에서, 왼쪽 칸에 5개가 있는 상태와 10개가 모두 있는 상태의 경우의 수는 각각 몇 가지일까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 1가지 — 입자가 어디 있는지만 다르므로<span class="why"><b>어느 입자가 왼쪽에 있는지를 구별하면</b> 5개를 고르는 방법은 여러 가지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>252가지와 1가지<span class="why"><b>맞습니다.</b> 10개 중 5개를 고르는 방법은 ₁₀C₅ = 252가지, 모두 왼쪽은 1가지입니다. 그래서 반반 상태가 252배 더 자주 나타납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5가지와 10가지<span class="why"><b>입자 수를 경우의 수로 착각한 답입니다.</b> 경우의 수는 입자들을 나누는 방법의 가짓수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 1가지 — 입자가 어디 있는지만 다르므로<span class="why"><b>어느 입자가 왼쪽에 있는지를 구별하면</b> 5개를 고르는 방법은 여러 가지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>252가지와 1가지<span class="why"><b>맞다.</b> 10개 중 5개를 고르는 방법은 ₁₀C₅ = 252가지, 모두 왼쪽은 1가지이다. 그래서 반반 상태가 252배 더 자주 나타난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5가지와 10가지<span class="why"><b>입자 수를 경우의 수로 착각한 답이다.</b> 경우의 수는 입자들을 나누는 방법의 가짓수이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mateng/3-3.html#card-mateng-spont"><small class="mono">물질과 에너지 3.3</small>열을 흡수하는 변화도 저절로 일어날 수 있을까?</a><a href="../../c/labchem/2-12.html#card-labchem-raoult"><small class="mono">화학 실험 2.12</small>설탕물의 증기압은 맹물보다 얼마나 낮을까?</a><a href="../../c/adphy/1-6.html#card-adphy-carnot"><small class="mono">고급 물리학 1.6</small>열기관의 효율에는 왜 넘을 수 없는 한계가 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a><a href="../../c/adphy/1-6.html#text-adphy-entropy-flow"><small class="mono">고급 물리학 1.6</small>열효율과 엔트로피</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/3-3.html#text-mateng-spontaneity"><small class="mono">물질과 에너지 3.3</small>엔트로피와 자발성</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mateng/3-3.html#card-mateng-spont"><small class="mono">물질과 에너지 3.3</small>열을 흡수하는 변화도 저절로 일어날 수 있을까?</a><a href="../../c/adchem/3-4.html#text-adchem-gibbs-dissolve"><small class="mono">고급 화학 3.4</small>깁스 자유 에너지와 자발성</a><a href="../../c/labchem/2-12.html#card-labchem-raoult"><small class="mono">화학 실험 2.12</small>설탕물의 증기압은 맹물보다 얼마나 낮을까?</a><a href="../../c/labchem/2-12.html#text-labchem-raoult"><small class="mono">화학 실험 2.12</small>증기압 내림</a></div></nav>
 
       <article class="card" id="card-adchem-suniv">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>물이 얼면 질서가 생기는데, 왜 저절로 얼까?</h2><span class="kind">표준 몰 엔트로피 · ΔS<sub>주위</sub> = −ΔH/T · 우주의 엔트로피</span>
+          <span class="no">탐구 2</span><h2>물이 얼면 질서가 생기는데, 왜 저절로 얼까?</h2><span class="kind">표준 몰 엔트로피 · ΔS<sub>주위</sub> = −ΔH/T · 우주의 엔트로피</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -116,47 +174,52 @@
                 <div><dt>ΔS<sub>주위</sub> = −ΔH/T</dt><dd class="n-o">—</dd></div>
                 <div><dt>ΔS<sub>우주</sub></dt><dd class="n-u">—</dd></div>
               </dl>
-              <p class="fig-note">반응식의 몰수만큼 변할 때의 값입니다. 표준 몰 엔트로피 S°와 Δ<sub>f</sub>H°는 25 °C, 1 bar 값(CRC Handbook)이고, 물이 얼 때는 0 °C의 융해 엔탈피 6.01 kJ/mol과 ΔS = −6010/273.15 = −22.0 J/K를 썼습니다. 다른 온도에서도 ΔH와 ΔS<sub>계</sub>가 변하지 않는다고 본 근사입니다. 주위는 온도가 일정한 매우 큰 열 저장고로 봅니다.</p>
+              <p class="fig-note">반응식의 몰수만큼 변할 때의 값이다. 표준 몰 엔트로피 S°와 Δ<sub>f</sub>H°는 25 °C, 1 bar 값(CRC Handbook)이고, 물이 얼 때는 0 °C의 융해 엔탈피 6.01 kJ/mol과 ΔS = −6010/273.15 = −22.0 J/K를 썼다. 다른 온도에서도 ΔH와 ΔS<sub>계</sub>가 변하지 않는다고 본 근사이다. 주위는 온도가 일정한 매우 큰 열 저장고로 본다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>엔트로피는 무질서도라고 배웠는데, 영하의 날씨에 물은 저절로 얼어 규칙적인 얼음 결정이 됩니다. 계의 엔트로피는 분명히 줄었습니다. 그렇다면 엔트로피가 줄어드는 변화도 저절로 일어날 수 있는 것일까요?</li>
-            <li><span class="tag">복원</span>입자들이 놓일 수 있는 방법의 수 W가 많은 상태일수록 엔트로피 S = k ln W가 큽니다. 고립된 계에서는 S가 늘어나는 방향으로만 변화가 저절로 일어납니다(열역학 제2법칙).</li>
-            <li><span class="tag">설명</span>열역학에서는 엔트로피 변화를 가역적으로 주고받은 열로 정의합니다: <em>ΔS = q<sub>가역</sub>/T</em>. 같은 열이라도 차가운 곳에 들어가면 엔트로피를 크게 늘립니다. 물질마다 0 K에서 S = 0인 완전 결정부터 쌓아 올려 잰 <em>표준 몰 엔트로피</em> S°가 있어, ΔS°<sub>계</sub> = Σν S°(생성물) − Σν S°(반응물)로 계산합니다. 기체는 S°가 액체·고체보다 훨씬 크므로, 기체 분자 수가 늘면 ΔS<sub>계</sub> &gt; 0, 줄면 ΔS<sub>계</sub> &lt; 0이라고 대부분 예측할 수 있습니다.</li>
-            <li><span class="tag">연결</span>압력이 일정할 때 반응이 내놓은 열(−ΔH)은 주위로 들어가므로 <em>ΔS<sub>주위</sub> = −ΔH/T</em>입니다. 발열 반응은 주위의 엔트로피를 늘리고, 그 효과는 온도가 낮을수록 큽니다. 변화가 저절로 일어날지는 계만이 아니라 <em>ΔS<sub>우주</sub> = ΔS<sub>계</sub> + ΔS<sub>주위</sub> &gt; 0</em>으로 판단합니다. 반응의 에너지 변화가 이렇게 엔트로피의 장부에 들어오는 것입니다.</li>
-            <li><span class="tag">적용</span>‘물이 얼기’에서 온도를 −20 °C에서 +20 °C까지 움직이며 ΔS<sub>우주</sub>의 부호가 바뀌는 온도를 찾으세요. 그 온도는 무엇인가요? 질산 암모늄 용해는 흡열인데도 상온에서 저절로 일어납니다. 어느 막대가 이 변화를 밀어 주나요? 암모니아 합성은 몇 K 위에서 저절로 일어나지 않게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“엔트로피 = 무질서도”는 비유일 뿐입니다. 물이 얼 때 계의 엔트로피는 줄지만, 내놓은 열이 주위의 엔트로피를 그보다 더 늘립니다. 또 ΔS<sub>우주</sub> &gt; 0은 변화가 일어날 수 ‘있다’는 뜻이지 빨리 일어난다는 뜻이 아닙니다. 다이아몬드가 흑연으로 바뀌는 변화는 저절로 일어나는 방향이지만 상온에서는 사실상 진행되지 않습니다.</li>
+            <li><span class="tag">질문</span>엔트로피는 무질서도라고 배웠는데, 영하의 날씨에 물은 저절로 얼어 규칙적인 얼음 결정이 된다. 계의 엔트로피는 분명히 줄었다. 그렇다면 엔트로피가 줄어드는 변화도 저절로 일어날 수 있는 것일까?</li>
+            <li><span class="tag">복원</span>입자들이 놓일 수 있는 방법의 수 W가 많은 상태일수록 엔트로피 S = k ln W가 크다. 고립된 계에서는 S가 늘어나는 방향으로만 변화가 저절로 일어난다(열역학 제2법칙).</li>
+            <li><span class="tag">설명</span>열역학에서는 엔트로피 변화를 가역적으로 주고받은 열로 정의한다: <em>ΔS = q<sub>가역</sub>/T</em>. 같은 열이라도 차가운 곳에 들어가면 엔트로피를 크게 늘린다. 물질마다 0 K에서 S = 0인 완전 결정부터 쌓아 올려 잰 <em>표준 몰 엔트로피</em> S°가 있어, ΔS°<sub>계</sub> = Σν S°(생성물) − Σν S°(반응물)로 계산한다. 기체는 S°가 액체·고체보다 훨씬 크므로, 기체 분자 수가 늘면 ΔS<sub>계</sub> &gt; 0, 줄면 ΔS<sub>계</sub> &lt; 0이라고 대부분 예측할 수 있다.</li>
+            <li><span class="tag">연결</span>압력이 일정할 때 반응이 내놓은 열(−ΔH)은 주위로 들어가므로 <em>ΔS<sub>주위</sub> = −ΔH/T</em>이다. 발열 반응은 주위의 엔트로피를 늘리고, 그 효과는 온도가 낮을수록 크다. 변화가 저절로 일어날지는 계만이 아니라 <em>ΔS<sub>우주</sub> = ΔS<sub>계</sub> + ΔS<sub>주위</sub> &gt; 0</em>으로 판단한다. 반응의 에너지 변화가 이렇게 엔트로피의 장부에 들어오는 것이다.</li>
+            <li><span class="tag">적용</span>‘물이 얼기’에서 온도를 −20 °C에서 +20 °C까지 움직이며 ΔS<sub>우주</sub>의 부호가 바뀌는 온도를 찾자. 그 온도는 무엇인가? 질산 암모늄 용해는 흡열인데도 상온에서 저절로 일어난다. 어느 막대가 이 변화를 밀어 주는가? 암모니아 합성은 몇 K 위에서 저절로 일어나지 않게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>“엔트로피 = 무질서도”는 비유일 뿐이다. 물이 얼 때 계의 엔트로피는 줄지만, 내놓은 열이 주위의 엔트로피를 그보다 더 늘린다. 또 ΔS<sub>우주</sub> &gt; 0은 변화가 일어날 수 ‘있다’는 뜻이지 빨리 일어난다는 뜻이 아니다. 다이아몬드가 흑연으로 바뀌는 변화는 저절로 일어나는 방향이지만 상온에서는 사실상 진행되지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 반응의 ΔH = −50 kJ, ΔS<sub>계</sub> = −100 J/K입니다(온도에 따라 변하지 않는다고 가정). 1000 K에서 이 반응의 ΔS<sub>우주</sub>와 자발성은?</p>
+          <p class="q">어떤 반응의 ΔH = −50 kJ, ΔS<sub>계</sub> = −100 J/K이다(온도에 따라 변하지 않는다고 가정). 1000 K에서 이 반응의 ΔS<sub>우주</sub>와 자발성은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>+50 J/K, 자발적<span class="why"><b>ΔS<sub>주위</sub>를 25 °C처럼 계산했거나 부호를 놓쳤습니다.</b> 1000 K에서 ΔS<sub>주위</sub> = +50 000/1000 = +50 J/K이고, 여기에 ΔS<sub>계</sub> −100 J/K를 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>−50 J/K, 비자발적<span class="why"><b>맞습니다.</b> −100 + 50 = −50 J/K. 발열 반응이라도 온도가 높으면 같은 열이 주위의 엔트로피를 조금밖에 늘리지 못합니다. 이 반응은 500 K 아래에서만 자발적입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>발열 반응이므로 언제나 자발적<span class="why"><b>발열만으로는 결정되지 않습니다.</b> ΔS<sub>계</sub>가 음수이면 고온에서 주위의 엔트로피 증가가 그 감소를 메우지 못합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>+50 J/K, 자발적<span class="why"><b>ΔS<sub>주위</sub>를 25 °C처럼 계산했거나 부호를 놓쳤다.</b> 1000 K에서 ΔS<sub>주위</sub> = +50 000/1000 = +50 J/K이고, 여기에 ΔS<sub>계</sub> −100 J/K를 더해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>−50 J/K, 비자발적<span class="why"><b>맞다.</b> −100 + 50 = −50 J/K. 발열 반응이라도 온도가 높으면 같은 열이 주위의 엔트로피를 조금밖에 늘리지 못한다. 이 반응은 500 K 아래에서만 자발적이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>발열 반응이므로 언제나 자발적<span class="why"><b>발열만으로는 결정되지 않는다.</b> ΔS<sub>계</sub>가 음수이면 고온에서 주위의 엔트로피 증가가 그 감소를 메우지 못한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adchem/3-2.html#card-adchem-formation"><small class="mono">고급 화학 3.2</small>표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/3-4.html#card-adchem-gibbs-t"><small class="mono">고급 화학 3.4</small>석회석은 몇 도부터 저절로 분해될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-5.html#text-mech-entropy"><small class="mono">역학과 에너지 2.5</small>엔트로피와 비가역 현상</a><a href="../../c/mateng/3-3.html#text-mateng-spontaneity"><small class="mono">물질과 에너지 3.3</small>엔트로피와 자발성</a><a href="../../c/adchem/3-2.html#card-adchem-formation"><small class="mono">고급 화학 3.2</small>표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/3-4.html#card-adchem-gibbs-t"><small class="mono">고급 화학 3.4</small>석회석은 몇 도부터 저절로 분해될까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adchem-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adchem&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">7문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adchem-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">50문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adchem/body.js"></script>
 <script src="../../js/cards/mech/t-entropy.js"></script>
 <script src="../../js/cards/adchem/th-suniv.js"></script>
 </body>

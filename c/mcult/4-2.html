@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>대기 오염과 수학 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="초미세먼지(PM2.5) 등급 기준, 1시간 값과 24시간 이동평균의 차이(가상 측정값), 같은 비율로 줄일 때 총 배출 100/r(등비급수)와 같은 양씩 줄일 때 100(N + 1)/2(등차수열의 합), 가상 탄소 예산. 미세먼지 평균 카드와, 배출 경로 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-mcult-pm-average canvas { aspect-ratio: 16 / 8; max-width: 600px; margin: .3rem auto 0; }
@@ -45,18 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mcult-pm-average"><span class="mono">4.2.1</span>지금 공기는 나쁜데 등급은 '보통'? — 이동평균</a></li>
-        <li><a href="#card-mcult-emission-path"><span class="mono">4.2.2</span>해마다 몇 %씩 줄이면 충분할까 — 등비급수와 탄소 예산</a></li>
+        <li><a href="#text-mcult-emission"><span class="mono">본문</span>대기 오염과 수학</a></li>
+        <li><a href="#card-mcult-pm-average"><span class="mono">탐구 1</span>지금 공기는 나쁜데 등급은 '보통'? — 이동평균</a></li>
+        <li><a href="#card-mcult-emission-path"><span class="mono">탐구 2</span>해마다 몇 %씩 줄이면 충분할까 — 등비급수와 탄소 예산</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mcult-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mcult&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mcult-4-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mcult-emission" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>대기 오염과 수학</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">한 도시가 지금 해마다 100만 톤인 온실가스 배출을 10년 뒤 절반인 50만 톤으로 줄이겠다고 발표했다. 한 계획은 해마다 5만 톤씩 꾸준히 줄이고, 다른 계획은 5년 동안 그대로 두었다가 6년째에 한꺼번에 절반으로 줄인다. 10년 뒤의 배출량은 똑같이 50만 톤이다. 두 계획은 대기에 같은 결과를 줄까? 그리고 하루 평균 미세먼지가 '보통'이었던 날, 정말 하루 종일 공기가 괜찮았을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 230" role="img" aria-label="세 감축 계획의 해마다 배출량">
+              <line x1="60" y1="190" x2="490" y2="190" class="ax"/><line x1="60" y1="15" x2="60" y2="190" class="ax"/>
+              <line x1="60" y1="105" x2="490" y2="105" class="gd"/><line x1="60" y1="20" x2="490" y2="20" class="gd"/>
+              <text x="54" y="194" class="s" text-anchor="end">0</text><text x="54" y="109" class="s" text-anchor="end">50</text><text x="54" y="24" class="s" text-anchor="end">100</text>
+              <text x="60" y="206" class="s" text-anchor="middle">0</text><text x="270" y="206" class="s" text-anchor="middle">5</text><text x="480" y="206" class="s" text-anchor="middle">10</text>
+              <path d="M60 20 L102 28.5 L144 36.6 L186 44.2 L228 51.5 L270 58.5 L312 65.0 L354 71.3 L396 77.2 L438 82.9 L480 88.2" class="a"/>
+              <path d="M60 20 L480 105" class="b"/>
+              <path d="M60 20 L270 20 L270 105 L480 105" class="c"/>
+              <text x="300" y="54" class="s ta">해마다 5%씩 (762)</text><text x="300" y="86" class="s tb">해마다 5씩 (725)</text><text x="330" y="122" class="s tc">미루다 절반으로 (750)</text>
+              <text x="66" y="12" class="s">해마다 배출 (만 톤)</text><text x="490" y="222" class="s" text-anchor="end">해 (괄호 안은 10년 누적 배출, 만 톤)</text>
+            </svg>
+            <figcaption>그림 1. 세 계획은 10년 동안의 누적 배출량이 서로 다르고, 대기에 쌓이는 온실가스는 이 누적량으로 정해진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>평균, 등차수열의 합, 등비수열의 합.</div>
+
+          <h3><span class="no">4.2.1</span>마지막 해가 아니라 모두 더한 양</h3>
+          <p>이산화탄소는 대기에 한번 들어가면 수백 년 동안 남는다. 그래서 기온을 올리는 것은 어느 한 해의 배출량이 아니라 지금까지 내보낸 양을 모두 더한 누적 배출량이다. 감축 계획을 평가할 때 마지막 해의 목표만 보면, 그때까지 얼마나 쌓였는지를 놓친다. 해마다 같은 양씩 줄이는 계획의 배출은 등차수열이고, 해마다 같은 비율로 줄이는 계획의 배출은 등비수열이므로, 누적량은 수열의 합으로 구한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">감축 계획의 누적 배출</span></span>
+            <p>첫해 배출이 \(a\)이고 해마다 \(d\)씩 줄이면 \(n\)년의 누적은 \(\dfrac{n\{2a - (n-1)d\}}{2}\)이다. 첫해 배출이 \(a\)이고 해마다 비율 \(r\)로 줄어들면 누적은 \[a + ar + \cdots + ar^{n-1} = \frac{a(1 - r^n)}{1 - r}\]이다.</p>
+          </div>
+          <p>그림 1에서 세 계획의 넓이를 비교해 보자. 그래프 아래의 넓이가 누적 배출량이다. 해마다 5만 톤씩 줄이는 계획이 가장 적게 쌓이고, 5년을 미룬 계획은 같은 목표에 이르면서도 25만 톤을 더 쌓는다. 해마다 5%씩 줄이는 계획은 처음에 빨리 줄지만 갈수록 줄이는 양이 작아져, 10년 뒤에도 약 60만 톤으로 목표에 못 미친다. 그러므로 같은 목표라도 일찍 줄일수록 대기에는 덜 쌓인다.<sup class="fn"><a href="#fn-mcult-emission-1">1</a></sup></p>
+
+          <h3><span class="no">4.2.2</span>평균이 가리는 것</h3>
+          <p>미세먼지의 등급은 흔히 하루 평균 농도로 정한다. 그런데 평균은 높은 값과 낮은 값을 섞어 하나의 수로 만들므로, 짧게 치솟은 시간을 가린다. 출퇴근 시간에 몇 시간 동안 아주 나빴더라도 밤에 깨끗했다면 하루 평균은 '보통'이 될 수 있다. 그래서 하루 평균과 함께 1시간 평균의 가장 큰 값이나 기준을 넘은 시간 수를 보아야 실제로 숨 쉰 공기를 알 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="하루 동안의 초미세먼지 농도와 평균">
+              <g class="s">
+                <text x="20" y="22">시간대</text><text x="160" y="22">시간 수</text><text x="270" y="22">농도 (µg/m³)</text><text x="400" y="22">등급</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">대부분의 시간</text><text x="160" y="52">20</text><text x="270" y="52">25</text><text x="400" y="52">보통</text>
+                <text x="20" y="74">출퇴근 시간</text><text x="160" y="74">4</text><text x="270" y="74">85</text><text x="400" y="74" class="td">매우 나쁨</text>
+                <text x="20" y="96">하루 평균</text><text x="160" y="96">24</text><text x="270" y="96">35</text><text x="400" y="96">보통</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 4시간 동안 '매우 나쁨'이었던 날도 하루 평균으로는 '보통'이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+            <p>지금 배출이 해마다 100만 톤이다. 다음 해부터 해마다 5만 톤씩 줄이는 계획, 해마다 5%씩 줄이는 계획, 5년 동안 100만 톤을 유지하다가 6년째부터 50만 톤으로 줄이는 계획의 10년 누적 배출을 구하여라. \(0.95^{10} \approx 0.599\)이다.</p>
+          </div>
+          <p>해마다 5만 톤씩 줄이면 배출은 95, 90, …, 50만 톤이므로 누적은 \(\dfrac{10 \times (95 + 50)}{2} = 725\)만 톤이다. 해마다 5%씩 줄이면 95, \(95 \times 0.95\), …이므로 누적은 \(\dfrac{95(1 - 0.95^{10})}{1 - 0.95} = 1900 \times 0.401 \approx 762\)만 톤이다. 미루는 계획은 \(5 \times 100 + 5 \times 50 = 750\)만 톤이다.</p>
+          <p>두 계획이 같은 해에 같은 목표 50만 톤에 이르러도, 미루는 계획은 25만 톤을 더 쌓는다. 비율로 줄이는 계획은 마지막 해 배출이 약 60만 톤으로 목표에도 못 미치고 누적도 가장 많다. 비율 감축으로 10년 뒤 절반에 이르려면 \(r^{10} = 0.5\), 곧 해마다 약 6.7%씩 줄여야 한다. 즉 감축 계획을 비교할 때는 목표 해의 숫자와 함께 그때까지의 합을 따져야 하고, 그 합은 그래프 아래의 넓이로 한눈에 보인다.</p>
+          <p>아래 탐구 카드에서 미세먼지 자료를 여러 평균으로 읽어 보고, 감축 계획의 누적 배출을 수열의 합으로 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mcult-emission-1">기후 과학자들은 지구 기온의 상승이 이산화탄소 누적 배출량에 거의 비례한다는 것을 밝혔다. 그래서 기온 상승을 어느 수준 아래로 막기 위해 앞으로 더 내보낼 수 있는 총량을 탄소 예산이라 부른다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>대기에 쌓이는 온실가스는 해마다의 배출을 모두 더한 누적량으로 정해지므로, 감축 계획은 등차수열과 등비수열의 합, 곧 그래프 아래의 넓이로 비교한다. 미세먼지의 하루 평균은 짧게 치솟은 시간을 가리므로 시간별 최댓값과 함께 읽는다. 처음 질문의 두 계획은 10년 뒤 배출량이 같아도, 미루는 계획이 꾸준히 줄이는 계획보다 25만 톤을 더 쌓는다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-mcult-pm-average">
         <header class="card-head">
-          <span class="no">4.2.1</span><h2>창밖은 뿌연데 초미세먼지 등급은 왜 '보통'일까?</h2><span class="kind">평균과 이동평균 · 활용</span>
+          <span class="no">탐구 1</span><h2>창밖은 뿌연데 초미세먼지 등급은 왜 '보통'일까?</h2><span class="kind">평균과 이동평균 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -65,33 +128,33 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>창밖이 뿌옇고 1시간 측정값은 '나쁨'인데, 어떤 곳에서는 '보통'으로 나옵니다(이 카드의 측정값은 가상). 같은 공기를 두고 왜 다른 등급이 나올까요?</li>
-            <li><span class="tag">복원</span>평균 \(= \frac{\text{자료의 합}}{\text{자료의 개수}}\).</li>
-            <li><span class="tag">설명</span>매시간 지난 24시간의 값을 평균한 것을 <em>24시간 이동평균</em>이라 합니다. 이동평균은 짧게 치솟은 값을 고르게 펴 주어 하루 동안 얼마나 노출되었는지를 나타내지만, 갑자기 나빠진 지금의 공기는 늦게 반영합니다. 초미세먼지(PM2.5) 등급 기준은 좋음 0~15, 보통 16~35, 나쁨 36~75, 매우 나쁨 76 이상(µg/m³)입니다. 같은 시각이라도 1시간 값으로 보느냐 24시간 이동평균으로 보느냐에 따라 등급이 달라질 수 있습니다.</li>
-            <li><span class="tag">연결</span>주가 그래프의 이동평균선, 코로나19 확진자 수의 7일 평균도 같은 방법입니다.</li>
-            <li><span class="tag">적용</span>시각을 옮기며 1시간 값과 24시간 평균의 등급이 다른 때를 찾아보세요. 농도가 갑자기 높아진 뒤 이동평균이 '나쁨'이 되기까지 몇 시간 걸리나요?</li>
-            <li class="warn"><span class="tag">판단</span>바깥 활동을 정할 때는 지금의 1시간 값이 더 알맞을 수 있습니다. 어떤 평균인지 확인하고 목적에 맞게 읽어야 합니다.</li>
+            <li><span class="tag">질문</span>창밖이 뿌옇고 1시간 측정값은 '나쁨'인데, 어떤 곳에서는 '보통'으로 나온다(이 카드의 측정값은 가상). 같은 공기를 두고 왜 다른 등급이 나올까?</li>
+            <li><span class="tag">복원</span>평균은 \(\frac{\text{자료의 합}}{\text{자료의 개수}}\)이다.</li>
+            <li><span class="tag">설명</span>매시간 지난 24시간의 값을 평균한 것을 <em>24시간 이동평균</em>이라 한다. 이동평균은 짧게 치솟은 값을 고르게 펴 주어 하루 동안 얼마나 노출되었는지를 나타내지만, 갑자기 나빠진 지금의 공기는 늦게 반영한다. 초미세먼지(PM2.5) 등급 기준은 좋음 0~15, 보통 16~35, 나쁨 36~75, 매우 나쁨 76 이상(µg/m³)이다. 같은 시각이라도 1시간 값으로 보느냐 24시간 이동평균으로 보느냐에 따라 등급이 달라질 수 있다.</li>
+            <li><span class="tag">연결</span>주가 그래프의 이동평균선, 코로나19 확진자 수의 7일 평균도 같은 방법이다.</li>
+            <li><span class="tag">적용</span>시각을 옮기며 1시간 값과 24시간 평균의 등급이 다른 때를 찾아보자. 농도가 갑자기 높아진 뒤 이동평균이 '나쁨'이 되기까지 몇 시간 걸리는가?</li>
+            <li class="warn"><span class="tag">판단</span>바깥 활동을 정할 때는 지금의 1시간 값이 더 알맞을 수 있다. 어떤 평균인지 확인하고 목적에 맞게 읽어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">24시간 중 20시간은 20 µg/m³, 4시간은 80 µg/m³였습니다. 24시간 평균은?</p>
+          <p class="q">24시간 중 20시간은 20 µg/m³, 4시간은 80 µg/m³였다. 24시간 평균은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>30 µg/m³<span class="why"><b>맞습니다.</b> \(\frac{20 \times 20 + 4 \times 80}{24} = \frac{720}{24} = 30\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50 µg/m³<span class="why"><b>두 값의 평균입니다.</b> 시간 수를 반영해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>80 µg/m³<span class="why"><b>가장 높은 값입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20 µg/m³<span class="why"><b>대부분의 시간 값만 보았습니다.</b> 높았던 4시간도 평균에 들어갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>30 µg/m³<span class="why"><b>맞다.</b> \(\frac{20 \times 20 + 4 \times 80}{24} = \frac{720}{24} = 30\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50 µg/m³<span class="why"><b>두 값의 평균이다.</b> 시간 수를 반영해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>80 µg/m³<span class="why"><b>가장 높은 값이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20 µg/m³<span class="why"><b>대부분의 시간 값만 보았다.</b> 높았던 4시간도 평균에 들어간다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-mcult-emission-path">
         <header class="card-head">
-          <span class="no">4.2.2</span><h2>배출량을 해마다 같은 비율로 줄이는 것과 같은 양씩 줄이는 것, 무엇이 남은 예산을 지킬까?</h2><span class="kind">등차·등비수열의 합 · 조작</span>
+          <span class="no">탐구 2</span><h2>배출량을 해마다 같은 비율로 줄이는 것과 같은 양씩 줄이는 것, 무엇이 남은 예산을 지킬까?</h2><span class="kind">등차·등비수열의 합 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">올해 배출량을 100으로 둔 <b>가상</b> 상황입니다. 앞으로 모두 합해 1500(올해의 15년치)까지만 배출할 수 있다고 합시다(가상의 탄소 예산).</p>
+            <p class="small">올해 배출량을 100으로 둔 가상 상황이다. 앞으로 모두 합해 1500(올해의 15년치)까지만 배출할 수 있다고 하자(가상의 탄소 예산).</p>
             <div class="ctl-row">
               <div><label class="mono">해마다 줄이는 비율 \(r\) = <output class="r-out"></output>%</label><input class="r" type="range" min="1" max="20" step="0.5" value="5" aria-label="해마다 줄이는 비율"></div>
               <div><label class="mono">같은 양씩 줄여 0이 되는 해 \(N\) = <output class="n-out"></output>년</label><input class="n" type="range" min="5" max="60" step="1" value="30" aria-label="0이 되는 해"></div>
@@ -100,38 +163,38 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>기후 변화를 막으려면 앞으로 내보낼 온실가스의 <em>총량</em>을 제한해야 한다는 생각(탄소 예산)이 있습니다. 해마다 5%씩 줄이는 계획은 예산을 지킬 수 있을까요?</li>
-            <li><span class="tag">복원</span>등비수열의 합 \(\sum_{k=0}^{\infty} ar^k = \frac{a}{1 - r}\) \((|r| < 1)\), 등차수열의 합.</li>
-            <li><span class="tag">설명</span>해마다 \(r\)씩 줄이면 \(k\)년 뒤 배출량은 \(100(1 - r)^k\)이고, 영원히 더한 총량은 \(\frac{100}{1 - (1 - r)} = \frac{100}{r}\)입니다. \(r = 5\%\)이면 2000으로 예산 1500을 넘습니다. 같은 비율로 줄이면 배출량이 0에 가까워질 뿐 0이 되지는 않고, 앞쪽 해들의 배출이 총량에서 큰 몫을 차지합니다. 같은 양씩 줄여 \(N\)년 뒤 0으로 만들면 총량은 약 \(\frac{100(N + 1)}{2}\)입니다.</li>
-            <li><span class="tag">연결</span>여러 나라가 정한 '탄소 중립' 목표는 배출을 언제까지 순 0으로 만드는지를 정한 것입니다. 경로에 따라 같은 목표 연도라도 총 배출량이 다릅니다.</li>
-            <li><span class="tag">적용</span>같은 비율로 줄여 예산 1500을 지키려면 \(r\)이 몇 % 이상이어야 하나요? 같은 양씩 줄일 때는 몇 년 안에 0을 만들어야 하나요?</li>
-            <li class="warn"><span class="tag">판단</span>이 카드의 예산과 배출량은 가상의 값입니다. 실제 탄소 예산은 목표 온도와 추정 방법에 따라 크게 달라지며, 과학 기관의 보고서를 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>기후 변화를 막으려면 앞으로 내보낼 온실가스의 <em>총량</em>을 제한해야 한다는 생각(탄소 예산)이 있다. 해마다 5%씩 줄이는 계획은 예산을 지킬 수 있을까?</li>
+            <li><span class="tag">복원</span>등비수열의 합 \(\sum_{k=0}^{\infty} ar^k = \frac{a}{1 - r}\) \((|r| < 1)\)과 등차수열의 합을 떠올리자.</li>
+            <li><span class="tag">설명</span>해마다 \(r\)씩 줄이면 \(k\)년 뒤 배출량은 \(100(1 - r)^k\)이고, 영원히 더한 총량은 \(\frac{100}{1 - (1 - r)} = \frac{100}{r}\)이다. \(r = 5\%\)이면 2000으로 예산 1500을 넘는다. 같은 비율로 줄이면 배출량이 0에 가까워질 뿐 0이 되지는 않고, 앞쪽 해들의 배출이 총량에서 큰 몫을 차지한다. 같은 양씩 줄여 \(N\)년 뒤 0으로 만들면 총량은 약 \(\frac{100(N + 1)}{2}\)이다.</li>
+            <li><span class="tag">연결</span>여러 나라가 정한 '탄소 중립' 목표는 배출을 언제까지 순 0으로 만드는지를 정한 것이다. 경로에 따라 같은 목표 연도라도 총 배출량이 다르다.</li>
+            <li><span class="tag">적용</span>같은 비율로 줄여 예산 1500을 지키려면 \(r\)이 몇 % 이상이어야 하는가? 같은 양씩 줄일 때는 몇 년 안에 0을 만들어야 하는가?</li>
+            <li class="warn"><span class="tag">판단</span>이 카드의 예산과 배출량은 가상의 값이다. 실제 탄소 예산은 목표 온도와 추정 방법에 따라 크게 달라지며, 과학 기관의 보고서를 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">올해 배출량 100에서 해마다 10%씩 줄이면, 앞으로 영원히 더한 총 배출량은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1000<span class="why"><b>맞습니다.</b> \(\frac{100}{1 - 0.9} = 1000\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>550<span class="why"><b>10년 만에 0이 되는 등차수열로 보았습니다(100 + 90 + … + 0).</b> 같은 비율로 줄이면 0이 되지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>무한히 커진다<span class="why"><b>공비가 1보다 작은 등비급수는 수렴합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>900<span class="why"><b>첫해를 빼고 더했습니다.</b> 첫해(100)도 포함합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1000<span class="why"><b>맞다.</b> \(\frac{100}{1 - 0.9} = 1000\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>550<span class="why"><b>10년 만에 0이 되는 등차수열로 보았다(100 + 90 + … + 0).</b> 같은 비율로 줄이면 0이 되지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>무한히 커진다<span class="why"><b>공비가 1보다 작은 등비급수는 수렴한다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>900<span class="why"><b>첫해를 빼고 더했다.</b> 첫해(100)도 포함한다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
-      <a class="px-go" href="../../practice.html?sec=mcult-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=mcult&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

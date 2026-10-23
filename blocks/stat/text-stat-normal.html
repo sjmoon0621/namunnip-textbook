@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "3-4",
+  "short": "본문 · 정규분포"
+}
+-->
+<article class="card reading" id="text-stat-normal" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>정규분포</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">고등학생의 키, 공장에서 만든 과자 봉지의 무게, 측정 오차처럼 많은 자료가 평균 근처에 몰리고 양쪽으로 갈수록 드물어지는 종 모양을 이룬다. 이 종 모양은 무엇으로 정해지고, 키가 평균보다 표준편차의 2배 이상 큰 사람이 몇 %인지는 어떻게 계산할까?</p>
+    <figure class="q-fig" data-q="stat-normal">
+      <svg viewBox="0 0 520 260" role="img" aria-label="정규분포 곡선 N(m, σ²)과 구간 m±kσ의 넓이"></svg>
+      <div class="q-ctl"><label>평균 \(m\) = <input type="range" data-k="m" min="-2" max="2" step="0.5" value="0"><output data-k="m"></output></label><label>표준편차 \(\sigma\) = <input type="range" data-k="s" min="0.5" max="2" step="0.25" value="1"><output data-k="s"></output></label><label>\(k\) = <input type="range" data-k="k" min="0.5" max="3" step="0.5" value="1"><output data-k="k"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 정규분포의 곡선은 평균 \(m\)에서 가장 높고 좌우 대칭이며, \(m\)에서 \(\sigma\)의 몇 배 떨어진 구간의 넓이는 \(m\)과 \(\sigma\)에 상관없이 같다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>연속확률변수와 넓이(<a href="3-1.html">확률변수와 확률분포</a>), \(aX + b\)의 평균과 표준편차(<a href="3-2.html">기댓값과 표준편차</a>), 이항분포(<a href="3-3.html">이항분포</a>).</div>
+
+    <h3><span class="no">3.4.1</span>정규분포</h3>
+    <p>평균이 \(m\), 표준편차가 \(\sigma\)인 연속확률변수 \(X\)의 확률밀도함수가 종 모양의 곡선 \(f(x) = \dfrac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x - m)^2}{2\sigma^2}}\)일 때, \(X\)는 정규분포 \(\mathrm{N}(m, \sigma^2)\)을 따른다고 한다.<sup class="fn"><a href="#fn-stat-normal-1">1</a></sup> 식은 복잡하지만, 곡선의 모양은 \(m\)과 \(\sigma\) 두 수로 완전히 정해진다.</p>
+    <p>그런데 왜 하필 이런 식일까? 과녁에 다트를 던지는 상황으로 생각해 보자. 가로로 빗나가는 정도와 세로로 빗나가는 정도는 서로 상관없이 일어나고, 과녁 한가운데에서 같은 거리만큼 떨어진 곳이라면 어느 방향이든 맞을 가능성이 같다고 하자. 그러면 가로 방향 빗나감의 분포를 \(g(x)\)라 할 때 두 조건을 함께 만족해야 하는데, 이것이 가능한 함수는 \(e^{-kx^2}\) 꼴뿐이라는 것이 알려져 있다. 즉 종 모양 식에서 가장 낯선 부분인 '거리의 제곱에 음수를 곱한 지수'는 오차가 방향을 가리지 않고 고르게 생긴다는 소박한 가정에서 나온 것이고, 앞의 상수는 전체 넓이를 1로 맞추려고 붙인 것이다.</p>
+    <p>그림 1에서 평균을 바꾸면 곡선이 모양은 그대로인 채 옆으로 옮겨 가고, 표준편차를 키우면 낮고 넓게, 줄이면 높고 좁게 바뀐다. 전체 넓이는 언제나 1이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">정규분포 곡선의 성질</span></span>
+      <p>정규분포 \(\mathrm{N}(m, \sigma^2)\)의 곡선은 직선 \(x = m\)에 대하여 대칭이고 \(x = m\)에서 가장 높다. 곡선과 \(x\)축 사이의 넓이는 1이며, \(P(m - \sigma \le X \le m + \sigma) \approx 0.683\), \(P(m - 2\sigma \le X \le m + 2\sigma) \approx 0.954\), \(P(m - 3\sigma \le X \le m + 3\sigma) \approx 0.997\)이다.</p>
+    </div>
+
+    <h3><span class="no">3.4.2</span>표준화</h3>
+    <p>모든 정규분포는 '평균에서 표준편차의 몇 배 떨어졌는가'로 바꾸면 하나의 분포가 된다. \(Z = \dfrac{X - m}{\sigma}\)로 두면 \(E(Z) = 0\), \(\sigma(Z) = 1\)이고, \(Z\)는 표준정규분포 \(\mathrm{N}(0, 1)\)을 따른다. 이것을 표준화라 한다.</p>
+    <p>그래서 표준정규분포의 확률을 적은 표 하나로 모든 정규분포의 확률을 구할 수 있다. 그림 1에서 \(m\)과 \(\sigma\)를 바꾸어도 \(k\)를 같게 두면 칠한 넓이가 변하지 않는 것이 바로 이 사실이다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="X를 평균을 빼고 표준편차로 나누어 Z로 바꾸는 표준화">
+        <g class="s">
+          <rect x="20" y="40" width="150" height="60" class="lb"/><text x="95" y="66" text-anchor="middle">X ~ N(m, σ²)</text><text x="95" y="86" text-anchor="middle">예: 키 N(170, 6²)</text>
+          <rect x="350" y="40" width="150" height="60" class="lc"/><text x="425" y="66" text-anchor="middle">Z ~ N(0, 1)</text><text x="425" y="86" text-anchor="middle">표준정규분포표</text>
+          <text x="260" y="62" text-anchor="middle">Z = (X − m) / σ</text><text x="260" y="85" text-anchor="middle">182 cm → Z = 2</text>
+        </g>
+        <path d="M172 70 L348 70" class="k"/>
+      </svg>
+      <figcaption>그림 2. 평균을 빼고 표준편차로 나누면 어떤 정규분포든 표준정규분포로 바뀐다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+      <p>어느 학교 학생의 키가 정규분포 \(\mathrm{N}(170, 6^2)\)을 따른다. 키가 182 cm 이상인 학생의 비율과, 164 cm 이상 176 cm 이하인 학생의 비율을 구하여라. (\(P(0 \le Z \le 1) = 0.3413\), \(P(0 \le Z \le 2) = 0.4772\))</p>
+    </div>
+    <p>182 cm를 표준화하면 \(Z = \dfrac{182 - 170}{6} = 2\)이다. 따라서 \(P(X \ge 182) = P(Z \ge 2) = 0.5 - P(0 \le Z \le 2) = 0.5 - 0.4772 = 0.0228\), 곧 약 2.3%이다. 곡선이 대칭이므로 \(Z \ge 0\)인 쪽의 넓이가 0.5라는 것을 썼다.</p>
+    <p>164 cm와 176 cm는 각각 \(Z = -1\), \(Z = 1\)이므로 \(P(-1 \le Z \le 1) = 2 \times 0.3413 = 0.6826\), 곧 약 68%이다. 평균에서 표준편차 하나 안쪽에 약 3분의 2가 모인다는 정리의 값과 같다.</p>
+    <p>학생이 1000명이면 182 cm 이상은 약 23명, 164~176 cm는 약 683명이다. 표 하나와 표준화만으로 구체적인 인원을 어림할 수 있다. 아래 탐구 카드에서 평균과 표준편차를 바꾸며 곡선과 넓이를 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-normal-1">\(e \approx 2.718\)은 자연로그의 밑이다. 고등학교에서는 이 식을 직접 다루지 않고, 곡선의 모양과 넓이(표준정규분포표)만 쓴다. 이항분포 \(\mathrm{B}(n, p)\)도 \(n\)이 충분히 크면 평균 \(np\), 분산 \(np(1 - p)\)인 정규분포에 가까워진다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>정규분포는 평균 \(m\)과 표준편차 \(\sigma\)로 정해지는 대칭인 종 모양의 분포이며, 평균에서 \(\sigma\)의 몇 배 떨어진 구간의 확률은 \(m\)과 \(\sigma\)에 상관없이 같다. 그래서 \(Z = \tfrac{X - m}{\sigma}\)로 표준화하면 표 하나로 확률을 구할 수 있다. 처음 질문의 '평균보다 표준편차의 2배 이상 큰 사람'은 약 2.3%이다.</p></div>
+  </div>
+</article>

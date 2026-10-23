@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>오일러그래프와 해밀턴그래프 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="오일러 경로와 오일러 회로의 조건(홀수 차수 꼭짓점의 개수), 해밀턴 경로와 해밀턴 회로, 해밀턴 회로가 없음을 보이는 방법. 한붓그리기 도전 카드와, 정십이면체 등에서 해밀턴 회로를 찾는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-euler-trail canvas { aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; display: block; }
@@ -32,7 +37,7 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>오일러그래프와 해밀턴그래프</h1>
-    <p class="lead">모든 <b>변</b>을 한 번씩 지나는 길과 모든 <b>꼭짓점</b>을 한 번씩 지나는 길은 비슷해 보이지만 전혀 다른 문제입니다. 앞의 것(<em>오일러 회로</em>)은 차수만 보면 바로 판단할 수 있지만, 뒤의 것(<em>해밀턴 회로</em>)은 그런 간단한 조건이 알려져 있지 않습니다. 이 절에서는 한붓그리기와 해밀턴의 이코시안 게임에 도전하며 두 문제의 차이를 느껴 봅니다.</p>
+    <p class="lead">모든 변을 한 번씩 지나는 길과 모든 꼭짓점을 한 번씩 지나는 길은 비슷해 보이지만 전혀 다른 문제입니다. 앞의 것(<em>오일러 회로</em>)은 차수만 보면 바로 판단할 수 있지만, 뒤의 것(<em>해밀턴 회로</em>)은 그런 간단한 조건이 알려져 있지 않습니다. 이 절에서는 한붓그리기와 해밀턴의 이코시안 게임에 도전하며 두 문제의 차이를 느껴 봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
       <a class="p p-card" href="../../c/dmath/4-2.html#card-dmath-handshake" title="이산 수학 4.2 · 악수한 횟수를 모두 더하면 왜 늘 짝수일까?">꼭짓점의 차수와 변의 개수</a><a class="p p-card" href="../../c/dmath/4-1.html#card-dmath-konigsberg" title="이산 수학 4.1 · 일곱 다리를 한 번씩만 건너 산책할 수 있을까?">그래프와 실생활 문제</a>
@@ -43,18 +48,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-euler-trail"><span class="mono">4.5.1</span>한붓그리기의 조건 찾기</a></li>
-        <li><a href="#card-dmath-hamilton"><span class="mono">4.5.2</span>모든 도시를 한 번씩 돌아오는 여행</a></li>
+        <li><a href="#text-dmath-euler-hamilton"><span class="mono">본문</span>오일러그래프와 해밀턴그래프</a></li>
+        <li><a href="#card-dmath-euler-trail"><span class="mono">탐구 1</span>한붓그리기의 조건 찾기</a></li>
+        <li><a href="#card-dmath-hamilton"><span class="mono">탐구 2</span>모든 도시를 한 번씩 돌아오는 여행</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-4-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=4-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-4-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-4-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-euler-hamilton" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>오일러그래프와 해밀턴그래프</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">편지 봉투 모양의 그림, 곧 직사각형에 두 대각선을 긋고 위에 삼각형 지붕을 얹은 그림은 펜을 떼지 않고 모든 선을 한 번씩만 지나 그릴 수 있다. 그런데 어디서 출발하느냐가 중요해서, 아래 두 모서리 가운데 하나에서 시작해야만 된다. 한편 우편배달부가 아니라 택배 기사라면 모든 길이 아니라 모든 집을 꼭 한 번씩 들르고 돌아오는 길을 찾아야 한다. 두 문제는 비슷해 보이는데, 왜 하나는 쉽게 판정되고 다른 하나는 어렵다고 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="한붓그리기가 되는 봉투 모양의 그래프">
+              <path d="M80 180 L240 180 L240 90 L80 90 Z" class="k"/>
+              <line x1="80" y1="180" x2="240" y2="90" class="k"/><line x1="240" y1="180" x2="80" y2="90" class="k"/>
+              <path d="M80 90 L160 30 L240 90" class="k"/>
+              <circle cx="80" cy="180" r="6" class="fd"/><circle cx="240" cy="180" r="6" class="fd"/>
+              <circle cx="80" cy="90" r="5" class="fk"/><circle cx="240" cy="90" r="5" class="fk"/><circle cx="160" cy="30" r="5" class="fk"/><circle cx="160" cy="135" r="5" class="fk"/>
+              <text x="40" y="196" class="s td">차수 3</text><text x="246" y="196" class="s td">차수 3</text>
+              <text x="40" y="86" class="s">차수 4</text><text x="248" y="86" class="s">차수 4</text><text x="170" y="30" class="s">차수 2</text><text x="170" y="138" class="s">차수 4</text>
+              <text x="300" y="120" class="s">홀수 차수인 점 2개</text><text x="300" y="142" class="s td">두 점 가운데 하나에서 출발</text>
+            </svg>
+            <figcaption>그림 1. 홀수 차수인 꼭짓점이 정확히 두 개여서, 그 가운데 하나에서 출발해 다른 하나에서 끝나는 한붓그리기가 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>그래프와 차수(<a href="4-1.html">그래프와 실생활 문제</a>), 악수 정리(<a href="4-2.html">꼭짓점의 차수와 변의 개수</a>).</div>
+
+          <h3><span class="no">4.5.1</span>모든 변을 한 번씩</h3>
+          <p>그래프의 모든 변을 꼭 한 번씩 지나는 길을 오일러 경로라 하고, 출발점으로 돌아오는 경우를 오일러 회로라 한다. 한붓그리기는 오일러 경로를 찾는 일이다. 길이 어떤 꼭짓점을 지날 때마다 들어오는 변과 나가는 변을 하나씩 쓰므로, 지나가기만 하는 꼭짓점의 차수는 짝수여야 한다. 출발점과 도착점만 예외이다. 더 나아가 이 조건은 필요할 뿐 아니라 충분하기도 해서, 연결된 그래프이기만 하면 차수 조건만으로 오일러 경로가 있는지 정해진다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.5.1 <span class="nm">오일러 경로의 판정</span></span>
+            <p>연결된 그래프에 오일러 회로가 있을 필요충분조건은 모든 꼭짓점의 차수가 짝수인 것이다. 오일러 경로가 있을 필요충분조건은 홀수 차수인 꼭짓점이 0개 또는 2개인 것이며, 2개이면 그 두 점이 출발점과 도착점이다.</p>
+          </div>
+          <p>모든 차수가 짝수이면, 어느 꼭짓점에서 출발해도 막다른 곳에 갇히지 않고 출발점으로 돌아오는 회로를 만들 수 있다. 아직 지나지 않은 변이 남아 있으면 그 변에서 같은 방법으로 작은 회로를 만들어 큰 회로에 끼워 넣는다. 이렇게 하면 결국 모든 변을 지나는 회로가 된다. 홀수 차수인 점이 두 개이면, 두 점 사이에 가상의 변을 하나 더해 모두 짝수로 만든 뒤 회로를 찾고, 가상의 변을 지우면 두 점을 잇는 오일러 경로가 된다.<sup class="fn"><a href="#fn-dmath-euler-hamilton-1">1</a></sup></p>
+
+          <h3><span class="no">4.5.2</span>모든 꼭짓점을 한 번씩</h3>
+          <p>모든 꼭짓점을 꼭 한 번씩 지나 출발점으로 돌아오는 회로를 해밀턴 회로라 한다. 이것은 변이 아니라 꼭짓점을 한 번씩 지나는 것이어서, 차수를 세는 간단한 판정법이 알려져 있지 않다. 꼭짓점이 \(n\)개이고 모든 꼭짓점의 차수가 \(n/2\) 이상이면 해밀턴 회로가 있다는 것처럼 충분조건만 몇 가지 있을 뿐이다. 그래서 꼭짓점이 많아지면 가능한 순서를 거의 다 따져 보아야 하고, 컴퓨터로도 오래 걸린다. 가장 짧은 해밀턴 회로를 찾는 외판원 문제는 지금도 빠른 풀이가 알려져 있지 않다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="오일러 회로와 해밀턴 회로의 비교">
+              <g class="s">
+                <text x="20" y="22">구분</text><text x="160" y="22">오일러 회로</text><text x="340" y="22">해밀턴 회로</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">한 번씩 지나는 것</text><text x="160" y="52">모든 변</text><text x="340" y="52">모든 꼭짓점</text>
+                <text x="20" y="74">판정</text><text x="160" y="74" class="td">차수가 모두 짝수</text><text x="340" y="74" class="tb">간단한 판정법 없음</text>
+                <text x="20" y="96">실생활</text><text x="160" y="96">제설차, 우편배달</text><text x="340" y="96">택배 배송, 여행 경로</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 변을 한 번씩 지나는 문제는 차수로 바로 판정되지만, 꼭짓점을 한 번씩 지나는 문제는 그렇지 않다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.5.2</span>
+            <p>그림 1의 봉투 그래프에서 꼭짓점의 차수를 구해 한붓그리기가 되는지 판정하고, 출발점이 어디여야 하는지 말하여라. 또 이 그래프에 해밀턴 회로가 있는지 찾아보아라.</p>
+          </div>
+          <p>왼쪽 아래와 오른쪽 아래 모서리는 밑변, 옆변, 대각선이 모여 차수 3이다. 위의 두 모서리는 옆변, 윗변, 대각선, 지붕이 모여 차수 4이고, 지붕 꼭대기는 2, 두 대각선이 만나는 가운데 점은 4이다. 홀수 차수인 꼭짓점이 아래 두 모서리뿐이므로 오일러 경로가 있고, 반드시 아래 모서리 하나에서 출발해 다른 하나에서 끝나야 한다.</p>
+          <p>해밀턴 회로는 왼쪽 아래, 오른쪽 아래, 가운데 점, 오른쪽 위, 지붕 꼭대기, 왼쪽 위를 차례로 지나 왼쪽 아래로 돌아오면 된다. 가운데 점은 두 대각선이 만나는 곳이어서 오른쪽 아래와 오른쪽 위 모두와 이어져 있다. 여섯 꼭짓점을 한 번씩 지나 돌아오므로 해밀턴 회로가 있다. 즉 모든 변을 한 번씩 지나는 길은 홀수 차수인 꼭짓점의 개수로 바로 판정되지만, 모든 꼭짓점을 한 번씩 지나는 길은 직접 찾아보아야 한다.</p>
+          <p>아래 탐구 카드에서 여러 그림이 한붓그리기가 되는지 차수로 미리 판정해 보고, 모든 도시를 꼭 한 번씩 들르고 돌아오는 길을 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-euler-hamilton-1">해밀턴 회로라는 이름은 1857년 아일랜드의 해밀턴이 만든 놀이에서 왔다. 정십이면체의 20개 꼭짓점에 도시 이름을 붙이고, 모서리를 따라 모든 도시를 한 번씩 들러 돌아오는 길을 찾는 놀이였다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>모든 변을 한 번씩 지나는 오일러 회로는 연결된 그래프의 모든 차수가 짝수일 때만 있고, 오일러 경로는 홀수 차수인 꼭짓점이 0개나 2개일 때만 있으며 2개이면 그 두 점에서 시작하고 끝난다. 모든 꼭짓점을 한 번씩 지나는 해밀턴 회로는 이런 간단한 판정법이 없어 직접 찾아야 한다. 처음 질문의 봉투 그림은 홀수 차수인 아래 두 모서리 가운데 하나에서 출발해야 한붓그리기가 된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
+
       <article class="card" id="card-dmath-euler-trail">
         <header class="card-head">
-          <span class="no">4.5.1</span><h2>한붓그리기가 되는 그림은 미리 알 수 있을까?</h2><span class="kind">오일러그래프 · 도전</span>
+          <span class="no">탐구 1</span><h2>한붓그리기가 되는 그림은 미리 알 수 있을까?</h2><span class="kind">오일러그래프 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -64,30 +128,30 @@
             <p class="verdict" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>종이에서 펜을 떼지 않고, 같은 선을 두 번 지나지 않고 그림을 그리는 놀이가 한붓그리기입니다. 어떤 그림은 쉽게 되고 어떤 그림은 아무리 해도 안 됩니다. 그려 보기 전에 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>쾨니히스베르크 문제에서 지나가는 땅은 들어가는 다리와 나가는 다리가 짝을 이루었습니다.</li>
-            <li><span class="tag">설명</span>모든 변을 한 번씩 지나는 경로를 <em>오일러 경로</em>, 출발점으로 돌아오면 <em>오일러 회로</em>라 합니다. 연결된 그래프에서 ① 모든 꼭짓점의 차수가 짝수이면 오일러 회로가 있고(어디서 출발해도 됨), ② 차수가 홀수인 꼭짓점이 정확히 2개이면 그 둘을 양 끝으로 하는 오일러 경로가 있으며, ③ 홀수인 꼭짓점이 4개 이상이면 한붓그리기가 불가능합니다. 오일러 회로가 있는 그래프를 <em>오일러그래프</em>라 합니다.</li>
-            <li><span class="tag">연결</span>눈 치우는 차, 우편 배달, 쓰레기 수거차가 모든 길을 한 번씩 지나는 경로를 계획할 때 이 조건을 씁니다. 홀수인 교차로가 있으면 몇몇 길을 두 번 지나야 하고, 그 거리를 최소로 하는 것이 "중국 우편배달부 문제"입니다.</li>
-            <li><span class="tag">적용</span>그림마다 출발할 꼭짓점을 누르고 이웃한 꼭짓점을 차례로 눌러 모든 변을 그려 보세요. 안 될 것 같으면 "불가능하다"를 누르세요. 성공한 그림에서 출발점과 끝점의 차수는 어땠나요?</li>
-            <li class="warn"><span class="tag">판단</span>홀수인 꼭짓점이 2개인데 엉뚱한 곳에서 출발하면 실패합니다. 조건은 "가능한지"를 알려 주고, 출발점은 홀수인 꼭짓점 중 하나로 골라야 합니다. 또 그래프가 끊어져 있으면 차수 조건을 만족해도 불가능합니다.</li>
+            <li><span class="tag">질문</span>종이에서 펜을 떼지 않고, 같은 선을 두 번 지나지 않고 그림을 그리는 놀이가 한붓그리기이다. 어떤 그림은 쉽게 되고 어떤 그림은 아무리 해도 안 된다. 그려 보기 전에 알 수 있을까?</li>
+            <li><span class="tag">복원</span>쾨니히스베르크 문제에서 지나가는 땅은 들어가는 다리와 나가는 다리가 짝을 이루었다.</li>
+            <li><span class="tag">설명</span>모든 변을 한 번씩 지나는 경로를 <em>오일러 경로</em>, 출발점으로 돌아오면 <em>오일러 회로</em>라 한다. 연결된 그래프에서 ① 모든 꼭짓점의 차수가 짝수이면 오일러 회로가 있고(어디서 출발해도 됨), ② 차수가 홀수인 꼭짓점이 정확히 2개이면 그 둘을 양 끝으로 하는 오일러 경로가 있으며, ③ 홀수인 꼭짓점이 4개 이상이면 한붓그리기가 불가능하다. 오일러 회로가 있는 그래프를 <em>오일러그래프</em>라 한다.</li>
+            <li><span class="tag">연결</span>눈 치우는 차, 우편 배달, 쓰레기 수거차가 모든 길을 한 번씩 지나는 경로를 계획할 때 이 조건을 쓴다. 홀수인 교차로가 있으면 몇몇 길을 두 번 지나야 하고, 그 거리를 최소로 하는 것이 "중국 우편배달부 문제"이다.</li>
+            <li><span class="tag">적용</span>그림마다 출발할 꼭짓점을 누르고 이웃한 꼭짓점을 차례로 눌러 모든 변을 그려 보자. 안 될 것 같으면 "불가능하다"를 누르자. 성공한 그림에서 출발점과 끝점의 차수는 어땠는가?</li>
+            <li class="warn"><span class="tag">판단</span>홀수인 꼭짓점이 2개인데 엉뚱한 곳에서 출발하면 실패한다. 조건은 "가능한지"를 알려 주고, 출발점은 홀수인 꼭짓점 중 하나로 골라야 한다. 또 그래프가 끊어져 있으면 차수 조건을 만족해도 불가능하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">차수가 2, 4, 3, 3, 2, 4인 연결그래프에서 한붓그리기를 하려면 어디서 출발해야 할까요?</p>
+          <p class="q">차수가 2, 4, 3, 3, 2, 4인 연결그래프에서 한붓그리기를 하려면 어디서 출발해야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>차수가 3인 꼭짓점 중 하나<span class="why"><b>맞습니다.</b> 홀수 꼭짓점 2개가 출발점과 끝점이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>차수가 가장 큰 4인 꼭짓점<span class="why"><b>짝수 꼭짓점에서 출발하면 홀수 꼭짓점 하나에 갇힙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>어디서든 상관없다<span class="why"><b>모든 차수가 짝수일 때만 그렇습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>불가능하다<span class="why"><b>홀수 꼭짓점이 2개라 가능합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>차수가 3인 꼭짓점 중 하나<span class="why"><b>맞다.</b> 홀수 꼭짓점 2개가 출발점과 끝점이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>차수가 가장 큰 4인 꼭짓점<span class="why"><b>짝수 꼭짓점에서 출발하면 홀수 꼭짓점 하나에 갇힌다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>어디서든 상관없다<span class="why"><b>모든 차수가 짝수일 때만 그렇다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>불가능하다<span class="why"><b>홀수 꼭짓점이 2개라 가능하다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
 
       <article class="card" id="card-dmath-hamilton">
         <header class="card-head">
-          <span class="no">4.5.2</span><h2>모든 도시를 꼭 한 번씩 들르고 돌아오는 길이 있을까?</h2><span class="kind">해밀턴그래프 · 도전</span>
+          <span class="no">탐구 2</span><h2>모든 도시를 꼭 한 번씩 들르고 돌아오는 길이 있을까?</h2><span class="kind">해밀턴그래프 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -97,39 +161,40 @@
             <p class="verdict" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>1857년 해밀턴은 정십이면체의 꼭짓점 20개에 도시 이름을 붙이고, 모서리를 따라 모든 도시를 한 번씩 들른 뒤 출발점으로 돌아오는 놀이(이코시안 게임)를 만들었습니다. 한붓그리기와 비슷해 보이는데 무엇이 다를까요?</li>
-            <li><span class="tag">복원</span>오일러 회로는 모든 <b>변</b>을 한 번씩 지나며, 차수만 보면 있는지 알 수 있었습니다.</li>
-            <li><span class="tag">설명</span>모든 <b>꼭짓점</b>을 한 번씩 지나 출발점으로 돌아오는 회로를 <em>해밀턴 회로</em>, 그런 회로가 있는 그래프를 <em>해밀턴그래프</em>라 합니다. 오일러 회로와 달리 해밀턴 회로가 있는지 간단히 판정하는 조건은 알려져 있지 않습니다. 대신 "꼭짓점이 \(n \ge 3\)개이고 모든 차수가 \(\frac{n}{2}\) 이상이면 해밀턴그래프"(디랙 정리) 같은 충분조건이 있고, 없음을 보일 때는 색칠 논법을 씁니다. 예를 들어 바둑판 그래프는 검은 칸과 흰 칸을 번갈아 지나야 하므로 두 색의 개수가 다르면 해밀턴 회로가 없습니다.</li>
-            <li><span class="tag">연결</span>택배 차가 모든 배달지를 한 번씩 들르는 가장 짧은 길을 찾는 "외판원 문제"가 해밀턴 회로 문제를 품고 있습니다. 도시가 많아지면 컴퓨터로도 정확한 답을 찾기 매우 어려운 문제로 알려져 있습니다.</li>
-            <li><span class="tag">적용</span>그래프마다 출발점을 누르고 이웃한 점을 차례로 눌러 모든 점을 들른 뒤 출발점을 눌러 돌아오세요. 셋째 그래프에서 칸을 검은색, 흰색으로 번갈아 칠한다고 생각하면 무엇을 알 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>여러 번 실패했다고 해밀턴 회로가 없다고 할 수는 없습니다. 넷째 그래프(페테르센 그래프)는 모든 차수가 3으로 고르게 보이지만 해밀턴 회로가 없습니다. 이는 경우를 나누어 따지는 증명으로 알려진 사실입니다.</li>
+            <li><span class="tag">질문</span>1857년 해밀턴은 정십이면체의 꼭짓점 20개에 도시 이름을 붙이고, 모서리를 따라 모든 도시를 한 번씩 들른 뒤 출발점으로 돌아오는 놀이(이코시안 게임)를 만들었다. 한붓그리기와 비슷해 보이는데 무엇이 다를까?</li>
+            <li><span class="tag">복원</span>오일러 회로는 모든 변을 한 번씩 지나며, 차수만 보면 있는지 알 수 있었다.</li>
+            <li><span class="tag">설명</span>모든 꼭짓점을 한 번씩 지나 출발점으로 돌아오는 회로를 <em>해밀턴 회로</em>, 그런 회로가 있는 그래프를 <em>해밀턴그래프</em>라 한다. 오일러 회로와 달리 해밀턴 회로가 있는지 간단히 판정하는 조건은 알려져 있지 않는다. 대신 "꼭짓점이 \(n \ge 3\)개이고 모든 차수가 \(\frac{n}{2}\) 이상이면 해밀턴그래프"(디랙 정리) 같은 충분조건이 있고, 없음을 보일 때는 색칠 논법을 쓴다. 예를 들어 바둑판 그래프는 검은 칸과 흰 칸을 번갈아 지나야 하므로 두 색의 개수가 다르면 해밀턴 회로가 없다.</li>
+            <li><span class="tag">연결</span>택배 차가 모든 배달지를 한 번씩 들르는 가장 짧은 길을 찾는 "외판원 문제"가 해밀턴 회로 문제를 품고 있다. 도시가 많아지면 컴퓨터로도 정확한 답을 찾기 매우 어려운 문제로 알려져 있다.</li>
+            <li><span class="tag">적용</span>그래프마다 출발점을 누르고 이웃한 점을 차례로 눌러 모든 점을 들른 뒤 출발점을 눌러 돌아오자. 셋째 그래프에서 칸을 검은색, 흰색으로 번갈아 칠한다고 생각하면 무엇을 알 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>여러 번 실패했다고 해밀턴 회로가 없다고 할 수는 없다. 넷째 그래프(페테르센 그래프)는 모든 차수가 3으로 고르게 보이지만 해밀턴 회로가 없다. 이는 경우를 나누어 따지는 증명으로 알려진 사실이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">완전그래프 \(K_5\)에 대해 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>해밀턴 회로도 있고 오일러 회로도 있다.<span class="why"><b>맞습니다.</b> 모든 차수가 4(짝수)이고, 아무 순서로나 다섯 점을 돌 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>해밀턴 회로만 있다.<span class="why"><b>차수가 모두 짝수라 오일러 회로도 있습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>오일러 회로만 있다.<span class="why"><b>완전그래프는 늘 해밀턴 회로가 있습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>둘 다 없다.<span class="why"><b>둘 다 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>해밀턴 회로도 있고 오일러 회로도 있다.<span class="why"><b>맞다.</b> 모든 차수가 4(짝수)이고, 아무 순서로나 다섯 점을 돌 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>해밀턴 회로만 있다.<span class="why"><b>차수가 모두 짝수라 오일러 회로도 있다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>오일러 회로만 있다.<span class="why"><b>완전그래프는 늘 해밀턴 회로가 있다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>둘 다 없다.<span class="why"><b>둘 다 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-4-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=4-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-4-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

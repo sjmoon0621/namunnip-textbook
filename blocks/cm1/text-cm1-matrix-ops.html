@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/cm1/body.js"],
+  "sec": "4-2",
+  "short": "본문 · 행렬의 연산"
+}
+-->
+<article class="card reading" id="text-cm1-matrix-ops" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>행렬의 연산</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">분식집에서 떡볶이와 김밥을 판다. 두 지점의 하루 판매량과 메뉴별 가격이 각각 행렬로 정리되어 있을 때, 지점별 매출을 행렬 하나로 한 번에 계산할 수 있을까? 그 계산이 바로 행렬의 곱셈이라면, 곱셈 규칙은 왜 그렇게 생겼을까?</p>
+    <figure class="q-fig" data-q="cm1-mmul">
+      <svg viewBox="0 0 520 220" role="img" aria-label="판매량 행렬과 가격 행렬을 곱해 매출 행렬을 얻는 그림, 고른 성분의 행과 열을 강조"></svg>
+      <div class="q-ctl"><label>매출 행렬의 성분 <input type="range" data-k="c" min="0" max="3" step="1" value="0"><output data-k="c"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 곱 \(AB\)의 \((i, j)\) 성분은 \(A\)의 제\(i\)행과 \(B\)의 제\(j\)열에서 같은 순서의 성분끼리 곱해 더한 값이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 뜻과 성분의 자리(<a href="4-1.html">행렬의 뜻</a>), 곱의 법칙과 분배법칙.</div>
+
+    <h3><span class="no">4.2.1</span>덧셈과 실수배는 자리끼리</h3>
+    <p>두 지점의 월요일 판매량이 \(A = \begin{pmatrix} 30 &amp; 20 \\ 25 &amp; 40 \end{pmatrix}\), 화요일 판매량이 \(B = \begin{pmatrix} 35 &amp; 15 \\ 20 &amp; 45 \end{pmatrix}\)라 하자. 행은 지점, 열은 메뉴(떡볶이, 김밥)이다. 이틀 동안의 판매량은 같은 지점, 같은 메뉴끼리 더하면 되므로 \(A + B = \begin{pmatrix} 65 &amp; 35 \\ 45 &amp; 85 \end{pmatrix}\)이다.</p>
+    <p>즉 행렬의 덧셈과 뺄셈은 같은 자리의 성분끼리 하고, 그래서 모양이 같은 행렬끼리만 할 수 있다. 판매량을 모두 두 배로 늘리는 계획이라면 모든 성분에 2를 곱한 \(2A\)가 된다. 실수 \(k\)에 대하여 모든 성분에 \(k\)를 곱한 행렬을 \(kA\)라 하고, 이것을 행렬의 실수배라 한다.<sup class="fn"><a href="#fn-cm1-matrix-ops-1">1</a></sup></p>
+
+    <h3><span class="no">4.2.2</span>곱셈은 행과 열의 짝</h3>
+    <p>이제 매출을 구하자. 떡볶이는 4천 원, 김밥은 3천 원이고, 이것을 열 하나짜리 행렬 \(P = \begin{pmatrix} 4 \\ 3 \end{pmatrix}\)(단위 천 원)로 둔다. 1지점의 월요일 매출은 떡볶이 30개와 김밥 20개이므로 \(30 \times 4 + 20 \times 3 = 180\)천 원이다. 2지점은 \(25 \times 4 + 40 \times 3 = 220\)천 원이다.</p>
+    <p>여기서 계산의 모양을 보자. 1지점의 매출은 \(A\)의 제1행 \((30, 20)\)과 \(P\)의 열 \((4, 3)\)을 순서대로 곱해 더한 것이다. 2지점은 \(A\)의 제2행을 썼다. 이 계산을 그대로 행렬의 곱셈으로 정한다. 그러면 \(AP = \begin{pmatrix} 180 \\ 220 \end{pmatrix}\)이 된다.</p>
+    <p>같은 계산을 지점 쪽이 아니라 메뉴 쪽에서 볼 수도 있다. \(A\)의 제1열 \(\begin{pmatrix} 30 \\ 25 \end{pmatrix}\)은 두 지점의 떡볶이 판매량이고, 제2열 \(\begin{pmatrix} 20 \\ 40 \end{pmatrix}\)은 김밥 판매량이다. 그래서 떡볶이 판매량 열에 4를, 김밥 판매량 열에 3을 곱해 더하면 \(4\begin{pmatrix} 30 \\ 25 \end{pmatrix} + 3\begin{pmatrix} 20 \\ 40 \end{pmatrix} = \begin{pmatrix} 180 \\ 220 \end{pmatrix}\)으로 같은 답이 나온다. 행렬에 열 하나를 곱하는 것은 행마다 짝지어 더하는 계산이면서, 동시에 \(A\)의 열들을 가격만큼씩 섞는 계산이기도 하다. 행렬을 더 배우면 이 두 번째 눈이 자주 쓰인다.</p>
+    <div class="tb-env"><span class="lb">정의 4.2.1 <span class="nm">행렬의 곱셈</span></span>
+      <p>\(m \times k\) 행렬 \(A\)와 \(k \times n\) 행렬 \(B\)의 곱 \(AB\)는 \(m \times n\) 행렬이고, 그 \((i, j)\) 성분은 \[a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{ik}b_{kj}\]이다. \(A\)의 열의 개수와 \(B\)의 행의 개수가 같을 때만 정의된다.</p>
+    </div>
+    <p>정의의 조건은 매출 계산에서 자연스럽게 나온다. \(A\)의 한 행에 메뉴가 \(k\)개 있으면 가격도 \(k\)개 있어야 짝을 지을 수 있다. 그림 1의 슬라이더로 매출 행렬의 성분을 고르면, 그 성분을 만드는 \(A\)의 행과 가격 행렬의 열이 함께 표시된다. 그림의 가격 행렬은 월요일 가격과 할인한 화요일 가격 두 열로 늘린 것이다.</p>
+
+    <h3><span class="no">4.2.3</span>수의 곱셈과 다른 점</h3>
+    <p>행렬의 곱셈에서도 결합법칙 \((AB)C = A(BC)\)과 분배법칙 \(A(B + C) = AB + AC\)는 성립한다. 그런데 교환법칙은 일반적으로 성립하지 않는다. \(AB\)는 '\(A\)의 행과 \(B\)의 열'을, \(BA\)는 '\(B\)의 행과 \(A\)의 열'을 짝짓기 때문에 계산하는 내용 자체가 다르다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 170" role="img" aria-label="AB와 BA를 계산하면 결과가 다른 예">
+        <text x="20" y="40">A = [1 1; 0 1],  B = [1 0; 1 1]</text>
+        <text x="20" y="90" class="ta">AB = [1·1+1·1  1·0+1·1; 0·1+1·1  0·0+1·1] = [2 1; 1 1]</text>
+        <text x="20" y="130" class="tb">BA = [1·1+0·0  1·1+0·1; 1·1+1·0  1·1+1·1] = [1 1; 1 2]</text>
+        <text x="20" y="160" class="s">대괄호 안의 세미콜론(;)은 행을 나눈다</text>
+      </svg>
+      <figcaption>그림 2. 같은 두 행렬이라도 곱하는 순서를 바꾸면 결과가 달라질 수 있다.</figcaption>
+    </figure>
+    <p>그림 2에서 \(AB \ne BA\)이다. 따라서 행렬의 식을 정리할 때 \((A + B)^2\)을 \(A^2 + 2AB + B^2\)으로 쓰면 안 된다. 분배법칙으로 펼치면 \(A^2 + AB + BA + B^2\)이고, \(AB\)와 \(BA\)가 같을 때만 앞의 꼴이 된다.</p>
+
+    <h3><span class="no">4.2.4</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+      <p>\(A = \begin{pmatrix} 2 &amp; 1 \\ -1 &amp; 3 \end{pmatrix}\), \(B = \begin{pmatrix} 1 &amp; 0 \\ 2 &amp; -1 \end{pmatrix}\)일 때 \(AB\)와 \(2A - B\)를 구하여라.</p>
+    </div>
+    <p>\(AB\)의 \((1, 1)\) 성분은 \(A\)의 제1행 \((2, 1)\)과 \(B\)의 제1열 \((1, 2)\)에서 \(2 \cdot 1 + 1 \cdot 2 = 4\)이다. \((1, 2)\) 성분은 제1행과 제2열 \((0, -1)\)에서 \(0 - 1 = -1\)이다. 같은 방법으로 \((2, 1)\) 성분은 \(-1 + 6 = 5\), \((2, 2)\) 성분은 \(0 - 3 = -3\)이다. 따라서 \(AB = \begin{pmatrix} 4 &amp; -1 \\ 5 &amp; -3 \end{pmatrix}\)이다.</p>
+    <p>\(2A - B\)는 자리끼리 계산한다. \(2A = \begin{pmatrix} 4 &amp; 2 \\ -2 &amp; 6 \end{pmatrix}\)에서 \(B\)를 빼면 \(\begin{pmatrix} 3 &amp; 2 \\ -4 &amp; 7 \end{pmatrix}\)이다.</p>
+    <p>곱셈이 맞는지 한 성분만 다른 방법으로 확인해 보자. \(B\)의 제1열 \(\begin{pmatrix} 1 \\ 2 \end{pmatrix}\)에 \(A\)를 곱하면 \(\begin{pmatrix} 2 + 2 \\ -1 + 6 \end{pmatrix} = \begin{pmatrix} 4 \\ 5 \end{pmatrix}\)이고, 이것이 \(AB\)의 제1열과 같다. 곱 \(AB\)의 각 열은 \(A\)에 \(B\)의 각 열을 곱한 것이라는 사실도 함께 보인다. 아래 탐구 카드에서 성분을 하나씩 골라 행과 열의 짝을 직접 따라가 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-cm1-matrix-ops-1">모든 성분이 0인 행렬을 영행렬 \(O\)라 하고, 정사각행렬에서 왼쪽 위에서 오른쪽 아래로 가는 대각선의 성분이 모두 1이고 나머지가 0인 행렬을 단위행렬 \(E\)라 한다. \(A + O = A\), \(AE = EA = A\)이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>행렬의 덧셈과 실수배는 같은 자리의 성분끼리 계산하고, 곱셈은 앞 행렬의 행과 뒤 행렬의 열을 같은 순서끼리 곱해 더한다. 이 규칙은 판매량과 가격으로 매출을 구하는 계산을 그대로 옮긴 것이어서, 처음 질문의 두 지점 매출은 \(AP\) 하나로 한 번에 얻는다. 다만 짝짓는 대상이 바뀌므로 일반적으로 \(AB \ne BA\)이다.</p></div>
+  </div>
+</article>

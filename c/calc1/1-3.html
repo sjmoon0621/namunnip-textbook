@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>함수의 연속 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="x = a에서 함수가 연속일 세 조건(f(a)가 정의됨, 극한값이 존재함, 극한값 = 함숫값), 불연속의 여러 모양, 구간(닫힌구간·열린구간·반닫힌 구간)과 구간에서의 연속, 연속함수.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-cont-three canvas { aspect-ratio: 16 / 11; }
@@ -54,18 +59,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-cont-three"><span class="mono">1.3.1</span>한 점에서의 연속</a></li>
-        <li><a href="#card-calc1-cont-interval"><span class="mono">1.3.2</span>구간에서의 연속</a></li>
+        <li><a href="#text-calc1-continuity"><span class="mono">본문</span>함수의 연속</a></li>
+        <li><a href="#card-calc1-cont-three"><span class="mono">탐구 1</span>한 점에서의 연속</a></li>
+        <li><a href="#card-calc1-cont-interval"><span class="mono">탐구 2</span>구간에서의 연속</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">217문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">217문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-continuity" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>함수의 연속</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">택시 요금은 거리가 일정하게 늘 때마다 100원씩 뛰어오르고, 물의 온도는 시간에 따라 끊김 없이 변한다. 그래프로 그리면 하나는 계단처럼 끊기고 하나는 이어진다. 연필을 떼지 않고 그릴 수 있다는 느낌을 수학의 말로 어떻게 정확히 바꿀까?</p>
+          <figure class="q-fig" data-q="calc1-cont">
+            <svg viewBox="0 0 520 260" role="img" aria-label="x=a에서 끊긴 세 가지 경우와 이어진 경우를 고르는 그래프"></svg>
+            <div class="q-ctl"><label>그래프 고르기 <input type="range" data-k="c" min="0" max="3" step="1" value="0"><output data-k="c"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(x = a\)에서 함숫값이 없거나, 극한값이 없거나, 둘이 다르면 그래프가 끊긴다. 셋이 모두 갖추어져야 연속이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수의 극한, 좌극한과 우극한(<a href="1-1.html">함수의 극한</a>), 극한의 성질(<a href="1-2.html">극한의 성질과 극한값</a>).</div>
+
+          <h3><span class="no">1.3.1</span>끊기는 세 가지 방식</h3>
+          <p>그림 1에서 그래프를 하나씩 골라 보자. 첫째는 \(x = a\)에 구멍이 나서 함숫값이 정의되지 않은 경우이다. 둘째는 왼쪽과 오른쪽에서 다가가는 높이가 달라 극한값이 없는 계단이다. 셋째는 극한값은 있지만 \(x = a\)의 점만 엉뚱한 높이에 따로 찍힌 경우이다. 셋 모두 연필을 한 번 떼어야 그릴 수 있다.</p>
+          <p>그렇다면 이어지려면 무엇이 필요할까? \(x = a\)에서 값이 있어야 하고, 근처의 값들이 한 높이로 모여야 하며, 그 높이가 바로 \(x = a\)의 값이어야 한다. 이 세 조건을 그대로 정의로 삼는다.</p>
+          <div class="tb-env"><span class="lb">정의 1.3.1 <span class="nm">함수의 연속</span></span>
+            <p>함수 \(f(x)\)가 실수 \(a\)에 대하여 (ⅰ) \(x = a\)에서 정의되어 있고, (ⅱ) 극한값 \(\displaystyle\lim_{x \to a} f(x)\)가 존재하며, (ⅲ) \(\displaystyle\lim_{x \to a} f(x) = f(a)\)일 때, \(f(x)\)는 \(x = a\)에서 연속이라 한다. 연속이 아닐 때 불연속이라 한다.</p>
+          </div>
+          <p>정의의 세 조건이 그림 1의 세 가지 끊김에 하나씩 대응한다. (ⅰ)이 없으면 구멍, (ⅱ)가 없으면 계단, (ⅲ)이 없으면 떨어진 점이다. 그래서 연속인지 확인하려면 함숫값, 좌극한, 우극한 세 값을 구해 모두 같은지 보면 된다.</p>
+
+          <h3><span class="no">1.3.2</span>구간에서의 연속</h3>
+          <p>함수가 어떤 구간의 모든 점에서 연속이면 그 구간에서 연속이라 하고, 그런 함수를 연속함수라 한다. 닫힌구간 \([a, b]\)에서는 끝점에서 바깥쪽 값을 볼 수 없으므로, \(x = a\)에서는 우극한만, \(x = b\)에서는 좌극한만 함숫값과 같으면 된다.</p>
+          <p>다항함수는 실수 전체에서 연속이다. 유리함수는 분모가 0이 아닌 모든 점에서, 무리함수 \(\sqrt{x}\)는 \(x \ge 0\)에서 연속이다.<sup class="fn"><a href="#fn-calc1-continuity-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="택시 요금의 계단 그래프와 물의 온도의 이어진 그래프">
+              <g transform="translate(20 10)"><line x1="0" y1="120" x2="220" y2="120" class="ax"/><line x1="0" y1="0" x2="0" y2="120" class="ax"/>
+                <line x1="0" y1="100" x2="60" y2="100" class="b"/><line x1="60" y1="80" x2="110" y2="80" class="b"/><line x1="110" y1="60" x2="160" y2="60" class="b"/><line x1="160" y1="40" x2="210" y2="40" class="b"/>
+                <circle cx="60" cy="100" r="3" class="k" style="fill:var(--card)"/><circle cx="110" cy="80" r="3" class="k" style="fill:var(--card)"/><circle cx="160" cy="60" r="3" class="k" style="fill:var(--card)"/>
+                <text x="110" y="138" text-anchor="middle" class="s">택시 요금, 불연속</text></g>
+              <g transform="translate(280 10)"><line x1="0" y1="120" x2="220" y2="120" class="ax"/><line x1="0" y1="0" x2="0" y2="120" class="ax"/><path d="M0 100 Q60 40 120 30 Q170 25 210 25" class="c"/><text x="110" y="138" text-anchor="middle" class="s">데우는 물의 온도, 연속</text></g>
+            </svg>
+            <figcaption>그림 2. 값이 갑자기 뛰는 곳이 있으면 불연속이고, 끊김 없이 변하면 연속이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>함수 \(f(x) = \begin{cases} \dfrac{x^2 + x - 6}{x - 2} &amp; (x \ne 2) \\ k &amp; (x = 2) \end{cases}\)가 \(x = 2\)에서 연속이 되도록 하는 \(k\)를 구하여라. 또 \(g(x) = \begin{cases} x + 1 &amp; (x &lt; 1) \\ ax^2 &amp; (x \ge 1) \end{cases}\)이 실수 전체에서 연속이 되는 \(a\)를 구하여라.</p>
+          </div>
+          <p>\(x \ne 2\)이면 \(\dfrac{(x - 2)(x + 3)}{x - 2} = x + 3\)이므로 \(\displaystyle\lim_{x \to 2} f(x) = 5\)이다. (ⅰ)과 (ⅱ)는 갖추어졌으니 (ⅲ)이 성립하려면 \(f(2) = k = 5\)여야 한다.</p>
+          <p>\(g(x)\)는 \(x &lt; 1\)과 \(x &gt; 1\)에서 각각 다항함수라 연속이다. 따라서 이어 붙인 \(x = 1\)만 보면 된다. 좌극한은 \(1 + 1 = 2\), 우극한과 함숫값은 \(a \times 1^2 = a\)이므로, \(a = 2\)일 때 세 값이 모두 같아 연속이다.</p>
+          <p>\(a = 2\)이면 \(g\)의 그래프는 직선 \(y = x + 1\)이 점 \((1, 2)\)에서 포물선 \(y = 2x^2\)으로 끊김 없이 바뀐다. 이어지는 높이만 맞추었을 뿐 꺾임이 있을 수 있다는 것은 미분에서 다시 따진다. 아래 탐구 카드에서 세 가지 끊김을 직접 만들고 고쳐 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-continuity-1">\(f\), \(g\)가 \(x = a\)에서 연속이면 \(f \pm g\), \(cf\), \(fg\)도 연속이고, \(g(a) \ne 0\)이면 \(\tfrac{f}{g}\)도 연속이다. 극한의 성질에서 바로 나오며, 다음 절에서 자세히 다룬다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>함수가 \(x = a\)에서 연속이라는 것은 함숫값이 있고, 극한값이 있으며, 둘이 같다는 세 조건을 모두 갖춘다는 뜻이다. 하나라도 빠지면 그래프에 구멍, 계단, 떨어진 점이 생긴다. 그래서 처음 질문의 '연필을 떼지 않고 그린다'는 느낌은 모든 점에서 \(\lim_{x \to a} f(x) = f(a)\)라는 식으로 정확히 바뀐다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-1.html#card-calc1-one-sided"><small class="mono">미적분Ⅰ 1.1</small>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</a><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-4.html#text-calc1-cont-props"><small class="mono">미적분Ⅰ 1.4</small>연속함수끼리 더하고 곱하고 나누어도 연속일까?</a><a href="../../c/calc1/1-4.html#text-calc1-cont-theorems"><small class="mono">미적분Ⅰ 1.4</small>연속함수의 성질</a><a href="../../c/calc1/1-4.html#card-calc1-evt"><small class="mono">미적분Ⅰ 1.4</small>연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?</a><a href="../../c/calc1/1-4.html#card-calc1-ivt"><small class="mono">미적분Ⅰ 1.4</small>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</a></div></nav>
+
       <article class="card" id="card-calc1-cont-three">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>그래프가 '이어져 있다'는 것을 극한으로 어떻게 말할까?</h2><span class="kind">함수의 연속 · 세 조건</span>
+          <span class="no">탐구 1</span><h2>그래프가 '이어져 있다'는 것을 극한으로 어떻게 말할까?</h2><span class="kind">함수의 연속 · 세 조건</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,9 +137,9 @@
               </div>
               <label class="def"><input class="cd" type="checkbox" checked> \(x = 2\)에서 함숫값을 정의함</label>
               <ol class="chk">
-                <li class="c1"><b>—</b>① \(f(2)\)가 정의되어 있다</li>
-                <li class="c2"><b>—</b>② \(\lim_{x \to 2} f(x)\)가 존재한다</li>
-                <li class="c3"><b>—</b>③ \(\lim_{x \to 2} f(x) = f(2)\)이다</li>
+                <li class="c1"><b>—</b>조건 1. \(f(2)\)가 정의되어 있다</li>
+                <li class="c2"><b>—</b>조건 2. \(\lim_{x \to 2} f(x)\)가 존재한다</li>
+                <li class="c3"><b>—</b>조건 3. \(\lim_{x \to 2} f(x) = f(2)\)이다</li>
               </ol>
               <dl class="nums">
                 <div><dt>좌극한 / 우극한</dt><dd class="n-lr">—</dd></div>
@@ -93,30 +150,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>연필을 떼지 않고 그릴 수 있으면 '이어져 있다'고 말합니다. 그런데 이 말로는 구멍 하나, 튀어 나온 점 하나를 정확히 판정하기 어렵습니다. 한 점 \(x = a\)에서 그래프가 이어져 있다는 것을 극한으로 어떻게 정할 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(\lim_{x \to a} f(x)\)는 \(a\) 근처의 값들이 모이는 곳이고, \(f(a)\)는 \(x = a\)에서의 높이입니다. 극한이 존재하려면 좌극한과 우극한이 같아야 합니다.</li>
-            <li><span class="tag">설명</span>함수 \(f(x)\)가 실수 \(a\)에 대하여 ① \(x = a\)에서 정의되어 있고 ② 극한값 \(\lim_{x \to a} f(x)\)가 존재하며 ③ \(\lim_{x \to a} f(x) = f(a)\)일 때, \(f(x)\)는 \(x = a\)에서 <em>연속</em>이라고 합니다. 세 조건 중 하나라도 성립하지 않으면 \(x = a\)에서 <em>불연속</em>이라고 합니다. 이 정의는 '근처의 값들이 모이는 곳에 실제로 점이 찍혀 있다'는 뜻입니다.</li>
-            <li><span class="tag">연결</span>이 함수의 좌극한은 \(2^2 = 4\), 우극한은 \(k - 2\)입니다. ②는 \(k = 6\)일 때만 성립하고, ③은 거기에 \(c = 4\)가 더해져야 성립합니다. 불연속의 모양도 조건으로 나뉩니다. ①이나 ③만 깨지면 구멍이나 떨어진 점이고, ②가 깨지면 그래프가 끊어져 뛰어오릅니다.</li>
-            <li><span class="tag">적용</span>처음 상태에서 깨진 조건을 확인하세요. 함숫값을 정의하지 않으면 ①부터 깨집니다. \(k\)만 바꾸어 ②를 성립시킨 다음, \(c\)를 바꾸어 ③까지 성립시켜 보세요. 세 조건이 모두 성립할 때 그래프가 어떻게 보이나요?</li>
-            <li class="warn"><span class="tag">판단</span>세 조건은 차례로 확인합니다. ①이 깨지면 ③은 따질 수조차 없습니다. 또 '극한값이 존재하면 연속'은 틀립니다. 극한값이 4이고 \(f(2) = 3\)이면 불연속입니다. 반대로 식이 바뀌는 점이라고 해서 불연속인 것도 아닙니다. \(k = 6, c = 4\)이면 식이 바뀌어도 연속입니다.</li>
+            <li><span class="tag">질문</span>연필을 떼지 않고 그릴 수 있으면 '이어져 있다'고 말한다. 그런데 이 말로는 구멍 하나, 튀어 나온 점 하나를 정확히 판정하기 어렵다. 한 점 \(x = a\)에서 그래프가 이어져 있다는 것을 극한으로 어떻게 정할 수 있을까?</li>
+            <li><span class="tag">복원</span>\(\lim_{x \to a} f(x)\)는 \(a\) 근처의 값들이 모이는 곳이고, \(f(a)\)는 \(x = a\)에서의 높이이다. 그리고 극한이 존재하려면 좌극한과 우극한이 같아야 한다.</li>
+            <li><span class="tag">설명</span>함수 \(f(x)\)가 실수 \(a\)에 대하여 \(x = a\)에서 정의되어 있고, 극한값 \(\lim_{x \to a} f(x)\)가 존재하며, \(\lim_{x \to a} f(x) = f(a)\)일 때 \(f(x)\)는 \(x = a\)에서 <em>연속</em>이라고 한다. 세 조건 가운데 하나라도 성립하지 않으면 \(x = a\)에서 <em>불연속</em>이라고 한다. 즉 이 정의는 '근처의 값들이 모이는 곳에 실제로 점이 찍혀 있다'는 뜻이다.</li>
+            <li><span class="tag">연결</span>이 카드의 함수는 좌극한이 \(2^2 = 4\), 우극한이 \(k - 2\)이다. 그래서 극한값은 \(k = 6\)일 때만 존재하고, 마지막 조건은 거기에 \(c = 4\)가 더해져야 성립한다. 불연속의 모양도 어느 조건이 깨졌는지로 나뉜다. 함숫값이 없거나 극한값과 다르면 구멍이나 떨어진 점이 되고, 극한값이 없으면 그래프가 끊어져 뛰어오른다.</li>
+            <li><span class="tag">적용</span>처음 상태에서 깨진 조건을 확인해 보자. 함숫값을 정의하지 않으면 첫째 조건부터 깨진다. \(k\)만 바꾸어 극한값이 존재하게 만든 다음, \(c\)를 바꾸어 마지막 조건까지 성립시키면 그래프가 한 줄로 이어진다.</li>
+            <li class="warn"><span class="tag">판단</span>세 조건은 차례로 확인한다. 함숫값이 정의되지 않으면 마지막 조건은 따질 수조차 없기 때문이다. 또 '극한값이 존재하면 연속'은 틀린 말로, 극한값이 4이고 \(f(2) = 3\)이면 불연속이다. 반대로 식이 바뀌는 점이라고 해서 불연속인 것도 아니어서, \(k = 6, c = 4\)이면 식이 바뀌어도 연속이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(x \ne 1\)이면 \(f(x) = \frac{x^2 + 2x - 3}{x - 1}, f(1) = c\)인 함수가 \(x = 1\)에서 연속이 되는 \(c\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0<span class="why"><b>대입한 분자의 값을 썼습니다.</b> 분자가 0으로 가지만 분모도 0으로 가므로 몫의 극한은 0이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>인수분해를 잘못했습니다.</b> \(x^2 + 2x - 3 = (x - 1)(x + 3)\)이므로 약분한 식은 \(x + 3\)이고 \(x = 1\)에서 4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4<span class="why"><b>맞습니다.</b> \(x \ne 1\)이면 \(f(x) = x + 3\)이므로 극한값은 4입니다. ③을 만족하려면 \(f(1) = c = 4\)여야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(c\)로도 연속이 될 수 없다<span class="why"><b>\(0/0\) 꼴이면 불연속이라고 보았습니다.</b> 처음 식이 \(x = 1\)에서 정의되지 않을 뿐, 극한값이 있으므로 그 값으로 \(f(1)\)을 정하면 연속입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0<span class="why"><b>대입한 분자의 값을 썼다.</b> 분자가 0으로 가지만 분모도 0으로 가므로 몫의 극한은 0이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>인수분해를 잘못했다.</b> \(x^2 + 2x - 3 = (x - 1)(x + 3)\)이므로 약분한 식은 \(x + 3\)이고 \(x = 1\)에서 4이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>4<span class="why"><b>맞다.</b> \(x \ne 1\)이면 \(f(x) = x + 3\)이므로 극한값은 4이다. ③을 만족하려면 \(f(1) = c = 4\)여야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(c\)로도 연속이 될 수 없다<span class="why"><b>\(0/0\) 꼴이면 불연속이라고 보았다.</b> 처음 식이 \(x = 1\)에서 정의되지 않을 뿐, 극한값이 있으므로 그 값으로 \(f(1)\)을 정하면 연속이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-1.html#card-calc1-one-sided"><small class="mono">미적분Ⅰ 1.1</small>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</a><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-4.html#text-calc1-cont-props"><small class="mono">미적분Ⅰ 1.4</small>연속함수끼리 더하고 곱하고 나누어도 연속일까?</a><a href="../../c/calc1/1-4.html#card-calc1-evt"><small class="mono">미적분Ⅰ 1.4</small>연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?</a><a href="../../c/calc1/1-4.html#card-calc1-ivt"><small class="mono">미적분Ⅰ 1.4</small>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-1.html#card-calc1-one-sided"><small class="mono">미적분Ⅰ 1.1</small>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</a><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-4.html#text-calc1-cont-props"><small class="mono">미적분Ⅰ 1.4</small>연속함수끼리 더하고 곱하고 나누어도 연속일까?</a><a href="../../c/calc1/1-4.html#text-calc1-cont-theorems"><small class="mono">미적분Ⅰ 1.4</small>연속함수의 성질</a><a href="../../c/calc1/1-4.html#card-calc1-evt"><small class="mono">미적분Ⅰ 1.4</small>연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?</a><a href="../../c/calc1/1-4.html#card-calc1-ivt"><small class="mono">미적분Ⅰ 1.4</small>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</a></div></nav>
 
       <article class="card" id="card-calc1-cont-interval">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>구간의 끝점까지 연속이라는 것은 무슨 뜻일까?</h2><span class="kind">구간 · 구간에서의 연속 · 연속함수</span>
+          <span class="no">탐구 2</span><h2>구간의 끝점까지 연속이라는 것은 무슨 뜻일까?</h2><span class="kind">구간 · 구간에서의 연속 · 연속함수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -146,39 +203,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f(x) = x\ (x &lt; 2), x - 1\ (x \ge 2)\)는 \(x = 2\)에서 끊어집니다. 그렇다면 '구간 [0, 2]에서 연속'이라고 할 수 있을까요? [2, 4]에서는 어떨까요? 끝점에서는 한쪽에서만 다가갈 수 있는데, 연속을 어떻게 판정해야 할까요?</li>
-            <li><span class="tag">복원</span>\(x = a\)에서 연속이라는 것은 \(f(a)\)가 정의되고 \(\lim_{x \to a} f(x) = f(a)\)라는 뜻입니다. 좌극한과 우극한은 각각 한쪽에서 다가갈 때의 극한입니다.</li>
-            <li><span class="tag">설명</span>두 실수 \(a &lt; b\)에 대하여 \(\{x \mid a \le x \le b\}\)를 <em>닫힌구간</em> \([a, b], \{x \mid a &lt; x &lt; b\}\)를 <em>열린구간</em> \((a, b)\)라 하고, \([a, b), (a, b]\)를 <em>반닫힌 구간</em>(반열린 구간)이라 합니다. \([a, \infty), (-\infty, \infty)\)처럼 끝이 없는 구간도 씁니다. 함수가 어떤 구간에 속하는 모든 \(x\)에서 연속일 때 그 구간에서 연속이라고 합니다. 이때 닫힌 끝점에서는 구간 안쪽의 한쪽 극한만 봅니다. \(f\)가 \([a, b]\)에서 연속이려면 \((a, b)\)의 모든 점에서 연속이고, \(\lim_{x \to a^+} f(x) = f(a), \lim_{x \to b^-} f(x) = f(b)\)여야 합니다. 정의역의 모든 점에서 연속인 함수를 <em>연속함수</em>라고 합니다.</li>
-            <li><span class="tag">연결</span>첫째 함수는 \(f(2) = 1\)이고 우극한도 1이므로, 2를 왼쪽 끝으로 갖는 [2, 4]에서는 연속입니다. 그러나 좌극한이 2라서 2를 오른쪽 끝으로 갖는 [0, 2]에서는 연속이 아닙니다. [0, 2)처럼 2를 빼면 다시 연속입니다. \(\sqrt{x}\)는 \(x &lt; 0\)에서 정의되지 않지만 \([0, \infty)\)에서 연속이므로 연속함수입니다. \(\frac{1}{x - 1}\)도 \(x = 1\)에서는 정의되지 않을 뿐, 정의역의 모든 점에서 연속인 연속함수입니다.</li>
-            <li><span class="tag">적용</span>첫째 함수에서 구간을 [0, 2]로 두고 오른쪽 끝을 빼 보세요. 그다음 구간을 [2, 4]로 옮겨 판정을 비교하세요. \(\frac{1}{x - 1}\)과 \(\sqrt{x}\)로 바꾸어 연속이 되는 가장 넓은 구간을 끝점 포함 여부까지 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>'그래프가 한 번이라도 끊어지면 연속함수가 아니다'는 판단은 조심해야 합니다. \(\frac{1}{x - 1}\)의 그래프는 두 조각이지만, 끊어진 곳 \(x = 1\)은 정의역에 없으므로 연속함수입니다. 다만 1을 포함한 구간 [0, 2]에서는 연속이 아닙니다. 연속은 늘 '어느 점에서', '어느 구간에서'를 함께 말해야 뜻이 정해집니다.</li>
+            <li><span class="tag">질문</span>\(f(x) = x\ (x &lt; 2), x - 1\ (x \ge 2)\)는 \(x = 2\)에서 끊어진다. 그렇다면 '구간 [0, 2]에서 연속'이라고 할 수 있을까? [2, 4]에서는 어떨까? 끝점에서는 한쪽에서만 다가갈 수 있는데, 연속을 어떻게 판정해야 할까?</li>
+            <li><span class="tag">복원</span>\(x = a\)에서 연속이라는 것은 \(f(a)\)가 정의되고 \(\lim_{x \to a} f(x) = f(a)\)라는 뜻이다. 그리고 좌극한과 우극한은 각각 한쪽에서 다가갈 때의 극한이다.</li>
+            <li><span class="tag">설명</span>두 실수 \(a &lt; b\)에 대하여 \(\{x \mid a \le x \le b\}\)를 <em>닫힌구간</em> \([a, b]\), \(\{x \mid a &lt; x &lt; b\}\)를 <em>열린구간</em> \((a, b)\)라 하고, \([a, b), (a, b]\)를 <em>반닫힌 구간</em>(반열린 구간)이라 한다. \([a, \infty), (-\infty, \infty)\)처럼 끝이 없는 구간도 쓴다. 함수가 어떤 구간에 속하는 모든 \(x\)에서 연속일 때 그 구간에서 연속이라고 하는데, 닫힌 끝점에서는 구간 안쪽의 한쪽 극한만 본다. 즉 \(f\)가 \([a, b]\)에서 연속이려면 \((a, b)\)의 모든 점에서 연속이고, \(\lim_{x \to a^+} f(x) = f(a), \lim_{x \to b^-} f(x) = f(b)\)여야 한다. 그리고 정의역의 모든 점에서 연속인 함수를 <em>연속함수</em>라고 한다.</li>
+            <li><span class="tag">연결</span>첫째 함수는 \(f(2) = 1\)이고 우극한도 1이므로, 2를 왼쪽 끝으로 갖는 [2, 4]에서는 연속이다. 그러나 좌극한이 2라서 2를 오른쪽 끝으로 갖는 [0, 2]에서는 연속이 아니고, [0, 2)처럼 2를 빼면 다시 연속이다. 한편 \(\sqrt{x}\)는 \(x &lt; 0\)에서 정의되지 않지만 \([0, \infty)\)에서 연속이므로 연속함수이다. \(\frac{1}{x - 1}\)도 \(x = 1\)에서는 정의되지 않을 뿐, 정의역의 모든 점에서 연속인 연속함수이다.</li>
+            <li><span class="tag">적용</span>첫째 함수에서 구간을 [0, 2]로 두고 오른쪽 끝을 빼 본 뒤, 구간을 [2, 4]로 옮겨 판정을 비교해 보자. 그다음 \(\frac{1}{x - 1}\)과 \(\sqrt{x}\)로 바꾸어 연속이 되는 가장 넓은 구간을 끝점 포함 여부까지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>'그래프가 한 번이라도 끊어지면 연속함수가 아니다'라는 판단은 조심해야 한다. \(\frac{1}{x - 1}\)의 그래프는 두 조각이지만, 끊어진 곳 \(x = 1\)은 정의역에 없으므로 연속함수이다. 다만 1을 포함한 구간 [0, 2]에서는 연속이 아니다. 그래서 연속은 늘 '어느 점에서', '어느 구간에서'를 함께 말해야 뜻이 정해진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = x + 1\ (x &lt; 0), x^2\ (x \ge 0)\)일 때, \(f\)가 연속인 구간이 <b>아닌</b> 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>[0, 2]<span class="why"><b>연속인 구간입니다.</b> 왼쪽 끝 0에서 우극한 0과 \(f(0) = 0\)이 같고, 안쪽은 \(x^2\)이므로 연속입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\([-1, 0)\)<span class="why"><b>연속인 구간입니다.</b> 0을 포함하지 않으므로 끊어진 점이 구간 밖에 있습니다. 구간 안은 모두 \(x + 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\([-1, 0]\)<span class="why"><b>맞습니다.</b> 오른쪽 끝 0에서는 좌극한을 봐야 하는데, 좌극한 1과 \(f(0) = 0\)이 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(0, 3)<span class="why"><b>연속인 구간입니다.</b> 열린구간이라 0을 포함하지 않고, 안쪽은 모두 \(x^2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>[0, 2]<span class="why"><b>연속인 구간이다.</b> 왼쪽 끝 0에서 우극한 0과 \(f(0) = 0\)이 같고, 안쪽은 \(x^2\)이므로 연속이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\([-1, 0)\)<span class="why"><b>연속인 구간이다.</b> 0을 포함하지 않으므로 끊어진 점이 구간 밖에 있다. 구간 안은 모두 \(x + 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\([-1, 0]\)<span class="why"><b>맞다.</b> 오른쪽 끝 0에서는 좌극한을 봐야 하는데, 좌극한 1과 \(f(0) = 0\)이 다르다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(0, 3)<span class="why"><b>연속인 구간이다.</b> 열린구간이라 0을 포함하지 않고, 안쪽은 모두 \(x^2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-1.html#card-calc1-one-sided"><small class="mono">미적분Ⅰ 1.1</small>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</a><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-4.html#text-calc1-cont-props"><small class="mono">미적분Ⅰ 1.4</small>연속함수끼리 더하고 곱하고 나누어도 연속일까?</a><a href="../../c/calc1/1-4.html#card-calc1-evt"><small class="mono">미적분Ⅰ 1.4</small>연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?</a><a href="../../c/calc1/1-4.html#card-calc1-ivt"><small class="mono">미적분Ⅰ 1.4</small>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-1.html#card-calc1-one-sided"><small class="mono">미적분Ⅰ 1.1</small>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</a><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-4.html#text-calc1-cont-props"><small class="mono">미적분Ⅰ 1.4</small>연속함수끼리 더하고 곱하고 나누어도 연속일까?</a><a href="../../c/calc1/1-4.html#text-calc1-cont-theorems"><small class="mono">미적분Ⅰ 1.4</small>연속함수의 성질</a><a href="../../c/calc1/1-4.html#card-calc1-evt"><small class="mono">미적분Ⅰ 1.4</small>연속인 함수는 구간에서 언제나 가장 큰 값을 가질까?</a><a href="../../c/calc1/1-4.html#card-calc1-ivt"><small class="mono">미적분Ⅰ 1.4</small>그래프를 보지 않고 방정식의 근이 있는 곳을 알 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">217문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">217문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -186,6 +244,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/cont-three.js"></script>
 <script src="../../js/cards/calc1/cont-interval.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>y = xⁿ의 도함수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="도함수의 정의와 기호 f′(x), y′, dy/dx, d/dx f(x). (x + h)ⁿ을 전개해 y = xⁿ의 도함수 nxⁿ⁻¹ 유도, 상수함수의 도함수 0. 접선 기울기를 모아 도함수 그래프를 그려 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-deriv-graph canvas { aspect-ratio: 1 / 1; touch-action: pan-y; cursor: ew-resize; }
@@ -47,18 +52,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-deriv-graph"><span class="mono">2.3.1</span>도함수의 뜻과 기호</a></li>
-        <li><a href="#card-calc1-power-rule"><span class="mono">2.3.2</span>y = xⁿ의 도함수</a></li>
+        <li><a href="#text-calc1-power-rule"><span class="mono">본문</span>y = xⁿ의 도함수</a></li>
+        <li><a href="#card-calc1-deriv-graph"><span class="mono">탐구 1</span>도함수의 뜻과 기호</a></li>
+        <li><a href="#card-calc1-power-rule"><span class="mono">탐구 2</span>y = xⁿ의 도함수</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-2-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">2문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=2-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-2-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">2문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-2-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-power-rule" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>y = xⁿ의 도함수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(y = x^2\)에서 \(x = 1\)의 접선 기울기는 2, \(x = 3\)에서는 6이었다. 점마다 극한을 새로 계산하는 대신, '\(x\)에서의 기울기'를 \(x\)의 식 하나로 쓸 수는 없을까? 그리고 \(x^3\), \(x^{10}\)의 기울기는 어떤 규칙을 따를까?</p>
+          <figure class="q-fig" data-q="calc1-deriv">
+            <svg viewBox="0 0 520 300" role="img" aria-label="위쪽은 y=x^n과 한 점의 접선, 아래쪽은 그 점의 기울기를 높이로 찍어 모은 도함수의 그래프"></svg>
+            <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="1" max="4" step="1" value="2"><output data-k="n"></output></label><label>\(x\) = <input type="range" data-k="x" min="-1.5" max="1.5" step="0.1" value="1"><output data-k="x"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 위 그래프의 각 점에서 접선의 기울기를 아래 그래프의 높이로 옮기면, 그 점들이 도함수 \(y = nx^{n-1}\)의 그래프를 이룬다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>미분계수(<a href="2-1.html">미분계수</a>), 함수의 극한(<a href="1-1.html">함수의 극한</a>), 곱셈 공식과 이항 전개.</div>
+
+          <h3><span class="no">2.3.1</span>도함수</h3>
+          <p>\(f(x) = x^2\)의 미분계수를 \(a\) 대신 문자 \(x\)로 계산해 보자. \(\dfrac{(x + h)^2 - x^2}{h} = \dfrac{2xh + h^2}{h} = 2x + h\)이므로, \(h \to 0\)이면 \(2x\)이다. 즉 어느 점에서든 접선의 기울기는 그 점의 \(x\)좌표의 2배이다. \(x = 1\)이면 2, \(x = 3\)이면 6으로 앞의 값과 맞는다.</p>
+          <p>다시 말해 각 \(x\)에 그 점의 미분계수를 대응시키면 새로운 함수가 생긴다.</p>
+          <div class="tb-env"><span class="lb">정의 2.3.1 <span class="nm">도함수</span></span>
+            <p>미분가능한 함수 \(f(x)\)의 정의역의 각 \(x\)에 미분계수 \(f'(x)\)를 대응시키는 함수 \[f'(x) = \lim_{h \to 0}\frac{f(x + h) - f(x)}{h}\] 를 \(f(x)\)의 도함수라 한다. \(y'\), \(\dfrac{dy}{dx}\)로도 쓰며, 도함수를 구하는 것을 미분한다고 한다.</p>
+          </div>
+
+          <h3><span class="no">2.3.2</span>\(x^n\)의 도함수</h3>
+          <p>\(x^3\)도 같은 방법으로 미분한다. \((x + h)^3 = x^3 + 3x^2h + 3xh^2 + h^3\)이므로 \(\dfrac{(x + h)^3 - x^3}{h} = 3x^2 + 3xh + h^2\)이고, \(h \to 0\)이면 \(3x^2\)이다. 여기서 \(h\)가 하나뿐인 항 \(3x^2h\)만 살아남고, \(h\)가 둘 이상 곱해진 항은 모두 사라진 것에 주목하자.</p>
+          <p>\(n\)제곱에서도 같다. \((x + h)^n\)을 전개하면 \(x^n + nx^{n-1}h + (h^2\text{ 이상이 곱해진 항})\)이다. \(x^n\)을 빼고 \(h\)로 나눈 뒤 \(h \to 0\)으로 보내면 \(nx^{n-1}\)만 남는다.<sup class="fn"><a href="#fn-calc1-power-rule-1">1</a></sup></p>
+          <div class="tb-env thm"><span class="lb">정리 2.3.2 <span class="nm">\(y = x^n\)의 도함수</span></span>
+            <p>\(n\)이 자연수일 때 \((x^n)' = nx^{n-1}\)이다. 또 상수함수 \(y = c\)의 도함수는 0이다.</p>
+          </div>
+          <p>그림 1에서 \(n\)과 \(x\)를 바꾸어 보자. 위 그래프의 접선 기울기가 아래 그래프의 점의 높이가 된다. \(n = 2\)이면 아래 그래프는 직선 \(y = 2x\), \(n = 3\)이면 포물선 \(y = 3x^2\)이다. \(x^3\)은 원점에서 기울기가 0이고 양쪽에서 모두 올라가므로, 도함수 \(3x^2\)은 원점에서 0이고 나머지에서 양수이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="(x+h)^n 전개에서 h가 하나인 항만 남는 그림">
+              <g class="s"><text x="20" y="40">(x + h)ⁿ</text><text x="90" y="40">= xⁿ</text><text x="150" y="40" class="tb">+ n xⁿ⁻¹ h</text><text x="250" y="40" class="tc">+ (h²이 곱해진 항)</text><text x="400" y="40" class="tc">+ … + hⁿ</text>
+                <text x="20" y="80">− xⁿ, ÷ h</text><text x="150" y="80" class="tb">n xⁿ⁻¹</text><text x="250" y="80" class="tc">+ (h가 곱해진 항)</text>
+                <text x="20" y="120">h → 0</text><text x="150" y="120" class="tb">n xⁿ⁻¹</text><text x="250" y="120" class="tc">→ 0</text></g>
+            </svg>
+            <figcaption>그림 2. 전개에서 \(h\)가 하나 곱해진 항만 남고, 나머지는 \(h \to 0\)일 때 모두 0이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.3.3</span>
+            <p>\(f(x) = x^4\)의 도함수를 구하고, \(x = -1\), \(0\), \(2\)에서의 접선의 기울기를 구하여라. 또 \(y = x^3\)의 그래프 위에서 접선의 기울기가 12인 점을 모두 구하여라.</p>
+          </div>
+          <p>공식에 따라 \(f'(x) = 4x^3\)이다. 그러면 \(f'(-1) = -4\), \(f'(0) = 0\), \(f'(2) = 32\)이다. \(x^4\)의 그래프는 원점에서 바닥이 평평하고, 왼쪽에서는 내려가며 오른쪽에서는 가파르게 올라간다는 것이 기울기의 부호와 크기에서 읽힌다.</p>
+          <p>\(y = x^3\)의 도함수는 \(3x^2\)이다. 기울기가 12인 점은 \(3x^2 = 12\), 곧 \(x = \pm 2\)인 점이다. 따라서 \((2, 8)\)과 \((-2, -8)\) 두 점이다.</p>
+          <p>정의로 확인하면 \(\dfrac{(2 + h)^3 - 8}{h} = 12 + 6h + h^2 \to 12\)이다. 공식 하나가 극한 계산을 대신해 주었다. 아래 탐구 카드에서 접선의 기울기를 모아 도함수의 그래프를 직접 그려 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-power-rule-1">\((x + h)^n\)의 전개에서 \(x^{n-1}h\)의 계수가 \(n\)인 것은, \(n\)개의 괄호 \((x + h)\) 가운데 하나에서만 \(h\)를 고르고 나머지에서 \(x\)를 고르는 방법이 \(n\)가지이기 때문이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>도함수는 각 점의 미분계수를 \(x\)의 함수로 모은 것이다. \((x + h)^n\)을 전개해 \(h\)로 나누면 \(h\)가 하나 곱해진 항만 남으므로 \((x^n)' = nx^{n-1}\)이다. 그래서 처음 질문의 기울기는 \(x^2\)에서 \(2x\), \(x^3\)에서 \(3x^2\), \(x^{10}\)에서 \(10x^9\)이라는 한 규칙을 따른다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/adcalc/4-1.html#text-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>미분방정식과 방향장</a></div></nav>
+
       <article class="card" id="card-calc1-deriv-graph">
         <header class="card-head">
-          <span class="no">2.3.1</span><h2>접선의 기울기를 모으면 어떤 그래프가 될까?</h2><span class="kind">도함수 · 기울기 찍기</span>
+          <span class="no">탐구 1</span><h2>접선의 기울기를 모으면 어떤 그래프가 될까?</h2><span class="kind">도함수 · 기울기 찍기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -84,34 +142,34 @@
                 <div><dt>찍은 점</dt><dd class="n-c">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">위 그림을 좌우로 끌면 \(P\)가 움직이며 아래 그림에 점 \((a, f'(a))\)가 찍힙니다. 파란 선분이 \(P\)에서의 접선입니다.</p>
+              <p class="fig-note">위 그림을 좌우로 끌면 \(P\)가 움직이며 아래 그림에 점 \((a, f'(a))\)가 찍힌다. 파란 선분이 \(P\)에서의 접선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>곡선 위의 점을 옮기면 그 점에서의 접선 기울기도 바뀝니다. \(x\)좌표마다 그 기울기를 짝지으면 새 함수가 하나 생깁니다. 그 함수의 그래프는 어떤 모양일까요?</li>
-            <li><span class="tag">복원</span>미분계수 \(f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}\)는 점 \((a, f(a))\)에서 그은 접선의 기울기입니다. 함수는 \(x\)의 값 하나에 \(y\)의 값 하나를 짝짓는 대응입니다.</li>
-            <li><span class="tag">설명</span>미분가능한 함수 \(f\)에서 \(x\)의 값마다 미분계수 \(f'(x)\)를 짝지으면 새 함수가 됩니다. 이 함수 \(f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}\)를 \(f\)의 <em>도함수</em>라 하고, \(y', \frac{dy}{dx}, \frac{d}{dx} f(x)\)로도 씁니다. 도함수를 구하는 것을 '\(x\)에 대하여 <em>미분한다</em>'고 합니다. \(f(x) = x^2\)이면 \(\frac{f(x + h) - f(x)}{h} = 2x + h\)이므로 \(f'(x) = 2x\)입니다. 상수함수 \(f(x) = c\)는 \(f(x + h) - f(x) = 0\)이므로 \(f'(x) = 0\)입니다.</li>
-            <li><span class="tag">연결</span>도함수를 한 번 구해 두면 미분계수는 대입만으로 얻습니다. \(f'(x) = 2x\)에서 \(f'(3) = 6\)입니다. 또 도함수의 부호는 원래 그래프가 오르는지 내리는지를 알려 줍니다. 아래 그림에서 점이 \(x\)축 위에 있는 구간에서는 위 그래프가 오른쪽 위로 향합니다.</li>
-            <li><span class="tag">적용</span>\(x^2\)에서 \(P\)를 끌어 점을 여러 개 찍으세요. 점들은 어떤 직선 위에 놓이나요? \(x^3 - 3x\)에서는 어느 \(x\)에서 찍힌 점이 \(x\)축 위에 오나요? 그때 위 그래프의 접선은 어떤 모양인가요? 상수함수에서는 점이 어디에 찍히나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(f'(a)\)는 수 하나이고 \(f'(x)\)는 함수입니다. 또 도함수의 그래프는 원래 그래프를 옮긴 것이 아닙니다. \(x^2\)의 그래프는 아래로 볼록하지만 도함수 \(2x\)의 그래프는 직선입니다. 아래 그림의 세로축은 높이가 아니라 기울기를 나타냅니다.</li>
+            <li><span class="tag">질문</span>곡선 위의 점을 옮기면 그 점에서의 접선 기울기도 바뀐다. 그래서 \(x\)좌표마다 그 기울기를 짝지으면 새 함수가 하나 생긴다. 그 함수의 그래프는 어떤 모양일까?</li>
+            <li><span class="tag">복원</span>미분계수 \(f'(a) = \lim_{h \to 0} \frac{f(a + h) - f(a)}{h}\)는 점 \((a, f(a))\)에서 그은 접선의 기울기이다. 그리고 함수는 \(x\)의 값 하나에 \(y\)의 값 하나를 짝짓는 대응이다.</li>
+            <li><span class="tag">설명</span>미분가능한 함수 \(f\)에서 \(x\)의 값마다 미분계수 \(f'(x)\)를 짝지으면 새 함수가 된다. 이 함수 \(f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}\)를 \(f\)의 <em>도함수</em>라 하고, \(y', \frac{dy}{dx}, \frac{d}{dx} f(x)\)로도 쓴다. 도함수를 구하는 것을 '\(x\)에 대하여 <em>미분한다</em>'고 한다. 가령 \(f(x) = x^2\)이면 \(\frac{f(x + h) - f(x)}{h} = 2x + h\)이므로 \(f'(x) = 2x\)이다. 또 상수함수 \(f(x) = c\)는 \(f(x + h) - f(x) = 0\)이므로 \(f'(x) = 0\)이다.</li>
+            <li><span class="tag">연결</span>도함수를 한 번 구해 두면 미분계수는 대입만으로 얻는다. \(f'(x) = 2x\)에서 \(f'(3) = 6\)인 식이다. 또 도함수의 부호는 원래 그래프가 오르는지 내리는지를 알려 준다. 아래 그림에서 점이 \(x\)축 위에 있는 구간에서는 위 그래프가 오른쪽 위로 향한다.</li>
+            <li><span class="tag">적용</span>\(x^2\)에서 \(P\)를 끌어 점을 여러 개 찍고, 점들이 어떤 직선 위에 놓이는지 보자. \(x^3 - 3x\)에서는 어느 \(x\)에서 찍힌 점이 \(x\)축 위에 오는지, 그때 위 그래프의 접선이 어떤 모양인지 확인하고, 상수함수에서 점이 어디에 찍히는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(f'(a)\)는 수 하나이고 \(f'(x)\)는 함수이다. 또 도함수의 그래프는 원래 그래프를 옮긴 것이 아니다. \(x^2\)의 그래프는 아래로 볼록하지만 도함수 \(2x\)의 그래프는 직선이다. 즉 아래 그림의 세로축은 높이가 아니라 기울기를 나타낸다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(f(x) = x^3 - 3x\)의 도함수는 \(f'(x) = 3x^2 - 3\)입니다. \(y = f'(x)\)의 그래프가 \(x\)축과 만나는 점의 \(x\)좌표를 모두 고르면?</p>
+          <p class="q">\(f(x) = x^3 - 3x\)의 도함수는 \(f'(x) = 3x^2 - 3\)이다. \(y = f'(x)\)의 그래프가 \(x\)축과 만나는 점의 \(x\)좌표를 모두 고르면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1, 1\)<span class="why"><b>맞습니다.</b> \(3x^2 - 3 = 0\)에서 \(x^2 = 1\)입니다. 이 두 점에서 원래 그래프의 접선은 수평입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\sqrt{3}, 0, \sqrt{3}\)<span class="why"><b>원래 함수가 0이 되는 점을 구했습니다.</b> \(f(x) = 0\)의 해이고, 묻는 것은 기울기 \(f'(x)\)가 0이 되는 점입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>음수 해를 빠뜨렸습니다.</b> \(x^2 = 1\)의 해는 \(\pm 1\)입니다. \(x = -1\)에서도 접선이 수평입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>원래 그래프가 원점을 지나서 그렇게 보았습니다.</b> \(f'(0) = -3\)이므로 원점에서 접선의 기울기는 0이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1, 1\)<span class="why"><b>맞다.</b> \(3x^2 - 3 = 0\)에서 \(x^2 = 1\)이다. 이 두 점에서 원래 그래프의 접선은 수평이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\sqrt{3}, 0, \sqrt{3}\)<span class="why"><b>원래 함수가 0이 되는 점을 구했다.</b> \(f(x) = 0\)의 해이고, 묻는 것은 기울기 \(f'(x)\)가 0이 되는 점이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>음수 해를 빠뜨렸다.</b> \(x^2 = 1\)의 해는 \(\pm 1\)이다. \(x = -1\)에서도 접선이 수평이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>원래 그래프가 원점을 지나서 그렇게 보았다.</b> \(f'(0) = -3\)이므로 원점에서 접선의 기울기는 0이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/adcalc/4-1.html#text-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>미분방정식과 방향장</a></div></nav>
 
       <article class="card" id="card-calc1-power-rule">
         <header class="card-head">
-          <span class="no">2.3.2</span><h2>\((x + h)^n\)을 전개하면 왜 \(nx^{n-1}\)만 남을까?</h2><span class="kind">\(y = x^n\)의 도함수 · 단계별 유도</span>
+          <span class="no">탐구 2</span><h2>\((x + h)^n\)을 전개하면 왜 \(nx^{n-1}\)만 남을까?</h2><span class="kind">\(y = x^n\)의 도함수 · 단계별 유도</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -132,43 +190,44 @@
                 <div><dt>\(nx^{n-1}\)</dt><dd class="n-ex">—</dd></div>
                 <div><dt>차이</dt><dd class="n-err">—</dd></div>
               </dl>
-              <p class="fig-note">삼각형에서 지워진 수는 빠진 항의 계수입니다. 주황 원이 끝까지 남는 계수 \(n\)입니다.</p>
+              <p class="fig-note">삼각형에서 지워진 수는 빠진 항의 계수이다. 주황 원이 끝까지 남는 계수 \(n\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x^2\)의 도함수는 \(2x\)였습니다. \(x^3, x^4, \cdots\)의 도함수도 매번 극한을 새로 계산해야 할까요? 지수 \(n\)만 보고 바로 쓰는 규칙이 있을까요?</li>
-            <li><span class="tag">복원</span>\((x + h)^n\)을 전개한 계수는 파스칼의 삼각형 \(n\)번째 줄의 수입니다. 그 줄의 두 번째 수는 언제나 \(n\)입니다. 도함수는 \(f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}\)입니다.</li>
-            <li><span class="tag">설명</span>\((x + h)^n = x^n + nx^{n-1}h\) + (\(h^2\) 이상이 곱해진 항들)입니다. 여기서 \(x^n\)을 빼면 첫 항이 사라지고, \(h\)로 나누면 \(nx^{n-1}\) + (\(h\)가 곱해진 항들)이 남습니다. \(h \to 0\)이면 뒤의 항이 모두 0으로 가므로 <em>\(n\)이 양의 정수일 때 \((x^n)' = nx^{n-1}\)</em>입니다. \(n = 1\)이면 \((x)' = 1\)이고, 상수함수는 \((c)' = 0\)입니다.</li>
-            <li><span class="tag">연결</span>규칙은 '지수를 앞으로 내리고 지수를 1 줄인다'로 기억할 수 있습니다. 앞으로 내려오는 수 \(n\)은 파스칼의 삼각형에서 \(h\)가 한 번만 곱해진 항의 계수입니다. 이 규칙과 다음 절의 합·실수배의 미분법을 합치면 모든 다항함수를 미분할 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(n = 3\)으로 두고 단계 버튼을 네 번 눌러 어떤 항이 사라지는지 보세요. \(n\)을 바꾸어도 남는 계수가 늘 \(n\)인가요? 아래 슬라이더로 \(x = 1, h\)를 0.0001까지 줄이면 평균변화율이 \(nx^{n-1}\)에 얼마나 가까워지나요? \(x = -1\)에서 \(n = 4\)와 \(n = 5\)의 부호는 어떻게 다른가요?</li>
-            <li class="warn"><span class="tag">판단</span>\((x^3)'\)을 \(x^2\)나 \(3x^3\)으로 쓰는 실수가 많습니다. 지수를 내리는 일과 1 줄이는 일을 함께 해야 합니다. 또 이 규칙은 밑이 \(x\)인 꼴에만 바로 씁니다. \((2x)^3\)은 먼저 \(8x^3\)으로 정리하면 도함수가 \(24x^2\)이고, \(3(2x)^2 = 12x^2\)이 아닙니다.</li>
+            <li><span class="tag">질문</span>\(x^2\)의 도함수는 \(2x\)였다. 그러면 \(x^3, x^4, \cdots\)의 도함수도 매번 극한을 새로 계산해야 할까? 지수 \(n\)만 보고 바로 쓰는 규칙이 있을까?</li>
+            <li><span class="tag">복원</span>\((x + h)^n\)을 전개한 계수는 파스칼의 삼각형 \(n\)번째 줄의 수이고, 그 줄의 두 번째 수는 언제나 \(n\)이다. 그리고 도함수는 \(f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}\)이다.</li>
+            <li><span class="tag">설명</span>\((x + h)^n = x^n + nx^{n-1}h\) + (\(h^2\) 이상이 곱해진 항들)이다. 여기서 \(x^n\)을 빼면 첫 항이 사라지고, \(h\)로 나누면 \(nx^{n-1}\) + (\(h\)가 곱해진 항들)이 남는다. \(h \to 0\)이면 뒤의 항이 모두 0으로 가므로 <em>\(n\)이 양의 정수일 때 \((x^n)' = nx^{n-1}\)</em>이다. 또 \(n = 1\)이면 \((x)' = 1\)이고, 상수함수는 \((c)' = 0\)이다.</li>
+            <li><span class="tag">연결</span>그래서 이 규칙은 '지수를 앞으로 내리고 지수를 1 줄인다'로 기억할 수 있다. 앞으로 내려오는 수 \(n\)은 파스칼의 삼각형에서 \(h\)가 한 번만 곱해진 항의 계수이다. 이 규칙과 다음 절의 합과 실수배의 미분법을 합치면 모든 다항함수를 미분할 수 있다.</li>
+            <li><span class="tag">적용</span>\(n = 3\)으로 두고 단계 버튼을 네 번 눌러 어떤 항이 사라지는지 보고, \(n\)을 바꾸어도 남는 계수가 늘 \(n\)인지 확인해 보자. 아래 슬라이더로 \(x = 1\)에서 \(h\)를 0.0001까지 줄이며 평균변화율이 \(nx^{n-1}\)에 얼마나 가까워지는지 보고, \(x = -1\)에서 \(n = 4\)와 \(n = 5\)의 부호도 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\((x^3)'\)을 \(x^2\)나 \(3x^3\)으로 쓰는 실수가 많은데, 지수를 내리는 일과 1 줄이는 일을 함께 해야 한다. 또 이 규칙은 밑이 \(x\)인 꼴에만 바로 쓴다. \((2x)^3\)은 먼저 \(8x^3\)으로 정리하면 도함수가 \(24x^2\)이고, \(3(2x)^2 = 12x^2\)이 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = x^5\)일 때 \(f'(-1)\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞습니다.</b> \(f'(x) = 5x^4\)이고 \((-1)^4 = 1\)이므로 \(f'(-1) = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-5\)<span class="why"><b>원래 지수 5로 부호를 정했습니다.</b> 미분하면 지수가 4가 되므로 \((-1)^4 = 1\), 양수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>지수만 줄이고 앞으로 내리지 않았습니다.</b> \(x^4\)에 넣은 값입니다. 계수 5가 곱해져야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-1\)<span class="why"><b>함숫값을 구했습니다.</b> \(f(-1) = -1\)은 점의 높이입니다. 미분계수는 도함수에 넣은 값입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞다.</b> \(f'(x) = 5x^4\)이고 \((-1)^4 = 1\)이므로 \(f'(-1) = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-5\)<span class="why"><b>원래 지수 5로 부호를 정했다.</b> 미분하면 지수가 4가 되므로 \((-1)^4 = 1\), 양수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>지수만 줄이고 앞으로 내리지 않았다.</b> \(x^4\)에 넣은 값이다. 계수 5가 곱해져야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-1\)<span class="why"><b>함숫값을 구했다.</b> \(f(-1) = -1\)은 점의 높이이다. 미분계수는 도함수에 넣은 값이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a><a href="../../c/calc1/2-4.html#text-calc1-poly-deriv"><small class="mono">미적분Ⅰ 2.4</small>다항함수의 도함수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-2-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">2문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=2-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-2-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">2문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -176,6 +235,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/deriv-graph.js"></script>
 <script src="../../js/cards/calc1/power-rule.js"></script>

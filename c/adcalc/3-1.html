@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>단조수렴정리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="단조수렴정리: 증가(감소)하고 위(아래)로 유계인 수열은 수렴한다. 천장을 끌어 가장 낮은 상한을 찾는 조작 카드, 극한의 존재를 먼저 보이고 극한값을 구하는 증명 조립 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-monotone canvas { aspect-ratio: 16 / 10; touch-action: pan-x; }
@@ -43,18 +48,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-monotone"><span class="mono">3.1.1</span>천장에 막힌 증가수열</a></li>
-        <li><a href="#card-adcalc-monotone-proof"><span class="mono">3.1.2</span>수렴부터 보이고 극한 구하기</a></li>
+        <li><a href="#text-adcalc-monotone"><span class="mono">본문</span>단조수렴정리</a></li>
+        <li><a href="#card-adcalc-monotone"><span class="mono">탐구 1</span>천장에 막힌 증가수열</a></li>
+        <li><a href="#card-adcalc-monotone-proof"><span class="mono">탐구 2</span>수렴부터 보이고 극한 구하기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-monotone" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>단조수렴정리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">계산기에 2를 넣고 \(\sqrt{\ }\) 단추를 누른 뒤, 2를 더하고 다시 \(\sqrt{\ }\)을 누르는 일을 되풀이했다. 화면에는 1.4142, 1.8478, 1.9616, 1.9904, 1.9976이 차례로 나왔다. 값은 매번 커지지만 2를 넘은 적은 없다. 이 수열 \(a_{n+1} = \sqrt{2 + a_n}\)은 2로 수렴할 것 같다. 그런데 극한을 \(L\)로 놓고 \(L = \sqrt{2 + L}\)을 풀어 \(L = 2\)를 얻는 풀이는, 수열 \(a_{n+1} = 2a_n\)에 똑같이 쓰면 \(L = 0\)이라는 엉터리 답을 준다. 무엇이 다를까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="두 수열의 첫 몇 항">
+              <g class="s">
+                <text x="20" y="22">n</text><text x="120" y="22">1</text><text x="190" y="22">2</text><text x="260" y="22">3</text><text x="330" y="22">4</text><text x="400" y="22">5</text><text x="460" y="22">L</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">√(2 + aₙ)</text><text x="120" y="52">1.4142</text><text x="190" y="52">1.8478</text><text x="260" y="52">1.9616</text><text x="330" y="52">1.9904</text><text x="400" y="52">1.9976</text><text x="460" y="52" class="td">2</text>
+                <text x="20" y="74">2aₙ (a₁ = 1)</text><text x="120" y="74">1</text><text x="190" y="74">2</text><text x="260" y="74">4</text><text x="330" y="74">8</text><text x="400" y="74">16</text><text x="460" y="74" class="tb">발산</text>
+                <text x="20" y="104">L = 2L을 풀면 0이 나오지만, 둘째 수열은 0으로 가지 않는다.</text>
+                <text x="20" y="124">극한이 있다는 것을 먼저 보여야 L을 구하는 풀이가 뜻을 가진다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 첫째 수열은 늘어나지만 2를 넘지 못해 2로 모이고, 둘째 수열은 끝없이 커져 극한이 없다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>수열의 수렴과 발산, 수학적 귀납법, 수열의 귀납적 정의.</div>
+
+          <h3><span class="no">3.1.1</span>늘기만 하고 넘지 못하면</h3>
+          <p>수열의 항이 늘어나기만 하거나 줄어들기만 하면 단조 수열이라 한다. 늘어나기만 하는 수열은 둘 중 하나이다. 끝없이 커지거나, 어떤 수를 넘지 못한 채 어딘가에 쌓여 가거나이다. 넘지 못하는 수가 있다면, 그런 수들 가운데 가장 작은 수가 있고 수열은 그 수에 한없이 가까워진다. 실수에는 빈틈이 없어서 이런 가장 작은 수가 늘 존재한다. 그래서 위로 유계인 증가 수열은 극한값을 직접 몰라도 수렴한다는 것을 알 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.1.1 <span class="nm">단조수렴정리</span></span>
+            <p>증가하고 위로 유계인 수열은 수렴한다. 감소하고 아래로 유계인 수열도 수렴한다. 수열 \(a_{n+1} = g(a_n)\)이 수렴하고 \(g\)가 연속이면, 극한 \(L\)은 \(L = g(L)\)을 만족한다.</p>
+          </div>
+          <p>\(L = g(L)\)을 푸는 풀이는 수열이 수렴한다는 것이 먼저 밝혀졌을 때만 쓸 수 있다. 수렴한다면 \(a_n\)과 \(a_{n+1}\)이 모두 \(L\)로 가므로 등식이 성립하지만, 수렴하지 않는 수열에서는 \(L\)이라는 수 자체가 없다. \(a_{n+1} = 2a_n\)에서 \(L = 0\)이 나온 것은, 수열이 0으로 간다는 뜻이 아니라 만약 수렴한다면 0일 수밖에 없다는 뜻이다. 실제로는 수렴하지 않으므로 그 답은 아무 뜻이 없다.<sup class="fn"><a href="#fn-adcalc-monotone-1">1</a></sup></p>
+
+          <h3><span class="no">3.1.2</span>귀납법으로 두 가지를 보이다</h3>
+          <p>\(a_{n+1} = \sqrt{2 + a_n}\)이 수렴함을 보이려면, 수열이 증가한다는 것과 위로 유계라는 것을 수학적 귀납법으로 보인다. 위로 유계는 \(a_n &lt; 2\)이면 \(a_{n+1} = \sqrt{2 + a_n} &lt; \sqrt4 = 2\)라는 데서 나온다. 증가는 \(0 &lt; a_n &lt; 2\)일 때 \(a_n^2 &lt; a_n + 2\), 곧 \((a_n - 2)(a_n + 1) &lt; 0\)이므로 \(a_n &lt; \sqrt{2 + a_n} = a_{n+1}\)이라는 데서 나온다. 두 성질이 모두 성립하므로 단조수렴정리에 따라 수열은 수렴한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="단조수렴정리로 수렴을 보이는 단계">
+              <g class="s">
+                <text x="20" y="22">단계</text><text x="160" y="22">보일 것</text><text x="330" y="22">근거</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1</text><text x="160" y="52">aₙ &lt; 2 (위로 유계)</text><text x="330" y="52">aₙ &lt; 2이면 √(2 + aₙ) &lt; 2</text>
+                <text x="20" y="74">2</text><text x="160" y="74">aₙ &lt; aₙ₊₁ (증가)</text><text x="330" y="74">(aₙ − 2)(aₙ + 1) &lt; 0</text>
+                <text x="20" y="96">3</text><text x="160" y="96">극한 L = 2</text><text x="330" y="96" class="td">수렴한 뒤 L = √(2 + L)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 수렴을 먼저 보이고 나서야 극한을 \(L\)로 놓고 방정식을 푼다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>\(a_1 = 1\), \(a_{n+1} = \dfrac12\left(a_n + \dfrac{3}{a_n}\right)\)인 수열이 수렴함을 보이고 극한을 구하여라. 산술평균과 기하평균의 관계를 써도 된다.</p>
+          </div>
+          <p>\(a_2 = \tfrac12(1 + 3) = 2\)이다. \(n \ge 2\)이면 산술평균과 기하평균의 관계로 \(a_{n+1} = \tfrac12\left(a_n + \tfrac{3}{a_n}\right) \ge \sqrt{a_n\cdot\tfrac{3}{a_n}} = \sqrt3\)이므로 수열은 아래로 유계이다. 또 \(a_n \ge \sqrt3\)이면 \(a_n^2 \ge 3\)이므로 \(a_{n+1} - a_n = \dfrac{3 - a_n^2}{2a_n} \le 0\)이어서, 둘째 항부터 수열은 감소한다.</p>
+          <p>그래서 단조수렴정리에 따라 수열은 수렴하고, 극한 \(L\)은 \(L = \tfrac12(L + 3/L)\)을 만족한다. 정리하면 \(L^2 = 3\)이고 \(L \ge \sqrt3 > 0\)이므로 \(L = \sqrt3\)이다. 실제로 \(a_3 = 1.75\), \(a_4 \approx 1.7321\)로 \(\sqrt3 = 1.73205\cdots\)에 빠르게 다가간다. 이 수열은 뉴턴의 방법으로 \(\sqrt3\)을 구하는 수열과 같다. 즉 단조이고 유계인 수열은 극한값을 몰라도 수렴이 보장되며, 수렴을 먼저 보인 뒤에야 극한을 \(L\)로 놓고 방정식을 풀 수 있다.</p>
+          <p>아래 탐구 카드에서 증가하면서 위로 유계인 수열이 어디로 가는지 관찰하고, 극한을 \(L\)로 놓고 푼 풀이가 언제 틀리는지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-monotone-1">유계인 단조 수열이 늘 수렴한다는 것은 실수에 빈틈이 없다는 성질과 같은 말이다. 유리수만 쓰면 \(\sqrt2\)에 다가가는 유리수의 증가 수열이 있어도 극한이 유리수 안에 없어서 이 정리가 성립하지 않는다. 19세기에 데데킨트와 칸토어가 이 빈틈을 메운 실수를 엄밀히 정의했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>증가하면서 위로 유계이거나 감소하면서 아래로 유계인 단조 수열은, 실수에 빈틈이 없으므로 극한값을 몰라도 반드시 수렴한다. 귀납적으로 정의된 수열은 단조성과 유계성을 수학적 귀납법으로 보인 뒤, 극한을 \(L\)로 놓고 \(L = g(L)\)을 풀어 극한을 구한다. 처음 질문의 \(\sqrt{2 + a_n}\) 수열은 증가하고 2를 넘지 못해 2로 수렴하고, \(2a_n\) 수열은 수렴하지 않으므로 \(L = 0\)은 뜻이 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-1.html#card-calc2-seq-converge"><small class="mono">미적분Ⅱ 1.1</small>수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?</a><a href="../../c/calc2/1-1.html#card-calc2-seq-far"><small class="mono">미적분Ⅱ 1.1</small>처음 몇 항만 보고 수렴·발산을 판정해도 될까?</a><a href="../../c/calc2/1-1.html#text-calc2-seq-limit"><small class="mono">미적분Ⅱ 1.1</small>수열의 수렴과 발산</a><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a><a href="../../c/adcalc/3-2.html#text-adcalc-series-tests"><small class="mono">고급 미적분 3.2</small>양항급수의 판정법</a></div></nav>
+
       <article class="card" id="card-adcalc-monotone">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</h2><span class="kind">단조수렴정리 · 조작 · 발견</span>
+          <span class="no">탐구 1</span><h2>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</h2><span class="kind">단조수렴정리 · 조작 · 발견</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,34 +134,34 @@
                 <div><dt>\(n = 10^4\)인 항</dt><dd class="n-a">—</dd></div>
                 <div><dt>천장을 넘는 항</dt><dd class="n-o">—</dd></div>
               </dl>
-              <p class="fig-note">천장 선을 위아래로 끌어, 어떤 항도 넘지 못하는 가장 낮은 천장을 찾아보세요. 가로축은 \(n = 1\)부터 \(10^4\)까지 로그 눈금입니다.</p>
+              <p class="fig-note">천장 선을 위아래로 끌어, 어떤 항도 넘지 못하는 가장 낮은 천장을 찾아보자. 가로축은 \(n = 1\)부터 \(10^4\)까지 로그 눈금이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수열 \(\sqrt{2},\ \sqrt{2 + \sqrt{2}},\ \sqrt{2 + \sqrt{2 + \sqrt{2}}},\ \cdots\)은 계속 커지지만 2를 넘지 못합니다. 그렇다면 이 수열은 반드시 어떤 수에 수렴할까요? 극한값을 모르는데도 수렴한다고 말할 수 있을까요?</li>
-            <li><span class="tag">복원</span>모든 \(n\)에 대해 \(a_n \le a_{n+1}\)이면 증가수열, \(a_n \le M\)인 \(M\)이 있으면 위로 유계라고 합니다. 수렴하는 수열은 유계이지만, 유계인 수열이 모두 수렴하지는 않습니다(\((-1)^n\)).</li>
-            <li><span class="tag">설명</span><em>단조수렴정리</em>: <b>증가하면서 위로 유계인 수열은 수렴한다.</b> 감소하면서 아래로 유계인 수열도 수렴합니다. 증가수열은 진동할 수 없으므로, 넘지 못하는 천장이 있으면 천장 가운데 가장 낮은 것(상한)으로 모여들 수밖에 없습니다. 이 정리의 힘은 극한값을 몰라도 수렴을 보장해 준다는 데 있습니다. \(\left(1 + \frac{1}{n}\right)^n\)은 증가하고 3보다 작으므로 수렴하고, 그 극한을 \(e\)라고 이름 붙였습니다.</li>
-            <li><span class="tag">연결</span>이 정리는 실수에 "빈틈이 없다"는 성질(완비성)에 기대고 있습니다. 유리수만 있는 세상에서는 \(1,\ 1.4,\ 1.41,\ 1.414,\ \cdots\)처럼 증가하고 2를 넘지 않는 유리수 수열이 \(\sqrt{2}\)라는 "구멍"으로 가므로 수렴하지 못합니다. 다음 절의 양항급수 판정법은 모두 이 정리에서 출발합니다. 양항급수의 부분합은 증가수열이기 때문입니다.</li>
-            <li><span class="tag">적용</span>보기마다 천장을 내려 보며, 어떤 항도 넘지 못하는 가장 낮은 천장을 찾으세요. \(\sum\frac{1}{k^2}\)의 천장은 약 1.645(\(\frac{\pi^2}{6}\))입니다. \(\sum\frac{1}{k}\)에는 그런 천장이 있나요? 그림의 범위에서는 막힌 것처럼 보이지만 \(n\)을 더 늘리면 어떻게 될까요?</li>
-            <li class="warn"><span class="tag">판단</span>천장이 있다고 그 천장이 극한값인 것은 아닙니다. \(\sqrt{2 + a_n}\)은 3보다도 작지만 극한은 2입니다. 또 \(n = 10^4\)까지 천장을 넘지 않았다는 것은 증명이 아닙니다. \(\sum\frac{1}{k}\)은 \(n = 10^4\)에서 약 9.79이지만 결국 어떤 수든 넘어섭니다.</li>
+            <li><span class="tag">질문</span>수열 \(\sqrt{2},\ \sqrt{2 + \sqrt{2}},\ \sqrt{2 + \sqrt{2 + \sqrt{2}}},\ \cdots\)은 계속 커지지만 2를 넘지 못한다. 그렇다면 이 수열은 반드시 어떤 수에 수렴할까? 극한값을 모르는데도 수렴한다고 말할 수 있을까?</li>
+            <li><span class="tag">복원</span>모든 \(n\)에 대해 \(a_n \le a_{n+1}\)이면 증가수열, \(a_n \le M\)인 \(M\)이 있으면 위로 유계라고 한다. 수렴하는 수열은 유계이지만, 유계인 수열이 모두 수렴하지는 않는다(\((-1)^n\)).</li>
+            <li><span class="tag">설명</span><em>단조수렴정리</em>: 증가하면서 위로 유계인 수열은 수렴한다. 감소하면서 아래로 유계인 수열도 수렴한다. 증가수열은 진동할 수 없으므로, 넘지 못하는 천장이 있으면 천장 가운데 가장 낮은 것(상한)으로 모여들 수밖에 없다. 이 정리의 힘은 극한값을 몰라도 수렴을 보장해 준다는 데 있다. \(\left(1 + \frac{1}{n}\right)^n\)은 증가하고 3보다 작으므로 수렴하고, 그 극한을 \(e\)라고 이름 붙였다.</li>
+            <li><span class="tag">연결</span>이 정리는 실수에 "빈틈이 없다"는 성질(완비성)에 기대고 있다. 유리수만 있는 세상에서는 \(1,\ 1.4,\ 1.41,\ 1.414,\ \cdots\)처럼 증가하고 2를 넘지 않는 유리수 수열이 \(\sqrt{2}\)라는 "구멍"으로 가므로 수렴하지 못한다. 다음 절의 양항급수 판정법은 모두 이 정리에서 출발한다. 양항급수의 부분합은 증가수열이기 때문이다.</li>
+            <li><span class="tag">적용</span>보기마다 천장을 내려 보며, 어떤 항도 넘지 못하는 가장 낮은 천장을 찾자. \(\sum\frac{1}{k^2}\)의 천장은 약 1.645(\(\frac{\pi^2}{6}\))이다. \(\sum\frac{1}{k}\)에는 그런 천장이 있는가? 그림의 범위에서는 막힌 것처럼 보이지만 \(n\)을 더 늘리면 어떻게 될까?</li>
+            <li class="warn"><span class="tag">판단</span>천장이 있다고 그 천장이 극한값인 것은 아니다. \(\sqrt{2 + a_n}\)은 3보다도 작지만 극한은 2이다. 또 \(n = 10^4\)까지 천장을 넘지 않았다는 것은 증명이 아니다. \(\sum\frac{1}{k}\)은 \(n = 10^4\)에서 약 9.79이지만 결국 어떤 수든 넘어선다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">수열 \(\{a_n\}\)이 감소하고 모든 항이 양수입니다. 옳은 것은?</p>
+          <p class="q">수열 \(\{a_n\}\)이 감소하고 모든 항이 양수이다. 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>수렴하고, 극한값은 0 이상이다<span class="why"><b>맞습니다.</b> 감소하면서 아래로 0에 막혀 있으므로 수렴합니다. 극한값이 0일 필요는 없습니다(\(1 + \frac{1}{n} \to 1\)).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>반드시 0으로 수렴한다<span class="why"><b>아래 막힌 곳을 극한값으로 보았습니다.</b> \(1 + \frac{1}{n}\)은 감소하고 양수이지만 1로 갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>발산할 수도 있다<span class="why"><b>단조수렴정리를 적용하지 않았습니다.</b> 감소하고 아래로 유계이면 반드시 수렴합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>극한값을 구해야 수렴하는지 알 수 있다<span class="why"><b>정리의 핵심을 놓쳤습니다.</b> 단조수렴정리는 극한값을 몰라도 수렴을 보장합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>수렴하고, 극한값은 0 이상이다<span class="why"><b>맞다.</b> 감소하면서 아래로 0에 막혀 있으므로 수렴한다. 극한값이 0일 필요는 없다(\(1 + \frac{1}{n} \to 1\)).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>반드시 0으로 수렴한다<span class="why"><b>아래 막힌 곳을 극한값으로 보았다.</b> \(1 + \frac{1}{n}\)은 감소하고 양수이지만 1로 간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>발산할 수도 있다<span class="why"><b>단조수렴정리를 적용하지 않았다.</b> 감소하고 아래로 유계이면 반드시 수렴한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>극한값을 구해야 수렴하는지 알 수 있다<span class="why"><b>정리의 핵심을 놓쳤다.</b> 단조수렴정리는 극한값을 몰라도 수렴을 보장한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-1.html#card-calc2-seq-converge"><small class="mono">미적분Ⅱ 1.1</small>수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?</a><a href="../../c/calc2/1-1.html#card-calc2-seq-far"><small class="mono">미적분Ⅱ 1.1</small>처음 몇 항만 보고 수렴·발산을 판정해도 될까?</a><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-1.html#card-calc2-seq-converge"><small class="mono">미적분Ⅱ 1.1</small>수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?</a><a href="../../c/calc2/1-1.html#card-calc2-seq-far"><small class="mono">미적분Ⅱ 1.1</small>처음 몇 항만 보고 수렴·발산을 판정해도 될까?</a><a href="../../c/calc2/1-1.html#text-calc2-seq-limit"><small class="mono">미적분Ⅱ 1.1</small>수열의 수렴과 발산</a><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a><a href="../../c/adcalc/3-2.html#text-adcalc-series-tests"><small class="mono">고급 미적분 3.2</small>양항급수의 판정법</a></div></nav>
 
       <article class="card" id="card-adcalc-monotone-proof">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>극한을 \(L\)로 놓고 방정식을 풀면 끝일까?</h2><span class="kind">단조수렴정리 · 증명 조립</span>
+          <span class="no">탐구 2</span><h2>극한을 \(L\)로 놓고 방정식을 풀면 끝일까?</h2><span class="kind">단조수렴정리 · 증명 조립</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -106,7 +169,7 @@
             <div class="ctl">
               <div class="presets">
                 <button class="chip" type="button" data-f="nest" aria-pressed="true">\(a_{n+1} = \sqrt{2 + a_n}\)</button>
-                <button class="chip" type="button" data-f="dbl">함정: \(b_{n+1} = 2b_n\), \(b_1 = 1\)</button>
+                <button class="chip" type="button" data-f="dbl">함정 \(b_{n+1} = 2b_n\), \(b_1 = 1\)</button>
               </div>
               <div class="pf">
                 <ol class="pf-pool">
@@ -118,43 +181,43 @@
                   <li data-k="t">모든 항이 3보다 작으므로 극한값은 3이다.<span class="pf-why">위로 막는 수는 극한값이 아닙니다. 2도, 3도, 100도 천장이 됩니다.</span></li>
                 </ol>
               </div>
-              <p class="fig-note">함정 수열 \(b_{n+1} = 2b_n\)도 극한을 \(L\)로 놓으면 \(L = 2L\)에서 \(L = 0\)이 나옵니다. 그러나 이 수열은 1, 2, 4, 8, …로 발산합니다.</p>
+              <p class="fig-note">함정 수열 \(b_{n+1} = 2b_n\)도 극한을 \(L\)로 놓으면 \(L = 2L\)에서 \(L = 0\)이 나온다. 그러나 이 수열은 1, 2, 4, 8, …로 발산한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(a_{n+1} = \sqrt{2 + a_n}\)의 극한을 \(L\)이라 하면 \(L = \sqrt{2 + L}\)에서 \(L = 2\)가 바로 나옵니다. 이것으로 증명이 끝난 걸까요?</li>
-            <li><span class="tag">복원</span>단조수렴정리: 증가하면서 위로 유계인 수열은 수렴합니다. 수학적 귀납법은 첫 경우와 "\(n\)일 때 성립하면 \(n + 1\)일 때도 성립"을 보이는 방법입니다.</li>
-            <li><span class="tag">설명</span>"극한을 \(L\)로 놓는다"는 것은 극한이 <b>있다고 가정</b>하는 것입니다. 함정 수열 \(b_{n+1} = 2b_n\)도 같은 방법으로 \(L = 0\)이 나오지만 실제로는 발산합니다. 그래서 순서가 중요합니다. ① 유계임을 보인다(귀납법). ② 증가함을 보인다. ③ 단조수렴정리로 극한이 존재함을 안다. ④ 그다음에야 점화식에 극한을 취해 값을 구한다.</li>
-            <li><span class="tag">연결</span>그림의 거미줄은 \(y = \sqrt{2 + x}\)와 \(y = x\) 사이를 오가며 그립니다. 계단이 교점 \((2, 2)\)으로 올라가는 모습이 "증가하고 2에 막힌다"를 보여 줍니다. 뉴턴의 방법도 \(x_{n+1} = g(x_n)\) 꼴의 점화식이고, 같은 방법으로 수렴을 증명할 수 있습니다.</li>
-            <li><span class="tag">적용</span>단계를 순서대로 쌓아 증명을 완성하세요. 함정 수열로 바꾸어 거미줄이 어디로 가는지 보세요. \(y = 2x\)와 \(y = x\)의 교점 0으로 가나요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(L = g(L)\)의 해"는 수렴한다면 갈 수 있는 후보일 뿐입니다. 후보가 여러 개일 때 어느 것으로 가는지, 그리고 정말 수렴하는지는 따로 보여야 합니다.</li>
+            <li><span class="tag">질문</span>\(a_{n+1} = \sqrt{2 + a_n}\)의 극한을 \(L\)이라 하면 \(L = \sqrt{2 + L}\)에서 \(L = 2\)가 바로 나온다. 이것으로 증명이 끝난 걸까?</li>
+            <li><span class="tag">복원</span>단조수렴정리에 따르면 증가하면서 위로 유계인 수열은 수렴한다. 수학적 귀납법은 첫 경우와 "\(n\)일 때 성립하면 \(n + 1\)일 때도 성립"을 보이는 방법이다.</li>
+            <li><span class="tag">설명</span>"극한을 \(L\)로 놓는다"는 것은 극한이 있다고 가정하는 것이다. 함정 수열 \(b_{n+1} = 2b_n\)도 같은 방법으로 \(L = 0\)이 나오지만 실제로는 발산한다. 그래서 순서가 중요하다. ① 유계임을 보인다(귀납법). ② 증가함을 보인다. ③ 단조수렴정리로 극한이 존재함을 안다. ④ 그다음에야 점화식에 극한을 취해 값을 구한다.</li>
+            <li><span class="tag">연결</span>그림의 거미줄은 \(y = \sqrt{2 + x}\)와 \(y = x\) 사이를 오가며 그린다. 계단이 교점 \((2, 2)\)으로 올라가는 모습이 "증가하고 2에 막힌다"를 보여 준다. 뉴턴의 방법도 \(x_{n+1} = g(x_n)\) 꼴의 점화식이고, 같은 방법으로 수렴을 증명할 수 있다.</li>
+            <li><span class="tag">적용</span>단계를 순서대로 쌓아 증명을 완성해 보자. 함정 수열로 바꾸어 거미줄이 어디로 가는지 보자. \(y = 2x\)와 \(y = x\)의 교점 0으로 가는가?</li>
+            <li class="warn"><span class="tag">판단</span>"\(L = g(L)\)의 해"는 수렴한다면 갈 수 있는 후보일 뿐이다. 후보가 여러 개일 때 어느 것으로 가는지, 그리고 정말 수렴하는지는 따로 보여야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(c_1 = 1\), \(c_{n+1} = \frac{1}{2}\left(c_n + \frac{3}{c_n}\right)\)이 수렴한다는 것을 알 때, 극한값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{3}\)<span class="why"><b>맞습니다.</b> \(L = \frac{1}{2}\left(L + \frac{3}{L}\right)\)에서 \(L^2 = 3\)이고, 모든 항이 양수이므로 \(L = \sqrt{3}\)입니다. 바빌로니아 방법입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\pm\sqrt{3}\)<span class="why"><b>부호를 확인하지 않았습니다.</b> 항이 모두 양수이므로 극한은 음수일 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>\(c_2 = 2\)를 극한으로 보았습니다.</b> 둘째 항 이후로는 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3<span class="why"><b>\(L^2 = 3\)에서 제곱근을 취하지 않았습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{3}\)<span class="why"><b>맞다.</b> \(L = \frac{1}{2}\left(L + \frac{3}{L}\right)\)에서 \(L^2 = 3\)이고, 모든 항이 양수이므로 \(L = \sqrt{3}\)이다. 바빌로니아 방법이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\pm\sqrt{3}\)<span class="why"><b>부호를 확인하지 않았다.</b> 항이 모두 양수이므로 극한은 음수일 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>\(c_2 = 2\)를 극한으로 보았다.</b> 둘째 항 이후로는 줄어든다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3<span class="why"><b>\(L^2 = 3\)에서 제곱근을 취하지 않았다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-1.html#card-calc2-seq-converge"><small class="mono">미적분Ⅱ 1.1</small>수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?</a><a href="../../c/calc2/1-1.html#card-calc2-seq-far"><small class="mono">미적분Ⅱ 1.1</small>처음 몇 항만 보고 수렴·발산을 판정해도 될까?</a><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-1.html#card-calc2-seq-converge"><small class="mono">미적분Ⅱ 1.1</small>수열이 한 값에 '한없이 가까워진다'는 것은 무엇일까?</a><a href="../../c/calc2/1-1.html#card-calc2-seq-far"><small class="mono">미적분Ⅱ 1.1</small>처음 몇 항만 보고 수렴·발산을 판정해도 될까?</a><a href="../../c/calc2/1-1.html#text-calc2-seq-limit"><small class="mono">미적분Ⅱ 1.1</small>수열의 수렴과 발산</a><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a><a href="../../c/adcalc/3-2.html#text-adcalc-series-tests"><small class="mono">고급 미적분 3.2</small>양항급수의 판정법</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>키르히호프 법칙 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="키르히호프의 접합점 법칙과 고리 법칙을 이용하여 전지와 저항이 여러 개인 다양한 회로에서 각 가지의 전류와 전압을 예측한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adphy-kirchhoff canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -48,18 +53,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-circuit-meter"><span class="mono">2.5.1</span>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a></li>
-        <li><a href="#card-adphy-kirchhoff"><span class="mono">2.5.2</span>키르히호프 법칙</a></li>
+        <li><a href="#text-adphy-kirchhoff-rules"><span class="mono">본문</span>키르히호프 법칙</a></li>
+        <li><a href="#card-phy-circuit-meter"><span class="mono">탐구 1</span>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a></li>
+        <li><a href="#card-adphy-kirchhoff"><span class="mono">탐구 2</span>키르히호프 법칙</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">31문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-kirchhoff-rules" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>키르히호프 법칙</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">손전등에 새 건전지와 다 쓴 건전지를 함께 넣으면 손전등이 금방 어두워진다. 캠핑용 전원에 새 배터리와 낡은 배터리를 나란히 이어도 마찬가지이다. 새 배터리의 에너지가 전등이 아니라 낡은 배터리로 흘러 들어가기 때문이다. 그런데 이런 회로는 직렬이나 병렬로 묶이지 않아, 저항을 합치는 공식만으로는 전류를 구할 수 없다. 전류가 어디로, 얼마나 흐르는지 어떻게 알 수 있을까?</p>
+          <figure class="q-fig" data-q="adphy-kvl">
+            <svg viewBox="0 0 520 165" role="img" aria-label="두 번째 전지의 기전력에 따른 세 갈래 전류"></svg>
+            <div class="q-ctl"><label>전지 2의 기전력 E₂ (V) <input type="range" data-k="E2" min="0" max="24" step="1" value="12"><output data-k="E2"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 전지 1(12 V, 내부 저항 2 Ω)과 전지 2(E₂, 내부 저항 4 Ω)가 나란히 부하 저항 6 Ω에 전류를 보내는 회로. 오른쪽이 전지에서 부하로 나가는 방향이다. E₂가 낮으면 I₂가 음수가 되어 전지 1이 전지 2를 충전한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>옴의 법칙과 전위차, 저항의 직렬·병렬 연결(물리학), 연립 일차 방정식(수학).</div>
+
+          <h3><span class="no">2.5.1</span>두 가지 보존 법칙</h3>
+          <p>복잡한 회로도 두 가지 보존 원리로 풀 수 있다. 첫째, 전하는 회로의 접점에서 생기거나 사라지지 않는다. 그래서 한 접점으로 들어오는 전류의 합은 나가는 전류의 합과 같다. 둘째, 정전기적인 전위는 위치만으로 정해지므로, 회로의 닫힌 고리를 한 바퀴 돌아 제자리에 오면 전위의 오르내림의 합이 0이다. 전지를 음극에서 양극으로 지나면 전위가 기전력만큼 오르고, 저항을 전류 방향으로 지나면 \(IR\)만큼 내려간다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">키르히호프 법칙</span></span>
+            <p>접점 법칙은 \(\sum I_{\text{들어옴}} = \sum I_{\text{나감}}\), 고리 법칙은 닫힌 고리를 따라 \(\sum \varepsilon - \sum IR = 0\)이다. 각 갈래의 전류 방향을 마음대로 정해 식을 세우고 연립하여 풀면, 답이 음수로 나온 전류는 실제로 정한 방향과 반대로 흐른다.</p>
+          </div>
+          <p>그림 1의 회로에서 부하 양 끝의 전위차를 \(V\)라 하면, 갈래마다 \(I_1 = \dfrac{12 - V}{2}\), \(I_2 = \dfrac{E_2 - V}{4}\), \(I_3 = \dfrac{V}{6}\)이고 접점 법칙 \(I_1 + I_2 = I_3\)을 만족해야 한다. E₂를 바꾸어 보자. 두 전지가 모두 12 V이면 \(V \approx 9.8\) V이고, 내부 저항이 작은 전지 1이 1.09 A, 전지 2가 0.55 A를 보낸다. 그런데 E₂를 9 V 아래로 낮추면 \(I_2\)가 음수가 되어, 전지 1의 전류 일부가 부하 대신 전지 2로 거꾸로 흘러 들어간다.<sup class="fn"><a href="#fn-adphy-kirchhoff-rules-1">1</a></sup></p>
+
+          <h3><span class="no">2.5.2</span>식을 세우는 순서</h3>
+          <p>키르히호프 법칙으로 회로를 풀 때는 먼저 갈래마다 전류에 이름과 방향을 붙인다. 다음으로 접점마다 접점 법칙을 쓰고, 서로 겹치지 않는 고리마다 고리 법칙을 쓴다. 미지수의 수만큼 독립인 식이 모이면 연립 방정식을 푼다. 전류의 방향은 처음에 틀리게 잡아도 괜찮다. 답의 부호가 실제 방향을 알려 주기 때문이다. 다만 고리를 돌 때 전지와 저항의 부호를 정한 방향에 맞게 일관되게 붙여야 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="고리를 돌 때 전위 변화의 부호">
+              <g class="s">
+                <text x="20" y="22">지나는 소자</text><text x="230" y="22">지나는 방향</text><text x="400" y="22">전위 변화</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">전지</text><text x="230" y="52">음극에서 양극으로</text><text x="400" y="52">+ε</text>
+                <text x="20" y="74">저항</text><text x="230" y="74">정한 전류 방향으로</text><text x="400" y="74">−IR</text>
+                <text x="20" y="96">저항</text><text x="230" y="96">정한 전류와 반대로</text><text x="400" y="96">+IR</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 고리 법칙은 이 부호 규칙을 일관되게 지키면 전류 방향을 어떻게 정해도 같은 답을 준다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>그림 1의 회로에서 전지 2가 많이 닳아 기전력이 6 V로 떨어졌다. 세 갈래의 전류를 구하고, 전지 1이 내는 전력 가운데 부하에 가는 몫과 전지 2를 충전하는 몫을 비교하여라.</p>
+          </div>
+          <p>접점 법칙에 갈래 전류를 넣으면 \(\dfrac{12 - V}{2} + \dfrac{6 - V}{4} = \dfrac{V}{6}\)이다. 양변에 12를 곱하면 \(72 - 6V + 18 - 3V = 2V\), 곧 \(V = 90/11 \approx 8.18\) V이다. 따라서 \(I_1 \approx 1.91\) A, \(I_2 \approx -0.55\) A, \(I_3 \approx 1.36\) A이다.</p>
+          <p>전지 1은 \(12 \times 1.91 \approx 22.9\) W를 낸다. 그 가운데 부하는 \(1.36^2 \times 6 \approx 11.2\) W만 받고, 전지 1의 내부 저항이 \(1.91^2 \times 2 \approx 7.3\) W, 전지 2가 충전과 내부 저항으로 \(8.18 \times 0.55 \approx 4.5\) W를 가져간다. 즉 새 전지가 내는 전력의 절반 가까이가 부하가 아닌 곳에서 사라진다. 그래서 전지를 나란히 이을 때는 기전력과 상태가 같은 전지끼리 이어야 한다.</p>
+          <p>아래 탐구 카드에서 전류 방향을 거꾸로 가정해도 같은 답이 나오는지 확인하고, 여러 전원이 얽힌 회로를 키르히호프 법칙으로 풀어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-kirchhoff-rules-1">키르히호프는 1845년, 스물한 살의 대학생일 때 이 두 법칙을 발표했다. 그는 뒤에 분젠과 함께 원소마다 고유한 스펙트럼 선을 찾아내, 태양 빛을 분석해 그 속의 원소를 알아내는 분광학의 길도 열었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>키르히호프 법칙은 접점에서 전하가 보존되고 닫힌 고리를 돌면 전위의 합이 0이라는 두 원리로, 직렬과 병렬로 묶이지 않는 회로의 전류를 모두 구하게 해 준다. 전류 방향은 마음대로 정해도 되고, 음수로 나온 전류는 실제로 반대로 흐른다. 그래서 처음 질문의 새 배터리는 기전력이 낮은 낡은 배터리 쪽으로 전류를 거꾸로 흘려 보내 충전하는 데 에너지를 써서 금방 닳는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-field"><small class="mono">물리학 2.1</small>보이지 않는 전기장을 어떻게 그릴까?</a><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a><a href="../../c/labphy/3-3.html#text-labphy-filament"><small class="mono">물리학 실험 3.3</small>전압·전류·저항의 관계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#card-is2-transmission"><small class="mono">통합과학2 2.5</small>송전은 왜 높은 전압으로 할까?</a><a href="../../c/fusi/1-4.html#card-fusi-power"><small class="mono">융합과학 탐구 1.4</small>스마트 플러그는 몇 초마다 재야 하루 전력량을 맞힐까?</a><a href="../../c/fusi/1-4.html#card-fusi-knn"><small class="mono">융합과학 탐구 1.4</small>인공지능은 처음 보는 광물을 어떻게 분류할까?</a><a href="../../c/fusi/1-4.html#text-fusi-ai"><small class="mono">융합과학 탐구 1.4</small>인공지능과 디지털 도구는 과학 탐구를 어떻게 바꾸었을까?</a></div></nav>
+
       <article class="card" id="card-phy-circuit-meter">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</h2><span class="kind">실험 · 저항의 연결 · 전류와 전압 측정</span>
+          <span class="no">탐구 1</span><h2>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</h2><span class="kind">실험 · 저항의 연결 · 전류와 전압 측정</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,42 +128,42 @@
               <div class="lab-btns"><button class="chip go rec" type="button">읽은 값 기록</button><button class="chip clear" type="button">기록 지우기</button></div>
               <div class="tbl-host"></div>
               <p class="verdict small"></p>
-              <p class="fig-note">전원: 전지 6.0 V(내부 저항 0.2 Ω). 전류계 내부 저항 0.05 Ω, 전압계 내부 저항 10 MΩ. 계기 눈금은 0.01 단위로 읽습니다. "잘못 꽂기"는 실제로 해 보면 계기나 전지가 상할 수 있는 연결입니다.</p>
+              <p class="fig-note">전원은 전지 6.0 V(내부 저항 0.2 Ω)이다. 전류계 내부 저항은 0.05 Ω, 전압계 내부 저항은 10 MΩ이고, 계기 눈금은 0.01 단위로 읽는다. "잘못 꽂기"는 실제로 해 보면 계기나 전지가 상할 수 있는 연결이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>전구 두 개를 직렬로 이으면 어둡고, 병렬로 이으면 밝습니다. 각 저항에 흐르는 전류와 걸리는 전압을 직접 재면, 두 연결 방법의 규칙을 찾을 수 있을까요?</li>
-            <li><span class="tag">복원</span>전류계는 전류가 지나가는 길 위에 <em>직렬로</em> 끼워야 하고, 전압계는 재려는 부분의 양 끝에 <em>병렬로</em> 대야 합니다. 전류계는 저항이 아주 작고, 전압계는 아주 커서 회로를 거의 바꾸지 않습니다.</li>
-            <li><span class="tag">설계</span>같은 저항으로 직렬과 병렬 회로를 만들고, 각 저항의 전류와 전압, 전체 전류와 전지 전압을 잽니다. 조작 변인은 연결 방법, 통제 변인은 저항과 전지입니다.</li>
-            <li><span class="tag">분석</span>직렬에서는 모든 저항에 같은 전류가 흐르고, 전압은 저항에 비례해 나뉘어 합이 전지 전압이 됩니다. 병렬에서는 모든 저항에 같은 전압이 걸리고, 전류는 저항에 반비례해 나뉘어 합이 전체 전류가 됩니다. 전지 전압이 6.0 V보다 조금 작게 읽히는 것은 내부 저항 때문입니다.</li>
-            <li><span class="tag">측정</span>직렬·병렬 각각에서 계기 위치를 모두 바꿔 가며 기록하고, 전압의 합과 전류의 합을 확인하세요. 그다음 "잘못 꽂기"를 골라 계기가 무엇을 보여 주는지 보세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>전류계를 저항 양 끝에 대면 그 부분이 전류계를 통해 거의 단락되어 큰 전류가 흐릅니다. 병렬 회로에서는 전지가 직접 단락되어 계기의 퓨즈가 끊어지거나 전지가 뜨거워질 수 있습니다. 측정은 큰 범위(눈금)부터 시작하고, 회로를 바꿀 때는 스위치를 먼저 끕니다.</li>
+            <li><span class="tag">탐구 문제</span>전구 두 개를 직렬로 이으면 어둡고, 병렬로 이으면 밝다. 각 저항에 흐르는 전류와 걸리는 전압을 직접 재면, 두 연결 방법의 규칙을 찾을 수 있을까?</li>
+            <li><span class="tag">복원</span>전류계는 전류가 지나가는 길 위에 <em>직렬로</em> 끼워야 하고, 전압계는 재려는 부분의 양 끝에 <em>병렬로</em> 대야 한다. 또 전류계는 저항이 아주 작고 전압계는 아주 커서, 회로를 거의 바꾸지 않는다.</li>
+            <li><span class="tag">설계</span>그래서 같은 저항으로 직렬과 병렬 회로를 만들고, 각 저항의 전류와 전압, 전체 전류와 전지 전압을 잰다. 조작 변인은 연결 방법이고, 통제 변인은 저항과 전지이다.</li>
+            <li><span class="tag">분석</span>직렬에서는 모든 저항에 같은 전류가 흐르고, 전압은 저항에 비례해 나뉘어 합이 전지 전압이 된다. 병렬에서는 모든 저항에 같은 전압이 걸리고, 전류는 저항에 반비례해 나뉘어 합이 전체 전류가 된다. 전지 전압이 6.0 V보다 조금 작게 읽히는 것은 내부 저항 때문이다.</li>
+            <li><span class="tag">측정</span>직렬과 병렬 각각에서 계기 위치를 모두 바꿔 가며 기록하고, 전압의 합과 전류의 합을 확인해 보자. 그다음 "잘못 꽂기"를 골라 계기가 무엇을 보여 주는지도 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>전류계를 저항 양 끝에 대면 그 부분이 전류계를 통해 거의 단락되어 큰 전류가 흐른다. 병렬 회로에서는 전지가 직접 단락되어 계기의 퓨즈가 끊어지거나 전지가 뜨거워질 수 있다. 그래서 측정은 큰 범위(눈금)부터 시작하고, 회로를 바꿀 때는 스위치를 먼저 끈다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>측정값 해석</h3>
-          <p class="q">10 Ω, 20 Ω을 병렬로 연결해 6 V(내부 저항 무시)에 이었습니다. 20 Ω에 흐르는 전류는?</p>
+          <p class="q">10 Ω, 20 Ω을 병렬로 연결해 6 V(내부 저항 무시)에 이었다. 20 Ω에 흐르는 전류는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.2 A<span class="why"><b>직렬일 때의 값입니다.</b> 직렬이면 전체 저항 30 Ω에 0.2 A가 흐릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.3 A<span class="why"><b>맞습니다.</b> 병렬이면 20 Ω 양 끝에 6 V가 그대로 걸려 6/20 = 0.3 A입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.9 A<span class="why"><b>전체 전류입니다.</b> 10 Ω에 0.6 A, 20 Ω에 0.3 A가 흘러 합이 0.9 A입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.2 A<span class="why"><b>직렬일 때의 값이다.</b> 직렬이면 전체 저항 30 Ω에 0.2 A가 흐른다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.3 A<span class="why"><b>맞다.</b> 병렬이면 20 Ω 양 끝에 6 V가 그대로 걸려 6/20 = 0.3 A이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.9 A<span class="why"><b>전체 전류이다.</b> 10 Ω에 0.6 A, 20 Ω에 0.3 A가 흘러 합이 0.9 A이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-field"><small class="mono">물리학 2.1</small>보이지 않는 전기장을 어떻게 그릴까?</a><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#card-is2-transmission"><small class="mono">통합과학2 2.5</small>송전은 왜 높은 전압으로 할까?</a><a href="../../c/fusi/1-4.html#card-fusi-power"><small class="mono">융합과학 탐구 1.4</small>스마트 플러그는 몇 초마다 재야 하루 전력량을 맞힐까?</a><a href="../../c/fusi/1-4.html#card-fusi-knn"><small class="mono">융합과학 탐구 1.4</small>인공지능은 처음 보는 광물을 어떻게 분류할까?</a><a href="../../c/fusi/1-4.html#text-fusi-ai"><small class="mono">융합과학 탐구 1.4</small>인공지능과 디지털 도구는 과학 탐구를 어떻게 바꾸었을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-field"><small class="mono">물리학 2.1</small>보이지 않는 전기장을 어떻게 그릴까?</a><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labphy/3-3.html#text-labphy-filament"><small class="mono">물리학 실험 3.3</small>전압·전류·저항의 관계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#card-is2-transmission"><small class="mono">통합과학2 2.5</small>송전은 왜 높은 전압으로 할까?</a><a href="../../c/fusi/1-4.html#card-fusi-power"><small class="mono">융합과학 탐구 1.4</small>스마트 플러그는 몇 초마다 재야 하루 전력량을 맞힐까?</a><a href="../../c/fusi/1-4.html#card-fusi-knn"><small class="mono">융합과학 탐구 1.4</small>인공지능은 처음 보는 광물을 어떻게 분류할까?</a><a href="../../c/fusi/1-4.html#text-fusi-ai"><small class="mono">융합과학 탐구 1.4</small>인공지능과 디지털 도구는 과학 탐구를 어떻게 바꾸었을까?</a></div></nav>
 
       <article class="card" id="card-adphy-kirchhoff">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>전류 방향을 거꾸로 가정해도 답이 맞을까?</h2><span class="kind">키르히호프 법칙 · 접합점 법칙과 고리 법칙 · 두 고리 회로</span>
+          <span class="no">탐구 2</span><h2>전류 방향을 거꾸로 가정해도 답이 맞을까?</h2><span class="kind">키르히호프 법칙 · 접합점 법칙과 고리 법칙 · 두 고리 회로</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="전지 두 개와 저항 세 개로 된 두 고리 회로. 도선의 색은 전위(파랑 낮음, 빨강 높음), 흰 점은 실제 전류의 움직임, 초록 화살표는 가정한 전류 방향"></canvas>
             <div class="ctl">
               <div class="presets" role="group" aria-label="가정한 전류 방향">
-                <button type="button" class="chip" data-d="1">I₁ 가정: 위로</button>
-                <button type="button" class="chip" data-d="2">I₂ 가정: 위로</button>
-                <button type="button" class="chip" data-d="3">I₃ 가정: 아래로</button>
+                <button type="button" class="chip" data-d="1">I₁ 위로 가정</button>
+                <button type="button" class="chip" data-d="2">I₂ 위로 가정</button>
+                <button type="button" class="chip" data-d="3">I₃ 아래로 가정</button>
               </div>
               <div class="presets" role="group" aria-label="예시">
                 <button type="button" class="chip" data-p="same">두 전지가 함께 밀 때</button>
@@ -131,42 +188,43 @@
                 <div><dt>저항의 발열 Σ I²R</dt><dd class="n-h">—</dd></div>
                 <div><dt>전지 상태</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">전지의 내부 저항은 R₁, R₂에 포함된 것으로 보고 도선 저항은 무시했습니다. 고리는 모두 시계 방향(↻)으로 돌며, 전지를 −에서 +로 지나면 +ε, 가정한 전류 방향으로 저항을 지나면 −IR로 썼습니다. 빨간 값은 가정과 실제 방향이 반대라는 뜻입니다.</p>
+              <p class="fig-note">전지의 내부 저항은 R₁, R₂에 포함된 것으로 보고 도선 저항은 무시했다. 고리는 모두 시계 방향(↻)으로 돌며, 전지를 −에서 +로 지나면 +ε, 가정한 전류 방향으로 저항을 지나면 −IR로 썼다. 빨간 값은 가정과 실제 방향이 반대라는 뜻이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>전지가 둘 이상이고 고리가 여러 개인 회로는 직렬·병렬로 묶어 합성 저항을 구하는 방법이 통하지 않습니다. 어느 쪽으로 전류가 흐르는지도 모르는 상태에서 각 가지의 전류를 어떻게 구할까요?</li>
-            <li><span class="tag">복원</span>저항에 전류 I가 흐르면 전류 방향으로 전위가 IR만큼 낮아집니다(옴의 법칙). 전지는 −극에서 +극으로 갈 때 전위를 ε만큼 높입니다. 전위는 위치마다 하나의 값만 가집니다.</li>
-            <li><span class="tag">설명</span><em>접합점 법칙</em>: 한 접합점으로 들어오는 전류의 합은 나가는 전류의 합과 같습니다(ΣI = 0). 전하가 접합점에 쌓이거나 생기지 않기 때문이며, <em>전하 보존</em>의 표현입니다. <em>고리 법칙</em>: 닫힌 고리를 한 바퀴 돌면 전위 변화의 합은 0입니다(Σε − ΣIR = 0). 출발점으로 돌아오면 전위가 같아야 하기 때문이며, 단위 전하에 대한 <em>에너지 보존</em>입니다.</li>
-            <li><span class="tag">연결</span>모르는 전류가 3개이면 독립인 식이 3개 필요합니다. 접합점이 2개(A, B)지만 두 식은 같은 내용이라 하나만 쓰고, 나머지는 고리 2개에서 얻습니다(바깥 큰 고리는 두 고리 식의 합이라 새 정보가 없습니다). 방향은 아무렇게나 가정해도 되며, 계산 결과가 음수이면 실제 방향이 반대라는 뜻일 뿐입니다. 결과가 맞는지는 전지가 내는 일률과 저항의 발열이 같은지로 확인할 수 있습니다.</li>
-            <li><span class="tag">적용</span>초록 버튼으로 가정 방향을 바꾸며 식의 부호와 답이 어떻게 달라지는지 보세요. 실제 전류(흰 점)는 바뀌나요? ‘약한 전지가 충전될 때’에서 ε₂를 지나는 전류는 어느 극으로 들어가나요? ε₂를 몇 V로 맞추면 I₂ = 0이 되는지 찾고, 그때 A의 전위와 ε₂를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>“전지는 언제나 +극에서 전류를 내보낸다”는 틀린 생각입니다. 더 센 전지가 있으면 전류가 약한 전지의 +극으로 들어가 그 전지가 에너지를 받습니다(충전, 일률 εI가 음수). 또 키르히호프 법칙은 도선의 전기장이 보존력일 때의 이야기입니다. 고리 속 자기 선속이 빠르게 변하면 ∮E·dl ≠ 0이므로 유도 기전력을 고리 법칙에 따로 넣어야 합니다.</li>
+            <li><span class="tag">질문</span>전지가 둘 이상이고 고리가 여러 개인 회로는 직렬·병렬로 묶어 합성 저항을 구하는 방법이 통하지 않는다. 어느 쪽으로 전류가 흐르는지도 모르는 상태에서 각 가지의 전류를 어떻게 구할까?</li>
+            <li><span class="tag">복원</span>저항에 전류 I가 흐르면 전류 방향으로 전위가 IR만큼 낮아진다(옴의 법칙). 전지는 −극에서 +극으로 갈 때 전위를 ε만큼 높인다. 전위는 위치마다 하나의 값만 가진다.</li>
+            <li><span class="tag">설명</span><em>접합점 법칙</em>: 한 접합점으로 들어오는 전류의 합은 나가는 전류의 합과 같다(ΣI = 0). 전하가 접합점에 쌓이거나 생기지 않기 때문이며, <em>전하 보존</em>의 표현이다. <em>고리 법칙</em>: 닫힌 고리를 한 바퀴 돌면 전위 변화의 합은 0이다(Σε − ΣIR = 0). 출발점으로 돌아오면 전위가 같아야 하기 때문이며, 단위 전하에 대한 <em>에너지 보존</em>이다.</li>
+            <li><span class="tag">연결</span>모르는 전류가 3개이면 독립인 식이 3개 필요하다. 접합점이 2개(A, B)지만 두 식은 같은 내용이라 하나만 쓰고, 나머지는 고리 2개에서 얻는다(바깥 큰 고리는 두 고리 식의 합이라 새 정보가 없다). 방향은 아무렇게나 가정해도 되며, 계산 결과가 음수이면 실제 방향이 반대라는 뜻일 뿐이다. 결과가 맞는지는 전지가 내는 일률과 저항의 발열이 같은지로 확인할 수 있다.</li>
+            <li><span class="tag">적용</span>초록 버튼으로 가정 방향을 바꾸며 식의 부호와 답이 어떻게 달라지는지 보자. 실제 전류(흰 점)는 바뀌는가? ‘약한 전지가 충전될 때’에서 ε₂를 지나는 전류는 어느 극으로 들어가는가? ε₂를 몇 V로 맞추면 I₂ = 0이 되는지 찾고, 그때 A의 전위와 ε₂를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“전지는 언제나 +극에서 전류를 내보낸다”는 틀린 생각이다. 더 센 전지가 있으면 전류가 약한 전지의 +극으로 들어가 그 전지가 에너지를 받는다(충전, 일률 εI가 음수). 또 키르히호프 법칙은 도선의 전기장이 보존력일 때의 이야기이다. 고리 속 자기 선속이 빠르게 변하면 ∮E·dl ≠ 0이므로 유도 기전력을 고리 법칙에 따로 넣어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">이 회로에서 R₃를 떼어 내 가운데 가지를 끊었습니다(ε₁ = 12 V, ε₂ = 6 V, 둘 다 +극이 위, R₁ = 4 Ω, R₂ = 2 Ω). 남은 한 고리에 흐르는 전류의 크기와 ε₂의 상태는?</p>
+          <p class="q">이 회로에서 R₃를 떼어 내 가운데 가지를 끊었다(ε₁ = 12 V, ε₂ = 6 V, 둘 다 +극이 위, R₁ = 4 Ω, R₂ = 2 Ω). 남은 한 고리에 흐르는 전류의 크기와 ε₂의 상태는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1 A, ε₂는 충전된다<span class="why"><b>맞습니다.</b> 두 전지가 서로 마주 밀어 알짜 기전력은 12 − 6 = 6 V, 전체 저항 6 Ω이므로 1 A입니다. 전류는 ε₂의 +극으로 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3 A, 두 전지 모두 방전된다<span class="why"><b>두 기전력을 더한 답입니다.</b> 한 고리를 돌면 두 전지를 서로 반대 방향(−→+, +→−)으로 지나므로 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0 A, 가운데 가지가 끊겨 고리가 없다<span class="why"><b>바깥 큰 고리는 그대로 닫혀 있습니다.</b> ε₁–R₁–ε₂–R₂가 한 고리를 이룹니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1 A, ε₂는 충전된다<span class="why"><b>맞다.</b> 두 전지가 서로 마주 밀어 알짜 기전력은 12 − 6 = 6 V, 전체 저항 6 Ω이므로 1 A이다. 전류는 ε₂의 +극으로 들어간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3 A, 두 전지 모두 방전된다<span class="why"><b>두 기전력을 더한 답이다.</b> 한 고리를 돌면 두 전지를 서로 반대 방향(−→+, +→−)으로 지나므로 빼야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0 A, 가운데 가지가 끊겨 고리가 없다<span class="why"><b>바깥 큰 고리는 그대로 닫혀 있다.</b> ε₁–R₁–ε₂–R₂가 한 고리를 이룬다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-6.html#card-adphy-ac"><small class="mono">고급 물리학 2.6</small>코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a><a href="../../c/labphy/3-3.html#text-labphy-filament"><small class="mono">물리학 실험 3.3</small>전압·전류·저항의 관계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-6.html#card-adphy-ac"><small class="mono">고급 물리학 2.6</small>코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">31문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -174,6 +232,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/phy/circuit-meter.js"></script>
 <script src="../../js/cards/adphy/em-kirchhoff.js"></script>

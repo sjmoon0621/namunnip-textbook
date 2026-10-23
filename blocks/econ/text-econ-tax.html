@@ -1,0 +1,55 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/econ/body.js"],
+  "sec": "1-3",
+  "short": "본문 · 세금"
+}
+-->
+<article class="card reading" id="text-econ-tax" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>세금</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">"연봉이 오르면 세율 구간이 올라가서 오히려 손에 쥐는 돈이 줄어든다"는 말을 들은 적이 있을 것이다. 소득이 1억 원인 사람의 세율이 35%라면, 정말로 3500만 원을 세금으로 낼까? 소득세는 실제로 어떻게 계산될까?</p>
+    <figure class="q-fig" data-q="econ-tax">
+      <svg viewBox="0 0 520 230" role="img" aria-label="과세 표준에 따른 누진 소득세액 그래프"></svg>
+      <div class="q-ctl"><label>과세 표준 (만 원) <input type="range" data-k="m" min="500" max="15000" step="100" value="10000"><output data-k="m"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 단순화한 누진 세율(1400만 원까지 6%, 5000만 원까지 15%, 8800만 원까지 24%, 1억 5천만 원까지 35%)로 계산한 세액. 그래프는 구간마다 기울기가 커지는 꺾은선이며, 끊어지거나 뛰어오르는 곳이 없다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수와 그래프, 일차함수의 기울기(중학교), 비율과 백분율.</div>
+
+    <h3><span class="no">1.3.1</span>누진세의 계산</h3>
+    <p>소득이 많을수록 더 높은 비율의 세금을 매기는 제도를 누진세라 한다. 우리나라 소득세는 소득을 여러 구간으로 나누고, 구간마다 다른 세율을 그 구간에 속한 금액에만 적용한다. 이를 초과 누진 세율이라 한다. 소득 전체에 하나의 세율을 매기는 방식과 달리, 소득이 한 구간을 넘어가도 이미 아래 구간에 속한 소득의 세금은 바뀌지 않는다.</p>
+    <div class="tb-env thm"><span class="lb">정의 1.3.1 <span class="nm">한계 세율과 실효 세율</span></span>
+      <p>소득이 한 단위 늘어날 때 그 추가 소득에 붙는 세율을 한계 세율이라 하고, 전체 세금을 전체 소득으로 나눈 비율을 실효 세율(평균 세율)이라 한다. 초과 누진 세율에서는 실효 세율이 언제나 한계 세율보다 작거나 같다.</p>
+    </div>
+    <p>그림 1에서 과세 표준을 1억 원으로 맞추어 보자. 처음 1400만 원에는 6%, 그다음 3600만 원에는 15%, 그다음 3800만 원에는 24%, 마지막 1200만 원에만 35%가 붙는다. 세액은 \(84 + 540 + 912 + 420 = 1956\)만 원이고 실효 세율은 약 19.6%이다. 한계 세율 35%와 크게 다르다. 뉴스에서 말하는 '세율 구간'은 대개 한계 세율이므로, 실제로 내는 세금의 비율과 혼동하지 않아야 한다.<sup class="fn"><a href="#fn-econ-tax-1">1</a></sup></p>
+
+    <h3><span class="no">1.3.2</span>세금은 소득의 연속함수</h3>
+    <p>세액을 과세 표준의 함수로 그리면, 구간마다 기울기가 그 구간의 세율인 꺾은선이 된다. 구간 경계에서 기울기만 커질 뿐 세액이 갑자기 뛰지 않는다. 수학적으로 말하면 세액은 과세 표준의 연속함수이고, 구간 경계에서만 미분계수가 바뀐다. 그러므로 소득이 늘면 세금도 늘지만, 늘어난 소득 가운데 세금으로 나가는 몫은 한계 세율만큼뿐이고 나머지는 손에 남는다. 구간이 올라가서 손에 쥐는 돈이 줄어드는 일은 생기지 않는다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="과세 표준 1억 원의 구간별 세액">
+        <g class="s">
+          <rect x="30" y="35" width="56" height="30" class="la"/><rect x="86" y="35" width="144" height="30" class="lb"/><rect x="230" y="35" width="152" height="30" class="lc"/><rect x="382" y="35" width="48" height="30" class="ld"/>
+          <text x="58" y="55" text-anchor="middle">6%</text><text x="158" y="55" text-anchor="middle">15%</text><text x="306" y="55" text-anchor="middle">24%</text><text x="406" y="55" text-anchor="middle">35%</text>
+          <text x="58" y="85" text-anchor="middle">84</text><text x="158" y="85" text-anchor="middle">540</text><text x="306" y="85" text-anchor="middle">912</text><text x="406" y="85" text-anchor="middle">420</text>
+          <text x="440" y="55">만 원</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 과세 표준 1억 원을 구간으로 나누면 각 구간의 금액에 그 구간의 세율만 적용된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+      <p>그림 1의 세율에서 과세 표준이 4900만 원에서 5100만 원으로 200만 원 늘었다. 세금은 얼마나 늘고, 세후 소득은 얼마나 늘었는가? 세율 구간이 올라가서 손해를 보았는가?</p>
+    </div>
+    <p>4900만 원의 세액은 \(1400 \times 0.06 + 3500 \times 0.15 = 84 + 525 = 609\)만 원이다. 5100만 원의 세액은 \(84 + 3600 \times 0.15 + 100 \times 0.24 = 84 + 540 + 24 = 648\)만 원이다.</p>
+    <p>세금은 39만 원 늘었고, 세후 소득은 \(200 - 39 = 161\)만 원 늘었다. 5000만 원을 넘는 100만 원에만 24%가 붙고, 그 아래 100만 원에는 여전히 15%가 붙었다. 구간이 올라가도 늘어난 소득의 일부만 더 높은 세율을 적용받으므로 손해를 보지 않는다. 한계 세율이 100%를 넘지 않는 한 이 결론은 언제나 성립한다.</p>
+    <p>아래 탐구 카드에서 누진세를 직접 계산하고, '구간이 올라가면 손해'라는 말이 왜 틀렸는지 따져 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-econ-tax-1">세액을 빨리 구할 때는 '과세 표준 × 그 구간 세율 − 누진 공제액'을 쓴다. 누진 공제액은 아래 구간들이 낮은 세율을 적용받은 만큼을 미리 계산해 둔 값이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>초과 누진 세율에서는 각 구간의 세율이 그 구간에 속한 소득에만 적용되므로, 세액은 기울기가 점점 커지는 꺾은선 함수이고 실효 세율은 한계 세율보다 작다. 그래서 처음 질문의 세율 35%인 사람이 내는 세금은 소득의 35%가 아니라 그보다 훨씬 적으며, 구간이 올라가도 손에 쥐는 돈은 줄지 않는다.</p></div>
+  </div>
+</article>

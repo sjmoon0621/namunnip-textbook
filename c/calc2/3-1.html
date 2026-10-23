@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>여러 가지 함수의 적분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="실수 지수 거듭제곱함수 x^n의 부정적분 x^(n+1)/(n+1)과 n = −1일 때의 ln|x|, 지수함수 e^x, a^x의 부정적분 a^x/ln a, 삼각함수 sin x, cos x, sec² x의 부정적분과 정적분. 지수 n을 −1 쪽으로 옮기며 넓이가 ln b로 다가가는 것을 보고, 후보 원시함수를 넓이와 비교해 고르는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-xn-integral canvas { width: 100%; aspect-ratio: 16 / 11; touch-action: pan-y; cursor: ew-resize; }
@@ -45,18 +50,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-xn-integral"><span class="mono">3.1.1</span>xⁿ의 적분과 1/x의 적분</a></li>
-        <li><a href="#card-calc2-antideriv-check"><span class="mono">3.1.2</span>지수함수·삼각함수의 적분</a></li>
+        <li><a href="#text-calc2-integrals"><span class="mono">본문</span>여러 가지 함수의 적분</a></li>
+        <li><a href="#card-calc2-xn-integral"><span class="mono">탐구 1</span>xⁿ의 적분과 1/x의 적분</a></li>
+        <li><a href="#card-calc2-antideriv-check"><span class="mono">탐구 2</span>지수함수·삼각함수의 적분</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">52문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-3-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">53문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-integrals" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>여러 가지 함수의 적분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">미적분Ⅰ에서 \(\int x^n\,dx = \dfrac{x^{n+1}}{n+1} + C\)를 배웠다. 그런데 \(n = -1\)을 넣으면 분모가 0이 되어 공식이 무너진다. 그렇다고 \(y = \dfrac{1}{x}\)의 그래프 아래 넓이가 없는 것은 아니다. \(x = 1\)에서 \(x = 2\)까지 \(y = \dfrac{1}{x}\) 아래의 넓이는 얼마이고, 그 넓이는 어떤 함수로 나타날까?</p>
+          <figure class="q-fig" data-q="calc2-xn">
+            <svg viewBox="0 0 520 230" role="img" aria-label="지수 n에 따른 y = x^n 의 그래프와 1에서 2까지의 넓이"></svg>
+            <div class="q-ctl"><label>지수 \(n\) <input type="range" data-k="n" min="-2" max="1" step="0.05" value="-0.5"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(\int_1^2 x^n\,dx\). \(n\)을 \(-1\)에 가깝게 해도 넓이는 매끄럽게 변하며 \(\ln 2 \approx 0.693\)에 다가간다. 공식만 무너질 뿐 넓이에는 아무 문제가 없다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>부정적분과 정적분(미적분Ⅰ), 지수함수·로그함수의 도함수(<a href="2-1.html">지수·로그함수의 극한과 미분</a>), 삼각함수의 도함수(<a href="2-3.html">삼각함수의 극한과 미분</a>).</div>
+
+          <h3><span class="no">3.1.1</span>미분을 거꾸로 읽기</h3>
+          <p>부정적분은 미분의 역이다. 그러므로 앞에서 구한 도함수 공식을 거꾸로 읽으면 적분 공식을 얻는다. \((\ln|x|)' = \dfrac{1}{x}\)이므로 \(\dfrac{1}{x}\)의 부정적분은 \(\ln|x|\)이다. \(x &lt; 0\)에서도 \(\ln(-x)\)를 미분하면 \(\dfrac{-1}{-x} = \dfrac{1}{x}\)이 되므로 절댓값을 붙인다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.1.1 <span class="nm">여러 가지 함수의 부정적분</span> (\(C\)는 적분상수)</span>
+            <p>\[\int x^n\,dx = \frac{x^{n+1}}{n+1} + C\ (n \ne -1),\qquad \int \frac{1}{x}\,dx = \ln|x| + C\] \[\int e^x\,dx = e^x + C,\quad \int a^x\,dx = \frac{a^x}{\ln a} + C,\quad \int \sin x\,dx = -\cos x + C,\quad \int \cos x\,dx = \sin x + C\] \[\int \sec^2 x\,dx = \tan x + C\]</p>
+          </div>
+          <p>그림 1에서 \(n\)을 \(-1\)에 가깝게 움직여 보자. \(n = -0.99\)이면 \(\dfrac{2^{0.01} - 1}{0.01} \approx 0.6956\), \(n = -1.01\)이면 \(\approx 0.6908\)로, 둘 다 \(\ln 2 \approx 0.6931\)을 사이에 두고 다가간다. \(\dfrac{1}{x}\)의 적분이 거듭제곱이 아니라 로그로 나오는 것은 공식의 빈자리를 로그가 채우는 것이다.<sup class="fn"><a href="#fn-calc2-integrals-1">1</a></sup></p>
+
+          <h3><span class="no">3.1.2</span>원시함수 확인하기</h3>
+          <p>부정적분이 맞는지는 미분해 보면 바로 확인할 수 있다. \(\int \sin x\,dx\)의 후보로 \(\cos x\)를 떠올리기 쉽지만, \((\cos x)' = -\sin x\)이므로 부호가 틀렸다. 올바른 답 \(-\cos x\)를 미분하면 \(\sin x\)가 된다. 적분 결과를 미분하여 처음 함수가 나오는지 확인하는 습관이 실수를 막는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="미분과 적분이 서로 거꾸로인 관계">
+              <g class="s">
+                <rect x="40" y="35" width="150" height="40" class="lb"/><text x="115" y="60" text-anchor="middle">−cos x + C</text>
+                <rect x="330" y="35" width="150" height="40" class="lc"/><text x="405" y="60" text-anchor="middle">sin x</text>
+                <path d="M190 45 L330 45" class="k"/><path d="M330 45 l-8 -4 v8 Z" class="fk"/><text x="260" y="38" text-anchor="middle">미분</text>
+                <path d="M330 65 L190 65" class="k"/><path d="M190 65 l8 -4 v8 Z" class="fk"/><text x="260" y="88" text-anchor="middle">적분</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 적분한 결과를 미분하면 처음 함수로 돌아와야 한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>다음 정적분의 값을 구하여라. (1) \(\int_1^{e} \dfrac{x + 1}{x}\,dx\) (2) \(\int_0^{\pi} \sin x\,dx\) (3) \(\int_0^{1} (e^x + 2^x)\,dx\)</p>
+          </div>
+          <p>(1) \(\dfrac{x + 1}{x} = 1 + \dfrac{1}{x}\)이므로 \(\left[x + \ln x\right]_1^e = (e + 1) - (1 + 0) = e\)이다. (2) \(\left[-\cos x\right]_0^{\pi} = -\cos\pi + \cos 0 = 1 + 1 = 2\)이다. 사인 곡선의 한 봉우리 아래 넓이가 정확히 2라는 뜻이다.</p>
+          <p>(3) \(\left[e^x + \dfrac{2^x}{\ln 2}\right]_0^1 = (e - 1) + \dfrac{2 - 1}{\ln 2} = e - 1 + \dfrac{1}{\ln 2} \approx 1.718 + 1.443 = 3.161\)이다. 밑이 \(e\)가 아닌 지수함수는 \(\ln a\)로 나누어야 한다는 점에 주의한다.</p>
+          <p>아래 탐구 카드에서 \(x^n\)의 적분 공식이 \(n = -1\)에서 바뀌는 모습과, 여러 원시함수 후보를 미분으로 확인하는 과정을 직접 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-integrals-1">그래서 \(\ln x\)를 \(\ln x = \int_1^x \dfrac{1}{t}\,dt\)로 정의하기도 한다. 이렇게 정의하면 \(\ln(ab) = \ln a + \ln b\) 같은 로그의 성질도 넓이의 성질로 증명할 수 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>여러 가지 함수의 적분 공식은 도함수 공식을 거꾸로 읽어 얻으며, 결과를 미분하여 확인할 수 있다. \(x^n\)의 공식은 \(n = -1\)에서 쓸 수 없고, 그 자리를 \(\int \frac{1}{x}dx = \ln|x| + C\)가 채운다. 그래서 처음 질문의 \(y = \frac{1}{x}\) 아래 1에서 2까지의 넓이는 \(\ln 2 \approx 0.693\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-2.html#card-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?</a><a href="../../c/calc2/3-2.html#card-calc2-sub-bounds"><small class="mono">미적분Ⅱ 3.2</small>치환할 때 적분 구간도 바꾸어야 할까?</a><a href="../../c/calc2/3-2.html#text-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>치환적분법</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a></div></nav>
+
       <article class="card" id="card-calc2-xn-integral">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>\(x^n\)의 적분 공식은 \(n = -1\)에서 왜 멈출까?</h2><span class="kind">거듭제곱함수의 적분 · 조작</span>
+          <span class="no">탐구 1</span><h2>\(x^n\)의 적분 공식은 \(n = -1\)에서 왜 멈출까?</h2><span class="kind">거듭제곱함수의 적분 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,33 +134,33 @@
                 <div><dt>\(\frac{b^{n+1} - 1}{n + 1}\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>\(\ln b\)</dt><dd class="n-l">—</dd></div>
               </dl>
-              <p class="fig-note">그림을 끌면 위끝 \(b\)가 움직입니다. 첫 값은 칠한 넓이를 잘게 나누어 더한 값입니다(\(b &lt; 1\)이면 부호가 음수).</p>
+              <p class="fig-note">그림을 끌면 위끝 \(b\)가 움직인다. 첫 값은 칠한 넓이를 잘게 나누어 더한 값이다(\(b &lt; 1\)이면 부호가 음수).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)는 \(n\)이 정수가 아닌 실수일 때도 맞을까요? 그리고 분모가 0이 되는 \(n = -1\)이면 \(\frac{1}{x}\)의 넓이는 어떻게 구할까요?</li>
-            <li><span class="tag">복원</span>\(x &gt; 0\)이고 \(n\)이 실수이면 \((x^{n+1})' = (n + 1)x^n\)입니다. 또 \((\ln x)' = \frac{1}{x}\)입니다. 부정적분은 미분하면 피적분함수가 되는 함수입니다.</li>
-            <li><span class="tag">설명</span>\(n \ne -1\)이면 \(\frac{x^{n+1}}{n + 1}\)을 미분해 \(x^n\)이 되므로 <b>\(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)</b>입니다. 예를 들어 \(\int \sqrt{x}\,dx = (\frac{2}{3})x^{\frac{3}{2}} + C\), \(\int \frac{1}{x^2}\,dx = -\frac{1}{x} + C\)입니다. \(n = -1\)이면 이 식은 0으로 나누게 되어 쓸 수 없습니다. 대신 \((\ln x)' = \frac{1}{x}\)이므로 <b>\(\int \frac{1}{x}\,dx = \ln |x| + C\)</b>입니다. \(x &lt; 0\)에서도 \((\ln(-x))' = \frac{1}{x}\)이므로 절댓값을 씌웁니다.</li>
-            <li><span class="tag">연결</span>\(n\)이 \(-1\)에 가까워지면 \(\frac{b^{n+1} - 1}{n + 1}\)은 앞 단원의 극한 \(\frac{e^h - 1}{h} \to 1\)과 같은 꼴이 되어 \(\ln b\)로 다가갑니다. 그래서 \(\frac{1}{x}\)의 적분은 따로 떨어진 예외가 아니라 거듭제곱 적분이 이어지는 자리에 있습니다. \(\frac{1}{x}\)의 넓이로 자연로그를 정의하는 교재도 있습니다.</li>
-            <li><span class="tag">적용</span>\(n = -0.5\), \(b = 4\)에서 넓이가 2인지 확인하세요. 이어서 \(n\)을 \(-1.1\), \(-1.05\)로 옮기며 둘째 값과 \(\ln b\)를 비교하세요. \(n = -1\)을 누르면 둘째 값은 어떻게 되고, 넓이는 무엇과 같아지나요? \(b\)를 1보다 작게 하면 부호는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\int \frac{1}{x}\,dx = \frac{x^0}{0}\) 또는 \(-\frac{1}{x^2}\)이라고 쓰는 실수가 흔합니다. 앞의 것은 정의되지 않고, 뒤의 것은 \(\frac{1}{x}\)를 미분한 결과입니다. 또 \(\int_{-1}^1 \frac{1}{x^2}\,dx\)에 공식을 그대로 넣어 \(-2\)를 얻으면 안 됩니다. \(\frac{1}{x^2}\)은 \(x = 0\)에서 정의되지 않아 그 구간에서는 이 방법으로 정적분을 구할 수 없습니다.</li>
+            <li><span class="tag">질문</span>\(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)는 \(n\)이 정수가 아닌 실수일 때도 맞을까? 그리고 분모가 0이 되는 \(n = -1\)이면 \(\frac{1}{x}\)의 넓이는 어떻게 구할까?</li>
+            <li><span class="tag">복원</span>\(x &gt; 0\)이고 \(n\)이 실수이면 \((x^{n+1})' = (n + 1)x^n\)이고, \((\ln x)' = \frac{1}{x}\)이다. 그리고 부정적분은 미분하면 피적분함수가 되는 함수이다.</li>
+            <li><span class="tag">설명</span>\(n \ne -1\)이면 \(\frac{x^{n+1}}{n + 1}\)을 미분해 \(x^n\)이 되므로 \(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)이고, 예를 들어 \(\int \sqrt{x}\,dx = (\frac{2}{3})x^{\frac{3}{2}} + C\), \(\int \frac{1}{x^2}\,dx = -\frac{1}{x} + C\)이다. 그런데 \(n = -1\)이면 이 식은 0으로 나누게 되어 쓸 수 없다. 대신 \((\ln x)' = \frac{1}{x}\)이므로 \(\int \frac{1}{x}\,dx = \ln |x| + C\)이며, \(x &lt; 0\)에서도 \((\ln(-x))' = \frac{1}{x}\)이므로 절댓값을 씌운다.</li>
+            <li><span class="tag">연결</span>\(n\)이 \(-1\)에 가까워지면 \(\frac{b^{n+1} - 1}{n + 1}\)은 앞 단원의 극한 \(\frac{e^h - 1}{h} \to 1\)과 같은 꼴이 되어 \(\ln b\)로 다가간다. 그래서 \(\frac{1}{x}\)의 적분은 따로 떨어진 예외가 아니라 거듭제곱 적분이 이어지는 자리에 있으며, \(\frac{1}{x}\)의 넓이로 자연로그를 정의하는 교재도 있다.</li>
+            <li><span class="tag">적용</span>\(n = -0.5\), \(b = 4\)에서 넓이가 2인지 확인하고, \(n\)을 \(-1.1\), \(-1.05\)로 옮기며 둘째 값과 \(\ln b\)를 비교해 보자. 그리고 \(n = -1\)을 누르면 둘째 값이 어떻게 되고 넓이는 무엇과 같아지는지, \(b\)를 1보다 작게 하면 부호가 어떻게 되는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\int \frac{1}{x}\,dx = \frac{x^0}{0}\) 또는 \(-\frac{1}{x^2}\)이라고 쓰는 실수가 흔한데, 앞의 것은 정의되지 않고 뒤의 것은 \(\frac{1}{x}\)를 미분한 결과이다. 또 \(\int_{-1}^1 \frac{1}{x^2}\,dx\)에 공식을 그대로 넣어 \(-2\)를 얻으면 안 된다. \(\frac{1}{x^2}\)은 \(x = 0\)에서 정의되지 않아 그 구간에서는 이 방법으로 정적분을 구할 수 없기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_1^e (\frac{1}{x} + x)\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 + 1}{2}\)<span class="why"><b>맞습니다.</b> \([\ln x + \frac{x^2}{2}]_1^e = (1 + \frac{e^2}{2}) - (0 + \frac{1}{2}) = \frac{e^2 + 1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{e^2 - 1}{2}\)<span class="why"><b>\(\frac{1}{x}\)의 넓이를 빠뜨렸습니다.</b> \(x\)의 정적분만 구한 값입니다. \(\int_1^e \frac{1}{x}\,dx = \ln e - \ln 1 = 1\)을 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{x}\)는 거듭제곱 공식에서 0으로 나누므로 구할 수 없다<span class="why"><b>공식만 보고 멈추었습니다.</b> \(n = -1\)일 때는 \(\ln |x|\)가 부정적분입니다. 구간 \([1, e]\)에서 \(\frac{1}{x}\)는 연속이므로 정적분이 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 + 1}{2}\)<span class="why"><b>맞다.</b> \([\ln x + \frac{x^2}{2}]_1^e = (1 + \frac{e^2}{2}) - (0 + \frac{1}{2}) = \frac{e^2 + 1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{e^2 - 1}{2}\)<span class="why"><b>\(\frac{1}{x}\)의 넓이를 빠뜨렸다.</b> \(x\)의 정적분만 구한 값이다. \(\int_1^e \frac{1}{x}\,dx = \ln e - \ln 1 = 1\)을 더해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{x}\)는 거듭제곱 공식에서 0으로 나누므로 구할 수 없다<span class="why"><b>공식만 보고 멈추었다.</b> \(n = -1\)일 때는 \(\ln |x|\)가 부정적분이다. 구간 \([1, e]\)에서 \(\frac{1}{x}\)는 연속이므로 정적분이 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-2.html#card-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?</a><a href="../../c/calc2/3-2.html#card-calc2-sub-bounds"><small class="mono">미적분Ⅱ 3.2</small>치환할 때 적분 구간도 바꾸어야 할까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-choice"><small class="mono">미적분Ⅱ 3.3</small>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-2.html#card-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?</a><a href="../../c/calc2/3-2.html#card-calc2-sub-bounds"><small class="mono">미적분Ⅱ 3.2</small>치환할 때 적분 구간도 바꾸어야 할까?</a><a href="../../c/calc2/3-2.html#text-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>치환적분법</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a></div></nav>
 
       <article class="card" id="card-calc2-antideriv-check">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>어느 후보가 \(e^x\), \(\sin x\)의 진짜 원시함수일까?</h2><span class="kind">지수함수·삼각함수의 적분 · 조작</span>
+          <span class="no">탐구 2</span><h2>어느 후보가 \(e^x\), \(\sin x\)의 진짜 원시함수일까?</h2><span class="kind">지수함수·삼각함수의 적분 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,43 +183,44 @@
                 <div><dt>후보 \(F(b) - F(a)\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>판정</dt><dd class="n-ok">—</dd></div>
               </dl>
-              <p class="fig-note">초록은 \(x\)축 위, 주황은 아래쪽 넓이입니다. 후보를 하나 고르고 구간을 여러 번 바꾸어도 두 값이 늘 같은지 보세요.</p>
+              <p class="fig-note">초록은 \(x\)축 위, 주황은 아래쪽 넓이이다. 후보를 하나 고르고 구간을 여러 번 바꾸어도 두 값이 늘 같은지 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\int e^x\,dx\), \(\int 2^x\,dx\), \(\int \sin x\,dx\)를 구하라고 할 때, 그럴듯한 후보 중 어느 것이 맞는지 어떻게 가릴 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(F'(x) = f(x)\)이면 \(\int_a^b f(x)\,dx = F(b) - F(a)\)입니다. 또 \((e^x)' = e^x\), \((a^x)' = a^x \ln a\), \((\sin x)' = \cos x\), \((\cos x)' = -\sin x\), \((\tan x)' = \sec^2 x\)입니다.</li>
-            <li><span class="tag">설명</span>도함수 공식을 거꾸로 읽으면 다음을 얻습니다. <b>\(\int e^x\,dx = e^x + C\)</b>, <b>\(\int a^x\,dx = \frac{a^x}{\ln a} + C\)</b> \((a &gt; 0, a \ne 1)\), <b>\(\int \sin x\,dx = -\cos x + C\)</b>, <b>\(\int \cos x\,dx = \sin x + C\)</b>, <b>\(\int \sec^2 x\,dx = \tan x + C\)</b>, \(\int \csc^2 x\,dx = -\cot x + C\). 후보가 맞는지는 미분해 보면 알 수 있고, 그림에서는 \(F(b) - F(a)\)가 어떤 구간에서도 넓이와 같은지로 확인할 수 있습니다.</li>
-            <li><span class="tag">연결</span>적분 공식은 모두 미분 공식의 거울상입니다. 그래서 새 함수의 적분을 만날 때마다 "무엇을 미분하면 이것이 될까?"를 먼저 묻습니다. 바로 떠오르지 않는 함수는 다음 두 절의 치환적분법과 부분적분법으로 아는 꼴로 바꿉니다.</li>
-            <li><span class="tag">적용</span>\(e^x\)에서 두 후보를 번갈아 고르며 판정을 보세요. 틀린 후보도 어떤 구간에서는 우연히 넓이와 가까울 수 있을까요? \(2^x\)에서는 \(2^x\)을 그대로 쓰면 넓이와 몇 배 차이가 나나요? 그 배수는 \(\ln 2\)와 어떤 관계인가요? \(\sin x\)에서 \(a = 0\), \(b = 3.15\) 근처로 놓으면 넓이는 2에 가까워집니다.</li>
-            <li class="warn"><span class="tag">판단</span>\(\int e^x\,dx = \frac{e^{x+1}}{x + 1}\)처럼 거듭제곱 공식을 지수함수에 쓰는 실수가 흔합니다. 거듭제곱 공식은 밑이 변수이고 지수가 상수일 때만 씁니다. 또 \(\int \sin x\,dx = \cos x\)로 부호를 놓치기 쉽습니다. \(0 &lt; x &lt; \pi\)에서 \(\sin x &gt; 0\)이므로 원시함수는 증가해야 하는데 \(\cos x\)는 감소합니다.</li>
+            <li><span class="tag">질문</span>\(\int e^x\,dx\), \(\int 2^x\,dx\), \(\int \sin x\,dx\)를 구하라고 할 때, 그럴듯한 후보 중 어느 것이 맞는지 어떻게 가릴 수 있을까?</li>
+            <li><span class="tag">복원</span>\(F'(x) = f(x)\)이면 \(\int_a^b f(x)\,dx = F(b) - F(a)\)이다. 또 \((e^x)' = e^x\), \((a^x)' = a^x \ln a\), \((\sin x)' = \cos x\), \((\cos x)' = -\sin x\), \((\tan x)' = \sec^2 x\)이다.</li>
+            <li><span class="tag">설명</span>도함수 공식을 거꾸로 읽으면 \(\int e^x\,dx = e^x + C\), \(\int a^x\,dx = \frac{a^x}{\ln a} + C\) \((a &gt; 0, a \ne 1)\), \(\int \sin x\,dx = -\cos x + C\), \(\int \cos x\,dx = \sin x + C\), \(\int \sec^2 x\,dx = \tan x + C\), \(\int \csc^2 x\,dx = -\cot x + C\)를 얻는다. 후보가 맞는지는 미분해 보면 알 수 있고, 그림에서는 \(F(b) - F(a)\)가 어떤 구간에서도 넓이와 같은지로 확인할 수 있다.</li>
+            <li><span class="tag">연결</span>적분 공식은 모두 미분 공식의 거울상이다. 그래서 새 함수의 적분을 만날 때마다 무엇을 미분하면 이것이 될지를 먼저 묻고, 바로 떠오르지 않는 함수는 다음 두 절의 치환적분법과 부분적분법으로 아는 꼴로 바꾼다.</li>
+            <li><span class="tag">적용</span>\(e^x\)에서 두 후보를 번갈아 고르며 판정을 보고, 틀린 후보도 어떤 구간에서는 우연히 넓이와 가까울 수 있는지 생각해 보자. \(2^x\)에서는 \(2^x\)을 그대로 쓰면 넓이와 몇 배 차이가 나는지, 그 배수가 \(\ln 2\)와 어떤 관계인지 보자. \(\sin x\)에서 \(a = 0\), \(b = 3.15\) 근처로 놓으면 넓이는 2에 가까워진다.</li>
+            <li class="warn"><span class="tag">판단</span>\(\int e^x\,dx = \frac{e^{x+1}}{x + 1}\)처럼 거듭제곱 공식을 지수함수에 쓰는 실수가 흔한데, 거듭제곱 공식은 밑이 변수이고 지수가 상수일 때만 쓴다. 또 \(\int \sin x\,dx = \cos x\)로 부호를 놓치기 쉽다. \(0 &lt; x &lt; \pi\)에서 \(\sin x &gt; 0\)이므로 원시함수는 증가해야 하는데 \(\cos x\)는 감소하기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_0^{\frac{\pi}{2}} (\sin x + e^x)\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(e^{\frac{\pi}{2}}\)<span class="why"><b>맞습니다.</b> 원시함수 \(-\cos x + e^x\)에 넣으면 \((0 + e^{\frac{\pi}{2}}) - (-1 + 1) = e^{\frac{\pi}{2}}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e^{\frac{\pi}{2}} - 2\)<span class="why"><b>\(\sin x\)의 원시함수를 \(\cos x\)로 썼습니다.</b> 그러면 \((0 + e^{\frac{\pi}{2}}) - (1 + 1)\)이 됩니다. \(\cos x\)를 미분하면 \(-\sin x\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(e^{\frac{\pi}{2}} + 1\)<span class="why"><b>아래끝에서 \(e^0\)을 빠뜨렸습니다.</b> \(F(0)\)을 \(-\cos 0 = -1\)로만 계산하면 이렇게 됩니다. \(e^0 = 1\)도 \(F(0)\)에 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(e^{\frac{\pi}{2}} - 1\)<span class="why"><b>아래끝에서 \(-\cos 0\)을 빠뜨렸습니다.</b> \(e^0 = 1\)만 빼면 이 값이 됩니다. \(F(0) = -1 + 1 = 0\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(e^{\frac{\pi}{2}}\)<span class="why"><b>맞다.</b> 원시함수 \(-\cos x + e^x\)에 넣으면 \((0 + e^{\frac{\pi}{2}}) - (-1 + 1) = e^{\frac{\pi}{2}}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e^{\frac{\pi}{2}} - 2\)<span class="why"><b>\(\sin x\)의 원시함수를 \(\cos x\)로 썼다.</b> 그러면 \((0 + e^{\frac{\pi}{2}}) - (1 + 1)\)이 된다. \(\cos x\)를 미분하면 \(-\sin x\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(e^{\frac{\pi}{2}} + 1\)<span class="why"><b>아래끝에서 \(e^0\)을 빠뜨렸다.</b> \(F(0)\)을 \(-\cos 0 = -1\)로만 계산하면 이렇게 된다. \(e^0 = 1\)도 \(F(0)\)에 들어간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(e^{\frac{\pi}{2}} - 1\)<span class="why"><b>아래끝에서 \(-\cos 0\)을 빠뜨렸다.</b> \(e^0 = 1\)만 빼면 이 값이 된다. \(F(0) = -1 + 1 = 0\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-2.html#card-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?</a><a href="../../c/calc2/3-2.html#card-calc2-sub-bounds"><small class="mono">미적분Ⅱ 3.2</small>치환할 때 적분 구간도 바꾸어야 할까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a><a href="../../c/calc2/3-3.html#card-calc2-parts-choice"><small class="mono">미적분Ⅱ 3.3</small>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-2.html#card-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>속함수를 u로 바꾸면 넓이는 어디로 옮겨 갈까?</a><a href="../../c/calc2/3-2.html#card-calc2-sub-bounds"><small class="mono">미적분Ⅱ 3.2</small>치환할 때 적분 구간도 바꾸어야 할까?</a><a href="../../c/calc2/3-2.html#text-calc2-substitution"><small class="mono">미적분Ⅱ 3.2</small>치환적분법</a><a href="../../c/calc2/3-3.html#card-calc2-parts-area"><small class="mono">미적분Ⅱ 3.3</small>넓이 두 조각을 합치면 왜 직사각형이 될까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">52문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-3-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">53문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -171,6 +228,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/xn-integral.js"></script>

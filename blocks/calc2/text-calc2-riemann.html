@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "3-4",
+  "short": "본문 · 정적분과 급수의 합"
+}
+-->
+<article class="card reading" id="text-calc2-riemann" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>정적분과 급수의 합</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\(\lim_{n \to \infty} \dfrac{1}{n}\left\{\left(\dfrac{1}{n}\right)^2 + \left(\dfrac{2}{n}\right)^2 + \cdots + \left(\dfrac{n}{n}\right)^2\right\}\)을 구하라는 문제가 있다. 제곱수의 합 공식으로 계산할 수도 있지만, 이 식을 가만히 보면 폭이 \(\dfrac{1}{n}\)인 막대 \(n\)개의 넓이를 더한 것처럼 생겼다. 합의 극한을 넓이로, 곧 정적분으로 읽을 수 있다면 계산이 훨씬 간단해지지 않을까?</p>
+    <figure class="q-fig" data-q="calc2-riemann">
+      <svg viewBox="0 0 520 230" role="img" aria-label="y = x² 아래를 n개의 직사각형으로 채운 넓이의 합"></svg>
+      <div class="q-ctl"><label>직사각형의 수 \(n\) <input type="range" data-k="n" min="2" max="60" step="1" value="6"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 구간 \([0, 1]\)을 \(n\)등분하고 각 소구간의 오른쪽 끝 높이 \(\left(\dfrac{k}{n}\right)^2\)으로 직사각형을 세운다. \(n\)이 커질수록 넓이의 합이 \(\int_0^1 x^2\,dx = \dfrac{1}{3}\)에 다가간다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합의 기호 \(\sum\)와 자연수의 거듭제곱의 합(대수), 수열의 극한(<a href="1-2.html">수열의 극한의 성질</a>), 정적분과 넓이(미적분Ⅰ).</div>
+
+    <h3><span class="no">3.4.1</span>구분구적법</h3>
+    <p>구간 \([a, b]\)를 \(n\)등분하면 소구간의 폭은 \(\Delta x = \dfrac{b - a}{n}\)이고, \(k\)번째 오른쪽 끝은 \(x_k = a + k\Delta x\)이다. 높이 \(f(x_k)\)인 직사각형의 넓이를 모두 더한 \(\sum_{k=1}^{n} f(x_k)\Delta x\)는 곡선 아래 넓이의 근삿값이다. \(n\)을 한없이 키우면 막대가 가늘어지며 근삿값이 넓이에 한없이 가까워진다. 이렇게 넓이를 구하는 방법을 구분구적법이라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">정적분과 급수의 합</span></span>
+      <p>함수 \(f(x)\)가 구간 \([a, b]\)에서 연속이면 \[\lim_{n \to \infty} \sum_{k=1}^{n} f\!\left(a + \frac{b - a}{n}k\right)\frac{b - a}{n} = \int_a^b f(x)\,dx\]</p>
+    </div>
+    <p>그림 1에서 \(n\)을 늘려 보자. \(n = 6\)이면 합은 약 0.42로 \(\dfrac{1}{3}\)보다 크지만, \(n = 60\)이면 약 0.342로 줄어든다. 직사각형이 곡선 위로 삐져나온 조각이 점점 작아지기 때문이다.<sup class="fn"><a href="#fn-calc2-riemann-1">1</a></sup></p>
+
+    <h3><span class="no">3.4.2</span>합을 정적분으로 읽는 요령</h3>
+    <p>주어진 합에서 \(\dfrac{1}{n}\)을 \(dx\), \(\dfrac{k}{n}\)을 \(x\)로 바꾸어 읽는다. \(\dfrac{k}{n}\)이 \(k = 1\)일 때 \(\dfrac{1}{n} \to 0\), \(k = n\)일 때 1이므로 적분 구간은 \([0, 1]\)이다. \(\dfrac{2k}{n}\)처럼 쓰여 있으면 \(x = \dfrac{2k}{n}\), \(dx = \dfrac{2}{n}\)으로 보아 구간을 \([0, 2]\)로 읽을 수도 있다. 같은 합을 여러 정적분으로 읽을 수 있지만 값은 같다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="합의 기호를 정적분으로 바꾸어 읽는 대응">
+        <g class="s">
+          <text x="30" y="30">합</text><text x="200" y="30">정적분</text>
+          <line x1="20" y1="38" x2="360" y2="38" class="gd"/>
+          <text x="30" y="60">lim Σ (k = 1 ~ n)</text><text x="200" y="60">∫ (0 ~ 1)</text>
+          <text x="30" y="82">k / n</text><text x="200" y="82">x</text>
+          <text x="30" y="104">1 / n</text><text x="200" y="104">dx</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. \(\sum\)는 \(\int\)로, \(\dfrac{k}{n}\)은 \(x\)로, \(\dfrac{1}{n}\)은 \(dx\)로 바꾸어 읽는다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+      <p>\(\lim_{n \to \infty} \sum_{k=1}^{n} \dfrac{1}{n + k}\)의 값을 구하여라.</p>
+    </div>
+    <p>\(\dfrac{1}{n + k} = \dfrac{1}{n} \cdot \dfrac{1}{1 + \frac{k}{n}}\)이다. \(\dfrac{k}{n}\)을 \(x\), \(\dfrac{1}{n}\)을 \(dx\)로 읽으면 구간은 \([0, 1]\)이고 함수는 \(\dfrac{1}{1 + x}\)이다.</p>
+    <p>따라서 \[\lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{n + k} = \int_0^1 \frac{1}{1 + x}\,dx = \Big[\ln(1 + x)\Big]_0^1 = \ln 2 \approx 0.693\] 이다. \(n = 100\)으로 직접 더하면 약 0.6907로, \(\ln 2\)에 가깝다. 이 합은 \(\dfrac{1}{n+1} + \cdots + \dfrac{1}{2n}\)으로, 조화급수의 한 토막이다. 이렇게 공식으로 계산하기 어려운 합도 정적분으로 읽으면 쉽게 구할 수 있다.</p>
+    <p>아래 탐구 카드에서 합의 극한을 넓이로 읽고, 같은 합을 서로 다른 정적분으로 읽어 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-riemann-1">제곱수의 합 공식으로 직접 계산하면 \(\dfrac{1}{n^3} \cdot \dfrac{n(n+1)(2n+1)}{6} = \dfrac{(n+1)(2n+1)}{6n^2}\)이고, \(n \to \infty\)이면 \(\dfrac{2}{6} = \dfrac{1}{3}\)이다. 정적분과 같은 값이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>구간을 \(n\)등분한 직사각형 넓이의 합 \(\sum f(x_k)\Delta x\)는 \(n \to \infty\)일 때 정적분 \(\int_a^b f(x)dx\)가 된다. 거꾸로 합의 극한에서 \(\frac{k}{n}\)을 \(x\), \(\frac{1}{n}\)을 \(dx\)로 읽으면 정적분으로 바꾸어 계산할 수 있다. 그래서 처음 질문의 합의 극한은 \(\int_0^1 x^2dx = \frac{1}{3}\)이다.</p></div>
+  </div>
+</article>

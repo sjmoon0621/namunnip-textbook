@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>오실로스코프와 함수 발생기 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="오실로스코프와 함수 발생기의 원리와 사용법을 익히고, 시간에 따라 변하는 전압 신호의 주기·진동수·최댓값과 실효값을 측정한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-labphy-scope .sc-sel { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 6px 0; }
     #card-labphy-scope .sc-sel label { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); }
@@ -44,17 +50,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-labphy-scope"><span class="mono">1.3.1</span>화면의 눈금 칸만 세어서 신호의 진동수와 전압을 알 수 있을까?</a></li>
+        <li><a href="#text-labphy-divisions"><span class="mono">본문</span>오실로스코프와 함수 발생기</a></li>
+        <li><a href="#card-labphy-scope"><span class="mono">탐구 1</span>화면의 눈금 칸만 세어서 신호의 진동수와 전압을 알 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labphy-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labphy&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">6문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labphy-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labphy-divisions" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>오실로스코프와 함수 발생기</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">함수 발생기로 사인파 전압을 만들어 멀티미터의 교류 단자에 연결하니 3.1 V가 나왔다. 같은 신호를 오실로스코프에 넣자 화면의 물결이 위아래로 4.4칸에 걸쳐 그려졌고, 화면 옆에는 2 V/칸이라고 적혀 있다. 칸 수에 2 V를 곱하면 8.8 V인데, 어느 쪽이 맞을까? 그리고 화면에 그려진 물결의 가로 길이에서 진동수는 어떻게 읽어 낼까?</p>
+          <figure class="q-fig" data-q="lp-scope">
+            <svg viewBox="0 0 520 220" role="img" aria-label="수직 감도와 시간축 설정에 따른 오실로스코프 화면"></svg>
+            <div class="q-ctl"><label>수직 감도 (V/칸) <input type="range" data-k="vd" min="0.5" max="5" step="0.5" value="1"><output data-k="vd"></output></label><label>시간축 (ms/칸) <input type="range" data-k="td" min="0.1" max="1" step="0.1" value="0.2"><output data-k="td"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 진폭 3 V, 진동수 1 kHz인 사인파를 여러 설정으로 본 화면. 신호는 그대로인데 설정에 따라 물결의 높이와 폭이 달라진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>주기와 진동수 \(f = 1/T\), 교류 전압의 봉우리값과 실횻값, 측정 도구의 분해능(<a href="1-1.html">정확도·정밀도와 오차의 전파</a>).</div>
+
+          <h3><span class="no">1.3.1</span>화면은 전압과 시간의 그래프이다</h3>
+          <p>오실로스코프의 화면은 가로가 시간, 세로가 전압인 그래프이다. 화면에는 가로 10칸, 세로 8칸의 격자가 그려져 있고, 한 칸이 얼마인지는 사용자가 두 손잡이로 정한다. 세로 한 칸이 나타내는 전압을 수직 감도(V/칸), 가로 한 칸이 나타내는 시간을 시간축(s/칸)이라 한다. 그래서 화면에서 칸 수를 세어 수직 감도를 곱하면 전압이 되고, 시간축을 곱하면 시간이 된다. 함수 발생기는 사인파, 사각파, 삼각파를 원하는 진동수와 진폭으로 만들어 회로에 넣어 주는 장치이고, 오실로스코프로 그 출력을 확인하며 쓴다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">화면 읽기</span></span>
+            <p>물결의 봉우리에서 골까지가 \(N_V\)칸, 한 주기가 \(N_T\)칸이면 \[V_{pp} = N_V \times (\text{V/칸}), \qquad T = N_T \times (\text{s/칸}), \qquad f = \frac{1}{T}\]이다. 사인파의 진폭(봉우리값)은 \(V_0 = V_{pp}/2\)이고, 실횻값은 \(V_{\text{rms}} = V_0/\sqrt{2}\)이다.</p>
+          </div>
+          <p>멀티미터의 교류 전압은 실횻값을 보여 준다. 실횻값은 같은 저항에서 같은 열을 내는 직류 전압이고, 전기 기구에 적힌 220 V도 실횻값이다. 그래서 처음 질문의 두 값은 서로 다른 것을 잰 것이며 모두 맞을 수 있다. 화면의 8.8 V는 봉우리에서 골까지의 전압이고, 진폭은 그 절반인 4.4 V, 실횻값은 \(4.4/\sqrt{2} \approx 3.1\) V이다.</p>
+
+          <h3><span class="no">1.3.2</span>설정을 고르는 법</h3>
+          <p>그림 1에서 두 손잡이를 돌려 보자. 수직 감도를 0.5 V/칸으로 낮추면 진폭 3 V의 신호는 6칸이 되어 화면 위아래로 잘려 나간다. 5 V/칸으로 올리면 물결이 0.6칸 높이로 납작해져 칸 수를 읽기 어렵다. 시간축도 1 ms/칸이면 화면에 물결 10개가 빽빽이 들어차고, 0.1 ms/칸이면 한 주기도 다 보이지 않는다. 눈으로 칸을 읽을 때는 작은 눈금의 절반쯤, 곧 0.1칸에서 0.2칸 정도가 오차가 된다. 그래서 같은 읽기 오차의 비중을 줄이려면, 물결이 화면 세로의 대부분을 채우고 가로로 두세 주기가 보이도록 설정을 고른다.<sup class="fn"><a href="#fn-labphy-divisions-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="설정에 따른 읽기 오차">
+              <g class="s">
+                <text x="20" y="22">설정</text><text x="180" y="22">봉우리에서 골까지</text><text x="370" y="22">±0.2칸의 비중</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">5 V/칸</text><text x="180" y="52">1.2칸</text><text x="370" y="52">17%</text>
+                <text x="20" y="74">2 V/칸</text><text x="180" y="74">3.0칸</text><text x="370" y="74">7%</text>
+                <text x="20" y="96">1 V/칸</text><text x="180" y="96">6.0칸</text><text x="370" y="96">3%</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 진폭 3 V인 신호를 읽을 때, 화면을 크게 채우는 설정일수록 같은 읽기 오차의 비중이 작다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>처음 질문의 화면에서 시간축은 0.5 ms/칸이고, 한 주기가 4.0칸이다. 신호의 진동수, 진폭, 실횻값을 구하여라. 칸을 ±0.2칸 오차로 읽는다면 진동수의 상대 오차는 얼마이고, 두 주기를 한꺼번에 재면 어떻게 되는가?</p>
+          </div>
+          <p>주기는 \(T = 4.0 \times 0.5 = 2.0\) ms이므로 진동수는 \(f = 1/0.0020 = 500\) Hz이다. 봉우리에서 골까지 \(4.4 \times 2 = 8.8\) V이므로 진폭은 4.4 V, 실횻값은 \(4.4 / 1.414 \approx 3.1\) V로 멀티미터의 값과 맞는다.</p>
+          <p>한 주기 4.0칸을 ±0.2칸으로 읽으면 주기의 상대 오차는 \(0.2/4.0 = 5\)%이고, 진동수도 5% 틀린다. 두 주기 8.0칸을 한꺼번에 재면 양 끝을 읽는 오차는 그대로이므로 \(0.2/8.0 = 2.5\)%로 절반이 된다. 전압도 마찬가지여서 1 V/칸으로 바꾸면 8.8칸이 화면을 넘으므로, 2 V/칸이 이 신호에 맞는 설정이다. 즉 화면 읽기의 오차는 칸 수 자체보다 읽는 길이에 대한 비율로 정해진다.</p>
+          <p>아래 탐구 카드에서 함수 발생기의 신호를 오실로스코프로 보며, 설정을 바꾸어 진동수와 전압을 읽어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labphy-divisions-1">처음의 오실로스코프는 1897년 브라운이 만든 음극선관을 썼다. 전자빔을 전압으로 휘게 하여 형광 화면 위에 신호의 모양을 그렸기 때문에, 지금도 화면 위의 선을 빔이라 부르기도 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>오실로스코프 화면은 세로가 전압, 가로가 시간인 그래프이고, 칸 수에 수직 감도와 시간축을 곱해 전압과 주기를 읽으며 진동수는 주기의 역수이다. 사인파의 봉우리에서 골까지의 전압은 진폭의 두 배, 진폭은 실횻값의 \(\sqrt{2}\)배이고, 읽기 오차를 줄이려면 물결이 화면을 크게 채우도록 설정한다. 처음 질문의 8.8 V는 봉우리에서 골까지의 전압이고, 멀티미터의 3.1 V는 같은 신호의 실횻값이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-3.html#card-labphy-rc"><small class="mono">고급 물리학 2.3</small>축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?</a><a href="../../c/labphy/3-8.html#text-labphy-time-constant"><small class="mono">물리학 실험 3.8</small>RC·RL 회로의 시간 상수</a><a href="../../c/labphy/3-10.html#card-labphy-rectifier"><small class="mono">물리학 실험 3.10</small>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</a></div></nav>
+
       <article class="card" id="card-labphy-scope">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>화면의 눈금 칸만 세어서 신호의 진동수와 전압을 알 수 있을까?</h2><span class="kind">실험 · 오실로스코프 · 함수 발생기 · 주기와 실효값</span>
+          <span class="no">탐구 1</span><h2>화면의 눈금 칸만 세어서 신호의 진동수와 전압을 알 수 있을까?</h2><span class="kind">실험 · 오실로스코프 · 함수 발생기 · 주기와 실효값</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -87,47 +144,51 @@
               <div class="tbl-host"></div>
               <canvas class="cv-plot" aria-label="화면에서 차지한 칸 수에 따른 측정값과 눈금값의 비 그래프"></canvas>
               <dl class="nums"><div><dt>마지막 f</dt><dd class="n-f">—</dd></div><div><dt>마지막 V<sub>pp</sub></dt><dd class="n-v">—</dd></div><div><dt>마지막 V<sub>rms</sub></dt><dd class="n-r">—</dd></div></dl>
-              <p class="fig-note">함수 발생기의 눈금은 대략값입니다(진동수 ±3%, 진폭 ±5% 안팎으로 어긋나 있음). 눈으로 칸을 읽으면 작은 눈금(0.2칸)의 절반인 ±0.1칸쯤 오차가 납니다. XY 모드에서 세로축(CH2)에는 500 Hz 사인파 기준 신호가 들어갑니다.</p>
+              <p class="fig-note">함수 발생기의 눈금은 대략값이다(진동수 ±3%, 진폭 ±5% 안팎으로 어긋나 있음). 눈으로 칸을 읽으면 작은 눈금(0.2칸)의 절반인 ±0.1칸쯤 오차가 난다. XY 모드에서 세로축(CH2)에는 500 Hz 사인파 기준 신호가 들어간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>함수 발생기 눈금에 "1 kHz, 4 V"라고 적혀 있어도 실제로 나오는 신호가 꼭 그 값인지는 알 수 없습니다. 오실로스코프 화면의 칸 수만으로 신호의 주기·진동수, 봉우리–골 전압(V<sub>pp</sub>), 실효값(V<sub>rms</sub>)을 정확히 잴 수 있을까요?</li>
-            <li><span class="tag">복원</span>오실로스코프 화면은 가로 10칸, 세로 8칸입니다. 가로 한 칸이 나타내는 시간이 <em>TIME/DIV</em>, 세로 한 칸이 나타내는 전압이 <em>VOLTS/DIV</em>입니다. 따라서 주기 T = (한 주기의 칸 수) × TIME/DIV, V<sub>pp</sub> = (세로 칸 수) × VOLTS/DIV이고, 진동수는 f = 1/T입니다. <em>트리거</em>는 신호가 정한 전압(트리거 레벨)을 올라가며 지나는 순간마다 화면을 같은 자리에서 다시 그리게 해서 파형을 멈춰 보이게 합니다.</li>
-            <li><span class="tag">설계</span>함수 발생기 출력을 CH1에 연결하고, 파형이 화면을 크게 채우도록 VOLTS/DIV와 TIME/DIV를 고릅니다. 한 주기가 2칸 이상, 세로 폭이 4칸 이상이면 읽기 오차가 작아집니다. 파형이 흘러가면 트리거 레벨을 파형 범위 안으로 옮깁니다. 직류 성분을 빼고 교류 부분만 보려면 AC 결합을, 0 V 기준선 위치를 확인하려면 GND를 씁니다.</li>
-            <li><span class="tag">분석</span>실효값은 같은 저항에서 같은 열을 내는 직류 전압입니다. 오프셋이 0일 때 사인파는 V<sub>rms</sub> = V<sub>pp</sub>/(2√2), 사각파는 V<sub>pp</sub>/2, 삼각파는 V<sub>pp</sub>/(2√3)입니다. 칸 읽기 오차는 ±0.1칸으로 일정하므로 상대 오차는 0.1/(칸 수)입니다. 그래프는 측정값을 눈금값으로 나눈 비를 차지한 칸 수에 대해 그린 것입니다. 칸을 많이 차지할수록 오차 막대가 짧아지고, 점들이 1이 아닌 어떤 값으로 모인다면 그만큼 눈금이 어긋나 있다는 뜻입니다.</li>
-            <li><span class="tag">측정</span>같은 신호를 TIME/DIV, VOLTS/DIV를 바꿔 가며 세 번 이상 기록하고, 어떤 설정의 값이 함수 발생기 눈금과 가장 잘 맞는지 비교하세요. 오프셋을 2 V로 올리고 DC와 AC 결합에서 파형의 위치를 비교해 보세요. XY 모드에서 진동수를 바꿔 1:1, 2:1 모양(리사주 도형)이 멈추는 진동수를 찾아 보세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>오실로스코프 측정값과 함수 발생기 눈금이 다르면, 대개 눈금 쪽이 대략값이기 때문입니다. 칸 읽기는 우연 오차, 프로브 감쇠(×10)를 설정에 반영하지 않는 것은 계통 오차입니다. 가정용 220 V 콘센트 전압을 일반 프로브로 직접 재면 안 됩니다. 프로브의 접지 집게는 회로의 접지에만 연결하고, 장비의 최대 입력 전압을 넘기지 않습니다.</li>
+            <li><span class="tag">탐구 문제</span>함수 발생기 눈금에 "1 kHz, 4 V"라고 적혀 있어도 실제로 나오는 신호가 꼭 그 값인지는 알 수 없다. 오실로스코프 화면의 칸 수만으로 신호의 주기·진동수, 봉우리–골 전압(V<sub>pp</sub>), 실효값(V<sub>rms</sub>)을 정확히 잴 수 있을까?</li>
+            <li><span class="tag">복원</span>오실로스코프 화면은 가로 10칸, 세로 8칸이다. 가로 한 칸이 나타내는 시간이 <em>TIME/DIV</em>, 세로 한 칸이 나타내는 전압이 <em>VOLTS/DIV</em>이다. 따라서 주기 T = (한 주기의 칸 수) × TIME/DIV, V<sub>pp</sub> = (세로 칸 수) × VOLTS/DIV이고, 진동수는 f = 1/T이다. <em>트리거</em>는 신호가 정한 전압(트리거 레벨)을 올라가며 지나는 순간마다 화면을 같은 자리에서 다시 그리게 해서 파형을 멈춰 보이게 한다.</li>
+            <li><span class="tag">설계</span>함수 발생기 출력을 CH1에 연결하고, 파형이 화면을 크게 채우도록 VOLTS/DIV와 TIME/DIV를 고른다. 한 주기가 2칸 이상, 세로 폭이 4칸 이상이면 읽기 오차가 작아진다. 파형이 흘러가면 트리거 레벨을 파형 범위 안으로 옮긴다. 직류 성분을 빼고 교류 부분만 보려면 AC 결합을, 0 V 기준선 위치를 확인하려면 GND를 쓴다.</li>
+            <li><span class="tag">분석</span>실효값은 같은 저항에서 같은 열을 내는 직류 전압이다. 오프셋이 0일 때 사인파는 V<sub>rms</sub> = V<sub>pp</sub>/(2√2), 사각파는 V<sub>pp</sub>/2, 삼각파는 V<sub>pp</sub>/(2√3)이다. 칸 읽기 오차는 ±0.1칸으로 일정하므로 상대 오차는 0.1/(칸 수)이다. 그래프는 측정값을 눈금값으로 나눈 비를 차지한 칸 수에 대해 그린 것이다. 칸을 많이 차지할수록 오차 막대가 짧아지고, 점들이 1이 아닌 어떤 값으로 모인다면 그만큼 눈금이 어긋나 있다는 뜻이다.</li>
+            <li><span class="tag">측정</span>같은 신호를 TIME/DIV, VOLTS/DIV를 바꿔 가며 세 번 이상 기록하고, 어떤 설정의 값이 함수 발생기 눈금과 가장 잘 맞는지 비교해 보자. 오프셋을 2 V로 올리고 DC와 AC 결합에서 파형의 위치를 비교해 보자. XY 모드에서 진동수를 바꿔 1:1, 2:1 모양(리사주 도형)이 멈추는 진동수를 찾아 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>오실로스코프 측정값과 함수 발생기 눈금이 다르면, 대개 눈금 쪽이 대략값이기 때문이다. 칸 읽기는 우연 오차, 프로브 감쇠(×10)를 설정에 반영하지 않는 것은 계통 오차이다. 가정용 220 V 콘센트 전압을 일반 프로브로 직접 재면 안 된다. 프로브의 접지 집게는 회로의 접지에만 연결하고, 장비의 최대 입력 전압을 넘기지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">TIME/DIV = 0.5 ms, VOLTS/DIV = 2 V일 때 사인파 한 주기가 가로 4.0칸, 봉우리에서 골까지 세로 3.0칸을 차지했습니다. 이 신호에 대한 설명으로 옳은 것은?</p>
+          <p class="q">TIME/DIV = 0.5 ms, VOLTS/DIV = 2 V일 때 사인파 한 주기가 가로 4.0칸, 봉우리에서 골까지 세로 3.0칸을 차지했다. 이 신호에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>진동수는 2 kHz, V<sub>pp</sub>는 6 V이다<span class="why"><b>주기를 잘못 계산했습니다.</b> T = 4.0 × 0.5 ms = 2.0 ms이므로 f = 1/T = 500 Hz입니다. 칸 수의 역수를 진동수로 착각하기 쉽습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>진동수는 500 Hz, 실효값은 약 2.1 V이다<span class="why"><b>맞습니다.</b> V<sub>pp</sub> = 3.0 × 2 V = 6.0 V, 사인파의 실효값은 6.0/(2√2) ≈ 2.1 V입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>실효값은 6 V이다<span class="why"><b>V<sub>pp</sub>와 실효값을 혼동했습니다.</b> 6 V는 봉우리–골 전압입니다. 멀티미터의 교류 전압 측정은 실효값을 보여 주므로 약 2.1 V가 나옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>진동수는 2 kHz, V<sub>pp</sub>는 6 V이다<span class="why"><b>주기를 잘못 계산했다.</b> T = 4.0 × 0.5 ms = 2.0 ms이므로 f = 1/T = 500 Hz이다. 칸 수의 역수를 진동수로 착각하기 쉽다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>진동수는 500 Hz, 실효값은 약 2.1 V이다<span class="why"><b>맞다.</b> V<sub>pp</sub> = 3.0 × 2 V = 6.0 V, 사인파의 실효값은 6.0/(2√2) ≈ 2.1 V이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>실효값은 6 V이다<span class="why"><b>V<sub>pp</sub>와 실효값을 혼동했다.</b> 6 V는 봉우리–골 전압이다. 멀티미터의 교류 전압 측정은 실효값을 보여 주므로 약 2.1 V가 나온다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-2.html#card-is1-units"><small class="mono">통합과학1 1.2</small>모든 단위는 7개로 만들어질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-3.html#card-labphy-rc"><small class="mono">고급 물리학 2.3</small>축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?</a><a href="../../c/labphy/3-10.html#card-labphy-rectifier"><small class="mono">물리학 실험 3.10</small>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-3.html#card-labphy-rc"><small class="mono">고급 물리학 2.3</small>축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?</a><a href="../../c/labphy/3-8.html#text-labphy-time-constant"><small class="mono">물리학 실험 3.8</small>RC·RL 회로의 시간 상수</a><a href="../../c/labphy/3-10.html#card-labphy-rectifier"><small class="mono">물리학 실험 3.10</small>교류를 매끈한 직류로 바꾸려면 다이오드 말고 무엇이 더 필요할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labphy-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labphy&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">6문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/labphy/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/labphy/scope.js"></script>
 </body>

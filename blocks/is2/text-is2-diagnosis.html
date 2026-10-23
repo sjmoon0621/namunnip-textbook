@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/is2/body.js"],
+  "sec": "3-1",
+  "short": "본문 · 감염병 진단"
+}
+-->
+<article class="card reading" id="text-is2-diagnosis" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>감염병 진단</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">감염된 사람의 95%를 양성으로 찾아내고, 감염되지 않은 사람의 98%를 음성으로 판정하는 검사가 있다. 꽤 정확해 보인다. 그런데 감염자가 1%뿐인 지역에서 이 검사로 양성이 나온 사람이 실제로 감염되었을 확률은 얼마일까? 95%일까?</p>
+    <figure class="q-fig" data-q="is2-bayes">
+      <svg viewBox="0 0 520 260" role="img" aria-label="1000명을 감염자와 비감염자로 나누고 검사 결과에 따라 칸을 칠한 그림"></svg>
+      <div class="q-ctl"><label>감염자 비율(%) <input type="range" data-k="p" min="1" max="30" step="1" value="1"><output data-k="p"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 감염자가 드물면 비감염자 가운데 2%의 거짓 양성이 진짜 양성보다 많아질 수 있다(민감도 95%, 특이도 98%, 1000명).</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>DNA의 염기 짝(<a href="../is1/3-6.html">유전자와 단백질</a>), 10의 거듭제곱, 비율과 백분율.</div>
+
+    <h3><span class="no">3.1.1</span>아주 적은 바이러스를 찾는 방법</h3>
+    <p>콧속을 문지른 면봉에 묻은 바이러스는 너무 적어서 그대로는 찾을 수 없다. 그래서 바이러스의 유전 물질에서 특정한 부분만 골라 복제해 늘린다. 이것이 중합 효소 연쇄 반응(PCR)이다. 온도를 올려 DNA 두 가닥을 떼어 놓고, 온도를 낮추어 찾으려는 부분의 양 끝에 짧은 프라이머를 붙인 뒤, 효소로 나머지를 이어 붙인다. 이 한 번의 순환마다 목표 DNA가 두 배가 된다.</p>
+    <p>두 배씩 늘어나므로 30번 순환하면 \(2^{30} \approx 10^9\)배, 곧 약 10억 배가 된다. 처음에 바이러스 유전 물질이 몇 개뿐이어도 30번이면 형광 신호로 잴 수 있을 만큼 많아진다. 반면 신속 항원 검사는 바이러스의 단백질을 항체로 직접 잡아 줄을 나타내므로 빠르지만, 늘리는 과정이 없어 바이러스가 적으면 놓치기 쉽다.<sup class="fn"><a href="#fn-is2-diagnosis-1">1</a></sup></p>
+
+    <h3><span class="no">3.1.2</span>검사의 정확도를 나타내는 두 수</h3>
+    <div class="tb-env"><span class="lb">정의 3.1.1 <span class="nm">민감도와 특이도</span></span>
+      <p>민감도는 실제 감염자 가운데 검사가 양성으로 판정하는 비율이고, 특이도는 실제 비감염자 가운데 검사가 음성으로 판정하는 비율이다. 감염자를 음성으로 판정하면 거짓 음성, 비감염자를 양성으로 판정하면 거짓 양성이라 한다.</p>
+    </div>
+    <p>그런데 검사를 받은 사람이 알고 싶은 것은 민감도가 아니다. '내가 양성이 나왔는데, 정말 감염일 확률'이다. 이 값은 검사의 성능뿐 아니라 검사를 받는 집단에 감염자가 얼마나 있는지에도 달려 있다.</p>
+    <p>그림 1로 1000명을 생각해 보자. 감염자 비율이 1%이면 감염자는 10명이고, 그 가운데 95%인 약 9.5명이 양성이다. 비감염자 990명 가운데 2%인 약 19.8명도 양성이 나온다(거짓 양성). 따라서 양성은 모두 약 29.3명이고, 그 가운데 실제 감염자는 9.5명뿐이다. 즉 양성인 사람이 실제로 감염되었을 확률은 \(\dfrac{9.5}{29.3} \approx 32\%\)이다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 170" role="img" aria-label="PCR 순환마다 목표 DNA가 2배가 되는 그림">
+        <g class="s">
+          <text x="40" y="20">순환</text><text x="40" y="160">개수</text>
+          <text x="120" y="20" text-anchor="middle">0</text><text x="200" y="20" text-anchor="middle">1</text><text x="280" y="20" text-anchor="middle">2</text><text x="360" y="20" text-anchor="middle">3</text><text x="460" y="20" text-anchor="middle">30</text>
+          <text x="120" y="160" text-anchor="middle">1</text><text x="200" y="160" text-anchor="middle">2</text><text x="280" y="160" text-anchor="middle">4</text><text x="360" y="160" text-anchor="middle">8</text><text x="460" y="160" text-anchor="middle">약 10억</text>
+        </g>
+        <rect x="110" y="70" width="20" height="8" class="fd"/>
+        <rect x="190" y="60" width="20" height="8" class="fd"/><rect x="190" y="80" width="20" height="8" class="fd"/>
+        <rect x="270" y="40" width="20" height="8" class="fd"/><rect x="270" y="60" width="20" height="8" class="fd"/><rect x="270" y="80" width="20" height="8" class="fd"/><rect x="270" y="100" width="20" height="8" class="fd"/>
+        <g><rect x="340" y="30" width="18" height="7" class="fd"/><rect x="362" y="30" width="18" height="7" class="fd"/><rect x="340" y="50" width="18" height="7" class="fd"/><rect x="362" y="50" width="18" height="7" class="fd"/><rect x="340" y="70" width="18" height="7" class="fd"/><rect x="362" y="70" width="18" height="7" class="fd"/><rect x="340" y="90" width="18" height="7" class="fd"/><rect x="362" y="90" width="18" height="7" class="fd"/></g>
+        <text x="410" y="80" class="s">…</text><rect x="430" y="30" width="60" height="90" class="ld"/>
+      </svg>
+      <figcaption>그림 2. PCR은 순환마다 목표 DNA를 두 배로 늘려, 30번이면 약 10억 배가 된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+      <p>같은 검사(민감도 95%, 특이도 98%)를 증상이 있어 감염자 비율이 20%인 사람들에게 쓰면, 양성인 사람이 실제로 감염되었을 확률은 얼마인가? 또 1%인 지역에서 양성이 나온 사람에게 같은 검사를 한 번 더 해서 다시 양성이 나오면 확률은 어떻게 될까?</p>
+    </div>
+    <p>1000명 가운데 감염자 200명의 95%인 190명이 양성이다. 비감염자 800명의 2%인 16명이 거짓 양성이다. 따라서 양성 206명 가운데 190명이 감염자이므로 확률은 \(\dfrac{190}{206} \approx 92\%\)이다. 감염자가 흔한 집단에서는 같은 검사의 양성이 훨씬 믿을 만해진다.</p>
+    <p>두 번째 질문에서는 첫 검사에서 양성이 나온 29.3명이 새 집단이다. 이 집단의 감염자 비율은 약 32%이다. 이들 가운데 감염자 9.5명의 95%인 약 9.0명이 다시 양성이고, 비감염자 19.8명의 2%인 약 0.4명이 다시 거짓 양성이다. 그러면 확률은 \(\dfrac{9.0}{9.4} \approx 96\%\)로 높아진다.</p>
+    <p>그래서 감염자가 드문 상황에서 선별 검사가 양성이면, 바로 확진하지 않고 더 정확한 검사로 다시 확인한다. 검사 결과의 의미는 검사의 성능과 검사를 받는 집단을 함께 보아야 정해진다. 아래 탐구 카드에서 PCR의 순환 횟수와 감염자 비율을 바꾸며 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-is2-diagnosis-1">PCR 결과에 쓰는 Ct 값은 형광 신호가 기준을 넘을 때까지의 순환 횟수이다. Ct 값이 작을수록 처음에 바이러스 유전 물질이 많았다는 뜻이며, Ct가 3 작으면 처음 양이 약 \(2^3 = 8\)배 많았던 셈이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>PCR은 목표 DNA를 순환마다 두 배로 늘려 아주 적은 바이러스도 찾아낸다. 그러나 양성 판정이 실제 감염을 뜻할 확률은 민감도, 특이도와 함께 집단의 감염자 비율에 달려 있어, 감염자가 드물면 거짓 양성의 비중이 커진다. 그래서 처음 질문에서 감염자가 1%인 지역의 양성자는 실제 감염일 확률이 약 32%에 그치며, 다시 검사해 확인해야 한다.</p></div>
+  </div>
+</article>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이항정리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이항정리와 이항계수의 성질, 파스칼의 삼각형. 갈톤 보드에서 공이 떨어지는 경로 수로 이항계수를 보는 시뮬레이션과, 이항정리로 거듭제곱을 어림하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-galton canvas { aspect-ratio: 4 / 3.4; }
@@ -43,18 +48,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-galton"><span class="mono">3.2.1</span>갈톤 보드와 이항계수</a></li>
-        <li><a href="#card-pmath-binom-approx"><span class="mono">3.2.2</span>이항정리로 거듭제곱 어림하기</a></li>
+        <li><a href="#text-pmath-binomial-theorem"><span class="mono">본문</span>이항정리</a></li>
+        <li><a href="#card-pmath-galton"><span class="mono">탐구 1</span>갈톤 보드와 이항계수</a></li>
+        <li><a href="#card-pmath-binom-approx"><span class="mono">탐구 2</span>이항정리로 거듭제곱 어림하기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-binomial-theorem" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이항정리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">과학관의 갤턴 보드에는 못이 10줄로 박혀 있고, 위에서 떨어뜨린 공은 못에 부딪힐 때마다 왼쪽이나 오른쪽으로 반반의 확률로 튄다. 공 1024개를 떨어뜨리니 아래 11개의 칸 가운데 한가운데 칸에 250개 가까이 모였고, 양 끝 칸에는 한두 개씩만 들어갔다. 한가운데 칸에 들어가는 길은 몇 가지이고, 끝 칸에 들어가는 길은 몇 가지일까? 이 수는 \((a + b)^{10}\)을 전개했을 때의 계수와 무슨 관계가 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="파스칼의 삼각형">
+              <g class="s" text-anchor="middle">
+                <text x="260" y="20">1</text>
+                <text x="240" y="40">1</text><text x="280" y="40">1</text>
+                <text x="220" y="60">1</text><text x="260" y="60">2</text><text x="300" y="60">1</text>
+                <text x="200" y="80">1</text><text x="240" y="80">3</text><text x="280" y="80">3</text><text x="320" y="80">1</text>
+                <text x="180" y="100">1</text><text x="220" y="100">4</text><text x="260" y="100" class="td">6</text><text x="300" y="100">4</text><text x="340" y="100">1</text>
+                <text x="160" y="120">1</text><text x="200" y="120">5</text><text x="240" y="120">10</text><text x="280" y="120">10</text><text x="320" y="120">5</text><text x="360" y="120">1</text>
+                <text x="260" y="144">각 수는 바로 위 두 수의 합</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 파스칼의 삼각형의 각 수는 그 자리까지 내려오는 길의 수이며, \(n\)번째 줄은 \((a + b)^n\)의 계수이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>조합 \({}_n\mathrm{C}_r\)와 그 성질, 곱셈 공식 \((a + b)^3\), 이항 전개와 파스칼의 삼각형.</div>
+
+          <h3><span class="no">3.2.1</span>전개는 길 고르기이다</h3>
+          <p>\((a + b)^n\)은 \((a + b)\)를 \(n\)번 곱한 것이다. 전개하면 \(n\)개의 괄호마다 \(a\)와 \(b\) 가운데 하나를 골라 곱한 항들이 모두 나오고, 그 가운데 \(b\)를 \(r\)번 고른 항은 \(a^{n-r}b^r\)이다. \(n\)개의 괄호 가운데 \(b\)를 고를 \(r\)개의 괄호를 정하는 방법은 \({}_n\mathrm{C}_r\)가지이므로, \(a^{n-r}b^r\)의 계수는 \({}_n\mathrm{C}_r\)이다. 갤턴 보드에서도 공은 10번 부딪힐 때마다 왼쪽과 오른쪽 가운데 하나를 고르므로, 오른쪽으로 \(r\)번 튄 공이 들어가는 칸까지의 길은 \({}_{10}\mathrm{C}_r\)가지이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">이항정리</span></span>
+            <p>자연수 \(n\)에 대하여 \[(a + b)^n = \sum_{r=0}^{n}{}_n\mathrm{C}_r\,a^{n-r}b^r\]이다. 계수 \({}_n\mathrm{C}_r\)를 이항계수라 하며, \({}_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r\)이 성립한다. \(a = b = 1\)을 넣으면 \(\sum_{r=0}^{n}{}_n\mathrm{C}_r = 2^n\)이다.</p>
+          </div>
+          <p>이항계수의 관계 \({}_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r\)은 파스칼의 삼각형에서 각 수가 바로 위 두 수의 합인 것과 같다. 갤턴 보드로 보면 어떤 못에 도착하는 길은 왼쪽 위 못에서 오는 길과 오른쪽 위 못에서 오는 길을 더한 것이다. 또 모든 이항계수의 합 \(2^n\)은 공이 갈 수 있는 길 전체의 수이다. 그래서 공 하나가 가운데 칸에 들어갈 확률은 가운데 칸까지의 길 수를 \(2^{10}\)으로 나눈 값이다.<sup class="fn"><a href="#fn-pmath-binomial-theorem-1">1</a></sup></p>
+
+          <h3><span class="no">3.2.2</span>작은 수의 거듭제곱 어림하기</h3>
+          <p>이항정리는 \(1\)에 가까운 수의 거듭제곱을 손으로 어림하는 데도 쓴다. \((1 + x)^n = 1 + nx + {}_n\mathrm{C}_2x^2 + {}_n\mathrm{C}_3x^3 + \cdots\)에서 \(x\)가 작으면 뒤로 갈수록 항이 빠르게 작아진다. 그래서 앞의 몇 항만 더해도 소수 몇째 자리까지 정확한 값을 얻는다. 예금 이자를 계산하거나 물리에서 작은 변화를 어림할 때 \((1 + x)^n \approx 1 + nx\)를 자주 쓰는 것도 이 때문이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="1.01의 10제곱을 이항정리로 어림하기">
+              <g class="s">
+                <text x="20" y="22">항</text><text x="200" y="22">값</text><text x="340" y="22">누적 합</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1 + 10 × 0.01</text><text x="200" y="52">1.1</text><text x="340" y="52">1.1</text>
+                <text x="20" y="74">₁₀C₂ × 0.01² = 45 × 0.0001</text><text x="200" y="74">0.0045</text><text x="340" y="74">1.1045</text>
+                <text x="20" y="96">₁₀C₃ × 0.01³ = 120 × 0.000001</text><text x="200" y="96">0.00012</text><text x="340" y="96" class="td">1.10462</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 넷째 항까지 더하면 \(1.01^{10} = 1.104622\cdots\)의 소수 넷째 자리까지 맞는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+            <p>처음 질문의 10줄 갤턴 보드에서 공이 한가운데 칸에 들어갈 확률과 양 끝 칸 가운데 하나에 들어갈 확률을 구하여라. 공 1024개를 떨어뜨리면 한가운데 칸에 몇 개쯤 모이겠는가?</p>
+          </div>
+          <p>한가운데 칸은 오른쪽으로 5번, 왼쪽으로 5번 튄 공이 들어가므로 길의 수는 \({}_{10}\mathrm{C}_5 = 252\)이다. 전체 길의 수는 \(2^{10} = 1024\)이므로 확률은 \(252/1024 \approx 0.246\)이다. 양 끝 칸은 10번 모두 같은 쪽으로 튀어야 해서 각각 길이 1가지뿐이므로, 둘 가운데 하나에 들어갈 확률은 \(2/1024 \approx 0.002\)이다.</p>
+          <p>공 1024개를 떨어뜨리면 한가운데 칸에는 평균 252개가 모이고, 양 끝 칸에는 합쳐서 평균 2개가 들어간다. 실제로는 우연 때문에 이 값에서 조금씩 벗어난다. 그래서 가운데 칸이 가장 높고 양쪽으로 갈수록 낮아지는 종 모양의 더미가 생긴다. 즉 \((a + b)^n\)의 이항계수는 \(n\)번의 두 갈래 선택에서 한쪽을 \(r\)번 고르는 길의 수이며, 가운데에 가까울수록 길이 많아 공이 많이 모인다.</p>
+          <p>아래 탐구 카드에서 갤턴 보드에 공을 떨어뜨려 칸마다 쌓이는 수를 이항계수와 비교하고, 이항정리로 \(1.01^{10}\)을 어림해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-binomial-theorem-1">이 판은 1873년 영국의 과학자 갤턴이 만들어, 작은 우연이 많이 쌓이면 종 모양의 분포가 생긴다는 것을 보여 주었다. 파스칼의 삼각형은 파스칼보다 수백 년 앞서 11세기 중국의 가헌과 13세기 양휘의 책에도 실려 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>\((a + b)^n\)을 전개하면 \(n\)개의 괄호에서 \(b\)를 고를 \(r\)개를 정하는 방법의 수 \({}_n\mathrm{C}_r\)가 \(a^{n-r}b^r\)의 계수가 되며, 이것이 이항정리이다. 이항계수는 파스칼의 삼각형에서 위 두 수의 합으로 이어지고, 모두 더하면 \(2^n\)이며, 1에 가까운 수의 거듭제곱을 어림하는 데도 쓴다. 처음 질문의 갤턴 보드에서 한가운데 칸까지의 길은 \({}_{10}\mathrm{C}_5 = 252\)가지로, 공 1024개 가운데 약 252개가 그 칸에 모인다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-3.html#card-stat-binom-expand"><small class="mono">확률과 통계 1.3</small>(a + b)ⁿ의 계수는 왜 조합의 수일까?</a><a href="../../c/stat/1-3.html#text-stat-binomial-thm"><small class="mono">확률과 통계 1.3</small>이항정리</a><a href="../../c/stat/1-3.html#card-stat-pascal"><small class="mono">확률과 통계 1.3</small>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</a></div></nav>
+
       <article class="card" id="card-pmath-galton">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>못이 박힌 판에 공을 떨어뜨리면 왜 가운데에 많이 쌓일까?</h2><span class="kind">이항정리 · 파스칼의 삼각형 · 시뮬레이션</span>
+          <span class="no">탐구 1</span><h2>못이 박힌 판에 공을 떨어뜨리면 왜 가운데에 많이 쌓일까?</h2><span class="kind">이항정리 · 파스칼의 삼각형 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -69,34 +133,34 @@
                 <div><dt>가운데 칸의 비율</dt><dd class="n-m">—</dd></div>
                 <div><dt>\({}_n\mathrm{C}_{n/2} \div 2^n\)</dt><dd class="n-e">—</dd></div>
               </dl>
-              <p class="fig-note">점선은 기대 개수 \(N \times {}_n\mathrm{C}_k \div 2^n\)입니다. 공 1개를 떨어뜨리면 그 공이 지나간 길이 그려집니다.</p>
+              <p class="fig-note">점선은 기대 개수 \(N \times {}_n\mathrm{C}_k \div 2^n\)이다. 공 1개를 떨어뜨리면 그 공이 지나간 길이 그려진다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공은 못에 부딪칠 때마다 반반의 확률로 왼쪽이나 오른쪽으로 떨어집니다. 그런데 공을 많이 떨어뜨리면 가운데 칸에 산처럼 쌓이고 양 끝 칸은 거의 비어 있습니다. 왜 그럴까요?</li>
-            <li><span class="tag">복원</span>\(n\)번 가운데 \(k\)번을 고르는 방법의 수는 \({}_n\mathrm{C}_k\)이고, 파스칼의 삼각형에서 각 수는 바로 위 두 수의 합입니다: \({}_n\mathrm{C}_k = {}_{n-1}\mathrm{C}_{k-1} + {}_{n-1}\mathrm{C}_k\).</li>
-            <li><span class="tag">설명</span>공이 \(k\)번째 칸에 들어가려면 \(n\)번의 갈림길 가운데 \(k\)번 오른쪽으로 가야 하고, 그 길의 수는 \({}_n\mathrm{C}_k\)입니다. 모든 길은 확률이 \(\left(\frac{1}{2}\right)^n\)으로 같으므로 \(k\)번째 칸에 들어갈 확률은 \(\frac{{}_n\mathrm{C}_k}{2^n}\)입니다. 못마다 그 못에 이르는 길의 수를 적으면 파스칼의 삼각형이 됩니다. 이 수들은 <em>이항정리</em> \((a + b)^n = \sum_{k=0}^{n}{}_n\mathrm{C}_k a^{n-k}b^k\)의 계수와 같습니다. 각 괄호에서 \(a\)(왼쪽)나 \(b\)(오른쪽)를 고르는 것이 갈림길에서 방향을 고르는 것과 같기 때문입니다.</li>
-            <li><span class="tag">연결</span>\(a = b = 1\)을 넣으면 \(\sum_k {}_n\mathrm{C}_k = 2^n\), 곧 모든 칸의 길의 수의 합이 전체 길의 수입니다. 공이 쌓인 모양은 이항분포이고, 줄 수가 많아지면 종 모양의 정규분포에 가까워집니다(이 대단원 7절).</li>
-            <li><span class="tag">적용</span>공을 1개씩 떨어뜨려 길을 보고, 100개씩, 계속 실행으로 늘려 막대가 점선(기대 개수)에 다가가는지 보세요. 가운데 칸의 비율이 \(\frac{{}_n\mathrm{C}_{n/2}}{2^n}\)에 가까워지나요? 줄 수를 늘리면 가운데 칸의 비율은 커지나요, 작아지나요?</li>
-            <li class="warn"><span class="tag">판단</span>가운데에 많이 쌓인다고 해서 가운데 칸으로 가는 "길 하나"의 확률이 큰 것은 아닙니다. 모든 길은 확률이 같고, 가운데로 가는 길의 <b>개수</b>가 많을 뿐입니다.</li>
+            <li><span class="tag">질문</span>공은 못에 부딪칠 때마다 반반의 확률로 왼쪽이나 오른쪽으로 떨어진다. 그런데 공을 많이 떨어뜨리면 가운데 칸에 산처럼 쌓이고 양 끝 칸은 거의 비어 있다. 왜 그럴까?</li>
+            <li><span class="tag">복원</span>\(n\)번 가운데 \(k\)번을 고르는 방법의 수는 \({}_n\mathrm{C}_k\)이고, 파스칼의 삼각형에서 각 수는 바로 위 두 수의 합이다. 곧 \({}_n\mathrm{C}_k = {}_{n-1}\mathrm{C}_{k-1} + {}_{n-1}\mathrm{C}_k\)이다.</li>
+            <li><span class="tag">설명</span>공이 \(k\)번째 칸에 들어가려면 \(n\)번의 갈림길 가운데 \(k\)번 오른쪽으로 가야 하고, 그 길의 수는 \({}_n\mathrm{C}_k\)이다. 모든 길은 확률이 \(\left(\frac{1}{2}\right)^n\)으로 같으므로 \(k\)번째 칸에 들어갈 확률은 \(\frac{{}_n\mathrm{C}_k}{2^n}\)이다. 못마다 그 못에 이르는 길의 수를 적으면 파스칼의 삼각형이 된다. 이 수들은 <em>이항정리</em> \((a + b)^n = \sum_{k=0}^{n}{}_n\mathrm{C}_k a^{n-k}b^k\)의 계수와 같다. 각 괄호에서 \(a\)(왼쪽)나 \(b\)(오른쪽)를 고르는 것이 갈림길에서 방향을 고르는 것과 같기 때문이다.</li>
+            <li><span class="tag">연결</span>\(a = b = 1\)을 넣으면 \(\sum_k {}_n\mathrm{C}_k = 2^n\), 곧 모든 칸의 길의 수의 합이 전체 길의 수이다. 공이 쌓인 모양은 이항분포이고, 줄 수가 많아지면 종 모양의 정규분포에 가까워진다(이 대단원 7절).</li>
+            <li><span class="tag">적용</span>공을 1개씩 떨어뜨려 길을 보고, 100개씩, 계속 실행으로 늘려 막대가 점선(기대 개수)에 다가가는지 보자. 가운데 칸의 비율이 \(\frac{{}_n\mathrm{C}_{n/2}}{2^n}\)에 가까워지는가? 줄 수를 늘리면 가운데 칸의 비율은 커지나요, 작아지는가?</li>
+            <li class="warn"><span class="tag">판단</span>가운데에 많이 쌓인다고 해서 가운데 칸으로 가는 "길 하나"의 확률이 큰 것은 아니다. 모든 길은 확률이 같고, 가운데로 가는 길의 개수가 많을 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\((x + 2)^6\)의 전개식에서 \(x^4\)의 계수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>60<span class="why"><b>맞습니다.</b> \({}_6\mathrm{C}_4 x^4 \cdot 2^2 = 15 \times 4\,x^4 = 60x^4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>15<span class="why"><b>\(2^2\)을 곱하지 않았습니다.</b> 남은 두 괄호에서 2를 골랐습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>240<span class="why"><b>\(2^4\)을 곱했습니다.</b> \(x\)를 네 번 골랐으니 2는 두 번 골랐습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>30<span class="why"><b>\(2^2\) 대신 2를 곱했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>60<span class="why"><b>맞다.</b> \({}_6\mathrm{C}_4 x^4 \cdot 2^2 = 15 \times 4\,x^4 = 60x^4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>15<span class="why"><b>\(2^2\)을 곱하지 않았다.</b> 남은 두 괄호에서 2를 골랐다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>240<span class="why"><b>\(2^4\)을 곱했다.</b> \(x\)를 네 번 골랐으니 2는 두 번 골랐다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>30<span class="why"><b>\(2^2\) 대신 2를 곱했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-3.html#card-stat-binom-expand"><small class="mono">확률과 통계 1.3</small>(a + b)ⁿ의 계수는 왜 조합의 수일까?</a><a href="../../c/stat/1-3.html#card-stat-pascal"><small class="mono">확률과 통계 1.3</small>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-3.html#card-stat-binom-expand"><small class="mono">확률과 통계 1.3</small>(a + b)ⁿ의 계수는 왜 조합의 수일까?</a><a href="../../c/stat/1-3.html#text-stat-binomial-thm"><small class="mono">확률과 통계 1.3</small>이항정리</a><a href="../../c/stat/1-3.html#card-stat-pascal"><small class="mono">확률과 통계 1.3</small>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</a></div></nav>
 
       <article class="card" id="card-pmath-binom-approx">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>계산기 없이 \(1.01^{10}\)을 소수 셋째 자리까지 구할 수 있을까?</h2><span class="kind">이항정리 · 어림 · 활용</span>
+          <span class="no">탐구 2</span><h2>계산기 없이 \(1.01^{10}\)을 소수 셋째 자리까지 구할 수 있을까?</h2><span class="kind">이항정리 · 어림 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -122,39 +186,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>저축 이자가 1 %인 통장에 10년 동안 돈을 두면 얼마가 될까요? 원리합계는 \(1.01^{10}\)배인데, 이 값을 곱셈 열 번 없이 빨리 어림할 수 있을까요?</li>
-            <li><span class="tag">복원</span>이항정리: \((1 + x)^n = 1 + {}_n\mathrm{C}_1 x + {}_n\mathrm{C}_2 x^2 + \cdots + x^n\)입니다.</li>
-            <li><span class="tag">설명</span>\(x\)가 작으면 \(x^2, x^3, \ldots\)은 빠르게 작아지므로 앞의 몇 항만 더해도 정확합니다. \(1.01^{10} = 1 + 10(0.01) + 45(0.01)^2 + 120(0.01)^3 + \cdots = 1 + 0.1 + 0.0045 + 0.00012 + \cdots \approx 1.1046\)입니다. 특히 첫 두 항만 쓴 <b>\((1 + x)^n \approx 1 + nx\)</b>는 \(nx\)가 작을 때 아주 쓸모 있는 어림입니다. 항이 어디서부터 무시할 만큼 작아지는지는 막대를 보면 바로 알 수 있습니다.</li>
-            <li><span class="tag">연결</span>\(n\)이 커질 때 \(\left(1 + \frac{1}{n}\right)^n\)의 항들을 보면 \(1 + 1 + \frac{1}{2!} + \frac{1}{3!} + \cdots\)에 다가가고, 그 합이 \(e\)입니다. 이 생각은 고급 미적분의 테일러급수로 이어집니다.</li>
-            <li><span class="tag">적용</span>\(1.01^{10}\)에서 더할 항을 하나씩 늘리며 오차가 얼마나 줄어드는지 보세요. 소수 셋째 자리까지 맞추려면 몇 항이 필요한가요? \(1.05^{20}\)에서는 \(1 + nx\) 어림이 왜 많이 틀리나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(1 + nx\) 어림은 \(x\)가 작아도 \(n\)이 커서 \(nx\)가 1에 가까우면 크게 틀립니다. 복리로 오래 두면 단리(\(1 + nx\))보다 훨씬 많아지는 이유가 이 무시된 항들입니다.</li>
+            <li><span class="tag">질문</span>저축 이자가 1 %인 통장에 10년 동안 돈을 두면 얼마가 될까? 원리합계는 \(1.01^{10}\)배인데, 이 값을 곱셈 열 번 없이 빨리 어림할 수 있을까?</li>
+            <li><span class="tag">복원</span>이항정리에 따르면 \((1 + x)^n = 1 + {}_n\mathrm{C}_1 x + {}_n\mathrm{C}_2 x^2 + \cdots + x^n\)이다.</li>
+            <li><span class="tag">설명</span>\(x\)가 작으면 \(x^2, x^3, \ldots\)은 빠르게 작아지므로 앞의 몇 항만 더해도 정확하다. \(1.01^{10} = 1 + 10(0.01) + 45(0.01)^2 + 120(0.01)^3 + \cdots = 1 + 0.1 + 0.0045 + 0.00012 + \cdots \approx 1.1046\)이다. 특히 첫 두 항만 쓴 \((1 + x)^n \approx 1 + nx\)는 \(nx\)가 작을 때 아주 쓸모 있는 어림이다. 항이 어디서부터 무시할 만큼 작아지는지는 막대를 보면 바로 알 수 있다.</li>
+            <li><span class="tag">연결</span>\(n\)이 커질 때 \(\left(1 + \frac{1}{n}\right)^n\)의 항들을 보면 \(1 + 1 + \frac{1}{2!} + \frac{1}{3!} + \cdots\)에 다가가고, 그 합이 \(e\)이다. 이 생각은 고급 미적분의 테일러급수로 이어진다.</li>
+            <li><span class="tag">적용</span>\(1.01^{10}\)에서 더할 항을 하나씩 늘리며 오차가 얼마나 줄어드는지 보자. 소수 셋째 자리까지 맞추려면 몇 항이 필요한가? \(1.05^{20}\)에서는 \(1 + nx\) 어림이 왜 많이 틀리는가?</li>
+            <li class="warn"><span class="tag">판단</span>\(1 + nx\) 어림은 \(x\)가 작아도 \(n\)이 커서 \(nx\)가 1에 가까우면 크게 틀린다. 복리로 오래 두면 단리(\(1 + nx\))보다 훨씬 많아지는 이유가 이 무시된 항들이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">이항정리의 앞 세 항으로 \(0.99^{20}\)을 어림하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.819<span class="why"><b>맞습니다.</b> \(1 + 20(-0.01) + 190(0.0001) = 1 - 0.2 + 0.019 = 0.819\)입니다(참값은 약 0.8179).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.8<span class="why"><b>두 항에서 멈추었습니다.</b> 세 번째 항 \(+0.019\)을 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.781<span class="why"><b>세 번째 항의 부호를 바꾸었습니다.</b> \((-0.01)^2\)은 양수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.838<span class="why"><b>\({}_{20}\mathrm{C}_2\)를 380으로 계산했습니다.</b> \({}_{20}\mathrm{C}_2 = \frac{20 \times 19}{2} = 190\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.819<span class="why"><b>맞다.</b> \(1 + 20(-0.01) + 190(0.0001) = 1 - 0.2 + 0.019 = 0.819\)이다(참값은 약 0.8179).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.8<span class="why"><b>두 항에서 멈추었다.</b> 세 번째 항 \(+0.019\)을 더해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.781<span class="why"><b>세 번째 항의 부호를 바꾸었다.</b> \((-0.01)^2\)은 양수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.838<span class="why"><b>\({}_{20}\mathrm{C}_2\)를 380으로 계산했다.</b> \({}_{20}\mathrm{C}_2 = \frac{20 \times 19}{2} = 190\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-3.html#card-stat-binom-expand"><small class="mono">확률과 통계 1.3</small>(a + b)ⁿ의 계수는 왜 조합의 수일까?</a><a href="../../c/stat/1-3.html#card-stat-pascal"><small class="mono">확률과 통계 1.3</small>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-3.html#card-stat-binom-expand"><small class="mono">확률과 통계 1.3</small>(a + b)ⁿ의 계수는 왜 조합의 수일까?</a><a href="../../c/stat/1-3.html#text-stat-binomial-thm"><small class="mono">확률과 통계 1.3</small>이항정리</a><a href="../../c/stat/1-3.html#card-stat-pascal"><small class="mono">확률과 통계 1.3</small>이항계수를 삼각형으로 쌓으면 어떤 규칙이 보일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

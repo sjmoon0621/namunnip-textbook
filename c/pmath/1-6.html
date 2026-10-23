@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>구분구적법과 정적분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="구분구적법으로 넓이와 부피를 구하고 정적분을 직사각형 넓이 합의 극한으로 정의한다. 직사각형 개수를 늘리며 오차가 줄어드는 모습과, 계단 모양 층을 쌓아 뿔의 부피가 기둥의 1/3임을 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-riemann canvas { aspect-ratio: 16 / 10; }
@@ -43,18 +48,78 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-riemann"><span class="mono">1.6.1</span>구분구적법과 정적분의 뜻</a></li>
-        <li><a href="#card-pmath-pyramid"><span class="mono">1.6.2</span>층을 쌓아 구하는 뿔의 부피</a></li>
+        <li><a href="#text-pmath-riemann-sum"><span class="mono">본문</span>구분구적법과 정적분</a></li>
+        <li><a href="#card-pmath-riemann"><span class="mono">탐구 1</span>구분구적법과 정적분의 뜻</a></li>
+        <li><a href="#card-pmath-pyramid"><span class="mono">탐구 2</span>층을 쌓아 구하는 뿔의 부피</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-1-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=1-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">7문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-1-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-riemann-sum" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>구분구적법과 정적분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">곡선 \(y = x^2\)과 \(x\)축, 직선 \(x = 1\)로 둘러싸인 부분의 넓이를 구하려 한다. 넓이 공식이 있는 도형은 직사각형, 삼각형, 원 정도인데, 이 부분은 한쪽이 휘어 있다. 구간 \([0, 1]\)을 5등분해 오른쪽 끝의 높이로 직사각형을 세우면 넓이의 합은 0.44, 10등분하면 0.385, 100등분하면 0.33835가 된다. 등분을 끝없이 늘리면 이 합은 어떤 값으로 모일까? 그 값이 곧 곡선 아래의 넓이일까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 220" role="img" aria-label="y = x^2 아래를 5개의 직사각형으로 덮은 모습">
+              <line x1="60" y1="190" x2="400" y2="190" class="ax"/><line x1="60" y1="20" x2="60" y2="200" class="ax"/>
+              <rect x="60" y="183.6" width="64" height="6.4" class="la"/>
+              <rect x="124" y="164.4" width="64" height="25.6" class="la"/>
+              <rect x="188" y="132.4" width="64" height="57.6" class="la"/>
+              <rect x="252" y="87.6" width="64" height="102.4" class="la"/>
+              <rect x="316" y="30" width="64" height="160" class="la"/>
+              <path d="M60 190 Q220 190 380 30" class="d"/>
+              <text x="60" y="206" class="s" text-anchor="middle">0</text><text x="380" y="206" class="s" text-anchor="middle">1</text><text x="54" y="34" class="s" text-anchor="end">1</text>
+              <text x="410" y="80" class="s td">y = x²</text>
+              <text x="410" y="120" class="s ta">직사각형 5개</text><text x="410" y="140" class="s ta">합 0.44</text>
+            </svg>
+            <figcaption>그림 1. 오른쪽 끝의 높이로 세운 직사각형은 곡선 위로 조금씩 삐져나온다. 폭을 좁힐수록 삐져나온 부분이 줄어든다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>\(\sum\)의 뜻과 성질, 수열의 극한, 그래프 아래 넓이, 기둥과 뿔의 부피.</div>
+
+          <h3><span class="no">1.6.1</span>잘게 자르고 극한을 취하다</h3>
+          <p>구간 \([0, 1]\)을 \(n\)등분하면 \(k\)번째 작은 구간의 오른쪽 끝은 \(k/n\)이고, 그곳의 높이는 \((k/n)^2\)이다. 폭 \(1/n\)인 직사각형 \(n\)개의 넓이를 더하면 \(S_n = \sum_{k=1}^{n}\left(\dfrac{k}{n}\right)^2\dfrac1n = \dfrac{1}{n^3}\sum_{k=1}^{n}k^2\)이다. 자연수의 제곱의 합 공식을 쓰면 \(S_n = \dfrac{(n+1)(2n+1)}{6n^2}\)이다. \(n\)이 커지면 이 값은 \(2/6 = 1/3\)으로 모인다. 직사각형은 곡선보다 늘 조금 크지만 그 차이가 0으로 줄어들므로, 곡선 아래의 넓이는 정확히 \(1/3\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.6.1 <span class="nm">정적분의 정의</span></span>
+            <p>연속함수 \(f\)에 대해 구간 \([a, b]\)를 \(n\)등분하고 \(\Delta x = (b - a)/n\), \(x_k = a + k\Delta x\)라 할 때 \[\int_a^b f(x)\,dx = \lim_{n\to\infty}\sum_{k=1}^{n} f(x_k)\,\Delta x\]이다. 오른쪽 끝 대신 왼쪽 끝이나 구간 안의 어느 점을 써도 극한은 같다.</p>
+          </div>
+          <p>이렇게 잘게 잘라 더한 뒤 극한을 취해 넓이나 부피를 구하는 방법을 구분구적법이라 한다. 왼쪽 끝의 높이를 쓰면 직사각형이 곡선 아래에 들어가 합이 조금 작아지지만, 그 합 \(\dfrac{(n-1)(2n-1)}{6n^2}\)도 \(1/3\)로 모인다. 위에서 덮는 합과 아래에서 채우는 합이 같은 값으로 모이므로, 넓이는 그 사이에 끼인 단 하나의 값이다.<sup class="fn"><a href="#fn-pmath-riemann-sum-1">1</a></sup></p>
+
+          <h3><span class="no">1.6.2</span>얇은 판을 쌓아 부피 구하기</h3>
+          <p>같은 생각을 입체에 쓰면 부피를 구할 수 있다. 밑면이 한 변 \(a\)인 정사각형이고 높이가 \(h\)인 사각뿔을 꼭짓점에서 \(n\)층으로 얇게 자르면, 꼭짓점에서 \(kh/n\)인 층의 단면은 한 변이 \(ka/n\)인 정사각형이다. 각 층을 두께 \(h/n\)인 판으로 보고 더하면 \(\sum_{k=1}^{n}\left(\dfrac{ka}{n}\right)^2\dfrac{h}{n} = a^2h\cdot\dfrac{(n+1)(2n+1)}{6n^2}\)이고, 극한은 \(\tfrac13 a^2h\)이다. 그래서 뿔의 부피가 같은 밑면, 같은 높이인 기둥의 \(1/3\)인 것은 포물선 아래 넓이가 \(1/3\)인 것과 같은 계산에서 나온다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="등분 수에 따른 직사각형 넓이의 합">
+              <g class="s">
+                <text x="20" y="22">n</text><text x="130" y="22">5</text><text x="210" y="22">10</text><text x="290" y="22">100</text><text x="380" y="22">1000</text><text x="460" y="22">∞</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">오른쪽 끝</text><text x="130" y="52">0.44</text><text x="210" y="52">0.385</text><text x="290" y="52">0.33835</text><text x="380" y="52">0.33383</text><text x="460" y="52" class="td">1/3</text>
+                <text x="20" y="74">왼쪽 끝</text><text x="130" y="74">0.24</text><text x="210" y="74">0.285</text><text x="290" y="74">0.32835</text><text x="380" y="74">0.33283</text><text x="460" y="74" class="td">1/3</text>
+                <text x="20" y="100">두 합의 차는 언제나 1/n으로, n이 커지면 0으로 준다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 위에서 덮는 합과 아래에서 채우는 합이 같은 값 \(1/3\)로 모인다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.6.2</span>
+            <p>구분구적법으로 \(\int_0^2 x^2\,dx\)를 구하여라. 오른쪽 끝의 높이를 쓰고, 결과를 미적분의 기본정리로 구한 값과 비교하여라.</p>
+          </div>
+          <p>구간 \([0, 2]\)를 \(n\)등분하면 \(\Delta x = 2/n\), \(x_k = 2k/n\)이다. 합은 \(\sum_{k=1}^{n}\left(\dfrac{2k}{n}\right)^2\dfrac2n = \dfrac{8}{n^3}\sum_{k=1}^{n}k^2 = \dfrac{8}{n^3}\cdot\dfrac{n(n+1)(2n+1)}{6} = \dfrac{4(n+1)(2n+1)}{3n^2}\)이다.</p>
+          <p>\(n \to \infty\)이면 \(\dfrac{4\times2}{3} = \dfrac83\)으로 모인다. 미적분의 기본정리로는 \(\left[\dfrac{x^3}{3}\right]_0^2 = \dfrac83\)으로 같다. 그래서 정적분은 원래 잘게 자른 합의 극한으로 정의되고, 그 값을 부정적분으로 쉽게 계산할 수 있다는 것이 기본정리의 내용이다. 구간을 두 배로 늘리면 넓이는 \(2^3 = 8\)배가 되는데, 가로가 2배, 세로가 4배로 늘었기 때문이다. 즉 휘어진 경계의 넓이도 직사각형을 끝없이 잘게 쪼갠 합의 극한으로 정확히 구할 수 있다.</p>
+          <p>아래 탐구 카드에서 직사각형의 수를 늘려 가며 합이 하나의 값으로 모이는 것을 확인하고, 각뿔을 얇은 판으로 쌓아 부피가 기둥의 \(1/3\)이 되는 까닭을 알아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-riemann-sum-1">기원전 3세기 아르키메데스는 포물선과 직선으로 둘러싸인 넓이를 삼각형을 끝없이 채워 넣는 방법으로 구해, 같은 밑변과 높이인 삼각형의 \(4/3\)배라는 것을 보였다. 극한이라는 말이 없던 때에 이미 같은 생각을 쓴 것이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>곡선 아래의 넓이는 구간을 \(n\)등분해 세운 직사각형 넓이의 합 \(\sum f(x_k)\Delta x\)의 극한으로 정의하며, 이것이 정적분이다. 위에서 덮는 합과 아래에서 채우는 합이 같은 값으로 모이고, 같은 방법으로 얇은 판을 쌓아 뿔의 부피가 기둥의 \(1/3\)임을 보인다. 처음 질문의 포물선 아래 넓이는 \(S_n = (n+1)(2n+1)/(6n^2)\)의 극한인 정확히 \(1/3\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-4.html#card-alg-sigma-read"><small class="mono">대수 3.4</small>Σ 기호 하나에는 무엇이 들어 있을까?</a><a href="../../c/alg/3-4.html#card-alg-sigma-rules"><small class="mono">대수 3.4</small>Σ끼리 더하고 곱해도 될까?</a><a href="../../c/alg/3-4.html#text-alg-sigma"><small class="mono">대수 3.4</small>합의 기호 ∑</a><a href="../../c/calc1/3-3.html#card-calc1-riemann"><small class="mono">미적분Ⅰ 3.3</small>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-7.html#card-pmath-cont-expect"><small class="mono">전문 수학 3.7</small>밀도 곡선의 어디에 받침을 대면 수평이 될까?</a><a href="../../c/pmath/3-7.html#text-pmath-normal"><small class="mono">전문 수학 3.7</small>연속확률변수와 정규분포</a></div></nav>
+
       <article class="card" id="card-pmath-riemann">
         <header class="card-head">
-          <span class="no">1.6.1</span><h2>직사각형을 끝없이 잘게 쪼개면 곡선 아래 넓이가 될까?</h2><span class="kind">구분구적법 · 정적분의 뜻 · 조작</span>
+          <span class="no">탐구 1</span><h2>직사각형을 끝없이 잘게 쪼개면 곡선 아래 넓이가 될까?</h2><span class="kind">구분구적법 · 정적분의 뜻 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -83,30 +148,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(y = x^2\)과 x축, 직선 \(x = 2\)로 둘러싸인 넓이는 직사각형도 삼각형도 아닙니다. 공식이 없는 넓이를 어떻게 정의하고 계산할 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}\)이고, \(\lim_{n \to \infty}\frac{1}{n} = 0\)입니다. 직사각형의 넓이는 가로 × 세로입니다.</li>
-            <li><span class="tag">설명</span>구간 \([a, b]\)를 폭 \(\Delta x = \frac{b - a}{n}\)인 \(n\)개로 나누고, 각 조각을 높이 \(f(x_k)\) (\(x_k = a + k\Delta x\))인 직사각형으로 바꾸면 넓이의 합은 \(S_n = \sum_{k=1}^{n} f(x_k)\Delta x\)입니다. \(n\)을 한없이 늘려 이 합이 한 값으로 다가가면 그 값을 넓이로 정합니다. 이 방법이 <em>구분구적법</em>이고, 그 극한값이 <b>정적분 \(\int_a^b f(x)\,dx = \lim_{n \to \infty}\sum_{k=1}^{n} f(x_k)\Delta x\)</b>입니다. 예를 들어 \(y = x^2\), \([0, 2]\)에서 \(S_n = \sum_{k=1}^{n}\left(\frac{2k}{n}\right)^2\frac{2}{n} = \frac{8}{n^3}\cdot\frac{n(n+1)(2n+1)}{6} \to \frac{8}{3}\)입니다.</li>
-            <li><span class="tag">연결</span>이 정의에서 "정적분은 넓이"라는 그림이 나옵니다. 거꾸로 \(\lim\sum\) 꼴의 급수를 보면 정적분으로 바꿔 계산할 수 있습니다. 미적분의 기본정리 \(\int_a^b f(x)\,dx = F(b) - F(a)\)는 이 극한을 미분의 거꾸로 계산하게 해 주는 지름길입니다.</li>
-            <li><span class="tag">적용</span>\(n\)을 늘리며 \(S_n\)이 참값에 다가가는 것을 보세요. 왼쪽, 오른쪽, 가운데 높이 가운데 어느 것이 가장 빨리 다가가나요? "\(n\)을 두 배로 하면 오차는"의 값을 보고, 오른쪽 끝 높이와 가운데 높이의 오차가 줄어드는 빠르기를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>높이를 어디서 재든 \(n \to \infty\)이면 같은 값으로 모입니다(연속함수에서). 그래서 정적분의 값은 높이를 재는 방법에 따라 달라지지 않습니다. 다만 유한한 \(n\)에서는 오차가 다르고, 곡선이 아래로 내려가는 함수(\(\sin x\)의 뒤쪽)에서는 오른쪽 끝 높이가 참값보다 작아집니다.</li>
+            <li><span class="tag">질문</span>\(y = x^2\)과 x축, 직선 \(x = 2\)로 둘러싸인 넓이는 직사각형도 삼각형도 아니다. 공식이 없는 넓이를 어떻게 정의하고 계산할 수 있을까?</li>
+            <li><span class="tag">복원</span>\(\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}\)이고, \(\lim_{n \to \infty}\frac{1}{n} = 0\)이다. 직사각형의 넓이는 가로 × 세로이다.</li>
+            <li><span class="tag">설명</span>구간 \([a, b]\)를 폭 \(\Delta x = \frac{b - a}{n}\)인 \(n\)개로 나누고, 각 조각을 높이 \(f(x_k)\) (\(x_k = a + k\Delta x\))인 직사각형으로 바꾸면 넓이의 합은 \(S_n = \sum_{k=1}^{n} f(x_k)\Delta x\)이다. \(n\)을 한없이 늘려 이 합이 한 값으로 다가가면 그 값을 넓이로 정한다. 이 방법이 <em>구분구적법</em>이고, 그 극한값이 정적분 \(\int_a^b f(x)\,dx = \lim_{n \to \infty}\sum_{k=1}^{n} f(x_k)\Delta x\)이다. 예를 들어 \(y = x^2\), \([0, 2]\)에서 \(S_n = \sum_{k=1}^{n}\left(\frac{2k}{n}\right)^2\frac{2}{n} = \frac{8}{n^3}\cdot\frac{n(n+1)(2n+1)}{6} \to \frac{8}{3}\)이다.</li>
+            <li><span class="tag">연결</span>이 정의에서 "정적분은 넓이"라는 그림이 나온다. 거꾸로 \(\lim\sum\) 꼴의 급수를 보면 정적분으로 바꿔 계산할 수 있다. 미적분의 기본정리 \(\int_a^b f(x)\,dx = F(b) - F(a)\)는 이 극한을 미분의 거꾸로 계산하게 해 주는 지름길이다.</li>
+            <li><span class="tag">적용</span>\(n\)을 늘리며 \(S_n\)이 참값에 다가가는 것을 보자. 왼쪽, 오른쪽, 가운데 높이 가운데 어느 것이 가장 빨리 다가가는가? "\(n\)을 두 배로 하면 오차는"의 값을 보고, 오른쪽 끝 높이와 가운데 높이의 오차가 줄어드는 빠르기를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>높이를 어디서 재든 \(n \to \infty\)이면 같은 값으로 모인다(연속함수에서). 그래서 정적분의 값은 높이를 재는 방법에 따라 달라지지 않는다. 다만 유한한 \(n\)에서는 오차가 다르고, 곡선이 아래로 내려가는 함수(\(\sin x\)의 뒤쪽)에서는 오른쪽 끝 높이가 참값보다 작아진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{n \to \infty}\sum_{k=1}^{n}\frac{3}{n}\left(\frac{3k}{n}\right)^2\)을 정적분으로 바르게 나타낸 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\int_0^3 x^2\,dx = 9\)<span class="why"><b>맞습니다.</b> \(\Delta x = \frac{3}{n}\), \(x_k = \frac{3k}{n}\)이므로 구간 \([0, 3]\)에서 \(f(x) = x^2\)를 적분한 것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\int_0^1 x^2\,dx = \frac{1}{3}\)<span class="why"><b>폭 \(\frac{3}{n}\)을 \(\frac{1}{n}\)으로 보았습니다.</b> 폭이 \(\frac{3}{n}\)이면 구간의 길이는 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\int_0^3 9x^2\,dx = 81\)<span class="why"><b>\(\left(\frac{3k}{n}\right)^2\)의 3을 함수 밖으로 뺐습니다.</b> \(x_k = \frac{3k}{n}\) 자체가 \(x\)이므로 높이는 \(x^2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\int_0^1 3x^2\,dx = 1\)<span class="why"><b>\(x_k = \frac{k}{n}\)로 읽고 나머지를 계수로 몰았습니다.</b> 이렇게 읽으면 \(\int_0^1 27x^2\,dx\)가 되어야 하고, 값은 역시 9입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\int_0^3 x^2\,dx = 9\)<span class="why"><b>맞다.</b> \(\Delta x = \frac{3}{n}\), \(x_k = \frac{3k}{n}\)이므로 구간 \([0, 3]\)에서 \(f(x) = x^2\)를 적분한 것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\int_0^1 x^2\,dx = \frac{1}{3}\)<span class="why"><b>폭 \(\frac{3}{n}\)을 \(\frac{1}{n}\)으로 보았다.</b> 폭이 \(\frac{3}{n}\)이면 구간의 길이는 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\int_0^3 9x^2\,dx = 81\)<span class="why"><b>\(\left(\frac{3k}{n}\right)^2\)의 3을 함수 밖으로 뺐다.</b> \(x_k = \frac{3k}{n}\) 자체가 \(x\)이므로 높이는 \(x^2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\int_0^1 3x^2\,dx = 1\)<span class="why"><b>\(x_k = \frac{k}{n}\)로 읽고 나머지를 계수로 몰았다.</b> 이렇게 읽으면 \(\int_0^1 27x^2\,dx\)가 되어야 하고, 값은 역시 9이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-4.html#card-alg-sigma-read"><small class="mono">대수 3.4</small>Σ 기호 하나에는 무엇이 들어 있을까?</a><a href="../../c/alg/3-4.html#card-alg-sigma-rules"><small class="mono">대수 3.4</small>Σ끼리 더하고 곱해도 될까?</a><a href="../../c/calc1/3-3.html#card-calc1-riemann"><small class="mono">미적분Ⅰ 3.3</small>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</a><a href="../../c/calc1/3-3.html#card-calc1-signed-area"><small class="mono">미적분Ⅰ 3.3</small>그래프가 x축 아래로 내려가면 정적분은 어떻게 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-7.html#card-pmath-cont-expect"><small class="mono">전문 수학 3.7</small>밀도 곡선의 어디에 받침을 대면 수평이 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-4.html#card-alg-sigma-read"><small class="mono">대수 3.4</small>Σ 기호 하나에는 무엇이 들어 있을까?</a><a href="../../c/alg/3-4.html#card-alg-sigma-rules"><small class="mono">대수 3.4</small>Σ끼리 더하고 곱해도 될까?</a><a href="../../c/alg/3-4.html#text-alg-sigma"><small class="mono">대수 3.4</small>합의 기호 ∑</a><a href="../../c/calc1/3-3.html#card-calc1-riemann"><small class="mono">미적분Ⅰ 3.3</small>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-7.html#card-pmath-cont-expect"><small class="mono">전문 수학 3.7</small>밀도 곡선의 어디에 받침을 대면 수평이 될까?</a><a href="../../c/pmath/3-7.html#text-pmath-normal"><small class="mono">전문 수학 3.7</small>연속확률변수와 정규분포</a></div></nav>
 
       <article class="card" id="card-pmath-pyramid">
         <header class="card-head">
-          <span class="no">1.6.2</span><h2>각뿔의 부피는 왜 각기둥의 \(\frac{1}{3}\)일까?</h2><span class="kind">구분구적법 · 부피 · 만들기</span>
+          <span class="no">탐구 2</span><h2>각뿔의 부피는 왜 각기둥의 \(\frac{1}{3}\)일까?</h2><span class="kind">구분구적법 · 부피 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -123,43 +188,43 @@
                 <div><dt>안쪽 계단 부피 ÷ 기둥</dt><dd class="n-i">—</dd></div>
                 <div><dt>두 값의 차</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">밑면은 한 변이 1인 정사각형, 높이는 1입니다. 그래서 기둥(정육면체)의 부피는 1이고, 표의 값이 곧 뿔 부피의 어림값입니다.</p>
+              <p class="fig-note">밑면은 한 변이 1인 정사각형, 높이는 1이다. 그래서 기둥(정육면체)의 부피는 1이고, 표의 값이 곧 뿔 부피의 어림값이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>각뿔의 부피가 \(\frac{1}{3} \times\) (밑넓이) \(\times\) (높이)라는 것은 물을 부어 재 보면 확인할 수 있습니다. 그런데 정확히 \(\frac{1}{3}\)이라는 것은 어떻게 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>꼭짓점에서 거리 \(t\)인 곳의 단면은 밑면과 닮은 정사각형이고, 닮음비는 \(t : 1\)이므로 한 변이 \(t\)입니다. \(\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}\)입니다.</li>
-            <li><span class="tag">설명</span>높이를 \(n\)등분해 두께 \(\frac{1}{n}\)인 판을 쌓습니다. 위에서 \(k\)번째 판의 한 변을 \(\frac{k}{n}\)로 하면 뿔을 덮는 바깥 계단이 되고, 그 부피는 \(V_n = \sum_{k=1}^{n}\left(\frac{k}{n}\right)^2\frac{1}{n} = \frac{(n+1)(2n+1)}{6n^2}\)입니다. 한 변을 \(\frac{k-1}{n}\)로 하면 뿔 안에 들어가는 안쪽 계단이 되고 부피는 \(\frac{(n-1)(2n-1)}{6n^2}\)입니다. 뿔의 부피는 늘 두 계단 사이에 있는데, \(n \to \infty\)이면 두 값이 모두 <b>\(\frac{2}{6} = \frac{1}{3}\)</b>으로 다가가므로 뿔의 부피는 정확히 \(\frac{1}{3}\)입니다.</li>
-            <li><span class="tag">연결</span>판의 넓이를 단면적 \(S(t)\)로 바꾸어 쓰면 이 극한은 정적분 \(\int_0^1 S(t)\,dt = \int_0^1 t^2\,dt\)입니다. 단면적만 알면 어떤 입체의 부피도 같은 방법으로 구할 수 있습니다. 원뿔과 구의 부피 공식도 이렇게 얻습니다.</li>
-            <li><span class="tag">적용</span>\(n\)을 1부터 늘리며 두 계단의 부피가 \(\frac{1}{3} \approx 0.333\)을 사이에 두고 좁혀지는 것을 보세요. 두 값의 차는 \(\frac{1}{n}\)과 어떤 관계가 있나요? 바깥 계단과 안쪽 계단을 번갈아 눌러 어느 판이 빠지는지도 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>계단 입체의 부피는 \(\frac{1}{3}\)로 다가가지만, 겉넓이는 그렇지 않습니다. 계단의 옆면을 아무리 잘게 쪼개도 비스듬한 뿔의 옆면 넓이로 다가가지 않습니다. 부피에서 통하는 어림이 겉넓이에서도 통한다고 생각하면 안 됩니다.</li>
+            <li><span class="tag">질문</span>각뿔의 부피가 \(\frac{1}{3} \times\) (밑넓이) \(\times\) (높이)라는 것은 물을 부어 재 보면 확인할 수 있다. 그런데 정확히 \(\frac{1}{3}\)이라는 것은 어떻게 알 수 있을까?</li>
+            <li><span class="tag">복원</span>꼭짓점에서 거리 \(t\)인 곳의 단면은 밑면과 닮은 정사각형이고, 닮음비는 \(t : 1\)이므로 한 변이 \(t\)이다. \(\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}\)이다.</li>
+            <li><span class="tag">설명</span>높이를 \(n\)등분해 두께 \(\frac{1}{n}\)인 판을 쌓는다. 위에서 \(k\)번째 판의 한 변을 \(\frac{k}{n}\)로 하면 뿔을 덮는 바깥 계단이 되고, 그 부피는 \(V_n = \sum_{k=1}^{n}\left(\frac{k}{n}\right)^2\frac{1}{n} = \frac{(n+1)(2n+1)}{6n^2}\)이다. 한 변을 \(\frac{k-1}{n}\)로 하면 뿔 안에 들어가는 안쪽 계단이 되고 부피는 \(\frac{(n-1)(2n-1)}{6n^2}\)이다. 뿔의 부피는 늘 두 계단 사이에 있는데, \(n \to \infty\)이면 두 값이 모두 \(\frac{2}{6} = \frac{1}{3}\)으로 다가가므로 뿔의 부피는 정확히 \(\frac{1}{3}\)이다.</li>
+            <li><span class="tag">연결</span>판의 넓이를 단면적 \(S(t)\)로 바꾸어 쓰면 이 극한은 정적분 \(\int_0^1 S(t)\,dt = \int_0^1 t^2\,dt\)이다. 단면적만 알면 어떤 입체의 부피도 같은 방법으로 구할 수 있다. 원뿔과 구의 부피 공식도 이렇게 얻는다.</li>
+            <li><span class="tag">적용</span>\(n\)을 1부터 늘리며 두 계단의 부피가 \(\frac{1}{3} \approx 0.333\)을 사이에 두고 좁혀지는 것을 보자. 두 값의 차는 \(\frac{1}{n}\)과 어떤 관계가 있는가? 바깥 계단과 안쪽 계단을 번갈아 눌러 어느 판이 빠지는지도 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>계단 입체의 부피는 \(\frac{1}{3}\)로 다가가지만, 겉넓이는 그렇지 않다. 계단의 옆면을 아무리 잘게 쪼개도 비스듬한 뿔의 옆면 넓이로 다가가지 않는다. 부피에서 통하는 어림이 겉넓이에서도 통한다고 생각하면 안 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">같은 방법으로 반지름 \(r\), 높이 \(h\)인 원뿔을 쌓으면, 위에서 \(k\)번째 판(바깥 계단)의 부피는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\pi\left(\frac{rk}{n}\right)^2\frac{h}{n}\)<span class="why"><b>맞습니다.</b> 반지름은 꼭짓점에서의 거리에 비례해 \(\frac{rk}{n}\)이고, 판의 두께는 \(\frac{h}{n}\)입니다. 합의 극한은 \(\frac{1}{3}\pi r^2 h\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\pi r^2\frac{h}{n}\)<span class="why"><b>모든 판의 반지름을 밑면과 같게 했습니다.</b> 그러면 원기둥의 부피가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\pi\frac{rk}{n}\cdot\frac{h}{n}\)<span class="why"><b>반지름을 제곱하지 않았습니다.</b> 원판의 넓이는 \(\pi \times\) (반지름)\(^2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\pi\left(\frac{rk}{n}\right)^2 h\)<span class="why"><b>두께를 높이 전체로 썼습니다.</b> 판은 \(n\)장이므로 한 장의 두께는 \(\frac{h}{n}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\pi\left(\frac{rk}{n}\right)^2\frac{h}{n}\)<span class="why"><b>맞다.</b> 반지름은 꼭짓점에서의 거리에 비례해 \(\frac{rk}{n}\)이고, 판의 두께는 \(\frac{h}{n}\)이다. 합의 극한은 \(\frac{1}{3}\pi r^2 h\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\pi r^2\frac{h}{n}\)<span class="why"><b>모든 판의 반지름을 밑면과 같게 했다.</b> 그러면 원기둥의 부피가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\pi\frac{rk}{n}\cdot\frac{h}{n}\)<span class="why"><b>반지름을 제곱하지 않았다.</b> 원판의 넓이는 \(\pi \times\) (반지름)\(^2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\pi\left(\frac{rk}{n}\right)^2 h\)<span class="why"><b>두께를 높이 전체로 썼다.</b> 판은 \(n\)장이므로 한 장의 두께는 \(\frac{h}{n}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-4.html#card-alg-sigma-read"><small class="mono">대수 3.4</small>Σ 기호 하나에는 무엇이 들어 있을까?</a><a href="../../c/alg/3-4.html#card-alg-sigma-rules"><small class="mono">대수 3.4</small>Σ끼리 더하고 곱해도 될까?</a><a href="../../c/calc1/3-3.html#card-calc1-riemann"><small class="mono">미적분Ⅰ 3.3</small>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</a><a href="../../c/calc1/3-3.html#card-calc1-signed-area"><small class="mono">미적분Ⅰ 3.3</small>그래프가 x축 아래로 내려가면 정적분은 어떻게 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-7.html#card-pmath-cont-expect"><small class="mono">전문 수학 3.7</small>밀도 곡선의 어디에 받침을 대면 수평이 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-4.html#card-alg-sigma-read"><small class="mono">대수 3.4</small>Σ 기호 하나에는 무엇이 들어 있을까?</a><a href="../../c/alg/3-4.html#card-alg-sigma-rules"><small class="mono">대수 3.4</small>Σ끼리 더하고 곱해도 될까?</a><a href="../../c/alg/3-4.html#text-alg-sigma"><small class="mono">대수 3.4</small>합의 기호 ∑</a><a href="../../c/calc1/3-3.html#card-calc1-riemann"><small class="mono">미적분Ⅰ 3.3</small>곡선 아래의 넓이를 직사각형으로 잴 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-7.html#card-pmath-cont-expect"><small class="mono">전문 수학 3.7</small>밀도 곡선의 어디에 받침을 대면 수평이 될까?</a><a href="../../c/pmath/3-7.html#text-pmath-normal"><small class="mono">전문 수학 3.7</small>연속확률변수와 정규분포</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-1-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=1-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">7문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

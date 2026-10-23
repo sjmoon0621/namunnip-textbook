@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인공위성 궤도와 행성의 질량 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="인공위성의 궤도 고도와 공전 주기 자료로 케플러 제3법칙을 확인하고, 주기와 궤도 반지름의 관계에서 지구와 목성 같은 중심 행성의 질량을 계산한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-labearth-orbit-mass .sats { margin-top: 6px; }
     #card-labearth-orbit-mass [hidden] { display: none !important; }
@@ -42,23 +48,81 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-labearth-orbit-mass"><span class="mono">3.4.1</span>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</a></li>
+        <li><a href="#text-labearth-orbit"><span class="mono">본문</span>인공위성 궤도와 행성의 질량</a></li>
+        <li><a href="#card-labearth-orbit-mass"><span class="mono">탐구 1</span>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labearth-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labearth&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">4문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-3-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labearth-orbit" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>인공위성 궤도와 행성의 질량</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">국제 우주 정거장은 지표에서 420 km 높이를 약 93분에 한 바퀴 돈다. 위성 항법에 쓰이는 GPS 위성은 2만 km 높이를 12시간에, 기상 위성 천리안 2A는 3만 6천 km 높이를 하루에 한 바퀴 돈다. 높이 올라간 위성일수록 한 바퀴에 오래 걸린다. 위성의 무게는 저마다 다른데도 높이만으로 주기가 정해지는 듯하다. 이 관계에서 지구의 질량을 꺼낼 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="인공위성의 궤도 반지름과 주기">
+              <g class="s">
+                <text x="20" y="22">위성</text><text x="170" y="22">높이 (km)</text><text x="270" y="22">궤도 반지름 r (km)</text><text x="420" y="22">주기 T</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">국제 우주 정거장</text><text x="170" y="52">420</text><text x="270" y="52">6791</text><text x="420" y="52" class="td">92.8분</text>
+                <text x="20" y="74">GPS 위성</text><text x="170" y="74">20200</text><text x="270" y="74">26571</text><text x="420" y="74">11.97시간</text>
+                <text x="20" y="96">천리안 2A (정지 궤도)</text><text x="170" y="96">35793</text><text x="270" y="96">42164</text><text x="420" y="96">23.93시간</text>
+                <text x="20" y="122">궤도 반지름은 지구 반지름 6371 km에 높이를 더한 값이다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 위성이 높을수록 주기가 길다. 반지름이 6.2배이면 주기는 약 15.5배로, 반지름의 1.5제곱에 비례한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>케플러 법칙, 만유인력과 원운동, 로그 그래프.</div>
+
+          <h3><span class="no">3.4.1</span>중력이 구심력이 된다</h3>
+          <p>위성이 원 궤도를 돌려면 중심을 향하는 구심력이 필요하고, 그 힘은 지구의 중력이 낸다. 위성의 질량을 \(m\)이라 하면 구심력도 중력도 \(m\)에 비례하므로, 식에서 \(m\)이 지워진다. 그래서 위성의 무게와 상관없이 궤도 반지름만으로 속력과 주기가 정해진다. 높이 올라가면 중력이 약해져 느리게 돌아도 충분하고, 돌아야 할 둘레도 길어지므로 주기가 길어진다. 이 관계는 행성이 태양 둘레를 도는 케플러 제3법칙과 같다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">궤도와 중심 천체의 질량</span></span>
+            <p>질량 \(M\)인 천체 둘레를 반지름 \(r\), 주기 \(T\)로 도는 위성은 \(GMm/r^2 = m(2\pi/T)^2 r\)을 만족하므로 \[M = \frac{4\pi^2 r^3}{G\,T^2}\]이다. \(G = 6.674\times10^{-11}\) N·m²/kg²이다. 타원 궤도에서는 \(r\) 대신 긴반지름을 쓴다.</p>
+          </div>
+          <p>여러 위성의 \(r\)과 \(T\)를 로그 눈금 그래프에 찍으면 기울기 1.5인 직선 위에 놓인다. 직선의 위치가 중심 천체의 질량을 알려 주므로, 위성 하나만 있어도 질량을 계산할 수 있고, 여러 위성을 쓰면 측정 오차를 줄일 수 있다. 같은 방법으로 목성의 위성들에서 목성의 질량을, 지구의 공전에서 태양의 질량을 잰다.<sup class="fn"><a href="#fn-labearth-orbit-1">1</a></sup></p>
+
+          <h3><span class="no">3.4.2</span>정지 궤도의 높이</h3>
+          <p>주기가 지구의 자전 주기인 23시간 56분과 같고 적도 위를 같은 방향으로 도는 위성은 지상에서 보면 하늘의 한 점에 멈춰 있다. 그래서 기상 위성과 방송 위성은 이 정지 궤도를 쓴다. 주기가 정해지면 위의 식에서 반지름도 하나로 정해지므로, 정지 궤도는 지구 중심에서 42164 km, 지표에서 약 3만 6천 km인 한 높이뿐이다. 반면 국제 우주 정거장처럼 낮은 위성은 하루에 지구를 15바퀴 넘게 돌아 지상의 여러 곳 위를 지난다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="세 위성으로 계산한 지구의 질량">
+              <g class="s">
+                <text x="20" y="22">위성</text><text x="170" y="22">r³/T² (m³/s²)</text><text x="330" y="22">계산한 지구 질량 (kg)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">국제 우주 정거장</text><text x="170" y="52">1.010 × 10¹³</text><text x="330" y="52">5.98 × 10²⁴</text>
+                <text x="20" y="74">GPS 위성</text><text x="170" y="74">1.010 × 10¹³</text><text x="330" y="74">5.97 × 10²⁴</text>
+                <text x="20" y="96">천리안 2A</text><text x="170" y="96">1.010 × 10¹³</text><text x="330" y="96">5.97 × 10²⁴</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 세 위성의 \(r^3/T^2\)은 같은 값을 주고, 거기서 지구의 질량이 나온다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+            <p>국제 우주 정거장의 궤도 반지름 6791 km와 주기 92.8분으로 지구의 질량을 구하여라. 이 값으로 지구의 평균 밀도를 구하고, 지각 암석의 밀도 약 2.7 g/cm³와 비교하여라.</p>
+          </div>
+          <p>\(r = 6.791\times10^6\) m이고 \(T = 92.8\times60 = 5568\) s이다. \(r^3 = 3.132\times10^{20}\) m³, \(T^2 = 3.100\times10^7\) s²이므로 \(M = \dfrac{39.48 \times 3.132\times10^{20}}{6.674\times10^{-11} \times 3.100\times10^7} \approx 5.98\times10^{24}\) kg이다.</p>
+          <p>지구의 부피는 \(\tfrac43\pi(6.371\times10^6)^3 \approx 1.083\times10^{21}\) m³이므로 평균 밀도는 \(5.98\times10^{24}/1.083\times10^{21} \approx 5520\) kg/m³, 곧 약 5.5 g/cm³이다. 지각 암석의 두 배쯤이어서, 지구 안쪽에는 훨씬 무거운 물질이 있어야 한다. 이것이 지구 중심에 철로 된 핵이 있다는 증거 가운데 하나이다. 즉 위성의 높이와 주기는 위성의 질량과 상관없이 중심 천체의 질량을 알려 주고, 그 질량은 천체의 속까지 짐작하게 한다.</p>
+          <p>아래 탐구 카드에서 여러 인공위성의 높이와 주기를 로그 그래프에 찍어 기울기를 확인하고, 지구의 질량을 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labearth-orbit-1">이 식에서 위성의 운동으로 얻는 것은 \(GM\)이다. \(G\)를 따로 재야 \(M\)을 알 수 있는데, 1798년 영국의 캐번디시가 비틀림 저울로 납 공 사이의 인력을 재어 처음으로 지구의 밀도를 구했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>위성은 중심 천체의 중력을 구심력으로 삼아 돌므로, 위성의 질량과 상관없이 \(T^2 = 4\pi^2 r^3/(GM)\)를 만족하고, 궤도 반지름과 주기만 알면 중심 천체의 질량 \(M = 4\pi^2 r^3/(GT^2)\)을 구할 수 있다. 주기가 정해진 정지 궤도는 지표에서 약 3만 6천 km인 한 높이뿐이다. 처음 질문의 국제 우주 정거장으로 구한 지구의 질량은 약 \(5.98\times10^{24}\) kg이고, 평균 밀도는 지각 암석의 두 배쯤인 5.5 g/cm³이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a><a href="../../c/mech/1-4.html#card-mech-kepler"><small class="mono">역학과 에너지 1.4</small>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a></div></nav>
+
       <article class="card" id="card-labearth-orbit-mass">
         <header class="card-head">
-          <span class="no">3.4.1</span><h2>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</h2><span class="kind">실험 · 케플러 제3법칙 · 로그 그래프 · 행성의 질량</span>
+          <span class="no">탐구 1</span><h2>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</h2><span class="kind">실험 · 케플러 제3법칙 · 로그 그래프 · 행성의 질량</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <div class="presets sys" role="group" aria-label="중심 천체">
-              <button type="button" class="chip" data-s="earth" aria-pressed="true">지구 — 인공위성과 달</button>
-              <button type="button" class="chip" data-s="jupiter" aria-pressed="false">목성 — 갈릴레이 위성</button>
+              <button type="button" class="chip" data-s="earth" aria-pressed="true">지구 (인공위성과 달)</button>
+              <button type="button" class="chip" data-s="jupiter" aria-pressed="false">목성 (갈릴레이 위성)</button>
             </div>
             <canvas class="cv-wide" aria-label="중심 천체와 고른 위성의 궤도, 측정 중인 시간"></canvas>
             <div class="ctl">
@@ -73,43 +137,45 @@
               <div class="tbl-host t-earth"></div>
               <div class="tbl-host t-jupiter" hidden></div>
               <canvas class="cv-plot" aria-label="log a와 log T 그래프와 맞춤 직선"></canvas>
-              <p class="fig-note">인공위성의 주기·고도는 CelesTrak SATCAT(미 우주군 공개 궤도 자료, 2026년 10월), 달은 NASA 달 자료표, 갈릴레이 위성은 NASA·JPL 위성 궤도 요소의 실제 값입니다. 지구 위성은 지상국에서 연속 세 번 통과한 시각으로 주기를 재며(±0.03분), a는 궤도 제원표 값을 씁니다. 목성 위성은 망원경으로 잰 최대 이각(±1.5″)에 목성까지 거리 4.20 AU(예시 값)를 곱해 a를 구하고, 여러 밤의 관측으로 주기를 잽니다(±0.01일). 그림의 궤도 크기와 움직임 속도는 한 화면에 담으려고 줄인 모식입니다.</p>
+              <p class="fig-note">인공위성의 주기·고도는 CelesTrak SATCAT(미 우주군 공개 궤도 자료, 2026년 10월), 달은 NASA 달 자료표, 갈릴레이 위성은 NASA·JPL 위성 궤도 요소의 실제 값이다. 지구 위성은 지상국에서 연속 세 번 통과한 시각으로 주기를 재며(±0.03분), a는 궤도 제원표 값을 쓴다. 목성 위성은 망원경으로 잰 최대 이각(±1.5″)에 목성까지 거리 4.20 AU(예시 값)를 곱해 a를 구하고, 여러 밤의 관측으로 주기를 잰다(±0.01일). 그림의 궤도 크기와 움직임 속도는 한 화면에 담으려고 줄인 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>국제 우주 정거장은 약 93분, GPS 위성은 약 12시간, 천리안 2A는 하루에 지구를 한 바퀴 돕니다. 이 높이와 주기 자료만으로 지구의 질량을 구할 수 있을까요? 같은 방법을 목성 위성에 쓰면 목성의 질량은요?</li>
-            <li><span class="tag">복원</span>위성이 반지름 a인 원 궤도를 주기 T로 돌려면 만유인력이 구심력이 되어야 합니다. GMm/a² = m(2π/T)²a에서 <em>T² = (4π²/GM) a³</em>, 곧 케플러 제3법칙입니다. 비례 상수에 중심 천체의 질량 M만 들어 있고 위성의 질량은 없습니다.</li>
-            <li><span class="tag">설계</span>조작 변인은 궤도 긴반지름 a(위성 바꾸기), 종속 변인은 주기 T입니다. a는 지구 중심에서 잰 거리이므로 고도에 지구 반지름 6378 km를 더해야 합니다. 주기는 한 바퀴보다 여러 바퀴를 재서 나눌수록 정확합니다.</li>
-            <li><span class="tag">분석</span>양변에 로그를 취하면 <em>log T = 1.5 log a + ½ log(4π²/GM)</em>입니다. 가로축 log a, 세로축 log T(단위 m, s)로 그리면 기울기 1.5인 직선이 되고, 절편 b에서 M = 4π² / (G · 10<sup>2b</sup>)를 구합니다. 고도가 수백 km에서 38만 km까지 1000배 넘게 달라도 한 직선에 놓이는지 확인하세요. 절편은 자료에서 멀리 떨어진 log a = 0까지 직선을 늘려 읽은 값이라 기울기의 작은 오차가 크게 불어납니다. 기울기가 1.5임을 확인했다면 1.5로 고정하고 절편만 구하는 편이 정확합니다.</li>
-            <li><span class="tag">측정</span>위성을 다섯 개 이상 골라 주기를 재고 그래프의 기울기와 질량을 구하세요. 달을 넣었을 때와 뺐을 때 질량이 얼마나 달라지나요? 목성으로 바꿔 갈릴레이 위성 네 개로 목성의 질량을 구하고 지구의 몇 배인지 비교하세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>낮은 궤도의 위성은 대기 저항 때문에 고도가 조금씩 낮아지고, 지구가 완전한 구가 아니어서 궤도가 흔들립니다. 그래서 같은 위성도 날짜마다 주기가 조금 다릅니다. 달처럼 위성이 무거우면 식의 M은 실제로 M + m이 되어 결과가 약 1.2% 커집니다. 목성 위성의 a는 목성까지 거리의 오차가 그대로 들어가는 계통 오차를 가집니다. 또 공개 목록의 인공위성 고도는 주기와 같은 궤도 요소에서 계산한 값이라, 인공위성 점들은 서로 독립인 측정이 아니라 GM을 다시 확인하는 셈입니다. 독립적인 검증은 달과 목성 위성 점이 맡습니다. 야간 관측 때는 두 명 이상 함께 하고, 망원경을 태양 쪽으로 돌리지 않습니다.</li>
+            <li><span class="tag">탐구 문제</span>국제 우주 정거장은 약 93분, GPS 위성은 약 12시간, 천리안 2A는 하루에 지구를 한 바퀴 돈다. 이 높이와 주기 자료만으로 지구의 질량을 구할 수 있을까? 같은 방법을 목성 위성에 쓰면 목성의 질량은 어떨까?</li>
+            <li><span class="tag">복원</span>위성이 반지름 a인 원 궤도를 주기 T로 돌려면 만유인력이 구심력이 되어야 한다. GMm/a² = m(2π/T)²a에서 <em>T² = (4π²/GM) a³</em>, 곧 케플러 제3법칙이다. 비례 상수에 중심 천체의 질량 M만 들어 있고 위성의 질량은 없다.</li>
+            <li><span class="tag">설계</span>조작 변인은 궤도 긴반지름 a(위성 바꾸기), 종속 변인은 주기 T이다. a는 지구 중심에서 잰 거리이므로 고도에 지구 반지름 6378 km를 더해야 한다. 주기는 한 바퀴보다 여러 바퀴를 재서 나눌수록 정확하다.</li>
+            <li><span class="tag">분석</span>양변에 로그를 취하면 <em>log T = 1.5 log a + ½ log(4π²/GM)</em>이다. 가로축 log a, 세로축 log T(단위 m, s)로 그리면 기울기 1.5인 직선이 되고, 절편 b에서 M = 4π² / (G · 10<sup>2b</sup>)를 구한다. 고도가 수백 km에서 38만 km까지 1000배 넘게 달라도 한 직선에 놓이는지 확인해 보자. 절편은 자료에서 멀리 떨어진 log a = 0까지 직선을 늘려 읽은 값이라 기울기의 작은 오차가 크게 불어난다. 기울기가 1.5임을 확인했다면 1.5로 고정하고 절편만 구하는 편이 정확하다.</li>
+            <li><span class="tag">측정</span>위성을 다섯 개 이상 골라 주기를 재고 그래프의 기울기와 질량을 구해 보자. 달을 넣었을 때와 뺐을 때 질량이 얼마나 달라지는가? 목성으로 바꿔 갈릴레이 위성 네 개로 목성의 질량을 구하고 지구의 몇 배인지 비교해 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>낮은 궤도의 위성은 대기 저항 때문에 고도가 조금씩 낮아지고, 지구가 완전한 구가 아니어서 궤도가 흔들린다. 그래서 같은 위성도 날짜마다 주기가 조금 다르다. 달처럼 위성이 무거우면 식의 M은 실제로 M + m이 되어 결과가 약 1.2% 커진다. 목성 위성의 a는 목성까지 거리의 오차가 그대로 들어가는 계통 오차를 가진다. 또 공개 목록의 인공위성 고도는 주기와 같은 궤도 요소에서 계산한 값이라, 인공위성 점들은 서로 독립인 측정이 아니라 GM을 다시 확인하는 셈이다. 독립적인 검증은 달과 목성 위성 점이 맡는다. 야간 관측 때는 두 명 이상 함께 하고, 망원경을 태양 쪽으로 돌리지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">질량이 지구의 4배이고 반지름은 같은 행성 둘레를 같은 궤도 반지름으로 도는 위성의 주기는 지구 위성의 몇 배일까요?</p>
+          <p class="q">질량이 지구의 4배이고 반지름은 같은 행성 둘레를 같은 궤도 반지름으로 도는 위성의 주기는 지구 위성의 몇 배일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/2배<span class="why"><b>맞습니다.</b> T² ∝ a³/M이므로 a가 같으면 T ∝ 1/√M입니다. M이 4배이면 T는 1/2배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4배<span class="why"><b>제곱근을 빠뜨렸습니다.</b> 질량에 반비례하는 것은 T가 아니라 T²입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같다<span class="why"><b>케플러 제3법칙의 비례 상수는 중심 천체마다 다릅니다.</b> T²/a³ = 4π²/GM이므로 중심 천체가 무거우면 같은 거리에서 더 빨리 돕니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1/2배<span class="why"><b>맞다.</b> T² ∝ a³/M이므로 a가 같으면 T ∝ 1/√M이다. M이 4배이면 T는 1/2배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4배<span class="why"><b>제곱근을 빠뜨렸다.</b> 질량에 반비례하는 것은 T가 아니라 T²이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>같다<span class="why"><b>케플러 제3법칙의 비례 상수는 중심 천체마다 다르다.</b> T²/a³ = 4π²/GM이므로 중심 천체가 무거우면 같은 거리에서 더 빨리 돈다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a><a href="../../c/mech/1-4.html#card-mech-kepler"><small class="mono">역학과 에너지 1.4</small>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a><a href="../../c/mech/1-4.html#card-mech-kepler"><small class="mono">역학과 에너지 1.4</small>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labearth-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labearth&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">4문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>

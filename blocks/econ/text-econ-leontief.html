@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/econ/body.js"],
+  "sec": "3-3",
+  "short": "본문 · 행렬로 푸는 경제 문제"
+}
+-->
+<article class="card reading" id="text-econ-leontief" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>행렬로 푸는 경제 문제</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">자동차를 만들려면 철강이 필요하다. 그런데 철강을 만드는 공장도 트럭과 기계, 그리고 철강 자신을 쓴다. 소비자가 자동차를 100억 원어치 더 사면, 철강 산업은 자동차에 들어갈 철강만큼만 더 만들면 될까? 철강을 더 만들기 위해 필요한 철강, 그 철강을 만들기 위한 철강까지 생각하면 계산이 끝없이 이어질 것 같다.</p>
+    <figure class="q-fig" data-q="econ-leontief">
+      <svg viewBox="0 0 520 170" role="img" aria-label="자동차 최종 수요에 따른 두 산업의 총생산"></svg>
+      <div class="q-ctl"><label>자동차 최종 수요 (억 원) <input type="range" data-k="d2" min="50" max="300" step="10" value="100"><output data-k="d2"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 철강의 최종 수요를 50억 원으로 두고 자동차의 최종 수요를 바꾸면, 두 산업이 서로 원료를 대 주므로 총생산은 최종 수요보다 훨씬 커진다. 총생산은 \((E - A)^{-1}\)에 최종 수요를 곱하여 구한다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>역행렬(<a href="3-2.html">역행렬</a>), 연립 일차 방정식, 등비급수의 아이디어.</div>
+
+    <h3><span class="no">3.3.1</span>투입 계수 행렬</h3>
+    <p>철강(1)과 자동차(2) 두 산업을 생각하자. 철강 1원어치를 만드는 데 철강 0.2원, 자동차 0.1원어치가 들고, 자동차 1원어치를 만드는 데 철강 0.3원, 자동차 0.1원어치가 든다고 하자. 이 비율을 모은 행렬 \[A = \begin{pmatrix} 0.2 &amp; 0.3 \\ 0.1 &amp; 0.1 \end{pmatrix}\] 를 투입 계수 행렬이라 한다. 첫째 행은 철강이 각 산업에 얼마씩 들어가는지를 나타낸다.</p>
+    <p>두 산업의 총생산을 \(X = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}\), 소비자가 사 가는 최종 수요를 \(D\)라 하면, 총생산은 다른 산업의 원료로 쓰이는 몫 \(AX\)와 최종 수요 \(D\)의 합이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">투입 산출 모형</span></span>
+      <p>\[X = AX + D \iff (E - A)X = D \iff X = (E - A)^{-1}D\]</p>
+    </div>
+    <p>이 모형을 처음 만든 경제학자의 이름을 따서 레온티예프 모형이라 한다. 처음 질문의 끝없는 계산은 \(D + AD + A^2D + \cdots\)의 합인데, 등비급수의 합처럼 이 합이 바로 \((E - A)^{-1}D\)이다.<sup class="fn"><a href="#fn-econ-leontief-1">1</a></sup></p>
+
+    <h3><span class="no">3.3.2</span>파급 효과</h3>
+    <p>그림 1에서 자동차의 최종 수요를 늘려 보자. 자동차 총생산이 늘 뿐 아니라, 자동차가 쓰는 철강 때문에 철강 총생산도 함께 늘어난다. 최종 수요의 변화가 산업 사이의 거래를 타고 퍼져 나가는 것을 파급 효과라 한다. \((E - A)^{-1}\)의 각 성분이 바로 그 크기를 알려 준다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="최종 수요의 파급 효과가 단계별로 더해지는 모습">
+        <g class="s">
+          <rect x="30" y="40" width="80" height="30" class="lb"/><text x="70" y="60" text-anchor="middle">D</text>
+          <rect x="130" y="40" width="80" height="30" class="lc"/><text x="170" y="60" text-anchor="middle">AD</text>
+          <rect x="230" y="40" width="80" height="30" class="la"/><text x="270" y="60" text-anchor="middle">A²D</text>
+          <text x="330" y="60">⋯ = (E − A)⁻¹ D</text>
+          <text x="260" y="98" text-anchor="middle">최종 수요, 그 원료, 원료의 원료, ⋯ 를 모두 더한 것</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 총생산은 최종 수요와 그 원료, 원료의 원료를 끝없이 더한 값이며, 그 합이 역행렬로 한 번에 계산된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>위 투입 계수 행렬에서 철강의 최종 수요가 50억 원, 자동차의 최종 수요가 100억 원일 때 두 산업의 총생산을 구하여라.</p>
+    </div>
+    <p>\(E - A = \begin{pmatrix} 0.8 &amp; -0.3 \\ -0.1 &amp; 0.9 \end{pmatrix}\)이고 행렬식은 \(0.72 - 0.03 = 0.69\)이다. 따라서 \((E - A)^{-1} = \dfrac{1}{0.69}\begin{pmatrix} 0.9 &amp; 0.3 \\ 0.1 &amp; 0.8 \end{pmatrix}\)이다.</p>
+    <p>\[X = \frac{1}{0.69}\begin{pmatrix} 0.9 \times 50 + 0.3 \times 100 \\ 0.1 \times 50 + 0.8 \times 100 \end{pmatrix} = \frac{1}{0.69}\begin{pmatrix} 75 \\ 85 \end{pmatrix} \approx \begin{pmatrix} 108.7 \\ 123.2 \end{pmatrix}\] 이므로 철강 약 108.7억 원, 자동차 약 123.2억 원을 생산해야 한다. 철강은 최종 수요 50억 원의 두 배가 넘게 만들어야 한다. 자동차 수요를 10억 원 늘리면 철강 총생산은 \(\dfrac{0.3 \times 10}{0.69} \approx 4.3\)억 원 늘어난다.</p>
+    <p>아래 탐구 카드에서 자동차 수요의 파급 효과와, 두 시장의 가격이 함께 움직이는 문제를 행렬로 풀어 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-econ-leontief-1">수에서 \(|r| &lt; 1\)이면 \(1 + r + r^2 + \cdots = \dfrac{1}{1 - r}\)인 것처럼, 투입 계수가 충분히 작으면 \(E + A + A^2 + \cdots = (E - A)^{-1}\)이 성립한다. 레온티예프는 이 모형으로 노벨 경제학상을 받았다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>산업 사이의 원료 거래를 투입 계수 행렬 \(A\)로 나타내면 총생산 \(X\)는 \(X = AX + D\)를 만족하고, \(X = (E - A)^{-1}D\)로 구한다. 이 역행렬은 최종 수요가 산업 사이로 퍼지는 파급 효과를 한 번에 계산해 준다. 그래서 처음 질문의 자동차 수요가 늘면 철강은 자동차에 들어가는 양보다 더 많이, 역행렬이 알려 주는 만큼 더 만들어야 한다.</p></div>
+  </div>
+</article>

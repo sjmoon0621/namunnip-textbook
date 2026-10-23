@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>복소수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="허수단위 i, 복소수의 실수부분과 허수부분, 서로 같은 복소수, 켤레복소수, 복소수의 사칙연산과 켤레복소수를 이용한 나눗셈. 거듭제곱과 연산을 평면 위 점으로 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-imag-unit .seq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; color: var(--ink-2); }
@@ -46,18 +51,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm1-imag-unit"><span class="mono">2.1.1</span>허수단위와 복소수</a></li>
-        <li><a href="#card-cm1-complex-arith"><span class="mono">2.1.2</span>복소수의 사칙연산</a></li>
+        <li><a href="#text-cm1-complex"><span class="mono">본문</span>복소수</a></li>
+        <li><a href="#card-cm1-imag-unit"><span class="mono">탐구 1</span>허수단위와 복소수</a></li>
+        <li><a href="#card-cm1-complex-arith"><span class="mono">탐구 2</span>복소수의 사칙연산</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm1-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">135문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm1&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm1-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">135문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm1-complex" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>복소수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">실수는 제곱하면 언제나 0 이상이므로 방정식 \(x^2 = -1\)에는 실수 해가 없다. 그렇다면 제곱해서 \(-1\)이 되는 새 수를 하나 약속하고 계산 규칙을 그대로 쓰면, 모순 없이 계산할 수 있을까?</p>
+          <figure class="q-fig" data-q="cm1-ipow">
+            <svg viewBox="0 0 520 260" role="img" aria-label="i의 거듭제곱이 1, i, −1, −i를 차례로 돌며 되풀이되는 그림"></svg>
+            <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="0" max="12" step="1" value="1"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(i\)를 곱할 때마다 값은 \(1, i, -1, -i\)를 차례로 돌고, 네 번 곱하면 처음으로 돌아온다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>중학교의 제곱근과 실수, 근호 계산 \(\sqrt{a}\sqrt{b} = \sqrt{ab}\ (a, b \ge 0)\), 다항식의 연산(<a href="../cm1/1-1.html">다항식의 연산</a>).</div>
+
+          <h3><span class="no">2.1.1</span>수는 방정식을 풀려고 넓어져 왔다</h3>
+          <p>자연수만 알면 \(x + 3 = 1\)을 풀 수 없다. 그래서 음수를 들여와 정수를 만들었다. 정수만으로는 \(2x = 1\)을 풀 수 없어서 분수를 들여와 유리수를 만들었고, \(x^2 = 2\)를 풀려고 \(\sqrt{2}\) 같은 무리수를 더해 실수를 만들었다. 새 수를 들일 때마다 지켜 온 원칙이 있다. 원래 수의 계산 규칙은 그대로 둔다는 것이다.</p>
+          <p>이제 \(x^2 = -1\) 차례이다. 실수 가운데에는 답이 없으므로, 제곱해서 \(-1\)이 되는 수를 새로 하나 약속하고 이름을 \(i\)라 하자. 그러면 \(i^2 = -1\)이고, \(i\)는 '상상의 수'라는 뜻에서 <em>허수단위</em>라 부른다.</p>
+          <p>약속만 하고 넘어가면 \(i\)가 어떤 수인지 손에 잡히지 않으니, 수직선에서 곱셈이 하는 일을 다시 떠올려 보자. 3을 곱하면 0에서 멀어지는 거리가 세 배가 되고, \(-1\)을 곱하면 거리는 그대로인 채 0을 사이에 두고 반대쪽으로 넘어간다. 반대쪽으로 넘어가는 것을 0을 중심으로 반 바퀴 도는 것으로 보면, \(-1\)을 두 번 곱해 제자리로 오는 것도 반 바퀴씩 두 번 돌아 한 바퀴를 채운 것이다. 그렇다면 두 번 곱해서 \(-1\)이 되는 수는 두 번 하면 반 바퀴가 되는 움직임, 곧 4분의 1 바퀴 돌리기여야 한다. 수직선 위에는 4분의 1 바퀴 돈 자리가 없으므로 \(i\)는 수직선 밖, 0에서 수직선과 직각으로 뻗은 방향에 놓인다고 생각할 수 있다. 그림 1에서 \(i\)를 한 번 곱할 때마다 점이 원을 따라 4분의 1 바퀴씩 도는 것이 바로 이 그림이다.</p>
+
+          <h3><span class="no">2.1.2</span>복소수의 뜻</h3>
+          <p>\(i\)를 들였으면 \(2i\)도, \(3 + 2i\)도 생각할 수 있어야 한다. 덧셈과 곱셈을 그대로 쓰기로 했기 때문이다. 그래서 실수 \(a\), \(b\)로 \(a + bi\)꼴의 수를 모두 모은다.</p>
+          <div class="tb-env"><span class="lb">정의 2.1.1 <span class="nm">복소수</span></span>
+            <p>실수 \(a\), \(b\)에 대하여 \(a + bi\)꼴의 수를 <em>복소수</em>라 하고, \(a\)를 실수부분, \(b\)를 허수부분이라 한다. \(b = 0\)이면 실수이고, \(b \ne 0\)이면 허수이다. 두 복소수는 실수부분과 허수부분이 각각 같을 때 서로 같다.</p>
+          </div>
+          <p>정의에 따라 실수 \(5\)도 \(5 + 0i\)이므로 복소수이다. 즉 복소수는 실수를 버린 새 집합이 아니라 실수를 품은 더 큰 집합이다. 두 복소수가 같다는 조건이 '두 부분이 각각 같다'인 까닭은, 실수 \(a, b, c, d\)에 대해 \(a + bi = c + di\)이면 \(a - c = (d - b)i\)인데 왼쪽은 실수이므로 \(d = b\)여야 하기 때문이다.</p>
+
+          <h3><span class="no">2.1.3</span>계산 규칙은 그대로</h3>
+          <p>복소수의 덧셈과 뺄셈은 \(i\)를 문자처럼 보고 동류항끼리 모으면 된다. 가령 \((3 + 2i) + (1 - 5i) = 4 - 3i\)이다. 곱셈도 분배법칙으로 전개한 뒤, 나오는 \(i^2\)을 \(-1\)로 바꾸기만 하면 된다.</p>
+          <p>\((3 + 2i)(1 - 5i)\)를 전개하면 \(3 - 15i + 2i - 10i^2\)이다. 여기서 \(i^2 = -1\)이므로 \(-10i^2 = 10\)이고, 따라서 곱은 \(13 - 13i\)이다. 그림 1의 슬라이더로 \(n\)을 늘려 보면 \(i\)의 거듭제곱도 같은 규칙으로 계산된다. \(i^3 = i^2 \cdot i = -i\), \(i^4 = (i^2)^2 = 1\)이므로 네 번마다 값이 되풀이된다.</p>
+          <p>나눗셈에는 한 가지 장치가 더 필요하다. 복소수 \(a + bi\)에 대하여 \(a - bi\)를 <em>켤레복소수</em>라 하고 \(\overline{a + bi}\)로 쓴다. 둘을 곱하면 \((a + bi)(a - bi) = a^2 - b^2i^2 = a^2 + b^2\)으로 실수가 된다. 그래서 분모에 켤레복소수를 곱하면 분모의 \(i\)를 없앨 수 있다. 무리수를 분모로 가진 식에서 분모를 유리화하던 것과 같은 생각이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="자연수, 정수, 유리수, 실수, 복소수가 차례로 포함되는 그림">
+              <rect x="10" y="10" width="500" height="180" class="lc"/><rect x="30" y="34" width="330" height="146" class="lb"/><rect x="48" y="58" width="230" height="114" class="la"/><rect x="64" y="82" width="150" height="82" class="lk"/><rect x="80" y="106" width="80" height="50" class="lk"/>
+              <text x="500" y="30" text-anchor="end" class="tc">복소수 a + bi</text><text x="350" y="52" text-anchor="end" class="tb">실수 (b = 0)</text><text x="268" y="76" text-anchor="end" class="ta">유리수</text><text x="206" y="100" text-anchor="end">정수</text><text x="120" y="136" text-anchor="middle">자연수</text>
+              <text x="320" y="130" text-anchor="middle" class="s">√2, π</text><text x="440" y="110" text-anchor="middle" class="s">허수 (b ≠ 0)</text><text x="440" y="134" text-anchor="middle" class="s">i, 3 + 2i</text>
+            </svg>
+            <figcaption>그림 2. 수는 새 방정식을 풀 때마다 넓어졌고, 복소수는 실수를 그대로 품은 채 허수를 더한 집합이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.1.4</span>음수의 제곱근</h3>
+          <p>\(i\)가 있으면 음수의 제곱근을 쓸 수 있다. \(a > 0\)일 때 \((\sqrt{a}\,i)^2 = a \cdot i^2 = -a\)이므로 \(\sqrt{a}\,i\)는 \(-a\)의 제곱근이다. 이것을 \(\sqrt{-a} = \sqrt{a}\,i\)로 약속한다. 가령 \(\sqrt{-4} = 2i\)이고, \(-4\)의 제곱근은 \(\pm 2i\)이다.</p>
+          <p>그런데 근호의 곱셈 규칙 \(\sqrt{a}\sqrt{b} = \sqrt{ab}\)는 여기서 조심해야 한다. \(\sqrt{-4}\sqrt{-9}\)를 이 규칙대로 쓰면 \(\sqrt{36} = 6\)이 되지만, 약속대로 바꾸면 \(2i \cdot 3i = 6i^2 = -6\)이다. 둘 다 음수일 때는 규칙이 성립하지 않는 것이다.<sup class="fn"><a href="#fn-cm1-complex-1">1</a></sup> 그래서 음수의 제곱근은 먼저 \(i\)를 써서 바꾼 다음에 계산한다.</p>
+
+          <h3><span class="no">2.1.5</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+            <p>\(\dfrac{3 + 2i}{1 - i}\)를 \(a + bi\)꼴로 나타내고, 결과가 맞는지 확인하여라.</p>
+          </div>
+          <p>분모 \(1 - i\)의 켤레복소수는 \(1 + i\)이다. 분자와 분모에 같은 수를 곱해도 값은 변하지 않으므로 둘 다 \(1 + i\)를 곱한다. 분모는 \((1 - i)(1 + i) = 1 - i^2 = 2\)가 된다.</p>
+          <p>분자는 \((3 + 2i)(1 + i) = 3 + 3i + 2i + 2i^2 = 3 + 5i - 2 = 1 + 5i\)이다. 따라서 \(\dfrac{3 + 2i}{1 - i} = \dfrac{1 + 5i}{2} = \dfrac{1}{2} + \dfrac{5}{2}i\)이다.</p>
+          <p>확인은 곱셈으로 한다. 몫에 나누는 수를 곱하면 \(\left(\tfrac{1}{2} + \tfrac{5}{2}i\right)(1 - i) = \tfrac{1}{2} - \tfrac{1}{2}i + \tfrac{5}{2}i - \tfrac{5}{2}i^2 = 3 + 2i\)이므로 분자가 그대로 나온다. 다시 말해 \(i^2 = -1\) 하나만 더한 규칙으로 덧셈, 뺄셈, 곱셈, 나눗셈이 모두 막힘없이 된다. 아래 탐구 카드에서 \(i\)의 거듭제곱과 복소수의 곱을 직접 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm1-complex-1">\(a &lt; 0\), \(b &lt; 0\)일 때만 \(\sqrt{a}\sqrt{b} = -\sqrt{ab}\)이고, 나머지 경우에는 \(\sqrt{a}\sqrt{b} = \sqrt{ab}\)이다. 나눗셈에서는 \(a &gt; 0\), \(b &lt; 0\)일 때 \(\tfrac{\sqrt{a}}{\sqrt{b}} = -\sqrt{\tfrac{a}{b}}\)이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>제곱해서 \(-1\)이 되는 수 \(i\)를 약속하고 실수의 계산 규칙을 그대로 쓰면, \(a + bi\)꼴의 복소수 안에서 사칙연산이 모순 없이 이루어진다. 곱셈에서는 \(i^2\)을 \(-1\)로 바꾸고, 나눗셈에서는 켤레복소수를 곱해 분모를 실수로 만든다. 그래서 \(x^2 = -1\)은 복소수 범위에서 \(x = \pm i\)라는 해를 갖는다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-cm1-imag-unit">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>제곱해서 \(-1\)이 되는 수에 \(i\)를 계속 곱하면 어디로 갈까?</h2><span class="kind">허수단위 · 복소수의 뜻</span>
+          <span class="no">탐구 1</span><h2>제곱해서 \(-1\)이 되는 수에 \(i\)를 계속 곱하면 어디로 갈까?</h2><span class="kind">허수단위 · 복소수의 뜻</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,33 +141,33 @@
                 <div><dt>처음 수 \(\times i^n\)</dt><dd class="n-z">1</dd></div>
               </dl>
               <p class="mono seq">—</p>
-              <p class="fig-note">가로 위치는 실수부분, 세로 위치는 허수부분입니다. 이런 평면(복소평면)은 교육과정 밖이지만, 계산 결과를 한눈에 비교하는 데 씁니다.</p>
+              <p class="fig-note">가로 위치는 실수부분, 세로 위치는 허수부분이다. 이런 평면(복소평면)은 교육과정 밖이지만, 계산 결과를 한눈에 비교하는 데 쓴다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>실수는 제곱하면 0 이상이므로 \(x^2 = -1\)을 만족하는 실수는 없습니다. 그래도 이 방정식의 해가 되는 수를 하나 약속하면 무슨 일이 생길까요?</li>
-            <li><span class="tag">복원</span>양수 \(a\)의 제곱근은 \(\pm\sqrt{a}\)이고, \(\sqrt{a} \times \sqrt{a} = a\)입니다. 다항식은 같은 문자끼리 묶어 계산하고, 문자에 수를 넣어 값을 구합니다.</li>
-            <li><span class="tag">설명</span>제곱해서 \(-1\)이 되는 수를 <em>허수단위</em> \(i\)라 하고 \(i^2 = -1\), \(i = \sqrt{-1}\)로 씁니다. 양수 \(a\)에 대해 \(\sqrt{-a} = \sqrt{a} i\)이므로 \(-a\)의 제곱근은 \(\pm\sqrt{a} i\)입니다. 실수 \(a\), \(b\)로 \(a + bi\) 꼴로 나타낸 수를 <em>복소수</em>라 하고, \(a\)를 <em>실수부분</em>, \(b\)를 <em>허수부분</em>이라 합니다. \(b = 0\)이면 실수이고, \(b \ne 0\)이면 <em>허수</em>, 특히 \(a = 0\), \(b \ne 0\)이면 순허수입니다. 두 복소수는 실수부분끼리, 허수부분끼리 각각 같을 때만 서로 같습니다. \(a + bi = c + di \Leftrightarrow a = c\), \(b = d\)입니다.</li>
-            <li><span class="tag">연결</span>\(i\)를 곱할 때마다 \(i^2 = -1\)을 써서 정리하면 \(i\), \(-1\), \(-i\), 1이 차례로 되풀이됩니다. 그래서 \(i^n\)은 \(n\)을 4로 나눈 나머지만 알면 됩니다. 이 수를 쓰면 실수 범위에서 풀리지 않던 이차방정식도 근을 갖게 되고, 다음 절의 허근으로 이어집니다.</li>
-            <li><span class="tag">적용</span>처음 수 1에서 "\(\times i\)"를 네 번 눌러 처음 자리로 돌아오는지 보세요. 처음 수를 \(2 + i\)로 바꾸고 한 번 누르면 \((2 + i)i = 2i + i^2 = -1 + 2i\)가 나오는지 확인하세요. 점은 원점을 중심으로 몇 도씩 돌아가나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\sqrt{a}\sqrt{b} = \sqrt{ab}\)는 \(a\), \(b\)가 둘 다 음수일 때는 성립하지 않습니다. \(\sqrt{-2} \times \sqrt{-3} = \sqrt{2}i \times \sqrt{3}i = \sqrt{6}i^2 = -\sqrt{6}\)이지, \(\sqrt{6}\)이 아닙니다. 음수의 제곱근은 먼저 \(i\)를 꺼낸 뒤 계산하세요. 또 허수에는 크기 순서가 없습니다. "\(i &gt; 0\)"이나 "\(2i &gt; i\)"는 참도 거짓도 아닌, 정할 수 없는 문장입니다.</li>
+            <li><span class="tag">질문</span>실수는 제곱하면 0 이상이므로 \(x^2 = -1\)을 만족하는 실수는 없다. 그래도 이 방정식의 해가 되는 수를 하나 약속하면 무슨 일이 생길까?</li>
+            <li><span class="tag">복원</span>양수 \(a\)의 제곱근은 \(\pm\sqrt{a}\)이고, \(\sqrt{a} \times \sqrt{a} = a\)이다. 또 다항식은 같은 문자끼리 묶어 계산하고, 문자에 수를 넣어 값을 구한다.</li>
+            <li><span class="tag">설명</span>제곱해서 \(-1\)이 되는 수를 <em>허수단위</em> \(i\)라 하고 \(i^2 = -1\), \(i = \sqrt{-1}\)로 쓴다. 그러면 양수 \(a\)에 대해 \(\sqrt{-a} = \sqrt{a} i\)이므로 \(-a\)의 제곱근은 \(\pm\sqrt{a} i\)이다. 실수 \(a\), \(b\)로 \(a + bi\) 꼴로 나타낸 수를 <em>복소수</em>라 하고, \(a\)를 <em>실수부분</em>, \(b\)를 <em>허수부분</em>이라 한다. \(b = 0\)이면 실수이고 \(b \ne 0\)이면 <em>허수</em>이며, 특히 \(a = 0\), \(b \ne 0\)이면 순허수이다. 두 복소수는 실수부분끼리, 허수부분끼리 각각 같을 때만 서로 같으므로 \(a + bi = c + di \Leftrightarrow a = c\), \(b = d\)이다.</li>
+            <li><span class="tag">연결</span>\(i\)를 곱할 때마다 \(i^2 = -1\)을 써서 정리하면 \(i\), \(-1\), \(-i\), 1이 차례로 되풀이된다. 그래서 \(i^n\)은 \(n\)을 4로 나눈 나머지만 알면 된다. 또 이 수를 쓰면 실수 범위에서 풀리지 않던 이차방정식도 근을 갖게 되어, 다음 절의 허근으로 이어진다.</li>
+            <li><span class="tag">적용</span>처음 수 1에서 "\(\times i\)"를 네 번 눌러 처음 자리로 돌아오는지 보자. 이어서 처음 수를 \(2 + i\)로 바꾸고 한 번 누르면 \((2 + i)i = 2i + i^2 = -1 + 2i\)가 나온다. 점이 원점을 중심으로 몇 도씩 돌아가는지도 살펴보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\sqrt{a}\sqrt{b} = \sqrt{ab}\)는 \(a\), \(b\)가 둘 다 음수일 때는 성립하지 않는다. \(\sqrt{-2} \times \sqrt{-3} = \sqrt{2}i \times \sqrt{3}i = \sqrt{6}i^2 = -\sqrt{6}\)이고 \(\sqrt{6}\)이 아니다. 그래서 음수의 제곱근은 먼저 \(i\)를 꺼낸 뒤 계산한다. 또 허수에는 크기 순서가 없으므로 "\(i &gt; 0\)"이나 "\(2i &gt; i\)"는 참도 거짓도 아닌, 정할 수 없는 문장이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(i^{2026}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1<span class="why"><b>지수가 짝수라서 1이라고 보았습니다.</b> \(i^2 = -1\)이므로 짝수 거듭제곱도 \(-1\)이 될 수 있습니다. 4로 나눈 나머지를 보아야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-1\)<span class="why"><b>맞습니다.</b> \(2026 = 4 \times 506 + 2\)이므로 \(i^{2026} = (i^4)^{506} \times i^2 = 1 \times (-1) = -1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(i\)<span class="why"><b>나머지를 잘못 구했습니다.</b> 나머지가 1일 때 \(i\)입니다. 2026을 4로 나눈 나머지는 2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-i\)<span class="why"><b>나머지가 3인 경우입니다.</b> \(2026 = 2024 + 2\)이고 2024는 4의 배수이므로 나머지는 2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1<span class="why"><b>지수가 짝수라서 1이라고 보았다.</b> \(i^2 = -1\)이므로 짝수 거듭제곱도 \(-1\)이 될 수 있다. 4로 나눈 나머지를 보아야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-1\)<span class="why"><b>맞다.</b> \(2026 = 4 \times 506 + 2\)이므로 \(i^{2026} = (i^4)^{506} \times i^2 = 1 \times (-1) = -1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(i\)<span class="why"><b>나머지를 잘못 구했다.</b> 나머지가 1일 때 \(i\)이다. 2026을 4로 나눈 나머지는 2이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-i\)<span class="why"><b>나머지가 3인 경우이다.</b> \(2026 = 2024 + 2\)이고 2024는 4의 배수이므로 나머지는 2이다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-cm1-complex-arith">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>복소수로 나눗셈은 어떻게 할까?</h2><span class="kind">복소수의 사칙연산 · 켤레복소수</span>
+          <span class="no">탐구 2</span><h2>복소수로 나눗셈은 어떻게 할까?</h2><span class="kind">복소수의 사칙연산 · 켤레복소수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -133,39 +196,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\((1 + 2i) + (1 - i)\)나 \((1 + 2i)(1 - i)\)는 \(i\)를 문자처럼 두고 계산하면 됩니다. 그런데 \((1 + 2i) \div (1 - i)\)는 어떻게 \(a + bi\) 꼴로 만들까요?</li>
-            <li><span class="tag">복원</span>실수의 덧셈과 곱셈에는 교환법칙, 결합법칙, 분배법칙이 성립합니다. 분모에 \(1 + \sqrt{2}\)가 있으면 \(1 - \sqrt{2}\)를 분모와 분자에 곱해 분모를 유리수로 만들었습니다.</li>
-            <li><span class="tag">설명</span>복소수도 \(i\)를 문자처럼 계산하고 \(i^2\)은 \(-1\)로 바꿉니다. \((a + bi) \pm (c + di) = (a \pm c) + (b \pm d)i\), \((a + bi)(c + di) = (ac - bd) + (ad + bc)i\)입니다. \(z = a + bi\)에서 허수부분의 부호만 바꾼 \(a - bi\)를 <em>켤레복소수</em>라 하고 \(\overline{z}\)로 씁니다. \(z + \overline{z} = 2a\), \(z \overline{z} = a^2 + b^2\)으로 둘 다 실수입니다. 그래서 나눗셈은 분모의 켤레복소수를 분모와 분자에 곱해 분모를 실수로 만듭니다. \((a + bi)/(c + di)\) = {\((ac + bd) + (bc - ad)i\)}/\((c^2 + d^2)\)입니다(단, \(c + di \ne 0\)).</li>
-            <li><span class="tag">연결</span>켤레복소수로 나누는 방법은 분모의 유리화와 같은 생각입니다. 복소수끼리 더하고 빼고 곱하고 (0이 아닌 수로) 나눈 결과는 다시 복소수이므로, 실수에서 쓰던 계산 법칙을 그대로 쓸 수 있습니다. 켤레복소수는 계수가 실수인 이차방정식의 두 허근으로 다시 나옵니다.</li>
-            <li><span class="tag">적용</span>"\(z \div w\)"를 고르고 \(z = 1 + 2i\), \(w = 1 - i\)로 두어 결과를 읽으세요. 그다음 "\(z \times \overline{z}\)"를 고르고 \(a\), \(b\)를 움직여 결과 점이 늘 실수축 위에 있는지 보세요. 결과가 0이 되는 것은 언제인가요? \(w\)를 0으로 만들면 나눗셈은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>나눗셈에서 실수부분끼리, 허수부분끼리 따로 나누면 안 됩니다. \((1 + 2i)/(1 - i)\)는 \(1/1 + (2/-1)i = 1 - 2i\)가 아닙니다. 곱해 보면 \((1 - 2i)(1 - i) = -1 - 3i\)로 \(1 + 2i\)가 나오지 않습니다. 계산이 끝나면 결과에 \(w\)를 곱해 \(z\)로 돌아오는지 검산하세요.</li>
+            <li><span class="tag">질문</span>\((1 + 2i) + (1 - i)\)나 \((1 + 2i)(1 - i)\)는 \(i\)를 문자처럼 두고 계산하면 된다. 그런데 \((1 + 2i) \div (1 - i)\)는 어떻게 \(a + bi\) 꼴로 만들까?</li>
+            <li><span class="tag">복원</span>실수의 덧셈과 곱셈에는 교환법칙, 결합법칙, 분배법칙이 성립한다. 또 분모에 \(1 + \sqrt{2}\)가 있으면 \(1 - \sqrt{2}\)를 분모와 분자에 곱해 분모를 유리수로 만들었다.</li>
+            <li><span class="tag">설명</span>복소수도 \(i\)를 문자처럼 계산하고 \(i^2\)만 \(-1\)로 바꾼다. 그래서 \((a + bi) \pm (c + di) = (a \pm c) + (b \pm d)i\), \((a + bi)(c + di) = (ac - bd) + (ad + bc)i\)이다. 이제 \(z = a + bi\)에서 허수부분의 부호만 바꾼 \(a - bi\)를 <em>켤레복소수</em>라 하고 \(\overline{z}\)로 쓰자. 그러면 \(z + \overline{z} = 2a\), \(z \overline{z} = a^2 + b^2\)으로 둘 다 실수이다. 따라서 나눗셈은 분모의 켤레복소수를 분모와 분자에 곱해 분모를 실수로 만들면 되고, \((a + bi)/(c + di)\) = {\((ac + bd) + (bc - ad)i\)}/\((c^2 + d^2)\)이다(단, \(c + di \ne 0\)).</li>
+            <li><span class="tag">연결</span>켤레복소수로 나누는 방법은 분모의 유리화와 같은 생각이다. 또 복소수끼리 더하고 빼고 곱하고 0이 아닌 수로 나눈 결과는 다시 복소수이므로, 실수에서 쓰던 계산 법칙을 그대로 쓸 수 있다. 켤레복소수는 뒤에서 계수가 실수인 이차방정식의 두 허근으로 다시 나온다.</li>
+            <li><span class="tag">적용</span>"\(z \div w\)"를 고르고 \(z = 1 + 2i\), \(w = 1 - i\)로 두어 결과를 읽어 보자. 그다음 "\(z \times \overline{z}\)"를 고르고 \(a\), \(b\)를 움직이면 결과 점이 늘 실수축 위에 머물고, \(a = b = 0\)일 때만 0이 된다. \(w\)를 0으로 만들면 나눗셈이 정의되지 않는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>나눗셈에서 실수부분끼리, 허수부분끼리 따로 나누면 안 된다. \((1 + 2i)/(1 - i)\)는 \(1/1 + (2/-1)i = 1 - 2i\)가 아니다. 실제로 곱해 보면 \((1 - 2i)(1 - i) = -1 - 3i\)여서 \(1 + 2i\)가 나오지 않는다. 그래서 계산이 끝나면 결과에 \(w\)를 곱해 \(z\)로 돌아오는지 검산하는 습관이 좋다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\((1 + 2i) \div (1 - i)\)를 \(a + bi\) 꼴로 나타내면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1/2 + (3/2)i\)<span class="why"><b>맞습니다.</b> 분모와 분자에 \(1 + i\)를 곱하면 \((1 + 2i)(1 + i)\)/{\((1 - i)(1 + i)\)} = \((-1 + 3i)/2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1 - 2i\)<span class="why"><b>부분끼리 따로 나누었습니다.</b> 복소수의 나눗셈은 실수부분, 허수부분을 따로 나눈 것이 아닙니다. 결과에 \(1 - i\)를 곱해 보면 \(1 + 2i\)가 되지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(3/2 + (3/2)i\)<span class="why"><b>\(i^2\)을 1로 계산했습니다.</b> 분자 \((1 + 2i)(1 + i) = 1 + 3i + 2i^2\)에서 \(2i^2 = -2\)이므로 실수부분은 \(-1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-1 + 3i\)<span class="why"><b>분모를 잊었습니다.</b> 분자만 계산하고 멈추었습니다. 분모 \((1 - i)(1 + i) = 1 - i^2 = 2\)로 나누어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1/2 + (3/2)i\)<span class="why"><b>맞다.</b> 분모와 분자에 \(1 + i\)를 곱하면 \((1 + 2i)(1 + i)\)/{\((1 - i)(1 + i)\)} = \((-1 + 3i)/2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1 - 2i\)<span class="why"><b>부분끼리 따로 나누었다.</b> 복소수의 나눗셈은 실수부분, 허수부분을 따로 나눈 것이 아니다. 결과에 \(1 - i\)를 곱해 보면 \(1 + 2i\)가 되지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(3/2 + (3/2)i\)<span class="why"><b>\(i^2\)을 1로 계산했다.</b> 분자 \((1 + 2i)(1 + i) = 1 + 3i + 2i^2\)에서 \(2i^2 = -2\)이므로 실수부분은 \(-1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-1 + 3i\)<span class="why"><b>분모를 잊었다.</b> 분자만 계산하고 멈추었다. 분모 \((1 - i)(1 + i) = 1 - i^2 = 2\)로 나누어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/2-2.html#card-cm1-discriminant"><small class="mono">공통수학1 2.2</small>근의 공식의 √ 안이 음수이면 근이 없는 걸까?</a><a href="../../c/cm1/2-2.html#card-cm1-root-path"><small class="mono">공통수학1 2.2</small>두 실근이 허근으로 바뀌는 순간 무슨 일이 생길까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/2-2.html#card-cm1-discriminant"><small class="mono">공통수학1 2.2</small>근의 공식의 √ 안이 음수이면 근이 없는 걸까?</a><a href="../../c/cm1/2-2.html#card-cm1-root-path"><small class="mono">공통수학1 2.2</small>두 실근이 허근으로 바뀌는 순간 무슨 일이 생길까?</a><a href="../../c/cm1/2-2.html#text-cm1-discriminant"><small class="mono">공통수학1 2.2</small>이차방정식의 판별식</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=cm1-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">135문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm1&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm1-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">135문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -173,6 +237,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm1/body.js"></script>
 <script src="../../js/cards/cm1/eqplot.js"></script>
 <script src="../../js/cards/cm1/imag-unit.js"></script>
 <script src="../../js/cards/cm1/complex-arith.js"></script>

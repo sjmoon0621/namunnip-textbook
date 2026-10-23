@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>반도체 소자와 전자 회로 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="p-n 접합 다이오드의 정류 작용과 트랜지스터의 증폭·스위치 작용을 이해하고, 이를 이용한 전자 회로를 분석하여 현대 문명에서 반도체의 중요성을 인식한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-lm-bands .toggles input:disabled + span { color: var(--ink-3); }
     #card-is1-doping .presets .lab { font-size: 11px; color: var(--ink-3); align-self: center; margin-right: 2px; }
@@ -46,21 +52,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-lm-bands"><span class="mono">1.7.1</span>규소는 도체일까, 절연체일까?</a></li>
-        <li><a href="#card-is1-doping"><span class="mono">1.7.2</span>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a></li>
-        <li><a href="#card-phy-lm-led"><span class="mono">1.7.3</span>LED는 색마다 왜 필요한 전압이 다를까?</a></li>
+        <li><a href="#text-emq-semiconductor"><span class="mono">본문</span>반도체 소자와 전자 회로</a></li>
+        <li><a href="#card-phy-lm-bands"><span class="mono">탐구 1</span>규소는 도체일까, 절연체일까?</a></li>
+        <li><a href="#card-is1-doping"><span class="mono">탐구 2</span>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a></li>
+        <li><a href="#card-phy-lm-led"><span class="mono">탐구 3</span>LED는 색마다 왜 필요한 전압이 다를까?</a></li>
         <li><a href="#video-is1-chip"><span class="mono">영상</span>모래에서 반도체 칩까지</a></li>
-        <li><a href="#card-emq-semis"><span class="mono">1.7.4</span>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</a></li>
+        <li><a href="#card-emq-semis"><span class="mono">탐구 4</span>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=emq-1-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">43문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=emq&amp;sec=1-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=emq-1-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">43문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=emq-1-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-emq-semiconductor" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>반도체 소자와 전자 회로</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">충전기는 콘센트의 교류를 배터리에 맞는 직류로 바꾸어야 한다. 교류는 1초에 60번씩 방향이 바뀌는데, 어떻게 한쪽 방향의 전류만 골라낼까? 그리고 마이크의 작은 신호를 스피커를 울릴 만큼 키우는 일은 어떻게 할까? 두 일은 모두 반도체로 만든 작은 소자가 맡는다.</p>
+          <figure class="q-fig" data-q="emq-diode">
+            <svg viewBox="0 0 520 230" role="img" aria-label="규소 다이오드의 전류-전압 곡선"></svg>
+            <div class="q-ctl"><label>다이오드에 건 전압 (V) <input type="range" data-k="V" min="-1" max="1" step="0.02" value="0.6"><output data-k="V"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 규소 다이오드에 거는 전압에 따른 전류. 역방향(음의 전압)에서는 전류가 거의 흐르지 않고, 순방향에서는 0.6 V 근처를 넘으면 전류가 급격히 커진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>반도체와 도핑, 에너지띠(물리학, 통합과학), 교류와 직류, 옴의 법칙과 전력(<a href="1-6.html">저항·축전기·인덕터</a>).</div>
+
+          <h3><span class="no">1.7.1</span>p-n 접합 다이오드</h3>
+          <p>규소에 인 같은 15족 원소를 조금 섞으면 남는 전자가 생겨 n형 반도체가 되고, 붕소 같은 13족 원소를 섞으면 전자가 빈 자리인 양공이 생겨 p형 반도체가 된다. 두 반도체를 붙이면 경계에서 전자와 양공이 만나 사라지면서 전하 운반자가 없는 얇은 층, 곧 공핍층이 생긴다.</p>
+          <p>p형에 양극, n형에 음극을 연결하면 전자와 양공이 경계 쪽으로 밀려 공핍층이 얇아지고, 약 0.6 V를 넘으면 전류가 잘 흐른다. 이를 순방향 연결이라 한다. 0.6 V라는 값은 규소의 공핍층이 만드는 전위 장벽의 높이에서 나오며, 저마늄 다이오드는 약 0.3 V, 빨간 LED는 약 2 V이다. 반대로 연결하면 전자와 양공이 경계에서 멀어져 공핍층이 두꺼워지고 전류가 거의 흐르지 않는다. 그래서 다이오드는 전류를 한쪽으로만 흘린다. 수도관의 체크 밸브가 물을 한 방향으로만 흐르게 하는 것과 비슷하다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.7.1 <span class="nm">정류</span></span>
+            <p>다이오드는 교류 가운데 순방향 반주기만 통과시킨다. 다이오드 네 개를 다리처럼 연결한 브리지 회로를 쓰면 두 반주기를 모두 같은 방향으로 바꿀 수 있고, 축전기로 출렁임을 메우면 거의 고른 직류가 된다.</p>
+          </div>
+
+          <h3><span class="no">1.7.2</span>트랜지스터와 증폭</h3>
+          <p>트랜지스터는 반도체 세 층을 겹친 소자이다. 가운데 층(베이스)에 흐르는 작은 전류가 양 끝 사이(컬렉터와 이미터)에 흐르는 큰 전류를 조절한다. 그런데 컬렉터 전류는 베이스 전류의 수십에서 수백 배이므로, 작은 신호의 모양 그대로 큰 신호가 만들어진다. 이것이 증폭이며, 마이크의 약한 신호도 이렇게 몇 단계를 거쳐 스피커를 울린다. 또 베이스 전류를 켜고 끄면 큰 전류를 켜고 끄는 스위치가 되며, 컴퓨터는 이 스위치 수십억 개로 0과 1을 계산한다.<sup class="fn"><a href="#fn-emq-semiconductor-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="반파 정류와 전파 정류">
+              <g class="s">
+                <path d="M20 60 Q45 20 70 60 Q95 100 120 60 Q145 20 170 60" class="gd"/><text x="95" y="112" text-anchor="middle">교류</text>
+                <path d="M190 60 Q215 20 240 60 L290 60 Q315 20 340 60" class="b"/><text x="265" y="112" text-anchor="middle">다이오드 1개</text>
+                <path d="M360 60 Q385 20 410 60 Q435 20 460 60 Q485 20 510 60" class="c"/><text x="435" y="112" text-anchor="middle">브리지 회로</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 다이오드 하나는 반주기만 남기고, 브리지 회로는 두 반주기를 모두 한 방향으로 바꾼다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.7.2</span>
+            <p>5 V 전원에 빨간 LED와 저항을 직렬로 연결한다. LED에는 2 V가 걸리고 20 mA가 흘러야 알맞게 빛난다. 필요한 저항을 구하여라. 또 전류 증폭률이 100인 트랜지스터의 베이스에 0.2 mA를 흘리면 컬렉터 전류는 얼마인가?</p>
+          </div>
+          <p>저항에 걸리는 전압은 \(5 - 2 = 3\) V이므로 \(R = \dfrac{3}{0.02} = 150\) Ω이다. 저항 없이 연결하면 그림 1처럼 다이오드의 전류가 전압에 따라 급격히 커져 LED가 타 버린다. 즉 저항은 전류를 제한하는 역할을 한다.</p>
+          <p>그리고 트랜지스터의 컬렉터 전류는 \(100 \times 0.2 = 20\) mA이다. 따라서 작은 0.2 mA의 신호로 이 LED를 켜고 끌 수 있다. 센서나 마이크로컨트롤러가 낼 수 있는 전류는 작아도, 트랜지스터 하나를 거치면 전동기나 스피커처럼 큰 전류가 필요한 장치를 움직일 수 있다.</p>
+          <p>아래 탐구 카드에서 교류를 직류로 바꾸고 작은 신호를 큰 신호로 키우는 회로를 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-emq-semiconductor-1">오늘날 컴퓨터 칩에 쓰이는 트랜지스터는 전기장으로 전류를 조절하는 방식(MOSFET)이 대부분이다. 크기가 수 nm까지 작아져, 손톱만 한 칩 하나에 수백억 개가 들어간다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>p형과 n형 반도체를 붙인 다이오드는 순방향에서만 전류를 흘려 교류를 직류로 바꾸고, 트랜지스터는 작은 베이스 전류로 큰 전류를 조절하여 신호를 증폭하거나 스위치 역할을 한다. 그래서 처음 질문의 다이오드는 역방향에서 공핍층이 두꺼워져 전하가 건너지 못하므로 전류를 한쪽으로만 흘린다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a><a href="../../c/phy/3-5.html#text-phy-semiconductor"><small class="mono">물리학 3.5</small>에너지띠와 반도체</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a><a href="../../c/labphy/3-10.html#text-labphy-ripple"><small class="mono">물리학 실험 3.10</small>다이오드와 정류 회로</a><a href="../../c/emq/2-4.html#card-emq-pixels"><small class="mono">전자기와 양자 2.4</small>어두운 곳에서 찍은 사진은 왜 자글자글할까?</a></div></nav>
+
       <article class="card" id="card-phy-lm-bands">
         <header class="card-head">
-          <span class="no">1.7.1</span><h2>규소는 도체일까, 절연체일까?</h2><span class="kind">띠 간격 · 온도 · 도핑</span>
+          <span class="no">탐구 1</span><h2>규소는 도체일까, 절연체일까?</h2><span class="kind">띠 간격 · 온도 · 도핑</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,33 +137,33 @@
                 <div><dt>전도 전자 농도</dt><dd class="ncar" style="font-size:14px">—</dd></div>
                 <div><dt>원자 몇 개에 1개?</dt><dd class="ratio" style="font-size:13px">—</dd></div>
               </dl>
-              <p class="fig-note">순수한 반도체의 농도는 n<sub>i</sub> = √(N<sub>c</sub>N<sub>v</sub>)·e<sup>−E<sub>g</sub>/2kT</sup>로 계산했습니다. 띠 간격이 온도에 따라 조금 변하는 것은 무시했고, 다이아몬드의 N<sub>c</sub>, N<sub>v</sub>는 어림값입니다. 규소의 300 K 값은 문헌에서 흔히 약 10¹⁰ cm⁻³으로 씁니다.</p>
+              <p class="fig-note">순수한 반도체의 농도는 n<sub>i</sub> = √(N<sub>c</sub>N<sub>v</sub>)·e<sup>−E<sub>g</sub>/2kT</sup>로 계산했다. 띠 간격이 온도에 따라 조금 변하는 것은 무시했고, 다이아몬드의 N<sub>c</sub>, N<sub>v</sub>는 어림값이다. 규소의 300 K 값은 문헌에서 흔히 약 10¹⁰ cm⁻³으로 쓴다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>규소는 컴퓨터 칩의 재료입니다. 전기가 잘 통하는 구리와, 거의 통하지 않는 유리 사이 어디쯤일까요? 그리고 왜 하필 이런 물질로 칩을 만들까요?</li>
-            <li><span class="tag">복원</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위에 있습니다(3.4). 전자는 비어 있는 에너지 자리가 바로 위에 있어야 전기장에서 에너지를 얻어 움직일 수 있습니다.</li>
-            <li><span class="tag">설명</span>고체에서는 수많은 원자의 준위가 겹쳐 에너지띠가 됩니다. 구리는 띠가 절반만 차 있어 전자가 쉽게 움직입니다. 규소와 다이아몬드는 원자가 띠가 꽉 차 있고, 그 위 전도띠와의 사이에 전자가 가질 수 없는 틈(띠 간격)이 있습니다. 열에너지로 이 틈을 건너뛴 전자만 전류를 나릅니다.</li>
-            <li><span class="tag">연결</span>열에너지 kT는 300 K에서 약 0.026 eV로, 띠 간격보다 훨씬 작습니다. 그래서 틈을 건너는 전자 수는 <span class="formula">e<sup>−E<sub>g</sub>/2kT</sup></span>에 따라 띠 간격에 아주 민감합니다. 띠 간격이 1 eV 안팎이면 반도체, 수 eV 이상이면 절연체라 부릅니다. 원자가 띠에 전자가 빠져나간 빈자리(양공)도 전류를 나릅니다.</li>
-            <li><span class="tag">적용</span>규소에서 온도를 300 K에서 400 K로 올려 보세요. 전도 전자는 몇 배가 되나요? 그다음 ‘인 넣기’를 켜 보세요. 불순물 원자 500만 개에 1개가 전도 전자 수를 얼마나 바꾸나요? 게르마늄으로 바꿔 온도를 높이면 도핑 효과는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>반도체가 쓸모 있는 것은 ‘전기가 어중간하게 통해서’가 아니라, 불순물의 종류와 양으로 전도를 원하는 만큼 조절할 수 있어서입니다. 인처럼 전자가 하나 더 많은 원소를 넣으면 n형, 붕소처럼 하나 적은 원소를 넣으면 p형이 됩니다. 온도가 너무 높아지면 저절로 생긴 전자가 도핑으로 넣은 전자보다 많아져 조절이 어려워집니다.</li>
+            <li><span class="tag">질문</span>규소는 컴퓨터 칩의 재료이다. 전기가 잘 통하는 구리와, 거의 통하지 않는 유리 사이 어디쯤일까? 그리고 왜 하필 이런 물질로 칩을 만들까?</li>
+            <li><span class="tag">복원</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위에 있다(3.4). 그리고 전자는 비어 있는 에너지 자리가 바로 위에 있어야 전기장에서 에너지를 얻어 움직일 수 있다.</li>
+            <li><span class="tag">설명</span>고체에서는 수많은 원자의 준위가 겹쳐 에너지띠가 된다. 구리는 띠가 절반만 차 있어 전자가 쉽게 움직인다. 반면 규소와 다이아몬드는 원자가 띠가 꽉 차 있고, 그 위 전도띠와의 사이에 전자가 가질 수 없는 틈(띠 간격)이 있다. 그래서 열에너지로 이 틈을 건너뛴 전자만 전류를 나른다.</li>
+            <li><span class="tag">연결</span>열에너지 kT는 300 K에서 약 0.026 eV로, 띠 간격보다 훨씬 작다. 그래서 틈을 건너는 전자 수는 <span class="formula">e<sup>−E<sub>g</sub>/2kT</sup></span>에 따라 띠 간격에 아주 민감하다. 띠 간격이 1 eV 안팎이면 반도체, 수 eV 이상이면 절연체라 부르고, 원자가 띠에 전자가 빠져나간 빈자리(양공)도 전류를 나른다.</li>
+            <li><span class="tag">적용</span>규소에서 온도를 300 K에서 400 K로 올려 전도 전자가 몇 배가 되는지 보자. 그다음 ‘인 넣기’를 켜서 불순물 원자 500만 개에 1개가 전도 전자 수를 얼마나 바꾸는지 확인하고, 게르마늄으로 바꿔 온도를 높이면 도핑 효과가 어떻게 되는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>반도체가 쓸모 있는 것은 ‘전기가 어중간하게 통해서’가 아니라, 불순물의 종류와 양으로 전도를 원하는 만큼 조절할 수 있어서이다. 인처럼 전자가 하나 더 많은 원소를 넣으면 n형, 붕소처럼 하나 적은 원소를 넣으면 p형이 된다. 다만 온도가 너무 높아지면 저절로 생긴 전자가 도핑으로 넣은 전자보다 많아져 조절이 어려워진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">순수한 규소와 구리 도선을 함께 데웠습니다. 온도가 오를 때 두 물질의 전기 저항은 어떻게 변할까요?</p>
+          <p class="q">순수한 규소와 구리 도선을 함께 데웠다. 온도가 오를 때 두 물질의 전기 저항은 어떻게 변할까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 커진다.<span class="why"><b>금속만 보면 맞습니다.</b> 구리는 원자 진동이 커져 전자가 더 자주 부딪히므로 저항이 커집니다. 하지만 규소는 전도 전자 수 자체가 크게 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>구리는 커지고, 규소는 크게 작아진다.<span class="why"><b>맞습니다.</b> 규소는 300 K에서 400 K로 가면 전도 전자가 약 350배가 됩니다. 이 성질을 이용한 온도 센서가 서미스터입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 조금 작아진다.<span class="why"><b>구리의 전도 전자 수는 온도와 거의 관계없습니다.</b> 이미 원자마다 하나씩 있으므로 데워도 늘지 않고, 원자 진동 때문에 저항만 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 커진다.<span class="why"><b>금속만 보면 맞다.</b> 구리는 원자 진동이 커져 전자가 더 자주 부딪히므로 저항이 커진다. 하지만 규소는 전도 전자 수 자체가 크게 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>구리는 커지고, 규소는 크게 작아진다.<span class="why"><b>맞다.</b> 규소는 300 K에서 400 K로 가면 전도 전자가 약 350배가 된다. 이 성질을 이용한 온도 센서가 서미스터이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 조금 작아진다.<span class="why"><b>구리의 전도 전자 수는 온도와 거의 관계없다.</b> 이미 원자마다 하나씩 있으므로 데워도 늘지 않고, 원자 진동 때문에 저항만 커진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a><a href="../../c/emq/2-4.html#card-emq-pixels"><small class="mono">전자기와 양자 2.4</small>어두운 곳에서 찍은 사진은 왜 자글자글할까?</a><a href="../../c/adphy/4-5.html#card-adphy-bands"><small class="mono">고급 물리학 4.5</small>원자가 많이 모이면 에너지 준위는 왜 띠가 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a><a href="../../c/labphy/3-10.html#text-labphy-ripple"><small class="mono">물리학 실험 3.10</small>다이오드와 정류 회로</a><a href="../../c/emq/2-4.html#card-emq-pixels"><small class="mono">전자기와 양자 2.4</small>어두운 곳에서 찍은 사진은 왜 자글자글할까?</a></div></nav>
 
       <article class="card" id="card-is1-doping">
         <header class="card-head">
-          <span class="no">1.7.2</span><h2>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</h2><span class="kind">도핑 · n형과 p형 · 전하 운반자</span>
+          <span class="no">탐구 2</span><h2>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</h2><span class="kind">도핑 · n형과 p형 · 전하 운반자</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,33 +184,33 @@
                 <div><dt>순수한 규소 대비</dt><dd class="x">—</dd></div>
               </dl>
               <p class="legend"><span class="dot k-p"></span>인(원자가 전자 5) <span class="dot k-b"></span>붕소(원자가 전자 3) <span class="dot k-e"></span>자유 전자 <span class="dot k-h"></span>양공</p>
-              <p class="fig-note">그림의 원자를 누르면 규소 → 인 → 붕소 → 규소 순서로 바뀝니다. 그림은 불순물을 아주 많이 넣은 것처럼 과장한 2차원 모식입니다. 수치는 규소 원자 밀도 5.0×10²² 개/cm³, 실온의 순수한 규소 전하 운반자 약 10¹⁰ 개/cm³, 불순물이 모두 이온화된다는 가정으로 계산했습니다.</p>
+              <p class="fig-note">그림의 원자를 누르면 규소 → 인 → 붕소 → 규소 순서로 바뀐다. 그림은 불순물을 아주 많이 넣은 것처럼 과장한 2차원 모식이다. 수치는 규소 원자 밀도 5.0×10²² 개/cm³, 실온의 순수한 규소 전하 운반자 약 10¹⁰ 개/cm³, 불순물이 모두 이온화된다는 가정으로 계산했다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>반도체 공장은 규소를 99.9999999% 넘게 순수하게 만든 뒤, 일부러 불순물을 넣습니다. 애써 없앤 불순물을 왜 다시 넣을까요?</li>
-            <li><span class="tag">복원</span>규소는 원자가 전자가 4개라, 이웃 규소 4개와 전자쌍을 하나씩 공유합니다. 모든 전자가 결합에 묶여 있어 실온에서는 풀려난 전자가 아주 적습니다(에너지 띠와 띠틈).</li>
-            <li><span class="tag">설명</span>원자가 전자가 5개인 인(P)을 넣으면, 결합 4개를 만들고 전자 1개가 남아 쉽게 풀려납니다(n형). 원자가 전자가 3개인 붕소(B)를 넣으면 결합 하나에 전자가 모자란 빈자리가 생기고, 이웃 전자가 그 자리로 옮겨 가면서 빈자리가 움직입니다. 이 빈자리가 <em>양공</em>입니다(p형).</li>
-            <li><span class="tag">연결</span>규소 원자 100만 개에 인 1개만 넣어도 전하 운반자는 1 cm³에 약 5×10¹⁶개가 됩니다. 순수한 규소(약 10¹⁰개)보다 수백만 배 많습니다. 넣는 양으로 전기가 통하는 정도를 원하는 만큼 조절할 수 있다는 것이 반도체가 쓸모 있는 까닭입니다.</li>
-            <li><span class="tag">적용</span>‘인 넣기’와 ‘붕소 넣기’를 눌러 전하를 나르는 입자가 어느 쪽으로 움직이는지 비교해 보세요. 그림의 원자를 직접 눌러 불순물을 더 넣어 보고, 농도 막대로 규소 원자 몇 개에 1개를 넣었는지 바꿔 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>n형 반도체가 음(−)전하를 띠는 것은 아닙니다. 남는 전자는 인 원자가 원래 가지고 있던 것이라 반도체 전체는 전기적으로 중성이고, 인은 전자를 내준 뒤 +1 이온으로 격자에 남습니다. p형도 마찬가지로 중성입니다. ‘n’과 ‘p’는 전하를 주로 나르는 입자의 부호를 뜻합니다.</li>
+            <li><span class="tag">질문</span>반도체 공장은 규소를 99.9999999% 넘게 순수하게 만든 뒤, 일부러 불순물을 넣는다. 애써 없앤 불순물을 왜 다시 넣을까?</li>
+            <li><span class="tag">복원</span>규소는 원자가 전자가 4개라, 이웃 규소 4개와 전자쌍을 하나씩 공유한다. 그래서 모든 전자가 결합에 묶여 있어 실온에서는 풀려난 전자가 아주 적다(에너지 띠와 띠틈).</li>
+            <li><span class="tag">설명</span>그런데 원자가 전자가 5개인 인(P)을 넣으면, 결합 4개를 만들고 전자 1개가 남아 쉽게 풀려난다(n형). 반대로 원자가 전자가 3개인 붕소(B)를 넣으면 결합 하나에 전자가 모자란 빈자리가 생기고, 이웃 전자가 그 자리로 옮겨 가면서 빈자리가 움직인다. 이 빈자리가 <em>양공</em>이다(p형).</li>
+            <li><span class="tag">연결</span>규소 원자 100만 개에 인 1개만 넣어도 전하 운반자는 1 cm³에 약 5×10¹⁶개가 되어, 순수한 규소(약 10¹⁰개)보다 수백만 배 많다. 넣는 양으로 전기가 통하는 정도를 원하는 만큼 조절할 수 있다는 것, 그것이 반도체가 쓸모 있는 까닭이다.</li>
+            <li><span class="tag">적용</span>‘인 넣기’와 ‘붕소 넣기’를 눌러 전하를 나르는 입자가 어느 쪽으로 움직이는지 비교해 보자. 그림의 원자를 직접 눌러 불순물을 더 넣어 볼 수도 있고, 농도 막대로 규소 원자 몇 개에 1개를 넣었는지 바꿀 수도 있다.</li>
+            <li class="warn"><span class="tag">판단</span>n형 반도체가 음(−)전하를 띠는 것은 아니다. 남는 전자는 인 원자가 원래 가지고 있던 것이라 반도체 전체는 전기적으로 중성이고, 인은 전자를 내준 뒤 +1 이온으로 격자에 남는다. p형도 마찬가지로 중성이다. 즉 ‘n’과 ‘p’는 전하를 주로 나르는 입자의 부호를 뜻한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">규소 대신 저마늄(원자가 전자 4개)에 갈륨(Ga, 원자가 전자 3개)을 조금 넣었습니다. 이 반도체에 대한 설명으로 옳은 것은?</p>
+          <p class="q">규소 대신 저마늄(원자가 전자 4개)에 갈륨(Ga, 원자가 전자 3개)을 조금 넣었다. 이 반도체에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>남는 전자가 생겨 n형이 된다.<span class="why"><b>원자가 전자를 세어 보세요.</b> 갈륨은 3개라 결합 하나에 전자가 모자랍니다. 남는 것이 아니라 빈자리가 생깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>양공이 생겨 p형이 되고, 전체는 전기적으로 중성이다.<span class="why"><b>맞습니다.</b> 붕소를 넣은 규소와 같은 원리입니다. 모재가 저마늄으로 바뀌어도 원자가 전자 수의 차이로 판단합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>양공이 생겨 반도체 전체가 양(+)전하를 띤다.<span class="why"><b>p형이라는 이름에 끌린 답입니다.</b> 갈륨 원자도 저마늄 원자도 처음부터 중성이라, 넣은 뒤에도 전체 전하는 0입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>남는 전자가 생겨 n형이 된다.<span class="why"><b>원자가 전자를 세어 보아라.</b> 갈륨은 3개라 결합 하나에 전자가 모자란다. 남는 것이 아니라 빈자리가 생긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>양공이 생겨 p형이 되고, 전체는 전기적으로 중성이다.<span class="why"><b>맞다.</b> 붕소를 넣은 규소와 같은 원리이다. 모재가 저마늄으로 바뀌어도 원자가 전자 수의 차이로 판단한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>양공이 생겨 반도체 전체가 양(+)전하를 띤다.<span class="why"><b>p형이라는 이름에 끌린 답이다.</b> 갈륨 원자도 저마늄 원자도 처음부터 중성이라, 넣은 뒤에도 전체 전하는 0이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-6.html#card-is2-solar-cell"><small class="mono">통합과학2 2.6</small>태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?</a><a href="../../c/adphy/4-5.html#text-adphy-nano"><small class="mono">고급 물리학 4.5</small>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</a><a href="../../c/fusi/3-1.html#card-fusi-moore"><small class="mono">융합과학 탐구 3.1</small>지난 추세만 보고 미래 기술을 얼마나 맞힐 수 있을까?</a><a href="../../c/fusi/3-1.html#text-fusi-future"><small class="mono">융합과학 탐구 3.1</small>다음에 올 융합과학기술은 어떻게 내다볼까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a><a href="../../c/phy/3-5.html#text-phy-semiconductor"><small class="mono">물리학 3.5</small>에너지띠와 반도체</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a><a href="../../c/labphy/3-10.html#text-labphy-ripple"><small class="mono">물리학 실험 3.10</small>다이오드와 정류 회로</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-6.html#card-is2-solar-cell"><small class="mono">통합과학2 2.6</small>태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?</a><a href="../../c/adphy/4-5.html#text-adphy-nano"><small class="mono">고급 물리학 4.5</small>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</a><a href="../../c/fusi/3-1.html#card-fusi-moore"><small class="mono">융합과학 탐구 3.1</small>지난 추세만 보고 미래 기술을 얼마나 맞힐 수 있을까?</a><a href="../../c/fusi/3-1.html#text-fusi-future"><small class="mono">융합과학 탐구 3.1</small>다음에 올 융합과학기술은 어떻게 내다볼까?</a></div></nav>
 
       <article class="card" id="card-phy-lm-led">
         <header class="card-head">
-          <span class="no">1.7.3</span><h2>LED는 색마다 왜 필요한 전압이 다를까?</h2><span class="kind">p–n 접합 · 광자 에너지</span>
+          <span class="no">탐구 3</span><h2>LED는 색마다 왜 필요한 전압이 다를까?</h2><span class="kind">p–n 접합 · 광자 에너지</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -175,29 +231,29 @@
                 <div><dt>광자 하나의 에너지 hc/λ</dt><dd class="ephot">—</dd></div>
                 <div><dt>전자 하나가 얻는 에너지 eV</dt><dd class="ev">—</dd></div>
               </dl>
-              <p class="fig-note">모식: 문턱 전압을 광자 에너지와 같다고 두고, 그 위에서 전류가 저항 20 Ω처럼 늘게 했습니다. 실제 LED는 제품마다 0.1~0.3 V쯤 다르고, 초록·파랑(InGaN) LED는 보통 광자 에너지보다 조금 높은 전압이 더 필요합니다.</p>
+              <p class="fig-note">모식이다. 문턱 전압을 광자 에너지와 같다고 두고, 그 위에서 전류가 저항 20 Ω처럼 늘게 했다. 실제 LED는 제품마다 0.1~0.3 V쯤 다르고, 초록과 파랑(InGaN) LED는 보통 광자 에너지보다 조금 높은 전압이 더 필요하다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>빨간 LED는 2 V쯤이면 켜지는데 파란 LED는 3 V 가까이 걸어야 켜집니다. 색과 전압은 무슨 관계일까요?</li>
-            <li><span class="tag">복원</span>반도체에는 띠 간격이 있고, 전도띠의 전자가 원자가 띠의 빈자리로 떨어지면 띠 간격만큼 에너지를 내놓습니다. 광자 하나의 에너지는 <span class="formula">hc / λ</span>입니다.</li>
-            <li><span class="tag">설명</span>LED는 n형과 p형 반도체를 붙인 p–n 접합입니다. 전압을 걸면 n형의 전자와 p형의 양공이 접합면으로 모여 만나고, 전자가 떨어지면서 띠 간격만큼의 에너지를 광자 하나로 냅니다. 전자 하나를 그 높이까지 밀어 올리려면 전자 하나가 전압에서 적어도 그만큼 에너지(eV)를 얻어야 합니다.</li>
-            <li><span class="tag">연결</span>그래서 문턱 전압은 대략 <span class="formula">eV ≈ E<sub>g</sub> ≈ hc / λ</span>입니다. 파장이 짧은 빛일수록 띠 간격이 넓은 반도체가 필요하고, 켜는 전압도 높습니다. 파란 LED에 쓰는 질화 갈륨(GaN) 계열 소재를 만든 공로로 2014년 노벨 물리학상이 수여되었습니다.</li>
-            <li><span class="tag">적용</span>빨강을 고르고 전압을 0 V에서 천천히 올려 보세요. 전류가 흐르기 시작하는 전압과 광자 에너지(eV)를 비교합니다. 다른 색으로 바꾸어 반복해 보고, 적외선과 자외선에서는 무엇이 다른지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>LED 전압을 문턱보다 조금만 넘겨도 전류가 급격히 늘어 LED가 망가질 수 있습니다. 그래서 실제 회로에는 저항을 함께 답니다. 또 전압을 더 높여도 색(광자 하나의 에너지)은 바뀌지 않고 밝기(광자 수)만 늘어납니다. 광전 효과와 같은 이야기를 거꾸로 본 셈입니다.</li>
+            <li><span class="tag">질문</span>빨간 LED는 2 V쯤이면 켜지는데 파란 LED는 3 V 가까이 걸어야 켜진다. 색과 전압은 무슨 관계일까?</li>
+            <li><span class="tag">복원</span>반도체에는 띠 간격이 있고, 전도띠의 전자가 원자가 띠의 빈자리로 떨어지면 띠 간격만큼 에너지를 내놓는다. 그리고 광자 하나의 에너지는 <span class="formula">hc / λ</span>이다.</li>
+            <li><span class="tag">설명</span>LED는 n형과 p형 반도체를 붙인 p-n 접합이다. 전압을 걸면 n형의 전자와 p형의 양공이 접합면으로 모여 만나고, 전자가 떨어지면서 띠 간격만큼의 에너지를 광자 하나로 낸다. 그런데 전자 하나를 그 높이까지 밀어 올리려면 전자 하나가 전압에서 적어도 그만큼 에너지(eV)를 얻어야 한다.</li>
+            <li><span class="tag">연결</span>그래서 문턱 전압은 대략 <span class="formula">eV ≈ E<sub>g</sub> ≈ hc / λ</span>이다. 파장이 짧은 빛일수록 띠 간격이 넓은 반도체가 필요하고, 켜는 전압도 높다. 파란 LED에 쓰는 질화 갈륨(GaN) 계열 소재를 만든 공로로 2014년 노벨 물리학상이 수여되었다.</li>
+            <li><span class="tag">적용</span>빨강을 고르고 전압을 0 V에서 천천히 올려, 전류가 흐르기 시작하는 전압과 광자 에너지(eV)를 비교해 보자. 다른 색으로 바꾸어 반복하고, 적외선과 자외선에서는 무엇이 다른지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>LED 전압을 문턱보다 조금만 넘겨도 전류가 급격히 늘어 LED가 망가질 수 있어서, 실제 회로에는 저항을 함께 단다. 또 전압을 더 높여도 색(광자 하나의 에너지)은 바뀌지 않고 밝기(광자 수)만 늘어난다. 광전 효과와 같은 이야기를 거꾸로 본 셈이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">1.5 V 건전지 하나에 LED를 직접 연결합니다. 이 그림의 여섯 LED 가운데 켜질 수 있는 것은?</p>
+          <p class="q">1.5 V 건전지 하나에 LED를 직접 연결한다. 이 그림의 여섯 LED 가운데 켜질 수 있는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모두 켜진다. 전압이 낮으면 조금 어둡게 켜질 뿐이다.<span class="why"><b>전구처럼 생각한 답입니다.</b> LED는 전자 하나가 띠 간격만큼 에너지를 얻지 못하면 광자를 거의 내지 못합니다. 문턱 아래에서는 전류가 거의 흐르지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>적외선 LED 정도만 켜진다.<span class="why"><b>맞습니다.</b> 850 nm 광자의 에너지는 약 1.46 eV로 1.5 V보다 조금 작습니다. 가시광 LED는 모두 1.9 eV 이상이 필요합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>자외선 LED만 켜진다. 에너지가 가장 큰 빛이므로.<span class="why"><b>순서가 거꾸로입니다.</b> 에너지가 큰 광자를 내려면 전자가 더 큰 에너지를 얻어야 하므로 전압이 더 필요합니다. 자외선 LED는 약 3.1 V가 필요합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>모두 켜진다. 전압이 낮으면 조금 어둡게 켜질 뿐이다.<span class="why"><b>전구처럼 생각한 답이다.</b> LED는 전자 하나가 띠 간격만큼 에너지를 얻지 못하면 광자를 거의 내지 못한다. 문턱 아래에서는 전류가 거의 흐르지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>적외선 LED 정도만 켜진다.<span class="why"><b>맞다.</b> 850 nm 광자의 에너지는 약 1.46 eV로 1.5 V보다 조금 작다. 가시광 LED는 모두 1.9 eV 이상이 필요하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>자외선 LED만 켜진다. 에너지가 가장 큰 빛이므로.<span class="why"><b>순서가 거꾸로이다.</b> 에너지가 큰 광자를 내려면 전자가 더 큰 에너지를 얻어야 하므로 전압이 더 필요하다. 자외선 LED는 약 3.1 V가 필요하다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-6.html#card-is2-solar-cell"><small class="mono">통합과학2 2.6</small>태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?</a><a href="../../c/adphy/4-5.html#text-adphy-nano"><small class="mono">고급 물리학 4.5</small>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</a><a href="../../c/fusi/3-1.html#card-fusi-moore"><small class="mono">융합과학 탐구 3.1</small>지난 추세만 보고 미래 기술을 얼마나 맞힐 수 있을까?</a><a href="../../c/fusi/3-1.html#text-fusi-future"><small class="mono">융합과학 탐구 3.1</small>다음에 올 융합과학기술은 어떻게 내다볼까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a><a href="../../c/phy/3-5.html#text-phy-semiconductor"><small class="mono">물리학 3.5</small>에너지띠와 반도체</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labphy/3-10.html#text-labphy-ripple"><small class="mono">물리학 실험 3.10</small>다이오드와 정류 회로</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-6.html#card-is2-solar-cell"><small class="mono">통합과학2 2.6</small>태양 전지는 햇빛을 얼마나 전기로 바꿀 수 있을까?</a><a href="../../c/adphy/4-5.html#text-adphy-nano"><small class="mono">고급 물리학 4.5</small>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</a><a href="../../c/fusi/3-1.html#card-fusi-moore"><small class="mono">융합과학 탐구 3.1</small>지난 추세만 보고 미래 기술을 얼마나 맞힐 수 있을까?</a><a href="../../c/fusi/3-1.html#text-fusi-future"><small class="mono">융합과학 탐구 3.1</small>다음에 올 융합과학기술은 어떻게 내다볼까?</a></div></nav>
 
       <section class="video-block" id="video-is1-chip" aria-label="통통사과 영상">
         <div>
@@ -218,7 +274,7 @@
 
       <article class="card" id="card-emq-semis">
         <header class="card-head">
-          <span class="no">1.7.4</span><h2>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</h2><span class="kind">다이오드의 정류 · 트랜지스터의 증폭과 스위치</span>
+          <span class="no">탐구 4</span><h2>교류를 직류로, 작은 신호를 큰 신호로 어떻게 바꿀까?</h2><span class="kind">다이오드의 정류 · 트랜지스터의 증폭과 스위치</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -245,43 +301,48 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>콘센트의 전기는 1초에 60번 방향이 바뀌는 교류인데, 스마트폰의 회로는 한 방향으로만 흐르는 직류로 작동합니다. 또 마이크의 아주 작은 전기 신호는 어떻게 스피커를 울릴 만큼 커질까요?</li>
-            <li><span class="tag">복원</span>p형 반도체는 양공이, n형 반도체는 전자가 전하를 나릅니다(도핑). 두 반도체를 붙인 경계(p–n 접합)에는 전하 운반자가 없는 공핍층이 생깁니다.</li>
-            <li><span class="tag">설명</span><em>다이오드</em>는 p–n 접합 하나로 된 소자입니다. p 쪽에 (+)를 걸면(순방향) 공핍층이 얇아져 규소는 약 0.7 V부터 전류가 급격히 흐르고, 반대로 걸면(역방향) 공핍층이 두꺼워져 거의 흐르지 않습니다. 그래서 교류의 한 방향만 통과시키는 <em>정류</em>에 쓰입니다. <em>트랜지스터</em>는 n–p–n(또는 p–n–p) 세 층으로 되어 있어, 베이스에 흐르는 작은 전류가 컬렉터–이미터 사이의 큰 전류를 조절합니다(I<sub>C</sub> ≈ βI<sub>B</sub>, β는 약 100).</li>
-            <li><span class="tag">연결</span>브리지 정류 회로와 축전기를 쓰면 교류가 거의 평평한 직류가 되어 충전기와 전원 장치를 만듭니다. 트랜지스터는 작은 신호를 비례해서 키우는 <em>증폭</em>(마이크 → 스피커)과, 베이스 전류로 큰 전류를 완전히 켜고 끄는 <em>스위치</em>로 쓰입니다. 스위치의 켜짐과 꺼짐이 디지털의 1과 0이며, 수십억 개의 트랜지스터 스위치가 모인 것이 컴퓨터의 CPU와 메모리입니다.</li>
-            <li><span class="tag">적용</span>정류 회로에서 반파와 전파의 출력 모양을 비교하고, 축전기를 넣으며 출력이 얼마나 평평해지는지 보세요. 트랜지스터에서 베이스 전류를 늘리면 컬렉터 전류가 어디까지 커지다가 멈추나요? 멈춘 상태가 스위치의 ‘켜짐’입니다.</li>
-            <li class="warn"><span class="tag">판단</span>“트랜지스터가 에너지를 만들어 신호를 키운다”는 오해입니다. 커진 신호의 에너지는 전원(배터리나 어댑터)에서 오고, 트랜지스터는 입력 신호의 모양대로 그 전류를 조절할 뿐입니다. 반도체 산업은 우리나라 수출의 약 5분의 1을 차지할 만큼 현대 문명과 경제의 바탕이 되었습니다.</li>
+            <li><span class="tag">질문</span>콘센트의 전기는 1초에 60번 방향이 바뀌는 교류인데, 스마트폰의 회로는 한 방향으로만 흐르는 직류로 작동한다. 또 마이크의 아주 작은 전기 신호는 어떻게 스피커를 울릴 만큼 커질까?</li>
+            <li><span class="tag">복원</span>p형 반도체는 양공이, n형 반도체는 전자가 전하를 나른다(도핑). 그리고 두 반도체를 붙인 경계(p–n 접합)에는 전하 운반자가 없는 공핍층이 생긴다.</li>
+            <li><span class="tag">설명</span><em>다이오드</em>는 p–n 접합 하나로 된 소자이다. p 쪽에 (+)를 걸면(순방향) 공핍층이 얇아져 규소는 약 0.7 V부터 전류가 급격히 흐르고, 반대로 걸면(역방향) 공핍층이 두꺼워져 거의 흐르지 않으므로, 교류의 한 방향만 통과시키는 <em>정류</em>에 쓰인다. <em>트랜지스터</em>는 n–p–n(또는 p–n–p) 세 층으로 되어 있어, 베이스에 흐르는 작은 전류가 컬렉터–이미터 사이의 큰 전류를 조절한다(I<sub>C</sub> ≈ βI<sub>B</sub>, β는 약 100).</li>
+            <li><span class="tag">연결</span>브리지 정류 회로와 축전기를 쓰면 교류가 거의 평평한 직류가 되어 충전기와 전원 장치를 만든다. 트랜지스터는 마이크의 작은 신호를 비례해서 키워 스피커로 보내는 <em>증폭</em>과, 베이스 전류로 큰 전류를 완전히 켜고 끄는 <em>스위치</em>로 쓰인다. 스위치의 켜짐과 꺼짐이 디지털의 1과 0이며, 수십억 개의 트랜지스터 스위치가 모인 것이 컴퓨터의 CPU와 메모리이다.</li>
+            <li><span class="tag">적용</span>정류 회로에서 반파와 전파의 출력 모양을 비교하고, 축전기를 넣으며 출력이 얼마나 평평해지는지 보자. 그리고 트랜지스터에서 베이스 전류를 늘리면 컬렉터 전류가 어디까지 커지다가 멈추는지 확인해 보자. 멈춘 상태가 스위치의 켜짐이다.</li>
+            <li class="warn"><span class="tag">판단</span>‘트랜지스터가 에너지를 만들어 신호를 키운다’는 생각은 오해이다. 커진 신호의 에너지는 전원(배터리나 어댑터)에서 오고, 트랜지스터는 입력 신호의 모양대로 그 전류를 조절할 뿐이다. 반도체 산업은 우리나라 수출의 약 5분의 1을 차지할 만큼 현대 문명과 경제의 바탕이 되었다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">반파 정류 회로에서 다이오드의 방향을 반대로 바꾸어 연결하면 출력은 어떻게 될까요?</p>
+          <p class="q">반파 정류 회로에서 다이오드의 방향을 반대로 바꾸어 연결하면 출력은 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>교류의 나머지 반쪽(음의 반주기)만 통과해 출력 전압의 부호가 반대가 된다<span class="why"><b>맞습니다.</b> 다이오드는 방향만 고를 뿐, 어느 반쪽을 통과시키는지는 연결 방향이 정합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>전류가 전혀 흐르지 않는다<span class="why"><b>교류는 양쪽 방향이 번갈아 오므로</b> 반대쪽 반주기에는 순방향이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전파 정류가 된다<span class="why"><b>전파 정류에는 다이오드 4개(브리지)나 중간 탭이 있는 변압기가 필요합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>교류의 나머지 반쪽(음의 반주기)만 통과해 출력 전압의 부호가 반대가 된다<span class="why"><b>맞다.</b> 다이오드는 방향만 고를 뿐, 어느 반쪽을 통과시키는지는 연결 방향이 정한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>전류가 전혀 흐르지 않는다<span class="why"><b>교류는 양쪽 방향이 번갈아 오므로</b> 반대쪽 반주기에는 순방향이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전파 정류가 된다<span class="why"><b>전파 정류에는 다이오드 4개(브리지)나 중간 탭이 있는 변압기가 필요하다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a><a href="../../c/labphy/3-10.html#text-labphy-ripple"><small class="mono">물리학 실험 3.10</small>다이오드와 정류 회로</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=emq-1-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">43문항</span></a>
+      <a class="px-go" href="../../bank.html?c=emq&amp;sec=1-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=emq-1-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">43문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/emq/body.js"></script>
 <script src="../../js/cards/phy/lm-bands.js"></script>
 <script src="../../js/cards/is1/m-doping.js"></script>
 <script src="../../js/cards/phy/lm-led.js"></script>

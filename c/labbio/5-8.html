@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>생물정보학과 유전체 분석 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="생물정보학의 연구 방법(서열 검색, 서열 정렬, 유전체 데이터베이스, 전장 유전체 연관 분석)으로 유전체 분석이 질병 치료에 기여한 사례를 조사하고, 다양한 매체로 협력하여 발표한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-bio-seq-tree canvas { width: 100%; aspect-ratio: 16 / 10; display: block; }
     #card-bio-seq-tree .aln { margin-top: 8px; font-family: var(--f-mono); font-size: 10.5px; line-height: 1.6; overflow-x: auto; }
@@ -58,19 +64,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-bio-seq-tree"><span class="mono">5.8.1</span>DNA 서열의 차이로 계통수를 그릴 수 있을까?</a></li>
-        <li><a href="#card-labbio-bioinfo"><span class="mono">5.8.2</span>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</a></li>
-        <li><a href="#text-labbio-genome-med"><span class="mono">5.8.3</span>유전체 분석은 실제로 어떤 환자를 도왔을까?</a></li>
+        <li><a href="#text-labbio-alignment"><span class="mono">본문</span>생물정보학과 유전체 분석</a></li>
+        <li><a href="#card-bio-seq-tree"><span class="mono">탐구 1</span>DNA 서열의 차이로 계통수를 그릴 수 있을까?</a></li>
+        <li><a href="#card-labbio-bioinfo"><span class="mono">탐구 2</span>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</a></li>
+        <li><a href="#text-labbio-genome-med"><span class="mono">읽기 3</span>유전체 분석은 실제로 어떤 환자를 도왔을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labbio-5-8"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labbio&amp;sec=5-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">6문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labbio-5-8">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labbio-alignment" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>생물정보학과 유전체 분석</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">네 종의 동물에서 같은 유전자의 앞부분 염기 30개를 읽어 위아래로 나란히 놓았다. 대부분의 자리는 네 종이 같았지만 몇 자리에서 염기가 달랐다. 가와 나는 한 자리만 달랐고, 가와 라는 여섯 자리가 달랐다. 생김새만으로는 어느 종끼리 더 가까운지 판단하기 어려웠는데, 이 차이를 세는 것만으로 진화의 관계를 그릴 수 있을까? 그리고 수십억 개의 염기를 가진 유전체 전체는 어떻게 비교할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="네 종의 정렬한 염기 서열">
+              <g class="s">
+                <text x="20" y="30">가</text><text x="60" y="30">ATGACCAACATTCGAAAATCACACCCACTA</text>
+                <text x="20" y="54">나</text><text x="60" y="54">ATGACCAACATCCGAAAATCACACCCACTA</text>
+                <text x="20" y="78">다</text><text x="60" y="78">ATGACTAACATTCGTAAATCCCACCCGCTA</text>
+                <text x="20" y="102">라</text><text x="60" y="102">ATGACAAATATTCGCAAGTCCCACCCACTG</text>
+                <text x="20" y="136">같은 자리끼리 맞추어 놓고 서로 다른 염기의 수를 센다</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 같은 유전자의 서열을 자리를 맞추어 정렬하면, 종마다 다른 자리를 셀 수 있다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>DNA 염기 서열과 돌연변이, 진화와 공통 조상, PCR(<a href="5-7.html">PCR 유전자 증폭</a>).</div>
+
+          <h3><span class="no">5.8.1</span>차이가 쌓이는 시간</h3>
+          <p>두 종이 공통 조상에서 갈라진 뒤에는 각 계통에서 따로 돌연변이가 쌓인다. 갈라진 지 오래될수록 쌓인 차이가 많다. 그래서 같은 유전자의 서열을 비교해 다른 자리가 적은 두 종일수록 최근에 갈라진 가까운 사이로 본다. 서열을 비교하려면 먼저 같은 자리끼리 맞추어 놓는 정렬을 해야 한다. 염기가 하나 빠지거나 끼어들면 그 뒤의 자리가 모두 어긋나므로, 컴퓨터는 차이가 가장 적어지도록 틈을 넣어 맞춘다. 이렇게 생물의 서열 자료를 컴퓨터로 분석하는 분야를 생물정보학이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 5.8.1 <span class="nm">서열 차이와 계통수</span></span>
+            <p>두 서열에서 다른 자리의 비율을 \(p = \dfrac{\text{다른 자리 수}}{\text{비교한 자리 수}}\)라 한다. 모든 쌍의 \(p\)를 구해 거리표를 만들고, 거리가 가장 가까운 쌍부터 차례로 묶으면 계통수를 그릴 수 있다.</p>
+          </div>
+          <p>그림 1의 네 종에서 가와 나는 30자리 가운데 1자리만 달라 \(p \approx 0.03\)으로 가장 가깝다. 다는 가나 나와 4~5자리, 라는 6~7자리가 달라 가장 멀다. 그래서 가와 나를 먼저 묶고, 그 다음 다를, 마지막에 라를 붙이는 계통수가 나온다. 다만 30자리는 매우 짧아 우연한 차이의 영향이 크므로, 실제 연구에서는 수천 자리 이상을 비교한다.<sup class="fn"><a href="#fn-labbio-alignment-1">1</a></sup></p>
+
+          <h3><span class="no">5.8.2</span>데이터베이스와 유전체</h3>
+          <p>전 세계 연구자들이 읽은 서열은 공개 데이터베이스에 모인다. 새로 읽은 서열을 데이터베이스와 비교하면 비슷한 서열을 가진 생물과 그 유전자가 무슨 일을 하는지 빠르게 알 수 있다. 유전체 전체를 비교하는 일은 사람의 손으로는 불가능해서 컴퓨터 프로그램이 정렬하고 차이를 센다. 사람과 침팬지의 유전체는 정렬되는 부분에서 약 1.2%가 다르다. 사람끼리는 약 0.1%가 달라, 이 작은 차이가 개인의 특징과 질병에 걸리기 쉬운 정도와도 관련된다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="네 종 사이의 서열 차이 거리표">
+              <g class="s">
+                <text x="120" y="22">가</text><text x="200" y="22">나</text><text x="280" y="22">다</text><text x="360" y="22">라</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">나</text><text x="120" y="52" class="td">1</text>
+                <text x="20" y="74">다</text><text x="120" y="74">4</text><text x="200" y="74">5</text>
+                <text x="20" y="96">라</text><text x="120" y="96">6</text><text x="200" y="96">7</text><text x="280" y="96">6</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 30자리 가운데 다른 자리의 수. 가와 나가 가장 가깝고 라가 가장 멀다.</figcaption>
+          </figure>
+
+          <h3><span class="no">5.8.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 5.8.2</span>
+            <p>그림 2의 거리표로 가장 가까운 쌍을 찾고, 그 쌍과 나머지 종 사이의 평균 거리를 구해 묶는 순서를 정하여라. 이 유전자에서 100만 년마다 염기 1000개 가운데 1개꼴로 차이가 쌓인다면, 가와 다는 몇 년 전에 갈라졌다고 어림할 수 있는가? 두 계통 모두에서 차이가 쌓인다는 것을 생각하여라.</p>
+          </div>
+          <p>가장 가까운 쌍은 거리 1인 가와 나이다. 이 묶음과 다의 평균 거리는 \((4 + 5)/2 = 4.5\), 라와는 \((6 + 7)/2 = 6.5\)이다. 그래서 다음으로 다를 붙이고, 마지막에 라를 붙인다.</p>
+          <p>가와 다는 30자리 가운데 4자리, 곧 \(p \approx 0.133\)이 다르다. 갈라진 뒤 두 계통이 각각 차이를 쌓았으므로 한 계통에 쌓인 차이는 그 절반인 0.067이다. 100만 년마다 0.001씩 쌓인다면 \(0.067/0.001 \approx 67\), 곧 약 6700만 년 전에 갈라졌다고 어림된다. 그러나 30자리에서 차이 하나만 달라져도 이 값은 1700만 년이나 바뀌므로, 아주 거친 어림이다. 즉 생물정보학은 정렬한 서열의 차이를 세어 진화의 관계와 시간을 어림하며, 그 정확도는 비교하는 서열의 길이에 달려 있다.</p>
+          <p>아래 탐구 카드에서 여러 생물의 서열을 정렬해 차이를 세고, 거리표로 계통수를 그려 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labbio-alignment-1">분자의 차이로 진화의 시간을 재는 생각을 분자 시계라 한다. 1960년대 미국의 주커칸들과 폴링이 여러 동물의 헤모글로빈 아미노산 서열을 비교하며 처음 제안했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>공통 조상에서 갈라진 뒤 각 계통에 돌연변이가 쌓이므로, 같은 유전자의 서열을 정렬해 다른 자리의 비율을 세면 가까운 종일수록 차이가 적다. 모든 쌍의 차이로 거리표를 만들어 가까운 쌍부터 묶으면 계통수가 되고, 차이가 쌓이는 빠르기를 알면 갈라진 시간도 어림한다. 처음 질문의 네 종에서는 한 자리만 다른 가와 나가 가장 가깝고, 30자리는 짧아 어림이 거칠다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/bio/3-4.html#card-bio-rank"><small class="mono">생명과학 3.4</small>고래는 왜 물고기가 아닐까?</a><a href="../../c/bio/3-4.html#card-bio-species"><small class="mono">생명과학 3.4</small>‘종’은 어떻게 정할까?</a><a href="../../c/bio/3-4.html#card-bio-domains"><small class="mono">생명과학 3.4</small>처음 보는 생물을 3역 6계 중 어디에 넣을까?</a><a href="../../c/bio/3-5.html#card-bio-key"><small class="mono">생명과학 3.5</small>질문 몇 개로 처음 보는 생물의 문(門)을 알아낼 수 있을까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/bio/3-5.html#card-bio-tree-read"><small class="mono">생명과학 3.5</small>계통수는 어떻게 읽을까?</a><a href="../../c/bio/3-5.html#card-bio-tree-build"><small class="mono">생명과학 3.5</small>형질 표로 계통수를 그릴 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labbio/3-11.html#text-labbio-evo-cases"><small class="mono">생명과학 실험 3.11</small>날개, 부리, 목, 눈은 어떻게 지금의 모습이 되었을까?</a></div></nav>
+
       <article class="card" id="card-bio-seq-tree">
         <header class="card-head">
-          <span class="no">5.8.1</span><h2>DNA 서열의 차이로 계통수를 그릴 수 있을까?</h2><span class="kind">분자 계통 · 거리 행렬 · UPGMA · 분자 시계</span>
+          <span class="no">탐구 1</span><h2>DNA 서열의 차이로 계통수를 그릴 수 있을까?</h2><span class="kind">분자 계통 · 거리 행렬 · UPGMA · 분자 시계</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -94,25 +157,25 @@
                 <div><dt>만난 위치(평균 차이)</dt><dd class="n-d">—</dd></div>
               </dl>
               <p class="verdict small"></p>
-              <p class="fig-note">교육용으로 줄인 가상 서열입니다. DNA는 실제 유전체 비교에서 얻은 차이 비율(사람–침팬지 약 1.2%, 사람–고릴라 약 1.6%, 사람–오랑우탄 약 3%, 사람–붉은털원숭이 약 6~7%)의 순서와 대략적인 비를 본떴고, 단백질은 시토크롬 c를 본떠 차이를 줄였습니다(실제 104개 남짓한 아미노산에서 사람과의 차이는 붉은털원숭이 1개, 개 11개, 닭 13개, 효모 40여 개입니다).</p>
+              <p class="fig-note">교육용으로 줄인 가상 서열이다. DNA는 실제 유전체 비교에서 얻은 차이 비율(사람과 침팬지 약 1.2%, 고릴라 약 1.6%, 오랑우탄 약 3%, 붉은털원숭이 약 6~7%)의 순서와 대략적인 비를 본떴고, 단백질은 시토크롬 c를 본떠 차이를 줄였다(실제 104개 남짓한 아미노산에서 사람과의 차이는 붉은털원숭이 1개, 개 11개, 닭 13개, 효모 40여 개이다).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사람, 침팬지, 고릴라 가운데 누가 누구와 가장 가까울까요? 겉모습은 보는 사람에 따라 판단이 갈립니다. 생김새 대신 DNA 서열의 차이만 세어서 계통수를 그릴 수 있을까요?</li>
-            <li><span class="tag">복원</span>생물은 공통 조상에게서 DNA를 물려받습니다. 두 계통이 갈라진 뒤에는 각 계통에서 돌연변이가 따로 쌓입니다. 그래서 갈라진 지 오래된 두 종일수록 같은 유전자의 서열 차이가 큽니다.</li>
-            <li><span class="tag">설명</span>같은 유전자를 자리가 맞게 나란히 놓고(정렬), 두 종마다 다른 자리의 수를 세면 <em>거리 행렬</em>이 됩니다. <em>UPGMA</em>는 행렬에서 가장 작은 칸의 두 무리를 하나로 묶고, 새 무리와 나머지 사이의 거리를 원래 거리들의 평균으로 바꾼 뒤 이 과정을 되풀이합니다. 묶인 순서가 곧 갈라진 순서의 역순입니다.</li>
-            <li><span class="tag">연결</span>돌연변이가 거의 일정한 속도로 쌓인다면 서열 차이는 갈라진 뒤 흐른 시간에 비례합니다. 이것이 <em>분자 시계</em>입니다. 화석으로 한 분기 시점(예: 사람과 침팬지, 약 600만~700만 년 전)을 정하면 다른 분기 시점도 어림할 수 있습니다. 단백질의 아미노산 서열로도 같은 방법을 씁니다.</li>
-            <li><span class="tag">적용</span>‘가장 가까운 둘 묶기’를 누를 때마다 표의 초록 칸이 나무의 어느 가지가 되는지, 표가 어떻게 한 줄씩 줄어드는지 보세요. 그다음 쓸 길이를 ‘앞 12자리’로 줄여 다시 해 보세요. 사람, 침팬지, 고릴라, 오랑우탄을 구별할 수 있나요? 단백질로 바꾸면 효모는 어디에 붙나요?</li>
-            <li class="warn"><span class="tag">판단</span>이 방법은 모든 계통에서 변이 속도가 같다고 가정합니다. 한 계통만 빨리 변하면 나무가 틀어집니다. 같은 자리에 변이가 두 번 일어나 원래대로 돌아가면 차이로 세지 못해, 먼 관계일수록 거리를 작게 잡습니다. 서열이 짧으면 차이가 0인 동점이 생겨 순서를 정할 수 없습니다. 실제 연구는 수천~수백만 자리와 여러 유전자를 비교하고, 더 정교한 방법도 함께 씁니다. 유전자마다 나무가 조금씩 다를 수도 있습니다. 사람 유전체의 일부 구간은 침팬지보다 고릴라와 더 비슷합니다.</li>
+            <li><span class="tag">질문</span>사람, 침팬지, 고릴라 가운데 누가 누구와 가장 가까울까? 겉모습은 보는 사람에 따라 판단이 갈린다. 생김새 대신 DNA 서열의 차이만 세어서 계통수를 그릴 수 있을까?</li>
+            <li><span class="tag">복원</span>생물은 공통 조상에게서 DNA를 물려받는다. 두 계통이 갈라진 뒤에는 각 계통에서 돌연변이가 따로 쌓이므로, 갈라진 지 오래된 두 종일수록 같은 유전자의 서열 차이가 크다.</li>
+            <li><span class="tag">설명</span>같은 유전자를 자리가 맞게 나란히 놓고(정렬), 두 종마다 다른 자리의 수를 세면 <em>거리 행렬</em>이 된다. <em>UPGMA</em>는 행렬에서 가장 작은 칸의 두 무리를 하나로 묶고, 새 무리와 나머지 사이의 거리를 원래 거리들의 평균으로 바꾼 뒤 이 과정을 되풀이한다. 그래서 묶인 순서가 곧 갈라진 순서의 역순이다.</li>
+            <li><span class="tag">연결</span>돌연변이가 거의 일정한 속도로 쌓인다면 서열 차이는 갈라진 뒤 흐른 시간에 비례하는데, 이것이 <em>분자 시계</em>이다. 화석으로 한 분기 시점(예를 들어 사람과 침팬지, 약 600만~700만 년 전)을 정하면 다른 분기 시점도 어림할 수 있다. 단백질의 아미노산 서열로도 같은 방법을 쓴다.</li>
+            <li><span class="tag">적용</span>‘가장 가까운 둘 묶기’를 누를 때마다 표의 초록 칸이 나무의 어느 가지가 되는지, 표가 어떻게 한 줄씩 줄어드는지 보자. 그다음 쓸 길이를 ‘앞 12자리’로 줄여 사람, 침팬지, 고릴라, 오랑우탄을 구별할 수 있는지 확인하고, 단백질로 바꾸면 효모가 어디에 붙는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이 방법은 모든 계통에서 변이 속도가 같다고 가정하므로, 한 계통만 빨리 변하면 나무가 틀어진다. 또 같은 자리에 변이가 두 번 일어나 원래대로 돌아가면 차이로 세지 못해, 먼 관계일수록 거리를 작게 잡는다. 서열이 짧으면 차이가 0인 동점이 생겨 순서를 정할 수 없다. 그래서 실제 연구는 수천~수백만 자리와 여러 유전자를 비교하고, 더 정교한 방법도 함께 쓴다. 유전자마다 나무가 조금씩 다를 수도 있어서, 사람 유전체의 일부 구간은 침팬지보다 고릴라와 더 비슷하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>묶은 뒤의 거리</h3>
-          <p class="q">세 종 A, B, C의 서열 차이가 A–B 4, A–C 10, B–C 12입니다. UPGMA로 A와 B를 먼저 묶었다면, 새 무리 (A, B)와 C 사이의 거리는 얼마로 계산할까요?</p>
+          <p class="q">세 종 A, B, C의 서열 차이가 A–B 4, A–C 10, B–C 12이다. UPGMA로 A와 B를 먼저 묶었다면, 새 무리 (A, B)와 C 사이의 거리는 얼마로 계산할까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10<span class="why"><b>가장 가까운 값을 고른 답입니다.</b> 그럴듯하지만 UPGMA는 무리 안의 모든 쌍을 똑같이 대표하려고 평균을 씁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞습니다.</b> (10 + 12) ÷ 2 = 11입니다. A와 B는 이제 한 무리이므로 C까지의 거리도 둘의 평균으로 나타냅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22<span class="why"><b>거리를 더하면 무리가 커질수록 거리가 부풀어 오릅니다.</b> 거리는 한 쌍 사이의 차이 수를 뜻하므로 합이 아니라 평균을 씁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>10<span class="why"><b>가장 가까운 값을 고른 답이다.</b> 그럴듯하지만 UPGMA는 무리 안의 모든 쌍을 똑같이 대표하려고 평균을 쓴다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞다.</b> (10 + 12) ÷ 2 = 11이다. A와 B는 이제 한 무리이므로 C까지의 거리도 둘의 평균으로 나타낸다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22<span class="why"><b>거리를 더하면 무리가 커질수록 거리가 부풀어 오른다.</b> 거리는 한 쌍 사이의 차이 수를 뜻하므로 합이 아니라 평균을 쓴다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -120,7 +183,7 @@
 
       <article class="card" id="card-labbio-bioinfo">
         <header class="card-head">
-          <span class="no">5.8.2</span><h2>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</h2><span class="kind">탐구 · 생물정보학 · 서열 검색과 변이 찾기</span>
+          <span class="no">탐구 2</span><h2>염기 서열을 컴퓨터로 비교하면 병의 원인을 찾을 수 있을까?</h2><span class="kind">탐구 · 생물정보학 · 서열 검색과 변이 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -142,43 +205,38 @@
               <p class="bi-msg" aria-live="polite"></p>
               <div class="tbl-host"></div>
               <canvas class="cv-plot" aria-label="데이터베이스 서열마다의 일치율 막대그래프"></canvas>
-              <p class="fig-note">교육용으로 줄인 데이터베이스입니다. ‘사람 HBB’는 실제 β-글로빈 유전자 암호화 부위의 앞 60염기이고, 나머지 서열은 비교를 위해 만든 가상 서열입니다. 실제 BLAST는 수억 개의 서열에서 짧은 일치(씨앗)를 먼저 찾고 양옆으로 넓혀 가며, 틈(삽입·결실)을 허용하고 우연히 일치할 가능성(E값)도 계산합니다.</p>
+              <p class="fig-note">교육용으로 줄인 데이터베이스이다. ‘사람 HBB’는 실제 β-글로빈 유전자 암호화 부위의 앞 60염기이고, 나머지 서열은 비교를 위해 만든 가상 서열이다. 실제 BLAST는 수억 개의 서열에서 짧은 일치(씨앗)를 먼저 찾고 양옆으로 넓혀 가며, 틈(삽입·결실)을 허용하고 우연히 일치할 가능성(E값)도 계산한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>환자에게서 얻은 DNA 조각이 어느 유전자의 일부인지, 건강한 사람의 서열과 어디가 다른지 알아내려 합니다. 사람 유전체는 약 30억 염기쌍입니다. 눈으로 비교할 수 없는 이 많은 정보를 어떻게 다룰까요?</li>
-            <li><span class="tag">복원</span>유전자의 염기 서열은 코돈(3염기) 단위로 아미노산을 지정합니다. 한 염기가 바뀌면 아미노산이 바뀌거나(<em>비동의 변이</em>), 그대로이거나(<em>동의 변이</em>), 종결 코돈이 될 수 있습니다. <em>생물정보학</em>은 이런 생물 정보를 컴퓨터로 저장·검색·비교·해석하는 분야입니다.</li>
-            <li><span class="tag">설계</span>먼저 미지 서열을 데이터베이스 전체와 비교해 가장 비슷한 서열을 찾습니다(유사 서열 검색). 정체를 알면 같은 유전자의 <em>참조 서열</em>과 환자 서열을 나란히 놓고(정렬), 다른 자리를 찾아 코돈과 아미노산이 어떻게 바뀌는지 확인합니다.</li>
-            <li><span class="tag">분석</span>일치율이 높고 긴 구간이 맞을수록 같은 유전자이거나 가까운 종의 같은 유전자일 가능성이 큽니다. 무작위 서열끼리도 한 자리마다 1/4은 우연히 같고, 위치를 옮겨 가며 맞추면 40%를 넘기도 합니다. 그래서 일치율만이 아니라 여러 염기가 연속으로 같은 구간(씨앗)이 있는지도 봅니다. 사람 사이의 흔한 변이 수십만 곳을 많은 환자와 건강한 사람에게서 비교해, 특정 질병과 함께 나타나는 변이를 찾는 방법이 <em>전장 유전체 연관 분석(GWAS)</em>입니다.</li>
-            <li><span class="tag">측정</span>미지 서열 세 개를 검색해 각각 가장 비슷한 서열과 일치율을 기록하세요. 그다음 ‘변이 찾기’로 바꿔 환자 가·나·다의 서열을 참조 서열과 정렬하고, 몇 번째 코돈의 어떤 염기가 바뀌었는지, 아미노산이 어떻게 바뀌었는지 적으세요. 세 환자 가운데 아미노산이 바뀌지 않은 사람은 누구인가요?</li>
-            <li class="warn"><span class="tag">오차·안전</span>서열 분석 기기도 오류를 내므로, 하나의 읽기에서만 보이는 변이는 여러 번 읽어 확인합니다. 변이가 있다고 모두 병을 일으키는 것은 아니며, GWAS에서 찾은 연관은 원인이 아니라 ‘함께 나타남’일 수 있습니다. 유전체 정보는 본인과 가족의 건강 정보를 담은 민감한 개인 정보이므로, 동의를 받아 수집하고 익명화해 보호해야 합니다.</li>
+            <li><span class="tag">탐구 문제</span>환자에게서 얻은 DNA 조각이 어느 유전자의 일부인지, 건강한 사람의 서열과 어디가 다른지 알아내려 한다. 사람 유전체는 약 30억 염기쌍이다. 눈으로 비교할 수 없는 이 많은 정보를 어떻게 다룰까?</li>
+            <li><span class="tag">복원</span>유전자의 염기 서열은 코돈(3염기) 단위로 아미노산을 지정한다. 한 염기가 바뀌면 아미노산이 바뀌거나(<em>비동의 변이</em>), 그대로이거나(<em>동의 변이</em>), 종결 코돈이 될 수 있다. <em>생물정보학</em>은 이런 생물 정보를 컴퓨터로 저장·검색·비교·해석하는 분야이다.</li>
+            <li><span class="tag">설계</span>먼저 미지 서열을 데이터베이스 전체와 비교해 가장 비슷한 서열을 찾는다(유사 서열 검색). 정체를 알면 같은 유전자의 <em>참조 서열</em>과 환자 서열을 나란히 놓고(정렬), 다른 자리를 찾아 코돈과 아미노산이 어떻게 바뀌는지 확인한다.</li>
+            <li><span class="tag">분석</span>일치율이 높고 긴 구간이 맞을수록 같은 유전자이거나 가까운 종의 같은 유전자일 가능성이 크다. 무작위 서열끼리도 한 자리마다 1/4은 우연히 같고, 위치를 옮겨 가며 맞추면 40%를 넘기도 한다. 그래서 일치율만이 아니라 여러 염기가 연속으로 같은 구간(씨앗)이 있는지도 본다. 사람 사이의 흔한 변이 수십만 곳을 많은 환자와 건강한 사람에게서 비교해, 특정 질병과 함께 나타나는 변이를 찾는 방법이 <em>전장 유전체 연관 분석(GWAS)</em>이다.</li>
+            <li><span class="tag">측정</span>미지 서열 세 개를 검색해 각각 가장 비슷한 서열과 일치율을 기록해 보자. 그다음 ‘변이 찾기’로 바꿔 환자 가·나·다의 서열을 참조 서열과 정렬하고, 몇 번째 코돈의 어떤 염기가 바뀌었는지, 아미노산이 어떻게 바뀌었는지 적자. 세 환자 가운데 아미노산이 바뀌지 않은 사람은 누구인가?</li>
+            <li class="warn"><span class="tag">오차·안전</span>서열 분석 기기도 오류를 내므로, 하나의 읽기에서만 보이는 변이는 여러 번 읽어 확인한다. 변이가 있다고 모두 병을 일으키는 것은 아니며, GWAS에서 찾은 연관은 원인이 아니라 ‘함께 나타남’일 수 있다. 유전체 정보는 본인과 가족의 건강 정보를 담은 민감한 개인 정보이므로, 동의를 받아 수집하고 익명화해 보호해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 환자의 HBB 유전자 6번째 코돈(전통적인 번호)이 GAG에서 GAA로 바뀌었습니다. 이 변이로 낫 모양 적혈구 빈혈증이 생길까요?</p>
+          <p class="q">어떤 환자의 HBB 유전자 6번째 코돈(전통적인 번호)이 GAG에서 GAA로 바뀌었다. 이 변이로 낫 모양 적혈구 빈혈증이 생길까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>생긴다. 낫 모양 적혈구 빈혈증과 같은 코돈이 바뀌었기 때문이다<span class="why"><b>위치가 같아도 결과는 바뀐 염기에 따라 다릅니다.</b> 낫 모양 적혈구 빈혈증은 GAG → GTG로 글루탐산이 발린으로 바뀐 경우입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>생기지 않을 가능성이 크다. GAA도 글루탐산을 지정하는 동의 변이이다<span class="why"><b>맞습니다.</b> 유전 부호의 중복성 때문에 셋째 염기가 바뀌어도 같은 아미노산이 되는 경우가 많습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>단백질이 만들어지지 않는다<span class="why"><b>GAA는 종결 코돈이 아닙니다.</b> 종결 코돈은 UAA, UAG, UGA(DNA로는 TAA, TAG, TGA)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>생긴다. 낫 모양 적혈구 빈혈증과 같은 코돈이 바뀌었기 때문이다<span class="why"><b>위치가 같아도 결과는 바뀐 염기에 따라 다르다.</b> 낫 모양 적혈구 빈혈증은 GAG → GTG로 글루탐산이 발린으로 바뀐 경우이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>생기지 않을 가능성이 크다. GAA도 글루탐산을 지정하는 동의 변이이다<span class="why"><b>맞다.</b> 유전 부호의 중복성 때문에 셋째 염기가 바뀌어도 같은 아미노산이 되는 경우가 많다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>단백질이 만들어지지 않는다<span class="why"><b>GAA는 종결 코돈이 아니다.</b> 종결 코돈은 UAA, UAG, UGA(DNA로는 TAA, TAG, TGA)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/gene/2-2.html#card-gene-codon"><small class="mono">생물의 유전 2.2</small>염기 하나가 바뀌면 단백질은 얼마나 달라질까?</a><a href="../../c/bio/3-1.html#card-gene-nondisjunction"><small class="mono">생명과학 3.1</small>염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?</a><a href="../../c/gene/1-4.html#text-gene-disorders"><small class="mono">생물의 유전 1.4</small>유전병은 원인에 따라 어떻게 나눌까?</a><a href="../../c/bio/3-5.html#card-bio-tree-read"><small class="mono">생명과학 3.5</small>계통수는 어떻게 읽을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adbio/4-3.html#text-adbio-omics"><small class="mono">고급 생명과학 4.3</small>유전체를 다 읽은 뒤, 생명과학은 무엇을 더 알아내야 했을까?</a><a href="../../c/adbio/4-3.html#card-adbio-assembly"><small class="mono">고급 생명과학 4.3</small>유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/gene/2-2.html#card-gene-codon"><small class="mono">생물의 유전 2.2</small>염기 하나가 바뀌면 단백질은 얼마나 달라질까?</a><a href="../../c/gene/2-2.html#text-gene-codon"><small class="mono">생물의 유전 2.2</small>유전 부호</a><a href="../../c/adbio/3-3.html#text-adbio-code-cracking"><small class="mono">고급 생명과학 3.3</small>유전 암호의 실험적 해독</a><a href="../../c/bio/3-1.html#card-gene-nondisjunction"><small class="mono">생명과학 3.1</small>염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adbio/4-3.html#text-adbio-omics"><small class="mono">고급 생명과학 4.3</small>유전체를 다 읽은 뒤, 생명과학은 무엇을 더 알아내야 했을까?</a><a href="../../c/adbio/4-3.html#card-adbio-assembly"><small class="mono">고급 생명과학 4.3</small>유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?</a><a href="../../c/adbio/4-3.html#text-adbio-coverage"><small class="mono">고급 생명과학 4.3</small>생명공학기술의 활용과 학문 분야</a></div></nav>
 
       <article class="card reading" id="text-labbio-genome-med">
         <header class="card-head">
-          <span class="no">5.8.3</span><h2>유전체 분석은 실제로 어떤 환자를 도왔을까?</h2><span class="kind">읽기 · 유전체 데이터베이스와 질병 치료 사례 · 모둠 발표</span>
+          <span class="no">읽기 3</span><h2>유전체 분석은 실제로 어떤 환자를 도왔을까?</h2><span class="kind">읽기 · 유전체 데이터베이스와 질병 치료 사례 · 모둠 발표</span>
         </header>
         <div class="reading-body">
-          <p class="ask">같은 병이라도 환자마다 원인 유전자가 다르면 듣는 약도 다릅니다. 유전체 정보를 모은 데이터베이스와 분석 방법이 진단과 치료를 어떻게 바꾸었는지 사례로 살펴봅시다.</p>
+          <p class="ask">같은 병이라도 환자마다 원인 유전자가 다르면 듣는 약도 다르다. 유전체 정보를 모은 데이터베이스와 분석 방법이 진단과 치료를 어떻게 바꾸었는지 사례로 살펴보자.</p>
           <h3><span class="mono">1</span>누구나 쓸 수 있는 유전체 데이터베이스</h3>
-          <ul class="dots">
-            <li><em>GenBank</em>(미국 NCBI): 전 세계 연구자가 등록한 염기 서열 저장소. 같은 곳의 <em>BLAST</em>로 서열을 검색합니다.</li>
-            <li><em>dbSNP, ClinVar</em>(NCBI): 사람의 변이 목록과, 각 변이가 질병과 관련 있는지에 대한 근거를 모은 데이터베이스.</li>
-            <li><em>Ensembl, UCSC 유전체 브라우저</em>: 염색체 위의 유전자 위치, 구조, 변이를 지도처럼 보여 줍니다.</li>
-            <li>우리나라도 국가 연구비로 생산한 생명 연구 자료를 모아 공유하는 국가 바이오 데이터 스테이션을 운영합니다.</li>
-          </ul>
+          <p>미국 NCBI의 <em>GenBank</em>는 전 세계 연구자가 등록한 염기 서열 저장소이고, 같은 곳의 <em>BLAST</em>로 서열을 검색한다. NCBI의 <em>dbSNP</em>와 <em>ClinVar</em>는 사람의 변이 목록과, 각 변이가 질병과 관련 있는지에 대한 근거를 모은 데이터베이스이다. <em>Ensembl</em>과 <em>UCSC 유전체 브라우저</em>는 염색체 위의 유전자 위치, 구조, 변이를 지도처럼 보여 준다. 우리나라도 국가 연구비로 생산한 생명 연구 자료를 모아 공유하는 국가 바이오 데이터 스테이션을 운영한다.</p>
           <h3><span class="mono">2</span>치료에 쓰인 사례</h3>
           <div class="tbl"><table>
             <thead><tr><th>질병</th><th>유전체 분석으로 찾은 것</th><th>치료·관리에 쓰인 방식</th></tr></thead>
@@ -186,45 +244,45 @@
               <tr><td>만성 골수성 백혈병</td><td>9번과 22번 염색체가 자리를 바꿔 생긴 BCR-ABL 융합 유전자가 세포 분열을 계속 켜 둠</td><td>BCR-ABL 단백질만 막는 표적 항암제(이마티닙)가 개발되어 많은 환자가 장기 생존</td></tr>
               <tr><td>비소세포 폐암 일부</td><td>암세포의 EGFR 유전자 변이</td><td>암 조직의 변이를 검사해, 변이가 있는 환자에게 EGFR 억제제를 처방</td></tr>
               <tr><td>유전성 유방암·난소암</td><td>BRCA1·BRCA2 유전자의 병적 변이(DNA 손상 수리에 이상)</td><td>보인자의 정기 검진·예방 수술 상담, BRCA 변이 암에 PARP 억제제 사용</td></tr>
-              <tr><td>약물 반응 차이</td><td>약을 분해하는 효소(예: CYP2C19, CYP2C9) 유전자 변이</td><td>일부 약의 종류나 용량을 유전형에 맞춰 조절</td></tr>
+              <tr><td>약물 반응 차이</td><td>약을 분해하는 효소(예를 들어 CYP2C19, CYP2C9) 유전자 변이</td><td>일부 약의 종류나 용량을 유전형에 맞춰 조절</td></tr>
               <tr><td>희귀 유전 질환</td><td>전장 엑솜·유전체 분석으로 원인 변이 확인</td><td>몇 년씩 걸리던 진단 기간을 줄이고, 가족의 유전 상담에 활용</td></tr>
             </tbody>
           </table></div>
-          <h3><span class="mono">3</span>GWAS: 흔한 병의 위험 유전자 찾기</h3>
-          <p>당뇨병, 고혈압처럼 여러 유전자와 환경이 함께 작용하는 병은 원인 유전자 하나로 설명되지 않습니다. <em>전장 유전체 연관 분석(GWAS)</em>은 환자 수천~수십만 명과 건강한 사람을 모아, 유전체 전체에 흩어진 수십만 곳 이상의 단일 염기 다형성(SNP)을 비교합니다. 2005년 나이 관련 황반 변성과 관련된 CFH 유전자 변이를 찾은 것이 초기의 대표 사례입니다. 하나하나의 효과는 작아서, 여러 변이를 합쳐 위험도를 어림하는 연구가 진행 중입니다.</p>
+          <h3><span class="mono">3</span>GWAS, 흔한 병의 위험 유전자 찾기</h3>
+          <p>당뇨병, 고혈압처럼 여러 유전자와 환경이 함께 작용하는 병은 원인 유전자 하나로 설명되지 않는다. <em>전장 유전체 연관 분석(GWAS)</em>은 환자 수천~수십만 명과 건강한 사람을 모아, 유전체 전체에 흩어진 수십만 곳 이상의 단일 염기 다형성(SNP)을 비교한다. 2005년 나이 관련 황반 변성과 관련된 CFH 유전자 변이를 찾은 것이 초기의 대표 사례이다. 하나하나의 효과는 작아서, 여러 변이를 합쳐 위험도를 어림하는 연구가 진행 중이다.</p>
           <h3><span class="mono">모둠 발표</span></h3>
-          <ul class="dots">
-            <li>위 표의 사례나 새로 찾은 사례 하나를 모둠이 고르고, 질병 → 관련 유전자와 변이 → 쓰인 데이터베이스와 분석 방법 → 치료에 쓰인 방식 → 한계와 윤리 문제 순서로 정리하세요.</li>
-            <li>정리한 내용을 정보 그림, 짧은 영상, 슬라이드, 온라인 게시판 가운데 알맞은 매체로 만들고, 다른 모둠의 발표에 질문 하나와 보탤 점 하나를 남기세요.</li>
-            <li>실제로 GenBank나 ClinVar에서 그 유전자를 검색해 보고, 발표에 출처를 밝히세요.</li>
-          </ul>
-          <p class="judge"><b>판단</b>표적 치료는 해당 변이가 있는 환자에게만 효과가 있고, 시간이 지나면 암세포에 새 변이가 생겨 내성이 나타나기도 합니다. ‘유전자 검사 결과 = 운명’이 아닙니다. 대부분의 병은 유전자와 환경이 함께 작용하므로, 위험 변이가 있어도 병이 생기지 않을 수 있습니다. 유전 정보로 고용이나 보험에서 차별하지 못하도록 우리나라를 비롯한 여러 나라가 법으로 정하고 있습니다.</p>
+          <p>위 표의 사례나 새로 찾은 사례 하나를 모둠이 고르고, 질병 → 관련 유전자와 변이 → 쓰인 데이터베이스와 분석 방법 → 치료에 쓰인 방식 → 한계와 윤리 문제 순서로 정리해 보자.</p>
+          <p>정리한 내용을 정보 그림, 짧은 영상, 슬라이드, 온라인 게시판 가운데 알맞은 매체로 만들고, 다른 모둠의 발표에 질문 하나와 보탤 점 하나를 남기자.</p>
+          <p>실제로 GenBank나 ClinVar에서 그 유전자를 검색해 보고, 발표에 출처를 밝히자.</p>
+          <p class="judge"><b>판단</b>표적 치료는 해당 변이가 있는 환자에게만 효과가 있고, 시간이 지나면 암세포에 새 변이가 생겨 내성이 나타나기도 한다. ‘유전자 검사 결과 = 운명’이 아니다. 대부분의 병은 유전자와 환경이 함께 작용하므로, 위험 변이가 있어도 병이 생기지 않을 수 있다. 유전 정보로 고용이나 보험에서 차별하지 못하도록 우리나라를 비롯한 여러 나라가 법으로 정하고 있다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">GWAS에서 어떤 SNP를 가진 사람이 당뇨병에 걸린 비율이 조금 더 높게 나왔습니다. 알맞은 해석은?</p>
+          <p class="q">GWAS에서 어떤 SNP를 가진 사람이 당뇨병에 걸린 비율이 조금 더 높게 나왔다. 알맞은 해석은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>이 SNP가 당뇨병의 원인이므로 이 SNP가 있으면 반드시 당뇨병에 걸린다<span class="why"><b>연관은 원인과 같지 않습니다.</b> 그 SNP 근처의 다른 변이가 진짜 원인일 수 있고, 효과도 대개 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>이 SNP 근처에 위험과 관련된 유전 요인이 있을 가능성이 있어, 추가 연구가 필요하다<span class="why"><b>맞습니다.</b> GWAS는 후보 영역을 알려 주고, 실제 기능은 세포·동물 실험 등으로 따로 확인합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>환경은 관계없다는 뜻이다<span class="why"><b>흔한 병은 대부분 유전과 환경이 함께 작용합니다.</b> 유전 요인 하나가 발견되었다고 환경의 영향이 사라지지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>이 SNP가 당뇨병의 원인이므로 이 SNP가 있으면 반드시 당뇨병에 걸린다<span class="why"><b>연관은 원인과 같지 않다.</b> 그 SNP 근처의 다른 변이가 진짜 원인일 수 있고, 효과도 대개 작다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>이 SNP 근처에 위험과 관련된 유전 요인이 있을 가능성이 있어, 추가 연구가 필요하다<span class="why"><b>맞다.</b> GWAS는 후보 영역을 알려 주고, 실제 기능은 세포·동물 실험 등으로 따로 확인한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>환경은 관계없다는 뜻이다<span class="why"><b>흔한 병은 대부분 유전과 환경이 함께 작용한다.</b> 유전 요인 하나가 발견되었다고 환경의 영향이 사라지지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/gene/2-2.html#card-gene-codon"><small class="mono">생물의 유전 2.2</small>염기 하나가 바뀌면 단백질은 얼마나 달라질까?</a><a href="../../c/bio/3-1.html#card-gene-nondisjunction"><small class="mono">생명과학 3.1</small>염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?</a><a href="../../c/gene/1-4.html#text-gene-disorders"><small class="mono">생물의 유전 1.4</small>유전병은 원인에 따라 어떻게 나눌까?</a><a href="../../c/bio/3-5.html#card-bio-tree-read"><small class="mono">생명과학 3.5</small>계통수는 어떻게 읽을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adbio/4-3.html#text-adbio-omics"><small class="mono">고급 생명과학 4.3</small>유전체를 다 읽은 뒤, 생명과학은 무엇을 더 알아내야 했을까?</a><a href="../../c/adbio/4-3.html#card-adbio-assembly"><small class="mono">고급 생명과학 4.3</small>유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/gene/2-2.html#card-gene-codon"><small class="mono">생물의 유전 2.2</small>염기 하나가 바뀌면 단백질은 얼마나 달라질까?</a><a href="../../c/gene/2-2.html#text-gene-codon"><small class="mono">생물의 유전 2.2</small>유전 부호</a><a href="../../c/adbio/3-3.html#text-adbio-code-cracking"><small class="mono">고급 생명과학 3.3</small>유전 암호의 실험적 해독</a><a href="../../c/bio/3-1.html#card-gene-nondisjunction"><small class="mono">생명과학 3.1</small>염색체 하나가 더 들어가는 일은 감수 분열의 어느 단계에서 생길까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adbio/4-3.html#text-adbio-omics"><small class="mono">고급 생명과학 4.3</small>유전체를 다 읽은 뒤, 생명과학은 무엇을 더 알아내야 했을까?</a><a href="../../c/adbio/4-3.html#card-adbio-assembly"><small class="mono">고급 생명과학 4.3</small>유전체를 잘게 잘라 읽은 뒤, 컴퓨터는 어떻게 다시 이어 붙일까?</a><a href="../../c/adbio/4-3.html#text-adbio-coverage"><small class="mono">고급 생명과학 4.3</small>생명공학기술의 활용과 학문 분야</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labbio-5-8"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labbio&amp;sec=5-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">6문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>

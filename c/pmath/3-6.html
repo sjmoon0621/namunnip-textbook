@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이산확률변수와 이항분포 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이산확률변수의 기댓값과 표준편차, 이항분포의 뜻과 성질, 평균과 표준편차. 기댓값이 0인 공정한 게임을 설계하는 카드와 B(n, p)를 시뮬레이션하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-fair-game canvas { aspect-ratio: 16 / 8; }
@@ -43,22 +48,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-fair-game"><span class="mono">3.6.1</span>공정한 게임 설계하기</a></li>
-        <li><a href="#card-pmath-binom-slider"><span class="mono">3.6.2</span>이항분포 B(n, p)</a></li>
+        <li><a href="#text-pmath-binomial-dist"><span class="mono">본문</span>이산확률변수와 이항분포</a></li>
+        <li><a href="#card-pmath-fair-game"><span class="mono">탐구 1</span>공정한 게임 설계하기</a></li>
+        <li><a href="#card-pmath-binom-slider"><span class="mono">탐구 2</span>이항분포 B(n, p)</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">8문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-3-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-binomial-dist" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이산확률변수와 이항분포</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">자유투 성공률이 70%인 농구 선수가 연습 시간에 자유투를 20번 던졌다. 평균으로 생각하면 14번 넣어야 하지만, 실제로 꼭 14번만 넣는 것은 아니어서 어떤 날은 11번, 어떤 날은 17번을 넣는다. 14번을 정확히 넣을 확률은 얼마이고, 넣은 횟수는 보통 몇 번에서 몇 번 사이에 흩어질까? 학교 축제에서 주사위 게임을 열 때 상금을 얼마로 해야 공정한지도 같은 방법으로 정할 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 210" role="img" aria-label="B(20, 0.7)의 확률분포">
+              <line x1="40" y1="180" x2="500" y2="180" class="ax"/>
+              <rect x="132" y="179" width="16" height="1" class="la"/><rect x="152" y="178" width="16" height="2" class="la"/><rect x="172" y="173.5" width="16" height="6.5" class="la"/><rect x="192" y="163" width="16" height="17" class="la"/><rect x="212" y="145" width="16" height="35" class="la"/><rect x="232" y="118" width="16" height="62" class="la"/><rect x="252" y="91" width="16" height="89" class="la"/><rect x="272" y="76" width="16" height="104" class="ld"/><rect x="292" y="83" width="16" height="97" class="la"/><rect x="312" y="110" width="16" height="70" class="la"/><rect x="332" y="141" width="16" height="39" class="la"/><rect x="352" y="165" width="16" height="15" class="la"/><rect x="372" y="176" width="16" height="4" class="la"/><rect x="392" y="179" width="16" height="1" class="la"/>
+              <g class="s" text-anchor="middle"><text x="140" y="196">7</text><text x="220" y="196">11</text><text x="280" y="196">14</text><text x="340" y="196">17</text><text x="400" y="196">20</text></g>
+              <text x="280" y="68" class="s td" text-anchor="middle">0.192</text>
+              <text x="40" y="30" class="s">P(X = x), 평균 14, 표준편차 약 2.05</text>
+            </svg>
+            <figcaption>그림 1. 20번 가운데 넣은 횟수는 14번이 가장 그럴듯하지만, 그 확률도 20%가 되지 않는다. 대부분은 12번에서 16번 사이에 놓인다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>기댓값과 표준편차, 독립시행의 확률, 이항정리(<a href="3-2.html">이항정리</a>), 확률분포(<a href="3-5.html">확률변수와 확률분포</a>).</div>
+
+          <h3><span class="no">3.6.1</span>평균과 흩어짐</h3>
+          <p>이산확률변수 \(X\)의 평균, 곧 기댓값은 각 값에 그 확률을 곱해 모두 더한 \(E(X) = \sum x_i p_i\)이다. 같은 시행을 아주 많이 되풀이하면 \(X\)의 값들의 평균이 이 값에 가까워진다. 값들이 평균에서 얼마나 흩어지는지는 분산 \(V(X) = E\big((X - m)^2\big) = E(X^2) - m^2\)과 그 제곱근인 표준편차로 나타낸다. 또 \(X\)를 \(a\)배하고 \(b\)를 더하면 평균은 \(aE(X) + b\), 표준편차는 \(|a|\sigma(X)\)가 된다. 그래서 점수를 상금으로 바꾸는 것처럼 확률변수를 일차식으로 바꿀 때 평균과 표준편차를 바로 구할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.6.1 <span class="nm">이항분포</span></span>
+            <p>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 성공 횟수 \(X\)는 이항분포 \(B(n, p)\)를 따르고 \[P(X = r) = {}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\]이다. \(E(X) = np\), \(V(X) = np(1 - p)\), \(\sigma(X) = \sqrt{np(1 - p)}\)이다.</p>
+          </div>
+          <p>\(n\)번 가운데 \(r\)번 성공하는 확률은, 성공할 \(r\)번을 고르는 방법 \({}_n\mathrm{C}_r\)가지마다 확률이 \(p^r(1 - p)^{n-r}\)이므로 둘을 곱한 것이다. 이 확률들을 모두 더하면 이항정리에 따라 \((p + (1 - p))^n = 1\)이 된다. 평균 \(np\)는 시행 한 번의 평균 \(p\)를 \(n\)번 더한 것이고, 분산 \(np(1 - p)\)도 시행 한 번의 분산 \(p(1 - p)\)를 \(n\)번 더한 것이다. 독립인 확률변수를 더하면 분산도 더해지기 때문이다.<sup class="fn"><a href="#fn-pmath-binomial-dist-1">1</a></sup></p>
+
+          <h3><span class="no">3.6.2</span>공정한 게임</h3>
+          <p>한 판에 1000원을 내고 주사위를 던져 6이 나오면 상금을 받는 축제 게임이 있다. 참가자가 받는 상금의 기댓값이 참가비와 같으면 오래 하면 할수록 주최 측도 참가자도 손해를 보지 않으므로, 공정한 게임이라 한다. 상금을 \(a\)원이라 하면 기댓값은 \(a\times\tfrac16\)이므로, \(a = 6000\)원일 때 공정하다. 상금이 그보다 적으면 주최 측이 평균적으로 이익을 보고, 축제의 기금 마련 게임은 보통 이렇게 정한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="자유투 성공 횟수의 분포 요약">
+              <g class="s">
+                <text x="20" y="22">양</text><text x="200" y="22">식</text><text x="380" y="22">값</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">평균</text><text x="200" y="52">np = 20 × 0.7</text><text x="380" y="52">14</text>
+                <text x="20" y="74">표준편차</text><text x="200" y="74">√(20 × 0.7 × 0.3)</text><text x="380" y="74">약 2.05</text>
+                <text x="20" y="96">P(X = 14)</text><text x="200" y="96">₂₀C₁₄ × 0.7¹⁴ × 0.3⁶</text><text x="380" y="96" class="td">약 0.192</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 평균은 가장 그럴듯한 값이지만, 정확히 평균만큼 성공할 확률은 생각보다 작다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+            <p>처음 질문의 선수가 20번 던질 때 성공 횟수 \(X\)의 평균, 표준편차, \(P(X = 14)\)를 구하여라. 이 선수에게 한 번 넣을 때마다 2점, 놓칠 때마다 \(-1\)점을 주면 점수의 평균과 표준편차는 얼마인가?</p>
+          </div>
+          <p>\(X\)는 \(B(20, 0.7)\)을 따르므로 평균은 14, 분산은 \(20\times0.7\times0.3 = 4.2\), 표준편차는 \(\sqrt{4.2} \approx 2.05\)이다. \(P(X = 14) = {}_{20}\mathrm{C}_{14}\times0.7^{14}\times0.3^6 = 38760\times0.006782\times0.000729 \approx 0.192\)이다.</p>
+          <p>점수는 \(S = 2X - (20 - X) = 3X - 20\)이므로 평균은 \(3\times14 - 20 = 22\)점, 표준편차는 \(3\times2.05 \approx 6.1\)점이다. 그래서 넣은 횟수가 평균에서 2번쯤 벗어나면 점수는 6점쯤 벗어난다. 즉 독립인 시행을 되풀이할 때 성공 횟수는 이항분포를 따르고, 그 평균 \(np\)와 표준편차 \(\sqrt{np(1 - p)}\)가 결과가 어디쯤에 얼마나 흩어질지를 알려 준다.</p>
+          <p>아래 탐구 카드에서 성공률과 던지는 횟수를 바꾸며 이항분포의 모양을 살펴보고, 축제 주사위 게임의 공정한 상금을 정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-binomial-dist-1">이항분포는 1713년 출판된 야코프 베르누이의 책에서 처음 체계적으로 다루어져, 성공과 실패 두 가지 결과만 있는 시행을 베르누이 시행이라 부른다. 그는 같은 책에서 큰수의 법칙도 처음 증명했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>이산확률변수의 평균은 값과 확률의 곱의 합, 분산은 평균에서 벗어난 정도의 제곱의 평균이며, \(aX + b\)의 평균은 \(aE(X) + b\), 표준편차는 \(|a|\sigma(X)\)이다. 성공 확률 \(p\)인 독립시행 \(n\)번의 성공 횟수는 이항분포 \(B(n, p)\)를 따르고 평균 \(np\), 분산 \(np(1 - p)\)이다. 처음 질문의 선수는 20번 가운데 평균 14번을 넣고 표준편차는 약 2.05이며, 정확히 14번 넣을 확률은 약 0.19이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-2.html#text-stat-expectation"><small class="mono">확률과 통계 3.2</small>기댓값과 표준편차</a><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div></nav>
+
       <article class="card" id="card-pmath-fair-game">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>학교 축제 주사위 게임, 상금을 얼마로 해야 공정할까?</h2><span class="kind">이산확률변수의 기댓값 · 도전</span>
+          <span class="no">탐구 1</span><h2>학교 축제 주사위 게임, 상금을 얼마로 해야 공정할까?</h2><span class="kind">이산확률변수의 기댓값 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="mono small">규칙: 참가비를 내고 주사위 하나를 던진다. 6이 나오면 상금 A, 5가 나오면 상금 B, 나머지는 상금이 없다.</p>
+            <p class="mono small">규칙 참가비를 내고 주사위 하나를 던진다. 6이 나오면 상금 A, 5가 나오면 상금 B, 나머지는 상금이 없다.</p>
             <div class="ctl-row">
               <div><label class="mono">상금 A (6) = <output class="a-out">3000</output>원</label><input class="sa" type="range" min="0" max="6000" step="100" value="3000" aria-label="6이 나올 때 상금"></div>
               <div><label class="mono">상금 B (5) = <output class="b-out">1000</output>원</label><input class="sbb" type="range" min="0" max="6000" step="100" value="1000" aria-label="5가 나올 때 상금"></div>
@@ -73,33 +133,33 @@
             <p class="verdict" role="status"></p>
             <canvas aria-label="게임을 여러 번 했을 때 한 판당 평균 이익의 변화와 기댓값"></canvas>
             <div class="sim-btns"><button class="chip" type="button" data-sim="1">1판</button><button class="chip" type="button" data-sim="100">100판</button><button class="chip go" type="button" data-sim="auto">계속 실행</button><button class="chip" type="button" data-sim="reset">처음부터</button></div>
-            <p class="fig-note">도전: 참가비 1000원, 상금 A가 상금 B의 두 배일 때 공정한 게임(기댓값 0)을 만들어 보세요.</p>
+            <p class="fig-note">도전해 보자. 참가비 1000원, 상금 A가 상금 B의 두 배일 때 공정한 게임(기댓값 0)을 만들어 보자.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>축제에서 주사위 게임 부스를 엽니다. 상금을 너무 크게 하면 부스가 손해를 보고, 너무 작게 하면 아무도 하지 않습니다. 참가자와 부스 모두에게 공정한 상금은 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>이산확률변수 \(X\)가 값 \(x_i\)를 확률 \(p_i\)로 가질 때 기댓값은 \(E(X) = \sum x_i p_i\), 분산은 \(V(X) = E(X^2) - \{E(X)\}^2\), 표준편차는 \(\sigma(X) = \sqrt{V(X)}\)입니다.</li>
-            <li><span class="tag">설명</span>참가자의 이익 \(X\)는 6이면 \(A - c\), 5이면 \(B - c\), 나머지면 \(-c\)입니다(\(c\)는 참가비). 그러므로 <b>\(E(X) = \frac{A + B}{6} - c\)</b>이고, \(E(X) = 0\)인 게임을 공정한 게임이라고 합니다. 기댓값은 한 판의 결과를 알려 주지 않지만, 많이 하면 한 판당 평균 이익이 \(E(X)\)에 가까워집니다. 표준편차는 한 판의 결과가 기댓값에서 얼마나 흩어지는지, 곧 게임의 "짜릿함"(위험)을 나타냅니다.</li>
-            <li><span class="tag">연결</span>복권, 보험, 카지노는 모두 기댓값으로 설계됩니다. 복권과 카지노는 참가자의 기댓값이 음수이고, 보험은 가입자의 기댓값이 음수인 대신 큰 손해의 위험(표준편차)을 줄여 줍니다.</li>
-            <li><span class="tag">적용</span>도전 조건으로 공정한 게임을 만든 뒤, 100판씩 돌려 평균 이익이 0 근처로 모이는지 보세요. 같은 기댓값 0이라도 A를 크게, B를 0으로 하면 표준편차는 어떻게 바뀌나요? 부스가 한 판에 평균 200원을 남기려면 참가비를 얼마로 해야 하나요?</li>
-            <li class="warn"><span class="tag">판단</span>기댓값이 양수인 게임도 짧게 하면 손해를 볼 수 있고, 음수인 게임도 운이 좋으면 이길 수 있습니다. "기댓값만큼 번다"는 많이 되풀이할 때의 이야기입니다. 몇 판만 해 보고 게임이 공정한지 판단하면 안 됩니다.</li>
+            <li><span class="tag">질문</span>축제에서 주사위 게임 부스를 연다. 상금을 너무 크게 하면 부스가 손해를 보고, 너무 작게 하면 아무도 하지 않는다. 참가자와 부스 모두에게 공정한 상금은 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>이산확률변수 \(X\)가 값 \(x_i\)를 확률 \(p_i\)로 가질 때 기댓값은 \(E(X) = \sum x_i p_i\), 분산은 \(V(X) = E(X^2) - \{E(X)\}^2\), 표준편차는 \(\sigma(X) = \sqrt{V(X)}\)이다.</li>
+            <li><span class="tag">설명</span>참가자의 이익 \(X\)는 6이면 \(A - c\), 5이면 \(B - c\), 나머지면 \(-c\)이다(\(c\)는 참가비). 그러므로 \(E(X) = \frac{A + B}{6} - c\)이고, \(E(X) = 0\)인 게임을 공정한 게임이라고 한다. 기댓값은 한 판의 결과를 알려 주지 않지만, 많이 하면 한 판당 평균 이익이 \(E(X)\)에 가까워진다. 표준편차는 한 판의 결과가 기댓값에서 얼마나 흩어지는지, 곧 게임의 "짜릿함"(위험)을 나타낸다.</li>
+            <li><span class="tag">연결</span>복권, 보험, 카지노는 모두 기댓값으로 설계된다. 복권과 카지노는 참가자의 기댓값이 음수이고, 보험은 가입자의 기댓값이 음수인 대신 큰 손해의 위험(표준편차)을 줄여 준다.</li>
+            <li><span class="tag">적용</span>도전 조건으로 공정한 게임을 만든 뒤, 100판씩 돌려 평균 이익이 0 근처로 모이는지 보자. 같은 기댓값 0이라도 A를 크게, B를 0으로 하면 표준편차는 어떻게 바뀌는가? 부스가 한 판에 평균 200원을 남기려면 참가비를 얼마로 해야 하는가?</li>
+            <li class="warn"><span class="tag">판단</span>기댓값이 양수인 게임도 짧게 하면 손해를 볼 수 있고, 음수인 게임도 운이 좋으면 이길 수 있다. "기댓값만큼 번다"는 많이 되풀이할 때의 이야기이다. 몇 판만 해 보고 게임이 공정한지 판단하면 안 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">동전 두 개를 던져 모두 앞면이면 3000원을 받는 게임이 공정하려면 참가비는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>750원<span class="why"><b>맞습니다.</b> 모두 앞면일 확률은 \(\frac{1}{4}\)이고, \(3000 \times \frac{1}{4} = 750\)원이 상금의 기댓값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1500원<span class="why"><b>확률을 \(\frac{1}{2}\)로 보았습니다.</b> 두 동전이 모두 앞면이어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1000원<span class="why"><b>결과가 앞앞, 앞뒤, 뒤뒤 세 가지라고 보았습니다.</b> 앞뒤와 뒤앞은 다른 결과라 모두 네 가지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3000원<span class="why"><b>상금 전체를 참가비로 했습니다.</b> 그러면 참가자의 기댓값은 \(-2250\)원입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>750원<span class="why"><b>맞다.</b> 모두 앞면일 확률은 \(\frac{1}{4}\)이고, \(3000 \times \frac{1}{4} = 750\)원이 상금의 기댓값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1500원<span class="why"><b>확률을 \(\frac{1}{2}\)로 보았다.</b> 두 동전이 모두 앞면이어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1000원<span class="why"><b>결과가 앞앞, 앞뒤, 뒤뒤 세 가지라고 보았다.</b> 앞뒤와 뒤앞은 다른 결과라 모두 네 가지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>3000원<span class="why"><b>상금 전체를 참가비로 했다.</b> 그러면 참가자의 기댓값은 \(-2250\)원이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-2.html#text-stat-expectation"><small class="mono">확률과 통계 3.2</small>기댓값과 표준편차</a><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div></nav>
 
       <article class="card" id="card-pmath-binom-slider">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>자유투 성공률 70 %인 선수가 20번 던지면 몇 번쯤 넣을까?</h2><span class="kind">이항분포 · 평균과 표준편차 · 시뮬레이션</span>
+          <span class="no">탐구 2</span><h2>자유투 성공률 70 %인 선수가 20번 던지면 몇 번쯤 넣을까?</h2><span class="kind">이항분포 · 평균과 표준편차 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -116,43 +176,43 @@
                 <div><dt>실험의 평균</dt><dd class="n-xm">—</dd></div>
                 <div><dt>실험의 표준편차</dt><dd class="n-xs">—</dd></div>
               </dl>
-              <p class="fig-note">실험 1번 = \(n\)번 던져 성공 횟수를 세는 것. 점선은 이론 확률 \({}_n\mathrm{C}_k p^k(1 - p)^{n - k}\), 막대는 실험의 상대도수입니다. 빨간 선은 평균, 띠는 평균 ± 표준편차입니다.</p>
+              <p class="fig-note">실험 1번 = \(n\)번 던져 성공 횟수를 세는 것. 점선은 이론 확률 \({}_n\mathrm{C}_k p^k(1 - p)^{n - k}\), 막대는 실험의 상대도수이다. 빨간 선은 평균, 띠는 평균 ± 표준편차이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>자유투 성공률이 70 %인 선수가 20번 던지면 평균 14번 넣을 것 같습니다. 하지만 경기마다 12번, 17번처럼 들쭉날쭉합니다. 성공 횟수는 어떤 분포를 따르고, 보통 어느 범위에서 흔들릴까요?</li>
-            <li><span class="tag">복원</span>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 \(k\)번 성공할 확률은 \({}_n\mathrm{C}_k p^k (1 - p)^{n - k}\)입니다.</li>
-            <li><span class="tag">설명</span>성공 횟수 \(X\)의 확률분포를 <em>이항분포</em> \(\mathrm{B}(n, p)\)라고 합니다. 한 번의 시행에서 성공하면 1, 실패하면 0인 확률변수의 평균은 \(p\), 분산은 \(p(1 - p)\)이고, \(X\)는 이런 독립인 확률변수 \(n\)개의 합이므로 <b>\(E(X) = np\)</b>, <b>\(V(X) = np(1 - p)\)</b>, \(\sigma(X) = \sqrt{np(1 - p)}\)입니다. 20번 던지면 평균 14번, 표준편차 약 2번이라 대부분 12~16번 사이에 들어갑니다.</li>
-            <li><span class="tag">연결</span>\(n\)이 커지면 이항분포의 막대 모양은 종 모양에 가까워집니다. 다음 절에서는 이 모양을 정규분포 곡선으로 어림합니다(연속성 보정).</li>
-            <li><span class="tag">적용</span>실험을 계속 실행해 막대가 점선(이론)에 다가가고, 실험의 평균과 표준편차가 \(np\), \(\sqrt{np(1 - p)}\)에 가까워지는지 보세요. \(p = 0.5\)일 때와 \(p = 0.9\)일 때 분포의 모양은 어떻게 다른가요? \(n\)을 4배로 하면 표준편차는 몇 배가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>이항분포는 시행이 독립이고 성공 확률이 매번 같을 때만 맞습니다. 실제 선수는 긴장하거나 지치면 성공률이 바뀌고, 앞의 결과가 다음 시도에 영향을 줄 수도 있습니다.</li>
+            <li><span class="tag">질문</span>자유투 성공률이 70 %인 선수가 20번 던지면 평균 14번 넣을 것 같다. 하지만 경기마다 12번, 17번처럼 들쭉날쭉한다. 성공 횟수는 어떤 분포를 따르고, 보통 어느 범위에서 흔들릴까?</li>
+            <li><span class="tag">복원</span>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 \(k\)번 성공할 확률은 \({}_n\mathrm{C}_k p^k (1 - p)^{n - k}\)이다.</li>
+            <li><span class="tag">설명</span>성공 횟수 \(X\)의 확률분포를 <em>이항분포</em> \(\mathrm{B}(n, p)\)라고 한다. 한 번의 시행에서 성공하면 1, 실패하면 0인 확률변수의 평균은 \(p\), 분산은 \(p(1 - p)\)이고, \(X\)는 이런 독립인 확률변수 \(n\)개의 합이므로 \(E(X) = np\), \(V(X) = np(1 - p)\), \(\sigma(X) = \sqrt{np(1 - p)}\)이다. 20번 던지면 평균 14번, 표준편차 약 2번이라 대부분 12~16번 사이에 들어간다.</li>
+            <li><span class="tag">연결</span>\(n\)이 커지면 이항분포의 막대 모양은 종 모양에 가까워진다. 다음 절에서는 이 모양을 정규분포 곡선으로 어림한다(연속성 보정).</li>
+            <li><span class="tag">적용</span>실험을 계속 실행해 막대가 점선(이론)에 다가가고, 실험의 평균과 표준편차가 \(np\), \(\sqrt{np(1 - p)}\)에 가까워지는지 보자. \(p = 0.5\)일 때와 \(p = 0.9\)일 때 분포의 모양은 어떻게 다른가? \(n\)을 4배로 하면 표준편차는 몇 배가 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>이항분포는 시행이 독립이고 성공 확률이 매번 같을 때만 맞다. 실제 선수는 긴장하거나 지치면 성공률이 바뀌고, 앞의 결과가 다음 시도에 영향을 줄 수도 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(X\)가 이항분포 \(\mathrm{B}(n, p)\)를 따르고 \(E(X) = 12\), \(V(X) = 3\)일 때 \(n\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>16<span class="why"><b>맞습니다.</b> \(\frac{V(X)}{E(X)} = 1 - p = \frac{3}{12} = \frac{1}{4}\)이므로 \(p = \frac{3}{4}\)이고, \(n = \frac{12}{3/4} = 16\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48<span class="why"><b>\(p = \frac{1}{4}\)로 보았습니다.</b> \(\frac{V}{E}\)는 \(p\)가 아니라 \(1 - p\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>15<span class="why"><b>평균과 분산을 더했습니다.</b> 두 식을 나누어 \(p\)부터 구해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>36<span class="why"><b>평균과 분산을 곱했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>16<span class="why"><b>맞다.</b> \(\frac{V(X)}{E(X)} = 1 - p = \frac{3}{12} = \frac{1}{4}\)이므로 \(p = \frac{3}{4}\)이고, \(n = \frac{12}{3/4} = 16\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48<span class="why"><b>\(p = \frac{1}{4}\)로 보았다.</b> \(\frac{V}{E}\)는 \(p\)가 아니라 \(1 - p\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>15<span class="why"><b>평균과 분산을 더했다.</b> 두 식을 나누어 \(p\)부터 구해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>36<span class="why"><b>평균과 분산을 곱했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-2.html#text-stat-expectation"><small class="mono">확률과 통계 3.2</small>기댓값과 표준편차</a><a href="../../c/stat/3-3.html#card-stat-binom-shape"><small class="mono">확률과 통계 3.3</small>자유투 10번 중 몇 번 들어갈까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">8문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

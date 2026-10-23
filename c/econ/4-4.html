@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>최적화 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이윤 π = R − C의 최대 조건 π&#x27; = 0, 곧 한계수입 = 한계비용, 총수입 최대와 이윤 최대의 차이, 고정비의 역할, 좌석 제한이 있는 티켓 가격 최적화. MR = MC를 찾는 카드와, 축제 공연 티켓 값을 정하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-econ-profit-max .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem; }
@@ -46,22 +51,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-econ-profit-max"><span class="mono">4.4.1</span>이윤이 최대가 되는 곳: 한계수입 = 한계비용</a></li>
-        <li><a href="#card-econ-ticket-price"><span class="mono">4.4.2</span>공연 티켓 값을 얼마로 정해야 할까</a></li>
+        <li><a href="#text-econ-optimize"><span class="mono">본문</span>최적화</a></li>
+        <li><a href="#card-econ-profit-max"><span class="mono">탐구 1</span>이윤이 최대가 되는 곳: 한계수입 = 한계비용</a></li>
+        <li><a href="#card-econ-ticket-price"><span class="mono">탐구 2</span>공연 티켓 값을 얼마로 정해야 할까</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=econ-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=econ&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=econ-4-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-econ-optimize" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>최적화</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">많이 팔수록 이윤이 클 것 같지만, 많이 팔려면 값을 내려야 하고 만드는 비용도 늘어난다. 너무 적게 만들면 팔 기회를 놓치고, 너무 많이 만들면 싸게 팔아 남는 게 없다. 이윤이 가장 큰 생산량은 어디일까? 그 점을 찾는 규칙을 미분으로 세울 수 있을까?</p>
+          <figure class="q-fig" data-q="econ-profit">
+            <svg viewBox="0 0 520 230" role="img" aria-label="판매 수입, 총비용, 이윤 그래프"></svg>
+            <div class="q-ctl"><label>생산량 \(q\) <input type="range" data-k="q" min="0" max="100" step="2" value="20"><output data-k="q"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 수요 \(p = 100 - q\), 비용 \(C = 500 + 20q\)일 때 수입(파랑), 비용(빨강), 이윤(주황). 이윤은 \(q = 40\)에서 최대이며, 그곳에서 수입 곡선의 접선 기울기(한계수입)와 비용 직선의 기울기(한계비용)가 같다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수의 증가·감소와 극대·극소(미적분Ⅰ), 한계비용과 한계수입(<a href="4-1.html">경제 함수의 미분</a>), 탄력성(<a href="4-3.html">탄력성</a>).</div>
+
+          <h3><span class="no">4.4.1</span>이윤 극대화 조건</h3>
+          <p>이윤은 \(\pi(q) = R(q) - C(q)\)이다. 이윤이 최대가 되는 곳에서는 이윤 그래프의 접선이 수평이므로 \(\pi'(q) = 0\), 곧 \(R'(q) = C'(q)\)이다. 직관적으로도, 하나 더 팔아 얻는 수입(한계수입)이 하나 더 만드는 비용(한계비용)보다 크면 더 만들어야 하고, 작으면 줄여야 한다. 둘이 같아지는 곳에서 멈춘다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.4.1 <span class="nm">이윤 극대화의 조건</span></span>
+            <p>이윤이 최대인 생산량에서 \[MR = MC,\quad \text{곧 } R'(q) = C'(q)\] 이고, 그 좌우에서 \(\pi'(q)\)의 부호가 양에서 음으로 바뀐다.</p>
+          </div>
+          <p>그림 1에서 생산량을 늘려 보자. \(q = 20\)에서는 한계수입 60이 한계비용 20보다 커서 더 만들수록 이윤이 는다. \(q = 40\)에서 한계수입이 \(100 - 80 = 20\)으로 한계비용과 같아지고, 이윤이 1100으로 최대가 된다. 그 뒤로는 하나 더 팔 때 버는 돈이 드는 돈보다 적어 이윤이 준다.<sup class="fn"><a href="#fn-econ-optimize-1">1</a></sup></p>
+
+          <h3><span class="no">4.4.2</span>수입이 최대인 점과 이윤이 최대인 점</h3>
+          <p>판매 수입 \(R(q) = q(100 - q)\)는 \(q = 50\)에서 최대 2500이다. 그러나 이윤은 \(q = 40\)에서 최대이다. 50개를 팔면 수입은 크지만, 마지막 10개는 버는 돈(한계수입 20 미만)보다 드는 돈(한계비용 20)이 더 크다. 매출을 최대로 하는 것과 이윤을 최대로 하는 것은 다른 목표이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="한계수입과 한계비용의 비교에 따른 판단">
+              <g class="s">
+                <text x="30" y="25">비교</text><text x="260" y="25">판단</text>
+                <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+                <text x="30" y="58">MR &gt; MC</text><text x="260" y="58">더 만들면 이윤 증가</text>
+                <text x="30" y="80">MR = MC</text><text x="260" y="80" class="td">이윤 최대</text>
+                <text x="30" y="102">MR &lt; MC</text><text x="260" y="102">줄이면 이윤 증가</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 한계수입과 한계비용을 비교하면 생산을 늘릴지 줄일지 판단할 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.4.2</span>
+            <p>학교 축제 공연 티켓의 수요가 \(q = 600 - 50p\)(\(p\)는 천 원 단위)이고, 공연장 대관료 등 고정비가 50만 원, 관객 한 명당 비용은 2천 원이다. 이윤을 최대로 하는 티켓 값과 그때의 이윤을 구하여라.</p>
+          </div>
+          <p>가격으로 나타내면 수입은 \(R = pq = p(600 - 50p)\)천 원, 비용은 \(C = 500 + 2q = 500 + 2(600 - 50p) = 1700 - 100p\)천 원이다. 이윤은 \(\pi(p) = 600p - 50p^2 - 1700 + 100p = -50p^2 + 700p - 1700\)이다.</p>
+          <p>\(\pi'(p) = -100p + 700 = 0\)에서 \(p = 7\), 곧 티켓 값 7000원이다. 그때 관객은 \(600 - 350 = 250\)명이고, 이윤은 \(-2450 + 4900 - 1700 = 750\)천 원, 곧 75만 원이다. 값을 6000원으로 내리면 관객이 300명으로 늘지만 이윤은 \(-1800 + 4200 - 1700 = 700\)천 원으로 줄어든다.</p>
+          <p>아래 탐구 카드에서 이윤이 가장 큰 생산량과 티켓 가격을 직접 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-econ-optimize-1">\(MR = MC\)를 만족하는 점이 이윤의 극소일 수도 있다. 그래서 그 좌우에서 \(\pi'\)의 부호가 양에서 음으로 바뀌는지, 또는 \(\pi'' &lt; 0\)인지 확인해야 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>이윤 \(\pi = R - C\)가 최대인 생산량에서는 \(\pi' = 0\), 곧 한계수입과 한계비용이 같다. 한계수입이 더 크면 생산을 늘리고, 작으면 줄인다. 수입이 최대인 점과 이윤이 최대인 점은 다르다. 그래서 처음 질문의 이윤이 가장 큰 생산량은 하나 더 팔아 버는 돈과 하나 더 만드는 데 드는 돈이 같아지는 곳이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/4-2.html#card-econ-avg-marginal"><small class="mono">경제 수학 4.2</small>개당 평균 비용이 가장 낮은 생산량은 어디일까?</a><a href="../../c/econ/4-2.html#card-econ-revenue-shape"><small class="mono">경제 수학 4.2</small>이윤 그래프를 직접 그리지 않고 모양을 알 수 있을까?</a><a href="../../c/econ/4-2.html#text-econ-avg-cost"><small class="mono">경제 수학 4.2</small>그래프의 개형과 해석</a></div></nav>
+
       <article class="card" id="card-econ-profit-max">
         <header class="card-head">
-          <span class="no">4.4.1</span><h2>몇 개를 만들어 팔아야 이윤이 가장 클까?</h2><span class="kind">이윤의 최대 · 조작</span>
+          <span class="no">탐구 1</span><h2>몇 개를 만들어 팔아야 이윤이 가장 클까?</h2><span class="kind">이윤의 최대 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">수요 \(P = 100 - 2Q\), 총비용 \(C(Q) = Q^2 + 10Q + 200\)(가상, 단위 만 원)인 회사입니다.</p>
+            <p class="small">수요가 \(P = 100 - 2Q\), 총비용이 \(C(Q) = Q^2 + 10Q + 200\)(가상, 단위 만 원)인 회사이다.</p>
             <div class="ctl-row">
               <div><label class="mono">생산·판매량 Q = <output class="q-out"></output></label><input class="q" type="range" min="1" max="40" step="1" value="8" aria-label="생산 판매량"></div>
               <div><label class="mono">고정비 = <output class="f-out"></output>만 원</label><input class="f" type="range" min="0" max="900" step="50" value="200" aria-label="고정비"></div>
@@ -73,34 +129,34 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>많이 팔수록 수입은 늘지만 값을 내려야 하고, 비용도 늘어납니다. 이윤이 가장 큰 판매량은 어떻게 찾을까요?</li>
-            <li><span class="tag">복원</span>도함수의 부호가 양에서 음으로 바뀌는 점에서 함수는 극대이고, 그 점에서 접선은 수평이라 도함수의 값이 0입니다.</li>
-            <li><span class="tag">설명</span>이윤 \(\pi(Q) = R(Q) - C(Q)\)가 최대인 곳에서 \(\pi'(Q) = R'(Q) - C'(Q) = 0\), 곧 <em>한계수입 = 한계비용</em>입니다. 그 왼쪽에서는 하나 더 팔 때 수입이 비용보다 많이 늘어(\(MR > MC\)) 늘리는 것이 이득이고, 오른쪽에서는 그 반대입니다. 여기서 \(MR = 100 - 4Q\), \(MC = 2Q + 10\)이므로 \(Q = 15\), 가격은 \(P = 70\)입니다. 왼쪽 그림에서 이 점은 총수입과 총비용 곡선의 기울기가 같아 두 곡선 사이가 가장 벌어지는 곳입니다.</li>
-            <li><span class="tag">연결</span>고정비는 \(C'\)에 영향을 주지 않으므로 최적 판매량을 바꾸지 않습니다. 다만 고정비가 너무 크면 최적일 때도 이윤이 음수가 되어, 길게 보면 사업을 접는 편이 낫습니다.</li>
-            <li><span class="tag">적용</span>판매량을 움직여 이윤이 가장 큰 곳을 찾고, 오른쪽 그래프의 교점과 비교하세요. 고정비를 바꾸면 최적 판매량과 이윤은 각각 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>총수입이 가장 큰 판매량(\(Q = 25\))과 이윤이 가장 큰 판매량은 다릅니다. 많이 파는 것이 꼭 좋은 것은 아닙니다.</li>
+            <li><span class="tag">질문</span>많이 팔수록 수입은 늘지만 값을 내려야 하고, 비용도 늘어난다. 이윤이 가장 큰 판매량은 어떻게 찾을까?</li>
+            <li><span class="tag">복원</span>도함수의 부호가 양에서 음으로 바뀌는 점에서 함수는 극대이고, 그 점에서 접선은 수평이라 도함수의 값이 0이다.</li>
+            <li><span class="tag">설명</span>이윤 \(\pi(Q) = R(Q) - C(Q)\)가 최대인 곳에서 \(\pi'(Q) = R'(Q) - C'(Q) = 0\), 곧 <em>한계수입 = 한계비용</em>이다. 그 왼쪽에서는 하나 더 팔 때 수입이 비용보다 많이 늘어(\(MR &gt; MC\)) 늘리는 것이 이득이고, 오른쪽에서는 그 반대이다. 여기서 \(MR = 100 - 4Q\), \(MC = 2Q + 10\)이므로 \(Q = 15\), 가격은 \(P = 70\)이고, 왼쪽 그림에서 이 점은 총수입과 총비용 곡선의 기울기가 같아 두 곡선 사이가 가장 벌어지는 곳이다.</li>
+            <li><span class="tag">연결</span>고정비는 \(C'\)에 영향을 주지 않으므로 최적 판매량을 바꾸지 않는다. 다만 고정비가 너무 크면 최적일 때도 이윤이 음수가 되어, 길게 보면 사업을 접는 편이 낫다.</li>
+            <li><span class="tag">적용</span>판매량을 움직여 이윤이 가장 큰 곳을 찾고, 오른쪽 그래프의 교점과 비교해 보자. 그리고 고정비를 바꾸면 최적 판매량과 이윤이 각각 어떻게 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>총수입이 가장 큰 판매량(\(Q = 25\))과 이윤이 가장 큰 판매량은 다르다. 즉 많이 파는 것이 꼭 좋은 것은 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">수요 \(P = 80 - Q\), 총비용 \(C = 20Q + 100\)일 때 이윤이 최대인 판매량은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>30<span class="why"><b>맞습니다.</b> \(MR = 80 - 2Q\), \(MC = 20\)이므로 \(Q = 30\)(가격 50, 이윤 800)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>40<span class="why"><b>총수입이 최대인 판매량입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>60<span class="why"><b>가격 = 한계비용으로 놓았습니다.</b> 값을 내려야 더 팔리는 시장에서는 MR = MC입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20<span class="why"><b>한계비용 값을 판매량으로 썼습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>30<span class="why"><b>맞다.</b> \(MR = 80 - 2Q\), \(MC = 20\)이므로 \(Q = 30\)(가격 50, 이윤 800)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>40<span class="why"><b>총수입이 최대인 판매량이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>60<span class="why"><b>가격 = 한계비용으로 놓았다.</b> 값을 내려야 더 팔리는 시장에서는 MR = MC이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20<span class="why"><b>한계비용 값을 판매량으로 썼다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/4-2.html#card-econ-avg-marginal"><small class="mono">경제 수학 4.2</small>개당 평균 비용이 가장 낮은 생산량은 어디일까?</a><a href="../../c/econ/4-2.html#card-econ-revenue-shape"><small class="mono">경제 수학 4.2</small>이윤 그래프를 직접 그리지 않고 모양을 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/4-2.html#card-econ-avg-marginal"><small class="mono">경제 수학 4.2</small>개당 평균 비용이 가장 낮은 생산량은 어디일까?</a><a href="../../c/econ/4-2.html#card-econ-revenue-shape"><small class="mono">경제 수학 4.2</small>이윤 그래프를 직접 그리지 않고 모양을 알 수 있을까?</a><a href="../../c/econ/4-2.html#text-econ-avg-cost"><small class="mono">경제 수학 4.2</small>그래프의 개형과 해석</a></div></nav>
 
       <article class="card" id="card-econ-ticket-price">
         <header class="card-head">
-          <span class="no">4.4.2</span><h2>학교 축제 공연 티켓 값을 얼마로 정해야 수익이 가장 클까?</h2><span class="kind">최적화 · 활용</span>
+          <span class="no">탐구 2</span><h2>학교 축제 공연 티켓 값을 얼마로 정해야 수익이 가장 클까?</h2><span class="kind">최적화 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">사전 설문(가상)으로 티켓 값 \(p\)(천 원)일 때 오는 관객 수를 \(N(p) = 1200 - 60p\)명으로 추정했습니다. 관객 1명당 음료·안내 비용이 들고, 강당 좌석은 정해져 있습니다.</p>
+            <p class="small">사전 설문(가상)으로 티켓 값 \(p\)(천 원)일 때 오는 관객 수를 \(N(p) = 1200 - 60p\)명으로 추정했다. 관객 1명당 음료와 안내 비용이 들고, 강당 좌석은 정해져 있다.</p>
             <div class="ctl-row">
               <div><label class="mono">티켓 값 p = <output class="p-out"></output>천 원</label><input class="p" type="range" min="0" max="20" step="0.5" value="5" aria-label="티켓 값"></div>
               <div><label class="mono">관객 1명당 비용 c = <output class="c-out"></output>천 원</label><input class="c" type="range" min="0" max="10" step="0.5" value="2" aria-label="관객 1명당 비용"></div>
@@ -109,42 +165,42 @@
             <canvas aria-label="티켓 값에 따른 수익 곡선, 좌석 제한 구간, 최대점"></canvas>
             <div class="presets"><button class="chip go-best" type="button">미분으로 최적 값 구하기</button></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">설문 결과와 비용은 수업용 가상 값입니다.</p>
+            <p class="fig-note">설문 결과와 비용은 수업용 가상 값이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>티켓을 싸게 팔면 관객은 많지만 한 명당 남는 돈이 적고, 비싸게 팔면 관객이 줄어듭니다. 수익(수입 − 비용)이 가장 큰 티켓 값은 얼마일까요?</li>
-            <li><span class="tag">복원</span>이차함수 \(f(p) = ap^2 + bp + c\) \((a < 0)\)는 \(f'(p) = 0\)인 \(p = -\frac{b}{2a}\)에서 최대입니다.</li>
-            <li><span class="tag">설명</span>관객 수는 \(N = \min(1200 - 60p,\ \text{좌석 수})\)입니다. 좌석이 넉넉하면 수익은 \(\pi(p) = (p - c)(1200 - 60p)\)이고, \(\pi'(p) = 1200 - 120p + 60c = 0\)에서 \(p^* = 10 + \frac{c}{2}\)입니다. 1명당 비용이 오르면 최적 값은 그 절반만큼 오릅니다. 좌석이 모자라면 관객이 좌석 수를 넘지 않게 값을 올려야 하므로, 최적 값은 \(p^*\)와 "좌석이 꽉 차는 값" 중 큰 쪽입니다.</li>
-            <li><span class="tag">연결</span>항공권, 숙박, 공연 업계는 이런 계산을 실시간으로 반복해 가격을 바꿉니다. 4단원 전체(한계, 탄력성, 최적화)가 함께 쓰이는 문제입니다.</li>
-            <li><span class="tag">적용</span>막대로 수익이 가장 큰 값을 찾은 뒤 "미분으로 최적 값 구하기"와 비교하세요. 좌석을 500석으로 줄이면 최적 값과 수익은 어떻게 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>설문으로 추정한 \(N(p)\)는 실제와 다를 수 있습니다. 최적 값 근처에서 수익 곡선이 평평하므로, 추정이 조금 틀려도 수익은 크게 줄지 않습니다. 너무 정밀한 값보다 범위로 판단하는 것이 좋습니다.</li>
+            <li><span class="tag">질문</span>티켓을 싸게 팔면 관객은 많지만 한 명당 남는 돈이 적고, 비싸게 팔면 관객이 줄어든다. 수익(수입 − 비용)이 가장 큰 티켓 값은 얼마일까?</li>
+            <li><span class="tag">복원</span>이차함수 \(f(p) = ap^2 + bp + c\) \((a &lt; 0)\)는 \(f'(p) = 0\)인 \(p = -\frac{b}{2a}\)에서 최대이다.</li>
+            <li><span class="tag">설명</span>관객 수는 \(N = \min(1200 - 60p,\ \text{좌석 수})\)이다. 좌석이 넉넉하면 수익은 \(\pi(p) = (p - c)(1200 - 60p)\)이고, \(\pi'(p) = 1200 - 120p + 60c = 0\)에서 \(p^* = 10 + \frac{c}{2}\)이므로, 1명당 비용이 오르면 최적 값은 그 절반만큼 오른다. 반면 좌석이 모자라면 관객이 좌석 수를 넘지 않게 값을 올려야 하므로, 최적 값은 \(p^*\)와 좌석이 꽉 차는 값 중 큰 쪽이다.</li>
+            <li><span class="tag">연결</span>항공권, 숙박, 공연 업계는 이런 계산을 실시간으로 반복해 가격을 바꾼다. 이 문제에는 4단원 전체(한계, 탄력성, 최적화)가 함께 쓰인다.</li>
+            <li><span class="tag">적용</span>막대로 수익이 가장 큰 값을 찾은 뒤 ‘미분으로 최적 값 구하기’와 비교해 보자. 그리고 좌석을 500석으로 줄이면 최적 값과 수익이 어떻게 바뀌는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>설문으로 추정한 \(N(p)\)는 실제와 다를 수 있다. 그런데 최적 값 근처에서 수익 곡선이 평평하므로 추정이 조금 틀려도 수익은 크게 줄지 않아서, 너무 정밀한 값보다 범위로 판단하는 것이 좋다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">좌석이 넉넉하고 1명당 비용이 4천 원일 때 최적 티켓 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12천 원<span class="why"><b>맞습니다.</b> \(p^* = 10 + \frac{4}{2} = 12\)이고, 관객 480명, 수익 \((12 - 4) \times 480 = 3840\)천 원입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14천 원<span class="why"><b>비용을 그대로 더했습니다.</b> 비용의 절반만큼 오릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10천 원<span class="why"><b>수입이 최대인 값입니다.</b> 비용을 빼면 달라집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20천 원<span class="why"><b>관객이 0명이 되는 값입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12천 원<span class="why"><b>맞다.</b> \(p^* = 10 + \frac{4}{2} = 12\)이고, 관객 480명, 수익 \((12 - 4) \times 480 = 3840\)천 원이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14천 원<span class="why"><b>비용을 그대로 더했다.</b> 비용의 절반만큼 오른다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10천 원<span class="why"><b>수입이 최대인 값이다.</b> 비용을 빼면 달라진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>20천 원<span class="why"><b>관객이 0명이 되는 값이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/4-2.html#card-econ-avg-marginal"><small class="mono">경제 수학 4.2</small>개당 평균 비용이 가장 낮은 생산량은 어디일까?</a><a href="../../c/econ/4-2.html#card-econ-revenue-shape"><small class="mono">경제 수학 4.2</small>이윤 그래프를 직접 그리지 않고 모양을 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/4-2.html#card-econ-avg-marginal"><small class="mono">경제 수학 4.2</small>개당 평균 비용이 가장 낮은 생산량은 어디일까?</a><a href="../../c/econ/4-2.html#card-econ-revenue-shape"><small class="mono">경제 수학 4.2</small>이윤 그래프를 직접 그리지 않고 모양을 알 수 있을까?</a><a href="../../c/econ/4-2.html#text-econ-avg-cost"><small class="mono">경제 수학 4.2</small>그래프의 개형과 해석</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=econ-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=econ&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -152,6 +208,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/econ/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/econ/profit-max.js"></script>
 <script src="../../js/cards/econ/ticket-price.js"></script>

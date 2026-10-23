@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부분적분법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="부분적분법: 곱의 미분법 (uv)′ = u′v + uv′을 거꾸로 쓴 ∫u v′ dx = uv − ∫u′v dx와 정적분 ∫ₐᵇ u v′ dx = [uv]ₐᵇ − ∫ₐᵇ u′v dx. 넓이 두 조각이 직사각형을 채우는 그림으로 공식을 보고, x eˣ, x sin x, x ln x, ln x의 적분에서 u와 dv를 바꾸어 고르며 새 적분이 쉬워지는지 비교하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-parts-area canvas { width: 100%; aspect-ratio: 16 / 12; }
@@ -47,18 +52,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-parts-area"><span class="mono">3.3.1</span>부분적분법의 넓이 그림</a></li>
-        <li><a href="#card-calc2-parts-choice"><span class="mono">3.3.2</span>부분적분에서 u 고르기</a></li>
+        <li><a href="#text-calc2-parts"><span class="mono">본문</span>부분적분법</a></li>
+        <li><a href="#card-calc2-parts-area"><span class="mono">탐구 1</span>부분적분법의 넓이 그림</a></li>
+        <li><a href="#card-calc2-parts-choice"><span class="mono">탐구 2</span>부분적분에서 u 고르기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">40문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">40문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-parts" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부분적분법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\int \ln x\,dx\)나 \(\int xe^x\,dx\)는 치환으로도 풀리지 않는다. 곱으로 된 함수를 적분하는 방법은 없을까? 곱의 미분법을 거꾸로 쓰면 될 것 같다. 그 결과를 그래프로 보면, 곡선 아래 넓이와 곡선 왼쪽 넓이를 합친 것이 직사각형이 된다. 왜 그럴까?</p>
+          <figure class="q-fig" data-q="calc2-parts">
+            <svg viewBox="0 0 520 230" role="img" aria-label="y = ln x 아래의 넓이와 왼쪽의 넓이를 합친 직사각형"></svg>
+            <div class="q-ctl"><label>오른쪽 끝 \(b\) <input type="range" data-k="b" min="1.2" max="5.4" step="0.05" value="3"><output data-k="b"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(y = \ln x\) 아래의 넓이 \(\int_1^b \ln x\,dx\)(초록)와 곡선 왼쪽의 넓이 \(\int_0^{\ln b} e^y\,dy\)(주황)를 합치면 가로 \(b\), 세로 \(\ln b\)인 직사각형이 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>곱의 미분법(미적분Ⅰ), 여러 가지 함수의 적분(<a href="3-1.html">여러 가지 함수의 적분</a>), 치환적분법(<a href="3-2.html">치환적분법</a>).</div>
+
+          <h3><span class="no">3.3.1</span>부분적분법</h3>
+          <p>곱의 미분법 \((fg)' = f'g + fg'\)의 양변을 적분하면 \(fg = \int f'g\,dx + \int fg'\,dx\)이다. 이를 정리하면 곱의 적분 하나를 다른 곱의 적분으로 바꾸는 공식을 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">부분적분법</span></span>
+            <p>\[\int f(x)g'(x)\,dx = f(x)g(x) - \int f'(x)g(x)\,dx\] \[\int_a^b f(x)g'(x)\,dx = \Big[f(x)g(x)\Big]_a^b - \int_a^b f'(x)g(x)\,dx\]</p>
+          </div>
+          <p>그림 1은 이 공식의 넓이 그림이다. \(u = x\), \(v = \ln x\)로 보면 \(\int_1^b v\,du\)가 곡선 아래 넓이, \(\int_0^{\ln b} u\,dv\)가 곡선 왼쪽 넓이이고, 둘의 합이 직사각형 넓이 \(uv\)에서 원점 쪽 작은 직사각형 넓이를 뺀 것과 같다. 여기서는 작은 직사각형의 넓이가 \(1 \times 0 = 0\)이므로 합이 바로 \(b\ln b\)이다. 슬라이더로 \(b\)를 바꾸어도 두 넓이의 합은 늘 직사각형이다.<sup class="fn"><a href="#fn-calc2-parts-1">1</a></sup></p>
+
+          <h3><span class="no">3.3.2</span>어느 쪽을 미분할까</h3>
+          <p>부분적분이 쓸모 있으려면 오른쪽의 \(\int f'g\,dx\)가 처음보다 쉬워야 한다. 미분하면 간단해지는 함수를 \(f\)로, 적분하기 쉬운 함수를 \(g'\)으로 고른다. 대개 로그함수, 다항함수, 삼각함수, 지수함수의 순서로 앞의 것을 \(f\)로 잡으면 잘 풀린다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 100" role="img" aria-label="미분할 쪽을 고르는 순서">
+              <g class="s">
+                <rect x="15" y="30" width="110" height="40" class="ld"/><text x="70" y="55" text-anchor="middle">로그</text>
+                <rect x="140" y="30" width="110" height="40" class="lc"/><text x="195" y="55" text-anchor="middle">다항</text>
+                <rect x="265" y="30" width="110" height="40" class="lb"/><text x="320" y="55" text-anchor="middle">삼각</text>
+                <rect x="390" y="30" width="110" height="40" class="la"/><text x="445" y="55" text-anchor="middle">지수</text>
+                <text x="15" y="92">← 미분할 쪽 (f)</text><text x="500" y="92" text-anchor="end">적분할 쪽 (g′) →</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 왼쪽에 있는 함수일수록 미분하면 간단해지므로 \(f\)로, 오른쪽에 있는 함수일수록 \(g'\)으로 고르면 대체로 잘 풀린다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+            <p>(1) \(\int_0^1 xe^x\,dx\)와 (2) \(\int_1^e \ln x\,dx\)의 값을 구하여라.</p>
+          </div>
+          <p>(1) \(f = x\), \(g' = e^x\)로 놓으면 \(f' = 1\), \(g = e^x\)이다. \(\int_0^1 xe^x\,dx = \Big[xe^x\Big]_0^1 - \int_0^1 e^x\,dx = e - (e - 1) = 1\)이다. 거꾸로 \(f = e^x\), \(g' = x\)로 잡으면 \(\int \dfrac{x^2}{2}e^x\,dx\)가 남아 오히려 복잡해진다.</p>
+          <p>(2) \(\ln x = \ln x \cdot 1\)로 보고 \(f = \ln x\), \(g' = 1\)로 놓으면 \(f' = \dfrac{1}{x}\), \(g = x\)이다. \(\int_1^e \ln x\,dx = \Big[x\ln x\Big]_1^e - \int_1^e 1\,dx = e - (e - 1) = 1\)이다. 그림 1에서 \(b = e\)로 맞추면 초록 넓이가 1이고, 주황 넓이 \(e - 1\)과 합쳐 \(e \times 1 = e\)가 된다.</p>
+          <p>아래 탐구 카드에서 부분적분의 넓이 그림과, 어느 쪽을 미분할지 고르는 요령을 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-parts-1">일반적으로 증가함수 \(y = f(x)\)와 그 역함수에 대하여 \(\int_a^b f(x)\,dx + \int_{f(a)}^{f(b)} f^{-1}(y)\,dy = bf(b) - af(a)\)가 성립한다. 부분적분을 넓이로 본 것이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>곱의 미분법을 적분하면 \(\int fg'dx = fg - \int f'g\,dx\)인 부분적분법을 얻으며, 미분하면 간단해지는 쪽을 \(f\)로 고른다. 그래프로 보면 곡선 아래 넓이와 곡선 왼쪽 넓이의 합이 직사각형 넓이가 되는 관계이다. 그래서 처음 질문의 두 넓이 조각은 \(\int v\,du + \int u\,dv = uv\)이기 때문에 합쳐서 직사각형이 된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-5.html#card-calc2-area-slices"><small class="mono">미적분Ⅱ 3.5</small>세로로 자를까, 가로로 자를까?</a><a href="../../c/calc2/3-5.html#card-calc2-area-cross"><small class="mono">미적분Ⅱ 3.5</small>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</a><a href="../../c/calc2/3-5.html#text-calc2-area"><small class="mono">미적분Ⅱ 3.5</small>넓이</a><a href="../../c/pmath/1-7.html#card-pmath-int-choose"><small class="mono">전문 수학 1.7</small>이 적분은 어떤 방법으로 풀어야 할까?</a></div></nav>
+
       <article class="card" id="card-calc2-parts-area">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>넓이 두 조각을 합치면 왜 직사각형이 될까?</h2><span class="kind">부분적분법 · 조작</span>
+          <span class="no">탐구 1</span><h2>넓이 두 조각을 합치면 왜 직사각형이 될까?</h2><span class="kind">부분적분법 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,33 +135,33 @@
                 <div><dt>두 넓이의 합</dt><dd class="n-s">—</dd></div>
                 <div><dt>\([uv] = u(b)v(b) - u(a)v(a)\)</dt><dd class="n-r">—</dd></div>
               </dl>
-              <p class="fig-note">세 보기 모두 아래끝에서 \(u = 0\)이라 빼는 직사각형 \(u(a)v(a)\)는 넓이가 0입니다. 점선 직사각형이 \(u(b)v(b)\)입니다.</p>
+              <p class="fig-note">세 보기 모두 아래끝에서 \(u = 0\)이라 빼는 직사각형 \(u(a)v(a)\)는 넓이가 0이다. 점선 직사각형이 \(u(b)v(b)\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\int_1^b \ln x\,dx\)는 앞 절의 방법으로는 구하기 어렵습니다. 넓이를 다른 방향에서 보면 쉬운 넓이로 바꿀 수 있을까요?</li>
-            <li><span class="tag">복원</span>곱의 미분법은 \(\{u(x)v(x)\}' = u'(x)v(x) + u(x)v'(x)\)입니다. 또 \(\int_a^b F'(x)\,dx = F(b) - F(a)\)입니다.</li>
-            <li><span class="tag">설명</span>곱의 미분법의 양변을 \(a\)부터 \(b\)까지 적분하면 \([uv]_a^b = \int_a^b u'v\,dx + \int_a^b uv'\,dx\)입니다. 정리하면 <b>\(\int_a^b u(x)v'(x)\,dx = [u(x)v(x)]_a^b - \int_a^b u'(x)v(x)\,dx\)</b>이고, 이것이 <em>부분적분법</em>입니다. 줄여서 \(\int u\,dv = uv - \int v\,du\)로 씁니다. 그림에서 초록은 곡선 아래, 파랑은 곡선 왼쪽 넓이이고 둘을 합치면 직사각형 \(u(b)v(b)\)가 됩니다(곡선이 오른쪽 위로 올라가는 경우). 예를 들어 \(\ln x\)는 \(u = \ln x\), \(v = x\)로 보면 \(\int v\,du = \int x \cdot (\frac{1}{x})\,dx = b - 1\)이 쉬워져서 \(\int_1^b \ln x\,dx = b \ln b - b + 1\)입니다.</li>
-            <li><span class="tag">연결</span>부정적분으로 쓰면 \(\int \ln x\,dx = x \ln x - x + C\)입니다. 치환적분법이 합성함수의 미분법을 뒤집은 것이라면, 부분적분법은 곱의 미분법을 뒤집은 것입니다. 첫째 보기의 곡선 \(u = \ln v\)는 \(v = e^u\)와 같으므로, 파랑 넓이는 지수함수의 넓이로도 읽을 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(b\)를 움직이며 두 넓이의 합이 늘 \([uv]\)와 같은지 확인하세요. 첫째 보기에서 \(b = e\)(약 2.72)이면 초록 넓이는 얼마인가요? 둘째 보기에서 \(b = 1\)이면 \(\int_0^1 x e^x\,dx\)는 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\int u\,dv\)를 \(\int u\,dx \times \int v'\,dx\)처럼 따로 적분해 곱하는 실수가 있습니다. 곱의 적분은 적분의 곱이 아닙니다. 또 \([uv]\)를 계산할 때 아래끝의 값 \(u(a)v(a)\)를 빼는 것을 잊기 쉽습니다. 여기 보기들은 그 값이 0이지만 일반적으로는 0이 아닙니다.</li>
+            <li><span class="tag">질문</span>\(\int_1^b \ln x\,dx\)는 앞 절의 방법으로는 구하기 어렵다. 넓이를 다른 방향에서 보면 쉬운 넓이로 바꿀 수 있을까?</li>
+            <li><span class="tag">복원</span>곱의 미분법은 \(\{u(x)v(x)\}' = u'(x)v(x) + u(x)v'(x)\)이다. 또 \(\int_a^b F'(x)\,dx = F(b) - F(a)\)이다.</li>
+            <li><span class="tag">설명</span>곱의 미분법의 양변을 \(a\)부터 \(b\)까지 적분하면 \([uv]_a^b = \int_a^b u'v\,dx + \int_a^b uv'\,dx\)이고, 정리하면 \(\int_a^b u(x)v'(x)\,dx = [u(x)v(x)]_a^b - \int_a^b u'(x)v(x)\,dx\)인데, 이것이 <em>부분적분법</em>이며 줄여서 \(\int u\,dv = uv - \int v\,du\)로 쓴다. 그림에서 초록은 곡선 아래, 파랑은 곡선 왼쪽 넓이이고, 곡선이 오른쪽 위로 올라가는 경우 둘을 합치면 직사각형 \(u(b)v(b)\)가 된다. 예를 들어 \(\ln x\)는 \(u = \ln x\), \(v = x\)로 보면 \(\int v\,du = \int x \cdot (\frac{1}{x})\,dx = b - 1\)이 쉬워져서 \(\int_1^b \ln x\,dx = b \ln b - b + 1\)이다.</li>
+            <li><span class="tag">연결</span>부정적분으로 쓰면 \(\int \ln x\,dx = x \ln x - x + C\)이다. 치환적분법이 합성함수의 미분법을 뒤집은 것이라면, 부분적분법은 곱의 미분법을 뒤집은 것이다. 또 첫째 보기의 곡선 \(u = \ln v\)는 \(v = e^u\)와 같으므로, 파랑 넓이는 지수함수의 넓이로도 읽을 수 있다.</li>
+            <li><span class="tag">적용</span>\(b\)를 움직이며 두 넓이의 합이 늘 \([uv]\)와 같은지 확인해 보자. 그리고 첫째 보기에서 \(b = e\)(약 2.72)이면 초록 넓이가 얼마인지, 둘째 보기에서 \(b = 1\)이면 \(\int_0^1 x e^x\,dx\)가 얼마인지 구해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\int u\,dv\)를 \(\int u\,dx \times \int v'\,dx\)처럼 따로 적분해 곱하는 실수가 있는데, 곱의 적분은 적분의 곱이 아니다. 또 \([uv]\)를 계산할 때 아래끝의 값 \(u(a)v(a)\)를 빼는 것을 잊기 쉽다. 여기 보기들은 그 값이 0이지만 일반적으로는 0이 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_1^e x \ln x\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 + 1}{4}\)<span class="why"><b>맞습니다.</b> \(u = \ln x\), \(v = \frac{x^2}{2}\)로 두면 \([\frac{x^2}{2} \cdot \ln x]_1^e - \int_1^e \frac{x}{2}\,dx = \frac{e^2}{2} - \frac{e^2 - 1}{4} = \frac{e^2 + 1}{4}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{e^2}{2}\)<span class="why"><b>새 적분을 빼지 않았습니다.</b> \([uv]\)만 계산한 값입니다. 공식에는 \(-\int v\,du\)가 남습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3e^2 - 1}{4}\)<span class="why"><b>새 적분을 더했습니다.</b> 곱의 미분법에서는 두 항이 더해지지만, 한 항을 이항하면 부호가 바뀝니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 + 1}{4}\)<span class="why"><b>맞다.</b> \(u = \ln x\), \(v = \frac{x^2}{2}\)로 두면 \([\frac{x^2}{2} \cdot \ln x]_1^e - \int_1^e \frac{x}{2}\,dx = \frac{e^2}{2} - \frac{e^2 - 1}{4} = \frac{e^2 + 1}{4}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{e^2}{2}\)<span class="why"><b>새 적분을 빼지 않았다.</b> \([uv]\)만 계산한 값이다. 공식에는 \(-\int v\,du\)가 남는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3e^2 - 1}{4}\)<span class="why"><b>새 적분을 더했다.</b> 곱의 미분법에서는 두 항이 더해지지만, 한 항을 이항하면 부호가 바뀐다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-5.html#card-calc2-area-slices"><small class="mono">미적분Ⅱ 3.5</small>세로로 자를까, 가로로 자를까?</a><a href="../../c/calc2/3-5.html#card-calc2-area-cross"><small class="mono">미적분Ⅱ 3.5</small>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</a><a href="../../c/pmath/1-7.html#card-pmath-int-choose"><small class="mono">전문 수학 1.7</small>이 적분은 어떤 방법으로 풀어야 할까?</a><a href="../../c/pmath/1-7.html#card-pmath-partial-frac"><small class="mono">전문 수학 1.7</small>복잡한 분수식을 간단한 분수 두 개로 쪼갤 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-5.html#card-calc2-area-slices"><small class="mono">미적분Ⅱ 3.5</small>세로로 자를까, 가로로 자를까?</a><a href="../../c/calc2/3-5.html#card-calc2-area-cross"><small class="mono">미적분Ⅱ 3.5</small>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</a><a href="../../c/calc2/3-5.html#text-calc2-area"><small class="mono">미적분Ⅱ 3.5</small>넓이</a><a href="../../c/pmath/1-7.html#card-pmath-int-choose"><small class="mono">전문 수학 1.7</small>이 적분은 어떤 방법으로 풀어야 할까?</a></div></nav>
 
       <article class="card" id="card-calc2-parts-choice">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</h2><span class="kind">부분적분법 · 비교</span>
+          <span class="no">탐구 2</span><h2>어느 쪽을 미분하고 어느 쪽을 적분해야 할까?</h2><span class="kind">부분적분법 · 비교</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,43 +185,44 @@
                 <div><dt>새 적분 \(\int u'v\,dx\)</dt><dd class="n-n">—</dd></div>
                 <div><dt>\([uv]\) − 새 적분</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">\(A\)와 \(B\) 모두 공식은 성립합니다. 새 적분의 피적분함수(파랑)가 원래보다 쉬운 함수인지 보세요.</p>
+              <p class="fig-note">\(A\)와 \(B\) 모두 공식은 성립한다. 새 적분의 피적분함수(파랑)가 원래보다 쉬운 함수인지 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\int x e^x\,dx\)에서 \(u = x\), \(v' = e^x\)로 고를 수도 있고 \(u = e^x\), \(v' = x\)로 고를 수도 있습니다. 두 방법은 무엇이 다를까요?</li>
-            <li><span class="tag">복원</span>부분적분법은 \(\int u(x)v'(x)\,dx = u(x)v(x) - \int u'(x)v(x)\,dx\)입니다. \(u\)는 미분하고 \(v'\)은 적분해서 쓰입니다.</li>
-            <li><span class="tag">설명</span>공식은 어떻게 골라도 성립합니다. 다만 목적은 남는 적분 \(\int u'v\,dx\)를 원래보다 쉽게 만드는 것입니다. 그래서 <b>\(u\)로는 미분하면 간단해지는 함수</b>(다항식, 로그함수)를, <b>\(v'\)로는 적분해도 복잡해지지 않는 함수</b>(지수함수, 삼각함수)를 고릅니다. \(x e^x\)에서 \(u = x\)로 고르면 새 적분이 \(\int e^x\,dx\)가 되어 \(\int x e^x\,dx = (x - 1)e^x + C\)입니다. 반대로 고르면 새 적분에 \(x^2\)이 생겨 더 어려워집니다. 로그함수는 적분하기 어렵고 미분하면 \(\frac{1}{x}\)로 간단해지므로 거의 늘 \(u\)로 둡니다.</li>
-            <li><span class="tag">연결</span>\(x^2e^x\)처럼 다항식의 차수가 높으면 부분적분을 차수만큼 되풀이합니다. \(\int e^x \sin x\,dx\)는 두 번 부분적분하면 원래 적분이 다시 나타나므로, 그것을 \(I\)로 놓고 방정식 \(2I = e^x(\sin x - \cos x)\)를 풀어 \(I\)를 구합니다.</li>
-            <li><span class="tag">적용</span>보기마다 \(A\)와 \(B\)를 바꾸어 보세요. 넷째 값이 늘 첫째 값과 같은지 확인하고, 파랑 곡선이 어느 쪽에서 더 단순한지 비교하세요. \(x \sin x\)에서 \(b\)를 \(\pi\)(약 3.14)로 놓으면 원래 적분은 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(u\)는 늘 앞에 쓴 인수"처럼 순서로 고르면 안 됩니다. \(x \ln x\)에서 \(u = x\)로 고르면 \(v\)를 구하려고 \(\int \ln x\,dx\)부터 풀어야 하고, 새 적분에 \(\ln x\)가 그대로 남습니다. 미분과 적분 중 어느 쪽이 함수를 더 간단하게 만드는지로 고릅니다.</li>
+            <li><span class="tag">질문</span>\(\int x e^x\,dx\)에서 \(u = x\), \(v' = e^x\)로 고를 수도 있고 \(u = e^x\), \(v' = x\)로 고를 수도 있다. 두 방법은 무엇이 다를까?</li>
+            <li><span class="tag">복원</span>부분적분법은 \(\int u(x)v'(x)\,dx = u(x)v(x) - \int u'(x)v(x)\,dx\)이며, \(u\)는 미분하고 \(v'\)은 적분해서 쓰인다.</li>
+            <li><span class="tag">설명</span>공식은 어떻게 골라도 성립하지만, 목적은 남는 적분 \(\int u'v\,dx\)를 원래보다 쉽게 만드는 것이다. 그래서 \(u\)로는 다항식이나 로그함수처럼 미분하면 간단해지는 함수를, \(v'\)로는 지수함수나 삼각함수처럼 적분해도 복잡해지지 않는 함수를 고른다. \(x e^x\)에서 \(u = x\)로 고르면 새 적분이 \(\int e^x\,dx\)가 되어 \(\int x e^x\,dx = (x - 1)e^x + C\)이지만, 반대로 고르면 새 적분에 \(x^2\)이 생겨 더 어려워진다. 로그함수는 적분하기 어렵고 미분하면 \(\frac{1}{x}\)로 간단해지므로 거의 늘 \(u\)로 둔다.</li>
+            <li><span class="tag">연결</span>\(x^2e^x\)처럼 다항식의 차수가 높으면 부분적분을 차수만큼 되풀이한다. 또 \(\int e^x \sin x\,dx\)는 두 번 부분적분하면 원래 적분이 다시 나타나므로, 그것을 \(I\)로 놓고 방정식 \(2I = e^x(\sin x - \cos x)\)를 풀어 \(I\)를 구한다.</li>
+            <li><span class="tag">적용</span>보기마다 \(A\)와 \(B\)를 바꾸어 보며 넷째 값이 늘 첫째 값과 같은지 확인하고, 파랑 곡선이 어느 쪽에서 더 단순한지 비교해 보자. 그리고 \(x \sin x\)에서 \(b\)를 \(\pi\)(약 3.14)로 놓으면 원래 적분이 얼마인지 구해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘\(u\)는 늘 앞에 쓴 인수’처럼 순서로 고르면 안 된다. \(x \ln x\)에서 \(u = x\)로 고르면 \(v\)를 구하려고 \(\int \ln x\,dx\)부터 풀어야 하고, 새 적분에 \(\ln x\)가 그대로 남기 때문이다. 그래서 미분과 적분 중 어느 쪽이 함수를 더 간단하게 만드는지로 고른다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_0^\pi x \sin x\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\pi\)<span class="why"><b>맞습니다.</b> \(u = x\), \(v = -\cos x\)로 두면 \([-x \cos x]_0^\pi + \int_0^\pi \cos x\,dx = \pi + 0 = \pi\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\pi\)<span class="why"><b>\(v\)의 부호를 놓쳤습니다.</b> \(\sin x\)를 적분하면 \(-\cos x\)입니다. \(v = \cos x\)로 쓰면 부호가 뒤집힙니다. \(0 &lt; x &lt; \pi\)에서 \(x \sin x &gt; 0\)이므로 값은 양수여야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>\(x\)를 빼고 \(\sin x\)만 적분했습니다.</b> \(\int_0^\pi \sin x\,dx = 2\)입니다. 곱의 적분은 인수 하나만 적분해서 구할 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>끝에서의 함숫값을 보았습니다.</b> 피적분함수가 \(x = 0\), \(\pi\)에서 0이라고 넓이가 0인 것은 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\pi\)<span class="why"><b>맞다.</b> \(u = x\), \(v = -\cos x\)로 두면 \([-x \cos x]_0^\pi + \int_0^\pi \cos x\,dx = \pi + 0 = \pi\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\pi\)<span class="why"><b>\(v\)의 부호를 놓쳤다.</b> \(\sin x\)를 적분하면 \(-\cos x\)이다. \(v = \cos x\)로 쓰면 부호가 뒤집힌다. \(0 &lt; x &lt; \pi\)에서 \(x \sin x &gt; 0\)이므로 값은 양수여야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>\(x\)를 빼고 \(\sin x\)만 적분했다.</b> \(\int_0^\pi \sin x\,dx = 2\)이다. 곱의 적분은 인수 하나만 적분해서 구할 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>끝에서의 함숫값을 보았다.</b> 피적분함수가 \(x = 0\), \(\pi\)에서 0이라고 넓이가 0인 것은 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-5.html#card-calc2-area-slices"><small class="mono">미적분Ⅱ 3.5</small>세로로 자를까, 가로로 자를까?</a><a href="../../c/calc2/3-5.html#card-calc2-area-cross"><small class="mono">미적분Ⅱ 3.5</small>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</a><a href="../../c/pmath/1-7.html#card-pmath-int-choose"><small class="mono">전문 수학 1.7</small>이 적분은 어떤 방법으로 풀어야 할까?</a><a href="../../c/pmath/1-7.html#card-pmath-partial-frac"><small class="mono">전문 수학 1.7</small>복잡한 분수식을 간단한 분수 두 개로 쪼갤 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-5.html#card-calc2-area-slices"><small class="mono">미적분Ⅱ 3.5</small>세로로 자를까, 가로로 자를까?</a><a href="../../c/calc2/3-5.html#card-calc2-area-cross"><small class="mono">미적분Ⅱ 3.5</small>두 곡선이 엇갈리면 넓이는 어떻게 구할까?</a><a href="../../c/calc2/3-5.html#text-calc2-area"><small class="mono">미적분Ⅱ 3.5</small>넓이</a><a href="../../c/pmath/1-7.html#card-pmath-int-choose"><small class="mono">전문 수학 1.7</small>이 적분은 어떤 방법으로 풀어야 할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">40문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">40문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +230,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/parts-area.js"></script>

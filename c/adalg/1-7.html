@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>벡터의 정사영 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="한 벡터를 다른 벡터(또는 평면)에 정사영한 벡터와 수직 성분. 그림자로 보는 정사영 카드와, 정사영으로 흩어진 점에 가장 가까운 직선을 찾는 최소제곱 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-proj-shadow canvas { aspect-ratio: 4 / 3; max-width: 520px; margin: 0 auto; display: block; }
@@ -45,18 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-proj-shadow"><span class="mono">1.7.1</span>썰매를 끄는 힘의 정사영</a></li>
-        <li><a href="#card-adalg-least-squares"><span class="mono">1.7.2</span>오차 제곱의 합을 가장 작게</a></li>
+        <li><a href="#text-adalg-projection"><span class="mono">본문</span>벡터의 정사영</a></li>
+        <li><a href="#card-adalg-proj-shadow"><span class="mono">탐구 1</span>썰매를 끄는 힘의 정사영</a></li>
+        <li><a href="#card-adalg-least-squares"><span class="mono">탐구 2</span>오차 제곱의 합을 가장 작게</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-1-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=1-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-1-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-projection" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>벡터의 정사영</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공부한 시간 \(x\)(시간)과 점수의 향상 \(y\)(점)를 세 학생에게서 쟀더니 \((0, 1)\), \((1, 3)\), \((2, 4)\)였다. 세 점은 한 직선 위에 있지 않아서 \(y = c + mx\)가 세 점을 모두 지나게 할 수는 없다. 그래서 세 점과의 오차의 제곱의 합이 가장 작은 직선을 고르기로 했다. 그 직선은 \(y = 1.17 + 1.5x\)라고 하는데, 이 직선은 어떻게 구했을까? 벡터의 정사영이 이 문제와 무슨 관계가 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="세 점과 최소제곱 직선">
+              <line x1="60" y1="170" x2="360" y2="170" class="ax"/><line x1="80" y1="20" x2="80" y2="185" class="ax"/>
+              <line x1="80" y1="135" x2="330" y2="22.5" class="d"/>
+              <circle cx="80" cy="140" r="5" class="fa"/><circle cx="180" cy="80" r="5" class="fa"/><circle cx="280" cy="50" r="5" class="fa"/>
+              <line x1="80" y1="140" x2="80" y2="135" class="b"/><line x1="180" y1="80" x2="180" y2="90" class="b"/><line x1="280" y1="50" x2="280" y2="45" class="b"/>
+              <g class="s"><text x="80" y="186" text-anchor="middle">0</text><text x="180" y="186" text-anchor="middle">1</text><text x="280" y="186" text-anchor="middle">2</text><text x="72" y="144" text-anchor="end">1</text><text x="72" y="84" text-anchor="end">3</text><text x="72" y="54" text-anchor="end">4</text></g>
+              <text x="370" y="60" class="s td">y = 7/6 + 1.5x</text>
+              <text x="370" y="90" class="s tb">세로 선분은 오차</text>
+              <text x="370" y="110" class="s tb">−1/6, 1/3, −1/6</text>
+            </svg>
+            <figcaption>그림 1. 최소제곱 직선은 세 점을 모두 지나지 않지만, 세로 오차의 제곱의 합을 가장 작게 한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>정사영, 벡터의 내적과 수직 조건, \(n\)차원 벡터의 내적(<a href="1-6.html">n차원 벡터의 내적</a>).</div>
+
+          <h3><span class="no">1.7.1</span>가장 가까운 점은 수선의 발</h3>
+          <p>벡터 \(\vec b\)를 벡터 \(\vec a\) 방향의 직선 위의 점 \(t\vec a\)로 가장 가깝게 나타내려면, \(\vec b - t\vec a\)의 길이가 가장 작은 \(t\)를 찾는다. 그 점은 \(\vec b\)의 끝에서 직선에 내린 수선의 발이므로, 오차 \(\vec b - t\vec a\)가 \(\vec a\)와 수직이어야 한다. 내적으로 쓰면 \(\vec a\cdot(\vec b - t\vec a) = 0\)이고, 여기서 \(t = \dfrac{\vec a\cdot\vec b}{\vec a\cdot\vec a}\)이다. 이 \(t\vec a\)가 \(\vec b\)의 \(\vec a\) 위로의 정사영이다. 이 생각은 차원과 상관없이 성립하며, 직선 대신 평면이나 더 높은 차원의 부분공간 위로도 정사영할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.7.1 <span class="nm">정사영과 최소제곱</span></span>
+            <p>\(\vec b\)의 \(\vec a\) 위로의 정사영은 \(\mathrm{proj}_{\vec a}\vec b = \dfrac{\vec a\cdot\vec b}{\vec a\cdot\vec a}\vec a\)이다. \(\vec b\)를 벡터 \(\vec a_1, \vec a_2\)가 생성하는 부분공간 위로 정사영한 \(c\vec a_1 + m\vec a_2\)는 오차 \(\vec b - c\vec a_1 - m\vec a_2\)가 \(\vec a_1\)과 \(\vec a_2\)에 모두 수직이 되도록 정하며, 이것이 오차의 크기를 가장 작게 한다.</p>
+          </div>
+          <p>세 점을 지나는 직선 \(y = c + mx\)를 찾는 문제를 벡터로 쓰면, \(\vec 1 = (1, 1, 1)\), \(\vec x = (0, 1, 2)\), \(\vec y = (1, 3, 4)\)에 대해 \(c\vec 1 + m\vec x = \vec y\)를 푸는 일이다. 해가 없다는 것은 \(\vec y\)가 \(\vec 1\)과 \(\vec x\)가 생성하는 평면 밖에 있다는 뜻이다. 그래서 \(\vec y\)를 그 평면 위로 정사영한 벡터가 \(\vec y\)에 가장 가깝고, 그 계수가 오차의 제곱의 합을 가장 작게 하는 \(c\), \(m\)이다.<sup class="fn"><a href="#fn-adalg-projection-1">1</a></sup></p>
+
+          <h3><span class="no">1.7.2</span>수직 조건이 만드는 방정식</h3>
+          <p>오차 벡터 \(\vec e = \vec y - c\vec 1 - m\vec x\)가 \(\vec 1\)과 \(\vec x\)에 모두 수직이라는 조건을 내적으로 쓰면 \(\vec 1\cdot\vec e = 0\), \(\vec x\cdot\vec e = 0\)의 두 방정식이 된다. 첫째 조건은 오차의 합이 0이라는 뜻이어서, 최소제곱 직선은 점들의 평균점을 지난다. 둘째 조건은 오차에 \(x\)를 곱한 합이 0이라는 뜻이다. 두 방정식을 정규방정식이라 하며, 미지수 \(c\), \(m\)에 대한 연립일차방정식이어서 쉽게 풀린다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="정규방정식의 계산">
+              <g class="s">
+                <text x="20" y="22">조건</text><text x="180" y="22">방정식</text><text x="400" y="22">값</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1 · e = 0</text><text x="180" y="52">3c + 3m = 8</text><text x="400" y="52">Σy = 8</text>
+                <text x="20" y="74">x · e = 0</text><text x="180" y="74">3c + 5m = 11</text><text x="400" y="74">Σxy = 11</text>
+                <text x="20" y="96">풀이</text><text x="180" y="96" class="td">m = 3/2, c = 7/6</text><text x="400" y="96"></text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 오차가 두 벡터에 수직이라는 조건이 두 개의 일차방정식이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.7.2</span>
+            <p>처음 질문의 세 점에 대해 정규방정식을 세워 최소제곱 직선을 구하여라. 오차 벡터가 \(\vec 1\)과 \(\vec x\)에 수직임을 확인하고, 오차의 제곱의 합을 구하여라.</p>
+          </div>
+          <p>\(\vec 1\cdot\vec 1 = 3\), \(\vec 1\cdot\vec x = 3\), \(\vec x\cdot\vec x = 5\), \(\vec 1\cdot\vec y = 8\), \(\vec x\cdot\vec y = 11\)이므로 정규방정식은 \(3c + 3m = 8\), \(3c + 5m = 11\)이다. 빼면 \(2m = 3\)이므로 \(m = 1.5\), \(c = 7/6 \approx 1.17\)이다. 직선은 \(y = 7/6 + 1.5x\)이다.</p>
+          <p>직선 위의 값은 \(7/6\), \(8/3\), \(25/6\)이므로 오차는 \(\vec e = (1 - 7/6,\ 3 - 8/3,\ 4 - 25/6) = (-1/6, 1/3, -1/6)\)이다. \(\vec 1\cdot\vec e = -1/6 + 1/3 - 1/6 = 0\), \(\vec x\cdot\vec e = 0 + 1/3 - 1/3 = 0\)이어서 둘 다 수직이다. 오차의 제곱의 합은 \(1/36 + 1/9 + 1/36 = 1/6\)이다. 즉 해가 없는 연립방정식은 목표 벡터를 만들 수 있는 부분공간 위로 정사영해 가장 가까운 답을 얻으며, 오차가 그 부분공간에 수직이라는 조건이 최소제곱 직선의 방정식을 준다.</p>
+          <p>아래 탐구 카드에서 비탈에서 썰매를 끄는 힘을 정사영으로 나누어 보고, 여러 점에 가장 잘 맞는 직선을 최소제곱으로 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-projection-1">최소제곱법은 1805년 프랑스의 르장드르가 발표했고, 가우스는 1801년 소행성 세레스의 궤도를 이 방법으로 계산해 태양 뒤로 사라졌던 세레스가 다시 나타날 위치를 맞혔다. 오늘날 자료에 직선이나 곡선을 맞추는 거의 모든 계산이 이 방법을 쓴다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>벡터 \(\vec b\)의 \(\vec a\) 위로의 정사영은 \(\dfrac{\vec a\cdot\vec b}{\vec a\cdot\vec a}\vec a\)로, 오차가 \(\vec a\)에 수직이 되는 가장 가까운 점이며, 이 생각은 어떤 차원의 부분공간 위로도 넓혀진다. 해가 없는 연립방정식은 목표 벡터를 부분공간 위로 정사영해 오차의 제곱의 합이 가장 작은 답을 얻는다. 처음 질문의 세 점에 대한 최소제곱 직선은 오차가 두 벡터에 수직이라는 정규방정식에서 \(y = 7/6 + 1.5x\)로 정해진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a><a href="../../c/adalg/1-6.html#text-adalg-ndot"><small class="mono">고급 대수 1.6</small>n차원 벡터의 내적</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-8.html#card-adalg-gram-schmidt"><small class="mono">고급 대수 1.8</small>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</a><a href="../../c/adalg/1-8.html#card-adalg-ortho-coords"><small class="mono">고급 대수 1.8</small>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</a><a href="../../c/adalg/1-8.html#text-adalg-orthonormal"><small class="mono">고급 대수 1.8</small>정규직교기저</a></div></nav>
+
       <article class="card" id="card-adalg-proj-shadow">
         <header class="card-head">
-          <span class="no">1.7.1</span><h2>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</h2><span class="kind">정사영 · 활용</span>
+          <span class="no">탐구 1</span><h2>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</h2><span class="kind">정사영 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -68,34 +131,34 @@
                 <div><dt>비탈 방향 성분 \(\vec{F}\cdot\vec{u}\)</dt><dd class="n-p">—</dd></div>
                 <div><dt>10 m 끌 때 한 일</dt><dd class="n-w">—</dd></div>
               </dl>
-              <p class="fig-note">눈금 한 칸은 10 N입니다. 초록: 비탈 방향 정사영, 주황 점선: 비탈에 수직인 성분. 비탈에 수직으로 비추는 빛이 만든 \(\vec{F}\)의 그림자가 정사영입니다.</p>
+              <p class="fig-note">눈금 한 칸은 10 N이다. 초록은 비탈 방향 정사영, 주황 점선은 비탈에 수직인 성분이다. 비탈에 수직으로 비추는 빛이 만든 \(\vec{F}\)의 그림자가 정사영이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>썰매를 줄로 비스듬히 끌면 힘의 일부는 썰매를 앞으로 보내고, 나머지는 썰매를 들어 올리려고만 합니다. 힘을 두 부분으로 정확히 나누려면 어떻게 할까요?</li>
-            <li><span class="tag">복원</span>물리에서 일은 \(W = \vec{F}\cdot\vec{s}\)입니다. 힘과 이동 방향이 이루는 각이 \(\theta\)이면 \(W = |\vec{F}||\vec{s}|\cos\theta\)입니다.</li>
-            <li><span class="tag">설명</span>벡터 \(\vec{a}\)의 \(\vec{u}\) 방향 <em>정사영</em>은 \(\mathrm{proj}_{\vec{u}}\vec{a} = \dfrac{\vec{a}\cdot\vec{u}}{\vec{u}\cdot\vec{u}}\vec{u}\)입니다. 남은 부분 \(\vec{a} - \mathrm{proj}_{\vec{u}}\vec{a}\)는 \(\vec{u}\)와 수직이어서, \(\vec{a}\)가 "\(\vec{u}\)와 평행한 부분 + 수직인 부분"으로 한 가지로 나뉩니다. \(\vec{u}\)가 단위벡터이면 정사영의 길이는 \(\vec{a}\cdot\vec{u}\)입니다.</li>
-            <li><span class="tag">연결</span>평면이나 부분공간 위로의 정사영도 같은 생각입니다. 다음 카드의 최소제곱법은 자료 벡터를 부분공간 위로 정사영해 가장 가까운 점을 찾습니다.</li>
-            <li><span class="tag">적용</span>힘의 크기를 40 N 근처로 유지하면서 방향을 바꿔 보세요. 한 일이 가장 큰 방향은 어디인가요? 비탈 각을 바꾸면 같은 힘의 정사영이 어떻게 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>수직 성분은 일을 하지 않지만 쓸모가 없는 것은 아닙니다. 썰매를 살짝 들어 바닥을 누르는 힘을 줄이면 마찰이 줄어듭니다. 그래서 실제로 끌 때는 약간 위로 당기는 편이 유리할 수 있습니다. 이 그림은 마찰을 넣지 않은 모형입니다.</li>
+            <li><span class="tag">질문</span>썰매를 줄로 비스듬히 끌면 힘의 일부는 썰매를 앞으로 보내고, 나머지는 썰매를 들어 올리려고만 한다. 힘을 두 부분으로 정확히 나누려면 어떻게 할까?</li>
+            <li><span class="tag">복원</span>물리에서 일은 \(W = \vec{F}\cdot\vec{s}\)이다. 힘과 이동 방향이 이루는 각이 \(\theta\)이면 \(W = |\vec{F}||\vec{s}|\cos\theta\)이다.</li>
+            <li><span class="tag">설명</span>벡터 \(\vec{a}\)의 \(\vec{u}\) 방향 <em>정사영</em>은 \(\mathrm{proj}_{\vec{u}}\vec{a} = \dfrac{\vec{a}\cdot\vec{u}}{\vec{u}\cdot\vec{u}}\vec{u}\)이다. 남은 부분 \(\vec{a} - \mathrm{proj}_{\vec{u}}\vec{a}\)는 \(\vec{u}\)와 수직이어서, \(\vec{a}\)가 "\(\vec{u}\)와 평행한 부분 + 수직인 부분"으로 한 가지로 나뉜다. \(\vec{u}\)가 단위벡터이면 정사영의 길이는 \(\vec{a}\cdot\vec{u}\)이다.</li>
+            <li><span class="tag">연결</span>평면이나 부분공간 위로의 정사영도 같은 생각이다. 다음 카드의 최소제곱법은 자료 벡터를 부분공간 위로 정사영해 가장 가까운 점을 찾는다.</li>
+            <li><span class="tag">적용</span>힘의 크기를 40 N 근처로 유지하면서 방향을 바꿔 보자. 한 일이 가장 큰 방향은 어디인가? 비탈 각을 바꾸면 같은 힘의 정사영이 어떻게 달라지는가?</li>
+            <li class="warn"><span class="tag">판단</span>수직 성분은 일을 하지 않지만 쓸모가 없는 것은 아니다. 썰매를 살짝 들어 바닥을 누르는 힘을 줄이면 마찰이 줄어든다. 그래서 실제로 끌 때는 약간 위로 당기는 편이 유리할 수 있다. 이 그림은 마찰을 넣지 않은 모형이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{a} = (3, 4)\)의 \(\vec{u} = (1, 1)\) 방향 정사영은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((7/2, 7/2)\)<span class="why"><b>맞습니다.</b> \(\frac{7}{2}(1, 1)\)입니다. 남은 부분 \((-1/2, 1/2)\)은 \(\vec{u}\)와 수직입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((7, 7)\)<span class="why"><b>\(\vec{u}\cdot\vec{u} = 2\)로 나누지 않았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(7/\sqrt{2}\)<span class="why"><b>정사영의 길이입니다.</b> 정사영은 벡터입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 3)\)<span class="why"><b>작은 성분에 맞춘 것은 정사영이 아닙니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((7/2, 7/2)\)<span class="why"><b>맞다.</b> \(\frac{7}{2}(1, 1)\)이다. 남은 부분 \((-1/2, 1/2)\)은 \(\vec{u}\)와 수직이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((7, 7)\)<span class="why"><b>\(\vec{u}\cdot\vec{u} = 2\)로 나누지 않았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(7/\sqrt{2}\)<span class="why"><b>정사영의 길이이다.</b> 정사영은 벡터이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 3)\)<span class="why"><b>작은 성분에 맞춘 것은 정사영이 아니다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-hunt"><small class="mono">고급 대수 1.5</small>비스듬한 두 방향만으로 목표점까지 안내할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-8.html#card-adalg-gram-schmidt"><small class="mono">고급 대수 1.8</small>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</a><a href="../../c/adalg/1-8.html#card-adalg-ortho-coords"><small class="mono">고급 대수 1.8</small>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a><a href="../../c/adalg/1-6.html#text-adalg-ndot"><small class="mono">고급 대수 1.6</small>n차원 벡터의 내적</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-8.html#card-adalg-gram-schmidt"><small class="mono">고급 대수 1.8</small>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</a><a href="../../c/adalg/1-8.html#card-adalg-ortho-coords"><small class="mono">고급 대수 1.8</small>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</a><a href="../../c/adalg/1-8.html#text-adalg-orthonormal"><small class="mono">고급 대수 1.8</small>정규직교기저</a></div></nav>
 
       <article class="card" id="card-adalg-least-squares">
         <header class="card-head">
-          <span class="no">1.7.2</span><h2>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</h2><span class="kind">최소제곱법 · 도전</span>
+          <span class="no">탐구 2</span><h2>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</h2><span class="kind">최소제곱법 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -111,43 +174,43 @@
               </dl>
               <div class="presets"><button class="chip go-solve" type="button">정규방정식으로 풀기</button></div>
               <div class="ne small" role="status"></div>
-              <p class="fig-note">모의 자료: 추 질량 \(x\)(100 g 단위)와 늘어난 길이 \(y\)(cm). 주황 정사각형의 넓이가 각 점의 오차 제곱입니다(그림 비율에 맞춰 그림).</p>
+              <p class="fig-note">추 질량 \(x\)(100 g 단위)와 늘어난 길이 \(y\)(cm)의 모의 자료이다. 주황 정사각형의 넓이가 각 점의 오차 제곱이다(그림 비율에 맞춰 그림).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>실험 자료는 측정 오차 때문에 한 직선 위에 정확히 놓이지 않습니다. 연립방정식 \(mx_i + c = y_i\) \((i = 1, \ldots, 5)\)는 해가 없습니다. 그래도 "가장 그럴듯한" \(m, c\)를 하나 정하려면 무엇을 기준으로 해야 할까요?</li>
-            <li><span class="tag">복원</span>앞 카드에서 벡터를 직선 위로 정사영하면, 남은 부분이 직선과 수직이고 그 길이가 직선까지의 최단 거리였습니다.</li>
-            <li><span class="tag">설명</span>\(A = \begin{pmatrix} x_1 & 1 \\ \vdots & \vdots \\ x_5 & 1 \end{pmatrix}\), \(\vec{y} = (y_1, \ldots, y_5)\)로 두면 \(A\binom{m}{c}\)는 \(A\)의 두 열이 생성하는 \(\mathbb{R}^5\)의 부분공간(평면)을 돌아다닙니다. 오차 제곱의 합 \(|\vec{y} - A\binom{m}{c}|^2\)이 가장 작은 곳은 \(\vec{y}\)를 그 평면에 정사영한 점이고, 그때 오차 벡터는 두 열과 모두 수직입니다: \(A^T(\vec{y} - A\hat{x}) = \vec{0}\). 정리하면 <em>정규방정식</em> \(A^TA\hat{x} = A^T\vec{y}\)입니다.</li>
-            <li><span class="tag">연결</span>이것이 <em>최소제곱법</em>입니다. 통계의 회귀직선, GPS의 위치 계산, 인공지능의 선형 회귀가 모두 이 정규방정식을 풉니다.</li>
-            <li><span class="tag">적용</span>슬라이더로 오차 제곱의 합을 최대한 줄여 보세요. 그다음 "정규방정식으로 풀기"를 눌러 내 기록과 비교하세요. 오차 벡터가 두 열과 수직인지 숫자로 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>오차를 제곱하므로 멀리 떨어진 점 하나가 직선을 크게 끌어당깁니다. 잘못 잰 값이 섞였을 가능성이 있으면 먼저 자료를 살펴야 합니다. 또 이 직선은 자료 범위 밖(예: 아주 무거운 추)에서는 용수철이 늘어나는 한계 때문에 맞지 않을 수 있습니다.</li>
+            <li><span class="tag">질문</span>실험 자료는 측정 오차 때문에 한 직선 위에 정확히 놓이지 않는다. 연립방정식 \(mx_i + c = y_i\) \((i = 1, \ldots, 5)\)는 해가 없다. 그래도 "가장 그럴듯한" \(m, c\)를 하나 정하려면 무엇을 기준으로 해야 할까?</li>
+            <li><span class="tag">복원</span>앞 카드에서 벡터를 직선 위로 정사영하면, 남은 부분이 직선과 수직이고 그 길이가 직선까지의 최단 거리였다.</li>
+            <li><span class="tag">설명</span>\(A = \begin{pmatrix} x_1 & 1 \\ \vdots & \vdots \\ x_5 & 1 \end{pmatrix}\), \(\vec{y} = (y_1, \ldots, y_5)\)로 두면 \(A\binom{m}{c}\)는 \(A\)의 두 열이 생성하는 \(\mathbb{R}^5\)의 부분공간(평면)을 돌아다닌다. 오차 제곱의 합 \(|\vec{y} - A\binom{m}{c}|^2\)이 가장 작은 곳은 \(\vec{y}\)를 그 평면에 정사영한 점이고, 그때 오차 벡터는 두 열과 모두 수직이다. \(A^T(\vec{y} - A\hat{x}) = \vec{0}\). 정리하면 <em>정규방정식</em> \(A^TA\hat{x} = A^T\vec{y}\)이다.</li>
+            <li><span class="tag">연결</span>이것이 <em>최소제곱법</em>이다. 통계의 회귀직선, GPS의 위치 계산, 인공지능의 선형 회귀가 모두 이 정규방정식을 푼다.</li>
+            <li><span class="tag">적용</span>슬라이더로 오차 제곱의 합을 최대한 줄여 보자. 그다음 "정규방정식으로 풀기"를 눌러 내 기록과 비교해 보자. 오차 벡터가 두 열과 수직인지 숫자로 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>오차를 제곱하므로 멀리 떨어진 점 하나가 직선을 크게 끌어당긴다. 잘못 잰 값이 섞였을 가능성이 있으면 먼저 자료를 살펴야 한다. 또 이 직선은 자료 범위 밖(예를 들어 아주 무거운 추)에서는 용수철이 늘어나는 한계 때문에 맞지 않을 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">세 점 \((0, 0), (1, 1), (2, 1)\)에 원점을 지나는 직선 \(y = mx\)를 최소제곱법으로 맞추면 \(m\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(3/5\)<span class="why"><b>맞습니다.</b> \(A = (0, 1, 2)^T\)이므로 \(A^TA = 5\), \(A^T\vec{y} = 0 + 1 + 2 = 3\), \(m = 3/5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1/2\)<span class="why"><b>두 점만 잇거나 평균 기울기를 쓴 값입니다.</b> 오차 제곱의 합 기준이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2/3\)<span class="why"><b>\(y\)의 합을 \(x\)의 합으로 나누었습니다.</b> 정규방정식에서는 \(\sum x_iy_i / \sum x_i^2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>두 점 \((0, 0), (1, 1)\)만 맞춘 값입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(3/5\)<span class="why"><b>맞다.</b> \(A = (0, 1, 2)^T\)이므로 \(A^TA = 5\), \(A^T\vec{y} = 0 + 1 + 2 = 3\), \(m = 3/5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1/2\)<span class="why"><b>두 점만 잇거나 평균 기울기를 쓴 값이다.</b> 오차 제곱의 합 기준이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2/3\)<span class="why"><b>\(y\)의 합을 \(x\)의 합으로 나누었다.</b> 정규방정식에서는 \(\sum x_iy_i / \sum x_i^2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>두 점 \((0, 0), (1, 1)\)만 맞춘 값이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-hunt"><small class="mono">고급 대수 1.5</small>비스듬한 두 방향만으로 목표점까지 안내할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-8.html#card-adalg-gram-schmidt"><small class="mono">고급 대수 1.8</small>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</a><a href="../../c/adalg/1-8.html#card-adalg-ortho-coords"><small class="mono">고급 대수 1.8</small>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a><a href="../../c/adalg/1-6.html#text-adalg-ndot"><small class="mono">고급 대수 1.6</small>n차원 벡터의 내적</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-8.html#card-adalg-gram-schmidt"><small class="mono">고급 대수 1.8</small>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</a><a href="../../c/adalg/1-8.html#card-adalg-ortho-coords"><small class="mono">고급 대수 1.8</small>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</a><a href="../../c/adalg/1-8.html#text-adalg-orthonormal"><small class="mono">고급 대수 1.8</small>정규직교기저</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-1-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=1-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

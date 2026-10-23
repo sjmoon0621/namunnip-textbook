@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>평면그래프 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="평면그래프의 뜻, 비평면그래프 K₅와 K₃,₃, 오일러 공식 v − e + f = 2와 e ≤ 3v − 6. 엉킨 그래프를 펴는 도전 카드와, 변과 점을 더하며 오일러 공식을 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-untangle canvas { aspect-ratio: 1 / 1; max-width: 460px; margin: 0 auto; display: block; }
@@ -44,18 +49,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-untangle"><span class="mono">4.4.1</span>점을 옮겨 선의 교차 없애기</a></li>
-        <li><a href="#card-dmath-euler-formula"><span class="mono">4.4.2</span>v − e + f = 2를 직접 확인하기</a></li>
+        <li><a href="#text-dmath-planar"><span class="mono">본문</span>평면그래프</a></li>
+        <li><a href="#card-dmath-untangle"><span class="mono">탐구 1</span>점을 옮겨 선의 교차 없애기</a></li>
+        <li><a href="#card-dmath-euler-formula"><span class="mono">탐구 2</span>v − e + f = 2를 직접 확인하기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-4-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">6문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-4-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-planar" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>평면그래프</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">평평한 땅 위에 집 세 채와 수도국, 전력소, 가스소가 있다. 각 집을 세 시설과 모두 관으로 이어야 하는데, 관끼리는 겹치거나 교차하면 안 되고 땅 밖으로 우회할 수도 없다. 관은 모두 9개인데, 아무리 구불구불하게 돌려 보아도 마지막 하나가 꼭 다른 관을 가로지른다. 정말 불가능한 것일까? 정육면체의 꼭짓점과 모서리를 평면에 펼쳐 그리면 선이 겹치지 않는데, 둘은 무엇이 다를까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="여러 그래프의 오일러 공식과 평면성">
+              <g class="s">
+                <text x="20" y="22">그래프</text><text x="150" y="22">v</text><text x="200" y="22">e</text><text x="250" y="22">f</text><text x="300" y="22">v − e + f</text><text x="410" y="22">평면</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">정육면체</text><text x="150" y="52">8</text><text x="200" y="52">12</text><text x="250" y="52">6</text><text x="300" y="52">2</text><text x="410" y="52" class="td">예</text>
+                <text x="20" y="74">사면체 (K₄)</text><text x="150" y="74">4</text><text x="200" y="74">6</text><text x="250" y="74">4</text><text x="300" y="74">2</text><text x="410" y="74" class="td">예</text>
+                <text x="20" y="96">세 집과 세 시설 (K₃,₃)</text><text x="150" y="96">6</text><text x="200" y="96">9</text><text x="250" y="96">?</text><text x="300" y="96">5가 되어야</text><text x="410" y="96" class="tb">아니오</text>
+                <text x="20" y="122">평면그래프에서는 늘 v − e + f = 2이다. f는 바깥 영역까지 센 면의 수이다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 평면에 겹치지 않게 그린 그래프는 꼭짓점, 변, 면의 수가 늘 \(v - e + f = 2\)를 만족한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>그래프와 차수(<a href="4-1.html">그래프와 실생활 문제</a>), 악수 정리(<a href="4-2.html">꼭짓점의 차수와 변의 개수</a>).</div>
+
+          <h3><span class="no">4.4.1</span>오일러 공식</h3>
+          <p>변끼리 꼭짓점이 아닌 곳에서 만나지 않도록 평면에 그릴 수 있는 그래프를 평면그래프라 한다. 평면그래프를 그리면 변들이 평면을 여러 영역으로 나누는데, 그 영역을 면이라 하고 바깥의 끝없는 영역도 하나의 면으로 센다. 연결된 평면그래프에서는 꼭짓점 수 \(v\), 변 수 \(e\), 면 수 \(f\)가 늘 \(v - e + f = 2\)를 만족한다. 변 하나를 더하면 면이 하나 늘거나 꼭짓점이 하나 늘어, \(v - e + f\)는 바뀌지 않기 때문이다. 꼭짓점 하나에서 출발하면 \(1 - 0 + 1 = 2\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.4.1 <span class="nm">오일러 공식과 그 결과</span></span>
+            <p>연결된 평면그래프에서 \(v - e + f = 2\)이다. 꼭짓점이 3개 이상인 단순 평면그래프는 \(e \le 3v - 6\)이고, 삼각형이 없으면 \(e \le 2v - 4\)이다. 그래서 \(K_5\)(5개의 꼭짓점이 모두 서로 이어진 그래프)와 \(K_{3,3}\)은 평면그래프가 아니다.</p>
+          </div>
+          <p>단순그래프에서 각 면은 적어도 세 개의 변으로 둘러싸이고, 각 변은 많아야 두 면의 경계가 된다. 그래서 면의 경계를 이루는 변을 모두 세면 \(3f \le 2e\)이다. 이것을 오일러 공식에 넣으면 \(e \le 3v - 6\)이 된다. 삼각형이 없으면 각 면이 적어도 네 변으로 둘러싸여 \(4f \le 2e\)이고, 같은 방법으로 \(e \le 2v - 4\)가 된다. 이 부등식을 어기는 그래프는 아무리 잘 그려도 선이 겹친다.<sup class="fn"><a href="#fn-dmath-planar-1">1</a></sup></p>
+
+          <h3><span class="no">4.4.2</span>정다면체가 다섯 가지뿐인 까닭</h3>
+          <p>볼록한 다면체의 꼭짓점과 모서리는 한 면을 펼쳐 바깥 면으로 삼으면 평면그래프로 그릴 수 있다. 그래서 다면체에서도 꼭짓점 수에서 모서리 수를 빼고 면 수를 더하면 2이다. 이 공식에 모든 면이 같은 정다각형이고 각 꼭짓점에 같은 수의 면이 모인다는 조건을 넣으면, 가능한 경우가 정사면체, 정육면체, 정팔면체, 정십이면체, 정이십면체의 다섯 가지뿐임을 보일 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 그래프가 평면그래프가 아님을 보이는 부등식">
+              <g class="s">
+                <text x="20" y="22">그래프</text><text x="160" y="22">v, e</text><text x="280" y="22">부등식</text><text x="420" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">K₅</text><text x="160" y="52">5, 10</text><text x="280" y="52">e ≤ 3v − 6 = 9</text><text x="420" y="52" class="tb">10 > 9, 아님</text>
+                <text x="20" y="74">K₃,₃</text><text x="160" y="74">6, 9</text><text x="280" y="74">e ≤ 2v − 4 = 8</text><text x="420" y="74" class="tb">9 > 8, 아님</text>
+                <text x="20" y="96">정육면체</text><text x="160" y="96">8, 12</text><text x="280" y="96">e ≤ 2v − 4 = 12</text><text x="420" y="96" class="td">만족</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 변이 너무 많으면 오일러 공식과 맞지 않아 평면에 겹치지 않게 그릴 수 없다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.4.2</span>
+            <p>처음 질문의 세 집과 세 시설의 그래프 \(K_{3,3}\)이 평면그래프가 아님을 증명하여라. 정육면체의 그래프에서 오일러 공식을 확인하여라.</p>
+          </div>
+          <p>\(K_{3,3}\)은 꼭짓점 6개, 변 9개이다. 변은 늘 집과 시설 사이에만 있으므로 집끼리나 시설끼리는 이어져 있지 않고, 그래서 삼각형이 없다. 만약 평면그래프라면 \(e \le 2v - 4 = 8\)이어야 하는데 변이 9개이므로 모순이다. 오일러 공식으로 보면 평면그래프일 때 면이 \(f = 2 - 6 + 9 = 5\)개여야 하는데, 각 면이 네 변 이상으로 둘러싸이면 \(4\times5 = 20 \le 2\times9 = 18\)이 되어 모순이다. 그래서 관 하나는 반드시 다른 관을 가로지른다.</p>
+          <p>정육면체는 꼭짓점 8개, 모서리 12개, 면 6개이므로 \(8 - 12 + 6 = 2\)이다. 평면에 펼친 그림에서도 안쪽 면 5개와 바깥 면 1개를 합해 면이 6개이다. 즉 평면그래프는 오일러 공식 \(v - e + f = 2\)를 만족하고, 그 결과인 변의 개수의 상한을 어기는 그래프는 평면에 선이 겹치지 않게 그릴 수 없다.</p>
+          <p>아래 탐구 카드에서 엉킨 그래프를 선이 겹치지 않게 펴 보고, 평면그래프에서 점, 선, 면의 수 사이의 관계를 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-planar-1">1930년 폴란드의 쿠라토프스키는 어떤 그래프가 평면그래프가 아닐 필요충분조건이 \(K_5\)나 \(K_{3,3}\)을 변을 나누어 늘인 모양을 품는 것임을 증명했다. 전자 회로 기판을 설계할 때 배선이 겹치지 않게 하는 데 이 이론이 쓰인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>변이 꼭짓점이 아닌 곳에서 만나지 않게 평면에 그릴 수 있는 평면그래프는 꼭짓점, 변, 면의 수가 \(v - e + f = 2\)를 만족하며, 단순그래프이면 \(e \le 3v - 6\), 삼각형이 없으면 \(e \le 2v - 4\)이다. 이 부등식을 어기는 \(K_5\)와 \(K_{3,3}\)은 평면그래프가 아니고, 다면체에도 같은 공식이 성립한다. 처음 질문의 세 집과 세 시설은 \(K_{3,3}\)이어서 관 9개를 겹치지 않게 놓을 수 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-7.html#card-dmath-map-color"><small class="mono">이산 수학 4.7</small>지도를 칠하는 데 색이 최소 몇 가지 필요할까?</a><a href="../../c/dmath/4-7.html#card-dmath-chromatic-poly"><small class="mono">이산 수학 4.7</small>색이 k가지일 때 칠하는 방법은 몇 가지일까?</a><a href="../../c/dmath/4-7.html#text-dmath-coloring"><small class="mono">이산 수학 4.7</small>채색수와 채색다항식</a></div></nav>
+
       <article class="card" id="card-dmath-untangle">
         <header class="card-head">
-          <span class="no">4.4.1</span><h2>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</h2><span class="kind">평면그래프 · 도전</span>
+          <span class="no">탐구 1</span><h2>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</h2><span class="kind">평면그래프 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -65,30 +129,30 @@
             <p class="verdict" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>세 집에 수도, 가스, 전기를 각각 연결하되 관이 서로 교차하지 않게 할 수 있을까요? 전자 회로 기판에서도 선이 겹치면 합선이 되므로 같은 고민을 합니다.</li>
-            <li><span class="tag">복원</span>그래프는 꼭짓점과 변의 연결만 중요하고, 그리는 모양은 자유롭게 바꿀 수 있습니다.</li>
-            <li><span class="tag">설명</span>변이 꼭짓점이 아닌 곳에서 만나지 않게 평면에 그릴 수 있는 그래프를 <em>평면그래프</em>라 합니다. 처음 그림에서 선이 교차해도 꼭짓점을 옮겨 교차를 없앨 수 있으면 평면그래프입니다. 반대로 완전그래프 \(K_5\)와 "세 집과 세 공급처" 그래프 \(K_{3,3}\)은 어떻게 그려도 교차가 생기는 비평면그래프이고, 쿠라토프스키 정리에 따르면 모든 비평면그래프는 이 둘 중 하나와 같은 구조를 품고 있습니다.</li>
-            <li><span class="tag">연결</span>다음 카드의 오일러 공식 \(v - e + f = 2\)로 \(K_5\), \(K_{3,3}\)이 평면그래프가 아님을 증명할 수 있습니다. 회로 기판과 지하철 노선도 설계에서 교차를 줄이는 것이 중요한 문제입니다.</li>
-            <li><span class="tag">적용</span>점을 끌어 빨간 교차를 모두 없애 보세요. 정육면체 그래프도 펼 수 있나요? 마지막 두 그래프에서는 교차를 몇 개까지 줄일 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>오래 시도해도 교차를 없애지 못했다는 것은 증명이 아닙니다. 불가능하다는 것은 오일러 공식 같은 논증으로 보여야 하고, 가능하다는 것은 교차 없는 그림 하나로 보여 주면 됩니다.</li>
+            <li><span class="tag">질문</span>세 집에 수도, 가스, 전기를 각각 연결하되 관이 서로 교차하지 않게 할 수 있을까? 전자 회로 기판에서도 선이 겹치면 합선이 되므로 같은 고민을 한다.</li>
+            <li><span class="tag">복원</span>그래프는 꼭짓점과 변의 연결만 중요하고, 그리는 모양은 자유롭게 바꿀 수 있다.</li>
+            <li><span class="tag">설명</span>변이 꼭짓점이 아닌 곳에서 만나지 않게 평면에 그릴 수 있는 그래프를 <em>평면그래프</em>라 한다. 처음 그림에서 선이 교차해도 꼭짓점을 옮겨 교차를 없앨 수 있으면 평면그래프이다. 반대로 완전그래프 \(K_5\)와 "세 집과 세 공급처" 그래프 \(K_{3,3}\)은 어떻게 그려도 교차가 생기는 비평면그래프이고, 쿠라토프스키 정리에 따르면 모든 비평면그래프는 이 둘 중 하나와 같은 구조를 품고 있다.</li>
+            <li><span class="tag">연결</span>다음 카드의 오일러 공식 \(v - e + f = 2\)로 \(K_5\), \(K_{3,3}\)이 평면그래프가 아님을 증명할 수 있다. 회로 기판과 지하철 노선도 설계에서 교차를 줄이는 것이 중요한 문제이다.</li>
+            <li><span class="tag">적용</span>점을 끌어 빨간 교차를 모두 없애 보자. 정육면체 그래프도 펼 수 있는가? 마지막 두 그래프에서는 교차를 몇 개까지 줄일 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>오래 시도해도 교차를 없애지 못했다는 것은 증명이 아니다. 불가능하다는 것은 오일러 공식 같은 논증으로 보여야 하고, 가능하다는 것은 교차 없는 그림 하나로 보여 주면 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">다음 중 평면그래프인 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(K_4\)<span class="why"><b>맞습니다.</b> 삼각형 안에 한 점을 두고 세 꼭짓점과 이으면 교차가 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(K_5\)<span class="why"><b>비평면그래프입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(K_{3,3}\)<span class="why"><b>비평면그래프입니다.</b> 세 집 문제는 불가능합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(K_6\)<span class="why"><b>\(K_5\)를 품고 있어 비평면입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(K_4\)<span class="why"><b>맞다.</b> 삼각형 안에 한 점을 두고 세 꼭짓점과 이으면 교차가 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(K_5\)<span class="why"><b>비평면그래프이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(K_{3,3}\)<span class="why"><b>비평면그래프이다.</b> 세 집 문제는 불가능하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(K_6\)<span class="why"><b>\(K_5\)를 품고 있어 비평면이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-7.html#card-dmath-map-color"><small class="mono">이산 수학 4.7</small>지도를 칠하는 데 색이 최소 몇 가지 필요할까?</a><a href="../../c/dmath/4-7.html#card-dmath-chromatic-poly"><small class="mono">이산 수학 4.7</small>색이 k가지일 때 칠하는 방법은 몇 가지일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-7.html#card-dmath-map-color"><small class="mono">이산 수학 4.7</small>지도를 칠하는 데 색이 최소 몇 가지 필요할까?</a><a href="../../c/dmath/4-7.html#card-dmath-chromatic-poly"><small class="mono">이산 수학 4.7</small>색이 k가지일 때 칠하는 방법은 몇 가지일까?</a><a href="../../c/dmath/4-7.html#text-dmath-coloring"><small class="mono">이산 수학 4.7</small>채색수와 채색다항식</a></div></nav>
 
       <article class="card" id="card-dmath-euler-formula">
         <header class="card-head">
-          <span class="no">4.4.2</span><h2>평면그래프에서 점, 선, 면의 수 사이에는 어떤 관계가 있을까?</h2><span class="kind">오일러 공식 · 조작</span>
+          <span class="no">탐구 2</span><h2>평면그래프에서 점, 선, 면의 수 사이에는 어떤 관계가 있을까?</h2><span class="kind">오일러 공식 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -99,39 +163,40 @@
             <p class="mono small say"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>정육면체는 꼭짓점 8, 모서리 12, 면 6이고 \(8 - 12 + 6 = 2\)입니다. 정사면체는 \(4 - 6 + 4 = 2\)입니다. 우연일까요? 평면에 그린 그래프에서도 같은 일이 일어날까요?</li>
-            <li><span class="tag">복원</span>평면그래프는 변이 교차하지 않게 그릴 수 있는 그래프입니다. 변으로 둘러싸인 영역을 <em>면</em>이라 하고, 바깥의 무한한 영역도 면 하나로 셉니다.</li>
-            <li><span class="tag">설명</span>연결된 평면그래프의 꼭짓점 수 \(v\), 변의 수 \(e\), 면의 수 \(f\)는 늘 \(v - e + f = 2\)를 만족합니다(<em>오일러 공식</em>). 나무 모양(면 1개, \(e = v - 1\))에서 시작해, 변을 하나 더할 때마다 면이 하나 갈라져 \(e\)와 \(f\)가 함께 1 늘기 때문입니다. 이 공식에서 단순 평면그래프는 \(e \le 3v - 6\)(면마다 변이 3개 이상)을 얻고, \(K_5\)는 \(10 > 9\)라 평면그래프가 아닙니다. 삼각형이 없는 \(K_{3,3}\)은 \(e \le 2v - 4\)인데 \(9 > 8\)이라 역시 아닙니다.</li>
-            <li><span class="tag">연결</span>볼록 다면체의 꼭짓점·모서리·면에도 같은 공식이 성립합니다. 다면체를 한 면에서 들여다보듯 평면에 펼치면 평면그래프가 되기 때문입니다. 이것으로 정다면체가 다섯 가지뿐임을 증명할 수 있습니다.</li>
-            <li><span class="tag">적용</span>변을 더하거나 지우고 점을 더하며 \(v - e + f\)가 바뀌는지 보세요(교차가 생기지 않게). 변 하나를 더할 때 \(e\)와 \(f\)가 함께 늘어나나요? 점과 변을 함께 더하면요?</li>
-            <li class="warn"><span class="tag">판단</span>공식은 그래프가 연결되어 있고 교차 없이 그려졌을 때만 성립합니다. 조각이 \(k\)개로 나뉘면 \(v - e + f = k + 1\)이 됩니다. 교차가 있는 그림에서는 면을 셀 수 없습니다.</li>
+            <li><span class="tag">질문</span>정육면체는 꼭짓점 8, 모서리 12, 면 6이고 \(8 - 12 + 6 = 2\)이다. 정사면체는 \(4 - 6 + 4 = 2\)이다. 우연일까? 평면에 그린 그래프에서도 같은 일이 일어날까?</li>
+            <li><span class="tag">복원</span>평면그래프는 변이 교차하지 않게 그릴 수 있는 그래프이다. 변으로 둘러싸인 영역을 <em>면</em>이라 하고, 바깥의 무한한 영역도 면 하나로 센다.</li>
+            <li><span class="tag">설명</span>연결된 평면그래프의 꼭짓점 수 \(v\), 변의 수 \(e\), 면의 수 \(f\)는 늘 \(v - e + f = 2\)를 만족한다(<em>오일러 공식</em>). 나무 모양(면 1개, \(e = v - 1\))에서 시작해, 변을 하나 더할 때마다 면이 하나 갈라져 \(e\)와 \(f\)가 함께 1 늘기 때문이다. 이 공식에서 단순 평면그래프는 \(e \le 3v - 6\)(면마다 변이 3개 이상)을 얻고, \(K_5\)는 \(10 > 9\)라 평면그래프가 아니다. 삼각형이 없는 \(K_{3,3}\)은 \(e \le 2v - 4\)인데 \(9 > 8\)이라 역시 아니다.</li>
+            <li><span class="tag">연결</span>볼록 다면체의 꼭짓점·모서리·면에도 같은 공식이 성립한다. 다면체를 한 면에서 들여다보듯 평면에 펼치면 평면그래프가 되기 때문이다. 이것으로 정다면체가 다섯 가지뿐임을 증명할 수 있다.</li>
+            <li><span class="tag">적용</span>변을 더하거나 지우고 점을 더하며 \(v - e + f\)가 바뀌는지 보자(교차가 생기지 않게). 변 하나를 더할 때 \(e\)와 \(f\)가 함께 늘어나는가? 점과 변을 함께 더하면 어떨까?</li>
+            <li class="warn"><span class="tag">판단</span>공식은 그래프가 연결되어 있고 교차 없이 그려졌을 때만 성립한다. 조각이 \(k\)개로 나뉘면 \(v - e + f = k + 1\)이 된다. 교차가 있는 그림에서는 면을 셀 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">연결된 평면그래프의 꼭짓점이 10개, 변이 15개입니다. 면은 몇 개일까요?</p>
+          <p class="q">연결된 평면그래프의 꼭짓점이 10개, 변이 15개이다. 면은 몇 개일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(7\)<span class="why"><b>맞습니다.</b> \(10 - 15 + f = 2\)에서 \(f = 7\)입니다(바깥 면 포함).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(6\)<span class="why"><b>바깥 면을 빠뜨렸습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(5\)<span class="why"><b>공식을 \(v - e + f = 0\)으로 썼습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>그림을 보아야 안다<span class="why"><b>오일러 공식으로 정해집니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(7\)<span class="why"><b>맞다.</b> \(10 - 15 + f = 2\)에서 \(f = 7\)이다(바깥 면 포함).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(6\)<span class="why"><b>바깥 면을 빠뜨렸다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(5\)<span class="why"><b>공식을 \(v - e + f = 0\)으로 썼다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>그림을 보아야 안다<span class="why"><b>오일러 공식으로 정해진다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-7.html#card-dmath-map-color"><small class="mono">이산 수학 4.7</small>지도를 칠하는 데 색이 최소 몇 가지 필요할까?</a><a href="../../c/dmath/4-7.html#card-dmath-chromatic-poly"><small class="mono">이산 수학 4.7</small>색이 k가지일 때 칠하는 방법은 몇 가지일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-7.html#card-dmath-map-color"><small class="mono">이산 수학 4.7</small>지도를 칠하는 데 색이 최소 몇 가지 필요할까?</a><a href="../../c/dmath/4-7.html#card-dmath-chromatic-poly"><small class="mono">이산 수학 4.7</small>색이 k가지일 때 칠하는 방법은 몇 가지일까?</a><a href="../../c/dmath/4-7.html#text-dmath-coloring"><small class="mono">이산 수학 4.7</small>채색수와 채색다항식</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-4-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">6문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

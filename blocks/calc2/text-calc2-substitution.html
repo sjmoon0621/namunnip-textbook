@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "3-2",
+  "short": "본문 · 치환적분법"
+}
+-->
+<article class="card reading" id="text-calc2-substitution" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>치환적분법</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\(\int_0^1 2x\cos(x^2)\,dx\)는 공식표에 바로 없는 모양이다. 그런데 자세히 보면 \(2x\)는 \(x^2\)의 도함수이다. 합성함수의 미분법을 거꾸로 쓰면 이 적분을 쉬운 적분으로 바꿀 수 있지 않을까? 그때 넓이는 그래프에서 어떻게 옮겨 갈까?</p>
+    <figure class="q-fig" data-q="calc2-sub">
+      <svg viewBox="0 0 520 230" role="img" aria-label="y = 2x cos(x²) 아래 넓이와 y = cos u 아래 넓이의 비교"></svg>
+      <div class="q-ctl"><label>위끝 \(b\) <input type="range" data-k="b" min="0.2" max="1.6" step="0.02" value="1"><output data-k="b"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 왼쪽 \(\int_0^b 2x\cos(x^2)\,dx\)의 넓이와 오른쪽 \(\int_0^{b^2}\cos u\,du\)의 넓이(초록)는 모양이 달라도 언제나 같다. \(u = x^2\)로 바꾸면 가로가 늘어나는 만큼 높이가 줄어든다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합성함수의 미분법(<a href="2-5.html">합성함수의 미분법</a>), 여러 가지 함수의 적분(<a href="3-1.html">여러 가지 함수의 적분</a>), 정적분의 성질.</div>
+
+    <h3><span class="no">3.2.1</span>치환적분법</h3>
+    <p>\(F'(u) = f(u)\)이고 \(u = g(x)\)이면, 합성함수의 미분법에 의해 \(\{F(g(x))\}' = f(g(x))g'(x)\)이다. 이를 거꾸로 읽으면 \(\int f(g(x))g'(x)\,dx = F(g(x)) + C\)이다. 곧 적분할 식이 '속함수의 도함수 \(\times\) 속함수의 함수' 꼴이면, 속함수를 \(u\)로 바꾸어 \(\int f(u)\,du\)로 계산할 수 있다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">치환적분법</span></span>
+      <p>\(u = g(x)\)로 놓으면 \(du = g'(x)\,dx\)이고 \[\int f(g(x))g'(x)\,dx = \int f(u)\,du,\qquad \int_a^b f(g(x))g'(x)\,dx = \int_{g(a)}^{g(b)} f(u)\,du\]</p>
+    </div>
+    <p>정적분에서는 적분 구간도 \(x\)의 범위에서 \(u\)의 범위로 바꾸어야 한다. \(x\)가 0에서 1까지 변하면 \(u = x^2\)은 0에서 1까지 변하므로 \(\int_0^1 2x\cos(x^2)\,dx = \int_0^1 \cos u\,du = \sin 1 \approx 0.841\)이다. 그림 1에서 위끝 \(b\)를 바꾸어 보면 두 넓이가 늘 같다.<sup class="fn"><a href="#fn-calc2-substitution-1">1</a></sup></p>
+
+    <h3><span class="no">3.2.2</span>자주 쓰는 꼴</h3>
+    <p>분자가 분모의 도함수인 꼴 \(\int \dfrac{g'(x)}{g(x)}\,dx\)는 \(u = g(x)\)로 놓으면 \(\int \dfrac{du}{u} = \ln|g(x)| + C\)이다. 예를 들어 \(\int \tan x\,dx = \int \dfrac{\sin x}{\cos x}\,dx\)에서 분모 \(\cos x\)의 도함수는 \(-\sin x\)이므로 결과는 \(-\ln|\cos x| + C\)이다. 일차식이 들어간 \(\int f(ax + b)\,dx\)는 \(u = ax + b\)로 놓아 \(\dfrac{1}{a}F(ax + b) + C\)가 된다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="치환할 때 구간과 미소 길이를 함께 바꾸는 절차">
+        <g class="s">
+          <rect x="15" y="30" width="150" height="50" class="lb"/><text x="90" y="52" text-anchor="middle">u = g(x)</text><text x="90" y="70" text-anchor="middle">속함수를 고른다</text>
+          <rect x="185" y="30" width="150" height="50" class="lc"/><text x="260" y="52" text-anchor="middle">du = g′(x) dx</text><text x="260" y="70" text-anchor="middle">미소 길이를 바꾼다</text>
+          <rect x="355" y="30" width="150" height="50" class="la"/><text x="430" y="52" text-anchor="middle">g(a) ~ g(b)</text><text x="430" y="70" text-anchor="middle">구간도 바꾼다</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 치환할 때는 함수, \(dx\), 적분 구간의 세 가지를 모두 \(u\)에 맞게 바꾼다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+      <p>(1) \(\int_0^1 x e^{x^2}\,dx\)와 (2) \(\int_0^{\pi/2} \sin^3 x\cos x\,dx\)의 값을 구하여라.</p>
+    </div>
+    <p>(1) \(u = x^2\)으로 놓으면 \(du = 2x\,dx\), 곧 \(x\,dx = \dfrac{1}{2}du\)이다. \(x: 0 \to 1\)이면 \(u: 0 \to 1\)이므로 \(\int_0^1 \dfrac{1}{2}e^u\,du = \dfrac{1}{2}(e - 1) \approx 0.859\)이다.</p>
+    <p>(2) \(u = \sin x\)로 놓으면 \(du = \cos x\,dx\)이고, \(x: 0 \to \dfrac{\pi}{2}\)이면 \(u: 0 \to 1\)이다. 따라서 \(\int_0^1 u^3\,du = \dfrac{1}{4}\)이다. 구간을 바꾸지 않고 \(\int_0^{\pi/2} u^3\,du\)로 계산하면 틀린 값이 나온다. 구간을 바꾸기 싫다면 부정적분 \(\dfrac{\sin^4 x}{4}\)을 먼저 구해 원래 구간을 넣어도 같은 \(\dfrac{1}{4}\)이 나온다.</p>
+    <p>아래 탐구 카드에서 치환하면 넓이가 어디로 옮겨 가는지, 구간을 바꾸어야 하는 까닭을 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-substitution-1">\(du = g'(x)\,dx\)라는 표기는 '\(x\)가 조금 변할 때 \(u\)는 \(g'(x)\)배만큼 변한다'는 뜻으로 읽을 수 있다. 라이프니츠가 만든 이 표기 덕분에 치환이 분수 계산처럼 자연스러워진다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>적분할 식이 \(f(g(x))g'(x)\) 꼴이면 \(u = g(x)\), \(du = g'(x)dx\)로 바꾸어 \(\int f(u)du\)로 계산하고, 정적분에서는 구간도 \(g(a)\)에서 \(g(b)\)로 바꾼다. 그래서 처음 질문의 \(\int_0^1 2x\cos(x^2)dx\)는 \(u = x^2\)으로 바꾸면 \(\int_0^1\cos u\,du = \sin 1\)이 되며, 넓이는 가로가 늘어난 만큼 높이가 줄어든 모양으로 옮겨 간다.</p></div>
+  </div>
+</article>

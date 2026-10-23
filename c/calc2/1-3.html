@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>등비수열의 극한 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="등비수열 rⁿ의 수렴·발산: r &gt; 1이면 ∞, r = 1이면 1, −1 &lt; r &lt; 1이면 0, r ≤ −1이면 진동. 수렴 조건 −1 &lt; r ≤ 1, 밑이 다른 거듭제곱이 섞인 식의 극한(가장 큰 밑으로 나누기), 공비에 문자가 들어간 수열의 수렴 조건. 공비를 움직여 수직선을 채우는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-geo-ratio canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -46,18 +51,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-geo-ratio"><span class="mono">1.3.1</span>등비수열 rⁿ의 수렴 조건</a></li>
-        <li><a href="#card-calc2-geo-compare"><span class="mono">1.3.2</span>밑이 다른 거듭제곱의 극한</a></li>
+        <li><a href="#text-calc2-geo-seq"><span class="mono">본문</span>등비수열의 극한</a></li>
+        <li><a href="#card-calc2-geo-ratio"><span class="mono">탐구 1</span>등비수열 rⁿ의 수렴 조건</a></li>
+        <li><a href="#card-calc2-geo-compare"><span class="mono">탐구 2</span>밑이 다른 거듭제곱의 극한</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">94문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">94문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-geo-seq" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>등비수열의 극한</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(1.01\)을 계속 곱하면 처음에는 거의 변하지 않지만, 700번쯤 곱하면 1000을 넘는다. 반대로 \(0.99\)를 계속 곱하면 0에 가까워진다. 1보다 조금 크냐 작으냐가 이렇게 큰 차이를 만든다. 그렇다면 \(-0.99\)나 \(-1\)을 계속 곱하면 어떻게 될까? 공비에 따라 등비수열의 극한을 한꺼번에 정리할 수 있을까?</p>
+          <figure class="q-fig" data-q="calc2-rn">
+            <svg viewBox="0 0 520 230" role="img" aria-label="공비 r에 따른 등비수열 r^n의 항들"></svg>
+            <div class="q-ctl"><label>공비 \(r\) <input type="range" data-k="r" min="-1.3" max="1.3" step="0.05" value="0.8"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(r^n\)의 처음 20항. \(|r| &lt; 1\)이면 0으로 수렴하고, \(r = 1\)이면 1, \(r &gt; 1\)이면 발산, \(r \le -1\)이면 진동한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>등비수열의 일반항(대수), 수열의 극한에 대한 성질(<a href="1-2.html">수열의 극한의 성질</a>), 지수함수의 그래프.</div>
+
+          <h3><span class="no">1.3.1</span>\(r^n\)의 극한</h3>
+          <p>\(r &gt; 1\)이면 \(r = 1 + h\) (\(h &gt; 0\))로 쓸 수 있다. 이항정리에서 \((1 + h)^n \ge 1 + nh\)이고, \(1 + nh\)는 한없이 커지므로 \(r^n\)도 양의 무한대로 발산한다. \(0 &lt; r &lt; 1\)이면 \(\dfrac{1}{r} &gt; 1\)이므로 \(\left(\dfrac{1}{r}\right)^n \to \infty\), 곧 \(r^n \to 0\)이다. 음수인 \(r\)은 \(|r|^n\)의 극한에 부호가 번갈아 붙는 것으로 볼 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">등비수열 \(\{r^n\}\)의 수렴과 발산</span></span>
+            <p>\(r &gt; 1\)이면 \(\lim r^n = \infty\)(발산), \(r = 1\)이면 \(\lim r^n = 1\)(수렴), \(-1 &lt; r &lt; 1\)이면 \(\lim r^n = 0\)(수렴), \(r \le -1\)이면 진동(발산). 따라서 \(\{r^n\}\)이 수렴하기 위한 조건은 \(-1 &lt; r \le 1\)이다.</p>
+          </div>
+          <p>그림 1의 슬라이더로 \(r\)을 바꾸어 보자. \(r = 0.95\)처럼 1에 가까우면 천천히, \(r = 0.3\)이면 빠르게 0으로 간다. \(r = -0.8\)이면 부호를 바꾸며 0으로 줄어들고, \(r = -1.1\)이면 부호를 바꾸며 점점 커져 진동한다.<sup class="fn"><a href="#fn-calc2-geo-seq-1">1</a></sup></p>
+
+          <h3><span class="no">1.3.2</span>밑이 다른 거듭제곱이 섞일 때</h3>
+          <p>\(\dfrac{3^n + 2^n}{3^n - 2^n}\)처럼 밑이 다른 거듭제곱이 섞이면, 가장 빨리 커지는 항, 곧 절댓값이 가장 큰 밑의 거듭제곱으로 분모와 분자를 나눈다. 그러면 나머지 항은 \(\left(\dfrac{2}{3}\right)^n\)처럼 공비의 절댓값이 1보다 작은 등비수열이 되어 0으로 사라진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="공비 r 의 범위에 따른 등비수열의 극한 수직선">
+              <g class="s">
+                <line x1="30" y1="50" x2="490" y2="50" class="ax"/>
+                <line x1="160" y1="42" x2="160" y2="58" class="k"/><line x1="360" y1="42" x2="360" y2="58" class="k"/>
+                <text x="160" y="35" text-anchor="middle">−1</text><text x="360" y="35" text-anchor="middle">1</text>
+                <text x="95" y="80" text-anchor="middle">진동</text><text x="260" y="80" text-anchor="middle">0으로 수렴</text><text x="360" y="100" text-anchor="middle">1로 수렴</text><text x="430" y="80" text-anchor="middle">∞로 발산</text>
+                <rect x="161" y="46" width="198" height="8" class="la"/><circle cx="360" cy="50" r="4" class="fb"/>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(\{r^n\}\)은 \(-1 &lt; r \le 1\)에서만 수렴한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>\(\lim_{n \to \infty} \dfrac{3^{n+1} + 2^n}{3^n - 2^{n+1}}\)을 구하여라. 또 수열 \(\left\{\left(\dfrac{x - 1}{2}\right)^n\right\}\)이 수렴하도록 하는 실수 \(x\)의 범위를 구하여라.</p>
+          </div>
+          <p>분자와 분모를 \(3^n\)으로 나누면 \(\dfrac{3 + \left(\frac{2}{3}\right)^n}{1 - 2\left(\frac{2}{3}\right)^n}\)이다. \(\left(\dfrac{2}{3}\right)^n \to 0\)이므로 극한은 \(\dfrac{3 + 0}{1 - 0} = 3\)이다.</p>
+          <p>공비가 \(\dfrac{x - 1}{2}\)이므로 \(-1 &lt; \dfrac{x - 1}{2} \le 1\)이어야 한다. 각 변에 2를 곱하고 1을 더하면 \(-1 &lt; x \le 3\)이다. 경계에서 \(x = 3\)이면 공비가 1이라 1로 수렴하지만, \(x = -1\)이면 공비가 \(-1\)이라 진동한다. 그래서 한쪽 끝만 포함된다.</p>
+          <p>아래 탐구 카드에서 공비에 따른 \(r^n\)의 극한과, 밑이 다른 거듭제곱의 비교를 직접 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-geo-seq-1">\(r^n\)이 0에 얼마나 빨리 가는지는 \(|r|\)에 달려 있다. \(0.5^{10} \approx 0.001\)이지만 \(0.99^{10} \approx 0.90\)이다. 공비가 1에 가까울수록 수렴이 느리다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>등비수열 \(\{r^n\}\)은 \(|r| &lt; 1\)이면 0으로, \(r = 1\)이면 1로 수렴하고, \(r &gt; 1\)이면 발산, \(r \le -1\)이면 진동한다. 밑이 다른 거듭제곱이 섞이면 가장 큰 밑으로 나누어 나머지를 0으로 보낸다. 그래서 처음 질문의 \(-0.99\)를 곱한 수열은 부호를 바꾸며 0으로 수렴하고, \(-1\)을 곱한 수열은 \(\pm 1\)을 오가며 진동한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a></div></nav>
+
       <article class="card" id="card-calc2-geo-ratio">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>공비 \(r\)에 따라 \(r^n\)은 어디로 갈까?</h2><span class="kind">등비수열의 극한 · 수렴 조건</span>
+          <span class="no">탐구 1</span><h2>공비 \(r\)에 따라 \(r^n\)은 어디로 갈까?</h2><span class="kind">등비수열의 극한 · 수렴 조건</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -77,34 +134,34 @@
                 <div><dt>\(r^{30}\)</dt><dd class="n-30">—</dd></div>
                 <div><dt>판정</dt><dd class="n-j">—</dd></div>
               </dl>
-              <p class="fig-note">아래 수직선에는 지금까지 고른 \(r\)가 판정 색으로 쌓입니다. 초록은 0에 수렴, 노랑은 1에 수렴, 빨강은 양의 무한대로 발산, 회색은 진동입니다.</p>
+              <p class="fig-note">아래 수직선에는 지금까지 고른 \(r\)가 판정 색으로 쌓인다. 초록은 0에 수렴, 노랑은 1에 수렴, 빨강은 양의 무한대로 발산, 회색은 진동이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(0.9^n\)과 \(1.1^n\)은 공비가 0.2밖에 차이 나지 않습니다. 그런데 극한은 전혀 다릅니다. 공비 \(r\)의 어느 범위에서 등비수열 \(\{r^n\}\)이 수렴할까요?</li>
-            <li><span class="tag">복원</span>첫째항이 \(a\), 공비가 \(r\)인 등비수열의 일반항은 \(a_n = ar^{n-1}\)입니다. 수열은 극한값 둘레의 띠에 끝까지 머물 때 수렴하고, 그렇지 않으면 양의 무한대·음의 무한대로 발산하거나 진동합니다.</li>
-            <li><span class="tag">설명</span>등비수열 \(\{r^n\}\)의 수렴, 발산은 다음과 같습니다. ① \(r &gt; 1\)이면 \(\lim r^n = \infty\) (발산) ② \(r = 1\)이면 \(\lim r^n = 1\) (수렴) ③ \(-1 &lt; r &lt; 1\)이면 \(\lim r^n = 0\) (수렴) ④ \(r \le -1\)이면 진동 (발산). 따라서 \(\{r^n\}\)이 수렴할 조건은 <b>\(-1 &lt; r \le 1\)</b>입니다. ①은 \(r = 1 + h (h &gt; 0)\)로 두면 \((1 + h)^n \ge 1 + nh\)이고, \(1 + nh\)가 한없이 커지는 데서 나옵니다. ③은 \(|r| &lt; 1\)이면 \(\frac{1}{|r|} &gt; 1\)이므로 ①에서 \(\frac{1}{|r|^n} \to \infty\), 곧 \(|r|^n \to 0\)입니다.</li>
-            <li><span class="tag">연결</span>첫째항이 \(a\)인 등비수열 \(ar^{n-1}\)은 \(a \ne 0\)이면 같은 조건 \(-1 &lt; r \le 1\)에서 수렴합니다. \(r^n \to 0\)이라는 사실은 등비급수의 합 공식에서 부분합 \(\frac{a(1 - r^n)}{1 - r}\)의 극한을 구할 때 바로 쓰입니다.</li>
-            <li><span class="tag">적용</span>\(r\)를 \(-1.5\)에서 1.5까지 천천히 움직여 수직선을 채워 보세요. 색이 바뀌는 경계는 어디인가요? 경계 \(r = 1\)과 \(r = -1\)에서는 어떤 일이 일어나나요? \(r = 0.95\)와 \(r = -0.95\)에서 \(r^{30}\)을 비교하고, 음수 공비에서 점이 0의 위아래를 번갈아 가는 이유를 설명해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>수렴 조건은 \(-1 &lt; r &lt; 1\)이 아니라 \(-1 &lt; r \le 1\)입니다. \(r = 1\)이면 모든 항이 1인 상수수열이라 1에 수렴합니다. 반면 \(r = -1\)이면 \(-1, 1, -1, \cdots\)로 진동합니다. 또 \(|r|\)가 1에 가까우면 0에 다가가는 속도가 느려서 처음 30개 항만으로는 수렴인지 알기 어렵습니다. \(0.99^{30} \approx 0.74\)입니다.</li>
+            <li><span class="tag">질문</span>\(0.9^n\)과 \(1.1^n\)은 공비가 0.2밖에 차이 나지 않는데 극한은 전혀 다르다. 공비 \(r\)의 어느 범위에서 등비수열 \(\{r^n\}\)이 수렴할까?</li>
+            <li><span class="tag">복원</span>첫째항이 \(a\), 공비가 \(r\)인 등비수열의 일반항은 \(a_n = ar^{n-1}\)이다. 그리고 수열은 극한값 둘레의 띠에 끝까지 머물 때 수렴하고, 그렇지 않으면 양의 무한대나 음의 무한대로 발산하거나 진동한다.</li>
+            <li><span class="tag">설명</span>등비수열 \(\{r^n\}\)은 \(r &gt; 1\)이면 \(\lim r^n = \infty\)로 발산하고, \(r = 1\)이면 1에, \(-1 &lt; r &lt; 1\)이면 0에 수렴하며, \(r \le -1\)이면 진동한다. 따라서 \(\{r^n\}\)이 수렴할 조건은 \(-1 &lt; r \le 1\)이다. 첫째 경우는 \(r = 1 + h (h &gt; 0)\)로 두면 \((1 + h)^n \ge 1 + nh\)이고 \(1 + nh\)가 한없이 커지는 데서 나온다. 셋째 경우는 \(|r| &lt; 1\)이면 \(\frac{1}{|r|} &gt; 1\)이므로 첫째 경우에서 \(\frac{1}{|r|^n} \to \infty\), 곧 \(|r|^n \to 0\)이다.</li>
+            <li><span class="tag">연결</span>첫째항이 \(a\)인 등비수열 \(ar^{n-1}\)도 \(a \ne 0\)이면 같은 조건 \(-1 &lt; r \le 1\)에서 수렴한다. 그리고 \(r^n \to 0\)이라는 사실은 등비급수의 합 공식에서 부분합 \(\frac{a(1 - r^n)}{1 - r}\)의 극한을 구할 때 바로 쓰인다.</li>
+            <li><span class="tag">적용</span>\(r\)를 \(-1.5\)에서 1.5까지 천천히 움직여 수직선을 채우며 색이 바뀌는 경계가 어디인지, 경계 \(r = 1\)과 \(r = -1\)에서는 어떤 일이 일어나는지 보자. 그리고 \(r = 0.95\)와 \(r = -0.95\)에서 \(r^{30}\)을 비교하고, 음수 공비에서 점이 0의 위아래를 번갈아 가는 이유를 설명해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>수렴 조건은 \(-1 &lt; r &lt; 1\)이 아니라 \(-1 &lt; r \le 1\)이다. \(r = 1\)이면 모든 항이 1인 상수수열이라 1에 수렴하지만, \(r = -1\)이면 \(-1, 1, -1, \cdots\)로 진동하기 때문이다. 또 \(|r|\)가 1에 가까우면 0에 다가가는 속도가 느려서, \(0.99^{30} \approx 0.74\)처럼 처음 30개 항만으로는 수렴인지 알기 어렵다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">수열 \(\{(\frac{x - 1}{2})^n\}\)이 수렴하도록 하는 실수 \(x\)의 범위는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1 &lt; x \le 3\)<span class="why"><b>맞습니다.</b> 공비 \(\frac{x - 1}{2}\)가 \(-1 &lt; \frac{x - 1}{2} \le 1\)을 만족해야 하므로 \(-2 &lt; x - 1 \le 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-1 &lt; x &lt; 3\)<span class="why"><b>공비 1을 뺐습니다.</b> \(x = 3\)이면 공비가 1이라 모든 항이 1이고, 1에 수렴합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-1 \le x \le 3\)<span class="why"><b>공비 \(-1\)을 넣었습니다.</b> \(x = -1\)이면 공비가 \(-1\)이라 \(-1, 1, -1, \cdots\)로 진동합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(0 &lt; x &lt; 2\)<span class="why"><b>공비가 아니라 \(x - 1\)에 조건을 걸었습니다.</b> 공비는 \(\frac{x - 1}{2}\)이므로 2로 나눈 값이 \(-1\)과 1 사이에 있어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1 &lt; x \le 3\)<span class="why"><b>맞다.</b> 공비 \(\frac{x - 1}{2}\)가 \(-1 &lt; \frac{x - 1}{2} \le 1\)을 만족해야 하므로 \(-2 &lt; x - 1 \le 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-1 &lt; x &lt; 3\)<span class="why"><b>공비 1을 뺐다.</b> \(x = 3\)이면 공비가 1이라 모든 항이 1이고, 1에 수렴한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-1 \le x \le 3\)<span class="why"><b>공비 \(-1\)을 넣었다.</b> \(x = -1\)이면 공비가 \(-1\)이라 \(-1, 1, -1, \cdots\)로 진동한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(0 &lt; x &lt; 2\)<span class="why"><b>공비가 아니라 \(x - 1\)에 조건을 걸었다.</b> 공비는 \(\frac{x - 1}{2}\)이므로 2로 나눈 값이 \(-1\)과 1 사이에 있어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a></div></nav>
 
       <article class="card" id="card-calc2-geo-compare">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>밑이 다른 거듭제곱이 섞이면 어느 쪽이 극한을 정할까?</h2><span class="kind">등비수열의 극한 · 가장 큰 밑으로 나누기</span>
+          <span class="no">탐구 2</span><h2>밑이 다른 거듭제곱이 섞이면 어느 쪽이 극한을 정할까?</h2><span class="kind">등비수열의 극한 · 가장 큰 밑으로 나누기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,39 +183,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\frac{3^{n+1} + 2^n}{3^n + 2^n}\)은 분자와 분모가 모두 한없이 커집니다. \(3^n\)과 \(2^n\) 가운데 어느 쪽이 극한값을 정할까요?</li>
-            <li><span class="tag">복원</span>\(-1 &lt; r &lt; 1\)이면 \(\lim r^n = 0\)입니다. 분자와 분모가 모두 발산하는 분수식은 분모의 '가장 빨리 커지는 부분'으로 나누어 수렴하는 꼴로 바꾸었습니다.</li>
-            <li><span class="tag">설명</span>밑이 다른 거듭제곱이 섞이면, <b>밑의 절댓값이 가장 큰 거듭제곱</b>으로 분자와 분모를 나눕니다. \(3^n\)으로 나누면 \(\frac{3 + (\frac{2}{3})^n}{1 + (\frac{2}{3})^n}\)이 되고, \(0 &lt; \frac{2}{3} &lt; 1\)이므로 \((\frac{2}{3})^n \to 0\)입니다. 그래서 극한값은 \(\frac{3}{1} = 3\)입니다. 일반적으로 \(a &gt; b &gt; 0\)이면 \(\frac{b^n}{a^n} = (\frac{b}{a})^n \to 0\)이므로, 큰 밑의 거듭제곱 앞에 붙은 계수끼리의 비가 극한값이 됩니다.</li>
-            <li><span class="tag">연결</span>이 방법은 \(\infty/\infty\) 꼴 다항식에서 최고차항으로 나눈 것과 같은 생각입니다. 다항식에서는 차수가 높은 항이, 거듭제곱에서는 밑이 큰 항이 결국 나머지를 압도합니다. 또 \(x\)가 들어간 \(\lim \frac{x^{2n+1} + 1}{x^{2n} + 1}\) 같은 식은 \(|x| &lt; 1\), \(|x| = 1\), \(|x| &gt; 1\)로 나누어 같은 방법으로 구합니다.</li>
-            <li><span class="tag">적용</span>\(a = 3\), \(b = 2\)에서 \(n\)을 30까지 옮기며 \((\frac{2}{3})^n\)이 0에 가까워지는 것을 확인하세요. \(a\)와 \(b\)를 바꾸어 \(a &lt; b\)로 만들면 극한은 왜 1이 되나요? \(a = b\)일 때 극한이 \(\frac{a + 1}{2}\)인 이유를 식으로 설명해 보세요. \(a = 4\), \(b = 5\)처럼 두 밑이 가까우면 수렴이 느린 이유도 \((\text{작은 밑}/\text{큰 밑})^n\) 값에서 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>작은 밑의 거듭제곱으로 나누면 \((\frac{3}{2})^n\)처럼 발산하는 항이 남아 몫의 성질을 쓸 수 없습니다. 또 \(3^{n+1}\)은 \(3 \cdot 3^n\)이므로, 나눈 뒤 남는 계수 3을 빠뜨리지 않아야 합니다. \(2^{2n}\)처럼 지수에 계수가 붙으면 \(4^n\)으로 고쳐 밑을 비교합니다.</li>
+            <li><span class="tag">질문</span>\(\frac{3^{n+1} + 2^n}{3^n + 2^n}\)은 분자와 분모가 모두 한없이 커진다. \(3^n\)과 \(2^n\) 가운데 어느 쪽이 극한값을 정할까?</li>
+            <li><span class="tag">복원</span>\(-1 &lt; r &lt; 1\)이면 \(\lim r^n = 0\)이다. 그리고 분자와 분모가 모두 발산하는 분수식은 분모에서 가장 빨리 커지는 부분으로 나누어 수렴하는 꼴로 바꾸었다.</li>
+            <li><span class="tag">설명</span>밑이 다른 거듭제곱이 섞이면 <em>밑의 절댓값이 가장 큰 거듭제곱</em>으로 분자와 분모를 나눈다. \(3^n\)으로 나누면 \(\frac{3 + (\frac{2}{3})^n}{1 + (\frac{2}{3})^n}\)이 되고, \(0 &lt; \frac{2}{3} &lt; 1\)이므로 \((\frac{2}{3})^n \to 0\)이어서 극한값은 \(\frac{3}{1} = 3\)이다. 일반적으로 \(a &gt; b &gt; 0\)이면 \(\frac{b^n}{a^n} = (\frac{b}{a})^n \to 0\)이므로, 큰 밑의 거듭제곱 앞에 붙은 계수끼리의 비가 극한값이 된다.</li>
+            <li><span class="tag">연결</span>이 방법은 \(\infty/\infty\) 꼴 다항식에서 최고차항으로 나눈 것과 같은 생각이다. 다항식에서는 차수가 높은 항이, 거듭제곱에서는 밑이 큰 항이 결국 나머지를 압도한다. 또 \(x\)가 들어간 \(\lim \frac{x^{2n+1} + 1}{x^{2n} + 1}\) 같은 식은 \(|x| &lt; 1\), \(|x| = 1\), \(|x| &gt; 1\)로 나누어 같은 방법으로 구한다.</li>
+            <li><span class="tag">적용</span>\(a = 3\), \(b = 2\)에서 \(n\)을 30까지 옮기며 \((\frac{2}{3})^n\)이 0에 가까워지는 것을 확인하고, \(a\)와 \(b\)를 바꾸어 \(a &lt; b\)로 만들면 극한이 왜 1이 되는지 보자. 그리고 \(a = b\)일 때 극한이 \(\frac{a + 1}{2}\)인 이유를 식으로 설명하고, \(a = 4\), \(b = 5\)처럼 두 밑이 가까우면 수렴이 느린 이유도 \((\text{작은 밑}/\text{큰 밑})^n\) 값에서 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>작은 밑의 거듭제곱으로 나누면 \((\frac{3}{2})^n\)처럼 발산하는 항이 남아 몫의 성질을 쓸 수 없다. 또 \(3^{n+1}\)은 \(3 \cdot 3^n\)이므로 나눈 뒤 남는 계수 3을 빠뜨리지 않아야 하고, \(2^{2n}\)처럼 지수에 계수가 붙으면 \(4^n\)으로 고쳐 밑을 비교한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{n\to \infty} \frac{2^{2n} + 3^n}{4^n - 3^{n+1}}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> \(2^{2n} = 4^n\)이므로 \(4^n\)으로 나누면 \(\frac{1 + (\frac{3}{4})^n}{1 - 3(\frac{3}{4})^n} \to \frac{1}{1} = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\frac{1}{3}\)<span class="why"><b>\(3^n\)이 이긴다고 보았습니다.</b> \(2^{2n}\)은 \(4^n\)이라 \(3^n\)보다 빨리 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>분자의 밑을 2로 읽었습니다.</b> \(2^{2n} = (2^2)^n = 4^n\)이라 분모의 \(4^n\)과 같은 크기로 자랍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>\(\infty/\infty\)를 발산으로 보았습니다.</b> 분자와 분모가 모두 커져도 큰 밑으로 나누면 수렴하는 꼴이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞다.</b> \(2^{2n} = 4^n\)이므로 \(4^n\)으로 나누면 \(\frac{1 + (\frac{3}{4})^n}{1 - 3(\frac{3}{4})^n} \to \frac{1}{1} = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-\frac{1}{3}\)<span class="why"><b>\(3^n\)이 이긴다고 보았다.</b> \(2^{2n}\)은 \(4^n\)이라 \(3^n\)보다 빨리 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>분자의 밑을 2로 읽었다.</b> \(2^{2n} = (2^2)^n = 4^n\)이라 분모의 \(4^n\)과 같은 크기로 자란다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>\(\infty/\infty\)를 발산으로 보았다.</b> 분자와 분모가 모두 커져도 큰 밑으로 나누면 수렴하는 꼴이 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">94문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">94문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -166,6 +224,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc2/seq.js"></script>
 <script src="../../js/cards/calc2/geo-ratio.js"></script>
 <script src="../../js/cards/calc2/geo-compare.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>탈출 속도와 우주선 발사 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="역학적 에너지 보존으로 행성마다 탈출 속도가 다름을 이해하고, 그 차이로 행성의 대기 구성이 달라짐을 정성적으로 살펴본다. 우주선이 궤도에 오르는 원리를 운동량 보존으로 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-rocket .fig-2 { align-content: start; }
   </style>
@@ -41,18 +47,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-rocket"><span class="mono">1.5.1</span>로켓은 무엇을 밀고 나아갈까?</a></li>
-        <li><a href="#card-mech-escape"><span class="mono">1.5.2</span>달에는 왜 대기가 없을까?</a></li>
+        <li><a href="#text-mech-escape"><span class="mono">본문</span>탈출 속도와 우주선 발사</a></li>
+        <li><a href="#card-phy-rocket"><span class="mono">탐구 1</span>로켓은 무엇을 밀고 나아갈까?</a></li>
+        <li><a href="#card-mech-escape"><span class="mono">탐구 2</span>달에는 왜 대기가 없을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mech-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">33문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mech&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">14문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=mech-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">33문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mech-1-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mech-escape" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>탈출 속도와 우주선 발사</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공을 위로 던지면 빠를수록 높이 올라가지만 결국 떨어진다. 그런데 높이 올라갈수록 지구의 중력이 약해진다. 그렇다면 어떤 속력 이상으로 던지면 중력이 너무 약해져 다시는 떨어지지 않는 것은 아닐까? 그 속력은 얼마이며, 달에 대기가 거의 없는 것과는 어떤 관계가 있을까?</p>
+          <figure class="q-fig" data-q="mech-escape">
+            <svg viewBox="0 0 520 230" role="img" aria-label="발사 속력에 따른 최고 도달 높이와 탈출 속도"></svg>
+            <div class="q-ctl"><label>천체 (0 지구, 1 달, 2 화성) <input type="range" data-k="b" min="0" max="2" step="1" value="0"><output data-k="b"></output></label><label>발사 속력 (탈출 속도의 %) <input type="range" data-k="f" min="10" max="100" step="5" value="70"><output data-k="f"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 수직으로 쏘아 올린 물체가 올라가는 최고 높이(천체 반지름의 몇 배인지). 발사 속력이 탈출 속도에 가까워지면 높이가 한없이 커지고, 탈출 속도 이상이면 돌아오지 않는다(공기 저항 무시).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>만유인력(<a href="1-4.html">케플러 법칙과 만유인력</a>), 역학적 에너지 보존(물리학), 운동량 보존.</div>
+
+          <h3><span class="no">1.5.1</span>만유인력에 의한 퍼텐셜 에너지</h3>
+          <p>지표 근처에서는 중력 퍼텐셜 에너지를 \(mgh\)로 썼다. 그러나 멀리 가면 중력이 거리의 제곱에 반비례하여 약해지므로 이 식은 맞지 않는다. 지구 중심에서 거리 \(r\)인 곳의 중력 퍼텐셜 에너지는 무한히 먼 곳을 0으로 잡아 \(U = -\dfrac{GMm}{r}\)이다. 음수인 것은 무한히 먼 곳까지 가려면 에너지를 더 주어야 하기 때문이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">탈출 속도</span></span>
+            <p>질량 \(M\), 반지름 \(R\)인 천체의 표면에서 물체가 무한히 먼 곳까지 가려면 역학적 에너지가 0 이상이어야 한다. \(\dfrac{1}{2}mv^2 - \dfrac{GMm}{R} \ge 0\)에서 \[v_{\text{탈출}} = \sqrt{\frac{2GM}{R}}\] 지구는 약 11.2 km/s, 달은 약 2.4 km/s이다.</p>
+          </div>
+          <p>탈출 속도보다 느리게 쏘면 에너지가 음수라 어느 높이에서 멈추고 떨어진다. 에너지 보존 \(\dfrac{1}{2}mv^2 - \dfrac{GMm}{R} = -\dfrac{GMm}{R + h}\)에서 최고 높이는 \(h = \dfrac{Rv^2}{v_{\text{탈출}}^2 - v^2}\)이다. 그림 1에서 발사 속력을 탈출 속도의 70%로 두면 높이는 반지름의 약 0.96배, 90%이면 약 4.3배이다. 100%에 가까워질수록 높이가 한없이 커진다.</p>
+
+          <h3><span class="no">1.5.2</span>로켓과 대기</h3>
+          <p>실제 로켓은 한꺼번에 탈출 속도로 쏘는 것이 아니라 연료를 태워 가스를 뒤로 내뿜으며 계속 가속한다. 가스가 뒤로 받는 운동량만큼 로켓이 앞으로 운동량을 얻는다. 지구 둘레를 도는 데는 약 7.9 km/s, 지구를 벗어나는 데는 약 11.2 km/s가 필요하다.</p>
+          <p>기체 분자는 온도에 따라 빠르게 움직인다. 달은 탈출 속도가 2.4 km/s로 낮아, 햇빛에 데워진 기체 분자 가운데 빠른 것들이 오랜 세월 동안 하나둘 빠져나갔다. 그래서 달에는 대기가 거의 남아 있지 않다.<sup class="fn"><a href="#fn-mech-escape-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="천체별 탈출 속도">
+              <g class="s">
+                <rect x="120" y="20" width="336" height="22" class="lb"/><text x="112" y="36" text-anchor="end">지구</text><text x="462" y="36">11.2 km/s</text>
+                <rect x="120" y="50" width="150" height="22" class="lc"/><text x="112" y="66" text-anchor="end">화성</text><text x="276" y="66">5.0 km/s</text>
+                <rect x="120" y="80" width="72" height="22" class="lk"/><text x="112" y="96" text-anchor="end">달</text><text x="198" y="96">2.4 km/s</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 질량이 작고 반지름에 비해 가벼운 천체일수록 탈출 속도가 낮아 기체를 붙잡아 두기 어렵다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+            <p>지구의 질량은 \(6.0 \times 10^{24}\) kg, 반지름은 \(6.4 \times 10^6\) m이다. 지구의 탈출 속도를 구하여라. 또 지표에서 8 km/s로 수직 발사한 물체는 지표에서 얼마나 높이 올라가는가? (\(G = 6.67 \times 10^{-11}\))</p>
+          </div>
+          <p>\(v_{\text{탈출}} = \sqrt{\dfrac{2 \times 6.67 \times 10^{-11} \times 6.0 \times 10^{24}}{6.4 \times 10^6}} = \sqrt{1.25 \times 10^8} \approx 1.12 \times 10^4\) m/s, 곧 약 11.2 km/s이다.</p>
+          <p>8 km/s로 쏘면 \(h = \dfrac{6400 \times 8^2}{11.2^2 - 8^2} = \dfrac{409\,600}{61.4} \approx 6670\) km이다. 지구 반지름만큼 올라간 셈이다. 같은 속력으로 수평으로 쏘면 지구 둘레를 도는 궤도에 오를 수 있다. 수직이냐 수평이냐에 따라 같은 속력도 전혀 다른 결과를 낳는다.</p>
+          <p>아래 탐구 카드에서 로켓이 무엇을 밀고 나아가는지, 달에 대기가 없는 까닭을 직접 따져 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mech-escape-1">기체 분자의 평균 속력이 탈출 속도의 약 6분의 1을 넘으면 수십억 년 동안 대부분 빠져나간다고 어림한다. 지구도 가장 가벼운 수소와 헬륨은 대기에 거의 남아 있지 않다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>멀리서는 중력 퍼텐셜 에너지가 \(-\frac{GMm}{r}\)이며, 역학적 에너지가 0 이상이 되는 속력 \(\sqrt{\frac{2GM}{R}}\)이 탈출 속도이다. 그보다 느리면 \(\frac{Rv^2}{v_{\text{탈출}}^2 - v^2}\)까지 올라갔다 떨어진다. 그래서 처음 질문의 답은 지구에서 약 11.2 km/s이며, 탈출 속도가 낮은 달은 기체 분자가 빠져나가 대기가 거의 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-4.html#card-is1-airbag"><small class="mono">통합과학1 3.4</small>에어백은 무엇을 줄이고, 무엇은 줄이지 못할까?</a><a href="../../c/is1/3-4.html#card-is1-egg-drop"><small class="mono">통합과학1 3.4</small>떨어뜨린 달걀이 깨지지 않게 하려면?</a><a href="../../c/sie2/1-3.html#text-sie2-paper-column"><small class="mono">과학탐구실험2 1.3</small>실생활 문제 해결 도구 설계·제작</a><a href="../../c/phy/1-3.html#card-phy-horse"><small class="mono">물리학 1.3</small>수레도 말을 당긴다면, 말은 어떻게 수레를 끌까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/1-3.html#card-phy-collision"><small class="mono">물리학 1.3</small>부딪칠 때 무엇이 보존될까?</a><a href="../../c/adphy/1-2.html#text-adphy-elastic"><small class="mono">고급 물리학 1.2</small>보존력과 충돌</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-7.html#card-labphy-explode"><small class="mono">물리학 실험 2.7</small>붙어 있던 두 수레가 튕겨 나가면 운동량의 합은 얼마일까?</a><a href="../../c/labphy/2-7.html#text-labphy-recoil"><small class="mono">물리학 실험 2.7</small>운동량 보존</a><a href="../../c/adphy/1-2.html#card-adphy-collide2d"><small class="mono">고급 물리학 1.2</small>당구공은 왜 직각으로 갈라질까?</a></div></nav>
+
       <article class="card" id="card-phy-rocket">
         <header class="card-head">
-          <span class="no">1.5.1</span><h2>로켓은 무엇을 밀고 나아갈까?</h2><span class="kind">운동량 보존 · 분사</span>
+          <span class="no">탐구 1</span><h2>로켓은 무엇을 밀고 나아갈까?</h2><span class="kind">운동량 보존 · 분사</span>
         </header>
         <div class="card-body">
           <div class="card-fig fig-2">
@@ -75,33 +132,33 @@
                 <div><dt>잘게 나눈 극한</dt><dd class="vlim">—</dd></div>
                 <div><dt>운동량 합</dt><dd class="psum">—</dd></div>
               </dl>
-              <p class="fig-note">화학 로켓의 분사 속력은 대략 2~4.5 km/s입니다. 중력과 공기 저항은 뺐습니다. 화면의 움직임은 속력을 줄여 그린 모식입니다.</p>
+              <p class="fig-note">화학 로켓의 분사 속력은 대략 2~4.5 km/s이다. 중력과 공기 저항은 뺐고, 화면의 움직임은 속력을 줄여 그린 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>로켓은 뒤로 뿜은 기체가 공기를 밀어서 나아가는 걸까요? 그렇다면 공기가 없는 우주에서는 어떻게 움직일까요?</li>
-            <li><span class="tag">복원</span>작용·반작용 법칙에 따라 힘은 쌍으로 생깁니다. 로켓이 기체를 뒤로 밀면, 기체도 로켓을 앞으로 같은 크기로 같은 시간 동안 밉니다.</li>
-            <li><span class="tag">설명</span>두 힘이 같은 시간 작용하므로, 로켓이 얻은 운동량과 기체가 얻은 운동량은 크기가 같고 방향이 반대입니다. 처음에 합이 0이었다면 끝까지 0입니다. 로켓이 미는 것은 공기가 아니라 <em>자기가 뿜은 기체</em>입니다.</li>
-            <li><span class="tag">연결</span>한 번 뿜을 때마다 <span class="formula">M v = (M − Δm) v′ + Δm (v′ − u)</span>. 로켓이 가벼워질수록 같은 양을 뿜어도 속력이 더 많이 붙습니다. 잘게 나눌수록 최종 속력은 <span class="formula">u ln(m₀ / m)</span>에 다가갑니다 [심화].</li>
-            <li><span class="tag">적용</span>연료 80%를 ‘1번에’ 뿜을 때와 ‘50번’에 나눠 뿜을 때의 최종 속력을 비교하세요. 로켓과 기체의 운동량 합은 어떻게 되나요? 질량 중심 표시는 움직이나요?</li>
-            <li class="warn"><span class="tag">판단</span>공기가 있으면 오히려 공기 저항 때문에 손해입니다. 또 속력을 올리려면 연료를 더 싣는 것보다 분사 속력 u를 키우는 편이 효과가 큽니다. 연료를 늘리면 그 연료를 밀어 올릴 연료도 필요해서, 최종 속력은 로그로만 늘어나기 때문입니다.</li>
+            <li><span class="tag">질문</span>로켓은 뒤로 뿜은 기체가 공기를 밀어서 나아가는 걸까? 그렇다면 공기가 없는 우주에서는 어떻게 움직일까?</li>
+            <li><span class="tag">복원</span>작용 반작용 법칙에 따라 힘은 쌍으로 생긴다. 그래서 로켓이 기체를 뒤로 밀면, 기체도 로켓을 앞으로 같은 크기로 같은 시간 동안 민다.</li>
+            <li><span class="tag">설명</span>두 힘이 같은 시간 작용하므로, 로켓이 얻은 운동량과 기체가 얻은 운동량은 크기가 같고 방향이 반대이다. 처음에 합이 0이었다면 끝까지 0이다. 즉 로켓이 미는 것은 공기가 아니라 <em>자기가 뿜은 기체</em>이다.</li>
+            <li><span class="tag">연결</span>한 번 뿜을 때마다 <span class="formula">M v = (M − Δm) v′ + Δm (v′ − u)</span>이다. 그래서 로켓이 가벼워질수록 같은 양을 뿜어도 속력이 더 많이 붙고, 잘게 나눌수록 최종 속력은 <span class="formula">u ln(m₀ / m)</span>에 다가간다(심화).</li>
+            <li><span class="tag">적용</span>연료 80%를 ‘1번에’ 뿜을 때와 ‘50번’에 나눠 뿜을 때의 최종 속력을 비교해 보자. 로켓과 기체의 운동량 합이 어떻게 되는지, 질량 중심 표시가 움직이는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>공기가 있으면 오히려 공기 저항 때문에 손해이다. 또 속력을 올리려면 연료를 더 싣는 것보다 분사 속력 u를 키우는 편이 효과가 크다. 연료를 늘리면 그 연료를 밀어 올릴 연료도 필요해서, 최종 속력은 로그로만 늘어나기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">마찰 없는 얼음판 위에 선 60 kg인 학생이 3 kg짜리 공을 앞으로 5 m/s로 던졌습니다. 던진 뒤 학생은?</p>
+          <p class="q">마찰 없는 얼음판 위에 선 60 kg인 학생이 3 kg짜리 공을 앞으로 5 m/s로 던졌다. 던진 뒤 학생은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>움직이지 않는다. 미는 벽이 없으므로<span class="why"><b>로켓에 대한 오해와 같은 답입니다.</b> 학생은 공을 밀었고, 공도 학생을 뒤로 밀었습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>뒤로 0.25 m/s로 미끄러진다.<span class="why"><b>맞습니다.</b> 처음 운동량이 0이므로 60 × v = 3 × 5, v = 0.25 m/s입니다. 질량이 20배라 속력은 1/20입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>뒤로 5 m/s로 미끄러진다.<span class="why"><b>힘이 같다는 것을 속력이 같다는 것으로 옮긴 답입니다.</b> 같은 것은 힘과 운동량의 크기이고, 속력은 질량에 반비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>움직이지 않는다. 미는 벽이 없으므로<span class="why"><b>로켓에 대한 오해와 같은 답이다.</b> 학생은 공을 밀었고, 공도 학생을 뒤로 밀었다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>뒤로 0.25 m/s로 미끄러진다.<span class="why"><b>맞다.</b> 처음 운동량이 0이므로 60 × v = 3 × 5, v = 0.25 m/s이다. 질량이 20배라 속력은 1/20이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>뒤로 5 m/s로 미끄러진다.<span class="why"><b>힘이 같다는 것을 속력이 같다는 것으로 옮긴 답이다.</b> 같은 것은 힘과 운동량의 크기이고, 속력은 질량에 반비례한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-4.html#card-is1-airbag"><small class="mono">통합과학1 3.4</small>에어백은 무엇을 줄이고, 무엇은 줄이지 못할까?</a><a href="../../c/is1/3-4.html#card-is1-egg-drop"><small class="mono">통합과학1 3.4</small>떨어뜨린 달걀이 깨지지 않게 하려면?</a><a href="../../c/phy/1-3.html#card-phy-horse"><small class="mono">물리학 1.3</small>수레도 말을 당긴다면, 말은 어떻게 수레를 끌까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-7.html#card-labphy-explode"><small class="mono">물리학 실험 2.7</small>붙어 있던 두 수레가 튕겨 나가면 운동량의 합은 얼마일까?</a><a href="../../c/adphy/1-2.html#card-adphy-collide2d"><small class="mono">고급 물리학 1.2</small>당구공은 왜 직각으로 갈라질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-4.html#card-is1-airbag"><small class="mono">통합과학1 3.4</small>에어백은 무엇을 줄이고, 무엇은 줄이지 못할까?</a><a href="../../c/is1/3-4.html#card-is1-egg-drop"><small class="mono">통합과학1 3.4</small>떨어뜨린 달걀이 깨지지 않게 하려면?</a><a href="../../c/sie2/1-3.html#text-sie2-paper-column"><small class="mono">과학탐구실험2 1.3</small>실생활 문제 해결 도구 설계·제작</a><a href="../../c/phy/1-3.html#card-phy-horse"><small class="mono">물리학 1.3</small>수레도 말을 당긴다면, 말은 어떻게 수레를 끌까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/adphy/1-2.html#text-adphy-elastic"><small class="mono">고급 물리학 1.2</small>보존력과 충돌</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-7.html#card-labphy-explode"><small class="mono">물리학 실험 2.7</small>붙어 있던 두 수레가 튕겨 나가면 운동량의 합은 얼마일까?</a><a href="../../c/labphy/2-7.html#text-labphy-recoil"><small class="mono">물리학 실험 2.7</small>운동량 보존</a><a href="../../c/adphy/1-2.html#card-adphy-collide2d"><small class="mono">고급 물리학 1.2</small>당구공은 왜 직각으로 갈라질까?</a></div></nav>
 
       <article class="card" id="card-mech-escape">
         <header class="card-head">
-          <span class="no">1.5.2</span><h2>달에는 왜 대기가 없을까?</h2><span class="kind">탈출 속도 · 역학적 에너지 보존</span>
+          <span class="no">탐구 2</span><h2>달에는 왜 대기가 없을까?</h2><span class="kind">탈출 속도 · 역학적 에너지 보존</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -117,47 +174,52 @@
                 <div><dt>발사체의 운명</dt><dd class="n-fate">—</dd></div>
                 <div><dt>실제 대기</dt><dd class="n-T">—</dd></div>
               </dl>
-              <p class="fig-note">탈출 속도 = √(2GM/R). 분자의 평균 속력은 √(3kT/m)(제곱 평균 제곱근 속력)이고, 온도는 기체가 우주로 빠져나가는 대기 윗부분(외기권)의 대략값입니다(대기가 없는 달·수성은 낮 표면 온도). 분자 속력은 넓게 퍼져 있어서, 평균 속력이 탈출 속도의 약 1/6보다 크면 수십억 년 사이에 대부분 빠져나간다는 어림을 썼습니다. 실제 대기 탈출은 상층 대기 온도, 태양풍, 자기장에도 좌우됩니다.</p>
+              <p class="fig-note">탈출 속도는 √(2GM/R)이고, 분자의 평균 속력은 √(3kT/m)(제곱 평균 제곱근 속력)이며, 온도는 기체가 우주로 빠져나가는 대기 윗부분(외기권)의 대략값이다(대기가 없는 달과 수성은 낮 표면 온도). 분자 속력은 넓게 퍼져 있어서, 평균 속력이 탈출 속도의 약 1/6보다 크면 수십억 년 사이에 대부분 빠져나간다는 어림을 썼고, 실제 대기 탈출은 상층 대기 온도, 태양풍, 자기장에도 좌우된다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지구에는 두꺼운 대기가 있지만, 달에는 대기가 거의 없습니다. 목성은 가장 가벼운 기체인 수소까지 붙잡고 있습니다. 무엇이 이 차이를 만들까요?</li>
-            <li><span class="tag">복원</span>위로 던진 물체는 올라가면서 운동 에너지가 위치 에너지로 바뀝니다. 지표 근처에서는 위치 에너지를 mgh로 쓰지만, 멀리 올라가면 중력이 약해지므로 만유인력의 위치 에너지 −GMm/r을 써야 합니다.</li>
-            <li><span class="tag">설명</span>무한히 먼 곳의 위치 에너지를 0으로 잡으면, 표면에서 발사한 물체의 역학적 에너지는 ½mv² − GMm/R입니다. 이 값이 0 이상이면 물체는 다시 떨어지지 않고 영원히 멀어집니다. 그 경계의 속력이 <em>탈출 속도</em> v = √(2GM/R)이고, 지구에서는 약 11.2 km/s입니다. 물체의 질량과는 관계가 없습니다.</li>
-            <li><span class="tag">연결</span>기체 분자도 같은 규칙을 따릅니다. 분자는 온도에 따라 빠르게 움직이는데, 가볍고 뜨거울수록 빠릅니다. 탈출 속도가 작은 천체에서는 빠른 분자가 조금씩 우주로 빠져나가고, 오랜 시간이 지나면 대기가 사라집니다. 달은 질량이 작아 탈출 속도가 지구의 약 5분의 1입니다.</li>
-            <li><span class="tag">적용</span>지구에서 발사 속력을 올려 궤적이 “떨어짐”에서 “탈출”로 바뀌는 지점을 찾아보세요. 천체를 달로 바꾸고, 대기로 남을 수 있는 기체가 몇 가지인지 세어 보세요. 목성과 타이탄은 왜 탈출 속도가 크게 다른데도 둘 다 대기가 있을까요?</li>
-            <li class="warn"><span class="tag">판단</span>탈출 속도는 “엔진 없이 한 번 던졌을 때” 필요한 속력입니다. 로켓은 계속 연료를 태우며 올라가므로 처음부터 11.2 km/s일 필요가 없고, 궤도에 올리려면 탈출 속도보다 작은 약 7.9 km/s의 수평 속도가 필요합니다. 또 대기가 남는지는 탈출 속도만이 아니라 온도, 자기장, 태양풍에도 달려 있습니다.</li>
+            <li><span class="tag">질문</span>지구에는 두꺼운 대기가 있지만, 달에는 대기가 거의 없다. 목성은 가장 가벼운 기체인 수소까지 붙잡고 있는데, 무엇이 이 차이를 만들까?</li>
+            <li><span class="tag">복원</span>위로 던진 물체는 올라가면서 운동 에너지가 위치 에너지로 바뀐다. 지표 근처에서는 위치 에너지를 mgh로 쓰지만, 멀리 올라가면 중력이 약해지므로 만유인력의 위치 에너지 −GMm/r을 써야 한다.</li>
+            <li><span class="tag">설명</span>무한히 먼 곳의 위치 에너지를 0으로 잡으면, 표면에서 발사한 물체의 역학적 에너지는 ½mv² − GMm/R이고, 이 값이 0 이상이면 물체는 다시 떨어지지 않고 영원히 멀어진다. 그 경계의 속력이 <em>탈출 속도</em> v = √(2GM/R)이고, 지구에서는 약 11.2 km/s이며, 물체의 질량과는 관계가 없다.</li>
+            <li><span class="tag">연결</span>기체 분자도 같은 규칙을 따른다. 분자는 온도에 따라 빠르게 움직이는데 가볍고 뜨거울수록 빠르므로, 탈출 속도가 작은 천체에서는 빠른 분자가 조금씩 우주로 빠져나가고 오랜 시간이 지나면 대기가 사라진다. 달은 질량이 작아 탈출 속도가 지구의 약 5분의 1이다.</li>
+            <li><span class="tag">적용</span>지구에서 발사 속력을 올려 궤적이 ‘떨어짐’에서 ‘탈출’로 바뀌는 지점을 찾아보자. 그리고 천체를 달로 바꾸어 대기로 남을 수 있는 기체가 몇 가지인지 세어 보고, 목성과 타이탄은 왜 탈출 속도가 크게 다른데도 둘 다 대기가 있는지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>탈출 속도는 엔진 없이 한 번 던졌을 때 필요한 속력이다. 로켓은 계속 연료를 태우며 올라가므로 처음부터 11.2 km/s일 필요가 없고, 궤도에 올리려면 탈출 속도보다 작은 약 7.9 km/s의 수평 속도가 필요하다. 또 대기가 남는지는 탈출 속도만이 아니라 온도, 자기장, 태양풍에도 달려 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">질량은 지구와 같고 반지름만 지구의 4분의 1인 행성이 있다면, 이 행성의 탈출 속도는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지구의 4배<span class="why"><b>R에 반비례한다고 본 답입니다.</b> 탈출 속도는 √(1/R)에 비례합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>지구의 2배<span class="why"><b>맞습니다.</b> v = √(2GM/R)에서 R이 1/4이면 v는 √4 = 2배입니다. 표면이 중심에 가까워 퍼텐셜 우물이 더 깊습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지구와 같다 — 질량이 같으므로<span class="why"><b>질량만 본 답입니다.</b> 같은 질량이라도 표면이 중심에 가까울수록 빠져나오기 어렵습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지구의 4배<span class="why"><b>R에 반비례한다고 본 답이다.</b> 탈출 속도는 √(1/R)에 비례한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>지구의 2배<span class="why"><b>맞다.</b> v = √(2GM/R)에서 R이 1/4이면 v는 √4 = 2배이다. 표면이 중심에 가까워 퍼텐셜 우물이 더 깊다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지구와 같다 — 질량이 같으므로<span class="why"><b>질량만 본 답이다.</b> 같은 질량이라도 표면이 중심에 가까울수록 빠져나오기 어렵다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#card-mech-kepler"><small class="mono">역학과 에너지 1.4</small>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/phy/1-4.html#card-phy-coaster"><small class="mono">물리학 1.4</small>롤러코스터는 왜 첫 언덕이 가장 높을까?</a><a href="../../c/phy/1-4.html#text-phy-spring"><small class="mono">물리학 1.4</small>눌린 용수철에는 에너지가 얼마나 저장될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/1-6.html#text-mech-gr"><small class="mono">역학과 에너지 1.6</small>중력은 힘일까, 휘어진 시공간일까?</a><a href="../../c/adphy/1-4.html#card-adphy-orbit"><small class="mono">고급 물리학 1.4</small>인공위성은 얼마나 빨리 던져야 지구를 돌까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#card-mech-kepler"><small class="mono">역학과 에너지 1.4</small>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a><a href="../../c/space/1-3.html#text-space-kepler-mass"><small class="mono">행성우주과학 1.3</small>케플러 법칙과 태양계 천체의 운동</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/1-6.html#text-mech-gr"><small class="mono">역학과 에너지 1.6</small>중력은 힘일까, 휘어진 시공간일까?</a><a href="../../c/adphy/1-4.html#card-adphy-orbit"><small class="mono">고급 물리학 1.4</small>인공위성은 얼마나 빨리 던져야 지구를 돌까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=mech-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">33문항</span></a>
+      <a class="px-go" href="../../bank.html?c=mech&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">14문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=mech-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">33문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/mech/body.js"></script>
 <script src="../../js/cards/phy/f-rocket.js"></script>
 <script src="../../js/cards/mech/f-escape.js"></script>
 </body>

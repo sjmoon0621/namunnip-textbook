@@ -87,7 +87,7 @@
     nV.textContent = s.e2 * s.u[2] < -1e-9 ? "ε₂가 충전됨" : s.e1 * s.u[1] < -1e-9 ? "ε₁이 충전됨" : "둘 다 방전";
     draw();
   }
-  root.querySelectorAll("[data-d]").forEach((b) => b.addEventListener("click", () => { const i = +b.dataset.d; dir[i] *= -1; b.textContent = `I${"₁₂₃"[i - 1]} 가정: ${dir[i] > 0 ? "위로" : "아래로"}`; update(); }));
+  root.querySelectorAll("[data-d]").forEach((b) => b.addEventListener("click", () => { const i = +b.dataset.d; dir[i] *= -1; b.textContent = `I${"₁₂₃"[i - 1]} ${dir[i] > 0 ? "위로" : "아래로"} 가정`; update(); }));
   root.querySelectorAll("[data-p]").forEach((b) => b.addEventListener("click", () => { PRE[b.dataset.p].forEach((v, j) => { S[["e1", "e2", "r1", "r2", "r3"][j]].value = v; }); update(); }));
   ["e1", "e2", "r1", "r2", "r3"].forEach((k) => S[k].addEventListener("input", update));
   if (/[?&]demo\b/.test(location.search)) { PRE.charge.forEach((v, j) => { S[["e1", "e2", "r1", "r2", "r3"][j]].value = v; }); t = 3; }

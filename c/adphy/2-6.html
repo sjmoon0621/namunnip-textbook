@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>교류와 RLC 회로의 공진 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="교류 전기의 발생 원리와 교류 기전력의 주기적 변화를 이해하고, 용량 리액턴스와 유도 리액턴스, 임피던스를 계산하며, LC 회로와 RLC 회로에서 전기 진동과 공진 현상을 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-is2-generator canvas { aspect-ratio: 4 / 3; touch-action: pan-y; cursor: ew-resize; }
     #card-adphy-ac canvas { width: 100%; aspect-ratio: 1 / 1; }
@@ -42,20 +48,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-is2-generator"><span class="mono">2.6.1</span>자석을 움직이면 왜 전류가 흐를까?</a></li>
-        <li><a href="#card-emq-rlc"><span class="mono">2.6.2</span>축전기에 담긴 에너지는 회로에서 어디로 갈까?</a></li>
-        <li><a href="#card-adphy-ac"><span class="mono">2.6.3</span>리액턴스와 공진</a></li>
-        <li><a href="#card-labphy-rlc"><span class="mono">2.6.4</span>진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?</a></li>
+        <li><a href="#text-adphy-resonance"><span class="mono">본문</span>교류와 RLC 회로의 공진</a></li>
+        <li><a href="#card-is2-generator"><span class="mono">탐구 1</span>자석을 움직이면 왜 전류가 흐를까?</a></li>
+        <li><a href="#card-emq-rlc"><span class="mono">탐구 2</span>축전기에 담긴 에너지는 회로에서 어디로 갈까?</a></li>
+        <li><a href="#card-adphy-ac"><span class="mono">탐구 3</span>리액턴스와 공진</a></li>
+        <li><a href="#card-labphy-rlc"><span class="mono">탐구 4</span>진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">40문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-resonance" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>교류와 RLC 회로의 공진</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">지금 우리 주변에는 수십 개 방송국의 전파가 한꺼번에 지나가고 있다. 라디오 안테나에는 이 모든 전파가 만든 작은 전류가 뒤섞여 흐른다. 그런데 다이얼을 돌리면 그중 하나의 방송만 또렷하게 들린다. 라디오 속의 회로는 어떻게 특정한 진동수의 전류만 크게 키우고 나머지는 거의 막을까? 코일과 축전기가 함께 있는 교류 회로에서 무슨 일이 일어날까?</p>
+          <figure class="q-fig" data-q="adphy-res">
+            <svg viewBox="0 0 520 230" role="img" aria-label="진동수와 저항에 따른 RLC 직렬 회로의 전류"></svg>
+            <div class="q-ctl"><label>진동수 (Hz) <input type="range" data-k="f" min="200" max="5000" step="10" value="1590"><output data-k="f"></output></label><label>저항 R (Ω) <input type="range" data-k="R" min="5" max="100" step="5" value="10"><output data-k="R"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. L = 10 mH, C = 1 μF인 직렬 RLC 회로에 진폭 1 V의 교류를 걸 때 흐르는 전류의 진폭. 공진 진동수 근처에서만 전류가 크게 흐르고, 저항이 작을수록 봉우리가 높고 좁다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>전자기 유도와 발전기, 자체 유도 계수와 전기 용량(물리학), 삼각 함수의 미분(수학), 자체 유도(<a href="2-3.html">전류의 자기장과 자체 유도</a>).</div>
+
+          <h3><span class="no">2.6.1</span>리액턴스와 위상</h3>
+          <p>코일에 교류 전류 \(I_0 \sin\omega t\)가 흐르면, 코일 양 끝의 전압은 \(L\dfrac{dI}{dt} = \omega L I_0 \cos\omega t\)로 전류보다 4분의 1주기 앞선다. 전압의 진폭을 전류의 진폭으로 나눈 \(X_L = \omega L\)을 유도 리액턴스라 한다. 진동수가 높을수록 전류가 빨리 변하므로 코일이 더 세게 막는다. 반대로 축전기의 전압은 쌓인 전하에 비례하여 전류보다 4분의 1주기 늦고, 용량 리액턴스는 \(X_C = \dfrac{1}{\omega C}\)이다. 진동수가 높을수록 축전기는 전류를 잘 통과시킨다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">직렬 RLC 회로의 임피던스와 공진</span></span>
+            <p>코일과 축전기의 전압은 서로 반주기 어긋나 상쇄되므로, 회로 전체의 임피던스는 \[Z = \sqrt{R^2 + (X_L - X_C)^2}\]이고 전류의 진폭은 \(V_0/Z\)이다. \(X_L = X_C\)가 되는 공진 진동수 \(f_0 = \dfrac{1}{2\pi\sqrt{LC}}\)에서 임피던스가 \(R\)로 가장 작아져 전류가 가장 크다.</p>
+          </div>
+          <p>그림 1에서 진동수를 바꾸어 보자. \(L = 10\) mH, \(C = 1\) μF이면 공진 진동수는 약 1592 Hz이다. 여기서 두 리액턴스가 모두 약 100 Ω으로 같아 서로 지우고, 저항 10 Ω만 남아 전류가 100 mA로 가장 크다. 1000 Hz로 내려가면 용량 리액턴스가 159 Ω, 유도 리액턴스가 63 Ω이라 차이가 96 Ω이 되어 전류가 약 10 mA로 줄어든다. 저항을 키우면 봉우리가 낮고 넓어져, 이웃한 진동수를 잘 가르지 못한다.<sup class="fn"><a href="#fn-adphy-resonance-1">1</a></sup></p>
+
+          <h3><span class="no">2.6.2</span>공진으로 방송을 고르기</h3>
+          <p>라디오의 동조 회로는 코일과 가변 축전기로 되어 있다. 다이얼을 돌리면 축전기 극판의 겹친 넓이가 변해 \(C\)가 바뀌고, 공진 진동수가 원하는 방송국의 진동수에 맞춰진다. 그러면 그 방송의 전류만 크게 흐르고, 진동수가 다른 방송의 전류는 큰 임피던스에 막혀 작아진다. 공진 때 코일과 축전기는 에너지를 서로 주고받으며, 그 사이에 저항이 에너지를 조금씩 열로 바꾼다. 저항이 작을수록 공진이 날카로워져, 이웃 방송과 섞이지 않고 깨끗하게 들린다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="교류 회로에서 세 소자의 성질">
+              <g class="s">
+                <text x="20" y="22">소자</text><text x="130" y="22">전류를 막는 정도</text><text x="300" y="22">진동수가 높으면</text><text x="420" y="22">전압의 위상</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">저항</text><text x="130" y="52">R</text><text x="300" y="52">그대로</text><text x="420" y="52">전류와 같음</text>
+                <text x="20" y="74">코일</text><text x="130" y="74">ωL</text><text x="300" y="74">커진다</text><text x="420" y="74">4분의 1주기 앞섬</text>
+                <text x="20" y="96">축전기</text><text x="130" y="96">1/(ωC)</text><text x="300" y="96">작아진다</text><text x="420" y="96">4분의 1주기 늦음</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 코일과 축전기는 진동수에 대해 정반대로 행동하여, 특정 진동수에서 서로를 지운다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>자체 유도 계수 0.25 mH인 코일과 가변 축전기로 AM 방송 1 MHz를 고르려 한다. 축전기의 용량을 얼마로 맞추어야 하는가? 같은 회로로 600 kHz 방송을 고르려면 용량을 몇 배로 바꾸어야 하는가?</p>
+          </div>
+          <p>\(f_0 = \dfrac{1}{2\pi\sqrt{LC}}\)에서 \(C = \dfrac{1}{4\pi^2 f_0^2 L} = \dfrac{1}{39.5 \times (10^6)^2 \times 2.5 \times 10^{-4}} \approx 1.0 \times 10^{-10}\) F, 곧 약 100 pF이다.</p>
+          <p>공진 진동수는 \(\sqrt C\)에 반비례하므로, 진동수를 0.6배로 낮추려면 용량을 \(1/0.6^2 \approx 2.8\)배인 약 280 pF로 키워야 한다. 그래서 AM 라디오의 가변 축전기는 수십 pF에서 수백 pF까지 바꿀 수 있게 만든다. 즉 다이얼 하나로 축전기의 용량을 바꾸면 회로가 공진하는 진동수가 바뀌어, 원하는 방송만 골라 들을 수 있다.</p>
+          <p>아래 탐구 카드에서 코일과 축전기의 전압을 더하면 왜 전원 전압보다 커질 수 있는지 확인하고, 진동수를 바꾸며 RLC 회로의 공진을 측정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-resonance-1">공진 때 코일과 축전기 각각의 전압은 전원 전압보다 훨씬 클 수 있다. 그림 1의 회로에서는 두 소자에 각각 약 10 V가 걸리는데, 서로 반대 위상이라 전원에는 1 V만 보인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>교류 회로에서 코일은 진동수에 비례하여, 축전기는 진동수에 반비례하여 전류를 막고, 두 전압은 위상이 반주기 어긋나 서로를 지운다. 그래서 두 리액턴스가 같아지는 공진 진동수 \(1/(2\pi\sqrt{LC})\)에서 임피던스가 저항만 남아 전류가 가장 크다. 처음 질문의 라디오는 가변 축전기로 이 공진 진동수를 원하는 방송에 맞추어, 그 방송의 전류만 크게 키운다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-5.html#card-phy-oersted"><small class="mono">물리학 2.5</small>전류가 흐르면 왜 나침반이 돌까?</a><a href="../../c/phy/2-5.html#card-phy-motor"><small class="mono">물리학 2.5</small>전동기는 어떻게 계속 돌까?</a><a href="../../c/phy/2-5.html#text-phy-current-mag"><small class="mono">물리학 2.5</small>전류의 자기 작용</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-6.html#card-phy-lenz"><small class="mono">물리학 2.6</small>자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?</a><a href="../../c/phy/2-6.html#card-phy-wireless"><small class="mono">물리학 2.6</small>무선 충전기는 선 없이 어떻게 전기를 보낼까?</a><a href="../../c/phy/2-6.html#text-phy-induction-tech"><small class="mono">물리학 2.6</small>교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?</a><a href="../../c/is2/2-5.html#text-is2-power"><small class="mono">통합과학2 2.5</small>발전과 전력 수송</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#text-is2-power-plants"><small class="mono">통합과학2 2.5</small>화력 발전과 원자력 발전은 무엇을 얻고 무엇을 치를까?</a><a href="../../c/emq/1-5.html#card-emq-transformer"><small class="mono">전자기와 양자 1.5</small>변압기는 왜 교류에서만 작동할까?</a><a href="../../c/adphy/2-3.html#card-adphy-selfind"><small class="mono">고급 물리학 2.3</small>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</a><a href="../../c/adphy/2-4.html#card-adphy-wave"><small class="mono">고급 물리학 2.4</small>안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?</a></div></nav>
+
       <article class="card" id="card-is2-generator">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>자석을 움직이면 왜 전류가 흐를까?</h2><span class="kind">전자기 유도 · 발전기</span>
+          <span class="no">탐구 1</span><h2>자석을 움직이면 왜 전류가 흐를까?</h2><span class="kind">전자기 유도 · 발전기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -89,29 +147,29 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>발전소는 석탄, 우라늄, 물, 바람처럼 서로 다른 에너지를 씁니다. 그런데 마지막 단계는 거의 모두 같습니다. 무엇인가를 <em>돌립니다</em>. 돌리면 왜 전기가 나올까요?</li>
-            <li><span class="tag">복원</span>자석 둘레에는 자기장이 있고, 코일 속으로 자석을 넣었다 뺐다 하면 코일에 전류가 흐릅니다(전자기 유도, 중학교). 코일의 면을 지나는 자기력선의 양을 <em>자기 선속</em>이라고 합니다. 자석이 가까울수록 코일을 지나는 자기 선속이 커집니다.</li>
-            <li><span class="tag">설명</span>코일을 지나는 자기 선속이 <em>변하는 동안</em> 코일에 전압이 생겨 전류가 흐릅니다. 이것이 <em>전자기 유도</em>입니다. 전압의 크기는 코일의 감은 수와 자기 선속이 변하는 빠르기에 비례합니다(패러데이 법칙, <span class="formula">V = −N ΔΦ/Δt</span>).</li>
-            <li><span class="tag">연결</span>발전기는 자석 사이에서 코일을 돌려 자기 선속을 쉬지 않고 바꿉니다. 한 바퀴마다 전류의 방향이 두 번 바뀌므로 교류가 나옵니다. 우리나라 발전기의 상당수는 1분에 3600바퀴(1초에 60바퀴) 돌아 60 Hz 교류를 만듭니다.</li>
-            <li><span class="tag">적용</span>자석을 코일 속에 넣은 채 멈춰 보세요. 바늘은 어디를 가리키나요? 넣을 때와 뺄 때 바늘 방향을 비교하고, 감은 수를 200회로 바꿔 보세요. ‘발전기 돌리기’에서는 회전 속도를 절반으로 줄였을 때 그래프가 어떻게 바뀌는지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>“자석이 코일 안에 있으면 전류가 흐른다”는 흔한 오개념입니다. 중요한 것은 자기장의 크기가 아니라 <em>변화</em>입니다. 또 전기를 ‘만든다’고 하지만 에너지가 새로 생기지는 않습니다. 전류가 흐르면 코일이 돌아가는 것을 방해하는 힘이 생겨서, 터빈이 그만큼 일을 해 주어야 합니다.</li>
+            <li><span class="tag">질문</span>발전소는 석탄, 우라늄, 물, 바람처럼 서로 다른 에너지를 쓴다. 그런데 마지막 단계는 거의 모두 무엇인가를 <em>돌린다</em>는 점에서 같다. 돌리면 왜 전기가 나올까?</li>
+            <li><span class="tag">복원</span>자석 둘레에는 자기장이 있고, 코일 속으로 자석을 넣었다 뺐다 하면 코일에 전류가 흐른다(전자기 유도, 중학교). 코일의 면을 지나는 자기력선의 양을 <em>자기 선속</em>이라고 하며, 자석이 가까울수록 코일을 지나는 자기 선속이 커진다.</li>
+            <li><span class="tag">설명</span>코일을 지나는 자기 선속이 <em>변하는 동안</em> 코일에 전압이 생겨 전류가 흐르는데, 이것이 <em>전자기 유도</em>이다. 전압의 크기는 코일의 감은 수와 자기 선속이 변하는 빠르기에 비례한다(패러데이 법칙, <span class="formula">V = −N ΔΦ/Δt</span>).</li>
+            <li><span class="tag">연결</span>그래서 발전기는 자석 사이에서 코일을 돌려 자기 선속을 쉬지 않고 바꾼다. 한 바퀴마다 전류의 방향이 두 번 바뀌므로 교류가 나온다. 우리나라 발전기의 상당수는 1분에 3600바퀴(1초에 60바퀴) 돌아 60 Hz 교류를 만든다.</li>
+            <li><span class="tag">적용</span>자석을 코일 속에 넣은 채 멈추면 바늘이 0으로 돌아온다. 넣을 때와 뺄 때 바늘 방향을 비교하고, 감은 수를 200회로 바꿔 보자. ‘발전기 돌리기’에서 회전 속도를 절반으로 줄이면 그래프의 높이와 간격이 함께 바뀌는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“자석이 코일 안에 있으면 전류가 흐른다”는 흔한 오개념이다. 중요한 것은 자기장의 크기가 아니라 <em>변화</em>이다. 또 전기를 ‘만든다’고 하지만 에너지가 새로 생기지는 않는다. 전류가 흐르면 코일이 돌아가는 것을 방해하는 힘이 생겨서, 터빈이 그만큼 일을 해 주어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">발전기 코일의 회전 속도를 2배로 올리면 나오는 교류는 어떻게 달라질까요? (자석과 코일은 그대로)</p>
+          <p class="q">발전기 코일의 회전 속도를 2배로 올리면 나오는 교류는 어떻게 달라질까? (자석과 코일은 그대로)</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>주파수만 2배가 되고 최대 전압은 그대로다.<span class="why"><b>절반만 맞습니다.</b> 빨리 돌면 자기 선속도 2배 빠르게 변하므로 최대 전압도 2배가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>주파수와 최대 전압이 모두 2배가 된다.<span class="why"><b>맞습니다.</b> 최대 전압은 NBAω로 각속도 ω에 비례하고, 주파수도 1초에 도는 횟수와 같습니다. 그래서 발전소는 회전 속도를 일정하게 지켜야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>자석이 그대로이니 달라지지 않는다.<span class="why"><b>자기장만 본 답입니다.</b> 유도 전압을 정하는 것은 자기장 자체가 아니라 코일을 지나는 자기 선속이 변하는 빠르기입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>주파수만 2배가 되고 최대 전압은 그대로다.<span class="why"><b>절반만 맞다.</b> 빨리 돌면 자기 선속도 2배 빠르게 변하므로 최대 전압도 2배가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>주파수와 최대 전압이 모두 2배가 된다.<span class="why"><b>맞다.</b> 최대 전압은 NBAω로 각속도 ω에 비례하고, 주파수도 1초에 도는 횟수와 같다. 그래서 발전소는 회전 속도를 일정하게 지켜야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>자석이 그대로이니 달라지지 않는다.<span class="why"><b>자기장만 본 답이다.</b> 유도 전압을 정하는 것은 자기장 자체가 아니라 코일을 지나는 자기 선속이 변하는 빠르기이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-5.html#card-phy-oersted"><small class="mono">물리학 2.5</small>전류가 흐르면 왜 나침반이 돌까?</a><a href="../../c/phy/2-5.html#card-phy-motor"><small class="mono">물리학 2.5</small>전동기는 어떻게 계속 돌까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-6.html#card-phy-lenz"><small class="mono">물리학 2.6</small>자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?</a><a href="../../c/phy/2-6.html#card-phy-wireless"><small class="mono">물리학 2.6</small>무선 충전기는 선 없이 어떻게 전기를 보낼까?</a><a href="../../c/phy/2-6.html#text-phy-induction-tech"><small class="mono">물리학 2.6</small>교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#text-is2-power-plants"><small class="mono">통합과학2 2.5</small>화력 발전과 원자력 발전은 무엇을 얻고 무엇을 치를까?</a><a href="../../c/emq/1-5.html#card-emq-transformer"><small class="mono">전자기와 양자 1.5</small>변압기는 왜 교류에서만 작동할까?</a><a href="../../c/adphy/2-3.html#card-adphy-selfind"><small class="mono">고급 물리학 2.3</small>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</a><a href="../../c/adphy/2-4.html#card-adphy-wave"><small class="mono">고급 물리학 2.4</small>안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-5.html#card-phy-oersted"><small class="mono">물리학 2.5</small>전류가 흐르면 왜 나침반이 돌까?</a><a href="../../c/phy/2-5.html#card-phy-motor"><small class="mono">물리학 2.5</small>전동기는 어떻게 계속 돌까?</a><a href="../../c/phy/2-5.html#text-phy-current-mag"><small class="mono">물리학 2.5</small>전류의 자기 작용</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-6.html#card-phy-lenz"><small class="mono">물리학 2.6</small>자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?</a><a href="../../c/phy/2-6.html#card-phy-wireless"><small class="mono">물리학 2.6</small>무선 충전기는 선 없이 어떻게 전기를 보낼까?</a><a href="../../c/phy/2-6.html#text-phy-induction-tech"><small class="mono">물리학 2.6</small>교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?</a><a href="../../c/phy/2-6.html#text-phy-induction"><small class="mono">물리학 2.6</small>전자기 유도</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/2-5.html#text-is2-power-plants"><small class="mono">통합과학2 2.5</small>화력 발전과 원자력 발전은 무엇을 얻고 무엇을 치를까?</a><a href="../../c/emq/1-5.html#card-emq-transformer"><small class="mono">전자기와 양자 1.5</small>변압기는 왜 교류에서만 작동할까?</a><a href="../../c/adphy/2-3.html#card-adphy-selfind"><small class="mono">고급 물리학 2.3</small>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</a><a href="../../c/adphy/2-4.html#card-adphy-wave"><small class="mono">고급 물리학 2.4</small>안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?</a></div></nav>
 
       <article class="card" id="card-emq-rlc">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>축전기에 담긴 에너지는 회로에서 어디로 갈까?</h2><span class="kind">저항·축전기·인덕터와 에너지</span>
+          <span class="no">탐구 2</span><h2>축전기에 담긴 에너지는 회로에서 어디로 갈까?</h2><span class="kind">저항·축전기·인덕터와 에너지</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -133,33 +191,33 @@
                 <div><dt>회로의 모습</dt><dd class="n-k">—</dd></div>
                 <div><dt>진동 주기 2π√(LC)</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">10 V로 충전한 축전기를 스위치로 저항·인덕터와 직렬로 연결한 순간부터 계산했습니다(수치 적분). 세 영역의 합은 언제나 처음 에너지와 같습니다.</p>
+              <p class="fig-note">10 V로 충전한 축전기를 스위치로 저항, 인덕터와 직렬로 연결한 순간부터 계산했다(수치 적분). 세 영역의 합은 언제나 처음 에너지와 같다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>카메라 플래시는 축전기에 모아 둔 에너지를 순식간에 쏟아 내고, 라디오는 축전기와 코일로 특정 주파수에 맞춥니다. 축전기의 에너지는 회로에서 어떻게 움직일까요?</li>
-            <li><span class="tag">복원</span>축전기는 두 극판 사이의 전기장에 에너지 ½CV²를 저장합니다. 코일에 전류가 흐르면 자기장이 생기고, 전류가 변하면 그 변화를 방해하는 유도 기전력이 생깁니다.</li>
-            <li><span class="tag">설명</span>세 부품은 에너지를 다루는 방식이 다릅니다. <em>저항</em>은 전기 에너지를 열(과 빛)로 바꿔 내보내고 되돌려 주지 않습니다(I²R). <em>축전기</em>는 전기장에 ½CV², <em>인덕터</em>는 자기장에 ½LI²를 저장했다가 회로에 돌려줍니다. 인덕터는 전류가 갑자기 변하는 것을 막는 ‘전기의 관성’처럼 행동합니다.</li>
-            <li><span class="tag">연결</span>저항만 있으면 축전기의 에너지는 지수적으로 줄며 모두 열이 됩니다(시간 상수 RC). 저항이 작고 인덕터가 있으면 에너지가 축전기의 전기장과 인덕터의 자기장 사이를 오가는 <em>전기 진동</em>이 생기는데, 이 고유 진동수에 맞춰 원하는 방송을 고르는 것이 라디오의 동조 회로입니다. 제세동기와 플래시는 축전기를, 전원 장치와 무선 충전은 인덕터를 에너지 저장에 씁니다.</li>
-            <li><span class="tag">적용</span>세 예시를 차례로 눌러 에너지 그래프의 모양을 비교하세요. LC 진동에서 축전기 에너지가 0이 되는 순간 에너지는 어디에 있나요? 저항을 키우면 진동은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“에너지를 저장하는 부품은 축전기뿐이다”는 오해입니다. 인덕터도 자기장에 에너지를 저장하며, 큰 전류가 흐르던 코일의 회로를 갑자기 끊으면 이 에너지 때문에 높은 전압의 불꽃이 튈 수 있습니다(자동차 점화 플러그의 원리).</li>
+            <li><span class="tag">질문</span>카메라 플래시는 축전기에 모아 둔 에너지를 순식간에 쏟아 내고, 라디오는 축전기와 코일로 특정 주파수에 맞춘다. 축전기의 에너지는 회로에서 어떻게 움직일까?</li>
+            <li><span class="tag">복원</span>축전기는 두 극판 사이의 전기장에 에너지 ½CV²를 저장한다. 그리고 코일에 전류가 흐르면 자기장이 생기고, 전류가 변하면 그 변화를 방해하는 유도 기전력이 생긴다.</li>
+            <li><span class="tag">설명</span>세 부품은 에너지를 다루는 방식이 다르다. <em>저항</em>은 전기 에너지를 열(과 빛)로 바꿔 내보내고 되돌려 주지 않으며(I²R), <em>축전기</em>는 전기장에 ½CV², <em>인덕터</em>는 자기장에 ½LI²를 저장했다가 회로에 돌려준다. 특히 인덕터는 전류가 갑자기 변하는 것을 막는 전기의 관성처럼 행동한다.</li>
+            <li><span class="tag">연결</span>저항만 있으면 축전기의 에너지는 지수적으로 줄며 모두 열이 된다(시간 상수 RC). 반면 저항이 작고 인덕터가 있으면 에너지가 축전기의 전기장과 인덕터의 자기장 사이를 오가는 <em>전기 진동</em>이 생기는데, 이 고유 진동수에 맞춰 원하는 방송을 고르는 것이 라디오의 동조 회로이다. 제세동기와 플래시는 축전기를, 전원 장치와 무선 충전은 인덕터를 에너지 저장에 쓴다.</li>
+            <li><span class="tag">적용</span>세 예시를 차례로 눌러 에너지 그래프의 모양을 비교해 보자. 그리고 LC 진동에서 축전기 에너지가 0이 되는 순간 에너지가 어디에 있는지, 저항을 키우면 진동이 어떻게 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘에너지를 저장하는 부품은 축전기뿐이다’는 생각은 오해이다. 인덕터도 자기장에 에너지를 저장하며, 큰 전류가 흐르던 코일의 회로를 갑자기 끊으면 이 에너지 때문에 높은 전압의 불꽃이 튈 수 있다(자동차 점화 플러그의 원리).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">저항이 없는 이상적인 LC 회로에서 축전기의 전압이 0이 되는 순간, 회로의 에너지는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>모두 인덕터의 자기장에 있고, 전류가 가장 크다<span class="why"><b>맞습니다.</b> 에너지는 ½CV²와 ½LI² 사이를 오가며, 합은 일정합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모두 사라졌다<span class="why"><b>저항이 없으면 열로 빠져나가지 않습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전류도 0이다<span class="why"><b>이때 전류는 오히려 가장 큽니다.</b> 전류가 0인 순간은 축전기 전압이 가장 클 때입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>모두 인덕터의 자기장에 있고, 전류가 가장 크다<span class="why"><b>맞다.</b> 에너지는 ½CV²와 ½LI² 사이를 오가며, 합은 일정하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모두 사라졌다<span class="why"><b>저항이 없으면 열로 빠져나가지 않는다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전류도 0이다<span class="why"><b>이때 전류는 오히려 가장 크다.</b> 전류가 0인 순간은 축전기 전압이 가장 클 때이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-3.html#card-phy-capacitor"><small class="mono">물리학 2.3</small>축전기는 전기 에너지를 어떻게 저장할까?</a><a href="../../c/phy/2-3.html#card-phy-touch"><small class="mono">물리학 2.3</small>터치스크린은 손가락을 어떻게 알아챌까?</a><a href="../../c/emq/1-5.html#card-emq-transformer"><small class="mono">전자기와 양자 1.5</small>변압기는 왜 교류에서만 작동할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-3.html#card-phy-capacitor"><small class="mono">물리학 2.3</small>축전기는 전기 에너지를 어떻게 저장할까?</a><a href="../../c/phy/2-3.html#card-phy-touch"><small class="mono">물리학 2.3</small>터치스크린은 손가락을 어떻게 알아챌까?</a><a href="../../c/phy/2-3.html#text-phy-capacitor"><small class="mono">물리학 2.3</small>축전기</a><a href="../../c/adphy/2-2.html#text-adphy-dielectric"><small class="mono">고급 물리학 2.2</small>축전기의 연결과 유전체</a></div></nav>
 
       <article class="card" id="card-adphy-ac">
         <header class="card-head">
-          <span class="no">2.6.3</span><h2>코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?</h2><span class="kind">교류 · 용량·유도 리액턴스 · 임피던스 · RLC 공진</span>
+          <span class="no">탐구 3</span><h2>코일과 축전기의 전압을 더했는데 왜 전원 전압보다 클까?</h2><span class="kind">교류 · 용량·유도 리액턴스 · 임피던스 · RLC 공진</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -184,33 +242,33 @@
                 <div><dt>전류가 늦은 위상 φ</dt><dd class="n-ph">—</dd></div>
                 <div><dt>공진 진동수 f₀</dt><dd class="n-f0">—</dd></div>
               </dl>
-              <p class="fig-note">전원 전압 실횻값 10 V(최댓값 14.1 V)의 직렬 RLC 회로입니다. 위상자는 반시계 방향으로 돌며, 어느 순간의 실제 전압은 위상자를 가로축에 투영한 값입니다. 화면의 회전은 실제보다 매우 느립니다. φ가 음수이면 전류가 전압보다 앞섭니다.</p>
+              <p class="fig-note">전원 전압 실횻값 10 V(최댓값 14.1 V)의 직렬 RLC 회로이다. 위상자는 반시계 방향으로 돌며, 어느 순간의 실제 전압은 위상자를 가로축에 투영한 값이다. 화면의 회전은 실제보다 매우 느리다. φ가 음수이면 전류가 전압보다 앞선다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>직렬 RLC 회로에서 저항, 코일, 축전기 양 끝의 전압을 교류 전압계로 따로 재면, 세 값을 더한 것이 전원 전압보다 훨씬 클 때가 있습니다. 직렬 회로에서 전압의 합은 전원 전압과 같아야 하지 않을까요?</li>
-            <li><span class="tag">복원</span>자기장 B 속에서 넓이 A, N회 감은 코일을 각속도 ω로 돌리면 선속 NBA cos ωt가 변해 <em>ε = NBAω sin ωt</em>의 교류 기전력이 생깁니다. 실횻값은 최댓값의 1/√2입니다. 코일에는 v<sub>L</sub> = L dI/dt, 축전기에는 v<sub>C</sub> = q/C가 걸립니다.</li>
-            <li><span class="tag">설명</span>전류가 I = I<sub>m</sub> cos ωt이면 저항 전압 I<sub>m</sub>R cos ωt는 전류와 같은 위상입니다. 코일 전압은 미분하면 −ωLI<sub>m</sub> sin ωt = ωLI<sub>m</sub> cos(ωt + 90°)로 전류보다 90° <em>앞서고</em>, 축전기 전압은 q를 적분해 (I<sub>m</sub>/ωC) cos(ωt − 90°)로 90° <em>늦습니다</em>. 진폭의 비가 각각의 ‘교류 저항’이 되며, <em>유도 리액턴스 X<sub>L</sub> = ωL</em>, <em>용량 리액턴스 X<sub>C</sub> = 1/ωC</em>라 합니다. 위상이 다른 세 전압은 화살표(위상자)로 더해야 하므로 <em>임피던스 Z = √(R² + (X<sub>L</sub> − X<sub>C</sub>)²)</em>, I = V/Z, tan φ = (X<sub>L</sub> − X<sub>C</sub>)/R입니다.</li>
-            <li><span class="tag">연결</span>코일 전압과 축전기 전압은 정반대 방향이라 서로 빼집니다. X<sub>L</sub> = X<sub>C</sub>가 되는 진동수 <em>f₀ = 1/(2π√(LC))</em>에서 둘이 완전히 상쇄되어 Z = R로 가장 작고 전류가 가장 큽니다. 이것이 <em>공진</em>이며, 저항이 없는 LC 회로가 에너지를 축전기와 코일 사이에서 주고받으며 스스로 진동하는 고유 진동수와 같습니다. 라디오는 C를 바꿔 원하는 방송의 진동수에 f₀를 맞춥니다. R이 작을수록 공진 곡선이 뾰족해 이웃 방송을 잘 걸러 냅니다.</li>
-            <li><span class="tag">적용</span>진동수를 낮은 쪽부터 올리며 X<sub>L</sub>과 X<sub>C</sub>가 어떻게 변하는지, 위상자 그림에서 전원 전압 화살표가 전류보다 앞서는지 늦는지 보세요. ‘공진 진동수에 맞추기’를 누르면 φ는 몇 °인가요? 그때 V<sub>L</sub> 화살표는 전원 전압 화살표보다 긴가요? R을 1 Ω과 100 Ω으로 바꿔 공진 곡선의 폭을 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>“직렬 회로에서 각 부품 전압의 합은 전원 전압”은 순간값끼리만 맞습니다. 전압계가 보여 주는 실횻값은 위상이 달라 그냥 더할 수 없으며, 공진 근처에서는 V<sub>L</sub>과 V<sub>C</sub>가 각각 전원 전압의 몇 배가 될 수 있습니다(실제 회로에서 부품의 내전압을 확인해야 하는 까닭). 또 리액턴스는 에너지를 열로 내보내지 않으므로, 평균 전력은 I²R = VI cos φ로 저항에서만 소모됩니다.</li>
+            <li><span class="tag">질문</span>직렬 RLC 회로에서 저항, 코일, 축전기 양 끝의 전압을 교류 전압계로 따로 재면, 세 값을 더한 것이 전원 전압보다 훨씬 클 때가 있다. 직렬 회로에서 전압의 합은 전원 전압과 같아야 하지 않을까?</li>
+            <li><span class="tag">복원</span>자기장 B 속에서 넓이 A, N회 감은 코일을 각속도 ω로 돌리면 선속 NBA cos ωt가 변해 <em>ε = NBAω sin ωt</em>의 교류 기전력이 생긴다. 실횻값은 최댓값의 1/√2이다. 코일에는 v<sub>L</sub> = L dI/dt, 축전기에는 v<sub>C</sub> = q/C가 걸린다.</li>
+            <li><span class="tag">설명</span>전류가 I = I<sub>m</sub> cos ωt이면 저항 전압 I<sub>m</sub>R cos ωt는 전류와 같은 위상이다. 코일 전압은 미분하면 −ωLI<sub>m</sub> sin ωt = ωLI<sub>m</sub> cos(ωt + 90°)로 전류보다 90° <em>앞서고</em>, 축전기 전압은 q를 적분해 (I<sub>m</sub>/ωC) cos(ωt − 90°)로 90° <em>늦다</em>. 진폭의 비가 각각의 ‘교류 저항’이 되며, <em>유도 리액턴스 X<sub>L</sub> = ωL</em>, <em>용량 리액턴스 X<sub>C</sub> = 1/ωC</em>라 한다. 위상이 다른 세 전압은 화살표(위상자)로 더해야 하므로 <em>임피던스 Z = √(R² + (X<sub>L</sub> − X<sub>C</sub>)²)</em>, I = V/Z, tan φ = (X<sub>L</sub> − X<sub>C</sub>)/R이다.</li>
+            <li><span class="tag">연결</span>코일 전압과 축전기 전압은 정반대 방향이라 서로 빼진다. X<sub>L</sub> = X<sub>C</sub>가 되는 진동수 <em>f₀ = 1/(2π√(LC))</em>에서 둘이 완전히 상쇄되어 Z = R로 가장 작고 전류가 가장 크다. 이것이 <em>공진</em>이며, 저항이 없는 LC 회로가 에너지를 축전기와 코일 사이에서 주고받으며 스스로 진동하는 고유 진동수와 같다. 라디오는 C를 바꿔 원하는 방송의 진동수에 f₀를 맞춘다. R이 작을수록 공진 곡선이 뾰족해 이웃 방송을 잘 걸러 낸다.</li>
+            <li><span class="tag">적용</span>진동수를 낮은 쪽부터 올리며 X<sub>L</sub>과 X<sub>C</sub>가 어떻게 변하는지, 위상자 그림에서 전원 전압 화살표가 전류보다 앞서는지 늦는지 보자. ‘공진 진동수에 맞추기’를 누르면 φ는 몇 °인가? 그때 V<sub>L</sub> 화살표는 전원 전압 화살표보다 긴가? R을 1 Ω과 100 Ω으로 바꿔 공진 곡선의 폭을 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“직렬 회로에서 각 부품 전압의 합은 전원 전압”은 순간값끼리만 맞다. 전압계가 보여 주는 실횻값은 위상이 달라 그냥 더할 수 없으며, 공진 근처에서는 V<sub>L</sub>과 V<sub>C</sub>가 각각 전원 전압의 몇 배가 될 수 있다(실제 회로에서 부품의 내전압을 확인해야 하는 까닭). 또 리액턴스는 에너지를 열로 내보내지 않으므로, 평균 전력은 I²R = VI cos φ로 저항에서만 소모된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">L = 10 mH, C = 10 μF인 직렬 RLC 회로의 공진 진동수는 약 503 Hz입니다. 축전기를 C = 2.5 μF로 바꾸면 공진 진동수와, 원래 503 Hz에서의 회로 성질은?</p>
+          <p class="q">L = 10 mH, C = 10 μF인 직렬 RLC 회로의 공진 진동수는 약 503 Hz이다. 축전기를 C = 2.5 μF로 바꾸면 공진 진동수와, 원래 503 Hz에서의 회로 성질은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 X<sub>C</sub> &gt; X<sub>L</sub>이라 전류가 전압보다 앞선다<span class="why"><b>맞습니다.</b> f₀ ∝ 1/√C이므로 C가 1/4이면 f₀는 2배입니다. 503 Hz에서 X<sub>C</sub>는 4배로 커져 축전기 성질이 우세합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>공진 진동수는 약 2012 Hz가 된다<span class="why"><b>f₀가 1/C에 비례한다고 본 답입니다.</b> f₀ = 1/(2π√(LC))라 제곱근이 붙습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 전류가 전압보다 늦는다<span class="why"><b>앞섬과 늦음을 거꾸로 썼습니다.</b> 공진보다 낮은 진동수에서는 X<sub>C</sub>가 커서 회로가 축전기처럼 행동하고, 전류가 앞섭니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 X<sub>C</sub> &gt; X<sub>L</sub>이라 전류가 전압보다 앞선다<span class="why"><b>맞다.</b> f₀ ∝ 1/√C이므로 C가 1/4이면 f₀는 2배이다. 503 Hz에서 X<sub>C</sub>는 4배로 커져 축전기 성질이 우세하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>공진 진동수는 약 2012 Hz가 된다<span class="why"><b>f₀가 1/C에 비례한다고 본 답이다.</b> f₀ = 1/(2π√(LC))라 제곱근이 붙는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공진 진동수는 약 1006 Hz가 되고, 503 Hz에서는 전류가 전압보다 늦는다<span class="why"><b>앞섬과 늦음을 거꾸로 썼다.</b> 공진보다 낮은 진동수에서는 X<sub>C</sub>가 커서 회로가 축전기처럼 행동하고, 전류가 앞선다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adphy/2-3.html#card-adphy-selfind"><small class="mono">고급 물리학 2.3</small>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</a><a href="../../c/adphy/2-2.html#card-adphy-capnet"><small class="mono">고급 물리학 2.2</small>유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?</a><a href="../../c/adphy/2-5.html#card-adphy-kirchhoff"><small class="mono">고급 물리학 2.5</small>전류 방향을 거꾸로 가정해도 답이 맞을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adphy/2-3.html#card-adphy-selfind"><small class="mono">고급 물리학 2.3</small>코일을 두 배로 감으면 자체 유도 계수는 왜 네 배가 될까?</a><a href="../../c/adphy/2-2.html#card-adphy-capnet"><small class="mono">고급 물리학 2.2</small>유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?</a><a href="../../c/emq/1-6.html#text-emq-circuit"><small class="mono">전자기와 양자 1.6</small>저항·축전기·인덕터</a><a href="../../c/adphy/2-5.html#card-adphy-kirchhoff"><small class="mono">고급 물리학 2.5</small>전류 방향을 거꾸로 가정해도 답이 맞을까?</a></div></nav>
 
       <article class="card" id="card-labphy-rlc">
         <header class="card-head">
-          <span class="no">2.6.4</span><h2>진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?</h2><span class="kind">실험 · RLC 직렬 회로 · 공진 · Q값과 위상</span>
+          <span class="no">탐구 4</span><h2>진동수를 바꾸면 RLC 회로의 전류는 어디에서 가장 클까?</h2><span class="kind">실험 · RLC 직렬 회로 · 공진 · Q값과 위상</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -227,47 +285,52 @@
               <div class="presets view" role="group" aria-label="분석 그래프"><span class="mono small dim">그래프</span><button class="chip" data-v="i" aria-pressed="true">전류 진폭–f</button><button class="chip" data-v="p" aria-pressed="false">위상차–f</button></div>
               <canvas class="cv-plot" aria-label="진동수에 따른 전류 진폭 또는 위상차 그래프. 지금 R·C 설정의 기록은 초록, 다른 설정은 회색"></canvas>
               <dl class="nums n4"><div><dt>기록으로 찾은 f₀</dt><dd class="n-f0">—</dd></div><div><dt>1/(2π√LC) (표시값)</dt><dd class="n-th">—</dd></div><div><dt>반전력 폭 Δf</dt><dd class="n-df">—</dd></div><div><dt>Q = f₀/Δf</dt><dd class="n-q">—</dd></div></dl>
-              <p class="fig-note">함수 발생기 출력 진폭은 2.00 V로 일정하게 맞춥니다. CH1은 전원 전압, CH2는 저항 양 끝 전압 V_R이고 전류 진폭은 I = V_R/R입니다. 위상차는 두 파형의 시간 차 Δt로 φ = 360°·fΔt를 계산한 값입니다(전류가 앞서면 +). 코일의 저항과 부품의 실제 값은 화면에 나오지 않습니다. 분석 값은 지금 고른 R·C의 기록만으로 구합니다.</p>
+              <p class="fig-note">함수 발생기 출력 진폭은 2.00 V로 일정하게 맞춘다. CH1은 전원 전압, CH2는 저항 양 끝 전압 V_R이고 전류 진폭은 I = V_R/R이다. 위상차는 두 파형의 시간 차 Δt로 φ = 360°·fΔt를 계산한 값이다(전류가 앞서면 +). 코일의 저항과 부품의 실제 값은 화면에 나오지 않는다. 분석 값은 지금 고른 R·C의 기록만으로 구한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>라디오는 수많은 방송 전파 가운데 한 진동수만 골라 받습니다. 저항, 코일, 축전기를 직렬로 연결하고 교류의 진동수를 바꾸면 전류는 어떻게 달라질까요? 가장 큰 전류가 흐르는 진동수는 무엇이 정할까요?</li>
-            <li><span class="tag">복원</span>코일의 유도 리액턴스 X_L = 2πfL은 진동수에 비례하고, 축전기의 용량 리액턴스 X_C = 1/(2πfC)는 반비례합니다. 직렬 회로의 임피던스는 <em>Z = √(R² + (X_L − X_C)²)</em>이고, 전류 진폭은 I = V₀/Z입니다.</li>
-            <li><span class="tag">설계</span>조작 변인은 진동수 f, 종속 변인은 전류 진폭 I와 위상차 φ입니다. 전원 진폭과 L, C는 고정하고, R을 바꿔 곡선의 모양을 비교합니다. 공진 근처에서는 전류가 빠르게 변하므로 진동수 간격을 촘촘하게 잡습니다.</li>
-            <li><span class="tag">분석</span>X_L = X_C인 <em>f₀ = 1/(2π√LC)</em>에서 Z = R로 가장 작아 전류가 최대이고 위상차는 0입니다. f₀보다 낮으면 축전기가 우세해 전류가 전압보다 앞서고(φ > 0), 높으면 코일이 우세해 전류가 뒤집니다. 전류가 최댓값의 1/√2로 줄어드는 두 진동수 사이의 폭 Δf로 <em>Q = f₀/Δf</em>를 구합니다. 직렬 회로에서 Q = (1/R)√(L/C)라서 R이 작을수록 공진 곡선이 뾰족합니다.</li>
-            <li><span class="tag">측정</span>R = 10 Ω, C = 1.0 μF에서 500 Hz부터 6 kHz까지 기록하되 공진 근처는 50 Hz 이하 간격으로 촘촘히 재세요. f₀, Δf, Q를 구하고 R = 47 Ω, 100 Ω에서도 반복해 곡선을 겹쳐 보세요. C를 바꾸면 f₀가 어떻게 움직이는지도 확인하세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>코일 도선의 저항이 R에 더해지므로 잰 Q는 (1/R)√(L/C)보다 작습니다. R이 작을수록 이 차이가 커지는 계통 오차입니다. 부품 표시값의 오차 때문에 잰 f₀도 계산값과 몇 % 다를 수 있습니다. 진동수 간격이 성기면 봉우리 높이와 Δf가 부정확해집니다. 공진에서는 코일과 축전기 양 끝 전압이 전원 전압의 Q배까지 커질 수 있으므로 소자의 정격 전압을 확인합니다.</li>
+            <li><span class="tag">탐구 문제</span>라디오는 수많은 방송 전파 가운데 한 진동수만 골라 받는다. 저항, 코일, 축전기를 직렬로 연결하고 교류의 진동수를 바꾸면 전류는 어떻게 달라질까? 가장 큰 전류가 흐르는 진동수는 무엇이 정할까?</li>
+            <li><span class="tag">복원</span>코일의 유도 리액턴스 X_L = 2πfL은 진동수에 비례하고, 축전기의 용량 리액턴스 X_C = 1/(2πfC)는 반비례한다. 직렬 회로의 임피던스는 <em>Z = √(R² + (X_L − X_C)²)</em>이고, 전류 진폭은 I = V₀/Z이다.</li>
+            <li><span class="tag">설계</span>조작 변인은 진동수 f, 종속 변인은 전류 진폭 I와 위상차 φ이다. 전원 진폭과 L, C는 고정하고, R을 바꿔 곡선의 모양을 비교한다. 공진 근처에서는 전류가 빠르게 변하므로 진동수 간격을 촘촘하게 잡는다.</li>
+            <li><span class="tag">분석</span>X_L = X_C인 <em>f₀ = 1/(2π√LC)</em>에서 Z = R로 가장 작아 전류가 최대이고 위상차는 0이다. f₀보다 낮으면 축전기가 우세해 전류가 전압보다 앞서고(φ > 0), 높으면 코일이 우세해 전류가 뒤진다. 전류가 최댓값의 1/√2로 줄어드는 두 진동수 사이의 폭 Δf로 <em>Q = f₀/Δf</em>를 구한다. 직렬 회로에서 Q = (1/R)√(L/C)라서 R이 작을수록 공진 곡선이 뾰족한다.</li>
+            <li><span class="tag">측정</span>R = 10 Ω, C = 1.0 μF에서 500 Hz부터 6 kHz까지 기록하되 공진 근처는 50 Hz 이하 간격으로 촘촘히 재자. f₀, Δf, Q를 구하고 R = 47 Ω, 100 Ω에서도 반복해 곡선을 겹쳐 보자. C를 바꾸면 f₀가 어떻게 움직이는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>코일 도선의 저항이 R에 더해지므로 잰 Q는 (1/R)√(L/C)보다 작다. R이 작을수록 이 차이가 커지는 계통 오차이다. 부품 표시값의 오차 때문에 잰 f₀도 계산값과 몇 % 다를 수 있다. 진동수 간격이 성기면 봉우리 높이와 Δf가 부정확해진다. 공진에서는 코일과 축전기 양 끝 전압이 전원 전압의 Q배까지 커질 수 있으므로 소자의 정격 전압을 확인한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">L = 10 mH, C = 1.0 μF인 직렬 RLC 회로에서 C만 4.0 μF로 바꾸었습니다. 공진 진동수는 어떻게 될까요?</p>
+          <p class="q">L = 10 mH, C = 1.0 μF인 직렬 RLC 회로에서 C만 4.0 μF로 바꾸었다. 공진 진동수는 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4배로 커진다<span class="why"><b>C가 커지면 X_C가 작아져 더 낮은 진동수에서 X_L과 같아집니다.</b> 그리고 f₀는 C에 비례하지 않고 √C에 반비례합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4로 줄어든다<span class="why"><b>방향은 맞지만 크기가 틀렸습니다.</b> f₀ = 1/(2π√LC)이므로 √4 = 2배만큼 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 1.6 kHz에서 약 0.8 kHz로 절반이 된다<span class="why"><b>맞습니다.</b> f₀ = 1/(2π√(0.01 × 4×10⁻⁶)) ≈ 796 Hz로 처음 1592 Hz의 절반입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4배로 커진다<span class="why"><b>C가 커지면 X_C가 작아져 더 낮은 진동수에서 X_L과 같아진다.</b> 그리고 f₀는 C에 비례하지 않고 √C에 반비례한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1/4로 줄어든다<span class="why"><b>방향은 맞지만 크기가 틀렸다.</b> f₀ = 1/(2π√LC)이므로 √4 = 2배만큼 줄어든다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 1.6 kHz에서 약 0.8 kHz로 절반이 된다<span class="why"><b>맞다.</b> f₀ = 1/(2π√(0.01 × 4×10⁻⁶)) ≈ 796 Hz로 처음 1592 Hz의 절반이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adphy/2-3.html#card-labphy-rc"><small class="mono">고급 물리학 2.3</small>축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?</a><a href="../../c/mech/3-1.html#card-mech-shm"><small class="mono">역학과 에너지 3.1</small>용수철에 매단 추는 언제 가장 빠르고, 언제 가장 세게 당겨질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adphy/2-3.html#card-labphy-rc"><small class="mono">고급 물리학 2.3</small>축전기가 다 차는 데 걸리는 시간은 무엇이 정할까?</a><a href="../../c/labphy/3-8.html#text-labphy-time-constant"><small class="mono">물리학 실험 3.8</small>RC·RL 회로의 시간 상수</a><a href="../../c/mech/3-1.html#card-mech-shm"><small class="mono">역학과 에너지 3.1</small>용수철에 매단 추는 언제 가장 빠르고, 언제 가장 세게 당겨질까?</a><a href="../../c/labphy/2-8.html#text-labphy-energy-sum"><small class="mono">물리학 실험 2.8</small>용수철 진자의 역학적 에너지</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labphy/3-9.html#text-labphy-q-factor"><small class="mono">물리학 실험 3.9</small>RLC 회로의 특성</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">40문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/is2/e-generator.js"></script>
 <script src="../../js/cards/emq/e-rlc.js"></script>
 <script src="../../js/cards/adphy/em-ac.js"></script>

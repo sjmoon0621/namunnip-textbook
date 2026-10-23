@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>행렬 연산과 이미지 변환 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="행렬의 덧셈·실수배로 밝기와 대비 바꾸기, 반전 255J − A, 전치행렬과 대각선 뒤집기, 반대각 행렬을 곱한 좌우 뒤집기, 3×3 필터의 합성곱(흐리게, 선명하게, 가로·세로 윤곽). 편집 버튼의 계산 카드와, 합성곱 필터 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-aimath-image-ops .two { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; max-width: 520px; }
@@ -51,18 +56,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-aimath-image-ops"><span class="mono">3.2.1</span>행렬 계산으로 밝기·대비·반전·뒤집기</a></li>
-        <li><a href="#card-aimath-convolution"><span class="mono">3.2.2</span>3×3 필터로 흐리게, 윤곽 찾기 — 합성곱</a></li>
+        <li><a href="#text-aimath-image-ops"><span class="mono">본문</span>행렬 연산과 이미지 변환</a></li>
+        <li><a href="#card-aimath-image-ops"><span class="mono">탐구 1</span>행렬 계산으로 밝기·대비·반전·뒤집기</a></li>
+        <li><a href="#card-aimath-convolution"><span class="mono">탐구 2</span>3×3 필터로 흐리게, 윤곽 찾기 — 합성곱</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=aimath-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=aimath&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">14문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=aimath-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-aimath-image-ops" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>행렬 연산과 이미지 변환</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">사진 편집 앱에서 '밝기'를 올리면 사진 전체가 환해지고, '대비'를 올리면 밝은 곳은 더 밝게, 어두운 곳은 더 어둡게 바뀐다. '반전'을 누르면 필름 사진처럼 흑백이 뒤집힌다. 사진이 행렬이라면, 이 버튼들은 행렬의 각 성분에 어떤 계산을 하는 것일까? 윤곽선을 찾는 기능은 어떻게 작동할까?</p>
+          <figure class="q-fig" data-q="ai-imgops">
+            <svg viewBox="0 0 520 230" role="img" aria-label="밝기, 대비, 반전에 따라 원본 행렬이 변환된 모습"></svg>
+            <div class="q-ctl"><label>밝기 \(d\) <input type="range" data-k="d" min="-100" max="100" step="10" value="40"><output data-k="d"></output></label><label>대비 \(c\) <input type="range" data-k="c" min="0.2" max="2.5" step="0.1" value="1"><output data-k="c"></output></label><label>반전 <input type="range" data-k="inv" min="0" max="1" step="1" value="0"><output data-k="inv"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 왼쪽 원본의 각 성분 \(v\)에 \(c(v - 128) + 128 + d\)를 계산하고 0~255 범위로 자른 결과가 오른쪽이다. 밝기는 모든 성분에 같은 수를 더하고, 대비는 가운데 값 128에서 떨어진 정도를 늘린다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 덧셈, 뺄셈, 실수배, 행렬의 곱셈(공통수학1), 이미지와 행렬(<a href="3-1.html">행렬로 나타낸 이미지</a>).</div>
+
+          <h3><span class="no">3.2.1</span>성분별 계산으로 바꾸는 이미지</h3>
+          <p>이미지 행렬 \(A\)의 모든 성분에 같은 수 \(d\)를 더하면 사진 전체의 밝기가 바뀐다. 이는 \(A\)에 모든 성분이 \(d\)인 행렬을 더하는 것이다. 그리고 모든 성분에 실수 \(k\)를 곱하는 실수배 \(kA\)는 밝은 곳과 어두운 곳의 차이를 \(k\)배로 늘리거나 줄인다. 반전은 \(255 - v\)로, 모든 성분이 255인 행렬에서 \(A\)를 빼는 것이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">기본적인 이미지 변환</span></span>
+            <p>밝기 \(A + dJ\), 대비 \(c(A - 128J) + 128J\), 반전 \(255J - A\) (\(J\)는 모든 성분이 1인 행렬). 계산 결과가 0보다 작으면 0으로, 255보다 크면 255로 자른다.</p>
+          </div>
+          <p>그림 1에서 밝기를 올리면 모든 칸이 같은 만큼 환해지고, 이미 흰 칸은 255에서 더 밝아지지 않는다. 그런데 대비를 2로 올리면 230은 255로, 40은 0으로 가서 흑백이 뚜렷해진다. 대비를 0.5로 낮추면 모든 값이 128 쪽으로 모여 흐릿한 회색이 된다.</p>
+
+          <h3><span class="no">3.2.2</span>이웃 픽셀을 섞는 계산</h3>
+          <p>흐리게 하기나 윤곽선 찾기는 한 픽셀만 보지 않고 둘레의 픽셀과 함께 계산한다. 작은 행렬(필터)을 이미지 위에 겹쳐 놓고, 겹친 성분끼리 곱해 더한 값을 새 픽셀 값으로 삼는다. 이를 합성곱이라 한다. 모든 성분이 \(\frac{1}{9}\)인 3 × 3 필터는 둘레 9칸의 평균을 내어 사진을 흐리게 한다. 가운데가 8이고 둘레가 \(-1\)인 필터는 둘레와 밝기가 다른 곳, 곧 윤곽선에서 큰 값을 낸다.<sup class="fn"><a href="#fn-aimath-image-ops-1">1</a></sup></p>
+          <p>지금까지는 픽셀의 값을 바꾸었는데, 사진을 뒤집거나 돌리는 버튼은 값은 그대로 두고 픽셀의 자리를 옮긴다. 이때는 각 픽셀의 좌표 \(\begin{pmatrix} x \\ y \end{pmatrix}\)에 2 × 2 행렬을 곱한다. 행렬의 첫째 열은 오른쪽으로 한 칸인 \(\begin{pmatrix} 1 \\ 0 \end{pmatrix}\)이 옮겨 갈 자리, 둘째 열은 위로 한 칸인 \(\begin{pmatrix} 0 \\ 1 \end{pmatrix}\)이 옮겨 갈 자리라고 생각하면 행렬을 쉽게 만들 수 있다. 좌우 뒤집기는 오른쪽 한 칸을 왼쪽 한 칸으로 보내고 위쪽은 그대로 두므로 \(\begin{pmatrix} -1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\)이고, 시계 반대 방향으로 90° 돌리기는 오른쪽 한 칸을 위로, 위로 한 칸을 왼쪽으로 보내므로 \(\begin{pmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{pmatrix}\)이다. 다른 모든 칸은 이 두 칸의 조합이므로 두 열만 정하면 사진 전체가 어떻게 움직일지 정해진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="윤곽선 필터">
+              <g class="s">
+                <rect x="40" y="20" width="90" height="90" class="gd"/>
+                <text x="55" y="45">−1</text><text x="85" y="45">−1</text><text x="115" y="45">−1</text>
+                <text x="55" y="75">−1</text><text x="88" y="75" class="td">8</text><text x="115" y="75">−1</text>
+                <text x="55" y="105">−1</text><text x="85" y="105">−1</text><text x="115" y="105">−1</text>
+                <text x="170" y="50">밝기가 고른 곳 → 8v − 8v = 0</text><text x="170" y="80">밝기가 바뀌는 곳 → 0이 아닌 값</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 윤곽선 필터는 가운데 값과 둘레 값의 차이를 계산한다. 밝기가 고른 곳에서는 0이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+            <p>2 × 2 이미지 \(A = \begin{pmatrix} 40 &amp; 120 \\ 200 &amp; 250 \end{pmatrix}\)에 밝기 \(+30\)을 적용한 행렬과, 대비 2배(\(2(v - 128) + 128\))를 적용한 행렬, 반전한 행렬을 각각 구하여라.</p>
+          </div>
+          <p>밝기 \(+30\)이면 \(\begin{pmatrix} 70 &amp; 150 \\ 230 &amp; 280 \end{pmatrix}\)에서 280을 255로 잘라 \(\begin{pmatrix} 70 &amp; 150 \\ 230 &amp; 255 \end{pmatrix}\)이다.</p>
+          <p>대비 2배이면 \(2v - 128\)이므로 \(\begin{pmatrix} -48 &amp; 112 \\ 272 &amp; 372 \end{pmatrix}\)을 잘라 \(\begin{pmatrix} 0 &amp; 112 \\ 255 &amp; 255 \end{pmatrix}\)이다. 그리고 반전은 \(\begin{pmatrix} 215 &amp; 135 \\ 55 &amp; 5 \end{pmatrix}\)이다. 대비를 지나치게 올리면 200과 250처럼 다르던 값이 모두 255가 되어, 밝은 부분의 차이가 사라진다는 것을 알 수 있다.</p>
+          <p>아래 탐구 카드에서 사진 편집 버튼의 계산을 확인하고, 이웃 픽셀과 섞어 윤곽선을 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-aimath-image-ops-1">이미지를 인식하는 인공지능(합성곱 신경망)은 이런 필터의 성분을 사람이 정하지 않고 자료로부터 학습한다. 첫 층의 필터는 대개 윤곽선이나 무늬를 찾는 모양으로 학습된다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>이미지 행렬의 모든 성분에 같은 수를 더하면 밝기가, 가운데 값에서의 차이를 실수배하면 대비가, 255에서 빼면 반전이 바뀐다. 둘레 픽셀과 필터를 곱해 더하는 합성곱으로 흐리게 하거나 윤곽선을 찾는다. 그래서 처음 질문의 편집 버튼들은 모두 행렬의 덧셈, 실수배, 뺄셈, 그리고 이웃 성분을 섞는 계산이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/3-1.html#card-aimath-pixel-grid"><small class="mono">인공지능 수학 3.1</small>그림을 숫자로 된 표, 곧 행렬로 바꿀 수 있을까?</a><a href="../../c/aimath/3-1.html#card-aimath-rgb"><small class="mono">인공지능 수학 3.1</small>색이 있는 사진은 행렬 몇 개로 나타낼까?</a><a href="../../c/aimath/3-1.html#text-aimath-image-matrix"><small class="mono">인공지능 수학 3.1</small>행렬로 나타낸 이미지</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a></div></nav>
+
       <article class="card" id="card-aimath-image-ops">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>사진 편집 앱의 버튼은 행렬에 어떤 계산을 할까?</h2><span class="kind">행렬 연산과 이미지 변환 · 조작</span>
+          <span class="no">탐구 1</span><h2>사진 편집 앱의 버튼은 행렬에 어떤 계산을 할까?</h2><span class="kind">행렬 연산과 이미지 변환 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -70,33 +127,33 @@
             <div class="ctl-row"><div><label class="mono">값 = <output class="k-out"></output></label><input class="k" type="range" min="-100" max="100" step="5" value="60" aria-label="변환의 세기"></div></div>
             <div class="two"><div><canvas class="src no-invert" aria-label="원래 24×24 흑백 이미지"></canvas><p class="lab">원래 A</p></div><div><canvas class="dst no-invert" aria-label="변환한 이미지"></canvas><p class="lab dl"></p></div></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">원과 네모, 줄로 만든 24×24 가상 이미지입니다. 계산 결과가 0보다 작으면 0, 255보다 크면 255로 자릅니다.</p>
+            <p class="fig-note">원과 네모, 줄로 만든 24×24 가상 이미지이다. 계산 결과가 0보다 작으면 0, 255보다 크면 255로 자른다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사진 편집 앱에서 "밝게", "대비", "뒤집기"를 누르면 사진이 바로 바뀝니다. 앱은 사진의 행렬에 어떤 계산을 하는 걸까요?</li>
-            <li><span class="tag">복원</span>행렬의 실수배 \(kA\), 행렬의 덧셈과 뺄셈, 행렬의 곱셈.</li>
-            <li><span class="tag">설명</span>밝기는 모든 성분에 같은 수를 더하는 것(\(A + kJ\), \(J\)는 성분이 모두 1인 행렬), 대비는 128을 기준으로 차이를 늘리는 것(\(c(A - 128J) + 128J\)), 반전은 \(255J - A\)입니다. 이미지를 대각선으로 뒤집으면 \((i, j)\) 성분과 \((j, i)\) 성분이 바뀐 행렬이 되는데, 이를 <em>전치행렬</em> \(A^T\)라 합니다. 좌우로 뒤집으려면 오른쪽에 반대각선이 1인 행렬 \(R\)을 곱합니다(\(AR\)). 이처럼 이미지 처리는 대부분 행렬 연산입니다.</li>
-            <li><span class="tag">연결</span>인공지능에 사진을 학습시킬 때 같은 사진을 뒤집거나 밝기를 바꿔 자료를 늘리기도 합니다(데이터 증강). 다음 카드는 주변 픽셀을 함께 쓰는 계산(합성곱)입니다.</li>
-            <li><span class="tag">적용</span>각 변환을 해 보며 성분이 어떻게 바뀌는지 설명하세요. 반전을 두 번 하면 어떻게 되나요? 전치를 두 번 하면요?</li>
-            <li class="warn"><span class="tag">판단</span>255를 넘거나 0보다 작아진 값은 잘려서 원래 정보가 사라집니다. 너무 밝게 한 뒤 다시 어둡게 해도 원래 사진으로 돌아오지 않습니다.</li>
+            <li><span class="tag">질문</span>사진 편집 앱에서 ‘밝게’, ‘대비’, ‘뒤집기’를 누르면 사진이 바로 바뀐다. 앱은 사진의 행렬에 어떤 계산을 하는 걸까?</li>
+            <li><span class="tag">복원</span>행렬에는 실수배 \(kA\), 덧셈과 뺄셈, 곱셈이 있다.</li>
+            <li><span class="tag">설명</span>밝기는 모든 성분에 같은 수를 더하는 것(\(A + kJ\), \(J\)는 성분이 모두 1인 행렬)이고, 대비는 128을 기준으로 차이를 늘리는 것(\(c(A - 128J) + 128J\)), 반전은 \(255J - A\)이다. 이미지를 대각선으로 뒤집으면 \((i, j)\) 성분과 \((j, i)\) 성분이 바뀐 행렬이 되는데, 이를 <em>전치행렬</em> \(A^T\)라 한다. 또 좌우로 뒤집으려면 오른쪽에 반대각선이 1인 행렬 \(R\)을 곱한다(\(AR\)). 즉 이미지 처리는 대부분 행렬 연산이다.</li>
+            <li><span class="tag">연결</span>인공지능에 사진을 학습시킬 때는 같은 사진을 뒤집거나 밝기를 바꿔 자료를 늘리기도 한다(데이터 증강). 다음 카드에서는 주변 픽셀을 함께 쓰는 계산(합성곱)을 다룬다.</li>
+            <li><span class="tag">적용</span>각 변환을 해 보며 성분이 어떻게 바뀌는지 설명해 보자. 그리고 반전을 두 번 하면, 전치를 두 번 하면 어떻게 되는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>255를 넘거나 0보다 작아진 값은 잘려서 원래 정보가 사라진다. 그래서 너무 밝게 한 뒤 다시 어둡게 해도 원래 사진으로 돌아오지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">밝기 200인 픽셀을 반전한 뒤 밝기를 60만큼 올리면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>115<span class="why"><b>맞습니다.</b> \(255 - 200 = 55\), \(55 + 60 = 115\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>-5<span class="why"><b>순서를 바꿔 \(255 - 260\)으로 했습니다.</b> 게다가 음수는 0으로 잘립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>260<span class="why"><b>반전을 빼먹었습니다.</b> 255를 넘으면 잘립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>55<span class="why"><b>밝기 올리기를 빼먹었습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>115<span class="why"><b>맞다.</b> \(255 - 200 = 55\), \(55 + 60 = 115\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>-5<span class="why"><b>순서를 바꿔 \(255 - 260\)으로 했다.</b> 게다가 음수는 0으로 잘린다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>260<span class="why"><b>반전을 빼먹었다.</b> 255를 넘으면 잘린다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>55<span class="why"><b>밝기 올리기를 빼먹었다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/3-1.html#card-aimath-pixel-grid"><small class="mono">인공지능 수학 3.1</small>그림을 숫자로 된 표, 곧 행렬로 바꿀 수 있을까?</a><a href="../../c/aimath/3-1.html#card-aimath-rgb"><small class="mono">인공지능 수학 3.1</small>색이 있는 사진은 행렬 몇 개로 나타낼까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/3-1.html#card-aimath-pixel-grid"><small class="mono">인공지능 수학 3.1</small>그림을 숫자로 된 표, 곧 행렬로 바꿀 수 있을까?</a><a href="../../c/aimath/3-1.html#card-aimath-rgb"><small class="mono">인공지능 수학 3.1</small>색이 있는 사진은 행렬 몇 개로 나타낼까?</a><a href="../../c/aimath/3-1.html#text-aimath-image-matrix"><small class="mono">인공지능 수학 3.1</small>행렬로 나타낸 이미지</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a></div></nav>
 
       <article class="card" id="card-aimath-convolution">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>주변 픽셀과 섞으면 사진에서 윤곽선을 찾을 수 있을까?</h2><span class="kind">합성곱 필터 · 조작</span>
+          <span class="no">탐구 2</span><h2>주변 픽셀과 섞으면 사진에서 윤곽선을 찾을 수 있을까?</h2><span class="kind">합성곱 필터 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -106,39 +163,39 @@
             <pre class="mono calc" aria-live="polite"></pre>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사람은 사진에서 물체의 윤곽을 쉽게 찾습니다. 숫자 행렬만 받은 컴퓨터는 윤곽을 어떻게 찾을 수 있을까요?</li>
-            <li><span class="tag">복원</span>두 수 묶음의 같은 위치끼리 곱해 모두 더하는 계산은 코사인 유사도를 구할 때 분자에서 했던 계산과 같습니다.</li>
-            <li><span class="tag">설명</span>3×3 행렬 \(K\)(<em>필터</em>)를 이미지 위에 올려, 겹치는 9개 성분끼리 곱해 더한 값을 가운데 픽셀의 새 값으로 합니다. 이것을 모든 픽셀에서 반복하는 계산을 <em>합성곱</em>이라 합니다. 9칸이 모두 \(\frac19\)이면 평균이라 흐려지고, 위쪽 행은 음수, 아래쪽 행은 양수(예: \(-1, -2, -1\)과 \(1, 2, 1\))이면 위아래 밝기 차이가 큰 곳, 곧 가로 윤곽에서 값이 커집니다.</li>
-            <li><span class="tag">연결</span>이미지를 다루는 인공지능(합성곱 신경망)은 필터의 9개 수를 사람이 정하지 않고 자료로 학습합니다. 처음 층은 윤곽을, 다음 층은 모양을, 더 깊은 층은 물체를 알아보는 필터가 학습됩니다.</li>
-            <li><span class="tag">적용</span>필터를 바꿔 결과를 비교하고, 원래 이미지를 눌러 한 픽셀의 계산을 따라가 보세요. 필터 성분을 직접 바꿔 대각선 윤곽을 찾는 필터를 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>윤곽 필터의 결과는 음수가 될 수 있습니다. 이 카드는 보기 쉽게 128을 더해 회색을 0으로 나타냈습니다. 가장자리 픽셀은 바깥에 이웃이 없어 가까운 값으로 채웠습니다.</li>
+            <li><span class="tag">질문</span>사람은 사진에서 물체의 윤곽을 쉽게 찾는다. 숫자 행렬만 받은 컴퓨터는 윤곽을 어떻게 찾을 수 있을까?</li>
+            <li><span class="tag">복원</span>두 수 묶음의 같은 위치끼리 곱해 모두 더하는 계산은 코사인 유사도를 구할 때 분자에서 했던 계산과 같다.</li>
+            <li><span class="tag">설명</span>3×3 행렬 \(K\)(<em>필터</em>)를 이미지 위에 올려, 겹치는 9개 성분끼리 곱해 더한 값을 가운데 픽셀의 새 값으로 한다. 이것을 모든 픽셀에서 반복하는 계산을 <em>합성곱</em>이라 한다. 9칸이 모두 \(\frac19\)이면 평균이라 흐려지고, 위쪽 행은 음수, 아래쪽 행은 양수(예를 들어 \(-1, -2, -1\)과 \(1, 2, 1\))이면 위아래 밝기 차이가 큰 곳, 곧 가로 윤곽에서 값이 커진다.</li>
+            <li><span class="tag">연결</span>이미지를 다루는 인공지능(합성곱 신경망)은 필터의 9개 수를 사람이 정하지 않고 자료로 학습한다. 그래서 처음 층은 윤곽을, 다음 층은 모양을, 더 깊은 층은 물체를 알아보는 필터가 학습된다.</li>
+            <li><span class="tag">적용</span>필터를 바꿔 결과를 비교하고, 원래 이미지를 눌러 한 픽셀의 계산을 따라가 보자. 그다음 필터 성분을 직접 바꿔 대각선 윤곽을 찾는 필터를 만들어 보자.</li>
+            <li class="warn"><span class="tag">판단</span>윤곽 필터의 결과는 음수가 될 수 있어서, 이 카드는 보기 쉽게 128을 더해 회색을 0으로 나타냈다. 또 가장자리 픽셀은 바깥에 이웃이 없어 가까운 값으로 채웠다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">모든 성분이 \(\frac19\)인 필터를, 9개 픽셀이 모두 90이고 가운데만 180인 곳에 적용하면 가운데 새 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>100<span class="why"><b>맞습니다.</b> \((8 \times 90 + 180)/9 = 900/9 = 100\)입니다. 튀는 값이 주변에 섞여 흐려집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>180<span class="why"><b>필터를 적용하기 전 값입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>90<span class="why"><b>가운데 값도 9칸 중 하나로 섞입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>135<span class="why"><b>90과 180의 평균만 냈습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>100<span class="why"><b>맞다.</b> \((8 \times 90 + 180)/9 = 900/9 = 100\)이다. 튀는 값이 주변에 섞여 흐려진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>180<span class="why"><b>필터를 적용하기 전 값이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>90<span class="why"><b>가운데 값도 9칸 중 하나로 섞인다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>135<span class="why"><b>90과 180의 평균만 냈다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/3-1.html#card-aimath-pixel-grid"><small class="mono">인공지능 수학 3.1</small>그림을 숫자로 된 표, 곧 행렬로 바꿀 수 있을까?</a><a href="../../c/aimath/3-1.html#card-aimath-rgb"><small class="mono">인공지능 수학 3.1</small>색이 있는 사진은 행렬 몇 개로 나타낼까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/3-1.html#card-aimath-pixel-grid"><small class="mono">인공지능 수학 3.1</small>그림을 숫자로 된 표, 곧 행렬로 바꿀 수 있을까?</a><a href="../../c/aimath/3-1.html#card-aimath-rgb"><small class="mono">인공지능 수학 3.1</small>색이 있는 사진은 행렬 몇 개로 나타낼까?</a><a href="../../c/aimath/3-1.html#text-aimath-image-matrix"><small class="mono">인공지능 수학 3.1</small>행렬로 나타낸 이미지</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=aimath-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=aimath&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">14문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -146,6 +203,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/aimath/body.js"></script>
 <script src="../../js/cards/aimath/img.js"></script>
 <script src="../../js/cards/aimath/image-ops.js"></script>
 <script src="../../js/cards/aimath/convolution.js"></script>

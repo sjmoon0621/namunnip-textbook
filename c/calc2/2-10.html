@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>방정식과 부등식 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="그래프의 개형을 이용한 방정식의 실근의 개수(두 그래프의 교점, 정수 분리 f(x) = k와 가로선, 접할 때가 경계), ln x = kx와 eˣ = kx의 실근, 부등식의 증명(차의 함수 h = f − g의 최솟값 ≥ 0), 모든 x에 대하여 eˣ ≥ kx가 성립할 조건, eˣ ≥ x + 1, ln x ≤ x − 1.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-root-count canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -47,18 +52,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-root-count"><span class="mono">2.10.1</span>방정식의 실근의 개수</a></li>
-        <li><a href="#card-calc2-exp-bound"><span class="mono">2.10.2</span>부등식과 차의 함수의 최솟값</a></li>
+        <li><a href="#text-calc2-eq-ineq"><span class="mono">본문</span>방정식과 부등식</a></li>
+        <li><a href="#card-calc2-root-count"><span class="mono">탐구 1</span>방정식의 실근의 개수</a></li>
+        <li><a href="#card-calc2-exp-bound"><span class="mono">탐구 2</span>부등식과 차의 함수의 최솟값</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-2-10"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">9문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=2-10"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-2-10"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-2-10">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-eq-ineq" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>방정식과 부등식</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">방정식 \(e^x = 3x\)는 근의 공식이 없어 정확한 근을 식으로 구할 수 없다. 그래도 근이 몇 개인지, 대략 어디쯤 있는지는 알고 싶다. 또 \(e^x \ge kx\)가 모든 실수 \(x\)에서 성립하도록 \(k\)를 최대한 크게 잡으면 얼마일까? 미분이 이런 물음에 어떻게 답할까?</p>
+          <figure class="q-fig" data-q="calc2-roots">
+            <svg viewBox="0 0 520 230" role="img" aria-label="y = e^x 와 직선 y = kx 의 교점 개수"></svg>
+            <div class="q-ctl"><label>직선의 기울기 \(k\) <input type="range" data-k="k" min="-2" max="5" step="0.02" value="3"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(y = e^x\)(파랑)와 \(y = kx\)(주황)의 교점의 개수가 방정식 \(e^x = kx\)의 실근의 개수이다. \(k = e\)에서 직선이 곡선에 접한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>그래프의 개형(<a href="2-9.html">그래프의 개형</a>), 함수의 최댓값과 최솟값(미적분Ⅰ), 접선의 방정식(<a href="2-8.html">여러 가지 곡선의 접선</a>).</div>
+
+          <h3><span class="no">2.10.1</span>방정식의 실근의 개수</h3>
+          <p>방정식 \(f(x) = g(x)\)의 실근은 두 그래프 \(y = f(x)\), \(y = g(x)\)의 교점의 \(x\)좌표이다. 따라서 근을 직접 구하지 않아도 두 그래프를 그려 교점을 세면 실근의 개수를 알 수 있다. 문자 \(k\)가 들어 있으면 \(k\)만 따로 떼어 \(h(x) = k\) 꼴로 바꾸고, \(y = h(x)\)와 수평선 \(y = k\)의 교점을 세는 것이 편하다.</p>
+          <div class="tb-env thm"><span class="lb">방법 2.10.1 <span class="nm">실근의 개수 조사</span></span>
+            <p>방정식을 \(h(x) = k\) 꼴로 정리한다. \(h'(x)\)로 \(y = h(x)\)의 증감과 극값, 끝의 극한을 조사하여 그래프를 그린다. 수평선 \(y = k\)를 위아래로 움직이며 교점의 개수를 센다.</p>
+          </div>
+          <p>그림 1에서 \(k\)를 바꾸어 보자. \(k &lt; 0\)이면 교점이 하나, \(0 \le k &lt; e\)이면 직선이 곡선 아래를 지나 교점이 없고, \(k = e\)이면 한 점에서 접하며, \(k &gt; e\)이면 두 점에서 만난다. 처음 질문의 \(e^x = 3x\)는 \(3 &gt; e\)이므로 실근이 2개이다.<sup class="fn"><a href="#fn-calc2-eq-ineq-1">1</a></sup></p>
+
+          <h3><span class="no">2.10.2</span>부등식의 증명</h3>
+          <p>어떤 범위의 모든 \(x\)에서 \(f(x) \ge g(x)\)를 보이려면 \(h(x) = f(x) - g(x)\)로 놓고, 그 범위에서 \(h(x)\)의 최솟값이 0 이상임을 보인다. 최솟값은 \(h'(x)\)로 증감을 조사하여 구한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="e^x / x 의 그래프와 수평선 y = k 로 실근 개수를 세는 방법">
+              <g class="s">
+                <line x1="260" y1="10" x2="260" y2="115" class="ax"/><line x1="40" y1="70" x2="500" y2="70" class="ax"/>
+                <path d="M270 12 Q 290 40 320 40 Q 380 40 480 10" class="b"/>
+                <path d="M40 72 Q 200 76 250 112" class="b"/>
+                <line x1="40" y1="25" x2="500" y2="25" class="c"/><circle cx="320" cy="40" r="3" class="fd"/>
+                <text x="326" y="54">극소 (1, e)</text><text x="44" y="20" class="tc">y = k (k &gt; e 이면 교점 2개)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(e^x = kx\)를 \(\dfrac{e^x}{x} = k\)로 바꾸면, \(y = \dfrac{e^x}{x}\)는 \(x &gt; 0\)에서 \(x = 1\)일 때 극솟값 \(e\)를 갖는다. 수평선 \(y = k\)와의 교점이 실근이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.10.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.10.2</span>
+            <p>모든 실수 \(x\)에 대하여 \(e^x \ge x + 1\)임을 증명하여라. 또 \(x &gt; 0\)일 때 \(e^x \ge kx\)가 항상 성립하도록 하는 \(k\)의 최댓값을 구하여라.</p>
+          </div>
+          <p>\(h(x) = e^x - x - 1\)이라 하면 \(h'(x) = e^x - 1\)이다. \(x &lt; 0\)에서 \(h' &lt; 0\), \(x &gt; 0\)에서 \(h' &gt; 0\)이므로 \(h(x)\)는 \(x = 0\)에서 최솟값 \(h(0) = 0\)을 갖는다. 따라서 모든 \(x\)에서 \(h(x) \ge 0\), 곧 \(e^x \ge x + 1\)이다. 등호는 \(x = 0\)일 때 성립하며, 직선 \(y = x + 1\)은 \(y = e^x\)의 \(x = 0\)에서의 접선이다.</p>
+          <p>\(x &gt; 0\)이면 \(e^x \ge kx \iff \dfrac{e^x}{x} \ge k\)이다. \(p(x) = \dfrac{e^x}{x}\)의 도함수는 \(\dfrac{e^x(x - 1)}{x^2}\)이므로 \(x = 1\)에서 최솟값 \(p(1) = e\)를 갖는다. 모든 \(x &gt; 0\)에서 \(p(x) \ge k\)이려면 \(k \le e\)이어야 하므로 \(k\)의 최댓값은 \(e\)이다.</p>
+          <p>아래 탐구 카드에서 풀 수 없는 방정식의 근의 개수와, 부등식이 항상 성립하는 조건을 직접 조사해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-eq-ineq-1">근의 대략적인 위치는 사잇값 정리로 좁힐 수 있다. \(h(x) = e^x - 3x\)에서 \(h(0) = 1 &gt; 0\), \(h(1) = e - 3 &lt; 0\), \(h(2) = e^2 - 6 &gt; 0\)이므로 두 근은 각각 \((0, 1)\)과 \((1, 2)\)에 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>방정식의 실근의 개수는 두 그래프의 교점의 개수이며, 문자를 분리하여 \(y = h(x)\)와 수평선의 교점을 세면 편하다. 부등식은 차를 함수로 놓고 최솟값이 0 이상임을 보여 증명한다. 그래서 처음 질문의 \(e^x = 3x\)는 근을 구하지 못해도 실근이 2개임을 알 수 있고, \(e^x \ge kx\)가 \(x &gt; 0\)에서 늘 성립하는 \(k\)의 최댓값은 \(e\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-curve-sketch"><small class="mono">미적분Ⅱ 2.9</small>점을 찍지 않고 그래프의 모양을 알 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a><a href="../../c/calc2/2-8.html#text-calc2-tangent"><small class="mono">미적분Ⅱ 2.8</small>여러 가지 곡선의 접선</a></div></nav>
+
       <article class="card" id="card-calc2-root-count">
         <header class="card-head">
-          <span class="no">2.10.1</span><h2>풀 수 없는 방정식의 근은 몇 개일까?</h2><span class="kind">방정식의 실근 · 조작</span>
+          <span class="no">탐구 1</span><h2>풀 수 없는 방정식의 근은 몇 개일까?</h2><span class="kind">방정식의 실근 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -77,34 +134,34 @@
                 <div><dt>실근의 개수</dt><dd class="n-c good">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">근은 이분법으로 수치 계산한 값입니다. 근이 그림 밖\((x &gt; 10)\)에 있으면 표시만 하고 그리지 않습니다.</p>
+              <p class="fig-note">근은 이분법으로 수치 계산한 값이다. 근이 그림 밖\((x &gt; 10)\)에 있으면 표시만 하고 그리지 않는다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>방정식 \(\ln x = kx\)는 식을 변형해 풀 수 없습니다. 그래도 \(k\)의 값에 따라 실근이 몇 개인지 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>방정식 \(f(x) = g(x)\)의 실근은 두 그래프의 교점의 \(x\)좌표입니다. 앞 절에서 \(y = \frac{\ln x}{x}\)는 \(x = e\)에서 최댓값 \(\frac{1}{e}\)를 갖고, \(x \to 0^+\)이면 \(-\infty\)로, \(x \to \infty\)이면 0으로 간다는 것을 보았습니다.</li>
-            <li><span class="tag">설명</span>위 그림처럼 곡선과 기울어진 직선의 교점을 세면 \(k\)가 바뀔 때마다 직선이 돌아가서 판단하기 어렵습니다. \(x &gt; 0\)이므로 양변을 \(x\)로 나누어 <b>\(\frac{\ln x}{x} = k\)</b>로 바꿉니다. 이렇게 \(k\)를 한쪽으로 떼어 내면 고정된 곡선과 가로선 \(y = k\)의 교점만 세면 됩니다. 결과는 \(k \le 0\)이면 1개, \(0 &lt; k &lt; \frac{1}{e}\)이면 2개, \(k = \frac{1}{e}\)이면 1개, \(k &gt; \frac{1}{e}\)이면 0개입니다.</li>
-            <li><span class="tag">연결</span>근이 2개에서 0개로 바뀌는 경계 \(k = \frac{1}{e}\)에서 직선 \(y = \frac{x}{e}\)는 곡선 \(y = \ln x\)에 점 \((e, 1)\)에서 접합니다. 근의 개수가 바뀌는 순간은 두 그래프가 접하는 순간이고, 이는 접선 문제와 같은 계산입니다.</li>
-            <li><span class="tag">적용</span>\(k\)를 움직이며 위아래 그림의 교점이 늘 같은 \(x\)에서 생기는지 확인하세요. 근의 개수가 바뀌는 \(k\)를 모두 찾으세요. \(k = 0.05\)처럼 작은 양수에서는 위 그림에 교점이 하나만 보이는데 셋째 칸은 2입니다. 나머지 근은 어디에 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>양변을 \(x\)로 나눌 수 있었던 것은 정의역이 \(x &gt; 0\)이기 때문입니다. \(x\)가 0이나 음수가 될 수 있으면 나누기 전에 따로 확인해야 합니다. 또 그림의 범위 안에서만 교점을 세면 멀리 있는 근을 놓칩니다. 끝에서의 극한을 함께 봅니다.</li>
+            <li><span class="tag">질문</span>방정식 \(\ln x = kx\)는 식을 변형해 풀 수 없다. 그래도 \(k\)의 값에 따라 실근이 몇 개인지 알 수 있을까?</li>
+            <li><span class="tag">복원</span>방정식 \(f(x) = g(x)\)의 실근은 두 그래프의 교점의 \(x\)좌표이다. 그리고 앞 절에서 \(y = \frac{\ln x}{x}\)는 \(x = e\)에서 최댓값 \(\frac{1}{e}\)를 갖고, \(x \to 0^+\)이면 \(-\infty\)로, \(x \to \infty\)이면 0으로 간다는 것을 보았다.</li>
+            <li><span class="tag">설명</span>위 그림처럼 곡선과 기울어진 직선의 교점을 세면 \(k\)가 바뀔 때마다 직선이 돌아가서 판단하기 어렵다. 그런데 \(x &gt; 0\)이므로 양변을 \(x\)로 나누어 \(\frac{\ln x}{x} = k\)로 바꾸면, \(k\)를 한쪽으로 떼어 낸 셈이어서 고정된 곡선과 가로선 \(y = k\)의 교점만 세면 된다. 결과는 \(k \le 0\)이면 1개, \(0 &lt; k &lt; \frac{1}{e}\)이면 2개, \(k = \frac{1}{e}\)이면 1개, \(k &gt; \frac{1}{e}\)이면 0개이다.</li>
+            <li><span class="tag">연결</span>근이 2개에서 0개로 바뀌는 경계 \(k = \frac{1}{e}\)에서 직선 \(y = \frac{x}{e}\)는 곡선 \(y = \ln x\)에 점 \((e, 1)\)에서 접한다. 즉 근의 개수가 바뀌는 순간은 두 그래프가 접하는 순간이고, 이는 접선 문제와 같은 계산이다.</li>
+            <li><span class="tag">적용</span>\(k\)를 움직이며 위아래 그림의 교점이 늘 같은 \(x\)에서 생기는지 확인하고, 근의 개수가 바뀌는 \(k\)를 모두 찾아보자. 또 \(k = 0.05\)처럼 작은 양수에서는 위 그림에 교점이 하나만 보이는데 셋째 칸은 2인데, 나머지 근이 어디에 있는지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>양변을 \(x\)로 나눌 수 있었던 것은 정의역이 \(x &gt; 0\)이기 때문이므로, \(x\)가 0이나 음수가 될 수 있으면 나누기 전에 따로 확인해야 한다. 또 그림의 범위 안에서만 교점을 세면 멀리 있는 근을 놓치므로, 끝에서의 극한을 함께 본다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">방정식 \(e^x = kx\)가 서로 다른 두 실근을 갖도록 하는 실수 \(k\)의 범위는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(k &gt; e\)<span class="why"><b>맞습니다.</b> \(x = 0\)은 근이 아니므로 \(\frac{e^x}{x} = k\)로 바꿉니다. \(x &gt; 0\)에서 이 함수는 \(x = 1\)에서 최솟값 \(e\)를 갖고 양 끝에서 \(\infty\)로 가므로, \(k &gt; e\)일 때 교점이 둘입니다. \(x &lt; 0\)에서는 값이 음수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0 &lt; k &lt; e\)<span class="why"><b>최댓값 문제와 뒤집었습니다.</b> \(\frac{e^x}{x}\)는 \(x &gt; 0\)에서 최솟값을 가지므로 가로선이 그보다 위에 있어야 두 번 만납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(0 &lt; k &lt; \frac{1}{e}\)<span class="why"><b>\(\ln x = kx\)의 결과를 옮겨 왔습니다.</b> 곡선이 바뀌면 고정된 함수의 개형부터 다시 그려야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k &lt; 0\)<span class="why"><b>음수 쪽 근을 둘로 셌습니다.</b> \(x &lt; 0\)에서 \(\frac{e^x}{x}\)는 0에서 \(-\infty\)까지 감소하므로 \(k &lt; 0\)이면 근은 하나뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(k &gt; e\)<span class="why"><b>맞다.</b> \(x = 0\)은 근이 아니므로 \(\frac{e^x}{x} = k\)로 바꾼다. \(x &gt; 0\)에서 이 함수는 \(x = 1\)에서 최솟값 \(e\)를 갖고 양 끝에서 \(\infty\)로 가므로, \(k &gt; e\)일 때 교점이 둘이다. \(x &lt; 0\)에서는 값이 음수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0 &lt; k &lt; e\)<span class="why"><b>최댓값 문제와 뒤집었다.</b> \(\frac{e^x}{x}\)는 \(x &gt; 0\)에서 최솟값을 가지므로 가로선이 그보다 위에 있어야 두 번 만난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(0 &lt; k &lt; \frac{1}{e}\)<span class="why"><b>\(\ln x = kx\)의 결과를 옮겨 왔다.</b> 곡선이 바뀌면 고정된 함수의 개형부터 다시 그려야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k &lt; 0\)<span class="why"><b>음수 쪽 근을 둘로 셌다.</b> \(x &lt; 0\)에서 \(\frac{e^x}{x}\)는 0에서 \(-\infty\)까지 감소하므로 \(k &lt; 0\)이면 근은 하나뿐이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-curve-sketch"><small class="mono">미적분Ⅱ 2.9</small>점을 찍지 않고 그래프의 모양을 알 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-curve-sketch"><small class="mono">미적분Ⅱ 2.9</small>점을 찍지 않고 그래프의 모양을 알 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a><a href="../../c/calc2/2-8.html#text-calc2-tangent"><small class="mono">미적분Ⅱ 2.8</small>여러 가지 곡선의 접선</a></div></nav>
 
       <article class="card" id="card-calc2-exp-bound">
         <header class="card-head">
-          <span class="no">2.10.2</span><h2>\(e^x \ge kx\)가 모든 \(x\)에서 성립하려면 \(k\)는 얼마까지 될까?</h2><span class="kind">부등식 · 조작</span>
+          <span class="no">탐구 2</span><h2>\(e^x \ge kx\)가 모든 \(x\)에서 성립하려면 \(k\)는 얼마까지 될까?</h2><span class="kind">부등식 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -123,43 +180,44 @@
                 <div><dt>모든 \(x\)에서 성립?</dt><dd class="n-ok">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">아래 그림의 주황 점은 \(h\)가 가장 낮은 곳입니다. \(h\)가 \(x\)축 아래로 내려가는 곳이 있으면 부등식이 깨집니다.</p>
+              <p class="fig-note">아래 그림의 주황 점은 \(h\)가 가장 낮은 곳이다. \(h\)가 \(x\)축 아래로 내려가는 곳이 있으면 부등식이 깨진다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>모든 실수 \(x\)에 대하여 \(e^x \ge kx\)가 성립하도록 하는 \(k\)의 범위는 무엇일까요? \(k\)를 키우면 언젠가 직선이 곡선을 뚫고 올라갈 것입니다.</li>
-            <li><span class="tag">복원</span>'모든 \(x\)에서 \(f(x) \ge g(x)\)'는 '\(h(x) = f(x) - g(x) \ge 0\)'과 같습니다. \(h\)에 최솟값이 있으면 최솟값 \(\ge 0\)인지만 보면 됩니다.</li>
-            <li><span class="tag">설명</span>\(h(x) = e^x - kx\)로 두면 \(h'(x) = e^x - k\)입니다. \(k &gt; 0\)이면 \(x = \ln k\)에서 \(h'\)의 부호가 −에서 +로 바뀌므로 최솟값은 <b>\(h(\ln k) = k(1 - \ln k)\)</b>입니다. 이 값이 0 이상이려면 \(\ln k \le 1\), 곧 \(k \le e\)입니다. \(k = 0\)이면 \(e^x &gt; 0\)이라 성립합니다. \(k &lt; 0\)이면 \(x \to -\infty\)일 때 \(h(x) \to -\infty\)라 깨집니다. 따라서 답은 \(0 \le k \le e\)입니다.</li>
-            <li><span class="tag">연결</span>\(k = e\)일 때 직선 \(y = ex\)는 곡선에 점 \((1, e)\)에서 접합니다. 아래로 볼록한 곡선은 접선보다 위에 있다는 사실과 같은 이야기입니다. 같은 방법으로 \(e^x \ge x + 1\)(점 \((0, 1)\)에서의 접선)과 \(\ln x \le x - 1\)(점 \((1, 0)\)에서의 접선)을 증명할 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(k\)를 키우며 셋째 칸이 '아니요'로 바뀌는 순간을 찾으세요. 그때 위 그림의 직선과 곡선은 어떤 관계인가요? \(k\)를 음수로 내리면 아래 그림의 어느 쪽에서 문제가 생기나요?</li>
-            <li class="warn"><span class="tag">판단</span>극솟값만 확인하고 끝내면 안 됩니다. \(k &lt; 0\)이면 \(h' &gt; 0\)이라 극값이 아예 없고, 왼쪽 끝에서 \(h\)가 한없이 작아집니다. 최솟값이 없는 함수는 끝에서의 극한까지 보아야 합니다. 또 \(\frac{e^x}{x} \ge k\)처럼 \(x\)로 나누면 \(x &lt; 0\)일 때 부등호 방향이 바뀌므로 조심합니다.</li>
+            <li><span class="tag">질문</span>모든 실수 \(x\)에 대하여 \(e^x \ge kx\)가 성립하도록 하는 \(k\)의 범위는 무엇일까? \(k\)를 키우면 언젠가 직선이 곡선을 뚫고 올라갈 것이다.</li>
+            <li><span class="tag">복원</span>‘모든 \(x\)에서 \(f(x) \ge g(x)\)’는 ‘\(h(x) = f(x) - g(x) \ge 0\)’과 같다. 그래서 \(h\)에 최솟값이 있으면 최솟값이 0 이상인지만 보면 된다.</li>
+            <li><span class="tag">설명</span>\(h(x) = e^x - kx\)로 두면 \(h'(x) = e^x - k\)이다. \(k &gt; 0\)이면 \(x = \ln k\)에서 \(h'\)의 부호가 −에서 +로 바뀌므로 최솟값은 \(h(\ln k) = k(1 - \ln k)\)이고, 이 값이 0 이상이려면 \(\ln k \le 1\), 곧 \(k \le e\)이다. \(k = 0\)이면 \(e^x &gt; 0\)이라 성립하고, \(k &lt; 0\)이면 \(x \to -\infty\)일 때 \(h(x) \to -\infty\)라 깨진다. 따라서 답은 \(0 \le k \le e\)이다.</li>
+            <li><span class="tag">연결</span>\(k = e\)일 때 직선 \(y = ex\)는 곡선에 점 \((1, e)\)에서 접하는데, 이것은 아래로 볼록한 곡선이 접선보다 위에 있다는 사실과 같은 이야기이다. 같은 방법으로 \(e^x \ge x + 1\)(점 \((0, 1)\)에서의 접선)과 \(\ln x \le x - 1\)(점 \((1, 0)\)에서의 접선)을 증명할 수 있다.</li>
+            <li><span class="tag">적용</span>\(k\)를 키우며 셋째 칸이 ‘아니요’로 바뀌는 순간을 찾고, 그때 위 그림의 직선과 곡선이 어떤 관계인지 보자. 그리고 \(k\)를 음수로 내리면 아래 그림의 어느 쪽에서 문제가 생기는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>극솟값만 확인하고 끝내면 안 된다. \(k &lt; 0\)이면 \(h' &gt; 0\)이라 극값이 아예 없고, 왼쪽 끝에서 \(h\)가 한없이 작아지기 때문이다. 그래서 최솟값이 없는 함수는 끝에서의 극한까지 보아야 하고, \(\frac{e^x}{x} \ge k\)처럼 \(x\)로 나누면 \(x &lt; 0\)일 때 부등호 방향이 바뀌므로 조심해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">모든 양수 \(x\)에 대하여 \(\ln x \le kx\)가 성립하도록 하는 실수 \(k\)의 최솟값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{e}\)<span class="why"><b>맞습니다.</b> \(x &gt; 0\)이므로 \(\frac{\ln x}{x} \le k\)입니다. 왼쪽의 최댓값은 \(x = e\)에서 \(\frac{1}{e}\)이므로 \(k \ge \frac{1}{e}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e\)<span class="why"><b>\(e^x \ge kx\)의 경계를 옮겨 왔습니다.</b> 곡선이 \(\ln x\)로 바뀌었고 부등호 방향도 반대입니다. \(k = e\)도 성립하지만 가장 작은 값은 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>성립하는 값 하나를 찾았을 뿐입니다.</b> \(\ln x \le x - 1 &lt; x\)이므로 \(k = 1\)은 성립합니다. 하지만 1보다 작은 \(\frac{1}{e}\)까지 내려갈 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(x &lt; 1\)인 부분만 보았습니다.</b> \(x &gt; 1\)이면 \(\ln x &gt; 0\)이라 \(\ln x \le 0\)은 깨집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{e}\)<span class="why"><b>맞다.</b> \(x &gt; 0\)이므로 \(\frac{\ln x}{x} \le k\)이다. 왼쪽의 최댓값은 \(x = e\)에서 \(\frac{1}{e}\)이므로 \(k \ge \frac{1}{e}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e\)<span class="why"><b>\(e^x \ge kx\)의 경계를 옮겨 왔다.</b> 곡선이 \(\ln x\)로 바뀌었고 부등호 방향도 반대이다. \(k = e\)도 성립하지만 가장 작은 값은 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>성립하는 값 하나를 찾았을 뿐이다.</b> \(\ln x \le x - 1 &lt; x\)이므로 \(k = 1\)은 성립한다. 하지만 1보다 작은 \(\frac{1}{e}\)까지 내려갈 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(x &lt; 1\)인 부분만 보았다.</b> \(x &gt; 1\)이면 \(\ln x &gt; 0\)이라 \(\ln x \le 0\)은 깨진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-curve-sketch"><small class="mono">미적분Ⅱ 2.9</small>점을 찍지 않고 그래프의 모양을 알 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-curve-sketch"><small class="mono">미적분Ⅱ 2.9</small>점을 찍지 않고 그래프의 모양을 알 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-tangent-from-point"><small class="mono">미적분Ⅱ 2.8</small>곡선 밖의 한 점에서 접선을 몇 개 그을 수 있을까?</a><a href="../../c/calc2/2-8.html#card-calc2-slope-tangent"><small class="mono">미적분Ⅱ 2.8</small>기울기가 정해진 접선은 곡선의 어디에 닿을까?</a><a href="../../c/calc2/2-8.html#text-calc2-tangent"><small class="mono">미적분Ⅱ 2.8</small>여러 가지 곡선의 접선</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-2-10"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">9문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=2-10"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-2-10"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -167,6 +225,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/root-count.js"></script>
 <script src="../../js/cards/calc2/exp-bound.js"></script>

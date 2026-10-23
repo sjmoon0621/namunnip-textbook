@@ -1,0 +1,55 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/aimath/body.js"],
+  "sec": "4-1",
+  "short": "본문 · 확률과 예측"
+}
+-->
+<article class="card reading" id="text-aimath-prob" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>확률과 예측</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">어떤 질병 진단 인공지능은 환자에게는 99% 양성, 건강한 사람에게는 99% 음성을 낸다. 이 인공지능이 나에게 '양성'이라고 했다면, 내가 실제로 병에 걸렸을 확률은 99%일까? 그런데 그 질병이 드물다면 답은 절반에도 못 미칠 수 있다. 인공지능의 예측 확률은 어떻게 읽어야 할까?</p>
+    <figure class="q-fig" data-q="ai-bayes">
+      <svg viewBox="0 0 520 200" role="img" aria-label="유병률에 따라 달라지는 양성 판정자 가운데 실제 환자의 비율"></svg>
+      <div class="q-ctl"><label>유병률 (%) <input type="range" data-k="p" min="0.1" max="30" step="0.1" value="1"><output data-k="p"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 1만 명 가운데 실제 환자(위 막대의 빨강)와, 양성 판정을 받은 사람 가운데 진짜 환자(아래 막대의 빨강)와 잘못된 양성(파랑). 질병이 드물수록 건강한 사람 가운데 1%가 만드는 잘못된 양성이 진짜 양성보다 많아진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>비율과 백분율, 확률의 뜻(중학교), 조건부확률(확률과 통계), 스팸 확률(<a href="2-3.html">텍스트 분석의 수학</a>).</div>
+
+    <h3><span class="no">4.1.1</span>확률로 예측하기</h3>
+    <p>인공지능의 예측은 대개 '비가 올 확률 70%'처럼 확률로 나온다. 과거 자료에서 같은 조건이 몇 번 있었고 그 가운데 몇 번 비가 왔는지를 세면 이런 확률을 얻는다. 예를 들어 오늘 비가 온 날 100일 가운데 다음 날도 비가 온 날이 60일이면, 오늘 비가 올 때 내일 비가 올 확률을 0.6으로 어림한다. 이것이 조건부확률 \(P(\text{내일 비} \mid \text{오늘 비})\)이다.</p>
+
+    <h3><span class="no">4.1.2</span>기저율의 함정</h3>
+    <p>진단 인공지능의 '정확도 99%'는 병이 있는 사람 가운데 양성이 나올 확률 \(P(\text{양성} \mid \text{병})\)이다. 그런데 우리가 알고 싶은 것은 그 반대, 양성이 나온 사람 가운데 병이 있을 확률 \(P(\text{병} \mid \text{양성})\)이다. 두 확률은 다르며, 그 사이를 이어 주는 것이 베이즈 정리이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 4.1.1 <span class="nm">베이즈 정리</span></span>
+      <p>\[P(\text{병} \mid \text{양성}) = \frac{P(\text{양성} \mid \text{병})P(\text{병})}{P(\text{양성} \mid \text{병})P(\text{병}) + P(\text{양성} \mid \text{건강})P(\text{건강})}\] 여기서 \(P(\text{병})\)을 기저율(유병률)이라 한다.</p>
+    </div>
+    <p>그림 1에서 유병률을 1%로 두면, 1만 명 가운데 환자 100명 중 99명이 양성이고, 건강한 9900명 중 1%인 99명도 양성이다. 양성 198명 가운데 진짜 환자는 99명, 곧 50%뿐이다. 유병률을 0.1%로 낮추면 약 9%까지 떨어지고, 30%로 올리면 98%에 가까워진다. 같은 인공지능이라도 어디에 쓰느냐에 따라 '양성'의 뜻이 달라진다.<sup class="fn"><a href="#fn-aimath-prob-1">1</a></sup></p>
+    <p>그렇다면 같은 검사를 한 번 더 받아 또 양성이 나오면 어떨까? 첫 검사에서 양성인 198명은 이미 환자일 확률이 50%인 사람들이다. 이 198명을 새 출발점으로 삼으면 환자 99명 가운데 약 98명, 건강한 99명 가운데 약 1명이 다시 양성이므로, 두 번 연속 양성인 사람이 환자일 확률은 약 99%로 뛰어오른다. 베이즈 정리로 얻은 확률은 다음 증거를 받을 때의 기저율이 되고, 증거가 쌓일수록 판단이 점점 또렷해진다. 다만 이것은 두 검사의 결과가 서로 독립일 때의 이야기이다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="두 조건부확률의 차이">
+        <g class="s">
+          <rect x="30" y="30" width="200" height="50" class="lb"/><text x="130" y="52" text-anchor="middle">P(양성 | 병)</text><text x="130" y="70" text-anchor="middle">인공지능의 정확도</text>
+          <text x="260" y="60" text-anchor="middle">≠</text>
+          <rect x="290" y="30" width="200" height="50" class="ld"/><text x="390" y="52" text-anchor="middle">P(병 | 양성)</text><text x="390" y="70" text-anchor="middle">내가 알고 싶은 것</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 조건과 결과의 순서를 바꾼 두 조건부확률은 서로 다르다. 둘을 잇는 데 기저율이 필요하다.</figcaption>
+    </figure>
+
+    <h3><span class="no">4.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 4.1.2</span>
+      <p>유병률이 2%인 질병에 대해, 환자를 양성으로 판정할 확률이 95%, 건강한 사람을 음성으로 판정할 확률이 90%인 인공지능이 있다. 양성 판정을 받은 사람이 실제 환자일 확률을 구하여라.</p>
+    </div>
+    <p>1만 명으로 생각하면 환자는 200명이고, 그 가운데 \(200 \times 0.95 = 190\)명이 양성이다. 건강한 9800명 가운데 \(9800 \times 0.1 = 980\)명이 잘못된 양성이다.</p>
+    <p>양성은 모두 \(190 + 980 = 1170\)명이고 그 가운데 환자는 190명이므로 \(P(\text{병} \mid \text{양성}) = \dfrac{190}{1170} \approx 0.16\)이다. 양성 판정을 받아도 실제 환자일 확률은 16%에 불과하다. 그래서 드문 질병의 선별 검사에서 양성이 나오면 더 정확한 검사로 다시 확인한다.</p>
+    <p>아래 탐구 카드에서 날씨 예측의 조건부확률과, 정확도 99%인 진단의 의미를 직접 계산해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-aimath-prob-1">사람들이 기저율을 무시하고 \(P(\text{양성} \mid \text{병})\)을 \(P(\text{병} \mid \text{양성})\)으로 착각하는 경향을 기저율 오류라 한다. 재판에서 증거의 확률을 해석할 때도 같은 실수가 생길 수 있다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>인공지능의 예측은 조건부확률로 나타나며, 진단의 정확도 \(P(\text{양성} \mid \text{병})\)과 양성일 때 병일 확률 \(P(\text{병} \mid \text{양성})\)은 다르다. 둘은 기저율을 넣은 베이즈 정리로 이어진다. 그래서 처음 질문의 답은 질병이 얼마나 흔한지에 달려 있으며, 유병률이 1%라면 정확도 99%인 인공지능의 양성 판정도 실제 환자일 확률은 50%에 그친다.</p></div>
+  </div>
+</article>

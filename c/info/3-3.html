@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>문제 분해 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="전체 문제를 같은 모양의 작은 부분 문제로 분해하고, 부분 문제의 답과 전체 문제의 답 사이의 관계(관계식)와 기저 사례를 찾는다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-info-hanoi .cv-wide { cursor: pointer; }
     #card-info-hanoi .i2c { font: 11.5px/1.5 var(--f-mono); background: var(--paper-2); padding: 6px 0; margin: 0; overflow-x: auto; white-space: pre; }
@@ -54,18 +60,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-info-hanoi"><span class="mono">3.3.1</span>하노이 탑으로 보는 분해</a></li>
-        <li><a href="#text-info-decompose"><span class="mono">3.3.2</span>부분 문제와 관계식 찾기</a></li>
+        <li><a href="#text-info-grid-paths"><span class="mono">본문</span>문제 분해</a></li>
+        <li><a href="#card-info-hanoi"><span class="mono">탐구 1</span>하노이 탑으로 보는 분해</a></li>
+        <li><a href="#text-info-decompose"><span class="mono">읽기 2</span>부분 문제와 관계식 찾기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=info-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=info&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=info-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-info-grid-paths" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>문제 분해</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">바둑판처럼 생긴 동네에서 학교는 왼쪽 위 모퉁이, 집은 오른쪽 아래 모퉁이에 있다. 가로로 10블록, 세로로 10블록이다. 돌아가지 않고 오른쪽과 아래로만 걷는다면 집까지 가는 길은 몇 가지일까? 길을 하나하나 그려 세면 끝이 없다. 그런데 '바로 앞 모퉁이까지 오는 길의 수를 이미 안다면?'이라고 물으면 길이 보인다. 어려운 문제를 작은 문제로 나누어 푸는 방법을 알아보자.</p>
+          <figure class="q-fig" data-q="info-grid">
+            <svg viewBox="0 0 520 220" role="img" aria-label="격자의 크기에 따른 각 모퉁이까지의 경로 수"></svg>
+            <div class="q-ctl"><label>가로 블록 수 <input type="range" data-k="m" min="1" max="8" step="1" value="4"><output data-k="m"></output></label><label>세로 블록 수 <input type="range" data-k="k" min="1" max="4" step="1" value="3"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 왼쪽 위에서 출발해 각 모퉁이(칸)까지 오른쪽과 아래로만 가는 길의 수. 각 칸의 수는 위 칸과 왼쪽 칸의 수를 더한 값이다(주황이 집).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>재귀 구조(<a href="1-2.html">재귀 구조</a>), 가지치기 탐색(<a href="3-2.html">가지치기 탐색</a>), 조합(수학).</div>
+
+          <h3><span class="no">3.3.1</span>부분 문제로 나누기</h3>
+          <p>집에 도착하는 마지막 걸음은 바로 위 모퉁이에서 내려오거나, 바로 왼쪽 모퉁이에서 건너오는 두 가지뿐이다. 그래서 집까지 오는 길의 수는 위 모퉁이까지 오는 길의 수와 왼쪽 모퉁이까지 오는 길의 수의 합이다. 위 모퉁이와 왼쪽 모퉁이까지의 길의 수도 같은 방법으로 구할 수 있다. 이렇게 큰 문제의 답을 같은 모양의 더 작은 문제들의 답으로 나타내는 것이 문제 분해이다. 맨 윗줄과 맨 왼쪽 줄의 모퉁이는 한 줄로만 갈 수 있어 길이 한 가지씩이다. 이것이 더 나누지 않는 가장 작은 문제이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">격자 경로의 점화식</span></span>
+            <p>출발점에서 아래로 \(i\)칸, 오른쪽으로 \(j\)칸 떨어진 모퉁이까지의 길의 수를 \(P(i, j)\)라 하면 \[P(i, j) = P(i-1, j) + P(i, j-1),\qquad P(0, j) = P(i, 0) = 1\]이다. 이 값은 \(\dbinom{i+j}{i}\)와 같다. 작은 문제의 답을 표에 적으며 위에서 아래로 채우면 각 칸을 한 번씩만 계산한다.</p>
+          </div>
+          <p>그림 1에서 격자의 크기를 바꾸어 보자. 가로 4, 세로 3이면 표의 맨 끝 칸은 35이다. 각 칸의 수를 위 칸과 왼쪽 칸에서 더하기만 하면 되므로, 칸의 수만큼만 계산한다. 가로 10, 세로 10이면 끝 칸이 184756으로, 길을 하나하나 그려 세면 18만 번 넘게 그려야 하지만, 표는 121칸만 채우면 된다. 이 표를 채우는 방법은 파스칼의 삼각형을 만드는 방법과 같다.<sup class="fn"><a href="#fn-info-grid-paths-1">1</a></sup></p>
+
+          <h3><span class="no">3.3.2</span>분해의 두 갈래</h3>
+          <p>문제를 나누는 방식은 크게 두 가지로 이어진다. 부분 문제들이 서로 겹치지 않으면, 나누어 따로 풀고 그 답을 합치는 분할 정복이 알맞다. 리스트를 반으로 나누어 각각 정렬한 뒤 합치는 병합 정렬이 그렇다. 격자 경로처럼 같은 부분 문제가 여러 큰 문제에 거듭 쓰이면, 한 번 구한 답을 표에 적어 두고 다시 쓰는 동적 계획법이 알맞다. 그냥 재귀로 풀면 같은 모퉁이의 길의 수를 수없이 다시 계산하기 때문이다. 어느 쪽이든 '부분 문제가 무엇이고, 그 답으로 전체 답을 어떻게 만드는가'를 찾는 것이 출발점이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="분할 정복과 동적 계획법의 비교">
+              <g class="s">
+                <text x="20" y="22">방법</text><text x="170" y="22">부분 문제</text><text x="330" y="22">예</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="56">분할 정복</text><text x="170" y="56">서로 겹치지 않음</text><text x="330" y="56">병합 정렬, 이진 탐색</text>
+                <text x="20" y="86">동적 계획법</text><text x="170" y="86">여러 번 겹쳐 쓰임</text><text x="330" y="86">격자 경로, 피보나치</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 부분 문제가 겹치느냐가 분할 정복과 동적 계획법을 가른다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+            <p>가로 3블록, 세로 2블록인 격자에서 표를 채워 집까지의 길의 수를 구하여라. 공사 중인 모퉁이(출발점에서 아래로 1칸, 오른쪽으로 1칸)를 지날 수 없다면 길은 몇 가지가 되는가?</p>
+          </div>
+          <p>맨 윗줄은 1, 1, 1, 1이다. 둘째 줄은 1, 2, 3, 4이고, 셋째 줄은 1, 3, 6, 10이다. 따라서 길은 10가지이며, \(\dbinom{5}{2} = 10\)과 같다.</p>
+          <p>공사 중인 모퉁이를 0으로 두고 다시 채우면, 둘째 줄은 1, 0, 1, 2이고, 셋째 줄은 1, 1, 2, 4이다. 따라서 길은 4가지로 준다. 조합 공식은 막힌 모퉁이가 있으면 바로 쓸 수 없지만, 표를 채우는 방법은 그 칸만 0으로 바꾸면 그대로 통한다. 즉 문제를 부분 문제로 나누어 두면 조건이 바뀌어도 쉽게 대응할 수 있다. 그래서 문제 분해는 공식을 모르는 문제를 푸는 일반적인 방법이 된다.</p>
+          <p>아래 탐구 카드에서 여러 문제의 부분 문제를 찾고, 그 답으로 전체 답을 만드는 식을 세워 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-info-grid-paths-1">파스칼의 삼각형은 파스칼보다 수백 년 앞서 중국의 양휘, 페르시아의 알카라지가 이미 알고 있었다. 각 수가 바로 위 두 수의 합이라는 규칙이 격자 경로의 점화식과 같다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>문제 분해는 큰 문제의 답을 같은 모양의 작은 문제들의 답으로 나타내는 일이며, 격자 경로에서는 각 모퉁이까지의 길의 수가 위와 왼쪽 모퉁이의 길의 수의 합이다. 부분 문제가 겹치지 않으면 분할 정복, 겹치면 표에 답을 적어 두는 동적 계획법으로 이어진다. 그래서 처음 질문의 10 × 10 동네에서 집까지 가는 길은 표 121칸을 채워 184756가지로 구할 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/1-2.html#card-info-callstack"><small class="mono">정보과학 1.2</small>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</a><a href="../../c/info/1-2.html#text-info-induction"><small class="mono">정보과학 1.2</small>문제 속에서 재귀 관계를 어떻게 찾을까?</a><a href="../../c/info/1-2.html#text-info-hanoi"><small class="mono">정보과학 1.2</small>재귀 구조</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/3-4.html#card-info-sort"><small class="mono">정보과학 3.4</small>반으로 나눠 정렬하면 왜 빨라질까?</a><a href="../../c/info/3-4.html#card-info-power"><small class="mono">정보과학 3.4</small>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</a><a href="../../c/info/3-4.html#text-info-merge-sort"><small class="mono">정보과학 3.4</small>분할 정복</a></div></nav>
+
       <article class="card" id="card-info-hanoi">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>원판 n개 문제를 원판 n−1개 문제로 바꿀 수 있을까?</h2><span class="kind">문제 분해 · 부분 문제와 전체 문제의 관계 · 하노이 탑</span>
+          <span class="no">탐구 1</span><h2>원판 n개 문제를 원판 n−1개 문제로 바꿀 수 있을까?</h2><span class="kind">문제 분해 · 부분 문제와 전체 문제의 관계 · 하노이 탑</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -84,42 +140,42 @@
                 <div><p class="cap">호출 스택 (아래가 먼저 부른 것)</p><ol class="stack"></ol></div>
                 <div><p class="cap">파이썬 코드</p><pre class="i2c" aria-label="파이썬 하노이 탑 코드"></pre></div>
               </div>
-              <p class="fig-note">규칙: 한 번에 원판 하나만, 맨 위의 원판만 옮기고, 작은 원판 위에 큰 원판을 놓을 수 없습니다. 목표는 A의 원판을 모두 C로 옮기는 것입니다. 기둥을 눌러 직접 풀어 볼 수도 있습니다.</p>
+              <p class="fig-note">규칙: 한 번에 원판 하나만, 맨 위의 원판만 옮기고, 작은 원판 위에 큰 원판을 놓을 수 없다. 목표는 A의 원판을 모두 C로 옮기는 것이다. 기둥을 눌러 직접 풀어 볼 수도 있다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원판 3개는 손으로 몇 번 해 보면 풀립니다. 그런데 원판이 7개, 20개로 늘면 어떤 순서로 옮겨야 할지 막막합니다. 원판 수가 몇 개이든 통하는 풀이를 어떻게 찾을 수 있을까요?</li>
-            <li><span class="tag">복원</span>재귀 함수는 자기 자신을 더 작은 입력으로 호출하고, 기저 사례에서 멈춥니다. 함수를 부를 때마다 호출 스택에 새 칸이 쌓이고, 끝나면 빠집니다.</li>
-            <li><span class="tag">설명</span>가장 큰 원판에 주목합니다. 이것을 A에서 C로 옮기려면 그 순간 나머지 n−1개가 모두 B에 있어야 합니다. 그러면 전체 문제는 세 부분으로 <em>분해</em>됩니다. ① 원판 n−1개를 A에서 B로 옮기기, ② 가장 큰 원판을 A에서 C로 옮기기, ③ 원판 n−1개를 B에서 C로 옮기기. ①과 ③은 원판 수만 하나 적고 모양이 같은 <em>부분 문제</em>입니다. 원판 1개는 그냥 옮기면 되는 기저 사례입니다.</li>
-            <li><span class="tag">연결</span>전체 문제와 부분 문제 사이의 관계를 식으로 쓰면 이동 횟수 T(n) = 2T(n−1) + 1, T(1) = 1입니다. 이 관계를 따라가면 T(n) = 2ⁿ − 1이 되고, 이보다 적게 옮기는 방법은 없습니다. 분해할 때 찾아야 하는 것은 ① 부분 문제가 무엇인지, ② 부분 문제의 답으로 전체 답을 어떻게 만드는지, ③ 더 쪼개지 않는 가장 작은 경우가 무엇인지입니다.</li>
-            <li><span class="tag">적용</span>n = 3에서 먼저 기둥을 눌러 직접 풀어 보고, 처음부터를 누른 뒤 재귀 한 단계씩 따라가 보세요. 가장 큰 원판(주황)이 움직이는 순간 호출 스택에는 무엇이 있나요? 그때 B에는 원판이 몇 개 있나요? n을 1씩 늘리며 최소 이동 횟수가 어떻게 변하는지 표로 적어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>분해는 아무렇게나 나눈다고 되는 것이 아닙니다. "원판을 위에서부터 하나씩 옮긴다"처럼 나누면 부분 문제가 원래 문제와 같은 모양이 아니어서 재귀로 이어지지 않습니다. 또 하노이 탑의 두 부분 문제는 기둥만 다를 뿐 같은 크기라서, 원판이 하나 늘 때마다 일이 두 배가 됩니다. 분해가 곧 빠른 풀이를 뜻하지는 않습니다.</li>
+            <li><span class="tag">질문</span>원판 3개는 손으로 몇 번 해 보면 풀린다. 그런데 원판이 7개, 20개로 늘면 어떤 순서로 옮겨야 할지 막막한다. 원판 수가 몇 개이든 통하는 풀이를 어떻게 찾을 수 있을까?</li>
+            <li><span class="tag">복원</span>재귀 함수는 자기 자신을 더 작은 입력으로 호출하고, 기저 사례에서 멈춘다. 함수를 부를 때마다 호출 스택에 새 칸이 쌓이고, 끝나면 빠진다.</li>
+            <li><span class="tag">설명</span>가장 큰 원판에 주목한다. 이것을 A에서 C로 옮기려면 그 순간 나머지 n−1개가 모두 B에 있어야 한다. 그러면 전체 문제는 세 부분으로 <em>분해</em>된다. ① 원판 n−1개를 A에서 B로 옮기기, ② 가장 큰 원판을 A에서 C로 옮기기, ③ 원판 n−1개를 B에서 C로 옮기기. ①과 ③은 원판 수만 하나 적고 모양이 같은 <em>부분 문제</em>이다. 원판 1개는 그냥 옮기면 되는 기저 사례이다.</li>
+            <li><span class="tag">연결</span>전체 문제와 부분 문제 사이의 관계를 식으로 쓰면 이동 횟수 T(n) = 2T(n−1) + 1, T(1) = 1이다. 이 관계를 따라가면 T(n) = 2ⁿ − 1이 되고, 이보다 적게 옮기는 방법은 없다. 분해할 때 찾아야 하는 것은 ① 부분 문제가 무엇인지, ② 부분 문제의 답으로 전체 답을 어떻게 만드는지, ③ 더 쪼개지 않는 가장 작은 경우가 무엇인지이다.</li>
+            <li><span class="tag">적용</span>n = 3에서 먼저 기둥을 눌러 직접 풀어 보고, 처음부터를 누른 뒤 재귀 한 단계씩 따라가 보자. 가장 큰 원판(주황)이 움직이는 순간 호출 스택에는 무엇이 있는가? 그때 B에는 원판이 몇 개 있는가? n을 1씩 늘리며 최소 이동 횟수가 어떻게 변하는지 표로 적어 보자.</li>
+            <li class="warn"><span class="tag">판단</span>분해는 아무렇게나 나눈다고 되는 것이 아니다. "원판을 위에서부터 하나씩 옮긴다"처럼 나누면 부분 문제가 원래 문제와 같은 모양이 아니어서 재귀로 이어지지 않는다. 또 하노이 탑의 두 부분 문제는 기둥만 다를 뿐 같은 크기라서, 원판이 하나 늘 때마다 일이 두 배가 된다. 분해가 곧 빠른 풀이를 뜻하지는 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">원판 10개짜리 하노이 탑을 최소 횟수로 옮기려 합니다. 원판 9개를 옮기는 최소 횟수가 511번이라는 것을 알 때, 원판 10개의 최소 횟수는?</p>
+          <p class="q">원판 10개짜리 하노이 탑을 최소 횟수로 옮기려 한다. 원판 9개를 옮기는 최소 횟수가 511번이라는 것을 알 때, 원판 10개의 최소 횟수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2 × 511 + 1 = 1023번<span class="why"><b>맞습니다.</b> 9개를 B로(511), 가장 큰 원판을 C로(1), 9개를 C로(511) 옮깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>511 + 1 = 512번<span class="why"><b>부분 문제를 한 번만 셌습니다.</b> 가장 큰 원판을 옮기기 전과 후에 원판 9개를 각각 한 번씩, 두 번 옮겨야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>511 × 10 = 5110번<span class="why"><b>관계를 잘못 세웠습니다.</b> 원판 10개 문제는 원판 9개 문제 두 개와 이동 한 번으로 이루어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2 × 511 + 1 = 1023번<span class="why"><b>맞다.</b> 9개를 B로(511), 가장 큰 원판을 C로(1), 9개를 C로(511) 옮긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>511 + 1 = 512번<span class="why"><b>부분 문제를 한 번만 셌다.</b> 가장 큰 원판을 옮기기 전과 후에 원판 9개를 각각 한 번씩, 두 번 옮겨야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>511 × 10 = 5110번<span class="why"><b>관계를 잘못 세웠다.</b> 원판 10개 문제는 원판 9개 문제 두 개와 이동 한 번으로 이루어진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/1-2.html#card-info-callstack"><small class="mono">정보과학 1.2</small>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</a><a href="../../c/info/1-2.html#text-info-induction"><small class="mono">정보과학 1.2</small>문제 속에서 재귀 관계를 어떻게 찾을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/3-4.html#card-info-sort"><small class="mono">정보과학 3.4</small>반으로 나눠 정렬하면 왜 빨라질까?</a><a href="../../c/info/3-4.html#card-info-power"><small class="mono">정보과학 3.4</small>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/1-2.html#card-info-callstack"><small class="mono">정보과학 1.2</small>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</a><a href="../../c/info/1-2.html#text-info-induction"><small class="mono">정보과학 1.2</small>문제 속에서 재귀 관계를 어떻게 찾을까?</a><a href="../../c/info/1-2.html#text-info-hanoi"><small class="mono">정보과학 1.2</small>재귀 구조</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/3-4.html#card-info-sort"><small class="mono">정보과학 3.4</small>반으로 나눠 정렬하면 왜 빨라질까?</a><a href="../../c/info/3-4.html#card-info-power"><small class="mono">정보과학 3.4</small>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</a><a href="../../c/info/3-4.html#text-info-merge-sort"><small class="mono">정보과학 3.4</small>분할 정복</a></div></nav>
 
       <article class="card reading" id="text-info-decompose">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>큰 문제 속에서 같은 모양의 작은 문제를 어떻게 찾을까?</h2><span class="kind">읽기 · 문제 분해 · 관계식과 기저 사례</span>
+          <span class="no">읽기 2</span><h2>큰 문제 속에서 같은 모양의 작은 문제를 어떻게 찾을까?</h2><span class="kind">읽기 · 문제 분해 · 관계식과 기저 사례</span>
         </header>
         <div class="reading-body">
-          <p class="ask">"리스트에서 가장 큰 수 찾기"를 반복문 없이 풀 수 있을까요? 문제를 "앞의 n−1개에서 가장 큰 수"와 "마지막 수" 둘로 나누면, 앞쪽은 원래 문제와 똑같은 모양이고 크기만 하나 작습니다.</p>
+          <p class="ask">"리스트에서 가장 큰 수 찾기"를 반복문 없이 풀 수 있을까? 문제를 "앞의 n−1개에서 가장 큰 수"와 "마지막 수" 둘로 나누면, 앞쪽은 원래 문제와 똑같은 모양이고 크기만 하나 작다.</p>
 
           <h3><span class="mono">1</span>분해할 때 묻는 세 가지</h3>
           <ul class="dots">
-            <li><em>부분 문제</em>: 원래 문제와 같은 모양이면서 크기가 작은 문제는 무엇인가? 크기를 무엇으로 잴지(원소 수, 원판 수, 지수 n 등) 먼저 정합니다.</li>
-            <li><em>관계</em>: 부분 문제의 답을 알고 있다면, 그것으로 전체 문제의 답을 어떻게 만드는가? 이 관계를 식으로 적은 것이 점화식(관계식)입니다.</li>
-            <li><em>기저 사례</em>: 더 쪼개지 않고 바로 답을 아는 가장 작은 경우는 무엇인가? 크기가 매번 줄어들어 반드시 여기에 닿아야 합니다.</li>
+            <li><em>부분 문제</em>: 원래 문제와 같은 모양이면서 크기가 작은 문제는 무엇인가? 크기를 무엇으로 잴지(원소 수, 원판 수, 지수 n 등) 먼저 정한다.</li>
+            <li><em>관계</em>: 부분 문제의 답을 알고 있다면, 그것으로 전체 문제의 답을 어떻게 만드는가? 이 관계를 식으로 적은 것이 점화식(관계식)이다.</li>
+            <li><em>기저 사례</em>: 더 쪼개지 않고 바로 답을 아는 가장 작은 경우는 무엇인가? 크기가 매번 줄어들어 반드시 여기에 닿아야 한다.</li>
           </ul>
           <pre class="py">def biggest(a):
           if len(a) == 1:                  # 기저 사례
@@ -139,7 +195,7 @@
               <tr><th>계단을 1칸 또는 2칸씩 올라 n칸에 가는 방법 수 W(n)</th><td>W(n−1), W(n−2)</td><td>W(n) = W(n−1) + W(n−2)</td><td>W(1) = 1, W(2) = 2</td></tr>
             </tbody>
           </table></div>
-          <p>표의 마지막 줄은 마지막 걸음이 1칸인지 2칸인지로 경우를 나눈 것입니다. 마지막이 1칸이면 그 전까지 n−1칸을 오르는 방법 수, 2칸이면 n−2칸을 오르는 방법 수만큼 있습니다. 관계는 "마지막 한 걸음"이나 "가장 큰 원판"처럼 <em>마지막 결정 하나</em>에 주목할 때 잘 보입니다.</p>
+          <p>표의 마지막 줄은 마지막 걸음이 1칸인지 2칸인지로 경우를 나눈 것이다. 마지막이 1칸이면 그 전까지 n−1칸을 오르는 방법 수, 2칸이면 n−2칸을 오르는 방법 수만큼 있다. 관계는 "마지막 한 걸음"이나 "가장 큰 원판"처럼 <em>마지막 결정 하나</em>에 주목할 때 잘 보인다.</p>
 
           <h3><span class="mono">3</span>관계의 세 가지 모양</h3>
           <figure>
@@ -168,42 +224,46 @@
                 <text class="cap" x="90" y="190" text-anchor="middle">계단 오르기, 피보나치</text>
               </g>
             </svg>
-            <figcaption>세 모양은 이후 알고리즘 설계의 출발점이 됩니다. ②처럼 크기가 반씩 줄면 몇 번만 쪼개도 기저 사례에 닿습니다(분할 정복). ③처럼 같은 부분 문제(n−2가 두 번, 색칠한 n−3이 두 번)가 여러 번 나타나면 한 번 구한 답을 저장해 다시 쓰는 방법(동적 계획법)이 필요해집니다.</figcaption>
+            <figcaption>세 모양은 이후 알고리즘 설계의 출발점이 된다. ②처럼 크기가 반씩 줄면 몇 번만 쪼개도 기저 사례에 닿는다(분할 정복). ③처럼 같은 부분 문제(n−2가 두 번, 색칠한 n−3이 두 번)가 여러 번 나타나면 한 번 구한 답을 저장해 다시 쓰는 방법(동적 계획법)이 필요해진다.</figcaption>
           </figure>
 
           <h3><span class="mono">4</span>부분 문제의 답을 믿기</h3>
-          <p>재귀 코드를 읽을 때 호출을 끝까지 따라가면 금방 길을 잃습니다. 대신 "biggest(a[:-1])는 앞의 n−1개의 최댓값을 정확히 돌려준다"고 <em>믿고</em>, 그 답으로 전체 답을 맞게 만드는지만 확인합니다. 이것은 수학적 귀납법과 같은 생각입니다. 기저 사례가 맞고, n−1에서 맞으면 n에서도 맞음을 보이면 모든 n에서 맞습니다.</p>
-          <p class="judge"><b>판단</b>부분 문제가 원래 문제보다 작아지지 않으면(예: biggest(a)가 다시 biggest(a)를 부르면) 재귀는 끝나지 않고, 파이썬은 RecursionError를 냅니다. 또 같은 모양이라고 해서 아무렇게나 나눈 것이 좋은 분해는 아닙니다. 위의 최댓값 코드는 맞지만 a[:-1]이 리스트를 매번 복사하고 재귀 깊이가 n이라, 원소가 1000개 가까이 되면 파이썬 기본 재귀 한도(보통 1000)에 걸립니다. 분해는 정확성을 생각하는 도구이고, 효율은 따로 따져야 합니다.</p>
+          <p>재귀 코드를 읽을 때 호출을 끝까지 따라가면 금방 길을 잃는다. 대신 "biggest(a[:-1])는 앞의 n−1개의 최댓값을 정확히 돌려준다"고 <em>믿고</em>, 그 답으로 전체 답을 맞게 만드는지만 확인한다. 이것은 수학적 귀납법과 같은 생각이다. 기저 사례가 맞고, n−1에서 맞으면 n에서도 맞음을 보이면 모든 n에서 맞다.</p>
+          <p class="judge"><b>판단</b>부분 문제가 원래 문제보다 작아지지 않으면(예를 들어 biggest(a)가 다시 biggest(a)를 부르면) 재귀는 끝나지 않고, 파이썬은 RecursionError를 낸다. 또 같은 모양이라고 해서 아무렇게나 나눈 것이 좋은 분해는 아니다. 위의 최댓값 코드는 맞지만 a[:-1]이 리스트를 매번 복사하고 재귀 깊이가 n이라, 원소가 1000개 가까이 되면 파이썬 기본 재귀 한도(보통 1000)에 걸린다. 분해는 정확성을 생각하는 도구이고, 효율은 따로 따져야 한다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">계단을 한 번에 1칸, 2칸, <b>3칸</b> 중 하나로 오를 수 있게 바뀌었습니다. n칸에 오르는 방법 수 W(n)의 관계로 옳은 것은?</p>
+          <p class="q">계단을 한 번에 1칸, 2칸, <b>3칸</b> 중 하나로 오를 수 있게 바뀌었다. n칸에 오르는 방법 수 W(n)의 관계로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>W(n) = W(n−1) + W(n−2) + W(n−3)<span class="why"><b>맞습니다.</b> 마지막 걸음이 1칸, 2칸, 3칸인 세 경우로 나뉘고, 각 경우의 수는 남은 계단을 오르는 방법 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>W(n) = 3 × W(n−1)<span class="why"><b>세 경우가 모두 같은 크기의 부분 문제라고 보았습니다.</b> 걸음 폭에 따라 남는 계단 수가 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>W(n) = W(n−1) + W(n−2) + 1<span class="why"><b>3칸 걸음을 "한 가지 방법"으로만 셌습니다.</b> 마지막에 3칸을 오르기 전까지 n−3칸을 오르는 방법이 여러 가지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>W(n) = W(n−1) + W(n−2) + W(n−3)<span class="why"><b>맞다.</b> 마지막 걸음이 1칸, 2칸, 3칸인 세 경우로 나뉘고, 각 경우의 수는 남은 계단을 오르는 방법 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>W(n) = 3 × W(n−1)<span class="why"><b>세 경우가 모두 같은 크기의 부분 문제라고 보았다.</b> 걸음 폭에 따라 남는 계단 수가 다르다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>W(n) = W(n−1) + W(n−2) + 1<span class="why"><b>3칸 걸음을 "한 가지 방법"으로만 셌다.</b> 마지막에 3칸을 오르기 전까지 n−3칸을 오르는 방법이 여러 가지이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/1-2.html#card-info-callstack"><small class="mono">정보과학 1.2</small>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</a><a href="../../c/info/1-2.html#text-info-induction"><small class="mono">정보과학 1.2</small>문제 속에서 재귀 관계를 어떻게 찾을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/3-4.html#card-info-sort"><small class="mono">정보과학 3.4</small>반으로 나눠 정렬하면 왜 빨라질까?</a><a href="../../c/info/3-4.html#card-info-power"><small class="mono">정보과학 3.4</small>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/1-2.html#card-info-callstack"><small class="mono">정보과학 1.2</small>자기 자신을 부르는 함수는 왜 끝날 수 있을까?</a><a href="../../c/info/1-2.html#text-info-induction"><small class="mono">정보과학 1.2</small>문제 속에서 재귀 관계를 어떻게 찾을까?</a><a href="../../c/info/1-2.html#text-info-hanoi"><small class="mono">정보과학 1.2</small>재귀 구조</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/3-4.html#card-info-sort"><small class="mono">정보과학 3.4</small>반으로 나눠 정렬하면 왜 빨라질까?</a><a href="../../c/info/3-4.html#card-info-power"><small class="mono">정보과학 3.4</small>3의 1000제곱을 곱셈 몇 번으로 구할 수 있을까?</a><a href="../../c/info/3-4.html#text-info-merge-sort"><small class="mono">정보과학 3.4</small>분할 정복</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=info-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=info&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/info/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/info/i2-kit.js"></script>
 <script src="../../js/cards/info/i2-hanoi.js"></script>

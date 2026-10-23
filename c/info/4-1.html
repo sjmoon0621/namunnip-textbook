@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>컴퓨터과학으로 풀 문제 발견 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="여러 학문 분야와 실생활에서 컴퓨터과학의 기본 개념과 원리로 해결할 수 있는 문제를 발견하고, 입력과 출력이 분명한 문제로 다듬는다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body data-course="info" data-sec="4-1">
 
@@ -38,22 +44,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#text-info-find-problem"><span class="mono">4.1.1</span>컴퓨터과학으로 풀 문제 찾기</a></li>
+        <li><a href="#text-info-route-count"><span class="mono">본문</span>컴퓨터과학으로 풀 문제 발견</a></li>
+        <li><a href="#text-info-find-problem"><span class="mono">읽기 1</span>컴퓨터과학으로 풀 문제 찾기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=info-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=info&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=info-4-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-info-route-count" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>컴퓨터과학으로 풀 문제 발견</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">학교 급식 센터의 배달 차가 날마다 근처 학교 열 곳에 들렀다가 돌아온다. 운전기사는 늘 같은 순서로 다니지만, 순서를 바꾸면 더 짧게 다닐 수 있을 것 같다. 이 불편함은 컴퓨터과학으로 풀 수 있는 문제일까? 열 곳의 순서를 모두 따져 보면 확실한 답이 나오겠지만, 그 순서는 몇 가지이고 시간은 얼마나 걸릴까? 들를 곳이 스무 곳이라면 어떻게 될까? 주변에서 문제를 찾았을 때 먼저 무엇을 따져야 할까?</p>
+          <figure class="q-fig" data-q="info-tsp">
+            <svg viewBox="0 0 520 140" role="img" aria-label="들를 곳의 수에 따른 경로의 수와 검사 시간"></svg>
+            <div class="q-ctl"><label>들를 곳의 수 <input type="range" data-k="k" min="3" max="25" step="1" value="10"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 출발점에서 k곳을 모두 한 번씩 들르고 돌아오는 순서의 수(방향을 거꾸로 돈 것은 같은 경로로 침)와, 가장 가까운 곳부터 들르는 어림 방법의 계산량(막대는 로그 길이).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>상태 공간 완전 탐색(<a href="3-1.html">상태 공간 완전 탐색</a>), 빅오 표기법(<a href="3-6.html">빅오 표기법과 복잡도</a>), 그래프(<a href="2-3.html">트리와 그래프의 구현</a>).</div>
+
+          <h3><span class="no">4.1.1</span>불편함을 문제로 바꾸기</h3>
+          <p>프로젝트는 주변의 불편함을 컴퓨터가 풀 수 있는 문제로 바꾸는 데서 시작한다. 그러려면 입력과 출력, 목표를 분명히 정한다. 배달 순서 문제라면 입력은 학교들 사이의 거리 표이고, 출력은 들르는 순서이며, 목표는 전체 거리를 가장 짧게 하는 것이다. 이렇게 정하면 이 문제가 그래프에서 모든 정점을 한 번씩 지나 돌아오는 가장 짧은 경로를 찾는 문제, 곧 외판원 문제임을 알 수 있다. 이미 알려진 문제 꼴로 바꾸면, 그 문제에 쓰이는 방법과 그 한계를 빌려 올 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.1.1 <span class="nm">순회 경로의 수</span></span>
+            <p>출발점에서 \(k\)곳을 모두 한 번씩 들르고 돌아오는 순서는 \(k!\)가지이고, 거꾸로 도는 것을 같은 경로로 보면 \(\dfrac{k!}{2}\)가지이다. 완전 탐색의 시간은 이 수에 비례하므로 \(k\)가 조금만 커져도 감당할 수 없다.</p>
+          </div>
+          <p>그림 1에서 들를 곳의 수를 바꾸어 보자. 열 곳이면 약 180만 가지라, 1초에 1억 개의 경로를 검사하는 컴퓨터로 0.02초면 모두 따져 확실한 답을 찾는다. 열다섯 곳이면 약 6500억 가지로 2시간 가까이, 스무 곳이면 약 \(1.2 \times 10^{18}\)가지로 380년이 넘는다. 그래서 열 곳 남짓이면 완전 탐색으로 풀고, 그보다 많으면 동적 계획법이나 가까운 곳부터 들르는 어림 방법으로 충분히 좋은 답을 찾는다.<sup class="fn"><a href="#fn-info-route-count-1">1</a></sup></p>
+
+          <h3><span class="no">4.1.2</span>문제를 고르는 기준</h3>
+          <p>찾은 문제가 프로젝트로 알맞은지는 몇 가지 기준으로 판단한다. 해결하면 실제로 누군가에게 도움이 되는가. 필요한 자료를 구할 수 있는가. 지금까지 배운 탐색, 동적 계획법, 그래프 같은 방법으로 풀 수 있는가. 문제의 크기가 정해진 시간과 컴퓨터로 감당할 만한가. 그리고 다른 사람의 개인 정보나 권리를 침해하지 않는가. 잔반 줄이기, 등굣길의 혼잡, 시간표 짜기, 동물 찻길 사고처럼 주변에는 이 기준을 만족하는 문제가 많다. 문제의 크기를 먼저 어림해 보면 어떤 방법을 써야 할지도 정해진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="주변의 문제와 컴퓨터과학의 방법">
+              <g class="s">
+                <text x="20" y="22">주변의 문제</text><text x="200" y="22">문제의 꼴</text><text x="370" y="22">방법</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">배달 순서</text><text x="200" y="52">외판원 문제 (그래프)</text><text x="370" y="52">완전 탐색, 어림</text>
+                <text x="20" y="74">시간표 짜기</text><text x="200" y="74">조건 만족 문제</text><text x="370" y="74">백트래킹</text>
+                <text x="20" y="96">가장 빠른 등굣길</text><text x="200" y="96">최단 경로</text><text x="370" y="96">다익스트라</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 주변의 문제를 알려진 문제의 꼴로 바꾸면 쓸 방법이 보인다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.1.2</span>
+            <p>배달 차가 들르는 곳이 지금 10곳인데, 내년에 14곳으로 늘어날 예정이다. 완전 탐색으로 경로를 검사하는 데 지금은 0.02초가 걸린다면, 14곳에서는 얼마나 걸리는가? 하루 한 번 아침에 경로를 계산한다면, 몇 곳까지 완전 탐색을 쓸 수 있을지 판단하여라.</p>
+          </div>
+          <p>경로 수는 \(10!/2 \approx 1.8 \times 10^6\)에서 \(14!/2 \approx 4.4 \times 10^{10}\)으로 약 2만 4천 배가 된다. 따라서 시간도 약 \(0.02 \times 24000 \approx 480\)초, 곧 8분이다.</p>
+          <p>아침에 몇 분을 쓸 수 있다면 14곳까지는 완전 탐색이 가능하다. 그런데 15곳이면 그 15배인 2시간, 16곳이면 다시 16배인 32시간이 되어 하루 안에 끝나지 않는다. 즉 들를 곳이 하나 늘 때마다 시간이 그 수만큼 곱으로 늘어난다. 그래서 프로젝트를 설계할 때는 지금의 크기뿐 아니라 앞으로 늘어날 크기까지 어림하고, 15곳을 넘을 것 같으면 처음부터 어림 방법을 함께 준비한다.</p>
+          <p>아래 탐구 카드에서 주변의 불편함을 찾아 컴퓨터과학으로 풀 문제로 바꾸고, 문제의 크기와 쓸 방법을 정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-info-route-count-1">외판원 문제는 도시가 많아지면 정확한 답을 빨리 찾는 방법이 알려지지 않은 대표적인 문제이다. 그래도 연구자들은 정교한 가지치기로 8만 곳이 넘는 도시의 최단 경로를 정확히 찾은 기록을 세웠다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>프로젝트는 주변의 불편함을 입력, 출력, 목표가 분명한 문제로 바꾸고, 알려진 문제의 꼴을 찾아 쓸 방법과 그 한계를 정하는 데서 시작한다. 그리고 문제의 크기를 어림해 완전 탐색으로 풀지, 다른 방법을 써야 할지 판단한다. 그래서 처음 질문의 배달 순서는 열 곳이면 180만 가지를 0.02초 만에 모두 따져 볼 수 있지만, 스무 곳이면 수백 년이 걸려 어림 방법이 필요하다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/3-6.html#card-info-bigo-count"><small class="mono">정보과학 3.6</small>입력이 두 배가 되면 연산은 몇 배가 될까?</a><a href="../../c/info/3-6.html#card-info-bigo-growth"><small class="mono">정보과학 3.6</small>빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?</a><a href="../../c/info/3-6.html#text-info-big-o"><small class="mono">정보과학 3.6</small>빅오 표기법과 복잡도</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a><a href="../../c/info/4-2.html#text-info-team-size"><small class="mono">정보과학 4.2</small>프로젝트 설계</a></div></nav>
+
       <article class="card reading" id="text-info-find-problem">
         <header class="card-head">
-          <span class="no">4.1.1</span><h2>주변의 불편함을 컴퓨터가 풀 수 있는 문제로 바꾸려면?</h2><span class="kind">읽기 · 문제 발견 · 여러 분야의 사례</span>
+          <span class="no">읽기 1</span><h2>주변의 불편함을 컴퓨터가 풀 수 있는 문제로 바꾸려면?</h2><span class="kind">읽기 · 문제 발견 · 여러 분야의 사례</span>
         </header>
         <div class="reading-body">
-          <p class="ask">“급식 잔반이 너무 많다”, “등굣길이 막힌다”는 불편함이지, 아직 컴퓨터가 풀 수 있는 문제는 아닙니다. 무엇을 입력하고 무엇을 출력해야 하는지 정해야 비로소 알고리즘을 설계할 수 있습니다.</p>
+          <p class="ask">“급식 잔반이 너무 많다”, “등굣길이 막힌다”는 불편함이지, 아직 컴퓨터가 풀 수 있는 문제는 아니다. 무엇을 입력하고 무엇을 출력해야 하는지 정해야 비로소 알고리즘을 설계할 수 있다.</p>
           <h3><span class="mono">1</span>여러 분야에 숨어 있는 컴퓨터과학 문제</h3>
-          <p>정보과학에서 배운 탐색, 분할 정복, 동적 계획법, 그래프, 스택과 큐는 다른 학문의 문제를 풀 때도 그대로 쓰입니다. 아래는 고등학생 프로젝트로 다룰 만한 크기의 예입니다.</p>
+          <p>정보과학에서 배운 탐색, 분할 정복, 동적 계획법, 그래프, 스택과 큐는 다른 학문의 문제를 풀 때도 그대로 쓰인다. 아래는 고등학생 프로젝트로 다룰 만한 크기의 예이다.</p>
           <div class="tbl"><table>
             <thead><tr><th>분야</th><th>실생활 문제</th><th>입력 → 출력</th><th>쓸 수 있는 개념</th></tr></thead>
             <tbody>
@@ -67,47 +124,52 @@
             </tbody>
           </table></div>
           <h3><span class="mono">2</span>막연한 불편함을 계산 문제로 다듬기</h3>
-          <p>“급식 잔반이 많다”를 예로 들어 봅니다. 먼저 <em>누가, 언제, 왜</em> 불편한지 관찰하고 자료가 있는지 확인합니다. 그다음 다음 질문에 답할 수 있으면 컴퓨터로 풀 수 있는 문제가 됩니다.</p>
-          <ul class="dots">
-            <li><em>입력:</em> 날짜별 메뉴와 잔반 무게(급식실 기록), 날씨, 행사 여부</li>
-            <li><em>출력:</em> 잔반이 많이 나오는 메뉴 조합의 순위, 또는 내일 잔반량 예측</li>
-            <li><em>규모:</em> 1년 약 190일 × 메뉴 5~6개. 이 정도면 완전 탐색도 가능한지, 더 효율적인 알고리즘이 필요한지 따져 봅니다.</li>
-            <li><em>성공 기준:</em> 예측이 실제 잔반량과 얼마나 맞아야 쓸모가 있는가, 누가 결과를 쓰는가(영양 교사, 학생회)</li>
-            <li><em>이미 있는 해결책:</em> 비슷한 프로그램이나 공개된 라이브러리, 공공 데이터가 있는가</li>
-          </ul>
-          <p>문제를 작게 자르는 것도 중요합니다. “학교 급식을 개선한다”는 너무 크고, “지난 학기 기록으로 잔반이 많았던 메뉴 상위 10개를 찾아 그래프로 보여 준다”는 몇 주 안에 끝낼 수 있습니다. 첫 결과를 보고 예측 기능을 더하는 식으로 넓혀 갑니다.</p>
+          <p>“급식 잔반이 많다”를 예로 들어 본다. 먼저 <em>누가, 언제, 왜</em> 불편한지 관찰하고 자료가 있는지 확인한다. 그다음 다음 질문에 답할 수 있으면 컴퓨터로 풀 수 있는 문제가 된다.</p>
+          <p>입력은 날짜별 메뉴와 잔반 무게(급식실 기록), 날씨, 행사 여부이다.</p>
+          <p>출력은 잔반이 많이 나오는 메뉴 조합의 순위, 또는 내일 잔반량 예측이다.</p>
+          <h4>규모</h4>
+          <p>1년 약 190일 × 메뉴 5~6개. 이 정도면 완전 탐색도 가능한지, 더 효율적인 알고리즘이 필요한지 따져 본다.</p>
+          <h4>성공 기준</h4>
+          <p>예측이 실제 잔반량과 얼마나 맞아야 쓸모가 있는가? 누가 결과를 쓰는가(영양 교사, 학생회)?</p>
+          <h4>이미 있는 해결책</h4>
+          <p>비슷한 프로그램이나 공개된 라이브러리, 공공 데이터가 있는가?</p>
+          <p>문제를 작게 자르는 것도 중요하다. “학교 급식을 개선한다”는 너무 크고, “지난 학기 기록으로 잔반이 많았던 메뉴 상위 10개를 찾아 그래프로 보여 준다”는 몇 주 안에 끝낼 수 있다. 첫 결과를 보고 예측 기능을 더하는 식으로 넓혀 간다.</p>
           <h3><span class="mono">3</span>효율적으로 푸는 것도 환경을 지키는 일</h3>
-          <p>프로그램은 전기를 써서 돌아갑니다. 같은 일을 O(n²) 대신 O(n log n)으로 처리하면 자료가 많을수록 계산 시간과 전력이 크게 줄어듭니다. 생태·환경 문제를 주제로 고르는 것뿐 아니라, 어떤 주제든 효율적인 알고리즘을 쓰는 것이 에너지를 아끼는 길이라는 점도 기억해 둡니다.</p>
-          <p class="judge"><b>판단</b>컴퓨터로 풀기 어려운 문제도 있습니다. 사람의 가치 판단이 필요한 문제(어떤 메뉴가 ‘좋은’ 메뉴인가)는 프로그램이 대신 정해 줄 수 없고, 자료가 없거나 개인 정보를 모아야만 풀 수 있는 문제는 먼저 자료를 정당하게 얻을 수 있는지 따져야 합니다. 또 학생 몇 명의 시간표를 짜는 문제라도 경우의 수가 지수적으로 늘면 완전 탐색으로는 끝나지 않을 수 있으므로, 문제의 크기를 미리 어림합니다.</p>
+          <p>프로그램은 전기를 써서 돌아간다. 같은 일을 O(n²) 대신 O(n log n)으로 처리하면 자료가 많을수록 계산 시간과 전력이 크게 줄어든다. 생태·환경 문제를 주제로 고르는 것뿐 아니라, 어떤 주제든 효율적인 알고리즘을 쓰는 것이 에너지를 아끼는 길이라는 점도 기억해 둔다.</p>
+          <p class="judge"><b>판단</b>컴퓨터로 풀기 어려운 문제도 있다. 사람의 가치 판단이 필요한 문제(어떤 메뉴가 ‘좋은’ 메뉴인가)는 프로그램이 대신 정해 줄 수 없고, 자료가 없거나 개인 정보를 모아야만 풀 수 있는 문제는 먼저 자료를 정당하게 얻을 수 있는지 따져야 한다. 또 학생 몇 명의 시간표를 짜는 문제라도 경우의 수가 지수적으로 늘면 완전 탐색으로는 끝나지 않을 수 있으므로, 문제의 크기를 미리 어림한다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">모둠이 “학교 도서관을 더 좋게 만들기”를 주제로 정했습니다. 컴퓨터과학 프로젝트로 다듬은 것으로 가장 알맞은 것은?</p>
+          <p class="q">모둠이 “학교 도서관을 더 좋게 만들기”를 주제로 정했다. 컴퓨터과학 프로젝트로 다듬은 것으로 가장 알맞은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>학생들이 책을 더 많이 읽도록 독서 캠페인을 연다<span class="why"><b>좋은 활동이지만</b> 입력과 출력이 있는 계산 문제가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>개인 정보를 지운 대출 기록으로, 함께 빌려 간 책끼리 묶어 비슷한 책을 추천하는 프로그램을 만든다<span class="why"><b>맞습니다.</b> 입력(대출 기록), 출력(추천 목록), 쓸 개념(그래프, 정렬)이 분명하고 개인 정보도 고려했습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>도서관의 모든 문제를 해결하는 인공지능을 만든다<span class="why"><b>범위가 너무 넓어</b> 무엇을 입력하고 무엇을 출력할지 정할 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>학생들이 책을 더 많이 읽도록 독서 캠페인을 연다<span class="why"><b>좋은 활동이지만</b> 입력과 출력이 있는 계산 문제가 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>개인 정보를 지운 대출 기록으로, 함께 빌려 간 책끼리 묶어 비슷한 책을 추천하는 프로그램을 만든다<span class="why"><b>맞다.</b> 입력(대출 기록), 출력(추천 목록), 쓸 개념(그래프, 정렬)이 분명하고 개인 정보도 고려했다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>도서관의 모든 문제를 해결하는 인공지능을 만든다<span class="why"><b>범위가 너무 넓어</b> 무엇을 입력하고 무엇을 출력할지 정할 수 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/3-6.html#card-info-bigo-count"><small class="mono">정보과학 3.6</small>입력이 두 배가 되면 연산은 몇 배가 될까?</a><a href="../../c/info/3-6.html#card-info-bigo-growth"><small class="mono">정보과학 3.6</small>빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/3-6.html#card-info-bigo-count"><small class="mono">정보과학 3.6</small>입력이 두 배가 되면 연산은 몇 배가 될까?</a><a href="../../c/info/3-6.html#card-info-bigo-growth"><small class="mono">정보과학 3.6</small>빠른 컴퓨터를 사면 느린 알고리즘을 따라잡을 수 있을까?</a><a href="../../c/info/3-6.html#text-info-big-o"><small class="mono">정보과학 3.6</small>빅오 표기법과 복잡도</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a><a href="../../c/info/4-2.html#text-info-team-size"><small class="mono">정보과학 4.2</small>프로젝트 설계</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=info-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=info&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/info/body.js"></script>
 </body>
 </html>

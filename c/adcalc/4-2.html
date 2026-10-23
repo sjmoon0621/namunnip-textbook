@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>오일러의 방법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="오일러의 방법으로 미분방정식의 근사해를 구한다. 걸음 크기를 줄이며 오차가 줄어드는 것을 보는 조작 카드, 원운동을 오일러 방법으로 계산하면 궤도가 풀려 나가는 것을 보는 시뮬레이션 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-euler-steps canvas { aspect-ratio: 16 / 10; }
@@ -44,18 +49,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-euler-steps"><span class="mono">4.2.1</span>접선으로 한 걸음씩: 오일러 방법</a></li>
-        <li><a href="#card-adcalc-euler-orbit"><span class="mono">4.2.2</span>궤도가 풀려 나가는 오일러 방법</a></li>
+        <li><a href="#text-adcalc-euler"><span class="mono">본문</span>오일러의 방법</a></li>
+        <li><a href="#card-adcalc-euler-steps"><span class="mono">탐구 1</span>접선으로 한 걸음씩: 오일러 방법</a></li>
+        <li><a href="#card-adcalc-euler-orbit"><span class="mono">탐구 2</span>궤도가 풀려 나가는 오일러 방법</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">8문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-4-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-euler" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>오일러의 방법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">게임 속 공이 원점 둘레를 원을 그리며 돌도록, 위치 \((x, y)\)의 속도를 \((-y, x)\)로 정했다. 컴퓨터는 매 순간 "지금 위치에 속도와 시간 간격 0.1을 곱한 만큼 더한다"는 규칙으로 공을 옮긴다. 그런데 반지름 1에서 출발한 공이 한 바퀴를 돌고 나니 반지름이 1.37로 커져 있었고, 계속 돌릴수록 바깥으로 나선을 그리며 멀어졌다. 미분방정식의 해는 분명히 원인데, 컴퓨터가 한 걸음씩 계산한 길은 왜 원에서 벗어날까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="걸음 크기에 따른 오일러 방법의 결과">
+              <g class="s">
+                <text x="20" y="22">걸음 h</text><text x="140" y="22">y′ = y로 구한 y(1)</text><text x="320" y="22">한 바퀴 뒤 원의 반지름</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">0.1</text><text x="140" y="52">2.5937</text><text x="320" y="52" class="tb">약 1.37</text>
+                <text x="20" y="74">0.01</text><text x="140" y="74">2.7048</text><text x="320" y="74">약 1.03</text>
+                <text x="20" y="96">0.001</text><text x="140" y="96">2.7169</text><text x="320" y="96">약 1.003</text>
+                <text x="20" y="122">참값</text><text x="140" y="122" class="td">e = 2.71828</text><text x="320" y="122" class="td">1</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 걸음을 10분의 1로 줄이면 오차도 거의 10분의 1로 준다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>접선의 기울기, 자연로그, 수열의 귀납적 정의, 방향장(<a href="4-1.html">미분방정식과 방향장</a>).</div>
+
+          <h3><span class="no">4.2.1</span>접선을 따라 한 걸음씩</h3>
+          <p>미분방정식 \(y' = f(x, y)\)의 해를 식으로 구할 수 없으면, 방향장의 선분을 따라 한 걸음씩 걸어가며 해를 어림한다. 현재 점 \((x_n, y_n)\)에서의 기울기는 \(f(x_n, y_n)\)이므로, \(x\)를 \(h\)만큼 옮기는 동안 그 기울기로 직선을 따라가면 \(y\)는 \(h\,f(x_n, y_n)\)만큼 변한다. 도착한 점에서 다시 기울기를 구해 다음 걸음을 걷는다. 이 방법이 오일러의 방법이다. 매 걸음 접선을 따라가므로, 곡선이 휘어 있으면 걸음마다 조금씩 곡선에서 벗어난다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">오일러의 방법</span></span>
+            <p>\(y' = f(x, y)\), \(y(x_0) = y_0\)에 대하여 걸음 \(h\)로 \[x_{n+1} = x_n + h,\qquad y_{n+1} = y_n + h\,f(x_n, y_n)\]을 되풀이한다. 정해진 구간까지 갈 때의 오차는 대략 \(h\)에 비례한다.</p>
+          </div>
+          <p>\(y' = y\), \(y(0) = 1\)에 쓰면 \(y_{n+1} = y_n + hy_n = (1 + h)y_n\)이므로 \(y_n = (1 + h)^n\)이다. \(h = 0.1\)로 10걸음 가면 \(y(1) \approx 1.1^{10} \approx 2.594\)로, 참값 \(e \approx 2.718\)보다 0.12 작다. 해 \(e^x\)는 아래로 볼록해서 접선이 늘 곡선 아래에 있기 때문이다. \(h = 0.01\)로 100걸음 가면 \(1.01^{100} \approx 2.705\)로 오차가 0.013으로 줄어, 걸음을 10분의 1로 하면 오차도 거의 10분의 1이 된다.<sup class="fn"><a href="#fn-adcalc-euler-1">1</a></sup></p>
+
+          <h3><span class="no">4.2.2</span>원이 나선이 되는 까닭</h3>
+          <p>원운동 \(x' = -y\), \(y' = x\)에 오일러의 방법을 쓰면 \((x, y)\)에서 \((x - hy,\ y + hx)\)로 옮긴다. 이동한 거리 \(h\sqrt{x^2 + y^2}\)는 원의 접선 방향이므로, 새 점까지의 거리는 피타고라스 정리로 \(\sqrt{(x^2 + y^2)(1 + h^2)}\)이다. 그래서 한 걸음마다 반지름이 \(\sqrt{1 + h^2}\)배로 늘어난다. 접선은 원 바깥에 있으므로 접선을 따라가면 늘 원 밖으로 나가고, 이 작은 바깥쪽 어긋남이 쌓여 나선이 된다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 210" role="img" aria-label="오일러 방법으로 계산한 원운동이 나선이 되는 모습">
+              <path d="M250.0 105.0 L250.0 100.0 L249.5 95.0 L248.5 90.0 L247.0 85.2 L245.0 80.5 L242.6 76.0 L239.7 71.7 L236.3 67.8 L232.6 64.1 L228.5 60.9 L224.1 58.0 L219.4 55.6 L214.5 53.7 L209.4 52.2 L204.1 51.3 L198.7 50.9 L193.3 51.0 L187.9 51.7 L182.6 52.9 L177.3 54.6 L172.3 56.9 L167.5 59.7 L163.0 62.9 L158.8 66.6 L154.9 70.7 L151.5 75.2 L148.5 80.1 L146.0 85.2 L144.1 90.6 L142.6 96.2 L141.7 102.0 L141.4 107.8 L141.7 113.7 L142.6 119.5 L144.0 125.2 L146.1 130.8 L148.6 136.2 L151.8 141.4 L155.4 146.2 L159.5 150.6 L164.1 154.7 L169.0 158.3 L174.4 161.4 L180.0 163.9 L185.9 165.9 L192.0 167.3 L198.2 168.1 L204.5 168.3 L210.9 167.9 L217.2 166.8 L223.3 165.1 L229.4 162.7 L235.1 159.8 L240.6 156.3 L245.7 152.2 L250.5 147.6 L254.7 142.6 L258.5 137.1 L261.7 131.3 L264.3 125.1 L266.3 118.7 L267.7 112.0 L268.4 105.3 L268.4 98.4 L267.8 91.6 L266.4 84.8 L264.4 78.2 L261.7 71.7 L258.4 65.6 L254.5 59.7 L249.9 54.3 L244.9 49.3 L239.3 44.8 L233.3 40.9 L226.9 37.5 L220.1 34.8 L213.1 32.8 L205.9 31.5 L198.5 30.9 L191.1 31.1 L183.7 32.0 L176.4 33.6 L169.3 36.0 L162.4 39.0 L155.8 42.8 L149.6 47.2 L143.8 52.3 L138.5 57.9 L133.8 64.0 L129.7 70.6 L126.3 77.7 L123.5 85.0 L121.5 92.7 L120.3 100.5 L119.9 108.5 L120.2 116.5 L121.4 124.5 L123.3 132.4 L126.1 140.0 L129.6 147.4 L133.8 154.5 L138.7 161.1 L144.4 167.2 L150.6 172.8 L157.4 177.7 L164.6 182.0 L172.3 185.5 L180.4 188.3 L188.7 190.3 L197.2 191.4 L205.9 191.7 L214.5 191.1 L223.1 189.6 L231.6 187.3 L239.8 184.1 L247.8 180.2 L255.3 175.4 L262.3 169.9 L268.8 163.6 L274.7 156.7 L279.8 149.3 L284.3 141.3 L287.9 132.9 L290.7 124.1 L292.6 115.0 L293.6 105.8" class="b"/>
+              <circle cx="200" cy="105" r="50" class="gd"/>
+              <circle cx="200" cy="105" r="3" class="fk"/>
+              <text x="330" y="60" class="s">가는 원은 참 해 (반지름 1)</text>
+              <text x="330" y="80" class="s tb">나선은 오일러 방법, h = 0.1</text>
+              <text x="330" y="100" class="s tb">두 바퀴 뒤 반지름 약 1.88</text>
+            </svg>
+            <figcaption>그림 2. 매 걸음 원의 접선을 따라가므로 원 밖으로 조금씩 벗어나 나선이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+            <p>처음 질문의 원운동에서 \(h = 0.1\)로 한 바퀴, 곧 \(2\pi/0.1 \approx 63\)걸음을 갔을 때 반지름을 구하여라. 반지름이 1.01을 넘지 않게 한 바퀴를 돌려면 \(h\)를 얼마로 해야 하는가? \(\ln1.01 \approx 0.00995\)이다.</p>
+          </div>
+          <p>한 걸음마다 반지름이 \(\sqrt{1.01}\)배이므로, 63걸음 뒤에는 \(1.01^{63/2} = 1.01^{31.5}\)배이다. \(\ln\)을 취하면 \(31.5\times0.00995 \approx 0.313\)이므로 반지름은 \(e^{0.313} \approx 1.37\)이다. 처음 질문에서 본 값과 같다.</p>
+          <p>걸음 \(h\)로 한 바퀴 도는 걸음 수는 \(2\pi/h\)이고, 반지름은 \((1 + h^2)^{\pi/h}\)배가 된다. \(\ln\)을 취하면 \(\dfrac\pi h\ln(1 + h^2) \approx \pi h\)이므로, \(\pi h \le 0.00995\)이려면 \(h \le 0.0032\)이다. 그래서 2000걸음 가까이 걸어야 한 바퀴 동안 반지름 오차를 1% 안에 둘 수 있다. 실제 게임이나 행성 궤도 계산에서는 매 걸음 기울기를 여러 번 구해 평균하는 더 정밀한 방법을 쓴다. 즉 오일러의 방법은 접선을 따라 한 걸음씩 해를 어림하며, 오차는 걸음 크기에 비례해 쌓이고, 원운동처럼 휘어진 해에서는 그 어긋남이 한쪽으로 쌓여 눈에 띄게 된다.</p>
+          <p>아래 탐구 카드에서 걸음 크기를 바꾸며 오일러의 방법으로 해를 그려 참 해와 비교하고, 원운동이 나선이 되는 모습을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-euler-1">이 방법은 1768년 오일러의 적분학 책에 실렸다. 1960년대 미국 항공 우주국의 계산원들은 우주선의 궤도를 손과 기계식 계산기로 구할 때 오일러의 방법을 더 정밀하게 고친 방법을 썼는데, 영화 「히든 피겨스」에 그 장면이 나온다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>오일러의 방법은 현재 점의 기울기로 접선을 따라 \(y_{n+1} = y_n + h\,f(x_n, y_n)\)만큼 한 걸음씩 가며 미분방정식의 해를 어림하고, 정해진 구간까지의 오차는 걸음 \(h\)에 비례한다. 해가 휘어 있으면 접선이 곡선에서 한쪽으로 벗어나 오차가 쌓인다. 처음 질문의 공은 매 걸음 원의 접선을 따라가 반지름이 \(\sqrt{1 + h^2}\)배씩 늘어, \(h = 0.1\)이면 한 바퀴 뒤 반지름이 약 1.37이 된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/adcalc/4-1.html#text-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>미분방정식과 방향장</a><a href="../../c/calc2/2-1.html#card-calc2-e-limit"><small class="mono">미적분Ⅱ 2.1</small>(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?</a></div></nav>
+
       <article class="card" id="card-adcalc-euler-steps">
         <header class="card-head">
-          <span class="no">4.2.1</span><h2>접선을 따라 한 걸음씩 가면 해를 얼마나 정확히 그릴 수 있을까?</h2><span class="kind">오일러의 방법 · 조작 · 발견</span>
+          <span class="no">탐구 1</span><h2>접선을 따라 한 걸음씩 가면 해를 얼마나 정확히 그릴 수 있을까?</h2><span class="kind">오일러의 방법 · 조작 · 발견</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,34 +136,34 @@
                 <div><dt>오차 × \(n\)</dt><dd class="n-r">—</dd></div>
               </dl>
               <div class="tbl" aria-live="polite"></div>
-              <p class="fig-note">구간은 \(0 \le x \le 2\)입니다(첫 보기만 \(0 \le x \le 1\)). 걸음 수 막대는 1, 2, 4, …, 128처럼 두 배씩 늘어납니다.</p>
+              <p class="fig-note">구간은 \(0 \le x \le 2\)이다(첫 보기만 \(0 \le x \le 1\)). 걸음 수 막대는 1, 2, 4, …, 128처럼 두 배씩 늘어난다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>방향장을 따라 해 곡선을 손으로 그릴 때 우리는 "조금 가고, 기울기를 다시 보고, 또 조금 간다"를 되풀이합니다. 이것을 계산으로 정확히 하면 해의 근삿값을 얻을 수 있을까요? 걸음을 줄이면 얼마나 정확해질까요?</li>
-            <li><span class="tag">복원</span>점 \((x_n, y_n)\)에서의 접선은 \(y = y_n + f(x_n, y_n)(x - x_n)\)입니다. \(\left(1 + \frac{1}{n}\right)^n \to e\)입니다.</li>
-            <li><span class="tag">설명</span><em>오일러의 방법</em>은 걸음 크기 \(h\)를 정하고 \[y_{n+1} = y_n + h\,f(x_n, y_n)\]을 \(x_{n+1} = x_n + h\)와 함께 되풀이합니다. 한 걸음마다 접선을 따라가므로 곡선이 휜 만큼 오차가 생기고, 그 오차가 쌓입니다. 끝점의 오차는 대략 \(h\)에 비례합니다. 그래서 걸음 수를 두 배로 하면 오차가 대략 절반이 되고, "오차 × \(n\)"이 거의 일정해집니다. \(y' = y\)에 \(h = \frac{1}{n}\)로 쓰면 \(y_n = \left(1 + \frac{1}{n}\right)^n\)이 되어 \(e\)의 정의와 만납니다.</li>
-            <li><span class="tag">연결</span>오차가 \(h\)에 비례하는 방법을 1차 방법이라고 합니다. 정확도를 한 자리 높이려면 계산을 10배 해야 하므로 실제로는 잘 쓰이지 않고, 기울기를 여러 번 재어 평균하는 룽게–쿠타 방법(오차가 \(h^4\)에 비례) 같은 방법을 씁니다. 이 단원의 그림 속 해 곡선도 룽게–쿠타 방법으로 그렸습니다.</li>
-            <li><span class="tag">적용</span>걸음 수를 1, 2, 4, …로 늘리며 꺾은선이 참값 곡선에 다가가는 것을 보세요. 아래 표에서 걸음 수가 두 배가 될 때 오차가 대략 절반이 되나요? \(y' = y\)에서 꺾은선은 왜 언제나 곡선 아래에 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>오일러의 방법은 위로 볼록한 곳에서는 위로, 아래로 볼록한 곳에서는 아래로 치우치는 계통 오차를 냅니다. 걸음을 줄이면 오차는 줄지만, 걸음이 너무 많으면 컴퓨터의 반올림 오차가 쌓이기 시작합니다. 다음 카드에서는 오차가 쌓여 결과가 완전히 틀어지는 경우를 봅니다.</li>
+            <li><span class="tag">질문</span>방향장을 따라 해 곡선을 손으로 그릴 때 우리는 "조금 가고, 기울기를 다시 보고, 또 조금 간다"를 되풀이한다. 이것을 계산으로 정확히 하면 해의 근삿값을 얻을 수 있을까? 걸음을 줄이면 얼마나 정확해질까?</li>
+            <li><span class="tag">복원</span>점 \((x_n, y_n)\)에서의 접선은 \(y = y_n + f(x_n, y_n)(x - x_n)\)이다. \(\left(1 + \frac{1}{n}\right)^n \to e\)이다.</li>
+            <li><span class="tag">설명</span><em>오일러의 방법</em>은 걸음 크기 \(h\)를 정하고 \[y_{n+1} = y_n + h\,f(x_n, y_n)\]을 \(x_{n+1} = x_n + h\)와 함께 되풀이한다. 한 걸음마다 접선을 따라가므로 곡선이 휜 만큼 오차가 생기고, 그 오차가 쌓인다. 끝점의 오차는 대략 \(h\)에 비례한다. 그래서 걸음 수를 두 배로 하면 오차가 대략 절반이 되고, "오차 × \(n\)"이 거의 일정해진다. \(y' = y\)에 \(h = \frac{1}{n}\)로 쓰면 \(y_n = \left(1 + \frac{1}{n}\right)^n\)이 되어 \(e\)의 정의와 만난다.</li>
+            <li><span class="tag">연결</span>오차가 \(h\)에 비례하는 방법을 1차 방법이라고 한다. 정확도를 한 자리 높이려면 계산을 10배 해야 하므로 실제로는 잘 쓰이지 않고, 기울기를 여러 번 재어 평균하는 룽게–쿠타 방법(오차가 \(h^4\)에 비례) 같은 방법을 쓴다. 이 단원의 그림 속 해 곡선도 룽게–쿠타 방법으로 그렸다.</li>
+            <li><span class="tag">적용</span>걸음 수를 1, 2, 4, …로 늘리며 꺾은선이 참값 곡선에 다가가는 것을 보자. 아래 표에서 걸음 수가 두 배가 될 때 오차가 대략 절반이 되는가? \(y' = y\)에서 꺾은선은 왜 언제나 곡선 아래에 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>오일러의 방법은 위로 볼록한 곳에서는 위로, 아래로 볼록한 곳에서는 아래로 치우치는 계통 오차를 낸다. 걸음을 줄이면 오차는 줄지만, 걸음이 너무 많으면 컴퓨터의 반올림 오차가 쌓이기 시작한다. 다음 카드에서는 오차가 쌓여 결과가 완전히 틀어지는 경우를 본다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(y' = 2y\), \(y(0) = 1\)에 오일러의 방법을 \(h = 0.5\)로 두 걸음 쓰면 \(y(1)\)의 근삿값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞습니다.</b> \(y_1 = 1 + 0.5 \cdot 2 = 2\), \(y_2 = 2 + 0.5 \cdot 4 = 4\)입니다. 참값 \(e^2 \approx 7.39\)보다 한참 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e^2\)<span class="why"><b>참값입니다.</b> 오일러의 방법은 근삿값을 줍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>둘째 걸음의 기울기를 처음 기울기 2로 썼습니다.</b> 걸음마다 새 점에서 기울기를 다시 계산합니다(\(2y_1 = 4\)).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.25<span class="why"><b>\(y' = y\)처럼 계산했습니다.</b> 기울기는 \(2y\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞다.</b> \(y_1 = 1 + 0.5 \cdot 2 = 2\), \(y_2 = 2 + 0.5 \cdot 4 = 4\)이다. 참값 \(e^2 \approx 7.39\)보다 한참 작다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e^2\)<span class="why"><b>참값이다.</b> 오일러의 방법은 근삿값을 준다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>둘째 걸음의 기울기를 처음 기울기 2로 썼다.</b> 걸음마다 새 점에서 기울기를 다시 계산한다(\(2y_1 = 4\)).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.25<span class="why"><b>\(y' = y\)처럼 계산했다.</b> 기울기는 \(2y\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-e-limit"><small class="mono">미적분Ⅱ 2.1</small>(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/adcalc/4-1.html#text-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>미분방정식과 방향장</a><a href="../../c/calc2/2-1.html#card-calc2-e-limit"><small class="mono">미적분Ⅱ 2.1</small>(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?</a></div></nav>
 
       <article class="card" id="card-adcalc-euler-orbit">
         <header class="card-head">
-          <span class="no">4.2.2</span><h2>원을 그려야 할 공이 왜 점점 멀어질까?</h2><span class="kind">오일러의 방법의 오차 · 시뮬레이션 · 판단</span>
+          <span class="no">탐구 2</span><h2>원을 그려야 할 공이 왜 점점 멀어질까?</h2><span class="kind">오일러의 방법의 오차 · 시뮬레이션 · 판단</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -115,43 +177,43 @@
                 <div><dt>\((1 + h^2)^{N/2}\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>세 바퀴 뒤 반지름 (고친 것)</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">\(N\)은 세 바퀴(\(t = 6\pi\))에 필요한 걸음 수입니다. 고친 오일러는 \(x\)를 먼저 새로 구하고 그 새 \(x\)로 \(y\)를 구하는 방법입니다.</p>
+              <p class="fig-note">\(N\)은 세 바퀴(\(t = 6\pi\))에 필요한 걸음 수이다. 고친 오일러는 \(x\)를 먼저 새로 구하고 그 새 \(x\)로 \(y\)를 구하는 방법이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원 위를 도는 공의 속도는 언제나 원의 접선 방향입니다. 이 운동을 오일러의 방법으로 계산하면, 공은 계속 원 위에 머물까요?</li>
-            <li><span class="tag">복원</span>오일러의 방법: \(y_{n+1} = y_n + h\,y'_n\). 반지름 1인 원 위를 각속도 1로 도는 점은 \(x' = -y\), \(y' = x\)를 만족하고, 해는 \((\cos t, \sin t)\)입니다.</li>
-            <li><span class="tag">설명</span>오일러의 방법은 지금 점의 접선 방향으로 \(h\)만큼 똑바로 나아갑니다. 원의 접선은 원 바깥으로 나가므로, 한 걸음마다 반지름이 \(\sqrt{1 + h^2}\)배가 됩니다. 실제로 \(x_{n+1}^2 + y_{n+1}^2 = (x_n - hy_n)^2 + (y_n + hx_n)^2 = (1 + h^2)(x_n^2 + y_n^2)\)입니다. 걸음 하나의 오차는 작아도 같은 방향(바깥쪽)으로 쌓이므로 궤도가 나선으로 풀려 나갑니다. 순서만 살짝 바꾼 <em>고친 오일러 방법</em>(\(x\)를 먼저 새로 구하고 새 \(x\)로 \(y\)를 구함)은 오차가 쌓이지 않고 원 근처에 머뭅니다.</li>
-            <li><span class="tag">연결</span>게임의 물리 엔진이나 행성 궤도 계산에서 단순한 오일러 방법을 쓰면 에너지가 저절로 늘어나 물체가 점점 빨라지거나 궤도에서 벗어납니다. 그래서 이런 계산에는 고친 오일러 방법(반암시적 오일러), 베를레 방법처럼 에너지를 잘 보존하는 방법을 씁니다.</li>
-            <li><span class="tag">적용</span>\(h\)를 바꾸며 세 바퀴 뒤 반지름을 보세요. 계산값이 \((1 + h^2)^{N/2}\)과 같나요? \(h\)를 줄이면 오일러의 결과가 1에 가까워지나요? 고친 오일러는 \(h = 0.5\)에서도 원 근처에 머무나요?</li>
-            <li class="warn"><span class="tag">판단</span>한 걸음의 오차만 보고 방법을 고르면 안 됩니다. 두 방법은 한 걸음의 오차 크기가 같은 정도이지만, 오차가 쌓이는 방식이 달라 오랜 시간 뒤의 결과가 크게 다릅니다. 수치 계산에서는 무엇이 보존되어야 하는지(여기서는 반지름, 곧 에너지)를 함께 따져야 합니다.</li>
+            <li><span class="tag">질문</span>원 위를 도는 공의 속도는 언제나 원의 접선 방향이다. 이 운동을 오일러의 방법으로 계산하면, 공은 계속 원 위에 머물까?</li>
+            <li><span class="tag">복원</span>오일러의 방법은 \(y_{n+1} = y_n + h\,y'_n\)으로 다음 값을 구한다. 반지름 1인 원 위를 각속도 1로 도는 점은 \(x' = -y\), \(y' = x\)를 만족하고, 해는 \((\cos t, \sin t)\)이다.</li>
+            <li><span class="tag">설명</span>오일러의 방법은 지금 점의 접선 방향으로 \(h\)만큼 똑바로 나아간다. 원의 접선은 원 바깥으로 나가므로, 한 걸음마다 반지름이 \(\sqrt{1 + h^2}\)배가 된다. 실제로 \(x_{n+1}^2 + y_{n+1}^2 = (x_n - hy_n)^2 + (y_n + hx_n)^2 = (1 + h^2)(x_n^2 + y_n^2)\)이다. 걸음 하나의 오차는 작아도 같은 방향(바깥쪽)으로 쌓이므로 궤도가 나선으로 풀려 나간다. 순서만 살짝 바꾼 <em>고친 오일러 방법</em>(\(x\)를 먼저 새로 구하고 새 \(x\)로 \(y\)를 구함)은 오차가 쌓이지 않고 원 근처에 머문다.</li>
+            <li><span class="tag">연결</span>게임의 물리 엔진이나 행성 궤도 계산에서 단순한 오일러 방법을 쓰면 에너지가 저절로 늘어나 물체가 점점 빨라지거나 궤도에서 벗어난다. 그래서 이런 계산에는 고친 오일러 방법(반암시적 오일러), 베를레 방법처럼 에너지를 잘 보존하는 방법을 쓴다.</li>
+            <li><span class="tag">적용</span>\(h\)를 바꾸며 세 바퀴 뒤 반지름을 보자. 계산값이 \((1 + h^2)^{N/2}\)과 같은가? \(h\)를 줄이면 오일러의 결과가 1에 가까워지는가? 고친 오일러는 \(h = 0.5\)에서도 원 근처에 머무는가?</li>
+            <li class="warn"><span class="tag">판단</span>한 걸음의 오차만 보고 방법을 고르면 안 된다. 두 방법은 한 걸음의 오차 크기가 같은 정도이지만, 오차가 쌓이는 방식이 달라 오랜 시간 뒤의 결과가 크게 다르다. 수치 계산에서는 무엇이 보존되어야 하는지(여기서는 반지름, 곧 에너지)를 함께 따져야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">이 원운동에 오일러의 방법을 \(h = 0.1\)로 100걸음 쓰면 반지름은 약 몇 배가 되나요?</p>
+          <p class="q">이 원운동에 오일러의 방법을 \(h = 0.1\)로 100걸음 쓰면 반지름은 약 몇 배가 되는가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1.64배<span class="why"><b>맞습니다.</b> \((1 + 0.01)^{50} = 1.01^{50} \approx 1.64\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1배<span class="why"><b>오차가 쌓이지 않는다고 보았습니다.</b> 걸음마다 \(\sqrt{1.01}\)배씩 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2.7배<span class="why"><b>\(1.01^{100}\)으로 계산했습니다.</b> 반지름은 \(\sqrt{1 + h^2}\)배씩이므로 지수는 50입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 1.1배<span class="why"><b>늘어나는 양을 걸음마다 더하기만 했습니다.</b> 비율이 곱해지므로 거듭제곱으로 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1.64배<span class="why"><b>맞다.</b> \((1 + 0.01)^{50} = 1.01^{50} \approx 1.64\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1배<span class="why"><b>오차가 쌓이지 않는다고 보았다.</b> 걸음마다 \(\sqrt{1.01}\)배씩 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 2.7배<span class="why"><b>\(1.01^{100}\)으로 계산했다.</b> 반지름은 \(\sqrt{1 + h^2}\)배씩이므로 지수는 50이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 1.1배<span class="why"><b>늘어나는 양을 걸음마다 더하기만 했다.</b> 비율이 곱해지므로 거듭제곱으로 커진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-e-limit"><small class="mono">미적분Ⅱ 2.1</small>(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-field-match"><small class="mono">고급 미적분 4.1</small>방향장만 보고 미분방정식을 알아맞힐 수 있을까?</a><a href="../../c/adcalc/4-1.html#text-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>미분방정식과 방향장</a><a href="../../c/calc2/2-1.html#card-calc2-e-limit"><small class="mono">미적분Ⅱ 2.1</small>(1 + h)¹/h는 h가 0에 가까워지면 어디로 갈까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">8문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

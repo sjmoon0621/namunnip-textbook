@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>상용로그 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="밑이 10인 상용로그로 큰 수의 자릿수와 맨 앞자리 숫자를 구하고, 산성도(pH)·지진 규모·소리의 세기(dB)처럼 로그로 정한 실생활의 양을 해석한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-log-digits canvas { width: 100%; aspect-ratio: 2 / 1; }
@@ -45,18 +50,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-log-digits"><span class="mono">1.5.1</span>상용로그와 자릿수</a></li>
-        <li><a href="#card-alg-log-scale"><span class="mono">1.5.2</span>상용로그로 정한 양 — pH·규모·dB</a></li>
+        <li><a href="#text-alg-common-log"><span class="mono">본문</span>상용로그</a></li>
+        <li><a href="#card-alg-log-digits"><span class="mono">탐구 1</span>상용로그와 자릿수</a></li>
+        <li><a href="#card-alg-log-scale"><span class="mono">탐구 2</span>상용로그로 정한 양 — pH·규모·dB</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">63문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">66문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-1-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-common-log" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>상용로그</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">종이를 50번 접을 수 있다면 두께는 처음의 \(2^{50}\)배가 된다. 이 수는 계산기로도 다 나타내기 어렵다. 그런데 정확한 값을 몰라도 몇 자리 수인지, 맨 앞자리 숫자가 무엇인지는 알 수 있다. 어떤 도구를 쓰면 될까?</p>
+          <figure class="q-fig" data-q="alg-digits">
+            <svg viewBox="0 0 520 220" role="img" aria-label="상용로그 값의 정수 부분과 소수 부분이 자릿수와 맨 앞자리를 정하는 그림"></svg>
+            <div class="q-ctl"><label>\(2^n\)의 \(n\) = <input type="range" data-k="n" min="1" max="100" step="1" value="50"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(\log 2^n = n\log 2\)의 정수 부분이 자릿수를, 소수 부분이 맨 앞의 숫자들을 정한다(\(\log 2 \approx 0.3010\)).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>로그의 뜻과 성질(<a href="1-4.html">로그</a>), 과학적 표기 \(a \times 10^n\ (1 \le a &lt; 10)\).</div>
+
+          <h3><span class="no">1.5.1</span>밑이 10인 로그</h3>
+          <p>우리는 수를 10진법으로 쓴다. 그래서 밑이 10인 로그가 특히 쓸모 있다. 밑이 10인 로그 \(\log_{10} N\)을 <em>상용로그</em>라 하고, 밑을 생략해 \(\log N\)으로 쓴다. \(\log 10 = 1\), \(\log 100 = 2\), \(\log 1000 = 3\)이므로, 상용로그는 수가 10의 몇 제곱 정도인지를 알려 준다.</p>
+          <p>어떤 양수 \(N\)이든 과학적 표기로 \(N = a \times 10^n\ (1 \le a &lt; 10)\)처럼 쓸 수 있다. 양변에 상용로그를 취하면 \(\log N = n + \log a\)이고, \(0 \le \log a &lt; 1\)이다. 즉 상용로그 값의 정수 부분은 10의 지수 \(n\)이고, 소수 부분은 앞의 수 \(a\)에서 나온다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">상용로그와 자릿수</span></span>
+            <p>\(N \ge 1\)이고 \(\log N\)의 정수 부분이 \(n\)이면, \(N\)은 \((n + 1)\)자리 수이다. 소수 부분 \(\alpha\)는 \(N\)의 맨 앞 숫자들을 정하며, \(N = 10^{\alpha} \times 10^n\)이다.</p>
+          </div>
+          <p>그림 1에서 \(n\)을 바꾸어 보자. \(\log 2^n = n\log 2\)는 \(n\)에 비례해 늘어나므로, \(n\)이 약 3.3 늘 때마다 자릿수가 하나씩 늘어난다. \(2^{10} = 1024\)가 네 자리인 것도 \(10 \times 0.3010 = 3.010\)의 정수 부분 3에서 바로 읽힌다.<sup class="fn"><a href="#fn-alg-common-log-1">1</a></sup></p>
+
+          <h3><span class="no">1.5.2</span>로그 눈금</h3>
+          <p>지진의 규모, 소리의 데시벨, 산성도의 pH, 별의 등급처럼 아주 넓은 범위의 양은 로그를 써서 나타낸다. 이런 눈금에서는 한 칸이 일정한 차이가 아니라 일정한 배수를 뜻한다. 가령 지진의 규모가 1 커지면 방출 에너지가 약 \(10^{1.5} \approx 32\)배가 된다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="1부터 10000까지를 같은 간격의 칸으로 나타낸 로그 눈금">
+              <line x1="40" y1="70" x2="480" y2="70" class="k"/>
+              <g class="s"><text x="40" y="96" text-anchor="middle">1</text><text x="150" y="96" text-anchor="middle">10</text><text x="260" y="96" text-anchor="middle">100</text><text x="370" y="96" text-anchor="middle">1000</text><text x="480" y="96" text-anchor="middle">10000</text></g>
+              <line x1="40" y1="62" x2="40" y2="78" class="k"/><line x1="150" y1="62" x2="150" y2="78" class="k"/><line x1="260" y1="62" x2="260" y2="78" class="k"/><line x1="370" y1="62" x2="370" y2="78" class="k"/><line x1="480" y1="62" x2="480" y2="78" class="k"/>
+              <line x1="73" y1="65" x2="73" y2="75" class="ax"/><line x1="93" y1="65" x2="93" y2="75" class="ax"/><line x1="117" y1="65" x2="117" y2="75" class="ax"/><text x="73" y="56" text-anchor="middle" class="s">2</text><text x="117" y="56" text-anchor="middle" class="s">5</text>
+              <text x="260" y="125" text-anchor="middle" class="s">한 칸 = 10배 (상용로그 값이 1씩 늘어남)</text>
+            </svg>
+            <figcaption>그림 2. 로그 눈금에서는 같은 간격이 같은 배수를 뜻하므로, 1부터 10000까지를 한 줄에 고르게 담을 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+            <p>\(\log 2 = 0.3010\), \(\log 3 = 0.4771\)일 때, \(2^{50}\)은 몇 자리 수이고 맨 앞 숫자는 무엇인가? 또 \(\left(\tfrac{1}{3}\right)^{20}\)은 소수점 아래 몇째 자리에서 처음으로 0이 아닌 숫자가 나타나는가?</p>
+          </div>
+          <p>\(\log 2^{50} = 50 \times 0.3010 = 15.05\)이다. 정수 부분이 15이므로 \(2^{50}\)은 16자리 수이다. 소수 부분 0.05는 \(\log 1 = 0\)과 \(\log 2 = 0.3010\) 사이에 있으므로 \(10^{0.05}\)은 1과 2 사이이고, 맨 앞 숫자는 1이다. 실제로 \(2^{50} = 1\,125\,899\,906\,842\,624\)이다.</p>
+          <p>\(\log\left(\tfrac{1}{3}\right)^{20} = -20 \times 0.4771 = -9.542\)이다. 이것을 \(-10 + 0.458\)로 고쳐 쓰면 \(\left(\tfrac{1}{3}\right)^{20} = 10^{0.458} \times 10^{-10}\)이다. 따라서 이 수는 \(a \times 10^{-10}\ (1 \le a &lt; 10)\) 꼴이고, 소수점 아래 10째 자리에서 처음으로 0이 아닌 숫자가 나타난다.</p>
+          <p>\(10^{0.458}\)은 \(\log 2 = 0.301\)과 \(\log 3 = 0.477\) 사이이므로 2와 3 사이이고, 그 숫자는 2이다. 아래 탐구 카드에서 거듭제곱의 자릿수와 지진 규모의 눈금을 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-common-log-1">상용로그 값은 교과서 끝의 상용로그표에서 찾을 수 있다. 표에는 1.00부터 9.99까지의 수의 상용로그가 소수 넷째 자리까지 적혀 있고, 다른 수는 \(a \times 10^n\) 꼴로 고쳐 찾는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>상용로그는 수를 \(a \times 10^n\)으로 쓸 때의 지수 \(n\)과 앞의 수 \(a\)를 한 수에 담아, 정수 부분으로 자릿수를, 소수 부분으로 맨 앞 숫자를 알려 준다. 그래서 처음 질문의 \(2^{50}\)은 \(\log 2^{50} = 15.05\)에서 16자리 수이고 맨 앞 숫자는 1이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-8.html#card-alg-exp-ineq"><small class="mono">대수 1.8</small>지수부등식에서 부등호는 언제 뒤집힐까?</a><a href="../../c/alg/1-8.html#card-alg-growth-time"><small class="mono">대수 1.8</small>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</a><a href="../../c/alg/1-8.html#text-alg-exp-log-apply"><small class="mono">대수 1.8</small>지수함수와 로그함수의 활용</a><a href="../../c/extra/1-4.html#text-extra-paper-fold"><small class="mono">교양·심화 1.4</small>종이 접기와 지수</a></div></nav>
+
       <article class="card" id="card-alg-log-digits">
         <header class="card-head">
-          <span class="no">1.5.1</span><h2>\(2^{50}\)은 몇 자리 수일까?</h2><span class="kind">상용로그 · 정수 부분과 소수 부분</span>
+          <span class="no">탐구 1</span><h2>\(2^{50}\)은 몇 자리 수일까?</h2><span class="kind">상용로그 · 정수 부분과 소수 부분</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -83,30 +139,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2^{50}\)을 끝까지 곱하지 않고 몇 자리 수인지 알 수 있을까요? 맨 앞자리 숫자까지 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(\log_a M^k = k \log_a M\), \(\log_a MN = \log_a M + \log_a N\)입니다. \(10^2 = 100\)은 세 자리, \(10^3 = 1000\)은 네 자리입니다.</li>
-            <li><span class="tag">설명</span>밑이 10인 로그를 <em>상용로그</em>라 하고, 밑을 생략해 \(\log N\)으로 씁니다. 양수 \(N\)을 \(N = a \times 10^n\)(\(1 \le a &lt; 10, n\)은 정수)으로 쓰면 \(\log N = n + \log a\)이고 \(0 \le \log a &lt; 1\)입니다. 그래서 \(\log N\)의 <em>정수 부분</em> \(n\)은 자리의 크기를, <em>소수 부분</em> \(\log a\)는 숫자의 배열을 정합니다. \(n \ge 0\)이면 \(N\)의 정수 부분은 \(n + 1\)자리이고, \(n &lt; 0\)이면 \(N\)은 소수점 아래 \(-n\)째 자리에서 처음으로 0이 아닌 숫자가 나옵니다. 맨 앞 숫자는 \(10^{\text{소수 부분}}\)의 정수 부분입니다. 예: \(\log 2^{50} = 50 \log 2 \approx 15.05\)이므로 \(2^{50}\)은 16자리이고, \(10^{0.05} \approx 1.13\)이라 맨 앞 숫자는 1입니다.</li>
-            <li><span class="tag">연결</span>계산기가 없던 시절에는 1.00부터 9.99까지의 상용로그 값을 적은 상용로그표로 소수 부분을 찾았습니다. 정수 부분은 자릿수만 보면 되므로 표 하나로 모든 양수의 로그를 구할 수 있었습니다. 이 생각이 다음 카드의 pH, 지진 규모, 데시벨로 이어집니다.</li>
-            <li><span class="tag">적용</span>\(3^{20}\)을 눌러 자릿수와 맨 앞 숫자를 확인하세요. 지수를 1씩 늘리면 아래 눈금의 점은 얼마씩 움직이고, 한 바퀴 돌 때 정수 부분은 어떻게 바뀌나요? \(7^{-10}, 2^{-30}\)에서는 처음으로 0이 아닌 숫자가 소수점 아래 몇째 자리에 나오나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\log N \approx -8.45\)일 때 정수 부분을 \(-8\), 소수 부분을 \(-0.45\)로 읽는 실수가 흔합니다. 소수 부분은 언제나 0 이상 1 미만이 되도록 정하므로 \(-8.45 = -9 + 0.55\)입니다. 또 정수 부분이 15이면 16자리입니다. 15자리로 답하지 않도록 \(10^0 = 1\)이 한 자리라는 것을 떠올리세요.</li>
+            <li><span class="tag">질문</span>\(2^{50}\)을 끝까지 곱하지 않고 몇 자리 수인지 알 수 있을까? 맨 앞자리 숫자까지 알 수 있을까?</li>
+            <li><span class="tag">복원</span>\(\log_a M^k = k \log_a M\), \(\log_a MN = \log_a M + \log_a N\)이다. 그리고 \(10^2 = 100\)은 세 자리, \(10^3 = 1000\)은 네 자리이다.</li>
+            <li><span class="tag">설명</span>밑이 10인 로그를 <em>상용로그</em>라 하고, 밑을 생략해 \(\log N\)으로 쓴다. 양수 \(N\)을 \(N = a \times 10^n\)(\(1 \le a &lt; 10, n\)은 정수)으로 쓰면 \(\log N = n + \log a\)이고 \(0 \le \log a &lt; 1\)이다. 그래서 \(\log N\)의 <em>정수 부분</em> \(n\)은 자리의 크기를, <em>소수 부분</em> \(\log a\)는 숫자의 배열을 정한다. \(n \ge 0\)이면 \(N\)의 정수 부분은 \(n + 1\)자리이고, \(n &lt; 0\)이면 \(N\)은 소수점 아래 \(-n\)째 자리에서 처음으로 0이 아닌 숫자가 나온다. 또 맨 앞 숫자는 \(10^{\text{소수 부분}}\)의 정수 부분이다. 예를 들어 \(\log 2^{50} = 50 \log 2 \approx 15.05\)이므로 \(2^{50}\)은 16자리이고, \(10^{0.05} \approx 1.13\)이라 맨 앞 숫자는 1이다.</li>
+            <li><span class="tag">연결</span>계산기가 없던 시절에는 1.00부터 9.99까지의 상용로그 값을 적은 상용로그표로 소수 부분을 찾았다. 정수 부분은 자릿수만 보면 되므로 표 하나로 모든 양수의 로그를 구할 수 있었다. 이 생각이 다음 카드의 pH, 지진 규모, 데시벨로 이어진다.</li>
+            <li><span class="tag">적용</span>\(3^{20}\)을 눌러 자릿수와 맨 앞 숫자를 확인해 보자. 지수를 1씩 늘리며 아래 눈금의 점이 얼마씩 움직이는지, 한 바퀴 돌 때 정수 부분이 어떻게 바뀌는지 보고, \(7^{-10}, 2^{-30}\)에서 처음으로 0이 아닌 숫자가 소수점 아래 몇째 자리에 나오는지도 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\log N \approx -8.45\)일 때 정수 부분을 \(-8\), 소수 부분을 \(-0.45\)로 읽는 실수가 흔하다. 소수 부분은 언제나 0 이상 1 미만이 되도록 정하므로 \(-8.45 = -9 + 0.55\)이다. 또 정수 부분이 15이면 16자리이다. \(10^0 = 1\)이 한 자리라는 것을 떠올리면 15자리로 잘못 답하지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\log 3 = 0.4771\)일 때 \(3^{30}\)은 몇 자리 수인가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15자리<span class="why"><b>맞습니다.</b> \(\log 3^{30} = 30 \times 0.4771 = 14.313\)이므로 정수 부분이 14이고, 자릿수는 \(14 + 1 = 15\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14자리<span class="why"><b>정수 부분을 그대로 자릿수로 보았습니다.</b> \(10^{14}\)은 1 뒤에 0이 14개인 15자리 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>30자리<span class="why"><b>지수를 자릿수로 보았습니다.</b> 밑이 10일 때만 지수와 자릿수가 바로 이어집니다. 3은 10보다 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>16자리<span class="why"><b>반올림한 값으로 셌습니다.</b> 14.313의 정수 부분은 14이고, 반올림하지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>15자리<span class="why"><b>맞다.</b> \(\log 3^{30} = 30 \times 0.4771 = 14.313\)이므로 정수 부분이 14이고, 자릿수는 \(14 + 1 = 15\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14자리<span class="why"><b>정수 부분을 그대로 자릿수로 보았다.</b> \(10^{14}\)은 1 뒤에 0이 14개인 15자리 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>30자리<span class="why"><b>지수를 자릿수로 보았다.</b> 밑이 10일 때만 지수와 자릿수가 바로 이어진다. 3은 10보다 작다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>16자리<span class="why"><b>반올림한 값으로 셌다.</b> 14.313의 정수 부분은 14이고, 반올림하지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-8.html#card-alg-exp-ineq"><small class="mono">대수 1.8</small>지수부등식에서 부등호는 언제 뒤집힐까?</a><a href="../../c/alg/1-8.html#card-alg-growth-time"><small class="mono">대수 1.8</small>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-8.html#card-alg-exp-ineq"><small class="mono">대수 1.8</small>지수부등식에서 부등호는 언제 뒤집힐까?</a><a href="../../c/alg/1-8.html#card-alg-growth-time"><small class="mono">대수 1.8</small>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</a><a href="../../c/alg/1-8.html#text-alg-exp-log-apply"><small class="mono">대수 1.8</small>지수함수와 로그함수의 활용</a><a href="../../c/extra/1-4.html#text-extra-paper-fold"><small class="mono">교양·심화 1.4</small>종이 접기와 지수</a></div></nav>
 
       <article class="card" id="card-alg-log-scale">
         <header class="card-head">
-          <span class="no">1.5.2</span><h2>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</h2><span class="kind">상용로그의 활용 · pH, 지진 규모, 데시벨</span>
+          <span class="no">탐구 2</span><h2>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</h2><span class="kind">상용로그의 활용 · pH, 지진 규모, 데시벨</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -131,39 +187,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>뉴스에서 "규모 7.0"과 "규모 5.0"은 2만큼 차이 납니다. 그러면 지진이 내놓은 에너지도 두 배쯤 차이 날까요?</li>
-            <li><span class="tag">복원</span>\(\log N = k \Leftrightarrow N = 10^k\)이고, \(\log M - \log N = \log(\frac{M}{N})\)입니다. 로그 값이 1 늘면 진수는 10배가 됩니다.</li>
-            <li><span class="tag">설명</span>자연과 사회에는 아주 작은 값부터 아주 큰 값까지 몇십 자리에 걸쳐 변하는 양이 많습니다. 이런 양은 상용로그를 취해 다루기 쉬운 수로 바꾸어 씁니다. 지진의 규모 \(M\)과 에너지 \(E(\text{J})\) 사이에는 \(\log E = 4.8 + 1.5M\)이라는 관계가 알려져 있습니다. 그래서 규모가 1 크면 에너지는 \(10^{1.5} \approx 32\)배, 2 크면 \(10^3 = 1000\)배입니다. 산성도는 \(\text{pH} = -\log[\text{H}^+]\)(\([\text{H}^+]\)는 수소 이온 농도, mol/L)이므로 pH가 1 작으면 수소 이온이 10배 많습니다. 소리의 세기 수준은 \(10 \log(\frac{I}{I_0})\,\text{dB}(I_0 = 10^{-12}\,\text{W}/\text{m}^2)\)라서 10 dB 크면 세기가 10배입니다. 세 경우 모두 로그 값의 <em>차</em>가 실제 양의 <em>비</em>를 정합니다.</li>
-            <li><span class="tag">연결</span>2016년 경주 지진(규모 5.8)과 2011년 동일본 대지진(규모 9.0)의 규모 차는 3.2이지만, 에너지는 \(10^{4.8}\), 곧 약 6만 3천 배 차이 납니다. 별의 밝기(등급), 음계의 진동수도 같은 생각으로 정합니다.</li>
-            <li><span class="tag">적용</span>지진 규모에서 두 값을 1, 2, 3만큼 차이 나게 놓고 에너지의 비를 기록하세요. pH 3인 용액과 pH 6인 용액의 수소 이온 농도는 몇 배 차이 나나요? 60 dB과 90 dB의 소리는 세기가 몇 배 차이 나나요?</li>
-            <li class="warn"><span class="tag">판단</span>로그 눈금에서 같은 간격은 같은 "차"가 아니라 같은 "배율"입니다. "pH 4는 pH 8보다 두 배 산성"이라고 말하면 틀립니다. 수소 이온 농도는 \(10^4\)배 차이 납니다. 그림의 예시 값은 대표적인 대략값이고, 실제 레몬즙이나 대화 소리의 값은 상황에 따라 다릅니다. 또 데시벨은 세기의 비를 나타낼 뿐, 귀가 느끼는 크기와 정확히 비례하지는 않습니다.</li>
+            <li><span class="tag">질문</span>뉴스에서 "규모 7.0"과 "규모 5.0"은 2만큼 차이 난다. 그러면 지진이 내놓은 에너지도 두 배쯤 차이 날까?</li>
+            <li><span class="tag">복원</span>\(\log N = k \Leftrightarrow N = 10^k\)이고, \(\log M - \log N = \log(\frac{M}{N})\)이다. 즉 로그 값이 1 늘면 진수는 10배가 된다.</li>
+            <li><span class="tag">설명</span>자연과 사회에는 아주 작은 값부터 아주 큰 값까지 몇십 자리에 걸쳐 변하는 양이 많다. 이런 양은 상용로그를 취해 다루기 쉬운 수로 바꾸어 쓴다. 지진의 규모 \(M\)과 에너지 \(E(\text{J})\) 사이에는 \(\log E = 4.8 + 1.5M\)이라는 관계가 알려져 있다. 그래서 규모가 1 크면 에너지는 \(10^{1.5} \approx 32\)배, 2 크면 \(10^3 = 1000\)배이다. 산성도는 \(\text{pH} = -\log[\text{H}^+]\)(\([\text{H}^+]\)는 수소 이온 농도, mol/L)이므로 pH가 1 작으면 수소 이온이 10배 많다. 소리의 세기 수준은 \(10 \log(\frac{I}{I_0})\,\text{dB}(I_0 = 10^{-12}\,\text{W}/\text{m}^2)\)라서 10 dB 크면 세기가 10배이다. 세 경우 모두 로그 값의 <em>차</em>가 실제 양의 <em>비</em>를 정한다.</li>
+            <li><span class="tag">연결</span>2016년 경주 지진(규모 5.8)과 2011년 동일본 대지진(규모 9.0)의 규모 차는 3.2이지만, 에너지는 \(10^{4.8}\), 곧 약 6만 3천 배 차이 난다. 별의 밝기(등급)와 음계의 진동수도 같은 생각으로 정한다.</li>
+            <li><span class="tag">적용</span>지진 규모에서 두 값을 1, 2, 3만큼 차이 나게 놓고 에너지의 비를 기록해 보자. 그다음 pH 3인 용액과 pH 6인 용액의 수소 이온 농도가 몇 배 차이 나는지, 60 dB과 90 dB의 소리는 세기가 몇 배 차이 나는지도 구해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>로그 눈금에서 같은 간격은 같은 "차"가 아니라 같은 "배율"이다. 그래서 "pH 4는 pH 8보다 두 배 산성"이라고 말하면 틀리고, 수소 이온 농도는 \(10^4\)배 차이 난다. 그림의 예시 값은 대표적인 대략값이고, 실제 레몬즙이나 대화 소리의 값은 상황에 따라 다르다. 또 데시벨은 세기의 비를 나타낼 뿐, 귀가 느끼는 크기와 정확히 비례하지는 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">규모 6.0 지진의 에너지는 규모 4.0 지진의 에너지의 몇 배인가? \((\log E = 4.8 + 1.5M)\)</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1000배<span class="why"><b>맞습니다.</b> \(\log E\)의 차가 \(1.5 \times 2 = 3\)이므로 에너지의 비는 \(10^3 = 1000\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>100배<span class="why"><b>규모의 차를 그대로 10의 지수로 썼습니다.</b> 에너지의 로그는 규모의 1.5배씩 변합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1.5배<span class="why"><b>로그 값의 비를 실제 양의 비로 보았습니다.</b> \(\frac{6}{4} = 1.5\)는 규모의 비이지 에너지의 비가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 32배<span class="why"><b>규모 1 차이만 계산했습니다.</b> \(10^{1.5} \approx 32\)는 규모가 1 클 때의 비입니다. 2만큼 크면 이를 두 번 곱합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1000배<span class="why"><b>맞다.</b> \(\log E\)의 차가 \(1.5 \times 2 = 3\)이므로 에너지의 비는 \(10^3 = 1000\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>100배<span class="why"><b>규모의 차를 그대로 10의 지수로 썼다.</b> 에너지의 로그는 규모의 1.5배씩 변한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1.5배<span class="why"><b>로그 값의 비를 실제 양의 비로 보았다.</b> \(\frac{6}{4} = 1.5\)는 규모의 비이지 에너지의 비가 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 32배<span class="why"><b>규모 1 차이만 계산했다.</b> \(10^{1.5} \approx 32\)는 규모가 1 클 때의 비이다. 2만큼 크면 이를 두 번 곱한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-8.html#card-alg-exp-ineq"><small class="mono">대수 1.8</small>지수부등식에서 부등호는 언제 뒤집힐까?</a><a href="../../c/alg/1-8.html#card-alg-growth-time"><small class="mono">대수 1.8</small>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-4.html#card-alg-log-rules"><small class="mono">대수 1.4</small>로그를 쓰면 왜 곱셈이 덧셈이 될까?</a><a href="../../c/alg/1-4.html#card-alg-log-base-change"><small class="mono">대수 1.4</small>밑이 다른 로그는 서로 어떤 관계일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-8.html#card-alg-exp-ineq"><small class="mono">대수 1.8</small>지수부등식에서 부등호는 언제 뒤집힐까?</a><a href="../../c/alg/1-8.html#card-alg-growth-time"><small class="mono">대수 1.8</small>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</a><a href="../../c/alg/1-8.html#text-alg-exp-log-apply"><small class="mono">대수 1.8</small>지수함수와 로그함수의 활용</a><a href="../../c/extra/1-4.html#text-extra-paper-fold"><small class="mono">교양·심화 1.4</small>종이 접기와 지수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">63문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">66문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -171,6 +228,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>
 <script src="../../js/cards/alg/log-digits.js"></script>
 <script src="../../js/cards/alg/log-scale.js"></script>

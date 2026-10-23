@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>위치벡터, 내적과 외적 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="위치벡터, 내적과 외적의 뜻과 활용. 썰매를 끄는 힘이 한 일(내적), 오른손 법칙과 평행사변형 넓이(외적), 렌치로 볼트를 돌리는 토크, 3D 그래픽에서 면의 밝기를 정하는 법선과 조명 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-work-dot canvas { aspect-ratio: 16 / 9; }
@@ -45,20 +50,78 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-work-dot"><span class="mono">2.7.1</span>썰매를 끄는 힘과 내적</a></li>
-        <li><a href="#card-pmath-cross"><span class="mono">2.7.2</span>외적의 방향과 크기</a></li>
-        <li><a href="#card-pmath-torque"><span class="mono">2.7.3</span>렌치와 토크</a></li>
-        <li><a href="#card-pmath-shading"><span class="mono">2.7.4</span>3D 그래픽의 법선과 조명</a></li>
+        <li><a href="#text-pmath-dot-cross"><span class="mono">본문</span>위치벡터, 내적과 외적</a></li>
+        <li><a href="#card-pmath-work-dot"><span class="mono">탐구 1</span>썰매를 끄는 힘과 내적</a></li>
+        <li><a href="#card-pmath-cross"><span class="mono">탐구 2</span>외적의 방향과 크기</a></li>
+        <li><a href="#card-pmath-torque"><span class="mono">탐구 3</span>렌치와 토크</a></li>
+        <li><a href="#card-pmath-shading"><span class="mono">탐구 4</span>3D 그래픽의 법선과 조명</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-2-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-dot-cross" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>위치벡터, 내적과 외적</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">3D 게임 화면에서 상자의 윗면은 밝고 옆면은 어둡다. 컴퓨터는 각 면이 빛을 얼마나 정면으로 받는지 계산해 밝기를 정한다. 그러려면 먼저 면에 수직인 방향을 알아야 하는데, 면은 꼭짓점 세 개의 좌표로만 주어진다. 꼭짓점 \(A(0, 0, 0)\), \(B(1, 2, 0)\), \(C(0, 1, 3)\)으로 이루어진 삼각형 면에 수직인 방향은 어떻게 구할까? 그리고 빛이 \((0, 0, 1)\) 방향에서 비칠 때 이 면은 얼마나 밝아야 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="내적과 외적이 주는 정보">
+              <g class="s">
+                <text x="20" y="22">연산</text><text x="120" y="22">결과</text><text x="220" y="22">크기의 뜻</text><text x="380" y="22">쓰임</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">내적 a · b</text><text x="120" y="52">수</text><text x="220" y="52">|a||b| cos θ</text><text x="380" y="52">일, 각, 밝기</text>
+                <text x="20" y="74">외적 a × b</text><text x="120" y="74">벡터</text><text x="220" y="74">|a||b| sin θ (넓이)</text><text x="380" y="74">법선, 돌림힘</text>
+                <text x="20" y="104">내적이 0이면 두 벡터는 수직이다.</text>
+                <text x="20" y="124">외적은 두 벡터 모두에 수직이다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 내적은 두 벡터가 같은 방향을 향하는 정도를 수로, 외적은 두 벡터가 만드는 평행사변형을 수직 벡터로 알려 준다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>위치벡터, 벡터의 성분(<a href="2-6.html">벡터의 연산</a>), 벡터의 내적과 수직 조건, 공간좌표.</div>
+
+          <h3><span class="no">2.7.1</span>내적은 같은 방향의 몫이다</h3>
+          <p>두 벡터 \(\vec a\), \(\vec b\)가 이루는 각이 \(\theta\)일 때 \(\vec a\cdot\vec b = |\vec a||\vec b|\cos\theta\)를 내적이라 한다. \(|\vec b|\cos\theta\)는 \(\vec b\)를 \(\vec a\) 방향으로 정사영한 길이이므로, 내적은 한 벡터가 다른 벡터 방향으로 얼마나 향하는지를 나타낸다. 썰매 줄을 비스듬히 당길 때 썰매를 앞으로 끄는 데 쓰인 일이 힘과 이동 거리의 내적인 것이 그 예이다. 성분으로는 \(\vec a\cdot\vec b = a_1b_1 + a_2b_2 + a_3b_3\)이어서 각을 몰라도 계산할 수 있고, 거꾸로 내적으로 두 벡터 사이의 각을 구할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.7.1 <span class="nm">외적</span></span>
+            <p>공간벡터 \(\vec a = (a_1, a_2, a_3)\), \(\vec b = (b_1, b_2, b_3)\)의 외적은 \[\vec a\times\vec b = (a_2b_3 - a_3b_2,\ a_3b_1 - a_1b_3,\ a_1b_2 - a_2b_1)\]이다. \(\vec a\times\vec b\)는 \(\vec a\)와 \(\vec b\)에 모두 수직이고, 크기는 두 벡터가 만드는 평행사변형의 넓이 \(|\vec a||\vec b|\sin\theta\)이며, 방향은 오른손 법칙을 따른다.</p>
+          </div>
+          <p>외적이 두 벡터에 모두 수직인지는 내적으로 확인한다. 성분을 넣어 \(\vec a\cdot(\vec a\times\vec b)\)를 계산하면 모든 항이 지워져 0이 된다. 그래서 면 위의 두 변 벡터의 외적은 그 면의 법선 벡터가 된다. 렌치로 볼트를 돌리는 돌림힘도 렌치의 위치벡터와 힘의 외적으로, 렌치 끝을 렌치와 수직으로 밀 때 가장 크다.<sup class="fn"><a href="#fn-pmath-dot-cross-1">1</a></sup></p>
+
+          <h3><span class="no">2.7.2</span>빛을 받는 정도는 내적이다</h3>
+          <p>면이 빛을 받는 밝기는 면의 법선과 빛이 오는 방향이 이루는 각의 코사인에 비례한다. 그래서 두 방향을 길이 1인 단위벡터로 바꾸어 내적하면 그 코사인 값이 바로 나오고, 이를 면의 밝기로 쓴다. 내적이 음수이면 면이 빛을 등지고 있으므로 밝기를 0으로 둔다. 이 방법을 램버트 음영이라 하며, 게임 화면의 수많은 삼각형마다 외적으로 법선을 구하고 내적으로 밝기를 정한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="삼각형 면의 법선과 밝기 계산">
+              <g class="s">
+                <text x="20" y="22">양</text><text x="200" y="22">계산</text><text x="400" y="22">값</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">변 벡터</text><text x="200" y="52">AB = (1, 2, 0), AC = (0, 1, 3)</text><text x="400" y="52"></text>
+                <text x="20" y="74">법선 AB × AC</text><text x="200" y="74">(6 − 0, 0 − 3, 1 − 0)</text><text x="400" y="74" class="td">(6, −3, 1)</text>
+                <text x="20" y="96">밝기</text><text x="200" y="96">(6, −3, 1) · (0, 0, 1) / √46</text><text x="400" y="96" class="tb">약 0.15</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 외적으로 면의 법선을 구하고, 법선과 빛 방향의 내적으로 밝기를 정한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.7.2</span>
+            <p>처음 질문의 삼각형 \(ABC\)의 법선 벡터와 넓이를 구하고, 빛 방향 \((0, 0, 1)\)에서의 밝기를 구하여라. 법선이 두 변에 모두 수직인지도 확인하여라.</p>
+          </div>
+          <p>\(\overrightarrow{AB} = (1, 2, 0)\), \(\overrightarrow{AC} = (0, 1, 3)\)이므로 \(\overrightarrow{AB}\times\overrightarrow{AC} = (2\times3 - 0\times1,\ 0\times0 - 1\times3,\ 1\times1 - 2\times0) = (6, -3, 1)\)이다. \((1, 2, 0)\cdot(6, -3, 1) = 6 - 6 + 0 = 0\), \((0, 1, 3)\cdot(6, -3, 1) = 0 - 3 + 3 = 0\)이므로 두 변에 모두 수직이다.</p>
+          <p>외적의 크기는 \(\sqrt{36 + 9 + 1} = \sqrt{46} \approx 6.78\)이고, 이는 두 변이 만드는 평행사변형의 넓이이므로 삼각형의 넓이는 그 절반인 약 3.39이다. 밝기는 단위 법선과 빛 방향의 내적 \(\dfrac{(6, -3, 1)\cdot(0, 0, 1)}{\sqrt{46}} = \dfrac{1}{\sqrt{46}} \approx 0.15\)이다. 이 면은 거의 옆을 향하고 있어서 위에서 오는 빛을 15%만 받아 어둡게 칠한다. 즉 외적은 두 벡터에 수직인 방향과 평행사변형의 넓이를, 내적은 두 방향이 같은 쪽을 향하는 정도를 주어, 둘을 함께 쓰면 공간의 면이 빛을 받는 정도를 계산할 수 있다.</p>
+          <p>아래 탐구 카드에서 썰매를 끄는 힘의 일을 내적으로 구하고, 외적으로 법선과 돌림힘을 구해 3D 물체에 음영을 칠해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-dot-cross-1">외적은 1840년대 아일랜드의 해밀턴이 만든 사원수에서 나왔고, 1880년대 미국의 깁스와 영국의 헤비사이드가 이를 오늘날의 내적과 외적으로 나누어 정리했다. 전자기학의 맥스웰 방정식도 그들 덕분에 지금처럼 짧은 벡터 식으로 쓰게 되었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>내적 \(\vec a\cdot\vec b = |\vec a||\vec b|\cos\theta = a_1b_1 + a_2b_2 + a_3b_3\)은 두 벡터가 같은 방향을 향하는 정도를 수로 주고, 0이면 두 벡터가 수직이다. 외적 \(\vec a\times\vec b\)는 두 벡터에 모두 수직이고 크기가 평행사변형의 넓이인 벡터여서 면의 법선과 돌림힘을 구하는 데 쓴다. 처음 질문의 삼각형은 법선이 \((6, -3, 1)\), 넓이가 약 3.39이고, 위에서 오는 빛을 받는 밝기는 약 0.15이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a></div></nav>
+
       <article class="card" id="card-pmath-work-dot">
         <header class="card-head">
-          <span class="no">2.7.1</span><h2>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</h2><span class="kind">내적 · 일 · 활용</span>
+          <span class="no">탐구 1</span><h2>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</h2><span class="kind">내적 · 일 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,34 +138,34 @@
                 <div><dt>일 \(W = \vec{F}\cdot\vec{s}\)</dt><dd class="n-w">—</dd></div>
                 <div><dt>성분으로 계산</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">90°보다 크게 하면 줄을 뒤쪽으로 당기는 셈입니다. 성분 계산은 \(\vec{F} = (|\vec{F}|\cos\theta, |\vec{F}|\sin\theta)\), \(\vec{s} = (|\vec{s}|, 0)\)으로 했습니다.</p>
+              <p class="fig-note">90°보다 크게 하면 줄을 뒤쪽으로 당기는 셈이다. 성분 계산은 \(\vec{F} = (|\vec{F}|\cos\theta, |\vec{F}|\sin\theta)\), \(\vec{s} = (|\vec{s}|, 0)\)으로 했다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>썰매를 줄로 비스듬히 당기면 힘의 일부는 썰매를 들어 올리는 데 쓰이고, 일부만 앞으로 끄는 데 쓰입니다. 같은 힘으로 같은 거리를 끌어도 줄의 각에 따라 한 일이 다를까요?</li>
-            <li><span class="tag">복원</span>두 벡터의 내적은 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos\theta = a_1b_1 + a_2b_2\)입니다. \(|\vec{a}|\cos\theta\)는 \(\vec{a}\)를 \(\vec{b}\) 방향으로 정사영한 길이(부호 포함)입니다.</li>
-            <li><span class="tag">설명</span>물리에서 일은 "움직인 방향으로 작용한 힘 × 움직인 거리"입니다. 움직인 방향의 힘은 \(\vec{F}\)를 \(\vec{s}\) 방향으로 정사영한 \(|\vec{F}|\cos\theta\)이므로 <b>일 \(W = |\vec{F}||\vec{s}|\cos\theta = \vec{F}\cdot\vec{s}\)</b>, 곧 내적입니다. 줄이 수평이면 힘을 모두 쓰고, 수직이면 일을 하지 않으며, 둔각이면 일이 음수(움직임을 방해함)가 됩니다. 내적은 "두 벡터가 같은 쪽을 얼마나 향하는가"에 크기를 곱한 값입니다.</li>
-            <li><span class="tag">연결</span>내적이 0이면 두 벡터가 수직입니다. 원운동하는 물체에서 구심력이 일을 하지 않는 이유, 무거운 가방을 들고 수평으로 걸을 때 물리학적 일이 0인 이유가 모두 내적이 0이기 때문입니다.</li>
-            <li><span class="tag">적용</span>줄의 각을 0°부터 120°까지 바꾸며 일이 어떻게 변하는지 보세요. 일이 절반이 되는 각은 몇 도인가요? 두 계산(\(|\vec{F}||\vec{s}|\cos\theta\)와 성분 곱의 합)이 늘 같은지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>실제 썰매에서는 줄을 비스듬히 당기면 썰매가 바닥을 덜 누르게 되어 마찰력이 줄어듭니다. 그래서 끄는 데 가장 유리한 각이 0°가 아닐 수 있습니다. 이 카드의 일은 줄이 한 일만 계산한 것입니다.</li>
+            <li><span class="tag">질문</span>썰매를 줄로 비스듬히 당기면 힘의 일부는 썰매를 들어 올리는 데 쓰이고, 일부만 앞으로 끄는 데 쓰인다. 같은 힘으로 같은 거리를 끌어도 줄의 각에 따라 한 일이 다를까?</li>
+            <li><span class="tag">복원</span>두 벡터의 내적은 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos\theta = a_1b_1 + a_2b_2\)이다. \(|\vec{a}|\cos\theta\)는 \(\vec{a}\)를 \(\vec{b}\) 방향으로 정사영한 길이(부호 포함)이다.</li>
+            <li><span class="tag">설명</span>물리에서 일은 "움직인 방향으로 작용한 힘 × 움직인 거리"이다. 움직인 방향의 힘은 \(\vec{F}\)를 \(\vec{s}\) 방향으로 정사영한 \(|\vec{F}|\cos\theta\)이므로 일 \(W = |\vec{F}||\vec{s}|\cos\theta = \vec{F}\cdot\vec{s}\), 곧 내적이다. 줄이 수평이면 힘을 모두 쓰고, 수직이면 일을 하지 않으며, 둔각이면 일이 음수(움직임을 방해함)가 된다. 내적은 "두 벡터가 같은 쪽을 얼마나 향하는가"에 크기를 곱한 값이다.</li>
+            <li><span class="tag">연결</span>내적이 0이면 두 벡터가 수직이다. 원운동하는 물체에서 구심력이 일을 하지 않는 이유, 무거운 가방을 들고 수평으로 걸을 때 물리학적 일이 0인 이유가 모두 내적이 0이기 때문이다.</li>
+            <li><span class="tag">적용</span>줄의 각을 0°부터 120°까지 바꾸며 일이 어떻게 변하는지 보자. 일이 절반이 되는 각은 몇 도인가? 두 계산(\(|\vec{F}||\vec{s}|\cos\theta\)와 성분 곱의 합)이 늘 같은지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>실제 썰매에서는 줄을 비스듬히 당기면 썰매가 바닥을 덜 누르게 되어 마찰력이 줄어든다. 그래서 끄는 데 가장 유리한 각이 0°가 아닐 수 있다. 이 카드의 일은 줄이 한 일만 계산한 것이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(\vec{F} = (3, 4)\) N의 힘으로 물체를 \(\vec{s} = (5, -2)\) m만큼 옮겼습니다. 힘이 한 일은?</p>
+          <p class="q">\(\vec{F} = (3, 4)\) N의 힘으로 물체를 \(\vec{s} = (5, -2)\) m만큼 옮겼다. 힘이 한 일은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>7 J<span class="why"><b>맞습니다.</b> \(\vec{F}\cdot\vec{s} = 3 \times 5 + 4 \times (-2) = 7\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>23 J<span class="why"><b>음수 성분의 부호를 빠뜨렸습니다.</b> \(4 \times (-2) = -8\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(5\sqrt{29}\) J<span class="why"><b>두 벡터의 크기를 곱했습니다.</b> 방향이 달라 \(\cos\theta\)를 곱해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((15, -8)\) J<span class="why"><b>성분끼리 곱하고 더하지 않았습니다.</b> 내적은 벡터가 아니라 수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>7 J<span class="why"><b>맞다.</b> \(\vec{F}\cdot\vec{s} = 3 \times 5 + 4 \times (-2) = 7\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>23 J<span class="why"><b>음수 성분의 부호를 빠뜨렸다.</b> \(4 \times (-2) = -8\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(5\sqrt{29}\) J<span class="why"><b>두 벡터의 크기를 곱했다.</b> 방향이 달라 \(\cos\theta\)를 곱해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((15, -8)\) J<span class="why"><b>성분끼리 곱하고 더하지 않았다.</b> 내적은 벡터가 아니라 수이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a></div></nav>
 
       <article class="card" id="card-pmath-cross">
         <header class="card-head">
-          <span class="no">2.7.2</span><h2>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</h2><span class="kind">외적 · 조작</span>
+          <span class="no">탐구 2</span><h2>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</h2><span class="kind">외적 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -120,34 +183,34 @@
                 <div><dt>\(|\vec{a}\times\vec{b}|\)와 평행사변형 넓이</dt><dd class="n-a">—</dd></div>
                 <div><dt>\((\vec{a}\times\vec{b})\cdot\vec{a}\), \(\cdot\vec{b}\)</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">\(\vec{a} = (2, 0, 0)\)로 고정했습니다. 오른손의 네 손가락을 \(\vec{a}\)에서 \(\vec{b}\) 쪽으로 감아쥐면 엄지가 외적의 방향입니다. 그림을 끌면 돌아갑니다.</p>
+              <p class="fig-note">\(\vec{a} = (2, 0, 0)\)로 고정했다. 오른손의 네 손가락을 \(\vec{a}\)에서 \(\vec{b}\) 쪽으로 감아쥐면 엄지가 외적의 방향이다. 그림을 끌면 돌아간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공간에서 두 벡터가 만드는 평면에 수직인 방향은 위와 아래 두 가지입니다. 두 벡터만으로 이 중 하나를 정하고, 동시에 두 벡터가 만드는 평행사변형의 넓이까지 알려 주는 계산이 있을까요?</li>
-            <li><span class="tag">복원</span>두 벡터가 수직이면 내적이 0입니다. 두 변의 길이가 \(a\), \(b\)이고 끼인각이 \(\varphi\)인 평행사변형의 넓이는 \(ab\sin\varphi\)입니다.</li>
-            <li><span class="tag">설명</span><em>외적</em> \(\vec{a}\times\vec{b} = (a_2b_3 - a_3b_2,\ a_3b_1 - a_1b_3,\ a_1b_2 - a_2b_1)\)은 세 가지 성질을 가집니다. ① <b>\(\vec{a}\), \(\vec{b}\)에 모두 수직</b>입니다(내적이 0). ② <b>크기는 \(|\vec{a}||\vec{b}|\sin\varphi\)</b>, 곧 두 벡터가 만드는 평행사변형의 넓이입니다. ③ 방향은 <b>오른손 법칙</b>을 따릅니다. 순서를 바꾸면 \(\vec{b}\times\vec{a} = -\vec{a}\times\vec{b}\)로 방향이 뒤집힙니다. 두 벡터가 평행하면(\(\varphi = 0^\circ, 180^\circ\)) 외적은 영벡터입니다.</li>
-            <li><span class="tag">연결</span>외적은 평면의 법선벡터를 구할 때, 삼각형의 넓이를 좌표로 구할 때 쓰입니다. 물리에서는 토크 \(\vec{\tau} = \vec{r}\times\vec{F}\), 자기장 속 전하가 받는 힘 \(q\vec{v}\times\vec{B}\)가 외적입니다. 다음 카드에서 토크를 직접 다룹니다.</li>
-            <li><span class="tag">적용</span>사잇각을 0°부터 180°까지 움직이며 외적의 길이가 평행사변형의 넓이와 늘 같은지 보세요. 넓이가 가장 큰 각은? \(\vec{b}\times\vec{a}\)로 바꾸면 무엇이 달라지나요? \(\vec{b}\)를 위로 기울여도 외적이 두 벡터에 수직인지 표로 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>외적은 3차원 벡터에서만 정의됩니다. 평면 벡터에는 "두 벡터에 모두 수직인 같은 평면 위의 벡터"가 없기 때문입니다. 또 외적은 교환법칙이 성립하지 않으므로 순서를 함부로 바꾸면 부호가 틀립니다.</li>
+            <li><span class="tag">질문</span>공간에서 두 벡터가 만드는 평면에 수직인 방향은 위와 아래 두 가지이다. 두 벡터만으로 이 중 하나를 정하고, 동시에 두 벡터가 만드는 평행사변형의 넓이까지 알려 주는 계산이 있을까?</li>
+            <li><span class="tag">복원</span>두 벡터가 수직이면 내적이 0이다. 두 변의 길이가 \(a\), \(b\)이고 끼인각이 \(\varphi\)인 평행사변형의 넓이는 \(ab\sin\varphi\)이다.</li>
+            <li><span class="tag">설명</span><em>외적</em> \(\vec{a}\times\vec{b} = (a_2b_3 - a_3b_2,\ a_3b_1 - a_1b_3,\ a_1b_2 - a_2b_1)\)은 세 가지 성질을 가진다. ① \(\vec{a}\), \(\vec{b}\)에 모두 수직이다(내적이 0). ② 크기는 \(|\vec{a}||\vec{b}|\sin\varphi\), 곧 두 벡터가 만드는 평행사변형의 넓이이다. ③ 방향은 오른손 법칙을 따른다. 순서를 바꾸면 \(\vec{b}\times\vec{a} = -\vec{a}\times\vec{b}\)로 방향이 뒤집힌다. 두 벡터가 평행하면(\(\varphi = 0^\circ, 180^\circ\)) 외적은 영벡터이다.</li>
+            <li><span class="tag">연결</span>외적은 평면의 법선벡터를 구할 때, 삼각형의 넓이를 좌표로 구할 때 쓰인다. 물리에서는 토크 \(\vec{\tau} = \vec{r}\times\vec{F}\), 자기장 속 전하가 받는 힘 \(q\vec{v}\times\vec{B}\)가 외적이다. 다음 카드에서 토크를 직접 다룬다.</li>
+            <li><span class="tag">적용</span>사잇각을 0°부터 180°까지 움직이며 외적의 길이가 평행사변형의 넓이와 늘 같은지 보자. 넓이가 가장 큰 각은? \(\vec{b}\times\vec{a}\)로 바꾸면 무엇이 달라지는가? \(\vec{b}\)를 위로 기울여도 외적이 두 벡터에 수직인지 표로 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>외적은 3차원 벡터에서만 정의된다. 평면 벡터에는 "두 벡터에 모두 수직인 같은 평면 위의 벡터"가 없기 때문이다. 또 외적은 교환법칙이 성립하지 않으므로 순서를 함부로 바꾸면 부호가 틀린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">세 점 O(0, 0, 0), A(1, 2, 0), B(3, 1, 0)을 꼭짓점으로 하는 삼각형의 넓이는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{5}{2}\)<span class="why"><b>맞습니다.</b> \(\overrightarrow{\mathrm{OA}}\times\overrightarrow{\mathrm{OB}} = (0, 0, 1 - 6) = (0, 0, -5)\)이고, 삼각형은 평행사변형의 절반이므로 \(\frac{5}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>평행사변형의 넓이입니다.</b> 삼각형은 그 절반입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-\frac{5}{2}\)<span class="why"><b>외적의 성분을 넓이로 보았습니다.</b> 넓이는 외적의 크기(양수)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{7}{2}\)<span class="why"><b>\(1 + 6\)으로 계산했습니다.</b> z성분은 \(a_1b_2 - a_2b_1 = 1 \cdot 1 - 2 \cdot 3\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{5}{2}\)<span class="why"><b>맞다.</b> \(\overrightarrow{\mathrm{OA}}\times\overrightarrow{\mathrm{OB}} = (0, 0, 1 - 6) = (0, 0, -5)\)이고, 삼각형은 평행사변형의 절반이므로 \(\frac{5}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>평행사변형의 넓이이다.</b> 삼각형은 그 절반이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-\frac{5}{2}\)<span class="why"><b>외적의 성분을 넓이로 보았다.</b> 넓이는 외적의 크기(양수)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{7}{2}\)<span class="why"><b>\(1 + 6\)으로 계산했다.</b> z성분은 \(a_1b_2 - a_2b_1 = 1 \cdot 1 - 2 \cdot 3\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-8.html#card-pmath-param-line-plane"><small class="mono">전문 수학 2.8</small>매개변수 하나는 직선을, 둘은 평면을 그릴까?</a><a href="../../c/pmath/2-8.html#card-pmath-circle-sphere-vec"><small class="mono">전문 수학 2.8</small>원과 구는 같은 식 하나로 쓸 수 있을까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-8.html#card-pmath-param-line-plane"><small class="mono">전문 수학 2.8</small>매개변수 하나는 직선을, 둘은 평면을 그릴까?</a><a href="../../c/pmath/2-8.html#card-pmath-circle-sphere-vec"><small class="mono">전문 수학 2.8</small>원과 구는 같은 식 하나로 쓸 수 있을까?</a><a href="../../c/pmath/2-8.html#text-pmath-vector-equations"><small class="mono">전문 수학 2.8</small>벡터로 나타낸 도형의 방정식</a><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a></div></nav>
 
       <article class="card" id="card-pmath-torque">
         <header class="card-head">
-          <span class="no">2.7.3</span><h2>녹슨 볼트를 풀려면 렌치의 어디를 어느 방향으로 밀어야 할까?</h2><span class="kind">외적 · 토크 · 활용</span>
+          <span class="no">탐구 3</span><h2>녹슨 볼트를 풀려면 렌치의 어디를 어느 방향으로 밀어야 할까?</h2><span class="kind">외적 · 토크 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -164,34 +227,34 @@
                 <div><dt>팔 길이 \(|\vec{r}|\sin\varphi\)</dt><dd class="n-l">—</dd></div>
                 <div><dt>볼트</dt><dd class="n-b">—</dd></div>
               </dl>
-              <p class="fig-note">이 볼트는 40 N·m 이상의 토크가 걸려야 풀린다고 합시다. 도전: 가장 작은 힘으로 볼트를 풀어 보세요.</p>
+              <p class="fig-note">이 볼트는 40 N·m 이상의 토크가 걸려야 풀린다고 하자. 도전해 보자. 가장 작은 힘으로 볼트를 풀어 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>꽉 조인 볼트가 풀리지 않을 때 렌치 손잡이 끝을 잡거나 긴 파이프를 끼우면 쉽게 풀립니다. 힘은 같은데 왜 효과가 다를까요? 손잡이를 렌치 방향으로 밀면 왜 아무 일도 일어나지 않을까요?</li>
-            <li><span class="tag">복원</span>외적 \(\vec{r}\times\vec{F}\)의 크기는 \(|\vec{r}||\vec{F}|\sin\varphi\)이고, 방향은 \(\vec{r}\)과 \(\vec{F}\)에 모두 수직이며 오른손 법칙을 따릅니다.</li>
-            <li><span class="tag">설명</span>물체를 돌리는 효과를 <em>토크(돌림힘)</em>라고 하고, <b>\(\vec{\tau} = \vec{r}\times\vec{F}\)</b>로 나타냅니다. \(\vec{r}\)은 회전축(볼트 중심)에서 힘을 주는 곳까지의 위치벡터입니다. 크기 \(|\vec{r}||\vec{F}|\sin\varphi\)는 "힘 × 팔 길이"인데, 팔 길이 \(|\vec{r}|\sin\varphi\)는 볼트 중심에서 힘의 작용선까지의 거리입니다. 그래서 손잡이 끝을 잡고(\(|\vec{r}|\)이 크게), 렌치에 수직으로 밀 때(\(\sin\varphi = 1\)) 토크가 가장 큽니다. 렌치 방향으로 밀면 \(\varphi = 0\)이라 토크는 0입니다. 외적의 방향(볼트 축 방향의 위 또는 아래)은 조이는 쪽인지 푸는 쪽인지를 알려 줍니다.</li>
-            <li><span class="tag">연결</span>문손잡이가 경첩 반대쪽 끝에 달린 것, 시소에서 가벼운 사람이 멀리 앉는 것, 자전거 페달이 아래로 내려갈 때 가장 힘이 잘 전달되는 것이 모두 토크 때문입니다.</li>
-            <li><span class="tag">적용</span>40 N·m를 넘겨 볼트를 풀어 보세요. 잡는 위치를 0.4 m로 하면 필요한 힘은 몇 N까지 줄어드나요? 각 \(\varphi\)를 0°와 180°로 하면 어떻게 되나요? 90°보다 큰 각에서는 무엇이 다른가요?</li>
-            <li class="warn"><span class="tag">판단</span>이 그림은 볼트 축에 수직인 평면에서 미는 경우만 다룹니다. 렌치를 비스듬히 위로 당기면 힘의 일부는 볼트 축 방향으로 가서 돌리는 데 쓰이지 않습니다. 실제로는 렌치나 볼트가 견딜 수 있는 토크에도 한계가 있습니다.</li>
+            <li><span class="tag">질문</span>꽉 조인 볼트가 풀리지 않을 때 렌치 손잡이 끝을 잡거나 긴 파이프를 끼우면 쉽게 풀린다. 힘은 같은데 왜 효과가 다를까? 손잡이를 렌치 방향으로 밀면 왜 아무 일도 일어나지 않을까?</li>
+            <li><span class="tag">복원</span>외적 \(\vec{r}\times\vec{F}\)의 크기는 \(|\vec{r}||\vec{F}|\sin\varphi\)이고, 방향은 \(\vec{r}\)과 \(\vec{F}\)에 모두 수직이며 오른손 법칙을 따른다.</li>
+            <li><span class="tag">설명</span>물체를 돌리는 효과를 <em>토크(돌림힘)</em>라고 하고, \(\vec{\tau} = \vec{r}\times\vec{F}\)로 나타낸다. \(\vec{r}\)은 회전축(볼트 중심)에서 힘을 주는 곳까지의 위치벡터이다. 크기 \(|\vec{r}||\vec{F}|\sin\varphi\)는 "힘 × 팔 길이"인데, 팔 길이 \(|\vec{r}|\sin\varphi\)는 볼트 중심에서 힘의 작용선까지의 거리이다. 그래서 손잡이 끝을 잡고(\(|\vec{r}|\)이 크게), 렌치에 수직으로 밀 때(\(\sin\varphi = 1\)) 토크가 가장 크다. 렌치 방향으로 밀면 \(\varphi = 0\)이라 토크는 0이다. 외적의 방향(볼트 축 방향의 위 또는 아래)은 조이는 쪽인지 푸는 쪽인지를 알려 준다.</li>
+            <li><span class="tag">연결</span>문손잡이가 경첩 반대쪽 끝에 달린 것, 시소에서 가벼운 사람이 멀리 앉는 것, 자전거 페달이 아래로 내려갈 때 가장 힘이 잘 전달되는 것이 모두 토크 때문이다.</li>
+            <li><span class="tag">적용</span>40 N·m를 넘겨 볼트를 풀어 보자. 잡는 위치를 0.4 m로 하면 필요한 힘은 몇 N까지 줄어드는가? 각 \(\varphi\)를 0°와 180°로 하면 어떻게 되는가? 90°보다 큰 각에서는 무엇이 다른가?</li>
+            <li class="warn"><span class="tag">판단</span>이 그림은 볼트 축에 수직인 평면에서 미는 경우만 다룬다. 렌치를 비스듬히 위로 당기면 힘의 일부는 볼트 축 방향으로 가서 돌리는 데 쓰이지 않는다. 실제로는 렌치나 볼트가 견딜 수 있는 토크에도 한계가 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">길이 0.25 m인 렌치 끝을 렌치와 \(30^\circ\)를 이루는 방향으로 200 N의 힘으로 밀었습니다. 토크의 크기는?</p>
+          <p class="q">길이 0.25 m인 렌치 끝을 렌치와 \(30^\circ\)를 이루는 방향으로 200 N의 힘으로 밀었다. 토크의 크기는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25 N·m<span class="why"><b>맞습니다.</b> \(0.25 \times 200 \times \sin 30^\circ = 25\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 43.3 N·m<span class="why"><b>코사인을 썼습니다.</b> 돌리는 데 쓰이는 것은 렌치에 수직인 성분 \(F\sin\varphi\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>50 N·m<span class="why"><b>각을 무시했습니다.</b> 수직으로 밀 때의 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>800 N·m<span class="why"><b>길이로 나누었습니다.</b> 토크는 팔 길이와 힘의 곱입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25 N·m<span class="why"><b>맞다.</b> \(0.25 \times 200 \times \sin 30^\circ = 25\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 43.3 N·m<span class="why"><b>코사인을 썼다.</b> 돌리는 데 쓰이는 것은 렌치에 수직인 성분 \(F\sin\varphi\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>50 N·m<span class="why"><b>각을 무시했다.</b> 수직으로 밀 때의 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>800 N·m<span class="why"><b>길이로 나누었다.</b> 토크는 팔 길이와 힘의 곱이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-8.html#card-pmath-param-line-plane"><small class="mono">전문 수학 2.8</small>매개변수 하나는 직선을, 둘은 평면을 그릴까?</a><a href="../../c/pmath/2-8.html#card-pmath-circle-sphere-vec"><small class="mono">전문 수학 2.8</small>원과 구는 같은 식 하나로 쓸 수 있을까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a><a href="../../c/geo/3-2.html#card-geo-pos-section"><small class="mono">기하 3.2</small>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-8.html#card-pmath-param-line-plane"><small class="mono">전문 수학 2.8</small>매개변수 하나는 직선을, 둘은 평면을 그릴까?</a><a href="../../c/pmath/2-8.html#card-pmath-circle-sphere-vec"><small class="mono">전문 수학 2.8</small>원과 구는 같은 식 하나로 쓸 수 있을까?</a><a href="../../c/pmath/2-8.html#text-pmath-vector-equations"><small class="mono">전문 수학 2.8</small>벡터로 나타낸 도형의 방정식</a><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a></div></nav>
 
       <article class="card" id="card-pmath-shading">
         <header class="card-head">
-          <span class="no">2.7.4</span><h2>게임 속 3D 물체는 어떻게 그림자를 칠할까?</h2><span class="kind">외적과 내적 · 3D 그래픽 · 활용</span>
+          <span class="no">탐구 4</span><h2>게임 속 3D 물체는 어떻게 그림자를 칠할까?</h2><span class="kind">외적과 내적 · 3D 그래픽 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -205,43 +268,43 @@
               <input class="sd" type="range" min="1" max="4" step="1" value="2" aria-label="구를 나누는 정도">
               <div class="presets"><button class="chip go-n" type="button" aria-pressed="false">법선 보기</button><button class="chip go-flip" type="button" aria-pressed="false">외적 순서 뒤집기</button></div>
               <p class="mono small face">—</p>
-              <p class="fig-note">면의 밝기 = max(0, 법선 · 빛 방향) (둘 다 단위벡터). 법선은 면의 두 모서리 벡터의 외적입니다.</p>
+              <p class="fig-note">면의 밝기 = max(0, 법선 · 빛 방향) (둘 다 단위벡터). 법선은 면의 두 모서리 벡터의 외적이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>게임 속 공은 사실 작은 삼각형 수백 개를 이어 붙인 것입니다. 컴퓨터는 이 삼각형마다 얼마나 밝게 칠할지를 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>외적 \(\vec{u}\times\vec{v}\)는 두 벡터에 모두 수직이고, 단위벡터끼리의 내적은 사잇각의 코사인입니다.</li>
-            <li><span class="tag">설명</span>삼각형 PQR의 두 모서리 \(\vec{u} = \overrightarrow{\mathrm{PQ}}\), \(\vec{v} = \overrightarrow{\mathrm{PR}}\)의 외적 \(\vec{u}\times\vec{v}\)를 크기 1로 줄이면 면에 수직인 <b>법선벡터</b> \(\hat{n}\)이 됩니다. 빛이 오는 방향의 단위벡터를 \(\hat{l}\)이라 하면, 면이 빛을 정면으로 받을수록 밝으므로 <b>밝기 \(= \max(0, \hat{n}\cdot\hat{l}) = \max(0, \cos\theta)\)</b>로 칠합니다. 이것을 램버트 조명 모형이라고 합니다. 내적이 음수인 면은 빛을 등지고 있어 검게 칠합니다. 이 계산은 정사영 단원에서 태양광 패널이 받는 빛의 양 \(\cos\gamma\)와 같은 식입니다.</li>
-            <li><span class="tag">연결</span>외적의 순서(\(\vec{u}\times\vec{v}\)인가 \(\vec{v}\times\vec{u}\)인가)는 법선이 바깥을 향하느냐 안을 향하느냐를 정합니다. 그래서 3D 모델 파일은 삼각형의 꼭짓점을 늘 같은 방향(예: 바깥에서 볼 때 시계 반대 방향)으로 적는 약속을 지킵니다.</li>
-            <li><span class="tag">적용</span>빛의 방향을 바꾸며 가장 밝은 면이 빛 쪽을 향한 면인지 보세요. 면의 개수를 늘리면 공이 얼마나 매끄러워 보이나요? "외적 순서 뒤집기"를 켜면 무슨 일이 생기나요? 법선을 보면서 이유를 설명해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이 모형은 빛이 면에 닿는 각만 봅니다. 실제 그래픽에는 반짝이는 반사광, 다른 물체가 드리우는 그림자, 주변에서 되비친 빛이 더해집니다. 또 면마다 밝기를 하나로 칠하면 각진 모습이 남아, 실제 게임은 꼭짓점의 법선을 섞어 매끄럽게 보이게 합니다.</li>
+            <li><span class="tag">질문</span>게임 속 공은 사실 작은 삼각형 수백 개를 이어 붙인 것이다. 컴퓨터는 이 삼각형마다 얼마나 밝게 칠할지를 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>외적 \(\vec{u}\times\vec{v}\)는 두 벡터에 모두 수직이고, 단위벡터끼리의 내적은 사잇각의 코사인이다.</li>
+            <li><span class="tag">설명</span>삼각형 PQR의 두 모서리 \(\vec{u} = \overrightarrow{\mathrm{PQ}}\), \(\vec{v} = \overrightarrow{\mathrm{PR}}\)의 외적 \(\vec{u}\times\vec{v}\)를 크기 1로 줄이면 면에 수직인 법선벡터 \(\hat{n}\)이 된다. 빛이 오는 방향의 단위벡터를 \(\hat{l}\)이라 하면, 면이 빛을 정면으로 받을수록 밝으므로 밝기 \(= \max(0, \hat{n}\cdot\hat{l}) = \max(0, \cos\theta)\)로 칠한다. 이것을 램버트 조명 모형이라고 한다. 내적이 음수인 면은 빛을 등지고 있어 검게 칠한다. 이 계산은 정사영 단원에서 태양광 패널이 받는 빛의 양 \(\cos\gamma\)와 같은 식이다.</li>
+            <li><span class="tag">연결</span>외적의 순서(\(\vec{u}\times\vec{v}\)인가 \(\vec{v}\times\vec{u}\)인가)는 법선이 바깥을 향하느냐 안을 향하느냐를 정한다. 그래서 3D 모델 파일은 삼각형의 꼭짓점을 늘 같은 방향(예를 들어 바깥에서 볼 때 시계 반대 방향)으로 적는 약속을 지킨다.</li>
+            <li><span class="tag">적용</span>빛의 방향을 바꾸며 가장 밝은 면이 빛 쪽을 향한 면인지 보자. 면의 개수를 늘리면 공이 얼마나 매끄러워 보이는가? "외적 순서 뒤집기"를 켜면 무슨 일이 생기는가? 법선을 보면서 이유를 설명해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이 모형은 빛이 면에 닿는 각만 본다. 실제 그래픽에는 반짝이는 반사광, 다른 물체가 드리우는 그림자, 주변에서 되비친 빛이 더해진다. 또 면마다 밝기를 하나로 칠하면 각진 모습이 남아, 실제 게임은 꼭짓점의 법선을 섞어 매끄럽게 보이게 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">어떤 면의 단위 법선이 \(\left(0, 0, 1\right)\)이고 빛이 오는 방향의 단위벡터가 \(\left(\frac{1}{2}, 0, \frac{\sqrt{3}}{2}\right)\)일 때, 이 면의 밝기(0~1)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\sqrt{3}}{2} \approx 0.87\)<span class="why"><b>맞습니다.</b> 두 단위벡터의 내적은 \(0 + 0 + \frac{\sqrt{3}}{2}\)이고, 빛이 법선과 \(30^\circ\)를 이루며 들어옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>x성분을 골랐습니다.</b> 법선이 z축 방향이므로 빛의 z성분이 내적입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>빛이 정면에서 온다고 보았습니다.</b> 빛 방향이 법선과 \(30^\circ\) 어긋나 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>두 벡터가 수직이라고 보았습니다.</b> 내적이 0이 아니므로 수직이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\sqrt{3}}{2} \approx 0.87\)<span class="why"><b>맞다.</b> 두 단위벡터의 내적은 \(0 + 0 + \frac{\sqrt{3}}{2}\)이고, 빛이 법선과 \(30^\circ\)를 이루며 들어온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>x성분을 골랐다.</b> 법선이 z축 방향이므로 빛의 z성분이 내적이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>빛이 정면에서 온다고 보았다.</b> 빛 방향이 법선과 \(30^\circ\) 어긋나 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>두 벡터가 수직이라고 보았다.</b> 내적이 0이 아니므로 수직이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
       <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-8.html#card-pmath-raytrace"><small class="mono">전문 수학 2.8</small>빛줄기와 구의 교점만 계산해서 3D 그림을 그릴 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

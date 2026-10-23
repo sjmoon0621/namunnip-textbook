@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>수열의 귀납적 정의 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="첫째항과 이웃한 항 사이의 관계식으로 수열을 정하는 귀납적 정의, 등차·등비수열의 귀납적 표현, 실제 문제를 관계식으로 나타내기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-recur-rule .rule { font-size: 13.5px; margin: 6px 0 2px; overflow-wrap: anywhere; }
@@ -47,18 +52,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-recur-rule"><span class="mono">3.6.1</span>귀납적 정의</a></li>
-        <li><a href="#card-alg-recur-tiling"><span class="mono">3.6.2</span>관계식으로 세기</a></li>
+        <li><a href="#text-alg-recursion"><span class="mono">본문</span>수열의 귀납적 정의</a></li>
+        <li><a href="#card-alg-recur-rule"><span class="mono">탐구 1</span>귀납적 정의</a></li>
+        <li><a href="#card-alg-recur-tiling"><span class="mono">탐구 2</span>관계식으로 세기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">260문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">261문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-3-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-recursion" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>수열의 귀납적 정의</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">가로 2, 세로 \(n\)인 판을 \(1 \times 2\) 크기의 타일로 빈틈없이 덮는 방법의 수를 \(a_n\)이라 하자. \(n = 10\)일 때의 방법은 그림을 다 그려 세기에는 너무 많다. 그런데 \(a_9\)와 \(a_8\)을 알면 \(a_{10}\)을 바로 구할 수 있다고 한다. 어떻게 그럴까?</p>
+          <figure class="q-fig" data-q="alg-tiling">
+            <svg viewBox="0 0 520 230" role="img" aria-label="2×n 판을 덮는 방법을 맨 끝 타일 모양에 따라 두 경우로 나누는 그림"></svg>
+            <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="1" max="12" step="1" value="6"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 판의 맨 끝을 세로 타일 하나로 덮으면 남은 판은 \(2 \times (n - 1)\), 가로 타일 두 개로 덮으면 \(2 \times (n - 2)\)이므로 \(a_n = a_{n-1} + a_{n-2}\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>수열과 일반항(<a href="3-1.html">수열의 뜻</a>), 등차수열과 등비수열(<a href="3-2.html">등차수열</a>, <a href="3-3.html">등비수열</a>), 합의 법칙(공통수학1).</div>
+
+          <h3><span class="no">3.6.1</span>첫째항과 규칙으로 정하기</h3>
+          <p>수열은 일반항으로 정할 수도 있지만, 첫째항과 이웃한 항 사이의 관계로 정할 수도 있다. 가령 '\(a_1 = 3\)이고, \(a_{n+1} = a_n + 2\)'라고 하면 \(a_2 = 5\), \(a_3 = 7\), …로 모든 항이 차례로 정해진다. 이렇게 처음 몇 항과 이웃한 항 사이의 관계식으로 수열을 정하는 것을 수열의 <em>귀납적 정의</em>라 하고, 관계식을 점화식이라 한다.</p>
+          <div class="tb-env"><span class="lb">정리 3.6.1 <span class="nm">대표적인 점화식</span></span>
+            <p>\(a_{n+1} = a_n + d\)이면 공차가 \(d\)인 등차수열이고, \(a_{n+1} = ra_n\)이면 공비가 \(r\)인 등비수열이다. \(2a_{n+1} = a_n + a_{n+2}\)이면 등차수열, \(a_{n+1}^2 = a_na_{n+2}\)이면 등비수열이다.</p>
+          </div>
+
+          <h3><span class="no">3.6.2</span>경우를 나누어 점화식 세우기</h3>
+          <p>점화식은 일반항을 찾기 어려운 문제에서 특히 쓸모 있다. 처음 질문의 판에서 맨 오른쪽 끝을 어떻게 덮었는지로 경우를 나누어 보자. 세로 타일 하나로 덮었다면 나머지 \(2 \times (n - 1)\) 판을 덮는 방법은 \(a_{n-1}\)가지이다. 가로 타일 두 개를 위아래로 겹쳐 덮었다면 나머지는 \(2 \times (n - 2)\) 판이고 \(a_{n-2}\)가지이다.</p>
+          <p>두 경우는 겹치지 않고 모든 경우를 빠짐없이 나누므로, 합의 법칙에 따라 \(a_n = a_{n-1} + a_{n-2}\)이다. 그런데 이 식만으로는 출발할 수 없다. \(a_1 = 1\), \(a_2 = 2\)를 직접 세어 주어야 \(a_3 = 3\), \(a_4 = 5\), \(a_5 = 8\), …이 차례로 정해진다. 그림 1의 슬라이더로 \(n\)을 바꾸어 보면 두 경우의 수가 앞의 두 값이다.<sup class="fn"><a href="#fn-alg-recursion-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="점화식 a_{n+1}=2a_n+1로 항을 차례로 계산하는 사슬">
+              <g class="s">
+                <rect x="20" y="50" width="70" height="44" class="lc"/><text x="55" y="77" text-anchor="middle">a₁ = 1</text>
+                <rect x="130" y="50" width="70" height="44" class="lb"/><text x="165" y="77" text-anchor="middle">a₂ = 3</text>
+                <rect x="240" y="50" width="70" height="44" class="lb"/><text x="275" y="77" text-anchor="middle">a₃ = 7</text>
+                <rect x="350" y="50" width="70" height="44" class="lb"/><text x="385" y="77" text-anchor="middle">a₄ = 15</text>
+                <text x="460" y="77">…</text>
+                <text x="110" y="40" text-anchor="middle">×2+1</text><text x="220" y="40" text-anchor="middle">×2+1</text><text x="330" y="40" text-anchor="middle">×2+1</text>
+                <text x="260" y="130" text-anchor="middle">처음 값과 규칙만으로 모든 항이 이어서 정해진다</text>
+              </g>
+              <path d="M92 72 L128 72" class="k"/><path d="M202 72 L238 72" class="k"/><path d="M312 72 L348 72" class="k"/>
+            </svg>
+            <figcaption>그림 2. 귀납적 정의에서는 첫째항과 규칙이 사슬처럼 다음 항을 차례로 정한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+            <p>처음 질문의 \(a_{10}\)을 구하여라. 또 \(a_1 = 1\), \(a_{n+1} = 2a_n + 1\)로 정해진 수열의 제5항을 구하고, \(b_n = a_n + 1\)로 두어 일반항을 구하여라.</p>
+          </div>
+          <p>\(a_1 = 1\), \(a_2 = 2\)에서 점화식으로 차례로 더하면 3, 5, 8, 13, 21, 34, 55, 89이므로 \(a_{10} = 89\)이다. 10칸짜리 판을 덮는 방법이 89가지라는 것을 그림을 하나도 그리지 않고 얻었다.</p>
+          <p>두 번째 수열은 1, 3, 7, 15, 31이므로 제5항은 31이다. 그런데 각 항에 1을 더하면 2, 4, 8, 16, 32로 등비수열처럼 보인다. 실제로 \(b_{n+1} = a_{n+1} + 1 = 2a_n + 2 = 2b_n\)이므로 \(\{b_n\}\)은 첫째항 2, 공비 2인 등비수열이다.</p>
+          <p>따라서 \(b_n = 2^n\)이고 \(a_n = 2^n - 1\)이다. 점화식을 아는 꼴로 바꾸는 치환 하나로 일반항까지 얻은 셈이다. 아래 탐구 카드에서 점화식의 첫째항과 규칙을 바꾸며 수열이 어떻게 이어지는지 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-recursion-1">\(a_n = a_{n-1} + a_{n-2}\)를 만족하는 수열 1, 1, 2, 3, 5, 8, …을 피보나치수열이라 한다. 이웃한 두 항의 비 \(\tfrac{a_{n+1}}{a_n}\)은 \(n\)이 커질수록 황금비 \(\tfrac{1 + \sqrt{5}}{2} \approx 1.618\)에 가까워진다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>귀납적 정의는 처음 몇 항과 이웃한 항 사이의 점화식으로 수열을 정하며, 일반항을 바로 찾기 어려운 경우의 수 문제에서 경우를 나누어 점화식을 세우면 쉽게 풀린다. 그래서 처음 질문의 판은 맨 끝을 덮는 두 가지 방법으로 나누어 \(a_n = a_{n-1} + a_{n-2}\)를 얻고, \(a_{10} = 89\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-2.html#text-alg-arithmetic"><small class="mono">대수 3.2</small>등차수열</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a><a href="../../c/alg/3-7.html#text-alg-induction"><small class="mono">대수 3.7</small>수학적 귀납법</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a></div></nav>
+
       <article class="card" id="card-alg-recur-rule">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>첫째항과 규칙만으로 수열이 정해질까?</h2><span class="kind">수열의 귀납적 정의 · 첫째항과 관계식</span>
+          <span class="no">탐구 1</span><h2>첫째항과 규칙만으로 수열이 정해질까?</h2><span class="kind">수열의 귀납적 정의 · 첫째항과 관계식</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -72,8 +132,8 @@
               <p class="mono rule">—</p>
               <p class="msg">—</p>
               <div class="presets ex">
-                <button class="chip" type="button" data-s="1,1,2" aria-pressed="true">등차: 더하기</button>
-                <button class="chip" type="button" data-s="1,2,0">등비: 곱하기</button>
+                <button class="chip" type="button" data-s="1,1,2" aria-pressed="true">등차 (더하기)</button>
+                <button class="chip" type="button" data-s="1,2,0">등비 (곱하기)</button>
                 <button class="chip" type="button" data-s="-4,0.5,2">곱하고 더하기</button>
               </div>
               <div class="ctl-row">
@@ -92,30 +152,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>일반항 식이 없어도 '첫째항은 1이고, 각 항에 2를 더하면 다음 항이 된다'고 하면 수열이 하나로 정해질까요?</li>
-            <li><span class="tag">복원</span>등차수열은 이웃한 항의 차가 공차 \(d\)로 일정하고, 등비수열은 이웃한 항의 비가 공비 \(r\)로 일정합니다.</li>
-            <li><span class="tag">설명</span>수열을 ① 첫째항 \(a_1\)의 값과 ② 이웃한 항 사이의 관계식(예: \(a_{n+1} = 2a_n + 1, n = 1, 2, 3, \cdots\))으로 정하는 것을 수열의 <em>귀납적 정의</em>라고 합니다. \(a_1\)에서 관계식으로 \(a_2\)를, \(a_2\)에서 \(a_3\)을 차례로 얻으므로 모든 항이 하나로 정해집니다. 등차수열은 <b>\(a_{n+1} = a_n + d\)</b>, 등비수열은 <b>\(a_{n+1} = ra_n\)</b>으로 나타냅니다. 또 \(2a_{n+1} = a_n + a_{n+2}\)는 등차수열, \(a_{n+1}^2 = a_na_{n+2}\)는 등비수열의 귀납적 표현입니다(등차중항·등비중항).</li>
-            <li><span class="tag">연결</span>일반항은 \(n\)을 넣으면 바로 그 항을 주는 '직접 계산', 귀납적 정의는 앞 항에서 다음 항을 만드는 '한 단계씩 계산'입니다. 컴퓨터 프로그램의 반복문과 같은 생각이고, 다음 카드처럼 세는 문제를 나타내는 데 특히 편합니다.</li>
-            <li><span class="tag">적용</span>'다음 항 만들기'를 여러 번 눌러 보세요. 세 가지 규칙에서 점들이 어떻게 놓이나요? 같은 관계식에서 첫째항만 바꾸면 어떻게 되나요? '곱하고 더하기'에서 첫째항을 4로 바꾸면 무엇이 보이나요?</li>
-            <li class="warn"><span class="tag">판단</span>관계식만 있고 첫째항이 없으면 수열이 정해지지 않습니다. 같은 \(a_{n+1} = a_n + 2\)라도 첫째항이 1이면 홀수, 2이면 짝수의 수열입니다. 또 관계식의 \(n\)이 어디서부터 성립하는지(\(n = 1, 2, 3, \cdots\))도 함께 밝혀야 합니다.</li>
+            <li><span class="tag">질문</span>일반항 식이 없어도 '첫째항은 1이고, 각 항에 2를 더하면 다음 항이 된다'고 하면 수열이 하나로 정해질까?</li>
+            <li><span class="tag">복원</span>등차수열은 이웃한 항의 차가 공차 \(d\)로 일정하고, 등비수열은 이웃한 항의 비가 공비 \(r\)로 일정하다.</li>
+            <li><span class="tag">설명</span>수열을 첫째항 \(a_1\)의 값과 이웃한 항 사이의 관계식(예를 들어 \(a_{n+1} = 2a_n + 1, n = 1, 2, 3, \cdots\))으로 정하는 것을 수열의 <em>귀납적 정의</em>라고 한다. \(a_1\)에서 관계식으로 \(a_2\)를, \(a_2\)에서 \(a_3\)을 차례로 얻으므로 모든 항이 하나로 정해진다. 그래서 등차수열은 \(a_{n+1} = a_n + d\), 등비수열은 \(a_{n+1} = ra_n\)으로 나타낸다. 또 \(2a_{n+1} = a_n + a_{n+2}\)는 등차수열, \(a_{n+1}^2 = a_na_{n+2}\)는 등비수열의 귀납적 표현이다(등차중항과 등비중항).</li>
+            <li><span class="tag">연결</span>일반항은 \(n\)을 넣으면 바로 그 항을 주는 '직접 계산'이고, 귀납적 정의는 앞 항에서 다음 항을 만드는 '한 단계씩 계산'이다. 컴퓨터 프로그램의 반복문과 같은 생각이고, 다음 카드처럼 세는 문제를 나타내는 데 특히 편하다.</li>
+            <li><span class="tag">적용</span>'다음 항 만들기'를 여러 번 눌러 세 가지 규칙에서 점들이 어떻게 놓이는지 보자. 같은 관계식에서 첫째항만 바꾸어 보고, '곱하고 더하기'에서 첫째항을 4로 바꾸면 무엇이 보이는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>관계식만 있고 첫째항이 없으면 수열이 정해지지 않는다. 같은 \(a_{n+1} = a_n + 2\)라도 첫째항이 1이면 홀수, 2이면 짝수의 수열이다. 또 관계식의 \(n\)이 어디서부터 성립하는지(\(n = 1, 2, 3, \cdots\))도 함께 밝혀야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(a_1 = 2, a_{n+1} = 3a_n - 1 (n = 1, 2, 3, \cdots)\)로 정의된 수열에서 \(a_4\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>41<span class="why"><b>맞습니다.</b> \(a_2 = 3 \cdot 2 - 1 = 5\), \(a_3 = 3 \cdot 5 - 1 = 14\), \(a_4 = 3 \cdot 14 - 1 = 41\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14<span class="why"><b>한 단계 덜 갔습니다.</b> 14는 \(a_3\)입니다. \(a_4\)는 한 번 더 계산합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>관계식의 \(a_n\) 자리에 번호를 넣었습니다.</b> \(3 \cdot 3 - 1 = 8\)은 \(n = 3\)을 넣은 것입니다. 넣을 것은 앞 항의 값 \(a_3 = 14\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>122<span class="why"><b>한 단계 더 갔습니다.</b> 122는 \(a_5\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>41<span class="why"><b>맞다.</b> \(a_2 = 3 \cdot 2 - 1 = 5\), \(a_3 = 3 \cdot 5 - 1 = 14\), \(a_4 = 3 \cdot 14 - 1 = 41\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>14<span class="why"><b>한 단계 덜 갔다.</b> 14는 \(a_3\)이다. \(a_4\)는 한 번 더 계산한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8<span class="why"><b>관계식의 \(a_n\) 자리에 번호를 넣었다.</b> \(3 \cdot 3 - 1 = 8\)은 \(n = 3\)을 넣은 것이다. 넣을 것은 앞 항의 값 \(a_3 = 14\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>122<span class="why"><b>한 단계 더 갔다.</b> 122는 \(a_5\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-2.html#text-alg-arithmetic"><small class="mono">대수 3.2</small>등차수열</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a><a href="../../c/alg/3-7.html#text-alg-induction"><small class="mono">대수 3.7</small>수학적 귀납법</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a></div></nav>
 
       <article class="card" id="card-alg-recur-tiling">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>\(2\times n\) 판을 덮는 방법은 몇 가지일까?</h2><span class="kind">수열의 귀납적 정의 · 세는 문제를 관계식으로</span>
+          <span class="no">탐구 2</span><h2>\(2\times n\) 판을 덮는 방법은 몇 가지일까?</h2><span class="kind">수열의 귀납적 정의 · 세는 문제를 관계식으로</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,42 +189,43 @@
                 <div><dt class="d-2">가로로 시작</dt><dd class="v-2">—</dd></div>
                 <div><dt class="d-n">전체</dt><dd class="v-n">—</dd></div>
               </dl>
-              <p class="fig-note">작은 그림 하나가 덮는 방법 하나입니다. 맨 왼쪽 조각을 지우고 남은 부분을 보세요.</p>
+              <p class="fig-note">작은 그림 하나가 덮는 방법 하나이다. 맨 왼쪽 조각을 지우고 남은 부분을 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>가로 \(n\), 세로 2인 판을 \(1 \times 2\) 도미노로 빈틈없이 덮는 방법의 수를 \(a_n\)이라 합시다. \(n = 10\)일 때 모든 방법을 그려 보지 않고 셀 수 있을까요?</li>
-            <li><span class="tag">복원</span>수열은 첫째항과 이웃한 항 사이의 관계식으로 정할 수 있습니다. 경우의 수를 셀 때는 겹치지 않고 빠짐없이 나누어 더합니다(합의 법칙).</li>
-            <li><span class="tag">설명</span>맨 왼쪽 칸을 덮는 방법은 두 가지뿐입니다. ① 세로 도미노 하나를 두면 남은 부분은 가로 \(n - 1\)인 판이고, 덮는 방법은 \(a_{n-1}\)가지입니다. ② 가로 도미노 두 개를 위아래로 두면 남은 부분은 가로 \(n - 2\)인 판이고, \(a_{n-2}\)가지입니다. 두 경우는 겹치지 않으므로 <b>\(a_n = a_{n-1} + a_{n-2} (n \ge 3)\)</b>, 그리고 <b>\(a_1 = 1\), \(a_2 = 2\)</b>입니다. 이 귀납적 정의로 \(1, 2, 3, 5, 8, 13, \cdots\)을 차례로 얻고, \(a_{10} = 89\)입니다.</li>
-            <li><span class="tag">연결</span>이 관계식은 이웃한 두 항으로 다음 항을 정하므로 첫째항과 둘째항이 모두 필요합니다. 계단을 한 번에 한 칸 또는 두 칸씩 오르는 방법의 수도 같은 관계를 따릅니다. 이렇게 문제의 구조에서 관계식을 세우는 것이 귀납적 정의의 쓰임입니다. 일반항을 구하는 것은 이 과목의 범위를 넘지만, 관계식만으로도 원하는 항을 계산할 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(n\)을 바꾸며 초록 묶음과 주황 묶음의 개수가 각각 \(a_{n-1}\), \(a_{n-2}\)인지 세어 보세요. 초록 묶음에서 맨 왼쪽 세로 조각을 지우면 남는 그림들은 무엇과 같나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(a_n = a_{n-1} + 1\)처럼 '조각 하나를 더 놓는 방법은 하나'라고 세는 실수가 흔합니다. 새 조각을 어디에 놓느냐가 아니라 맨 왼쪽을 어떻게 덮느냐로 나누어야 겹치거나 빠지는 경우가 없습니다. 또 관계식이 \(n \ge 3\)에서만 쓰인다는 것과 처음 두 항을 함께 밝혀야 합니다.</li>
+            <li><span class="tag">질문</span>가로 \(n\), 세로 2인 판을 \(1 \times 2\) 도미노로 빈틈없이 덮는 방법의 수를 \(a_n\)이라 하자. \(n = 10\)일 때 모든 방법을 그려 보지 않고 셀 수 있을까?</li>
+            <li><span class="tag">복원</span>수열은 첫째항과 이웃한 항 사이의 관계식으로 정할 수 있다. 그리고 경우의 수를 셀 때는 겹치지 않고 빠짐없이 나누어 더한다(합의 법칙).</li>
+            <li><span class="tag">설명</span>맨 왼쪽 칸을 덮는 방법은 두 가지뿐이다. 세로 도미노 하나를 두면 남은 부분은 가로 \(n - 1\)인 판이고, 덮는 방법은 \(a_{n-1}\)가지이다. 가로 도미노 두 개를 위아래로 두면 남은 부분은 가로 \(n - 2\)인 판이고, \(a_{n-2}\)가지이다. 두 경우는 겹치지 않으므로 \(a_n = a_{n-1} + a_{n-2} (n \ge 3)\)이고, \(a_1 = 1\), \(a_2 = 2\)이다. 이 귀납적 정의로 \(1, 2, 3, 5, 8, 13, \cdots\)을 차례로 얻으면 \(a_{10} = 89\)이다.</li>
+            <li><span class="tag">연결</span>이 관계식은 이웃한 두 항으로 다음 항을 정하므로 첫째항과 둘째항이 모두 필요하다. 계단을 한 번에 한 칸 또는 두 칸씩 오르는 방법의 수도 같은 관계를 따른다. 이렇게 문제의 구조에서 관계식을 세우는 데 귀납적 정의가 쓰인다. 일반항을 구하는 것은 이 과목의 범위를 넘지만, 관계식만으로도 원하는 항을 계산할 수 있다.</li>
+            <li><span class="tag">적용</span>\(n\)을 바꾸며 초록 묶음과 주황 묶음의 개수가 각각 \(a_{n-1}\), \(a_{n-2}\)인지 세어 보자. 초록 묶음에서 맨 왼쪽 세로 조각을 지우면 남는 그림들이 가로 \(n - 1\)인 판을 덮는 방법과 같다는 것도 확인할 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>\(a_n = a_{n-1} + 1\)처럼 '조각 하나를 더 놓는 방법은 하나'라고 세는 실수가 흔하다. 새 조각을 어디에 놓느냐가 아니라 맨 왼쪽을 어떻게 덮느냐로 나누어야 겹치거나 빠지는 경우가 없다. 또 관계식이 \(n \ge 3\)에서만 쓰인다는 것과 처음 두 항을 함께 밝혀야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">계단을 한 번에 1칸 또는 3칸씩 오릅니다. 7칸을 오르는 방법의 수는? (\(b_1 = 1\), \(b_2 = 1\), \(b_3 = 2\)이고, 마지막 걸음이 1칸인지 3칸인지로 나눕니다.)</p>
+          <p class="q">계단을 한 번에 1칸 또는 3칸씩 오른다. 7칸을 오르는 방법의 수는? (\(b_1 = 1\), \(b_2 = 1\), \(b_3 = 2\)이고, 마지막 걸음이 1칸인지 3칸인지로 나눈다.)</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>9<span class="why"><b>맞습니다.</b> \(b_n = b_{n-1} + b_{n-3}\)이므로 \(b_4 = 3\), \(b_5 = 4\), \(b_6 = 6\), \(b_7 = 9\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>21<span class="why"><b>1칸 또는 2칸으로 세었습니다.</b> \(b_n = b_{n-1} + b_{n-2}\)를 쓰면 21이 나옵니다. 3칸 걸음은 세 칸 전에서 옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>한 단계 덜 계산했습니다.</b> 6은 6칸을 오르는 방법의 수 \(b_6\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>9<span class="why"><b>맞다.</b> \(b_n = b_{n-1} + b_{n-3}\)이므로 \(b_4 = 3\), \(b_5 = 4\), \(b_6 = 6\), \(b_7 = 9\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>21<span class="why"><b>1칸 또는 2칸으로 세었다.</b> \(b_n = b_{n-1} + b_{n-2}\)를 쓰면 21이 나온다. 3칸 걸음은 세 칸 전에서 온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>한 단계 덜 계산했다.</b> 6은 6칸을 오르는 방법의 수 \(b_6\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-2.html#card-alg-arith-term"><small class="mono">대수 3.2</small>같은 수씩 커지는 수열의 100번째 항은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sum"><small class="mono">대수 3.2</small>1부터 100까지 더하는 빠른 방법은?</a><a href="../../c/alg/3-2.html#card-alg-arith-sn"><small class="mono">대수 3.2</small>합을 알면 각 항도 알 수 있을까?</a><a href="../../c/alg/3-2.html#text-alg-arithmetic"><small class="mono">대수 3.2</small>등차수열</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/3-7.html#card-alg-induct-domino"><small class="mono">대수 3.7</small>몇 개를 확인하면 모든 자연수에서 참일까?</a><a href="../../c/alg/3-7.html#card-alg-induct-proof"><small class="mono">대수 3.7</small>P(k)에서 P(k + 1)로 어떻게 건너갈까?</a><a href="../../c/alg/3-7.html#text-alg-induction"><small class="mono">대수 3.7</small>수학적 귀납법</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">260문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">261문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +233,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/seq-lib.js"></script>
 <script src="../../js/cards/alg/recur-rule.js"></script>
 <script src="../../js/cards/alg/recur-tiling.js"></script>

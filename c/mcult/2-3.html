@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>디지털 기술과 수학 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="EAN-13 바코드의 가중치 1·3과 검사 숫자, 한 자리 오류는 반드시 찾고 이웃 자리 뒤바뀜은 차가 5일 때 놓치는 까닭, 흑백 그림의 런 길이 부호화와 압축률, 줄지 않는 자료가 반드시 있다는 사실. 바코드 카드와, 그림 압축 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-mcult-barcode-check .code { font: 600 1.15rem var(--mono, monospace); letter-spacing: .15em; width: 100%; max-width: 18rem; padding: .3rem .4rem; box-sizing: border-box; }
@@ -49,18 +54,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mcult-barcode-check"><span class="mono">2.3.1</span>바코드 마지막 숫자는 잘못 읽은 것을 잡아내는 검사 숫자</a></li>
-        <li><a href="#card-mcult-run-length"><span class="mono">2.3.2</span>같은 색이 몇 칸 이어지는지만 적어 그림을 줄이기</a></li>
+        <li><a href="#text-mcult-checkdigit"><span class="mono">본문</span>디지털 기술과 수학</a></li>
+        <li><a href="#card-mcult-barcode-check"><span class="mono">탐구 1</span>바코드 마지막 숫자는 잘못 읽은 것을 잡아내는 검사 숫자</a></li>
+        <li><a href="#card-mcult-run-length"><span class="mono">탐구 2</span>같은 색이 몇 칸 이어지는지만 적어 그림을 줄이기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mcult-2-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mcult&amp;sec=2-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mcult-2-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mcult-checkdigit" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>디지털 기술과 수학</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">과자 봉지의 바코드 아래에는 8801234567893처럼 13자리 숫자가 적혀 있다. 처음 12자리가 나라, 회사, 상품을 나타내고 마지막 3은 앞의 숫자들로 계산해 붙인 검사 숫자이다. 스캐너가 숫자 하나를 잘못 읽거나 계산원이 두 숫자의 순서를 바꾸어 입력하면 계산대가 바로 경고음을 낸다. 숫자 하나로 어떻게 실수를 알아챌까? 그리고 사진과 문서를 짧게 줄이는 압축은 왜 무한히 줄일 수 없을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="바코드 숫자에 가중치를 곱한 값">
+              <g class="s">
+                <text x="20" y="28">숫자</text><text x="20" y="58">가중치</text><text x="20" y="88">곱</text>
+                <text x="90" y="28">8</text><text x="120" y="28">8</text><text x="150" y="28">0</text><text x="180" y="28">1</text><text x="210" y="28">2</text><text x="240" y="28">3</text><text x="270" y="28">4</text><text x="300" y="28">5</text><text x="330" y="28">6</text><text x="360" y="28">7</text><text x="390" y="28">8</text><text x="420" y="28">9</text><text x="460" y="28" class="td">3</text>
+                <text x="90" y="58">1</text><text x="120" y="58">3</text><text x="150" y="58">1</text><text x="180" y="58">3</text><text x="210" y="58">1</text><text x="240" y="58">3</text><text x="270" y="58">1</text><text x="300" y="58">3</text><text x="330" y="58">1</text><text x="360" y="58">3</text><text x="390" y="58">1</text><text x="420" y="58">3</text><text x="460" y="58">1</text>
+                <text x="90" y="88">8</text><text x="120" y="88">24</text><text x="150" y="88">0</text><text x="180" y="88">3</text><text x="210" y="88">2</text><text x="240" y="88">9</text><text x="270" y="88">4</text><text x="300" y="88">15</text><text x="330" y="88">6</text><text x="360" y="88">21</text><text x="390" y="88">8</text><text x="420" y="88">27</text><text x="460" y="88" class="td">3</text>
+                <line x1="15" y1="100" x2="505" y2="100" class="gd"/>
+                <text x="20" y="124">합 127 + 3 = 130, 10의 배수이므로 바르게 읽었다</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 자리마다 1과 3을 번갈아 곱해 더한 값이 10의 배수가 되도록 검사 숫자를 정한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>나머지, 진법, 경우의 수.</div>
+
+          <h3><span class="no">2.3.1</span>검사 숫자</h3>
+          <p>13자리 상품 바코드는 홀수째 자리에 1, 짝수째 자리에 3을 곱해 모두 더한 값이 10의 배수가 되도록 마지막 숫자를 정한다. 스캐너는 13자리를 읽은 뒤 같은 계산을 하여 합이 10의 배수인지 확인하고, 아니면 다시 읽는다. 숫자 하나가 바뀌면 합이 바뀌는데, 가중치 1이나 3에 0부터 9까지의 차를 곱한 값은 10의 배수가 될 수 없으므로 합의 나머지가 반드시 달라진다. 그래서 숫자 하나의 잘못은 언제나 드러난다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.3.1 <span class="nm">바코드의 검사 숫자</span></span>
+            <p>앞의 12자리에 가중치 1, 3을 번갈아 곱한 합을 \(S\)라 하면 검사 숫자는 \[c = (10 - S \bmod 10) \bmod 10\]이다. 이웃한 두 숫자 \(a, b\)가 서로 바뀌면 합은 \(2(b - a)\) 또는 \(2(a - b)\)만큼 달라지므로, \(|a - b| = 5\)일 때만 잘못을 놓친다.</p>
+          </div>
+          <p>가중치를 모두 1로 두면 두 숫자의 순서가 바뀌어도 합이 같아 잘못을 알아채지 못한다. 가중치를 1과 3으로 다르게 두었기 때문에, 이웃한 숫자를 바꾸면 \(3a + b\)가 \(3b + a\)로 바뀌어 합이 \(2(b - a)\)만큼 달라진다. 이 차가 10의 배수가 되는 것은 두 숫자의 차가 5일 때뿐이다. 사람이 숫자를 옮겨 적을 때 가장 흔한 실수가 숫자 하나를 틀리는 것과 이웃한 두 숫자를 바꾸는 것이므로, 검사 숫자 하나로 대부분의 실수를 잡는다.<sup class="fn"><a href="#fn-mcult-checkdigit-1">1</a></sup></p>
+
+          <h3><span class="no">2.3.2</span>압축과 그 한계</h3>
+          <p>흑백 그림은 칸마다 흰색 0, 검은색 1로 저장한다. 그런데 같은 색이 길게 이어지는 그림이라면, 칸을 하나하나 적는 대신 '흰색 5칸, 검은색 6칸, 흰색 5칸'처럼 같은 색이 몇 칸 이어지는지만 적어도 된다. 이런 방법을 연속 길이 부호화라 하며 팩스가 이 방법으로 문서를 보냈다. 그러나 모든 자료를 짧게 줄이는 압축은 있을 수 없다. \(n\)비트짜리 자료는 \(2^n\)가지인데, 그보다 짧은 비트열은 모두 합쳐 \(2^n - 1\)가지뿐이다. 그래서 어떤 압축이든 적어도 하나의 자료는 줄이지 못하고, 무늬가 없이 마구 뒤섞인 자료는 오히려 길어지기도 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 100" role="img" aria-label="한 줄의 흑백 칸과 연속 길이 부호">
+              <g>
+                <rect x="60" y="20" width="100" height="22" class="lk"/><rect x="160" y="20" width="120" height="22" class="fk"/><rect x="280" y="20" width="100" height="22" class="lk"/>
+                <text x="110" y="60" class="s" text-anchor="middle">흰 5</text><text x="220" y="60" class="s" text-anchor="middle">검 6</text><text x="330" y="60" class="s" text-anchor="middle">흰 5</text>
+                <text x="60" y="88" class="s">16칸 = 16비트 → 길이 3개 × 4비트 = 12비트</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 같은 색이 길게 이어지면 칸을 하나씩 적는 대신 이어진 길이만 적어 저장량을 줄인다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.3.2</span>
+            <p>바코드의 앞 12자리가 880123456789일 때 검사 숫자를 구하여라. 계산원이 끝의 8과 9를 바꾸어 880123456798로 입력하면 계산대는 알아챌 수 있는가? 또 16칸짜리 줄이 흰색과 검은색으로 한 칸씩 번갈아 칠해져 있으면, 길이를 4비트로 적는 연속 길이 부호화는 몇 비트가 되는가?</p>
+          </div>
+          <p>그림 1처럼 가중치를 곱해 더하면 \(S = 127\)이고, \(127 \bmod 10 = 7\)이므로 검사 숫자는 \(10 - 7 = 3\)이다. 순서를 바꾼 880123456798의 합은 \(\cdots + 9 \times 1 + 8 \times 3 = 125\)가 되어 검사 숫자 3을 더하면 128로 10의 배수가 아니다. 두 숫자의 차가 1이므로 합이 2만큼 달라져, 계산대는 잘못을 알아챈다.</p>
+          <p>한 칸씩 번갈아 칠한 줄은 이어진 길이가 모두 1인 구간 16개이다. 길이 16개를 4비트씩 적으면 64비트로, 칸을 그대로 적은 16비트의 네 배가 된다. 즉 연속 길이 부호화는 같은 색이 길게 이어질 때만 이득이고, 무늬가 잘게 바뀌는 그림에서는 손해이다. 그래서 실제 압축 프로그램은 자료의 종류를 보고 방법을 고르며, 더 줄일 수 없을 때는 원래대로 저장한다.</p>
+          <p>아래 탐구 카드에서 바코드의 검사 숫자로 실수를 찾아보고, 흑백 그림을 연속 길이로 압축해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mcult-checkdigit-1">주민등록번호의 마지막 자리와 책의 국제 표준 도서 번호(ISBN) 마지막 자리도 검사 숫자이다. 10자리 ISBN은 가중치 10, 9, …, 1과 11로 나눈 나머지를 써서 이웃한 숫자를 바꾼 잘못까지 모두 잡도록 했고, 나머지가 10이면 X를 적었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>바코드의 검사 숫자는 자리마다 1과 3을 번갈아 곱한 합이 10의 배수가 되게 정하여, 숫자 하나의 잘못은 언제나, 이웃한 두 숫자의 맞바꿈은 차가 5일 때를 빼고 모두 알아챈다. 압축은 같은 값이 이어지는 무늬를 짧게 적어 저장량을 줄이지만, 비둘기집의 원리로 모든 자료를 줄이는 압축은 없다. 처음 질문의 계산대는 가중합이 10의 배수가 아니게 된 것을 보고 실수를 알아챈다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/2-2.html#card-mcult-nim"><small class="mono">수학과 문화 2.2</small>돌 줍기 게임에서 컴퓨터를 이길 수 있을까?</a><a href="../../c/mcult/2-2.html#card-mcult-gacha"><small class="mono">수학과 문화 2.2</small>당첨 확률 1%인 뽑기를 100번 하면 반드시 당첨될까?</a><a href="../../c/mcult/2-2.html#text-mcult-games"><small class="mono">수학과 문화 2.2</small>게임과 수학</a></div></nav>
+
       <article class="card" id="card-mcult-barcode-check">
         <header class="card-head">
-          <span class="no">2.3.1</span><h2>바코드의 마지막 숫자는 왜 있을까? 계산대는 잘못 읽은 것을 어떻게 알아챌까?</h2><span class="kind">나머지와 검사 숫자 · 오류 찾기</span>
+          <span class="no">탐구 1</span><h2>바코드의 마지막 숫자는 왜 있을까? 계산대는 잘못 읽은 것을 어떻게 알아챌까?</h2><span class="kind">나머지와 검사 숫자 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,30 +132,30 @@
             <p class="verdict" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>계산대 스캐너가 바코드를 읽다가 숫자 하나를 잘못 읽으면 다른 상품이 계산될 수 있습니다. 스캐너는 잘못 읽은 것을 어떻게 알아챌까요?</li>
-            <li><span class="tag">복원</span>정수를 10으로 나눈 나머지, 곧 일의 자리.</li>
-            <li><span class="tag">설명</span>EAN-13 바코드는 앞의 12자리에 왼쪽부터 가중치 1, 3, 1, 3, …을 곱해 더하고, 마지막 <em>검사 숫자</em>를 더한 합이 10의 배수가 되도록 정합니다. 숫자 하나가 \(e\)(1~9)만큼 달라지면 합은 \(e\) 또는 \(3e\)만큼 바뀝니다. 1과 3은 10과 서로소라서 이 변화는 10의 배수가 될 수 없고, 잘못 읽은 것이 반드시 들킵니다. 이웃한 두 숫자가 뒤바뀌면 합이 \(2(a - b)\)만큼 바뀌므로 두 숫자의 차가 5일 때만 놓칩니다.</li>
-            <li><span class="tag">연결</span>책의 ISBN, 신용카드 번호(룬 알고리즘)도 검사 숫자를 씁니다. 더 많은 오류를 고치는 방법은 QR 코드의 오류 정정 부호로 이어집니다.</li>
-            <li><span class="tag">적용</span>여러 번 "한 자리 잘못 읽기"를 눌러 보세요. 들키지 않는 경우가 있나요? 바꾸어도 들키지 않는 이웃 두 자리를 직접 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>검사 숫자는 실수를 찾아낼 뿐, 고치지는 못하고 위조를 막지도 못합니다. 누구나 같은 규칙으로 맞는 검사 숫자를 계산할 수 있기 때문입니다.</li>
+            <li><span class="tag">질문</span>계산대 스캐너가 바코드를 읽다가 숫자 하나를 잘못 읽으면 다른 상품이 계산될 수 있다. 스캐너는 잘못 읽은 것을 어떻게 알아챌까?</li>
+            <li><span class="tag">복원</span>정수를 10으로 나눈 나머지는 곧 일의 자리이다.</li>
+            <li><span class="tag">설명</span>EAN-13 바코드는 앞의 12자리에 왼쪽부터 가중치 1, 3, 1, 3, …을 곱해 더하고, 마지막 <em>검사 숫자</em>를 더한 합이 10의 배수가 되도록 정한다. 숫자 하나가 \(e\)(1~9)만큼 달라지면 합은 \(e\) 또는 \(3e\)만큼 바뀐다. 1과 3은 10과 서로소라서 이 변화는 10의 배수가 될 수 없고, 잘못 읽은 것이 반드시 들킨다. 이웃한 두 숫자가 뒤바뀌면 합이 \(2(a - b)\)만큼 바뀌므로 두 숫자의 차가 5일 때만 놓친다.</li>
+            <li><span class="tag">연결</span>책의 ISBN, 신용카드 번호(룬 알고리즘)도 검사 숫자를 쓴다. 더 많은 오류를 고치는 방법은 QR 코드의 오류 정정 부호로 이어진다.</li>
+            <li><span class="tag">적용</span>여러 번 "한 자리 잘못 읽기"를 눌러 보자. 들키지 않는 경우가 있는가? 바꾸어도 들키지 않는 이웃 두 자리를 직접 만들어 보자.</li>
+            <li class="warn"><span class="tag">판단</span>검사 숫자는 실수를 찾아낼 뿐, 고치지는 못하고 위조를 막지도 못한다. 누구나 같은 규칙으로 맞는 검사 숫자를 계산할 수 있기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">앞 12자리에 가중치를 곱해 더한 합이 127입니다. 검사 숫자는?</p>
+          <p class="q">앞 12자리에 가중치를 곱해 더한 합이 127이다. 검사 숫자는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> 127 + 3 = 130이 10의 배수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>7<span class="why"><b>일의 자리를 그대로 썼습니다.</b> 더해서 10의 배수가 되는 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>합이 10의 배수일 때입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>127을 3으로 나눈 나머지입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞다.</b> 127 + 3 = 130이 10의 배수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>7<span class="why"><b>일의 자리를 그대로 썼다.</b> 더해서 10의 배수가 되는 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>합이 10의 배수일 때이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>127을 3으로 나눈 나머지이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/2-2.html#card-mcult-nim"><small class="mono">수학과 문화 2.2</small>돌 줍기 게임에서 컴퓨터를 이길 수 있을까?</a><a href="../../c/mcult/2-2.html#card-mcult-gacha"><small class="mono">수학과 문화 2.2</small>당첨 확률 1%인 뽑기를 100번 하면 반드시 당첨될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/2-2.html#card-mcult-nim"><small class="mono">수학과 문화 2.2</small>돌 줍기 게임에서 컴퓨터를 이길 수 있을까?</a><a href="../../c/mcult/2-2.html#card-mcult-gacha"><small class="mono">수학과 문화 2.2</small>당첨 확률 1%인 뽑기를 100번 하면 반드시 당첨될까?</a><a href="../../c/mcult/2-2.html#text-mcult-games"><small class="mono">수학과 문화 2.2</small>게임과 수학</a></div></nav>
 
       <article class="card" id="card-mcult-run-length">
         <header class="card-head">
-          <span class="no">2.3.2</span><h2>흑백 그림을 더 짧은 숫자로 저장할 수 있을까?</h2><span class="kind">자료의 압축 · 만들기</span>
+          <span class="no">탐구 2</span><h2>흑백 그림을 더 짧은 숫자로 저장할 수 있을까?</h2><span class="kind">자료의 압축 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -104,39 +165,39 @@
             <pre class="mono rle"></pre>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>흑백 그림을 칸마다 0(흰색)과 1(검은색)로 저장하면 32×24 그림은 768비트가 필요합니다. 같은 색이 길게 이어지는 그림이라면 더 짧게 저장할 수 있지 않을까요?</li>
-            <li><span class="tag">복원</span>이진법으로 0부터 32까지 33가지 수를 나타내려면 6비트가 필요합니다(\(2^5 = 32 < 33 \le 2^6\)).</li>
-            <li><span class="tag">설명</span><em>런 길이 부호화</em>는 한 줄을 흰색부터 시작해 같은 색이 몇 칸 이어지는지(런)만 적습니다. 예를 들어 흰 10칸, 검 12칸, 흰 10칸이면 "10, 12, 10"입니다. 런 하나를 6비트로 적으면 런의 개수가 적은 그림일수록 짧아집니다. 반대로 색이 자주 바뀌는 그림은 런이 많아져 오히려 768비트보다 길어질 수 있습니다.</li>
-            <li><span class="tag">연결</span>팩스는 이 방법을 바탕으로 한 부호를 써서 문서를 보냈고, 이미지 파일 형식들도 비슷한 생각을 압축의 한 단계로 씁니다.</li>
-            <li><span class="tag">적용</span>칸을 눌러 그림을 그리고 압축률을 확인하세요. 768비트보다 길어지는 그림을 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>어떤 압축 방법도 모든 자료를 줄일 수는 없습니다. 짧아지는 자료가 있으면 반드시 길어지는 자료도 있습니다(비둘기집 원리).</li>
+            <li><span class="tag">질문</span>흑백 그림을 칸마다 0(흰색)과 1(검은색)로 저장하면 32×24 그림은 768비트가 필요하다. 같은 색이 길게 이어지는 그림이라면 더 짧게 저장할 수 있지 않을까?</li>
+            <li><span class="tag">복원</span>이진법으로 0부터 32까지 33가지 수를 나타내려면 6비트가 필요하다(\(2^5 = 32 < 33 \le 2^6\)).</li>
+            <li><span class="tag">설명</span><em>런 길이 부호화</em>는 한 줄을 흰색부터 시작해 같은 색이 몇 칸 이어지는지(런)만 적는다. 예를 들어 흰 10칸, 검 12칸, 흰 10칸이면 "10, 12, 10"이다. 런 하나를 6비트로 적으면 런의 개수가 적은 그림일수록 짧아진다. 반대로 색이 자주 바뀌는 그림은 런이 많아져 오히려 768비트보다 길어질 수 있다.</li>
+            <li><span class="tag">연결</span>팩스는 이 방법을 바탕으로 한 부호를 써서 문서를 보냈고, 이미지 파일 형식들도 비슷한 생각을 압축의 한 단계로 쓴다.</li>
+            <li><span class="tag">적용</span>칸을 눌러 그림을 그리고 압축률을 확인해 보자. 768비트보다 길어지는 그림을 만들어 보자.</li>
+            <li class="warn"><span class="tag">판단</span>어떤 압축 방법도 모든 자료를 줄일 수는 없다. 짧아지는 자료가 있으면 반드시 길어지는 자료도 있다(비둘기집 원리).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">한 줄이 흰흰흰흰검검검흰흰입니다. 흰색부터 적는 런 길이 부호는?</p>
+          <p class="q">한 줄이 흰흰흰흰검검검흰흰이다. 흰색부터 적는 런 길이 부호는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4, 3, 2<span class="why"><b>맞습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4, 3<span class="why"><b>마지막 흰 2칸이 빠졌습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0, 4, 3, 2<span class="why"><b>첫 칸이 검은색일 때만 0으로 시작합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6, 3<span class="why"><b>흰 칸을 모두 합쳤습니다.</b> 순서가 사라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4, 3, 2<span class="why"><b>맞다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4, 3<span class="why"><b>마지막 흰 2칸이 빠졌다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0, 4, 3, 2<span class="why"><b>첫 칸이 검은색일 때만 0으로 시작한다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6, 3<span class="why"><b>흰 칸을 모두 합쳤다.</b> 순서가 사라진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/2-2.html#card-mcult-nim"><small class="mono">수학과 문화 2.2</small>돌 줍기 게임에서 컴퓨터를 이길 수 있을까?</a><a href="../../c/mcult/2-2.html#card-mcult-gacha"><small class="mono">수학과 문화 2.2</small>당첨 확률 1%인 뽑기를 100번 하면 반드시 당첨될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/2-2.html#card-mcult-nim"><small class="mono">수학과 문화 2.2</small>돌 줍기 게임에서 컴퓨터를 이길 수 있을까?</a><a href="../../c/mcult/2-2.html#card-mcult-gacha"><small class="mono">수학과 문화 2.2</small>당첨 확률 1%인 뽑기를 100번 하면 반드시 당첨될까?</a><a href="../../c/mcult/2-2.html#text-mcult-games"><small class="mono">수학과 문화 2.2</small>게임과 수학</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=mcult-2-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=mcult&amp;sec=2-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>급수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="급수 ∑aₙ과 부분합 Sₙ, 급수의 합(부분합의 극한), 급수의 수렴·발산의 뜻, 분수를 두 분수의 차로 나누어 소거하는 부분합, 급수의 성질, 급수가 수렴하면 lim aₙ = 0, lim aₙ ≠ 0이면 발산, 조화급수 ∑1/n의 발산. 항을 하나씩 더해 부분합을 쌓는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-partial-sum canvas { width: 100%; aspect-ratio: 16 / 10; }
@@ -48,18 +53,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-partial-sum"><span class="mono">1.4.1</span>급수의 합 = 부분합의 극한</a></li>
-        <li><a href="#card-calc2-nth-term"><span class="mono">1.4.2</span>급수와 일반항의 극한</a></li>
+        <li><a href="#text-calc2-series"><span class="mono">본문</span>급수</a></li>
+        <li><a href="#card-calc2-partial-sum"><span class="mono">탐구 1</span>급수의 합 = 부분합의 극한</a></li>
+        <li><a href="#card-calc2-nth-term"><span class="mono">탐구 2</span>급수와 일반항의 극한</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">71문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">71문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-series" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>급수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\dfrac{1}{2} + \dfrac{1}{6} + \dfrac{1}{12} + \dfrac{1}{20} + \cdots\)처럼 끝없이 이어지는 덧셈은 실제로 끝까지 할 수 없다. 그런데도 이 합이 정확히 1이라고 한다. 또 \(1 + \dfrac{1}{2} + \dfrac{1}{3} + \dfrac{1}{4} + \cdots\)은 더하는 수가 0으로 줄어드는데도 합이 한없이 커진다고 한다. 끝없는 덧셈의 값은 무엇으로 정할까?</p>
+          <figure class="q-fig" data-q="calc2-partial">
+            <svg viewBox="0 0 520 230" role="img" aria-label="두 급수의 부분합 S_n 이 n에 따라 변하는 모습"></svg>
+            <div class="q-ctl"><label>더한 항의 수 \(n\) <input type="range" data-k="n" min="1" max="50" step="1" value="10"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 파랑은 \(\sum \dfrac{1}{k(k+1)}\)의 부분합으로 1에 다가가고, 빨강은 \(\sum \dfrac{1}{k}\)의 부분합으로 느리지만 한없이 커진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합의 기호 \(\sum\)(대수), 부분분수로 나누기, 수열의 극한에 대한 성질(<a href="1-2.html">수열의 극한의 성질</a>).</div>
+
+          <h3><span class="no">1.4.1</span>급수와 부분합</h3>
+          <p>수열 \(\{a_n\}\)의 각 항을 끝없이 더한 식 \(a_1 + a_2 + a_3 + \cdots\)를 급수라 하고 \(\sum_{n=1}^{\infty} a_n\)으로 쓴다. 끝없는 덧셈은 직접 할 수 없으므로, 첫째항부터 제\(n\)항까지의 합인 부분합 \(S_n\)을 만들고 \(n\)을 한없이 키울 때의 극한으로 급수의 값을 정한다.</p>
+          <div class="tb-env thm"><span class="lb">정의 1.4.1 <span class="nm">급수의 수렴</span></span>
+            <p>부분합 \(S_n = \sum_{k=1}^{n} a_k\)의 수열 \(\{S_n\}\)이 \(S\)에 수렴하면 급수는 수렴한다고 하고 \[\sum_{n=1}^{\infty} a_n = \lim_{n \to \infty} S_n = S\] 로 쓴다. \(S\)를 급수의 합이라 한다. \(\{S_n\}\)이 발산하면 급수는 발산한다.</p>
+          </div>
+          <p>\(\dfrac{1}{k(k+1)} = \dfrac{1}{k} - \dfrac{1}{k+1}\)로 나누면 부분합은 \[S_n = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \cdots + \left(\frac{1}{n} - \frac{1}{n+1}\right) = 1 - \frac{1}{n+1}\] 이다. 가운데 항이 서로 지워지고 처음과 끝만 남는다. \(n \to \infty\)이면 \(S_n \to 1\)이므로 급수의 합은 1이다. 그림 1에서 \(n\)을 늘리면 파란 점이 1에 다가간다.</p>
+
+          <h3><span class="no">1.4.2</span>항이 0으로 가도 발산할 수 있다</h3>
+          <p>급수가 수렴하면 \(a_n = S_n - S_{n-1}\)에서 \(\lim a_n = S - S = 0\)이다. 그러므로 \(\lim a_n \ne 0\)이면 급수는 발산한다. 하지만 거꾸로 \(\lim a_n = 0\)이라고 해서 급수가 수렴하는 것은 아니다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.2 <span class="nm">급수와 일반항의 관계</span></span>
+            <p>\(\sum a_n\)이 수렴하면 \(\lim a_n = 0\)이다. 따라서 \(\lim a_n \ne 0\)이거나 발산하면 \(\sum a_n\)은 발산한다. 역은 성립하지 않는다.</p>
+          </div>
+          <p>그 예가 \(\sum \dfrac{1}{k}\)이다. 항을 \(\dfrac{1}{2}\), \(\dfrac{1}{3} + \dfrac{1}{4}\), \(\dfrac{1}{5} + \cdots + \dfrac{1}{8}\)처럼 묶으면 각 묶음이 \(\dfrac{1}{2}\)보다 크거나 같다. 묶음은 끝없이 이어지므로 합은 한없이 커진다. 그림 1의 빨간 점이 느리지만 멈추지 않고 올라가는 까닭이다.<sup class="fn"><a href="#fn-calc2-series-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="조화급수의 항을 묶어 각 묶음이 1/2 이상임을 보이는 그림">
+              <g class="s">
+                <rect x="20" y="40" width="60" height="30" class="lb"/><text x="50" y="60" text-anchor="middle">1/2</text>
+                <rect x="90" y="40" width="90" height="30" class="lc"/><text x="135" y="60" text-anchor="middle">1/3 + 1/4</text>
+                <rect x="190" y="40" width="150" height="30" class="la"/><text x="265" y="60" text-anchor="middle">1/5 + ⋯ + 1/8</text>
+                <rect x="350" y="40" width="150" height="30" class="ld"/><text x="425" y="60" text-anchor="middle">1/9 + ⋯ + 1/16</text>
+                <text x="260" y="95" text-anchor="middle">각 묶음 ≥ 1/2, 묶음이 끝없이 이어진다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(\dfrac{1}{3} + \dfrac{1}{4} \ge \dfrac{1}{4} + \dfrac{1}{4} = \dfrac{1}{2}\)처럼 각 묶음이 \(\dfrac{1}{2}\) 이상이므로 조화급수는 발산한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.3</span>
+            <p>급수 \(\sum_{n=1}^{\infty} \dfrac{2}{(2n-1)(2n+1)}\)의 합을 구하여라. 또 급수 \(\sum_{n=1}^{\infty} \dfrac{n}{n+1}\)이 수렴하는지 판정하여라.</p>
+          </div>
+          <p>\(\dfrac{2}{(2n-1)(2n+1)} = \dfrac{1}{2n-1} - \dfrac{1}{2n+1}\)이므로 부분합은 \(S_n = 1 - \dfrac{1}{2n+1}\)이다. \(n \to \infty\)일 때 \(S_n \to 1\)이므로 합은 1이다.</p>
+          <p>\(\lim \dfrac{n}{n+1} = 1 \ne 0\)이므로 둘째 급수는 발산한다. 1에 가까운 수를 끝없이 더하면 합이 한없이 커지는 것은 당연하다. 일반항의 극한이 0이 아니면 부분합을 구할 필요도 없이 발산을 판정할 수 있다.</p>
+          <p>아래 탐구 카드에서 부분합으로 급수의 합을 정하고, 항이 0으로 가는 급수의 수렴 여부를 직접 따져 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-series-1">조화급수의 부분합은 \(\ln n\)과 비슷한 빠르기로 커진다. 부분합이 10을 넘으려면 약 12 000개의 항을, 100을 넘으려면 \(10^{43}\)개가 넘는 항을 더해야 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>급수의 합은 부분합 \(S_n\)의 극한으로 정하며, 부분분수로 나누면 가운데 항이 지워져 부분합을 구할 수 있는 경우가 많다. 급수가 수렴하면 일반항은 0으로 가지만, 그 역은 성립하지 않는다. 그래서 처음 질문의 첫 급수는 부분합 \(1 - \tfrac{1}{n+1}\)이 1로 수렴하고, 조화급수는 항이 0으로 가도 부분합이 한없이 커져 발산한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a></div></nav>
+
       <article class="card" id="card-calc2-partial-sum">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>끝없이 더한 값은 어떻게 정할까?</h2><span class="kind">급수 · 부분합 · 급수의 합</span>
+          <span class="no">탐구 1</span><h2>끝없이 더한 값은 어떻게 정할까?</h2><span class="kind">급수 · 부분합 · 급수의 합</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -86,30 +147,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\frac{1}{2} + \frac{1}{6} + \frac{1}{12} + \frac{1}{20} + \cdots\)처럼 끝없이 이어지는 덧셈은 끝까지 더할 수 없습니다. 그렇다면 이 덧셈의 '값'은 무엇으로 정해야 할까요?</li>
-            <li><span class="tag">복원</span>수열의 합 \(\sum_{k=1}^n a_k\)는 유한 개를 더한 값입니다. \(\frac{1}{k(k + 1)} = \frac{1}{k} - \frac{1}{k + 1}\)처럼 분수를 두 분수의 차로 나누면, 이웃한 항이 지워지며 합이 간단해집니다.</li>
-            <li><span class="tag">설명</span>수열 \(\{a_n\}\)의 각 항을 차례로 덧셈 기호로 이은 식 \(a_1 + a_2 + a_3 + \cdots\) 을 <em>급수</em>라 하고 \(\sum_{n=1}^\infty a_n\)으로 씁니다. 첫째항부터 제\(n\)항까지의 합 \(S_n = a_1 + \cdots + a_n\)을 <em>부분합</em>이라 합니다. 부분합의 수열 \(\{S_n\}\)이 \(S\)에 수렴하면 급수는 <em>수렴</em>한다고 하고, \(S\)를 <em>급수의 합</em>이라 합니다. 이때 \(\sum_{n=1}^\infty a_n = S\)로 씁니다. \(\{S_n\}\)이 발산하면 급수도 <em>발산</em>합니다. 곧 급수의 합은 '끝까지 더한 값'이 아니라 <b>부분합의 극한</b>입니다.</li>
-            <li><span class="tag">연결</span>수렴하는 두 급수 \(\sum a_n = S\), \(\sum b_n = T\)에 대해 \(\sum ka_n = kS\), \(\sum(a_n \pm b_n) = S \pm T\)가 성립합니다. 부분합에 수열의 극한에 대한 성질을 쓴 결과입니다. 부분합을 식으로 구하기 어려운 급수는 다음 카드처럼 일반항을 먼저 살펴봅니다.</li>
-            <li><span class="tag">적용</span>'한 항 더하기'를 눌러 첫 번째 급수의 부분합을 쌓아 보세요. 막대(더한 항)는 점점 짧아지고 초록 점(부분합)은 1에 다가갑니다. 아래 식에서 지워지지 않고 남는 항은 무엇인가요? 두 번째 급수에서는 왜 두 항(1과 \(\frac{1}{2}\))이 남나요? 세 번째 급수는 더하는 항이 0에 가까워지는데도 부분합이 \(\sqrt{n + 1} - 1\)로 끝없이 커집니다. 네 번째 급수의 부분합은 1과 0을 오갑니다.</li>
-            <li class="warn"><span class="tag">판단</span>\(1 - 1 + 1 - 1 + \cdots\) 을 \((1 - 1) + (1 - 1) + \cdots\) 으로 묶어 0이라고 하거나, \(1 + (-1 + 1) + \cdots\) 로 묶어 1이라고 하면 안 됩니다. 괄호를 마음대로 넣으면 다른 급수가 됩니다. 급수의 수렴·발산은 반드시 부분합의 수열로 판정합니다. 또 소거할 때 앞에서 남는 항과 뒤에서 남는 항의 개수가 같은지 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>\(\frac{1}{2} + \frac{1}{6} + \frac{1}{12} + \frac{1}{20} + \cdots\)처럼 끝없이 이어지는 덧셈은 끝까지 더할 수 없다. 그렇다면 이 덧셈의 값은 무엇으로 정해야 할까?</li>
+            <li><span class="tag">복원</span>수열의 합 \(\sum_{k=1}^n a_k\)는 유한 개를 더한 값이다. 그리고 \(\frac{1}{k(k + 1)} = \frac{1}{k} - \frac{1}{k + 1}\)처럼 분수를 두 분수의 차로 나누면, 이웃한 항이 지워지며 합이 간단해진다.</li>
+            <li><span class="tag">설명</span>수열 \(\{a_n\}\)의 각 항을 차례로 덧셈 기호로 이은 식 \(a_1 + a_2 + a_3 + \cdots\)을 <em>급수</em>라 하고 \(\sum_{n=1}^\infty a_n\)으로 쓰며, 첫째항부터 제\(n\)항까지의 합 \(S_n = a_1 + \cdots + a_n\)을 <em>부분합</em>이라 한다. 부분합의 수열 \(\{S_n\}\)이 \(S\)에 수렴하면 급수는 <em>수렴</em>한다고 하고, \(S\)를 <em>급수의 합</em>이라 하여 \(\sum_{n=1}^\infty a_n = S\)로 쓴다. 반면 \(\{S_n\}\)이 발산하면 급수도 <em>발산</em>한다. 곧 급수의 합은 끝까지 더한 값이 아니라 부분합의 극한이다.</li>
+            <li><span class="tag">연결</span>수렴하는 두 급수 \(\sum a_n = S\), \(\sum b_n = T\)에 대해 \(\sum ka_n = kS\), \(\sum(a_n \pm b_n) = S \pm T\)가 성립하는데, 이것은 부분합에 수열의 극한에 대한 성질을 쓴 결과이다. 부분합을 식으로 구하기 어려운 급수는 다음 카드처럼 일반항을 먼저 살펴본다.</li>
+            <li><span class="tag">적용</span>‘한 항 더하기’를 눌러 첫 번째 급수의 부분합을 쌓아 보면, 막대(더한 항)는 점점 짧아지고 초록 점(부분합)은 1에 다가간다. 아래 식에서 지워지지 않고 남는 항이 무엇인지, 두 번째 급수에서는 왜 두 항(1과 \(\frac{1}{2}\))이 남는지 보자. 세 번째 급수는 더하는 항이 0에 가까워지는데도 부분합이 \(\sqrt{n + 1} - 1\)로 끝없이 커지고, 네 번째 급수의 부분합은 1과 0을 오간다.</li>
+            <li class="warn"><span class="tag">판단</span>\(1 - 1 + 1 - 1 + \cdots\)을 \((1 - 1) + (1 - 1) + \cdots\)으로 묶어 0이라고 하거나, \(1 + (-1 + 1) + \cdots\)로 묶어 1이라고 하면 안 된다. 괄호를 마음대로 넣으면 다른 급수가 되기 때문에, 급수의 수렴과 발산은 반드시 부분합의 수열로 판정한다. 또 소거할 때 앞에서 남는 항과 뒤에서 남는 항의 개수가 같은지 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">급수 \(\sum_{n=1}^\infty \frac{1}{(2n - 1)(2n + 1)}\)의 합은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>맞습니다.</b> \(\frac{1}{(2n - 1)(2n + 1)} = (\frac{1}{2})\{\frac{1}{2n - 1} - \frac{1}{2n + 1}\}\)이므로 \(S_n = (\frac{1}{2})\{1 - \frac{1}{2n + 1}\} \to \frac{1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>앞의 \(\frac{1}{2}\)을 빠뜨렸습니다.</b> \(\frac{1}{2n - 1} - \frac{1}{2n + 1}\)을 통분하면 \(\frac{2}{(2n - 1)(2n + 1)}\)이라 \(\frac{1}{2}\)을 곱해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}\)<span class="why"><b>첫째항만 보았습니다.</b> \(\frac{1}{3}\)은 \(S_1\)이고, 부분합은 그 뒤로도 계속 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>항이 끝없이 많아서 발산한다고 보았습니다.</b> 항의 개수가 무한해도 부분합이 한 값에 수렴하면 급수는 수렴합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>맞다.</b> \(\frac{1}{(2n - 1)(2n + 1)} = (\frac{1}{2})\{\frac{1}{2n - 1} - \frac{1}{2n + 1}\}\)이므로 \(S_n = (\frac{1}{2})\{1 - \frac{1}{2n + 1}\} \to \frac{1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>앞의 \(\frac{1}{2}\)을 빠뜨렸다.</b> \(\frac{1}{2n - 1} - \frac{1}{2n + 1}\)을 통분하면 \(\frac{2}{(2n - 1)(2n + 1)}\)이라 \(\frac{1}{2}\)을 곱해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}\)<span class="why"><b>첫째항만 보았다.</b> \(\frac{1}{3}\)은 \(S_1\)이고, 부분합은 그 뒤로도 계속 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>항이 끝없이 많아서 발산한다고 보았다.</b> 항의 개수가 무한해도 부분합이 한 값에 수렴하면 급수는 수렴한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a></div></nav>
 
       <article class="card" id="card-calc2-nth-term">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>더하는 항이 0으로 가면 급수는 수렴할까?</h2><span class="kind">급수의 수렴·발산 판정 · 일반항의 극한</span>
+          <span class="no">탐구 2</span><h2>더하는 항이 0으로 가면 급수는 수렴할까?</h2><span class="kind">급수의 수렴·발산 판정 · 일반항의 극한</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -130,43 +191,44 @@
               <dl class="nums">
                 <div><dt>급수</dt><dd class="n-j">—</dd></div>
               </dl>
-              <p class="fig-note">부분합은 첫째항부터 \(10^6\)번째 항까지 실제로 더해 계산했습니다. \(S_n - S(\frac{n}{10})\)은 \(\frac{n}{10}\)번째 항 다음부터 \(n\)번째 항까지 더한 양입니다.</p>
+              <p class="fig-note">부분합은 첫째항부터 \(10^6\)번째 항까지 실제로 더해 계산했다. \(S_n - S(\frac{n}{10})\)은 \(\frac{n}{10}\)번째 항 다음부터 \(n\)번째 항까지 더한 양이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots\)에서 더하는 항은 0에 한없이 가까워집니다. 더하는 양이 거의 0이면 부분합은 어떤 값에서 멈출까요?</li>
-            <li><span class="tag">복원</span>급수가 수렴한다는 것은 부분합의 수열 \(\{S_n\}\)이 수렴한다는 뜻입니다. 또 \(S_n - S_{n-1} = a_n(n \ge 2)\)입니다.</li>
-            <li><span class="tag">설명</span>급수 \(\sum a_n\)이 \(S\)에 수렴하면 \(\lim S_n = \lim S_{n-1} = S\)이므로 \(\lim a_n = \lim (S_n - S_{n-1}) = S - S = 0\)입니다. 곧 <b>급수가 수렴하면 \(\lim a_n = 0\)</b>입니다. 이 명제의 대우를 쓰면 판정법이 됩니다. <b>\(\lim a_n \ne 0\)이면(또는 수렴하지 않으면) 급수는 발산합니다.</b> 그러나 거꾸로 \(\lim a_n = 0\)이라고 급수가 수렴하는 것은 아닙니다. \(\sum \frac{1}{n}\)이 그 예입니다. 항을 \(\frac{1}{2}, \frac{1}{3} + \frac{1}{4}, \frac{1}{5} + \cdots + \frac{1}{8}, \cdots\) 처럼 2배 길이로 묶으면 묶음마다 \(\frac{1}{2}\) 이상이므로, 부분합은 \(\frac{1}{2}\)씩 끝없이 쌓입니다.</li>
-            <li><span class="tag">연결</span>\(\lim a_n = 0\)은 급수가 수렴하기 위한 필요조건일 뿐 충분조건이 아닙니다. 그래서 일반항이 0으로 가는 급수는 부분합을 직접 구하거나, 다음 절의 등비급수처럼 부분합의 식을 아는 꼴로 바꾸어 판정합니다.</li>
-            <li><span class="tag">적용</span>\(\sum \frac{1}{n}\)에서 \(n\)을 10배씩 늘리며 \(S_n - S(\frac{n}{10})\)을 보세요. 10배 구간마다 늘어나는 양은 거의 일정합니다(약 2.3). 이 양이 줄지 않는다면 부분합은 어디로 가나요? \(\sum \frac{1}{n^2}\)에서는 같은 양이 어떻게 변하나요? \(\sum \frac{n}{n + 1}\)은 \(a_n\)만 보고도 판정할 수 있습니다.</li>
-            <li class="warn"><span class="tag">판단</span>"\(\lim a_n = 0\)이므로 \(\sum a_n\)은 수렴한다"는 흔한 잘못입니다. 일반항의 극한은 발산을 판정할 때만 결론을 줍니다. 또 \(\sum \frac{1}{n}\)의 부분합은 \(10^6\)항을 더해도 약 14.39에 불과해서, 화면만 보면 수렴하는 것처럼 보일 수 있습니다. 그래서 판정은 묶어서 비교하는 것처럼 식으로 해야 합니다.</li>
+            <li><span class="tag">질문</span>\(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots\)에서 더하는 항은 0에 한없이 가까워진다. 더하는 양이 거의 0이면 부분합은 어떤 값에서 멈출까?</li>
+            <li><span class="tag">복원</span>급수가 수렴한다는 것은 부분합의 수열 \(\{S_n\}\)이 수렴한다는 뜻이다. 또 \(S_n - S_{n-1} = a_n(n \ge 2)\)이다.</li>
+            <li><span class="tag">설명</span>급수 \(\sum a_n\)이 \(S\)에 수렴하면 \(\lim S_n = \lim S_{n-1} = S\)이므로 \(\lim a_n = \lim (S_n - S_{n-1}) = S - S = 0\)이다. 곧 급수가 수렴하면 \(\lim a_n = 0\)이고, 이 명제의 대우를 쓰면 \(\lim a_n \ne 0\)이면(또는 수렴하지 않으면) 급수는 발산한다는 판정법이 된다. 그러나 거꾸로 \(\lim a_n = 0\)이라고 급수가 수렴하는 것은 아니며, \(\sum \frac{1}{n}\)이 그 예이다. 항을 \(\frac{1}{2}, \frac{1}{3} + \frac{1}{4}, \frac{1}{5} + \cdots + \frac{1}{8}, \cdots\)처럼 2배 길이로 묶으면 묶음마다 \(\frac{1}{2}\) 이상이므로, 부분합은 \(\frac{1}{2}\)씩 끝없이 쌓인다.</li>
+            <li><span class="tag">연결</span>즉 \(\lim a_n = 0\)은 급수가 수렴하기 위한 필요조건일 뿐 충분조건이 아니다. 그래서 일반항이 0으로 가는 급수는 부분합을 직접 구하거나, 다음 절의 등비급수처럼 부분합의 식을 아는 꼴로 바꾸어 판정한다.</li>
+            <li><span class="tag">적용</span>\(\sum \frac{1}{n}\)에서 \(n\)을 10배씩 늘리며 \(S_n - S(\frac{n}{10})\)을 보면, 10배 구간마다 늘어나는 양이 거의 일정하다(약 2.3). 이 양이 줄지 않는다면 부분합이 어디로 가는지 생각하고, \(\sum \frac{1}{n^2}\)에서는 같은 양이 어떻게 변하는지 보자. \(\sum \frac{n}{n + 1}\)은 \(a_n\)만 보고도 판정할 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>‘\(\lim a_n = 0\)이므로 \(\sum a_n\)은 수렴한다’는 흔한 잘못이고, 일반항의 극한은 발산을 판정할 때만 결론을 준다. 또 \(\sum \frac{1}{n}\)의 부분합은 \(10^6\)항을 더해도 약 14.39에 불과해서 화면만 보면 수렴하는 것처럼 보일 수 있으므로, 판정은 묶어서 비교하는 것처럼 식으로 해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">급수 \(\sum_{n=1}^\infty a_n\)이 수렴할 때, \(\lim_{n\to \infty} \frac{a_n + 3}{2 - a_n}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{3}{2}\)<span class="why"><b>맞습니다.</b> 급수가 수렴하므로 \(\lim a_n = 0\)이고, 극한의 성질로 \(\frac{0 + 3}{2 - 0} = \frac{3}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>알 수 없다. \(a_n\)의 식이 없다<span class="why"><b>판정법을 거꾸로 쓰지 않았습니다.</b> 급수가 수렴한다는 조건만으로 \(\lim a_n = 0\)이 정해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-1\)<span class="why"><b>\(a_n\)이 한없이 커진다고 보았습니다.</b> 그러면 급수는 발산하므로 조건과 맞지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>급수의 합을 알아야 구할 수 있다<span class="why"><b>급수의 합 \(S\)와 일반항의 극한을 섞었습니다.</b> 극한값은 \(S\)와 상관없이 \(\lim a_n = 0\)으로 정해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{3}{2}\)<span class="why"><b>맞다.</b> 급수가 수렴하므로 \(\lim a_n = 0\)이고, 극한의 성질로 \(\frac{0 + 3}{2 - 0} = \frac{3}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>알 수 없다. \(a_n\)의 식이 없다<span class="why"><b>판정법을 거꾸로 쓰지 않았다.</b> 급수가 수렴한다는 조건만으로 \(\lim a_n = 0\)이 정해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-1\)<span class="why"><b>\(a_n\)이 한없이 커진다고 보았다.</b> 그러면 급수는 발산하므로 조건과 맞지 않다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>급수의 합을 알아야 구할 수 있다<span class="why"><b>급수의 합 \(S\)와 일반항의 극한을 섞었다.</b> 극한값은 \(S\)와 상관없이 \(\lim a_n = 0\)으로 정해진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/1-2.html#card-calc2-lim-laws"><small class="mono">미적분Ⅱ 1.2</small>수렴하는 두 수열을 더하고 곱하면 극한은 어떻게 될까?</a><a href="../../c/calc2/1-2.html#card-calc2-rational-seq"><small class="mono">미적분Ⅱ 1.2</small>∞/∞ 꼴의 수열은 어디로 갈까?</a><a href="../../c/calc2/1-2.html#text-calc2-lim-props"><small class="mono">미적분Ⅱ 1.2</small>수열의 극한의 성질</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/1-5.html#card-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>같은 비율로 줄어드는 수를 끝없이 더하면 얼마일까?</a><a href="../../c/calc2/1-5.html#card-calc2-bounce"><small class="mono">미적분Ⅱ 1.5</small>끝없이 튀는 공은 모두 얼마나 움직일까?</a><a href="../../c/calc2/1-5.html#text-calc2-geo-series"><small class="mono">미적분Ⅱ 1.5</small>등비급수</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">71문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">71문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -174,6 +236,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc2/seq.js"></script>
 <script src="../../js/cards/calc2/partial-sum.js"></script>
 <script src="../../js/cards/calc2/nth-term.js"></script>

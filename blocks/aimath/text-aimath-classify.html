@@ -1,0 +1,55 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/aimath/body.js"],
+  "sec": "3-3",
+  "short": "본문 · 이미지 분류의 수학"
+}
+-->
+<article class="card reading" id="text-aimath-classify" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>이미지 분류의 수학</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">우편 번호를 손으로 써도 기계가 읽어 낸다. 사람마다 '7'을 쓰는 모양이 다른데, 컴퓨터는 처음 보는 손글씨가 어떤 숫자인지 어떻게 판단할까? 가장 단순한 생각은 이미 정답을 아는 손글씨들 가운데 새 글씨와 가장 닮은 것을 찾는 것이다. 그런데 두 그림이 '닮았다'는 것을 어떻게 수로 잴까?</p>
+    <figure class="q-fig" data-q="ai-knn">
+      <svg viewBox="0 0 520 230" role="img" aria-label="두 무리의 점과 새 점의 가장 가까운 이웃 k개의 투표"></svg>
+      <div class="q-ctl"><label>새 점의 \(x\)좌표 <input type="range" data-k="x" min="1" max="9" step="0.1" value="4.6"><output data-k="x"></output></label><label>이웃의 수 \(k\) <input type="range" data-k="k" min="1" max="9" step="2" value="3"><output data-k="k"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 파랑과 주황 두 무리의 학습 자료 사이에 새 점(빨강)이 놓였다. 가장 가까운 \(k\)개 이웃의 다수결로 새 점의 무리를 정한다. \(k\)를 바꾸면 경계 근처의 판정이 달라질 수 있다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>좌표평면 위의 두 점 사이의 거리(공통수학2), 행렬의 뺄셈, 이미지와 행렬(<a href="3-1.html">행렬로 나타낸 이미지</a>).</div>
+
+    <h3><span class="no">3.3.1</span>이미지 사이의 거리</h3>
+    <p>두 이미지가 같은 크기의 행렬 \(A\), \(B\)이면, 대응하는 픽셀의 밝기 차이로 닮은 정도를 잴 수 있다. 각 픽셀의 차이를 제곱해 모두 더한 뒤 제곱근을 취하면, 좌표평면의 두 점 사이 거리를 픽셀 수만큼의 차원으로 늘린 것이 된다. 이 값이 작을수록 두 이미지가 닮았다.</p>
+    <div class="tb-env thm"><span class="lb">정의 3.3.1 <span class="nm">두 이미지 사이의 거리</span></span>
+      <p>같은 크기의 이미지 행렬 \(A = (a_{ij})\), \(B = (b_{ij})\)에 대하여 \[d(A, B) = \sqrt{\sum_{i, j}(a_{ij} - b_{ij})^2}\] 이다. 이미지를 픽셀 수만큼의 성분을 가진 벡터로 보고 구한 유클리드 거리와 같다.</p>
+    </div>
+
+    <h3><span class="no">3.3.2</span>k-최근접 이웃</h3>
+    <p>정답을 아는 학습 이미지들과 새 이미지 사이의 거리를 모두 계산하고, 가장 가까운 \(k\)개의 정답 가운데 가장 많은 것을 새 이미지의 답으로 정한다. 이 방법을 k-최근접 이웃(k-NN)이라 한다. 학습이라고 할 만한 계산 없이, 자료를 저장해 두었다가 비교하기만 한다.</p>
+    <p>그림 1에서 새 점을 두 무리 사이로 옮겨 보자. \(k = 1\)이면 가장 가까운 점 하나가 우연히 다른 무리이기만 해도 판정이 뒤집힌다. \(k\)를 3이나 5로 늘리면 여러 이웃의 다수결이라 한두 점의 우연에 덜 흔들린다. 하지만 \(k\)가 지나치게 크면 먼 점까지 투표에 들어와 경계가 흐려진다. \(k\)를 홀수로 잡는 것은 두 무리를 가를 때 동점을 피하기 위해서이다.<sup class="fn"><a href="#fn-aimath-classify-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="k의 크기에 따른 장단점">
+        <g class="s">
+          <text x="30" y="25">k</text><text x="150" y="25">장점</text><text x="330" y="25">단점</text>
+          <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+          <text x="30" y="60">작다 (1)</text><text x="150" y="60">경계를 세밀하게 따른다</text><text x="330" y="60">잘못된 점 하나에 흔들림</text>
+          <text x="30" y="90">크다</text><text x="150" y="90">우연에 덜 흔들린다</text><text x="330" y="90">경계가 뭉개짐</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 이웃의 수 \(k\)는 너무 작지도 크지도 않게, 시험용 자료로 정확도를 비교해 고른다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>2 × 2 흑백 이미지를 0(흰색)과 1(검정)로 나타낸다. 학습 이미지 '세로줄' \(\begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 0 \end{pmatrix}\)과 '가로줄' \(\begin{pmatrix} 1 &amp; 1 \\ 0 &amp; 0 \end{pmatrix}\)이 있을 때, 새 이미지 \(\begin{pmatrix} 1 &amp; 0 \\ 1 &amp; 1 \end{pmatrix}\)는 어느 쪽에 가까운가?</p>
+    </div>
+    <p>세로줄과의 차이는 \(\begin{pmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\)이므로 거리는 \(\sqrt{1} = 1\)이다. 가로줄과의 차이는 \(\begin{pmatrix} 0 &amp; -1 \\ 1 &amp; 1 \end{pmatrix}\)이므로 거리는 \(\sqrt{3} \approx 1.73\)이다.</p>
+    <p>따라서 새 이미지는 세로줄에 더 가깝고, \(k = 1\)이면 '세로줄'로 판정한다. 손글씨 숫자도 같은 원리이다. 28 × 28 픽셀이면 784개 성분의 차이로 거리를 계산하며, 이 단순한 방법만으로도 손글씨 숫자를 95% 넘게 맞힐 수 있다고 알려져 있다.</p>
+    <p>아래 탐구 카드에서 손글씨 숫자 사이의 거리를 재고, 이웃의 수를 바꾸며 판정이 어떻게 달라지는지 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-aimath-classify-1">픽셀 거리는 글씨가 한 칸만 옆으로 밀려도 크게 달라지는 약점이 있다. 그래서 실제로는 윤곽선 같은 특징을 먼저 뽑은 뒤 거리를 재거나, 신경망이 특징을 스스로 배우게 한다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>같은 크기의 두 이미지는 대응하는 픽셀 차이의 제곱합의 제곱근으로 거리를 잴 수 있고, 거리가 작을수록 닮았다. k-최근접 이웃은 가장 가까운 \(k\)개 학습 이미지의 다수결로 새 이미지의 답을 정한다. 그래서 처음 질문의 손글씨 숫자는, 정답을 아는 손글씨들 가운데 픽셀 거리가 가장 가까운 것들을 찾아 판정할 수 있다.</p></div>
+  </div>
+</article>

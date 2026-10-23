@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/alg/body.js"],
+  "sec": "1-4",
+  "short": "본문 · 로그"
+}
+-->
+<article class="card reading" id="text-alg-log" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>로그</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\(2^x = 8\)이면 \(x = 3\)이다. 그런데 \(2^x = 5\)를 만족하는 \(x\)는 2와 3 사이 어딘가에 있지만, 정수도 깔끔한 분수도 아니다. 이 수를 어떻게 이름 붙이고, 어떻게 계산할까?</p>
+    <figure class="q-fig" data-q="alg-logdef">
+      <svg viewBox="0 0 520 280" role="img" aria-label="y=2^x 그래프에서 높이 N에 해당하는 x를 읽어 log₂N을 얻는 그림"></svg>
+      <div class="q-ctl"><label>\(N\) = <input type="range" data-k="n" min="0.25" max="16" step="0.25" value="5"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. \(y = 2^x\)의 그래프에서 높이가 \(N\)인 점의 \(x\)좌표가 \(\log_2 N\)이다. 높이를 2배 하면 \(x\)좌표는 1만큼 늘어난다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>실수 지수의 뜻(<a href="1-2.html">지수의 확장</a>), 지수법칙(<a href="1-3.html">지수법칙</a>), \(y = a^x\) 꼴의 그래프.</div>
+
+    <h3><span class="no">1.4.1</span>지수를 묻는 기호</h3>
+    <p>\(2^x\)는 \(x\)가 커지면 계속 커지고, 모든 양수 값을 한 번씩 지난다. 그림 1처럼 높이 5를 지나는 곳이 한 군데뿐이므로, \(2^x = 5\)인 실수 \(x\)는 하나로 정해진다. 이 수를 '2를 밑으로 하는 5의 로그'라 하고 \(\log_2 5\)로 쓴다. 즉 \(\log_2 5\)는 '2를 몇 제곱하면 5가 되는가'의 답이다.</p>
+    <div class="tb-env"><span class="lb">정의 1.4.1 <span class="nm">로그</span></span>
+      <p>\(a &gt; 0\), \(a \ne 1\), \(N &gt; 0\)일 때, \(a^x = N\)을 만족하는 실수 \(x\)를 \(a\)를 밑으로 하는 \(N\)의 <em>로그</em>라 하고 \(x = \log_a N\)으로 나타낸다. 이때 \(N\)을 진수라 한다. \[a^x = N \iff x = \log_a N\]</p>
+    </div>
+    <p>정의의 조건에는 까닭이 있다. 밑이 1이면 \(1^x\)은 언제나 1이라 5가 될 수 없고, 밑이 음수이면 실수 지수가 정해지지 않는다. 진수가 양수인 것은 \(a^x\)가 언제나 양수이기 때문이다. 정의에서 바로 \(\log_a 1 = 0\), \(\log_a a = 1\)이 나온다.</p>
+
+    <h3><span class="no">1.4.2</span>로그의 성질</h3>
+    <p>로그는 지수를 돌려 읽은 것이므로, 지수법칙이 그대로 로그의 성질이 된다. \(\log_a M = x\), \(\log_a N = y\)로 두면 \(M = a^x\), \(N = a^y\)이다. 그러면 \(MN = a^{x+y}\)이므로 \(\log_a MN = x + y\)이다. 다시 말해 진수의 곱셈이 로그의 덧셈으로 바뀐다. 그림 1에서 높이를 2배 할 때마다 \(x\)좌표가 1씩 늘어나는 것도 이 성질이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 1.4.2 <span class="nm">로그의 성질</span></span>
+      <p>\(a &gt; 0\), \(a \ne 1\), \(M &gt; 0\), \(N &gt; 0\)일 때 \[\log_a MN = \log_a M + \log_a N,\quad \log_a \frac{M}{N} = \log_a M - \log_a N,\quad \log_a M^k = k\log_a M\ (k\text{는 실수})\]</p>
+    </div>
+    <p>밑이 다른 로그는 밑을 바꾸어 비교한다. \(\log_a b = x\)이면 \(a^x = b\)이고, 양변에 밑이 \(c\)인 로그를 취하면 \(x\log_c a = \log_c b\)이다. 따라서 \(\log_a b = \dfrac{\log_c b}{\log_c a}\)이고, 이것을 밑변환 공식이라 한다.<sup class="fn"><a href="#fn-alg-log-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="지수와 로그가 같은 관계를 반대 방향으로 읽는 그림">
+        <rect x="40" y="40" width="160" height="60" class="lb"/><text x="120" y="76" text-anchor="middle">2³ = 8</text>
+        <rect x="320" y="40" width="160" height="60" class="lc"/><text x="400" y="76" text-anchor="middle">log₂ 8 = 3</text>
+        <path d="M202 60 L318 60" class="k"/><path d="M318 80 L202 80" class="k"/><path d="M310 56 l8 4 -8 4 Z" class="fk"/><path d="M210 76 l-8 4 8 4 Z" class="fk"/>
+        <text x="260" y="52" text-anchor="middle" class="s">지수를 묻는다</text><text x="260" y="98" text-anchor="middle" class="s">결과를 묻는다</text>
+        <text x="260" y="135" text-anchor="middle" class="s">같은 관계를 반대 방향으로 읽은 것</text>
+      </svg>
+      <figcaption>그림 2. 지수 표기와 로그 표기는 같은 관계를 서로 다른 쪽에서 묻는다.</figcaption>
+    </figure>
+
+    <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 1.4.3</span>
+      <p>\(\log_2 3 = a\), \(\log_2 5 = b\)일 때 \(\log_2 60\)과 \(\log_3 10\)을 \(a\), \(b\)로 나타내어라.</p>
+    </div>
+    <p>\(60 = 2^2 \times 3 \times 5\)이므로 \(\log_2 60 = \log_2 2^2 + \log_2 3 + \log_2 5 = 2 + a + b\)이다. 곱셈이 덧셈으로 바뀌어 각 소인수의 로그만 알면 된다.</p>
+    <p>\(\log_3 10\)은 밑이 3이므로 밑을 2로 바꾼다. \(\log_3 10 = \dfrac{\log_2 10}{\log_2 3} = \dfrac{\log_2 2 + \log_2 5}{a} = \dfrac{1 + b}{a}\)이다.</p>
+    <p>확인해 보자. \(a \approx 1.585\), \(b \approx 2.322\)이므로 \(\log_2 60 \approx 5.907\)이고, 실제로 \(2^{5.907} \approx 60\)이다. 또 \(\dfrac{1 + b}{a} \approx 2.096\)이고 \(3^{2.096} \approx 10\)이다. 아래 탐구 카드에서 그래프의 높이와 가로 좌표를 오가며 로그를 직접 읽어 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-alg-log-1">밑변환 공식에서 \(c = b\)로 두면 \(\log_a b = \dfrac{1}{\log_b a}\)이다. 가령 \(\log_2 8 = 3\)이고 \(\log_8 2 = \tfrac{1}{3}\)이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>로그 \(\log_a N\)은 '\(a\)를 몇 제곱하면 \(N\)이 되는가'의 답으로, 지수 관계를 거꾸로 읽은 것이다. 그래서 지수법칙이 로그의 성질이 되어 진수의 곱은 로그의 합으로, 거듭제곱은 곱으로 바뀐다. 처음 질문의 수는 \(\log_2 5\)이고, 약 2.32이다.</p></div>
+  </div>
+</article>

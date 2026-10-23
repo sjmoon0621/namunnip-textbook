@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이항분포 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="독립시행과 이항분포 B(n, p), 확률 nCr p^r q^(n−r), 평균 np·분산 npq·표준편차 √npq, 큰 수의 법칙. n과 p를 바꾸며 모양을 보고 시행을 되풀이하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-binom-shape .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -43,18 +48,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-stat-binom-shape"><span class="mono">3.3.1</span>이항분포 B(n, p)</a></li>
-        <li><a href="#card-stat-large-numbers"><span class="mono">3.3.2</span>큰 수의 법칙</a></li>
+        <li><a href="#text-stat-binomial"><span class="mono">본문</span>이항분포</a></li>
+        <li><a href="#card-stat-binom-shape"><span class="mono">탐구 1</span>이항분포 B(n, p)</a></li>
+        <li><a href="#card-stat-large-numbers"><span class="mono">탐구 2</span>큰 수의 법칙</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=stat-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">31문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=stat&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">17문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=stat-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">31문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=stat-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-stat-binomial" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이항분포</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">자유투 성공률이 0.7인 선수가 10번 던진다. 성공 횟수는 0부터 10까지 어느 값이든 될 수 있지만, 7번 근처가 가장 흔할 것이다. 성공 횟수의 분포는 정확히 어떤 모양이고, 평균과 표준편차는 확률을 하나하나 계산하지 않고 바로 구할 수 있을까?</p>
+          <figure class="q-fig" data-q="stat-binom">
+            <svg viewBox="0 0 520 250" role="img" aria-label="이항분포 B(n, p)의 막대그래프와 평균 np"></svg>
+            <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="1" max="40" step="1" value="10"><output data-k="n"></output></label><label>\(p\) = <input type="range" data-k="p" min="0.05" max="0.95" step="0.05" value="0.7"><output data-k="p"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 이항분포 \(\mathrm{B}(n, p)\)는 평균 \(np\) 근처에서 가장 높고, \(n\)이 커질수록 좌우로 고른 종 모양에 가까워진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>독립시행의 확률(<a href="../stat/2-6.html">확률의 곱셈정리</a>), 조합 \({}_n\mathrm{C}_r\), 기댓값과 표준편차(<a href="3-2.html">기댓값과 표준편차</a>).</div>
+
+          <h3><span class="no">3.3.1</span>이항분포</h3>
+          <p>한 번의 시행에서 성공할 확률이 \(p\)인 시행을 \(n\)번 독립적으로 되풀이할 때, 성공 횟수를 \(X\)라 하자. 독립시행의 확률에 따라 \(X = r\)일 확률은 \(P(X = r) = {}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\)이다. 이 확률분포를 <em>이항분포</em>라 하고 \(\mathrm{B}(n, p)\)로 나타낸다. 확률을 모두 더하면 이항정리에 따라 \(\{p + (1 - p)\}^n = 1\)이 된다.</p>
+          <p>그림 1에서 \(n = 10\), \(p = 0.7\)이면 막대는 \(X = 7\)에서 가장 높다. \(p\)를 0.5로 바꾸면 좌우 대칭이 되고, 0.2로 바꾸면 왼쪽으로 쏠린다. \(n\)을 늘리면 막대가 많아지며 모양이 매끄러운 종에 가까워진다.</p>
+
+          <h3><span class="no">3.3.2</span>평균과 표준편차</h3>
+          <p>성공 횟수는 '한 번씩의 성공 여부'를 더한 것이다. \(i\)번째 시행에서 성공하면 1, 실패하면 0인 확률변수 \(X_i\)를 생각하면 \(X = X_1 + X_2 + \cdots + X_n\)이다. 각 \(X_i\)의 평균은 \(1 \times p + 0 \times (1 - p) = p\)이므로, 합의 평균은 \(np\)이다. 분산도 각 \(X_i\)의 분산 \(p(1 - p)\)를 \(n\)개 더한 \(np(1 - p)\)이다.<sup class="fn"><a href="#fn-stat-binomial-1">1</a></sup></p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">이항분포의 평균과 표준편차</span></span>
+            <p>확률변수 \(X\)가 이항분포 \(\mathrm{B}(n, p)\)를 따르면 \[E(X) = np,\quad V(X) = np(1 - p),\quad \sigma(X) = \sqrt{np(1 - p)}\]</p>
+          </div>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="성공 횟수는 한 번씩의 성공 여부 0 또는 1을 더한 것">
+              <g class="s">
+                <text x="20" y="40">시행</text><text x="80" y="40">1</text><text x="120" y="40">2</text><text x="160" y="40">3</text><text x="200" y="40">…</text><text x="240" y="40">n</text>
+                <text x="20" y="75">성공 여부</text><text x="80" y="75" class="ta">1</text><text x="120" y="75">0</text><text x="160" y="75" class="ta">1</text><text x="200" y="75">…</text><text x="240" y="75" class="ta">1</text>
+                <text x="300" y="75">→ 더하면 성공 횟수 X</text>
+                <text x="20" y="115">각각의 평균 p, 분산 p(1 − p) → 합의 평균 np, 분산 np(1 − p)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 성공 횟수를 한 번씩의 0과 1의 합으로 보면 평균과 분산이 \(n\)배가 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>큰수의 법칙</h3>
+          <p>성공 비율 \(\dfrac{X}{n}\)의 평균은 \(p\)이고 표준편차는 \(\dfrac{\sqrt{np(1 - p)}}{n} = \sqrt{\dfrac{p(1 - p)}{n}}\)이다. \(n\)이 커지면 이 표준편차는 0에 가까워진다. 즉 시행 횟수를 늘릴수록 성공 비율은 \(p\) 근처에 점점 좁게 모인다. 이것이 큰수의 법칙이고, 통계적 확률이 수학적 확률에 다가가는 까닭이다.</p>
+
+          <h3><span class="no">3.3.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+            <p>처음 질문의 선수가 10번 던질 때 성공 횟수 \(X\)의 평균과 표준편차를 구하여라. 또 같은 선수가 100번 던질 때와 비교해 성공 비율의 표준편차는 어떻게 변하는가?</p>
+          </div>
+          <p>\(X\)는 \(\mathrm{B}(10, 0.7)\)을 따르므로 평균은 \(10 \times 0.7 = 7\)번, 분산은 \(10 \times 0.7 \times 0.3 = 2.1\), 표준편차는 \(\sqrt{2.1} \approx 1.45\)번이다. 대체로 7번에서 1~2번 정도 벗어난다고 볼 수 있다.</p>
+          <p>성공 비율의 표준편차는 10번이면 \(\sqrt{\dfrac{0.21}{10}} \approx 0.145\), 100번이면 \(\sqrt{\dfrac{0.21}{100}} \approx 0.046\)이다. 던지는 횟수를 10배 늘리면 비율의 흔들림은 \(\sqrt{10} \approx 3.2\)분의 1로 준다.</p>
+          <p>한편 성공 횟수 자체의 표준편차는 100번이면 \(\sqrt{21} \approx 4.6\)번으로 오히려 커진다. 횟수는 더 크게 흔들리지만 전체에 대한 비율은 덜 흔들리는 것이다. 아래 탐구 카드에서 \(n\)과 \(p\)를 바꾸며 분포의 모양과 비율의 흔들림을 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-stat-binomial-1">독립인 확률변수의 합의 분산은 각 분산의 합과 같다. 이 성질은 고등학교에서 증명하지 않지만, 두 개의 경우 \(V(X + Y) = V(X) + V(Y)\)를 확률분포표로 확인할 수 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>성공률이 \(p\)인 시행을 \(n\)번 독립적으로 할 때 성공 횟수는 이항분포 \(\mathrm{B}(n, p)\)를 따르며, 평균은 \(np\), 표준편차는 \(\sqrt{np(1 - p)}\)이다. 시행이 많아질수록 성공 비율은 \(p\) 근처에 좁게 모인다. 그래서 처음 질문의 선수는 10번 가운데 평균 7번, 대략 1.45번의 표준편차로 성공한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-2.html#text-stat-expectation"><small class="mono">확률과 통계 3.2</small>기댓값과 표준편차</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a><a href="../../c/pmath/3-6.html#card-pmath-fair-game"><small class="mono">전문 수학 3.6</small>학교 축제 주사위 게임, 상금을 얼마로 해야 공정할까?</a><a href="../../c/pmath/3-6.html#card-pmath-binom-slider"><small class="mono">전문 수학 3.6</small>자유투 성공률 70 %인 선수가 20번 던지면 몇 번쯤 넣을까?</a><a href="../../c/pmath/3-6.html#text-pmath-binomial-dist"><small class="mono">전문 수학 3.6</small>이산확률변수와 이항분포</a></div></nav>
+
       <article class="card" id="card-stat-binom-shape">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>자유투 10번 중 몇 번 들어갈까?</h2><span class="kind">이항분포 · 평균과 표준편차</span>
+          <span class="no">탐구 1</span><h2>자유투 10번 중 몇 번 들어갈까?</h2><span class="kind">이항분포 · 평균과 표준편차</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -72,34 +131,34 @@
                 <div><dt>\(V(X) = npq\)</dt><dd class="n-v">—</dd></div>
                 <div><dt>\(\sigma(X) = \sqrt{npq}\)</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">처음 값은 성공률 70 %인 선수가 자유투를 10번 던지는 상황입니다. 매번 성공 확률이 같고 서로 영향을 주지 않는다고 가정합니다.</p>
+              <p class="fig-note">처음 값은 성공률 70 %인 선수가 자유투를 10번 던지는 상황이다. 매번 성공 확률이 같고 서로 영향을 주지 않는다고 가정한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>성공률이 70 %인 선수가 자유투를 10번 던지면 7번 넣을 확률은 얼마일까요? 7번이 가장 흔할까요, 아니면 7번보다 적게 넣는 일이 더 많을까요?</li>
-            <li><span class="tag">복원</span>각 시행의 결과가 서로 영향을 주지 않으면 <em>독립시행</em>입니다. 성공 확률이 \(p\)인 시행을 \(n\)번 하여 \(r\)번 성공할 확률은 \({}_{n}\mathrm{C}_{r}p^r(1 - p)^{n-r}\)입니다. 성공하는 \(r\)번의 자리를 고르는 방법이 \({}_{n}\mathrm{C}_{r}\)가지이기 때문입니다.</li>
-            <li><span class="tag">설명</span>이 독립시행에서 성공 횟수 \(X\)의 확률분포 \(P(X = r) = {}_{n}\mathrm{C}_{r}p^rq^{n-r}\) \((q = 1 - p, r = 0, 1, \cdots, n)\)을 <em>이항분포</em>라 하고 <b>\(B(n, p)\)</b>로 씁니다. 확률을 모두 더하면 이항정리에 의해 \((p + q)^n = 1\)입니다. 이항분포의 평균, 분산, 표준편차는 <b>\(E(X) = np\), \(V(X) = npq\), \(\sigma(X) = \sqrt{npq}\)</b>입니다. 한 번 시행에서 성공 횟수의 평균이 \(p\), 분산이 \(pq\)이고, 이것이 \(n\)번 쌓인 결과입니다.</li>
-            <li><span class="tag">연결</span>불량품 검사, 신약의 효과가 나타난 환자 수, 설문에서 '예'라고 답한 사람 수처럼 '성공/실패' 둘로 나뉘는 결과를 셀 때 이항분포를 씁니다. \(n\)이 커지면 막대의 윤곽이 종 모양에 가까워지는데, 이것이 다음 절의 정규분포로 이어집니다.</li>
-            <li><span class="tag">적용</span>\(r\)을 움직여 처음 상황에서 가장 높은 막대를 찾고 \(P(X = 7)\)을 읽어 보세요. \(p\)를 0.5로 하면 모양은 어떻게 되나요? \(p = 0.1\)에서 \(n\)을 10에서 60까지 키우면 치우친 모양이 어떻게 변하나요? \(n\)을 4배로 하면 \(\sigma(X)\)는 몇 배가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>이항분포는 (1) 시행 횟수 \(n\)이 정해져 있고 (2) 결과가 둘이며 (3) 성공 확률이 매번 같고 (4) 시행이 서로 독립일 때만 씁니다. 주머니에서 공을 꺼내고 다시 넣지 않으면 확률이 매번 바뀌므로 이항분포가 아닙니다. 또 평균 \(np\)는 '가장 확률이 큰 값'과 가깝지만 꼭 같지는 않습니다.</li>
+            <li><span class="tag">질문</span>성공률이 70 %인 선수가 자유투를 10번 던지면 7번 넣을 확률은 얼마일까? 7번이 가장 흔할까, 아니면 7번보다 적게 넣는 일이 더 많을까?</li>
+            <li><span class="tag">복원</span>각 시행의 결과가 서로 영향을 주지 않으면 <em>독립시행</em>이다. 성공 확률이 \(p\)인 시행을 \(n\)번 하여 \(r\)번 성공할 확률은 \({}_{n}\mathrm{C}_{r}p^r(1 - p)^{n-r}\)인데, 성공하는 \(r\)번의 자리를 고르는 방법이 \({}_{n}\mathrm{C}_{r}\)가지이기 때문이다.</li>
+            <li><span class="tag">설명</span>이 독립시행에서 성공 횟수 \(X\)의 확률분포 \(P(X = r) = {}_{n}\mathrm{C}_{r}p^rq^{n-r}\) \((q = 1 - p, r = 0, 1, \cdots, n)\)을 <em>이항분포</em>라 하고 \(B(n, p)\)로 쓴다. 확률을 모두 더하면 이항정리에 의해 \((p + q)^n = 1\)이다. 이항분포의 평균, 분산, 표준편차는 \(E(X) = np\), \(V(X) = npq\), \(\sigma(X) = \sqrt{npq}\)이다. 한 번 시행에서 성공 횟수의 평균이 \(p\), 분산이 \(pq\)이고, 그것이 \(n\)번 쌓인 결과이기 때문이다.</li>
+            <li><span class="tag">연결</span>그래서 불량품 검사, 신약의 효과가 나타난 환자 수, 설문에서 '예'라고 답한 사람 수처럼 성공과 실패 둘로 나뉘는 결과를 셀 때 이항분포를 쓴다. 또 \(n\)이 커지면 막대의 윤곽이 종 모양에 가까워지는데, 이것이 다음 절의 정규분포로 이어진다.</li>
+            <li><span class="tag">적용</span>\(r\)을 움직여 처음 상황에서 가장 높은 막대를 찾고 \(P(X = 7)\)을 읽어 보자. \(p\)를 0.5로 하면 모양이 좌우 대칭이 되고, \(p = 0.1\)에서 \(n\)을 10에서 60까지 키우면 치우친 모양이 점점 풀린다. \(n\)을 4배로 하면 \(\sigma(X)\)가 몇 배가 되는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이항분포는 시행 횟수 \(n\)이 정해져 있고, 결과가 둘이며, 성공 확률이 매번 같고, 시행이 서로 독립일 때만 쓴다. 그래서 주머니에서 공을 꺼내고 다시 넣지 않으면 확률이 매번 바뀌므로 이항분포가 아니다. 또 평균 \(np\)는 '가장 확률이 큰 값'과 가깝지만 꼭 같지는 않다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">오지선다 50문제를 모두 무작위로 찍을 때 맞힌 문제 수를 \(X\)라 하면, \(V(X)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>8<span class="why"><b>맞습니다.</b> \(X\)는 \(B(50, \frac{1}{5})\)를 따르므로 \(V(X) = 50 \times \frac{1}{5} \times \frac{4}{5} = 8\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>10<span class="why"><b>평균입니다.</b> \(E(X) = np = 10\)이고, 분산은 여기에 \(q = \frac{4}{5}\)를 더 곱합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2\sqrt{2}\)<span class="why"><b>표준편차입니다.</b> \(\sigma(X) = \sqrt{8} = 2\sqrt{2}\)이고, 분산은 제곱하기 전의 값 8입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>40<span class="why"><b>\(p\) 대신 \(q\)만 곱했습니다.</b> \(50 \times \frac{4}{5} = 40\)은 틀린 문제 수의 평균입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>8<span class="why"><b>맞다.</b> \(X\)는 \(B(50, \frac{1}{5})\)를 따르므로 \(V(X) = 50 \times \frac{1}{5} \times \frac{4}{5} = 8\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>10<span class="why"><b>평균이다.</b> \(E(X) = np = 10\)이고, 분산은 여기에 \(q = \frac{4}{5}\)를 더 곱한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2\sqrt{2}\)<span class="why"><b>표준편차이다.</b> \(\sigma(X) = \sqrt{8} = 2\sqrt{2}\)이고, 분산은 제곱하기 전의 값 8이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>40<span class="why"><b>\(p\) 대신 \(q\)만 곱했다.</b> \(50 \times \frac{4}{5} = 40\)은 틀린 문제 수의 평균이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a><a href="../../c/pmath/3-6.html#card-pmath-fair-game"><small class="mono">전문 수학 3.6</small>학교 축제 주사위 게임, 상금을 얼마로 해야 공정할까?</a><a href="../../c/pmath/3-6.html#card-pmath-binom-slider"><small class="mono">전문 수학 3.6</small>자유투 성공률 70 %인 선수가 20번 던지면 몇 번쯤 넣을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-2.html#card-stat-balance"><small class="mono">확률과 통계 3.2</small>확률분포의 '가운데'와 '퍼짐'은 어디서 읽을까?</a><a href="../../c/stat/3-2.html#card-stat-linear-rv"><small class="mono">확률과 통계 3.2</small>점수를 두 배 하고 5점을 빼면 표준편차는?</a><a href="../../c/stat/3-2.html#text-stat-expectation"><small class="mono">확률과 통계 3.2</small>기댓값과 표준편차</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a><a href="../../c/pmath/3-6.html#card-pmath-fair-game"><small class="mono">전문 수학 3.6</small>학교 축제 주사위 게임, 상금을 얼마로 해야 공정할까?</a><a href="../../c/pmath/3-6.html#card-pmath-binom-slider"><small class="mono">전문 수학 3.6</small>자유투 성공률 70 %인 선수가 20번 던지면 몇 번쯤 넣을까?</a><a href="../../c/pmath/3-6.html#text-pmath-binomial-dist"><small class="mono">전문 수학 3.6</small>이산확률변수와 이항분포</a></div></nav>
 
       <article class="card" id="card-stat-large-numbers">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>많이 던질수록 비율은 확률에 다가갈까?</h2><span class="kind">큰 수의 법칙 · 상대도수</span>
+          <span class="no">탐구 2</span><h2>많이 던질수록 비율은 확률에 다가갈까?</h2><span class="kind">큰 수의 법칙 · 상대도수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -119,43 +178,44 @@
                 <div><dt>\(|\frac{X}{n} - p|\)</dt><dd class="n-d">—</dd></div>
                 <div><dt>\(P(|\frac{X}{n} - p| &lt; 0.05)\)</dt><dd class="n-q">—</dd></div>
               </dl>
-              <p class="fig-note">마지막 값은 실험 결과가 아니라, 지금의 \(n\)에서 \(X\)가 \(B(n, p)\)를 따른다고 보고 계산한 확률입니다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금입니다.</p>
+              <p class="fig-note">마지막 값은 실험 결과가 아니라, 지금의 \(n\)에서 \(X\)가 \(B(n, p)\)를 따른다고 보고 계산한 확률이다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>성공 확률이 0.3인 시행을 10번 하면 성공이 3번이 아닐 때가 많습니다. 그렇다면 '확률이 0.3'이라는 말은 실제로 무엇을 보장할까요?</li>
-            <li><span class="tag">복원</span>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 성공 횟수 \(X\)는 \(B(n, p)\)를 따르고, \(E(X) = np\), \(\sigma(X) = \sqrt{npq}\)입니다. 통계적 확률은 시행을 많이 했을 때의 상대도수로 정했습니다.</li>
-            <li><span class="tag">설명</span>상대도수 \(\frac{X}{n}\)의 평균은 \(\frac{np}{n} = p\)이고, 표준편차는 \(\frac{\sqrt{npq}}{n} = \sqrt{\frac{pq}{n}}\)입니다. \(n\)이 커지면 표준편차가 0에 가까워지므로, 아무리 작은 양수 \(h\)를 잡아도 \(P(|\frac{X}{n} - p| &lt; h)\)는 1에 가까워집니다. 이것이 <em>큰 수의 법칙</em>입니다. 시행 횟수를 충분히 늘리면 상대도수가 수학적 확률에 가까워진다는 뜻이며, 통계적 확률을 확률로 쓸 수 있는 근거입니다.</li>
-            <li><span class="tag">연결</span>보험 회사가 많은 가입자를 모아 사고율을 예측하고, 카지노가 한 판의 결과와 상관없이 긴 시간 동안 이익을 얻는 것도 이 법칙 때문입니다. 뒤에서 배우는 표본비율이 모비율에 가까워지는 원리도 같습니다.</li>
-            <li><span class="tag">적용</span>'처음부터'를 누르고 '10번 더'를 몇 번 눌러 보세요. 곡선이 띠 밖으로 자주 나가나요? '1000번 더'를 여러 번 누른 뒤 \(|\frac{X}{n} - p|\)와 \(P(|\frac{X}{n} - p| &lt; 0.05)\)는 어떻게 되나요? \(p\)를 0.5로 바꾸면 같은 \(n\)에서 그 확률이 커지나요, 작아지나요?</li>
-            <li class="warn"><span class="tag">판단</span>큰 수의 법칙은 '비율'이 다가간다는 말이지, 성공 횟수 \(X\)가 \(np\)에 다가간다는 말이 아닙니다. \(|X - np|\)는 오히려 \(\sqrt{n}\) 정도로 커집니다. 또 앞에서 실패가 많이 나왔다고 다음 시행에서 성공 확률이 커지지 않습니다. 각 시행은 독립이고, 앞의 치우침은 갚아지는 것이 아니라 뒤의 많은 시행 속에 묻힐 뿐입니다.</li>
+            <li><span class="tag">질문</span>성공 확률이 0.3인 시행을 10번 하면 성공이 3번이 아닐 때가 많다. 그렇다면 '확률이 0.3'이라는 말은 실제로 무엇을 보장할까?</li>
+            <li><span class="tag">복원</span>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 성공 횟수 \(X\)는 \(B(n, p)\)를 따르고, \(E(X) = np\), \(\sigma(X) = \sqrt{npq}\)이다. 그리고 통계적 확률은 시행을 많이 했을 때의 상대도수로 정했다.</li>
+            <li><span class="tag">설명</span>상대도수 \(\frac{X}{n}\)의 평균은 \(\frac{np}{n} = p\)이고, 표준편차는 \(\frac{\sqrt{npq}}{n} = \sqrt{\frac{pq}{n}}\)이다. \(n\)이 커지면 표준편차가 0에 가까워지므로, 아무리 작은 양수 \(h\)를 잡아도 \(P(|\frac{X}{n} - p| &lt; h)\)는 1에 가까워진다. 이것이 <em>큰 수의 법칙</em>이다. 즉 시행 횟수를 충분히 늘리면 상대도수가 수학적 확률에 가까워지고, 이것이 통계적 확률을 확률로 쓸 수 있는 근거이다.</li>
+            <li><span class="tag">연결</span>보험 회사가 많은 가입자를 모아 사고율을 예측하고, 카지노가 한 판의 결과와 상관없이 긴 시간 동안 이익을 얻는 것도 이 법칙 때문이다. 뒤에서 배우는 표본비율이 모비율에 가까워지는 원리도 같다.</li>
+            <li><span class="tag">적용</span>'처음부터'를 누르고 '10번 더'를 몇 번 눌러 곡선이 띠 밖으로 자주 나가는지 보자. '1000번 더'를 여러 번 누른 뒤 \(|\frac{X}{n} - p|\)와 \(P(|\frac{X}{n} - p| &lt; 0.05)\)가 어떻게 되는지 확인하고, \(p\)를 0.5로 바꾸면 같은 \(n\)에서 그 확률이 커지는지 작아지는지도 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>큰 수의 법칙은 '비율'이 다가간다는 말이지, 성공 횟수 \(X\)가 \(np\)에 다가간다는 말이 아니다. \(|X - np|\)는 오히려 \(\sqrt{n}\) 정도로 커진다. 또 앞에서 실패가 많이 나왔다고 다음 시행에서 성공 확률이 커지지 않는다. 각 시행은 독립이고, 앞의 치우침은 갚아지는 것이 아니라 뒤의 많은 시행 속에 묻힐 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">공정한 동전을 \(n\)번 던져 앞면이 나온 횟수를 \(X\)라 할 때, 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(n\)이 커질수록 \(P(|\frac{X}{n} - \frac{1}{2}| &lt; 0.01)\)은 1에 가까워진다.<span class="why"><b>맞습니다.</b> \(\frac{X}{n}\)의 표준편차 \(\sqrt{\frac{1}{4n}}\)이 0에 가까워지므로, 폭이 0.01처럼 작은 구간이라도 그 안에 들어갈 확률이 1에 다가갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>앞면이 5번 연속 나왔다면 다음에는 뒷면이 나올 확률이 \(\frac{1}{2}\)보다 크다.<span class="why"><b>도박사의 오류입니다.</b> 동전은 앞의 결과를 기억하지 않으므로 다음에 뒷면이 나올 확률은 여전히 \(\frac{1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n\)이 커질수록 \(|X - \frac{n}{2}|\)도 0에 가까워진다.<span class="why"><b>비율과 횟수를 섞었습니다.</b> \(\sigma(X) = \frac{\sqrt{n}}{2}\)이므로 횟수의 차는 오히려 커지는 경향이 있습니다. 0에 가까워지는 것은 그 차를 \(n\)으로 나눈 비율입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(n = 1000\)이면 앞면은 반드시 500번 나온다.<span class="why"><b>평균과 실제 결과를 섞었습니다.</b> \(E(X) = 500\)이지만 \(P(X = 500)\)은 약 0.025에 불과합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(n\)이 커질수록 \(P(|\frac{X}{n} - \frac{1}{2}| &lt; 0.01)\)은 1에 가까워진다.<span class="why"><b>맞다.</b> \(\frac{X}{n}\)의 표준편차 \(\sqrt{\frac{1}{4n}}\)이 0에 가까워지므로, 폭이 0.01처럼 작은 구간이라도 그 안에 들어갈 확률이 1에 다가간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>앞면이 5번 연속 나왔다면 다음에는 뒷면이 나올 확률이 \(\frac{1}{2}\)보다 크다.<span class="why"><b>도박사의 오류이다.</b> 동전은 앞의 결과를 기억하지 않으므로 다음에 뒷면이 나올 확률은 여전히 \(\frac{1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n\)이 커질수록 \(|X - \frac{n}{2}|\)도 0에 가까워진다.<span class="why"><b>비율과 횟수를 섞었다.</b> \(\sigma(X) = \frac{\sqrt{n}}{2}\)이므로 횟수의 차는 오히려 커지는 경향이 있다. 0에 가까워지는 것은 그 차를 \(n\)으로 나눈 비율이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(n = 1000\)이면 앞면은 반드시 500번 나온다.<span class="why"><b>평균과 실제 결과를 섞었다.</b> \(E(X) = 500\)이지만 \(P(X = 500)\)은 약 0.025에 불과한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-3.html#card-pmath-buffon"><small class="mono">전문 수학 3.3</small>바늘을 바닥에 떨어뜨려 원주율을 구할 수 있을까?</a><a href="../../c/pmath/3-3.html#card-pmath-thumbtack"><small class="mono">전문 수학 3.3</small>압정이 바늘 끝을 위로 하고 떨어질 확률은 계산할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-3.html#card-pmath-buffon"><small class="mono">전문 수학 3.3</small>바늘을 바닥에 떨어뜨려 원주율을 구할 수 있을까?</a><a href="../../c/pmath/3-3.html#card-pmath-thumbtack"><small class="mono">전문 수학 3.3</small>압정이 바늘 끝을 위로 하고 떨어질 확률은 계산할 수 있을까?</a><a href="../../c/pmath/3-3.html#text-pmath-statistical-prob"><small class="mono">전문 수학 3.3</small>통계적 확률과 수학적 확률</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=stat-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">31문항</span></a>
+      <a class="px-go" href="../../bank.html?c=stat&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">17문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=stat-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">31문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -163,6 +223,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/stat/body.js"></script>
 <script src="../../js/cards/stat/stat-lib.js"></script>
 <script src="../../js/cards/stat/binom-shape.js"></script>
 <script src="../../js/cards/stat/large-numbers.js"></script>

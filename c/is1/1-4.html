@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>정보와 디지털 신호 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="소리를 표본화·양자화해 숫자로 바꾸고, 온도 센서의 신호가 저항·전압·숫자로 바뀌는 과정을 직접 조작하는 개념 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-is1-sensor canvas { aspect-ratio: 4 / 3; }
   </style>
@@ -41,20 +47,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-is1-sampling"><span class="mono">1.4.1</span>소리는 어떻게 숫자가 될까?</a></li>
-        <li><a href="#card-is1-sensor"><span class="mono">1.4.2</span>온도계는 정말 온도를 잴까?</a></li>
+        <li><a href="#text-is1-digital"><span class="mono">본문</span>정보와 디지털 신호</a></li>
+        <li><a href="#card-is1-sampling"><span class="mono">탐구 1</span>소리는 어떻게 숫자가 될까?</a></li>
+        <li><a href="#card-is1-sensor"><span class="mono">탐구 2</span>온도계는 정말 온도를 잴까?</a></li>
         <li><a href="#video-is1-sensors"><span class="mono">영상</span>스마트폰 속 센서들</a></li>
-        <li><a href="#text-is1-ict-history"><span class="mono">1.4.3</span>정보 통신 기술은 문명을 어떻게 바꾸었을까?</a></li>
+        <li><a href="#text-is1-ict-history"><span class="mono">읽기 3</span>정보 통신 기술은 문명을 어떻게 바꾸었을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=is1-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">6문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=is1&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">14문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=is1-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">31문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=is1-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-is1-digital" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>정보와 디지털 신호</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">목소리는 공기의 압력이 끊김 없이 오르내리는 연속적인 변화이다. 그런데 휴대 전화는 이 소리를 0과 1로 된 숫자로 저장하고 보낸다. 끊김 없는 변화를 띄엄띄엄한 숫자로 바꾸면 무엇이 남고 무엇을 잃을까?</p>
+          <figure class="q-fig" data-q="is1-sample">
+            <svg viewBox="0 0 520 240" role="img" aria-label="연속적인 파형을 일정한 간격으로 표본화하고 몇 단계로 양자화한 그림"></svg>
+            <div class="q-ctl"><label>1주기당 표본 수 <input type="range" data-k="s" min="2" max="24" step="1" value="8"><output data-k="s"></output></label><label>비트 수 <input type="range" data-k="b" min="1" max="5" step="1" value="3"><output data-k="b"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 일정한 간격으로 값을 재고(표본화), 그 값을 정해진 단계 가운데 가장 가까운 것으로 바꾸면(양자화) 연속 신호가 숫자의 나열이 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>진동수(Hz, 1초에 진동하는 횟수), 2진수, 중학교의 전압·전류·저항의 관계.</div>
+
+          <h3><span class="no">1.4.1</span>아날로그와 디지털</h3>
+          <p>온도계의 액체 기둥은 온도에 따라 끊김 없이 오르내린다. 이렇게 연속적으로 변하는 신호를 <em>아날로그 신호</em>라 한다. 반면 디지털 온도계는 '23.4'처럼 정해진 자리의 숫자만 보여 준다. 띄엄띄엄한 값만 갖는 신호를 <em>디지털 신호</em>라 한다.</p>
+          <p>컴퓨터는 전압이 높은지 낮은지, 곧 1인지 0인지만 구별하는 장치이다. 그래서 자연의 변화를 컴퓨터로 다루려면 먼저 센서로 전기 신호로 바꾸고, 그 전기 신호를 숫자로 바꾸어야 한다. 가령 온도 센서인 서미스터는 온도에 따라 저항이 바뀌고, 그 결과 흐르는 전압이 바뀐다.</p>
+
+          <h3><span class="no">1.4.2</span>표본화와 양자화</h3>
+          <p>아날로그 신호를 숫자로 바꾸는 일은 두 단계이다. 먼저 일정한 시간 간격으로 신호의 값을 잰다. 이것을 표본화라 하고, 1초에 잰 횟수를 표본화 주파수라 한다. 다음으로 잰 값을 미리 정해 둔 몇 개의 단계 가운데 가장 가까운 것으로 바꾼다. 이것을 양자화라 한다.</p>
+          <p>그림 1의 슬라이더로 1주기당 표본 수를 줄여 보자. 표본이 2개보다 적어지면 원래의 진동 모양을 되살릴 수 없다. 반대로 비트 수를 줄이면 단계가 거칠어져 계단처럼 보인다. 비트 수가 \(n\)이면 단계는 \(2^n\)개이므로, 비트 하나가 늘 때마다 단계가 두 배로 촘촘해진다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">디지털 변환의 두 기준</span></span>
+            <p>표본화 주파수가 신호의 가장 높은 진동수의 2배보다 커야 원래 신호를 되살릴 수 있다. 양자화 비트 수가 \(n\)이면 값을 \(2^n\)단계로 나타낸다.</p>
+          </div>
+          <p>사람이 들을 수 있는 소리는 약 20 000 Hz까지이다. 그래서 음악 CD는 그 두 배보다 조금 큰 44 100 Hz로 표본화하고, 값 하나를 16비트, 곧 \(2^{16} = 65\,536\)단계로 나타낸다.<sup class="fn"><a href="#fn-is1-digital-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 160" role="img" aria-label="센서, 아날로그-디지털 변환, 컴퓨터로 이어지는 흐름">
+              <rect x="10" y="50" width="100" height="56" class="lk"/><text x="60" y="76" text-anchor="middle">자연의 변화</text><text x="60" y="96" text-anchor="middle" class="s">온도, 소리, 빛</text>
+              <rect x="140" y="50" width="100" height="56" class="lb"/><text x="190" y="76" text-anchor="middle">센서</text><text x="190" y="96" text-anchor="middle" class="s">전압으로</text>
+              <rect x="270" y="50" width="110" height="56" class="lc"/><text x="325" y="76" text-anchor="middle">변환기</text><text x="325" y="96" text-anchor="middle" class="s">표본화·양자화</text>
+              <rect x="410" y="50" width="100" height="56" class="la"/><text x="460" y="76" text-anchor="middle">컴퓨터</text><text x="460" y="96" text-anchor="middle" class="s">0과 1</text>
+              <path d="M112 78 L138 78" class="k"/><path d="M242 78 L268 78" class="k"/><path d="M382 78 L408 78" class="k"/>
+              <text x="190" y="140" text-anchor="middle" class="s">아날로그</text><text x="460" y="140" text-anchor="middle" class="s">디지털</text>
+            </svg>
+            <figcaption>그림 2. 센서가 자연의 변화를 전압으로 바꾸고, 변환기가 그 전압을 숫자로 바꾼다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>왜 굳이 디지털일까</h3>
+          <p>숫자로 바꾸면 약간의 정보를 잃는데도 디지털을 쓰는 까닭은 잡음에 강하기 때문이다. 아날로그 신호는 전선을 지나며 조금씩 일그러지면 그 일그러짐이 그대로 남는다. 하지만 디지털 신호는 0과 1만 구별하면 되므로, 일그러져도 원래 값을 그대로 되살릴 수 있다. 그래서 몇 번을 복사하고 멀리 보내도 처음과 똑같다.</p>
+
+          <h3><span class="no">1.4.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.2</span>
+            <p>음악 CD의 방식(44 100 Hz, 16비트, 왼쪽과 오른쪽 2채널)으로 1분짜리 곡을 저장하면 몇 바이트가 필요할까? (1바이트는 8비트이다.)</p>
+          </div>
+          <p>1초에 표본을 44 100개 잰다. 표본 하나는 16비트이고 채널이 2개이므로, 1초에 필요한 비트는 \(44\,100 \times 16 \times 2 = 1\,411\,200\)비트이다. 이것을 8로 나누면 1초에 176 400바이트이다.</p>
+          <p>1분은 60초이므로 \(176\,400 \times 60 = 10\,584\,000\)바이트, 곧 약 10.6 MB이다. 그러면 74분짜리 음악 CD 한 장에는 약 780 MB의 소리 정보가 담기는 셈이다.</p>
+          <p>휴대 전화의 음악 파일이 1분에 1 MB 정도인 것은, 사람 귀가 잘 듣지 못하는 정보를 덜어 내는 압축을 쓰기 때문이다. 아래 탐구 카드에서 표본화 간격과 센서의 신호를 직접 바꾸며 숫자가 만들어지는 과정을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-is1-digital-1">표본화 주파수가 가장 높은 진동수의 2배보다 낮으면, 빠른 진동이 느린 진동처럼 잘못 기록된다. 이 현상을 에일리어싱이라 하며, 영상에서 바퀴가 거꾸로 도는 것처럼 보이는 것도 같은 원리이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>연속적인 아날로그 신호는 센서로 전압이 된 뒤, 일정한 간격으로 값을 재는 표본화와 정해진 단계로 맞추는 양자화를 거쳐 디지털 숫자가 된다. 표본을 충분히 자주 재고 단계를 촘촘히 하면 원래 신호를 거의 그대로 되살릴 수 있고, 디지털 신호는 잡음에 강해 복사와 전송에서 손상되지 않는다. 그래서 처음 질문의 목소리는 1초에 수만 번 잰 숫자의 나열로 휴대 전화에 담긴다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a><a href="../../c/is1/1-1.html#text-is1-measure-space-time"><small class="mono">통합과학1 1.1</small>시간과 공간의 측정</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/sie2/2-1.html#text-sie2-sensor-calibration"><small class="mono">과학탐구실험2 2.1</small>첨단 과학기술 속 과학 원리</a><a href="../../c/labphy/1-4.html#text-labphy-aliasing"><small class="mono">물리학 실험 1.4</small>센서와 컴퓨터 측정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#text-is2-ai-robot"><small class="mono">통합과학2 3.3</small>인공지능과 로봇</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a></div></nav>
+
       <article class="card" id="card-is1-sampling">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>소리는 어떻게 숫자가 될까?</h2><span class="kind">아날로그–디지털 변환 · 표본화 · 양자화</span>
+          <span class="no">탐구 1</span><h2>소리는 어떻게 숫자가 될까?</h2><span class="kind">아날로그–디지털 변환 · 표본화 · 양자화</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -83,29 +145,29 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>마이크가 만든 전압은 매끄럽게 오르내리는 곡선입니다. 곡선 위의 점은 무한히 많은데, 어떻게 유한한 숫자 몇 개로 저장할까요?</li>
-            <li><span class="tag">복원</span>n비트로는 <span class="formula">2<sup>n</sup></span>가지 수를 나타낼 수 있습니다. 3비트면 000부터 111까지 8가지, 16비트면 65,536가지입니다.</li>
-            <li><span class="tag">설명</span>두 번 자릅니다. 먼저 시간을 일정한 간격으로 잘라 그 순간의 값만 뽑습니다(<em>표본화</em>). 그다음 뽑은 값을 정해진 층 가운데 가장 가까운 층으로 반올림합니다(<em>양자화</em>). 그러면 소리는 ‘몇 번째 층’이라는 정수의 목록이 됩니다.</li>
-            <li><span class="tag">연결</span>1초에 fs번 뽑으면 진동수가 <span class="formula">fs / 2</span>보다 낮은 소리만 제대로 담을 수 있습니다(표본화 정리). 사람은 약 20 kHz까지 들으므로 CD는 그 두 배가 넘는 44.1 kHz로 뽑습니다. 비트 수를 1 늘리면 층이 2배로 촘촘해져 반올림 오차가 절반이 됩니다.</li>
-            <li><span class="tag">적용</span>‘거친 설정’을 누르고 비트 수를 1씩 올려 보세요. 계단이 원래 곡선에 얼마나 빨리 가까워지나요? ‘너무 드문 표본화’에서는 뽑은 점들이 실제와 전혀 다른, 훨씬 낮은 소리(점선)를 그립니다. 이 현상을 에일리어싱이라고 합니다.</li>
-            <li class="warn"><span class="tag">판단</span>디지털이 아날로그보다 늘 ‘더 정확한’ 것은 아닙니다. 변환할 때 이미 정보를 버립니다. 대신 한번 숫자가 되면 복사하고 전송해도 더 나빠지지 않습니다. 촘촘하게 뽑을수록 데이터가 커지므로, 무엇을 담아야 하는지에 맞춰 설정을 고릅니다.</li>
+            <li><span class="tag">질문</span>마이크가 만든 전압은 매끄럽게 오르내리는 곡선이다. 곡선 위의 점은 무한히 많은데, 어떻게 유한한 숫자 몇 개로 저장할까?</li>
+            <li><span class="tag">복원</span>n비트로는 <span class="formula">2<sup>n</sup></span>가지 수를 나타낼 수 있다. 3비트면 000부터 111까지 8가지, 16비트면 65,536가지이다.</li>
+            <li><span class="tag">설명</span>그래서 곡선을 두 번 자른다. 먼저 시간을 일정한 간격으로 잘라 그 순간의 값만 뽑고(<em>표본화</em>), 그다음 뽑은 값을 정해진 층 가운데 가장 가까운 층으로 반올림한다(<em>양자화</em>). 그러면 소리는 ‘몇 번째 층’이라는 정수의 목록이 된다.</li>
+            <li><span class="tag">연결</span>1초에 fs번 뽑으면 진동수가 <span class="formula">fs / 2</span>보다 낮은 소리만 제대로 담을 수 있다(표본화 정리). 사람은 약 20 kHz까지 들으므로 CD는 그 두 배가 넘는 44.1 kHz로 뽑는다. 또 비트 수를 1 늘리면 층이 2배로 촘촘해져 반올림 오차가 절반이 된다.</li>
+            <li><span class="tag">적용</span>‘거친 설정’을 누르고 비트 수를 1씩 올려 보면, 계단이 원래 곡선에 빠르게 가까워진다. 반면 ‘너무 드문 표본화’에서는 뽑은 점들이 실제와 전혀 다른, 훨씬 낮은 소리(점선)를 그린다. 이 현상을 에일리어싱이라고 한다.</li>
+            <li class="warn"><span class="tag">판단</span>디지털이 아날로그보다 늘 ‘더 정확한’ 것은 아니다. 변환할 때 이미 정보를 버리기 때문이다. 대신 한번 숫자가 되면 복사하고 전송해도 더 나빠지지 않는다. 다만 촘촘하게 뽑을수록 데이터가 커지므로, 무엇을 담아야 하는지에 맞춰 설정을 고른다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">박쥐는 약 50 kHz의 초음파를 냅니다. 이 소리를 녹음해 분석하려면 표본화 주파수는 적어도 얼마여야 할까요?</p>
+          <p class="q">박쥐는 약 50 kHz의 초음파를 낸다. 이 소리를 녹음해 분석하려면 표본화 주파수는 적어도 얼마여야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>44.1 kHz면 충분하다.<span class="why"><b>CD의 설정은 사람이 듣는 소리에 맞춘 것입니다.</b> 44.1 kHz로는 22.05 kHz까지만 담을 수 있어, 50 kHz 소리는 엉뚱한 낮은 소리로 기록됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50 kHz<span class="why"><b>진동수와 같게 뽑으면</b> 매번 파동의 같은 위치만 찍혀서 소리가 멈춘 것처럼 기록됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>100 kHz보다 높게<span class="why"><b>맞습니다.</b> 담으려는 가장 높은 진동수의 2배보다 빠르게 뽑아야 합니다. 실제 박쥐 연구용 녹음기는 수백 kHz로 표본화합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>44.1 kHz면 충분하다.<span class="why"><b>CD의 설정은 사람이 듣는 소리에 맞춘 것이다.</b> 44.1 kHz로는 22.05 kHz까지만 담을 수 있어, 50 kHz 소리는 엉뚱한 낮은 소리로 기록된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50 kHz<span class="why"><b>진동수와 같게 뽑으면</b> 매번 파동의 같은 위치만 찍혀서 소리가 멈춘 것처럼 기록된다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>100 kHz보다 높게<span class="why"><b>맞다.</b> 담으려는 가장 높은 진동수의 2배보다 빠르게 뽑아야 한다. 실제 박쥐 연구용 녹음기는 수백 kHz로 표본화한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a><a href="../../c/is2/3-3.html#card-is2-robot-design"><small class="mono">통합과학2 3.3</small>생활 로봇이 할 일을 하려면 어떤 감각과 손발이 필요할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a><a href="../../c/is1/1-1.html#text-is1-measure-space-time"><small class="mono">통합과학1 1.1</small>시간과 공간의 측정</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/sie2/2-1.html#text-sie2-sensor-calibration"><small class="mono">과학탐구실험2 2.1</small>첨단 과학기술 속 과학 원리</a><a href="../../c/labphy/1-4.html#text-labphy-aliasing"><small class="mono">물리학 실험 1.4</small>센서와 컴퓨터 측정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#text-is2-ai-robot"><small class="mono">통합과학2 3.3</small>인공지능과 로봇</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a></div></nav>
 
       <article class="card" id="card-is1-sensor">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>온도계는 정말 온도를 잴까?</h2><span class="kind">센서 · 서미스터 · 전압 나눔 · ADC</span>
+          <span class="no">탐구 2</span><h2>온도계는 정말 온도를 잴까?</h2><span class="kind">센서 · 서미스터 · 전압 나눔 · ADC</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -124,29 +186,29 @@
                 <div><dt>ADC 숫자</dt><dd class="code">—</dd></div>
                 <div><dt>숫자 한 칸 =</dt><dd class="res">—</dd></div>
               </dl>
-              <p class="fig-note">부품값은 흔히 쓰는 대표값입니다: 25 °C에서 10 kΩ, B = 3950 K인 NTC 서미스터와 10 kΩ 고정 저항, 5 V 전원.</p>
+              <p class="fig-note">부품값은 흔히 쓰는 대표값으로, 25 °C에서 10 kΩ, B = 3950 K인 NTC 서미스터와 10 kΩ 고정 저항, 5 V 전원이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>디지털 온도계의 화면에는 ‘25.0 °C’가 뜹니다. 그런데 전자 회로는 전압과 전류만 다룹니다. 온도계 속 부품은 무엇을 재는 걸까요?</li>
-            <li><span class="tag">복원</span>물질의 성질 가운데는 온도에 따라 달라지는 것이 많습니다. 수은은 부피가 늘고, 금속은 저항이 커집니다. 이 변화를 재면 온도를 거꾸로 알아낼 수 있습니다.</li>
-            <li><span class="tag">설명</span>서미스터는 온도가 오르면 저항이 크게 줄어드는 반도체 부품입니다. 고정 저항과 이어 전압을 걸면, 저항 비율에 따라 가운데 지점의 전압이 바뀝니다. 이 전압을 아날로그–디지털 변환기(ADC)가 0~1023 같은 정수로 바꿉니다.</li>
-            <li><span class="tag">연결</span><em>온도 → 저항 → 전압 → 숫자.</em> 센서가 직접 재는 것은 온도가 아니라 저항 변화이고, 컴퓨터는 이 과정을 거꾸로 계산해 온도를 표시합니다. 빛 센서, 압력 센서, 가속도 센서도 모두 ‘재기 쉬운 전기량’으로 바꾸는 단계를 거칩니다.</li>
-            <li><span class="tag">적용</span>온도 막대를 −20 °C에서 100 °C까지 움직이며 ‘숫자 한 칸’이 몇 °C인지 보세요. 어느 온도에서 가장 섬세하게 재나요? ADC를 8비트로 바꾸면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>화면에 소수점 아래 숫자가 나온다고 그만큼 정확한 것은 아닙니다. 부품값의 오차(흔히 ±1%), 서미스터가 제 몸의 전류로 데워지는 현상, 전원 전압의 흔들림이 모두 오차가 됩니다. 이 그래프의 곡선도 부품 규격으로 계산한 모형입니다.</li>
+            <li><span class="tag">질문</span>디지털 온도계의 화면에는 ‘25.0 °C’가 뜬다. 그런데 전자 회로는 전압과 전류만 다룬다. 온도계 속 부품은 무엇을 재는 걸까?</li>
+            <li><span class="tag">복원</span>물질의 성질 가운데는 온도에 따라 달라지는 것이 많다. 수은은 부피가 늘고, 금속은 저항이 커진다. 그래서 이 변화를 재면 온도를 거꾸로 알아낼 수 있다.</li>
+            <li><span class="tag">설명</span>서미스터는 온도가 오르면 저항이 크게 줄어드는 반도체 부품이다. 고정 저항과 이어 전압을 걸면, 저항 비율에 따라 가운데 지점의 전압이 바뀐다. 그리고 이 전압을 아날로그-디지털 변환기(ADC)가 0~1023 같은 정수로 바꾼다.</li>
+            <li><span class="tag">연결</span>즉 <em>온도가 저항으로, 저항이 전압으로, 전압이 숫자로</em> 바뀐다. 센서가 직접 재는 것은 온도가 아니라 저항 변화이고, 컴퓨터는 이 과정을 거꾸로 계산해 온도를 표시한다. 빛 센서, 압력 센서, 가속도 센서도 모두 재기 쉬운 전기량으로 바꾸는 단계를 거친다.</li>
+            <li><span class="tag">적용</span>온도 막대를 −20 °C에서 100 °C까지 움직이며 ‘숫자 한 칸’이 몇 °C인지 보자. 곡선이 가장 가파른 온도에서 가장 섬세하게 재고, ADC를 8비트로 바꾸면 한 칸이 네 배 거칠어진다.</li>
+            <li class="warn"><span class="tag">판단</span>화면에 소수점 아래 숫자가 나온다고 그만큼 정확한 것은 아니다. 부품값의 오차(흔히 ±1%), 서미스터가 제 몸의 전류로 데워지는 현상, 전원 전압의 흔들림이 모두 오차가 되기 때문이다. 이 그래프의 곡선도 부품 규격으로 계산한 모형이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">같은 회로에서 ADC만 10비트에서 12비트로 바꾸면, 25 °C 부근에서 ‘숫자 한 칸’이 나타내는 온도 폭은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1/4로 좁아진다.<span class="why"><b>맞습니다.</b> 12비트는 4096칸으로 10비트(1024칸)의 4배입니다. 같은 전압 범위를 4배 잘게 나누니 한 칸의 폭은 1/4이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 1/2로 좁아진다.<span class="why"><b>비트 수가 2 늘었으니 2배라고 생각하기 쉽습니다.</b> 하지만 비트 하나마다 칸 수가 2배가 되므로 2비트면 2 × 2 = 4배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도계가 4배 정확해진다.<span class="why"><b>잘게 나누는 것과 정확한 것은 다릅니다.</b> 부품값의 오차나 전원 전압의 흔들림은 ADC를 바꿔도 그대로 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 1/4로 좁아진다.<span class="why"><b>맞다.</b> 12비트는 4096칸으로 10비트(1024칸)의 4배이다. 같은 전압 범위를 4배 잘게 나누니 한 칸의 폭은 1/4이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 1/2로 좁아진다.<span class="why"><b>비트 수가 2 늘었으니 2배라고 생각하기 쉽다.</b> 하지만 비트 하나마다 칸 수가 2배가 되므로 2비트면 2 × 2 = 4배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도계가 4배 정확해진다.<span class="why"><b>잘게 나누는 것과 정확한 것은 다르다.</b> 부품값의 오차나 전원 전압의 흔들림은 ADC를 바꿔도 그대로 남는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a><a href="../../c/is2/3-3.html#card-is2-robot-design"><small class="mono">통합과학2 3.3</small>생활 로봇이 할 일을 하려면 어떤 감각과 손발이 필요할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a><a href="../../c/is1/1-1.html#text-is1-measure-space-time"><small class="mono">통합과학1 1.1</small>시간과 공간의 측정</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/sie2/2-1.html#text-sie2-sensor-calibration"><small class="mono">과학탐구실험2 2.1</small>첨단 과학기술 속 과학 원리</a><a href="../../c/labphy/1-4.html#text-labphy-aliasing"><small class="mono">물리학 실험 1.4</small>센서와 컴퓨터 측정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#text-is2-ai-robot"><small class="mono">통합과학2 3.3</small>인공지능과 로봇</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a></div></nav>
 
       <section class="video-block" id="video-is1-sensors" aria-label="통통사과 영상">
         <div>
@@ -168,52 +230,57 @@
 
       <article class="card reading" id="text-is1-ict-history">
         <header class="card-head">
-          <span class="no">1.4.3</span><h2>정보 통신 기술은 문명을 어떻게 바꾸었을까?</h2><span class="kind">읽기 · 정보 통신의 발달과 사회</span>
+          <span class="no">읽기 3</span><h2>정보 통신 기술은 문명을 어떻게 바꾸었을까?</h2><span class="kind">읽기 · 정보 통신의 발달과 사회</span>
         </header>
         <div class="reading-body">
-          <p class="ask">200년 전 서울에서 부산까지 소식이 가는 데는 며칠이 걸렸습니다. 지금은 지구 반대편과 영상 통화를 합니다. 정보를 전하는 방법이 바뀔 때마다 사회는 어떻게 달라졌을까요?</p>
+          <p class="ask">200년 전 서울에서 부산까지 소식이 가는 데는 며칠이 걸렸다. 지금은 지구 반대편과 영상 통화를 한다. 정보를 전하는 방법이 바뀔 때마다 사회는 어떻게 달라졌을까?</p>
           <div class="tbl"><table>
             <thead><tr><th>시기</th><th>기술</th><th>바뀐 것</th></tr></thead>
             <tbody>
               <tr><th>15세기</th><td>금속 활자 인쇄</td><td>지식이 소수에서 다수로 퍼짐 (종교 개혁, 과학 혁명의 바탕)</td></tr>
-              <tr><th>19세기</th><td>전신, 전화 (전기 신호)</td><td>정보가 사람·말보다 빨리 이동 — 철도 운행, 금융, 뉴스가 실시간으로</td></tr>
+              <tr><th>19세기</th><td>전신, 전화 (전기 신호)</td><td>정보가 사람·말보다 빨리 이동, 철도 운행·금융·뉴스가 실시간으로</td></tr>
               <tr><th>20세기 초</th><td>라디오, 텔레비전 (전자기파)</td><td>한 번에 수백만 명에게 방송, 대중문화와 여론 형성</td></tr>
               <tr><th>20세기 후반</th><td>컴퓨터, 인터넷 (디지털 신호)</td><td>정보를 0과 1로 저장·복사·전송, 누구나 정보를 만들고 퍼뜨림</td></tr>
               <tr><th>21세기</th><td>스마트폰, 무선 통신, 사물 인터넷, 인공지능</td><td>사람과 사물이 늘 연결, 데이터가 산업의 자원이 됨</td></tr>
             </tbody>
           </table></div>
-          <p>디지털 신호는 잡음에 강하고 복사해도 품질이 떨어지지 않아, 정보를 거의 공짜로 무한히 퍼뜨릴 수 있게 했습니다. 원격 진료와 온라인 교육처럼 거리의 제약을 줄였지만, 가짜 뉴스의 빠른 확산, 개인 정보 유출, 기술을 쓰지 못하는 사람이 뒤처지는 정보 격차 같은 새로운 문제도 생겼습니다.</p>
-          <p class="judge"><b>판단</b>기술의 영향은 기술 자체보다 사회가 그것을 어떻게 쓰느냐에 달려 있습니다. 새로운 정보 통신 기술을 평가할 때는 누가 이익을 얻고 누가 부담을 지는지, 어떤 규칙이 필요한지를 함께 따져 보아야 합니다.</p>
+          <p>표를 위에서 아래로 읽으면, 기술이 바뀔 때마다 정보가 더 빨리, 더 많은 사람에게 닿게 되었다는 흐름이 보인다. 특히 디지털 신호는 잡음에 강하고 복사해도 품질이 떨어지지 않아, 정보를 거의 공짜로 무한히 퍼뜨릴 수 있게 했다. 그래서 원격 진료와 온라인 교육처럼 거리의 제약을 줄였지만, 가짜 뉴스의 빠른 확산, 개인 정보 유출, 기술을 쓰지 못하는 사람이 뒤처지는 정보 격차 같은 새로운 문제도 생겼다.</p>
+          <p class="judge"><b>판단</b>기술의 영향은 기술 자체보다 사회가 그것을 어떻게 쓰느냐에 달려 있다. 그러므로 새로운 정보 통신 기술을 평가할 때는 누가 이익을 얻고 누가 부담을 지는지, 어떤 규칙이 필요한지를 함께 따져 보아야 한다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">디지털 정보가 아날로그 정보보다 멀리, 여러 번 전달하기에 유리한 까닭은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>잡음이 섞여도 0과 1만 구별하면 원래 신호를 되살릴 수 있기 때문<span class="why"><b>맞습니다.</b> 그래서 복사와 중계를 거듭해도 품질이 거의 떨어지지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>디지털 신호는 빛보다 빠르기 때문<span class="why"><b>신호의 속력은 빛의 속력을 넘지 못합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>디지털 신호에는 잡음이 전혀 생기지 않기 때문<span class="why"><b>잡음은 생기지만 되살리기 쉽습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>잡음이 섞여도 0과 1만 구별하면 원래 신호를 되살릴 수 있기 때문<span class="why"><b>맞다.</b> 그래서 복사와 중계를 거듭해도 품질이 거의 떨어지지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>디지털 신호는 빛보다 빠르기 때문<span class="why"><b>신호의 속력은 빛의 속력을 넘지 못한다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>디지털 신호에는 잡음이 전혀 생기지 않기 때문<span class="why"><b>잡음은 생기지만 되살리기 쉽다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a><a href="../../c/is2/3-3.html#card-is2-robot-design"><small class="mono">통합과학2 3.3</small>생활 로봇이 할 일을 하려면 어떤 감각과 손발이 필요할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-1.html#card-is1-scale"><small class="mono">통합과학1 1.1</small>원자핵에서 우주까지, 무엇으로 잴까?</a><a href="../../c/is1/1-1.html#card-is1-clock"><small class="mono">통합과학1 1.1</small>1초는 누가, 어떻게 정할까?</a><a href="../../c/is1/1-1.html#text-is1-measure-space-time"><small class="mono">통합과학1 1.1</small>시간과 공간의 측정</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/sie2/2-1.html#text-sie2-sensor-calibration"><small class="mono">과학탐구실험2 2.1</small>첨단 과학기술 속 과학 원리</a><a href="../../c/labphy/1-4.html#text-labphy-aliasing"><small class="mono">물리학 실험 1.4</small>센서와 컴퓨터 측정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is2/3-3.html#card-is2-learn"><small class="mono">통합과학2 3.3</small>인공지능은 어떻게 ‘학습’할까?</a><a href="../../c/is2/3-3.html#card-is2-trust"><small class="mono">통합과학2 3.3</small>AI가 ‘99% 확실하다’고 하면 믿어도 될까?</a><a href="../../c/is2/3-3.html#text-is2-ai-robot"><small class="mono">통합과학2 3.3</small>인공지능과 로봇</a><a href="../../c/is2/3-3.html#card-is2-robot"><small class="mono">통합과학2 3.3</small>로봇은 어떻게 선을 따라갈까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=is1-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">6문항</span></a>
+      <a class="px-go" href="../../bank.html?c=is1&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">14문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=is1-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">31문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/is1/body.js"></script>
 <script src="../../js/cards/is1/sampling.js"></script>
 <script src="../../js/cards/is1/thermistor.js"></script>
 <script src="../../js/cards/is1/reel-sensors.js"></script>

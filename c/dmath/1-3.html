@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>포함배제의 원리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="포함배제의 원리(세 집합 이상), 교란순열. 벤 다이어그램에서 영역마다 센 횟수를 따라가는 카드와, 모자 섞기로 교란순열의 확률 1/e를 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-venn-count canvas { aspect-ratio: 1 / 0.9; max-width: 420px; margin: 0 auto; display: block; cursor: pointer; }
@@ -45,18 +50,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-venn-count"><span class="mono">1.3.1</span>더하고 빼고 더하면 한 번씩</a></li>
-        <li><a href="#card-dmath-derange"><span class="mono">1.3.2</span>아무도 제 모자를 못 받을 확률</a></li>
+        <li><a href="#text-dmath-inclusion-exclusion"><span class="mono">본문</span>포함배제의 원리</a></li>
+        <li><a href="#card-dmath-venn-count"><span class="mono">탐구 1</span>더하고 빼고 더하면 한 번씩</a></li>
+        <li><a href="#card-dmath-derange"><span class="mono">탐구 2</span>아무도 제 모자를 못 받을 확률</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">8문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-inclusion-exclusion" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>포함배제의 원리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">네 사람이 식당에 모자를 맡겼는데, 직원이 모자를 마구 섞어 아무렇게나 하나씩 돌려주었다. 네 사람 모두 남의 모자를 받을 확률은 얼마일까? 사람이 10명, 100명으로 늘어나면 이 확률은 커질까, 작아질까? 한 사람이라도 제 모자를 받는 경우를 세려 하면, 두 사람이 동시에 받는 경우, 세 사람이 동시에 받는 경우가 겹쳐서 여러 번 세어진다. 겹친 것을 어떻게 정확히 덜어 낼 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="사람 수에 따른 완전순열의 수와 확률">
+              <g class="s">
+                <text x="20" y="22">사람 수 n</text><text x="140" y="22">2</text><text x="200" y="22">3</text><text x="260" y="22">4</text><text x="320" y="22">5</text><text x="400" y="22">10</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">모두 남의 것 Dₙ</text><text x="140" y="52">1</text><text x="200" y="52">2</text><text x="260" y="52" class="td">9</text><text x="320" y="52">44</text><text x="400" y="52">1334961</text>
+                <text x="20" y="74">확률 Dₙ/n!</text><text x="140" y="74">0.5</text><text x="200" y="74">0.333</text><text x="260" y="74" class="td">0.375</text><text x="320" y="74">0.367</text><text x="400" y="74">0.3679</text>
+                <text x="20" y="104">사람이 늘어도 확률은 약 0.368, 곧 1/e로 모인다.</text>
+                <text x="20" y="124">e ≈ 2.71828</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 아무도 제 모자를 받지 못할 확률은 사람 수와 거의 상관없이 약 37%이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합집합의 원소의 개수, 순열, 확률.</div>
+
+          <h3><span class="no">1.3.1</span>더하고 빼고 다시 더하다</h3>
+          <p>두 집합의 합집합의 원소 수는 \(n(A) + n(B)\)에서 두 번 세어진 교집합을 한 번 빼서 구한다. 세 집합이면 세 집합의 원소 수를 더하고, 두 집합씩의 교집합을 빼는데, 그러면 세 집합의 공통 부분은 세 번 더해지고 세 번 빠져서 하나도 세어지지 않는다. 그래서 세 집합의 교집합을 다시 한 번 더한다. 이렇게 겹치는 부분을 번갈아 더하고 빼서 각 원소가 정확히 한 번씩 세어지게 하는 것이 포함배제의 원리이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">포함배제의 원리</span></span>
+            <p>\(n(A \cup B \cup C) = n(A) + n(B) + n(C) - n(A \cap B) - n(B \cap C) - n(C \cap A) + n(A \cap B \cap C)\)이다. 일반적으로 \(k\)개씩의 교집합의 원소 수를 \(k\)가 홀수이면 더하고 짝수이면 뺀다. \(n\)개를 모두 제자리가 아니게 늘어놓는 완전순열의 수는 \[D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots + \frac{(-1)^n}{n!}\right)\]이다.</p>
+          </div>
+          <p>완전순열의 식은 포함배제에서 나온다. \(i\)번째 사람이 제 모자를 받는 배열의 집합을 \(A_i\)라 하면, 한 사람 이상이 제 것을 받는 배열의 수는 \(A_1 \cup \cdots \cup A_n\)의 원소 수이다. 특정한 \(k\)명이 제 것을 받는 배열은 나머지 \(n - k\)명을 아무렇게나 늘어놓는 \((n - k)!\)가지이고, \(k\)명을 고르는 방법은 \({}_n\mathrm{C}_k\)가지이므로 \(k\)개씩의 교집합의 합은 \({}_n\mathrm{C}_k(n - k)! = n!/k!\)이다. 이것을 번갈아 더하고 빼 전체 \(n!\)에서 덜어 내면 완전순열의 식이 된다.<sup class="fn"><a href="#fn-dmath-inclusion-exclusion-1">1</a></sup></p>
+
+          <h3><span class="no">1.3.2</span>배수의 개수 세기</h3>
+          <p>1부터 100까지의 자연수 가운데 2, 3, 5 가운데 적어도 하나의 배수인 수를 세어 보자. 2의 배수는 50개, 3의 배수는 33개, 5의 배수는 20개이다. 2와 3의 공배수는 6의 배수여서 16개, 3과 5는 15의 배수 6개, 2와 5는 10의 배수 10개이고, 세 수의 공배수는 30의 배수 3개이다. 포함배제로 \(50 + 33 + 20 - 16 - 6 - 10 + 3 = 74\)개이다. 그래서 2, 3, 5 어느 것으로도 나누어떨어지지 않는 수는 26개이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="네 사람의 완전순열 계산">
+              <g class="s">
+                <text x="20" y="22">k명 이상 제 것</text><text x="200" y="22">₄Cₖ × (4 − k)!</text><text x="400" y="22">부호</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">k = 1, 2</text><text x="200" y="52">4 × 6 = 24, 6 × 2 = 12</text><text x="400" y="52">−, +</text>
+                <text x="20" y="74">k = 3, 4</text><text x="200" y="74">4 × 1 = 4, 1 × 1 = 1</text><text x="400" y="74">−, +</text>
+                <text x="20" y="96">D₄</text><text x="200" y="96">24 − 24 + 12 − 4 + 1</text><text x="400" y="96" class="td">9</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 전체 24가지에서 겹치는 경우를 번갈아 빼고 더하면 모두 남의 것을 받는 9가지가 남는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>처음 질문의 네 사람이 모두 남의 모자를 받는 배열의 수와 확률을 구하여라. 사람 수가 많아지면 이 확률은 어떤 값으로 다가가는가?</p>
+          </div>
+          <p>그림 2처럼 \(D_4 = 24 - 24 + 12 - 4 + 1 = 9\)이다. 확률은 \(9/24 = 0.375\)이다. 직접 확인하면 네 모자를 모두 제자리가 아니게 놓는 방법은 \(BADC\), \(BCDA\), \(BDAC\), \(CADB\), \(CDAB\), \(CDBA\), \(DABC\), \(DCAB\), \(DCBA\)의 아홉 가지이다.</p>
+          <p>확률은 \(\dfrac{D_n}{n!} = 1 - 1 + \dfrac{1}{2!} - \dfrac{1}{3!} + \cdots + \dfrac{(-1)^n}{n!}\)이고, 이것은 \(e^{-1}\)의 급수 전개를 \(n\)항까지 더한 것이다. 그래서 사람이 많아지면 확률은 \(1/e \approx 0.3679\)로 다가가고, 다섯 명만 되어도 이미 0.367이다. 확률이 사람 수에 거의 상관이 없는 것이다. 즉 여러 조건이 겹치는 경우를 셀 때는 포함배제의 원리로 겹친 부분을 번갈아 더하고 빼며, 완전순열의 수도 이 방법으로 구한다.</p>
+          <p>아래 탐구 카드에서 세 집합을 합칠 때 더하고 빼고 다시 더하는 까닭을 확인하고, 모자를 섞어 돌려주는 실험으로 완전순열의 확률을 구해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-inclusion-exclusion-1">이 문제는 1708년 프랑스의 몽모르가 카드 놀이를 분석하며 처음 풀었다. 1부터 13까지 적힌 카드를 섞어 한 장씩 뒤집으며 수를 세었을 때, 카드의 수와 센 수가 한 번도 맞지 않을 확률을 구한 것이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>포함배제의 원리는 여러 집합의 합집합의 원소 수를, 각 집합의 원소 수를 더하고 두 개씩의 교집합을 빼고 세 개씩의 교집합을 다시 더하는 식으로 번갈아 계산해 각 원소를 정확히 한 번씩 세게 한다. 모두 제자리가 아닌 완전순열의 수 \(D_n\)도 이 원리로 구하며, 그 비율은 \(1/e\)에 다가간다. 처음 질문의 네 사람이 모두 남의 모자를 받을 확률은 \(9/24 = 0.375\)이고, 사람이 많아져도 약 0.368이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-4.html#card-dmath-set-partition"><small class="mono">이산 수학 1.4</small>다섯 명을 세 모둠으로 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-4.html#card-dmath-young"><small class="mono">이산 수학 1.4</small>점 그림을 뒤집으면 어떤 분할이 나올까?</a><a href="../../c/dmath/1-4.html#text-dmath-partition"><small class="mono">이산 수학 1.4</small>집합의 분할과 자연수의 분할</a></div></nav>
+
       <article class="card" id="card-dmath-venn-count">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>세 집합을 합칠 때 왜 더하고 빼고 다시 더할까?</h2><span class="kind">포함배제의 원리 · 조작</span>
+          <span class="no">탐구 1</span><h2>세 집합을 합칠 때 왜 더하고 빼고 다시 더할까?</h2><span class="kind">포함배제의 원리 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -68,33 +132,33 @@
               <button class="chip go-new" type="button">원소 수 바꾸기</button>
             </div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">영역을 누르면 그 영역의 원소가 하나 늘어납니다. 빨간 배지는 그 영역을 지금까지 몇 번 셌는지입니다.</p>
+            <p class="fig-note">영역을 누르면 그 영역의 원소가 하나 늘어난다. 빨간 배지는 그 영역을 지금까지 몇 번 셌는지이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>설문에서 축구를 좋아하는 학생 A명, 농구 B명, 야구 C명이라고 합니다. 셋 중 하나라도 좋아하는 학생은 \(A + B + C\)명일까요?</li>
-            <li><span class="tag">복원</span>두 집합에서 \(n(A \cup B) = n(A) + n(B) - n(A \cap B)\)입니다. 겹친 부분을 두 번 셌으니 한 번 뺍니다.</li>
-            <li><span class="tag">설명</span>세 집합이면 ① 세 집합을 더할 때 두 집합에만 속한 원소는 2번, 세 집합 모두에 속한 원소는 3번 셉니다. ② 두 개씩의 교집합 세 개를 빼면 두 집합에만 속한 원소는 1번이 되지만, 세 집합 모두에 속한 원소는 \(3 - 3 = 0\)번이 됩니다. ③ 그래서 세 집합의 교집합을 다시 더합니다. \(n(A \cup B \cup C) = \sum n(A) - \sum n(A \cap B) + n(A \cap B \cap C)\). 이것이 <em>포함배제의 원리</em>이며, 집합이 더 많아도 "홀수 개의 교집합은 더하고 짝수 개는 뺀다"로 이어집니다.</li>
-            <li><span class="tag">연결</span>"어느 것도 아닌 것"을 세려면 전체에서 합집합을 뺍니다. 다음 카드의 교란순열, 앞 절의 "4 이하" 정수해, 1부터 100까지 2, 3, 5 중 어느 것으로도 나누어지지 않는 수 세기가 모두 이 방법입니다.</li>
-            <li><span class="tag">적용</span>①, ②, ③을 차례로 누르며 각 영역의 배지가 어떻게 바뀌는지 보세요. ③ 뒤에는 모든 영역이 1이 되나요? 영역의 수를 바꿔도 같은가요?</li>
-            <li class="warn"><span class="tag">판단</span>문제에서 "A와 B를 좋아하는 학생"이 "A와 B만 좋아하는 학생"인지 "A와 B를 둘 다 좋아하는 학생(C도 포함)"인지 구별해야 합니다. 공식의 \(n(A \cap B)\)는 C도 좋아하는 학생을 포함합니다.</li>
+            <li><span class="tag">질문</span>설문에서 축구를 좋아하는 학생 A명, 농구 B명, 야구 C명이라고 한다. 셋 중 하나라도 좋아하는 학생은 \(A + B + C\)명일까?</li>
+            <li><span class="tag">복원</span>두 집합에서 \(n(A \cup B) = n(A) + n(B) - n(A \cap B)\)이다. 겹친 부분을 두 번 셌으니 한 번 뺀다.</li>
+            <li><span class="tag">설명</span>세 집합이면 ① 세 집합을 더할 때 두 집합에만 속한 원소는 2번, 세 집합 모두에 속한 원소는 3번 센다. ② 두 개씩의 교집합 세 개를 빼면 두 집합에만 속한 원소는 1번이 되지만, 세 집합 모두에 속한 원소는 \(3 - 3 = 0\)번이 된다. ③ 그래서 세 집합의 교집합을 다시 더한다. \(n(A \cup B \cup C) = \sum n(A) - \sum n(A \cap B) + n(A \cap B \cap C)\). 이것이 <em>포함배제의 원리</em>이며, 집합이 더 많아도 "홀수 개의 교집합은 더하고 짝수 개는 뺀다"로 이어진다.</li>
+            <li><span class="tag">연결</span>"어느 것도 아닌 것"을 세려면 전체에서 합집합을 뺀다. 다음 카드의 교란순열, 앞 절의 "4 이하" 정수해, 1부터 100까지 2, 3, 5 중 어느 것으로도 나누어지지 않는 수 세기가 모두 이 방법이다.</li>
+            <li><span class="tag">적용</span>①, ②, ③을 차례로 누르며 각 영역의 배지가 어떻게 바뀌는지 보자. ③ 뒤에는 모든 영역이 1이 되는가? 영역의 수를 바꿔도 같은가?</li>
+            <li class="warn"><span class="tag">판단</span>문제에서 "A와 B를 좋아하는 학생"이 "A와 B만 좋아하는 학생"인지 "A와 B를 둘 다 좋아하는 학생(C도 포함)"인지 구별해야 한다. 공식의 \(n(A \cap B)\)는 C도 좋아하는 학생을 포함한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">1부터 60까지의 자연수 중 2, 3, 5 중 어느 것의 배수인 수의 개수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(44\)<span class="why"><b>맞습니다.</b> \(30 + 20 + 12 - 10 - 6 - 4 + 2 = 44\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(62\)<span class="why"><b>겹친 것을 빼지 않았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(42\)<span class="why"><b>세 개의 교집합(30의 배수 2개)을 다시 더하지 않았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(16\)<span class="why"><b>어느 것의 배수도 아닌 수의 개수입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(44\)<span class="why"><b>맞다.</b> \(30 + 20 + 12 - 10 - 6 - 4 + 2 = 44\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(62\)<span class="why"><b>겹친 것을 빼지 않았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(42\)<span class="why"><b>세 개의 교집합(30의 배수 2개)을 다시 더하지 않았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(16\)<span class="why"><b>어느 것의 배수도 아닌 수의 개수이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-4.html#card-dmath-set-partition"><small class="mono">이산 수학 1.4</small>다섯 명을 세 모둠으로 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-4.html#card-dmath-young"><small class="mono">이산 수학 1.4</small>점 그림을 뒤집으면 어떤 분할이 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-4.html#card-dmath-set-partition"><small class="mono">이산 수학 1.4</small>다섯 명을 세 모둠으로 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-4.html#card-dmath-young"><small class="mono">이산 수학 1.4</small>점 그림을 뒤집으면 어떤 분할이 나올까?</a><a href="../../c/dmath/1-4.html#text-dmath-partition"><small class="mono">이산 수학 1.4</small>집합의 분할과 자연수의 분할</a></div></nav>
 
       <article class="card" id="card-dmath-derange">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>모자를 섞어 돌려주면 아무도 제 것을 못 받을 확률은?</h2><span class="kind">교란순열 · 시뮬레이션</span>
+          <span class="no">탐구 2</span><h2>모자를 섞어 돌려주면 아무도 제 것을 못 받을 확률은?</h2><span class="kind">교란순열 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -105,39 +169,40 @@
             <table class="st" aria-label="n에 따른 교란순열의 수"></table>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>파티에 온 \(n\)명이 맡긴 모자를 무작위로 돌려받습니다. 아무도 자기 모자를 받지 못할 확률은 사람이 많아질수록 어떻게 될까요? 1에 가까워질까요, 0에 가까워질까요?</li>
-            <li><span class="tag">복원</span>포함배제의 원리: "적어도 하나"는 홀수 개의 교집합을 더하고 짝수 개를 뺍니다.</li>
-            <li><span class="tag">설명</span>\(A_i\)를 "\(i\)번째 사람이 제 모자를 받는" 배열의 집합이라 하면, \(k\)명을 정해 제 모자를 받게 하는 배열은 \((n - k)!\)가지이고 그런 \(k\)명을 고르는 방법은 \({}_n\mathrm{C}_k\)입니다. 따라서 아무도 제 것을 받지 않는 배열(<em>교란순열</em>)의 수는 \(D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots + \frac{(-1)^n}{n!}\right)\)입니다. 확률 \(D_n/n!\)은 \(n\)이 커지면 \(\frac{1}{e} \approx 0.3679\)로 빠르게 다가갑니다.</li>
-            <li><span class="tag">연결</span>교란순열은 점화식 \(D_n = (n - 1)(D_{n-1} + D_{n-2})\)도 만족합니다(다음 단원의 점화 관계). 비밀 산타 뽑기에서 자기 이름을 뽑지 않을 확률이 바로 이 값입니다.</li>
-            <li><span class="tag">적용</span>먼저 \(n = 6\)일 때 확률을 짐작해 보세요. 1000번 섞기를 여러 번 눌러 비율이 어디로 모이는지 보세요. \(n\)을 2, 3, 12로 바꾸면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>사람이 많을수록 "누군가는 자기 것을 받겠지" 싶어 확률이 0으로 갈 것 같지만, 실제로는 약 37%에 머뭅니다. 직관과 다른 결과는 계산과 실험으로 확인해야 합니다. 시행 횟수가 적으면 비율이 크게 흔들린다는 점도 기억하세요.</li>
+            <li><span class="tag">질문</span>파티에 온 \(n\)명이 맡긴 모자를 무작위로 돌려받는다. 아무도 자기 모자를 받지 못할 확률은 사람이 많아질수록 어떻게 될까? 1에 가까워질까요, 0에 가까워질까?</li>
+            <li><span class="tag">복원</span>포함배제의 원리에서 "적어도 하나"는 홀수 개의 교집합을 더하고 짝수 개를 뺀다.</li>
+            <li><span class="tag">설명</span>\(A_i\)를 "\(i\)번째 사람이 제 모자를 받는" 배열의 집합이라 하면, \(k\)명을 정해 제 모자를 받게 하는 배열은 \((n - k)!\)가지이고 그런 \(k\)명을 고르는 방법은 \({}_n\mathrm{C}_k\)이다. 따라서 아무도 제 것을 받지 않는 배열(<em>교란순열</em>)의 수는 \(D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \cdots + \frac{(-1)^n}{n!}\right)\)이다. 확률 \(D_n/n!\)은 \(n\)이 커지면 \(\frac{1}{e} \approx 0.3679\)로 빠르게 다가간다.</li>
+            <li><span class="tag">연결</span>교란순열은 점화식 \(D_n = (n - 1)(D_{n-1} + D_{n-2})\)도 만족한다(다음 단원의 점화 관계). 비밀 산타 뽑기에서 자기 이름을 뽑지 않을 확률이 바로 이 값이다.</li>
+            <li><span class="tag">적용</span>먼저 \(n = 6\)일 때 확률을 짐작해 보자. 1000번 섞기를 여러 번 눌러 비율이 어디로 모이는지 보자. \(n\)을 2, 3, 12로 바꾸면 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>사람이 많을수록 "누군가는 자기 것을 받겠지" 싶어 확률이 0으로 갈 것 같지만, 실제로는 약 37%에 머문다. 직관과 다른 결과는 계산과 실험으로 확인해야 한다. 시행 횟수가 적으면 비율이 크게 흔들린다는 점도 기억해 보자.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">4명의 교란순열의 수 \(D_4\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(9\)<span class="why"><b>맞습니다.</b> \(24 - 24 + 12 - 4 + 1 = 9\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(23\)<span class="why"><b>"모두 제 것을 받는" 1가지만 뺐습니다.</b> 일부만 제 것을 받는 경우도 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(8\)<span class="why"><b>마지막 \(+1\)(네 명 모두의 교집합)을 빠뜨렸습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(6\)<span class="why"><b>\(3!\)은 원순열의 수입니다.</b> 교란순열과 다릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(9\)<span class="why"><b>맞다.</b> \(24 - 24 + 12 - 4 + 1 = 9\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(23\)<span class="why"><b>"모두 제 것을 받는" 1가지만 뺐다.</b> 일부만 제 것을 받는 경우도 빼야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(8\)<span class="why"><b>마지막 \(+1\)(네 명 모두의 교집합)을 빠뜨렸다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(6\)<span class="why"><b>\(3!\)은 원순열의 수이다.</b> 교란순열과 다르다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-4.html#card-dmath-set-partition"><small class="mono">이산 수학 1.4</small>다섯 명을 세 모둠으로 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-4.html#card-dmath-young"><small class="mono">이산 수학 1.4</small>점 그림을 뒤집으면 어떤 분할이 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-4.html#card-dmath-set-partition"><small class="mono">이산 수학 1.4</small>다섯 명을 세 모둠으로 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-4.html#card-dmath-young"><small class="mono">이산 수학 1.4</small>점 그림을 뒤집으면 어떤 분할이 나올까?</a><a href="../../c/dmath/1-4.html#text-dmath-partition"><small class="mono">이산 수학 1.4</small>집합의 분할과 자연수의 분할</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-1-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">8문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>함수의 극한 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="x → a일 때 함수의 수렴과 극한값 lim f(x) = L의 뜻, 극한값과 함숫값의 구별, 좌극한과 우극한, 극한이 존재할 조건, 발산과 무한대(∞), x → ∞일 때의 극한. 두 점을 양쪽에서 다가가게 하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-lim-approach canvas { aspect-ratio: 16 / 11; }
@@ -50,19 +55,67 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-lim-approach"><span class="mono">1.1.1</span>함수의 극한의 뜻</a></li>
-        <li><a href="#card-calc1-one-sided"><span class="mono">1.1.2</span>좌극한과 우극한</a></li>
-        <li><a href="#card-calc1-infinity"><span class="mono">1.1.3</span>발산과 무한대</a></li>
+        <li><a href="#text-calc1-limit"><span class="mono">본문</span>함수의 극한</a></li>
+        <li><a href="#card-calc1-lim-approach"><span class="mono">탐구 1</span>함수의 극한의 뜻</a></li>
+        <li><a href="#card-calc1-one-sided"><span class="mono">탐구 2</span>좌극한과 우극한</a></li>
+        <li><a href="#card-calc1-infinity"><span class="mono">탐구 3</span>발산과 무한대</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">146문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">146문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-1-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-limit" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>함수의 극한</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(f(x) = \dfrac{x^2 - 1}{x - 1}\)은 \(x = 1\)에서 분모가 0이 되어 값이 정해지지 않는다. 그런데 \(x\)에 0.9, 0.99, 0.999나 1.1, 1.01, 1.001을 넣어 보면 함숫값이 어떤 수에 점점 가까워진다. 값이 없는 곳에서 '다가가는 값'을 어떻게 정확히 말할 수 있을까?</p>
+          <figure class="q-fig" data-q="calc1-lim">
+            <svg viewBox="0 0 520 280" role="img" aria-label="x가 1에 다가갈 때 f(x)=(x²−1)/(x−1)의 값이 2에 다가가는 그래프, x=1에는 구멍"></svg>
+            <div class="q-ctl"><label>1과의 거리 \(h\) = <input type="range" data-k="e" min="1" max="4" step="1" value="1"><output data-k="e"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(x\)가 1에 양쪽에서 다가가면 \(f(x)\)는 2에 다가간다. 그래프에는 \((1, 2)\)에 구멍이 있지만, 다가가는 값은 분명히 2이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수와 그래프, 유리함수 \(y = \tfrac{k}{x}\)(공통수학2), 구간과 부등식, 인수분해(공통수학1).</div>
+
+          <h3><span class="no">1.1.1</span>다가가는 값</h3>
+          <p>\(x \ne 1\)이면 분자를 인수분해해 \(f(x) = \dfrac{(x - 1)(x + 1)}{x - 1} = x + 1\)로 약분할 수 있다. 그래서 \(f\)의 그래프는 직선 \(y = x + 1\)에서 점 \((1, 2)\) 하나만 빠진 모양이다. 그림 1의 슬라이더로 \(x\)를 1에 더 가까이 옮겨 보면, 1의 왼쪽에서든 오른쪽에서든 함숫값은 2에 한없이 가까워진다.</p>
+          <p>일반적으로 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때, \(f(x)\)가 일정한 값 \(L\)에 한없이 가까워지면 '\(x \to a\)일 때 \(f(x)\)는 \(L\)에 수렴한다'고 한다. 여기서 \(x = a\)에서의 함숫값은 따지지 않는다. 극한은 '그 점에서의 값'이 아니라 '그 점 근처의 값들이 향하는 곳'이기 때문이다.</p>
+          <div class="tb-env"><span class="lb">정의 1.1.1 <span class="nm">함수의 극한</span></span>
+            <p>함수 \(f(x)\)에서 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때 \(f(x)\)의 값이 일정한 값 \(L\)에 한없이 가까워지면 \[\lim_{x \to a} f(x) = L\] 로 나타내고, \(L\)을 \(x \to a\)일 때 \(f(x)\)의 극한값이라 한다.</p>
+          </div>
+
+          <h3><span class="no">1.1.2</span>좌극한과 우극한</h3>
+          <p>\(x\)가 \(a\)보다 작은 쪽에서 다가갈 때의 극한을 좌극한 \(\displaystyle\lim_{x \to a-} f(x)\), 큰 쪽에서 다가갈 때를 우극한 \(\displaystyle\lim_{x \to a+} f(x)\)라 한다. 극한값이 존재하려면 두 값이 같아야 한다. 가령 \(g(x) = \dfrac{|x|}{x}\)는 \(x &lt; 0\)에서 \(-1\), \(x &gt; 0\)에서 1이므로, \(x \to 0\)일 때 좌극한은 \(-1\), 우극한은 1이어서 극한값이 존재하지 않는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="좌극한과 우극한이 다른 계단 모양 그래프와, 한없이 커지는 y=1/x² 그래프">
+              <g transform="translate(20 0)"><line x1="0" y1="85" x2="220" y2="85" class="ax"/><line x1="110" y1="10" x2="110" y2="160" class="ax"/><line x1="10" y1="125" x2="106" y2="125" class="b"/><line x1="114" y1="45" x2="210" y2="45" class="b"/><circle cx="110" cy="125" r="4" class="k"/><circle cx="110" cy="45" r="4" class="k"/><text x="110" y="168" text-anchor="middle" class="s">좌극한 ≠ 우극한</text></g>
+              <g transform="translate(280 0)"><line x1="0" y1="150" x2="220" y2="150" class="ax"/><line x1="110" y1="10" x2="110" y2="160" class="ax"/><path d="M10 145 Q90 140 104 15" class="c"/><path d="M210 145 Q130 140 116 15" class="c"/><text x="110" y="168" text-anchor="middle" class="s">양의 무한대로 발산</text></g>
+            </svg>
+            <figcaption>그림 2. 왼쪽과 오른쪽에서 다가가는 값이 다르거나, 함숫값이 한없이 커지면 극한값이 존재하지 않는다.</figcaption>
+          </figure>
+          <p>그림 2의 오른쪽처럼 \(x \to 0\)일 때 \(\dfrac{1}{x^2}\)이 한없이 커지는 경우도 있다. 이때는 어떤 값에 수렴하지 않으므로 '양의 무한대로 발산한다'고 하고 \(\displaystyle\lim_{x \to 0}\frac{1}{x^2} = \infty\)로 쓴다.<sup class="fn"><a href="#fn-calc1-limit-1">1</a></sup></p>
+
+          <h3><span class="no">1.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.1.2</span>
+            <p>함수 \(f(x) = \begin{cases} x^2 &amp; (x &lt; 1) \\ 3 - x &amp; (x \ge 1) \end{cases}\)에서 \(\displaystyle\lim_{x \to 1-} f(x)\), \(\displaystyle\lim_{x \to 1+} f(x)\)를 구하고, \(\displaystyle\lim_{x \to 1} f(x)\)가 존재하는지 판단하여라. \(x \ge 1\)인 식을 \(k - x\)로 바꾸면, 극한값이 존재하는 \(k\)는 얼마인가?</p>
+          </div>
+          <p>\(x\)가 1보다 작으면서 1에 다가가면 \(f(x) = x^2\)이 1에 다가가므로 좌극한은 1이다. \(x\)가 1보다 크면서 다가가면 \(f(x) = 3 - x\)가 2에 다가가므로 우극한은 2이다. 두 값이 다르므로 \(\displaystyle\lim_{x \to 1} f(x)\)는 존재하지 않는다.</p>
+          <p>식을 \(k - x\)로 바꾸면 우극한은 \(k - 1\)이다. 극한값이 존재하려면 좌극한과 같아야 하므로 \(k - 1 = 1\), 곧 \(k = 2\)이다.</p>
+          <p>\(k = 2\)이면 두 식은 \(x = 1\)에서 같은 높이 1에서 만나, 그래프가 끊기지 않고 이어진다. 극한이 '이어짐'과 깊이 관련된다는 것은 다음 절의 연속에서 다시 본다. 아래 탐구 카드에서 \(x\)를 한쪽씩 다가가게 하며 좌극한과 우극한을 직접 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-limit-1">\(\infty\)는 수가 아니라 '한없이 커진다'는 상태를 나타내는 기호이다. 그래서 \(\lim f(x) = \infty\)이면 극한값이 존재한다고 하지 않는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>함수의 극한은 \(x\)가 \(a\)에 다가갈 때 함숫값이 향하는 값으로, \(x = a\)에서의 함숫값과는 따로 정해진다. 극한값이 존재하려면 왼쪽과 오른쪽에서 다가가는 값이 같아야 한다. 그래서 처음 질문의 \(\tfrac{x^2 - 1}{x - 1}\)은 \(x = 1\)에서 값이 없지만 \(x \to 1\)일 때의 극한값은 2이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a></div></nav>
+
       <article class="card" id="card-calc1-lim-approach">
         <header class="card-head">
-          <span class="no">1.1.1</span><h2>\(x\)가 1에 다가가면 \(f(x)\)는 어디로 갈까?</h2><span class="kind">함수의 극한 · 양쪽에서 다가가기</span>
+          <span class="no">탐구 1</span><h2>\(x\)가 1에 다가가면 \(f(x)\)는 어디로 갈까?</h2><span class="kind">함수의 극한 · 양쪽에서 다가가기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,34 +134,34 @@
                 <div><dt>\(f(1)\)</dt><dd class="n-a">—</dd></div>
               </dl>
               <p class="mono eq st">—</p>
-              <p class="fig-note">슬라이더를 한 칸 옮길 때마다 \(d\)가 \(\frac{1}{10}\)로 줄어듭니다. 두 점은 \(x = 1\)의 왼쪽과 오른쪽에서 함께 다가갑니다.</p>
+              <p class="fig-note">슬라이더를 한 칸 옮길 때마다 \(d\)가 \(\frac{1}{10}\)로 줄어든다. 두 점은 \(x = 1\)의 왼쪽과 오른쪽에서 함께 다가간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f(x) = \frac{x^2 - 1}{x - 1}\)은 \(x = 1\)에서 분모가 0이라 함숫값이 없습니다. 그런데 \(x\)가 1에 가까워질 때 \(f(x)\)의 값은 아무 데로나 흩어질까요, 어떤 한 값으로 모일까요?</li>
-            <li><span class="tag">복원</span>함수 \(f\)는 정의역의 각 \(x\)에 값 \(f(x)\)를 하나씩 대응시킵니다. 그래프의 점 \((x, f(x))\)의 높이가 함숫값입니다. \(x \ne 1\)이면 \(x^2 - 1 = (x - 1)(x + 1)\)이므로 약분할 수 있습니다.</li>
-            <li><span class="tag">설명</span>함수 \(f(x)\)에서 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때 \(f(x)\)의 값이 일정한 값 \(L\)에 한없이 가까워지면, \(f(x)\)는 \(L\)에 <em>수렴</em>한다고 합니다. 이때 \(L\)을 \(x = a\)에서 \(f(x)\)의 <em>극한값</em> 또는 <em>극한</em>이라 하고 \(\lim_{x \to a} f(x) = L\) 또는 '\(x \to a\)일 때 \(f(x) \to L\)'로 씁니다. \(\lim\)은 limit의 줄임말입니다. 정의의 핵심은 \(x \ne a\)라는 점입니다. 극한값은 \(a\) 근처의 값들이 정하고, \(x = a\)에서의 함숫값과는 상관이 없습니다.</li>
-            <li><span class="tag">연결</span>세 함수는 \(x \ne 1\)에서 모두 1 근처의 값이 2 근처로 모입니다. 그래서 극한값은 셋 다 2입니다. 그러나 \(f(1)\)은 첫째는 없고, 둘째는 3이고, 셋째는 2입니다. 극한값과 함숫값이 같은 셋째 경우가 다음에 배울 '연속'입니다.</li>
-            <li><span class="tag">적용</span>첫째 함수에서 \(d\)를 \(1, 0.1, 0.01, \cdots\)로 줄이며 \(f(1 - d)\)와 \(f(1 + d)\)가 2와 얼마나 차이 나는지 보세요. 차이는 \(d\)와 어떤 관계인가요? 둘째, 셋째 함수로 바꾸어도 두 점이 모이는 높이가 같은지, \(f(1)\) 칸만 달라지는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"\(x = 1\)을 넣을 수 없으니 극한이 없다"는 흔한 오해입니다. 극한은 \(x = 1\)에서의 값을 묻지 않습니다. 반대로 \(f(1)\)이 있다고 해서 극한값이 \(f(1)\)인 것도 아닙니다. 둘째 함수는 \(f(1) = 3\)이지만 극한값은 2입니다. 또 표의 값 몇 개로 짐작한 것은 증명이 아닙니다. 식을 약분해 \(f(x) = x + 1\ (x \ne 1)\)임을 보이면 극한값이 2임이 확실해집니다.</li>
+            <li><span class="tag">질문</span>\(f(x) = \frac{x^2 - 1}{x - 1}\)은 \(x = 1\)에서 분모가 0이라 함숫값이 없다. 그런데 \(x\)가 1에 가까워질 때 \(f(x)\)의 값은 아무 데로나 흩어질까, 어떤 한 값으로 모일까?</li>
+            <li><span class="tag">복원</span>함수 \(f\)는 정의역의 각 \(x\)에 값 \(f(x)\)를 하나씩 대응시키고, 그래프의 점 \((x, f(x))\)의 높이가 함숫값이다. 또 \(x \ne 1\)이면 \(x^2 - 1 = (x - 1)(x + 1)\)이므로 약분할 수 있다.</li>
+            <li><span class="tag">설명</span>함수 \(f(x)\)에서 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때 \(f(x)\)의 값이 일정한 값 \(L\)에 한없이 가까워지면, \(f(x)\)는 \(L\)에 <em>수렴</em>한다고 한다. 이때 \(L\)을 \(x = a\)에서 \(f(x)\)의 <em>극한값</em> 또는 <em>극한</em>이라 하고 \(\lim_{x \to a} f(x) = L\) 또는 '\(x \to a\)일 때 \(f(x) \to L\)'로 쓴다. \(\lim\)은 limit의 줄임말이다. 이 정의에서 눈여겨볼 곳은 \(x \ne a\)라는 조건이다. 극한값은 \(a\) 근처의 값들이 정하고, \(x = a\)에서의 함숫값과는 상관이 없다.</li>
+            <li><span class="tag">연결</span>그래서 세 함수는 \(x \ne 1\)에서 모두 1 근처의 값이 2 근처로 모이고, 극한값은 셋 다 2이다. 그러나 \(f(1)\)은 첫째는 없고, 둘째는 3이고, 셋째는 2이다. 극한값과 함숫값이 같은 셋째 경우가 다음에 배울 '연속'이다.</li>
+            <li><span class="tag">적용</span>첫째 함수에서 \(d\)를 \(1, 0.1, 0.01, \cdots\)로 줄이며 \(f(1 - d)\)와 \(f(1 + d)\)가 2와 얼마나 차이 나는지, 그 차이가 \(d\)와 어떤 관계인지 보자. 둘째, 셋째 함수로 바꾸어도 두 점이 모이는 높이는 같고 \(f(1)\) 칸만 달라지는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(x = 1\)을 넣을 수 없으니 극한이 없다"는 흔한 오해이다. 극한은 \(x = 1\)에서의 값을 묻지 않기 때문이다. 반대로 \(f(1)\)이 있다고 해서 극한값이 \(f(1)\)인 것도 아니어서, 둘째 함수는 \(f(1) = 3\)이지만 극한값은 2이다. 또 표의 값 몇 개로 짐작한 것은 증명이 아니다. 식을 약분해 \(f(x) = x + 1\ (x \ne 1)\)임을 보여야 극한값이 2임이 확실해진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(x \ne 2\)이면 \(f(x) = \frac{x^2 - 4}{x - 2}\)이고 \(f(2) = 1\)인 함수가 있습니다. \(\lim_{x \to 2} f(x)\)의 값은?</p>
+          <p class="q">\(x \ne 2\)이면 \(f(x) = \frac{x^2 - 4}{x - 2}\)이고 \(f(2) = 1\)인 함수가 있다. \(\lim_{x \to 2} f(x)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1<span class="why"><b>함숫값을 극한값으로 썼습니다.</b> 극한은 \(x \ne 2\)인 값들이 어디로 모이는지를 봅니다. \(f(2) = 1\)은 극한값과 관계가 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4<span class="why"><b>맞습니다.</b> \(x \ne 2\)이면 \(f(x) = \frac{(x - 2)(x + 2)}{x - 2} = x + 2\)이므로, \(x \to 2\)일 때 \(f(x) \to 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>분자만 보고 판단했습니다.</b> 분자가 0으로 가지만 분모도 0으로 가므로 몫이 0으로 간다고 할 수 없습니다. 약분하면 \(x + 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>\(x = 2\)를 대입하는 것으로 보았습니다.</b> \(0/0\)이 나오는 것은 대입했을 때의 이야기입니다. 극한은 2에 다가가는 값들을 보므로 4로 수렴합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1<span class="why"><b>함숫값을 극한값으로 썼다.</b> 극한은 \(x \ne 2\)인 값들이 어디로 모이는지를 본다. \(f(2) = 1\)은 극한값과 관계가 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4<span class="why"><b>맞다.</b> \(x \ne 2\)이면 \(f(x) = \frac{(x - 2)(x + 2)}{x - 2} = x + 2\)이므로, \(x \to 2\)일 때 \(f(x) \to 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>분자만 보고 판단했다.</b> 분자가 0으로 가지만 분모도 0으로 가므로 몫이 0으로 간다고 할 수 없다. 약분하면 \(x + 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>\(x = 2\)를 대입하는 것으로 보았다.</b> \(0/0\)이 나오는 것은 대입했을 때의 이야기이다. 극한은 2에 다가가는 값들을 보므로 4로 수렴한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-escape"><small class="mono">고급 미적분 1.5</small>무한히 멀리 가는 데 드는 일은 유한할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a></div></nav>
 
       <article class="card" id="card-calc1-one-sided">
         <header class="card-head">
-          <span class="no">1.1.2</span><h2>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</h2><span class="kind">좌극한 · 우극한 · 극한의 존재</span>
+          <span class="no">탐구 2</span><h2>왼쪽과 오른쪽에서 다가간 값이 다르면 극한은 있을까?</h2><span class="kind">좌극한 · 우극한 · 극한의 존재</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,34 +180,34 @@
                 <div><dt>\(\lim_{x \to 1} f(x)\)</dt><dd class="n-lim">—</dd></div>
               </dl>
               <p class="mono eq st">—</p>
-              <p class="fig-note">그래프 위의 점을 끌어 \(x = 1\) 쪽으로 옮겨 보세요. 왼쪽에서 올 때와 오른쪽에서 올 때 점의 높이가 어디로 가는지 비교합니다.</p>
+              <p class="fig-note">그래프 위의 점을 끌어 \(x = 1\) 쪽으로 옮겨 보자. 왼쪽에서 올 때와 오른쪽에서 올 때 점의 높이가 어디로 가는지 비교한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x = 1\)을 경계로 식이 바뀌는 함수입니다. 왼쪽 식으로 다가가면 높이가 2로 가는데, 오른쪽 식으로 다가가면 다른 값으로 갈 수도 있습니다. 이때 '\(x \to 1\)일 때의 극한'은 무엇이라고 해야 할까요?</li>
-            <li><span class="tag">복원</span>\(\lim_{x \to a} f(x) = L\)은 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때 \(f(x)\)가 \(L\)에 한없이 가까워진다는 뜻입니다. '가까워지는 방식'에는 왼쪽에서와 오른쪽에서가 모두 들어 있습니다.</li>
-            <li><span class="tag">설명</span>\(x\)가 \(a\)보다 작으면서 \(a\)에 한없이 가까워질 때 \(f(x)\)가 \(L\)에 가까워지면 \(L\)을 <em>좌극한</em>이라 하고 \(\lim_{x \to a^-} f(x) = L\)로 씁니다. \(a\)보다 크면서 가까워질 때의 값 \(M\)은 <em>우극한</em>이고 \(\lim_{x \to a^+} f(x) = M\)으로 씁니다. 극한값 \(\lim_{x \to a} f(x)\)가 존재할 필요충분조건은 좌극한과 우극한이 모두 존재하고 서로 같은 것입니다. 이때 극한값은 그 공통의 값입니다.</li>
-            <li><span class="tag">연결</span>이 함수의 좌극한은 \(1 + 1 = 2\)이고, 우극한은 \(-1 + k = k - 1\)입니다. 극한이 존재하려면 \(k - 1 = 2\), 곧 \(k = 3\)이어야 합니다. \(f(1) = k - 1\)은 오른쪽 식으로 정해지지만, 극한의 존재 여부는 \(f(1)\)과 상관이 없습니다.</li>
-            <li><span class="tag">적용</span>\(k = 1\)로 두고 점을 왼쪽에서 1 쪽으로, 다시 오른쪽에서 1 쪽으로 끌어 보세요. 두 높이가 같은 곳으로 모이나요? 이번에는 \(k\)를 바꾸어 극한값이 존재하게 되는 \(k\)를 찾고, 그때 그래프가 어떤 모양인지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"\(x = 1\)에서 함숫값이 있으니 극한도 있다"거나 "한쪽 극한만 있으면 된다"는 판단은 틀립니다. 좌극한 2, 우극한 0처럼 다르면 두 값이 모두 존재해도 극한은 존재하지 않습니다. 또 좌극한, 우극한은 경계에서 식이 바뀌는 함수, \(\frac{|x|}{x}\)처럼 부호에 따라 값이 달라지는 함수를 판정할 때 특히 따로 계산해야 합니다.</li>
+            <li><span class="tag">질문</span>\(x = 1\)을 경계로 식이 바뀌는 함수이다. 왼쪽 식으로 다가가면 높이가 2로 가는데, 오른쪽 식으로 다가가면 다른 값으로 갈 수도 있다. 이때 '\(x \to 1\)일 때의 극한'은 무엇이라고 해야 할까?</li>
+            <li><span class="tag">복원</span>\(\lim_{x \to a} f(x) = L\)은 \(x\)가 \(a\)가 아니면서 \(a\)에 한없이 가까워질 때 \(f(x)\)가 \(L\)에 한없이 가까워진다는 뜻이다. 그리고 '가까워지는 방식'에는 왼쪽에서와 오른쪽에서가 모두 들어 있다.</li>
+            <li><span class="tag">설명</span>\(x\)가 \(a\)보다 작으면서 \(a\)에 한없이 가까워질 때 \(f(x)\)가 \(L\)에 가까워지면 \(L\)을 <em>좌극한</em>이라 하고 \(\lim_{x \to a^-} f(x) = L\)로 쓴다. \(a\)보다 크면서 가까워질 때의 값 \(M\)은 <em>우극한</em>이고 \(\lim_{x \to a^+} f(x) = M\)으로 쓴다. 그래서 극한값 \(\lim_{x \to a} f(x)\)가 존재할 필요충분조건은 좌극한과 우극한이 모두 존재하고 서로 같은 것이고, 이때 극한값은 그 공통의 값이다.</li>
+            <li><span class="tag">연결</span>이 함수의 좌극한은 \(1 + 1 = 2\)이고, 우극한은 \(-1 + k = k - 1\)이다. 따라서 극한이 존재하려면 \(k - 1 = 2\), 곧 \(k = 3\)이어야 한다. \(f(1) = k - 1\)은 오른쪽 식으로 정해지지만, 극한의 존재 여부는 \(f(1)\)과 상관이 없다.</li>
+            <li><span class="tag">적용</span>\(k = 1\)로 두고 점을 왼쪽에서 1 쪽으로, 다시 오른쪽에서 1 쪽으로 끌어 두 높이가 같은 곳으로 모이는지 보자. 이번에는 \(k\)를 바꾸어 극한값이 존재하게 되는 \(k\)를 찾고, 그때 그래프가 어떤 모양인지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(x = 1\)에서 함숫값이 있으니 극한도 있다"거나 "한쪽 극한만 있으면 된다"는 판단은 틀린다. 좌극한 2, 우극한 0처럼 다르면 두 값이 모두 존재해도 극한은 존재하지 않는다. 또 경계에서 식이 바뀌는 함수나 \(\frac{|x|}{x}\)처럼 부호에 따라 값이 달라지는 함수는 좌극한과 우극한을 특히 따로 계산해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = x^2\ (x &lt; 2), ax - 2\ (x \ge 2)\)에서 \(\lim_{x \to 2} f(x)\)가 존재하도록 하는 상수 \(a\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> 좌극한은 \(2^2 = 4\), 우극한은 \(2a - 2\)입니다. \(2a - 2 = 4\)에서 \(a = 3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>\(-2\)를 빠뜨렸습니다.</b> \(2a = 4\)로 놓으면 \(a = 2\)가 되지만, 우극한은 \(2a - 2\)이므로 이때 우극한은 2가 되어 좌극한 4와 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>좌극한을 2로 잘못 구했습니다.</b> \(x \to 2^-\)일 때 \(x^2 \to 4\)입니다. \(2a - 2 = 2\)에서 나온 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(a\)로도 존재하지 않는다<span class="why"><b>식이 바뀌면 극한이 없다고 보았습니다.</b> 식이 바뀌어도 좌극한과 우극한이 같으면 극한이 존재합니다. \(a = 3\)이면 둘 다 4입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞다.</b> 좌극한은 \(2^2 = 4\), 우극한은 \(2a - 2\)이다. \(2a - 2 = 4\)에서 \(a = 3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2<span class="why"><b>\(-2\)를 빠뜨렸다.</b> \(2a = 4\)로 놓으면 \(a = 2\)가 되지만, 우극한은 \(2a - 2\)이므로 이때 우극한은 2가 되어 좌극한 4와 다르다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>좌극한을 2로 잘못 구했다.</b> \(x \to 2^-\)일 때 \(x^2 \to 4\)이다. \(2a - 2 = 2\)에서 나온 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(a\)로도 존재하지 않는다<span class="why"><b>식이 바뀌면 극한이 없다고 보았다.</b> 식이 바뀌어도 좌극한과 우극한이 같으면 극한이 존재한다. \(a = 3\)이면 둘 다 4이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-3.html#card-calc1-cont-three"><small class="mono">미적분Ⅰ 1.3</small>그래프가 '이어져 있다'는 것을 극한으로 어떻게 말할까?</a><a href="../../c/calc1/1-3.html#card-calc1-cont-interval"><small class="mono">미적분Ⅰ 1.3</small>구간의 끝점까지 연속이라는 것은 무슨 뜻일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-3.html#card-calc1-cont-three"><small class="mono">미적분Ⅰ 1.3</small>그래프가 '이어져 있다'는 것을 극한으로 어떻게 말할까?</a><a href="../../c/calc1/1-3.html#card-calc1-cont-interval"><small class="mono">미적분Ⅰ 1.3</small>구간의 끝점까지 연속이라는 것은 무슨 뜻일까?</a><a href="../../c/calc1/1-3.html#text-calc1-continuity"><small class="mono">미적분Ⅰ 1.3</small>함수의 연속</a></div></nav>
 
       <article class="card" id="card-calc1-infinity">
         <header class="card-head">
-          <span class="no">1.1.3</span><h2>함숫값이 한없이 커지는 것도 극한이라고 할까?</h2><span class="kind">발산 · 무한대 · \(x \to \infty\)</span>
+          <span class="no">탐구 3</span><h2>함숫값이 한없이 커지는 것도 극한이라고 할까?</h2><span class="kind">발산 · 무한대 · \(x \to \infty\)</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -180,39 +233,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x\)가 0에 가까워지면 \(\frac{1}{x^2}\)은 끝없이 커집니다. 한 값으로 모이지 않으니 수렴하지 않습니다. 그렇다면 이런 움직임은 어떻게 말하고 어떻게 쓸까요? 거꾸로 \(x\)가 끝없이 커질 때 함숫값이 한 값으로 모이는 경우는 어떻게 쓸까요?</li>
-            <li><span class="tag">복원</span>\(f(x)\)가 한 값 \(L\)에 한없이 가까워지면 수렴한다고 하고 그 값을 극한값이라 합니다. 좌극한과 우극한이 같아야 극한값이 존재합니다.</li>
-            <li><span class="tag">설명</span>함수가 수렴하지 않으면 <em>발산</em>한다고 합니다. \(x \to a\)일 때 \(f(x)\)의 값이 한없이 커지면 \(f(x)\)는 <em>양의 무한대</em>로 발산한다고 하고 \(\lim_{x \to a} f(x) = \infty\)로 씁니다. 음수이면서 절댓값이 한없이 커지면 음의 무한대로 발산한다고 하고 \(-\infty\)로 씁니다. \(\infty\)는 수가 아니라 '한없이 커지는 상태'를 나타내는 기호입니다. 또 \(x\)가 한없이 커지는 것을 \(x \to \infty\), 음수이면서 절댓값이 한없이 커지는 것을 \(x \to -\infty\)로 쓰고, 이때 \(f(x)\)가 \(L\)에 가까워지면 \(\lim_{x \to \infty} f(x) = L\)로 씁니다.</li>
-            <li><span class="tag">연결</span>\(\frac{1}{x^2}\)은 양쪽 모두 \(\infty\)로 가므로 \(\lim_{x \to 0} \frac{1}{x^2} = \infty\)라고 씁니다. \(\frac{1}{x}\)는 오른쪽에서 \(\infty\), 왼쪽에서 \(-\infty\)로 가므로 한쪽씩만 쓸 수 있고, \(\lim_{x \to 0} \frac{1}{x}\)는 쓸 수 없습니다. \(\frac{2x + 1}{x} = 2 + \frac{1}{x}\)이므로 \(x \to \infty\)에서도 \(x \to -\infty\)에서도 2로 수렴합니다. 이때 직선 \(y = 2\)가 그래프의 점근선입니다.</li>
-            <li><span class="tag">적용</span>첫째 함수에서 \(t\)를 1씩 올리면 \(x\)는 \(\frac{1}{10}\)로 줄고 \(f(x)\)는 몇 배가 되나요? 둘째 함수에서 방향 버튼을 바꾸어 부호가 어떻게 달라지는지 보세요. 셋째 함수에서는 \(f(x)\)와 2의 차이가 \(x\)와 어떤 관계인지 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(\lim f(x) = \infty\)는 '극한값이 \(\infty\)'라는 뜻이 아닙니다. 극한값은 실수이고, 이 식은 발산하는 방식을 적은 것입니다. 그래서 \(\infty\)에는 수의 계산 규칙을 그대로 쓸 수 없습니다. \(\infty - \infty\)을 0으로, \(\infty/\infty\)을 1로 두면 틀립니다. 이런 꼴은 식을 고쳐서 따로 구해야 합니다.</li>
+            <li><span class="tag">질문</span>\(x\)가 0에 가까워지면 \(\frac{1}{x^2}\)은 끝없이 커진다. 한 값으로 모이지 않으니 수렴하지 않는다. 그렇다면 이런 움직임은 어떻게 말하고 어떻게 쓸까? 거꾸로 \(x\)가 끝없이 커질 때 함숫값이 한 값으로 모이는 경우는 어떻게 쓸까?</li>
+            <li><span class="tag">복원</span>\(f(x)\)가 한 값 \(L\)에 한없이 가까워지면 수렴한다고 하고 그 값을 극한값이라 한다. 그리고 좌극한과 우극한이 같아야 극한값이 존재한다.</li>
+            <li><span class="tag">설명</span>함수가 수렴하지 않으면 <em>발산</em>한다고 한다. \(x \to a\)일 때 \(f(x)\)의 값이 한없이 커지면 \(f(x)\)는 <em>양의 무한대</em>로 발산한다고 하고 \(\lim_{x \to a} f(x) = \infty\)로 쓴다. 음수이면서 절댓값이 한없이 커지면 음의 무한대로 발산한다고 하고 \(-\infty\)로 쓴다. 이때 \(\infty\)는 수가 아니라 '한없이 커지는 상태'를 나타내는 기호이다. 또 \(x\)가 한없이 커지는 것을 \(x \to \infty\), 음수이면서 절댓값이 한없이 커지는 것을 \(x \to -\infty\)로 쓰고, 이때 \(f(x)\)가 \(L\)에 가까워지면 \(\lim_{x \to \infty} f(x) = L\)로 쓴다.</li>
+            <li><span class="tag">연결</span>그래서 \(\frac{1}{x^2}\)은 양쪽 모두 \(\infty\)로 가므로 \(\lim_{x \to 0} \frac{1}{x^2} = \infty\)라고 쓴다. 반면 \(\frac{1}{x}\)는 오른쪽에서 \(\infty\), 왼쪽에서 \(-\infty\)로 가므로 한쪽씩만 쓸 수 있고, \(\lim_{x \to 0} \frac{1}{x}\)는 쓸 수 없다. 또 \(\frac{2x + 1}{x} = 2 + \frac{1}{x}\)이므로 \(x \to \infty\)에서도 \(x \to -\infty\)에서도 2로 수렴하고, 이때 직선 \(y = 2\)가 그래프의 점근선이다.</li>
+            <li><span class="tag">적용</span>첫째 함수에서 \(t\)를 1씩 올리면 \(x\)는 \(\frac{1}{10}\)로 줄고 \(f(x)\)는 100배가 된다. 둘째 함수에서는 방향 버튼을 바꾸어 부호가 어떻게 달라지는지 보고, 셋째 함수에서는 \(f(x)\)와 2의 차이가 \(x\)와 어떤 관계인지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\lim f(x) = \infty\)는 '극한값이 \(\infty\)'라는 뜻이 아니다. 극한값은 실수이고, 이 식은 발산하는 방식을 적은 것이다. 그래서 \(\infty\)에는 수의 계산 규칙을 그대로 쓸 수 없다. \(\infty - \infty\)을 0으로, \(\infty/\infty\)을 1로 두면 틀리고, 이런 꼴은 식을 고쳐서 따로 구해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = \frac{1}{x - 3}\)에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\lim_{x \to 3} f(x) = \infty\)이다<span class="why"><b>오른쪽만 보았습니다.</b> \(x \to 3^+\)이면 분모가 양수이면서 0으로 가서 \(\infty\)이지만, \(x \to 3^-\)이면 분모가 음수라 \(-\infty\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\lim_{x \to 3^-} f(x) = -\infty\)이고 \(\lim_{x \to \infty} f(x) = 0\)이다<span class="why"><b>맞습니다.</b> 3보다 작은 쪽에서는 분모가 음수이면서 0에 가까워지고, \(x\)가 한없이 커지면 분모가 한없이 커져 몫은 0에 가까워집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\lim_{x \to 3} f(x) = 0\)이다<span class="why"><b>분자와 분모를 바꾸어 보았습니다.</b> \(x - 3\)이 0으로 가는 것이고, 그 역수는 절댓값이 한없이 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\lim_{x \to \infty} f(x) = \infty\)이다<span class="why"><b>분모가 커지면 몫도 커진다고 보았습니다.</b> 분자는 1로 그대로이고 분모만 커지므로 몫은 0으로 갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\lim_{x \to 3} f(x) = \infty\)이다<span class="why"><b>오른쪽만 보았다.</b> \(x \to 3^+\)이면 분모가 양수이면서 0으로 가서 \(\infty\)이지만, \(x \to 3^-\)이면 분모가 음수라 \(-\infty\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\lim_{x \to 3^-} f(x) = -\infty\)이고 \(\lim_{x \to \infty} f(x) = 0\)이다<span class="why"><b>맞다.</b> 3보다 작은 쪽에서는 분모가 음수이면서 0에 가까워지고, \(x\)가 한없이 커지면 분모가 한없이 커져 몫은 0에 가까워진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\lim_{x \to 3} f(x) = 0\)이다<span class="why"><b>분자와 분모를 바꾸어 보았다.</b> \(x - 3\)이 0으로 가는 것이고, 그 역수는 절댓값이 한없이 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\lim_{x \to \infty} f(x) = \infty\)이다<span class="why"><b>분모가 커지면 몫도 커진다고 보았다.</b> 분자는 1로 그대로이고 분모만 커지므로 몫은 0으로 간다.</span></span></button></li>
           </ol>
         </div>
       </article>
       <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/1-2.html#card-calc1-indeterminate"><small class="mono">미적분Ⅰ 1.2</small>대입하면 0/0이 나오는 식의 극한값은 어떻게 구할까?</a><a href="../../c/calc1/1-2.html#card-calc1-lim-coef"><small class="mono">미적분Ⅰ 1.2</small>분모가 0으로 가는데 극한값이 있다면 분자는?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">146문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">146문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -220,6 +274,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/lim-approach.js"></script>
 <script src="../../js/cards/calc1/one-sided.js"></script>

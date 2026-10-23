@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이상 기체와 부분 압력 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이상 기체 방정식 PV = nRT를 이해하고 활용하며, 혼합 기체에서 각 성분의 부분 압력이 몰 분율에 비례함(Pᵢ = xᵢP, 돌턴 법칙)을 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adchem-stopcock canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-adchem-stopcock .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px; }
@@ -44,18 +50,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mateng-partial"><span class="mono">2.2.1</span>깊이 잠수할 때는 왜 공기 대신 다른 기체를 마실까?</a></li>
-        <li><a href="#card-adchem-stopcock"><span class="mono">2.2.2</span>콕을 연 두 플라스크와 부분 압력</a></li>
+        <li><a href="#text-adchem-gas-over-water"><span class="mono">본문</span>이상 기체와 부분 압력</a></li>
+        <li><a href="#card-mateng-partial"><span class="mono">탐구 1</span>깊이 잠수할 때는 왜 공기 대신 다른 기체를 마실까?</a></li>
+        <li><a href="#card-adchem-stopcock"><span class="mono">탐구 2</span>콕을 연 두 플라스크와 부분 압력</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adchem-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adchem&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">8문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adchem-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">194문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adchem-gas-over-water" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이상 기체와 부분 압력</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">아연 조각에 묽은 염산을 부으면 수소 기체가 나온다. 이 기체를 물을 가득 채운 눈금 실린더를 거꾸로 세운 곳에 모으면, 물이 밀려나며 기체의 부피를 쉽게 잴 수 있다. 실린더 안팎의 수면 높이를 맞추면 안의 압력은 대기압과 같다. 그런데 이 압력을 그대로 써서 수소의 몰수를 계산하면 실제보다 조금 크게 나온다. 왜 그럴까? 실린더 속 기체는 정말 수소뿐일까?</p>
+          <figure class="q-fig" data-q="adchem-water">
+            <svg viewBox="0 0 520 170" role="img" aria-label="수온에 따른 수증기압과 모은 기체의 부분 압력"></svg>
+            <div class="q-ctl"><label>물의 온도 (°C) <input type="range" data-k="T" min="10" max="40" step="1" value="25"><output data-k="T"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 대기압 760 mmHg에서 물 위에 모은 기체 250 mL. 실린더 속에는 모은 기체와 수증기가 함께 있어, 전체 압력에서 그 온도의 수증기압을 빼야 모은 기체의 부분 압력이 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>이상 기체 상태 방정식, 몰과 기체의 부피(화학), 기체 분자 운동론(<a href="2-1.html">기체 분자 운동론과 속력 분포</a>).</div>
+
+          <h3><span class="no">2.2.1</span>돌턴의 부분 압력 법칙</h3>
+          <p>이상 기체에서는 분자 사이의 힘을 무시하므로, 여러 기체가 섞여 있어도 각 기체는 다른 기체가 없는 것처럼 용기 전체를 채우며 벽에 부딪친다. 그래서 혼합 기체의 전체 압력은 각 기체가 혼자 용기를 채웠을 때의 압력을 더한 값이다. 각 기체의 이 압력을 부분 압력이라 한다. 부분 압력은 그 기체의 몰분율에 비례한다. 공기의 전체 압력이 1 atm이면 몰분율이 약 0.21인 산소의 부분 압력은 약 0.21 atm이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">부분 압력 법칙</span></span>
+            <p>혼합 기체에서 \(P_{\text{전체}} = P_A + P_B + \cdots\)이고, 각 기체의 부분 압력은 \(P_A = x_A P_{\text{전체}}\)이다. \(x_A\)는 몰분율이다. 각 기체에 대해 \(P_A V = n_A RT\)가 따로 성립한다.</p>
+          </div>
+          <p>그림 1에서 수온을 바꾸어 보자. 물 위의 기체 속에는 물이 증발한 수증기가 그 온도의 포화 수증기압만큼 섞여 있다. 25 °C에서 수증기압은 약 23.8 mmHg이므로, 전체 압력 760 mmHg 가운데 모은 기체의 부분 압력은 약 736 mmHg이다. 수증기를 무시하면 몰수를 약 3% 크게 계산한다. 수온이 40 °C면 수증기압이 약 55 mmHg로 커져 오차가 8%에 가깝다. 그래서 물 위에서 기체를 모을 때는 반드시 물의 온도를 재어 둔다.<sup class="fn"><a href="#fn-adchem-gas-over-water-1">1</a></sup></p>
+
+          <h3><span class="no">2.2.2</span>부분 압력이 중요한 곳</h3>
+          <p>우리 몸이 산소를 얼마나 받아들이는지는 공기의 전체 압력이 아니라 산소의 부분 압력이 정한다. 해발 5000 m의 높은 산에서는 공기의 산소 몰분율은 그대로 21%이지만, 전체 압력이 약 0.53 atm으로 낮아 산소의 부분 압력이 0.11 atm으로 떨어진다. 그래서 숨이 차고 고산병이 생긴다. 반대로 깊은 물에 잠수하면 전체 압력이 커져 질소의 부분 압력이 높아지고, 피에 녹는 질소가 늘어난다. 이렇게 혼합 기체의 행동은 각 성분의 부분 압력으로 따진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="온도에 따른 물의 포화 수증기압">
+              <g class="s">
+                <text x="20" y="22">물의 온도</text><text x="170" y="22">포화 수증기압</text><text x="350" y="22">760 mmHg에서의 몫</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">15 °C</text><text x="170" y="52">12.8 mmHg</text><text x="350" y="52">1.7%</text>
+                <text x="20" y="74">25 °C</text><text x="170" y="74">23.8 mmHg</text><text x="350" y="74">3.1%</text>
+                <text x="20" y="96">35 °C</text><text x="170" y="96">42.2 mmHg</text><text x="350" y="96">5.6%</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 물의 온도가 10 °C 오를 때마다 수증기압은 거의 두 배가 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>아연과 묽은 염산을 반응시켜 25 °C의 물 위에서 수소 기체 250 mL를 모았다. 대기압은 760 mmHg이고 25 °C의 수증기압은 23.8 mmHg이다. 모은 수소는 몇 몰이며, 반응한 아연은 몇 g인가? 아연의 원자량은 65.4이다.</p>
+          </div>
+          <p>수소의 부분 압력은 \(760 - 23.8 = 736.2\) mmHg, 곧 \(736.2 \div 760 \approx 0.969\) atm이다. 이상 기체 상태 방정식에서 \(n = \dfrac{PV}{RT} = \dfrac{0.969 \times 0.250}{0.0821 \times 298} \approx 9.90 \times 10^{-3}\) mol이다.</p>
+          <p>Zn + 2HCl → ZnCl₂ + H₂에서 아연 1 mol이 수소 1 mol을 내므로, 반응한 아연은 \(9.90 \times 10^{-3} \times 65.4 \approx 0.647\) g이다. 수증기를 빼지 않았다면 수소를 \(1.021 \times 10^{-2}\) mol로 계산해 아연을 0.668 g으로 잘못 구했을 것이다. 즉 3%의 차이도 정밀한 실험에서는 무시할 수 없다. 그래서 기체의 양을 잴 때는 그 기체와 함께 있는 다른 기체의 부분 압력을 먼저 따진다.</p>
+          <p>아래 탐구 카드에서 혼합 기체의 부분 압력을 계산해 보고, 기체를 물 위에서 모을 때의 보정을 실험 자료에 적용해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adchem-gas-over-water-1">돌턴은 1801년 공기 속 수증기의 양이 날씨에 따라 달라져도 공기의 다른 성분의 압력은 그대로라는 데서 이 법칙을 찾았다. 그는 기상 관측을 평생 이어 가며 날마다 기록을 남겼다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>이상 기체의 혼합물에서 전체 압력은 각 기체의 부분 압력의 합이고, 각 기체의 부분 압력은 몰분율에 비례하며 상태 방정식을 따로 만족한다. 물 위에서 모은 기체에는 그 온도의 포화 수증기압만큼 수증기가 섞여 있다. 그래서 처음 질문의 수소는 전체 압력에서 수증기압을 뺀 부분 압력으로 계산해야 몰수를 바르게 구할 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/1-2.html#text-mateng-partial-pressure"><small class="mono">물질과 에너지 1.2</small>부분 압력과 몰 분율</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/2-1.html#card-labearth-humidity"><small class="mono">고급 지구과학 2.1</small>공기를 압축하면 수증기량은 늘어날까, 그대로일까?</a><a href="../../c/labearth/2-1.html#text-labearth-mixing"><small class="mono">지구과학 실험 2.1</small>혼합비·비습과 수증기량</a><a href="../../c/adchem/4-1.html#card-adchem-ice"><small class="mono">고급 화학 4.1</small>아무렇게나 섞은 기체는 어디에서 멈출까?</a></div></nav>
+
       <article class="card" id="card-mateng-partial">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>깊이 잠수할 때는 왜 공기 대신 다른 기체를 마실까?</h2><span class="kind">부분 압력 · 몰 분율</span>
+          <span class="no">탐구 1</span><h2>깊이 잠수할 때는 왜 공기 대신 다른 기체를 마실까?</h2><span class="kind">부분 압력 · 몰 분율</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,42 +132,42 @@
                 <div><dt>질소 부분 압력</dt><dd class="n-n2">—</dd></div>
                 <div><dt>판정</dt><dd class="n-judge">—</dd></div>
               </dl>
-              <p class="fig-note">부분 압력 = 몰 분율 × 전체 압력. 물속에서는 10 m마다 약 1 atm씩 늘어납니다. 안전 기준은 레저 잠수에서 흔히 쓰는 대략값입니다(산소 0.16 atm 미만 저산소, 1.4 atm 초과 산소 중독 위험, 질소 약 3.2 atm 초과 질소 마취). 실제 잠수에는 교육과 장비가 필요합니다.</p>
+              <p class="fig-note">부분 압력은 몰 분율에 전체 압력을 곱해 구하고, 물속에서는 10 m마다 약 1 atm씩 늘어난다. 안전 기준은 레저 잠수에서 흔히 쓰는 대략값이며(산소 0.16 atm 미만 저산소, 1.4 atm 초과 산소 중독 위험, 질소 약 3.2 atm 초과 질소 마취), 실제 잠수에는 교육과 장비가 필요하다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공기통을 메고 40 m 아래로 잠수하면 공기 속 산소의 비율은 해수면과 같은 21 %입니다. 그런데도 깊이 잠수하는 사람은 산소 비율이 더 낮은 혼합 기체를 씁니다. 왜 그럴까요?</li>
-            <li><span class="tag">복원</span>이상 기체에서 압력은 분자의 수에 비례합니다. 기체 분자들은 서로 거의 간섭하지 않고 저마다 벽에 부딪칩니다.</li>
-            <li><span class="tag">설명</span>혼합 기체의 전체 압력은 각 성분 기체가 혼자 그 용기를 채웠을 때의 압력, 곧 <em>부분 압력</em>의 합입니다(돌턴의 부분 압력 법칙). 각 성분의 부분 압력은 전체 압력에 그 성분의 <em>몰 분율</em>(전체 몰수 가운데 그 성분이 차지하는 비율)을 곱한 값입니다.</li>
-            <li><span class="tag">연결</span>몸에 들어오는 산소의 양과 독성은 비율이 아니라 산소의 부분 압력으로 정해집니다. 에베레스트 정상에서는 산소 비율이 21 %로 같아도 전체 압력이 1/3이라 산소 부분 압력이 0.07 atm밖에 안 됩니다. 반대로 수심 40 m에서는 공기의 산소 부분 압력이 1 atm을 넘고 질소 부분 압력도 커져, 산소 중독과 질소 마취의 위험이 생깁니다.</li>
-            <li><span class="tag">적용</span>공기를 고르고 장소를 해수면에서 수심 20 m, 40 m, 60 m로 바꿔 보세요. 어느 깊이부터 위험 표시가 나오나요? 같은 깊이에서 트라이믹스로 바꾸면 어떻게 되나요? 에베레스트 정상에서 의료용 산소를 마시면 산소 부분 압력은 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>“산소는 많을수록 좋다”는 오개념입니다. 산소 부분 압력이 너무 높으면 신경계에 독성이 나타나 경련을 일으킬 수 있습니다. 그래서 깊이 잠수할 때는 산소 비율을 오히려 낮추고, 질소 일부를 마취 작용이 약한 헬륨으로 바꾼 트라이믹스를 씁니다.</li>
+            <li><span class="tag">질문</span>공기통을 메고 40 m 아래로 잠수해도 공기 속 산소의 비율은 해수면과 같은 21 %이다. 그런데도 깊이 잠수하는 사람은 산소 비율이 더 낮은 혼합 기체를 쓴다. 왜 그럴까?</li>
+            <li><span class="tag">복원</span>이상 기체에서 압력은 분자의 수에 비례한다. 그리고 기체 분자들은 서로 거의 간섭하지 않고 저마다 벽에 부딪친다.</li>
+            <li><span class="tag">설명</span>혼합 기체의 전체 압력은 각 성분 기체가 혼자 그 용기를 채웠을 때의 압력, 곧 <em>부분 압력</em>의 합이다(돌턴의 부분 압력 법칙). 그리고 각 성분의 부분 압력은 전체 압력에 그 성분의 <em>몰 분율</em>(전체 몰수 가운데 그 성분이 차지하는 비율)을 곱한 값이다.</li>
+            <li><span class="tag">연결</span>몸에 들어오는 산소의 양과 독성은 비율이 아니라 산소의 부분 압력으로 정해진다. 그래서 에베레스트 정상에서는 산소 비율이 21 %로 같아도 전체 압력이 1/3이라 산소 부분 압력이 0.07 atm밖에 안 된다. 반대로 수심 40 m에서는 공기의 산소 부분 압력이 1 atm을 넘고 질소 부분 압력도 커져, 산소 중독과 질소 마취의 위험이 생긴다.</li>
+            <li><span class="tag">적용</span>공기를 고르고 장소를 해수면에서 수심 20 m, 40 m, 60 m로 바꿔 어느 깊이부터 위험 표시가 나오는지 보자. 그리고 같은 깊이에서 트라이믹스로 바꾸면 어떻게 되는지, 에베레스트 정상에서 의료용 산소를 마시면 산소 부분 압력이 얼마인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘산소는 많을수록 좋다’는 생각은 오개념이다. 산소 부분 압력이 너무 높으면 신경계에 독성이 나타나 경련을 일으킬 수 있기 때문이다. 그래서 깊이 잠수할 때는 산소 비율을 오히려 낮추고, 질소 일부를 마취 작용이 약한 헬륨으로 바꾼 트라이믹스를 쓴다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">산소 32 %, 질소 68 %인 나이트록스로 수심 30 m(전체 압력 4 atm)에 있습니다. 산소의 부분 압력은?</p>
+          <p class="q">산소 32 %, 질소 68 %인 나이트록스로 수심 30 m(전체 압력 4 atm)에 있다. 산소의 부분 압력은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.32 atm<span class="why"><b>해수면(1 atm)의 값입니다.</b> 부분 압력은 전체 압력에 비례해 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1.28 atm<span class="why"><b>맞습니다.</b> 0.32 × 4 = 1.28 atm으로, 흔히 쓰는 한계 1.4 atm보다 조금 낮습니다. 더 깊이 내려가면 이 기체는 위험해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.72 atm<span class="why"><b>질소의 부분 압력(0.68 × 4)입니다.</b> 산소는 몰 분율 0.32를 곱합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.32 atm<span class="why"><b>해수면(1 atm)의 값이다.</b> 부분 압력은 전체 압력에 비례해 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>1.28 atm<span class="why"><b>맞다.</b> 0.32 × 4 = 1.28 atm으로, 흔히 쓰는 한계 1.4 atm보다 조금 낮다. 더 깊이 내려가면 이 기체는 위험해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.72 atm<span class="why"><b>질소의 부분 압력(0.68 × 4)이다.</b> 산소는 몰 분율 0.32를 곱한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/2-1.html#card-labearth-humidity"><small class="mono">고급 지구과학 2.1</small>공기를 압축하면 수증기량은 늘어날까, 그대로일까?</a><a href="../../c/adchem/4-1.html#card-adchem-ice"><small class="mono">고급 화학 4.1</small>아무렇게나 섞은 기체는 어디에서 멈출까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/2-1.html#card-labearth-humidity"><small class="mono">고급 지구과학 2.1</small>공기를 압축하면 수증기량은 늘어날까, 그대로일까?</a><a href="../../c/labearth/2-1.html#text-labearth-mixing"><small class="mono">지구과학 실험 2.1</small>혼합비·비습과 수증기량</a><a href="../../c/adchem/4-1.html#card-adchem-ice"><small class="mono">고급 화학 4.1</small>아무렇게나 섞은 기체는 어디에서 멈출까?</a></div></nav>
 
       <article class="card" id="card-adchem-stopcock">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>콕을 열어 두 기체를 섞으면 각 기체의 압력은 어떻게 될까?</h2><span class="kind">이상 기체 방정식 · 돌턴의 부분 압력 법칙 · 몰 분율</span>
+          <span class="no">탐구 2</span><h2>콕을 열어 두 기체를 섞으면 각 기체의 압력은 어떻게 될까?</h2><span class="kind">이상 기체 방정식 · 돌턴의 부분 압력 법칙 · 몰 분율</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <canvas aria-label="위: 콕으로 이어진 두 플라스크 속 N₂(초록)와 다른 기체(주황) 분자. 아래: 각 플라스크 속 성분 기체의 부분 압력 막대"></canvas>
             <div class="ctl">
               <div class="presets" role="group" aria-label="오른쪽 플라스크의 기체">
-                <button type="button" class="chip" data-g="O2" aria-pressed="true">오른쪽: O₂</button>
-                <button type="button" class="chip" data-g="He" aria-pressed="false">오른쪽: He</button>
-                <button type="button" class="chip" data-g="CO2" aria-pressed="false">오른쪽: CO₂</button>
+                <button type="button" class="chip" data-g="O2" aria-pressed="true">오른쪽에 O₂</button>
+                <button type="button" class="chip" data-g="He" aria-pressed="false">오른쪽에 He</button>
+                <button type="button" class="chip" data-g="CO2" aria-pressed="false">오른쪽에 CO₂</button>
               </div>
               <div class="row2">
                 <label class="mono">P<sub>A</sub> (N₂) = <output class="pa-out">2.0</output> atm<input class="pa" type="range" min="0.2" max="3" step="0.1" value="2" aria-label="왼쪽 플라스크 압력"></label>
@@ -125,47 +183,52 @@
                 <div><dt>몰 분율 x (N₂ / 오른쪽 기체)</dt><dd class="n-x">—</dd></div>
                 <div><dt>혼합 기체의 평균 몰 질량</dt><dd class="n-m">—</dd></div>
               </dl>
-              <p class="fig-note">온도는 25 °C(298 K)로 일정하고, 콕과 관의 부피는 무시했습니다. 분자 점 하나는 1/1500 mol을 나타내는 모식입니다. 아래 막대는 지금 각 플라스크에 있는 점의 수로 계산한 부분 압력(P<sub>i</sub> = n<sub>i</sub>RT/V)이고, 가는 선은 평형에서의 이론값입니다.</p>
+              <p class="fig-note">온도는 25 °C(298 K)로 일정하고, 콕과 관의 부피는 무시했다. 분자 점 하나는 1/1500 mol을 나타내는 모식이다. 아래 막대는 지금 각 플라스크에 있는 점의 수로 계산한 부분 압력(P<sub>i</sub> = n<sub>i</sub>RT/V)이고, 가는 선은 평형에서의 이론값이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>왼쪽 1 L 플라스크에는 2 atm의 N₂가, 오른쪽 2 L 플라스크에는 1 atm의 O₂가 들어 있습니다. 둘을 잇는 콕을 열면 전체 압력은 몇 atm이 될까요? N₂와 O₂는 각각 어떤 압력을 ‘맡게’ 될까요?</li>
-            <li><span class="tag">복원</span>이상 기체 방정식 <em>PV = nRT</em>는 보일·샤를·아보가드로 법칙을 하나로 묶은 식입니다(R = 0.08206 atm·L/(mol·K) = 8.314 J/(mol·K)). 기체 분자 운동론에서 압력은 분자가 벽에 부딪치는 횟수와 세기로 정해지고, 이상 기체의 분자는 서로 영향을 주지 않습니다.</li>
-            <li><span class="tag">설명</span>분자끼리 영향을 주지 않으므로, 혼합 기체 속 각 성분은 혼자 그 용기 전체를 채운 것처럼 압력을 냅니다. 이것이 <em>부분 압력</em> P<sub>i</sub> = n<sub>i</sub>RT/V이고, 전체 압력은 부분 압력의 합입니다(<em>돌턴 법칙</em>, P<sub>전체</sub> = ΣP<sub>i</sub>). 두 식을 나누면 P<sub>i</sub>/P<sub>전체</sub> = n<sub>i</sub>/n<sub>전체</sub>, 곧 <em>P<sub>i</sub> = x<sub>i</sub>P<sub>전체</sub></em>입니다. 몰 분율 x<sub>i</sub>만 알면 전체 압력을 나눠 가질 수 있습니다. 콕을 열면 온도가 같으므로 각 기체는 보일 법칙대로 퍼집니다. N₂: 2 atm × 1 L / 3 L = 0.67 atm, O₂: 1 atm × 2 L / 3 L = 0.67 atm, 전체 1.33 atm입니다.</li>
-            <li><span class="tag">연결</span>물 위에서 모은 기체에는 수증기가 섞여 있어, 모은 기체의 부분 압력은 P<sub>대기</sub> − P<sub>수증기</sub>(25 °C에서 23.8 mmHg)입니다. 혼합 기체의 평균 몰 질량 M̄ = Σx<sub>i</sub>M<sub>i</sub>를 쓰면 밀도도 ρ = PM̄/RT로 구할 수 있습니다. 공기(M̄ ≈ 29.0 g/mol)보다 가벼운 He 풍선이 뜨고, 무거운 CO₂가 낮은 곳에 고이는 까닭입니다.</li>
-            <li><span class="tag">적용</span>콕을 열고 분자가 섞이는 동안 막대가 이론값(가는 선)으로 다가가는지 보세요. 평형이 된 뒤 두 플라스크의 N₂ 부분 압력은 같나요? 이번에는 콕을 닫고 V<sub>B</sub>를 3 L로 늘린 다음 다시 열어, 몰 분율과 부분 압력 가운데 무엇이 달라지고 무엇이 그대로인지 확인하세요. 오른쪽 기체를 He로 바꾸면 섞이는 빠르기는 어떤가요?</li>
-            <li class="warn"><span class="tag">판단</span>“기체가 섞이면 무거운 기체가 압력을 더 많이 낸다”는 오해입니다. 같은 온도에서 분자 1개가 벽에 주는 평균 효과는 질량과 상관없으므로, 부분 압력은 질량 분율이 아니라 몰 분율에 비례합니다. 또 돌턴 법칙은 분자 사이 힘을 무시한 이상 기체의 결과입니다. 수백 기압처럼 압력이 매우 높거나 두 기체가 서로 반응하면(NO + O₂처럼) 성립하지 않습니다.</li>
+            <li><span class="tag">질문</span>왼쪽 1 L 플라스크에는 2 atm의 N₂가, 오른쪽 2 L 플라스크에는 1 atm의 O₂가 들어 있다. 둘을 잇는 콕을 열면 전체 압력은 몇 atm이 될까? N₂와 O₂는 각각 어떤 압력을 ‘맡게’ 될까?</li>
+            <li><span class="tag">복원</span>이상 기체 방정식 <em>PV = nRT</em>는 보일·샤를·아보가드로 법칙을 하나로 묶은 식입니다(R = 0.08206 atm·L/(mol·K) = 8.314 J/(mol·K)). 기체 분자 운동론에서 압력은 분자가 벽에 부딪치는 횟수와 세기로 정해지고, 이상 기체의 분자는 서로 영향을 주지 않는다.</li>
+            <li><span class="tag">설명</span>분자끼리 영향을 주지 않으므로, 혼합 기체 속 각 성분은 혼자 그 용기 전체를 채운 것처럼 압력을 낸다. 이것이 <em>부분 압력</em> P<sub>i</sub> = n<sub>i</sub>RT/V이고, 전체 압력은 부분 압력의 합이다(<em>돌턴 법칙</em>, P<sub>전체</sub> = ΣP<sub>i</sub>). 두 식을 나누면 P<sub>i</sub>/P<sub>전체</sub> = n<sub>i</sub>/n<sub>전체</sub>, 곧 <em>P<sub>i</sub> = x<sub>i</sub>P<sub>전체</sub></em>이다. 몰 분율 x<sub>i</sub>만 알면 전체 압력을 나눠 가질 수 있다. 콕을 열면 온도가 같으므로 각 기체는 보일 법칙대로 퍼진다. N₂: 2 atm × 1 L / 3 L = 0.67 atm, O₂: 1 atm × 2 L / 3 L = 0.67 atm, 전체 1.33 atm이다.</li>
+            <li><span class="tag">연결</span>물 위에서 모은 기체에는 수증기가 섞여 있어, 모은 기체의 부분 압력은 P<sub>대기</sub> − P<sub>수증기</sub>(25 °C에서 23.8 mmHg)이다. 혼합 기체의 평균 몰 질량 M̄ = Σx<sub>i</sub>M<sub>i</sub>를 쓰면 밀도도 ρ = PM̄/RT로 구할 수 있다. 공기(M̄ ≈ 29.0 g/mol)보다 가벼운 He 풍선이 뜨고, 무거운 CO₂가 낮은 곳에 고이는 까닭이다.</li>
+            <li><span class="tag">적용</span>콕을 열고 분자가 섞이는 동안 막대가 이론값(가는 선)으로 다가가는지 보자. 평형이 된 뒤 두 플라스크의 N₂ 부분 압력은 같은가? 이번에는 콕을 닫고 V<sub>B</sub>를 3 L로 늘린 다음 다시 열어, 몰 분율과 부분 압력 가운데 무엇이 달라지고 무엇이 그대로인지 확인해 보자. 오른쪽 기체를 He로 바꾸면 섞이는 빠르기는 어떤가?</li>
+            <li class="warn"><span class="tag">판단</span>“기체가 섞이면 무거운 기체가 압력을 더 많이 낸다”는 오해이다. 같은 온도에서 분자 1개가 벽에 주는 평균 효과는 질량과 상관없으므로, 부분 압력은 질량 분율이 아니라 몰 분율에 비례한다. 또 돌턴 법칙은 분자 사이 힘을 무시한 이상 기체의 결과이다. 수백 기압처럼 압력이 매우 높거나 두 기체가 서로 반응하면(NO + O₂처럼) 성립하지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">25 °C, 대기압 760 mmHg에서 물 위로 수소 기체를 모았더니 부피가 250 mL였습니다(25 °C의 수증기압 23.8 mmHg). 모은 수소의 양에 대한 설명으로 옳은 것은?</p>
+          <p class="q">25 °C, 대기압 760 mmHg에서 물 위로 수소 기체를 모았더니 부피가 250 mL였다(25 °C의 수증기압 23.8 mmHg). 모은 수소의 양에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>수소의 압력은 760 mmHg이므로 n = (1.00 atm)(0.250 L)/RT ≈ 0.0102 mol이다.<span class="why"><b>수증기를 빼야 합니다.</b> 병 속 기체는 수소와 수증기의 혼합 기체라서, 760 mmHg는 두 부분 압력의 합입니다. 그대로 쓰면 수소를 3 %쯤 많게 셉니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>수소의 부분 압력은 736 mmHg이고, n ≈ 0.00990 mol이다.<span class="why"><b>맞습니다.</b> 760 − 23.8 = 736.2 mmHg = 0.969 atm, n = 0.969 × 0.250 / (0.08206 × 298) ≈ 0.00990 mol입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>수소는 물보다 가벼우므로 수증기압을 더해 783.8 mmHg로 계산해야 한다.<span class="why"><b>더하는 것이 아니라 빼는 것입니다.</b> 병 속 전체 압력이 바깥 대기압과 같아지도록 수면 높이를 맞추었으므로, 수소가 맡은 몫은 전체에서 수증기 몫을 뺀 나머지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>수소의 압력은 760 mmHg이므로 n = (1.00 atm)(0.250 L)/RT ≈ 0.0102 mol이다.<span class="why"><b>수증기를 빼야 한다.</b> 병 속 기체는 수소와 수증기의 혼합 기체라서, 760 mmHg는 두 부분 압력의 합이다. 그대로 쓰면 수소를 3 %쯤 많게 센다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>수소의 부분 압력은 736 mmHg이고, n ≈ 0.00990 mol이다.<span class="why"><b>맞다.</b> 760 − 23.8 = 736.2 mmHg = 0.969 atm, n = 0.969 × 0.250 / (0.08206 × 298) ≈ 0.00990 mol이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>수소는 물보다 가벼우므로 수증기압을 더해 783.8 mmHg로 계산해야 한다.<span class="why"><b>더하는 것이 아니라 빼는 것이다.</b> 병 속 전체 압력이 바깥 대기압과 같아지도록 수면 높이를 맞추었으므로, 수소가 맡은 몫은 전체에서 수증기 몫을 뺀 나머지이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adchem/2-1.html#card-adchem-maxwell"><small class="mono">고급 화학 2.1</small>같은 온도의 기체 분자는 모두 같은 속력으로 움직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adchem/2-1.html#card-adchem-maxwell"><small class="mono">고급 화학 2.1</small>같은 온도의 기체 분자는 모두 같은 속력으로 움직일까?</a><a href="../../c/mateng/1-2.html#text-mateng-partial-pressure"><small class="mono">물질과 에너지 1.2</small>부분 압력과 몰 분율</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adchem-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adchem&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">8문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adchem-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">194문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adchem/body.js"></script>
 <script src="../../js/cards/mateng/g-partial.js"></script>
 <script src="../../js/cards/adchem/s2-stopcock.js"></script>
 </body>

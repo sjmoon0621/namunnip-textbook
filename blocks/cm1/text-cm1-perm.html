@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/cm1/body.js"],
+  "sec": "3-2",
+  "short": "본문 · 순열"
+}
+-->
+<article class="card reading" id="text-cm1-perm" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>순열</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">학생 5명 가운데 3명을 뽑아 반장, 부반장, 총무를 한 명씩 맡기려 한다. 방법은 모두 몇 가지일까? 사람이 늘어나면 경우가 너무 많아 다 써 볼 수 없는데, 곱의 법칙으로 어떻게 셀 수 있을까?</p>
+    <figure class="q-fig" data-q="cm1-perm">
+      <svg viewBox="0 0 520 200" role="img" aria-label="n명 가운데 r명을 자리에 차례로 앉힐 때 자리마다 남은 사람 수"></svg>
+      <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="2" max="8" step="1" value="5"><output data-k="n"></output></label><label>\(r\) = <input type="range" data-k="r" min="1" max="8" step="1" value="3"><output data-k="r"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 자리를 하나씩 채울 때마다 고를 수 있는 사람이 하나씩 줄어들므로, 경우의 수는 \(n\)부터 하나씩 줄어드는 수 \(r\)개의 곱이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>곱의 법칙(<a href="3-1.html">합의 법칙과 곱의 법칙</a>), 중학교의 나뭇가지 그림.</div>
+
+    <h3><span class="no">3.2.1</span>자리를 하나씩 채운다</h3>
+    <p>반장 자리부터 채우자. 5명 가운데 누구든 반장이 될 수 있으므로 5가지이다. 반장이 정해지면 그 사람은 부반장이 될 수 없으니 부반장은 남은 4명 가운데에서 고른다. 마지막으로 총무는 남은 3명 가운데에서 고른다.</p>
+    <p>반장이 누구이든 부반장을 고르는 방법은 4가지로 같고, 두 사람이 누구이든 총무를 고르는 방법은 3가지로 같다. 따라서 곱의 법칙에 따라 \(5 \times 4 \times 3 = 60\)가지이다. 그림 1에서 \(n\)과 \(r\)을 바꾸어 보면, 자리마다 적힌 수가 하나씩 줄어들며 곱해지는 모습이 보인다.</p>
+    <div class="tb-env"><span class="lb">정의 3.2.1 <span class="nm">순열</span></span>
+      <p>서로 다른 \(n\)개에서 \(r\)개\((0 &lt; r \le n)\)를 택하여 일렬로 나열하는 것을 \(n\)개에서 \(r\)개를 택하는 <em>순열</em>이라 하고, 그 수를 \({}_n\mathrm{P}_r\)로 나타낸다. \[{}_n\mathrm{P}_r = n(n - 1)(n - 2) \cdots (n - r + 1)\]</p>
+    </div>
+    <p>정의의 마지막 인수가 \(n - r + 1\)인 까닭은 그림 1에서 바로 보인다. 첫째 자리가 \(n\), 둘째 자리가 \(n - 1\)이므로 \(r\)번째 자리는 \(n - (r - 1)\)이다. 처음 질문은 \({}_5\mathrm{P}_3 = 5 \times 4 \times 3 = 60\)이다. 반장, 부반장, 총무라는 이름 때문에 같은 세 사람이라도 맡는 자리가 바뀌면 다른 경우가 된다. 순열이 '순서를 따지는' 셈법인 이유가 이것이다.</p>
+
+    <h3><span class="no">3.2.2</span>계승으로 쓰기</h3>
+    <p>\(n\)명을 모두 일렬로 세우면 \(r = n\)이므로 \({}_n\mathrm{P}_n = n(n - 1) \cdots 2 \cdot 1\)이다. 1부터 \(n\)까지의 곱을 \(n\)의 <em>계승</em>이라 하고 \(n!\)로 쓴다. 가령 \(4! = 24\), \(5! = 120\)이다.</p>
+    <p>계승을 쓰면 순열의 수를 한 덩어리로 나타낼 수 있다. \({}_5\mathrm{P}_3 = 5 \times 4 \times 3\)에 \(\dfrac{2 \times 1}{2 \times 1}\)을 곱하면 \(\dfrac{5!}{2!}\)이다. 즉 \(n!\)에서 쓰지 않는 뒤쪽 \((n - r)!\)을 나누어 없앤 것이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.2.2 <span class="nm">계승을 이용한 순열의 수</span></span>
+      <p>\[{}_n\mathrm{P}_r = \frac{n!}{(n - r)!} \quad (0 \le r \le n)\] 이때 \(0! = 1\), \({}_n\mathrm{P}_0 = 1\)로 정한다.</p>
+    </div>
+    <p>\(0! = 1\)이라는 약속은 이상해 보이지만, 공식이 \(r = n\)일 때도 통하게 하려면 필요하다. \({}_n\mathrm{P}_n = \dfrac{n!}{0!}\)이 \(n!\)과 같아야 하기 때문이다.<sup class="fn"><a href="#fn-cm1-perm-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 200" role="img" aria-label="A, B, C 세 문자를 나열하는 나뭇가지 그림">
+        <text x="40" y="104">시작</text>
+        <line x1="80" y1="100" x2="150" y2="40" class="ax"/><line x1="80" y1="100" x2="150" y2="100" class="ax"/><line x1="80" y1="100" x2="150" y2="160" class="ax"/>
+        <text x="160" y="44" class="ta">A</text><text x="160" y="104" class="ta">B</text><text x="160" y="164" class="ta">C</text>
+        <line x1="178" y1="40" x2="250" y2="22" class="ax"/><line x1="178" y1="40" x2="250" y2="58" class="ax"/><line x1="178" y1="100" x2="250" y2="82" class="ax"/><line x1="178" y1="100" x2="250" y2="118" class="ax"/><line x1="178" y1="160" x2="250" y2="142" class="ax"/><line x1="178" y1="160" x2="250" y2="178" class="ax"/>
+        <text x="258" y="26" class="tb">B</text><text x="258" y="62" class="tb">C</text><text x="258" y="86" class="tb">A</text><text x="258" y="122" class="tb">C</text><text x="258" y="146" class="tb">A</text><text x="258" y="182" class="tb">B</text>
+        <text x="300" y="26">→ C   ABC</text><text x="300" y="62">→ B   ACB</text><text x="300" y="86">→ C   BAC</text><text x="300" y="122">→ A   BCA</text><text x="300" y="146">→ B   CAB</text><text x="300" y="182">→ A   CBA</text>
+        <text x="470" y="104" class="s" text-anchor="middle">3 × 2 × 1</text>
+      </svg>
+      <figcaption>그림 2. 나뭇가지는 단계마다 하나씩 덜 갈라지고, 끝에 달린 가지의 수가 \(3! = 6\)이다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.2.3</span>
+      <p>남학생 3명과 여학생 2명이 일렬로 설 때, 여학생 2명이 서로 이웃하는 방법의 수와 이웃하지 않는 방법의 수를 구하여라.</p>
+    </div>
+    <p>이웃하는 경우에는 여학생 2명을 한 덩어리로 묶는다. 그러면 남학생 3명과 덩어리 1개, 모두 4개를 일렬로 세우는 일이 되어 \(4! = 24\)가지이다. 그런데 덩어리 안에서 두 여학생이 서는 순서도 \(2! = 2\)가지가 있다. 덩어리를 어떻게 세우든 안의 순서는 2가지이므로 곱의 법칙에 따라 \(24 \times 2 = 48\)가지이다.</p>
+    <p>이웃하지 않는 경우는 전체에서 뺄 수도 있다. 5명을 일렬로 세우는 방법은 \(5! = 120\)가지이므로 \(120 - 48 = 72\)가지이다. 다른 방법으로 세어 확인해 보자. 남학생 3명을 먼저 세우면 \(3! = 6\)가지이고, 남학생 사이와 양 끝의 빈자리 4곳 가운데 2곳을 골라 여학생을 순서 있게 세우면 \({}_4\mathrm{P}_2 = 12\)가지이다. 따라서 \(6 \times 12 = 72\)로 같다.</p>
+    <p>두 방법이 같은 답을 주었으니 셈이 맞을 가능성이 높다. 셈법을 두 가지로 바꾸어 확인하는 습관은 경우의 수에서 특히 쓸모가 있다. 아래 탐구 카드에서 자리를 채우는 순서와 나뭇가지 그림을 직접 조작해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-cm1-perm-1">\({}_n\mathrm{P}_0 = 1\)은 '아무것도 고르지 않고 늘어놓는 방법'이 한 가지라는 뜻으로 읽을 수 있다. 빈 줄 하나가 그 한 가지이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>서로 다른 \(n\)개에서 \(r\)개를 골라 순서 있게 늘어놓을 때, 자리를 하나씩 채울 때마다 고를 수 있는 것이 하나씩 줄어들므로 곱의 법칙에 따라 \({}_n\mathrm{P}_r = n(n - 1) \cdots (n - r + 1) = \tfrac{n!}{(n - r)!}\)이다. 처음 질문은 \({}_5\mathrm{P}_3 = 60\)가지이다.</p></div>
+  </div>
+</article>

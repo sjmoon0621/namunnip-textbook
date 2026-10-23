@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>위치벡터 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="위치벡터, AB = OB − OA, 내분점·외분점·무게중심의 위치벡터, 평면벡터와 공간벡터의 성분, 성분으로 하는 연산과 크기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-pos-section .vec { display: inline-block; position: relative; padding-top: .3em; line-height: 1; }
@@ -56,19 +61,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-geo-pos-section"><span class="mono">3.2.1</span>위치벡터와 내분점</a></li>
-        <li><a href="#card-geo-components"><span class="mono">3.2.2</span>벡터의 성분</a></li>
-        <li><a href="#card-geo-space-components"><span class="mono">3.2.3</span>공간벡터의 성분</a></li>
+        <li><a href="#text-geo-position-vec"><span class="mono">본문</span>위치벡터</a></li>
+        <li><a href="#card-geo-pos-section"><span class="mono">탐구 1</span>위치벡터와 내분점</a></li>
+        <li><a href="#card-geo-components"><span class="mono">탐구 2</span>벡터의 성분</a></li>
+        <li><a href="#card-geo-space-components"><span class="mono">탐구 3</span>공간벡터의 성분</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=geo-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">6문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=geo&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=geo-3-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">6문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=geo-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-geo-position-vec" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>위치벡터</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">벡터를 화살표로만 다루면 그림이 복잡해질수록 계산이 어렵다. 그런데 화살표의 시점을 원점에 고정하면 종점 하나로 벡터가 정해지고, 종점은 좌표로 나타낼 수 있다. 그렇다면 벡터의 덧셈과 실수배를 좌표의 계산으로 바꿀 수 있을까? 선분을 나누는 점도 벡터로 깔끔하게 나타낼 수 있을까?</p>
+          <figure class="q-fig" data-q="geo-section">
+            <svg viewBox="0 0 520 230" role="img" aria-label="두 점 A, B의 위치벡터와 선분 AB를 m : n으로 내분하는 점 P의 위치벡터"></svg>
+            <div class="q-ctl"><label>\(m\) (\(m + n = 4\)) <input type="range" data-k="m" min="0" max="4" step="0.5" value="1"><output data-k="m"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 원점에서 A, B로 향하는 위치벡터 \(\vec a\)(파랑), \(\vec b\)(주황). 선분 AB를 \(m : n\)으로 내분하는 점 P의 위치벡터(빨강)는 \(\dfrac{n\vec a + m\vec b}{m + n}\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>벡터의 덧셈과 실수배(<a href="3-1.html">벡터의 연산</a>), 내분점과 외분점의 좌표(공통수학2), 공간좌표(<a href="2-4.html">공간좌표</a>).</div>
+
+          <h3><span class="no">3.2.1</span>위치벡터</h3>
+          <p>한 점 O를 기준으로 정하면, 점 A의 위치는 벡터 \(\overrightarrow{OA}\) 하나로 정해진다. 이를 점 A의 위치벡터라 한다. 위치벡터를 쓰면 두 점을 잇는 벡터는 \(\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \vec b - \vec a\)로, 종점의 위치벡터에서 시점의 위치벡터를 뺀 것이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">내분점과 외분점의 위치벡터</span></span>
+            <p>두 점 A, B의 위치벡터가 \(\vec a\), \(\vec b\)일 때, 선분 AB를 \(m : n\)으로 내분하는 점과 외분하는 점의 위치벡터는 \[\frac{m\vec b + n\vec a}{m + n},\qquad \frac{m\vec b - n\vec a}{m - n}\ (m \ne n)\]</p>
+          </div>
+          <p>내분점 P는 A에서 B 쪽으로 \(\overrightarrow{AB}\)의 \(\dfrac{m}{m+n}\)만큼 간 점이므로 \(\vec p = \vec a + \dfrac{m}{m+n}(\vec b - \vec a)\)이고, 정리하면 위 식이 된다. 그림 1에서 \(m\)을 바꾸어 보면 P가 A에서 B까지 미끄러진다. 중점은 \(\dfrac{\vec a + \vec b}{2}\), 삼각형의 무게중심은 \(\dfrac{\vec a + \vec b + \vec c}{3}\)이다.</p>
+
+          <h3><span class="no">3.2.2</span>벡터의 성분</h3>
+          <p>좌표평면에서 \(x\)축, \(y\)축 방향의 단위벡터를 \(\vec e_1 = (1, 0)\), \(\vec e_2 = (0, 1)\)이라 하자. 위치벡터의 종점이 \((a_1, a_2)\)이면 \(\vec a = a_1\vec e_1 + a_2\vec e_2\)이고, 이를 간단히 \(\vec a = (a_1, a_2)\)로 쓴다. \(a_1\), \(a_2\)를 벡터의 성분이라 한다. 좌표공간에서는 성분이 세 개이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.2 <span class="nm">성분으로 계산하기</span></span>
+            <p>\(\vec a = (a_1, a_2)\), \(\vec b = (b_1, b_2)\)일 때 \(\vec a \pm \vec b = (a_1 \pm b_1, a_2 \pm b_2)\), \(k\vec a = (ka_1, ka_2)\), \(|\vec a| = \sqrt{a_1^2 + a_2^2}\). 공간에서도 성분을 하나 더해 같은 방법으로 계산한다.</p>
+          </div>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="벡터를 x성분과 y성분으로 나누기">
+              <g class="s">
+                <line x1="40" y1="100" x2="200" y2="100" class="ax"/><line x1="40" y1="110" x2="40" y2="10" class="ax"/>
+                <line x1="40" y1="100" x2="160" y2="30" class="d"/><path d="M160 30 l-9 1 l4 7 Z" class="fd"/>
+                <line x1="40" y1="100" x2="160" y2="100" class="b"/><line x1="160" y1="100" x2="160" y2="30" class="c"/>
+                <text x="100" y="114" class="tb">a₁ e₁</text><text x="166" y="70" class="tc">a₂ e₂</text>
+                <text x="240" y="50">a = a₁e₁ + a₂e₂ = (a₁, a₂)</text><text x="240" y="80">화살표 하나 = 수 두 개</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 벡터를 \(x\)축 방향과 \(y\)축 방향의 두 벡터로 나누면, 화살표가 두 수의 순서쌍으로 바뀐다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.3</span>
+            <p>두 점 \(A(1, 1)\), \(B(7, 5)\)에 대하여 \(\overrightarrow{AB}\)의 성분과 크기를 구하고, 선분 AB를 \(1 : 3\)으로 내분하는 점 P와 외분하는 점 Q의 좌표를 구하여라.</p>
+          </div>
+          <p>\(\overrightarrow{AB} = (7 - 1, 5 - 1) = (6, 4)\)이고 크기는 \(\sqrt{36 + 16} = 2\sqrt{13}\)이다.</p>
+          <p>내분점은 \(\vec p = \dfrac{1 \cdot (7, 5) + 3 \cdot (1, 1)}{4} = \dfrac{(10, 8)}{4} = \left(\dfrac{5}{2}, 2\right)\)이다. 외분점은 \(\vec q = \dfrac{1 \cdot (7, 5) - 3 \cdot (1, 1)}{1 - 3} = \dfrac{(4, 2)}{-2} = (-2, -1)\)이다. Q는 A의 바깥쪽, B와 반대편에 있다. 확인하면 \(\overrightarrow{QA} = (3, 2)\), \(\overrightarrow{QB} = (9, 6)\)으로 길이의 비가 \(1 : 3\)이다.<sup class="fn"><a href="#fn-geo-position-vec-1">1</a></sup></p>
+          <p>아래 탐구 카드에서 위치벡터로 선분을 나누는 점을 나타내고, 평면과 공간의 벡터를 성분으로 바꾸어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-geo-position-vec-1">그림 1의 슬라이더로 \(m = 1\)로 맞추면 \(m : n = 1 : 3\)이므로 이 예제의 내분점 \(\left(\dfrac{5}{2}, 2\right)\)이 표시된다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>기준점에서 그은 위치벡터를 쓰면 \(\overrightarrow{AB} = \vec b - \vec a\)이고, 선분을 \(m : n\)으로 내분하는 점은 \(\dfrac{m\vec b + n\vec a}{m + n}\)이다. 단위벡터로 나누면 벡터는 성분의 순서쌍이 되어 덧셈과 실수배를 성분끼리 계산한다. 그래서 처음 질문의 화살표는 평면에서는 수 두 개, 공간에서는 수 세 개로 바뀌어 계산할 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-4.html#text-geo-line-eq"><small class="mono">기하 3.4</small>직선의 방정식</a><a href="../../c/geo/3-5.html#card-geo-sphere-vec"><small class="mono">기하 3.5</small>중심에서 거리가 같은 점을 벡터로 쓰면?</a></div></nav>
+
       <article class="card" id="card-geo-pos-section">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</h2><span class="kind">위치벡터 · 내분점, 외분점</span>
+          <span class="no">탐구 1</span><h2>두 점의 위치벡터로 선분을 나누는 점을 어떻게 나타낼까?</h2><span class="kind">위치벡터 · 내분점, 외분점</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -90,34 +150,34 @@
                 <div><dt>\(\overrightarrow{OB} = \vec{b}\)</dt><dd class="n-b">—</dd></div>
                 <div><dt>\(\overrightarrow{OP} = \vec{p}\)</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">점 A와 B를 끌고 \(m, n\)을 바꾸어 보세요. 괄호 안 수는 점의 좌표이자 위치벡터의 성분입니다.</p>
+              <p class="fig-note">점 A와 B를 끌고 \(m, n\)을 바꾸어 보자. 괄호 안 수는 점의 좌표이자 위치벡터의 성분이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>두 점 A, B를 잇는 선분을 2 : 1로 나누는 점 P는 좌표 공식으로 구할 수 있습니다. 같은 일을 벡터로 하면 평면과 공간에서 한 번에 해결할 수 있을까요?</li>
-            <li><span class="tag">복원</span>공통수학에서 \(A(x_1, y_1), B(x_2, y_2)\)를 \(m : n\)으로 내분하는 점의 좌표가 \((\frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n})\)임을 배웠습니다. 또 \(\overrightarrow{OA} - \overrightarrow{OB} = \overrightarrow{BA}\)였습니다.</li>
-            <li><span class="tag">설명</span>기준점 O를 정하면 점 A에 벡터 \(\overrightarrow{OA}\)가 하나씩 대응합니다. 이 \(\overrightarrow{OA}\)를 점 A의 <em>위치벡터</em>라고 하고 \(\vec{a}\)로 씁니다. 두 점의 위치벡터를 알면 \(\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \vec{b} - \vec{a}\)입니다. 점 P가 선분 AB를 \(m : n(m \gt 0, n \gt 0)\)으로 내분하면 \(\overrightarrow{AP} = \frac{m}{m + n} \overrightarrow{AB}\)이므로<br>\(\vec{p} = \vec{a} + \frac{m}{m + n}(\vec{b} - \vec{a}) = \frac{m\vec{b} + n\vec{a}}{m + n}\)<br>입니다. 외분\((m \ne n)\)이면 \(\vec{p} = \frac{m\vec{b} - n\vec{a}}{m - n}\)입니다. 중점은 \(\frac{\vec{a} + \vec{b}}{2}\), 삼각형 ABC의 무게중심은 \(\frac{\vec{a} + \vec{b} + \vec{c}}{3}\)입니다.</li>
-            <li><span class="tag">연결</span>위치벡터를 성분으로 쓰면 이 식이 그대로 내분점의 좌표 공식이 됩니다. 식에 차원이 들어 있지 않으므로 좌표공간에서도 같은 식이 성립합니다. 또 \(\vec{p} = \vec{a} + t(\vec{b} - \vec{a})\)에서 \(t\)를 모든 실수로 넓히면 직선 AB 전체가 되는데, 이것이 직선의 방정식으로 이어집니다.</li>
-            <li><span class="tag">적용</span>\(m = n\)으로 두고 P가 중점인지 확인하세요. 외분으로 바꾸어 \(m \gt n\)일 때와 \(m \lt n\)일 때 P가 각각 어느 쪽 바깥에 생기는지 보세요. \(m = n\)인 외분은 왜 그려지지 않을까요?</li>
-            <li class="warn"><span class="tag">판단</span>위치벡터는 기준점 O에 따라 달라집니다. 그러나 \(\overrightarrow{AB} = \vec{b} - \vec{a}\)는 O를 어디에 두어도 같습니다. 외분점 식에서 \(m\vec{b} - n\vec{a}\)의 순서를 바꾸어 \(m\vec{a} - n\vec{b}\)로 쓰는 실수가 많습니다. 비의 앞쪽 \(m\)은 언제나 B 쪽 벡터 \(\vec{b}\)에 곱합니다.</li>
+            <li><span class="tag">질문</span>두 점 A, B를 잇는 선분을 2 : 1로 나누는 점 P는 좌표 공식으로 구할 수 있다. 같은 일을 벡터로 하면 평면과 공간에서 한 번에 해결할 수 있을까?</li>
+            <li><span class="tag">복원</span>공통수학에서 \(A(x_1, y_1), B(x_2, y_2)\)를 \(m : n\)으로 내분하는 점의 좌표가 \((\frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n})\)임을 배웠다. 또 \(\overrightarrow{OA} - \overrightarrow{OB} = \overrightarrow{BA}\)였다.</li>
+            <li><span class="tag">설명</span>기준점 O를 정하면 점 A에 벡터 \(\overrightarrow{OA}\)가 하나씩 대응하는데, 이 \(\overrightarrow{OA}\)를 점 A의 <em>위치벡터</em>라고 하고 \(\vec{a}\)로 쓴다. 두 점의 위치벡터를 알면 \(\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA} = \vec{b} - \vec{a}\)이다. 그래서 점 P가 선분 AB를 \(m : n(m \gt 0, n \gt 0)\)으로 내분하면 \(\overrightarrow{AP} = \frac{m}{m + n} \overrightarrow{AB}\)이므로 \(\vec{p} = \vec{a} + \frac{m}{m + n}(\vec{b} - \vec{a}) = \frac{m\vec{b} + n\vec{a}}{m + n}\)이고, 외분\((m \ne n)\)이면 \(\vec{p} = \frac{m\vec{b} - n\vec{a}}{m - n}\)이다. 또 중점은 \(\frac{\vec{a} + \vec{b}}{2}\), 삼각형 ABC의 무게중심은 \(\frac{\vec{a} + \vec{b} + \vec{c}}{3}\)이다.</li>
+            <li><span class="tag">연결</span>위치벡터를 성분으로 쓰면 이 식이 그대로 내분점의 좌표 공식이 되고, 식에 차원이 들어 있지 않으므로 좌표공간에서도 같은 식이 성립한다. 또 \(\vec{p} = \vec{a} + t(\vec{b} - \vec{a})\)에서 \(t\)를 모든 실수로 넓히면 직선 AB 전체가 되는데, 이것이 직선의 방정식으로 이어진다.</li>
+            <li><span class="tag">적용</span>\(m = n\)으로 두고 P가 중점인지 확인해 보자. 그리고 외분으로 바꾸어 \(m \gt n\)일 때와 \(m \lt n\)일 때 P가 각각 어느 쪽 바깥에 생기는지 보고, \(m = n\)인 외분은 왜 그려지지 않는지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>위치벡터는 기준점 O에 따라 달라지지만, \(\overrightarrow{AB} = \vec{b} - \vec{a}\)는 O를 어디에 두어도 같다. 또 외분점 식에서 \(m\vec{b} - n\vec{a}\)의 순서를 바꾸어 \(m\vec{a} - n\vec{b}\)로 쓰는 실수가 많은데, 비의 앞쪽 \(m\)은 언제나 B 쪽 벡터 \(\vec{b}\)에 곱한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 점 A, B의 위치벡터가 \(\vec{a}, \vec{b}\)일 때, 선분 AB를 1 : 3으로 외분하는 점의 위치벡터는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{3\vec{a} + \vec{b}}{4}\)<span class="why"><b>1 : 3 내분점입니다.</b> \(\frac{m\vec{b} + n\vec{a}}{m + n}\)에 \(m = 1, n = 3\)을 넣은 값입니다. 외분은 빼기입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\frac{3\vec{a} - \vec{b}}{2}\)<span class="why"><b>맞습니다.</b> \(\frac{\vec{b} - 3\vec{a}}{1 - 3} = \frac{3\vec{a} - \vec{b}}{2}\)입니다. \(m \lt n\)이므로 점은 A 쪽 바깥에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{\vec{b} - 3\vec{a}}{2}\)<span class="why"><b>분모의 부호를 놓쳤습니다.</b> 분모는 \(m - n = -2\)입니다. 이 벡터는 정답에 \(-1\)을 곱한 것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{3\vec{b} - \vec{a}}{2}\)<span class="why"><b>\(m\)과 \(n\)을 바꾸었습니다.</b> 이 벡터는 3 : 1로 외분하는 점, 곧 B 쪽 바깥의 점입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{3\vec{a} + \vec{b}}{4}\)<span class="why"><b>1 : 3 내분점이다.</b> \(\frac{m\vec{b} + n\vec{a}}{m + n}\)에 \(m = 1, n = 3\)을 넣은 값이다. 외분은 빼기이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\frac{3\vec{a} - \vec{b}}{2}\)<span class="why"><b>맞다.</b> \(\frac{\vec{b} - 3\vec{a}}{1 - 3} = \frac{3\vec{a} - \vec{b}}{2}\)이다. \(m \lt n\)이므로 점은 A 쪽 바깥에 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{\vec{b} - 3\vec{a}}{2}\)<span class="why"><b>분모의 부호를 놓쳤다.</b> 분모는 \(m - n = -2\)이다. 이 벡터는 정답에 \(-1\)을 곱한 것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{3\vec{b} - \vec{a}}{2}\)<span class="why"><b>\(m\)과 \(n\)을 바꾸었다.</b> 이 벡터는 3 : 1로 외분하는 점, 곧 B 쪽 바깥의 점이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-sphere-vec"><small class="mono">기하 3.5</small>중심에서 거리가 같은 점을 벡터로 쓰면?</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-4.html#text-geo-line-eq"><small class="mono">기하 3.4</small>직선의 방정식</a><a href="../../c/geo/3-5.html#card-geo-sphere-vec"><small class="mono">기하 3.5</small>중심에서 거리가 같은 점을 벡터로 쓰면?</a></div></nav>
 
       <article class="card" id="card-geo-components">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>화살표를 수 두 개로 바꿀 수 있을까?</h2><span class="kind">위치벡터 · 평면벡터의 성분</span>
+          <span class="no">탐구 2</span><h2>화살표를 수 두 개로 바꿀 수 있을까?</h2><span class="kind">위치벡터 · 평면벡터의 성분</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,34 +189,34 @@
                 <div><dt>\(\overrightarrow{AB}\)의 \(y\)성분</dt><dd class="n-y">—</dd></div>
                 <div><dt>\(|\overrightarrow{AB}|\)</dt><dd class="n-l">—</dd></div>
               </dl>
-              <p class="fig-note">점 A와 B를 끌어 보세요. 점선 화살표는 \(\overrightarrow{AB}\)를 시점이 원점 O가 되도록 옮긴 것입니다. 그 종점의 좌표가 곧 \(\overrightarrow{AB}\)의 성분입니다.</p>
+              <p class="fig-note">점 A와 B를 끌어 보자. 점선 화살표는 \(\overrightarrow{AB}\)를 시점이 원점 O가 되도록 옮긴 것이고, 그 종점의 좌표가 곧 \(\overrightarrow{AB}\)의 성분이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>좌표평면 위의 화살표 \(\overrightarrow{AB}\)를 그리지 않고 수만으로 전하려면 무엇을 알려 주면 될까요?</li>
-            <li><span class="tag">복원</span>벡터는 평행이동해도 같은 벡터입니다. 또 \(\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA}\)이고, 점 B의 위치벡터 \(\overrightarrow{OB}\)는 점 B의 좌표로 정해집니다.</li>
-            <li><span class="tag">설명</span>\(\vec{a}\)를 시점이 원점이 되도록 옮겼을 때 종점이 \((a_1, a_2)\)이면 \(\vec{a} = (a_1, a_2)\)로 쓰고, \(a_1, a_2\)를 \(\vec{a}\)의 \(x\)성분, \(y\)성분이라고 합니다. 단위벡터 \(\vec{e}_1 = (1, 0), \vec{e}_2 = (0, 1)\)을 쓰면 \(\vec{a} = a_1\vec{e}_1 + a_2\vec{e}_2\)입니다. \(A(x_1, y_1), B(x_2, y_2)\)이면 \(\overrightarrow{AB} = (x_2 - x_1, y_2 - y_1)\)입니다. 크기는 피타고라스 정리로 \(|\vec{a}| = \sqrt{a_1^2 + a_2^2}\)입니다. 두 벡터가 같을 필요충분조건은 대응하는 성분이 각각 같은 것이고, 연산은 성분끼리 합니다: \((a_1, a_2) \pm (b_1, b_2) = (a_1 \pm b_1, a_2 \pm b_2), k(a_1, a_2) = (ka_1, ka_2)\).</li>
-            <li><span class="tag">연결</span>그림(화살표)으로 보면 방향과 크기의 관계가 잘 보이고, 성분(수)으로 보면 계산이 쉬워집니다. 벡터를 다루는 이 두 방법은 같은 대상을 다르게 표현한 것입니다. 공간에서는 성분이 세 개로 늘어날 뿐 규칙은 같습니다.</li>
-            <li><span class="tag">적용</span>A와 B를 함께 같은 방향으로 한 칸씩 옮겨 보세요. 성분은 바뀌나요? B를 A의 바로 오른쪽 3칸, 위쪽 4칸에 두면 \(|\overrightarrow{AB}|\)는 얼마인가요? 성분이 음수가 되는 경우도 만들어 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>벡터의 성분과 점의 좌표를 같은 것으로 여기면 안 됩니다. \(\overrightarrow{AB}\)의 성분은 B의 좌표가 아니라 '종점 좌표 − 시점 좌표'입니다. 시점이 원점일 때, 곧 위치벡터일 때만 성분과 종점의 좌표가 같습니다.</li>
+            <li><span class="tag">질문</span>좌표평면 위의 화살표 \(\overrightarrow{AB}\)를 그리지 않고 수만으로 전하려면 무엇을 알려 주면 될까?</li>
+            <li><span class="tag">복원</span>벡터는 평행이동해도 같은 벡터이다. 또 \(\overrightarrow{AB} = \overrightarrow{OB} - \overrightarrow{OA}\)이고, 점 B의 위치벡터 \(\overrightarrow{OB}\)는 점 B의 좌표로 정해진다.</li>
+            <li><span class="tag">설명</span>\(\vec{a}\)를 시점이 원점이 되도록 옮겼을 때 종점이 \((a_1, a_2)\)이면 \(\vec{a} = (a_1, a_2)\)로 쓰고, \(a_1, a_2\)를 \(\vec{a}\)의 \(x\)성분, \(y\)성분이라고 한다. 단위벡터 \(\vec{e}_1 = (1, 0), \vec{e}_2 = (0, 1)\)을 쓰면 \(\vec{a} = a_1\vec{e}_1 + a_2\vec{e}_2\)이고, \(A(x_1, y_1), B(x_2, y_2)\)이면 \(\overrightarrow{AB} = (x_2 - x_1, y_2 - y_1)\)이며, 크기는 피타고라스 정리로 \(|\vec{a}| = \sqrt{a_1^2 + a_2^2}\)이다. 두 벡터가 같을 필요충분조건은 대응하는 성분이 각각 같은 것이고, 연산도 \((a_1, a_2) \pm (b_1, b_2) = (a_1 \pm b_1, a_2 \pm b_2), k(a_1, a_2) = (ka_1, ka_2)\)처럼 성분끼리 한다.</li>
+            <li><span class="tag">연결</span>그림(화살표)으로 보면 방향과 크기의 관계가 잘 보이고, 성분(수)으로 보면 계산이 쉬워진다. 즉 벡터를 다루는 이 두 방법은 같은 대상을 다르게 표현한 것이며, 공간에서는 성분이 세 개로 늘어날 뿐 규칙은 같다.</li>
+            <li><span class="tag">적용</span>A와 B를 함께 같은 방향으로 한 칸씩 옮기며 성분이 바뀌는지 보자. 그리고 B를 A의 바로 오른쪽 3칸, 위쪽 4칸에 두면 \(|\overrightarrow{AB}|\)가 얼마인지 구하고, 성분이 음수가 되는 경우도 만들어 보자.</li>
+            <li class="warn"><span class="tag">판단</span>벡터의 성분과 점의 좌표를 같은 것으로 여기면 안 된다. \(\overrightarrow{AB}\)의 성분은 B의 좌표가 아니라 종점 좌표에서 시점 좌표를 뺀 값이고, 시점이 원점일 때, 곧 위치벡터일 때만 성분과 종점의 좌표가 같다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{a} = (2, -1), \vec{b} = (-1, 3)\)일 때 \(|2\vec{a} - \vec{b}|\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(5\sqrt{2}\)<span class="why"><b>맞습니다.</b> \(2\vec{a} - \vec{b} = (4 + 1, -2 - 3) = (5, -5)\)이므로 크기는 \(\sqrt{25 + 25} = 5\sqrt{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\sqrt{10}\)<span class="why"><b>덧셈을 했습니다.</b> \(2\vec{a} + \vec{b} = (3, 1)\)의 크기가 \(\sqrt{10}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>성분의 절댓값을 더했습니다.</b> \(|5| + |-5| = 10\)은 크기가 아닙니다. 크기는 성분의 제곱의 합의 제곱근입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>50<span class="why"><b>제곱근을 빠뜨렸습니다.</b> \(5^2 + (-5)^2 = 50\)은 \(|2\vec{a} - \vec{b}|^2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(5\sqrt{2}\)<span class="why"><b>맞다.</b> \(2\vec{a} - \vec{b} = (4 + 1, -2 - 3) = (5, -5)\)이므로 크기는 \(\sqrt{25 + 25} = 5\sqrt{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\sqrt{10}\)<span class="why"><b>덧셈을 했다.</b> \(2\vec{a} + \vec{b} = (3, 1)\)의 크기가 \(\sqrt{10}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>성분의 절댓값을 더했다.</b> \(|5| + |-5| = 10\)은 크기가 아니다. 크기는 성분의 제곱의 합의 제곱근이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>50<span class="why"><b>제곱근을 빠뜨렸다.</b> \(5^2 + (-5)^2 = 50\)은 \(|2\vec{a} - \vec{b}|^2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a></div></nav>
 
       <article class="card" id="card-geo-space-components">
         <header class="card-head">
-          <span class="no">3.2.3</span><h2>공간의 화살표는 수 몇 개로 정해질까?</h2><span class="kind">위치벡터 · 공간벡터의 성분과 크기</span>
+          <span class="no">탐구 3</span><h2>공간의 화살표는 수 몇 개로 정해질까?</h2><span class="kind">위치벡터 · 공간벡터의 성분과 크기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -175,43 +235,44 @@
                 <div><dt>바닥 대각선 \(\sqrt{a_1^2 + a_2^2}\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>\(|\vec{a}|\)</dt><dd class="n-l">—</dd></div>
               </dl>
-              <p class="fig-note">세 성분을 바꾸고, 그림을 끌어 여러 방향에서 보세요. 초록 점선은 바닥(\(xy\)평면)의 대각선입니다.</p>
+              <p class="fig-note">세 성분을 바꾸고, 그림을 끌어 여러 방향에서 보자. 초록 점선은 바닥(\(xy\)평면)의 대각선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>방 한쪽 구석에서 맞은편 천장 구석까지 줄을 팽팽하게 걸면 줄의 방향과 길이는 무엇으로 정해질까요?</li>
-            <li><span class="tag">복원</span>평면벡터는 성분 두 개로 정해지고 크기는 \(\sqrt{a_1^2 + a_2^2}\)입니다. 좌표공간의 점은 \((x, y, z)\)로 나타내고, 두 점 사이의 거리는 \(\sqrt{(\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2}\)입니다.</li>
-            <li><span class="tag">설명</span>공간벡터 \(\vec{a}\)를 시점이 원점이 되도록 옮겼을 때 종점이 \((a_1, a_2, a_3)\)이면 \(\vec{a} = (a_1, a_2, a_3)\)로 씁니다. 세 좌표축 방향의 단위벡터 \(\vec{e}_1, \vec{e}_2, \vec{e}_3\)을 쓰면 \(\vec{a} = a_1\vec{e}_1 + a_2\vec{e}_2 + a_3\vec{e}_3\)입니다. 크기는 피타고라스 정리를 두 번 써서 구합니다. 바닥의 대각선 길이가 \(\sqrt{a_1^2 + a_2^2}\)이고, 이것과 높이 \(|a_3|\)가 직각을 이루므로 \(|\vec{a}| = \sqrt{a_1^2 + a_2^2 + a_3^2}\)입니다. 덧셈, 뺄셈, 실수배와 \(\overrightarrow{AB} = (x_2 - x_1, y_2 - y_1, z_2 - z_1)\)도 평면과 똑같이 성분끼리 계산합니다.</li>
-            <li><span class="tag">연결</span>이 성분 표현 덕분에 공간에서도 내적, 직선과 평면의 방정식을 좌표 계산으로 다룰 수 있습니다. 점의 좌표와 위치벡터의 성분이 같다는 사실은 평면과 공간 모두에서 쓰입니다.</li>
-            <li><span class="tag">적용</span>\((3, 2, 2)\)의 크기를 바닥 대각선과 높이로 나누어 계산해 보세요. 성분 하나를 0으로 만들면 화살표는 어디에 놓이나요? 크기가 정수가 되는 성분 조합을 하나 더 찾아보세요. 예를 들어 \((1, 2, 2)\)는 어떨까요?</li>
-            <li class="warn"><span class="tag">판단</span>그림은 공간을 평면에 옮긴 것이라 화살표의 화면 길이는 실제 크기와 다릅니다. 같은 벡터도 돌리면 화면에서 길어지거나 짧아집니다. 크기는 반드시 성분으로 계산하세요.</li>
+            <li><span class="tag">질문</span>방 한쪽 구석에서 맞은편 천장 구석까지 줄을 팽팽하게 걸면 줄의 방향과 길이는 무엇으로 정해질까?</li>
+            <li><span class="tag">복원</span>평면벡터는 성분 두 개로 정해지고 크기는 \(\sqrt{a_1^2 + a_2^2}\)이다. 그리고 좌표공간의 점은 \((x, y, z)\)로 나타내고, 두 점 사이의 거리는 \(\sqrt{(\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2}\)이다.</li>
+            <li><span class="tag">설명</span>공간벡터 \(\vec{a}\)를 시점이 원점이 되도록 옮겼을 때 종점이 \((a_1, a_2, a_3)\)이면 \(\vec{a} = (a_1, a_2, a_3)\)로 쓰고, 세 좌표축 방향의 단위벡터 \(\vec{e}_1, \vec{e}_2, \vec{e}_3\)을 쓰면 \(\vec{a} = a_1\vec{e}_1 + a_2\vec{e}_2 + a_3\vec{e}_3\)이다. 크기는 피타고라스 정리를 두 번 써서 구하는데, 바닥의 대각선 길이가 \(\sqrt{a_1^2 + a_2^2}\)이고 이것과 높이 \(|a_3|\)가 직각을 이루므로 \(|\vec{a}| = \sqrt{a_1^2 + a_2^2 + a_3^2}\)이다. 덧셈, 뺄셈, 실수배와 \(\overrightarrow{AB} = (x_2 - x_1, y_2 - y_1, z_2 - z_1)\)도 평면과 똑같이 성분끼리 계산한다.</li>
+            <li><span class="tag">연결</span>이 성분 표현 덕분에 공간에서도 내적, 직선과 평면의 방정식을 좌표 계산으로 다룰 수 있다. 그리고 점의 좌표와 위치벡터의 성분이 같다는 사실은 평면과 공간 모두에서 쓰인다.</li>
+            <li><span class="tag">적용</span>\((3, 2, 2)\)의 크기를 바닥 대각선과 높이로 나누어 계산해 보자. 그리고 성분 하나를 0으로 만들면 화살표가 어디에 놓이는지 보고, \((1, 2, 2)\)처럼 크기가 정수가 되는 성분 조합을 하나 더 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>그림은 공간을 평면에 옮긴 것이라 화살표의 화면 길이는 실제 크기와 다르고, 같은 벡터도 돌리면 화면에서 길어지거나 짧아진다. 그래서 크기는 반드시 성분으로 계산해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 점 \(A(1, 2, -1), B(3, -1, 5)\)에 대하여 \(|\overrightarrow{AB}|\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>7<span class="why"><b>맞습니다.</b> \(\overrightarrow{AB} = (2, -3, 6)\)이고 \(\sqrt{4 + 9 + 36} = \sqrt{49} = 7\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\sqrt{33}\)<span class="why"><b>좌표를 더했습니다.</b> \((1 + 3, 2 - 1, -1 + 5) = (4, 1, 4)\)는 \(\overrightarrow{OA} + \overrightarrow{OB}\)입니다. 두 점 사이의 벡터는 빼서 구합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>11<span class="why"><b>성분의 절댓값을 더했습니다.</b> \(2 + 3 + 6 = 11\)은 격자를 따라 걷는 거리입니다. 직선 거리는 제곱의 합의 제곱근입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>49<span class="why"><b>제곱근을 빠뜨렸습니다.</b> \(4 + 9 + 36 = 49\)는 \(|\overrightarrow{AB}|^2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>7<span class="why"><b>맞다.</b> \(\overrightarrow{AB} = (2, -3, 6)\)이고 \(\sqrt{4 + 9 + 36} = \sqrt{49} = 7\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\sqrt{33}\)<span class="why"><b>좌표를 더했다.</b> \((1 + 3, 2 - 1, -1 + 5) = (4, 1, 4)\)는 \(\overrightarrow{OA} + \overrightarrow{OB}\)이다. 두 점 사이의 벡터는 빼서 구한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>11<span class="why"><b>성분의 절댓값을 더했다.</b> \(2 + 3 + 6 = 11\)은 격자를 따라 걷는 거리이다. 직선 거리는 제곱의 합의 제곱근이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>49<span class="why"><b>제곱근을 빠뜨렸다.</b> \(4 + 9 + 36 = 49\)는 \(|\overrightarrow{AB}|^2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-3.html#card-geo-dot-angle"><small class="mono">기하 3.3</small>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</a><a href="../../c/geo/3-3.html#card-geo-dot-space"><small class="mono">기하 3.3</small>공간에서 두 벡터가 수직인지 어떻게 알까?</a><a href="../../c/geo/3-3.html#text-geo-dot"><small class="mono">기하 3.3</small>벡터의 내적</a><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=geo-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">6문항</span></a>
+      <a class="px-go" href="../../bank.html?c=geo&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=geo-3-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">6문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -219,6 +280,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/geo/body.js"></script>
 <script src="../../js/cards/geo/vec-kit.js"></script>
 <script src="../../js/cards/geo/pos-section.js"></script>
 <script src="../../js/cards/geo/components.js"></script>

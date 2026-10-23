@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>멱급수의 성질과 함수의 표현 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="멱급수의 항별 미분과 항별 적분, 멱급수로 나타낸 함수. 등비급수에서 ln(1 + x), tan⁻¹x의 급수를 만드는 만들기 카드, 라이프니츠 급수와 마친의 공식으로 원주율을 계산하는 경주 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-series-build canvas { aspect-ratio: 16 / 9; }
@@ -47,18 +52,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-series-build"><span class="mono">3.5.1</span>등비급수에서 새 급수 만들기</a></li>
-        <li><a href="#card-adcalc-pi-race"><span class="mono">3.5.2</span>원주율 계산 경주</a></li>
+        <li><a href="#text-adcalc-series-functions"><span class="mono">본문</span>멱급수의 성질과 함수의 표현</a></li>
+        <li><a href="#card-adcalc-series-build"><span class="mono">탐구 1</span>등비급수에서 새 급수 만들기</a></li>
+        <li><a href="#card-adcalc-pi-race"><span class="mono">탐구 2</span>원주율 계산 경주</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=3-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-3-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-series-functions" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>멱급수의 성질과 함수의 표현</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">등비급수 \(\dfrac{1}{1 + t^2} = 1 - t^2 + t^4 - \cdots\)를 0부터 \(x\)까지 항마다 적분하면 \(\tan^{-1}x = x - \dfrac{x^3}{3} + \dfrac{x^5}{5} - \cdots\)가 나온다. \(x = 1\)을 넣으면 \(\dfrac\pi4 = 1 - \dfrac13 + \dfrac15 - \cdots\)인데, 이 급수로는 1000항을 더해도 소수 셋째 자리밖에 맞지 않는다. 그런데 1706년 마친은 같은 급수를 조금 다르게 써서 손으로 원주율을 소수 100자리까지 구했다. 급수를 항마다 적분해도 괜찮을까? 그리고 어떻게 해야 급수가 빨리 수렴할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="등비급수에서 만든 함수의 급수">
+              <g class="s">
+                <text x="20" y="22">출발</text><text x="200" y="22">한 일</text><text x="340" y="22">얻은 급수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1/(1 − t)</text><text x="200" y="52">t를 −t로, 적분</text><text x="340" y="52">ln(1 + x) = x − x²/2 + x³/3 − ⋯</text>
+                <text x="20" y="74">1/(1 − t)</text><text x="200" y="74">t를 −t²로, 적분</text><text x="340" y="74">tan⁻¹x = x − x³/3 + x⁵/5 − ⋯</text>
+                <text x="20" y="96">1/(1 − x)</text><text x="200" y="96">미분</text><text x="340" y="96">1/(1 − x)² = 1 + 2x + 3x² + ⋯</text>
+                <text x="20" y="122">모두 |x| &lt; 1에서 성립한다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 등비급수에 대입하고, 항마다 미분하거나 적분하면 여러 함수의 급수를 얻는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>등비급수, 여러 가지 함수의 적분, 멱급수와 수렴반경(<a href="3-4.html">멱급수와 수렴반경</a>).</div>
+
+          <h3><span class="no">3.5.1</span>멱급수는 다항식처럼 다룬다</h3>
+          <p>멱급수는 수렴반경 안에서 항이 무한히 많은 다항식처럼 다룰 수 있다. 수렴반경이 \(R\)인 멱급수가 나타내는 함수는 \(|x| &lt; R\)에서 미분할 수 있고, 그 도함수는 각 항을 미분한 급수와 같다. 적분도 각 항을 적분한 급수와 같으며, 미분하거나 적분해도 수렴반경은 바뀌지 않는다. 그래서 이미 아는 등비급수 \(\dfrac{1}{1 - t} = \sum t^n\)에서 출발해 \(t\)에 다른 식을 넣거나, 항마다 미분하거나 적분하면 새 함수의 멱급수를 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.5.1 <span class="nm">항별 미분과 항별 적분</span></span>
+            <p>\(f(x) = \sum_{n=0}^{\infty}a_nx^n\)의 수렴반경이 \(R > 0\)이면 \(|x| &lt; R\)에서 \[f'(x) = \sum_{n=1}^{\infty}na_nx^{n-1},\qquad \int_0^x f(t)\,dt = \sum_{n=0}^{\infty}\frac{a_n}{n+1}x^{n+1}\]이고, 두 급수의 수렴반경도 \(R\)이다.</p>
+          </div>
+          <p>\(\ln(1 + x)\)는 \(\dfrac{1}{1 + t} = 1 - t + t^2 - \cdots\)를 0부터 \(x\)까지 적분해 \(x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \cdots\)이다. \(\tan^{-1}x\)는 \(\dfrac{1}{1 + t^2}\)을 적분해 얻는다. 두 급수는 \(|x| &lt; 1\)에서 수렴하고, 경계 \(x = 1\)에서도 교대급수로 수렴해 \(\ln 2\)와 \(\pi/4\)를 준다. 다만 경계에서 수렴하는지는 정리가 보장하지 않으므로 따로 확인해야 한다.<sup class="fn"><a href="#fn-adcalc-series-functions-1">1</a></sup></p>
+
+          <h3><span class="no">3.5.2</span>작은 \(x\)를 넣어야 빠르다</h3>
+          <p>\(\tan^{-1}1\)의 급수는 항이 \(1/(2n + 1)\)로 아주 느리게 줄어, 오차가 다음 항보다 작다는 교대급수의 성질로 보아도 소수 셋째 자리를 맞추는 데 500항이 넘게 필요하다. 반면 \(x\)가 작으면 항이 \(x^{2n+1}\)처럼 빠르게 줄어 몇 항만으로 정확해진다. 그래서 \(\pi/4\)를 작은 각들의 역탄젠트로 나누어 쓴다. 마친은 탄젠트의 덧셈정리로 \(\dfrac\pi4 = 4\tan^{-1}\dfrac15 - \tan^{-1}\dfrac{1}{239}\)를 찾아, \(x = 1/5\)과 \(x = 1/239\)를 넣은 급수로 원주율을 구했다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 방법으로 구한 π/4의 정확도">
+              <g class="s">
+                <text x="20" y="22">방법</text><text x="210" y="22">더한 항 수</text><text x="340" y="22">오차</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">tan⁻¹1의 급수</text><text x="210" y="52">10항</text><text x="340" y="52" class="tb">약 0.025</text>
+                <text x="20" y="74">tan⁻¹1의 급수</text><text x="210" y="74">1000항</text><text x="340" y="74">약 0.00025</text>
+                <text x="20" y="96">마친의 식</text><text x="210" y="96">5항 + 2항</text><text x="340" y="96" class="td">10⁻⁸보다 작음</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 같은 급수라도 작은 \(x\)를 넣으면 몇 항만으로 아주 정확한 값을 얻는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.5.2</span>
+            <p>\(\ln(1 + x)\)의 급수로 \(\ln 1.1\)을 넷째 항까지 구하여라. 또 \(\tan^{-1}\tfrac15\)을 넷째 항까지, \(\tan^{-1}\tfrac{1}{239}\)을 첫째 항까지 구해 마친의 식으로 \(\pi\)를 계산하여라.</p>
+          </div>
+          <p>\(\ln1.1 \approx 0.1 - 0.005 + 0.000333 - 0.000025 = 0.095308\)이다. 참값 \(0.0953102\cdots\)과 소수 다섯째 자리까지 같고, 오차는 다섯째 항 \(0.1^5/5 = 0.000002\)보다 작다.</p>
+          <p>\(\tan^{-1}\tfrac15 \approx 0.2 - \dfrac{0.008}{3} + \dfrac{0.00032}{5} - \dfrac{0.0000128}{7} = 0.2 - 0.0026667 + 0.000064 - 0.0000018 = 0.1973955\)이다. \(\tan^{-1}\tfrac{1}{239} \approx 1/239 \approx 0.0041841\)이다. 그러면 \(\dfrac\pi4 \approx 4\times0.1973955 - 0.0041841 = 0.7853979\)이고, \(\pi \approx 3.141592\)로 소수 다섯째 자리까지 맞는다. 즉 멱급수는 수렴반경 안에서 항마다 미분하고 적분할 수 있어 등비급수 하나로 여러 함수의 급수를 만들 수 있고, 수렴을 빠르게 하려면 작은 \(x\)를 넣도록 식을 바꾼다.</p>
+          <p>아래 탐구 카드에서 \(\dfrac{1}{1 - x}\) 하나로 \(\ln(1 + x)\)와 \(\tan^{-1}x\)의 급수를 만들어 보고, 여러 공식으로 원주율 계산 경주를 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-series-functions-1">\(\tan^{-1}x\)의 급수는 14세기 인도 케랄라의 마다바가 처음 찾았고, 유럽에서는 17세기에 그레고리와 라이프니츠가 다시 찾았다. 마친의 식과 비슷한 공식들은 컴퓨터가 원주율을 수조 자리까지 계산할 때도 검산에 쓰였다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>멱급수는 수렴반경 안에서 항마다 미분하고 적분할 수 있으며 수렴반경은 바뀌지 않으므로, 등비급수에 식을 대입하고 항별로 적분해 \(\ln(1 + x)\), \(\tan^{-1}x\) 같은 함수의 급수를 만든다. 경계에서의 수렴은 따로 확인하고, 수렴을 빠르게 하려면 작은 \(x\)를 넣도록 바꾸어 쓴다. 처음 질문의 \(\tan^{-1}1\)의 급수는 매우 느리지만, 마친의 식으로 \(x = 1/5\)과 \(1/239\)를 넣으면 몇 항만으로 원주율을 소수 다섯째 자리까지 맞힌다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/pmath/1-3.html#card-pmath-arc-restrict"><small class="mono">전문 수학 1.3</small>사인함수의 어디를 잘라야 역함수가 생길까?</a></div></nav>
+
       <article class="card" id="card-adcalc-series-build">
         <header class="card-head">
-          <span class="no">3.5.1</span><h2>\(\frac{1}{1 - x}\) 하나로 \(\ln(1 + x)\)와 \(\tan^{-1}x\)의 급수를 만들 수 있을까?</h2><span class="kind">멱급수의 성질 · 만들기</span>
+          <span class="no">탐구 1</span><h2>\(\frac{1}{1 - x}\) 하나로 \(\ln(1 + x)\)와 \(\tan^{-1}x\)의 급수를 만들 수 있을까?</h2><span class="kind">멱급수의 성질 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,34 +145,34 @@
               </div>
               <p class="ser" aria-live="polite"></p>
               <p class="verdict" role="status"></p>
-              <p class="fig-note">처음 함수는 \(\frac{1}{1 - x} = 1 + x + x^2 + \cdots\ (|x| &lt; 1)\)입니다. 굵은 선은 지금 함수, 파란 선은 급수의 8차까지 부분합입니다.</p>
+              <p class="fig-note">처음 함수는 \(\frac{1}{1 - x} = 1 + x + x^2 + \cdots\ (|x| &lt; 1)\)이다. 굵은 선은 지금 함수, 파란 선은 급수의 8차까지 부분합이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\ln(1 + x)\)의 멱급수를 구하려고 도함수를 여러 번 구하는 것은 번거롭습니다. 이미 아는 등비급수 \(\frac{1}{1 - x} = \sum x^n\)을 변형해서 얻을 수는 없을까요?</li>
-            <li><span class="tag">복원</span>\((\ln(1 + x))' = \frac{1}{1 + x}\), \((\tan^{-1}x)' = \frac{1}{1 + x^2}\). 멱급수 \(\sum c_n x^n\)은 수렴반경 \(R\) 안에서 정의된 함수입니다.</li>
-            <li><span class="tag">설명</span>멱급수는 수렴 구간 안에서 다항식처럼 다룰 수 있습니다. 변수를 바꾸어 넣을 수 있고(\(x \to -x\), \(x \to x^2\)), \(x\)를 곱할 수 있고, <b>항별로 미분하고 적분할 수 있습니다</b>. \[\frac{d}{dx}\sum c_n x^n = \sum n c_n x^{n-1}\] \[\int_0^x\sum c_n t^n\,dt = \sum\frac{c_n}{n + 1}x^{n+1}\] 이때 수렴반경은 바뀌지 않습니다(끝점의 수렴 여부는 바뀔 수 있습니다). 예를 들어 \(x \to -x\)를 하고 적분하면 \(\ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots\)입니다.</li>
-            <li><span class="tag">연결</span>\(\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots\)에 \(x = 1\)을 넣으면 \(\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \cdots\)입니다(끝점에서도 수렴). 다음 카드에서 이 급수로 원주율을 계산합니다.</li>
-            <li><span class="tag">적용</span>네 목표를 연산 단추만으로 만들어 보세요. 순서가 중요합니다. 만든 급수의 그래프가 \(|x| &lt; 1\)에서는 함수와 겹치고 밖에서는 갈라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>항별 적분은 0부터 하므로 상수항(적분상수)을 따로 맞추어야 합니다. \(\ln(1 + 0) = 0\), \(\tan^{-1}0 = 0\)이라 여기서는 상수가 0입니다. 또 이 급수들은 수렴 구간 밖(\(|x| &gt; 1\))에서는 쓸 수 없습니다. \(\ln 3\)을 \(x = 2\)로 계산하려 하면 발산합니다.</li>
+            <li><span class="tag">질문</span>\(\ln(1 + x)\)의 멱급수를 구하려고 도함수를 여러 번 구하는 것은 번거롭다. 이미 아는 등비급수 \(\frac{1}{1 - x} = \sum x^n\)을 변형해서 얻을 수는 없을까?</li>
+            <li><span class="tag">복원</span>\((\ln(1 + x))' = \frac{1}{1 + x}\), \((\tan^{-1}x)' = \frac{1}{1 + x^2}\). 멱급수 \(\sum c_n x^n\)은 수렴반경 \(R\) 안에서 정의된 함수이다.</li>
+            <li><span class="tag">설명</span>멱급수는 수렴 구간 안에서 다항식처럼 다룰 수 있다. 변수를 바꾸어 넣을 수 있고(\(x \to -x\), \(x \to x^2\)), \(x\)를 곱할 수 있고, 항별로 미분하고 적분할 수 있다. \[\frac{d}{dx}\sum c_n x^n = \sum n c_n x^{n-1}\] \[\int_0^x\sum c_n t^n\,dt = \sum\frac{c_n}{n + 1}x^{n+1}\] 이때 수렴반경은 바뀌지 않는다(끝점의 수렴 여부는 바뀔 수 있다). 예를 들어 \(x \to -x\)를 하고 적분하면 \(\ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \cdots\)이다.</li>
+            <li><span class="tag">연결</span>\(\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots\)에 \(x = 1\)을 넣으면 \(\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \cdots\)이다(끝점에서도 수렴). 다음 카드에서 이 급수로 원주율을 계산한다.</li>
+            <li><span class="tag">적용</span>네 목표를 연산 단추만으로 만들어 보자. 순서가 중요하다. 만든 급수의 그래프가 \(|x| &lt; 1\)에서는 함수와 겹치고 밖에서는 갈라지는가?</li>
+            <li class="warn"><span class="tag">판단</span>항별 적분은 0부터 하므로 상수항(적분상수)을 따로 맞추어야 한다. \(\ln(1 + 0) = 0\), \(\tan^{-1}0 = 0\)이라 여기서는 상수가 0이다. 또 이 급수들은 수렴 구간 밖(\(|x| &gt; 1\))에서는 쓸 수 없다. \(\ln 3\)을 \(x = 2\)로 계산하려 하면 발산한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(\frac{1}{1 + x} = \sum(-1)^n x^n\)을 미분하면 어떤 함수의 급수가 나오나요?</p>
+          <p class="q">\(\frac{1}{1 + x} = \sum(-1)^n x^n\)을 미분하면 어떤 함수의 급수가 나오는가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-\frac{1}{(1 + x)^2} = -1 + 2x - 3x^2 + \cdots\)<span class="why"><b>맞습니다.</b> 항별로 미분하면 \(\sum(-1)^n n x^{n-1}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\ln(1 + x)\)<span class="why"><b>적분과 미분을 바꾸었습니다.</b> \(\ln(1 + x)\)는 적분해서 나옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{(1 + x)^2}\)<span class="why"><b>부호를 놓쳤습니다.</b> \(\left(\frac{1}{1 + x}\right)' = -\frac{1}{(1 + x)^2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>미분하면 수렴반경이 바뀌어 알 수 없다<span class="why"><b>항별 미분은 수렴반경을 바꾸지 않습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-\frac{1}{(1 + x)^2} = -1 + 2x - 3x^2 + \cdots\)<span class="why"><b>맞다.</b> 항별로 미분하면 \(\sum(-1)^n n x^{n-1}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\ln(1 + x)\)<span class="why"><b>적분과 미분을 바꾸었다.</b> \(\ln(1 + x)\)는 적분해서 나온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{(1 + x)^2}\)<span class="why"><b>부호를 놓쳤다.</b> \(\left(\frac{1}{1 + x}\right)' = -\frac{1}{(1 + x)^2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>미분하면 수렴반경이 바뀌어 알 수 없다<span class="why"><b>항별 미분은 수렴반경을 바꾸지 않는다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/pmath/1-3.html#card-pmath-arc-restrict"><small class="mono">전문 수학 1.3</small>사인함수의 어디를 잘라야 역함수가 생길까?</a><a href="../../c/pmath/1-3.html#card-pmath-arc-sawtooth"><small class="mono">전문 수학 1.3</small>arcsin(sin x)는 언제나 x일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/pmath/1-3.html#card-pmath-arc-restrict"><small class="mono">전문 수학 1.3</small>사인함수의 어디를 잘라야 역함수가 생길까?</a></div></nav>
 
       <article class="card" id="card-adcalc-pi-race">
         <header class="card-head">
-          <span class="no">3.5.2</span><h2>\(\tan^{-1}x\)의 급수로 원주율을 몇 자리까지 구할 수 있을까?</h2><span class="kind">멱급수로 나타낸 함수 · 활용 · 경주</span>
+          <span class="no">탐구 2</span><h2>\(\tan^{-1}x\)의 급수로 원주율을 몇 자리까지 구할 수 있을까?</h2><span class="kind">멱급수로 나타낸 함수 · 활용 · 경주</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -118,43 +181,43 @@
               <label class="mono">항의 수 \(N\) = <output class="n-out">5</output></label>
               <input class="sn" type="range" min="1" max="30" step="1" value="5" aria-label="항의 수">
               <div class="pis" aria-live="polite"></div>
-              <p class="fig-note">맞는 자릿수는 소수점 아래에서 셉니다. 굵은 숫자가 참값 3.14159265358979…와 같은 자리입니다. 이 컴퓨터 계산은 약 15자리가 한계입니다.</p>
+              <p class="fig-note">맞는 자릿수는 소수점 아래에서 센다. 굵은 숫자가 참값 3.14159265358979…와 같은 자리이다. 이 컴퓨터 계산은 약 15자리가 한계이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\tan^{-1}1 = \frac{\pi}{4}\)이므로 앞 카드의 급수에 \(x = 1\)을 넣으면 \(\pi = 4\left(1 - \frac{1}{3} + \frac{1}{5} - \cdots\right)\)입니다. 이 식으로 원주율을 열 자리까지 구하려면 몇 항이 필요할까요?</li>
-            <li><span class="tag">복원</span>\(\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots\ (|x| \le 1)\). 교대급수의 오차는 다음 항보다 작습니다.</li>
-            <li><span class="tag">설명</span>\(x = 1\)은 수렴 구간의 끝이라 항이 \(\frac{1}{2n + 1}\)처럼 아주 천천히 줄어듭니다. \(N\)항까지 더한 값의 오차가 약 \(\frac{1}{N}\)이므로, 소수점 아래 열 자리를 맞추려면 약 100억 항이 필요합니다. 반면 \(x\)가 작으면 항이 \(x^{2n+1}\)처럼 빨리 줄어듭니다. 마친(1706)은 덧셈정리로 \[\frac{\pi}{4} = 4\tan^{-1}\frac{1}{5} - \tan^{-1}\frac{1}{239}\]을 찾아, \(\frac{1}{5}\)과 \(\frac{1}{239}\)을 넣은 빠른 급수로 원주율을 100자리까지 손으로 계산했습니다. 항 하나에 약 1.4자리씩 늘어납니다.</li>
-            <li><span class="tag">연결</span>\(\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \cdots\)은 라이프니츠의 급수로 불리지만, 14세기 무렵 인도 케랄라의 마다바도 같은 급수를 알았다고 전합니다. 멱급수의 수렴 속도는 \(x\)가 중심에 가까울수록 빠르다는 점이 계산 방법을 고르는 기준이 됩니다.</li>
-            <li><span class="tag">적용</span>\(N\)을 늘리며 두 방법의 맞는 자릿수를 비교하세요. 마친의 공식은 몇 항이면 컴퓨터 계산의 한계(약 15자리)에 이르나요? 같은 항 수에서 라이프니츠 급수는 몇 자리인가요?</li>
-            <li class="warn"><span class="tag">판단</span>수렴한다는 것과 계산에 쓸 만하다는 것은 다릅니다. 라이프니츠 급수는 분명히 \(\frac{\pi}{4}\)로 수렴하지만 실제 계산에는 거의 쓰이지 않습니다. 오늘날 원주율을 수조 자리까지 구하는 계산에는 이보다 훨씬 빠른 급수가 쓰입니다.</li>
+            <li><span class="tag">질문</span>\(\tan^{-1}1 = \frac{\pi}{4}\)이므로 앞 카드의 급수에 \(x = 1\)을 넣으면 \(\pi = 4\left(1 - \frac{1}{3} + \frac{1}{5} - \cdots\right)\)이다. 이 식으로 원주율을 열 자리까지 구하려면 몇 항이 필요할까?</li>
+            <li><span class="tag">복원</span>\(\tan^{-1}x = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots\ (|x| \le 1)\). 교대급수의 오차는 다음 항보다 작다.</li>
+            <li><span class="tag">설명</span>\(x = 1\)은 수렴 구간의 끝이라 항이 \(\frac{1}{2n + 1}\)처럼 아주 천천히 줄어든다. \(N\)항까지 더한 값의 오차가 약 \(\frac{1}{N}\)이므로, 소수점 아래 열 자리를 맞추려면 약 100억 항이 필요하다. 반면 \(x\)가 작으면 항이 \(x^{2n+1}\)처럼 빨리 줄어든다. 마친(1706)은 덧셈정리로 \[\frac{\pi}{4} = 4\tan^{-1}\frac{1}{5} - \tan^{-1}\frac{1}{239}\]을 찾아, \(\frac{1}{5}\)과 \(\frac{1}{239}\)을 넣은 빠른 급수로 원주율을 100자리까지 손으로 계산했다. 항 하나에 약 1.4자리씩 늘어난다.</li>
+            <li><span class="tag">연결</span>\(\frac{\pi}{4} = 1 - \frac{1}{3} + \frac{1}{5} - \cdots\)은 라이프니츠의 급수로 불리지만, 14세기 무렵 인도 케랄라의 마다바도 같은 급수를 알았다고 전한다. 멱급수의 수렴 속도는 \(x\)가 중심에 가까울수록 빠르다는 점이 계산 방법을 고르는 기준이 된다.</li>
+            <li><span class="tag">적용</span>\(N\)을 늘리며 두 방법의 맞는 자릿수를 비교해 보자. 마친의 공식은 몇 항이면 컴퓨터 계산의 한계(약 15자리)에 이르나요? 같은 항 수에서 라이프니츠 급수는 몇 자리인가?</li>
+            <li class="warn"><span class="tag">판단</span>수렴한다는 것과 계산에 쓸 만하다는 것은 다르다. 라이프니츠 급수는 분명히 \(\frac{\pi}{4}\)로 수렴하지만 실제 계산에는 거의 쓰이지 않는다. 오늘날 원주율을 수조 자리까지 구하는 계산에는 이보다 훨씬 빠른 급수가 쓰인다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(\tan^{-1}\frac{1}{5}\)의 급수에서 다음 항의 크기는 대략 앞 항의 몇 배씩 줄어드나요?</p>
+          <p class="q">\(\tan^{-1}\frac{1}{5}\)의 급수에서 다음 항의 크기는 대략 앞 항의 몇 배씩 줄어드는가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 \(\frac{1}{25}\)배<span class="why"><b>맞습니다.</b> 항이 \(\frac{x^{2n+1}}{2n + 1}\)이므로 \(x^2 = \frac{1}{25}\)배씩 줄어듭니다. 그래서 항 하나에 \(\log_{10}25 \approx 1.4\)자리씩 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 \(\frac{1}{5}\)배<span class="why"><b>거듭제곱이 두 번씩 커진다는 것을 놓쳤습니다.</b> 지수가 \(1, 3, 5, \cdots\)로 2씩 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 \(\frac{1}{2}\)배<span class="why"><b>분모 \(2n + 1\)만 보았습니다.</b> 분모는 아주 천천히 커질 뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>거의 줄지 않는다<span class="why"><b>\(x = 1\)일 때의 이야기입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 \(\frac{1}{25}\)배<span class="why"><b>맞다.</b> 항이 \(\frac{x^{2n+1}}{2n + 1}\)이므로 \(x^2 = \frac{1}{25}\)배씩 줄어든다. 그래서 항 하나에 \(\log_{10}25 \approx 1.4\)자리씩 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 \(\frac{1}{5}\)배<span class="why"><b>거듭제곱이 두 번씩 커진다는 것을 놓쳤다.</b> 지수가 \(1, 3, 5, \cdots\)로 2씩 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 \(\frac{1}{2}\)배<span class="why"><b>분모 \(2n + 1\)만 보았다.</b> 분모는 아주 천천히 커질 뿐이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>거의 줄지 않는다<span class="why"><b>\(x = 1\)일 때의 이야기이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/pmath/1-3.html#card-pmath-arc-restrict"><small class="mono">전문 수학 1.3</small>사인함수의 어디를 잘라야 역함수가 생길까?</a><a href="../../c/pmath/1-3.html#card-pmath-arc-sawtooth"><small class="mono">전문 수학 1.3</small>arcsin(sin x)는 언제나 x일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/pmath/1-3.html#card-pmath-arc-restrict"><small class="mono">전문 수학 1.3</small>사인함수의 어디를 잘라야 역함수가 생길까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=3-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

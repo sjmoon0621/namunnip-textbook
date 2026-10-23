@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부피 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="입체도형의 부피: 축에 수직인 평면으로 자른 단면의 넓이 S(x)를 알면 부피 V = ∫ₐᵇ S(x)dx. 정사각형·원·정삼각형 단면의 입체, 곡선을 축 둘레로 돌린 입체(단면 πf(x)²), 단면이 같으면 부피도 같다는 카발리에리의 원리와 비스듬한 원뿔. 얇은 조각을 늘리며 부피 합이 적분으로 다가가는 것을 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-cross-section canvas { width: 100%; aspect-ratio: 16 / 15; }
@@ -45,18 +50,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-cross-section"><span class="mono">3.6.1</span>단면의 넓이로 부피 구하기</a></li>
-        <li><a href="#card-calc2-cavalieri"><span class="mono">3.6.2</span>단면이 같으면 부피도 같다</a></li>
+        <li><a href="#text-calc2-volume"><span class="mono">본문</span>부피</a></li>
+        <li><a href="#card-calc2-cross-section"><span class="mono">탐구 1</span>단면의 넓이로 부피 구하기</a></li>
+        <li><a href="#card-calc2-cavalieri"><span class="mono">탐구 2</span>단면이 같으면 부피도 같다</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">28문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">28문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-3-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-volume" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부피</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">식빵 한 덩이의 부피를 재고 싶다면, 얇게 썰어 각 조각의 넓이에 두께를 곱해 더하면 된다. 조각을 얇게 썰수록 어림이 정확해진다. 이 생각을 끝까지 밀고 가면, 곡선을 축 둘레로 돌려 만든 그릇이나 꽃병처럼 공식이 없는 입체의 부피도 구할 수 있지 않을까?</p>
+          <figure class="q-fig" data-q="calc2-disk">
+            <svg viewBox="0 0 520 230" role="img" aria-label="y = √x 를 x축 둘레로 돌린 입체를 원판 n개로 어림한 모습"></svg>
+            <div class="q-ctl"><label>원판의 수 \(n\) <input type="range" data-k="n" min="2" max="60" step="1" value="8"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(y = \sqrt{x}\) (\(0 \le x \le 4\))를 \(x\)축 둘레로 돌린 입체를 옆에서 본 모습. 두께 \(\dfrac{4}{n}\)인 원판 \(n\)개의 부피 합은 \(n\)이 커질수록 \(8\pi\)에 다가간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>정적분과 급수의 합(<a href="3-4.html">정적분과 급수의 합</a>), 평면도형의 넓이, 기둥과 뿔의 부피(중학교), 여러 가지 함수의 적분.</div>
+
+          <h3><span class="no">3.6.1</span>단면의 넓이로 부피 구하기</h3>
+          <p>입체를 \(x\)축에 수직인 평면으로 자를 때, 위치 \(x\)에서 단면의 넓이가 \(S(x)\)라 하자. 두께 \(\Delta x\)인 얇은 조각의 부피는 거의 \(S(x)\Delta x\)이다. 그래서 이 조각들을 모두 더하고 두께를 한없이 얇게 하면, 구분구적법에 의해 부피는 정적분이 된다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.6.1 <span class="nm">입체의 부피</span></span>
+            <p>구간 \([a, b]\)에서 \(x\)축에 수직인 단면의 넓이가 \(S(x)\)인 입체의 부피는 \[V = \int_a^b S(x)\,dx\] 이다. 곡선 \(y = f(x)\)를 \(x\)축 둘레로 회전시킨 입체는 단면이 반지름 \(|f(x)|\)인 원이므로 \(V = \int_a^b \pi\{f(x)\}^2\,dx\)이다.</p>
+          </div>
+          <p>\(y = \sqrt{x}\)를 \(x\)축 둘레로 돌리면 단면은 반지름 \(\sqrt{x}\)인 원이고 넓이는 \(\pi x\)이다. 따라서 부피는 \(\int_0^4 \pi x\,dx = \pi \cdot \dfrac{16}{2} = 8\pi\)이다. 그림 1에서 원판의 수를 늘리면 계단 모양의 원판 더미가 매끈한 입체에 다가가고, 부피의 합이 \(8\pi \approx 25.13\)에 가까워진다.</p>
+
+          <h3><span class="no">3.6.2</span>카발리에리의 원리</h3>
+          <p>부피가 단면의 넓이만으로 정해진다는 것은, 단면의 넓이가 같으면 모양이 달라도 부피가 같다는 뜻이다. 동전 더미를 비스듬히 밀어도 부피가 그대로인 것과 같다. 이를 카발리에리의 원리라 한다. 중학교에서 배운 뿔의 부피 \(\dfrac{1}{3}Sh\)도 이 방법으로 증명할 수 있다.<sup class="fn"><a href="#fn-calc2-volume-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="곧게 쌓은 동전 더미와 비스듬히 민 동전 더미의 부피가 같음">
+              <g class="s">
+                <rect x="60" y="30" width="80" height="12" class="lc"/><rect x="60" y="44" width="80" height="12" class="lc"/><rect x="60" y="58" width="80" height="12" class="lc"/><rect x="60" y="72" width="80" height="12" class="lc"/><rect x="60" y="86" width="80" height="12" class="lc"/><rect x="60" y="100" width="80" height="12" class="lc"/>
+                <rect x="300" y="30" width="80" height="12" class="lc"/><rect x="292" y="44" width="80" height="12" class="lc"/><rect x="284" y="58" width="80" height="12" class="lc"/><rect x="276" y="72" width="80" height="12" class="lc"/><rect x="268" y="86" width="80" height="12" class="lc"/><rect x="260" y="100" width="80" height="12" class="lc"/>
+                <text x="100" y="132" text-anchor="middle">곧게 쌓은 더미</text><text x="320" y="132" text-anchor="middle">비스듬히 민 더미</text>
+                <text x="420" y="60">단면 넓이가</text><text x="420" y="82">같으면</text><text x="420" y="104">부피도 같다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 모든 높이에서 단면의 넓이가 같은 두 입체는 부피가 같다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+            <p>반지름 \(r\)인 구의 부피가 \(\dfrac{4}{3}\pi r^3\)임을 적분으로 보여라.</p>
+          </div>
+          <p>구는 반원 \(y = \sqrt{r^2 - x^2}\) (\(-r \le x \le r\))을 \(x\)축 둘레로 돌린 입체이다. 위치 \(x\)에서 단면은 반지름 \(\sqrt{r^2 - x^2}\)인 원이므로 넓이는 \(\pi(r^2 - x^2)\)이다.</p>
+          <p>\[V = \int_{-r}^{r} \pi(r^2 - x^2)\,dx = \pi\left[r^2x - \frac{x^3}{3}\right]_{-r}^{r} = \pi\left(\frac{2r^3}{3} + \frac{2r^3}{3}\right) = \frac{4}{3}\pi r^3\] 이다. 즉 중학교에서 외웠던 공식을 단면을 쌓는 생각만으로 이끌어 낸 것이다. 같은 방법으로 원뿔의 단면 넓이 \(\pi\left(\frac{rx}{h}\right)^2\)을 적분하면 \(\dfrac{1}{3}\pi r^2h\)를 얻는다.</p>
+          <p>아래 탐구 카드에서 얇은 조각을 모아 부피를 구하고, 입체를 비스듬히 밀어도 부피가 같은지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-volume-1">아르키메데스는 구, 원기둥, 원뿔의 단면 넓이를 비교하여 구의 부피가 외접하는 원기둥 부피의 \(\dfrac{2}{3}\)임을 알아냈다. 그는 이 결과를 가장 자랑스러워하여 묘비에 새기게 했다고 전해진다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>입체의 부피는 단면의 넓이 \(S(x)\)를 적분한 \(\int_a^b S(x)dx\)이며, 곡선을 \(x\)축 둘레로 돌린 입체는 \(\int_a^b \pi\{f(x)\}^2dx\)이다. 단면의 넓이가 같으면 모양이 달라도 부피가 같다. 그래서 처음 질문처럼 얇게 썬 조각의 부피를 모으면, 공식이 없는 입체의 부피도 정적분으로 정확히 구할 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a><a href="../../c/calc2/3-4.html#text-calc2-riemann"><small class="mono">미적분Ⅱ 3.4</small>정적분과 급수의 합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-vase"><small class="mono">고급 미적분 1.6</small>정확히 1 L가 들어가는 꽃병을 디자인할 수 있을까?</a><a href="../../c/adcalc/1-6.html#card-adcalc-band-area"><small class="mono">고급 미적분 1.6</small>구의 겉넓이를 띠로 어림하면 4π r²이 나올까?</a><a href="../../c/adcalc/1-6.html#text-adcalc-revolution"><small class="mono">고급 미적분 1.6</small>회전체의 부피와 겉넓이</a></div></nav>
+
       <article class="card" id="card-calc2-cross-section">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</h2><span class="kind">입체도형의 부피 · 조작</span>
+          <span class="no">탐구 1</span><h2>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</h2><span class="kind">입체도형의 부피 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -76,34 +132,34 @@
                 <div><dt>조각 부피의 합</dt><dd class="n-s">—</dd></div>
                 <div><dt>부피 \(\int S(x)\,dx\)</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">조각 하나의 부피는 (조각 가운데의 단면 넓이) × (두께)로 어림했습니다. 위 그림은 비스듬히 본 모식도입니다.</p>
+              <p class="fig-note">조각 하나의 부피는 (조각 가운데의 단면 넓이) × (두께)로 어림했다. 위 그림은 비스듬히 본 모식도이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(0 \le x \le 4\)에서 \(x\)축에 수직인 평면으로 자른 단면이 한 변의 길이 \(\sqrt{x}\)인 정사각형인 입체가 있습니다. 공식이 없는 이 입체의 부피를 어떻게 구할까요?</li>
-            <li><span class="tag">복원</span>\([a, b]\)를 \(n\)등분한 직사각형 넓이의 합의 극한이 정적분입니다. 기둥의 부피는 (밑넓이) × (높이)입니다.</li>
-            <li><span class="tag">설명</span>입체를 두께 \(\Delta x\)로 썰면 조각 하나는 거의 기둥이므로 부피가 약 \(S(x_k)\Delta x\)입니다. 조각을 모두 더하고 두께를 0에 가깝게 하면 <b>\(V = \lim \sum S(x_k)\Delta x = \int_a^b S(x)\,dx\)</b>입니다(\(S\)는 연속). 첫째 보기는 \(S(x) = (\sqrt{x})^2 = x\)이므로 \(V = \int_0^4 x\,dx = 8\)입니다. 둘째 보기처럼 곡선 \(y = f(x)\)를 \(x\)축 둘레로 돌린 입체는 단면이 반지름 \(|f(x)|\)인 원이므로 \(S(x) = \pi \{f(x)\}^2\)이고, \(V = \int_0^4 \pi x\,dx = 8\pi\)입니다.</li>
-            <li><span class="tag">연결</span>아래 그림은 \(S(x)\)의 그래프이고, 부피는 이 그래프 아래의 넓이입니다. 넓이는 길이를 적분하고, 부피는 넓이를 적분합니다. 원뿔의 부피 공식 \((\frac{1}{3})\pi r^2h\)에 \(\frac{1}{3}\)이 붙는 것도 \(S\)가 높이의 제곱에 비례해서 \(\int x^2\,dx\)를 계산하기 때문입니다.</li>
-            <li><span class="tag">적용</span>조각을 1개에서 40개로 늘리며 조각 부피의 합이 정확한 부피로 다가가는지 보세요. 자르는 위치를 옮기며 \(S(x)\)가 아래 그래프의 높이와 같은지 확인하세요. 셋째 보기에서 단면이 가장 큰 곳은 어디이고, 부피는 \(\frac{\sqrt{3}\pi}{8} \approx 0.680\)과 같은가요?</li>
-            <li class="warn"><span class="tag">판단</span>단면의 '한 변'이나 '반지름'을 적분하면 부피가 아닙니다. 적분하는 것은 반드시 단면의 넓이 \(S(x)\)이고, 그래서 한 변이 \(\sqrt{x}\)이면 \(S(x) = x\)처럼 제곱이 들어갑니다. 또 자르는 평면은 적분하는 축에 수직이어야 합니다.</li>
+            <li><span class="tag">질문</span>\(0 \le x \le 4\)에서 \(x\)축에 수직인 평면으로 자른 단면이 한 변의 길이 \(\sqrt{x}\)인 정사각형인 입체가 있다. 공식이 없는 이 입체의 부피를 어떻게 구할까?</li>
+            <li><span class="tag">복원</span>\([a, b]\)를 \(n\)등분한 직사각형 넓이의 합의 극한이 정적분이다. 그리고 기둥의 부피는 (밑넓이) × (높이)이다.</li>
+            <li><span class="tag">설명</span>입체를 두께 \(\Delta x\)로 썰면 조각 하나는 거의 기둥이므로 부피가 약 \(S(x_k)\Delta x\)이다. 그래서 조각을 모두 더하고 두께를 0에 가깝게 하면 \(V = \lim \sum S(x_k)\Delta x = \int_a^b S(x)\,dx\)이다(\(S\)는 연속). 첫째 보기는 \(S(x) = (\sqrt{x})^2 = x\)이므로 \(V = \int_0^4 x\,dx = 8\)이다. 둘째 보기처럼 곡선 \(y = f(x)\)를 \(x\)축 둘레로 돌린 입체는 단면이 반지름 \(|f(x)|\)인 원이므로 \(S(x) = \pi \{f(x)\}^2\)이고, \(V = \int_0^4 \pi x\,dx = 8\pi\)이다.</li>
+            <li><span class="tag">연결</span>아래 그림은 \(S(x)\)의 그래프이고, 부피는 이 그래프 아래의 넓이이다. 즉 넓이는 길이를 적분하고, 부피는 넓이를 적분한다. 원뿔의 부피 공식 \((\frac{1}{3})\pi r^2h\)에 \(\frac{1}{3}\)이 붙는 것도 \(S\)가 높이의 제곱에 비례해서 \(\int x^2\,dx\)를 계산하기 때문이다.</li>
+            <li><span class="tag">적용</span>조각을 1개에서 40개로 늘리며 조각 부피의 합이 정확한 부피로 다가가는지 보고, 자르는 위치를 옮기며 \(S(x)\)가 아래 그래프의 높이와 같은지 확인해 보자. 그리고 셋째 보기에서 단면이 가장 큰 곳이 어디인지, 부피가 \(\frac{\sqrt{3}\pi}{8} \approx 0.680\)과 같은지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>단면의 한 변이나 반지름을 적분하면 부피가 아니다. 적분하는 것은 반드시 단면의 넓이 \(S(x)\)이므로, 한 변이 \(\sqrt{x}\)이면 \(S(x) = x\)처럼 제곱이 들어간다. 또 자르는 평면은 적분하는 축에 수직이어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(0 \le x \le 1\)에서 \(x\)축에 수직인 평면으로 자른 단면이 한 변의 길이 \(e^x\)인 정사각형인 입체의 부피는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 - 1}{2}\)<span class="why"><b>맞습니다.</b> \(S(x) = e^{2x}\)이므로 \(\int_0^1 e^{2x}\,dx = [\frac{e^{2x}}{2}]_0^1 = \frac{e^2 - 1}{2} \approx 3.19\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>한 변을 적분했습니다.</b> \(\int e^x\,dx\)는 단면의 한 변을 모은 값으로, 부피가 아니라 넓이에 해당합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((e - 1)^2\)<span class="why"><b>적분한 뒤 제곱했습니다.</b> \((\int e^x\,dx)^2\)과 \(\int e^{2x}\,dx\)는 다릅니다. 단면마다 넓이를 먼저 구한 뒤 적분합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(e^2 - 1\)<span class="why"><b>합성함수 적분에서 \(\frac{1}{2}\)을 빠뜨렸습니다.</b> \((e^{2x})' = 2e^{2x}\)이므로 원시함수는 \(\frac{e^{2x}}{2}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{e^2 - 1}{2}\)<span class="why"><b>맞다.</b> \(S(x) = e^{2x}\)이므로 \(\int_0^1 e^{2x}\,dx = [\frac{e^{2x}}{2}]_0^1 = \frac{e^2 - 1}{2} \approx 3.19\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>한 변을 적분했다.</b> \(\int e^x\,dx\)는 단면의 한 변을 모은 값으로, 부피가 아니라 넓이에 해당한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((e - 1)^2\)<span class="why"><b>적분한 뒤 제곱했다.</b> \((\int e^x\,dx)^2\)과 \(\int e^{2x}\,dx\)는 다르다. 단면마다 넓이를 먼저 구한 뒤 적분한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(e^2 - 1\)<span class="why"><b>합성함수 적분에서 \(\frac{1}{2}\)을 빠뜨렸다.</b> \((e^{2x})' = 2e^{2x}\)이므로 원시함수는 \(\frac{e^{2x}}{2}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-vase"><small class="mono">고급 미적분 1.6</small>정확히 1 L가 들어가는 꽃병을 디자인할 수 있을까?</a><a href="../../c/adcalc/1-6.html#card-adcalc-band-area"><small class="mono">고급 미적분 1.6</small>구의 겉넓이를 띠로 어림하면 4π r²이 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a><a href="../../c/calc2/3-4.html#text-calc2-riemann"><small class="mono">미적분Ⅱ 3.4</small>정적분과 급수의 합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-vase"><small class="mono">고급 미적분 1.6</small>정확히 1 L가 들어가는 꽃병을 디자인할 수 있을까?</a><a href="../../c/adcalc/1-6.html#card-adcalc-band-area"><small class="mono">고급 미적분 1.6</small>구의 겉넓이를 띠로 어림하면 4π r²이 나올까?</a><a href="../../c/adcalc/1-6.html#text-adcalc-revolution"><small class="mono">고급 미적분 1.6</small>회전체의 부피와 겉넓이</a></div></nav>
 
       <article class="card" id="card-calc2-cavalieri">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>입체를 비스듬히 밀면 부피가 바뀔까?</h2><span class="kind">입체도형의 부피 · 조작</span>
+          <span class="no">탐구 2</span><h2>입체를 비스듬히 밀면 부피가 바뀔까?</h2><span class="kind">입체도형의 부피 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,43 +185,44 @@
                 <div><dt>조각 부피의 합 (왼쪽 / 오른쪽)</dt><dd class="n-s">—</dd></div>
                 <div><dt>부피 \(\int_0^2 S(y)\,dy\)</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">높이는 2, 원뿔의 밑면 반지름은 1, 원기둥의 반지름은 0.8입니다. 원판은 비스듬히 본 모양이라 타원으로 그렸습니다(모식).</p>
+              <p class="fig-note">높이는 2, 원뿔의 밑면 반지름은 1, 원기둥의 반지름은 0.8이다. 원판은 비스듬히 본 모양이라 타원으로 그렸다(모식).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전을 쌓은 기둥을 옆으로 밀어 비스듬하게 만들면 부피는 어떻게 될까요? 원뿔의 꼭짓점을 밑면 중심 바로 위가 아닌 곳으로 옮기면 부피 공식 \((\frac{1}{3})\pi r^2h\)는 그대로 쓸 수 있을까요?</li>
-            <li><span class="tag">복원</span>입체를 높이 \(y\)에서 밑면과 평행하게 자른 단면의 넓이가 \(S(y)\)이면 부피는 \(V = \int S(y)\,dy\)입니다.</li>
-            <li><span class="tag">설명</span>옆으로 밀어도 각 높이의 단면은 자리만 옮겨질 뿐 모양과 넓이가 그대로입니다. \(S(y)\)가 같으므로 \(\int S(y)\,dy\)도 같습니다. 이처럼 <b>모든 높이에서 단면의 넓이가 같은 두 입체는 부피가 같다</b>는 것을 <em>카발리에리의 원리</em>라고 합니다. 원뿔은 \(S(y) = \pi(1 - \frac{y}{2})^2\)이므로 \(V = \int_0^2 \pi(1 - \frac{y}{2})^2\,dy = \frac{2\pi}{3}\)이고, 이것은 \((\frac{1}{3})\pi \cdot 1^2 \cdot 2\)와 같습니다. 비스듬한 원뿔도 같은 값입니다.</li>
-            <li><span class="tag">연결</span>카발리에리(17세기)는 적분이 정리되기 전에 이 원리로 여러 부피를 구했습니다. 정적분 \(V = \int S(y)\,dy\)는 이 원리를 식으로 쓴 것입니다. 단면의 넓이만 알면 되므로, 모양이 복잡한 입체도 단면이 단순한 입체와 비교해 부피를 구할 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(s\)를 0에서 1.5까지 움직이며 두 단면 넓이와 조각 부피의 합이 늘 같은지 보세요. '휘게 하기'로 바꾸어도 같은가요? 조각을 늘리면 조각 부피의 합은 어떤 값으로 다가가나요?</li>
-            <li class="warn"><span class="tag">판단</span>비스듬한 입체의 '높이'는 기울어진 옆선의 길이가 아니라 밑면에서 꼭대기까지의 수직 거리입니다. 또 카발리에리의 원리는 같은 높이마다 넓이가 같아야 성립합니다. 부피만 같고 단면 넓이가 높이마다 다른 입체도 있으므로, 거꾸로 '부피가 같으면 단면이 같다'고 할 수는 없습니다.</li>
+            <li><span class="tag">질문</span>동전을 쌓은 기둥을 옆으로 밀어 비스듬하게 만들면 부피는 어떻게 될까? 원뿔의 꼭짓점을 밑면 중심 바로 위가 아닌 곳으로 옮겨도 부피 공식 \((\frac{1}{3})\pi r^2h\)를 그대로 쓸 수 있을까?</li>
+            <li><span class="tag">복원</span>입체를 높이 \(y\)에서 밑면과 평행하게 자른 단면의 넓이가 \(S(y)\)이면 부피는 \(V = \int S(y)\,dy\)이다.</li>
+            <li><span class="tag">설명</span>옆으로 밀어도 각 높이의 단면은 자리만 옮겨질 뿐 모양과 넓이가 그대로이다. \(S(y)\)가 같으므로 \(\int S(y)\,dy\)도 같고, 이렇게 모든 높이에서 단면의 넓이가 같은 두 입체는 부피가 같다는 것을 <em>카발리에리의 원리</em>라고 한다. 원뿔은 \(S(y) = \pi(1 - \frac{y}{2})^2\)이므로 \(V = \int_0^2 \pi(1 - \frac{y}{2})^2\,dy = \frac{2\pi}{3}\)이고, 이것은 \((\frac{1}{3})\pi \cdot 1^2 \cdot 2\)와 같으며 비스듬한 원뿔도 같은 값이다.</li>
+            <li><span class="tag">연결</span>카발리에리(17세기)는 적분이 정리되기 전에 이 원리로 여러 부피를 구했고, 정적분 \(V = \int S(y)\,dy\)는 이 원리를 식으로 쓴 것이다. 단면의 넓이만 알면 되므로, 모양이 복잡한 입체도 단면이 단순한 입체와 비교해 부피를 구할 수 있다.</li>
+            <li><span class="tag">적용</span>\(s\)를 0에서 1.5까지 움직이며 두 단면 넓이와 조각 부피의 합이 늘 같은지 보고, ‘휘게 하기’로 바꾸어도 같은지 확인해 보자. 그리고 조각을 늘리면 조각 부피의 합이 어떤 값으로 다가가는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>비스듬한 입체의 높이는 기울어진 옆선의 길이가 아니라 밑면에서 꼭대기까지의 수직 거리이다. 또 카발리에리의 원리는 같은 높이마다 넓이가 같아야 성립한다. 부피만 같고 단면 넓이가 높이마다 다른 입체도 있으므로, 거꾸로 부피가 같으면 단면이 같다고 할 수는 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">밑면의 반지름이 3이고, 꼭짓점에서 밑면까지의 수직 거리가 4이며, 모선 중 하나의 길이가 5인 비스듬한 원뿔의 부피는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(12\pi\)<span class="why"><b>맞습니다.</b> 단면은 반지름이 \(3(1 - \frac{y}{4})\)인 원이므로 똑바른 원뿔과 같고, \((\frac{1}{3})\pi \cdot 3^2 \cdot 4 = 12\pi\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(15\pi\)<span class="why"><b>모선의 길이를 높이로 썼습니다.</b> 높이는 수직 거리 4입니다. 모선은 기울어진 옆선이라 높이보다 깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(36\pi\)<span class="why"><b>기둥의 부피를 구했습니다.</b> 원뿔은 단면이 위로 갈수록 줄어들어 \(\int_0^4 9\pi(1 - \frac{y}{4})^2\,dy = 12\pi\)로, 기둥의 \(\frac{1}{3}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>비스듬하므로 공식으로 구할 수 없다<span class="why"><b>단면이 같다는 점을 놓쳤습니다.</b> 각 높이의 단면 넓이가 똑바른 원뿔과 같으므로 부피도 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(12\pi\)<span class="why"><b>맞다.</b> 단면은 반지름이 \(3(1 - \frac{y}{4})\)인 원이므로 똑바른 원뿔과 같고, \((\frac{1}{3})\pi \cdot 3^2 \cdot 4 = 12\pi\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(15\pi\)<span class="why"><b>모선의 길이를 높이로 썼다.</b> 높이는 수직 거리 4이다. 모선은 기울어진 옆선이라 높이보다 길다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(36\pi\)<span class="why"><b>기둥의 부피를 구했다.</b> 원뿔은 단면이 위로 갈수록 줄어들어 \(\int_0^4 9\pi(1 - \frac{y}{4})^2\,dy = 12\pi\)로, 기둥의 \(\frac{1}{3}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>비스듬하므로 공식으로 구할 수 없다<span class="why"><b>단면이 같다는 점을 놓쳤다.</b> 각 높이의 단면 넓이가 똑바른 원뿔과 같으므로 부피도 같다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-vase"><small class="mono">고급 미적분 1.6</small>정확히 1 L가 들어가는 꽃병을 디자인할 수 있을까?</a><a href="../../c/adcalc/1-6.html#card-adcalc-band-area"><small class="mono">고급 미적분 1.6</small>구의 겉넓이를 띠로 어림하면 4π r²이 나올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-to-int"><small class="mono">미적분Ⅱ 3.4</small>같은 합을 서로 다른 정적분으로 읽어도 될까?</a><a href="../../c/calc2/3-4.html#text-calc2-riemann"><small class="mono">미적분Ⅱ 3.4</small>정적분과 급수의 합</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-vase"><small class="mono">고급 미적분 1.6</small>정확히 1 L가 들어가는 꽃병을 디자인할 수 있을까?</a><a href="../../c/adcalc/1-6.html#card-adcalc-band-area"><small class="mono">고급 미적분 1.6</small>구의 겉넓이를 띠로 어림하면 4π r²이 나올까?</a><a href="../../c/adcalc/1-6.html#text-adcalc-revolution"><small class="mono">고급 미적분 1.6</small>회전체의 부피와 겉넓이</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">28문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">28문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -173,6 +230,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/cross-section.js"></script>

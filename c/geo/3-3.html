@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>벡터의 내적 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="내적의 뜻 a·b = |a||b|cosθ, 성분으로 구하는 내적, 두 벡터가 이루는 각, 수직 조건과 내적의 성질. 평면과 공간에서 확인한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-dot-angle .vec { display: inline-block; position: relative; padding-top: .3em; line-height: 1; }
@@ -51,18 +56,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-geo-dot-angle"><span class="mono">3.3.1</span>내적의 뜻</a></li>
-        <li><a href="#card-geo-dot-space"><span class="mono">3.3.2</span>공간벡터의 내적과 수직</a></li>
+        <li><a href="#text-geo-dot"><span class="mono">본문</span>벡터의 내적</a></li>
+        <li><a href="#card-geo-dot-angle"><span class="mono">탐구 1</span>내적의 뜻</a></li>
+        <li><a href="#card-geo-dot-space"><span class="mono">탐구 2</span>공간벡터의 내적과 수직</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=geo-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">67문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=geo&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=geo-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">67문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=geo-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-geo-dot" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>벡터의 내적</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">상자를 끈으로 비스듬히 끌면, 같은 힘을 주어도 끈을 바닥과 나란하게 당길 때보다 덜 움직인다. 힘 가운데 이동 방향을 향하는 부분만 일을 하기 때문이다. 두 벡터가 같은 방향을 얼마나 향하는지를 수 하나로 나타낼 수 있다면, 일의 양도, 두 벡터가 수직인지도 쉽게 알 수 있지 않을까?</p>
+          <figure class="q-fig" data-q="geo-dot">
+            <svg viewBox="0 0 520 230" role="img" aria-label="두 벡터 사이의 각에 따른 내적과 정사영의 길이"></svg>
+            <div class="q-ctl"><label>사잇각 \(\theta\) (°) <input type="range" data-k="th" min="0" max="180" step="1" value="50"><output data-k="th"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(|\vec a| = 4\)(파랑), \(|\vec b| = 3\)(주황). \(\vec b\)를 \(\vec a\) 방향으로 정사영한 길이(색 띠)는 \(3\cos\theta\)이고, 내적은 그 길이에 \(|\vec a|\)를 곱한 값이다. 둔각이면 띠가 반대쪽으로 가서 내적이 음수가 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>벡터의 성분(<a href="3-2.html">위치벡터</a>), 코사인의 뜻, 코사인법칙(대수).</div>
+
+          <h3><span class="no">3.3.1</span>내적의 정의</h3>
+          <div class="tb-env thm"><span class="lb">정의 3.3.1 <span class="nm">벡터의 내적</span></span>
+            <p>영벡터가 아닌 두 벡터 \(\vec a\), \(\vec b\)가 이루는 각이 \(\theta\) (\(0 \le \theta \le \pi\))일 때 \[\vec a \cdot \vec b = |\vec a||\vec b|\cos\theta\] 를 두 벡터의 내적이라 한다. 내적은 벡터가 아니라 실수이다.</p>
+          </div>
+          <p>\(|\vec b|\cos\theta\)는 \(\vec b\)를 \(\vec a\) 방향으로 정사영한 길이이다. 따라서 내적은 '\(\vec a\)의 크기 \(\times\) \(\vec b\) 가운데 \(\vec a\) 방향 부분'이다. 그림 1에서 각을 바꾸어 보자. 0°이면 내적이 최대인 12, 90°이면 0, 180°이면 최소인 \(-12\)이다. 영벡터가 아닌 두 벡터가 수직일 필요충분조건은 \(\vec a \cdot \vec b = 0\)이다.</p>
+          <p>이번에는 \(\vec a\)를 고정하고 \(\vec b\)를 바꾸어 가며, 내적이 같은 값이 되는 \(\vec b\)들이 어디에 있는지 보자. 내적은 \(|\vec a|\)와 정사영의 길이를 곱한 것이므로, 정사영의 길이가 같은 \(\vec b\)들은 내적도 같다. 정사영의 길이가 같다는 것은 \(\vec b\)의 끝점에서 \(\vec a\)가 놓인 직선에 내린 수선의 발이 같다는 뜻이다. 그래서 내적이 같은 \(\vec b\)들의 끝점은 \(\vec a\)에 수직인 한 직선 위에 늘어서고, 내적의 값을 바꾸면 이 직선이 \(\vec a\) 방향으로 나란히 옮겨 간다. 지도의 등고선처럼 \(\vec a\)에 수직인 평행선들이 내적의 값을 매기는 셈이다. 뒤에서 배울 직선과 평면의 방정식에서 법선벡터가 바로 이 \(\vec a\)의 역할을 한다.</p>
+
+          <h3><span class="no">3.3.2</span>성분으로 구하는 내적</h3>
+          <p>\(\vec a = (a_1, a_2)\), \(\vec b = (b_1, b_2)\)가 이루는 삼각형에 코사인법칙을 쓰면 \(|\vec b - \vec a|^2 = |\vec a|^2 + |\vec b|^2 - 2|\vec a||\vec b|\cos\theta\)이다. 좌변과 \(|\vec a|^2\), \(|\vec b|^2\)를 성분으로 전개하여 정리하면 \(|\vec a||\vec b|\cos\theta = a_1b_1 + a_2b_2\)가 나온다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.2 <span class="nm">성분으로 나타낸 내적</span></span>
+            <p>\[\vec a \cdot \vec b = a_1b_1 + a_2b_2\quad (\text{공간에서는 } a_1b_1 + a_2b_2 + a_3b_3)\] 따라서 \(\cos\theta = \dfrac{\vec a \cdot \vec b}{|\vec a||\vec b|}\)로 두 벡터가 이루는 각을 구할 수 있다.</p>
+          </div>
+          <p>내적은 교환법칙 \(\vec a \cdot \vec b = \vec b \cdot \vec a\)와 분배법칙이 성립하고, \(\vec a \cdot \vec a = |\vec a|^2\)이다. 물리에서 힘 \(\vec F\)가 물체를 \(\vec s\)만큼 옮길 때 한 일이 \(W = \vec F \cdot \vec s\)이다.<sup class="fn"><a href="#fn-geo-dot-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="사잇각에 따른 내적의 부호">
+              <g class="s">
+                <text x="30" y="25">사잇각</text><text x="200" y="25">cos θ</text><text x="340" y="25">내적</text>
+                <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+                <text x="30" y="58">예각</text><text x="200" y="58">양수</text><text x="340" y="58">양수</text>
+                <text x="30" y="80">직각</text><text x="200" y="80">0</text><text x="340" y="80" class="tb">0 (수직)</text>
+                <text x="30" y="102">둔각</text><text x="200" y="102">음수</text><text x="340" y="102">음수</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 내적의 부호만 보고도 두 벡터가 이루는 각이 예각인지, 직각인지, 둔각인지 알 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.3</span>
+            <p>\(\vec a = (1, 2, 2)\), \(\vec b = (3, 0, 4)\)가 이루는 각 \(\theta\)에 대하여 \(\cos\theta\)를 구하여라. 또 \(\vec c = (2, k, -1)\)이 \(\vec a\)와 수직이 되도록 \(k\)를 구하여라.</p>
+          </div>
+          <p>\(\vec a \cdot \vec b = 3 + 0 + 8 = 11\), \(|\vec a| = \sqrt{1 + 4 + 4} = 3\), \(|\vec b| = \sqrt{9 + 0 + 16} = 5\)이다. 따라서 \(\cos\theta = \dfrac{11}{15}\)이고 \(\theta \approx 43°\)이다.</p>
+          <p>\(\vec a \cdot \vec c = 2 + 2k - 2 = 2k = 0\)이므로 \(k = 0\)이다. 공간에서 각도기로 직각을 재지 않아도, 성분 계산 한 번으로 수직인지 판정할 수 있다.</p>
+          <p>아래 탐구 카드에서 두 벡터의 사잇각과 내적의 관계, 공간에서 수직 판정을 직접 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-geo-dot-1">끈으로 상자를 바닥과 30° 각도로 100 N의 힘으로 당겨 10 m 옮겼다면 일은 \(100 \times 10 \times \cos 30° \approx 866\) J이다. 같은 힘을 바닥과 나란히 주었다면 1000 J이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>두 벡터의 내적 \(\vec a \cdot \vec b = |\vec a||\vec b|\cos\theta\)는 한 벡터의 크기에 다른 벡터의 그 방향 정사영 길이를 곱한 실수이며, 성분으로는 \(a_1b_1 + a_2b_2 + a_3b_3\)이다. 내적이 0이면 두 벡터는 수직이다. 그래서 처음 질문의 '같은 쪽을 얼마나 향하는지'는 내적 하나로 나타나고, 끈이 한 일도 힘과 이동의 내적이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-normal"><small class="mono">기하 3.4</small>방향 대신 수직인 벡터로 직선을 정할 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/geo/3-5.html#text-geo-plane-eq"><small class="mono">기하 3.5</small>평면과 구의 방정식</a><a href="../../c/pmath/2-7.html#card-pmath-work-dot"><small class="mono">전문 수학 2.7</small>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</a></div></nav>
+
       <article class="card" id="card-geo-dot-angle">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</h2><span class="kind">벡터의 내적 · 정의와 성분</span>
+          <span class="no">탐구 1</span><h2>두 화살표가 같은 쪽을 얼마나 향하는지 수 하나로 나타낼 수 있을까?</h2><span class="kind">벡터의 내적 · 정의와 성분</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,34 +136,34 @@
                 <div><dt>\(a_1b_1 + a_2b_2\)</dt><dd class="n-c">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">두 끝점을 끌어 보세요. 굵은 초록(또는 주황) 선분은 \(\vec{b}\)를 \(\vec{a}\) 방향으로 내린 정사영이고, 그 부호 있는 길이가 \(|\vec{b}|\cos \theta\)입니다.</p>
+              <p class="fig-note">두 끝점을 끌어 보자. 굵은 초록(또는 주황) 선분은 \(\vec{b}\)를 \(\vec{a}\) 방향으로 내린 정사영이고, 그 부호 있는 길이가 \(|\vec{b}|\cos \theta\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수레를 줄로 끌 때 줄이 비스듬하면 힘의 일부만 수레를 앞으로 옮깁니다. 힘 \(\vec{F}\)와 이동 \(\vec{s}\)가 '얼마나 같은 쪽인지'까지 담은 곱은 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>삼각형에서 \(\cos \theta\)는 빗변에 대한 밑변의 비이고, \(\theta\)가 \(90^\circ\)보다 크면 음수입니다. 코사인법칙은 \(c^2 = a^2 + b^2 - 2ab \cos C\)입니다.</li>
-            <li><span class="tag">설명</span>영벡터가 아닌 두 벡터 \(\vec{a}, \vec{b}\)의 시점을 맞추었을 때 이루는 각을 \(\theta(0 \le \theta \le \pi)\)라고 하면, <em>내적</em>을 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta\)로 정합니다. 둘 중 하나가 \(\vec{0}\)이면 \(\vec{a}\cdot\vec{b} = 0\)입니다. \(|\vec{b}|\cos \theta\)는 \(\vec{b}\)를 \(\vec{a}\) 방향으로 내린 그림자(정사영)의 부호 있는 길이이므로, 내적은 '\(|\vec{a}|\) × 그림자 길이'입니다. 코사인법칙으로 \(|\vec{b} - \vec{a}|^2 = |\vec{a}|^2 + |\vec{b}|^2 - 2|\vec{a}||\vec{b}|\cos \theta\)를 쓰고 양변을 성분으로 풀면 \(\vec{a}\cdot\vec{b} = a_1b_1 + a_2b_2\)를 얻습니다. 그래서 \(\cos \theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\)로 두 벡터가 이루는 각을 구할 수 있습니다. 성질: \(\vec{a}\cdot\vec{a} = |\vec{a}|^2, \vec{a}\cdot\vec{b} = \vec{b}\cdot\vec{a}, \vec{a}\cdot(\vec{b} + \vec{c}) = \vec{a}\cdot\vec{b} + \vec{a}\cdot\vec{c}, (k\vec{a})\cdot\vec{b} = k(\vec{a}\cdot\vec{b})\).</li>
-            <li><span class="tag">연결</span>물리에서 힘이 한 일 \(W = \vec{F}\cdot\vec{s}\)가 바로 내적입니다. 또 영벡터가 아닌 두 벡터가 수직일 필요충분조건 \(\vec{a}\cdot\vec{b} = 0\)은 직선과 평면의 방정식에서 법선벡터를 쓰는 근거가 됩니다.</li>
-            <li><span class="tag">적용</span>두 값 \(|\vec{a}||\vec{b}|\cos \theta\)와 \(a_1b_1 + a_2b_2\)가 언제나 같은지 확인하세요. \(\vec{a} = (4, 1)\)일 때 \(\vec{b}\)를 어디에 두면 내적이 0이 되나요? \(\theta\)가 \(90^\circ\)를 넘으면 내적의 부호는 어떻게 되나요? \(\vec{b}\)를 \(\vec{a}\)와 같은 방향으로 두면 내적은 무엇과 같아지나요?</li>
-            <li class="warn"><span class="tag">판단</span>내적의 결과는 벡터가 아니라 실수입니다. 그래서 \((\vec{a}\cdot\vec{b})\vec{c}\)와 \(\vec{a}(\vec{b}\cdot\vec{c})\)는 일반적으로 다릅니다. 또 \(\vec{a}\cdot\vec{b} = 0\)이라고 해서 \(\vec{a} = \vec{0}\)이거나 \(\vec{b} = \vec{0}\)인 것은 아닙니다. 두 벡터가 수직이어도 내적은 0입니다.</li>
+            <li><span class="tag">질문</span>수레를 줄로 끌 때 줄이 비스듬하면 힘의 일부만 수레를 앞으로 옮긴다. 힘 \(\vec{F}\)와 이동 \(\vec{s}\)가 얼마나 같은 쪽인지까지 담은 곱은 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>삼각형에서 \(\cos \theta\)는 빗변에 대한 밑변의 비이고, \(\theta\)가 \(90^\circ\)보다 크면 음수이다. 그리고 코사인법칙은 \(c^2 = a^2 + b^2 - 2ab \cos C\)이다.</li>
+            <li><span class="tag">설명</span>영벡터가 아닌 두 벡터 \(\vec{a}, \vec{b}\)의 시점을 맞추었을 때 이루는 각을 \(\theta(0 \le \theta \le \pi)\)라고 하면, <em>내적</em>을 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta\)로 정하고, 둘 중 하나가 \(\vec{0}\)이면 \(\vec{a}\cdot\vec{b} = 0\)이다. \(|\vec{b}|\cos \theta\)는 \(\vec{b}\)를 \(\vec{a}\) 방향으로 내린 그림자(정사영)의 부호 있는 길이이므로, 내적은 \(|\vec{a}|\)에 그림자 길이를 곱한 값이다. 코사인법칙으로 \(|\vec{b} - \vec{a}|^2 = |\vec{a}|^2 + |\vec{b}|^2 - 2|\vec{a}||\vec{b}|\cos \theta\)를 쓰고 양변을 성분으로 풀면 \(\vec{a}\cdot\vec{b} = a_1b_1 + a_2b_2\)를 얻으므로, \(\cos \theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\)로 두 벡터가 이루는 각을 구할 수 있다. 또 내적은 \(\vec{a}\cdot\vec{a} = |\vec{a}|^2, \vec{a}\cdot\vec{b} = \vec{b}\cdot\vec{a}, \vec{a}\cdot(\vec{b} + \vec{c}) = \vec{a}\cdot\vec{b} + \vec{a}\cdot\vec{c}, (k\vec{a})\cdot\vec{b} = k(\vec{a}\cdot\vec{b})\)를 만족한다.</li>
+            <li><span class="tag">연결</span>물리에서 힘이 한 일 \(W = \vec{F}\cdot\vec{s}\)가 바로 내적이다. 또 영벡터가 아닌 두 벡터가 수직일 필요충분조건 \(\vec{a}\cdot\vec{b} = 0\)은 직선과 평면의 방정식에서 법선벡터를 쓰는 근거가 된다.</li>
+            <li><span class="tag">적용</span>두 값 \(|\vec{a}||\vec{b}|\cos \theta\)와 \(a_1b_1 + a_2b_2\)가 언제나 같은지 확인하고, \(\vec{a} = (4, 1)\)일 때 \(\vec{b}\)를 어디에 두면 내적이 0이 되는지 찾아보자. 그리고 \(\theta\)가 \(90^\circ\)를 넘으면 내적의 부호가 어떻게 되는지, \(\vec{b}\)를 \(\vec{a}\)와 같은 방향으로 두면 내적이 무엇과 같아지는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>내적의 결과는 벡터가 아니라 실수이다. 그래서 \((\vec{a}\cdot\vec{b})\vec{c}\)와 \(\vec{a}(\vec{b}\cdot\vec{c})\)는 일반적으로 다르다. 또 \(\vec{a}\cdot\vec{b} = 0\)이라고 해서 \(\vec{a} = \vec{0}\)이거나 \(\vec{b} = \vec{0}\)인 것은 아니며, 두 벡터가 수직이어도 내적은 0이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(|\vec{a}| = 2, |\vec{b}| = 3, |\vec{a} + \vec{b}| = \sqrt{7}\)일 때 \(\vec{a}\cdot\vec{b}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3<span class="why"><b>부호를 놓쳤습니다.</b> \(|\vec{a} + \vec{b}|^2 = 4 + 2\vec{a}\cdot\vec{b} + 9 = 7\)에서 \(2\vec{a}\cdot\vec{b} = -6\)입니다. 합이 두 크기보다 짧으므로 두 벡터는 둔각을 이룹니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-3\)<span class="why"><b>맞습니다.</b> \(|\vec{a} + \vec{b}|^2 = |\vec{a}|^2 + 2\vec{a}\cdot\vec{b} + |\vec{b}|^2\)에서 \(7 = 13 + 2\vec{a}\cdot\vec{b}\), 곧 \(\vec{a}\cdot\vec{b} = -3\)입니다. \(\cos \theta = -\frac{1}{2}\)이므로 \(\theta = 120^\circ\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-6\)<span class="why"><b>2를 나누지 않았습니다.</b> 전개식의 가운데 항은 \(2\vec{a}\cdot\vec{b}\)입니다. \(-6\)은 \(2\vec{a}\cdot\vec{b}\)의 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>크기를 곱했습니다.</b> \(|\vec{a}||\vec{b}| = 6\)은 \(\theta = 0\)일 때의 내적입니다. 여기서는 각이 주어지지 않았으므로 \(|\vec{a} + \vec{b}|\)에서 구해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3<span class="why"><b>부호를 놓쳤다.</b> \(|\vec{a} + \vec{b}|^2 = 4 + 2\vec{a}\cdot\vec{b} + 9 = 7\)에서 \(2\vec{a}\cdot\vec{b} = -6\)이다. 합이 두 크기보다 짧으므로 두 벡터는 둔각을 이룬다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-3\)<span class="why"><b>맞다.</b> \(|\vec{a} + \vec{b}|^2 = |\vec{a}|^2 + 2\vec{a}\cdot\vec{b} + |\vec{b}|^2\)에서 \(7 = 13 + 2\vec{a}\cdot\vec{b}\), 곧 \(\vec{a}\cdot\vec{b} = -3\)이다. \(\cos \theta = -\frac{1}{2}\)이므로 \(\theta = 120^\circ\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-6\)<span class="why"><b>2를 나누지 않았다.</b> 전개식의 가운데 항은 \(2\vec{a}\cdot\vec{b}\)이다. \(-6\)은 \(2\vec{a}\cdot\vec{b}\)의 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>크기를 곱했다.</b> \(|\vec{a}||\vec{b}| = 6\)은 \(\theta = 0\)일 때의 내적이다. 여기서는 각이 주어지지 않았으므로 \(|\vec{a} + \vec{b}|\)에서 구해야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-normal"><small class="mono">기하 3.4</small>방향 대신 수직인 벡터로 직선을 정할 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/pmath/2-7.html#card-pmath-work-dot"><small class="mono">전문 수학 2.7</small>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-normal"><small class="mono">기하 3.4</small>방향 대신 수직인 벡터로 직선을 정할 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/geo/3-5.html#text-geo-plane-eq"><small class="mono">기하 3.5</small>평면과 구의 방정식</a><a href="../../c/pmath/2-7.html#card-pmath-work-dot"><small class="mono">전문 수학 2.7</small>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</a></div></nav>
 
       <article class="card" id="card-geo-dot-space">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>공간에서 두 벡터가 수직인지 어떻게 알까?</h2><span class="kind">벡터의 내적 · 공간벡터, 이루는 각</span>
+          <span class="no">탐구 2</span><h2>공간에서 두 벡터가 수직인지 어떻게 알까?</h2><span class="kind">벡터의 내적 · 공간벡터, 이루는 각</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,43 +188,44 @@
                 <div><dt>\(\cos \theta\)</dt><dd class="n-c">—</dd></div>
                 <div><dt>\(\theta\)</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">\(\vec{b}\)의 성분을 바꾸어 내적이 0이 되는 경우를 찾고, 그림을 끌어 돌려서 정말 직각인지 보세요.</p>
+              <p class="fig-note">\(\vec{b}\)의 성분을 바꾸어 내적이 0이 되는 경우를 찾고, 그림을 끌어 돌려서 정말 직각인지 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공간에서는 화면에 비친 각이 실제 각과 다르게 보입니다. 두 막대가 수직인지 눈으로 확신하기 어렵다면 무엇으로 판단할까요?</li>
-            <li><span class="tag">복원</span>평면에서 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta = a_1b_1 + a_2b_2\)였습니다. 공간벡터의 크기는 \(\sqrt{a_1^2 + a_2^2 + a_3^2}\)입니다.</li>
-            <li><span class="tag">설명</span>두 공간벡터도 시점을 맞추면 한 평면 위에 놓이므로 내적의 정의 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta\)가 그대로 쓰입니다. 코사인법칙으로 같은 계산을 하면 \(\vec{a}\cdot\vec{b} = a_1b_1 + a_2b_2 + a_3b_3\)입니다. 따라서 영벡터가 아닌 두 벡터에 대하여<br>\(\cos \theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\),<br>\(\vec{a} \perp \vec{b} \Leftrightarrow \vec{a}\cdot\vec{b} = 0, \vec{a} \parallel \vec{b} \Leftrightarrow \vec{b} = k\vec{a}(k \ne 0)\)입니다.</li>
-            <li><span class="tag">연결</span>공간에서 수직 조건을 수식 하나로 확인할 수 있으므로, 다음 절들에서 직선의 방향벡터와 평면의 법선벡터가 수직인지 판단할 때 이 식을 씁니다.</li>
-            <li><span class="tag">적용</span>\(\vec{a} = (1, 2, 2)\)에서 내적이 0이 되는 \(\vec{b}\)를 두 개 이상 찾아보세요. 예를 들어 \((2, -1, 0), (0, 1, -1)\)은 어떤가요? \(\vec{b}\)를 \(\vec{a}\)의 2배로 두면 \(\theta\)는 얼마가 되나요? 그림을 돌려서 같은 \(\theta\)가 화면에서는 다르게 보이는 것도 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>한 벡터에 수직인 벡터가 하나뿐이라고 생각하기 쉽습니다. 공간에서 \(\vec{a}\)에 수직인 벡터는 한 평면을 이룰 만큼 많습니다. 이 사실이 다음 절의 '법선벡터 하나로 평면을 정한다'는 생각의 바탕입니다.</li>
+            <li><span class="tag">질문</span>공간에서는 화면에 비친 각이 실제 각과 다르게 보인다. 두 막대가 수직인지 눈으로 확신하기 어렵다면 무엇으로 판단할까?</li>
+            <li><span class="tag">복원</span>평면에서 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta = a_1b_1 + a_2b_2\)였다. 그리고 공간벡터의 크기는 \(\sqrt{a_1^2 + a_2^2 + a_3^2}\)이다.</li>
+            <li><span class="tag">설명</span>두 공간벡터도 시점을 맞추면 한 평면 위에 놓이므로 내적의 정의 \(\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos \theta\)가 그대로 쓰이고, 코사인법칙으로 같은 계산을 하면 \(\vec{a}\cdot\vec{b} = a_1b_1 + a_2b_2 + a_3b_3\)이다. 따라서 영벡터가 아닌 두 벡터에 대하여 \(\cos \theta = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\)이고, \(\vec{a} \perp \vec{b} \Leftrightarrow \vec{a}\cdot\vec{b} = 0, \vec{a} \parallel \vec{b} \Leftrightarrow \vec{b} = k\vec{a}(k \ne 0)\)이다.</li>
+            <li><span class="tag">연결</span>공간에서 수직 조건을 수식 하나로 확인할 수 있으므로, 다음 절들에서 직선의 방향벡터와 평면의 법선벡터가 수직인지 판단할 때 이 식을 쓴다.</li>
+            <li><span class="tag">적용</span>\(\vec{a} = (1, 2, 2)\)에서 \((2, -1, 0), (0, 1, -1)\)처럼 내적이 0이 되는 \(\vec{b}\)를 두 개 이상 찾아보자. 그리고 \(\vec{b}\)를 \(\vec{a}\)의 2배로 두면 \(\theta\)가 얼마가 되는지 보고, 그림을 돌려 같은 \(\theta\)가 화면에서는 다르게 보이는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>한 벡터에 수직인 벡터가 하나뿐이라고 생각하기 쉽다. 그런데 공간에서 \(\vec{a}\)에 수직인 벡터는 한 평면을 이룰 만큼 많고, 이 사실이 다음 절의 법선벡터 하나로 평면을 정한다는 생각의 바탕이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 벡터 \(\vec{a} = (1, -2, 2), \vec{b} = (2, k, 1)\)이 서로 수직일 때 실수 \(k\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<span class="why"><b>맞습니다.</b> \(\vec{a}\cdot\vec{b} = 2 - 2k + 2 = 0\)에서 \(k = 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-2\)<span class="why"><b>부호를 바꾸었습니다.</b> \(-2k\) 항을 옮길 때 부호가 바뀌었습니다. \(k = -2\)이면 내적은 8입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>마지막 성분의 곱을 빠뜨렸습니다.</b> \(2 - 2k = 0\)만 풀었습니다. 공간벡터는 세 성분의 곱을 모두 더합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-4\)<span class="why"><b>평행 조건과 섞었습니다.</b> 성분의 비를 맞추는 것은 평행 조건입니다. 수직 조건은 내적이 0인 것입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<span class="why"><b>맞다.</b> \(\vec{a}\cdot\vec{b} = 2 - 2k + 2 = 0\)에서 \(k = 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-2\)<span class="why"><b>부호를 바꾸었다.</b> \(-2k\) 항을 옮길 때 부호가 바뀌었다. \(k = -2\)이면 내적은 8이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>마지막 성분의 곱을 빠뜨렸다.</b> \(2 - 2k = 0\)만 풀었다. 공간벡터는 세 성분의 곱을 모두 더한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-4\)<span class="why"><b>평행 조건과 섞었다.</b> 성분의 비를 맞추는 것은 평행 조건이다. 수직 조건은 내적이 0인 것이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-normal"><small class="mono">기하 3.4</small>방향 대신 수직인 벡터로 직선을 정할 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/pmath/2-7.html#card-pmath-work-dot"><small class="mono">전문 수학 2.7</small>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/geo/3-4.html#card-geo-line-normal"><small class="mono">기하 3.4</small>방향 대신 수직인 벡터로 직선을 정할 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/geo/3-5.html#text-geo-plane-eq"><small class="mono">기하 3.5</small>평면과 구의 방정식</a><a href="../../c/pmath/2-7.html#card-pmath-work-dot"><small class="mono">전문 수학 2.7</small>썰매 줄을 비스듬히 당기면 힘의 얼마가 썰매를 끄는 데 쓰일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=geo-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">67문항</span></a>
+      <a class="px-go" href="../../bank.html?c=geo&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=geo-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">67문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -171,6 +233,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/geo/body.js"></script>
 <script src="../../js/cards/geo/vec-kit.js"></script>
 <script src="../../js/cards/geo/dot-angle.js"></script>
 <script src="../../js/cards/geo/dot-space.js"></script>

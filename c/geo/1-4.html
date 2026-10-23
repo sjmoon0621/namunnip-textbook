@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이차곡선의 접선 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="직선을 이차곡선에 대입한 이차방정식의 판별식으로 기울기가 주어진 접선을 구하고, 곡선 위의 점에서의 접선 공식을 할선의 극한과 비교한다. 포물선·타원·쌍곡선의 반사 성질과 쓰임을 읽는다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-geo-tangent-slope canvas { aspect-ratio: 4 / 3; }
@@ -46,19 +51,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-geo-tangent-slope"><span class="mono">1.4.1</span>기울기가 주어진 접선</a></li>
-        <li><a href="#card-geo-tangent-point"><span class="mono">1.4.2</span>곡선 위의 점에서의 접선</a></li>
-        <li><a href="#text-geo-conic-uses"><span class="mono">1.4.3</span>이차곡선의 쓰임</a></li>
+        <li><a href="#text-geo-conic-tangent"><span class="mono">본문</span>이차곡선의 접선</a></li>
+        <li><a href="#card-geo-tangent-slope"><span class="mono">탐구 1</span>기울기가 주어진 접선</a></li>
+        <li><a href="#card-geo-tangent-point"><span class="mono">탐구 2</span>곡선 위의 점에서의 접선</a></li>
+        <li><a href="#text-geo-conic-uses"><span class="mono">읽기 3</span>이차곡선의 쓰임</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=geo-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">59문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=geo&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=geo-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">59문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=geo-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-geo-conic-tangent" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이차곡선의 접선</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">원 \(x^2 + y^2 = r^2\) 위의 점 \((x_1, y_1)\)에서의 접선은 \(x_1x + y_1y = r^2\)이었다. \(x^2\)을 \(x_1x\)로, \(y^2\)을 \(y_1y\)로 바꾼 꼴이다. 타원이나 쌍곡선에서도 같은 요령이 통할까? 그리고 기울기가 정해진 접선은 곡선의 어디에 닿을까?</p>
+          <figure class="q-fig" data-q="geo-tangent">
+            <svg viewBox="0 0 520 230" role="img" aria-label="타원 위의 점에서 그은 접선"></svg>
+            <div class="q-ctl"><label>접점의 위치 <input type="range" data-k="t" min="0" max="6.28" step="0.02" value="0.9"><output data-k="t"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 타원 \(\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1\) 위의 점 \((x_1, y_1)\)에서의 접선은 \(\dfrac{x_1x}{16} + \dfrac{y_1y}{9} = 1\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>이차방정식의 판별식(공통수학1), 원의 접선의 방정식(공통수학2), 포물선·타원·쌍곡선의 표준형(<a href="1-1.html">포물선</a>, <a href="1-2.html">타원</a>, <a href="1-3.html">쌍곡선</a>).</div>
+
+          <h3><span class="no">1.4.1</span>기울기가 주어진 접선</h3>
+          <p>직선 \(y = mx + n\)이 이차곡선에 접하려면, 두 식을 연립한 이차방정식이 중근을 가져야 한다. 곧 판별식이 0이어야 한다. 타원 \(\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1\)에 \(y = mx + n\)을 대입하여 정리한 이차방정식의 판별식을 0으로 놓으면 \(n^2 = a^2m^2 + b^2\)을 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">기울기가 \(m\)인 접선</span></span>
+            <p>포물선 \(y^2 = 4px\)이면 \(y = mx + \dfrac{p}{m}\) (\(m \ne 0\))<br>타원 \(\dfrac{x^2}{a^2} + \dfrac{y^2}{b^2} = 1\)이면 \(y = mx \pm \sqrt{a^2m^2 + b^2}\)<br>쌍곡선 \(\dfrac{x^2}{a^2} - \dfrac{y^2}{b^2} = 1\)이면 \(y = mx \pm \sqrt{a^2m^2 - b^2}\) (\(a^2m^2 &gt; b^2\))</p>
+          </div>
+          <p>쌍곡선에서는 근호 안이 양수여야 하므로 \(|m| &gt; \dfrac{b}{a}\)일 때만 접선이 있다. 점근선보다 완만한 기울기의 직선은 쌍곡선에 접할 수 없다는 뜻이다.</p>
+
+          <h3><span class="no">1.4.2</span>곡선 위의 점에서의 접선</h3>
+          <p>타원 위의 점 \((x_1, y_1)\)에서의 접선은 음함수의 미분으로 구할 수 있다. \(\dfrac{2x}{a^2} + \dfrac{2y\,y'}{b^2} = 0\)이므로 기울기는 \(-\dfrac{b^2x_1}{a^2y_1}\)이고, 접선의 방정식을 정리하면 원과 같은 꼴이 된다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.2 <span class="nm">곡선 위의 점 \((x_1, y_1)\)에서의 접선</span></span>
+            <p>포물선 \(y^2 = 4px\)이면 \(y_1y = 2p(x + x_1)\)<br>타원이면 \(\dfrac{x_1x}{a^2} + \dfrac{y_1y}{b^2} = 1\)<br>쌍곡선이면 \(\dfrac{x_1x}{a^2} - \dfrac{y_1y}{b^2} = 1\)</p>
+          </div>
+          <p>요령은 \(x^2\)을 \(x_1x\)로, \(y^2\)을 \(y_1y\)로, \(x\)를 \(\dfrac{x + x_1}{2}\)로 바꾸는 것이다. 그림 1에서 접점을 돌려 보면 접선이 늘 타원에 한 점에서만 닿는다.<sup class="fn"><a href="#fn-geo-conic-tangent-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="곡선의 방정식에서 접선의 방정식으로 바꾸는 규칙">
+              <g class="s">
+                <rect x="30" y="35" width="120" height="40" class="lb"/><text x="90" y="60" text-anchor="middle">x²</text>
+                <rect x="200" y="35" width="120" height="40" class="lc"/><text x="260" y="60" text-anchor="middle">x₁x</text>
+                <line x1="150" y1="55" x2="200" y2="55" class="k"/>
+                <text x="350" y="50">y² → y₁y</text><text x="350" y="75">x → (x + x₁)/2</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 곡선의 방정식에서 이차항과 일차항을 이렇게 바꾸면 접점 \((x_1, y_1)\)에서의 접선이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.3</span>
+            <p>타원 \(\dfrac{x^2}{16} + \dfrac{y^2}{9} = 1\)에 접하고 기울기가 1인 접선의 방정식과 접점을 구하여라.</p>
+          </div>
+          <p>공식에서 \(a^2 = 16\), \(b^2 = 9\), \(m = 1\)이므로 \(y = x \pm \sqrt{16 + 9} = x \pm 5\)이다.</p>
+          <p>\(y = x + 5\)의 접점을 \((x_1, y_1)\)이라 하면 그 점의 접선 \(\dfrac{x_1x}{16} + \dfrac{y_1y}{9} = 1\)이 \(y = x + 5\)와 같아야 한다. 기울기 \(-\dfrac{9x_1}{16y_1} = 1\)이고 \(y\)절편 \(\dfrac{9}{y_1} = 5\)이므로 \(y_1 = \dfrac{9}{5}\), \(x_1 = -\dfrac{16}{5}\)이다. 확인하면 \(\dfrac{(16/5)^2}{16} + \dfrac{(9/5)^2}{9} = \dfrac{16}{25} + \dfrac{9}{25} = 1\)로 타원 위의 점이다. 다른 접선 \(y = x - 5\)의 접점은 원점에 대칭인 \(\left(\dfrac{16}{5}, -\dfrac{9}{5}\right)\)이다.</p>
+          <p>아래 탐구 카드에서 기울기가 정해진 접선과 곡선 위의 점에서의 접선을 직접 구하고, 이차곡선이 쓰이는 곳을 살펴보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-geo-conic-tangent-1">타원의 접선은 접점에서 두 초점으로 그은 선분이 이루는 각을 이등분하는 직선과 수직이다. 그래서 한 초점에서 나온 빛이나 소리는 타원에 반사되어 다른 초점에 모인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>기울기가 주어진 접선은 연립한 이차방정식의 판별식이 0이 되는 조건으로 구하며, 곡선 위의 점 \((x_1, y_1)\)에서의 접선은 \(x^2 \to x_1x\), \(y^2 \to y_1y\)로 바꾸어 얻는다. 그래서 처음 질문처럼 원에서 쓰던 요령이 타원과 쌍곡선에서도 그대로 통하며, 접선은 \(\frac{x_1x}{a^2} \pm \frac{y_1y}{b^2} = 1\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-1.html#text-geo-parabola"><small class="mono">기하 1.1</small>포물선</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-2.html#card-pmath-parabolic-mirror"><small class="mono">전문 수학 2.2</small>위성 안테나는 왜 접시 모양일까?</a><a href="../../c/pmath/2-2.html#card-pmath-ellipse-billiard"><small class="mono">전문 수학 2.2</small>타원 모양 당구대에서 초점을 지나게 친 공은 어디로 갈까?</a><a href="../../c/pmath/2-2.html#text-pmath-conic-tangent"><small class="mono">전문 수학 2.2</small>이차곡선의 접선</a></div></nav>
+
       <article class="card" id="card-geo-tangent-slope">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>기울기가 정해진 접선은 어떻게 찾을까?</h2><span class="kind">판별식 · 기울기가 주어진 접선</span>
+          <span class="no">탐구 1</span><h2>기울기가 정해진 접선은 어떻게 찾을까?</h2><span class="kind">판별식 · 기울기가 주어진 접선</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -89,34 +149,34 @@
                 <div><dt>교점의 개수</dt><dd class="n-r">—</dd></div>
                 <div><dt>\(D = 0\)인 \(k\)</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">먼저 \(k\)를 직접 움직여 교점이 두 개에서 한 개, 0개로 바뀌는 곳을 찾으세요. 맞추기 단추는 그다음에 확인용으로 씁니다.</p>
+              <p class="fig-note">먼저 \(k\)를 직접 움직여 교점이 두 개에서 한 개, 0개로 바뀌는 곳을 찾아보자. 맞추기 단추는 그다음에 확인용으로 쓴다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>타원 \(\frac{x^2}{9} + \frac{y^2}{4} = 1\)에 접하고 기울기가 1인 직선은 몇 개이고, 식은 무엇일까요? 그림을 보고 어림하지 않고 정확히 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>공통수학에서 직선과 원, 직선과 이차함수의 그래프의 위치 관계를 판별식으로 정했습니다. 직선의 식을 대입해 얻은 이차방정식이 D &gt; 0이면 두 점에서 만나고, \(D = 0\)이면 접하고, D &lt; 0이면 만나지 않습니다.</li>
-            <li><span class="tag">설명</span>이차곡선에서도 같습니다. \(y = mx + k\)를 곡선의 식에 대입해 \(x\)에 대한 이차방정식을 만들고, <b>\(D = 0\)이 되는 \(k\)</b>를 구하면 접선입니다. 타원 \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\)에 대입하면 \((b^2 + a^2m^2)x^2 + 2a^2mkx + a^2(k^2 - b^2) = 0\)이고, \(\frac{D}{4} = a^2b^2(a^2m^2 + b^2 - k^2) = 0\)에서 <b>\(y = mx \pm \sqrt{a^2m^2 + b^2}\)</b>입니다. 같은 방법으로 쌍곡선 \(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)은 <b>\(y = mx \pm \sqrt{a^2m^2 - b^2}\)</b>(\(a^2m^2\) &gt; \(b^2\)), 포물선 \(y^2 = 4px\)는 <b>\(y = mx + \frac{p}{m}\)</b>\((m \ne 0)\)입니다. 질문의 답은 \(k^2 = 9 + 4 = 13\)이므로 \(y = x \pm \sqrt{13}\), 두 개입니다.</li>
-            <li><span class="tag">연결</span>타원은 닫힌 곡선이라 어떤 기울기든 접선이 두 개 있습니다. 포물선은 한 방향으로 열려 있어 기울기마다 접선이 하나입니다. 쌍곡선은 점근선보다 가파른 기울기에서만 접선이 생기고, 점근선과 기울기가 같거나 완만하면 접선이 없습니다. 공식을 외우기보다 대입하고 판별식을 쓰는 과정을 익혀 두면 어느 곡선에도 쓸 수 있습니다.</li>
-            <li><span class="tag">적용</span>타원에서 \(m = 1\)로 두고 \(k\)를 움직여 교점의 개수가 바뀌는 두 경계를 찾고, \(\sqrt{13} \approx 3.61\)과 비교하세요. 쌍곡선으로 바꾸어 \(m\)을 0.5, 0.25로 줄여 보세요. \(D = 0\)인 \(k\)가 왜 사라지나요? 포물선에서 \(m = 0\)이면 교점이 하나인데도 접선이 아닌 까닭은 무엇일까요?</li>
-            <li class="warn"><span class="tag">판단</span>교점이 하나라고 늘 접선은 아닙니다. 포물선의 축에 평행한 직선\((y = k)\)이나 쌍곡선의 점근선에 평행한 직선은 대입한 식의 \(x^2\) 계수가 0이 되어 이차방정식이 아니고, 곡선을 뚫고 지나가며 한 점에서 만납니다. 판별식은 \(x^2\)의 계수가 0이 아닐 때만 쓸 수 있습니다. 또 이 공식들은 중심이나 꼭짓점이 원점인 표준형에서만 성립합니다.</li>
+            <li><span class="tag">질문</span>타원 \(\frac{x^2}{9} + \frac{y^2}{4} = 1\)에 접하고 기울기가 1인 직선은 몇 개이고, 식은 무엇일까? 그림을 보고 어림하지 않고 정확히 구할 수 있을까?</li>
+            <li><span class="tag">복원</span>공통수학에서 직선과 원, 직선과 이차함수의 그래프의 위치 관계를 판별식으로 정했다. 직선의 식을 대입해 얻은 이차방정식이 D &gt; 0이면 두 점에서 만나고, \(D = 0\)이면 접하고, D &lt; 0이면 만나지 않는다.</li>
+            <li><span class="tag">설명</span>이차곡선에서도 같아서, \(y = mx + k\)를 곡선의 식에 대입해 \(x\)에 대한 이차방정식을 만들고 \(D = 0\)이 되는 \(k\)를 구하면 접선이다. 타원 \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\)에 대입하면 \((b^2 + a^2m^2)x^2 + 2a^2mkx + a^2(k^2 - b^2) = 0\)이고, \(\frac{D}{4} = a^2b^2(a^2m^2 + b^2 - k^2) = 0\)에서 \(y = mx \pm \sqrt{a^2m^2 + b^2}\)이다. 같은 방법으로 쌍곡선 \(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)은 \(y = mx \pm \sqrt{a^2m^2 - b^2}\)(\(a^2m^2\) &gt; \(b^2\)), 포물선 \(y^2 = 4px\)는 \(y = mx + \frac{p}{m}\)\((m \ne 0)\)이며, 질문의 답은 \(k^2 = 9 + 4 = 13\)이므로 \(y = x \pm \sqrt{13}\), 두 개이다.</li>
+            <li><span class="tag">연결</span>타원은 닫힌 곡선이라 어떤 기울기든 접선이 두 개 있고, 포물선은 한 방향으로 열려 있어 기울기마다 접선이 하나이다. 반면 쌍곡선은 점근선보다 가파른 기울기에서만 접선이 생기고, 점근선과 기울기가 같거나 완만하면 접선이 없다. 그래서 공식을 외우기보다 대입하고 판별식을 쓰는 과정을 익혀 두면 어느 곡선에도 쓸 수 있다.</li>
+            <li><span class="tag">적용</span>타원에서 \(m = 1\)로 두고 \(k\)를 움직여 교점의 개수가 바뀌는 두 경계를 찾고, \(\sqrt{13} \approx 3.61\)과 비교해 보자. 쌍곡선으로 바꾸어 \(m\)을 0.5, 0.25로 줄이면 \(D = 0\)인 \(k\)가 왜 사라지는지, 포물선에서 \(m = 0\)이면 교점이 하나인데도 접선이 아닌 까닭이 무엇인지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>교점이 하나라고 늘 접선은 아니다. 포물선의 축에 평행한 직선\((y = k)\)이나 쌍곡선의 점근선에 평행한 직선은 대입한 식의 \(x^2\) 계수가 0이 되어 이차방정식이 아니고, 곡선을 뚫고 지나가며 한 점에서 만나기 때문이다. 그래서 판별식은 \(x^2\)의 계수가 0이 아닐 때만 쓸 수 있고, 이 공식들은 중심이나 꼭짓점이 원점인 표준형에서만 성립한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">타원 \(\frac{x^2}{4} + y^2 = 1\)에 접하고 기울기가 1인 직선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = x \pm \sqrt{5}\)<span class="why"><b>맞습니다.</b> 대입하면 \(5x^2 + 8kx + 4k^2 - 4 = 0\)이고, \(\frac{D}{4} = 16k^2 - 5(4k^2 - 4) = 20 - 4k^2 = 0\)에서 \(k^2 = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = x \pm \sqrt{3}\)<span class="why"><b>쌍곡선의 공식을 썼습니다.</b> \(a^2m^2 - b^2 = 4 - 1 = 3\)은 \(\frac{x^2}{4} - y^2 = 1\)의 접선에서 나오는 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = x \pm 5\)<span class="why"><b>제곱근을 빠뜨렸습니다.</b> \(D = 0\)에서 얻는 것은 \(k^2 = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = x \pm 3\)<span class="why"><b>\(a + b\)로 어림했습니다.</b> 그림에서는 그럴듯하지만 \(y = x + 3\)을 대입하면 \(\frac{D}{4} = 20 - 36\) &lt; 0이라 타원과 만나지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = x \pm \sqrt{5}\)<span class="why"><b>맞다.</b> 대입하면 \(5x^2 + 8kx + 4k^2 - 4 = 0\)이고, \(\frac{D}{4} = 16k^2 - 5(4k^2 - 4) = 20 - 4k^2 = 0\)에서 \(k^2 = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = x \pm \sqrt{3}\)<span class="why"><b>쌍곡선의 공식을 썼다.</b> \(a^2m^2 - b^2 = 4 - 1 = 3\)은 \(\frac{x^2}{4} - y^2 = 1\)의 접선에서 나오는 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = x \pm 5\)<span class="why"><b>제곱근을 빠뜨렸다.</b> \(D = 0\)에서 얻는 것은 \(k^2 = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = x \pm 3\)<span class="why"><b>\(a + b\)로 어림했다.</b> 그림에서는 그럴듯하지만 \(y = x + 3\)을 대입하면 \(\frac{D}{4} = 20 - 36\) &lt; 0이라 타원과 만나지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-eq"><small class="mono">기하 1.2</small>방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-2.html#card-pmath-parabolic-mirror"><small class="mono">전문 수학 2.2</small>위성 안테나는 왜 접시 모양일까?</a><a href="../../c/pmath/2-2.html#card-pmath-ellipse-billiard"><small class="mono">전문 수학 2.2</small>타원 모양 당구대에서 초점을 지나게 친 공은 어디로 갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-1.html#text-geo-parabola"><small class="mono">기하 1.1</small>포물선</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-2.html#card-pmath-parabolic-mirror"><small class="mono">전문 수학 2.2</small>위성 안테나는 왜 접시 모양일까?</a><a href="../../c/pmath/2-2.html#card-pmath-ellipse-billiard"><small class="mono">전문 수학 2.2</small>타원 모양 당구대에서 초점을 지나게 친 공은 어디로 갈까?</a><a href="../../c/pmath/2-2.html#text-pmath-conic-tangent"><small class="mono">전문 수학 2.2</small>이차곡선의 접선</a></div></nav>
 
       <article class="card" id="card-geo-tangent-point">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>곡선 위의 점에서 그은 접선은 어떤 식일까?</h2><span class="kind">곡선 위의 점에서의 접선 · 할선의 극한</span>
+          <span class="no">탐구 2</span><h2>곡선 위의 점에서 그은 접선은 어떤 식일까?</h2><span class="kind">곡선 위의 점에서의 접선 · 할선의 극한</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -136,38 +196,38 @@
                 <div><dt>할선 PQ의 기울기</dt><dd class="n-q">—</dd></div>
                 <div><dt>PQ 거리</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">빨간 점 P와 회색 점 Q는 곡선을 따라 끌 수 있습니다. 노란 실선이 공식으로 그린 접선입니다.</p>
+              <p class="fig-note">빨간 점 P와 회색 점 Q는 곡선을 따라 끌 수 있다. 노란 실선이 공식으로 그린 접선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>타원 \(\frac{x^2}{9} + \frac{y^2}{4} = 1\) 위의 점 \(P(x_1, y_1)\)에서 그은 접선의 방정식을 매번 판별식을 풀지 않고 바로 쓸 수 있을까요?</li>
-            <li><span class="tag">복원</span>원 \(x^2 + y^2 = r^2\) 위의 점 \((x_1, y_1)\)에서의 접선은 \(x_1x + y_1y = r^2\)이었습니다. 또 기울기가 \(m\)인 접선은 대입한 이차방정식의 판별식이 0이 되는 조건으로 찾습니다.</li>
-            <li><span class="tag">설명</span>\(P(x_1, y_1)\)를 지나고 기울기가 \(m\)인 직선을 타원에 대입해 \(D = 0\)을 풀면 \(m = -\frac{b^2x_1}{a^2y_1}\)이 나옵니다\((y_1 \ne 0)\). 이를 정리하고 \(\frac{x_1^2}{a^2} + \frac{y_1^2}{b^2} = 1\)을 쓰면 접선은 <b>\(\frac{x_1x}{a^2} + \frac{y_1y}{b^2} = 1\)</b>입니다. 같은 방법으로 쌍곡선 \(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)은 <b>\(\frac{x_1x}{a^2} - \frac{y_1y}{b^2} = 1\)</b>, 포물선 \(y^2 = 4px\)는 <b>\(y_1y = 2p(x + x_1)\)</b>입니다. 규칙은 원과 같습니다. 곡선의 식에서 \(x^2\)을 \(x_1x\)로, \(y^2\)을 \(y_1y\)로, 일차항 \(x\)를 \(\frac{x + x_1}{2}\)로 바꿉니다. \(y_1 = 0\)인 꼭짓점에서도 공식이 세로 접선 \(x = x_1\)을 바르게 줍니다.</li>
-            <li><span class="tag">연결</span>접선은 곡선 위의 다른 점 Q를 P에 한없이 가깝게 할 때 할선 PQ가 다가가는 직선입니다. 이 생각은 미분계수로 이어집니다. 미적분Ⅱ에서 배우는 음함수의 미분법으로 \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\)의 양변을 \(x\)에 대해 미분하면 \(\frac{2x}{a^2} + \frac{2yy'}{b^2} = 0\)입니다. 그러면 \(y' = -\frac{b^2x}{a^2y}\)가 되어 판별식으로 얻은 기울기와 같습니다.</li>
-            <li><span class="tag">적용</span>'Q를 P 쪽으로 반만큼'을 여러 번 누르며 할선 PQ의 기울기가 접선의 기울기에 다가가는지 보세요. P를 타원의 꼭짓점 \((3, 0)\)으로 끌면 접선은 어떻게 되나요? 쌍곡선과 포물선으로 바꾸어 같은 일을 해 보고, 화면에 나온 식이 규칙대로 바뀌었는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>이 공식은 점 P가 곡선 <b>위에</b> 있을 때만 접선입니다. 곡선 밖의 점 \((x_1, y_1)\)을 넣으면 식은 직선이 되지만 접선이 아닙니다. 곡선 밖의 점에서 그은 접선은 접점을 \((x_1, y_1)\)로 놓고 접선이 그 점을 지난다는 조건과 접점이 곡선 위에 있다는 조건을 연립하거나, 기울기를 \(m\)으로 놓고 판별식을 써서 구합니다. 또 이 공식은 표준형에서 유도한 것이므로 평행이동한 곡선에 그대로 쓰면 틀립니다.</li>
+            <li><span class="tag">질문</span>타원 \(\frac{x^2}{9} + \frac{y^2}{4} = 1\) 위의 점 \(P(x_1, y_1)\)에서 그은 접선의 방정식을 매번 판별식을 풀지 않고 바로 쓸 수 있을까?</li>
+            <li><span class="tag">복원</span>원 \(x^2 + y^2 = r^2\) 위의 점 \((x_1, y_1)\)에서의 접선은 \(x_1x + y_1y = r^2\)이었다. 그리고 기울기가 \(m\)인 접선은 대입한 이차방정식의 판별식이 0이 되는 조건으로 찾는다.</li>
+            <li><span class="tag">설명</span>\(P(x_1, y_1)\)를 지나고 기울기가 \(m\)인 직선을 타원에 대입해 \(D = 0\)을 풀면 \(m = -\frac{b^2x_1}{a^2y_1}\)이 나오고\((y_1 \ne 0)\), 이를 정리하고 \(\frac{x_1^2}{a^2} + \frac{y_1^2}{b^2} = 1\)을 쓰면 접선은 \(\frac{x_1x}{a^2} + \frac{y_1y}{b^2} = 1\)이다. 같은 방법으로 쌍곡선 \(\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1\)은 \(\frac{x_1x}{a^2} - \frac{y_1y}{b^2} = 1\), 포물선 \(y^2 = 4px\)는 \(y_1y = 2p(x + x_1)\)이다. 규칙은 원과 같아서, 곡선의 식에서 \(x^2\)을 \(x_1x\)로, \(y^2\)을 \(y_1y\)로, 일차항 \(x\)를 \(\frac{x + x_1}{2}\)로 바꾸며, \(y_1 = 0\)인 꼭짓점에서도 공식이 세로 접선 \(x = x_1\)을 바르게 준다.</li>
+            <li><span class="tag">연결</span>접선은 곡선 위의 다른 점 Q를 P에 한없이 가깝게 할 때 할선 PQ가 다가가는 직선이고, 이 생각은 미분계수로 이어진다. 미적분Ⅱ에서 배우는 음함수의 미분법으로 \(\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1\)의 양변을 \(x\)에 대해 미분하면 \(\frac{2x}{a^2} + \frac{2yy'}{b^2} = 0\)이므로, \(y' = -\frac{b^2x}{a^2y}\)가 되어 판별식으로 얻은 기울기와 같다.</li>
+            <li><span class="tag">적용</span>‘Q를 P 쪽으로 반만큼’을 여러 번 누르며 할선 PQ의 기울기가 접선의 기울기에 다가가는지 보고, P를 타원의 꼭짓점 \((3, 0)\)으로 끌면 접선이 어떻게 되는지 확인해 보자. 그리고 쌍곡선과 포물선으로 바꾸어 같은 일을 해 보고, 화면에 나온 식이 규칙대로 바뀌었는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이 공식은 점 P가 곡선 <em>위에</em> 있을 때만 접선이다. 곡선 밖의 점 \((x_1, y_1)\)을 넣으면 식은 직선이 되지만 접선이 아니다. 곡선 밖의 점에서 그은 접선은 접점을 \((x_1, y_1)\)로 놓고 접선이 그 점을 지난다는 조건과 접점이 곡선 위에 있다는 조건을 연립하거나, 기울기를 \(m\)으로 놓고 판별식을 써서 구한다. 또 이 공식은 표준형에서 유도한 것이므로 평행이동한 곡선에 그대로 쓰면 틀린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">타원 \(\frac{x^2}{4} + \frac{y^2}{3} = 1\) 위의 점 \((1, \frac{3}{2})\)에서의 접선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x + 2y = 4\)<span class="why"><b>맞습니다.</b> \(1\cdot \frac{x}{4} + \frac{\frac{3}{2}y}{3} = 1\), 곧 \(\frac{x}{4} + \frac{y}{2} = 1\)이고 양변에 4를 곱하면 \(x + 2y = 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x + 6y = 4\)<span class="why"><b>\(y^2\)의 분모 3으로 나누지 않았습니다.</b> \(\frac{x}{4} + \frac{3}{2}y = 1\)이 되어 이 직선은 점 \((1, \frac{3}{2})\)를 지나지도 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2x + y = 4\)<span class="why"><b>계수를 맞바꿨습니다.</b> 이 직선의 기울기는 \(-2\)이지만, 접선의 기울기는 \(-\frac{b^2x_1}{a^2y_1} = -\frac{3}{6} = -\frac{1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x + 2y = 1\)<span class="why"><b>분모를 없애며 우변을 그대로 두었습니다.</b> 기울기는 맞지만, 양변에 4를 곱하면 우변도 4가 되어야 합니다. 이 직선은 점 \((1, \frac{3}{2})\)를 지나지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x + 2y = 4\)<span class="why"><b>맞다.</b> \(1\cdot \frac{x}{4} + \frac{\frac{3}{2}y}{3} = 1\), 곧 \(\frac{x}{4} + \frac{y}{2} = 1\)이고 양변에 4를 곱하면 \(x + 2y = 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x + 6y = 4\)<span class="why"><b>\(y^2\)의 분모 3으로 나누지 않았다.</b> \(\frac{x}{4} + \frac{3}{2}y = 1\)이 되어 이 직선은 점 \((1, \frac{3}{2})\)를 지나지도 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2x + y = 4\)<span class="why"><b>계수를 맞바꿨다.</b> 이 직선의 기울기는 \(-2\)이지만, 접선의 기울기는 \(-\frac{b^2x_1}{a^2y_1} = -\frac{3}{6} = -\frac{1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x + 2y = 1\)<span class="why"><b>분모를 없애며 우변을 그대로 두었다.</b> 기울기는 맞지만, 양변에 4를 곱하면 우변도 4가 되어야 한다. 이 직선은 점 \((1, \frac{3}{2})\)를 지나지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-eq"><small class="mono">기하 1.2</small>방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-2.html#card-pmath-parabolic-mirror"><small class="mono">전문 수학 2.2</small>위성 안테나는 왜 접시 모양일까?</a><a href="../../c/pmath/2-2.html#card-pmath-ellipse-billiard"><small class="mono">전문 수학 2.2</small>타원 모양 당구대에서 초점을 지나게 친 공은 어디로 갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-1.html#text-geo-parabola"><small class="mono">기하 1.1</small>포물선</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/2-2.html#card-pmath-parabolic-mirror"><small class="mono">전문 수학 2.2</small>위성 안테나는 왜 접시 모양일까?</a><a href="../../c/pmath/2-2.html#card-pmath-ellipse-billiard"><small class="mono">전문 수학 2.2</small>타원 모양 당구대에서 초점을 지나게 친 공은 어디로 갈까?</a><a href="../../c/pmath/2-2.html#text-pmath-conic-tangent"><small class="mono">전문 수학 2.2</small>이차곡선의 접선</a></div></nav>
 
       <article class="card reading" id="text-geo-conic-uses">
-        <header class="card-head"><span class="no">1.4.3</span><h2>이차곡선은 어디에 쓰일까?</h2><span class="kind">읽기 · 원뿔곡선 · 반사 성질</span></header>
+        <header class="card-head"><span class="no">읽기 3</span><h2>이차곡선은 어디에 쓰일까?</h2><span class="kind">읽기 · 원뿔곡선 · 반사 성질</span></header>
         <div class="reading-body">
-          <p class="ask">위성 안테나는 왜 오목한 접시 모양이고, 수신기는 왜 접시 앞 한 점에 매달려 있을까요? 포물선, 타원, 쌍곡선의 정의와 접선의 성질이 실제 장치에서 어떻게 쓰이는지 살펴봅니다.</p>
+          <p class="ask">위성 안테나는 왜 오목한 접시 모양이고, 수신기는 왜 접시 앞 한 점에 매달려 있을까? 포물선, 타원, 쌍곡선의 정의와 접선의 성질이 실제 장치에서 어떻게 쓰이는지 따라가 보자.</p>
           <h3><span class="mono">1</span>원뿔을 자른 단면</h3>
-          <p>포물선, 타원, 쌍곡선은 모두 원뿔을 평면으로 자른 단면으로 얻을 수 있어 <em>원뿔곡선</em>이라고도 부릅니다. 평면이 원뿔의 축에 수직이면 원, 조금 기울이면 타원, 모선과 평행하면 포물선, 더 세워서 위아래 두 원뿔을 모두 자르면 쌍곡선이 나옵니다. 기원전 3세기 무렵 그리스의 아폴로니오스가 이 곡선들을 정리했고, 포물선·타원·쌍곡선이라는 이름도 이때 자리 잡았습니다. 좌표평면에서는 모두 \(x, y\)에 대한 이차방정식으로 나타나므로 <em>이차곡선</em>이라고 합니다.</p>
-          <h3><span class="mono">2</span>포물선: 평행한 빛을 한 점에 모은다</h3>
+          <p>포물선, 타원, 쌍곡선은 모두 원뿔을 평면으로 자른 단면으로 얻을 수 있어 <em>원뿔곡선</em>이라고도 부른다. 평면이 원뿔의 축에 수직이면 원, 조금 기울이면 타원, 모선과 평행하면 포물선, 더 세워서 위아래 두 원뿔을 모두 자르면 쌍곡선이 나온다. 기원전 3세기 무렵 그리스의 아폴로니오스가 이 곡선들을 정리했고, 포물선, 타원, 쌍곡선이라는 이름도 이때 자리 잡았다. 그리고 좌표평면에서는 모두 \(x, y\)에 대한 이차방정식으로 나타나므로 <em>이차곡선</em>이라고 한다.</p>
+          <h3><span class="mono">2</span>평행한 빛을 한 점에 모으는 포물선</h3>
           <figure>
             <svg viewBox="0 0 360 200" role="img" aria-label="포물선 거울에 축과 평행하게 들어온 네 줄기 빛이 반사되어 초점 F에 모이는 모식도">
               <line x1="20" y1="100" x2="350" y2="100" stroke="#8d8d92" stroke-width="1" stroke-dasharray="4 4"/>
@@ -186,14 +246,14 @@
               <text x="300" y="94" font-size="11" fill="#5d5d61">축</text>
               <text x="22" y="20" font-size="11" fill="#5d5d61">포물선 거울</text>
             </svg>
-            <figcaption>포물선 거울의 반사(모식). 축과 평행하게 들어온 빛은 모두 초점 F를 지나도록 반사됩니다. 거꾸로 초점에서 나온 빛은 축과 평행하게 나갑니다.</figcaption>
+            <figcaption>포물선 거울의 반사를 나타낸 모식이다. 축과 평행하게 들어온 빛은 모두 초점 F를 지나도록 반사되고, 거꾸로 초점에서 나온 빛은 축과 평행하게 나간다.</figcaption>
           </figure>
-          <p>포물선 위의 점에서 접선을 그으면, 축과 평행하게 들어온 빛과 초점을 향하는 선이 접선과 이루는 각이 같습니다. 거울에서 빛은 입사각과 반사각이 같도록 반사되므로 평행한 빛이 모두 초점으로 모입니다. 그래서 위성 안테나는 수신기를 초점에 두고, 자동차 전조등이나 손전등은 반대로 초점에 광원을 두어 빛을 나란히 내보냅니다. 공기 저항을 무시하면 비스듬히 던진 공의 궤적도 포물선입니다.</p>
-          <h3><span class="mono">3</span>타원: 한 초점에서 나와 다른 초점으로</h3>
-          <p>타원 거울에서는 한 초점에서 나온 빛이나 소리가 반사되어 모두 다른 초점에 모입니다. 천장이 타원 모양인 방에서 한 초점에 선 사람이 작게 속삭여도 멀리 떨어진 다른 초점에서 또렷이 들리는 까닭입니다. 의료에서는 타원 반사경의 한 초점에서 충격파를 만들고 다른 초점에 몸속 결석이 오도록 맞추어, 몸을 가르지 않고 결석을 부수는 체외충격파쇄석술에 이 성질을 씁니다.</p>
-          <p>케플러는 1609년 행성이 태양을 한 초점으로 하는 타원 궤도를 돈다는 사실을 발표했습니다. 지구 궤도는 원에 매우 가까운 타원이어서 태양까지 거리가 가장 가까울 때(근일점) 약 1억 4710만 km, 가장 멀 때(원일점) 약 1억 5210만 km입니다. 이 두 거리의 합이 장축의 길이 \(2a\)이고, 차의 절반이 중심에서 초점까지의 거리 \(c\)로 약 250만 km입니다.</p>
-          <h3><span class="mono">4</span>쌍곡선: 도착 시간의 차로 위치를 찾는다</h3>
-          <p>두 수신소 A, B에 같은 신호가 도착한 시간의 차를 재면, 신호의 속력을 곱해 '발신 지점에서 A까지의 거리와 B까지의 거리의 차'를 알 수 있습니다. 거리의 차가 일정한 점의 모임은 A, B를 초점으로 하는 쌍곡선이므로, 발신 지점은 그 쌍곡선 위에 있습니다. 다른 수신소 쌍으로 또 하나의 쌍곡선을 얻으면 두 곡선의 교점이 위치입니다. 20세기 중반 배와 비행기가 쓰던 로란(LORAN) 항법이 이 원리를 썼습니다.</p>
+          <p>포물선 위의 점에서 접선을 그으면, 축과 평행하게 들어온 빛과 초점을 향하는 선이 접선과 이루는 각이 같다. 거울에서 빛은 입사각과 반사각이 같도록 반사되므로 평행한 빛이 모두 초점으로 모인다. 그래서 위성 안테나는 수신기를 초점에 두고, 자동차 전조등이나 손전등은 반대로 초점에 광원을 두어 빛을 나란히 내보낸다. 또 공기 저항을 무시하면 비스듬히 던진 공의 궤적도 포물선이다.</p>
+          <h3><span class="mono">3</span>한 초점에서 나와 다른 초점으로 모이는 타원</h3>
+          <p>타원 거울에서는 한 초점에서 나온 빛이나 소리가 반사되어 모두 다른 초점에 모인다. 그래서 천장이 타원 모양인 방에서는 한 초점에 선 사람이 작게 속삭여도 멀리 떨어진 다른 초점에서 또렷이 들린다. 의료에서는 타원 반사경의 한 초점에서 충격파를 만들고 다른 초점에 몸속 결석이 오도록 맞추어, 몸을 가르지 않고 결석을 부수는 체외충격파쇄석술에 이 성질을 쓴다.</p>
+          <p>케플러는 1609년 행성이 태양을 한 초점으로 하는 타원 궤도를 돈다는 사실을 발표했다. 지구 궤도는 원에 매우 가까운 타원이어서 태양까지 거리가 가장 가까울 때(근일점) 약 1억 4710만 km, 가장 멀 때(원일점) 약 1억 5210만 km이다. 이 두 거리의 합이 장축의 길이 \(2a\)이고, 차의 절반이 중심에서 초점까지의 거리 \(c\)로 약 250만 km이다.</p>
+          <h3><span class="mono">4</span>도착 시간의 차로 위치를 찾는 쌍곡선</h3>
+          <p>두 수신소 A, B에 같은 신호가 도착한 시간의 차를 재고 신호의 속력을 곱하면, 발신 지점에서 A까지의 거리와 B까지의 거리의 차를 알 수 있다. 거리의 차가 일정한 점의 모임은 A, B를 초점으로 하는 쌍곡선이므로 발신 지점은 그 쌍곡선 위에 있고, 다른 수신소 쌍으로 또 하나의 쌍곡선을 얻으면 두 곡선의 교점이 위치이다. 20세기 중반 배와 비행기가 쓰던 로란(LORAN) 항법이 이 원리를 썼다.</p>
           <div class="tbl"><table>
             <thead><tr><th>곡선</th><th>정의</th><th>쓰이는 성질</th><th>예</th></tr></thead>
             <tbody>
@@ -202,33 +262,34 @@
               <tr><td>쌍곡선</td><td>두 초점까지 거리의 차가 일정</td><td>거리의 차가 같은 점의 모임</td><td>시간차 위치 측정</td></tr>
             </tbody>
           </table></div>
-          <p class="judge"><b>판단</b>실제 현상은 이상적인 곡선을 근사한 것입니다. 공기 저항이 크면 던진 공의 궤적은 포물선에서 벗어나고, 행성의 궤도도 다른 행성의 인력 때문에 조금씩 바뀝니다. 또 반사 성질은 거울이 정확히 그 곡선 모양일 때만 성립합니다. 구면 거울은 축에 가까운 빛만 대략 한 점에 모읍니다.</p>
+          <p class="judge"><b>판단</b>실제 현상은 이상적인 곡선을 근사한 것이다. 공기 저항이 크면 던진 공의 궤적은 포물선에서 벗어나고, 행성의 궤도도 다른 행성의 인력 때문에 조금씩 바뀐다. 또 반사 성질은 거울이 정확히 그 곡선 모양일 때만 성립하므로, 구면 거울은 축에 가까운 빛만 대략 한 점에 모은다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">6 km 떨어진 두 관측소 A, B 가운데 B가 A보다 5초 먼저 폭발음을 들었습니다. 소리의 속력을 340 m/s라고 할 때, 폭발 지점은 어디에 있습니까?</p>
+          <p class="q">6 km 떨어진 두 관측소 A, B 가운데 B가 A보다 5초 먼저 폭발음을 들었다. 소리의 속력을 340 m/s라고 할 때, 폭발 지점은 어디에 있습니까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>A, B를 초점으로 하고 거리의 차가 1.7 km인 쌍곡선 가운데 B에 가까운 가지 위<span class="why"><b>맞습니다.</b> 거리의 차는 \(340 \times 5 = 1700\) m이고, B가 먼저 들었으므로 B에 더 가깝습니다. 1.7 km는 두 관측소 사이 거리 6 km보다 작으므로 쌍곡선이 생깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>A, B를 초점으로 하는 타원 위<span class="why"><b>합과 차를 바꿨습니다.</b> 타원은 두 초점까지 거리의 합이 일정한 점의 모임입니다. 도착 시간의 차가 알려 주는 것은 거리의 차입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선분 AB의 수직이등분선 위<span class="why"><b>두 관측소에 동시에 들렸을 때의 답입니다.</b> 거리의 차가 0이면 수직이등분선이 되지만, 여기서는 5초 차이가 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>쌍곡선의 두 가지 위 어디든<span class="why"><b>어느 쪽이 먼저 들었는지를 쓰지 않았습니다.</b> A에 가까운 가지 위라면 A가 먼저 들었어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>A, B를 초점으로 하고 거리의 차가 1.7 km인 쌍곡선 가운데 B에 가까운 가지 위<span class="why"><b>맞다.</b> 거리의 차는 \(340 \times 5 = 1700\) m이고, B가 먼저 들었으므로 B에 더 가깝다. 1.7 km는 두 관측소 사이 거리 6 km보다 작으므로 쌍곡선이 생긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>A, B를 초점으로 하는 타원 위<span class="why"><b>합과 차를 바꿨다.</b> 타원은 두 초점까지 거리의 합이 일정한 점의 모임이다. 도착 시간의 차가 알려 주는 것은 거리의 차이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선분 AB의 수직이등분선 위<span class="why"><b>두 관측소에 동시에 들렸을 때의 답이다.</b> 거리의 차가 0이면 수직이등분선이 되지만, 여기서는 5초 차이가 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>쌍곡선의 두 가지 위 어디든<span class="why"><b>어느 쪽이 먼저 들었는지를 쓰지 않았다.</b> A에 가까운 가지 위라면 A가 먼저 들었어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-eq"><small class="mono">기하 1.2</small>방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/1-1.html#card-geo-parabola-def"><small class="mono">기하 1.1</small>초점과 준선에서 거리가 같은 점은 어떤 곡선을 이룰까?</a><a href="../../c/geo/1-1.html#card-geo-parabola-shift"><small class="mono">기하 1.1</small>꼭짓점을 옮기면 초점과 준선은 어디로 갈까?</a><a href="../../c/geo/1-1.html#text-geo-parabola"><small class="mono">기하 1.1</small>포물선</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=geo-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">59문항</span></a>
+      <a class="px-go" href="../../bank.html?c=geo&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=geo-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">59문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -236,6 +297,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/geo/body.js"></script>
 <script src="../../js/cards/cm2/coord.js"></script>
 <script src="../../js/cards/geo/conic.js"></script>
 <script src="../../js/cards/geo/tangent-slope.js"></script>

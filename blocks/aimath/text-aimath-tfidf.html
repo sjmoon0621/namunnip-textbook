@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/aimath/body.js"],
+  "sec": "2-2",
+  "short": "본문 · 빈도수 벡터와 요약"
+}
+-->
+<article class="card reading" id="text-aimath-tfidf" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>빈도수 벡터와 요약</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">학교 급식에 관한 글에서 낱말을 세어 보면 '은', '는', '학교' 같은 낱말이 가장 많이 나온다. 그런데 이 낱말들은 어느 글에나 흔히 나오므로 이 글만의 특징이 아니다. 이 글에서는 자주 나오지만 다른 글에는 잘 나오지 않는 '급식', '메뉴' 같은 낱말이 진짜 요점일 것이다. 이 생각을 수로 나타낼 수 있을까?</p>
+    <figure class="q-fig" data-q="ai-tfidf">
+      <svg viewBox="0 0 520 210" role="img" aria-label="낱말의 단순 빈도와 TF-IDF 점수 비교"></svg>
+      <div class="q-ctl"><label>점수 방식 (0 단순 빈도, 1 TF-IDF) <input type="range" data-k="m" min="0" max="1" step="1" value="0"><output data-k="m"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 글 5편 가운데 한 편에서 낱말별 점수. 단순 빈도로는 어느 글에나 나오는 '은/는'이 가장 높지만, TF-IDF로 바꾸면 이 글에만 나오는 '급식'이 가장 높아진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>비율과 백분율(중학교), 로그(대수), 문장의 벡터 표현(<a href="2-1.html">집합과 벡터로 나타낸 텍스트</a>).</div>
+
+    <h3><span class="no">2.2.1</span>빈도수 벡터</h3>
+    <p>앞에서는 낱말이 있으면 1, 없으면 0을 적었다. 이번에는 낱말이 나온 횟수를 적는다. 사전의 각 낱말 자리에 그 글에서 나온 횟수를 적은 벡터를 빈도수 벡터라 한다. 같은 낱말이 여러 번 나오는 긴 글의 특징을 더 잘 담는다. 빈도가 높은 낱말 몇 개를 뽑으면 글의 대강을 짐작할 수 있다.</p>
+    <p>그러나 '은', '는', '이다'처럼 문법적인 낱말이나 '학교'처럼 주제와 상관없이 흔한 낱말은 어느 글에서나 빈도가 높다. 그래서 단순 빈도로 요점을 뽑으면 이런 낱말이 맨 위에 온다.</p>
+
+    <h3><span class="no">2.2.2</span>TF-IDF</h3>
+    <p>요점이 되는 낱말은 이 글에서는 자주 나오고(빈도가 높고), 다른 글에서는 드물게 나와야 한다. 앞의 것을 낱말 빈도(TF), 뒤의 것을 역문서 빈도(IDF)로 나타내 둘을 곱한다.</p>
+    <div class="tb-env thm"><span class="lb">정의 2.2.1 <span class="nm">TF-IDF</span></span>
+      <p>전체 문서 \(N\)편 가운데 낱말 \(w\)가 들어 있는 문서가 \(n_w\)편일 때 \[\text{TF-IDF}(w) = \text{TF}(w) \times \log\frac{N}{n_w}\] 이다. 모든 문서에 나오는 낱말은 \(\log 1 = 0\)이 되어 점수가 0이다.</p>
+    </div>
+    <p>그림 1에서 점수 방식을 바꾸어 보자. '은/는'은 9번이나 나왔지만 5편 모두에 나오므로 \(\log\frac{5}{5} = 0\)이 곱해져 점수가 0이 된다. '급식'은 5번 나왔고 이 글에만 있으므로 \(5 \times \log 5 \approx 3.49\)로 가장 높다. 로그를 쓰는 것은 문서가 아주 많을 때 희귀한 낱말의 가중치가 지나치게 커지지 않게 하려는 것이다.<sup class="fn"><a href="#fn-aimath-tfidf-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="TF와 IDF의 곱">
+        <g class="s">
+          <rect x="30" y="30" width="140" height="50" class="lb"/><text x="100" y="52" text-anchor="middle">TF</text><text x="100" y="70" text-anchor="middle">이 글에서 자주</text>
+          <text x="200" y="60" text-anchor="middle">×</text>
+          <rect x="230" y="30" width="140" height="50" class="lc"/><text x="300" y="52" text-anchor="middle">IDF</text><text x="300" y="70" text-anchor="middle">다른 글에서 드물게</text>
+          <text x="400" y="60">= 요점 점수</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 이 글에서 자주 나오고 다른 글에서는 드문 낱말일수록 TF-IDF 점수가 높다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+      <p>글 5편이 있다. 어떤 글에서 '학교'가 6번, '맛있다'가 4번 나왔고, '학교'는 5편 가운데 4편에, '맛있다'는 2편에 나온다. 두 낱말의 TF-IDF를 구하여 어느 쪽이 이 글의 특징에 가까운지 판단하여라. (\(\log 1.25 \approx 0.097\), \(\log 2.5 \approx 0.398\))</p>
+    </div>
+    <p>'학교'는 \(6 \times \log\dfrac{5}{4} = 6 \times 0.097 \approx 0.58\)이다. '맛있다'는 \(4 \times \log\dfrac{5}{2} = 4 \times 0.398 \approx 1.59\)이다.</p>
+    <p>빈도는 '학교'가 더 높지만 TF-IDF는 '맛있다'가 약 2.7배 높다. '학교'는 대부분의 글에 나오는 흔한 낱말이라 이 글을 다른 글과 구별해 주지 못하기 때문이다. 이렇게 고른 낱말들이 검색 엔진의 색인이나 글의 자동 요약에 쓰인다.</p>
+    <p>아래 탐구 카드에서 낱말을 세어 글의 요점을 찾고, 가장 많이 나온 낱말이 요점인지 TF-IDF로 따져 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-aimath-tfidf-1">로그의 밑은 10이나 \(e\)를 쓰는데, 밑을 바꾸어도 모든 낱말의 점수가 같은 비율로 바뀌므로 순위는 달라지지 않는다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>빈도수 벡터는 낱말이 나온 횟수를 담지만, 어느 글에나 흔한 낱말이 위로 온다. TF-IDF는 낱말 빈도에 \(\log\frac{N}{n_w}\)를 곱해, 이 글에서 자주 나오고 다른 글에서 드문 낱말에 높은 점수를 준다. 그래서 처음 질문의 답은 '아니다'이며, 가장 많이 나온 낱말보다 TF-IDF가 높은 낱말이 그 글의 요점에 더 가깝다.</p></div>
+  </div>
+</article>

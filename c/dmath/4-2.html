@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>꼭짓점의 차수와 변의 개수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="꼭짓점의 차수, 차수의 합과 변의 개수의 관계(악수 정리), 홀수 차수 꼭짓점의 개수, 완전그래프, 차수열. 변을 이으며 차수의 합을 확인하는 카드와, 주어진 차수열을 그래프로 실현하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-handshake canvas { aspect-ratio: 4 / 3; max-width: 480px; margin: 0 auto; display: block; }
@@ -43,18 +48,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-handshake"><span class="mono">4.2.1</span>차수의 합은 늘 변의 수의 두 배</a></li>
-        <li><a href="#card-dmath-degree-seq"><span class="mono">4.2.2</span>주어진 차수대로 그래프를 그릴 수 있을까</a></li>
+        <li><a href="#text-dmath-degree"><span class="mono">본문</span>꼭짓점의 차수와 변의 개수</a></li>
+        <li><a href="#card-dmath-handshake"><span class="mono">탐구 1</span>차수의 합은 늘 변의 수의 두 배</a></li>
+        <li><a href="#card-dmath-degree-seq"><span class="mono">탐구 2</span>주어진 차수대로 그래프를 그릴 수 있을까</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-4-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-4-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-degree" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>꼭짓점의 차수와 변의 개수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">동아리 첫 모임에 아홉 명이 왔다. 진행자가 "모두 정확히 세 명과 악수하세요"라고 했는데, 아무리 짝을 맞추어 보아도 누군가는 두 명이나 네 명과 악수하게 되었다. 열 명이었다면 문제없이 되었을 것이다. 사람을 꼭짓점, 악수를 변으로 그리면 각 사람이 악수한 횟수는 꼭짓점의 차수이다. 모든 사람의 악수 횟수를 더하면 어떤 수가 될까? 그리고 그 수에서 아홉 명의 계획이 불가능한 까닭을 알 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="차수의 합과 변의 개수">
+              <g class="s">
+                <text x="20" y="22">모임</text><text x="160" y="22">차수의 합</text><text x="300" y="22">변의 개수</text><text x="420" y="22">가능</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">10명, 모두 3명과</text><text x="160" y="52">30</text><text x="300" y="52">15</text><text x="420" y="52" class="td">가능</text>
+                <text x="20" y="74">9명, 모두 3명과</text><text x="160" y="74">27 (홀수)</text><text x="300" y="74">13.5 ?</text><text x="420" y="74" class="tb">불가능</text>
+                <text x="20" y="96">9명, 모두 4명과</text><text x="160" y="96">36</text><text x="300" y="96">18</text><text x="420" y="96" class="td">가능</text>
+                <text x="20" y="122">악수 하나는 두 사람의 횟수를 하나씩 올린다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 차수의 합은 늘 변의 개수의 두 배여서 짝수이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>그래프와 차수(<a href="4-1.html">그래프와 실생활 문제</a>).</div>
+
+          <h3><span class="no">4.2.1</span>변 하나가 차수 둘</h3>
+          <p>변 하나는 두 꼭짓점을 이으므로, 그 두 꼭짓점의 차수를 하나씩 올린다. 그래서 모든 꼭짓점의 차수를 더하면 각 변이 정확히 두 번씩 세어져, 차수의 합은 변의 개수의 두 배이다. 이것을 악수 정리라 한다. 차수의 합은 늘 짝수이므로, 홀수 차수인 꼭짓점의 개수는 반드시 짝수이다. 홀수 차수가 홀수 개이면 그 합이 홀수가 되어, 짝수 차수들의 합과 더해도 전체가 홀수가 되기 때문이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">악수 정리</span></span>
+            <p>꼭짓점이 \(v_1, \ldots, v_n\)이고 변이 \(m\)개인 그래프에서 \[\deg v_1 + \deg v_2 + \cdots + \deg v_n = 2m\]이다. 따라서 홀수 차수인 꼭짓점의 개수는 짝수이다.</p>
+          </div>
+          <p>아홉 명이 모두 세 명과 악수하면 차수의 합이 \(9\times3 = 27\)로 홀수인데, 이는 변의 개수의 두 배가 될 수 없다. 그래서 그런 그래프는 존재하지 않는다. 반면 열 명이면 합이 30이어서 변 15개의 그래프가 있을 수 있고, 실제로 만들 수도 있다. 이렇게 악수 정리는 어떤 그래프가 불가능하다는 것을 계산 한 번으로 보여 준다. 그러나 합이 짝수라는 것만으로 그래프가 꼭 있는 것은 아니다.<sup class="fn"><a href="#fn-dmath-degree-1">1</a></sup></p>
+
+          <h3><span class="no">4.2.2</span>차수 목록만 보고 판정하기</h3>
+          <p>각 꼭짓점의 차수를 큰 순서로 늘어놓은 것을 차수열이라 한다. 차수열 \((3, 3, 3, 1)\)은 합이 10으로 짝수이지만, 이런 단순그래프는 없다. 단순그래프는 두 꼭짓점 사이에 변이 많아야 하나이고 자기 자신과 잇는 변이 없는 그래프이다. 차수 3인 꼭짓점 셋은 각각 나머지 세 점과 모두 이어져야 하는데, 그러면 넷째 점의 차수가 3이 되어야 하기 때문이다. 이런 판정은 가장 큰 차수의 꼭짓점을 그다음 큰 꼭짓점들과 이어 지우고, 남은 차수열로 같은 일을 되풀이해 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="차수열 판정 과정">
+              <g class="s">
+                <text x="20" y="22">차수열</text><text x="200" y="22">가장 큰 것을 지우고 다음 수들에서 1씩 뺌</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(3, 3, 3, 1)</text><text x="200" y="52">(2, 2, 0)</text>
+                <text x="20" y="74">(2, 2, 0)</text><text x="200" y="74" class="tb">(1, −1), 음수가 나와 불가능</text>
+                <text x="20" y="96">(3, 2, 2, 2, 1)</text><text x="200" y="96" class="td">(1, 1, 1, 1) → (0, 1, 1) → 가능</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 차수열을 차례로 줄여 가다가 음수가 나오면 그런 단순그래프는 없다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+            <p>처음 질문의 아홉 명 계획이 불가능함을 악수 정리로 보여라. 아홉 명 가운데 한 명만 네 명과, 나머지는 세 명과 악수하는 것은 가능한지 판단하여라. 차수열 \((3, 2, 2, 2, 1)\)인 그래프의 변의 개수를 구하여라.</p>
+          </div>
+          <p>모두 세 명과 악수하면 차수의 합이 27로 홀수여서 \(2m\)이 될 수 없으므로 불가능하다. 한 명만 네 명과 악수하면 합은 \(4 + 8\times3 = 28\)로 짝수이다. 합이 짝수인 것만으로는 충분하지 않지만, 차수열 \((4, 3, 3, 3, 3, 3, 3, 3, 3)\)을 그림 2의 방법으로 줄이면 음수 없이 일곱 점의 차수가 모두 2인 차수열이 되고, 이는 일곱 점을 원형으로 이은 그래프로 만들 수 있으므로 가능하다. 홀수 차수인 꼭짓점은 여덟 명으로 짝수 개이다.</p>
+          <p>차수열 \((3, 2, 2, 2, 1)\)은 합이 10이므로 변의 개수는 5이다. 그림 2처럼 차수열을 줄이면 음수 없이 끝나므로 그런 단순그래프가 있다. 예를 들어 꼭짓점 a를 b, c, d와 잇고, b와 c, d와 e를 이으면 차수가 \(3, 2, 2, 2, 1\)이 된다. 즉 차수의 합은 변의 개수의 두 배라는 악수 정리로 많은 그래프가 불가능함을 바로 보일 수 있고, 차수열이 가능한지는 차례로 줄여 가며 판정한다.</p>
+          <p>아래 탐구 카드에서 악수한 횟수의 합이 늘 짝수인지 확인해 보고, 차수 목록만 보고 그런 그래프가 있는지 판정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-degree-1">차수열을 차례로 줄여 판정하는 방법은 1955년 체코의 하벨과 1962년 미국의 하키미가 각각 찾아 하벨–하키미 알고리즘이라 부른다. 분자식에서 원자들이 몇 개의 결합을 가질 수 있는지 따지는 화학 문제에도 같은 생각이 쓰인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>변 하나는 두 꼭짓점의 차수를 하나씩 올리므로, 모든 차수의 합은 변의 개수의 두 배이고 홀수 차수인 꼭짓점은 짝수 개이다. 이 악수 정리로 차수의 합이 홀수인 그래프는 바로 불가능함을 알 수 있고, 합이 짝수인 차수열은 가장 큰 차수를 지우며 차례로 줄여 가능한지 판정한다. 처음 질문의 아홉 명은 차수의 합이 27로 홀수여서 모두 세 명과 악수할 수 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-1.html#card-dmath-konigsberg"><small class="mono">이산 수학 4.1</small>일곱 다리를 한 번씩만 건너 산책할 수 있을까?</a><a href="../../c/dmath/4-1.html#card-dmath-graph-model"><small class="mono">이산 수학 4.1</small>버스 노선 설명을 그래프로 그리면 무엇이 보일까?</a><a href="../../c/dmath/4-1.html#text-dmath-graph-model"><small class="mono">이산 수학 4.1</small>그래프와 실생활 문제</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-3.html#card-dmath-adj-matrix"><small class="mono">이산 수학 4.3</small>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</a><a href="../../c/dmath/4-3.html#card-dmath-walk-count"><small class="mono">이산 수학 4.3</small>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</a><a href="../../c/dmath/4-3.html#text-dmath-adjacency"><small class="mono">이산 수학 4.3</small>인접행렬</a><a href="../../c/dmath/4-4.html#card-dmath-untangle"><small class="mono">이산 수학 4.4</small>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</a></div></nav>
+
       <article class="card" id="card-dmath-handshake">
         <header class="card-head">
-          <span class="no">4.2.1</span><h2>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</h2><span class="kind">차수와 변의 개수 · 조작</span>
+          <span class="no">탐구 1</span><h2>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</h2><span class="kind">차수와 변의 개수 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -63,30 +127,30 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>파티에서 사람들이 악수를 했습니다. 각자 악수한 횟수를 적어 모두 더하면 늘 짝수가 됩니다. 왜 그럴까요? 또 악수를 홀수 번 한 사람의 수에 대해 무엇을 말할 수 있을까요?</li>
-            <li><span class="tag">복원</span>사람을 꼭짓점, 악수 한 번을 변 하나로 나타내면 그래프가 됩니다.</li>
-            <li><span class="tag">설명</span>꼭짓점에 닿은 변의 개수를 그 꼭짓점의 <em>차수</em> \(\deg(v)\)라 합니다. 변 하나는 양 끝의 두 꼭짓점의 차수를 1씩 올리므로 \(\sum \deg(v) = 2|E|\)입니다(<em>악수 정리</em>). 차수의 합이 짝수이므로 <b>차수가 홀수인 꼭짓점의 개수는 늘 짝수</b>입니다. 꼭짓점이 \(n\)개이고 모든 쌍이 이어진 <em>완전그래프</em> \(K_n\)은 차수가 모두 \(n - 1\)이라 변이 \(\frac{n(n-1)}{2}\)개입니다.</li>
-            <li><span class="tag">연결</span>쾨니히스베르크에서 "홀수인 땅의 수"가 중요했습니다. 악수 정리 때문에 홀수인 땅은 0, 2, 4, …개만 가능합니다. 다음 카드에서는 차수만 주어졌을 때 그런 그래프가 있는지 따집니다.</li>
-            <li><span class="tag">적용</span>변을 이었다 지웠다 하며 차수의 합과 변의 수를 비교하세요. 홀수 차수인 꼭짓점을 정확히 하나만 만들 수 있나요? "모두 잇기"로 \(K_7\)의 변의 수를 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>한 꼭짓점에서 자기 자신으로 가는 고리(루프)가 있으면 그 꼭짓점의 차수는 2 올라갑니다. 고리와 다중 변이 있어도 \(\sum\deg(v) = 2|E|\)는 성립하지만, "단순그래프"인지 아닌지에 따라 다른 성질은 달라집니다.</li>
+            <li><span class="tag">질문</span>파티에서 사람들이 악수를 했다. 각자 악수한 횟수를 적어 모두 더하면 늘 짝수가 된다. 왜 그럴까? 또 악수를 홀수 번 한 사람의 수에 대해 무엇을 말할 수 있을까?</li>
+            <li><span class="tag">복원</span>사람을 꼭짓점, 악수 한 번을 변 하나로 나타내면 그래프가 된다.</li>
+            <li><span class="tag">설명</span>꼭짓점에 닿은 변의 개수를 그 꼭짓점의 <em>차수</em> \(\deg(v)\)라 한다. 변 하나는 양 끝의 두 꼭짓점의 차수를 1씩 올리므로 \(\sum \deg(v) = 2|E|\)이다(<em>악수 정리</em>). 차수의 합이 짝수이므로 차수가 홀수인 꼭짓점의 개수는 늘 짝수이다. 꼭짓점이 \(n\)개이고 모든 쌍이 이어진 <em>완전그래프</em> \(K_n\)은 차수가 모두 \(n - 1\)이라 변이 \(\frac{n(n-1)}{2}\)개이다.</li>
+            <li><span class="tag">연결</span>쾨니히스베르크에서 "홀수인 땅의 수"가 중요했다. 악수 정리 때문에 홀수인 땅은 0, 2, 4, …개만 가능하다. 다음 카드에서는 차수만 주어졌을 때 그런 그래프가 있는지 따진다.</li>
+            <li><span class="tag">적용</span>변을 이었다 지웠다 하며 차수의 합과 변의 수를 비교해 보자. 홀수 차수인 꼭짓점을 정확히 하나만 만들 수 있는가? "모두 잇기"로 \(K_7\)의 변의 수를 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>한 꼭짓점에서 자기 자신으로 가는 고리(루프)가 있으면 그 꼭짓점의 차수는 2 올라간다. 고리와 다중 변이 있어도 \(\sum\deg(v) = 2|E|\)는 성립하지만, "단순그래프"인지 아닌지에 따라 다른 성질은 달라진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">모든 꼭짓점의 차수가 3인 그래프에 꼭짓점이 10개 있습니다. 변은 몇 개일까요?</p>
+          <p class="q">모든 꼭짓점의 차수가 3인 그래프에 꼭짓점이 10개 있다. 변은 몇 개일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(15\)개<span class="why"><b>맞습니다.</b> \(3 \times 10 = 2|E|\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(30\)개<span class="why"><b>변을 두 번 셌습니다.</b> 차수의 합이 30입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(45\)개<span class="why"><b>\(K_{10}\)의 변의 수입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>이런 그래프는 없다<span class="why"><b>차수의 합 30이 짝수라 가능합니다(예: 페테르센 그래프).</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(15\)개<span class="why"><b>맞다.</b> \(3 \times 10 = 2|E|\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(30\)개<span class="why"><b>변을 두 번 셌다.</b> 차수의 합이 30이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(45\)개<span class="why"><b>\(K_{10}\)의 변의 수이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>이런 그래프는 없다<span class="why"><b>차수의 합 30이 짝수라 가능하다(예: 페테르센 그래프).</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-1.html#card-dmath-konigsberg"><small class="mono">이산 수학 4.1</small>일곱 다리를 한 번씩만 건너 산책할 수 있을까?</a><a href="../../c/dmath/4-1.html#card-dmath-graph-model"><small class="mono">이산 수학 4.1</small>버스 노선 설명을 그래프로 그리면 무엇이 보일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-3.html#card-dmath-adj-matrix"><small class="mono">이산 수학 4.3</small>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</a><a href="../../c/dmath/4-3.html#card-dmath-walk-count"><small class="mono">이산 수학 4.3</small>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</a><a href="../../c/dmath/4-4.html#card-dmath-untangle"><small class="mono">이산 수학 4.4</small>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</a><a href="../../c/dmath/4-4.html#card-dmath-euler-formula"><small class="mono">이산 수학 4.4</small>평면그래프에서 점, 선, 면의 수 사이에는 어떤 관계가 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-1.html#card-dmath-konigsberg"><small class="mono">이산 수학 4.1</small>일곱 다리를 한 번씩만 건너 산책할 수 있을까?</a><a href="../../c/dmath/4-1.html#card-dmath-graph-model"><small class="mono">이산 수학 4.1</small>버스 노선 설명을 그래프로 그리면 무엇이 보일까?</a><a href="../../c/dmath/4-1.html#text-dmath-graph-model"><small class="mono">이산 수학 4.1</small>그래프와 실생활 문제</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-3.html#card-dmath-adj-matrix"><small class="mono">이산 수학 4.3</small>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</a><a href="../../c/dmath/4-3.html#card-dmath-walk-count"><small class="mono">이산 수학 4.3</small>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</a><a href="../../c/dmath/4-3.html#text-dmath-adjacency"><small class="mono">이산 수학 4.3</small>인접행렬</a><a href="../../c/dmath/4-4.html#card-dmath-untangle"><small class="mono">이산 수학 4.4</small>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</a></div></nav>
 
       <article class="card" id="card-dmath-degree-seq">
         <header class="card-head">
-          <span class="no">4.2.2</span><h2>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</h2><span class="kind">차수열 · 도전</span>
+          <span class="no">탐구 2</span><h2>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</h2><span class="kind">차수열 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -97,39 +161,40 @@
             <p class="mono small hh"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>여섯 명이 "나는 친구가 5명, 3명, 2명, 2명, 1명, 1명"이라고 말했습니다(친구 관계는 서로). 이 말이 모두 사실일 수 있을까요? 그래프를 그려 보지 않고 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>악수 정리: 차수의 합은 변의 수의 두 배이므로 짝수입니다.</li>
-            <li><span class="tag">설명</span>꼭짓점들의 차수를 큰 것부터 늘어놓은 것을 <em>차수열</em>이라 합니다. 고리와 다중 변이 없는 단순그래프로 실현되려면 ① 합이 짝수, ② 가장 큰 차수가 \(n - 1\) 이하여야 합니다. 그래도 부족해서, <em>하벨-하키미 방법</em>으로 확인합니다: 가장 큰 차수 \(d\)를 지우고 그다음 큰 \(d\)개의 차수에서 1씩 뺀 뒤 다시 정렬하기를 반복해, 모두 0이 되면 가능하고 음수가 나오면 불가능합니다. 이 과정이 실제로 그래프를 그리는 방법도 알려 줍니다.</li>
-            <li><span class="tag">연결</span>화학에서 원자의 결합 수(원자가)가 정해진 분자의 구조를 찾을 때, 네트워크 설계에서 각 장치의 연결 수가 정해졌을 때 같은 질문이 나옵니다.</li>
-            <li><span class="tag">적용</span>목록마다 꼭짓점 옆의 수(더 필요한 변)가 모두 0이 되게 변을 이어 보세요. 아무리 해도 안 되면 "불가능하다"를 누르세요. 합이 짝수인데도 불가능한 목록이 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>"합이 짝수"는 필요조건일 뿐입니다. (4, 4, 1, 1, 1, 1)은 합이 12인데도 단순그래프로 그릴 수 없습니다. 차수 4인 두 꼭짓점이 각각 다른 네 점과 이어져야 하는데, 차수 1인 점들은 한 번밖에 이어질 수 없기 때문입니다.</li>
+            <li><span class="tag">질문</span>여섯 명이 "나는 친구가 5명, 3명, 2명, 2명, 1명, 1명"이라고 말했다(친구 관계는 서로). 이 말이 모두 사실일 수 있을까? 그래프를 그려 보지 않고 알 수 있을까?</li>
+            <li><span class="tag">복원</span>악수 정리에 따르면 차수의 합은 변의 수의 두 배이므로 짝수이다.</li>
+            <li><span class="tag">설명</span>꼭짓점들의 차수를 큰 것부터 늘어놓은 것을 <em>차수열</em>이라 한다. 고리와 다중 변이 없는 단순그래프로 실현되려면 ① 합이 짝수, ② 가장 큰 차수가 \(n - 1\) 이하여야 한다. 그래도 부족해서, <em>하벨-하키미 방법</em>으로 확인한다. 가장 큰 차수 \(d\)를 지우고 그다음 큰 \(d\)개의 차수에서 1씩 뺀 뒤 다시 정렬하기를 반복해, 모두 0이 되면 가능하고 음수가 나오면 불가능하다. 이 과정이 실제로 그래프를 그리는 방법도 알려 준다.</li>
+            <li><span class="tag">연결</span>화학에서 원자의 결합 수(원자가)가 정해진 분자의 구조를 찾을 때, 네트워크 설계에서 각 장치의 연결 수가 정해졌을 때 같은 질문이 나온다.</li>
+            <li><span class="tag">적용</span>목록마다 꼭짓점 옆의 수(더 필요한 변)가 모두 0이 되게 변을 이어 보자. 아무리 해도 안 되면 "불가능하다"를 누르자. 합이 짝수인데도 불가능한 목록이 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>"합이 짝수"는 필요조건일 뿐이다. (4, 4, 1, 1, 1, 1)은 합이 12인데도 단순그래프로 그릴 수 없다. 차수 4인 두 꼭짓점이 각각 다른 네 점과 이어져야 하는데, 차수 1인 점들은 한 번밖에 이어질 수 없기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">다음 중 단순그래프의 차수열이 될 수 있는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, 2, 2, 2)\)<span class="why"><b>맞습니다.</b> 사각형(순환 그래프 \(C_4\))입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((3, 3, 3)\)<span class="why"><b>꼭짓점 3개에서 차수는 2 이하입니다.</b> 합도 홀수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((3, 2, 2, 2)\)<span class="why"><b>합 9가 홀수입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 3, 1, 1)\)<span class="why"><b>하벨-하키미: 3을 지우면 (2, 0, 0), 다시 2를 지우면 (−1, −1)</b>이라 불가능합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, 2, 2, 2)\)<span class="why"><b>맞다.</b> 사각형(순환 그래프 \(C_4\))이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((3, 3, 3)\)<span class="why"><b>꼭짓점 3개에서 차수는 2 이하이다.</b> 합도 홀수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((3, 2, 2, 2)\)<span class="why"><b>합 9가 홀수이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 3, 1, 1)\)<span class="why"><b>하벨-하키미: 3을 지우면 (2, 0, 0), 다시 2를 지우면 (−1, −1)</b>이라 불가능하다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-1.html#card-dmath-konigsberg"><small class="mono">이산 수학 4.1</small>일곱 다리를 한 번씩만 건너 산책할 수 있을까?</a><a href="../../c/dmath/4-1.html#card-dmath-graph-model"><small class="mono">이산 수학 4.1</small>버스 노선 설명을 그래프로 그리면 무엇이 보일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-3.html#card-dmath-adj-matrix"><small class="mono">이산 수학 4.3</small>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</a><a href="../../c/dmath/4-3.html#card-dmath-walk-count"><small class="mono">이산 수학 4.3</small>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</a><a href="../../c/dmath/4-4.html#card-dmath-untangle"><small class="mono">이산 수학 4.4</small>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</a><a href="../../c/dmath/4-4.html#card-dmath-euler-formula"><small class="mono">이산 수학 4.4</small>평면그래프에서 점, 선, 면의 수 사이에는 어떤 관계가 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-1.html#card-dmath-konigsberg"><small class="mono">이산 수학 4.1</small>일곱 다리를 한 번씩만 건너 산책할 수 있을까?</a><a href="../../c/dmath/4-1.html#card-dmath-graph-model"><small class="mono">이산 수학 4.1</small>버스 노선 설명을 그래프로 그리면 무엇이 보일까?</a><a href="../../c/dmath/4-1.html#text-dmath-graph-model"><small class="mono">이산 수학 4.1</small>그래프와 실생활 문제</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/4-3.html#card-dmath-adj-matrix"><small class="mono">이산 수학 4.3</small>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</a><a href="../../c/dmath/4-3.html#card-dmath-walk-count"><small class="mono">이산 수학 4.3</small>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</a><a href="../../c/dmath/4-3.html#text-dmath-adjacency"><small class="mono">이산 수학 4.3</small>인접행렬</a><a href="../../c/dmath/4-4.html#card-dmath-untangle"><small class="mono">이산 수학 4.4</small>엉킨 그래프를 선이 겹치지 않게 펼 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-4-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

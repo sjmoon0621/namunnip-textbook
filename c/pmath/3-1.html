@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>여러 가지 순열과 중복조합 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="원순열, 염주순열, 중복순열, 같은 것이 있는 순열과 중복조합. 원탁을 돌려 같은 배열을 세는 카드, 뒤집기까지 같다고 보는 목걸이 디자인, 칸막이로 사탕을 나누는 중복조합 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-round-table canvas { aspect-ratio: 16 / 9; }
@@ -53,19 +58,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-round-table"><span class="mono">3.1.1</span>원탁에 앉는 방법(원순열)</a></li>
-        <li><a href="#card-pmath-necklace"><span class="mono">3.1.2</span>목걸이 도감(염주순열)</a></li>
-        <li><a href="#card-pmath-candy"><span class="mono">3.1.3</span>사탕 나누기(중복조합)</a></li>
+        <li><a href="#text-pmath-circular-combination"><span class="mono">본문</span>여러 가지 순열과 중복조합</a></li>
+        <li><a href="#card-pmath-round-table"><span class="mono">탐구 1</span>원탁에 앉는 방법(원순열)</a></li>
+        <li><a href="#card-pmath-necklace"><span class="mono">탐구 2</span>목걸이 도감(염주순열)</a></li>
+        <li><a href="#card-pmath-candy"><span class="mono">탐구 3</span>사탕 나누기(중복조합)</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">8문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-circular-combination" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>여러 가지 순열과 중복조합</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">다섯 친구가 일렬로 서는 방법은 120가지인데, 둥근 탁자에 둘러앉는 방법은 24가지라고 한다. 같은 다섯 명인데 왜 다섯 배나 적을까? 또 서로 다른 구슬 다섯 개를 줄에 꿰어 목걸이를 만들면 12가지밖에 나오지 않는다. 한편 똑같은 사탕 6개를 세 사람에게 나누어 주는 방법은, 한 개도 못 받는 사람이 있어도 된다면 28가지이다. 같은 것끼리 바꾸어도 똑같아지는 경우를 어떻게 세면 이런 수가 나올까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="여러 가지 순열과 중복조합의 수">
+              <g class="s">
+                <text x="20" y="22">상황</text><text x="230" y="22">세는 식</text><text x="400" y="22">가짓수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="50">5명 일렬</text><text x="230" y="50">5!</text><text x="400" y="50">120</text>
+                <text x="20" y="70">5명 원탁</text><text x="230" y="70">5!/5 = 4!</text><text x="400" y="70" class="ta">24</text>
+                <text x="20" y="90">구슬 5개 목걸이</text><text x="230" y="90">4!/2</text><text x="400" y="90" class="tb">12</text>
+                <text x="20" y="110">사탕 6개를 3명에게</text><text x="230" y="110">₃H₆ = ₈C₂</text><text x="400" y="110" class="td">28</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 돌리거나 뒤집어도 같아지는 배열은 한 번만 세고, 똑같은 물건의 분배는 칸막이를 놓는 방법으로 센다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>순열 \({}_n\mathrm{P}_r\)와 \(n!\), 조합 \({}_n\mathrm{C}_r\)와 그 성질, 중복순열, 같은 것이 있는 순열.</div>
+
+          <h3><span class="no">3.1.1</span>돌려서 같으면 하나로 센다</h3>
+          <p>원탁에는 첫째 자리와 마지막 자리가 없어서, 모두가 한 칸씩 옆으로 옮겨 앉아도 누가 누구 옆에 앉았는지는 그대로이다. 그래서 일렬로 선 120가지 배열을 원탁에 앉히면, 한 칸씩 돌린 다섯 배열이 모두 같은 앉음새가 된다. 따라서 원탁에 앉는 방법은 \(120/5 = 24\)가지이다. 다르게 생각하면, 한 사람을 먼저 아무 자리에 앉혀 기준으로 삼고 나머지 네 명을 그 사람에게서 시계 방향으로 일렬로 앉히는 것과 같아 \(4! = 24\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.1.1 <span class="nm">원순열과 중복조합</span></span>
+            <p>서로 다른 \(n\)개를 원형으로 배열하는 원순열의 수는 \((n - 1)!\)이다. 서로 다른 \(n\)종류에서 중복을 허락해 \(r\)개를 택하는 중복조합의 수는 \[{}_n\mathrm{H}_r = {}_{n + r - 1}\mathrm{C}_r\]이다. 똑같은 물건 \(r\)개를 \(n\)명에게 나누는 방법의 수도 \({}_n\mathrm{H}_r\)이다.</p>
+          </div>
+          <p>목걸이는 원탁과 달리 뒤집을 수도 있다. 목걸이를 뒤집으면 시계 방향의 배열이 시계 반대 방향의 배열로 바뀌지만 같은 목걸이이므로, 원순열 \(4! = 24\)가지를 다시 둘씩 묶어 \(12\)가지가 된다. 그래서 같은 것으로 보는 변환이 많아질수록 가짓수는 그 변환의 수로 나누어 줄어든다. 다만 뒤집어도 자기 자신과 같은 배열이 있으면 이렇게 나눌 수 없어 더 조심해서 세야 한다.<sup class="fn"><a href="#fn-pmath-circular-combination-1">1</a></sup></p>
+
+          <h3><span class="no">3.1.2</span>사탕과 칸막이</h3>
+          <p>똑같은 사탕 6개를 세 사람에게 나누는 방법은, 사탕 6개를 일렬로 놓고 그 사이에 칸막이 2개를 끼워 세 칸으로 나누는 방법과 하나씩 대응한다. 첫째 칸의 사탕은 첫째 사람, 둘째 칸은 둘째 사람, 셋째 칸은 셋째 사람이 받는다. 칸막이가 맨 앞이나 붙어 있으면 그 사람은 하나도 받지 못한다. 그래서 사탕 6개와 칸막이 2개, 모두 8개의 자리 가운데 칸막이 2개의 자리를 고르면 되므로 \({}_8\mathrm{C}_2 = 28\)가지이다. 이것이 \({}_3\mathrm{H}_6 = {}_{3 + 6 - 1}\mathrm{C}_6\)이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="사탕과 칸막이로 나타낸 분배">
+              <g class="s">
+                <text x="20" y="22">배열 (○ 사탕, | 칸막이)</text><text x="250" y="22">세 사람이 받는 수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">○ ○ | ○ ○ ○ | ○</text><text x="250" y="52">(2, 3, 1)</text>
+                <text x="20" y="74">| ○ ○ ○ ○ | ○ ○</text><text x="250" y="74">(0, 4, 2)</text>
+                <text x="20" y="96">○ ○ ○ ○ ○ ○ | |</text><text x="250" y="96">(6, 0, 0)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 8개의 자리에서 칸막이 2개의 자리만 정하면 나누는 방법이 하나로 정해진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>똑같은 사탕 6개를 세 사람에게 모두 나누어 줄 때, 모든 사람이 적어도 하나씩 받는 방법의 수를 구하여라. 또 방정식 \(x + y + z = 6\)을 만족하는 음이 아닌 정수의 순서쌍 \((x, y, z)\)의 개수와 비교하여라.</p>
+          </div>
+          <p>먼저 세 사람에게 하나씩 나누어 주면 남은 사탕은 3개이다. 이 3개를 아무 제한 없이 세 사람에게 나누는 방법은 \({}_3\mathrm{H}_3 = {}_5\mathrm{C}_3 = 10\)가지이다. 그래서 모두 적어도 하나씩 받는 방법은 10가지이다.</p>
+          <p>\(x + y + z = 6\)의 음이 아닌 정수해는 세 사람이 받는 사탕의 수와 같으므로 \({}_3\mathrm{H}_6 = 28\)개이다. 양의 정수해만 세면 위와 같은 10개이다. 즉 똑같은 것을 나누거나 중복을 허락해 고르는 경우는 칸막이를 놓을 자리를 고르는 조합으로 바뀌고, 돌리거나 뒤집어 같아지는 배열은 그 변환의 수로 나누어 센다. 그래서 무엇을 같은 것으로 보느냐를 먼저 정해야 가짓수를 바르게 셀 수 있다.</p>
+          <p>아래 탐구 카드에서 원탁에 앉는 방법을 일렬로 서는 방법과 비교하고, 목걸이와 사탕 나누기의 가짓수를 직접 세어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-circular-combination-1">돌리거나 뒤집어서 같아지는 배열을 정확히 세는 일반적인 방법은 번사이드 보조정리라 한다. 화학에서 분자의 이성질체를 세거나, 여러 색으로 칠한 정육면체가 몇 종류인지 셀 때 쓴다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>서로 다른 \(n\)개의 원순열은 돌려서 같은 \(n\)가지를 하나로 묶어 \((n - 1)!\)이고, 뒤집어도 같은 목걸이는 다시 2로 나눈다. 똑같은 물건 \(r\)개를 \(n\)명에게 나누는 방법은 물건과 칸막이 \(n - 1\)개를 늘어놓는 방법과 같아 \({}_n\mathrm{H}_r = {}_{n + r - 1}\mathrm{C}_r\)이다. 처음 질문의 원탁은 24가지, 목걸이는 12가지, 사탕 6개를 세 사람에게 나누는 방법은 \({}_8\mathrm{C}_2 = 28\)가지이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a></div></nav>
+
       <article class="card" id="card-pmath-round-table">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>둥근 탁자에 둘러앉는 방법은 줄을 서는 방법보다 왜 적을까?</h2><span class="kind">원순열 · 조작</span>
+          <span class="no">탐구 1</span><h2>둥근 탁자에 둘러앉는 방법은 줄을 서는 방법보다 왜 적을까?</h2><span class="kind">원순열 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,7 +137,7 @@
               <label class="mono">사람 수 \(n\) = <output class="n-out">5</output></label>
               <input class="sn" type="range" min="3" max="7" step="1" value="5" aria-label="사람 수">
               <div class="presets"><button class="chip go-rot" type="button">한 자리씩 돌리기</button><button class="chip go-mix" type="button">자리 섞기</button></div>
-              <p class="mono small">이 원탁 배열을 A부터 시계 방향으로 읽은 줄:</p>
+              <p class="mono small">이 원탁 배열을 A부터 시계 방향으로 읽은 줄</p>
               <p class="rows">—</p>
               <dl class="nums">
                 <div><dt>줄 세우기 \(n!\)</dt><dd class="n-f">—</dd></div>
@@ -84,30 +147,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>다섯 명이 한 줄로 서는 방법은 \(5! = 120\)가지입니다. 같은 다섯 명이 둥근 탁자에 둘러앉는 방법도 120가지일까요?</li>
-            <li><span class="tag">복원</span>서로 다른 \(n\)개를 일렬로 나열하는 방법의 수는 \(n! = n \times (n - 1) \times \cdots \times 1\)입니다.</li>
-            <li><span class="tag">설명</span>원탁에서는 모두가 한 자리씩 옆으로 옮겨 앉아도 서로의 위치 관계가 같으므로 같은 배열로 봅니다. 원탁 배열 하나를 어느 자리에서 끊어 줄로 펴느냐에 따라 서로 다른 줄이 \(n\)개 나오므로, 줄 \(n!\)개는 \(n\)개씩 묶여 같은 원탁 배열이 됩니다. 그래서 <em>원순열</em>의 수는 <b>\(\frac{n!}{n} = (n - 1)!\)</b>입니다. 한 사람(A)의 자리를 고정하고 나머지 \(n - 1\)명을 줄 세운다고 생각해도 같은 답이 나옵니다.</li>
-            <li><span class="tag">연결</span>"같은 것으로 볼 배열을 묶어 그 크기로 나눈다"는 생각은 같은 것이 있는 순열 \(\frac{n!}{p!q!}\)과 다음 카드의 염주순열에도 그대로 쓰입니다.</li>
-            <li><span class="tag">적용</span>"한 자리씩 돌리기"를 눌러 원탁 배열이 그대로인데 줄로 읽은 글자만 바뀌는 것을 보세요. 한 바퀴 돌리는 동안 서로 다른 줄이 몇 개 나오나요? 사람 수를 바꾸며 \(n!\), \(n\), \((n - 1)!\)의 관계를 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>자리에 번호가 붙어 있거나 창가 자리처럼 구별되는 자리가 있으면 돌리면 다른 배열이 되므로 원순열이 아니라 그냥 순열 \(n!\)입니다. 문제에서 자리가 구별되는지를 먼저 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>다섯 명이 한 줄로 서는 방법은 \(5! = 120\)가지이다. 같은 다섯 명이 둥근 탁자에 둘러앉는 방법도 120가지일까?</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개를 일렬로 나열하는 방법의 수는 \(n! = n \times (n - 1) \times \cdots \times 1\)이다.</li>
+            <li><span class="tag">설명</span>원탁에서는 모두가 한 자리씩 옆으로 옮겨 앉아도 서로의 위치 관계가 같으므로 같은 배열로 본다. 원탁 배열 하나를 어느 자리에서 끊어 줄로 펴느냐에 따라 서로 다른 줄이 \(n\)개 나오므로, 줄 \(n!\)개는 \(n\)개씩 묶여 같은 원탁 배열이 된다. 그래서 <em>원순열</em>의 수는 \(\frac{n!}{n} = (n - 1)!\)이다. 한 사람(A)의 자리를 고정하고 나머지 \(n - 1\)명을 줄 세운다고 생각해도 같은 답이 나온다.</li>
+            <li><span class="tag">연결</span>"같은 것으로 볼 배열을 묶어 그 크기로 나눈다"는 생각은 같은 것이 있는 순열 \(\frac{n!}{p!q!}\)과 다음 카드의 염주순열에도 그대로 쓰인다.</li>
+            <li><span class="tag">적용</span>"한 자리씩 돌리기"를 눌러 원탁 배열이 그대로인데 줄로 읽은 글자만 바뀌는 것을 보자. 한 바퀴 돌리는 동안 서로 다른 줄이 몇 개 나오는가? 사람 수를 바꾸며 \(n!\), \(n\), \((n - 1)!\)의 관계를 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>자리에 번호가 붙어 있거나 창가 자리처럼 구별되는 자리가 있으면 돌리면 다른 배열이 되므로 원순열이 아니라 그냥 순열 \(n!\)이다. 문제에서 자리가 구별되는지를 먼저 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">부부 3쌍이 원탁에 앉을 때, 부부끼리 반드시 이웃해 앉는 방법의 수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>16<span class="why"><b>맞습니다.</b> 부부를 한 묶음으로 보면 세 묶음의 원순열 \((3 - 1)! = 2\), 각 부부가 자리를 바꾸는 \(2^3 = 8\)을 곱해 16입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48<span class="why"><b>묶음을 줄 세우듯 \(3!\)로 셌습니다.</b> 원탁이므로 묶음의 배열은 \((3 - 1)!\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>부부끼리 자리를 바꾸는 경우를 빠뜨렸습니다.</b> 한 쌍마다 2가지씩입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>120<span class="why"><b>조건 없이 6명의 원순열 \(5!\)을 구했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>16<span class="why"><b>맞다.</b> 부부를 한 묶음으로 보면 세 묶음의 원순열 \((3 - 1)! = 2\), 각 부부가 자리를 바꾸는 \(2^3 = 8\)을 곱해 16이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48<span class="why"><b>묶음을 줄 세우듯 \(3!\)로 셌다.</b> 원탁이므로 묶음의 배열은 \((3 - 1)!\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>부부끼리 자리를 바꾸는 경우를 빠뜨렸다.</b> 한 쌍마다 2가지씩이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>120<span class="why"><b>조건 없이 6명의 원순열 \(5!\)을 구했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a></div></nav>
 
       <article class="card" id="card-pmath-necklace">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>서로 다른 구슬 다섯 개로 목걸이를 몇 가지나 만들 수 있을까?</h2><span class="kind">염주순열 · 만들기</span>
+          <span class="no">탐구 2</span><h2>서로 다른 구슬 다섯 개로 목걸이를 몇 가지나 만들 수 있을까?</h2><span class="kind">염주순열 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -118,34 +181,34 @@
               <p class="verdict" role="status"></p>
               <p class="mono small cnt">—</p>
               <div class="book" aria-label="찾은 목걸이 도감"></div>
-              <p class="fig-note">구슬 두 개를 차례로 누르면 자리가 바뀝니다. 돌리거나 뒤집어서 같아지는 목걸이는 도감에 한 번만 들어갑니다.</p>
+              <p class="fig-note">구슬 두 개를 차례로 누르면 자리가 바뀐다. 돌리거나 뒤집어서 같아지는 목걸이는 도감에 한 번만 들어간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>색이 모두 다른 구슬 다섯 개를 줄에 꿰어 목걸이를 만듭니다. 목걸이는 돌릴 수도 있고 뒤집을 수도 있습니다. 서로 다른 목걸이는 몇 가지일까요?</li>
-            <li><span class="tag">복원</span>서로 다른 \(n\)개의 원순열의 수는 \((n - 1)!\)입니다. 돌려서 같아지는 배열을 하나로 묶은 결과입니다.</li>
-            <li><span class="tag">설명</span>목걸이는 원탁과 달리 뒤집을 수 있습니다. 시계 방향으로 A-B-C-D-E인 목걸이를 뒤집으면 A-E-D-C-B가 되는데, 원순열로는 다른 배열이지만 목걸이로는 같습니다. 그래서 원순열 \((n - 1)!\)개가 둘씩 짝지어 같은 목걸이가 되고, <em>염주순열</em>의 수는 <b>\(\frac{(n - 1)!}{2}\)</b>입니다(\(n \ge 3\)). 다섯 개면 \(\frac{24}{2} = 12\)가지입니다.</li>
-            <li><span class="tag">연결</span>대칭으로 같아지는 것을 묶어 세는 일은 분자 구조, 결정 구조, 퍼즐의 서로 다른 상태를 셀 때도 쓰입니다. 같은 색 구슬이 섞이면 이렇게 간단히 나누어지지 않아, 대학에서는 번사이드 보조정리라는 방법으로 셉니다.</li>
-            <li><span class="tag">적용</span>구슬을 바꿔 가며 서로 다른 목걸이를 도감에 모아 보세요. 12가지를 다 모을 수 있나요? "돌리기만 같다"로 바꾸면 도감에는 몇 가지가 들어갈 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\frac{(n - 1)!}{2}\)는 구슬이 모두 다를 때의 공식입니다. 같은 색 구슬이 있으면 뒤집어도 자기 자신과 같은 목걸이가 생겨서 짝이 맞지 않으므로 이 공식으로 나누면 틀립니다.</li>
+            <li><span class="tag">질문</span>색이 모두 다른 구슬 다섯 개를 줄에 꿰어 목걸이를 만든다. 목걸이는 돌릴 수도 있고 뒤집을 수도 있다. 서로 다른 목걸이는 몇 가지일까?</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개의 원순열의 수는 \((n - 1)!\)이다. 돌려서 같아지는 배열을 하나로 묶은 결과이다.</li>
+            <li><span class="tag">설명</span>목걸이는 원탁과 달리 뒤집을 수 있다. 시계 방향으로 A-B-C-D-E인 목걸이를 뒤집으면 A-E-D-C-B가 되는데, 원순열로는 다른 배열이지만 목걸이로는 같다. 그래서 원순열 \((n - 1)!\)개가 둘씩 짝지어 같은 목걸이가 되고, <em>염주순열</em>의 수는 \(\frac{(n - 1)!}{2}\)이다(\(n \ge 3\)). 다섯 개면 \(\frac{24}{2} = 12\)가지이다.</li>
+            <li><span class="tag">연결</span>대칭으로 같아지는 것을 묶어 세는 일은 분자 구조, 결정 구조, 퍼즐의 서로 다른 상태를 셀 때도 쓰인다. 같은 색 구슬이 섞이면 이렇게 간단히 나누어지지 않아, 대학에서는 번사이드 보조정리라는 방법으로 센다.</li>
+            <li><span class="tag">적용</span>구슬을 바꿔 가며 서로 다른 목걸이를 도감에 모아 보자. 12가지를 다 모을 수 있는가? "돌리기만 같다"로 바꾸면 도감에는 몇 가지가 들어갈 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>\(\frac{(n - 1)!}{2}\)는 구슬이 모두 다를 때의 공식이다. 같은 색 구슬이 있으면 뒤집어도 자기 자신과 같은 목걸이가 생겨서 짝이 맞지 않으므로 이 공식으로 나누면 틀린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">서로 다른 색의 구슬 6개로 만들 수 있는 목걸이의 수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>60<span class="why"><b>맞습니다.</b> 원순열 \(5! = 120\)을 뒤집기로 짝지어 \(\frac{120}{2} = 60\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>120<span class="why"><b>원순열에서 멈추었습니다.</b> 목걸이는 뒤집을 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>360<span class="why"><b>\(\frac{6!}{2}\)로 돌리기를 빠뜨렸습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>720<span class="why"><b>일렬로 세는 \(6!\)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>60<span class="why"><b>맞다.</b> 원순열 \(5! = 120\)을 뒤집기로 짝지어 \(\frac{120}{2} = 60\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>120<span class="why"><b>원순열에서 멈추었다.</b> 목걸이는 뒤집을 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>360<span class="why"><b>\(\frac{6!}{2}\)로 돌리기를 빠뜨렸다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>720<span class="why"><b>일렬로 세는 \(6!\)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a></div></nav>
 
       <article class="card" id="card-pmath-candy">
         <header class="card-head">
-          <span class="no">3.1.3</span><h2>똑같은 사탕 6개를 세 사람에게 나누는 방법은 몇 가지일까?</h2><span class="kind">중복조합 · 도전</span>
+          <span class="no">탐구 3</span><h2>똑같은 사탕 6개를 세 사람에게 나누는 방법은 몇 가지일까?</h2><span class="kind">중복조합 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -158,42 +221,42 @@
             <p class="sb" aria-label="별과 막대로 나타낸 나누는 방법">—</p>
             <p class="verdict" role="status"></p>
             <p class="mono small cnt">—</p>
-            <p class="fig-note">사탕을 모두 나눠 주면 그 방법이 자동으로 기록됩니다. 한 개도 못 받는 사람이 있어도 됩니다. 별(★)은 사탕, 막대(|)는 사람 사이의 칸막이입니다.</p>
+            <p class="fig-note">사탕을 모두 나눠 주면 그 방법이 자동으로 기록된다. 한 개도 못 받는 사람이 있어도 된다. 별(★)은 사탕, 막대(|)는 사람 사이의 칸막이이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>똑같은 사탕 6개를 세 명에게 나누어 줍니다. 한 개도 못 받는 사람이 있어도 된다면, 나누는 방법은 몇 가지일까요? 하나씩 적어 보면 빠뜨리기 쉽습니다. 빠짐없이 세는 방법이 있을까요?</li>
-            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 순서 없이 \(r\)개를 고르는 방법의 수는 \({}_n\mathrm{C}_r = \frac{n!}{r!(n - r)!}\)입니다.</li>
-            <li><span class="tag">설명</span>나누는 방법 하나를 사탕 6개(★)와 칸막이 2개(|)를 한 줄로 늘어놓은 것으로 바꿀 수 있습니다. 예를 들어 ★★|★|★★★는 (2, 1, 3)입니다. 거꾸로 이런 줄 하나는 나누는 방법 하나를 정합니다. 그러므로 나누는 방법의 수는 8자리 가운데 칸막이 2개의 자리를 고르는 수 \({}_8\mathrm{C}_2 = 28\)입니다. 일반적으로 서로 다른 \(n\)개에서 중복을 허락해 \(r\)개를 고르는 <em>중복조합</em>은 <b>\({}_n\mathrm{H}_r = {}_{n + r - 1}\mathrm{C}_r\)</b>입니다.</li>
-            <li><span class="tag">연결</span>이 문제는 방정식 \(x + y + z = 6\)의 음이 아닌 정수해의 개수와 같습니다. 모두 적어도 하나씩 받아야 한다면 먼저 하나씩 나눠 준 뒤 남은 3개를 나누면 되므로 \({}_3\mathrm{H}_3 = 10\)입니다.</li>
-            <li><span class="tag">적용</span>사탕을 직접 나누어 기록이 28가지가 될 때까지 모아 보세요. 별과 막대의 줄이 매번 어떻게 바뀌나요? 사탕 수와 사람 수를 바꾸어 공식이 맞는지도 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>사탕이 서로 다르면(이름표가 붙어 있으면) 사탕마다 받을 사람을 고르므로 중복순열 \(n^r\)입니다. "같은 것을 나누는지, 다른 것을 나누는지"를 먼저 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>똑같은 사탕 6개를 세 명에게 나누어 준다. 한 개도 못 받는 사람이 있어도 된다면, 나누는 방법은 몇 가지일까? 하나씩 적어 보면 빠뜨리기 쉽다. 빠짐없이 세는 방법이 있을까?</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 순서 없이 \(r\)개를 고르는 방법의 수는 \({}_n\mathrm{C}_r = \frac{n!}{r!(n - r)!}\)이다.</li>
+            <li><span class="tag">설명</span>나누는 방법 하나를 사탕 6개(★)와 칸막이 2개(|)를 한 줄로 늘어놓은 것으로 바꿀 수 있다. 예를 들어 ★★|★|★★★는 (2, 1, 3)이다. 거꾸로 이런 줄 하나는 나누는 방법 하나를 정한다. 그러므로 나누는 방법의 수는 8자리 가운데 칸막이 2개의 자리를 고르는 수 \({}_8\mathrm{C}_2 = 28\)이다. 일반적으로 서로 다른 \(n\)개에서 중복을 허락해 \(r\)개를 고르는 <em>중복조합</em>은 \({}_n\mathrm{H}_r = {}_{n + r - 1}\mathrm{C}_r\)이다.</li>
+            <li><span class="tag">연결</span>이 문제는 방정식 \(x + y + z = 6\)의 음이 아닌 정수해의 개수와 같다. 모두 적어도 하나씩 받아야 한다면 먼저 하나씩 나눠 준 뒤 남은 3개를 나누면 되므로 \({}_3\mathrm{H}_3 = 10\)이다.</li>
+            <li><span class="tag">적용</span>사탕을 직접 나누어 기록이 28가지가 될 때까지 모아 보자. 별과 막대의 줄이 매번 어떻게 바뀌는가? 사탕 수와 사람 수를 바꾸어 공식이 맞는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>사탕이 서로 다르면(이름표가 붙어 있으면) 사탕마다 받을 사람을 고르므로 중복순열 \(n^r\)이다. "같은 것을 나누는지, 다른 것을 나누는지"를 먼저 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(x + y + z + w = 5\)를 만족하는 음이 아닌 정수 \(x, y, z, w\)의 순서쌍의 개수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>56<span class="why"><b>맞습니다.</b> \({}_4\mathrm{H}_5 = {}_8\mathrm{C}_5 = 56\)입니다. 별 5개와 막대 3개를 늘어놓는 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>126<span class="why"><b>막대를 하나 더 넣었습니다.</b> 변수 4개를 나누는 칸막이는 3개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>모두 1 이상이라는 조건으로 풀었습니다.</b> 그때는 \({}_4\mathrm{H}_1 = 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1024<span class="why"><b>\(4^5\)로 셌습니다.</b> 서로 다른 것을 나누는 중복순열입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>56<span class="why"><b>맞다.</b> \({}_4\mathrm{H}_5 = {}_8\mathrm{C}_5 = 56\)이다. 별 5개와 막대 3개를 늘어놓는 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>126<span class="why"><b>막대를 하나 더 넣었다.</b> 변수 4개를 나누는 칸막이는 3개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>모두 1 이상이라는 조건으로 풀었다.</b> 그때는 \({}_4\mathrm{H}_1 = 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1024<span class="why"><b>\(4^5\)로 셌다.</b> 서로 다른 것을 나누는 중복순열이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a><a href="../../c/stat/1-2.html#text-stat-comb-rep"><small class="mono">확률과 통계 1.2</small>중복조합</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">8문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>대푯값과 산포도 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="극단값 하나에 끌려가는 평균과 버티는 중앙값(가상 소득), 치우친 분포에서의 대푯값 선택, 편차·분산·표준편차의 뜻과 계산(n으로 나눔), 평균 60·표준편차 10인 자료 만들기 도전. 평균과 중앙값 카드와, 표준편차 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pstat-mean-median canvas { aspect-ratio: 16 / 5; max-width: 620px; margin: .3rem auto 0; }
@@ -47,22 +52,79 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pstat-mean-median"><span class="mono">2.4.1</span>부자 한 집이 이사 오면 '평균 소득'은 어떻게 될까 — 평균과 중앙값</a></li>
-        <li><a href="#card-pstat-sd-spread"><span class="mono">2.4.2</span>평균이 같은 두 반, 퍼진 정도는 표준편차로 — 직접 만들어 보기</a></li>
+        <li><a href="#text-pstat-center"><span class="mono">본문</span>대푯값과 산포도</a></li>
+        <li><a href="#card-pstat-mean-median"><span class="mono">탐구 1</span>부자 한 집이 이사 오면 '평균 소득'은 어떻게 될까 — 평균과 중앙값</a></li>
+        <li><a href="#card-pstat-sd-spread"><span class="mono">탐구 2</span>평균이 같은 두 반, 퍼진 정도는 표준편차로 — 직접 만들어 보기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pstat-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pstat&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pstat-2-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pstat-center" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>대푯값과 산포도</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">아홉 가구가 사는 작은 동네의 연 소득은 3000만 원에서 5500만 원 사이이고 평균은 약 4260만 원이다. 어느 날 연 소득 9억 원인 가구가 이사 왔다. 다음 날 소식지에는 '우리 동네 평균 소득 1억 2830만 원'이라는 기사가 실렸다. 다른 아홉 가구의 형편은 하나도 달라지지 않았는데 평균은 세 배가 되었다. 이 동네의 '보통' 가구 소득을 나타내려면 어떤 값을 써야 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="열 가구의 소득과 평균, 중앙값의 위치">
+              <line x1="40" y1="90" x2="500" y2="90" class="ax"/>
+              <text x="40" y="108" class="s" text-anchor="middle">0</text><text x="142" y="108" class="s" text-anchor="middle">2억</text><text x="244" y="108" class="s" text-anchor="middle">4억</text><text x="347" y="108" class="s" text-anchor="middle">6억</text><text x="449" y="108" class="s" text-anchor="middle">8억</text>
+              <circle cx="55.3" cy="80" r="4" class="fb"/><circle cx="57.9" cy="72" r="4" class="fb"/><circle cx="59.4" cy="64" r="4" class="fb"/><circle cx="60.4" cy="80" r="4" class="fb"/><circle cx="61.5" cy="56" r="4" class="fb"/><circle cx="63" cy="72" r="4" class="fb"/><circle cx="64.5" cy="80" r="4" class="fb"/><circle cx="65.6" cy="64" r="4" class="fb"/><circle cx="68.1" cy="72" r="4" class="fb"/>
+              <circle cx="500" cy="80" r="4" class="fd"/><text x="496" y="66" class="s td" text-anchor="end">9억 원 한 가구</text>
+              <line x1="62.2" y1="30" x2="62.2" y2="90" class="c"/><text x="70" y="36" class="s tc">중앙값 4350만</text>
+              <line x1="105.6" y1="30" x2="105.6" y2="90" class="d"/><text x="112" y="52" class="s td">평균 1억 2830만</text>
+              <text x="40" y="136" class="s">한 점이 아주 멀리 있으면 평균은 끌려가지만 중앙값은 가운데에 남는다</text>
+            </svg>
+            <figcaption>그림 1. 열 가구 가운데 아홉 가구가 평균보다 소득이 적다. 극단값 하나가 평균을 끌어당겨 '보통'을 나타내지 못하게 한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>평균, 자료의 평균과 분산, 상자그림(<a href="2-3.html">그래프의 종류</a>).</div>
+
+          <h3><span class="no">2.4.1</span>평균과 중앙값</h3>
+          <p>자료의 가운데를 수 하나로 나타내는 값을 대푯값이라 한다. 평균은 모든 값을 더해 개수로 나눈 값으로, 모든 자료의 정보를 다 쓰지만 아주 크거나 작은 값 하나에 크게 끌려간다. 중앙값은 자료를 크기순으로 놓았을 때 가운데 있는 값으로, 극단값이 아무리 커도 순서만 바뀌지 않으면 움직이지 않는다. 그래서 소득이나 집값처럼 한쪽으로 길게 꼬리를 끄는 자료에서는 중앙값이 '보통'을 더 잘 나타낸다. 좌우가 대칭인 자료에서는 평균과 중앙값이 거의 같아 어느 쪽을 써도 된다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.4.1 <span class="nm">대푯값과 산포도의 짝</span></span>
+            <p>평균을 대푯값으로 쓰면 퍼짐은 표준편차 \(\sigma = \sqrt{\tfrac{1}{n}\sum (x_i - \bar{x})^2}\)로 나타내고, 중앙값을 쓰면 퍼짐은 사분위수 범위(IQR)로 나타낸다. 평균과 표준편차는 극단값에 민감하고, 중앙값과 IQR은 둔감하다.</p>
+          </div>
+          <p>그림 1에서 아홉 가구는 평균선의 왼쪽에 모여 있고, 9억 원 가구 하나만 오른쪽 끝에 있다. 열 가구 가운데 아홉 가구가 평균보다 적게 버는 셈이니, 평균 1억 2830만 원은 이 동네의 어느 가구도 대표하지 않는다. 우리나라의 가구 소득도 평균이 중앙값보다 크다. 그래서 통계청은 소득을 발표할 때 평균과 중앙값을 함께 싣는다.<sup class="fn"><a href="#fn-pstat-center-1">1</a></sup></p>
+
+          <h3><span class="no">2.4.2</span>퍼짐을 함께 말하기</h3>
+          <p>대푯값이 같아도 자료는 전혀 다를 수 있다. 두 반의 평균이 모두 70점이어도, 한 반은 모두 68점에서 72점 사이이고 다른 반은 50점에서 90점까지 퍼져 있을 수 있다. 첫째 반에서는 70점이 거의 모든 학생을 대표하지만, 둘째 반에서는 70점 근처의 학생이 오히려 드물다. 그래서 대푯값과 함께 퍼진 정도를 나타내는 산포도를 말해야 자료를 제대로 요약한다. 표준편차는 각 값이 평균에서 떨어진 거리를 제곱해 평균한 뒤 제곱근을 취한 값으로, 대략 '평균에서 보통 얼마나 떨어져 있는지'를 나타낸다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="평균이 같은 두 반의 점수와 표준편차">
+              <g class="s">
+                <text x="20" y="22">반</text><text x="100" y="22">점수</text><text x="300" y="22">평균</text><text x="390" y="22">표준편차</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">가</text><text x="100" y="52">68, 69, 70, 71, 72</text><text x="300" y="52">70</text><text x="390" y="52">1.4</text>
+                <text x="20" y="74">나</text><text x="100" y="74">50, 60, 70, 80, 90</text><text x="300" y="74">70</text><text x="390" y="74">14.1</text>
+                <text x="20" y="96">평균이 같아도 표준편차는 10배 차이</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 평균이 같은 두 반도 퍼진 정도는 크게 다를 수 있어, 대푯값과 산포도를 함께 말해야 한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.4.2</span>
+            <p>아홉 가구의 연 소득이 3000, 3500, 3800, 4000, 4200, 4500, 4800, 5000, 5500만 원이다. 평균과 중앙값을 구하고, 9억 원 가구가 이사 온 뒤의 평균과 중앙값을 구하여라. 또 그림 2의 나 반의 표준편차를 계산하여 확인하여라.</p>
+          </div>
+          <p>아홉 가구의 합은 38 300만 원이므로 평균은 약 4256만 원이고, 중앙값은 5번째인 4200만 원이다. 9억 원 가구가 오면 합이 128 300만 원이 되어 평균은 1억 2830만 원으로 세 배가 된다. 중앙값은 열 가구의 5번째와 6번째의 평균인 \((4200 + 4500) \div 2 = 4350\)만 원으로 150만 원만 움직인다. 그러므로 이 동네의 보통 가구 소득은 중앙값 4350만 원으로 말해야 한다.</p>
+          <p>나 반의 편차는 \(-20, -10, 0, 10, 20\)이고 제곱의 합은 \(400 + 100 + 0 + 100 + 400 = 1000\)이다. 분산은 \(1000 \div 5 = 200\)이고 표준편차는 \(\sqrt{200} \approx 14.1\)점이다. 가 반은 편차가 \(-2, -1, 0, 1, 2\)이므로 분산이 2, 표준편차가 약 1.4점이다. 두 반의 표준편차가 10배 차이 나므로, 70점을 받은 학생이라도 가 반에서는 딱 가운데이지만 나 반에서는 흔한 점수가 아니다.</p>
+          <p>아래 탐구 카드에서 극단값을 더하며 평균과 중앙값의 변화를 비교하고, 평균이 같은 두 자료의 퍼짐을 표준편차로 나타내 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pstat-center-1">통계청의 가계금융복지조사에서도 가구 소득의 평균은 중앙값보다 해마다 수백만 원 이상 크게 나온다. 소득이 아주 높은 소수의 가구가 평균을 끌어올리기 때문이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>평균은 모든 값을 쓰지만 극단값에 끌려가고, 중앙값은 순서의 가운데여서 극단값에 흔들리지 않으므로 한쪽으로 꼬리가 긴 자료에서는 중앙값이 '보통'을 더 잘 나타낸다. 대푯값은 산포도와 함께 말하며, 평균에는 표준편차를, 중앙값에는 사분위수 범위를 짝지어 쓴다. 처음 질문의 동네에서 평균 1억 2830만 원은 9억 원 한 가구가 끌어올린 값이고, 보통 가구의 소득은 중앙값 4350만 원이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/2-1.html#card-pstat-data-types"><small class="mono">실용 통계 2.1</small>혈액형, 키, 만족도 점수, 형제 수는 각각 어떤 종류의 자료일까?</a><a href="../../c/pstat/2-1.html#card-pstat-number-not-number"><small class="mono">실용 통계 2.1</small>축구팀 선수들의 등번호 평균이 12.6이라는 것은 무슨 뜻일까?</a><a href="../../c/pstat/2-1.html#text-pstat-datatypes"><small class="mono">실용 통계 2.1</small>자료의 종류</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/3-1.html#card-pstat-t-vs-z"><small class="mono">실용 통계 3.1</small>t분포는 표준정규분포와 무엇이 다를까?</a><a href="../../c/pstat/3-1.html#card-pstat-why-t"><small class="mono">실용 통계 3.1</small>표본 5개로 표준화하면 정말 95%가 ±1.96 안에 들어올까?</a><a href="../../c/pstat/3-1.html#text-pstat-tdist"><small class="mono">실용 통계 3.1</small>정규분포와 t분포</a></div></nav>
+
       <article class="card" id="card-pstat-mean-median">
         <header class="card-head">
-          <span class="no">2.4.1</span><h2>동네에 아주 부유한 한 집이 이사 오면 '평균 소득'과 '중앙값'은 어떻게 달라질까?</h2><span class="kind">대푯값의 선택 · 예측→확인</span>
+          <span class="no">탐구 1</span><h2>동네에 아주 부유한 한 집이 이사 오면 '평균 소득'과 '중앙값'은 어떻게 달라질까?</h2><span class="kind">대푯값의 선택 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small"><b>가상</b> 마을 9가구의 월 소득(만 원). 소득이 아주 큰 한 가구가 더해지면?</p>
+            <p class="small">가상 마을 9가구의 월 소득(만 원). 소득이 아주 큰 한 가구가 더해지면?</p>
             <div class="presets" role="group" aria-label="예측"><button class="chip" type="button" data-g="mean">평균이 훨씬 크게 변한다</button><button class="chip" type="button" data-g="med">중앙값이 훨씬 크게 변한다</button><button class="chip" type="button" data-g="same">둘 다 비슷하게 변한다</button></div>
             <p class="verdict" role="status"></p>
             <div class="after" hidden>
@@ -72,72 +134,72 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>뉴스에서 "평균 소득"이 올랐다고 하는데 주변 사람들의 형편은 그대로인 것 같을 때가 있습니다. 어떤 대푯값이 '보통'을 더 잘 나타낼까요?</li>
-            <li><span class="tag">복원</span>평균, 중앙값, 최빈값의 뜻.</li>
-            <li><span class="tag">설명</span><em>평균</em>은 모든 값을 더해 나누므로 아주 큰 값 하나에 크게 끌려갑니다. <em>중앙값</em>은 크기순으로 가운데 값이라, 극단값이 얼마나 크든 위치만 바뀌어 거의 영향을 받지 않습니다. 소득, 집값처럼 한쪽으로 길게 치우친 분포에서는 평균이 중앙값보다 크고, '보통 가구'를 나타내기에는 중앙값이 알맞은 경우가 많습니다.</li>
-            <li><span class="tag">연결</span>통계청 등은 가구 소득을 발표할 때 평균과 함께 중위소득(중앙값)을 쓰며, 여러 복지 제도의 기준에 기준 중위소득이 쓰입니다.</li>
-            <li><span class="tag">적용</span>새 가구의 소득을 바꾸며 평균과 중앙값의 변화를 비교하세요. 새 가구의 소득이 얼마일 때 평균이 원래 9가구 대부분의 소득보다 커지나요?</li>
-            <li class="warn"><span class="tag">판단</span>어느 대푯값이 옳다기보다 목적에 맞는 값을 골라야 합니다. 마을 전체의 총소득이 궁금하면 평균(×가구 수)이 필요합니다.</li>
+            <li><span class="tag">질문</span>뉴스에서 "평균 소득"이 올랐다고 하는데 주변 사람들의 형편은 그대로인 것 같을 때가 있다. 어떤 대푯값이 '보통'을 더 잘 나타낼까?</li>
+            <li><span class="tag">복원</span>평균, 중앙값, 최빈값의 뜻을 떠올리자.</li>
+            <li><span class="tag">설명</span><em>평균</em>은 모든 값을 더해 나누므로 아주 큰 값 하나에 크게 끌려간다. <em>중앙값</em>은 크기순으로 가운데 값이라, 극단값이 얼마나 크든 위치만 바뀌어 거의 영향을 받지 않는다. 소득, 집값처럼 한쪽으로 길게 치우친 분포에서는 평균이 중앙값보다 크고, '보통 가구'를 나타내기에는 중앙값이 알맞은 경우가 많다.</li>
+            <li><span class="tag">연결</span>통계청 등은 가구 소득을 발표할 때 평균과 함께 중위소득(중앙값)을 쓰며, 여러 복지 제도의 기준에 기준 중위소득이 쓰인다.</li>
+            <li><span class="tag">적용</span>새 가구의 소득을 바꾸며 평균과 중앙값의 변화를 비교해 보자. 새 가구의 소득이 얼마일 때 평균이 원래 9가구 대부분의 소득보다 커지는가?</li>
+            <li class="warn"><span class="tag">판단</span>어느 대푯값이 옳다기보다 목적에 맞는 값을 골라야 한다. 마을 전체의 총소득이 궁금하면 평균(×가구 수)이 필요하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">자료 2, 3, 3, 4, 100의 평균과 중앙값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>평균 22.4, 중앙값 3<span class="why"><b>맞습니다.</b> 합 112 ÷ 5 = 22.4이고, 가운데 값은 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>평균 3, 중앙값 22.4<span class="why"><b>둘을 바꾸었습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>평균 22.4, 중앙값 51<span class="why"><b>최솟값과 최댓값의 가운데를 구했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>평균 3, 중앙값 3<span class="why"><b>100을 빼고 계산했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>평균 22.4, 중앙값 3<span class="why"><b>맞다.</b> 합 112 ÷ 5 = 22.4이고, 가운데 값은 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>평균 3, 중앙값 22.4<span class="why"><b>둘을 바꾸었다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>평균 22.4, 중앙값 51<span class="why"><b>최솟값과 최댓값의 가운데를 구했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>평균 3, 중앙값 3<span class="why"><b>100을 빼고 계산했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/2-1.html#card-pstat-data-types"><small class="mono">실용 통계 2.1</small>혈액형, 키, 만족도 점수, 형제 수는 각각 어떤 종류의 자료일까?</a><a href="../../c/pstat/2-1.html#card-pstat-number-not-number"><small class="mono">실용 통계 2.1</small>축구팀 선수들의 등번호 평균이 12.6이라는 것은 무슨 뜻일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/3-1.html#card-pstat-t-vs-z"><small class="mono">실용 통계 3.1</small>t분포는 표준정규분포와 무엇이 다를까?</a><a href="../../c/pstat/3-1.html#card-pstat-why-t"><small class="mono">실용 통계 3.1</small>표본 5개로 표준화하면 정말 95%가 ±1.96 안에 들어올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/2-1.html#card-pstat-data-types"><small class="mono">실용 통계 2.1</small>혈액형, 키, 만족도 점수, 형제 수는 각각 어떤 종류의 자료일까?</a><a href="../../c/pstat/2-1.html#card-pstat-number-not-number"><small class="mono">실용 통계 2.1</small>축구팀 선수들의 등번호 평균이 12.6이라는 것은 무슨 뜻일까?</a><a href="../../c/pstat/2-1.html#text-pstat-datatypes"><small class="mono">실용 통계 2.1</small>자료의 종류</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/3-1.html#card-pstat-t-vs-z"><small class="mono">실용 통계 3.1</small>t분포는 표준정규분포와 무엇이 다를까?</a><a href="../../c/pstat/3-1.html#card-pstat-why-t"><small class="mono">실용 통계 3.1</small>표본 5개로 표준화하면 정말 95%가 ±1.96 안에 들어올까?</a><a href="../../c/pstat/3-1.html#text-pstat-tdist"><small class="mono">실용 통계 3.1</small>정규분포와 t분포</a></div></nav>
 
       <article class="card" id="card-pstat-sd-spread">
         <header class="card-head">
-          <span class="no">2.4.2</span><h2>평균이 같은 두 반의 점수, 무엇으로 차이를 나타낼까?</h2><span class="kind">분산과 표준편차 · 도전</span>
+          <span class="no">탐구 2</span><h2>평균이 같은 두 반의 점수, 무엇으로 차이를 나타낼까?</h2><span class="kind">분산과 표준편차 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small goal">도전: 다섯 점수의 평균이 60, 표준편차가 10이 되도록 만들어 보세요(각각 ±0.5 이내).</p>
+            <p class="small goal">도전해 보자. 다섯 점수의 평균이 60, 표준편차가 10이 되도록 만들어 보자(각각 ±0.5 이내).</p>
             <div class="sl"></div>
             <canvas aria-label="다섯 점수와 평균, 편차 막대"></canvas>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>두 반의 수학 평균이 똑같이 60점입니다. 한 반은 대부분 55~65점이고, 다른 반은 30점부터 90점까지 고루 있습니다. 이 차이를 수 하나로 나타낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>편차 = 변량 − 평균, 편차의 합은 0.</li>
-            <li><span class="tag">설명</span>편차의 합은 늘 0이라 퍼짐을 나타내지 못합니다. 그래서 편차를 제곱해 평균한 <em>분산</em> \(\frac{1}{n}\sum (x_i - \bar x)^2\)을 쓰고, 단위를 변량과 맞추려고 제곱근을 씌운 <em>표준편차</em>를 씁니다. 표준편차가 클수록 자료가 평균에서 멀리 퍼져 있습니다. (이 카드는 자료 자체의 퍼짐을 나타내려고 \(n\)으로 나눕니다. 표본으로 모집단을 추정할 때는 \(n - 1\)로 나누기도 합니다.)</li>
-            <li><span class="tag">연결</span>표준편차는 정규분포와 표준화, 오차범위 계산의 바탕이 됩니다.</li>
-            <li><span class="tag">적용</span>평균은 그대로 두고 표준편차만 두 배로 만들려면 점수들을 어떻게 바꿔야 할까요? 모든 점수에 5점씩 더하면 표준편차는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>표준편차도 극단값 하나에 크게 흔들립니다. 치우친 자료에서는 사분위수 범위(IQR)를 함께 보는 것이 좋습니다.</li>
+            <li><span class="tag">질문</span>두 반의 수학 평균이 똑같이 60점이다. 한 반은 대부분 55~65점이고, 다른 반은 30점부터 90점까지 고루 있다. 이 차이를 수 하나로 나타낼 수 있을까?</li>
+            <li><span class="tag">복원</span>편차는 변량에서 평균을 뺀 값이고, 편차의 합은 0이다.</li>
+            <li><span class="tag">설명</span>편차의 합은 늘 0이라 퍼짐을 나타내지 못한다. 그래서 편차를 제곱해 평균한 <em>분산</em> \(\frac{1}{n}\sum (x_i - \bar x)^2\)을 쓰고, 단위를 변량과 맞추려고 제곱근을 씌운 <em>표준편차</em>를 쓴다. 표준편차가 클수록 자료가 평균에서 멀리 퍼져 있다. (이 카드는 자료 자체의 퍼짐을 나타내려고 \(n\)으로 나눈다. 표본으로 모집단을 추정할 때는 \(n - 1\)로 나누기도 한다.)</li>
+            <li><span class="tag">연결</span>표준편차는 정규분포와 표준화, 오차범위 계산의 바탕이 된다.</li>
+            <li><span class="tag">적용</span>평균은 그대로 두고 표준편차만 두 배로 만들려면 점수들을 어떻게 바꿔야 할까? 모든 점수에 5점씩 더하면 표준편차는 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>표준편차도 극단값 하나에 크게 흔들린다. 치우친 자료에서는 사분위수 범위(IQR)를 함께 보는 것이 좋다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">자료 2, 4, 6, 8의 표준편차(\(n\)으로 나눔)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt5\)<span class="why"><b>맞습니다.</b> 평균 5, 편차 −3, −1, 1, 3, 분산 \(\frac{9 + 1 + 1 + 9}{4} = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>분산입니다.</b> 제곱근을 씌워야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>편차의 합입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>편차 절댓값의 평균입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt5\)<span class="why"><b>맞다.</b> 평균 5, 편차 −3, −1, 1, 3, 분산 \(\frac{9 + 1 + 1 + 9}{4} = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>5<span class="why"><b>분산이다.</b> 제곱근을 씌워야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>편차의 합이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2<span class="why"><b>편차 절댓값의 평균이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/2-1.html#card-pstat-data-types"><small class="mono">실용 통계 2.1</small>혈액형, 키, 만족도 점수, 형제 수는 각각 어떤 종류의 자료일까?</a><a href="../../c/pstat/2-1.html#card-pstat-number-not-number"><small class="mono">실용 통계 2.1</small>축구팀 선수들의 등번호 평균이 12.6이라는 것은 무슨 뜻일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/3-1.html#card-pstat-t-vs-z"><small class="mono">실용 통계 3.1</small>t분포는 표준정규분포와 무엇이 다를까?</a><a href="../../c/pstat/3-1.html#card-pstat-why-t"><small class="mono">실용 통계 3.1</small>표본 5개로 표준화하면 정말 95%가 ±1.96 안에 들어올까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/2-1.html#card-pstat-data-types"><small class="mono">실용 통계 2.1</small>혈액형, 키, 만족도 점수, 형제 수는 각각 어떤 종류의 자료일까?</a><a href="../../c/pstat/2-1.html#card-pstat-number-not-number"><small class="mono">실용 통계 2.1</small>축구팀 선수들의 등번호 평균이 12.6이라는 것은 무슨 뜻일까?</a><a href="../../c/pstat/2-1.html#text-pstat-datatypes"><small class="mono">실용 통계 2.1</small>자료의 종류</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/3-1.html#card-pstat-t-vs-z"><small class="mono">실용 통계 3.1</small>t분포는 표준정규분포와 무엇이 다를까?</a><a href="../../c/pstat/3-1.html#card-pstat-why-t"><small class="mono">실용 통계 3.1</small>표본 5개로 표준화하면 정말 95%가 ±1.96 안에 들어올까?</a><a href="../../c/pstat/3-1.html#text-pstat-tdist"><small class="mono">실용 통계 3.1</small>정규분포와 t분포</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pstat-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pstat&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

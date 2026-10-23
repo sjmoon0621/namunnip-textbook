@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "text",
+  "sec": "3-4",
+  "short": "본문 · 직교행렬과 직교대각화"
+}
+-->
+<article class="card reading" id="text-adalg-orthogonal-diag" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>직교행렬과 직교대각화</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">반지름 1인 원 위의 모든 점에 대칭행렬 \(A = \begin{pmatrix}2 & 1\\ 1 & 2\end{pmatrix}\)을 곱했더니 원이 비스듬히 누운 타원으로 바뀌었다. 타원의 긴 축은 \(y = x\) 방향으로 길이가 3, 짧은 축은 \(y = -x\) 방향으로 길이가 1이었고, 두 축은 정확히 수직이었다. 대칭이 아닌 행렬 \(\begin{pmatrix}2 & 1\\ 0 & 1\end{pmatrix}\)의 고유벡터 \((1, 0)\)과 \((1, -1)\)은 서로 수직이 아닌데, 대칭행렬의 고유벡터는 왜 늘 수직일까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 210" role="img" aria-label="대칭행렬이 단위원을 바꾼 타원">
+        <line x1="60" y1="105" x2="400" y2="105" class="ax"/><line x1="230" y1="10" x2="230" y2="200" class="ax"/>
+        <circle cx="230" cy="105" r="30" class="gd"/>
+        <ellipse cx="230" cy="105" rx="90" ry="30" transform="rotate(-45 230 105)" class="la"/>
+        <line x1="230" y1="105" x2="293.6" y2="41.4" class="d"/><text x="298" y="40" class="s td">(1, 1) 방향, 3배</text>
+        <line x1="230" y1="105" x2="251.2" y2="126.2" class="b"/><text x="256" y="140" class="s tb">(1, −1) 방향, 1배</text>
+        <text x="60" y="30" class="s">가는 원은 단위원</text>
+      </svg>
+      <figcaption>그림 1. 대칭행렬은 원을 서로 수직인 두 고유벡터 방향으로 늘여 타원으로 만든다. 반지름 1이 30 px이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 대각화(<a href="3-3.html">행렬의 대각화</a>), 정규직교기저(<a href="1-8.html">정규직교기저</a>), 회전변환.</div>
+
+    <h3><span class="no">3.4.1</span>대칭행렬의 고유벡터는 수직이다</h3>
+    <p>전치행렬 \(A^T\)가 자기 자신과 같은 행렬, 곧 대각선을 사이에 두고 성분이 대칭인 행렬을 대칭행렬이라 한다. 대칭행렬은 내적에 대해 특별한 성질을 가진다. 모든 벡터 \(\vec u\), \(\vec v\)에 대해 \((A\vec u)\cdot\vec v = \vec u\cdot(A\vec v)\)이다. 서로 다른 고윳값 \(\lambda_1 \ne \lambda_2\)의 고유벡터 \(\vec v_1\), \(\vec v_2\)에 이것을 쓰면 \(\lambda_1(\vec v_1\cdot\vec v_2) = \lambda_2(\vec v_1\cdot\vec v_2)\)이고, \(\lambda_1 \ne \lambda_2\)이므로 \(\vec v_1\cdot\vec v_2 = 0\)이다. 그래서 대칭행렬의 서로 다른 고윳값의 고유벡터는 늘 수직이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">직교대각화</span></span>
+      <p>열벡터들이 정규직교인 행렬 \(Q\)를 직교행렬이라 하며 \(Q^{-1} = Q^T\)이다. 실수 대칭행렬 \(A\)는 고윳값이 모두 실수이고, 단위 고유벡터를 열로 하는 직교행렬 \(Q\)로 \[A = QDQ^T\]처럼 대각화된다. 이것을 직교대각화라 한다.</p>
+    </div>
+    <p>직교행렬은 길이와 각을 보존하므로 회전이나 대칭이다. 그래서 \(A = QDQ^T\)는 대칭행렬이 하는 일을 세 단계로 나누어 보여 준다. 먼저 \(Q^T\)로 돌려 고유벡터를 좌표축에 맞추고, \(D\)로 각 축을 고윳값만큼 늘인 뒤, \(Q\)로 다시 돌려 놓는다. 원을 축 방향으로 늘이면 타원이 되므로, 대칭행렬은 원을 고유벡터 방향이 축인 타원으로 바꾸고, 반축의 길이는 고윳값의 절댓값이다. 역행렬을 구할 필요 없이 전치만 하면 되어 계산도 쉽다.<sup class="fn"><a href="#fn-adalg-orthogonal-diag-1">1</a></sup></p>
+
+    <h3><span class="no">3.4.2</span>대칭이 아니면</h3>
+    <p>대칭이 아닌 행렬은 고유벡터가 수직이 아닐 수 있고, 아예 실수 고유벡터가 없을 수도 있다. \(\begin{pmatrix}2 & 1\\ 0 & 1\end{pmatrix}\)은 고윳값이 2와 1이고 고유벡터가 \((1, 0)\)과 \((1, -1)\)이어서 45°로 만난다. 이 행렬도 원을 타원으로 바꾸지만, 타원의 축이 고유벡터 방향과 일치하지 않는다. 회전 행렬은 실수 고윳값이 없다. 대칭행렬만이 언제나 서로 수직인 실수 고유벡터의 축을 가져, 길이를 재는 정규직교기저 위에서 늘이기만 하는 변환으로 볼 수 있다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="대칭행렬의 직교대각화">
+        <g class="s">
+          <text x="20" y="22">행렬</text><text x="200" y="22">값</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">Q</text><text x="200" y="52">(1/√2, 1/√2 / 1/√2, −1/√2)</text>
+          <text x="20" y="74">D</text><text x="200" y="74">(3, 0 / 0, 1)</text>
+          <text x="20" y="96">Q D Qᵀ</text><text x="200" y="96" class="td">(2, 1 / 1, 2) = A</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 단위 고유벡터를 열로 한 직교행렬로 대칭행렬을 대각화한다. 그림의 /는 다음 행을 뜻한다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+      <p>대칭행렬 \(A = \begin{pmatrix}2 & 1\\ 1 & 2\end{pmatrix}\)을 직교대각화하여라. 단위원 위의 점 \(\left(\tfrac{1}{\sqrt2}, \tfrac{1}{\sqrt2}\right)\)과 \(\left(\tfrac{1}{\sqrt2}, -\tfrac{1}{\sqrt2}\right)\)은 어디로 가는가? 바뀐 타원의 방정식을 고유벡터 좌표로 써라.</p>
+    </div>
+    <p>고윳값은 3과 1이고 고유벡터는 \((1, 1)\)과 \((1, -1)\)로, 내적이 0이어서 수직이다. 길이를 1로 맞추면 \(Q = \dfrac{1}{\sqrt2}\begin{pmatrix}1 & 1\\ 1 & -1\end{pmatrix}\)이고, \(Q^TQ = I\)이며 \(A = Q\begin{pmatrix}3 & 0\\ 0 & 1\end{pmatrix}Q^T\)이다.</p>
+    <p>\(\left(\tfrac{1}{\sqrt2}, \tfrac{1}{\sqrt2}\right)\)은 고유벡터이므로 3배가 되어 \(\left(\tfrac{3}{\sqrt2}, \tfrac{3}{\sqrt2}\right)\)으로, 원점에서 거리 3인 곳으로 간다. \(\left(\tfrac{1}{\sqrt2}, -\tfrac{1}{\sqrt2}\right)\)은 고윳값 1이어서 그대로이다. 고유벡터 방향의 좌표를 \(X\), \(Y\)라 하면 원 \(X^2 + Y^2 = 1\)은 \(\dfrac{X^2}{9} + Y^2 = 1\)인 타원으로 바뀐다. 즉 대칭행렬의 고유벡터는 서로 수직이어서 직교행렬로 대각화되며, 대칭행렬은 그 수직인 축을 따라 공간을 고윳값만큼 늘이는 변환이다.</p>
+    <p>아래 탐구 카드에서 대칭행렬이 원을 어떤 타원으로 바꾸는지 보고, 대칭행렬의 고유벡터가 수직임을 증명해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adalg-orthogonal-diag-1">물체의 관성이나 재료 속 응력은 대칭행렬로 나타내며, 직교대각화로 찾은 서로 수직인 축을 주축이라 한다. 휴대폰을 공중에 던져 돌릴 때 가장 긴 축과 가장 짧은 축 둘레로는 안정하게 돌지만 가운데 축 둘레로는 뒤집히며 도는 것도 이 주축과 관계가 있다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>대칭행렬은 \((A\vec u)\cdot\vec v = \vec u\cdot(A\vec v)\)를 만족해 서로 다른 고윳값의 고유벡터가 수직이고, 단위 고유벡터를 열로 하는 직교행렬 \(Q\)로 \(A = QDQ^T\)처럼 직교대각화된다. 그래서 대칭행렬은 서로 수직인 축을 따라 공간을 늘이는 변환이며, 원을 그 축이 장축과 단축인 타원으로 바꾼다. 처음 질문의 행렬은 \((1, 1)\) 방향으로 3배, \((1, -1)\) 방향으로 1배 늘여 단위원을 수직인 두 축을 가진 타원으로 만든다.</p></div>
+  </div>
+</article>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>확률의 뜻과 기본 성질 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="시행, 표본공간, 사건, 수학적 확률과 통계적 확률, 확률의 기본 성질. 상대도수가 확률로 다가가는 모의실험과 두 주사위 표본공간을 칠해 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-freq-prob canvas { width: 100%; aspect-ratio: 16 / 11; }
@@ -45,18 +50,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-stat-freq-prob"><span class="mono">2.1.1</span>수학적 확률과 통계적 확률</a></li>
-        <li><a href="#card-stat-sample-grid"><span class="mono">2.1.2</span>확률의 기본 성질</a></li>
+        <li><a href="#text-stat-probability"><span class="mono">본문</span>확률의 뜻과 기본 성질</a></li>
+        <li><a href="#card-stat-freq-prob"><span class="mono">탐구 1</span>수학적 확률과 통계적 확률</a></li>
+        <li><a href="#card-stat-sample-grid"><span class="mono">탐구 2</span>확률의 기본 성질</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=stat-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">52문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=stat&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=stat-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">52문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=stat-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-stat-probability" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>확률의 뜻과 기본 성질</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">주사위 두 개를 던지면 눈의 합은 2부터 12까지 11가지이다. 그러면 합이 7일 확률은 \(\tfrac{1}{11}\)일까? 또 직접 수천 번 던져서 얻은 비율과, 계산으로 얻은 확률은 어떤 관계일까?</p>
+          <figure class="q-fig" data-q="stat-freq">
+            <svg viewBox="0 0 520 260" role="img" aria-label="주사위 두 개를 n번 던진 결과의 합 7의 상대도수가 1/6에 다가가는 그래프"></svg>
+            <div class="q-ctl"><label>던진 횟수 <input type="range" data-k="n" min="1" max="12" step="1" value="6"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 던지는 횟수가 많아질수록 '합이 7'의 상대도수는 계산으로 구한 확률 \(\tfrac{6}{36} = \tfrac{1}{6}\)에 가까워진다(고정된 의사 난수로 흉내 낸 실험).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>중학교의 경우의 수와 상대도수, 집합과 원소의 개수(공통수학2).</div>
+
+          <h3><span class="no">2.1.1</span>시행, 표본공간, 사건</h3>
+          <p>같은 조건에서 되풀이할 수 있고 결과가 우연에 따라 정해지는 실험이나 관찰을 시행이라 한다. 시행에서 일어날 수 있는 모든 결과의 집합을 <em>표본공간</em> \(S\)라 하고, 표본공간의 부분집합을 사건이라 한다. 주사위 두 개를 던지는 시행의 표본공간은 \((1, 1)\)부터 \((6, 6)\)까지 36개의 순서쌍이다.</p>
+          <p>여기서 주의할 점이 있다. '눈의 합'을 결과로 보면 11가지이지만, 이 11가지는 일어날 가능성이 같지 않다. 합이 2인 경우는 \((1, 1)\) 하나뿐이지만, 합이 7인 경우는 \((1, 6), (2, 5), \ldots, (6, 1)\) 여섯 가지이다. 확률을 계산하려면 각 결과가 일어날 가능성이 같은 표본공간을 골라야 한다.</p>
+          <div class="tb-env"><span class="lb">정의 2.1.1 <span class="nm">수학적 확률</span></span>
+            <p>표본공간 \(S\)의 각 근원사건이 일어날 가능성이 모두 같을 때, 사건 \(A\)가 일어날 확률은 \[P(A) = \frac{n(A)}{n(S)}\]</p>
+          </div>
+          <p>따라서 처음 질문의 '합이 7'일 확률은 \(\dfrac{6}{36} = \dfrac{1}{6}\)이고, \(\tfrac{1}{11}\)이 아니다.</p>
+
+          <h3><span class="no">2.1.2</span>통계적 확률</h3>
+          <p>그림 1에서 던진 횟수를 늘려 보자. 몇 번 던지지 않으면 상대도수가 크게 흔들리지만, 수천 번을 던지면 \(\tfrac{1}{6} \approx 0.167\) 근처에 모인다. 이렇게 시행을 많이 되풀이할 때 상대도수가 다가가는 값을 통계적 확률이라 한다. 각 결과가 같은 가능성인지 알 수 없는 경우, 가령 압정을 던져 바늘이 위로 갈 확률은 이 방법으로만 구할 수 있다.<sup class="fn"><a href="#fn-stat-probability-1">1</a></sup></p>
+          <div class="tb-env thm"><span class="lb">정리 2.1.2 <span class="nm">확률의 기본 성질</span></span>
+            <p>임의의 사건 \(A\)에 대하여 \(0 \le P(A) \le 1\)이다. 반드시 일어나는 사건 \(S\)의 확률은 \(P(S) = 1\), 절대로 일어나지 않는 사건 \(\varnothing\)의 확률은 \(P(\varnothing) = 0\)이다.</p>
+          </div>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 220" role="img" aria-label="두 주사위의 36개 결과를 6×6 격자로 놓고 합이 7인 칸을 표시">
+              <rect x="60" y="30" width="26" height="26" class="lk"/><text x="73" y="47" text-anchor="middle" class="s">2</text><rect x="88" y="30" width="26" height="26" class="lk"/><text x="101" y="47" text-anchor="middle" class="s">3</text><rect x="116" y="30" width="26" height="26" class="lk"/><text x="129" y="47" text-anchor="middle" class="s">4</text><rect x="144" y="30" width="26" height="26" class="lk"/><text x="157" y="47" text-anchor="middle" class="s">5</text><rect x="172" y="30" width="26" height="26" class="lk"/><text x="185" y="47" text-anchor="middle" class="s">6</text><rect x="200" y="30" width="26" height="26" class="lc"/><text x="213" y="47" text-anchor="middle" class="s">7</text><rect x="60" y="58" width="26" height="26" class="lk"/><text x="73" y="75" text-anchor="middle" class="s">3</text><rect x="88" y="58" width="26" height="26" class="lk"/><text x="101" y="75" text-anchor="middle" class="s">4</text><rect x="116" y="58" width="26" height="26" class="lk"/><text x="129" y="75" text-anchor="middle" class="s">5</text><rect x="144" y="58" width="26" height="26" class="lk"/><text x="157" y="75" text-anchor="middle" class="s">6</text><rect x="172" y="58" width="26" height="26" class="lc"/><text x="185" y="75" text-anchor="middle" class="s">7</text><rect x="200" y="58" width="26" height="26" class="lk"/><text x="213" y="75" text-anchor="middle" class="s">8</text><rect x="60" y="86" width="26" height="26" class="lk"/><text x="73" y="103" text-anchor="middle" class="s">4</text><rect x="88" y="86" width="26" height="26" class="lk"/><text x="101" y="103" text-anchor="middle" class="s">5</text><rect x="116" y="86" width="26" height="26" class="lk"/><text x="129" y="103" text-anchor="middle" class="s">6</text><rect x="144" y="86" width="26" height="26" class="lc"/><text x="157" y="103" text-anchor="middle" class="s">7</text><rect x="172" y="86" width="26" height="26" class="lk"/><text x="185" y="103" text-anchor="middle" class="s">8</text><rect x="200" y="86" width="26" height="26" class="lk"/><text x="213" y="103" text-anchor="middle" class="s">9</text><rect x="60" y="114" width="26" height="26" class="lk"/><text x="73" y="131" text-anchor="middle" class="s">5</text><rect x="88" y="114" width="26" height="26" class="lk"/><text x="101" y="131" text-anchor="middle" class="s">6</text><rect x="116" y="114" width="26" height="26" class="lc"/><text x="129" y="131" text-anchor="middle" class="s">7</text><rect x="144" y="114" width="26" height="26" class="lk"/><text x="157" y="131" text-anchor="middle" class="s">8</text><rect x="172" y="114" width="26" height="26" class="lk"/><text x="185" y="131" text-anchor="middle" class="s">9</text><rect x="200" y="114" width="26" height="26" class="lk"/><text x="213" y="131" text-anchor="middle" class="s">10</text><rect x="60" y="142" width="26" height="26" class="lk"/><text x="73" y="159" text-anchor="middle" class="s">6</text><rect x="88" y="142" width="26" height="26" class="lc"/><text x="101" y="159" text-anchor="middle" class="s">7</text><rect x="116" y="142" width="26" height="26" class="lk"/><text x="129" y="159" text-anchor="middle" class="s">8</text><rect x="144" y="142" width="26" height="26" class="lk"/><text x="157" y="159" text-anchor="middle" class="s">9</text><rect x="172" y="142" width="26" height="26" class="lk"/><text x="185" y="159" text-anchor="middle" class="s">10</text><rect x="200" y="142" width="26" height="26" class="lk"/><text x="213" y="159" text-anchor="middle" class="s">11</text><rect x="60" y="170" width="26" height="26" class="lc"/><text x="73" y="187" text-anchor="middle" class="s">7</text><rect x="88" y="170" width="26" height="26" class="lk"/><text x="101" y="187" text-anchor="middle" class="s">8</text><rect x="116" y="170" width="26" height="26" class="lk"/><text x="129" y="187" text-anchor="middle" class="s">9</text><rect x="144" y="170" width="26" height="26" class="lk"/><text x="157" y="187" text-anchor="middle" class="s">10</text><rect x="172" y="170" width="26" height="26" class="lk"/><text x="185" y="187" text-anchor="middle" class="s">11</text><rect x="200" y="170" width="26" height="26" class="lk"/><text x="213" y="187" text-anchor="middle" class="s">12</text><text x="73" y="26" text-anchor="middle" class="s">1</text><text x="52" y="47" text-anchor="end" class="s">1</text><text x="101" y="26" text-anchor="middle" class="s">2</text><text x="52" y="75" text-anchor="end" class="s">2</text><text x="129" y="26" text-anchor="middle" class="s">3</text><text x="52" y="103" text-anchor="end" class="s">3</text><text x="157" y="26" text-anchor="middle" class="s">4</text><text x="52" y="131" text-anchor="end" class="s">4</text><text x="185" y="26" text-anchor="middle" class="s">5</text><text x="52" y="159" text-anchor="end" class="s">5</text><text x="213" y="26" text-anchor="middle" class="s">6</text><text x="52" y="187" text-anchor="end" class="s">6</text><text x="260" y="80" class="s">칸의 수 = 두 눈의 합</text><text x="260" y="104" class="s tc">합이 7인 칸 6개 / 전체 36개</text><text x="260" y="128" class="s">합이 2인 칸은 1개뿐</text><text x="144" y="12" text-anchor="middle" class="s">둘째 주사위</text><text x="20" y="120" text-anchor="middle" class="s">첫째</text>
+            </svg>
+            <figcaption>그림 2. 36개의 결과는 모두 같은 가능성이고, 합이 7인 칸은 대각선 위의 6칸이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.3</span>
+            <p>주사위 두 개를 던질 때 눈의 합이 10 이상일 확률과, 두 눈이 같을 확률을 구하여라. 또 A, B, C, D 네 사람을 일렬로 세울 때 A가 맨 앞에 설 확률을 구하여라.</p>
+          </div>
+          <p>합이 10 이상인 경우는 합 10이 \((4, 6), (5, 5), (6, 4)\)의 3가지, 합 11이 2가지, 합 12가 1가지로 모두 6가지이다. 따라서 확률은 \(\dfrac{6}{36} = \dfrac{1}{6}\)이다. 두 눈이 같은 경우는 \((1, 1)\)부터 \((6, 6)\)까지 6가지이므로 역시 \(\dfrac{1}{6}\)이다.</p>
+          <p>네 사람을 세우는 방법은 \(4! = 24\)가지로 모두 같은 가능성이다. A가 맨 앞이면 나머지 셋을 세우는 \(3! = 6\)가지가 있으므로 확률은 \(\dfrac{6}{24} = \dfrac{1}{4}\)이다.</p>
+          <p>마지막 답은 '맨 앞에 설 수 있는 사람은 넷이고 그 가운데 A일 가능성은 모두 같다'고 생각해도 \(\tfrac{1}{4}\)로 같다. 같은 가능성인 결과를 무엇으로 잡느냐에 따라 계산의 길이가 달라진다. 아래 탐구 카드에서 실험 횟수를 늘리며 상대도수와 확률을 직접 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-stat-probability-1">시행 횟수를 늘리면 상대도수가 확률에 가까워진다는 것을 큰수의 법칙이라 한다. 통계 단원의 이항분포에서 다시 다룬다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>확률은 같은 가능성인 결과들로 표본공간을 잡고 사건에 속한 결과의 비율로 정하며, 시행을 많이 되풀이한 상대도수가 다가가는 값으로도 정할 수 있다. 확률은 0과 1 사이의 수이다. 그래서 처음 질문의 '합이 7'은 11가지 합 가운데 하나가 아니라 36개 결과 가운데 6개이므로 확률이 \(\tfrac{1}{6}\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a><a href="../../c/stat/2-2.html#text-stat-addition"><small class="mono">확률과 통계 2.2</small>확률의 덧셈정리</a><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a></div></nav>
+
       <article class="card" id="card-stat-freq-prob">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>많이 던질수록 상대도수는 어디로 갈까?</h2><span class="kind">통계적 확률 · 모의실험</span>
+          <span class="no">탐구 1</span><h2>많이 던질수록 상대도수는 어디로 갈까?</h2><span class="kind">통계적 확률 · 모의실험</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,34 +135,34 @@
                 <div><dt>상대도수 \(\frac{r}{n}\)</dt><dd class="n-f">—</dd></div>
                 <div><dt>수학적 확률</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">초록 선이 지금 기록, 회색 선은 '새로 시작' 전의 기록입니다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금이며, 시행은 10000번까지 할 수 있습니다.</p>
+              <p class="fig-note">초록 선이 지금 기록, 회색 선은 '새로 시작' 전의 기록이다. 가로축은 1, 10, 100, …이 같은 간격인 로그 눈금이며, 시행은 10000번까지 할 수 있다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전을 10번 던져 앞면이 7번 나왔다면, 앞면이 나올 확률은 \(\frac{7}{10}\)일까요? 압정처럼 결과가 같은 정도로 기대되지 않는 물체는 확률을 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>같은 조건에서 되풀이할 수 있고 결과가 우연에 의해 정해지는 실험이나 관찰을 <em>시행</em>이라고 합니다. 시행에서 일어날 수 있는 모든 결과의 집합이 <em>표본공간</em> S이고, 그 부분집합이 <em>사건</em>입니다. 상대도수는 \((\text{일어난 횟수}) \div (\text{전체 횟수})\)입니다.</li>
-            <li><span class="tag">설명</span>표본공간의 결과가 모두 같은 정도로 기대될 때, 사건 A의 <em>수학적 확률</em>은 \(P(A) = \frac{n(A)}{n(S)}\)입니다. 그렇지 않을 때는 같은 시행을 \(n\)번 되풀이해 A가 \(r\)번 일어났다고 합시다. \(n\)을 충분히 크게 하면 상대도수 \(\frac{r}{n}\)이 일정한 값 \(p\)에 가까워집니다. 이 \(p\)를 A의 <em>통계적 확률</em>이라 하고, 실제로는 충분히 큰 \(n\)에서의 상대도수를 통계적 확률로 씁니다. 수학적 확률을 알 수 있는 시행에서는 \(n\)이 커질수록 상대도수가 수학적 확률에 가까워집니다. 이를 큰수의 법칙이라고 합니다.</li>
-            <li><span class="tag">연결</span>야구 선수의 타율이나 자동차 보험의 사고율은 오랜 기록에서 얻은 상대도수입니다. 통계 단원에서 표본의 비율로 모집단의 비율을 추정할 때 이 생각을 다시 씁니다.</li>
-            <li><span class="tag">적용</span>사건을 고르고 '10번 더'를 몇 번 눌러 보세요. 처음 몇십 번은 그래프가 크게 흔들립니다. '1000번 더'로 \(n\)을 수천까지 늘리면 그래프가 점선에 붙나요? '새로 시작'으로 다른 기록을 겹쳐 그리고, 왼쪽(작은 \(n\))과 오른쪽(큰 \(n\))에서 선들이 흩어진 정도를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>상대도수는 확률에 가까워질 뿐, 어떤 \(n\)에서 정확히 같아진다는 뜻은 아닙니다. "앞면이 다섯 번 연속 나왔으니 이번에는 뒷면이 나올 차례"라는 생각도 틀립니다. 동전은 앞의 결과를 기억하지 않습니다. 앞쪽의 치우침은 뒤에서 되갚아지는 것이 아니라, 많은 시행 속에 묻혀 비율에 주는 영향이 작아지는 것입니다.</li>
+            <li><span class="tag">질문</span>동전을 10번 던져 앞면이 7번 나왔다면, 앞면이 나올 확률은 \(\frac{7}{10}\)일까? 압정처럼 결과가 같은 정도로 기대되지 않는 물체는 확률을 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>같은 조건에서 되풀이할 수 있고 결과가 우연에 의해 정해지는 실험이나 관찰을 <em>시행</em>이라고 한다. 시행에서 일어날 수 있는 모든 결과의 집합이 <em>표본공간</em> S이고, 그 부분집합이 <em>사건</em>이다. 그리고 상대도수는 \((\text{일어난 횟수}) \div (\text{전체 횟수})\)이다.</li>
+            <li><span class="tag">설명</span>표본공간의 결과가 모두 같은 정도로 기대될 때, 사건 A의 <em>수학적 확률</em>은 \(P(A) = \frac{n(A)}{n(S)}\)이다. 그렇지 않을 때는 같은 시행을 \(n\)번 되풀이해 A가 \(r\)번 일어났다고 하자. \(n\)을 충분히 크게 하면 상대도수 \(\frac{r}{n}\)이 일정한 값 \(p\)에 가까워지는데, 이 \(p\)를 A의 <em>통계적 확률</em>이라 하고, 실제로는 충분히 큰 \(n\)에서의 상대도수를 통계적 확률로 쓴다. 또 수학적 확률을 알 수 있는 시행에서는 \(n\)이 커질수록 상대도수가 수학적 확률에 가까워지며, 이를 큰수의 법칙이라고 한다.</li>
+            <li><span class="tag">연결</span>야구 선수의 타율이나 자동차 보험의 사고율은 오랜 기록에서 얻은 상대도수이다. 통계 단원에서 표본의 비율로 모집단의 비율을 추정할 때 이 생각을 다시 쓴다.</li>
+            <li><span class="tag">적용</span>사건을 고르고 '10번 더'를 몇 번 눌러 보면 처음 몇십 번은 그래프가 크게 흔들린다. '1000번 더'로 \(n\)을 수천까지 늘려 그래프가 점선에 붙는지 보고, '새로 시작'으로 다른 기록을 겹쳐 그려 왼쪽(작은 \(n\))과 오른쪽(큰 \(n\))에서 선들이 흩어진 정도를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>상대도수는 확률에 가까워질 뿐, 어떤 \(n\)에서 정확히 같아진다는 뜻은 아니다. "앞면이 다섯 번 연속 나왔으니 이번에는 뒷면이 나올 차례"라는 생각도 틀리는데, 동전은 앞의 결과를 기억하지 않기 때문이다. 앞쪽의 치우침은 뒤에서 되갚아지는 것이 아니라, 많은 시행 속에 묻혀 비율에 주는 영향이 작아지는 것이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 압정을 2000번 던졌더니 바늘이 위로 향한 것이 1240번이었습니다. 이 압정을 한 번 던질 때 바늘이 위로 향할 확률로 알맞은 것은?</p>
+          <p class="q">어떤 압정을 2000번 던졌더니 바늘이 위로 향한 것이 1240번이었다. 이 압정을 한 번 던질 때 바늘이 위로 향할 확률로 알맞은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>결과가 두 가지라서 \(\frac{1}{2}\)로 보았습니다.</b> 수학적 확률은 결과들이 같은 정도로 기대될 때만 씁니다. 압정은 모양이 비대칭이라 그렇지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.62<span class="why"><b>맞습니다.</b> 수학적 확률을 쓸 수 없으므로, 충분히 많이 던진 상대도수 \(\frac{1240}{2000} = 0.62\)를 통계적 확률로 씁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.38<span class="why"><b>반대 결과의 비율입니다.</b> \(\frac{760}{2000} = 0.38\)은 바늘이 위로 향하지 않은 상대도수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>정할 수 없다<span class="why"><b>통계적 확률을 잊었습니다.</b> 경우의 수로 셀 수 없어도, 많은 시행의 상대도수로 확률을 정할 수 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>결과가 두 가지라서 \(\frac{1}{2}\)로 보았다.</b> 수학적 확률은 결과들이 같은 정도로 기대될 때만 쓴다. 압정은 모양이 비대칭이라 그렇지 않다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.62<span class="why"><b>맞다.</b> 수학적 확률을 쓸 수 없으므로, 충분히 많이 던진 상대도수 \(\frac{1240}{2000} = 0.62\)를 통계적 확률로 쓴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.38<span class="why"><b>반대 결과의 비율이다.</b> \(\frac{760}{2000} = 0.38\)은 바늘이 위로 향하지 않은 상대도수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>정할 수 없다<span class="why"><b>통계적 확률을 잊었다.</b> 경우의 수로 셀 수 없어도, 많은 시행의 상대도수로 확률을 정할 수 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a><a href="../../c/stat/2-2.html#text-stat-addition"><small class="mono">확률과 통계 2.2</small>확률의 덧셈정리</a><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a></div></nav>
 
       <article class="card" id="card-stat-sample-grid">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>두 눈의 합이 11가지이면 확률은 각각 \(\frac{1}{11}\)일까?</h2><span class="kind">수학적 확률 · 기본 성질</span>
+          <span class="no">탐구 2</span><h2>두 눈의 합이 11가지이면 확률은 각각 \(\frac{1}{11}\)일까?</h2><span class="kind">수학적 확률 · 기본 성질</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,43 +181,44 @@
                 <div><dt>\(P(A)\)</dt><dd class="n-p">—</dd></div>
                 <div><dt>\(P(A)\) 소수</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">칸을 누르거나 끌어서 사건 A에 넣고 뺄 수 있습니다. 칸 안의 수는 두 눈의 합입니다. 아래 막대는 합이 같은 결과를 한 묶음으로 모은 것이고, 칠한 부분이 A에 든 결과입니다.</p>
+              <p class="fig-note">칸을 누르거나 끌어서 사건 A에 넣고 뺄 수 있다. 칸 안의 수는 두 눈의 합이다. 아래 막대는 합이 같은 결과를 한 묶음으로 모은 것이고, 칠한 부분이 A에 든 결과이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>주사위 두 개를 던질 때 두 눈의 합은 2부터 12까지 11가지입니다. 그러면 합이 7일 확률은 \(\frac{1}{11}\)일까요?</li>
-            <li><span class="tag">복원</span>확률은 사건이 일어날 가능성을 0부터 1까지의 수로 나타낸 것입니다. 사건은 표본공간의 부분집합이고, 결과 한 개로만 이루어진 사건을 <em>근원사건</em>이라고 합니다.</li>
-            <li><span class="tag">설명</span>수학적 확률 \(P(A) = \frac{n(A)}{n(S)}\)는 근원사건이 모두 같은 정도로 기대될 때만 씁니다. 두 주사위를 구별해 (첫째 눈, 둘째 눈)으로 적은 36가지가 그런 표본공간입니다. 합 11가지로 묶으면 묶음마다 든 결과가 1개부터 6개까지 달라서 같은 정도로 기대되지 않습니다. 어떤 사건 A든 \(0 \le n(A) \le n(S)\)이므로 다음 <em>기본 성질</em>이 나옵니다. ① \(0 \le P(A) \le 1\) ② 반드시 일어나는 사건 S는 \(P(S) = 1\) ③ 절대로 일어나지 않는 사건 \(\varnothing\)는 \(P(\varnothing) = 0\). 상대도수도 0과 1 사이이므로 통계적 확률도 같은 성질을 갖습니다.</li>
-            <li><span class="tag">연결</span>기본 성질은 계산이 맞았는지 점검하는 첫 기준입니다. 확률이 1보다 크거나 음수로 나왔다면 어딘가 잘못 센 것입니다. 다음 절의 덧셈정리와 여사건의 확률도 이 성질에서 출발합니다.</li>
-            <li><span class="tag">적용</span>'합이 7'을 누르고 칠해진 칸을 세어 보세요. 아래 막대에서 합 7의 묶음과 합 2의 묶음에는 결과가 몇 개씩 있나요? 칸을 하나씩 더하며 \(P(A)\)가 \(\frac{1}{36}\)씩 커지는 것을 보고, '비우기'와 '전체'에서 \(P(A)\)가 각각 얼마인지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>두 주사위가 똑같이 생겨도 \((1, 2)\)와 \((2, 1)\)은 다른 결과입니다. 한 주사위에 색을 칠했다고 생각해 보세요. 색을 칠한다고 주사위가 다르게 구르지는 않으므로 확률도 달라지지 않습니다. 결과를 셀 때는 '각 결과가 같은 정도로 기대되는가'를 먼저 확인합니다.</li>
+            <li><span class="tag">질문</span>주사위 두 개를 던질 때 두 눈의 합은 2부터 12까지 11가지이다. 그러면 합이 7일 확률은 \(\frac{1}{11}\)일까?</li>
+            <li><span class="tag">복원</span>확률은 사건이 일어날 가능성을 0부터 1까지의 수로 나타낸 것이다. 그리고 사건은 표본공간의 부분집합이고, 결과 한 개로만 이루어진 사건을 <em>근원사건</em>이라고 한다.</li>
+            <li><span class="tag">설명</span>수학적 확률 \(P(A) = \frac{n(A)}{n(S)}\)는 근원사건이 모두 같은 정도로 기대될 때만 쓴다. 두 주사위를 구별해 (첫째 눈, 둘째 눈)으로 적은 36가지가 그런 표본공간이다. 하지만 합 11가지로 묶으면 묶음마다 든 결과가 1개부터 6개까지 달라서 같은 정도로 기대되지 않는다. 또 어떤 사건 A든 \(0 \le n(A) \le n(S)\)이므로 <em>기본 성질</em>이 나온다. 즉 \(0 \le P(A) \le 1\)이고, 반드시 일어나는 사건 S는 \(P(S) = 1\), 절대로 일어나지 않는 사건 \(\varnothing\)는 \(P(\varnothing) = 0\)이다. 상대도수도 0과 1 사이이므로 통계적 확률도 같은 성질을 갖는다.</li>
+            <li><span class="tag">연결</span>기본 성질은 계산이 맞았는지 점검하는 첫 기준이다. 확률이 1보다 크거나 음수로 나왔다면 어딘가 잘못 센 것이다. 다음 절의 덧셈정리와 여사건의 확률도 이 성질에서 출발한다.</li>
+            <li><span class="tag">적용</span>'합이 7'을 누르고 칠해진 칸을 세어 보자. 아래 막대에서 합 7의 묶음과 합 2의 묶음에 결과가 몇 개씩 있는지 비교하고, 칸을 하나씩 더하며 \(P(A)\)가 \(\frac{1}{36}\)씩 커지는 것을 본 뒤, '비우기'와 '전체'에서 \(P(A)\)가 각각 얼마인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>두 주사위가 똑같이 생겨도 \((1, 2)\)와 \((2, 1)\)은 다른 결과이다. 한 주사위에 색을 칠했다고 생각해 보면, 색을 칠한다고 주사위가 다르게 구르지는 않으므로 확률도 달라지지 않는다. 그래서 결과를 셀 때는 각 결과가 같은 정도로 기대되는지를 먼저 확인한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">주사위 두 개를 던질 때, 두 눈의 곱이 홀수일 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{4}\)<span class="why"><b>맞습니다.</b> 곱이 홀수이려면 두 눈이 모두 홀수여야 합니다. \(3 \times 3 = 9\)가지이므로 \(\frac{9}{36} = \frac{1}{4}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>결과를 '홀수, 짝수' 두 가지로 보았습니다.</b> 두 묶음에 든 결과는 9개와 27개로, 같은 정도로 기대되지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3}{4}\)<span class="why"><b>곱이 짝수일 확률입니다.</b> 한 눈이라도 짝수이면 곱은 짝수이므로 \(\frac{27}{36} = \frac{3}{4}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{6}\)<span class="why"><b>곱의 값의 종류를 셌습니다.</b> 홀수인 곱은 1, 3, 5, 9, 15, 25의 6가지이지만, 곱이 3인 결과는 \((1, 3), (3, 1)\)의 2개이고 곱이 9인 결과는 \((3, 3)\) 1개입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{4}\)<span class="why"><b>맞다.</b> 곱이 홀수이려면 두 눈이 모두 홀수여야 한다. \(3 \times 3 = 9\)가지이므로 \(\frac{9}{36} = \frac{1}{4}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>결과를 '홀수, 짝수' 두 가지로 보았다.</b> 두 묶음에 든 결과는 9개와 27개로, 같은 정도로 기대되지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{3}{4}\)<span class="why"><b>곱이 짝수일 확률이다.</b> 한 눈이라도 짝수이면 곱은 짝수이므로 \(\frac{27}{36} = \frac{3}{4}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{6}\)<span class="why"><b>곱의 값의 종류를 셌다.</b> 홀수인 곱은 1, 3, 5, 9, 15, 25의 6가지이지만, 곱이 3인 결과는 \((1, 3), (3, 1)\)의 2개이고 곱이 9인 결과는 \((3, 3)\) 1개이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-2.html#card-stat-add-rule"><small class="mono">확률과 통계 2.2</small>'A 또는 B'의 확률은 두 확률의 합일까?</a><a href="../../c/stat/2-2.html#card-stat-add-multiples"><small class="mono">확률과 통계 2.2</small>4의 배수와 6의 배수는 어디에서 겹칠까?</a><a href="../../c/stat/2-2.html#text-stat-addition"><small class="mono">확률과 통계 2.2</small>확률의 덧셈정리</a><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=stat-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">52문항</span></a>
+      <a class="px-go" href="../../bank.html?c=stat&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=stat-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">52문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -170,6 +226,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/stat/body.js"></script>
 <script src="../../js/cards/stat/freq-prob.js"></script>
 <script src="../../js/cards/stat/dice-grid.js"></script>
 <script src="../../js/cards/stat/sample-grid.js"></script>

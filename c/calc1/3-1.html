@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부정적분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="부정적분의 뜻과 적분상수, 미분과 부정적분의 관계, 한 점의 조건으로 적분상수 정하기. 곡선 가족과 기울기장을 직접 움직여 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-antideriv-family .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -44,18 +49,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-antideriv-family"><span class="mono">3.1.1</span>부정적분과 적분상수</a></li>
-        <li><a href="#card-calc1-slope-field"><span class="mono">3.1.2</span>조건으로 적분상수 정하기</a></li>
+        <li><a href="#text-calc1-antiderivative"><span class="mono">본문</span>부정적분</a></li>
+        <li><a href="#card-calc1-antideriv-family"><span class="mono">탐구 1</span>부정적분과 적분상수</a></li>
+        <li><a href="#card-calc1-slope-field"><span class="mono">탐구 2</span>조건으로 적분상수 정하기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">7문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-3-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">7문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-antiderivative" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부정적분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">어떤 함수를 미분했더니 \(2x\)가 나왔다. 원래 함수는 \(x^2\)일 것 같다. 그런데 \(x^2 + 5\)나 \(x^2 - 3\)을 미분해도 \(2x\)이다. 그렇다면 원래 함수는 몇 개이고, 하나로 정하려면 무엇이 더 필요할까?</p>
+          <figure class="q-fig" data-q="calc1-family">
+            <svg viewBox="0 0 520 280" role="img" aria-label="도함수가 2x인 함수 y=x²+C들이 위아래로 평행이동된 포물선 가족"></svg>
+            <div class="q-ctl"><label>지나는 점의 \(y\)좌표 (\(x = 1\)에서) <input type="range" data-k="y" min="-3" max="5" step="0.5" value="3"><output data-k="y"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 도함수가 \(2x\)인 함수는 \(y = x^2 + C\)로 모두 위아래로 평행이동한 포물선이며, 한 점을 지나라는 조건이 \(C\)를 하나로 정한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>도함수와 \(y = x^n\)의 도함수(<a href="2-3.html">y = xⁿ의 도함수</a>), 평균값 정리(<a href="2-6.html">평균값 정리</a>), 접선의 기울기.</div>
+
+          <h3><span class="no">3.1.1</span>미분을 거꾸로</h3>
+          <p>미분은 함수에서 기울기의 함수를 얻는 일이다. 그 반대로 기울기의 함수에서 원래 함수를 찾는 일을 생각하자. 함수 \(F(x)\)의 도함수가 \(f(x)\)일 때, 곧 \(F'(x) = f(x)\)일 때 \(F(x)\)를 \(f(x)\)의 <em>부정적분</em>이라 한다.</p>
+          <p>\(F(x) = x^2\)이 \(2x\)의 부정적분이면 \(x^2 + C\)(\(C\)는 상수)도 모두 부정적분이다. 상수는 미분하면 0이 되어 사라지기 때문이다. 그림 1에서 보듯 이 함수들의 그래프는 같은 모양의 포물선을 위아래로 옮긴 것이어서, 같은 \(x\)에서 접선의 기울기가 모두 같다.</p>
+
+          <h3><span class="no">3.1.2</span>부정적분은 상수만큼만 다르다</h3>
+          <p>거꾸로, 도함수가 같은 두 함수는 상수만큼만 다를까? \(F' = G'\)이면 \(H = F - G\)의 도함수는 0이다. 평균값 정리에 따라 어느 두 점 사이에서도 \(H(b) - H(a) = H'(c)(b - a) = 0\)이므로 \(H\)는 상수이다. 즉 \(f\)의 부정적분은 하나를 찾으면 나머지는 모두 그것에 상수를 더한 것이다.</p>
+          <div class="tb-env"><span class="lb">정의 3.1.1 <span class="nm">부정적분과 적분상수</span></span>
+            <p>\(F'(x) = f(x)\)일 때 \(f(x)\)의 부정적분은 \[\int f(x)\,dx = F(x) + C\ (C\text{는 상수})\] 이고, \(C\)를 적분상수라 한다. \(f(x)\)의 부정적분을 구하는 것을 \(f(x)\)를 적분한다고 한다.</p>
+          </div>
+          <p>적분상수를 하나로 정하려면 조건이 하나 더 있어야 한다. 그림 1의 슬라이더로 그래프가 지나는 점을 정하면, 포물선 가족 가운데 그 점을 지나는 것은 하나뿐이다.<sup class="fn"><a href="#fn-calc1-antiderivative-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="미분과 적분이 서로 반대 방향인 관계">
+              <rect x="60" y="40" width="160" height="56" class="lb"/><text x="140" y="74" text-anchor="middle">F(x) = x² + C</text>
+              <rect x="300" y="40" width="160" height="56" class="lc"/><text x="380" y="74" text-anchor="middle">f(x) = 2x</text>
+              <path d="M222 58 L298 58" class="k"/><path d="M298 80 L222 80" class="k"/><path d="M290 54 l8 4 -8 4 Z" class="fk"/><path d="M230 76 l-8 4 8 4 Z" class="fk"/>
+              <text x="260" y="50" text-anchor="middle" class="s">미분</text><text x="260" y="98" text-anchor="middle" class="s">적분 (+C)</text>
+            </svg>
+            <figcaption>그림 2. 미분하면 상수가 사라지므로, 적분으로 되돌릴 때는 사라진 상수를 \(C\)로 붙여 둔다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>곡선 \(y = F(x)\) 위의 점 \((x, F(x))\)에서의 접선의 기울기가 \(2x\)이고, 이 곡선이 점 \((1, 3)\)을 지날 때 \(F(x)\)를 구하여라. 또 \(\displaystyle\frac{d}{dx}\int f(x)\,dx\)와 \(\displaystyle\int \left\{\frac{d}{dx}f(x)\right\}dx\)가 어떻게 다른지 \(f(x) = x^2 + 1\)로 확인하여라.</p>
+          </div>
+          <p>접선의 기울기가 \(F'(x) = 2x\)이므로 \(F(x) = x^2 + C\)이다. 점 \((1, 3)\)을 지나므로 \(1 + C = 3\), 곧 \(C = 2\)이다. 따라서 \(F(x) = x^2 + 2\)이다. 그림 1의 처음 모습이 이 곡선이다.</p>
+          <p>\(f(x) = x^2 + 1\)을 먼저 적분하면 \(\dfrac{x^3}{3} + x + C\)이고, 이것을 미분하면 다시 \(x^2 + 1\)이 된다. 반면 먼저 미분하면 \(2x\)이고, 이것을 적분하면 \(x^2 + C\)가 된다. 원래의 \(+1\)은 사라지고 \(C\)가 대신 붙는다.</p>
+          <p>즉 적분한 뒤 미분하면 제자리로 돌아오지만, 미분한 뒤 적분하면 상수만큼 차이가 남는다. 미분이 상수의 정보를 지우기 때문이다. 아래 탐구 카드에서 기울기만으로 그래프를 그려 보고, 한 점의 조건이 그래프를 정하는 모습을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-antiderivative-1">기울기의 함수만 주어지면 그래프의 '모양'은 정해지지만 '높이'는 정해지지 않는다. 가령 물체의 속도만 알면 움직인 모양은 알 수 있어도, 처음 위치를 알아야 지금 위치가 정해진다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>부정적분은 미분하면 \(f(x)\)가 되는 함수이고, 도함수가 같은 함수들은 상수만큼만 다르므로 \(\int f(x)\,dx = F(x) + C\)로 쓴다. 적분상수 \(C\)는 지나는 점 같은 조건 하나로 정해진다. 그래서 처음 질문의 원래 함수는 \(x^2 + C\) 꼴로 무수히 많고, 한 점을 지난다는 조건이 있어야 하나로 정해진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a></div></nav>
+
       <article class="card" id="card-calc1-antideriv-family">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>도함수가 같은 함수는 몇 개일까?</h2><span class="kind">부정적분 · 적분상수</span>
+          <span class="no">탐구 1</span><h2>도함수가 같은 함수는 몇 개일까?</h2><span class="kind">부정적분 · 적분상수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,34 +130,34 @@
                 <div><dt>초록 곡선의 접선 기울기</dt><dd class="n-s">—</dd></div>
                 <div><dt>\(f(x)\)의 값</dt><dd class="n-f">—</dd></div>
               </dl>
-              <p class="fig-note">초록 점을 끌면 곡선이 위아래로, 접점이 좌우로 움직입니다. 회색 곡선은 \(C\)만 다른 다른 부정적분들입니다.</p>
+              <p class="fig-note">초록 점을 끌면 곡선이 위아래로, 접점이 좌우로 움직인다. 회색 곡선은 \(C\)만 다른 다른 부정적분들이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>미분해서 \(2x\)가 되는 함수를 하나 찾으면 \(x^2\)입니다. 그런데 미분해서 \(2x\)가 되는 함수가 이것 하나뿐일까요?</li>
-            <li><span class="tag">복원</span>\((x^2)' = 2x\)이고, 상수함수의 도함수는 0입니다. 미분계수 \(f'(a)\)는 \(x = a\)에서 그은 접선의 기울기입니다. 또 평균값 정리에서, 어떤 구간에서 도함수가 늘 0인 함수는 그 구간에서 상수함수입니다.</li>
-            <li><span class="tag">설명</span>함수 \(F(x)\)의 도함수가 \(f(x)\)일 때, 곧 \(F'(x) = f(x)\)일 때 \(F(x)\)를 \(f(x)\)의 <em>부정적분</em>이라 합니다. 부정적분은 하나가 아닙니다. \(G(x)\)도 \(f(x)\)의 부정적분이면 \((G - F)' = f - f = 0\)이므로 \(G(x) - F(x)\)는 상수입니다. 그래서 부정적분 전체를 <b>\(\int f(x)\,dx = F(x) + C\)</b>로 씁니다. \(C\)를 <em>적분상수</em>, \(f(x)\)를 피적분함수라 하고, 부정적분을 구하는 것을 '\(f(x)\)를 \(x\)에 대하여 적분한다'고 합니다. 부정적분과 미분은 서로 거꾸로 가는 계산이므로 \((\frac{d}{dx})\int f(x)\,dx = f(x)\)이고, \(\int\{(\frac{d}{dx})f(x)\}\,dx = f(x) + C\)입니다.</li>
-            <li><span class="tag">연결</span>그림에서 \(C\)를 바꾸면 곡선이 위아래로만 평행이동합니다. 평행이동해도 같은 \(x\)에서 접선 기울기는 그대로이므로 도함수가 같습니다. 속도를 알고 위치를 구할 때도 같은 일이 생깁니다. 속도만으로는 출발 위치를 알 수 없고, 출발 위치가 \(C\) 역할을 합니다.</li>
-            <li><span class="tag">적용</span>\(C\)를 바꾸어도 '초록 곡선의 접선 기울기'가 변하지 않는지 확인하세요. 그 값이 언제나 \(f(x)\)와 같은지도 \(x\)를 움직여 보세요. \(f(x) = 3x^2 - 3\)에서 접선이 모두 가로로 눕는 \(x\)는 어디이고, 그곳에서 \(f(x)\)는 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(\int 2x\,dx = x^2\)"처럼 적분상수를 빼고 쓰면 부정적분 가운데 하나만 적은 것입니다. 하나의 함수가 아니라 함수의 모임을 나타낸다는 뜻에서 \(+ C\)를 꼭 붙입니다. 또 미분한 뒤 적분하면 원래 함수로 돌아오지 않고 상수만큼의 차이가 남습니다. 미분하면서 상수항의 정보가 사라지기 때문입니다.</li>
+            <li><span class="tag">질문</span>미분해서 \(2x\)가 되는 함수를 하나 찾으면 \(x^2\)이다. 그런데 미분해서 \(2x\)가 되는 함수가 이것 하나뿐일까?</li>
+            <li><span class="tag">복원</span>\((x^2)' = 2x\)이고, 상수함수의 도함수는 0이다. 미분계수 \(f'(a)\)는 \(x = a\)에서 그은 접선의 기울기이다. 또 평균값 정리에서, 어떤 구간에서 도함수가 늘 0인 함수는 그 구간에서 상수함수였다.</li>
+            <li><span class="tag">설명</span>함수 \(F(x)\)의 도함수가 \(f(x)\)일 때, 곧 \(F'(x) = f(x)\)일 때 \(F(x)\)를 \(f(x)\)의 <em>부정적분</em>이라 한다. 그런데 부정적분은 하나가 아니다. \(G(x)\)도 \(f(x)\)의 부정적분이면 \((G - F)' = f - f = 0\)이므로 \(G(x) - F(x)\)는 상수이다. 그래서 부정적분 전체를 \(\int f(x)\,dx = F(x) + C\)로 쓴다. 이때 \(C\)를 <em>적분상수</em>, \(f(x)\)를 피적분함수라 하고, 부정적분을 구하는 것을 '\(f(x)\)를 \(x\)에 대하여 적분한다'고 한다. 부정적분과 미분은 서로 거꾸로 가는 계산이므로 \((\frac{d}{dx})\int f(x)\,dx = f(x)\)이고, \(\int\{(\frac{d}{dx})f(x)\}\,dx = f(x) + C\)이다.</li>
+            <li><span class="tag">연결</span>그림에서 \(C\)를 바꾸면 곡선이 위아래로만 평행이동한다. 평행이동해도 같은 \(x\)에서 접선 기울기는 그대로이므로 도함수가 같다. 속도를 알고 위치를 구할 때도 같은 일이 생긴다. 속도만으로는 출발 위치를 알 수 없고, 출발 위치가 \(C\) 역할을 한다.</li>
+            <li><span class="tag">적용</span>\(C\)를 바꾸어도 '초록 곡선의 접선 기울기'가 변하지 않는지 확인하고, \(x\)를 움직여 그 값이 언제나 \(f(x)\)와 같은지도 보자. \(f(x) = 3x^2 - 3\)에서는 접선이 모두 가로로 눕는 \(x\)를 찾아 그곳에서 \(f(x)\)가 얼마인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(\int 2x\,dx = x^2\)"처럼 적분상수를 빼고 쓰면 부정적분 가운데 하나만 적은 것이다. 부정적분은 하나의 함수가 아니라 함수의 모임을 나타내므로 \(+ C\)를 꼭 붙인다. 또 미분한 뒤 적분하면 원래 함수로 돌아오지 않고 상수만큼의 차이가 남는데, 미분하면서 상수항의 정보가 사라지기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">다음 중 \(f(x) = 3x^2 + 2\)의 부정적분이 <b>아닌</b> 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(x^3 + 2x + 7\)<span class="why"><b>부정적분입니다.</b> 미분하면 \(3x^2 + 2\)입니다. 상수 7은 미분하면 0이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x^3 + 2x - \sqrt{2}\)<span class="why"><b>부정적분입니다.</b> \(-\sqrt{2}\)도 상수이므로 적분상수 자리에 올 수 있습니다. 적분상수가 정수일 필요는 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(x^3 + 2x^2\)<span class="why"><b>맞습니다.</b> 미분하면 \(3x^2 + 4x\)로 \(f(x)\)와 다릅니다. 상수항 2를 적분하면 \(2x\)이지 \(2x^2\)이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x(x^2 + 2)\)<span class="why"><b>부정적분입니다.</b> 전개하면 \(x^3 + 2x\)이고, 적분상수가 0인 경우입니다. 모양이 달라 보여도 미분해서 확인해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(x^3 + 2x + 7\)<span class="why"><b>부정적분이다.</b> 미분하면 \(3x^2 + 2\)이다. 상수 7은 미분하면 0이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x^3 + 2x - \sqrt{2}\)<span class="why"><b>부정적분이다.</b> \(-\sqrt{2}\)도 상수이므로 적분상수 자리에 올 수 있다. 적분상수가 정수일 필요는 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(x^3 + 2x^2\)<span class="why"><b>맞다.</b> 미분하면 \(3x^2 + 4x\)로 \(f(x)\)와 다르다. 상수항 2를 적분하면 \(2x\)이지 \(2x^2\)이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x(x^2 + 2)\)<span class="why"><b>부정적분이다.</b> 전개하면 \(x^3 + 2x\)이고, 적분상수가 0인 경우이다. 모양이 달라 보여도 미분해서 확인해야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a></div></nav>
 
       <article class="card" id="card-calc1-slope-field">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</h2><span class="kind">부정적분 · 기울기장</span>
+          <span class="no">탐구 2</span><h2>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</h2><span class="kind">부정적분 · 기울기장</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -122,43 +177,44 @@
                 <div><dt>정해진 \(C\)</dt><dd class="n-c">—</dd></div>
                 <div><dt>구한 함수 \(F(x)\)</dt><dd class="n-F">—</dd></div>
               </dl>
-              <p class="fig-note">짧은 선분은 그 자리에서 곡선이 가져야 할 기울기 \(F'(x)\)입니다. 주황 점을 끌어 옮겨 보세요.</p>
+              <p class="fig-note">짧은 선분은 그 자리에서 곡선이 가져야 할 기울기 \(F'(x)\)이다. 주황 점을 끌어 옮겨 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(F'(x) = 2x\)를 만족하는 함수는 \(x^2 + C\) 꼴로 끝없이 많습니다. 그 가운데 점 (1, 3)을 지나는 것은 몇 개일까요?</li>
-            <li><span class="tag">복원</span>\(F'(x) = f(x)\)인 \(F(x)\)가 \(f(x)\)의 부정적분이고, 모든 부정적분은 \(\int f(x)\,dx = F(x) + C\)처럼 상수만큼씩 다릅니다.</li>
-            <li><span class="tag">설명</span>각 점 \((x, y)\)에 기울기 \(f(x)\)인 짧은 선분을 그리면 <em>기울기장</em>이 됩니다. 부정적분의 그래프는 이 선분들을 따라 흐르는 곡선입니다. 기울기가 \(x\)에만 달려 있으므로 같은 세로줄의 선분은 모두 평행하고, 곡선 하나를 위아래로 옮기면 다른 곡선이 됩니다. 한 점 \((x_0, y_0)\)을 지나야 한다는 조건을 주면 \(F(x_0) + C = y_0\)에서 <b>\(C = y_0 - F(x_0)\)</b>로 하나가 정해집니다. 예를 들어 \(F'(x) = 2x, F(1) = 3\)이면 \(1 + C = 3\)에서 \(C = 2\), 곧 \(F(x) = x^2 + 2\)입니다.</li>
-            <li><span class="tag">연결</span>물체의 속도를 알면 위치 함수를 부정적분으로 구할 수 있고, 처음 위치 하나가 적분상수를 정합니다. 기울기장은 나중에 미분방정식을 풀 때 그림으로 답의 모양을 미리 보는 도구로도 쓰입니다.</li>
-            <li><span class="tag">적용</span>점을 같은 세로줄에서 위아래로만 옮기면 곡선의 모양이 바뀌나요, 위치만 바뀌나요? \(F'(x) = x^2 - 1\)에서 점 (0, 0)을 지나는 곡선의 \(C\)는 얼마이고, 곡선 위의 어느 점에서 선분이 가로로 눕나요?</li>
-            <li class="warn"><span class="tag">판단</span>조건을 쓸 때 \(F'(x_0)\)에 값을 넣는 실수가 흔합니다. '점 (1, 3)을 지난다'는 \(F(1) = 3\)이라는 함수값 조건이고, \(F'(1)\)은 그 점에서의 기울기입니다. 기울기 조건으로는 \(C\)가 정해지지 않습니다. 모든 부정적분이 같은 \(x\)에서 같은 기울기를 가지기 때문입니다.</li>
+            <li><span class="tag">질문</span>\(F'(x) = 2x\)를 만족하는 함수는 \(x^2 + C\) 꼴로 끝없이 많다. 그 가운데 점 (1, 3)을 지나는 것은 몇 개일까?</li>
+            <li><span class="tag">복원</span>\(F'(x) = f(x)\)인 \(F(x)\)가 \(f(x)\)의 부정적분이고, 모든 부정적분은 \(\int f(x)\,dx = F(x) + C\)처럼 상수만큼씩 다르다.</li>
+            <li><span class="tag">설명</span>각 점 \((x, y)\)에 기울기 \(f(x)\)인 짧은 선분을 그리면 <em>기울기장</em>이 되고, 부정적분의 그래프는 이 선분들을 따라 흐르는 곡선이다. 기울기가 \(x\)에만 달려 있으므로 같은 세로줄의 선분은 모두 평행하고, 곡선 하나를 위아래로 옮기면 다른 곡선이 된다. 그런데 한 점 \((x_0, y_0)\)을 지나야 한다는 조건을 주면 \(F(x_0) + C = y_0\)에서 \(C = y_0 - F(x_0)\)로 하나가 정해진다. 예를 들어 \(F'(x) = 2x, F(1) = 3\)이면 \(1 + C = 3\)에서 \(C = 2\), 곧 \(F(x) = x^2 + 2\)이다.</li>
+            <li><span class="tag">연결</span>물체의 속도를 알면 위치 함수를 부정적분으로 구할 수 있고, 처음 위치 하나가 적분상수를 정한다. 또 기울기장은 나중에 미분방정식을 풀 때 그림으로 답의 모양을 미리 보는 도구로도 쓰인다.</li>
+            <li><span class="tag">적용</span>점을 같은 세로줄에서 위아래로만 옮기면 곡선의 모양은 그대로이고 위치만 바뀐다. \(F'(x) = x^2 - 1\)에서는 점 (0, 0)을 지나는 곡선의 \(C\)를 구하고, 곡선 위의 어느 점에서 선분이 가로로 눕는지도 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>조건을 쓸 때 \(F'(x_0)\)에 값을 넣는 실수가 흔하다. '점 (1, 3)을 지난다'는 \(F(1) = 3\)이라는 함숫값 조건이고, \(F'(1)\)은 그 점에서의 기울기이다. 기울기 조건으로는 \(C\)가 정해지지 않는데, 모든 부정적분이 같은 \(x\)에서 같은 기울기를 가지기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f'(x) = 2x - 4\)이고 \(f(1) = 0\)일 때, \(f(2)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1\)<span class="why"><b>맞습니다.</b> \(f(x) = x^2 - 4x + C\)이고 \(f(1) = 1 - 4 + C = 0\)에서 \(C = 3\)입니다. \(f(2) = 4 - 8 + 3 = -1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-4\)<span class="why"><b>적분상수를 0으로 두었습니다.</b> \(f(1) = 0\)이라는 조건으로 \(C\)를 먼저 정해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-7\)<span class="why"><b>\(C\)의 부호를 반대로 구했습니다.</b> \(-3 + C = 0\)이므로 \(C = 3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(f'(2)\)를 계산했습니다.</b> \(x = 2\)에서 기울기가 0일 뿐, 함숫값은 따로 구해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1\)<span class="why"><b>맞다.</b> \(f(x) = x^2 - 4x + C\)이고 \(f(1) = 1 - 4 + C = 0\)에서 \(C = 3\)이다. \(f(2) = 4 - 8 + 3 = -1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-4\)<span class="why"><b>적분상수를 0으로 두었다.</b> \(f(1) = 0\)이라는 조건으로 \(C\)를 먼저 정해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-7\)<span class="why"><b>\(C\)의 부호를 반대로 구했다.</b> \(-3 + C = 0\)이므로 \(C = 3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(f'(2)\)를 계산했다.</b> \(x = 2\)에서 기울기가 0일 뿐, 함숫값은 따로 구해야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">7문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-3-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">7문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -166,6 +222,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/antideriv-family.js"></script>

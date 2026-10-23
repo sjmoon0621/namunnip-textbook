@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>속도와 거리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="속도를 적분해 위치, 변위, 이동 거리를 구하고, 두 물체의 속도 그래프 사이 넓이로 만나는 시각과 가장 멀어지는 시각을 찾는다. 직선 운동만 다룬다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-vel-dist canvas { aspect-ratio: 1 / 1; }
@@ -49,18 +54,66 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-vel-dist"><span class="mono">3.6.1</span>위치, 변위, 이동 거리</a></li>
-        <li><a href="#card-calc1-chase"><span class="mono">3.6.2</span>속도 그래프로 따라잡기</a></li>
+        <li><a href="#text-calc1-distance"><span class="mono">본문</span>속도와 거리</a></li>
+        <li><a href="#card-calc1-vel-dist"><span class="mono">탐구 1</span>위치, 변위, 이동 거리</a></li>
+        <li><a href="#card-calc1-chase"><span class="mono">탐구 2</span>속도 그래프로 따라잡기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">112문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">112문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-3-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-distance" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>속도와 거리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">자동차의 계기판은 매 순간의 속도만 보여 준다. 그런데 주행 기록계는 지금까지 달린 거리를 알려 준다. 속도의 기록만으로 위치와 움직인 거리를 계산할 수 있을까? 앞으로 갔다가 뒤로 돌아온 경우에도 같은 방법이 통할까?</p>
+          <figure class="q-fig" data-q="calc1-vdist">
+            <svg viewBox="0 0 520 270" role="img" aria-label="속도 그래프 v(t)=4−2t 아래의 넓이로 위치의 변화와 움직인 거리를 읽는 그림"></svg>
+            <div class="q-ctl"><label>끝 시각 \(t\) (초) = <input type="range" data-k="t" min="0.5" max="4" step="0.25" value="3"><output data-k="t"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 속도 그래프와 \(t\)축 사이의 넓이에서, 위쪽은 앞으로 간 거리, 아래쪽은 뒤로 간 거리이다. 정적분은 위치의 변화, 절댓값의 적분은 움직인 거리이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>속도와 가속도(<a href="2-10.html">속도와 가속도</a>), 정적분의 계산(<a href="3-4.html">부정적분과 정적분의 관계</a>), 곡선과 \(x\)축 사이의 넓이(<a href="3-5.html">넓이</a>).</div>
+
+          <h3><span class="no">3.6.1</span>속도를 적분하면 위치의 변화</h3>
+          <p>위치 \(x(t)\)를 미분하면 속도 \(v(t)\)였다. 그러면 거꾸로 위치는 속도의 부정적분이다. 정적분의 계산 정리에 따라 \(\displaystyle\int_a^b v(t)\,dt = x(b) - x(a)\)이므로, 속도를 \(a\)에서 \(b\)까지 적분하면 그동안의 위치의 변화가 나온다.</p>
+          <p>그림으로 보면, 아주 짧은 시간 \(\Delta t\) 동안 움직인 양은 '속도 × 시간', 곧 속도 그래프 아래 가는 띠의 넓이이다. 이 띠를 모두 더하는 것이 정적분이다. 그런데 속도가 음수이면 띠가 \(t\)축 아래에 놓이고 넓이에 음의 부호가 붙는다. 이것은 뒤로 움직였다는 뜻이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.6.1 <span class="nm">속도와 위치, 움직인 거리</span></span>
+            <p>수직선 위를 움직이는 점의 속도가 \(v(t)\)이고 \(t = a\)에서의 위치가 \(x(a)\)일 때, \(t = b\)에서의 위치는 \(x(b) = x(a) + \displaystyle\int_a^b v(t)\,dt\)이고, \(t = a\)에서 \(t = b\)까지 움직인 거리는 \(\displaystyle\int_a^b |v(t)|\,dt\)이다.</p>
+          </div>
+          <p>그림 1의 슬라이더로 끝 시각을 늘려 보자. \(t = 2\)까지는 위쪽 넓이만 쌓이다가, 그 뒤로는 아래쪽 넓이가 쌓이며 위치의 변화는 줄어들기 시작한다. 그러나 움직인 거리는 계속 늘어난다.<sup class="fn"><a href="#fn-calc1-distance-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="수직선 위에서 원점에서 4까지 갔다가 3으로 돌아온 경로, 위치 변화 3, 거리 5">
+              <line x1="40" y1="90" x2="480" y2="90" class="ax"/>
+              <g class="s"><text x="60" y="110" text-anchor="middle">0</text><text x="160" y="110" text-anchor="middle">1</text><text x="260" y="110" text-anchor="middle">2</text><text x="360" y="110" text-anchor="middle">3</text><text x="460" y="110" text-anchor="middle">4</text></g>
+              <path d="M60 60 L456 60" class="c"/><path d="M456 60 l-8 -4 v8 Z" class="fc"/><path d="M460 75 L364 75" class="d"/><path d="M364 75 l8 -4 v8 Z" class="fd"/>
+              <text x="260" y="50" text-anchor="middle" class="s tc">앞으로 4</text><text x="410" y="70" text-anchor="middle" class="s td">뒤로 1</text>
+              <text x="260" y="132" text-anchor="middle" class="s">위치의 변화 3, 움직인 거리 5</text>
+            </svg>
+            <figcaption>그림 2. 앞으로 4, 뒤로 1 움직이면 위치는 3만큼 바뀌지만 움직인 거리는 5이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.6.2</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+            <p>원점에서 출발해 수직선 위를 움직이는 점의 속도가 \(v(t) = 4 - 2t\)일 때, \(t = 3\)에서의 위치와 \(t = 0\)부터 \(t = 3\)까지 움직인 거리를 구하여라.</p>
+          </div>
+          <p>위치는 \(x(3) = 0 + \displaystyle\int_0^3 (4 - 2t)\,dt = \Big[4t - t^2\Big]_0^3 = 12 - 9 = 3\)이다.</p>
+          <p>움직인 거리는 속도의 부호가 바뀌는 \(t = 2\)에서 나누어 구한다. \(0 \le t \le 2\)에서는 \(v \ge 0\)이므로 \(\displaystyle\int_0^2 (4 - 2t)\,dt = 8 - 4 = 4\)이다. \(2 \le t \le 3\)에서는 \(v \le 0\)이므로 \(\displaystyle -\int_2^3 (4 - 2t)\,dt = -\{(12 - 9) - (8 - 4)\} = 1\)이다. 따라서 움직인 거리는 \(4 + 1 = 5\)이다.</p>
+          <p>점은 2초 동안 위치 4까지 갔다가 방향을 바꾸어 1만큼 되돌아왔다. 그래서 위치는 3, 움직인 거리는 5로 서로 다르다. 그림 2가 바로 이 움직임이다. 아래 탐구 카드에서 속도 그래프를 바꾸며 위치와 거리를 직접 비교하고, 두 물체가 언제 만나는지도 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-distance-1">두 물체의 속도 그래프가 만나는 순간은 두 물체의 속도가 같은 순간이지, 두 물체가 같은 곳에 있는 순간이 아니다. 같은 곳에 있는지는 출발점부터 속도를 적분한 위치를 비교해야 안다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>속도를 적분하면 위치의 변화가 나오고, 처음 위치를 더하면 나중 위치가 된다. 속도가 음수인 동안은 뒤로 움직이므로, 실제로 움직인 거리는 속도의 절댓값을 적분해 구한다. 그래서 처음 질문의 속도 기록만으로도 위치와 거리를 모두 계산할 수 있고, 방향을 바꾼 경우에는 둘이 달라진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a></div></nav>
+
       <article class="card" id="card-calc1-vel-dist">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>속도만 알면 움직인 거리를 알 수 있을까?</h2><span class="kind">속도와 거리 · 변위와 이동 거리</span>
+          <span class="no">탐구 1</span><h2>속도만 알면 움직인 거리를 알 수 있을까?</h2><span class="kind">속도와 거리 · 변위와 이동 거리</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,34 +135,34 @@
                 <div><dt>위치 \(x(t)\)</dt><dd class="n-x">—</dd></div>
               </dl>
               <p class="mono rel">—</p>
-              <p class="fig-note">위 그래프 안을 끌면 시각 \(t\)가 바뀝니다. 아래 자취는 파랑이 양의 방향, 주황이 음의 방향으로 움직인 부분이고, 위로 갈수록 나중 시각입니다.</p>
+              <p class="fig-note">위 그래프 안을 끌면 시각 \(t\)가 바뀐다. 아래 자취는 파랑이 양의 방향, 주황이 음의 방향으로 움직인 부분이고, 위로 갈수록 나중 시각이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수직선 위를 움직이는 점 \(P\)의 속도가 \(v(t) = 3t^2 - 12t + 9\)입니다. 속도만 알 때, \(t = 4\)에서 \(P\)가 어디에 있는지, 그동안 \(P\)가 모두 얼마나 움직였는지 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>위치 \(x(t)\)를 미분하면 속도 \(v(t) = x'(t)\)입니다. 곧 위치는 속도의 부정적분입니다. \(F' = f\)이면 \(\int_a^b f(t)\,dt = F(b) - F(a)\)이고, 그래프와 가로축 사이의 넓이는 \(\int|f(t)|\,dt\)입니다.</li>
-            <li><span class="tag">설명</span>\(x' = v\)이므로 \(\int_a^b v(t)\,dt = x(b) - x(a)\)입니다. 이 값은 위치의 변화량, 곧 <em>변위</em>입니다. 그래서 시각 \(t\)에서의 위치는 <b>\(x(t) = x(0) + \int_0^t v(s)\,ds\)</b>입니다. 한편 실제로 움직인 길이인 <em>이동 거리</em>는 거꾸로 간 부분도 더해야 하므로 <b>\(\int_a^b |v(t)|\,dt\)</b>입니다. 예에서 \(v = 3(t - 1)(t - 3)\)이고 \(\int_0^4 v\,dt = [t^3 - 6t^2 + 9t]_0^4 = 4\)입니다. 이동 거리는 \(t = 1, 3\)에서 나누어 \(4 + 4 + 4 = 12\)입니다.</li>
-            <li><span class="tag">연결</span>미분에서는 위치에서 속도로 갔고, 적분은 속도에서 위치로 돌아옵니다. 가속도를 적분하면 같은 방법으로 속도의 변화량을 얻습니다. 자동차의 주행 거리계는 바퀴가 돈 횟수로 이동 거리를 쌓아 가는데, 이것은 속력을 시간에 대해 적분하는 것과 같은 일입니다.</li>
-            <li><span class="tag">적용</span>\(t\)를 0부터 4까지 밀면서 변위와 이동 거리가 언제부터 달라지는지 찾아 보세요. 처음 위치 \(x(0)\)을 바꾸면 위치, 변위, 이동 거리 가운데 무엇이 바뀌나요? \(v = t^2 - 4t + 5\)에서는 변위와 이동 거리가 끝까지 같습니다. 위 그래프의 어떤 모양 때문인가요?</li>
-            <li class="warn"><span class="tag">판단</span>"속도를 적분하면 이동 거리"는 속도의 부호가 바뀌지 않을 때만 맞습니다. 되돌아가는 구간이 있으면 \(\int v\,dt\)는 앞뒤로 간 거리가 서로 지워진 변위입니다. 또 \(\int_0^t v\,dt\)는 위치가 아니라 위치의 변화량이므로, 위치를 구하려면 처음 위치를 더해야 합니다. 이 카드는 직선 위의 운동만 다룹니다.</li>
+            <li><span class="tag">질문</span>수직선 위를 움직이는 점 \(P\)의 속도가 \(v(t) = 3t^2 - 12t + 9\)이다. 속도만 알 때, \(t = 4\)에서 \(P\)가 어디에 있는지, 그동안 \(P\)가 모두 얼마나 움직였는지 구할 수 있을까?</li>
+            <li><span class="tag">복원</span>위치 \(x(t)\)를 미분하면 속도 \(v(t) = x'(t)\)이므로, 위치는 속도의 부정적분이다. 그리고 \(F' = f\)이면 \(\int_a^b f(t)\,dt = F(b) - F(a)\)이고, 그래프와 가로축 사이의 넓이는 \(\int|f(t)|\,dt\)이다.</li>
+            <li><span class="tag">설명</span>\(x' = v\)이므로 \(\int_a^b v(t)\,dt = x(b) - x(a)\)이고, 이 값은 위치의 변화량, 곧 <em>변위</em>이다. 그래서 시각 \(t\)에서의 위치는 \(x(t) = x(0) + \int_0^t v(s)\,ds\)이다. 한편 실제로 움직인 길이인 <em>이동 거리</em>는 거꾸로 간 부분도 더해야 하므로 \(\int_a^b |v(t)|\,dt\)이다. 예에서 \(v = 3(t - 1)(t - 3)\)이고 \(\int_0^4 v\,dt = [t^3 - 6t^2 + 9t]_0^4 = 4\)이지만, 이동 거리는 \(t = 1, 3\)에서 나누어 \(4 + 4 + 4 = 12\)이다.</li>
+            <li><span class="tag">연결</span>미분에서는 위치에서 속도로 갔고, 적분은 속도에서 위치로 돌아온다. 가속도를 적분하면 같은 방법으로 속도의 변화량을 얻는다. 자동차의 주행 거리계는 바퀴가 돈 횟수로 이동 거리를 쌓아 가는데, 이것은 속력을 시간에 대해 적분하는 것과 같은 일이다.</li>
+            <li><span class="tag">적용</span>\(t\)를 0부터 4까지 밀면서 변위와 이동 거리가 언제부터 달라지는지 찾아보자. 처음 위치 \(x(0)\)을 바꾸면 위치만 바뀌고 변위와 이동 거리는 그대로이다. \(v = t^2 - 4t + 5\)에서는 변위와 이동 거리가 끝까지 같은데, 위 그래프의 어떤 모양 때문인지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"속도를 적분하면 이동 거리"는 속도의 부호가 바뀌지 않을 때만 맞다. 되돌아가는 구간이 있으면 \(\int v\,dt\)는 앞뒤로 간 거리가 서로 지워진 변위이다. 또 \(\int_0^t v\,dt\)는 위치가 아니라 위치의 변화량이므로, 위치를 구하려면 처음 위치를 더해야 한다. 이 카드는 직선 위의 운동만 다룬다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">수직선 위를 움직이는 점의 속도가 \(v(t) = 2t - 4\)이고 \(x(0) = 1\)입니다. \(0 \le t \le 3\) 동안 이 점의 이동 거리는?</p>
+          <p class="q">수직선 위를 움직이는 점의 속도가 \(v(t) = 2t - 4\)이고 \(x(0) = 1\)이다. \(0 \le t \le 3\) 동안 이 점의 이동 거리는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞습니다.</b> \(t = 2\)에서 방향이 바뀝니다. \(\int_0^2 = -4, \int_2^3 = 1\)이므로 이동 거리는 \(4 + 1 = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-3\)<span class="why"><b>변위입니다.</b> \(\int_0^3 (2t - 4)\,dt = 9 - 12 = -3\)은 위치의 변화량이고, 거리는 음수가 될 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>변위의 절댓값입니다.</b> 왼쪽으로 4만큼 갔다가 오른쪽으로 1만큼 돌아온 것을 지워 버린 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-2\)<span class="why"><b>\(t = 3\)에서의 위치입니다.</b> \(x(3) = 1 + (-3) = -2\)는 점이 있는 곳이지 움직인 길이가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞다.</b> \(t = 2\)에서 방향이 바뀐다. \(\int_0^2 = -4, \int_2^3 = 1\)이므로 이동 거리는 \(4 + 1 = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-3\)<span class="why"><b>변위이다.</b> \(\int_0^3 (2t - 4)\,dt = 9 - 12 = -3\)은 위치의 변화량이고, 거리는 음수가 될 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>변위의 절댓값이다.</b> 왼쪽으로 4만큼 갔다가 오른쪽으로 1만큼 돌아온 것을 지워 버린 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-2\)<span class="why"><b>\(t = 3\)에서의 위치이다.</b> \(x(3) = 1 + (-3) = -2\)는 점이 있는 곳이지 움직인 길이가 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a></div></nav>
 
       <article class="card" id="card-calc1-chase">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>두 속도 그래프가 만나는 순간, 두 물체도 만날까?</h2><span class="kind">속도와 거리 · 두 물체의 간격</span>
+          <span class="no">탐구 2</span><h2>두 속도 그래프가 만나는 순간, 두 물체도 만날까?</h2><span class="kind">속도와 거리 · 두 물체의 간격</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,43 +181,44 @@
                 <div><dt>따라잡는 시각</dt><dd class="n-m">—</dd></div>
               </dl>
               <p class="mono rel">—</p>
-              <p class="fig-note">\(A\)는 원점에서 정지 상태로 출발해 \(v_A = at\)로 빨라지고, \(B\)는 \(x = d\)에서 일정한 속도 \(v_B = k\)로 출발합니다. 위 그래프 안을 끌면 시각 \(t\)가 바뀝니다.</p>
+              <p class="fig-note">\(A\)는 원점에서 정지 상태로 출발해 \(v_A = at\)로 빨라지고, \(B\)는 \(x = d\)에서 일정한 속도 \(v_B = k\)로 출발한다. 위 그래프 안을 끌면 시각 \(t\)가 바뀐다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>같은 출발선에서 \(A\)는 정지 상태에서 \(v_A = 2t\)로 가속하고, \(B\)는 일정한 속도 4로 출발합니다. 처음에는 \(B\)가 앞서 나갑니다. 두 속도 그래프는 \(t = 2\)에서 만나는데, 이때 \(A\)가 \(B\)를 따라잡을까요?</li>
-            <li><span class="tag">복원</span>시각 0부터 \(t\)까지의 변위는 \(\int_0^t v(s)\,ds\)이고, 정적분은 \(\int(f - g) = \int f - \int g\)로 나눌 수 있습니다. 위끝이 변수인 정적분을 미분하면 피적분함수가 됩니다.</li>
-            <li><span class="tag">설명</span>두 물체의 간격은 <b>\(x_B(t) - x_A(t) = d + \int_0^t \{v_B(s) - v_A(s)\}\,ds\)</b>입니다. 곧 두 속도 그래프 사이의 넓이가 간격의 변화입니다. \(B\)가 빠른 동안(노랑) 간격이 벌어지고, \(A\)가 빠른 동안(파랑) 줄어듭니다. 그래서 <em>간격이 가장 큰 때</em>는 두 속도가 같아지는 순간이고, <em>만나는 때</em>는 처음 간격 + 노랑 넓이 − 파랑 넓이 = 0인 순간입니다. 예에서 간격은 \(4t - t^2\)이므로 \(t = 2\)에서 가장 큰 값 4가 되고, \(t = 4\)에서 0이 되어 \(A\)가 \(B\)를 따라잡습니다.</li>
-            <li><span class="tag">연결</span>간격 \(D(t) = d + \int_0^t (v_B - v_A)\,ds\)를 미분하면 \(D'(t) = v_B(t) - v_A(t)\)입니다. \(D'\)의 부호가 +에서 −로 바뀌는 곳이 \(D\)의 극대이므로, 미분에서 배운 극대 판정과 같은 결론입니다. 앞차와의 거리를 재며 속도를 맞추는 자동차의 차간 거리 유지 기능도 이 간격의 변화를 다룹니다.</li>
-            <li><span class="tag">적용</span>기본값에서 \(t\)를 움직여 노랑 넓이와 파랑 넓이가 같아지는 순간을 찾고, 그때 '간격 \(B - A\)'가 0인지 확인하세요. \(d\)를 늘리면 따라잡는 시각은 늦어지나요? 간격이 가장 큰 시각은 \(d\)에 따라 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>"속도 그래프가 만나는 점에서 두 물체가 만난다"는 흔한 오해입니다. 속도–시간 그래프의 교점은 속도가 같은 순간이고, 이때는 오히려 간격이 가장 큽니다. 위치가 같아지는 순간은 그래프 사이의 넓이로 판단해야 합니다. 이 카드는 같은 직선 위에서 같은 방향으로 움직이는 경우만 다룹니다.</li>
+            <li><span class="tag">질문</span>같은 출발선에서 \(A\)는 정지 상태에서 \(v_A = 2t\)로 가속하고, \(B\)는 일정한 속도 4로 출발한다. 처음에는 \(B\)가 앞서 나간다. 두 속도 그래프는 \(t = 2\)에서 만나는데, 이때 \(A\)가 \(B\)를 따라잡을까?</li>
+            <li><span class="tag">복원</span>시각 0부터 \(t\)까지의 변위는 \(\int_0^t v(s)\,ds\)이고, 정적분은 \(\int(f - g) = \int f - \int g\)로 나눌 수 있다. 그리고 위끝이 변수인 정적분을 미분하면 피적분함수가 된다.</li>
+            <li><span class="tag">설명</span>두 물체의 간격은 \(x_B(t) - x_A(t) = d + \int_0^t \{v_B(s) - v_A(s)\}\,ds\)이다. 즉 두 속도 그래프 사이의 넓이가 간격의 변화이다. 그래서 \(B\)가 빠른 동안(노랑) 간격이 벌어지고, \(A\)가 빠른 동안(파랑) 줄어든다. 따라서 <em>간격이 가장 큰 때</em>는 두 속도가 같아지는 순간이고, <em>만나는 때</em>는 처음 간격에 노랑 넓이를 더하고 파랑 넓이를 뺀 값이 0인 순간이다. 예에서 간격은 \(4t - t^2\)이므로 \(t = 2\)에서 가장 큰 값 4가 되고, \(t = 4\)에서 0이 되어 \(A\)가 \(B\)를 따라잡는다.</li>
+            <li><span class="tag">연결</span>간격 \(D(t) = d + \int_0^t (v_B - v_A)\,ds\)를 미분하면 \(D'(t) = v_B(t) - v_A(t)\)이다. \(D'\)의 부호가 +에서 −로 바뀌는 곳이 \(D\)의 극대이므로, 미분에서 배운 극대 판정과 같은 결론이다. 앞차와의 거리를 재며 속도를 맞추는 자동차의 차간 거리 유지 기능도 이 간격의 변화를 다룬다.</li>
+            <li><span class="tag">적용</span>기본값에서 \(t\)를 움직여 노랑 넓이와 파랑 넓이가 같아지는 순간을 찾고, 그때 '간격 \(B - A\)'가 0인지 확인해 보자. 다음에는 \(d\)를 늘려 따라잡는 시각이 늦어지는지, 간격이 가장 큰 시각은 \(d\)와 상관없이 그대로인지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"속도 그래프가 만나는 점에서 두 물체가 만난다"는 흔한 오해이다. 속도-시간 그래프의 교점은 속도가 같은 순간이고, 이때는 오히려 간격이 가장 크다. 위치가 같아지는 순간은 그래프 사이의 넓이로 판단해야 한다. 이 카드는 같은 직선 위에서 같은 방향으로 움직이는 경우만 다룬다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">같은 지점에서 동시에 출발한 \(A, B\)의 속도가 \(v_A = 2t, v_B = 6\)입니다. \(A\)가 \(B\)를 따라잡는 시각은?</p>
+          <p class="q">같은 지점에서 동시에 출발한 \(A, B\)의 속도가 \(v_A = 2t, v_B = 6\)이다. \(A\)가 \(B\)를 따라잡는 시각은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(t = 6\)<span class="why"><b>맞습니다.</b> 간격은 \(\int_0^t (6 - 2s)\,ds = 6t - t^2\)이고, 0이 되는 양수 \(t\)는 6입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(t = 3\)<span class="why"><b>속도가 같아지는 순간입니다.</b> \(2t = 6\)인 \(t = 3\)에서는 간격이 9로 가장 크고, \(A\)는 아직 뒤에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(t = 9\)<span class="why"><b>가장 큰 간격의 값입니다.</b> 9는 \(t = 3\)일 때의 간격이지 시각이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(t = 36\)<span class="why"><b>만나는 곳의 위치입니다.</b> \(t = 6\)에서 두 물체는 모두 위치 36에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(t = 6\)<span class="why"><b>맞다.</b> 간격은 \(\int_0^t (6 - 2s)\,ds = 6t - t^2\)이고, 0이 되는 양수 \(t\)는 6이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(t = 3\)<span class="why"><b>속도가 같아지는 순간이다.</b> \(2t = 6\)인 \(t = 3\)에서는 간격이 9로 가장 크고, \(A\)는 아직 뒤에 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(t = 9\)<span class="why"><b>가장 큰 간격의 값이다.</b> 9는 \(t = 3\)일 때의 간격이지 시각이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(t = 36\)<span class="why"><b>만나는 곳의 위치이다.</b> \(t = 6\)에서 두 물체는 모두 위치 36에 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">112문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-3-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">112문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +226,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/vel-dist.js"></script>

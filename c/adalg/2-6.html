@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>선형변환의 합성과 역변환 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="선형변환의 합성과 행렬의 곱(먼저 하는 변환이 오른쪽), 역변환과 역행렬, (AB)⁻¹ = B⁻¹A⁻¹. 두 변환의 순서를 바꾼 결과를 예측하는 카드와, 변환된 그림을 역행렬로 되돌리는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-compose-order .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; max-width: 420px; }
@@ -38,7 +43,7 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>선형변환의 합성과 역변환</h1>
-    <p class="lead">두 변환을 잇따라 하면 하나의 변환이 되고, 그 행렬은 두 행렬의 곱입니다. 행렬의 곱은 순서를 바꾸면 달라질 수 있으므로, 변환을 하는 순서가 중요합니다. 변환을 거꾸로 되돌리는 <em>역변환</em>의 행렬은 역행렬입니다. 이 절에서는 두 변환의 순서를 바꾼 결과를 예측해 보고, 뒤틀린 그림을 제자리로 되돌리는 행렬을 찾아봅니다.</p>
+    <p class="lead">두 변환을 잇따라 하면 하나의 변환이 되고, 그 행렬은 두 행렬의 곱입니다. 행렬의 곱은 순서를 바꾸면 달라질 수 있으므로, 변환을 하는 순서를 꼭 따져야 합니다. 변환을 거꾸로 되돌리는 <em>역변환</em>의 행렬은 역행렬입니다. 이 절에서는 두 변환의 순서를 바꾼 결과를 예측해 보고, 뒤틀린 그림을 제자리로 되돌리는 행렬을 찾아봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
       <a class="p p-card" href="../../c/adalg/2-4.html#card-adalg-grid-transform" title="고급 대수 2.4 · 행렬 하나가 평면 전체를 어떻게 움직일까?">선형변환과 행렬</a><a class="p p-card" href="../../c/adalg/2-2.html#card-adalg-inverse-elim" title="고급 대수 2.2 · 역행렬이 있는지 계산하기 전에 알 수 있을까?">역행렬</a><a class="p p-card" href="../../c/adalg/2-5.html#card-adalg-transform-target" title="고급 대수 2.5 · 회전, 대칭, 닮음 중 어느 것으로 목표 모양을 만들까?">대칭변환·닮음변환·회전변환</a>
@@ -49,18 +54,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-compose-order"><span class="mono">2.6.1</span>변환을 잇는 순서와 행렬 곱의 순서</a></li>
-        <li><a href="#card-adalg-undo"><span class="mono">2.6.2</span>역변환으로 제자리에 되돌리기</a></li>
+        <li><a href="#text-adalg-composition"><span class="mono">본문</span>선형변환의 합성과 역변환</a></li>
+        <li><a href="#card-adalg-compose-order"><span class="mono">탐구 1</span>변환을 잇는 순서와 행렬 곱의 순서</a></li>
+        <li><a href="#card-adalg-undo"><span class="mono">탐구 2</span>역변환으로 제자리에 되돌리기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-composition" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>선형변환의 합성과 역변환</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">스마트폰 화면의 글자 'F'를 시계 반대 방향으로 90° 돌린 뒤 \(x\)축에 대해 뒤집었다. 다른 친구는 같은 글자를 먼저 \(x\)축에 대해 뒤집은 뒤 90° 돌렸다. 두 사람이 한 일은 똑같은 두 가지인데, 결과를 겹쳐 보니 'F'의 방향이 서로 달랐다. 수에서는 \(2\times3 = 3\times2\)인데 변환에서는 왜 순서가 결과를 바꿀까? 또 비스듬히 기울어진 그림을 원래대로 되돌리는 변환은 어떻게 구할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="두 변환의 순서에 따른 합성 결과">
+              <g class="s">
+                <text x="20" y="22">순서</text><text x="220" y="22">합성 행렬</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">회전 R 다음 뒤집기 F</text><text x="220" y="52">FR = (0, −1 / −1, 0)</text><text x="400" y="52" class="td">y = −x 대칭</text>
+                <text x="20" y="74">뒤집기 F 다음 회전 R</text><text x="220" y="74">RF = (0, 1 / 1, 0)</text><text x="400" y="74" class="tb">y = x 대칭</text>
+                <text x="20" y="104">R = 90° 회전 (0, −1 / 1, 0), F = x축 대칭 (1, 0 / 0, −1)</text>
+                <text x="20" y="124">먼저 한 변환이 오른쪽에 온다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 같은 두 변환도 순서를 바꾸면 서로 다른 대칭이 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>선형변환과 행렬(<a href="2-4.html">선형변환과 행렬</a>), 역행렬(<a href="2-2.html">역행렬</a>), 회전과 대칭(<a href="2-5.html">대칭변환·닮음변환·회전변환</a>).</div>
+
+          <h3><span class="no">2.6.1</span>합성은 행렬의 곱</h3>
+          <p>벡터 \(\vec v\)에 먼저 \(S\)를, 그다음 \(T\)를 적용하면 결과는 \(T(S(\vec v))\)이다. 두 변환의 행렬이 \(B\), \(A\)이면 이것은 \(A(B\vec v) = (AB)\vec v\)이므로, 합성 변환의 행렬은 곱 \(AB\)이다. 먼저 하는 변환이 벡터에 가까운 오른쪽에 온다. 행렬의 곱셈은 일반적으로 교환법칙이 성립하지 않으므로, \(AB\)와 \(BA\)가 다르면 두 변환을 하는 순서에 따라 결과가 다르다. 반면 두 회전이나 두 닮음은 순서를 바꾸어도 결과가 같다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">합성과 역변환</span></span>
+            <p>\(S\)의 행렬이 \(B\), \(T\)의 행렬이 \(A\)이면 \(T\circ S\)의 행렬은 \(AB\)이다. \(A\)가 역행렬을 가지면 \(T\)의 역변환 \(T^{-1}\)의 행렬은 \(A^{-1}\)이고, \((AB)^{-1} = B^{-1}A^{-1}\)이다.</p>
+          </div>
+          <p>합성의 역변환은 순서를 거꾸로 해야 한다. 양말을 신고 신발을 신었다면, 벗을 때는 신발을 먼저 벗고 양말을 벗는 것과 같다. 그래서 \(AB\)의 역행렬은 \(A^{-1}B^{-1}\)이 아니라 \(B^{-1}A^{-1}\)이다. 회전의 역변환은 반대 방향 회전이고, 대칭의 역변환은 자기 자신이며, \(k\)배 닮음의 역변환은 \(1/k\)배 닮음이다. 행렬식이 0인 변환은 공간을 납작하게 누르므로 역변환이 없다.<sup class="fn"><a href="#fn-adalg-composition-1">1</a></sup></p>
+
+          <h3><span class="no">2.6.2</span>기울어진 그림 되돌리기</h3>
+          <p>그림의 위쪽을 오른쪽으로 미는 변환 \(\begin{pmatrix}1 & 2\\ 0 & 1\end{pmatrix}\)은 \((0, 1)\)을 \((2, 1)\)로 보내 직사각형을 평행사변형으로 기울인다. 이 변환을 되돌리려면 위쪽을 같은 만큼 왼쪽으로 밀면 되므로 역변환은 \(\begin{pmatrix}1 & -2\\ 0 & 1\end{pmatrix}\)이다. 두 행렬을 곱하면 단위행렬이 되어 확인할 수 있다. 여러 변환을 거친 그림을 되돌릴 때는 마지막 변환부터 하나씩 역변환을 적용한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="여러 변환과 그 역변환">
+              <g class="s">
+                <text x="20" y="22">변환</text><text x="170" y="22">행렬</text><text x="350" y="22">역변환</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">θ 회전</text><text x="170" y="52">R_θ</text><text x="350" y="52">R_(−θ)</text>
+                <text x="20" y="74">밀기</text><text x="170" y="74">(1, 2 / 0, 1)</text><text x="350" y="74" class="td">(1, −2 / 0, 1)</text>
+                <text x="20" y="96">밀기 다음 90° 회전</text><text x="170" y="96">R S</text><text x="350" y="96" class="tb">S⁻¹ R⁻¹</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 합성의 역변환은 나중에 한 것부터 거꾸로 되돌린다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>그림 1의 \(R\)과 \(F\)로 \(FR\)과 \(RF\)를 계산하고, 점 \((2, 1)\)이 각각 어디로 가는지 구하여라. 또 밀기 \(S = \begin{pmatrix}1 & 2\\ 0 & 1\end{pmatrix}\) 다음 \(R\)을 한 변환의 역행렬을 구하여라.</p>
+          </div>
+          <p>\(FR = \begin{pmatrix}1 & 0\\ 0 & -1\end{pmatrix}\begin{pmatrix}0 & -1\\ 1 & 0\end{pmatrix} = \begin{pmatrix}0 & -1\\ -1 & 0\end{pmatrix}\), \(RF = \begin{pmatrix}0 & -1\\ 1 & 0\end{pmatrix}\begin{pmatrix}1 & 0\\ 0 & -1\end{pmatrix} = \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}\)이다. \((2, 1)\)은 \(FR\)로 \((-1, -2)\), \(RF\)로 \((1, 2)\)로 가서 서로 원점에 대해 대칭인 다른 점이다.</p>
+          <p>밀기 다음 회전은 \(RS = \begin{pmatrix}0 & -1\\ 1 & 2\end{pmatrix}\)이고, 역행렬은 \(S^{-1}R^{-1} = \begin{pmatrix}1 & -2\\ 0 & 1\end{pmatrix}\begin{pmatrix}0 & 1\\ -1 & 0\end{pmatrix} = \begin{pmatrix}2 & 1\\ -1 & 0\end{pmatrix}\)이다. 확인하면 \(\begin{pmatrix}0 & -1\\ 1 & 2\end{pmatrix}\begin{pmatrix}2 & 1\\ -1 & 0\end{pmatrix} = \begin{pmatrix}1 & 0\\ 0 & 1\end{pmatrix}\)이다. 즉 선형변환의 합성은 행렬의 곱이어서 순서가 결과를 바꿀 수 있고, 합성의 역변환은 나중에 한 변환부터 거꾸로 되돌린 \(B^{-1}A^{-1}\)이다.</p>
+          <p>아래 탐구 카드에서 두 변환의 순서를 바꾸어 결과를 비교하고, 뒤틀린 그림을 제자리로 되돌리는 행렬을 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-composition-1">루빅스 큐브를 맞추는 공식도 변환의 합성이다. 두 면을 돌리는 순서를 바꾸면 결과가 달라지는데, 이 때문에 큐브를 푸는 사람들은 여러 회전을 묶은 공식과 그 역순 공식을 함께 외운다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>먼저 \(S\)(행렬 \(B\)), 다음 \(T\)(행렬 \(A\))를 하는 합성 변환의 행렬은 \(AB\)이며, 행렬의 곱셈은 교환법칙이 성립하지 않아 순서를 바꾸면 결과가 달라질 수 있다. 역변환의 행렬은 역행렬이고, 합성의 역변환은 \((AB)^{-1} = B^{-1}A^{-1}\)로 나중에 한 것부터 되돌린다. 처음 질문에서 회전 다음 뒤집기는 \(y = -x\) 대칭, 뒤집기 다음 회전은 \(y = x\) 대칭이어서 'F'의 방향이 달라졌다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a></div></nav>
+
       <article class="card" id="card-adalg-compose-order">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>두 변환의 순서를 바꾸면 결과도 달라질까?</h2><span class="kind">선형변환의 합성 · 예측→확인</span>
+          <span class="no">탐구 1</span><h2>두 변환의 순서를 바꾸면 결과도 달라질까?</h2><span class="kind">선형변환의 합성 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,30 +134,30 @@
             <p class="mono small prod"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>양말을 신고 신발을 신는 것과 신발을 신고 양말을 신는 것은 결과가 다릅니다. 평면을 돌린 다음 뒤집는 것과 뒤집은 다음 돌리는 것은 어떨까요?</li>
-            <li><span class="tag">복원</span>행렬의 곱 \(AB\)와 \(BA\)는 일반적으로 다릅니다. \((AB)\vec{x} = A(B\vec{x})\)입니다.</li>
-            <li><span class="tag">설명</span>변환 \(g\)를 먼저 하고 \(f\)를 나중에 하는 <em>합성변환</em> \(f \circ g\)의 행렬은 \(AB\)입니다(\(A\)는 \(f\), \(B\)는 \(g\)의 행렬). <b>먼저 하는 변환이 오른쪽</b>에 옵니다. \(\vec{x}\)에 가까운 쪽부터 곱해지기 때문입니다. 순서를 바꾼 \(g \circ f\)는 \(BA\)이고, \(AB \ne BA\)이면 결과 그림도 다릅니다.</li>
-            <li><span class="tag">연결</span>로봇 팔의 관절 회전, 3D 그래픽의 카메라와 물체 변환은 모두 행렬의 곱으로 이어집니다. 곱하는 순서가 틀리면 물체가 엉뚱한 곳에 나타납니다.</li>
-            <li><span class="tag">적용</span>짝마다 "먼저 B, 그다음 A"의 결과를 네 그림 중에서 고르세요. 결과를 확인한 뒤 순서를 바꾼 것과 같은지 보세요. 순서를 바꿔도 같은 짝은 어떤 공통점이 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>회전끼리, 또는 닮음변환(\(kI\))과 다른 변환은 순서를 바꿔도 같습니다. 그렇다고 모든 변환이 그런 것은 아닙니다. 한두 예가 맞았다고 일반화하면 안 됩니다.</li>
+            <li><span class="tag">질문</span>양말을 신고 신발을 신는 것과 신발을 신고 양말을 신는 것은 결과가 다르다. 평면을 돌린 다음 뒤집는 것과 뒤집은 다음 돌리는 것은 어떨까?</li>
+            <li><span class="tag">복원</span>행렬의 곱 \(AB\)와 \(BA\)는 일반적으로 다르다. \((AB)\vec{x} = A(B\vec{x})\)이다.</li>
+            <li><span class="tag">설명</span>변환 \(g\)를 먼저 하고 \(f\)를 나중에 하는 <em>합성변환</em> \(f \circ g\)의 행렬은 \(AB\)이다(\(A\)는 \(f\), \(B\)는 \(g\)의 행렬). 먼저 하는 변환이 오른쪽에 온다. \(\vec{x}\)에 가까운 쪽부터 곱해지기 때문이다. 순서를 바꾼 \(g \circ f\)는 \(BA\)이고, \(AB \ne BA\)이면 결과 그림도 다르다.</li>
+            <li><span class="tag">연결</span>로봇 팔의 관절 회전, 3D 그래픽의 카메라와 물체 변환은 모두 행렬의 곱으로 이어진다. 곱하는 순서가 틀리면 물체가 엉뚱한 곳에 나타난다.</li>
+            <li><span class="tag">적용</span>짝마다 "먼저 B, 그다음 A"의 결과를 네 그림 중에서 고르자. 결과를 확인한 뒤 순서를 바꾼 것과 같은지 보자. 순서를 바꿔도 같은 짝은 어떤 공통점이 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>회전끼리, 또는 닮음변환(\(kI\))과 다른 변환은 순서를 바꿔도 같다. 그렇다고 모든 변환이 그런 것은 아니다. 한두 예가 맞았다고 일반화하면 안 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(x\)축 대칭 \(S\)를 먼저 하고 \(90°\) 회전 \(R\)을 나중에 하는 변환의 행렬은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(RS = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)<span class="why"><b>맞습니다.</b> 나중 변환이 왼쪽입니다. 결과는 직선 \(y = x\)에 대한 대칭입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(SR = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}\)<span class="why"><b>순서가 반대입니다.</b> 이것은 회전을 먼저 한 결과(직선 \(y = -x\)에 대한 대칭)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(R + S\)<span class="why"><b>잇따라 하는 것은 곱입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>순서와 상관없이 같다.<span class="why"><b>\(RS \ne SR\)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(RS = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)<span class="why"><b>맞다.</b> 나중 변환이 왼쪽이다. 결과는 직선 \(y = x\)에 대한 대칭이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(SR = \begin{pmatrix} 0 & -1 \\ -1 & 0 \end{pmatrix}\)<span class="why"><b>순서가 반대이다.</b> 이것은 회전을 먼저 한 결과(직선 \(y = -x\)에 대한 대칭)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(R + S\)<span class="why"><b>잇따라 하는 것은 곱이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>순서와 상관없이 같다.<span class="why"><b>\(RS \ne SR\)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a></div></nav>
 
       <article class="card" id="card-adalg-undo">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>뒤틀린 그림을 제자리로 되돌리는 행렬은?</h2><span class="kind">역변환 · 도전</span>
+          <span class="no">탐구 2</span><h2>뒤틀린 그림을 제자리로 되돌리는 행렬은?</h2><span class="kind">역변환 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -108,39 +171,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사진을 밀고 돌렸다가 원래대로 되돌리고 싶습니다. "되돌리기" 버튼 뒤에서는 어떤 계산이 일어날까요? 어떤 변환은 아예 되돌릴 수 없을까요?</li>
-            <li><span class="tag">복원</span>\(AA^{-1} = A^{-1}A = I\). \(2 \times 2\)이면 \(A^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)입니다.</li>
-            <li><span class="tag">설명</span>변환 \(f\)의 행렬이 \(A\)일 때, \(f\)를 한 뒤 하면 제자리가 되는 변환이 <em>역변환</em> \(f^{-1}\)이고 그 행렬은 \(A^{-1}\)입니다. \(\det A = 0\)이면 평면이 직선으로 납작해져 서로 다른 점이 같은 점으로 가므로 역변환이 없습니다. 두 변환을 잇따라 했으면 \((AB)^{-1} = B^{-1}A^{-1}\), 곧 <b>나중에 한 것부터 거꾸로</b> 되돌립니다.</li>
-            <li><span class="tag">연결</span>양말과 신발을 벗을 때도 나중에 신은 신발부터 벗습니다. 앞 카드의 힐 암호 해독, 그래픽의 화면 좌표에서 물체 좌표로 돌아가는 계산이 모두 역변환입니다.</li>
-            <li><span class="tag">적용</span>문제마다 주황 집을 회색 점선 자리로 되돌리는 행렬을 입력하세요. 되돌릴 수 없다고 판단되면 그 버튼을 누르세요. 다섯째 문제는 두 변환을 이은 것입니다.</li>
-            <li class="warn"><span class="tag">판단</span>\((AB)^{-1}\)을 \(A^{-1}B^{-1}\)로 쓰는 실수가 흔합니다. 두 행렬이 교환 가능하지 않으면 이 둘은 다릅니다.</li>
+            <li><span class="tag">질문</span>사진을 밀고 돌렸다가 원래대로 되돌리고 싶다. "되돌리기" 버튼 뒤에서는 어떤 계산이 일어날까? 어떤 변환은 아예 되돌릴 수 없을까?</li>
+            <li><span class="tag">복원</span>\(AA^{-1} = A^{-1}A = I\). \(2 \times 2\)이면 \(A^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)이다.</li>
+            <li><span class="tag">설명</span>변환 \(f\)의 행렬이 \(A\)일 때, \(f\)를 한 뒤 하면 제자리가 되는 변환이 <em>역변환</em> \(f^{-1}\)이고 그 행렬은 \(A^{-1}\)이다. \(\det A = 0\)이면 평면이 직선으로 납작해져 서로 다른 점이 같은 점으로 가므로 역변환이 없다. 두 변환을 잇따라 했으면 \((AB)^{-1} = B^{-1}A^{-1}\), 곧 나중에 한 것부터 거꾸로 되돌린다.</li>
+            <li><span class="tag">연결</span>양말과 신발을 벗을 때도 나중에 신은 신발부터 벗는다. 앞 카드의 힐 암호 해독, 그래픽의 화면 좌표에서 물체 좌표로 돌아가는 계산이 모두 역변환이다.</li>
+            <li><span class="tag">적용</span>문제마다 주황 집을 회색 점선 자리로 되돌리는 행렬을 입력해 보자. 되돌릴 수 없다고 판단되면 그 버튼을 누르자. 다섯째 문제는 두 변환을 이은 것이다.</li>
+            <li class="warn"><span class="tag">판단</span>\((AB)^{-1}\)을 \(A^{-1}B^{-1}\)로 쓰는 실수가 흔하다. 두 행렬이 교환 가능하지 않으면 이 둘은 다르다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(A = \begin{pmatrix} 1 & 3 \\ 0 & 1 \end{pmatrix}\)(가로로 밀기)의 역변환 행렬은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 1 & -3 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>맞습니다.</b> 반대 방향으로 같은 만큼 밉니다. \(\det A = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 1 & 1/3 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>성분마다 역수를 취한 것은 역행렬이 아닙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 1 & 0 \\ 3 & 1 \end{pmatrix}\)<span class="why"><b>전치행렬입니다.</b> 회전과 대칭에서만 전치가 역행렬입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>역변환이 없다.<span class="why"><b>\(\det A = 1 \ne 0\)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 1 & -3 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>맞다.</b> 반대 방향으로 같은 만큼 민다. \(\det A = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 1 & 1/3 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>성분마다 역수를 취한 것은 역행렬이 아니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 1 & 0 \\ 3 & 1 \end{pmatrix}\)<span class="why"><b>전치행렬이다.</b> 회전과 대칭에서만 전치가 역행렬이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>역변환이 없다.<span class="why"><b>\(\det A = 1 \ne 0\)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -1,0 +1,52 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "3-1",
+  "short": "본문 · 확률변수와 확률분포"
+}
+-->
+<article class="card reading" id="text-stat-random-var" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>확률변수와 확률분포</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">동전을 세 번 던지면 '앞뒤앞', '뒤뒤앞'처럼 결과가 8가지이다. 이 결과들은 그대로는 더하거나 평균을 낼 수 없다. 그런데 각 결과에 '앞면의 개수'라는 수를 붙이면 0, 1, 2, 3 가운데 하나가 되어 계산할 수 있다. 결과에 수를 붙이면 무엇이 달라질까?</p>
+    <figure class="q-fig" data-q="stat-rv">
+      <svg viewBox="0 0 520 250" role="img" aria-label="동전 n개를 던질 때 앞면의 개수 X의 확률분포 막대그래프"></svg>
+      <div class="q-ctl"><label>동전 개수 \(n\) = <input type="range" data-k="n" min="1" max="8" step="1" value="3"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 앞면의 개수 \(X\)가 가질 수 있는 값마다 확률을 막대로 세우면 확률분포가 되고, 막대의 높이를 모두 더하면 1이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>표본공간과 사건, 수학적 확률(<a href="2-1.html">확률의 뜻과 기본 성질</a>), 독립시행의 확률(<a href="2-6.html">확률의 곱셈정리</a>), 함수의 뜻.</div>
+
+    <h3><span class="no">3.1.1</span>확률변수</h3>
+    <p>동전을 세 번 던지는 시행의 표본공간은 앞앞앞, 앞앞뒤, …, 뒤뒤뒤의 8가지이다. 각 결과에 앞면의 개수를 대응시키면, 앞앞앞은 3, 앞뒤앞은 2, 뒤뒤뒤는 0이 된다. 다시 말해 표본공간의 각 원소에 실수 하나를 대응시키는 함수를 만든 것이다. 이런 함수를 <em>확률변수</em>라 하고 보통 \(X\)처럼 대문자로 쓴다.</p>
+    <p>확률변수 \(X\)가 어떤 값을 가질 확률도 정할 수 있다. \(X = 2\)인 결과는 앞앞뒤, 앞뒤앞, 뒤앞앞의 3가지이므로 \(P(X = 2) = \tfrac{3}{8}\)이다. 같은 방법으로 \(P(X = 0) = \tfrac{1}{8}\), \(P(X = 1) = \tfrac{3}{8}\), \(P(X = 3) = \tfrac{1}{8}\)이다.</p>
+    <div class="tb-env"><span class="lb">정의 3.1.1 <span class="nm">이산확률변수와 확률분포</span></span>
+      <p>확률변수 \(X\)가 가질 수 있는 값이 \(x_1, x_2, \ldots, x_n\)처럼 셀 수 있을 때 \(X\)를 이산확률변수라 한다. 각 값과 그 값을 가질 확률 \(P(X = x_i) = p_i\)의 대응을 \(X\)의 확률분포라 하며, \(0 \le p_i \le 1\)이고 \(p_1 + p_2 + \cdots + p_n = 1\)이다.</p>
+    </div>
+    <p>그림 1의 슬라이더로 동전 개수를 바꾸어 보자. 막대의 개수는 \(n + 1\)개이고, 가운데가 가장 높은 대칭 모양이 된다. 막대 높이의 합이 언제나 1인 것은, 어떤 결과든 \(X\)의 값 가운데 정확히 하나를 갖기 때문이다.</p>
+
+    <h3><span class="no">3.1.2</span>연속확률변수</h3>
+    <p>버스를 기다리는 시간처럼 0분부터 10분 사이의 모든 실수 값을 가질 수 있는 확률변수도 있다. 이런 확률변수를 연속확률변수라 한다. 값이 셀 수 없이 많으므로 '정확히 3분'일 확률은 0이고, 대신 '2분에서 4분 사이'처럼 범위의 확률을 생각한다. 이때 확률은 확률밀도함수의 그래프 아래 넓이로 나타내며, 전체 넓이는 1이다.<sup class="fn"><a href="#fn-stat-random-var-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="이산확률분포의 막대와 연속확률분포의 넓이 비교">
+        <g transform="translate(20 10)"><line x1="0" y1="110" x2="220" y2="110" class="ax"/><rect x="20" y="85" width="30" height="25" class="lb"/><rect x="70" y="35" width="30" height="75" class="lb"/><rect x="120" y="35" width="30" height="75" class="lb"/><rect x="170" y="85" width="30" height="25" class="lb"/><text x="110" y="130" text-anchor="middle" class="s">이산, 막대 높이 = 확률</text></g>
+        <g transform="translate(280 10)"><line x1="0" y1="110" x2="220" y2="110" class="ax"/><rect x="10" y="70" width="200" height="40" class="lk"/><rect x="50" y="70" width="40" height="40" class="lc"/><line x1="10" y1="70" x2="210" y2="70" class="b"/><text x="110" y="130" text-anchor="middle" class="s">연속, 넓이 = 확률</text></g>
+      </svg>
+      <figcaption>그림 2. 이산확률변수는 값마다 확률을 막대로, 연속확률변수는 범위의 확률을 그래프 아래 넓이로 나타낸다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+      <p>한 개의 주사위를 두 번 던져 나온 눈 가운데 큰 값을 \(X\)라 할 때(같으면 그 값), \(X\)의 확률분포를 구하고 \(P(X \ge 5)\)를 구하여라.</p>
+    </div>
+    <p>\(X \le k\)는 두 눈이 모두 \(k\) 이하인 경우이므로 \(P(X \le k) = \dfrac{k^2}{36}\)이다. 그러면 \(P(X = k) = P(X \le k) - P(X \le k - 1) = \dfrac{k^2 - (k - 1)^2}{36} = \dfrac{2k - 1}{36}\)이다.</p>
+    <p>따라서 \(X\)가 1, 2, 3, 4, 5, 6일 확률은 \(\tfrac{1}{36}, \tfrac{3}{36}, \tfrac{5}{36}, \tfrac{7}{36}, \tfrac{9}{36}, \tfrac{11}{36}\)이다. 합은 \(\tfrac{36}{36} = 1\)로 맞는다.</p>
+    <p>\(P(X \ge 5) = \dfrac{9 + 11}{36} = \dfrac{5}{9}\)이다. 여사건으로 확인하면 \(1 - P(X \le 4) = 1 - \tfrac{16}{36} = \tfrac{20}{36}\)으로 같다. 큰 값을 취하면 큰 수가 나오기 쉬워져 분포가 오른쪽으로 기운다. 아래 탐구 카드에서 결과에 수를 붙여 확률분포를 직접 만들어 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-random-var-1">0분부터 10분까지 어느 시각이든 같은 가능성으로 버스가 온다면 확률밀도함수는 높이 \(\tfrac{1}{10}\)인 직선이고, 2분에서 4분 사이일 확률은 넓이 \(2 \times \tfrac{1}{10} = 0.2\)이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>확률변수는 시행의 결과마다 수를 하나씩 대응시킨 함수이고, 그 값과 확률의 대응이 확률분포이다. 이산확률변수는 값마다 확률을 갖고 그 합이 1이며, 연속확률변수는 범위의 확률을 넓이로 나타낸다. 그래서 처음 질문의 동전 결과에 앞면의 개수를 붙이면 0, 1, 2, 3이 각각 \(\tfrac{1}{8}, \tfrac{3}{8}, \tfrac{3}{8}, \tfrac{1}{8}\)의 확률을 갖는 분포가 되어 평균 같은 계산을 할 수 있다.</p></div>
+  </div>
+</article>

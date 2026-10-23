@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>집합과 벡터로 나타낸 텍스트 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="문장을 낱말의 집합으로 나타내기, 교집합과 합집합, 자카드 유사도, 낱말 사전과 원-핫 벡터, 낱말 주머니(횟수 벡터)와 문장 사이의 거리. 두 문장의 유사도를 재는 카드와, 문장을 벡터로 만드는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-aimath-jaccard textarea { width: 100%; min-height: 3.2rem; font: inherit; }
@@ -22,7 +27,7 @@
     #card-aimath-jaccard .venn .a { background: rgba(63,111,163,.14); }
     #card-aimath-jaccard .venn .ab { background: rgba(123,94,167,.2); }
     #card-aimath-jaccard .venn .b { background: rgba(224,160,42,.18); }
-    #card-aimath-jaccard .venn b { display: block; font-size: .78rem; margin-bottom: .2rem; }
+    #card-aimath-jaccard .venn .vh { display: block; font-size: .78rem; margin: 0 0 .2rem; font-weight: 700; }
     #card-aimath-jaccard .venn span { display: inline-block; margin: .1rem .25rem .1rem 0; }
     #card-aimath-onehot table { border-collapse: collapse; font-size: .82rem; margin: .4rem 0; font-family: var(--mono, monospace); }
     #card-aimath-onehot td, #card-aimath-onehot th { border: 1px solid var(--rule, #d9dad2); padding: .15rem .35rem; text-align: center; }
@@ -56,57 +61,109 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-aimath-jaccard"><span class="mono">2.1.1</span>두 문장은 얼마나 비슷할까 — 자카드 유사도</a></li>
-        <li><a href="#card-aimath-onehot"><span class="mono">2.1.2</span>문장을 숫자 벡터로 바꾸기</a></li>
+        <li><a href="#text-aimath-text-vec"><span class="mono">본문</span>집합과 벡터로 나타낸 텍스트</a></li>
+        <li><a href="#card-aimath-jaccard"><span class="mono">탐구 1</span>두 문장은 얼마나 비슷할까 — 자카드 유사도</a></li>
+        <li><a href="#card-aimath-onehot"><span class="mono">탐구 2</span>문장을 숫자 벡터로 바꾸기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=aimath-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=aimath&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">14문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=aimath-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-aimath-text-vec" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>집합과 벡터로 나타낸 텍스트</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">검색창에 질문을 입력하면 비슷한 질문과 답이 먼저 나온다. 컴퓨터는 글의 뜻을 사람처럼 이해하지 못하는데, 어떻게 두 문장이 비슷하다는 것을 알아챌까? 글을 수로 바꿀 수 있다면, '비슷하다'를 계산할 수 있을 것이다. 가장 간단한 방법은 문장을 낱말의 집합으로 보는 것이다.</p>
+          <figure class="q-fig" data-q="ai-jaccard">
+            <svg viewBox="0 0 520 240" role="img" aria-label="두 문장의 낱말 집합과 교집합, 합집합으로 구한 자카드 유사도"></svg>
+            <div class="q-ctl"><label>문장 쌍 <input type="range" data-k="k" min="0" max="3" step="1" value="0"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 두 문장을 띄어쓰기 단위의 낱말 집합으로 보고 벤 다이어그램에 놓았다. 가운데 겹친 부분이 공통 낱말이다. 공통 낱말이 전체 낱말 가운데 차지하는 비율이 자카드 유사도이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>집합의 연산(공통수학2), 좌표평면 위의 두 점 사이의 거리, 벡터의 성분(기하 또는 아래 설명).</div>
+
+          <h3><span class="no">2.1.1</span>집합으로 나타낸 문장과 자카드 유사도</h3>
+          <p>문장을 띄어쓰기로 나누면 낱말의 집합이 된다. "나는 사과를 좋아한다"는 {나는, 사과를, 좋아한다}이다. 두 집합이 얼마나 겹치는지를 재면 두 문장의 비슷한 정도를 수로 나타낼 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정의 2.1.1 <span class="nm">자카드 유사도</span></span>
+            <p>두 집합 \(A\), \(B\)에 대하여 \[J(A, B) = \frac{n(A \cap B)}{n(A \cup B)}\] 를 자카드 유사도라 한다. 값은 0과 1 사이이며, 두 집합이 같으면 1, 공통 원소가 없으면 0이다.</p>
+          </div>
+          <p>그림 1에서 문장 쌍을 바꾸어 보자. "나는 사과를 좋아한다"와 "나는 귤을 좋아한다"는 공통 낱말이 2개, 전체 낱말이 4개라 유사도가 0.5이다. "고양이가 잔다"와 "강아지가 뛴다"는 공통 낱말이 없어 0이다. 다만 이 방법은 '사과'와 '귤'이 둘 다 과일이라는 것도, 낱말의 순서도 알지 못한다.<sup class="fn"><a href="#fn-aimath-text-vec-1">1</a></sup></p>
+
+          <h3><span class="no">2.1.2</span>벡터로 나타낸 문장</h3>
+          <p>여러 문장에 나오는 낱말을 모두 모아 순서대로 늘어놓은 목록을 사전이라 하자. 각 문장을, 사전의 각 낱말이 그 문장에 있으면 1, 없으면 0인 수의 줄로 나타낼 수 있다. 이런 수의 줄을 벡터라 하고, 이 표현을 원-핫 표현 또는 이진 벡터라 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="사전과 두 문장의 이진 벡터">
+              <g class="s">
+                <text x="30" y="25">사전</text><text x="130" y="25">나는</text><text x="200" y="25">사과를</text><text x="275" y="25">귤을</text><text x="340" y="25">좋아한다</text>
+                <line x1="20" y1="33" x2="420" y2="33" class="gd"/>
+                <text x="30" y="60">문장 1</text><text x="140" y="60">1</text><text x="215" y="60">1</text><text x="285" y="60">0</text><text x="360" y="60">1</text>
+                <text x="30" y="90">문장 2</text><text x="140" y="90">1</text><text x="215" y="90">0</text><text x="285" y="90">1</text><text x="360" y="90">1</text>
+                <text x="440" y="60">(1, 1, 0, 1)</text><text x="440" y="90">(1, 0, 1, 1)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 사전의 각 낱말 자리에 있으면 1, 없으면 0을 적으면 문장이 벡터가 된다.</figcaption>
+          </figure>
+          <p>벡터로 바꾸면 두 문장 사이의 거리를 계산할 수 있다. 위의 두 벡터는 두 자리에서 다르므로 거리는 \(\sqrt{0^2 + 1^2 + 1^2 + 0^2} = \sqrt{2}\)이다. 같은 성분끼리 곱해 더한 값 \(1 + 0 + 0 + 1 = 2\)는 공통 낱말의 개수와 같다.</p>
+
+          <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+            <p>세 문장 A "오늘 날씨가 맑다", B "오늘 날씨가 흐리다", C "내일 날씨가 맑다"가 있다. A와 B, A와 C의 자카드 유사도를 각각 구하고, 이진 벡터 사이의 거리도 구하여라.</p>
+          </div>
+          <p>A = {오늘, 날씨가, 맑다}, B = {오늘, 날씨가, 흐리다}, C = {내일, 날씨가, 맑다}이다. A와 B는 공통 2개, 합집합 4개이므로 \(J = \dfrac{2}{4} = 0.5\)이다. A와 C도 공통 2개(날씨가, 맑다), 합집합 4개로 0.5이다.</p>
+          <p>사전을 (오늘, 내일, 날씨가, 맑다, 흐리다)로 정하면 A = (1, 0, 1, 1, 0), B = (1, 0, 1, 0, 1), C = (0, 1, 1, 1, 0)이다. A와 B, A와 C는 모두 두 자리가 달라 거리가 \(\sqrt{2}\)이다. 그런데 뜻으로 보면 A와 B는 날씨가 반대이고, A와 C는 날이 다르다. 두 경우가 같은 값으로 나온다는 것은, 낱말의 일치만으로는 뜻의 차이를 다 잡지 못한다는 뜻이다.</p>
+          <p>아래 탐구 카드에서 두 문장의 유사도를 직접 계산하고, 문장을 벡터로 바꾸어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-aimath-text-vec-1">우리말은 조사가 붙어 '사과를', '사과가'가 다른 낱말로 셈해진다. 그래서 실제로는 형태소 분석으로 '사과', '를'처럼 나누어 비교하는 경우가 많다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>문장을 낱말의 집합으로 보면 자카드 유사도 \(\frac{n(A \cap B)}{n(A \cup B)}\)로 비슷한 정도를 잴 수 있고, 사전의 낱말 자리에 0과 1을 적으면 문장이 벡터가 되어 거리와 곱을 계산할 수 있다. 그래서 처음 질문처럼 뜻을 이해하지 못하는 컴퓨터도, 공통 낱말을 세어 두 문장이 얼마나 비슷한지 수로 나타낼 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-3.html#card-cm2-set-ops"><small class="mono">공통수학2 2.3</small>두 집합으로 새 집합을 만드는 방법은 몇 가지일까?</a><a href="../../c/cm2/2-3.html#card-cm2-set-laws"><small class="mono">공통수학2 2.3</small>두 식이 같은 집합인지 그림으로 어떻게 확인할까?</a><a href="../../c/cm2/2-3.html#text-cm2-set-ops"><small class="mono">공통수학2 2.3</small>집합의 연산</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/2-2.html#card-aimath-word-count"><small class="mono">인공지능 수학 2.2</small>낱말을 세기만 해도 글의 요점을 찾을 수 있을까?</a><a href="../../c/aimath/2-2.html#card-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>가장 많이 나온 낱말이 그 글의 핵심어일까?</a><a href="../../c/aimath/2-2.html#text-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>빈도수 벡터와 요약</a></div></nav>
+
       <article class="card" id="card-aimath-jaccard">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>두 문장이 얼마나 비슷한지 수로 나타낼 수 있을까?</h2><span class="kind">집합과 자카드 유사도 · 조작</span>
+          <span class="no">탐구 1</span><h2>두 문장이 얼마나 비슷한지 수로 나타낼 수 있을까?</h2><span class="kind">집합과 자카드 유사도 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <div class="presets" role="group" aria-label="예시 문장 쌍"><button class="chip" type="button" data-p="0">비슷한 질문</button><button class="chip" type="button" data-p="1">같은 낱말, 다른 뜻</button><button class="chip" type="button" data-p="2">다른 주제</button></div>
             <label class="small">문장 A<textarea class="ta" aria-label="문장 A"></textarea></label>
             <label class="small">문장 B<textarea class="tb" aria-label="문장 B"></textarea></label>
-            <div class="venn" aria-live="polite"><div class="a"><b>A에만</b><span class="oa"></span></div><div class="ab"><b>A ∩ B</b><span class="oab"></span></div><div class="b"><b>B에만</b><span class="ob"></span></div></div>
+            <div class="venn" aria-live="polite"><div class="a"><p class="vh">A에만</p><span class="oa"></span></div><div class="ab"><p class="vh">A ∩ B</p><span class="oab"></span></div><div class="b"><p class="vh">B에만</p><span class="ob"></span></div></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">낱말은 띄어쓰기로 나누고 흔한 조사(은, 는, 이, 가, 을, 를 등)만 떼는 아주 단순한 방법으로 나눴습니다.</p>
+            <p class="fig-note">낱말은 띄어쓰기로 나누고 흔한 조사(은, 는, 이, 가, 을, 를 등)만 떼는 아주 단순한 방법으로 나눴다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>고객 상담 챗봇은 "비밀번호를 잊어버렸어요"와 "비밀번호가 기억나지 않아요"가 같은 질문임을 알아야 합니다. 컴퓨터가 두 문장의 비슷한 정도를 계산하려면 어떻게 해야 할까요?</li>
-            <li><span class="tag">복원</span>\(n(A \cup B) = n(A) + n(B) - n(A \cap B)\).</li>
-            <li><span class="tag">설명</span>문장을 낱말의 <em>집합</em>으로 나타내면, 두 문장에 함께 나오는 낱말은 교집합, 둘 중 하나라도 나오는 낱말은 합집합입니다. <em>자카드 유사도</em> \(J(A, B) = \dfrac{n(A \cap B)}{n(A \cup B)}\)는 0(공통 낱말 없음)과 1(낱말이 같음) 사이의 값입니다.</li>
-            <li><span class="tag">연결</span>검색 엔진의 중복 문서 찾기, 표절 검사, 추천 시스템(함께 산 상품의 집합 비교)에서 자카드 유사도를 씁니다. 다음 카드에서는 낱말의 횟수까지 담는 벡터로 나타냅니다.</li>
-            <li><span class="tag">적용</span>예시 세 쌍의 유사도를 비교하고, 직접 문장을 바꿔 유사도를 0.5 이상으로 만들어 보세요. "같은 낱말, 다른 뜻" 쌍에서는 무엇이 문제인가요?</li>
-            <li class="warn"><span class="tag">판단</span>집합은 순서와 횟수를 무시합니다. "고양이가 강아지를 쫓았다"와 "강아지가 고양이를 쫓았다"는 자카드 유사도가 1이지만 뜻은 전혀 다릅니다. 또 "잊어버렸다"와 "기억나지 않는다"처럼 낱말이 달라도 뜻이 같은 경우는 잡아내지 못합니다.</li>
+            <li><span class="tag">질문</span>고객 상담 챗봇은 “비밀번호를 잊어버렸어요”와 “비밀번호가 기억나지 않아요”가 같은 질문임을 알아야 한다. 컴퓨터가 두 문장의 비슷한 정도를 계산하려면 어떻게 해야 할까?</li>
+            <li><span class="tag">복원</span>두 집합의 합집합의 원소 개수는 \(n(A \cup B) = n(A) + n(B) - n(A \cap B)\)이다.</li>
+            <li><span class="tag">설명</span>문장을 낱말의 <em>집합</em>으로 나타내면, 두 문장에 함께 나오는 낱말은 교집합, 둘 중 하나라도 나오는 낱말은 합집합이 된다. 그래서 <em>자카드 유사도</em> \(J(A, B) = \dfrac{n(A \cap B)}{n(A \cup B)}\)는 0(공통 낱말 없음)과 1(낱말이 같음) 사이의 값이다.</li>
+            <li><span class="tag">연결</span>검색 엔진의 중복 문서 찾기, 표절 검사, 함께 산 상품의 집합을 비교하는 추천 시스템에서 자카드 유사도를 쓴다. 다음 카드에서는 낱말의 횟수까지 담는 벡터로 나타낸다.</li>
+            <li><span class="tag">적용</span>예시 세 쌍의 유사도를 비교하고, 직접 문장을 바꿔 유사도를 0.5 이상으로 만들어 보자. 그리고 ‘같은 낱말, 다른 뜻’ 쌍에서는 무엇이 문제인지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>집합은 순서와 횟수를 무시한다. 그래서 “고양이가 강아지를 쫓았다”와 “강아지가 고양이를 쫓았다”는 자카드 유사도가 1이지만 뜻은 전혀 다르다. 또 ‘잊어버렸다’와 ‘기억나지 않는다’처럼 낱말이 달라도 뜻이 같은 경우는 잡아내지 못한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(A = \{\)사과, 배, 감\(\}\), \(B = \{\)배, 감, 귤, 밤\(\}\)일 때 자카드 유사도는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac25\)<span class="why"><b>맞습니다.</b> 교집합 {배, 감} 2개, 합집합 5개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac27\)<span class="why"><b>합집합을 \(3 + 4\)로 셌습니다.</b> 겹치는 2개를 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac23\)<span class="why"><b>\(A\)의 원소 수로 나눴습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac12\)<span class="why"><b>\(B\)의 원소 수로 나눴습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac25\)<span class="why"><b>맞다.</b> 교집합 {배, 감} 2개, 합집합 5개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac27\)<span class="why"><b>합집합을 \(3 + 4\)로 셌다.</b> 겹치는 2개를 빼야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac23\)<span class="why"><b>\(A\)의 원소 수로 나눴다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac12\)<span class="why"><b>\(B\)의 원소 수로 나눴다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-3.html#card-cm2-set-ops"><small class="mono">공통수학2 2.3</small>두 집합으로 새 집합을 만드는 방법은 몇 가지일까?</a><a href="../../c/cm2/2-3.html#card-cm2-set-laws"><small class="mono">공통수학2 2.3</small>두 식이 같은 집합인지 그림으로 어떻게 확인할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/2-2.html#card-aimath-word-count"><small class="mono">인공지능 수학 2.2</small>낱말을 세기만 해도 글의 요점을 찾을 수 있을까?</a><a href="../../c/aimath/2-2.html#card-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>가장 많이 나온 낱말이 그 글의 핵심어일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-3.html#card-cm2-set-ops"><small class="mono">공통수학2 2.3</small>두 집합으로 새 집합을 만드는 방법은 몇 가지일까?</a><a href="../../c/cm2/2-3.html#card-cm2-set-laws"><small class="mono">공통수학2 2.3</small>두 식이 같은 집합인지 그림으로 어떻게 확인할까?</a><a href="../../c/cm2/2-3.html#text-cm2-set-ops"><small class="mono">공통수학2 2.3</small>집합의 연산</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/2-2.html#card-aimath-word-count"><small class="mono">인공지능 수학 2.2</small>낱말을 세기만 해도 글의 요점을 찾을 수 있을까?</a><a href="../../c/aimath/2-2.html#card-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>가장 많이 나온 낱말이 그 글의 핵심어일까?</a><a href="../../c/aimath/2-2.html#text-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>빈도수 벡터와 요약</a></div></nav>
 
       <article class="card" id="card-aimath-onehot">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>문장을 숫자들의 줄, 곧 벡터로 바꿀 수 있을까?</h2><span class="kind">원-핫 벡터와 낱말 주머니 · 만들기</span>
+          <span class="no">탐구 2</span><h2>문장을 숫자들의 줄, 곧 벡터로 바꿀 수 있을까?</h2><span class="kind">원-핫 벡터와 낱말 주머니 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">아래 낱말을 눌러 나만의 문장을 만드세요(같은 낱말을 여러 번 눌러도 됩니다). 표의 맨 아래 줄이 내 문장의 벡터입니다.</p>
+            <p class="small">아래 낱말을 눌러 나만의 문장을 만들어 보자(같은 낱말을 여러 번 눌러도 된다). 표의 맨 아래 줄이 내 문장의 벡터이다.</p>
             <div class="words" role="group" aria-label="낱말 고르기"></div>
             <div class="presets"><button class="chip go-clear" type="button">내 문장 지우기</button></div>
             <p class="mine mono small"></p>
@@ -114,39 +171,39 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>컴퓨터는 글자를 그대로 계산할 수 없습니다. 문장을 수로 바꿔야 비교하거나 분류할 수 있는데, 어떻게 바꿀 수 있을까요?</li>
-            <li><span class="tag">복원</span>좌표평면의 두 점 \((a_1, a_2)\), \((b_1, b_2)\) 사이의 거리는 \(\sqrt{(a_1 - b_1)^2 + (a_2 - b_2)^2}\)입니다.</li>
-            <li><span class="tag">설명</span>\(n\)개의 수를 순서대로 늘어놓은 \((a_1, a_2, \ldots, a_n)\)을 \(n\)차원 <em>벡터</em>라 하고, 두 벡터의 거리도 같은 방법으로 \(\sqrt{(a_1 - b_1)^2 + \cdots + (a_n - b_n)^2}\)라 합니다.쓰는 낱말을 모두 모아 순서를 정한 것을 <em>낱말 사전</em>이라 합니다. 사전의 \(k\)번째 낱말은 \(k\)번째 성분만 1이고 나머지는 0인 <em>원-핫 벡터</em>로 나타냅니다. 문장은 그 안의 낱말 벡터를 모두 더한 벡터, 곧 각 낱말이 몇 번 나왔는지를 적은 벡터로 나타낼 수 있습니다(<em>낱말 주머니</em>). 이렇게 하면 문장끼리의 거리를 계산할 수 있습니다.</li>
-            <li><span class="tag">연결</span>다음 절에서는 이 횟수 벡터로 글을 요약하고, 낱말마다 중요도를 다르게 줍니다. 실제 인공지능은 비슷한 뜻의 낱말이 가까운 벡터가 되도록 학습한 벡터(낱말 임베딩)를 씁니다.</li>
-            <li><span class="tag">적용</span>문장 1과 가장 가까운 문장을 만들어 보세요. 낱말 순서를 바꾸면 벡터는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>원-핫 벡터에서는 서로 다른 두 낱말의 거리가 모두 \(\sqrt2\)로 같습니다. "강아지"와 "개"가 "강아지"와 "비행기"만큼 다르다고 보는 셈이라, 뜻의 가까움은 담지 못합니다.</li>
+            <li><span class="tag">질문</span>컴퓨터는 글자를 그대로 계산할 수 없다. 문장을 수로 바꿔야 비교하거나 분류할 수 있는데, 어떻게 바꿀 수 있을까?</li>
+            <li><span class="tag">복원</span>좌표평면의 두 점 \((a_1, a_2)\), \((b_1, b_2)\) 사이의 거리는 \(\sqrt{(a_1 - b_1)^2 + (a_2 - b_2)^2}\)이다.</li>
+            <li><span class="tag">설명</span>\(n\)개의 수를 순서대로 늘어놓은 \((a_1, a_2, \ldots, a_n)\)을 \(n\)차원 <em>벡터</em>라 하고, 두 벡터의 거리도 같은 방법으로 \(\sqrt{(a_1 - b_1)^2 + \cdots + (a_n - b_n)^2}\)라 한다. 쓰는 낱말을 모두 모아 순서를 정한 것을 <em>낱말 사전</em>이라 하며, 사전의 \(k\)번째 낱말은 \(k\)번째 성분만 1이고 나머지는 0인 <em>원-핫 벡터</em>로 나타낸다. 그러면 문장은 그 안의 낱말 벡터를 모두 더한 벡터, 곧 각 낱말이 몇 번 나왔는지를 적은 벡터로 나타낼 수 있고(<em>낱말 주머니</em>), 문장끼리의 거리도 계산할 수 있다.</li>
+            <li><span class="tag">연결</span>다음 절에서는 이 횟수 벡터로 글을 요약하고, 낱말마다 중요도를 다르게 준다. 실제 인공지능은 비슷한 뜻의 낱말이 가까운 벡터가 되도록 학습한 벡터(낱말 임베딩)를 쓴다.</li>
+            <li><span class="tag">적용</span>문장 1과 가장 가까운 문장을 만들어 보자. 그리고 낱말 순서를 바꾸면 벡터가 어떻게 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>원-핫 벡터에서는 서로 다른 두 낱말의 거리가 모두 \(\sqrt2\)로 같다. ‘강아지’와 ‘개’가 ‘강아지’와 ‘비행기’만큼 다르다고 보는 셈이라, 뜻의 가까움은 담지 못한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">사전이 (나, 너, 좋다, 싫다)일 때 "나 너 좋다 너"의 벡터는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((1, 2, 1, 0)\)<span class="why"><b>맞습니다.</b> "너"가 두 번 나옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, 1, 1, 0)\)<span class="why"><b>나온 여부만 적은 집합 표현입니다.</b> 횟수 벡터는 2를 적습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((1, 2, 1)\)<span class="why"><b>사전의 낱말 수만큼 성분이 있어야 합니다.</b> "싫다"는 0입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((0, 0, 0, 1)\)<span class="why"><b>"싫다"의 원-핫 벡터입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((1, 2, 1, 0)\)<span class="why"><b>맞다.</b> "너"가 두 번 나온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, 1, 1, 0)\)<span class="why"><b>나온 여부만 적은 집합 표현이다.</b> 횟수 벡터는 2를 적는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((1, 2, 1)\)<span class="why"><b>사전의 낱말 수만큼 성분이 있어야 한다.</b> "싫다"는 0이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((0, 0, 0, 1)\)<span class="why"><b>"싫다"의 원-핫 벡터이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-3.html#card-cm2-set-ops"><small class="mono">공통수학2 2.3</small>두 집합으로 새 집합을 만드는 방법은 몇 가지일까?</a><a href="../../c/cm2/2-3.html#card-cm2-set-laws"><small class="mono">공통수학2 2.3</small>두 식이 같은 집합인지 그림으로 어떻게 확인할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/2-2.html#card-aimath-word-count"><small class="mono">인공지능 수학 2.2</small>낱말을 세기만 해도 글의 요점을 찾을 수 있을까?</a><a href="../../c/aimath/2-2.html#card-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>가장 많이 나온 낱말이 그 글의 핵심어일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-3.html#card-cm2-set-ops"><small class="mono">공통수학2 2.3</small>두 집합으로 새 집합을 만드는 방법은 몇 가지일까?</a><a href="../../c/cm2/2-3.html#card-cm2-set-laws"><small class="mono">공통수학2 2.3</small>두 식이 같은 집합인지 그림으로 어떻게 확인할까?</a><a href="../../c/cm2/2-3.html#text-cm2-set-ops"><small class="mono">공통수학2 2.3</small>집합의 연산</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/2-2.html#card-aimath-word-count"><small class="mono">인공지능 수학 2.2</small>낱말을 세기만 해도 글의 요점을 찾을 수 있을까?</a><a href="../../c/aimath/2-2.html#card-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>가장 많이 나온 낱말이 그 글의 핵심어일까?</a><a href="../../c/aimath/2-2.html#text-aimath-tfidf"><small class="mono">인공지능 수학 2.2</small>빈도수 벡터와 요약</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=aimath-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=aimath&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">14문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -154,6 +211,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/aimath/body.js"></script>
 <script src="../../js/cards/aimath/text.js"></script>
 <script src="../../js/cards/aimath/jaccard.js"></script>
 <script src="../../js/cards/aimath/onehot.js"></script>

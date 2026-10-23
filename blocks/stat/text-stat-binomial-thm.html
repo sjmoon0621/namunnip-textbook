@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "1-3",
+  "short": "본문 · 이항정리"
+}
+-->
+<article class="card reading" id="text-stat-binomial-thm" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>이항정리</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\((a + b)^2 = a^2 + 2ab + b^2\), \((a + b)^3 = a^3 + 3a^2b + 3ab^2 + b^3\)이다. 그러면 \((a + b)^{10}\)에서 \(a^7b^3\)의 계수는 얼마일까? 열 번 곱해 전개하지 않고 계수를 바로 알아내는 방법이 있을까?</p>
+    <figure class="q-fig" data-q="stat-pascal">
+      <svg viewBox="0 0 520 260" role="img" aria-label="파스칼의 삼각형, 선택한 줄의 수가 (a+b)^n의 계수"></svg>
+      <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="0" max="9" step="1" value="4"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 파스칼의 삼각형의 \(n\)번째 줄이 \((a + b)^n\)의 계수이며, 각 수는 바로 위 두 수의 합이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>다항식의 곱셈과 곱셈 공식(공통수학1), 조합 \({}_n\mathrm{C}_r\)와 그 성질, 같은 것이 있는 순열(<a href="1-1.html">중복순열과 같은 것이 있는 순열</a>).</div>
+
+    <h3><span class="no">1.3.1</span>괄호마다 하나씩 고르기</h3>
+    <p>\((a + b)^3 = (a + b)(a + b)(a + b)\)를 분배법칙으로 전개하면, 세 괄호에서 \(a\)나 \(b\)를 하나씩 골라 곱한 항이 모두 나온다. 가령 \(a^2b\)는 세 괄호 가운데 어느 하나에서 \(b\)를, 나머지에서 \(a\)를 고를 때 생긴다. \(b\)를 고를 괄호를 정하는 방법이 \({}_3\mathrm{C}_1 = 3\)가지이므로 \(a^2b\)의 계수는 3이다.</p>
+    <p>같은 생각을 \(n\)제곱으로 넓히자. \((a + b)^n\)을 전개할 때 \(a^{n-r}b^r\)이 나오는 것은 \(n\)개의 괄호 가운데 \(r\)개에서 \(b\)를 고르는 경우이고, 그 방법은 \({}_n\mathrm{C}_r\)가지이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">이항정리</span></span>
+      <p>자연수 \(n\)에 대하여 \[(a + b)^n = {}_n\mathrm{C}_0a^n + {}_n\mathrm{C}_1a^{n-1}b + \cdots + {}_n\mathrm{C}_ra^{n-r}b^r + \cdots + {}_n\mathrm{C}_nb^n = \sum_{r=0}^{n}{}_n\mathrm{C}_ra^{n-r}b^r\]</p>
+    </div>
+    <p>계수 \({}_n\mathrm{C}_r\)를 이항계수라 하고, \({}_n\mathrm{C}_ra^{n-r}b^r\)를 일반항이라 한다. 처음 질문의 \(a^7b^3\)의 계수는 \({}_{10}\mathrm{C}_3 = 120\)이다.</p>
+
+    <h3><span class="no">1.3.2</span>파스칼의 삼각형</h3>
+    <p>이항계수를 줄마다 늘어놓으면 그림 1의 삼각형이 된다. 조합의 성질 \({}_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r\)에 따라 각 수는 바로 위 두 수의 합이고, \({}_n\mathrm{C}_r = {}_n\mathrm{C}_{n-r}\)이므로 좌우가 대칭이다. 슬라이더로 줄을 바꾸어 보면 줄의 수들이 그대로 전개식의 계수이다.<sup class="fn"><a href="#fn-stat-binomial-thm-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 130" role="img" aria-label="(a+b)^4 전개에서 b를 고르는 괄호 수에 따른 항">
+        <g class="s"><text x="20" y="30">(a + b)(a + b)(a + b)(a + b)</text>
+          <text x="20" y="65">b를 0개 고름 → a⁴ (₄C₀ = 1)</text><text x="260" y="65">1개 → a³b (₄C₁ = 4)</text>
+          <text x="20" y="95">2개 → a²b² (₄C₂ = 6)</text><text x="200" y="95">3개 → ab³ (₄C₃ = 4)</text><text x="380" y="95">4개 → b⁴ (1)</text>
+          <text x="20" y="122" class="td">a⁴ + 4a³b + 6a²b² + 4ab³ + b⁴</text></g>
+      </svg>
+      <figcaption>그림 2. 각 항의 계수는 \(b\)를 고를 괄호를 정하는 방법의 수이다.</figcaption>
+    </figure>
+
+    <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+      <p>\((2x - 1)^5\)의 전개식에서 \(x^3\)의 계수를 구하여라. 또 \({}_n\mathrm{C}_0 + {}_n\mathrm{C}_1 + \cdots + {}_n\mathrm{C}_n\)의 값을 이항정리로 구하여라.</p>
+    </div>
+    <p>일반항은 \({}_5\mathrm{C}_r(2x)^{5-r}(-1)^r\)이다. \(x^3\)이 되려면 \(5 - r = 3\), 곧 \(r = 2\)이다. 따라서 계수는 \({}_5\mathrm{C}_2 \times 2^3 \times (-1)^2 = 10 \times 8 = 80\)이다. \(2x\)의 계수 2를 세제곱하는 것과 \(-1\)의 부호를 빠뜨리지 않아야 한다.</p>
+    <p>두 번째 합은 이항정리에서 \(a = b = 1\)을 넣으면 \((1 + 1)^n = \displaystyle\sum_{r=0}^{n}{}_n\mathrm{C}_r\)이다. 따라서 합은 \(2^n\)이다.</p>
+    <p>이 결과는 세는 방법으로도 읽힌다. 원소가 \(n\)개인 집합의 부분집합은 원소를 0개, 1개, …, \(n\)개 고르는 것을 모두 더한 수이고, 동시에 원소마다 넣고 빼는 \(2^n\)가지이다. 파스칼의 삼각형에서 각 줄의 합이 1, 2, 4, 8, …로 두 배씩 커지는 것과도 같다. 아래 탐구 카드에서 괄호에서 고르는 과정과 삼각형의 규칙을 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-binomial-thm-1">파스칼의 삼각형은 프랑스의 파스칼이 1650년대에 체계적으로 다루어 이름이 붙었지만, 그보다 앞서 중국의 양휘(13세기)와 페르시아의 수학자들도 같은 표를 알고 있었다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>\((a + b)^n\)을 전개하면 \(n\)개의 괄호에서 \(a\)나 \(b\)를 하나씩 골라 곱하므로, \(a^{n-r}b^r\)의 계수는 \(b\)를 고를 괄호 \(r\)개를 정하는 방법의 수 \({}_n\mathrm{C}_r\)이다. 이 계수들은 파스칼의 삼각형을 이룬다. 그래서 처음 질문의 \((a + b)^{10}\)에서 \(a^7b^3\)의 계수는 전개하지 않고도 \({}_{10}\mathrm{C}_3 = 120\)이다.</p></div>
+  </div>
+</article>

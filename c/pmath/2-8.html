@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>벡터로 나타낸 도형의 방정식 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="벡터로 직선과 평면, 원과 구의 방정식을 나타낸다. 매개변수로 직선과 평면을 그리는 카드, |p − c| = r 하나로 원과 구를 다루는 카드, 빛줄기와 구의 교점으로 그림을 그리는 레이 트레이싱 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-param-line-plane canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -46,19 +51,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-param-line-plane"><span class="mono">2.8.1</span>매개변수로 그리는 직선과 평면</a></li>
-        <li><a href="#card-pmath-circle-sphere-vec"><span class="mono">2.8.2</span>|p − c| = r로 보는 원과 구</a></li>
-        <li><a href="#card-pmath-raytrace"><span class="mono">2.8.3</span>레이 트레이싱</a></li>
+        <li><a href="#text-pmath-vector-equations"><span class="mono">본문</span>벡터로 나타낸 도형의 방정식</a></li>
+        <li><a href="#card-pmath-param-line-plane"><span class="mono">탐구 1</span>매개변수로 그리는 직선과 평면</a></li>
+        <li><a href="#card-pmath-circle-sphere-vec"><span class="mono">탐구 2</span>|p − c| = r로 보는 원과 구</a></li>
+        <li><a href="#card-pmath-raytrace"><span class="mono">탐구 3</span>레이 트레이싱</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-2-8"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=2-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-2-8">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-vector-equations" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>벡터로 나타낸 도형의 방정식</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">컴퓨터 그래픽의 광선 추적은 카메라에서 화면의 각 점을 지나는 빛줄기를 쏘아, 그 빛줄기가 장면 속 물체에 처음 닿는 점을 찾아 색을 정한다. 원점의 카메라에서 앞쪽 \(z\)축 방향으로 5 m 떨어진 곳에 반지름 3 m인 공이 있다. 정면으로 쏜 빛줄기는 공의 몇 m 앞에서 닿을까? 방향 \((0, 0.6, 0.8)\)으로 비스듬히 쏜 빛줄기는 공에 닿을까, 비켜 갈까? 빛줄기와 공을 모두 벡터의 식으로 쓰면 답을 계산할 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="카메라에서 쏜 두 빛줄기와 공">
+              <circle cx="60" cy="110" r="5" class="fk"/><text x="20" y="134" class="s">카메라 O</text>
+              <circle cx="210" cy="110" r="90" class="lb"/><circle cx="210" cy="110" r="3" class="fk"/><text x="216" y="126" class="s">중심 (0, 0, 5)</text>
+              <line x1="60" y1="110" x2="120" y2="110" class="d"/><circle cx="120" cy="110" r="4" class="fd"/><text x="70" y="102" class="s td">t = 2</text>
+              <line x1="60" y1="110" x2="204" y2="2" class="a"/><circle cx="156" cy="38" r="4" class="fa"/><text x="40" y="30" class="s ta">접점 t = 4</text>
+              <line x1="210" y1="110" x2="156" y2="38" class="dsh"/><text x="196" y="66" class="s">3</text>
+              <text x="330" y="190" class="s">z축 방향 →</text>
+            </svg>
+            <figcaption>그림 1. 정면 빛줄기는 \(t = 2\)에서 공에 닿고, 비스듬한 빛줄기는 \(t = 4\)에서 공을 스치기만 한다. 그림은 \(yz\) 평면의 단면이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>위치벡터, 벡터의 내적(<a href="2-7.html">위치벡터, 내적과 외적</a>), 직선의 방정식, 구의 방정식(<a href="2-5.html">공간좌표와 구의 방정식</a>).</div>
+
+          <h3><span class="no">2.8.1</span>매개변수로 그리는 직선과 평면</h3>
+          <p>점 \(A\)를 지나고 방향벡터가 \(\vec u\)인 직선 위의 점 \(P\)는 \(A\)에서 \(\vec u\) 방향으로 몇 배 간 곳이므로, 위치벡터로 \(\vec p = \vec a + t\vec u\)라 쓴다. 매개변수 \(t\)가 실수 전체를 지나면 직선 전체가 그려진다. 같은 방법으로 평행하지 않은 두 방향 \(\vec u\), \(\vec v\)를 쓰면 \(\vec p = \vec a + s\vec u + t\vec v\)가 평면 하나를 그린다. 평면은 법선 벡터 \(\vec n\)으로도 나타내는데, 평면 위의 모든 점 \(P\)에 대해 \(\overrightarrow{AP}\)가 \(\vec n\)과 수직이어야 하므로 \(\vec n\cdot(\vec p - \vec a) = 0\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.8.1 <span class="nm">벡터로 나타낸 도형</span></span>
+            <p>직선은 \(\vec p = \vec a + t\vec u\), 평면은 \(\vec n\cdot(\vec p - \vec a) = 0\), 중심이 \(C\)이고 반지름이 \(r\)인 구는 \(|\vec p - \vec c| = r\)이다. 원점에서 단위 방향 \(\vec d\)로 쏜 빛줄기 \(\vec p = t\vec d\)가 구와 만나는 \(t\)는 \[t^2 - 2(\vec d\cdot\vec c)\,t + |\vec c|^2 - r^2 = 0\]의 근이다.</p>
+          </div>
+          <p>빛줄기와 구의 교점을 구하는 식은 구의 방정식 \(|\vec p - \vec c|^2 = r^2\)에 \(\vec p = t\vec d\)를 넣고 내적을 전개하면 나온다. \(|\vec d| = 1\)이므로 \(|t\vec d - \vec c|^2 = t^2 - 2t\,\vec d\cdot\vec c + |\vec c|^2\)이다. 이차방정식의 판별식이 양수이면 빛줄기가 공을 뚫고 지나가 두 점에서 만나고, 0이면 스치고, 음수이면 비켜 간다. 두 근 가운데 작은 양수가 카메라에서 처음 닿는 점이다.<sup class="fn"><a href="#fn-pmath-vector-equations-1">1</a></sup></p>
+
+          <h3><span class="no">2.8.2</span>원과 구는 같은 식</h3>
+          <p>\(|\vec p - \vec c| = r\)은 중심에서 거리가 \(r\)인 점들의 모임을 뜻하므로, 평면벡터로 읽으면 원, 공간벡터로 읽으면 구이다. 그래서 벡터 식 하나가 차원에 따라 다른 도형을 나타낸다. 마찬가지로 \(\vec n\cdot(\vec p - \vec a) = 0\)은 평면벡터로는 직선, 공간벡터로는 평면이다. 성분으로 풀어 쓰면 식이 길어지지만, 벡터로 쓰면 도형의 뜻이 그대로 드러나고 계산도 내적 몇 번으로 줄어든다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 빛줄기와 구의 교점 계산">
+              <g class="s">
+                <text x="20" y="22">빛줄기 방향 d</text><text x="150" y="22">d · c</text><text x="230" y="22">이차방정식</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(0, 0, 1)</text><text x="150" y="52">5</text><text x="230" y="52">t² − 10t + 16 = 0</text><text x="400" y="52" class="td">t = 2, 8 (뚫음)</text>
+                <text x="20" y="74">(0, 0.6, 0.8)</text><text x="150" y="74">4</text><text x="230" y="74">t² − 8t + 16 = 0</text><text x="400" y="74" class="ta">t = 4 (스침)</text>
+                <text x="20" y="96">(0, 0.8, 0.6)</text><text x="150" y="96">3</text><text x="230" y="96">t² − 6t + 16 = 0</text><text x="400" y="96">근 없음 (비켜 감)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 중심 \((0, 0, 5)\), 반지름 3인 구에서 \(|\vec c|^2 - r^2 = 16\)이다. 판별식의 부호로 빛줄기가 공에 닿는지 판단한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.8.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.8.2</span>
+            <p>처음 질문의 두 빛줄기가 공에 처음 닿는 점의 좌표를 구하여라. 정면 빛줄기가 닿은 점에서 공의 법선 벡터를 구하고, 빛줄기와 이루는 각을 구하여라.</p>
+          </div>
+          <p>정면 빛줄기 \(\vec d = (0, 0, 1)\)은 \(\vec d\cdot\vec c = 5\)이므로 \(t^2 - 10t + 16 = 0\)에서 \(t = 2\) 또는 8이다. 처음 닿는 점은 \(t = 2\)인 \((0, 0, 2)\)로 카메라에서 2 m 앞이다. 비스듬한 빛줄기 \((0, 0.6, 0.8)\)은 \(\vec d\cdot\vec c = 4\)이므로 \(t^2 - 8t + 16 = (t - 4)^2 = 0\)에서 \(t = 4\)인 한 점 \((0, 2.4, 3.2)\)에서 공을 스친다. 이 점과 중심 사이의 거리는 \(\sqrt{2.4^2 + 1.8^2} = 3\)으로 반지름과 같다.</p>
+          <p>\((0, 0, 2)\)에서 공의 법선은 중심에서 그 점으로 향하는 \((0, 0, 2) - (0, 0, 5) = (0, 0, -3)\), 곧 단위벡터 \((0, 0, -1)\)이다. 빛줄기 방향 \((0, 0, 1)\)과의 내적이 \(-1\)이므로 둘은 정반대로, 빛줄기가 공을 정면으로 친다. 그래서 이 점은 가장 밝게 칠해지고, 스치는 점은 법선과 빛줄기가 수직이어서 가장자리처럼 어둡게 칠해진다. 즉 직선과 구를 벡터 식으로 쓰면 둘의 교점은 내적으로 만든 이차방정식 하나로 구해지고, 판별식이 빛줄기가 물체에 닿는지를 알려 준다.</p>
+          <p>아래 탐구 카드에서 매개변수를 바꾸며 직선과 평면을 그려 보고, 빛줄기와 구의 교점을 계산해 직접 3D 그림을 만들어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-vector-equations-1">광선 추적은 1980년 미국의 휘티드가 반사와 굴절까지 따라가는 방법으로 발전시켰다. 화면 한 장에 빛줄기를 수백만 개 쏘아야 해서 오랫동안 영화에서만 쓰였지만, 지금은 게임용 그래픽 카드가 1초에 수십억 번의 교점 계산을 해낸다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>직선은 \(\vec p = \vec a + t\vec u\), 평면은 \(\vec n\cdot(\vec p - \vec a) = 0\), 구는 \(|\vec p - \vec c| = r\)로 나타내며, 같은 벡터 식이 평면에서는 원과 직선, 공간에서는 구와 평면을 그린다. 빛줄기와 구의 교점은 구의 식에 빛줄기의 식을 넣어 얻는 \(t\)의 이차방정식으로 구하고, 판별식으로 닿는지를 판단한다. 처음 질문의 정면 빛줄기는 카메라에서 2 m 앞의 \((0, 0, 2)\)에서 공에 닿고, 비스듬한 빛줄기는 \((0, 2.4, 3.2)\)에서 공을 스친다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-4.html#text-geo-line-eq"><small class="mono">기하 3.4</small>직선의 방정식</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a></div></nav>
+
       <article class="card" id="card-pmath-param-line-plane">
         <header class="card-head">
-          <span class="no">2.8.1</span><h2>매개변수 하나는 직선을, 둘은 평면을 그릴까?</h2><span class="kind">직선과 평면의 벡터방정식 · 조작</span>
+          <span class="no">탐구 1</span><h2>매개변수 하나는 직선을, 둘은 평면을 그릴까?</h2><span class="kind">직선과 평면의 벡터방정식 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,34 +136,34 @@
                 <div><dt class="d-c">\(\vec{n}\cdot(\vec{p} - \vec{a})\)</dt><dd class="n-c">—</dd></div>
               </dl>
               <div class="presets"><button class="chip go-clear" type="button">자취 지우기</button></div>
-              <p class="fig-note">A(1, −1, 1), \(\vec{u} = (1, 1, 0)\), \(\vec{v} = (0, 1, 1)\)입니다. 슬라이더를 움직이면 점 P가 지나간 자리에 점이 남습니다. 그림을 끌면 돌아갑니다.</p>
+              <p class="fig-note">A(1, −1, 1), \(\vec{u} = (1, 1, 0)\), \(\vec{v} = (0, 1, 1)\)이다. 슬라이더를 움직이면 점 P가 지나간 자리에 점이 남는다. 그림을 끌면 돌아간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공간의 직선은 기울기 하나로 나타낼 수 없습니다. 평면의 방정식도 평면 위의 \(y = mx + k\)와는 모양이 다릅니다. 공간에서는 직선과 평면을 어떻게 식으로 쓸까요?</li>
-            <li><span class="tag">복원</span>위치벡터를 쓰면 점을 벡터로 다룰 수 있고, 벡터의 실수배 \(t\vec{u}\)는 \(\vec{u}\)와 같은 방향(또는 반대 방향)으로 길이만 바꾼 것입니다.</li>
-            <li><span class="tag">설명</span>점 A를 지나고 방향이 \(\vec{u}\)인 직선 위의 점은 "A에서 출발해 \(\vec{u}\) 방향으로 \(t\)만큼 간 점"이므로 <b>\(\vec{p} = \vec{a} + t\vec{u}\)</b>입니다. 방향을 하나 더 추가해 <b>\(\vec{p} = \vec{a} + s\vec{u} + t\vec{v}\)</b>로 두면 두 방향으로 자유롭게 움직이므로 평면이 됩니다(\(\vec{u}, \vec{v}\)가 평행하지 않을 때). 이 평면은 \(\vec{n} = \vec{u}\times\vec{v}\)와 수직이므로 <b>\(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\)</b>, 성분으로 쓰면 \(n_1(x - x_1) + n_2(y - y_1) + n_3(z - z_1) = 0\)이 평면의 방정식입니다.</li>
-            <li><span class="tag">연결</span>평면에서의 직선 \(y = mx + k\)도 \(\vec{p} = (0, k) + t(1, m)\)으로 쓸 수 있습니다. 벡터방정식은 차원과 상관없이 같은 모양이라 2차원, 3차원, 그 이상에서도 그대로 쓰입니다. 다음 카드의 원과 구도 마찬가지입니다.</li>
-            <li><span class="tag">적용</span>직선 모드에서 \(t\)를 끝까지 움직여 자취가 곧은 직선이 되는지 보세요. 평면 모드에서는 \(s\)와 \(t\)를 번갈아 움직여 자취로 평면을 채우세요. 자취의 모든 점에서 \(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\)인지 표로 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(\vec{u}\)와 \(\vec{v}\)가 평행하면 \(s\vec{u} + t\vec{v}\)는 한 방향으로만 움직여 평면이 아니라 직선이 됩니다. 이때 외적은 영벡터라 법선도 정할 수 없습니다. 또 같은 직선을 나타내는 벡터방정식은 하나가 아닙니다. A를 직선 위의 다른 점으로, \(\vec{u}\)를 그 실수배로 바꿔도 같은 직선입니다.</li>
+            <li><span class="tag">질문</span>공간의 직선은 기울기 하나로 나타낼 수 없다. 평면의 방정식도 평면 위의 \(y = mx + k\)와는 모양이 다르다. 공간에서는 직선과 평면을 어떻게 식으로 쓸까?</li>
+            <li><span class="tag">복원</span>위치벡터를 쓰면 점을 벡터로 다룰 수 있고, 벡터의 실수배 \(t\vec{u}\)는 \(\vec{u}\)와 같은 방향(또는 반대 방향)으로 길이만 바꾼 것이다.</li>
+            <li><span class="tag">설명</span>점 A를 지나고 방향이 \(\vec{u}\)인 직선 위의 점은 "A에서 출발해 \(\vec{u}\) 방향으로 \(t\)만큼 간 점"이므로 \(\vec{p} = \vec{a} + t\vec{u}\)이다. 방향을 하나 더 추가해 \(\vec{p} = \vec{a} + s\vec{u} + t\vec{v}\)로 두면 두 방향으로 자유롭게 움직이므로 평면이 된다(\(\vec{u}, \vec{v}\)가 평행하지 않을 때). 이 평면은 \(\vec{n} = \vec{u}\times\vec{v}\)와 수직이므로 \(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\), 성분으로 쓰면 \(n_1(x - x_1) + n_2(y - y_1) + n_3(z - z_1) = 0\)이 평면의 방정식이다.</li>
+            <li><span class="tag">연결</span>평면에서의 직선 \(y = mx + k\)도 \(\vec{p} = (0, k) + t(1, m)\)으로 쓸 수 있다. 벡터방정식은 차원과 상관없이 같은 모양이라 2차원, 3차원, 그 이상에서도 그대로 쓰인다. 다음 카드의 원과 구도 마찬가지이다.</li>
+            <li><span class="tag">적용</span>직선 모드에서 \(t\)를 끝까지 움직여 자취가 곧은 직선이 되는지 보자. 평면 모드에서는 \(s\)와 \(t\)를 번갈아 움직여 자취로 평면을 채우자. 자취의 모든 점에서 \(\vec{n}\cdot(\vec{p} - \vec{a}) = 0\)인지 표로 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\vec{u}\)와 \(\vec{v}\)가 평행하면 \(s\vec{u} + t\vec{v}\)는 한 방향으로만 움직여 평면이 아니라 직선이 된다. 이때 외적은 영벡터라 법선도 정할 수 없다. 또 같은 직선을 나타내는 벡터방정식은 하나가 아니다. A를 직선 위의 다른 점으로, \(\vec{u}\)를 그 실수배로 바꿔도 같은 직선이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">점 \((1, 0, 2)\)를 지나고 법선벡터가 \((2, -1, 3)\)인 평면의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2x - y + 3z = 8\)<span class="why"><b>맞습니다.</b> \(2(x - 1) - (y - 0) + 3(z - 2) = 0\)을 정리하면 \(2x - y + 3z = 8\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x + 2z = 8\)<span class="why"><b>점과 법선의 역할을 바꾸었습니다.</b> 법선의 성분이 \(x, y, z\)의 계수가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2x - y + 3z = 0\)<span class="why"><b>평면이 원점을 지난다고 보았습니다.</b> 점 \((1, 0, 2)\)를 넣으면 \(2 + 6 = 8\)이어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{x - 1}{2} = \frac{y}{-1} = \frac{z - 2}{3}\)<span class="why"><b>직선의 방정식입니다.</b> \((2, -1, 3)\)을 방향으로 하는 직선이 되어, 평면에 수직인 직선이 나옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2x - y + 3z = 8\)<span class="why"><b>맞다.</b> \(2(x - 1) - (y - 0) + 3(z - 2) = 0\)을 정리하면 \(2x - y + 3z = 8\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x + 2z = 8\)<span class="why"><b>점과 법선의 역할을 바꾸었다.</b> 법선의 성분이 \(x, y, z\)의 계수가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2x - y + 3z = 0\)<span class="why"><b>평면이 원점을 지난다고 보았다.</b> 점 \((1, 0, 2)\)를 넣으면 \(2 + 6 = 8\)이어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{x - 1}{2} = \frac{y}{-1} = \frac{z - 2}{3}\)<span class="why"><b>직선의 방정식이다.</b> \((2, -1, 3)\)을 방향으로 하는 직선이 되어, 평면에 수직인 직선이 나온다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/geo/3-5.html#card-geo-sphere-vec"><small class="mono">기하 3.5</small>중심에서 거리가 같은 점을 벡터로 쓰면?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-4.html#text-geo-line-eq"><small class="mono">기하 3.4</small>직선의 방정식</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a></div></nav>
 
       <article class="card" id="card-pmath-circle-sphere-vec">
         <header class="card-head">
-          <span class="no">2.8.2</span><h2>원과 구는 같은 식 하나로 쓸 수 있을까?</h2><span class="kind">원과 구의 벡터방정식 · 도전</span>
+          <span class="no">탐구 2</span><h2>원과 구는 같은 식 하나로 쓸 수 있을까?</h2><span class="kind">원과 구의 벡터방정식 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -120,34 +181,34 @@
                 <div><dt>점 P는</dt><dd class="n-w">—</dd></div>
               </dl>
               <p class="mono small found">—</p>
-              <p class="fig-note">중심은 원점, 반지름은 3입니다. 도전: 좌표가 모두 정수이면서 원(구) 위에 있는 점을 모두 찾아보세요. 좌표축 위의 점 말고도 있을까요?</p>
+              <p class="fig-note">중심은 원점, 반지름은 3이다. 도전해 보자. 좌표가 모두 정수이면서 원(구) 위에 있는 점을 모두 찾아보자. 좌표축 위의 점 말고도 있을까?</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원의 방정식 \(x^2 + y^2 = r^2\)과 구의 방정식 \(x^2 + y^2 + z^2 = r^2\)은 아주 닮았습니다. 두 식을 같은 말로 설명할 수 있을까요?</li>
-            <li><span class="tag">복원</span>벡터의 크기는 \(|\vec{v}| = \sqrt{v_1^2 + v_2^2}\) (공간에서는 \(\sqrt{v_1^2 + v_2^2 + v_3^2}\))이고, \(|\vec{v}|^2 = \vec{v}\cdot\vec{v}\)입니다.</li>
-            <li><span class="tag">설명</span>원과 구는 모두 "중심 C에서 거리가 \(r\)인 점들의 모임"입니다. 거리를 벡터의 크기로 쓰면 둘 다 <b>\(|\vec{p} - \vec{c}| = r\)</b>, 또는 \((\vec{p} - \vec{c})\cdot(\vec{p} - \vec{c}) = r^2\)입니다. 이 식을 성분으로 풀면 평면에서는 \((x - a)^2 + (y - b)^2 = r^2\), 공간에서는 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)이 나옵니다. \(|\vec{p} - \vec{c}| &lt; r\)이면 안쪽, \(&gt; r\)이면 바깥쪽입니다.</li>
-            <li><span class="tag">연결</span>벡터 식으로 쓰면 접선과 접평면도 간단해집니다. 원(구) 위의 점 \(\vec{p}_0\)에서의 접선(접평면)은 반지름 방향 \(\vec{p}_0 - \vec{c}\)에 수직이므로 \((\vec{p}_0 - \vec{c})\cdot(\vec{p} - \vec{p}_0) = 0\)입니다. 다음 카드는 직선과 구의 교점을 이 식으로 구합니다.</li>
-            <li><span class="tag">적용</span>점 P를 움직여 안쪽, 원(구) 위, 바깥쪽을 확인하세요. 공간 모드에서 좌표가 모두 정수인 구 위의 점을 찾아보세요. \(1^2 + 2^2 + 2^2 = 9\)를 떠올리면 몇 개나 나오나요? 평면 모드에서는 몇 개인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(|\vec{p} - \vec{c}| = r\)을 \(\vec{p} - \vec{c} = r\)로 쓰면 안 됩니다. 왼쪽은 벡터, 오른쪽은 수라서 같을 수 없습니다. 거리는 반드시 벡터의 크기로 재야 합니다.</li>
+            <li><span class="tag">질문</span>원의 방정식 \(x^2 + y^2 = r^2\)과 구의 방정식 \(x^2 + y^2 + z^2 = r^2\)은 아주 닮았다. 두 식을 같은 말로 설명할 수 있을까?</li>
+            <li><span class="tag">복원</span>벡터의 크기는 \(|\vec{v}| = \sqrt{v_1^2 + v_2^2}\) (공간에서는 \(\sqrt{v_1^2 + v_2^2 + v_3^2}\))이고, \(|\vec{v}|^2 = \vec{v}\cdot\vec{v}\)이다.</li>
+            <li><span class="tag">설명</span>원과 구는 모두 "중심 C에서 거리가 \(r\)인 점들의 모임"이다. 거리를 벡터의 크기로 쓰면 둘 다 \(|\vec{p} - \vec{c}| = r\), 또는 \((\vec{p} - \vec{c})\cdot(\vec{p} - \vec{c}) = r^2\)이다. 이 식을 성분으로 풀면 평면에서는 \((x - a)^2 + (y - b)^2 = r^2\), 공간에서는 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)이 나온다. \(|\vec{p} - \vec{c}| &lt; r\)이면 안쪽, \(&gt; r\)이면 바깥쪽이다.</li>
+            <li><span class="tag">연결</span>벡터 식으로 쓰면 접선과 접평면도 간단해진다. 원(구) 위의 점 \(\vec{p}_0\)에서의 접선(접평면)은 반지름 방향 \(\vec{p}_0 - \vec{c}\)에 수직이므로 \((\vec{p}_0 - \vec{c})\cdot(\vec{p} - \vec{p}_0) = 0\)이다. 다음 카드는 직선과 구의 교점을 이 식으로 구한다.</li>
+            <li><span class="tag">적용</span>점 P를 움직여 안쪽, 원(구) 위, 바깥쪽을 확인해 보자. 공간 모드에서 좌표가 모두 정수인 구 위의 점을 찾아보자. \(1^2 + 2^2 + 2^2 = 9\)를 떠올리면 몇 개나 나오는가? 평면 모드에서는 몇 개인가?</li>
+            <li class="warn"><span class="tag">판단</span>\(|\vec{p} - \vec{c}| = r\)을 \(\vec{p} - \vec{c} = r\)로 쓰면 안 된다. 왼쪽은 벡터, 오른쪽은 수라서 같을 수 없다. 거리는 반드시 벡터의 크기로 재야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">점 \((2, -1, 3)\)이 중심 \((1, 1, 1)\), 반지름 \(r\)인 구 위에 있으려면 \(r\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> \(\vec{p} - \vec{c} = (1, -2, 2)\)이고 크기는 \(\sqrt{1 + 4 + 4} = 3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>9<span class="why"><b>\(r^2\)을 답했습니다.</b> 거리의 제곱이 9이므로 반지름은 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\sqrt{14}\)<span class="why"><b>원점까지의 거리를 구했습니다.</b> 중심은 원점이 아니라 \((1, 1, 1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>성분을 더했습니다.</b> \(1 - 2 + 2 = 1\)은 거리가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞다.</b> \(\vec{p} - \vec{c} = (1, -2, 2)\)이고 크기는 \(\sqrt{1 + 4 + 4} = 3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>9<span class="why"><b>\(r^2\)을 답했다.</b> 거리의 제곱이 9이므로 반지름은 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\sqrt{14}\)<span class="why"><b>원점까지의 거리를 구했다.</b> 중심은 원점이 아니라 \((1, 1, 1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>성분을 더했다.</b> \(1 - 2 + 2 = 1\)은 거리가 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a><a href="../../c/geo/3-5.html#card-geo-sphere-vec"><small class="mono">기하 3.5</small>중심에서 거리가 같은 점을 벡터로 쓰면?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-4.html#card-geo-line-dir"><small class="mono">기하 3.4</small>한 점과 방향만으로 직선 위의 모든 점을 가리킬 수 있을까?</a><a href="../../c/geo/3-4.html#card-geo-line-space"><small class="mono">기하 3.4</small>공간의 직선도 같은 식으로 나타낼 수 있을까?</a><a href="../../c/geo/3-4.html#text-geo-line-eq"><small class="mono">기하 3.4</small>직선의 방정식</a><a href="../../c/geo/3-5.html#card-geo-plane-normal"><small class="mono">기하 3.5</small>공간에서 수직인 벡터 하나는 무엇을 정할까?</a></div></nav>
 
       <article class="card" id="card-pmath-raytrace">
         <header class="card-head">
-          <span class="no">2.8.3</span><h2>빛줄기와 구의 교점만 계산해서 3D 그림을 그릴 수 있을까?</h2><span class="kind">직선과 구의 교점 · 레이 트레이싱 · 활용</span>
+          <span class="no">탐구 3</span><h2>빛줄기와 구의 교점만 계산해서 3D 그림을 그릴 수 있을까?</h2><span class="kind">직선과 구의 교점 · 레이 트레이싱 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -163,39 +224,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>영화 특수효과와 최신 게임은 "레이 트레이싱"으로 실제 사진 같은 그림을 만듭니다. 화면의 점 하나하나에서 빛줄기를 거꾸로 쏘아 무엇에 닿는지 계산한다는데, 그 계산은 무엇일까요?</li>
-            <li><span class="tag">복원</span>직선은 \(\vec{p} = \vec{o} + t\vec{d}\), 구는 \(|\vec{p} - \vec{c}| = r\)로 나타냅니다. 이차방정식 \(at^2 + bt + c = 0\)의 판별식이 음수이면 실근이 없습니다.</li>
-            <li><span class="tag">설명</span>눈(카메라) \(\vec{o}\)에서 화소 쪽으로 방향 \(\vec{d}\)인 빛줄기를 쏩니다. 이 직선이 구와 만나는 점은 \(|\vec{o} + t\vec{d} - \vec{c}|^2 = r^2\)을 풀면 됩니다. \(\vec{w} = \vec{o} - \vec{c}\)로 놓으면 <b>\((\vec{d}\cdot\vec{d})t^2 + 2(\vec{d}\cdot\vec{w})t + (\vec{w}\cdot\vec{w} - r^2) = 0\)</b>이라는 이차방정식이 됩니다. 판별식이 음수면 빛줄기가 구를 비켜 가므로 배경(바닥)을 칠하고, 양수면 작은 근 \(t\)가 눈에 먼저 닿는 점입니다. 그 점의 법선 \(\frac{\vec{p} - \vec{c}}{r}\)과 빛 방향의 내적으로 밝기를 정하고, 바닥에서는 해 쪽으로 다시 빛줄기를 쏘아 구에 막히면 그림자를 칠합니다.</li>
-            <li><span class="tag">연결</span>이 카드의 그림은 앞에서 배운 세 가지만으로 그렸습니다. 직선의 벡터방정식, 구의 벡터방정식, 그리고 밝기를 정하는 내적입니다. 실제 레이 트레이싱은 반사와 굴절까지 따라가므로 화소 하나에 수많은 빛줄기를 계산합니다.</li>
-            <li><span class="tag">적용</span>해상도를 8칸부터 늘리며 그림이 어떻게 또렷해지는지 보세요. 구의 테두리 칸을 눌러 판별식이 0에 가까운지 확인하세요. 그림자가 생긴 바닥 칸을 누르면 어떤 계산이 나오나요?</li>
-            <li class="warn"><span class="tag">판단</span>두 근 가운데 작은 근을 고르는 이유는 눈에 먼저 닿는 점이 앞쪽 표면이기 때문입니다. 큰 근은 구의 뒤쪽 표면입니다. 또 \(t &lt; 0\)인 근은 눈 뒤쪽이므로 버립니다. 이 판단을 빠뜨리면 보이지 않아야 할 면이 그려집니다.</li>
+            <li><span class="tag">질문</span>영화 특수효과와 최신 게임은 "레이 트레이싱"으로 실제 사진 같은 그림을 만든다. 화면의 점 하나하나에서 빛줄기를 거꾸로 쏘아 무엇에 닿는지 계산한다는데, 그 계산은 무엇일까?</li>
+            <li><span class="tag">복원</span>직선은 \(\vec{p} = \vec{o} + t\vec{d}\), 구는 \(|\vec{p} - \vec{c}| = r\)로 나타낸다. 이차방정식 \(at^2 + bt + c = 0\)의 판별식이 음수이면 실근이 없다.</li>
+            <li><span class="tag">설명</span>눈(카메라) \(\vec{o}\)에서 화소 쪽으로 방향 \(\vec{d}\)인 빛줄기를 쏜다. 이 직선이 구와 만나는 점은 \(|\vec{o} + t\vec{d} - \vec{c}|^2 = r^2\)을 풀면 된다. \(\vec{w} = \vec{o} - \vec{c}\)로 놓으면 \((\vec{d}\cdot\vec{d})t^2 + 2(\vec{d}\cdot\vec{w})t + (\vec{w}\cdot\vec{w} - r^2) = 0\)이라는 이차방정식이 된다. 판별식이 음수면 빛줄기가 구를 비켜 가므로 배경(바닥)을 칠하고, 양수면 작은 근 \(t\)가 눈에 먼저 닿는 점이다. 그 점의 법선 \(\frac{\vec{p} - \vec{c}}{r}\)과 빛 방향의 내적으로 밝기를 정하고, 바닥에서는 해 쪽으로 다시 빛줄기를 쏘아 구에 막히면 그림자를 칠한다.</li>
+            <li><span class="tag">연결</span>이 카드의 그림은 앞에서 배운 세 가지만으로 그렸다. 직선의 벡터방정식, 구의 벡터방정식, 그리고 밝기를 정하는 내적이다. 실제 레이 트레이싱은 반사와 굴절까지 따라가므로 화소 하나에 수많은 빛줄기를 계산한다.</li>
+            <li><span class="tag">적용</span>해상도를 8칸부터 늘리며 그림이 어떻게 또렷해지는지 보자. 구의 테두리 칸을 눌러 판별식이 0에 가까운지 확인해 보자. 그림자가 생긴 바닥 칸을 누르면 어떤 계산이 나오는가?</li>
+            <li class="warn"><span class="tag">판단</span>두 근 가운데 작은 근을 고르는 이유는 눈에 먼저 닿는 점이 앞쪽 표면이기 때문이다. 큰 근은 구의 뒤쪽 표면이다. 또 \(t &lt; 0\)인 근은 눈 뒤쪽이므로 버린다. 이 판단을 빠뜨리면 보이지 않아야 할 면이 그려진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">원점에서 방향 \((1, 0, 0)\)으로 쏜 빛줄기가 중심 \((5, 2, 0)\), 반지름 \(r\)인 구에 닿으려면 \(r\)은 어떤 범위여야 할까요?</p>
+          <p class="q">원점에서 방향 \((1, 0, 0)\)으로 쏜 빛줄기가 중심 \((5, 2, 0)\), 반지름 \(r\)인 구에 닿으려면 \(r\)은 어떤 범위여야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(r \ge 2\)<span class="why"><b>맞습니다.</b> \(t^2 - 10t + 29 - r^2 = 0\)의 판별식 \(100 - 4(29 - r^2) \ge 0\)에서 \(r^2 \ge 4\)입니다. 직선과 중심 사이의 거리가 2이기 때문입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(r \ge 5\)<span class="why"><b>중심의 x좌표를 썼습니다.</b> 빛줄기는 x축을 따라가므로 중심이 x축에서 떨어진 거리 2가 기준입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(r \ge \sqrt{29}\)<span class="why"><b>원점까지의 거리를 썼습니다.</b> 그 반지름이면 원점이 구 안에 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(r \le 2\)<span class="why"><b>부등호 방향이 거꾸로입니다.</b> 반지름이 작을수록 빛줄기를 비켜 갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(r \ge 2\)<span class="why"><b>맞다.</b> \(t^2 - 10t + 29 - r^2 = 0\)의 판별식 \(100 - 4(29 - r^2) \ge 0\)에서 \(r^2 \ge 4\)이다. 직선과 중심 사이의 거리가 2이기 때문이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(r \ge 5\)<span class="why"><b>중심의 x좌표를 썼다.</b> 빛줄기는 x축을 따라가므로 중심이 x축에서 떨어진 거리 2가 기준이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(r \ge \sqrt{29}\)<span class="why"><b>원점까지의 거리를 썼다.</b> 그 반지름이면 원점이 구 안에 들어간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(r \le 2\)<span class="why"><b>부등호 방향이 거꾸로이다.</b> 반지름이 작을수록 빛줄기를 비켜 간다.</span></span></button></li>
           </ol>
         </div>
       </article>
       <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pmath/2-7.html#card-pmath-shading"><small class="mono">전문 수학 2.7</small>게임 속 3D 물체는 어떻게 그림자를 칠할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-2-8"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=2-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

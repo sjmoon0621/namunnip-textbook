@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이상적분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이상적분: 끝이 무한대이거나 함숫값이 무한대로 커지는 구간에서의 적분, 수렴과 발산. 1/x^p의 넓이가 유한한지 조작으로 확인하는 카드, 이상적분을 잘못 계산한 풀이의 오류 찾기, 지구 탈출 속도.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-improper-p canvas { aspect-ratio: 4 / 3.6; }
@@ -45,19 +50,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-improper-p"><span class="mono">1.5.1</span>끝없는 넓이가 유한할 때</a></li>
-        <li><a href="#card-adcalc-improper-spot"><span class="mono">1.5.2</span>이상적분 풀이의 오류 찾기</a></li>
-        <li><a href="#card-adcalc-escape"><span class="mono">1.5.3</span>지구 탈출 속도</a></li>
+        <li><a href="#text-adcalc-improper"><span class="mono">본문</span>이상적분</a></li>
+        <li><a href="#card-adcalc-improper-p"><span class="mono">탐구 1</span>끝없는 넓이가 유한할 때</a></li>
+        <li><a href="#card-adcalc-improper-spot"><span class="mono">탐구 2</span>이상적분 풀이의 오류 찾기</a></li>
+        <li><a href="#card-adcalc-escape"><span class="mono">탐구 3</span>지구 탈출 속도</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">14문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-1-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-improper" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이상적분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">로켓을 지구에서 무한히 먼 곳까지 보내려면 지구의 중력을 이기며 끝없이 일을 해야 할 것 같다. 그런데 중력은 거리의 제곱에 반비례해 멀어질수록 빠르게 약해진다. 지표에서 1 kg을 무한히 멀리 옮기는 데 드는 일은 \(\int_R^\infty\dfrac{GM}{r^2}\,dr\)인데, 적분 구간이 끝없이 길다. 이런 적분의 값은 유한할 수 있을까? 유한하다면 로켓은 초속 몇 km로 쏘아 올려야 지구로 돌아오지 않을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="거듭제곱 함수의 이상적분 수렴 여부">
+              <g class="s">
+                <text x="20" y="22">함수</text><text x="150" y="22">∫₁^b f(x) dx</text><text x="320" y="22">b → ∞</text><text x="430" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1/x</text><text x="150" y="52">ln b</text><text x="320" y="52">∞</text><text x="430" y="52" class="tb">발산</text>
+                <text x="20" y="74">1/x²</text><text x="150" y="74">1 − 1/b</text><text x="320" y="74">1</text><text x="430" y="74" class="td">수렴</text>
+                <text x="20" y="96">1/√x</text><text x="150" y="96">2√b − 2</text><text x="320" y="96">∞</text><text x="430" y="96" class="tb">발산</text>
+                <text x="20" y="122">1/xᵖ의 넓이는 p > 1일 때만 유한하다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 끝없이 뻗은 꼬리 아래의 넓이도, 꼬리가 충분히 빨리 0으로 줄면 유한하다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수의 극한, 정적분 \(F(b) - F(a)\), 곡선과 \(x\)축 사이의 넓이, 좌극한과 우극한.</div>
+
+          <h3><span class="no">1.5.1</span>극한으로 정의하는 적분</h3>
+          <p>정적분은 닫힌 구간에서 정의되므로, 구간이 끝없이 길거나 피적분함수가 구간 안에서 끝없이 커지면 그대로 계산할 수 없다. 그래서 먼저 유한한 구간 \([a, b]\)에서 적분한 뒤 \(b\)를 무한대로 보내는 극한을 생각한다. 그 극한이 하나의 값이면 이상적분이 수렴한다고 하고, 그렇지 않으면 발산한다고 한다. 예를 들어 \(\int_1^b\dfrac{dx}{x^2} = 1 - \dfrac1b\)는 \(b \to \infty\)일 때 1로 모이므로, 끝없이 뻗은 곡선 아래의 넓이가 1이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">이상적분</span></span>
+            <p>\(\int_a^\infty f(x)\,dx = \lim_{b\to\infty}\int_a^b f(x)\,dx\)이고, \(f\)가 \(x = a\) 근처에서 끝없이 커지면 \(\int_a^b f(x)\,dx = \lim_{t\to a+}\int_t^b f(x)\,dx\)이다. \[\int_1^\infty\frac{dx}{x^p}\ \text{은}\ p > 1\text{일 때 } \frac{1}{p - 1}\text{로 수렴하고, } p \le 1\text{이면 발산한다.}\]</p>
+          </div>
+          <p>\(1/x\)과 \(1/x^2\)은 둘 다 0으로 줄지만, \(1/x\)은 너무 느리게 줄어 넓이가 \(\ln b\)처럼 끝없이 커진다. 반대로 구간 \((0, 1]\)에서는 \(1/\sqrt x\)의 넓이가 2로 유한하고 \(1/x^2\)은 발산한다. 그래서 무한대 쪽에서는 빨리 줄어야, 0 쪽에서는 천천히 커져야 넓이가 유한하다. 구간 안에 끝없이 커지는 점이 있는데 그대로 기본정리를 쓰면, \(\int_{-1}^{1}\dfrac{dx}{x^2} = \left[-\dfrac1x\right]_{-1}^{1} = -2\)처럼 양수 함수의 넓이가 음수로 나오는 틀린 답을 얻는다.<sup class="fn"><a href="#fn-adcalc-improper-1">1</a></sup></p>
+
+          <h3><span class="no">1.5.2</span>중력을 벗어나는 일</h3>
+          <p>지구 중심에서 거리 \(r\)인 곳에서 질량 1 kg에 작용하는 중력은 \(GM/r^2\)이다. 지표 \(r = R\)에서 무한히 먼 곳까지 옮기는 데 드는 일은 \(\int_R^\infty\dfrac{GM}{r^2}\,dr = \lim_{b\to\infty}\left[-\dfrac{GM}{r}\right]_R^b = \dfrac{GM}{R}\)으로 유한하다. 중력이 거리의 제곱에 반비례해 \(p = 2 > 1\)이기 때문이다. 그래서 처음에 이만큼의 운동 에너지를 주면, 로켓은 엔진 없이도 지구로 돌아오지 않고 영원히 멀어진다. 그 속도를 탈출 속도라 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="지구 탈출에 드는 일과 속도">
+              <g class="s">
+                <text x="20" y="22">양</text><text x="200" y="22">식</text><text x="380" y="22">값</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">GM</text><text x="200" y="52">지구의 중력 상수</text><text x="380" y="52">3.99 × 10¹⁴ m³/s²</text>
+                <text x="20" y="74">1 kg당 드는 일</text><text x="200" y="74">GM/R (R = 6.37 × 10⁶ m)</text><text x="380" y="74">6.26 × 10⁷ J</text>
+                <text x="20" y="96">탈출 속도</text><text x="200" y="96">√(2GM/R)</text><text x="380" y="96" class="td">약 11.2 km/s</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 무한히 먼 곳까지의 일이 유한하므로, 처음 속도만 충분하면 지구를 영원히 떠날 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+            <p>그림 2의 값으로 지구의 탈출 속도를 구하여라. 또 중력이 거리에 반비례하는 세상이라면, 같은 일을 계산했을 때 무엇이 달라지는가?</p>
+          </div>
+          <p>운동 에너지 \(\tfrac12v^2\)이 1 kg당 드는 일 \(GM/R\)과 같아야 하므로 \(v = \sqrt{2GM/R} = \sqrt{2\times6.26\times10^7} \approx \sqrt{1.25\times10^8} \approx 1.12\times10^4\) m/s, 곧 초속 약 11.2 km이다.</p>
+          <p>중력이 \(k/r\)이라면 드는 일은 \(\int_R^\infty\dfrac{k}{r}\,dr = \lim_{b\to\infty}k\ln\dfrac{b}{R}\)로 발산한다. 그러면 아무리 빠르게 쏘아 올려도 언젠가는 운동 에너지를 다 써서 되돌아오므로, 어떤 천체도 그 행성의 중력을 영원히 벗어날 수 없다. 그래서 중력이 거리의 제곱에 반비례한다는 사실 덕분에 우주 탐사선이 태양계 밖으로 나갈 수 있다. 즉 무한 구간의 적분도 극한으로 정의하면 유한한 값을 가질 수 있고, 그 값은 함수가 무한대 쪽에서 얼마나 빨리 0으로 줄어드는지에 달려 있다.</p>
+          <p>아래 탐구 카드에서 \(1/x^p\)의 꼬리 아래 넓이가 \(p\)에 따라 수렴하는지 확인하고, 넓이가 음수로 나온 풀이의 틀린 곳을 찾고, 탈출에 드는 일을 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-improper-1">1977년에 발사된 보이저 1호는 목성과 토성의 중력을 이용해 태양의 탈출 속도보다 빨라졌고, 2012년 태양권을 벗어나 성간 공간에 들어섰다. 지금도 엔진 없이 해마다 약 5억 km씩 멀어지고 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>구간이 끝없이 길거나 피적분함수가 끝없이 커지는 적분은 유한한 구간의 적분에 극한을 취해 정의하며, 극한이 있으면 수렴한다. \(\int_1^\infty x^{-p}\,dx\)는 \(p > 1\)일 때만 수렴하고, 끝없이 커지는 점을 무시하고 기본정리를 쓰면 틀린 값이 나온다. 처음 질문의 일은 중력이 거리의 제곱에 반비례해 \(GM/R\)로 유한하며, 초속 약 11.2 km로 쏘아 올리면 로켓은 지구로 돌아오지 않는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+
       <article class="card" id="card-adcalc-improper-p">
         <header class="card-head">
-          <span class="no">1.5.1</span><h2>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</h2><span class="kind">이상적분 · 조작 · 발견</span>
+          <span class="no">탐구 1</span><h2>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</h2><span class="kind">이상적분 · 조작 · 발견</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,34 +141,34 @@
                 <div><dt>극한</dt><dd class="n-l">—</dd></div>
                 <div><dt>판정</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">끝 막대는 로그 눈금이라 한 칸마다 끝이 10배씩 멀어지거나(위끝) 0에 10배씩 가까워집니다(아래끝).</p>
+              <p class="fig-note">끝 막대는 로그 눈금이라 한 칸마다 끝이 10배씩 멀어지거나(위끝) 0에 10배씩 가까워진다(아래끝).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(y = \frac{1}{x}\)과 \(y = \frac{1}{x^2}\)은 모두 \(x \to \infty\)일 때 0으로 가는 꼬리를 가집니다. 두 꼬리 아래의 넓이는 모두 무한할까요, 모두 유한할까요?</li>
-            <li><span class="tag">복원</span>\(\int x^{-p}dx = \frac{x^{1-p}}{1-p} + C\ (p \ne 1)\), \(\int\frac{dx}{x} = \ln|x| + C\). \(x^{1-p}\)은 \(x \to \infty\)일 때 \(p &gt; 1\)이면 0으로, \(p &lt; 1\)이면 \(\infty\)로 갑니다.</li>
-            <li><span class="tag">설명</span>끝이 무한대인 적분은 끝을 \(b\)로 두고 극한을 취해 정의합니다. 이를 <em>이상적분</em>이라고 합니다. \[\int_1^{\infty}\frac{dx}{x^p} = \lim_{b \to \infty}\int_1^{b}\frac{dx}{x^p} = \lim_{b \to \infty}\frac{b^{1-p} - 1}{1 - p}\] 이 극한은 \(p &gt; 1\)이면 \(\frac{1}{p - 1}\)로 <b>수렴</b>하고, \(p \le 1\)이면 \(\infty\)로 <b>발산</b>합니다. 구간 안에서 함숫값이 무한대로 커질 때도 같습니다. \(\int_0^1\frac{dx}{x^p} = \lim_{a \to 0+}\int_a^1\frac{dx}{x^p}\)는 반대로 \(p &lt; 1\)일 때 \(\frac{1}{1 - p}\)로 수렴합니다.</li>
-            <li><span class="tag">연결</span>\(p = 1\)인 \(\frac{1}{x}\)이 경계입니다. 오른쪽 꼬리도, 0 근처도 넓이가 무한합니다. 이 결과는 3대단원에서 급수 \(\sum\frac{1}{n^p}\)의 수렴을 판정할 때 그대로 쓰입니다(적분판정법).</li>
-            <li><span class="tag">적용</span>\(p = 2\)에서 끝을 멀리 보내며 넓이가 1을 넘는지 보세요. \(p\)를 1.1, 1, 0.9로 바꾸어 보세요. \(p = 1.1\)이면 넓이는 결국 10에 다가가지만, \(b = 10^4\)에서도 약 6에 머뭅니다. 아래 작은 그래프에서 넓이가 멈추는지 계속 오르는지 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"함숫값이 0으로 가면 넓이는 유한하다"는 틀린 생각입니다. \(\frac{1}{x}\)도 0으로 가지만 넓이는 무한합니다. 중요한 것은 0으로 가는 <b>빠르기</b>입니다. 또 컴퓨터로 \(b = 10^4\)까지 계산한 값만 보고 수렴, 발산을 판정할 수는 없습니다. \(\ln b\)처럼 아주 느리게 발산하는 함수가 있기 때문입니다.</li>
+            <li><span class="tag">질문</span>\(y = \frac{1}{x}\)과 \(y = \frac{1}{x^2}\)은 모두 \(x \to \infty\)일 때 0으로 가는 꼬리를 가진다. 두 꼬리 아래의 넓이는 모두 무한할까요, 모두 유한할까?</li>
+            <li><span class="tag">복원</span>\(\int x^{-p}dx = \frac{x^{1-p}}{1-p} + C\ (p \ne 1)\), \(\int\frac{dx}{x} = \ln|x| + C\). \(x^{1-p}\)은 \(x \to \infty\)일 때 \(p &gt; 1\)이면 0으로, \(p &lt; 1\)이면 \(\infty\)로 간다.</li>
+            <li><span class="tag">설명</span>끝이 무한대인 적분은 끝을 \(b\)로 두고 극한을 취해 정의한다. 이를 <em>이상적분</em>이라고 한다. \[\int_1^{\infty}\frac{dx}{x^p} = \lim_{b \to \infty}\int_1^{b}\frac{dx}{x^p} = \lim_{b \to \infty}\frac{b^{1-p} - 1}{1 - p}\] 이 극한은 \(p &gt; 1\)이면 \(\frac{1}{p - 1}\)로 수렴하고, \(p \le 1\)이면 \(\infty\)로 발산한다. 구간 안에서 함숫값이 무한대로 커질 때도 같다. \(\int_0^1\frac{dx}{x^p} = \lim_{a \to 0+}\int_a^1\frac{dx}{x^p}\)는 반대로 \(p &lt; 1\)일 때 \(\frac{1}{1 - p}\)로 수렴한다.</li>
+            <li><span class="tag">연결</span>\(p = 1\)인 \(\frac{1}{x}\)이 경계이다. 오른쪽 꼬리도, 0 근처도 넓이가 무한한다. 이 결과는 3대단원에서 급수 \(\sum\frac{1}{n^p}\)의 수렴을 판정할 때 그대로 쓰인다(적분판정법).</li>
+            <li><span class="tag">적용</span>\(p = 2\)에서 끝을 멀리 보내며 넓이가 1을 넘는지 보자. \(p\)를 1.1, 1, 0.9로 바꾸어 보자. \(p = 1.1\)이면 넓이는 결국 10에 다가가지만, \(b = 10^4\)에서도 약 6에 머문다. 아래 작은 그래프에서 넓이가 멈추는지 계속 오르는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"함숫값이 0으로 가면 넓이는 유한하다"는 틀린 생각이다. \(\frac{1}{x}\)도 0으로 가지만 넓이는 무한한다. 중요한 것은 0으로 가는 빠르기이다. 또 컴퓨터로 \(b = 10^4\)까지 계산한 값만 보고 수렴, 발산을 판정할 수는 없다. \(\ln b\)처럼 아주 느리게 발산하는 함수가 있기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_0^{1}\frac{dx}{\sqrt{x}}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<span class="why"><b>맞습니다.</b> \(p = \frac{1}{2} &lt; 1\)이므로 수렴하고, \(\lim_{a \to 0+}\left[2\sqrt{x}\right]_a^1 = 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>발산한다<span class="why"><b>\(x = 0\)에서 함숫값이 무한대라서 넓이도 무한하다고 보았습니다.</b> 높이가 무한대여도 넓이는 유한할 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{2}{3}\)<span class="why"><b>\(\sqrt{x}\)를 적분했습니다.</b> 피적분함수는 \(x^{-1/2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(p &gt; 1\)일 때의 공식 \(\frac{1}{p - 1}\)을 썼습니다.</b> 0 근처의 적분은 \(\frac{1}{1 - p}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2<span class="why"><b>맞다.</b> \(p = \frac{1}{2} &lt; 1\)이므로 수렴하고, \(\lim_{a \to 0+}\left[2\sqrt{x}\right]_a^1 = 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>발산한다<span class="why"><b>\(x = 0\)에서 함숫값이 무한대라서 넓이도 무한하다고 보았다.</b> 높이가 무한대여도 넓이는 유한할 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{2}{3}\)<span class="why"><b>\(\sqrt{x}\)를 적분했다.</b> 피적분함수는 \(x^{-1/2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(p &gt; 1\)일 때의 공식 \(\frac{1}{p - 1}\)을 썼다.</b> 0 근처의 적분은 \(\frac{1}{1 - p}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
 
       <article class="card" id="card-adcalc-improper-spot">
         <header class="card-head">
-          <span class="no">1.5.2</span><h2>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</h2><span class="kind">이상적분 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</h2><span class="kind">이상적분 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -153,30 +216,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\frac{1}{x^2}\)은 늘 양수인데, 어떤 풀이는 \(\int_{-1}^{1}\frac{dx}{x^2} = -2\)라는 답을 냅니다. 계산은 틀린 곳이 없어 보입니다. 무엇이 잘못되었을까요?</li>
-            <li><span class="tag">복원</span>\(\int_a^b f(x)\,dx = F(b) - F(a)\)는 \(f\)가 닫힌구간 \([a, b]\)에서 연속일 때 성립합니다. 이상적분은 문제가 되는 끝을 문자로 두고 극한을 취해 정의합니다.</li>
-            <li><span class="tag">설명</span>이상적분에서 틀리기 쉬운 곳은 세 가지입니다. ① 구간 <b>안쪽</b>에서 함수가 무한대로 커지는 점을 놓친다(풀이 1). 이런 점에서 구간을 나누어 각각 극한을 취해야 합니다. ② 양 끝이 모두 무한대인데 \(\int_{-b}^{b}\)처럼 한꺼번에 극한을 취한다(풀이 3). ③ 함숫값이 0으로 가면 넓이가 유한하다고 생각한다(풀이 4).</li>
-            <li><span class="tag">연결</span>나누어 놓은 이상적분 가운데 하나라도 발산하면 전체가 발산합니다. 확률에서 정규분포의 넓이 \(\int_{-\infty}^{\infty}\) 같은 적분은 양쪽 꼬리가 각각 수렴하므로 의미가 있습니다.</li>
-            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾으세요. 풀이 1의 그래프에서 구간 \([-1, 1]\) 안에 문제가 되는 점이 보이나요? 풀이 3에서 끝을 대칭이 아니게 움직이면 어떤 값이 나오나요?</li>
-            <li class="warn"><span class="tag">판단</span>계산기나 프로그램도 \(\int_{-1}^{1}\frac{dx}{x^2}\)에 그럴듯한 수를 내놓을 때가 있습니다. 적분하기 전에 구간 안에서 피적분함수가 연속인지 확인하는 습관이 필요합니다.</li>
+            <li><span class="tag">질문</span>\(\frac{1}{x^2}\)은 늘 양수인데, 어떤 풀이는 \(\int_{-1}^{1}\frac{dx}{x^2} = -2\)라는 답을 낸다. 계산은 틀린 곳이 없어 보인다. 무엇이 잘못되었을까?</li>
+            <li><span class="tag">복원</span>\(\int_a^b f(x)\,dx = F(b) - F(a)\)는 \(f\)가 닫힌구간 \([a, b]\)에서 연속일 때 성립한다. 이상적분은 문제가 되는 끝을 문자로 두고 극한을 취해 정의한다.</li>
+            <li><span class="tag">설명</span>이상적분에서 틀리기 쉬운 곳은 세 가지이다. ① 구간 안쪽에서 함수가 무한대로 커지는 점을 놓친다(풀이 1). 이런 점에서 구간을 나누어 각각 극한을 취해야 한다. ② 양 끝이 모두 무한대인데 \(\int_{-b}^{b}\)처럼 한꺼번에 극한을 취한다(풀이 3). ③ 함숫값이 0으로 가면 넓이가 유한하다고 생각한다(풀이 4).</li>
+            <li><span class="tag">연결</span>나누어 놓은 이상적분 가운데 하나라도 발산하면 전체가 발산한다. 확률에서 정규분포의 넓이 \(\int_{-\infty}^{\infty}\) 같은 적분은 양쪽 꼬리가 각각 수렴하므로 의미가 있다.</li>
+            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾자. 풀이 1의 그래프에서 구간 \([-1, 1]\) 안에 문제가 되는 점이 보이는가? 풀이 3에서 끝을 대칭이 아니게 움직이면 어떤 값이 나오는가?</li>
+            <li class="warn"><span class="tag">판단</span>계산기나 프로그램도 \(\int_{-1}^{1}\frac{dx}{x^2}\)에 그럴듯한 수를 내놓을 때가 있다. 적분하기 전에 구간 안에서 피적분함수가 연속인지 확인하는 습관이 필요하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(\int_0^{3}\frac{dx}{(x - 1)^{2/3}}\)을 바르게 구하려면 어떻게 해야 할까요?</p>
+          <p class="q">\(\int_0^{3}\frac{dx}{(x - 1)^{2/3}}\)을 바르게 구하려면 어떻게 해야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 1\)에서 나누어 두 이상적분으로 구한다. 값은 \(3 + 3\sqrt[3]{2}\)<span class="why"><b>맞습니다.</b> 원시함수 \(3(x - 1)^{1/3}\)으로 \(\int_0^1 = 3\), \(\int_1^3 = 3\sqrt[3]{2}\)이고, 지수 \(\frac{2}{3} &lt; 1\)이라 둘 다 수렴합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)에서 정의되지 않으므로 적분할 수 없다<span class="why"><b>이상적분으로 정의할 수 있습니다.</b> 함숫값이 무한대여도 넓이는 유한할 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left[3(x - 1)^{1/3}\right]_0^3\)으로 한 번에 구하면 된다<span class="why"><b>값은 우연히 같지만 근거가 빠졌습니다.</b> 두 이상적분이 각각 수렴함을 확인해야 이 계산이 정당해집니다. 풀이 1처럼 발산하는 경우도 같은 계산으로 엉뚱한 값을 냅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = 1\)에서 함숫값이 무한대이므로 발산한다<span class="why"><b>무한대로 커지는 빠르기를 보지 않았습니다.</b> \(\frac{1}{|x - 1|^{p}}\)은 \(p &lt; 1\)이면 수렴합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 1\)에서 나누어 두 이상적분으로 구한다. 값은 \(3 + 3\sqrt[3]{2}\)<span class="why"><b>맞다.</b> 원시함수 \(3(x - 1)^{1/3}\)으로 \(\int_0^1 = 3\), \(\int_1^3 = 3\sqrt[3]{2}\)이고, 지수 \(\frac{2}{3} &lt; 1\)이라 둘 다 수렴한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)에서 정의되지 않으므로 적분할 수 없다<span class="why"><b>이상적분으로 정의할 수 있다.</b> 함숫값이 무한대여도 넓이는 유한할 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left[3(x - 1)^{1/3}\right]_0^3\)으로 한 번에 구하면 된다<span class="why"><b>값은 우연히 같지만 근거가 빠졌다.</b> 두 이상적분이 각각 수렴함을 확인해야 이 계산이 정당해진다. 풀이 1처럼 발산하는 경우도 같은 계산으로 엉뚱한 값을 낸다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = 1\)에서 함숫값이 무한대이므로 발산한다<span class="why"><b>무한대로 커지는 빠르기를 보지 않았다.</b> \(\frac{1}{|x - 1|^{p}}\)은 \(p &lt; 1\)이면 수렴한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
 
       <article class="card" id="card-adcalc-escape">
         <header class="card-head">
-          <span class="no">1.5.3</span><h2>무한히 멀리 가는 데 드는 일은 유한할까?</h2><span class="kind">이상적분 · 활용 · 탈출 속도</span>
+          <span class="no">탐구 3</span><h2>무한히 멀리 가는 데 드는 일은 유한할까?</h2><span class="kind">이상적분 · 활용 · 탈출 속도</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -194,43 +257,43 @@
                 <div><dt>필요한 발사 속도</dt><dd class="n-v">—</dd></div>
                 <div><dt>탈출 속도</dt><dd class="n-e">—</dd></div>
               </dl>
-              <p class="fig-note">\(GM = 3.986 \times 10^{14}\ \mathrm{m^3/s^2}\)(지구), \(R = 6371\ \mathrm{km}\)(평균 반지름). 공기 저항, 지구의 자전, 달과 태양의 중력은 무시합니다. 막대는 로그 눈금입니다.</p>
+              <p class="fig-note">\(GM = 3.986 \times 10^{14}\ \mathrm{m^3/s^2}\)(지구), \(R = 6371\ \mathrm{km}\)(평균 반지름). 공기 저항, 지구의 자전, 달과 태양의 중력은 무시한다. 막대는 로그 눈금이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지구의 중력은 아무리 멀리 가도 0이 되지 않습니다. 그렇다면 지구에서 영영 벗어나려면 무한히 많은 에너지가 필요할까요?</li>
-            <li><span class="tag">복원</span>질량 \(m\)인 물체가 지구 중심에서 \(r\)만큼 떨어져 있을 때 중력의 크기는 \(F(r) = \frac{GMm}{r^2}\)입니다. 힘이 변할 때 한 일은 힘을 거리로 적분한 값입니다.</li>
-            <li><span class="tag">설명</span>지표면 \(r = R\)에서 무한히 먼 곳까지 중력을 거슬러 하는 일은 이상적분입니다. \[W = \int_R^{\infty}\frac{GMm}{r^2}\,dr = \lim_{b \to \infty}GMm\left(\frac{1}{R} - \frac{1}{b}\right)\]이고, 이 값은 \(\frac{GMm}{R}\)입니다. 중력이 \(\frac{1}{r^2}\)(지수 2 &gt; 1)로 빠르게 약해지므로 일은 유한합니다. 이 일을 처음 운동 에너지 \(\frac{1}{2}mv^2\)으로 대신하면 \(v = \sqrt{\frac{2GM}{R}} \approx 11.2\ \mathrm{km/s}\)이고, 이를 <em>탈출 속도</em>라고 합니다. 질량 \(m\)은 약분되어 사라지므로 탈출 속도는 물체의 무게와 상관없습니다.</li>
-            <li><span class="tag">연결</span>중력이 \(\frac{1}{r}\)로 약해지는 세상이었다면 \(\int_R^{\infty}\frac{dr}{r}\)이 발산해 어떤 속도로도 탈출할 수 없었을 것입니다. 이상적분의 수렴과 발산이 물리적인 차이를 만듭니다.</li>
-            <li><span class="tag">적용</span>거리를 늘려 가며 칠한 넓이(한 일)가 전체의 몇 %인지 보세요. 달까지 가는 데 필요한 속도는 탈출 속도의 몇 %인가요? 거리가 10배일 때 이미 일의 몇 %를 했나요?</li>
-            <li class="warn"><span class="tag">판단</span>실제 로켓은 처음부터 11.2 km/s로 쏘아 올리지 않고 엔진으로 계속 가속하며, 공기 저항과 다른 천체의 중력도 받습니다. 탈출 속도는 "엔진을 끄고 던져 올린다면"이라는 이상화한 기준입니다.</li>
+            <li><span class="tag">질문</span>지구의 중력은 아무리 멀리 가도 0이 되지 않는다. 그렇다면 지구에서 영영 벗어나려면 무한히 많은 에너지가 필요할까?</li>
+            <li><span class="tag">복원</span>질량 \(m\)인 물체가 지구 중심에서 \(r\)만큼 떨어져 있을 때 중력의 크기는 \(F(r) = \frac{GMm}{r^2}\)이다. 힘이 변할 때 한 일은 힘을 거리로 적분한 값이다.</li>
+            <li><span class="tag">설명</span>지표면 \(r = R\)에서 무한히 먼 곳까지 중력을 거슬러 하는 일은 이상적분이다. \[W = \int_R^{\infty}\frac{GMm}{r^2}\,dr = \lim_{b \to \infty}GMm\left(\frac{1}{R} - \frac{1}{b}\right)\]이고, 이 값은 \(\frac{GMm}{R}\)이다. 중력이 \(\frac{1}{r^2}\)(지수 2 &gt; 1)로 빠르게 약해지므로 일은 유한한다. 이 일을 처음 운동 에너지 \(\frac{1}{2}mv^2\)으로 대신하면 \(v = \sqrt{\frac{2GM}{R}} \approx 11.2\ \mathrm{km/s}\)이고, 이를 <em>탈출 속도</em>라고 한다. 질량 \(m\)은 약분되어 사라지므로 탈출 속도는 물체의 무게와 상관없다.</li>
+            <li><span class="tag">연결</span>중력이 \(\frac{1}{r}\)로 약해지는 세상이었다면 \(\int_R^{\infty}\frac{dr}{r}\)이 발산해 어떤 속도로도 탈출할 수 없었을 것이다. 이상적분의 수렴과 발산이 물리적인 차이를 만든다.</li>
+            <li><span class="tag">적용</span>거리를 늘려 가며 칠한 넓이(한 일)가 전체의 몇 %인지 보자. 달까지 가는 데 필요한 속도는 탈출 속도의 몇 %인가? 거리가 10배일 때 이미 일의 몇 %를 했는가?</li>
+            <li class="warn"><span class="tag">판단</span>실제 로켓은 처음부터 11.2 km/s로 쏘아 올리지 않고 엔진으로 계속 가속하며, 공기 저항과 다른 천체의 중력도 받는다. 탈출 속도는 "엔진을 끄고 던져 올린다면"이라는 이상화한 기준이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">반지름은 지구와 같고 질량이 지구의 4배인 행성의 탈출 속도는 지구의 몇 배인가요?</p>
+          <p class="q">반지름은 지구와 같고 질량이 지구의 4배인 행성의 탈출 속도는 지구의 몇 배인가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2배<span class="why"><b>맞습니다.</b> \(v = \sqrt{\frac{2GM}{R}}\)이므로 \(M\)이 4배이면 \(v\)는 \(\sqrt{4} = 2\)배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4배<span class="why"><b>필요한 일(에너지)과 속도를 혼동했습니다.</b> 일은 4배이지만 속도는 그 제곱근만큼 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>16배<span class="why"><b>제곱과 제곱근을 거꾸로 썼습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무한대가 된다<span class="why"><b>질량이 커져도 \(\frac{1}{r^2}\)의 적분은 여전히 수렴합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2배<span class="why"><b>맞다.</b> \(v = \sqrt{\frac{2GM}{R}}\)이므로 \(M\)이 4배이면 \(v\)는 \(\sqrt{4} = 2\)배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4배<span class="why"><b>필요한 일(에너지)과 속도를 혼동했다.</b> 일은 4배이지만 속도는 그 제곱근만큼 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>16배<span class="why"><b>제곱과 제곱근을 거꾸로 썼다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무한대가 된다<span class="why"><b>질량이 커져도 \(\frac{1}{r^2}\)의 적분은 여전히 수렴한다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a><a href="../../c/calc1/1-1.html#card-calc1-lim-approach"><small class="mono">미적분Ⅰ 1.1</small>x가 1에 다가가면 f(x)는 어디로 갈까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-6.html#card-adcalc-gabriel"><small class="mono">고급 미적분 1.6</small>채울 수는 있는데 칠할 수는 없는 나팔이 있을까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-integral-test"><small class="mono">고급 미적분 3.2</small>Σ1/n²은 유한하고 Σ1/n은 무한한 까닭은?</a><a href="../../c/adcalc/3-2.html#card-adcalc-test-pick"><small class="mono">고급 미적분 3.2</small>이 급수에는 어떤 판정법이 통할까?</a><a href="../../c/adcalc/3-2.html#card-adcalc-overhang"><small class="mono">고급 미적분 3.2</small>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">14문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

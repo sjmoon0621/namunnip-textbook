@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>확률과 예측 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="기록의 상대도수로 확률을 추정해 예측하기, 가장 큰 확률을 고르는 예측과 정확도, 기저율, 민감도·특이도, &#x27;병이 있는 사람 중 양성 비율&#x27;과 &#x27;양성인 사람 중 병이 있는 비율&#x27;의 구별. 날씨 기록으로 내일을 예측하는 카드와, 진단 인공지능의 양성 결과를 해석하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-aimath-weather-predict table { border-collapse: collapse; font-size: .86rem; margin: .4rem 0; }
@@ -56,57 +61,107 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-aimath-weather-predict"><span class="mono">4.1.1</span>오늘 날씨로 내일 날씨를 확률로 예측하기</a></li>
-        <li><a href="#card-aimath-base-rate"><span class="mono">4.1.2</span>정확도 99% 진단 인공지능이 '양성'이라 할 때</a></li>
+        <li><a href="#text-aimath-prob"><span class="mono">본문</span>확률과 예측</a></li>
+        <li><a href="#card-aimath-weather-predict"><span class="mono">탐구 1</span>오늘 날씨로 내일 날씨를 확률로 예측하기</a></li>
+        <li><a href="#card-aimath-base-rate"><span class="mono">탐구 2</span>정확도 99% 진단 인공지능이 '양성'이라 할 때</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=aimath-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=aimath&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=aimath-4-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-aimath-prob" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>확률과 예측</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">어떤 질병 진단 인공지능은 환자에게는 99% 양성, 건강한 사람에게는 99% 음성을 낸다. 이 인공지능이 나에게 '양성'이라고 했다면, 내가 실제로 병에 걸렸을 확률은 99%일까? 그런데 그 질병이 드물다면 답은 절반에도 못 미칠 수 있다. 인공지능의 예측 확률은 어떻게 읽어야 할까?</p>
+          <figure class="q-fig" data-q="ai-bayes">
+            <svg viewBox="0 0 520 200" role="img" aria-label="유병률에 따라 달라지는 양성 판정자 가운데 실제 환자의 비율"></svg>
+            <div class="q-ctl"><label>유병률 (%) <input type="range" data-k="p" min="0.1" max="30" step="0.1" value="1"><output data-k="p"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 1만 명 가운데 실제 환자(위 막대의 빨강)와, 양성 판정을 받은 사람 가운데 진짜 환자(아래 막대의 빨강)와 잘못된 양성(파랑). 질병이 드물수록 건강한 사람 가운데 1%가 만드는 잘못된 양성이 진짜 양성보다 많아진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>비율과 백분율, 확률의 뜻(중학교), 조건부확률(확률과 통계), 스팸 확률(<a href="2-3.html">텍스트 분석의 수학</a>).</div>
+
+          <h3><span class="no">4.1.1</span>확률로 예측하기</h3>
+          <p>인공지능의 예측은 대개 '비가 올 확률 70%'처럼 확률로 나온다. 과거 자료에서 같은 조건이 몇 번 있었고 그 가운데 몇 번 비가 왔는지를 세면 이런 확률을 얻는다. 예를 들어 오늘 비가 온 날 100일 가운데 다음 날도 비가 온 날이 60일이면, 오늘 비가 올 때 내일 비가 올 확률을 0.6으로 어림한다. 이것이 조건부확률 \(P(\text{내일 비} \mid \text{오늘 비})\)이다.</p>
+
+          <h3><span class="no">4.1.2</span>기저율의 함정</h3>
+          <p>진단 인공지능의 '정확도 99%'는 병이 있는 사람 가운데 양성이 나올 확률 \(P(\text{양성} \mid \text{병})\)이다. 그런데 우리가 알고 싶은 것은 그 반대, 양성이 나온 사람 가운데 병이 있을 확률 \(P(\text{병} \mid \text{양성})\)이다. 두 확률은 다르며, 그 사이를 이어 주는 것이 베이즈 정리이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.1.1 <span class="nm">베이즈 정리</span></span>
+            <p>\[P(\text{병} \mid \text{양성}) = \frac{P(\text{양성} \mid \text{병})P(\text{병})}{P(\text{양성} \mid \text{병})P(\text{병}) + P(\text{양성} \mid \text{건강})P(\text{건강})}\] 여기서 \(P(\text{병})\)을 기저율(유병률)이라 한다.</p>
+          </div>
+          <p>그림 1에서 유병률을 1%로 두면, 1만 명 가운데 환자 100명 중 99명이 양성이고, 건강한 9900명 중 1%인 99명도 양성이다. 양성 198명 가운데 진짜 환자는 99명, 곧 50%뿐이다. 유병률을 0.1%로 낮추면 약 9%까지 떨어지고, 30%로 올리면 98%에 가까워진다. 같은 인공지능이라도 어디에 쓰느냐에 따라 '양성'의 뜻이 달라진다.<sup class="fn"><a href="#fn-aimath-prob-1">1</a></sup></p>
+          <p>그렇다면 같은 검사를 한 번 더 받아 또 양성이 나오면 어떨까? 첫 검사에서 양성인 198명은 이미 환자일 확률이 50%인 사람들이다. 이 198명을 새 출발점으로 삼으면 환자 99명 가운데 약 98명, 건강한 99명 가운데 약 1명이 다시 양성이므로, 두 번 연속 양성인 사람이 환자일 확률은 약 99%로 뛰어오른다. 베이즈 정리로 얻은 확률은 다음 증거를 받을 때의 기저율이 되고, 증거가 쌓일수록 판단이 점점 또렷해진다. 다만 이것은 두 검사의 결과가 서로 독립일 때의 이야기이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 조건부확률의 차이">
+              <g class="s">
+                <rect x="30" y="30" width="200" height="50" class="lb"/><text x="130" y="52" text-anchor="middle">P(양성 | 병)</text><text x="130" y="70" text-anchor="middle">인공지능의 정확도</text>
+                <text x="260" y="60" text-anchor="middle">≠</text>
+                <rect x="290" y="30" width="200" height="50" class="ld"/><text x="390" y="52" text-anchor="middle">P(병 | 양성)</text><text x="390" y="70" text-anchor="middle">내가 알고 싶은 것</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 조건과 결과의 순서를 바꾼 두 조건부확률은 서로 다르다. 둘을 잇는 데 기저율이 필요하다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.1.2</span>
+            <p>유병률이 2%인 질병에 대해, 환자를 양성으로 판정할 확률이 95%, 건강한 사람을 음성으로 판정할 확률이 90%인 인공지능이 있다. 양성 판정을 받은 사람이 실제 환자일 확률을 구하여라.</p>
+          </div>
+          <p>1만 명으로 생각하면 환자는 200명이고, 그 가운데 \(200 \times 0.95 = 190\)명이 양성이다. 건강한 9800명 가운데 \(9800 \times 0.1 = 980\)명이 잘못된 양성이다.</p>
+          <p>양성은 모두 \(190 + 980 = 1170\)명이고 그 가운데 환자는 190명이므로 \(P(\text{병} \mid \text{양성}) = \dfrac{190}{1170} \approx 0.16\)이다. 양성 판정을 받아도 실제 환자일 확률은 16%에 불과하다. 그래서 드문 질병의 선별 검사에서 양성이 나오면 더 정확한 검사로 다시 확인한다.</p>
+          <p>아래 탐구 카드에서 날씨 예측의 조건부확률과, 정확도 99%인 진단의 의미를 직접 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-aimath-prob-1">사람들이 기저율을 무시하고 \(P(\text{양성} \mid \text{병})\)을 \(P(\text{병} \mid \text{양성})\)으로 착각하는 경향을 기저율 오류라 한다. 재판에서 증거의 확률을 해석할 때도 같은 실수가 생길 수 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>인공지능의 예측은 조건부확률로 나타나며, 진단의 정확도 \(P(\text{양성} \mid \text{병})\)과 양성일 때 병일 확률 \(P(\text{병} \mid \text{양성})\)은 다르다. 둘은 기저율을 넣은 베이즈 정리로 이어진다. 그래서 처음 질문의 답은 질병이 얼마나 흔한지에 달려 있으며, 유병률이 1%라면 정확도 99%인 인공지능의 양성 판정도 실제 환자일 확률은 50%에 그친다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/5-2.html#card-aimath-explore-plan"><small class="mono">인공지능 수학 5.2</small>내가 궁금한 것을 인공지능 수학 탐구 주제로 바꿀 수 있을까?</a><a href="../../c/aimath/5-2.html#card-aimath-fairness"><small class="mono">인공지능 수학 5.2</small>같은 기준 점수를 적용하면 공정한 인공지능일까?</a><a href="../../c/aimath/5-2.html#text-aimath-explore"><small class="mono">인공지능 수학 5.2</small>인공지능 수학 주제 탐구</a></div></nav>
+
       <article class="card" id="card-aimath-weather-predict">
         <header class="card-head">
-          <span class="no">4.1.1</span><h2>오늘 비가 오면 내일도 비가 올 확률은 얼마일까?</h2><span class="kind">상대도수로 구한 확률과 예측 · 조작</span>
+          <span class="no">탐구 1</span><h2>오늘 비가 오면 내일도 비가 올 확률은 얼마일까?</h2><span class="kind">상대도수로 구한 확률과 예측 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">한 도시의 60일 기록에서 "오늘 날씨 → 다음 날 날씨"를 센 가상 자료입니다.</p>
+            <p class="small">한 도시의 60일 기록에서 오늘 날씨에 따라 다음 날 날씨가 무엇이었는지를 센 가상 자료이다.</p>
             <table aria-label="오늘 날씨별 다음 날 날씨의 횟수"></table>
             <div class="presets" role="group" aria-label="오늘 날씨 고르기"><button class="chip" type="button" data-t="0">오늘 맑음</button><button class="chip" type="button" data-t="1">오늘 흐림</button><button class="chip" type="button" data-t="2" aria-pressed="true">오늘 비</button></div>
             <div class="bars" aria-live="polite"></div>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>날씨 앱은 "내일 비 올 확률 60%"처럼 확률로 예보합니다. 지난 기록만 있다면 내일 날씨를 어떻게 확률로 예측할 수 있을까요?</li>
-            <li><span class="tag">복원</span>같은 일을 여러 번 되풀이할 때 어떤 일이 일어난 횟수의 비율(상대도수)은 그 일이 일어날 확률에 가까워집니다(중학교 2학년).</li>
-            <li><span class="tag">설명</span>기록에서 "오늘 비"였던 날만 모아, 그다음 날이 각 날씨였던 비율을 구하면 "오늘 비가 올 때 내일 그 날씨일 확률"의 추정값이 됩니다. 전체 날이 아니라 조건에 맞는 날만 모아 비율을 구한다는 점이 중요합니다. 확률이 가장 큰 날씨를 고르면 맞힐 가능성이 가장 높은 예측이 되고, 확률 자체를 알려 주면 불확실성까지 전할 수 있습니다. 자료가 많을수록 추정한 확률은 믿을 만해집니다.</li>
-            <li><span class="tag">연결</span>인공지능의 분류 결과도 대부분 "고양이 92%, 강아지 8%"처럼 확률로 나옵니다. 다음 카드에서는 확률을 해석할 때 흔히 하는 실수를 봅니다.</li>
-            <li><span class="tag">적용</span>오늘 날씨를 바꿔 가며 내일의 확률을 비교하세요. "확률이 가장 큰 날씨로 예측하기"와 "늘 맑음으로 예측하기" 중 60일 기록에서 더 많이 맞히는 방법은?</li>
-            <li class="warn"><span class="tag">판단</span>"비 올 확률 30%"는 "비가 안 온다"는 뜻이 아닙니다. 확률이 가장 큰 쪽만 말하면 틀릴 가능성이 있다는 정보를 잃습니다.</li>
+            <li><span class="tag">질문</span>날씨 앱은 ‘내일 비 올 확률 60%’처럼 확률로 예보한다. 지난 기록만 있다면 내일 날씨를 어떻게 확률로 예측할 수 있을까?</li>
+            <li><span class="tag">복원</span>같은 일을 여러 번 되풀이할 때 어떤 일이 일어난 횟수의 비율(상대도수)은 그 일이 일어날 확률에 가까워진다(중학교 2학년).</li>
+            <li><span class="tag">설명</span>기록에서 오늘 비였던 날만 모아 그다음 날이 각 날씨였던 비율을 구하면, 오늘 비가 올 때 내일 그 날씨일 확률의 추정값이 된다. 이때 전체 날이 아니라 조건에 맞는 날만 모아 비율을 구해야 한다. 확률이 가장 큰 날씨를 고르면 맞힐 가능성이 가장 높은 예측이 되고, 확률 자체를 알려 주면 불확실성까지 전할 수 있으며, 자료가 많을수록 추정한 확률은 믿을 만해진다.</li>
+            <li><span class="tag">연결</span>인공지능의 분류 결과도 대부분 ‘고양이 92%, 강아지 8%’처럼 확률로 나온다. 다음 카드에서는 확률을 해석할 때 흔히 하는 실수를 본다.</li>
+            <li><span class="tag">적용</span>오늘 날씨를 바꿔 가며 내일의 확률을 비교해 보자. 그리고 ‘확률이 가장 큰 날씨로 예측하기’와 ‘늘 맑음으로 예측하기’ 가운데 60일 기록에서 더 많이 맞히는 방법이 무엇인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘비 올 확률 30%’는 비가 안 온다는 뜻이 아니다. 확률이 가장 큰 쪽만 말하면 틀릴 가능성이 있다는 정보를 잃는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">흐린 날 20일 중 다음 날 비가 온 날이 5일이었습니다. 오늘 흐릴 때 내일 비가 올 확률의 추정값은?</p>
+          <p class="q">흐린 날 20일 중 다음 날 비가 온 날이 5일이었다. 오늘 흐릴 때 내일 비가 올 확률의 추정값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25%<span class="why"><b>맞습니다.</b> \(\frac{5}{20} = 0.25\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 8%<span class="why"><b>전체 60일로 나눴습니다.</b> 조건이 "흐린 날"이므로 20일로 나눕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5%<span class="why"><b>횟수를 확률로 읽었습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>기록으로 추정할 수 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25%<span class="why"><b>맞다.</b> \(\frac{5}{20} = 0.25\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 8%<span class="why"><b>전체 60일로 나눴다.</b> 조건이 "흐린 날"이므로 20일로 나눈다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5%<span class="why"><b>횟수를 확률로 읽었다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>기록으로 추정할 수 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/5-2.html#card-aimath-explore-plan"><small class="mono">인공지능 수학 5.2</small>내가 궁금한 것을 인공지능 수학 탐구 주제로 바꿀 수 있을까?</a><a href="../../c/aimath/5-2.html#card-aimath-fairness"><small class="mono">인공지능 수학 5.2</small>같은 기준 점수를 적용하면 공정한 인공지능일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/5-2.html#card-aimath-explore-plan"><small class="mono">인공지능 수학 5.2</small>내가 궁금한 것을 인공지능 수학 탐구 주제로 바꿀 수 있을까?</a><a href="../../c/aimath/5-2.html#card-aimath-fairness"><small class="mono">인공지능 수학 5.2</small>같은 기준 점수를 적용하면 공정한 인공지능일까?</a><a href="../../c/aimath/5-2.html#text-aimath-explore"><small class="mono">인공지능 수학 5.2</small>인공지능 수학 주제 탐구</a></div></nav>
 
       <article class="card" id="card-aimath-base-rate">
         <header class="card-head">
-          <span class="no">4.1.2</span><h2>정확도 99%인 진단 인공지능이 "양성"이라고 하면 정말 병이 있을 확률은?</h2><span class="kind">기저율과 확률의 해석 · 예측→확인</span>
+          <span class="no">탐구 2</span><h2>정확도 99%인 진단 인공지능이 "양성"이라고 하면 정말 병이 있을 확률은?</h2><span class="kind">기저율과 확률의 해석 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">어떤 병을 찾는 가상의 진단 인공지능: 병이 있는 사람의 99%를 양성으로, 병이 없는 사람의 95%를 음성으로 맞힙니다. 이 병은 1000명 중 10명(1%)에게 있습니다.</p>
-            <p class="small"><b>예측</b>: 양성이 나온 사람이 실제로 병이 있을 확률은?</p>
+            <p class="small">어떤 병을 찾는 가상의 진단 인공지능은 병이 있는 사람의 99%를 양성으로, 병이 없는 사람의 95%를 음성으로 맞힌다. 이 병은 1000명 중 10명(1%)에게 있다.</p>
+            <p class="small">먼저 예측해 보자. 양성이 나온 사람이 실제로 병이 있을 확률은 얼마일까?</p>
             <div class="presets" role="group" aria-label="예측"><button class="chip" type="button" data-g="99">약 99%</button><button class="chip" type="button" data-g="95">약 95%</button><button class="chip" type="button" data-g="50">약 50%</button><button class="chip" type="button" data-g="17">20%도 안 됨</button></div>
             <p class="verdict" role="status"></p>
             <div class="after" hidden>
@@ -120,39 +175,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>"정확도 99%"인 인공지능이 양성이라고 하면 병이 있을 확률도 99%일까요?</li>
-            <li><span class="tag">복원</span>확률은 전체 가운데 그 일이 일어나는 경우의 비율입니다. 무엇을 '전체'로 삼느냐에 따라 같은 사건의 확률도 달라집니다.</li>
-            <li><span class="tag">설명</span>1000명으로 생각하면 병이 있는 10명 중 약 10명이 양성이고, 병이 없는 990명 중 5%인 약 50명도 양성입니다. 이제 '양성이 나온 사람'을 전체로 삼으면, 양성 약 60명 중 실제 환자는 10명이므로 병이 있을 확률은 \(\frac{10}{60} \approx 17\%\)입니다. 병이 드물면(<em>기저율</em>이 낮으면) 정확한 검사라도 양성 중 대부분이 잘못된 양성일 수 있습니다.</li>
-            <li><span class="tag">연결</span>인공지능의 성능은 정확도 하나가 아니라 "병이 있을 때 맞히는 비율(민감도)"과 "병이 없을 때 맞히는 비율(특이도)"로 함께 봐야 합니다. 스팸 필터(2단원)도 같은 계산입니다. 확률과 통계 과목에서는 이 계산을 조건부확률과 베이즈 정리로 정리합니다.</li>
-            <li><span class="tag">적용</span>예측한 뒤, 병이 있는 비율과 특이도를 바꿔 보세요. 양성의 신뢰도를 높이려면 어느 쪽을 바꾸는 것이 효과가 큰가요?</li>
-            <li class="warn"><span class="tag">판단</span>"병이 있는 사람 가운데 양성인 비율"과 "양성인 사람 가운데 병이 있는 비율"은 다릅니다. 이 둘을 바꿔 읽는 실수가 의료, 재판, 보안 검색에서 잘못된 판단을 낳습니다.</li>
+            <li><span class="tag">질문</span>“정확도 99%”인 인공지능이 양성이라고 하면 병이 있을 확률도 99%일까?</li>
+            <li><span class="tag">복원</span>확률은 전체 가운데 그 일이 일어나는 경우의 비율이다. 그래서 무엇을 ‘전체’로 삼느냐에 따라 같은 사건의 확률도 달라진다.</li>
+            <li><span class="tag">설명</span>1000명으로 생각하면 병이 있는 10명 중 약 10명이 양성이고, 병이 없는 990명 중 5%인 약 50명도 양성이다. 이제 ‘양성이 나온 사람’을 전체로 삼으면, 양성 약 60명 중 실제 환자는 10명이므로 병이 있을 확률은 \(\frac{10}{60} \approx 17\%\)이다. 즉 병이 드물면(<em>기저율</em>이 낮으면) 정확한 검사라도 양성 중 대부분이 잘못된 양성일 수 있다.</li>
+            <li><span class="tag">연결</span>그래서 인공지능의 성능은 정확도 하나가 아니라 병이 있을 때 맞히는 비율(민감도)과 병이 없을 때 맞히는 비율(특이도)로 함께 보아야 한다. 스팸 필터(2단원)도 같은 계산이며, 확률과 통계 과목에서는 이 계산을 조건부확률과 베이즈 정리로 정리한다.</li>
+            <li><span class="tag">적용</span>예측한 뒤 병이 있는 비율과 특이도를 바꿔 보며, 양성의 신뢰도를 높이려면 어느 쪽을 바꾸는 것이 효과가 큰지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘병이 있는 사람 가운데 양성인 비율’과 ‘양성인 사람 가운데 병이 있는 비율’은 다르다. 이 둘을 바꿔 읽는 실수가 의료, 재판, 보안 검색에서 잘못된 판단을 낳는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">병이 있는 비율이 10%라면(다른 조건은 같음) 양성일 때 병이 있을 확률은 대략?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 69%<span class="why"><b>맞습니다.</b> 1000명 중 환자 100명 → 양성 99명, 비환자 900명 → 양성 45명. \(\frac{99}{144} \approx 0.69\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 17%<span class="why"><b>기저율이 1%일 때의 값입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>99%<span class="why"><b>"병이 있는 사람 가운데 양성인 비율"과 바꿔 읽었습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10%<span class="why"><b>검사 전 확률(기저율)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 69%<span class="why"><b>맞다.</b> 1000명 중 환자 100명 → 양성 99명, 비환자 900명 → 양성 45명. \(\frac{99}{144} \approx 0.69\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 17%<span class="why"><b>기저율이 1%일 때의 값이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>99%<span class="why"><b>"병이 있는 사람 가운데 양성인 비율"과 바꿔 읽었다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10%<span class="why"><b>검사 전 확률(기저율)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/5-2.html#card-aimath-explore-plan"><small class="mono">인공지능 수학 5.2</small>내가 궁금한 것을 인공지능 수학 탐구 주제로 바꿀 수 있을까?</a><a href="../../c/aimath/5-2.html#card-aimath-fairness"><small class="mono">인공지능 수학 5.2</small>같은 기준 점수를 적용하면 공정한 인공지능일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/5-2.html#card-aimath-explore-plan"><small class="mono">인공지능 수학 5.2</small>내가 궁금한 것을 인공지능 수학 탐구 주제로 바꿀 수 있을까?</a><a href="../../c/aimath/5-2.html#card-aimath-fairness"><small class="mono">인공지능 수학 5.2</small>같은 기준 점수를 적용하면 공정한 인공지능일까?</a><a href="../../c/aimath/5-2.html#text-aimath-explore"><small class="mono">인공지능 수학 5.2</small>인공지능 수학 주제 탐구</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=aimath-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=aimath&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -160,6 +215,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/aimath/body.js"></script>
 <script src="../../js/cards/aimath/weather-predict.js"></script>
 <script src="../../js/cards/aimath/base-rate.js"></script>
 </body>

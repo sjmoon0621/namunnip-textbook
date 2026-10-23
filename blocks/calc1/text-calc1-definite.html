@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc1/body.js"],
+  "sec": "3-3",
+  "short": "본문 · 정적분"
+}
+-->
+<article class="card reading" id="text-calc1-definite" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>정적분</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\(y = x^2\)의 그래프와 \(x\)축, 직선 \(x = 1\)로 둘러싸인 도형은 한쪽이 곡선이라 넓이 공식이 없다. 이 도형을 폭이 좁은 직사각형으로 잘게 나누어 넓이를 더하면 어떤 값에 가까워질까? 그 값을 정확히 정하는 방법은 무엇일까?</p>
+    <figure class="q-fig" data-q="calc1-riemann">
+      <svg viewBox="0 0 520 280" role="img" aria-label="y=x² 아래를 n개의 직사각형으로 나누어 넓이를 어림하는 그림"></svg>
+      <div class="q-ctl"><label>직사각형 개수 \(n\) = <input type="range" data-k="n" min="2" max="60" step="1" value="5"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 구간을 \(n\)등분해 오른쪽 끝의 높이로 세운 직사각형의 넓이 합은 \(n\)이 커질수록 \(\tfrac{1}{3}\)에 가까워진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>연속함수(<a href="1-3.html">함수의 연속</a>), 수열의 합 \(\sum k^2\)(대수), 함수의 극한(<a href="1-1.html">함수의 극한</a>).</div>
+
+    <h3><span class="no">3.3.1</span>직사각형으로 어림하기</h3>
+    <p>구간 \([0, 1]\)을 \(n\)등분하면 직사각형 하나의 폭은 \(\dfrac{1}{n}\)이다. \(k\)번째 직사각형의 높이를 오른쪽 끝 \(x = \dfrac{k}{n}\)에서의 함숫값 \(\left(\dfrac{k}{n}\right)^2\)으로 정하면, 넓이의 합은 \[S_n = \sum_{k=1}^{n}\left(\frac{k}{n}\right)^2 \cdot \frac{1}{n} = \frac{1}{n^3}\sum_{k=1}^{n} k^2 = \frac{(n + 1)(2n + 1)}{6n^2}\] 이다.</p>
+    <p>그림 1의 슬라이더로 \(n\)을 늘려 보자. \(n = 5\)이면 \(S_5 = 0.44\), \(n = 50\)이면 약 0.343이다. 직사각형이 곡선 위로 삐져나온 부분이 점점 작아지기 때문이다. \(n \to \infty\)이면 \(S_n \to \dfrac{2}{6} = \dfrac{1}{3}\)이다. 따라서 이 도형의 넓이는 \(\dfrac{1}{3}\)이다.</p>
+
+    <h3><span class="no">3.3.2</span>정적분의 뜻</h3>
+    <p>같은 방법을 일반적인 연속함수에 쓴 것이 정적분이다. 구간을 잘게 나누어 '높이 × 폭'을 모두 더하고, 나누는 개수를 한없이 늘린 극한을 취한다.</p>
+    <div class="tb-env"><span class="lb">정의 3.3.1 <span class="nm">정적분</span></span>
+      <p>함수 \(f(x)\)가 닫힌구간 \([a, b]\)에서 연속일 때, 구간을 \(n\)등분한 각 소구간의 오른쪽 끝을 \(x_k\), 폭을 \(\Delta x = \dfrac{b - a}{n}\)이라 하면 \[\int_a^b f(x)\,dx = \lim_{n \to \infty}\sum_{k=1}^{n} f(x_k)\Delta x\] 이고, 이것을 \(f(x)\)의 \(a\)에서 \(b\)까지의 정적분이라 한다.</p>
+    </div>
+    <p>기호 \(\int\)는 합을 뜻하는 S를 길게 늘인 모양이고, \(dx\)는 폭 \(\Delta x\)가 한없이 작아진 것을 나타낸다. 즉 정적분은 '아주 가는 직사각형들의 넓이의 합'이다. \(f(x) \ge 0\)이면 곡선 아래의 넓이이고, \(f(x) &lt; 0\)인 부분은 높이가 음수이므로 넓이에 음의 부호를 붙여 더한다.<sup class="fn"><a href="#fn-calc1-definite-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="x축 위의 부분은 더하고 아래의 부분은 빼는 정적분">
+        <line x1="20" y1="80" x2="500" y2="80" class="ax"/>
+        <path d="M60 80 Q150 -10 240 80 Z" class="la"/><path d="M240 80 Q330 170 420 80 Z" class="ld"/>
+        <path d="M60 80 Q150 -10 240 80 Q330 170 420 80" class="b"/>
+        <text x="150" y="60" text-anchor="middle" class="ta">+</text><text x="330" y="112" text-anchor="middle" class="td">−</text>
+        <text x="460" y="40" class="s" text-anchor="middle">정적분 = 위 넓이 − 아래 넓이</text>
+      </svg>
+      <figcaption>그림 2. \(x\)축 아래에서는 높이가 음수이므로, 정적분은 위쪽 넓이에서 아래쪽 넓이를 뺀 값이 된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>정적분의 성질</h3>
+    <p>정적분은 합의 극한이므로 합의 성질이 그대로 이어진다. 상수배와 합은 따로 적분해 더할 수 있고, 구간을 둘로 나누어 적분해 더하면 원래 구간의 적분과 같다. 곧 \(\displaystyle\int_a^b f\,dx = \int_a^c f\,dx + \int_c^b f\,dx\)이다.</p>
+
+    <h3><span class="no">3.3.4</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>직사각형 합의 극한으로 \(\displaystyle\int_0^2 x\,dx\)를 구하고, 삼각형의 넓이와 비교하여라.</p>
+    </div>
+    <p>\([0, 2]\)를 \(n\)등분하면 폭은 \(\dfrac{2}{n}\), \(k\)번째 오른쪽 끝은 \(\dfrac{2k}{n}\)이다. 넓이의 합은 \(\displaystyle\sum_{k=1}^{n}\frac{2k}{n} \cdot \frac{2}{n} = \frac{4}{n^2} \cdot \frac{n(n + 1)}{2} = \frac{2(n + 1)}{n}\)이다.</p>
+    <p>\(n \to \infty\)이면 \(\dfrac{2(n + 1)}{n} \to 2\)이므로 \(\displaystyle\int_0^2 x\,dx = 2\)이다.</p>
+    <p>도형으로 보면 밑변 2, 높이 2인 직각삼각형이므로 넓이는 \(\tfrac{1}{2} \times 2 \times 2 = 2\)로 같다. 넓이 공식이 있는 도형에서 정적분이 그 넓이와 일치하니, 공식이 없는 곡선 도형에서도 정적분을 넓이로 믿을 수 있다. 아래 탐구 카드에서 직사각형의 개수와 높이를 잡는 위치를 바꾸며 합이 어디로 가는지 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc1-definite-1">높이를 왼쪽 끝이나 가운데의 함숫값으로 잡아도, 연속함수이면 \(n \to \infty\)일 때 같은 극한값에 다가간다. 그래서 정적분은 높이를 잡는 위치와 상관없이 정해진다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>정적분은 구간을 잘게 나눈 직사각형들의 '높이 × 폭'을 더하고, 나누는 개수를 한없이 늘린 극한이다. 함숫값이 양수이면 곡선 아래의 넓이가 되고, 음수인 부분은 빼진다. 그래서 처음 질문의 \(y = x^2\) 아래 \([0, 1]\)의 넓이는 직사각형 합의 극한 \(\tfrac{1}{3}\)이다.</p></div>
+  </div>
+</article>

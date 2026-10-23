@@ -45,12 +45,12 @@
   function design() {
     const el = $(".dcheck"), rows = tbl.rows, now = { ck: cat, p: +$(".c").value, T: +$(".t").value };
     el.classList.remove("bad", "good");
-    if (!rows.length) { el.textContent = "설계 점검: 첫 실행입니다. 무엇을 바꿀지 먼저 정하세요."; return; }
+    if (!rows.length) { el.textContent = "설계 점검 · 첫 실행입니다. 무엇을 바꿀지 먼저 정하세요."; return; }
     const prev = rows[rows.length - 1], diff = [];
     if (prev.ck !== now.ck) diff.push("촉매"); if (prev.p !== now.p) diff.push("농도"); if (prev.T !== now.T) diff.push("온도");
-    if (!diff.length) { el.textContent = "설계 점검: 앞 실행과 조건이 같습니다 → 반복 측정"; el.classList.add("good"); }
-    else if (diff.length === 1) { el.textContent = `설계 점검: 앞 실행과 달라진 변인은 ${diff[0]} 하나입니다`; el.classList.add("good"); }
-    else { el.textContent = `설계 점검: ${diff.join("·")}이(가) 함께 바뀌었습니다 → 앞 실행과 비교하면 원인을 가릴 수 없습니다`; el.classList.add("bad"); }
+    if (!diff.length) { el.textContent = "설계 점검 · 앞 실행과 조건이 같습니다 → 반복 측정"; el.classList.add("good"); }
+    else if (diff.length === 1) { el.textContent = `설계 점검 · 앞 실행과 달라진 변인은 ${diff[0]} 하나입니다`; el.classList.add("good"); }
+    else { el.textContent = `설계 점검 · ${diff.join("·")}이(가) 함께 바뀌었습니다 → 앞 실행과 비교하면 원인을 가릴 수 없습니다`; el.classList.add("bad"); }
   }
 
   function drawApp() {

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>포물선 운동의 벡터 분석 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="위치·속도·가속도를 벡터와 미분으로 나타내어 지표면 근처의 포물선 운동을 정량적으로 분석하고, 공기 저항처럼 여러 힘이 작용할 때의 운동 방정식을 푼다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adphy-drag .nums { grid-template-columns: 1fr 1fr; }
     #card-adphy-drag .nums dd { font-size: 14px; }
@@ -42,18 +48,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-projectile"><span class="mono">1.1.1</span>비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?</a></li>
-        <li><a href="#card-adphy-drag"><span class="mono">1.1.2</span>위치·속도·가속도 벡터와 공기 저항</a></li>
+        <li><a href="#text-adphy-terminal"><span class="mono">본문</span>포물선 운동의 벡터 분석</a></li>
+        <li><a href="#card-mech-projectile"><span class="mono">탐구 1</span>비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?</a></li>
+        <li><a href="#card-adphy-drag"><span class="mono">탐구 2</span>위치·속도·가속도 벡터와 공기 저항</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">110문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-1-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-terminal" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>포물선 운동의 벡터 분석</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">빗방울은 2 km 높이의 구름에서 떨어진다. 공기가 없다면 땅에 닿을 때의 속력은 \(\sqrt{2gh} \approx 200\) m/s로, 총알처럼 우산을 뚫을 것이다. 그런데 실제 빗방울은 초속 수 미터로 떨어진다. 공기 저항이 속력을 줄인다는 것은 알지만, 왜 어느 속력에서 더는 빨라지지 않고 일정해질까? 그리고 위치와 속도를 벡터로 쓰면 공기 저항이 있는 포물선 운동은 어떻게 풀 수 있을까?</p>
+          <figure class="q-fig" data-q="adphy-vterm">
+            <svg viewBox="0 0 520 230" role="img" aria-label="저항 계수에 따른 낙하 속력의 시간 변화와 종단 속도"></svg>
+            <div class="q-ctl"><label>저항 계수 k (1/s) <input type="range" data-k="k" min="0.1" max="2" step="0.05" value="0.5"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 속도에 비례하는 저항을 받으며 떨어지는 물체의 속력(파랑)과 저항이 없을 때의 속력(회색 직선). 속력은 지수 함수로 종단 속도(회색 가로선)에 다가간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>포물선 운동의 성분 분해, 뉴턴 운동 제2법칙(물리학), 미분과 지수 함수(수학).</div>
+
+          <h3><span class="no">1.1.1</span>속도에 비례하는 저항</h3>
+          <p>위치를 벡터 \(\vec r(t)\)로 쓰면 속도는 \(\vec v = \dfrac{d\vec r}{dt}\), 가속도는 \(\vec a = \dfrac{d\vec v}{dt}\)이다. 작은 물체가 공기 속을 천천히 움직이면, 공기 저항은 속도와 반대 방향이고 크기는 속력에 비례한다. 그래서 운동 방정식은 \(m\dfrac{d\vec v}{dt} = m\vec g - mk\vec v\)가 된다. 수평 성분과 연직 성분이 서로 섞이지 않으므로 따로 풀 수 있다. 연직 방향으로는 떨어질수록 저항이 커져, 저항이 중력과 같아지는 속력에서 가속도가 0이 된다. 이 속력을 종단 속도라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.1.1 <span class="nm">선형 저항 속의 낙하</span></span>
+            <p>정지 상태에서 떨어진 물체의 속력은 \[v(t) = v_t\left(1 - e^{-kt}\right),\qquad v_t = \frac{g}{k}\]이다. 시간 상수 \(\tau = 1/k\)가 지날 때마다 종단 속도와의 차이가 \(e^{-1} \approx 0.37\)배로 줄고, \(3\tau\) 뒤에는 종단 속도의 95%에 이른다.</p>
+          </div>
+          <p>그림 1에서 저항 계수를 바꾸어 보자. \(k = 0.5\)/s이면 종단 속도는 \(9.8 \div 0.5 = 19.6\) m/s이고, 6 s 뒤에는 그 95%에 이른다. 저항이 두 배가 되면 종단 속도는 반이 되고, 거기에 다다르는 시간도 반으로 준다. 수평 방향에도 같은 저항이 작용하므로, 비스듬히 던진 공은 수평 속도가 지수 함수로 줄어 포물선보다 짧고 끝이 가파르게 꺾인 궤도를 그린다.<sup class="fn"><a href="#fn-adphy-terminal-1">1</a></sup></p>
+
+          <h3><span class="no">1.1.2</span>저항이 속력의 제곱에 비례할 때</h3>
+          <p>빗방울, 야구공, 낙하산처럼 크고 빠른 물체는 뒤에 소용돌이를 만들며 공기를 밀어내므로, 저항이 속력의 제곱에 비례한다. 그러면 운동 방정식은 \(m\dfrac{dv}{dt} = mg - cv^2\)이 되고, 종단 속도는 \(v_t = \sqrt{mg/c}\)이다. 이 경우 수평과 연직 성분이 서로 섞여 식을 손으로 풀기 어렵다. 그래서 짧은 시간 간격마다 속도와 위치를 조금씩 바꾸어 가는 수치 계산으로 궤도를 구한다. 어느 쪽이든 '저항이 중력과 같아지는 속력'에서 가속이 멈춘다는 생각은 같다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="물체에 따른 저항의 종류와 종단 속도">
+              <g class="s">
+                <text x="20" y="22">물체</text><text x="170" y="22">저항의 모양</text><text x="350" y="22">종단 속도 (대략)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">안개 물방울 (0.01 mm)</text><text x="170" y="52">속력에 비례</text><text x="350" y="52">약 1 cm/s</text>
+                <text x="20" y="74">빗방울 (2 mm)</text><text x="170" y="74">속력의 제곱에 비례</text><text x="350" y="74">약 6.5 m/s</text>
+                <text x="20" y="96">사람 (팔다리를 편 자세)</text><text x="170" y="96">속력의 제곱에 비례</text><text x="350" y="96">약 55 m/s</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 작고 느린 물체는 속력에 비례하는 저항을, 크고 빠른 물체는 속력의 제곱에 비례하는 저항을 받는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.1.2</span>
+            <p>속력에 비례하는 저항을 받는 작은 공의 저항 계수가 \(k = 0.5\)/s이다. 정지 상태에서 떨어뜨렸을 때 2 s 뒤의 속력을 구하고, 저항이 없을 때와 비교하여라. 이 공이 종단 속도의 99%에 이르는 데 걸리는 시간도 구하여라.</p>
+          </div>
+          <p>종단 속도는 \(v_t = 9.8 \div 0.5 = 19.6\) m/s이다. 2 s 뒤에는 \(v = 19.6\,(1 - e^{-1}) = 19.6 \times 0.632 \approx 12.4\) m/s이다. 저항이 없으면 \(9.8 \times 2 = 19.6\) m/s이므로 약 63%에 그친다.</p>
+          <p>99%에 이르려면 \(e^{-kt} = 0.01\)이어야 하므로 \(t = \dfrac{\ln 100}{0.5} \approx 9.2\) s이다. 즉 종단 속도에 정확히 닿지는 않지만, 시간 상수의 몇 배만 지나면 사실상 일정한 속력으로 떨어진다. 그래서 빗방울은 구름에서 출발한 뒤 몇 초 안에 종단 속도에 이르고, 나머지 수백 m는 같은 속력으로 떨어진다.</p>
+          <p>아래 탐구 카드에서 공기 저항이 있을 때 포물선 궤도가 어떻게 찌그러지는지 확인하고, 각도에 따라 도달 거리가 어떻게 달라지는지 살펴보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-terminal-1">공기 저항이 있으면 가장 멀리 가는 발사각은 45°보다 작아진다. 야구에서 홈런 타구의 각도가 대개 25°에서 35° 사이인 것도 이 때문이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>위치를 벡터로 쓰고 속도와 가속도를 그 미분으로 다루면, 속도에 따라 달라지는 공기 저항도 운동 방정식에 넣어 풀 수 있다. 떨어지는 물체는 저항이 중력과 같아지는 종단 속도에 지수 함수로 다가가며, 그 시간 상수는 저항 계수의 역수이다. 그래서 처음 질문의 빗방울은 떨어질수록 커지는 공기 저항이 곧 중력과 맞먹게 되어, 몇 초 만에 초속 수 미터의 종단 속도로 일정하게 떨어진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-3.html#card-free-fall"><small class="mono">통합과학1 3.3</small>무거운 물체가 더 빨리 떨어질까?</a><a href="../../c/is1/3-3.html#card-is1-projectile"><small class="mono">통합과학1 3.3</small>수평으로 던진 공은 왜 포물선을 그릴까?</a><a href="../../c/is1/3-3.html#card-is1-moon-jump"><small class="mono">통합과학1 3.3</small>달에서 뛰면 얼마나 높이, 얼마나 오래 떠 있을까?</a><a href="../../c/is1/3-3.html#text-is1-gravity-motion"><small class="mono">통합과학1 3.3</small>중력장 내의 운동</a></div></nav>
+
       <article class="card" id="card-mech-projectile">
         <header class="card-head">
-          <span class="no">1.1.1</span><h2>비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?</h2><span class="kind">포물선 운동 · 성분 분해와 역학적 에너지</span>
+          <span class="no">탐구 1</span><h2>비스듬히 던진 공은 몇 도에서 가장 멀리 갈까?</h2><span class="kind">포물선 운동 · 성분 분해와 역학적 에너지</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,33 +136,33 @@
                 <div><dt>비행 시간</dt><dd class="n-tf">—</dd></div>
                 <div><dt>이 높이에서 가장 멀리</dt><dd class="n-best">—</dd></div>
               </dl>
-              <p class="fig-note">질량 1 kg인 공, g = 9.8 m/s², 공기 저항은 무시했습니다. 위치 에너지의 기준면은 땅입니다. 회색 점선은 같은 속력으로 던졌을 때 가장 멀리 가는 궤적입니다.</p>
+              <p class="fig-note">질량 1 kg인 공, g = 9.8 m/s²로 두고 공기 저항은 무시했으며, 위치 에너지의 기준면은 땅이다. 회색 점선은 같은 속력으로 던졌을 때 가장 멀리 가는 궤적이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>포환던지기 선수는 45°보다 낮은 각도로 던진다고 합니다. 가장 멀리 가는 각은 45°라고 배웠는데, 왜 그럴까요?</li>
-            <li><span class="tag">복원</span>수평으로 던진 물체는 가로로는 같은 속도로, 세로로는 자유 낙하처럼 움직입니다. 두 방향의 운동은 서로 영향을 주지 않습니다.</li>
-            <li><span class="tag">설명</span>처음 속도 v₀를 각 θ로 던지면 수평 성분은 v₀cosθ, 연직 성분은 v₀sinθ입니다. 수평으로는 힘이 없으므로 x = v₀cosθ·t, 연직으로는 중력만 작용하므로 y = h₀ + v₀sinθ·t − ½gt²입니다. 땅에서 던지면 도달 거리는 v₀²sin2θ/g로, sin2θ가 가장 큰 45°에서 가장 멉니다.</li>
-            <li><span class="tag">연결</span>날아가는 동안 공에 일을 하는 힘은 중력뿐이라 역학적 에너지 ½mv² + mgh가 일정합니다. 수평 속도는 변하지 않으므로, 최고점에서도 운동 에너지는 0이 아니라 ½m(v₀cosθ)²가 남습니다.</li>
-            <li><span class="tag">적용</span>시각 막대를 움직여 에너지 막대의 합이 변하는지 보세요. 그다음 던지는 높이를 2 m로 올리고, 가장 멀리 가는 각이 45°보다 작아지는지 확인해 보세요. 30°와 60°로 던졌을 때 도달 거리를 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>“45°가 언제나 가장 멀리 간다”는 땅에서 던지고 공기 저항이 없을 때만 맞습니다. 높은 곳에서 던지면 더 낮은 각이 유리하고, 공기 저항이 있으면 최적 각이 더 작아집니다. 또 최고점에서 속력이 0이라는 생각도 오개념입니다. 연직 성분만 0입니다.</li>
+            <li><span class="tag">질문</span>포환던지기 선수는 45°보다 낮은 각도로 던진다고 한다. 가장 멀리 가는 각은 45°라고 배웠는데, 왜 그럴까?</li>
+            <li><span class="tag">복원</span>수평으로 던진 물체는 가로로는 같은 속도로, 세로로는 자유 낙하처럼 움직이며, 두 방향의 운동은 서로 영향을 주지 않는다.</li>
+            <li><span class="tag">설명</span>처음 속도 v₀를 각 θ로 던지면 수평 성분은 v₀cosθ, 연직 성분은 v₀sinθ이다. 수평으로는 힘이 없으므로 x = v₀cosθ·t, 연직으로는 중력만 작용하므로 y = h₀ + v₀sinθ·t − ½gt²이고, 땅에서 던지면 도달 거리는 v₀²sin2θ/g이어서 sin2θ가 가장 큰 45°에서 가장 멀다.</li>
+            <li><span class="tag">연결</span>날아가는 동안 공에 일을 하는 힘은 중력뿐이라 역학적 에너지 ½mv² + mgh가 일정하다. 그리고 수평 속도는 변하지 않으므로, 최고점에서도 운동 에너지는 0이 아니라 ½m(v₀cosθ)²가 남는다.</li>
+            <li><span class="tag">적용</span>시각 막대를 움직여 에너지 막대의 합이 변하는지 보자. 그다음 던지는 높이를 2 m로 올려 가장 멀리 가는 각이 45°보다 작아지는지 확인하고, 30°와 60°로 던졌을 때 도달 거리를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>45°가 언제나 가장 멀리 간다는 것은 땅에서 던지고 공기 저항이 없을 때만 맞는다. 높은 곳에서 던지면 더 낮은 각이 유리하고, 공기 저항이 있으면 최적 각이 더 작아진다. 또 최고점에서 속력이 0이라는 생각도 오개념인데, 연직 성분만 0이기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">땅에서 같은 속력으로 30°와 60°로 각각 공을 던졌습니다. 공기 저항이 없을 때 두 공에 대한 설명으로 옳은 것은?</p>
+          <p class="q">땅에서 같은 속력으로 30°와 60°로 각각 공을 던졌다. 공기 저항이 없을 때 두 공에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>도달 거리는 같고, 60°로 던진 공이 더 오래 난다<span class="why"><b>맞습니다.</b> sin60° = sin120°라서 sin2θ가 같아 거리가 같습니다. 60°는 연직 성분이 커서 더 높이, 더 오래 날지만 수평 성분이 작아 같은 곳에 떨어집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>60°로 던진 공이 더 높이 올라가므로 더 멀리 간다<span class="why"><b>높이와 거리를 혼동한 답입니다.</b> 높이는 연직 성분, 거리는 수평 성분과 비행 시간의 곱으로 정해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>땅에 닿는 순간의 속력은 60°로 던진 공이 더 크다<span class="why"><b>역학적 에너지 보존을 보세요.</b> 같은 높이에서 같은 속력으로 던졌다면 같은 높이로 돌아올 때 속력도 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>도달 거리는 같고, 60°로 던진 공이 더 오래 난다<span class="why"><b>맞다.</b> sin60° = sin120°라서 sin2θ가 같아 거리가 같다. 60°는 연직 성분이 커서 더 높이, 더 오래 날지만 수평 성분이 작아 같은 곳에 떨어진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>60°로 던진 공이 더 높이 올라가므로 더 멀리 간다<span class="why"><b>높이와 거리를 혼동한 답이다.</b> 높이는 연직 성분, 거리는 수평 성분과 비행 시간의 곱으로 정해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>땅에 닿는 순간의 속력은 60°로 던진 공이 더 크다<span class="why"><b>역학적 에너지 보존을 보아라.</b> 같은 높이에서 같은 속력으로 던졌다면 같은 높이로 돌아올 때 속력도 같다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-3.html#card-free-fall"><small class="mono">통합과학1 3.3</small>무거운 물체가 더 빨리 떨어질까?</a><a href="../../c/is1/3-3.html#card-is1-projectile"><small class="mono">통합과학1 3.3</small>수평으로 던진 공은 왜 포물선을 그릴까?</a><a href="../../c/is1/3-3.html#card-is1-moon-jump"><small class="mono">통합과학1 3.3</small>달에서 뛰면 얼마나 높이, 얼마나 오래 떠 있을까?</a><a href="../../c/phy/1-4.html#card-phy-coaster"><small class="mono">물리학 1.4</small>롤러코스터는 왜 첫 언덕이 가장 높을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/3-3.html#card-free-fall"><small class="mono">통합과학1 3.3</small>무거운 물체가 더 빨리 떨어질까?</a><a href="../../c/is1/3-3.html#card-is1-projectile"><small class="mono">통합과학1 3.3</small>수평으로 던진 공은 왜 포물선을 그릴까?</a><a href="../../c/is1/3-3.html#card-is1-moon-jump"><small class="mono">통합과학1 3.3</small>달에서 뛰면 얼마나 높이, 얼마나 오래 떠 있을까?</a><a href="../../c/is1/3-3.html#text-is1-gravity-motion"><small class="mono">통합과학1 3.3</small>중력장 내의 운동</a></div></nav>
 
       <article class="card" id="card-adphy-drag">
         <header class="card-head">
-          <span class="no">1.1.2</span><h2>공기 저항이 있으면 포물선은 어떻게 찌그러질까?</h2><span class="kind">위치·속도·가속도 벡터 · 미분 · 운동 방정식</span>
+          <span class="no">탐구 2</span><h2>공기 저항이 있으면 포물선은 어떻게 찌그러질까?</h2><span class="kind">위치·속도·가속도 벡터 · 미분 · 운동 방정식</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -132,47 +190,52 @@
                 <div><dt>도달 거리 (진공일 때) · 최적 각</dt><dd class="n-R">—</dd></div>
               </dl>
               <p class="legend"><span class="line-key" style="--c:#8d8d92"></span>위치 r <span class="line-key" style="--c:#3f6fa3"></span>속도 v <span class="line-key" style="--c:#d4493a"></span>가속도 a <span class="line-key dash" style="--c:#8d8d92"></span>진공 궤적</p>
-              <p class="fig-note">g = 9.8 m/s². 공기 저항을 속도에 비례하는 힘 −bv로 둔 모형(선형 저항)입니다. 실제 야구공·축구공의 저항은 속력의 제곱에 더 가깝습니다. 속도·가속도 화살표의 길이는 각각 0.4 s, 0.4 s² 동안의 변위로 그렸습니다(서로 다른 눈금).</p>
+              <p class="fig-note">g = 9.8 m/s². 공기 저항을 속도에 비례하는 힘 −bv로 둔 모형(선형 저항)이다. 실제 야구공·축구공의 저항은 속력의 제곱에 더 가깝다. 속도·가속도 화살표의 길이는 각각 0.4 s, 0.4 s² 동안의 변위로 그렸다(서로 다른 눈금).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>야구 중계에서 뜬공의 궤적을 보면 올라갈 때보다 떨어질 때가 더 가파릅니다. 교과서의 포물선은 좌우가 대칭인데, 무엇이 대칭을 깨뜨릴까요? 그리고 그 효과를 식으로 어떻게 계산할까요?</li>
-            <li><span class="tag">복원</span>비스듬히 던진 공은 수평 방향으로 등속, 연직 방향으로 등가속도 운동을 합니다. 순간 속도는 아주 짧은 시간 동안의 변위를 그 시간으로 나눈 값, 곧 위치를 시간에 대해 미분한 값입니다.</li>
-            <li><span class="tag">설명</span>위치를 벡터 <em>r</em>(t) = x(t)<b>i</b> + y(t)<b>j</b>로 쓰면 속도는 <em>v = dr/dt</em>, 가속도는 <em>a = dv/dt</em>입니다. 진공에서는 a = (0, −g)로 일정하므로 적분하면 v = v₀ + at, r = v₀t + ½at²가 나옵니다. 공기 저항 −b<b>v</b>가 더해지면 운동 방정식은 m<b>dv</b>/dt = m<b>g</b> − b<b>v</b>, 곧 <em>dv/dt = g − kv</em>(k = b/m)가 됩니다. 이 미분 방정식의 해는 v<sub>x</sub> = v<sub>0x</sub>e<sup>−kt</sup>, v<sub>y</sub> = (v<sub>0y</sub> + g/k)e<sup>−kt</sup> − g/k이고, 이를 한 번 더 적분하면 위치가 나옵니다.</li>
-            <li><span class="tag">연결</span>오른쪽 그림은 속도 벡터의 끝을 이은 자취(호도그래프)입니다. 가속도는 속도의 변화율이므로 이 자취의 접선 방향을 가리킵니다. 진공에서는 자취가 연직 직선이라 가속도가 늘 아래로 g입니다. 저항이 있으면 자취가 종단 속도 (0, −g/k)를 향하는 직선이 되고, 가속도는 아래쪽에 ‘속도와 반대 방향’ 성분이 더해집니다.</li>
-            <li><span class="tag">적용</span>‘약한 저항’에서 시각 막대를 끝까지 움직이며 가속도 화살표가 최고점에서도 연직 아래가 아닌지 확인하세요. 각도를 바꿔 가며 최적 각이 45°보다 작아지는지, k를 0.4로 올리면 궤적의 끝이 얼마나 가팔라지는지 보세요. 진공에서는 호도그래프가 어떤 모양인가요?</li>
-            <li class="warn"><span class="tag">판단</span>“최고점에서 가속도는 0이다”, “가속도는 속도 방향을 향한다”는 흔한 오개념입니다. 가속도는 속도의 <em>변화</em> 방향을 가리킵니다. 또 선형 저항은 느린 물체(작은 입자, 점성이 큰 유체)에 맞는 모형입니다. 빠른 공에는 저항이 v²에 비례해 식을 손으로 풀 수 없으므로, 짧은 시간 간격으로 v와 r을 차례로 고치는 수치 계산을 씁니다.</li>
+            <li><span class="tag">질문</span>야구 중계에서 뜬공의 궤적을 보면 올라갈 때보다 떨어질 때가 더 가파르다. 교과서의 포물선은 좌우가 대칭인데, 무엇이 대칭을 깨뜨릴까? 그리고 그 효과를 식으로 어떻게 계산할까?</li>
+            <li><span class="tag">복원</span>비스듬히 던진 공은 수평 방향으로 등속, 연직 방향으로 등가속도 운동을 한다. 순간 속도는 아주 짧은 시간 동안의 변위를 그 시간으로 나눈 값, 곧 위치를 시간에 대해 미분한 값이다.</li>
+            <li><span class="tag">설명</span>위치를 벡터 <em>r</em>(t) = x(t)i + y(t)j로 쓰면 속도는 <em>v = dr/dt</em>, 가속도는 <em>a = dv/dt</em>이다. 진공에서는 a = (0, −g)로 일정하므로 적분하면 v = v₀ + at, r = v₀t + ½at²가 나온다. 공기 저항 −bv가 더해지면 운동 방정식은 mdv/dt = mg − bv, 곧 <em>dv/dt = g − kv</em>(k = b/m)가 된다. 이 미분 방정식의 해는 v<sub>x</sub> = v<sub>0x</sub>e<sup>−kt</sup>, v<sub>y</sub> = (v<sub>0y</sub> + g/k)e<sup>−kt</sup> − g/k이고, 이를 한 번 더 적분하면 위치가 나온다.</li>
+            <li><span class="tag">연결</span>오른쪽 그림은 속도 벡터의 끝을 이은 자취(호도그래프)이다. 가속도는 속도의 변화율이므로 이 자취의 접선 방향을 가리킨다. 진공에서는 자취가 연직 직선이라 가속도가 늘 아래로 g이다. 저항이 있으면 자취가 종단 속도 (0, −g/k)를 향하는 직선이 되고, 가속도는 아래쪽에 ‘속도와 반대 방향’ 성분이 더해진다.</li>
+            <li><span class="tag">적용</span>‘약한 저항’에서 시각 막대를 끝까지 움직이며 가속도 화살표가 최고점에서도 연직 아래가 아닌지 확인해 보자. 각도를 바꿔 가며 최적 각이 45°보다 작아지는지, k를 0.4로 올리면 궤적의 끝이 얼마나 가팔라지는지 보자. 진공에서는 호도그래프가 어떤 모양인가?</li>
+            <li class="warn"><span class="tag">판단</span>“최고점에서 가속도는 0이다”, “가속도는 속도 방향을 향한다”는 흔한 오개념이다. 가속도는 속도의 <em>변화</em> 방향을 가리킨다. 또 선형 저항은 느린 물체(작은 입자, 점성이 큰 유체)에 맞는 모형이다. 빠른 공에는 저항이 v²에 비례해 식을 손으로 풀 수 없으므로, 짧은 시간 간격으로 v와 r을 차례로 고치는 수치 계산을 쓴다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">속도에 비례하는 공기 저항을 받는 공이 궤적의 최고점을 지나고 있습니다. 이 순간 공의 가속도에 대한 설명으로 옳은 것은?</p>
+          <p class="q">속도에 비례하는 공기 저항을 받는 공이 궤적의 최고점을 지나고 있다. 이 순간 공의 가속도에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>크기는 g보다 조금 크고, 방향은 연직 아래에서 진행 반대쪽으로 기울어 있다<span class="why"><b>맞습니다.</b> 최고점에서 속도는 수평이므로 저항 −kv도 수평 뒤쪽입니다. 중력 g와 합치면 크기는 √(g² + k²v²)로 g보다 크고, 방향은 뒤쪽 아래입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연직 속도가 0이므로 가속도도 0이다<span class="why"><b>속도와 가속도를 혼동했습니다.</b> 연직 속도는 이 순간 0이지만 계속 줄고 있으므로 변화율은 0이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공기 저항이 있어도 가속도는 정확히 연직 아래로 g이다<span class="why"><b>진공일 때만 맞습니다.</b> 저항은 속도에 비례하므로 수평으로 움직이는 동안 수평 가속도를 만듭니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>크기는 g보다 조금 크고, 방향은 연직 아래에서 진행 반대쪽으로 기울어 있다<span class="why"><b>맞다.</b> 최고점에서 속도는 수평이므로 저항 −kv도 수평 뒤쪽이다. 중력 g와 합치면 크기는 √(g² + k²v²)로 g보다 크고, 방향은 뒤쪽 아래이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연직 속도가 0이므로 가속도도 0이다<span class="why"><b>속도와 가속도를 혼동했다.</b> 연직 속도는 이 순간 0이지만 계속 줄고 있으므로 변화율은 0이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>공기 저항이 있어도 가속도는 정확히 연직 아래로 g이다<span class="why"><b>진공일 때만 맞다.</b> 저항은 속도에 비례하므로 수평으로 움직이는 동안 수평 가속도를 만든다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-2.html#card-phy-stopping"><small class="mono">물리학 1.2</small>속력이 2배면 정지 거리는 몇 배가 될까?</a><a href="../../c/phy/1-2.html#card-phy-vt"><small class="mono">물리학 1.2</small>속도–시간 그래프 한 장에서 무엇을 읽을 수 있을까?</a><a href="../../c/phy/1-2.html#card-phy-video-track"><small class="mono">물리학 1.2</small>동영상 한 편으로 수레의 가속도를 잴 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-2.html#card-phy-stopping"><small class="mono">물리학 1.2</small>속력이 2배면 정지 거리는 몇 배가 될까?</a><a href="../../c/phy/1-2.html#card-phy-vt"><small class="mono">물리학 1.2</small>속도–시간 그래프 한 장에서 무엇을 읽을 수 있을까?</a><a href="../../c/phy/1-2.html#card-phy-video-track"><small class="mono">물리학 1.2</small>동영상 한 편으로 수레의 가속도를 잴 수 있을까?</a><a href="../../c/labphy/2-1.html#text-labphy-tape"><small class="mono">물리학 실험 2.1</small>등가속도 직선 운동 측정</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">110문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/mech/f-projectile.js"></script>
 <script src="../../js/cards/adphy/me-drag.js"></script>
 </body>

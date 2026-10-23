@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>확률의 곱셈정리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="확률의 곱셈정리 P(A∩B) = P(A)P(B|A), 복원·비복원 추출의 나뭇가지 그림, 독립시행의 확률 nCr p^r (1−p)^(n−r).">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-tree-draw canvas { width: 100%; aspect-ratio: 4 / 3; cursor: pointer; }
@@ -45,18 +50,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-stat-tree-draw"><span class="mono">2.6.1</span>확률의 곱셈정리</a></li>
-        <li><a href="#card-stat-indep-trials"><span class="mono">2.6.2</span>독립시행의 확률</a></li>
+        <li><a href="#text-stat-multiplication"><span class="mono">본문</span>확률의 곱셈정리</a></li>
+        <li><a href="#card-stat-tree-draw"><span class="mono">탐구 1</span>확률의 곱셈정리</a></li>
+        <li><a href="#card-stat-indep-trials"><span class="mono">탐구 2</span>독립시행의 확률</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=stat-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=stat&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=stat-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=stat-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-stat-multiplication" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>확률의 곱셈정리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">빨간 공 3개와 파란 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼낸다. 꺼낸 공을 다시 넣지 않는다면 두 번 모두 빨간 공일 확률은 얼마일까? 또 두 번째 공이 빨간 공일 확률은 첫 번째에 무엇을 꺼냈는지에 달려 있을까?</p>
+          <figure class="q-fig" data-q="stat-tree">
+            <svg viewBox="0 0 520 250" role="img" aria-label="두 번 꺼내는 나뭇가지 그림, 가지마다 조건부확률, 끝마다 곱"></svg>
+            <div class="q-ctl"><label>다시 넣기 <input type="range" data-k="r" min="0" max="1" step="1" value="0"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 나뭇가지의 각 가지에는 앞에서 일어난 일을 조건으로 한 확률을 적고, 한 갈래 길의 확률은 가지의 확률을 곱해 얻는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>조건부확률(<a href="2-4.html">조건부확률</a>), 독립과 종속(<a href="2-5.html">독립과 종속</a>), 조합 \({}_n\mathrm{C}_r\).</div>
+
+          <h3><span class="no">2.6.1</span>곱셈정리</h3>
+          <p>조건부확률의 정의 \(P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}\)의 양변에 \(P(A)\)를 곱하면, 두 사건이 함께 일어날 확률을 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">확률의 곱셈정리</span></span>
+            <p>\(P(A) &gt; 0\)일 때 \[P(A \cap B) = P(A)P(B \mid A)\] 특히 \(A\)와 \(B\)가 독립이면 \(P(A \cap B) = P(A)P(B)\)이다.</p>
+          </div>
+          <p>처음 질문에서 첫째 공이 빨간 공일 확률은 \(\tfrac{3}{5}\)이다. 첫째로 빨간 공을 꺼냈다면 주머니에는 빨간 공 2개, 파란 공 2개가 남으므로 둘째도 빨간 공일 확률은 \(\tfrac{2}{4}\)이다. 따라서 두 번 모두 빨간 공일 확률은 \(\tfrac{3}{5} \times \tfrac{2}{4} = \tfrac{3}{10}\)이다. 그림 1의 나뭇가지에서 위쪽 길을 따라 확률을 곱한 것이다.</p>
+
+          <h3><span class="no">2.6.2</span>둘째 공의 확률</h3>
+          <p>두 번째 공이 빨간 공이 되는 길은 '빨강 → 빨강'과 '파랑 → 빨강' 두 갈래이다. 두 길은 동시에 일어나지 않으므로 확률을 더한다. \(\tfrac{3}{5} \times \tfrac{2}{4} + \tfrac{2}{5} \times \tfrac{3}{4} = \tfrac{6}{20} + \tfrac{6}{20} = \tfrac{3}{5}\)이다. 즉 첫째 공을 모르면, 둘째 공이 빨간 공일 확률은 첫째와 똑같이 \(\tfrac{3}{5}\)이다.<sup class="fn"><a href="#fn-stat-multiplication-1">1</a></sup></p>
+          <p>그림 1의 슬라이더로 '다시 넣기'를 켜면, 둘째 가지의 확률이 첫째 결과와 상관없이 \(\tfrac{3}{5}\), \(\tfrac{2}{5}\)로 같아진다. 이때 두 번의 시행은 독립이다. 이렇게 같은 시행을 독립적으로 되풀이하는 것을 독립시행이라 한다.</p>
+
+          <h3><span class="no">2.6.3</span>독립시행의 확률</h3>
+          <p>동전을 4번 던져 앞면이 정확히 2번 나올 확률을 생각하자. '앞앞뒤뒤'처럼 특정한 순서 하나의 확률은 독립이므로 \(\left(\tfrac{1}{2}\right)^4\)이다. 앞면이 나올 두 자리를 고르는 방법이 \({}_4\mathrm{C}_2 = 6\)가지이므로 확률은 \(6 \times \tfrac{1}{16} = \tfrac{3}{8}\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.2 <span class="nm">독립시행의 확률</span></span>
+            <p>한 번의 시행에서 사건 \(A\)가 일어날 확률이 \(p\)일 때, 이 시행을 \(n\)번 독립적으로 되풀이해 \(A\)가 정확히 \(r\)번 일어날 확률은 \[{}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\]</p>
+          </div>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="동전 4번 중 앞면 2번이 나오는 6가지 순서">
+              <g class="s"><text x="20" y="30">앞앞뒤뒤</text><text x="110" y="30">앞뒤앞뒤</text><text x="200" y="30">앞뒤뒤앞</text><text x="290" y="30">뒤앞앞뒤</text><text x="380" y="30">뒤앞뒤앞</text><text x="460" y="30">뒤뒤앞앞</text>
+                <text x="20" y="70">순서 하나의 확률 (1/2)⁴ = 1/16, 순서의 수 ₄C₂ = 6</text><text x="20" y="100" class="td">앞면 2번의 확률 6 × 1/16 = 3/8</text></g>
+            </svg>
+            <figcaption>그림 2. 독립시행에서는 순서 하나의 확률에 그런 순서의 수를 곱한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.3</span>
+            <p>자유투 성공률이 0.7인 선수가 5번 던질 때 정확히 4번 성공할 확률과, 4번 이상 성공할 확률을 구하여라. (\(0.7^4 = 0.2401\), \(0.7^5 = 0.16807\))</p>
+          </div>
+          <p>정확히 4번 성공할 확률은 \({}_5\mathrm{C}_4 \times 0.7^4 \times 0.3 = 5 \times 0.2401 \times 0.3 = 0.36015\)이다.</p>
+          <p>5번 모두 성공할 확률은 \(0.7^5 = 0.16807\)이다. 4번 이상 성공하는 것은 '정확히 4번'과 '정확히 5번'으로 나뉘고 두 경우는 배반이므로 더한다. 따라서 \(0.36015 + 0.16807 = 0.52822\), 곧 약 0.53이다.</p>
+          <p>성공률이 70%인 선수라도 5번 가운데 4번 이상 넣을 확률은 절반을 조금 넘는 정도이다. 곱셈정리로 한 길의 확률을, 조합으로 길의 수를, 덧셈정리로 여러 경우를 묶었다. 아래 탐구 카드에서 나뭇가지와 독립시행을 직접 조작해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-stat-multiplication-1">제비뽑기에서 먼저 뽑든 나중에 뽑든 당첨될 확률이 같은 것도 같은 이유이다. 앞 사람이 뽑은 결과를 모르는 한, 몇 번째로 뽑든 확률은 처음과 같다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>잇달아 일어나는 사건의 확률은 \(P(A \cap B) = P(A)P(B \mid A)\)로 곱하며, 나뭇가지 그림에서 길을 따라 가지의 확률을 곱하는 것과 같다. 독립이면 조건이 빠져 확률을 그대로 곱하고, 독립시행에서 \(r\)번 성공할 확률은 \({}_n\mathrm{C}_rp^r(1 - p)^{n-r}\)이다. 그래서 처음 질문의 두 번 모두 빨간 공일 확률은 \(\tfrac{3}{10}\)이고, 둘째 공이 빨간 공일 확률은 첫째를 모를 때 \(\tfrac{3}{5}\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a><a href="../../c/stat/2-4.html#text-stat-conditional"><small class="mono">확률과 통계 2.4</small>조건부확률</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a><a href="../../c/pmath/3-4.html#text-pmath-bayes"><small class="mono">전문 수학 3.4</small>확률의 여러 가지 정리</a></div></nav>
+
       <article class="card" id="card-stat-tree-draw">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>두 번째 공이 빨간 공일 확률은 첫 번째 공에 달려 있을까?</h2><span class="kind">곱셈정리 · 나뭇가지 그림</span>
+          <span class="no">탐구 1</span><h2>두 번째 공이 빨간 공일 확률은 첫 번째 공에 달려 있을까?</h2><span class="kind">곱셈정리 · 나뭇가지 그림</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -76,34 +135,34 @@
                 <div><dt>\(P(\text{첫째 빨강})\)</dt><dd class="n-r1">—</dd></div>
                 <div><dt>\(P(\text{둘째 빨강})\)</dt><dd class="n-r2">—</dd></div>
               </dl>
-              <p class="fig-note">오른쪽 끝의 동그라미(또는 그 줄)를 누르면 그 경로를 고릅니다. 연두색 띠는 둘째 공이 빨간 공인 두 경로입니다.</p>
+              <p class="fig-note">오른쪽 끝의 동그라미(또는 그 줄)를 누르면 그 경로를 고른다. 연두색 띠는 둘째 공이 빨간 공인 두 경로이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>빨간 공 3개, 흰 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼냅니다. 꺼낸 공을 다시 넣지 않을 때, 두 번 모두 빨간 공일 확률은 얼마일까요? 또 두 번째 공이 빨간 공일 확률은 첫 번째 공의 색에 따라 달라질까요?</li>
-            <li><span class="tag">복원</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)입니다. A가 일어난 뒤에는 줄어든 표본공간, 곧 바뀐 주머니에서 B의 확률을 생각합니다.</li>
-            <li><span class="tag">설명</span>조건부확률의 정의 양변에 \(P(A)\)를 곱하면 \(P(A\cap B) = P(A)P(B\mid A)\) \((P(A) &gt; 0)\)이고, 같은 방법으로 \(P(A\cap B) = P(B)P(A\mid B)\) \((P(B) &gt; 0)\)입니다. 이것이 <em>확률의 곱셈정리</em>입니다. 나뭇가지 그림에서는 가지 위의 확률을 곱해 경로의 확률을 얻습니다. 첫째가 빨강이면 주머니에 빨강 2개, 흰 공 2개가 남으므로 \(P(\text{빨강},\text{빨강}) = \frac{3}{5} \times \frac{2}{4} = \frac{3}{10}\)입니다. 한 사건에 이르는 경로가 여럿이면 경로끼리는 배반이므로 확률을 더합니다. 둘째가 빨강일 확률은 \(\frac{3}{5} \times \frac{2}{4} + \frac{2}{5} \times \frac{3}{4} = \frac{3}{5}\)입니다. 꺼낸 공을 다시 넣으면 둘째 상황이 처음과 같아져 \(P(B\mid A) = P(B)\)이므로, 곱셈정리는 \(P(A\cap B) = P(A)P(B)\)가 됩니다.</li>
-            <li><span class="tag">연결</span>두 사건 A, B가 독립이면 곱셈정리는 \(P(A\cap B) = P(A)P(B)\)로 간단해집니다. 진단 검사에서 \(P(\text{양성}) = P(\text{환자})P(\text{양성}\mid\text{환자}) + P(\text{비환자})P(\text{양성}\mid\text{비환자})\)로 구한 것도 같은 구조입니다. 경로별로 곱하고, 같은 결과에 이르는 경로끼리 더합니다.</li>
-            <li><span class="tag">적용</span>비복원에서 빨간 공과 흰 공의 수를 여러 가지로 바꿔 \(P(\text{첫째 빨강})\)과 \(P(\text{둘째 빨강})\)을 비교하세요. 늘 같나요? 복원으로 바꾸면 둘째 가지의 수가 어떻게 바뀌나요? 빨간 공을 1개로 하면 비복원에서 '빨강 → 빨강' 경로의 확률은 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>비복원에서는 둘째 공의 확률이 첫째 공의 색에 따라 달라집니다. 그렇다고 둘째가 빨강일 확률 자체가 첫째보다 작아지는 것은 아닙니다. 첫째 공의 색을 모르면 둘째 공도 처음 주머니와 같은 확률을 갖습니다. 제비뽑기에서 '나중에 뽑으면 불리하다'는 생각은 이 점을 놓친 것입니다.</li>
+            <li><span class="tag">질문</span>빨간 공 3개, 흰 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼낸다. 꺼낸 공을 다시 넣지 않을 때, 두 번 모두 빨간 공일 확률은 얼마일까? 또 두 번째 공이 빨간 공일 확률은 첫 번째 공의 색에 따라 달라질까?</li>
+            <li><span class="tag">복원</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)이다. 즉 A가 일어난 뒤에는 줄어든 표본공간, 곧 바뀐 주머니에서 B의 확률을 생각한다.</li>
+            <li><span class="tag">설명</span>조건부확률의 정의 양변에 \(P(A)\)를 곱하면 \(P(A\cap B) = P(A)P(B\mid A)\) \((P(A) &gt; 0)\)이고, 같은 방법으로 \(P(A\cap B) = P(B)P(A\mid B)\) \((P(B) &gt; 0)\)이다. 이것이 <em>확률의 곱셈정리</em>이고, 나뭇가지 그림에서는 가지 위의 확률을 곱해 경로의 확률을 얻는다. 첫째가 빨강이면 주머니에 빨강 2개, 흰 공 2개가 남으므로 \(P(\text{빨강},\text{빨강}) = \frac{3}{5} \times \frac{2}{4} = \frac{3}{10}\)이다. 또 한 사건에 이르는 경로가 여럿이면 경로끼리는 배반이므로 확률을 더해, 둘째가 빨강일 확률은 \(\frac{3}{5} \times \frac{2}{4} + \frac{2}{5} \times \frac{3}{4} = \frac{3}{5}\)이다. 꺼낸 공을 다시 넣으면 둘째 상황이 처음과 같아져 \(P(B\mid A) = P(B)\)이므로, 곱셈정리는 \(P(A\cap B) = P(A)P(B)\)가 된다.</li>
+            <li><span class="tag">연결</span>그래서 두 사건 A, B가 독립이면 곱셈정리는 \(P(A\cap B) = P(A)P(B)\)로 간단해진다. 진단 검사에서 \(P(\text{양성}) = P(\text{환자})P(\text{양성}\mid\text{환자}) + P(\text{비환자})P(\text{양성}\mid\text{비환자})\)로 구한 것도 같은 구조로, 경로별로 곱하고 같은 결과에 이르는 경로끼리 더한다.</li>
+            <li><span class="tag">적용</span>비복원에서 빨간 공과 흰 공의 수를 여러 가지로 바꿔 \(P(\text{첫째 빨강})\)과 \(P(\text{둘째 빨강})\)이 늘 같은지 비교해 보자. 복원으로 바꾸면 둘째 가지의 수가 어떻게 바뀌는지 보고, 빨간 공을 1개로 하면 비복원에서 '빨강 → 빨강' 경로의 확률이 0이 되는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>비복원에서는 둘째 공의 확률이 첫째 공의 색에 따라 달라진다. 그렇다고 둘째가 빨강일 확률 자체가 첫째보다 작아지는 것은 아니다. 첫째 공의 색을 모르면 둘째 공도 처음 주머니와 같은 확률을 갖기 때문이다. 제비뽑기에서 '나중에 뽑으면 불리하다'는 생각은 이 점을 놓친 것이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">흰 공 3개, 검은 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼냅니다. 꺼낸 공을 다시 넣지 않을 때, 두 번째 공이 검은 공일 확률은?</p>
+          <p class="q">흰 공 3개, 검은 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼낸다. 꺼낸 공을 다시 넣지 않을 때, 두 번째 공이 검은 공일 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{1}{10}\)<span class="why"><b>두 번 모두 검은 공일 확률입니다.</b> \(\frac{2}{5} \times \frac{1}{4} = \frac{1}{10}\)은 '검정 → 검정' 경로 하나뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{3}{10}\)<span class="why"><b>경로 하나만 셌습니다.</b> \(\frac{3}{5} \times \frac{2}{4} = \frac{3}{10}\)은 '흰 → 검정' 경로입니다. '검정 → 검정' 경로도 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>첫째가 검은 공이라고 가정했습니다.</b> \(\frac{1}{4}\)은 \(P(\text{둘째 검정}\mid\text{첫째 검정})\)입니다. 첫째 공의 색은 주어지지 않았습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄹ</span><span>\(\frac{2}{5}\)<span class="why"><b>맞습니다.</b> \(\frac{3}{5} \times \frac{2}{4} + \frac{2}{5} \times \frac{1}{4} = \frac{6}{20} + \frac{2}{20} = \frac{8}{20} = \frac{2}{5}\)입니다. 첫째 공의 확률과 같습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{1}{10}\)<span class="why"><b>두 번 모두 검은 공일 확률이다.</b> \(\frac{2}{5} \times \frac{1}{4} = \frac{1}{10}\)은 '검정 → 검정' 경로 하나뿐이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{3}{10}\)<span class="why"><b>경로 하나만 셌다.</b> \(\frac{3}{5} \times \frac{2}{4} = \frac{3}{10}\)은 '흰 → 검정' 경로이다. '검정 → 검정' 경로도 더해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>첫째가 검은 공이라고 가정했다.</b> \(\frac{1}{4}\)은 \(P(\text{둘째 검정}\mid\text{첫째 검정})\)이다. 첫째 공의 색은 주어지지 않았다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄹ</span><span>\(\frac{2}{5}\)<span class="why"><b>맞다.</b> \(\frac{3}{5} \times \frac{2}{4} + \frac{2}{5} \times \frac{1}{4} = \frac{6}{20} + \frac{2}{20} = \frac{8}{20} = \frac{2}{5}\)이다. 첫째 공의 확률과 같다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a><a href="../../c/stat/2-4.html#text-stat-conditional"><small class="mono">확률과 통계 2.4</small>조건부확률</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a><a href="../../c/pmath/3-4.html#text-pmath-bayes"><small class="mono">전문 수학 3.4</small>확률의 여러 가지 정리</a></div></nav>
 
       <article class="card" id="card-stat-indep-trials">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</h2><span class="kind">독립시행 · 곱셈정리</span>
+          <span class="no">탐구 2</span><h2>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</h2><span class="kind">독립시행 · 곱셈정리</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -124,43 +183,44 @@
                 <div><dt>한 경로의 확률</dt><dd class="n-one">—</dd></div>
                 <div><dt>\(P(\text{정확히 }r\text{번})\)</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">작은 칸 한 줄이 시행 \(n\)번의 결과 하나이고, 왼쪽부터 첫째, 둘째, … 시행입니다. 채운 칸이 성공입니다. 아래 수는 각 묶음의 확률이며, 모두 더하면 1입니다.</p>
+              <p class="fig-note">작은 칸 한 줄이 시행 \(n\)번의 결과 하나이고, 왼쪽부터 첫째, 둘째, … 시행이다. 채운 칸이 성공이다. 아래 수는 각 묶음의 확률이며, 모두 더하면 1이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전을 네 번 던질 때 앞면이 정확히 두 번 나올 확률은 얼마일까요? 주사위를 네 번 던져 1의 눈이 정확히 두 번 나올 확률은 같은 방법으로 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>두 사건이 독립이면 \(P(A\cap B) = P(A)P(B)\)입니다. 서로 다른 \(n\)개에서 \(r\)개를 고르는 방법의 수는 \({}_{n}\mathrm{C}_{r}\)입니다.</li>
-            <li><span class="tag">설명</span>동전이나 주사위를 되풀이해 던지는 것처럼, 각 시행의 결과가 다른 시행의 결과에 영향을 주지 않는 시행을 <em>독립시행</em>이라고 합니다. 한 번의 시행에서 사건 A가 일어날 확률이 \(p\)일 때, \(n\)번의 독립시행에서 '성공, 실패, 성공, …'처럼 정해진 순서 하나가 나올 확률은 곱셈정리로 \(p^r(1 - p)^{n-r}\)입니다. 성공 \(r\)번이 들어갈 자리를 고르는 방법이 \({}_{n}\mathrm{C}_{r}\)가지이고 이 순서들은 서로 배반이므로, A가 정확히 \(r\)번 일어날 확률은 \({}_{n}\mathrm{C}_{r}p^r(1 - p)^{n-r}\)입니다.</li>
-            <li><span class="tag">연결</span>이 확률을 \(r = 0, 1, \cdots, n\)에 대해 모은 것이 통계 단원의 이항분포입니다. 이항정리로 \((p + q)^n\)을 전개한 각 항이 바로 이 확률이므로, 모두 더하면 \((p + q)^n = 1^n = 1\)입니다\((q = 1 - p)\).</li>
-            <li><span class="tag">적용</span>\(n = 4\), \(r = 2\)에서 강조된 묶음의 줄을 세어 \({}_{4}\mathrm{C}_{2}\)와 같은지 확인하세요. 성공 확률을 \(\frac{1}{6}\)로 바꾸면 줄의 수는 그대로인데 한 줄의 확률이 바뀝니다. 이때 확률이 가장 큰 묶음은 어디로 옮겨 가나요? \(n\)을 6까지 늘려 묶음의 줄 수가 파스칼의 삼각형 한 줄과 같은지도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"네 번 중 두 번이니 \(\frac{2}{4} = \frac{1}{2}\)"처럼 비율을 확률로 쓰면 안 됩니다. 한 줄의 확률 \(p^r(1 - p)^{n-r}\)만 구하고 \({}_{n}\mathrm{C}_{r}\)를 곱하지 않는 실수도 흔합니다. 이 공식은 매번 성공 확률이 같고 시행끼리 독립일 때만 씁니다. 꺼낸 공을 다시 넣지 않는 추출에는 그대로 쓸 수 없습니다.</li>
+            <li><span class="tag">질문</span>동전을 네 번 던질 때 앞면이 정확히 두 번 나올 확률은 얼마일까? 주사위를 네 번 던져 1의 눈이 정확히 두 번 나올 확률도 같은 방법으로 구할 수 있을까?</li>
+            <li><span class="tag">복원</span>두 사건이 독립이면 \(P(A\cap B) = P(A)P(B)\)이다. 그리고 서로 다른 \(n\)개에서 \(r\)개를 고르는 방법의 수는 \({}_{n}\mathrm{C}_{r}\)이다.</li>
+            <li><span class="tag">설명</span>동전이나 주사위를 되풀이해 던지는 것처럼, 각 시행의 결과가 다른 시행의 결과에 영향을 주지 않는 시행을 <em>독립시행</em>이라고 한다. 한 번의 시행에서 사건 A가 일어날 확률이 \(p\)일 때, \(n\)번의 독립시행에서 '성공, 실패, 성공, …'처럼 정해진 순서 하나가 나올 확률은 곱셈정리로 \(p^r(1 - p)^{n-r}\)이다. 그런데 성공 \(r\)번이 들어갈 자리를 고르는 방법이 \({}_{n}\mathrm{C}_{r}\)가지이고 이 순서들은 서로 배반이므로, A가 정확히 \(r\)번 일어날 확률은 \({}_{n}\mathrm{C}_{r}p^r(1 - p)^{n-r}\)이다.</li>
+            <li><span class="tag">연결</span>이 확률을 \(r = 0, 1, \cdots, n\)에 대해 모은 것이 통계 단원의 이항분포이다. 이항정리로 \((p + q)^n\)을 전개한 각 항이 바로 이 확률이므로, 모두 더하면 \((p + q)^n = 1^n = 1\)이다\((q = 1 - p)\).</li>
+            <li><span class="tag">적용</span>\(n = 4\), \(r = 2\)에서 강조된 묶음의 줄을 세어 \({}_{4}\mathrm{C}_{2}\)와 같은지 확인해 보자. 성공 확률을 \(\frac{1}{6}\)로 바꾸면 줄의 수는 그대로인데 한 줄의 확률이 바뀌어, 확률이 가장 큰 묶음이 왼쪽으로 옮겨 간다. \(n\)을 6까지 늘려 묶음의 줄 수가 파스칼의 삼각형 한 줄과 같은지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"네 번 가운데 두 번이니 \(\frac{2}{4} = \frac{1}{2}\)"처럼 비율을 확률로 쓰면 안 된다. 한 줄의 확률 \(p^r(1 - p)^{n-r}\)만 구하고 \({}_{n}\mathrm{C}_{r}\)를 곱하지 않는 실수도 흔하다. 또 이 공식은 매번 성공 확률이 같고 시행끼리 독립일 때만 쓰므로, 꺼낸 공을 다시 넣지 않는 추출에는 그대로 쓸 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">주사위 한 개를 네 번 던질 때, 3의 배수의 눈이 정확히 두 번 나올 확률은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{4}{81}\)<span class="why"><b>한 경로의 확률입니다.</b> \((\frac{1}{3})^2(\frac{2}{3})^2 = \frac{4}{81}\)은 '성공, 성공, 실패, 실패' 같은 순서 하나의 확률입니다. 순서가 \({}_{4}\mathrm{C}_{2} = 6\)가지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\frac{8}{27}\)<span class="why"><b>맞습니다.</b> \({}_{4}\mathrm{C}_{2}(\frac{1}{3})^2(\frac{2}{3})^2 = 6 \times \frac{4}{81} = \frac{24}{81} = \frac{8}{27}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{2}{3}\)<span class="why"><b>실패의 확률을 빠뜨렸습니다.</b> \(6 \times (\frac{1}{3})^2 = \frac{2}{3}\)에는 나머지 두 번이 3의 배수가 아닐 확률 \((\frac{2}{3})^2\)이 곱해지지 않았습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>횟수의 비율을 확률로 썼습니다.</b> \(\frac{2}{4}\)는 '네 번 중 두 번'이라는 비율일 뿐 확률이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(\frac{4}{81}\)<span class="why"><b>한 경로의 확률이다.</b> \((\frac{1}{3})^2(\frac{2}{3})^2 = \frac{4}{81}\)은 '성공, 성공, 실패, 실패' 같은 순서 하나의 확률이다. 순서가 \({}_{4}\mathrm{C}_{2} = 6\)가지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(\frac{8}{27}\)<span class="why"><b>맞다.</b> \({}_{4}\mathrm{C}_{2}(\frac{1}{3})^2(\frac{2}{3})^2 = 6 \times \frac{4}{81} = \frac{24}{81} = \frac{8}{27}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{2}{3}\)<span class="why"><b>실패의 확률을 빠뜨렸다.</b> \(6 \times (\frac{1}{3})^2 = \frac{2}{3}\)에는 나머지 두 번이 3의 배수가 아닐 확률 \((\frac{2}{3})^2\)이 곱해지지 않았다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>횟수의 비율을 확률로 썼다.</b> \(\frac{2}{4}\)는 '네 번 중 두 번'이라는 비율일 뿐 확률이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-5.html#card-stat-indep-dice"><small class="mono">확률과 통계 2.5</small>'합이 7'은 첫째 눈의 영향을 받을까?</a><a href="../../c/stat/2-5.html#card-stat-indep-area"><small class="mono">확률과 통계 2.5</small>두 사각형이 어떻게 겹치면 독립일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-5.html#card-stat-indep-dice"><small class="mono">확률과 통계 2.5</small>'합이 7'은 첫째 눈의 영향을 받을까?</a><a href="../../c/stat/2-5.html#card-stat-indep-area"><small class="mono">확률과 통계 2.5</small>두 사각형이 어떻게 겹치면 독립일까?</a><a href="../../c/stat/2-5.html#text-stat-independence"><small class="mono">확률과 통계 2.5</small>독립과 종속</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=stat-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../bank.html?c=stat&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=stat-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -168,6 +228,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/stat/body.js"></script>
 <script src="../../js/cards/stat/tree-draw.js"></script>
 <script src="../../js/cards/stat/indep-trials.js"></script>
 </body>

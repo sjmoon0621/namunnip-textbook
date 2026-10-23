@@ -1,386 +1,386 @@
 # 개념 지도 데이터 — tools/build.py가 읽어 js/graph-data.js를 만든다.
 # 한 줄에 개념 하나:  개념 id | 이름 | 이 개념을 다루는 블록 id들(공백 구분) | 먼저 알아야 할 개념 id들(공백 구분)
 # 블록 id로 연결하므로 교육과정이 바뀌어 블록이 다른 절로 옮겨 가도 지도는 그대로 쓸 수 있다.
-# 한 블록이 여러 개념에 속해도 된다. 선수 관계는 과목을 넘나들어도 된다.
+# 한 블록이 여러 개념에 속해도 된다. 선수 관계는 과목을 넘나들어도 되지만, 수학(교양·심화 포함)과 과학 사이는 잇지 않는다. 빌드가 검사한다.
 
 # ── 측정과 정보 ──
-measure | 측정과 규모 | card-is1-scale card-is1-clock video-is1-meter |
+measure | 측정과 규모 | card-is1-scale card-is1-clock video-is1-meter text-is1-measure-space-time |
 gps-time | 시간으로 위치 찾기 | card-is1-gps | measure
-units | 기본량과 단위 | card-is1-units card-is1-dimension text-is1-standards card-is1-new-unit card-is1-standard | measure
-error | 오차와 유효숫자 | card-is1-error card-is1-sigfig card-is1-four-measure | measure
+units | 기본량과 단위 | card-is1-units card-is1-dimension text-is1-standards card-is1-new-unit card-is1-standard text-is1-base-units | measure
+error | 오차와 유효숫자 | card-is1-error card-is1-sigfig card-is1-four-measure text-is1-measurement text-sie1-graph-axis text-labchem-digits | measure
 estimate | 어림 | card-is1-fermi | units
-digital | 센서와 디지털 신호 | card-is1-sampling card-is1-sensor video-is1-sensors text-is1-ict-history | measure
-data | 빅데이터와 통계적 판단 | card-is2-confound card-is2-dredge card-is2-reident | error
+digital | 센서와 디지털 신호 | card-is1-sampling card-is1-sensor video-is1-sensors text-is1-ict-history text-is1-digital text-sie2-sensor-calibration text-labphy-aliasing | measure
+data | 빅데이터와 통계적 판단 | card-is2-confound card-is2-dredge card-is2-reident text-is2-big-data text-fusi-simpson-paradox text-info-group-eval | error
 diag-test | 진단 검사의 해석 | card-is2-test | error
-ai | 인공지능과 기계 학습 | card-is2-learn card-is2-trust video-is2-ai-cat | digital data
+ai | 인공지능과 기계 학습 | card-is2-learn card-is2-trust video-is2-ai-cat text-is2-ai-robot | digital data
 robot | 로봇과 되먹임 제어 | card-is2-robot card-is2-robot-design | digital
-iot | 사물인터넷 | text-is2-iot | digital ai
-ethics | 과학기술과 윤리 | card-is2-ethics text-is2-science-role text-is2-genai | data
-sci-method | 가설과 대조 실험 | card-bio-control | error
+iot | 사물인터넷 | text-is2-iot text-sie2-co2-classroom text-hist-six-degrees | digital ai
+ethics | 과학기술과 윤리 | card-is2-ethics text-is2-science-role text-is2-genai text-is2-ethics text-sie2-data-integrity | data
+sci-method | 가설과 대조 실험 | card-bio-control text-sie1-pasteur-flask | error
 
 # ── 원소와 화학 결합 ──
-spectrum | 선 스펙트럼 | card-is1-spectrum |
+spectrum | 선 스펙트럼 | card-is1-spectrum text-is1-spectrum-elements |
 bbn | 빅뱅과 가벼운 원소 | card-is1-bbn | spectrum
-fusion | 별의 핵융합 | card-is1-fusion card-is2-sun-fusion text-is2-sun-path | bbn
+fusion | 별의 핵융합 | card-is1-fusion card-is2-sun-fusion text-is2-sun-path text-is1-nucleosynthesis text-is2-solar-energy text-emq-stellar text-adearth-burning-stages | bbn
 heavy-el | 무거운 원소의 생성 | card-is1-ncap video-is1-body | fusion
-periodic | 주기율과 전자 껍질 | card-is1-shells |
+periodic | 주기율과 전자 껍질 | card-is1-shells text-is1-periodicity text-adchem-electron-config |
 alkali-hal | 알칼리 금속과 할로젠 | card-is1-alkali card-is1-halogen | periodic
-bonding | 이온 결합과 공유 결합 | card-is1-bond card-is1-conduct card-chem-nacl card-chem-h2oel | periodic
-silicate | 규산염 광물 | card-is1-silicate | bonding
+bonding | 이온 결합과 공유 결합 | card-is1-bond card-is1-conduct card-chem-nacl card-chem-h2oel text-is1-chem-bond text-chem-bond-elec | periodic
+silicate | 규산염 광물 | card-is1-silicate text-is1-building-blocks text-adearth-olivine | bonding
 rare-earth | 희토류와 자원 개발 쟁점 | text-is1-rare-earth | silicate
-polymer | 생명체의 고분자 | card-is1-polymer | bonding
-bands | 에너지띠와 도체·반도체 | card-is1-bands card-phy-lm-bands | bonding spectrum
-semicond | 도핑과 반도체 소자 | card-is1-doping video-is1-chip card-phy-lm-led card-phy-diode-iv card-phy-solar-panel | bands
-en | 전기 음성도와 결합의 극성 | card-chem-en card-chem-dipole | bonding
-lewis | 루이스 구조와 분자 모양 | card-chem-lewis card-chem-vsepr video-chem-shapes | bonding
-imf | 수소 결합과 분자 사이의 힘 | card-chem-bp card-chem-ice card-chem-mix card-chem-polar-lab | en lewis
-chem-society | 화학과 우리 사회 | card-chem-haber video-chem-society card-chem-safety text-chem-green | 
-mole | 몰 | card-chem-mole card-chem-cup card-chem-molvol card-chem-molar-mass text-chem-avogadro | units
-stoich | 화학 반응식과 양적 관계 | card-chem-balance card-chem-gasvol card-chem-limit card-chem-caco3 | mole
-redox | 산화와 환원 | card-is2-redox-electron card-is2-reactivity card-is2-redox-life | bonding
-acid-base | 산과 염기, 중화 반응 | card-is2-ion-migration card-is2-ph-log card-is2-neutral card-is2-acid-plate | bonding
-reaction-heat | 발열 반응과 흡열 반응 | card-is2-hand-warmer card-is2-cold-pack | bonding
-equilibrium | 동적 평형 | card-chem-dyn-eq card-chem-vapor-eq card-chem-color-rev card-chem-phase | stoich
-eq-const | 평형 상수와 반응 지수 | card-chem-k-hi card-chem-k-solid card-chem-qk | equilibrium
-le-chat | 평형 이동 | card-chem-lechat card-chem-soda card-chem-haber-eq video-chem-altitude card-chem-shift-lab text-chem-eq-cases | eq-const chem-society
-water-ion | 물의 자동 이온화와 pH | card-chem-autoion card-chem-ph-scale card-chem-kw-temp card-chem-dilute-ph | acid-base eq-const
-molarity | 몰 농도 | card-chem-molar-lab card-chem-dilution | mole
-neutral-q | 중화 반응의 양적 관계 | card-chem-ion-count card-chem-eq-point card-chem-antacid text-chem-neutral-env | acid-base molarity
-titration | 중화 적정 | card-chem-vinegar card-chem-indicator video-chem-titration | neutral-q water-ion
+polymer | 생명체의 고분자 | card-is1-polymer text-rxn-polymerization text-cell-dna-base | bonding
+bands | 에너지띠와 도체·반도체 | card-is1-bands card-phy-lm-bands text-is1-electric-materials text-phy-semiconductor text-emq-semiconductor | bonding spectrum
+semicond | 도핑과 반도체 소자 | card-is1-doping video-is1-chip card-phy-lm-led card-phy-diode-iv card-phy-solar-panel text-labphy-ripple | bands
+en | 전기 음성도와 결합의 극성 | card-chem-en card-chem-dipole text-chem-polarity | bonding
+lewis | 루이스 구조와 분자 모양 | card-chem-lewis card-chem-vsepr video-chem-shapes text-chem-shape text-adchem-formal-charge text-adchem-hybrid | bonding
+imf | 수소 결합과 분자 사이의 힘 | card-chem-bp card-chem-ice card-chem-mix card-chem-polar-lab text-chem-hbond text-mateng-intermolecular text-mateng-water-props | en lewis
+chem-society | 화학과 우리 사회 | card-chem-haber video-chem-society card-chem-safety text-chem-green text-chem-society | 
+mole | 몰 | card-chem-mole card-chem-cup card-chem-molvol card-chem-molar-mass text-chem-avogadro text-chem-mol | units
+stoich | 화학 반응식과 양적 관계 | card-chem-balance card-chem-gasvol card-chem-limit card-chem-caco3 text-chem-stoich | mole
+redox | 산화와 환원 | card-is2-redox-electron card-is2-reactivity card-is2-redox-life text-is2-redox text-rxn-galvanic text-rxn-oxidation-number text-cell-two-etc | bonding
+acid-base | 산과 염기, 중화 반응 | card-is2-ion-migration card-is2-ph-log card-is2-neutral card-is2-acid-plate text-is2-acid-base text-rxn-bronsted text-rxn-ph | bonding
+reaction-heat | 발열 반응과 흡열 반응 | card-is2-hand-warmer card-is2-cold-pack text-is2-reaction-heat text-mateng-enthalpy | bonding
+equilibrium | 동적 평형 | card-chem-dyn-eq card-chem-vapor-eq card-chem-color-rev card-chem-phase text-chem-equilibrium text-adchem-common-ion | stoich
+eq-const | 평형 상수와 반응 지수 | card-chem-k-hi card-chem-k-solid card-chem-qk text-chem-kc text-chem-qk text-adchem-reaction-quotient | equilibrium
+le-chat | 평형 이동 | card-chem-lechat card-chem-soda card-chem-haber-eq video-chem-altitude card-chem-shift-lab text-chem-eq-cases text-chem-lechatelier text-rxn-buffer text-adchem-vant-hoff text-labchem-keq | eq-const chem-society
+water-ion | 물의 자동 이온화와 pH | card-chem-autoion card-chem-ph-scale card-chem-kw-temp card-chem-dilute-ph text-chem-ph | acid-base eq-const
+molarity | 몰 농도 | card-chem-molar-lab card-chem-dilution text-chem-molarity | mole
+neutral-q | 중화 반응의 양적 관계 | card-chem-ion-count card-chem-eq-point card-chem-antacid text-chem-neutral-env text-chem-neutralize text-rxn-titration | acid-base molarity
+titration | 중화 적정 | card-chem-vinegar card-chem-indicator video-chem-titration text-chem-titration | neutral-q water-ion
 
 # ── 힘과 에너지 ──
-inertia | 관성 법칙 | text-is1-inertia card-phy-inertia video-phy-bus |
-free-fall | 자유 낙하와 포물선 운동 | card-free-fall card-is1-projectile card-is1-moon-jump |
+inertia | 관성 법칙 | text-is1-inertia card-phy-inertia video-phy-bus text-is1-momentum text-phy-newton |
+free-fall | 자유 낙하와 포물선 운동 | card-free-fall card-is1-projectile card-is1-moon-jump text-is1-gravity-motion text-mech-projectile |
 gravity | 만유인력과 원운동 | card-inverse-square video-apple-moon | free-fall
-newton2 | 가속도 법칙 | card-phy-stopping card-phy-vt card-phy-video-track | inertia
-impulse | 충격량과 운동량 | card-is1-airbag card-is1-egg-drop | inertia free-fall
-torque | 힘의 평형과 돌림힘 | card-phy-seesaw card-phy-crane card-phy-truss |
-action-reaction | 작용 반작용 | card-phy-horse | newton2
-momentum | 운동량 보존 | card-phy-rocket card-phy-collision | impulse action-reaction
-work-energy | 일과 운동 에너지 | card-phy-work | newton2
-mech-energy | 역학적 에너지 보존 | card-phy-coaster text-phy-spring card-pendulum | work-energy free-fall
-heat-energy | 열과 에너지 보존 | card-phy-brake card-phy-joule card-phy-heat-transfer | mech-energy
-heat-engine | 열기관과 효율 | card-phy-engine card-phy-wheel video-phy-engine | heat-energy
-efficiency | 에너지 효율과 신재생 에너지 | card-is2-efficiency card-is2-renewable card-is2-energy-design | power-gen heat-energy
+newton2 | 가속도 법칙 | card-phy-stopping card-phy-vt card-phy-video-track text-labphy-tape | inertia
+impulse | 충격량과 운동량 | card-is1-airbag card-is1-egg-drop text-sie2-paper-column | inertia free-fall
+torque | 힘의 평형과 돌림힘 | card-phy-seesaw card-phy-crane card-phy-truss text-phy-torque text-mech-forces text-adphy-rolling-energy |
+action-reaction | 작용 반작용 | card-phy-horse text-phy-momentum-cons | newton2
+momentum | 운동량 보존 | card-phy-rocket card-phy-collision text-mech-escape text-adphy-elastic | impulse action-reaction
+work-energy | 일과 운동 에너지 | card-phy-work text-phy-energy | newton2
+mech-energy | 역학적 에너지 보존 | card-phy-coaster text-phy-spring card-pendulum text-mech-shm | work-energy free-fall
+heat-energy | 열과 에너지 보존 | card-phy-brake card-phy-joule card-phy-heat-transfer text-phy-heat text-mech-first-law text-labphy-stirring | mech-energy
+heat-engine | 열기관과 효율 | card-phy-engine card-phy-wheel video-phy-engine text-phy-engine text-mech-engine | heat-energy
+efficiency | 에너지 효율과 신재생 에너지 | card-is2-efficiency card-is2-renewable card-is2-energy-design text-is2-efficiency | power-gen heat-energy
 solar-cell | 태양 전지 | card-is2-solar-cell | semicond spectrum
 
 # ── 전기와 자기 ──
-e-field | 전기장과 전위차 | card-phy-field card-phy-potential |
-elec-power | 저항의 연결과 전력 | card-phy-multitap card-phy-bulbs card-phy-circuit-meter | e-field
-capacitor | 축전기 | card-phy-capacitor card-phy-touch | e-field
-magnet | 자성체 | card-phy-magnet |
-current-mag | 전류의 자기 작용 | card-phy-oersted card-phy-motor video-phy-speaker | magnet
-em-induction | 전자기 유도 | card-phy-lenz card-phy-wireless card-is2-generator text-phy-induction-tech | current-mag
+e-field | 전기장과 전위차 | card-phy-field card-phy-potential text-phy-efield text-emq-field text-adphy-gauss-sphere |
+elec-power | 저항의 연결과 전력 | card-phy-multitap card-phy-bulbs card-phy-circuit-meter text-phy-circuit text-adphy-kirchhoff-rules text-labphy-filament | e-field
+capacitor | 축전기 | card-phy-capacitor card-phy-touch text-phy-capacitor text-adphy-dielectric | e-field
+magnet | 자성체 | card-phy-magnet text-phy-magnetism text-emq-bfield |
+current-mag | 전류의 자기 작용 | card-phy-oersted card-phy-motor video-phy-speaker text-phy-current-mag | magnet
+em-induction | 전자기 유도 | card-phy-lenz card-phy-wireless card-is2-generator text-phy-induction-tech text-is2-power text-phy-induction text-emq-induction text-adphy-resonance | current-mag
 power-gen | 발전소 | text-is2-power-plants | em-induction
 transmission | 송전과 전력 수송 | card-is2-transmission video-is2-grid | power-gen elec-power
 
 # ── 빛과 현대 물리 ──
-interference | 빛의 간섭 | card-phy-lm-dslit card-phy-lm-film card-phy-superpose | 
-lens | 굴절과 렌즈 | card-phy-lm-refract card-phy-lm-image card-phy-lm-litho card-phy-lens-bench | 
-photon | 광전 효과와 광자 | card-phy-lm-photo text-phy-image-sensor card-phy-compton | interference
-matter-wave | 물질파와 전자 현미경 | card-phy-lm-emicro | photon lens
-energy-level | 에너지 준위와 스펙트럼 | card-phy-lm-hyd card-phy-lm-spec card-phy-prism | photon spectrum
-relativity | 특수 상대성 이론 | card-phy-lm-clock card-phy-lm-gps video-phy-lm-muon text-phy-length text-phy-relativity-society | inertia gps-time
+interference | 빛의 간섭 | card-phy-lm-dslit card-phy-lm-film card-phy-superpose text-phy-interference text-mech-interference text-emq-grating text-adphy-michelson | 
+lens | 굴절과 렌즈 | card-phy-lm-refract card-phy-lm-image card-phy-lm-litho card-phy-lens-bench text-phy-lens text-emq-lens text-adphy-microscope text-labphy-bessel | 
+photon | 광전 효과와 광자 | card-phy-lm-photo text-phy-image-sensor card-phy-compton text-phy-duality text-emq-photoelectric text-adphy-matter-wave text-labphy-stopping | interference
+matter-wave | 물질파와 전자 현미경 | card-phy-lm-emicro text-emq-single-quantum | photon lens
+energy-level | 에너지 준위와 스펙트럼 | card-phy-lm-hyd card-phy-lm-spec card-phy-prism text-phy-levels text-adphy-quantum-box text-labchem-lines | photon spectrum
+relativity | 특수 상대성 이론 | card-phy-lm-clock card-phy-lm-gps video-phy-lm-muon text-phy-length text-phy-relativity-society text-phy-relativity text-mech-equivalence text-hist-light-bending text-adphy-muon | inertia gps-time
 
 # ── 지구 ──
-earth-system | 지구시스템과 권역 | text-is1-spheres card-is1-earth-energy card-is1-water-budget |
+earth-system | 지구시스템과 권역 | text-is1-spheres card-is1-earth-energy card-is1-water-budget text-is1-earth-system text-esys-frost-line |
 carbon-cycle | 탄소 순환과 인간 활동 | card-is1-carbon-cycle text-is1-human-impact | earth-system
-plate | 판 구조론 | card-is1-seafloor card-is1-plate-boundary video-is1-atlantic text-is1-geosphere-effects card-is1-quake-map card-is1-quake-damage | earth-system
-rel-age | 지층의 상대 연령 | card-earth-relative-age |
-abs-age | 방사성 동위 원소와 절대 연령 | card-earth-half-life | rel-age
-geotime | 지질 시대와 화석 | card-is2-deep-time card-is2-index-fossil card-is2-extinction card-earth-geotime video-earth-day card-is2-paleoenv card-is2-mass-extinction card-earth-correlate card-earth-fossil-map | rel-age
+plate | 판 구조론 | card-is1-seafloor card-is1-plate-boundary video-is1-atlantic text-is1-geosphere-effects card-is1-quake-map card-is1-quake-damage text-is1-plate-tectonics text-esys-plume | earth-system
+rel-age | 지층의 상대 연령 | card-earth-relative-age text-earth-age text-labearth-sequence |
+abs-age | 방사성 동위 원소와 절대 연령 | card-earth-half-life text-mateng-first-order text-labearth-clocks | rel-age
+geotime | 지질 시대와 화석 | card-is2-deep-time card-is2-index-fossil card-is2-extinction card-earth-geotime video-earth-day card-is2-paleoenv card-is2-mass-extinction card-earth-correlate card-earth-fossil-map text-is2-geologic-time text-earth-geotime text-adearth-fossil-range text-adearth-zircon-age text-labearth-trackway | rel-age
 sediment | 퇴적 구조와 퇴적 환경 | text-earth-sediment | rel-age
 paleoclimate | 고기후 연구 | text-earth-paleoclimate | geotime
-magma | 마그마와 화성암 | card-earth-magma card-earth-igneous card-earth-columnar | plate
-metamorph | 변성 작용과 지질 구조 | card-earth-deform card-earth-foliation | plate
+magma | 마그마와 화성암 | card-earth-magma card-earth-igneous card-earth-columnar text-earth-igneous text-esys-volcano-type text-labearth-rock-texture | plate
+metamorph | 변성 작용과 지질 구조 | card-earth-deform card-earth-foliation text-earth-metamorphic | plate
 rock-cycle | 암석의 순환 | card-earth-rock-cycle card-earth-sedrock | magma metamorph sediment
-korea-geo | 한반도의 지질 | card-earth-korea-rocks card-earth-geopark | rock-cycle abs-age
-seawater | 해수의 성질 | card-earth-thermocline card-earth-salinity text-earth-oxygen card-earth-argo card-earth-gas | earth-system
-deep-circ | 심층 순환 | card-earth-ts card-earth-amoc video-earth-conveyor card-earth-gyre | seawater
-wind | 기압과 바람 | card-earth-isobar card-earth-updown | earth-system
-front | 전선과 중위도 저기압 | card-earth-front text-earth-satellite card-earth-forecast text-earth-moving-highs | wind
-typhoon | 태풍과 악기상 | card-earth-typhoon-energy card-earth-danger card-earth-thunder text-earth-severe-weather card-earth-typhoon-track | wind
-enso | 용승과 엘니뇨 | card-earth-upwelling card-earth-enso text-is2-enso-desert card-earth-oni | seawater wind
-greenhouse | 온실 효과와 지구 온난화 | card-is2-greenhouse card-is2-co2 card-is2-sea-level video-is2-keeling card-is2-ssp | earth-system
-climate-factor | 기후 변화의 요인 | card-earth-milankovitch card-earth-forcing card-earth-attrib card-earth-mitigate | greenhouse
+korea-geo | 한반도의 지질 | card-earth-korea-rocks card-earth-geopark text-earth-korea-geology | rock-cycle abs-age
+seawater | 해수의 성질 | card-earth-thermocline card-earth-salinity text-earth-oxygen card-earth-argo card-earth-gas text-earth-seawater text-labearth-argo | earth-system
+deep-circ | 심층 순환 | card-earth-ts card-earth-amoc video-earth-conveyor card-earth-gyre text-earth-deep-circulation text-adearth-sofar text-adearth-sverdrup text-labearth-thermohaline | seawater
+wind | 기압과 바람 | card-earth-isobar card-earth-updown text-earth-cyclone text-esys-geostrophic text-esys-stability-lift | earth-system
+front | 전선과 중위도 저기압 | card-earth-front text-earth-satellite card-earth-forecast text-earth-moving-highs text-esys-planetary-wave | wind
+typhoon | 태풍과 악기상 | card-earth-typhoon-energy card-earth-danger card-earth-thunder text-earth-severe-weather card-earth-typhoon-track text-earth-typhoon text-esys-tsunami-height | wind
+enso | 용승과 엘니뇨 | card-earth-upwelling card-earth-enso text-is2-enso-desert card-earth-oni text-earth-enso text-esys-ekman-transport text-adearth-delayed-oscillator | seawater wind
+greenhouse | 온실 효과와 지구 온난화 | card-is2-greenhouse card-is2-co2 card-is2-sea-level video-is2-keeling card-is2-ssp text-is2-greenhouse text-esys-selective-absorb text-clim-range-shift | earth-system
+climate-factor | 기후 변화의 요인 | card-earth-milankovitch card-earth-forcing card-earth-attrib card-earth-mitigate text-earth-climate | greenhouse
 
 # ── 우주 ──
-eclipse | 일식과 월식 | card-earth-eclipse text-earth-eclipse-types |
+eclipse | 일식과 월식 | card-earth-eclipse text-earth-eclipse-types text-earth-planets-motion |
 retro | 행성의 겉보기 운동 | card-earth-retro |
-blackbody | 흑체 복사와 별의 온도 | card-earth-blackbody | spectrum
-stellar-spec | 별의 분광형 | card-earth-spectral | blackbody spectrum
-hrd | H–R도 | card-earth-hrd | stellar-spec
-star-evol | 별의 진화 | card-earth-evolve text-earth-star-life card-earth-star-core | hrd fusion
-galaxy | 은하의 분류와 특이 은하 | card-earth-hubble card-earth-quasar text-earth-active-galaxy card-earth-galaxy-ai | star-evol
-expansion | 우주 팽창 | card-earth-hlaw card-earth-nocenter | galaxy
-cosmology | 현대 우주론 | text-earth-cosmology | expansion bbn
+blackbody | 흑체 복사와 별의 온도 | card-earth-blackbody text-earth-blackbody text-space-photosphere | spectrum
+stellar-spec | 별의 분광형 | card-earth-spectral text-labearth-blackbody | blackbody spectrum
+hrd | H–R도 | card-earth-hrd text-earth-hr text-space-binary-mass | stellar-spec
+star-evol | 별의 진화 | card-earth-evolve text-earth-star-life card-earth-star-core text-space-cepheid | hrd fusion
+galaxy | 은하의 분류와 특이 은하 | card-earth-hubble card-earth-quasar text-earth-active-galaxy card-earth-galaxy-ai text-earth-galaxies text-space-dark-matter text-adearth-agn-size | star-evol
+expansion | 우주 팽창 | card-earth-hlaw card-earth-nocenter text-earth-expansion text-space-redshift text-space-structure-growth text-labearth-hubble | galaxy
+cosmology | 현대 우주론 | text-earth-cosmology text-adearth-universe-age | expansion bbn
 
 # ── 생명 ──
-life | 생명의 특성 | card-bio-alive text-bio-modern | 
-bio-levels | 생명 시스템의 구성 단계 | card-bio-levels text-bio-eco-levels |
-membrane | 세포막과 물질 출입 | card-is1-membrane | bio-levels
-enzyme | 효소 | card-is1-enzyme-fit card-is1-activation text-is1-enzymes-life card-is1-catalase | polymer
-dogma | 유전 정보의 흐름 | card-is1-dogma card-is1-mutation video-is1-codon | polymer
-pcr | PCR 진단 | card-is2-pcr card-is2-rapid-test | dogma
-chromosome | 염색체와 DNA | card-bio-dna-pack card-bio-gene-chromo card-bio-karyotype | dogma
-division | 세포 분열 | card-bio-division card-bio-assort video-bio-meiosis | chromosome
-evolution | 변이와 자연선택 | card-is2-selection card-is2-resistance card-is2-lamarck video-is2-moth card-bio-selection card-bio-finch video-bio-whale card-bio-genepool text-bio-evo-methods | dogma
+life | 생명의 특성 | card-bio-alive text-bio-modern text-bio-science | 
+bio-levels | 생명 시스템의 구성 단계 | card-bio-levels text-bio-eco-levels text-bio-levels |
+membrane | 세포막과 물질 출입 | card-is1-membrane text-mateng-osmotic text-cell-membrane-transport | bio-levels
+enzyme | 효소 | card-is1-enzyme-fit card-is1-activation text-is1-enzymes-life card-is1-catalase text-cell-enzyme-kinetics | polymer
+dogma | 유전 정보의 흐름 | card-is1-dogma card-is1-mutation video-is1-codon text-is1-gene-protein text-gene-chromosome-error text-gene-transcription | polymer
+pcr | PCR 진단 | card-is2-pcr card-is2-rapid-test text-is2-diagnosis text-labbio-pcr-cycles | dogma
+chromosome | 염색체와 DNA | card-bio-dna-pack card-bio-gene-chromo card-bio-karyotype text-bio-chromosome text-gene-genome-size text-gene-sexlinked | dogma
+division | 세포 분열 | card-bio-division card-bio-assort video-bio-meiosis text-bio-division | chromosome
+evolution | 변이와 자연선택 | card-is2-selection card-is2-resistance card-is2-lamarck video-is2-moth card-bio-selection card-bio-finch video-bio-whale card-bio-genepool text-bio-evo-methods text-is2-natural-selection text-bio-evolution text-labbio-beak text-labbio-hardy | dogma
 biodiversity | 생물다양성 | text-is2-biodiversity | evolution
-classify | 분류 체계와 종 | card-bio-rank card-bio-species card-bio-domains card-bio-key | evolution
-phylo | 계통수 | card-bio-tree-read card-bio-tree-build card-bio-seq-tree | classify
-metabolism | 세포 호흡과 ATP | card-bio-resp card-bio-atp | enzyme redox
-photosyn | 광합성 | card-leaf-color card-photo-rate | redox
-organ-sys | 기관계의 통합 작용 | card-bio-systems card-bio-exercise card-bio-digest | metabolism bio-levels
-neuron | 뉴런과 흥분 전도 | card-bio-ap card-bio-saltatory card-bio-snapshot | membrane
-synapse | 시냅스 | card-bio-syndir card-bio-syndrug | neuron
-nervous | 신경계 | card-bio-reflex card-bio-autonomic text-bio-brain card-bio-brain-map | synapse
-homeostasis | 항상성 | card-bio-glucose card-bio-thermo video-bio-fever card-bio-hormone card-bio-wearable | nervous organ-sys
-metab-disease | 물질대사와 질환 | card-bio-diabetes card-bio-energy text-bio-epidemiology card-bio-metabolic | homeostasis
-immunity | 병원체와 면역 | card-bio-pathogen card-bio-immune | life
-blood-type | 항원–항체 반응과 혈액형 | card-bio-blood | immunity
-vaccine | 백신과 집단 면역 | card-bio-vtypes card-bio-herd | immunity
-eco-parts | 생태계 구성 요소 | card-is2-forest-light card-is2-fox-heat | bio-levels
-food-web | 먹이 사슬과 생태계 평형 | card-is2-food-chain card-is2-energy-pyramid | eco-parts
-cycles | 물질 순환과 에너지 흐름 | card-bio-carbon card-bio-nitrogen card-bio-flow card-bio-disturb | food-web photosyn
-population | 개체군과 군집 | card-bio-logistic text-bio-social card-bio-interact text-bio-niche card-bio-quadrat | eco-parts
-phyllotaxis | 잎차례와 황금각 | card-phyllo | photosyn
+classify | 분류 체계와 종 | card-bio-rank card-bio-species card-bio-domains card-bio-key text-bio-phylogeny text-bio-taxonomy text-labbio-key | evolution
+phylo | 계통수 | card-bio-tree-read card-bio-tree-build card-bio-seq-tree text-labbio-alignment | classify
+metabolism | 세포 호흡과 ATP | card-bio-resp card-bio-atp text-bio-metabolism text-cell-atp-cycle text-cell-respiration-steps | enzyme redox
+photosyn | 광합성 | card-leaf-color card-photo-rate text-cell-pigment text-labbio-limiting | redox
+organ-sys | 기관계의 통합 작용 | card-bio-systems card-bio-exercise card-bio-digest text-bio-organ-systems | metabolism bio-levels
+neuron | 뉴런과 흥분 전도 | card-bio-ap card-bio-saltatory card-bio-snapshot text-bio-neuron text-adbio-goldman | membrane
+synapse | 시냅스 | card-bio-syndir card-bio-syndrug text-bio-synapse text-adbio-summation | neuron
+nervous | 신경계 | card-bio-reflex card-bio-autonomic text-bio-brain card-bio-brain-map text-bio-nervous | synapse
+homeostasis | 항상성 | card-bio-glucose card-bio-thermo video-bio-fever card-bio-hormone card-bio-wearable text-bio-homeostasis text-adbio-diffusion-time text-adbio-signal-cascade | nervous organ-sys
+metab-disease | 물질대사와 질환 | card-bio-diabetes card-bio-energy text-bio-epidemiology card-bio-metabolic text-bio-disease | homeostasis
+immunity | 병원체와 면역 | card-bio-pathogen card-bio-immune text-bio-immunity | life
+blood-type | 항원–항체 반응과 혈액형 | card-bio-blood text-bio-bloodtype text-gene-abo | immunity
+vaccine | 백신과 집단 면역 | card-bio-vtypes card-bio-herd text-bio-vaccine text-hist-cholera-map | immunity
+eco-parts | 생태계 구성 요소 | card-is2-forest-light card-is2-fox-heat text-is2-ecosystem | bio-levels
+food-web | 먹이 사슬과 생태계 평형 | card-is2-food-chain card-is2-energy-pyramid text-is2-eco-balance | eco-parts
+cycles | 물질 순환과 에너지 흐름 | card-bio-carbon card-bio-nitrogen card-bio-flow card-bio-disturb text-bio-ecosystem text-esys-oxygen-rise | food-web photosyn
+population | 개체군과 군집 | card-bio-logistic text-bio-social card-bio-interact text-bio-niche card-bio-quadrat text-bio-population text-labbio-quadrat | eco-parts
+phyllotaxis | 잎차례와 황금각 | card-phyllo text-extra-golden-angle |
 
 # ── 진로선택: 역학과 에너지 ──
 force-vector | 힘의 합성과 빗면 | card-mech-incline | newton2 torque
-projectile2 | 포물선 운동의 정량 분석 | card-mech-projectile | free-fall mech-energy force-vector
-circular | 원운동과 구심력 | card-mech-circular | force-vector inertia
-kepler | 케플러 법칙과 만유인력 | card-mech-kepler text-mech-kepler-history | circular gravity
+projectile2 | 포물선 운동의 정량 분석 | card-mech-projectile text-adphy-terminal | free-fall mech-energy force-vector
+circular | 원운동과 구심력 | card-mech-circular text-mech-circular | force-vector inertia
+kepler | 케플러 법칙과 만유인력 | card-mech-kepler text-mech-kepler-history text-mech-kepler text-space-kepler-mass text-adphy-circular-orbit | circular gravity
 escape | 탈출 속도와 대기 | card-mech-escape | kepler mech-energy momentum
 gen-rel | 등가 원리와 일반 상대론 | text-mech-gr | escape relativity
-heat-transfer | 열의 이동과 열팽창 | card-mech-insulation text-mech-heat-tech | heat-energy
-latent-heat | 비열과 잠열 | card-mech-heating-curve | heat-energy
-ideal-gas | 이상 기체 | card-mech-ideal-gas | heat-energy
-first-law | 열역학 제1법칙 | card-mech-first-law | ideal-gas heat-energy
-cycle | 열기관의 순환 과정 | card-mech-cycle | first-law heat-engine
-entropy | 엔트로피와 비가역 현상 | card-mech-entropy | first-law cycle
-shm | 단진동 | card-mech-shm | mech-energy force-vector
-elastic-wave | 탄성파의 반사와 투과 | card-mech-pulse text-mech-elastic-use | shm
-doppler | 도플러 효과 | card-mech-doppler | elastic-wave
+heat-transfer | 열의 이동과 열팽창 | card-mech-insulation text-mech-heat-tech text-mech-heat-transfer | heat-energy
+latent-heat | 비열과 잠열 | card-mech-heating-curve text-mech-ideal-gas text-labphy-latent | heat-energy
+ideal-gas | 이상 기체 | card-mech-ideal-gas text-mateng-gas-law text-adphy-expansion-work text-adchem-speed-distribution | heat-energy
+first-law | 열역학 제1법칙 | card-mech-first-law text-adchem-internal-energy | ideal-gas heat-energy
+cycle | 열기관의 순환 과정 | card-mech-cycle text-adphy-entropy-flow | first-law heat-engine
+entropy | 엔트로피와 비가역 현상 | card-mech-entropy text-mech-entropy text-mateng-spontaneity text-adchem-microstates | first-law cycle
+shm | 단진동 | card-mech-shm text-labphy-energy-sum | mech-energy force-vector
+elastic-wave | 탄성파의 반사와 투과 | card-mech-pulse text-mech-elastic-use text-mech-pulse | shm
+doppler | 도플러 효과 | card-mech-doppler text-mech-doppler text-space-transit | elastic-wave
 sound-interference | 음파의 간섭과 소음 제어 | card-mech-two-speaker | elastic-wave interference
-standing-wave | 정상파와 악기 | card-mech-standing | elastic-wave sound-interference
+standing-wave | 정상파와 악기 | card-mech-standing text-mech-standing text-labphy-water-column | elastic-wave sound-interference
 
 # ── 진로선택: 물질과 에너지 ──
 mateng-gas-law | 이상 기체 방정식의 활용 | card-mateng-gas-use | ideal-gas mole
-mateng-partial | 부분 압력과 몰 분율 | card-mateng-partial | mateng-gas-law
-mateng-imf | 분산력과 끓는점 | card-mateng-bp-data | imf
-mateng-solids | 결정성 고체의 분류 | card-mateng-solids | bonding imf
+mateng-partial | 부분 압력과 몰 분율 | card-mateng-partial text-mateng-partial-pressure text-adchem-gas-over-water | mateng-gas-law
+mateng-imf | 분산력과 끓는점 | card-mateng-bp-data text-adchem-capillary | imf
+mateng-solids | 결정성 고체의 분류 | card-mateng-solids text-mateng-crystal text-adchem-unit-cell | bonding imf
 mateng-water | 물의 특별한 성질 | text-mateng-water | imf
-mateng-colligative | 끓는점 오름과 어는점 내림 | card-mateng-colligative | mateng-water molarity
+mateng-colligative | 끓는점 오름과 어는점 내림 | card-mateng-colligative text-mateng-colligative text-adchem-molar-mass | mateng-water molarity
 mateng-osmosis | 삼투 현상 | card-mateng-osmosis | mateng-colligative membrane
 mateng-enthalpy | 엔탈피와 열화학 반응식 | card-mateng-thermo-eq | reaction-heat stoich
-mateng-hess | 헤스 법칙 | card-mateng-hess | mateng-enthalpy
-mateng-spont | 엔트로피와 자발성 | card-mateng-spont | mateng-enthalpy entropy
-mateng-rate-law | 반응 속도식과 반응 차수 | card-mateng-rate-law | molarity stoich
+mateng-hess | 헤스 법칙 | card-mateng-hess text-mateng-hess text-adchem-bond-enthalpy text-labchem-hess | mateng-enthalpy
+mateng-spont | 엔트로피와 자발성 | card-mateng-spont text-adchem-gibbs-dissolve | mateng-enthalpy entropy
+mateng-rate-law | 반응 속도식과 반응 차수 | card-mateng-rate-law text-mateng-rate-law text-adchem-integrated-rate text-labchem-clock | molarity stoich
 mateng-half-life | 1차 반응과 반감기 | card-mateng-half-life | mateng-rate-law abs-age
-mateng-ea | 유효 충돌과 활성화 에너지 | card-mateng-ea | mateng-rate-law ideal-gas
-mateng-rate-factors | 농도·온도·촉매와 반응 속도 | card-mateng-rate-factors | mateng-ea enzyme
+mateng-ea | 유효 충돌과 활성화 에너지 | card-mateng-ea text-mateng-activation text-adchem-collision | mateng-rate-law ideal-gas
+mateng-rate-factors | 농도·온도·촉매와 반응 속도 | card-mateng-rate-factors text-mateng-rate-control text-adchem-ten-degree text-labchem-variables | mateng-ea enzyme
 
 # ── 진로선택: 세포와 물질대사 ──
-cell-carb-lipid | 탄수화물과 지질 | card-cell-fat text-cell-carb-lipid | polymer
-cell-protein-na | 단백질과 핵산의 구조 | card-cell-chargaff text-cell-protein | polymer
-cell-organelle | 세포 소기관과 연구 방법 | text-cell-organelles card-cell-fraction | bio-levels
+cell-carb-lipid | 탄수화물과 지질 | card-cell-fat text-cell-carb-lipid text-cell-fatty-acid text-adbio-dna-melting | polymer
+cell-protein-na | 단백질과 핵산의 구조 | card-cell-chargaff text-cell-protein text-gene-hershey | polymer
+cell-organelle | 세포 소기관과 연구 방법 | text-cell-organelles card-cell-fraction text-is1-life-reactions text-cell-centrifuge | bio-levels
 cell-endomembrane | 내막계와 분비 경로 | card-cell-pulse | cell-organelle dogma
-cell-pro-eu | 원핵세포와 진핵세포 | card-cell-size text-cell-pro-eu | cell-organelle
-cell-transport | 막 수송과 삼투 | card-cell-transport card-cell-osmosis | membrane
-cell-metab-energy | 물질대사와 에너지 출입 | card-cell-coupling | enzyme
+cell-pro-eu | 원핵세포와 진핵세포 | card-cell-size text-cell-pro-eu text-cell-surface-volume | cell-organelle
+cell-transport | 막 수송과 삼투 | card-cell-transport card-cell-osmosis text-labbio-plasmolysis | membrane
+cell-metab-energy | 물질대사와 에너지 출입 | card-cell-coupling text-cell-energy-coupling | enzyme
 cell-energy-flow | 광합성·세포 호흡과 ATP | card-cell-plant-day | metabolism photosyn
-cell-enzyme-kind | 효소의 종류와 활성 요인 | text-cell-enzyme-kind card-cell-enzyme-lab | enzyme sci-method
+cell-enzyme-kind | 효소의 종류와 활성 요인 | text-cell-enzyme-kind card-cell-enzyme-lab text-cell-enzyme-condition text-labbio-enzyme | enzyme sci-method
 cell-enzyme-kinetics | 효소 작용 기작과 저해 | card-cell-inhibit | enzyme
-cell-enzyme-use | 효소의 이용 | text-cell-enzyme-use | cell-enzyme-kind
-cell-mito | 미토콘드리아의 구조 | card-cell-mito | cell-organelle
-cell-resp-steps | 세포 호흡의 단계 | card-cell-carbon | metabolism cell-mito redox
-cell-chemiosmosis | 산화적 인산화와 화학 삼투 | card-cell-chemiosmosis | cell-resp-steps cell-transport
-cell-ferment | 산소 호흡과 발효 | card-cell-ferment text-cell-ferment-use | cell-resp-steps
+cell-enzyme-use | 효소의 이용 | text-cell-enzyme-use text-cell-thermostable | cell-enzyme-kind
+cell-mito | 미토콘드리아의 구조 | card-cell-mito text-cell-mitochondria | cell-organelle
+cell-resp-steps | 세포 호흡의 단계 | card-cell-carbon text-adbio-pfk-control | metabolism cell-mito redox
+cell-chemiosmosis | 산화적 인산화와 화학 삼투 | card-cell-chemiosmosis text-cell-chemiosmosis text-adbio-c-ring | cell-resp-steps cell-transport
+cell-ferment | 산소 호흡과 발효 | card-cell-ferment text-cell-ferment-use text-cell-fermentation | cell-resp-steps
 cell-chloroplast | 엽록체의 구조 | card-cell-chloroplast | cell-organelle photosyn
-cell-calvin | 명반응과 탄소 고정 반응 | card-cell-calvin | cell-chloroplast
-cell-etc-compare | 두 전자 전달계의 비교 | card-cell-etc | cell-chemiosmosis cell-calvin redox
-cell-photo-history | 광합성 연구의 역사 | text-cell-photo-history card-cell-engelmann | photosyn
+cell-calvin | 명반응과 탄소 고정 반응 | card-cell-calvin text-cell-light-reaction text-adbio-calvin-tracer | cell-chloroplast
+cell-etc-compare | 두 전자 전달계의 비교 | card-cell-etc text-adbio-cyclic-flow | cell-chemiosmosis cell-calvin redox
+cell-photo-history | 광합성 연구의 역사 | text-cell-photo-history card-cell-engelmann text-cell-photo-experiment | photosyn
 
 # ── 진로선택: 지구시스템과학 ──
 esys-origin | 태양계와 초기 지구의 형성 | card-esys-snowline text-esys-early-earth | earth-system heavy-el
 esys-coevolution | 생명과 지구의 공진화 | card-esys-oxygen | esys-origin photosyn cycles
-esys-plume | 플룸과 열점 | card-esys-hotspot | plate
+esys-plume | 플룸과 열점 | card-esys-hotspot text-adearth-seafloor-depth | plate
 esys-volcano | 마그마의 성질과 화산 활동 | card-esys-volcano | magma
-esys-interior | 지진파와 지구 내부 구조 | card-esys-seismic | esys-origin lens
-esys-geostrophic | 에크만 수송과 지형류 | card-esys-ekman | enso wind
-esys-waves | 심해파와 천해파 | card-esys-waves | seawater
-esys-surge | 해일 | card-esys-tsunami text-esys-surge | esys-waves typhoon
-esys-tide | 조석 | card-esys-tide | gravity
+esys-interior | 지진파와 지구 내부 구조 | card-esys-seismic text-esys-seismic-shadow text-adearth-moho | esys-origin lens
+esys-geostrophic | 에크만 수송과 지형류 | card-esys-ekman text-adearth-geostrophic-current text-labearth-geostrophic | enso wind
+esys-waves | 심해파와 천해파 | card-esys-waves text-esys-wave-speed text-adearth-storm-surge | seawater
+esys-surge | 해일 | card-esys-tsunami text-esys-surge text-labearth-wave-tank | esys-waves typhoon
+esys-tide | 조석 | card-esys-tide text-esys-tide-cycle text-adearth-tidal-resonance text-labearth-tide | gravity
 esys-absorb | 대기의 선택적 흡수와 생명체 | card-esys-absorb | greenhouse blackbody esys-coevolution
-esys-budget | 지구의 열수지 | card-esys-budget | esys-absorb
-esys-stability | 대기 안정도와 구름·강수 | card-esys-stability text-esys-precip | wind
-esys-hydro | 정역학 평형과 연직 운동 | card-esys-hydro | wind
-esys-winds | 지균풍·경도풍·지상풍 | card-esys-winds | esys-hydro wind
+esys-budget | 지구의 열수지 | card-esys-budget text-esys-heat-budget | esys-absorb
+esys-stability | 대기 안정도와 구름·강수 | card-esys-stability text-esys-precip text-adearth-cloud-base text-adearth-droplet-growth text-labearth-stability | wind
+esys-hydro | 정역학 평형과 연직 운동 | card-esys-hydro text-esys-hydrostatic | wind
+esys-winds | 지균풍·경도풍·지상풍 | card-esys-winds text-adearth-gradient-wind text-labearth-geowind | esys-hydro wind
 esys-rossby | 행성파와 편서풍 파동 | card-esys-rossby | esys-winds front
 
 # ── 진로선택: 전자기와 양자 ──
 emq-equipotential | 등전위면과 전기장의 세기 | card-emq-equipotential | e-field
-emq-polarize | 정전기 유도와 유전 분극 | card-emq-polarize | e-field
-emq-bfield | 전류가 만드는 자기장의 세기 | card-emq-bfield | current-mag
-emq-lorentz | 로런츠 힘과 질량 분석기 | card-emq-lorentz | emq-bfield
+emq-polarize | 정전기 유도와 유전 분극 | card-emq-polarize text-emq-polarization | e-field
+emq-bfield | 전류가 만드는 자기장의 세기 | card-emq-bfield text-adphy-rl-circuit | current-mag
+emq-lorentz | 로런츠 힘과 질량 분석기 | card-emq-lorentz text-emq-lorentz | emq-bfield
 emq-transformer | 자기 선속과 변압기 | card-emq-transformer | em-induction
-emq-rlc | 저항·축전기·인덕터의 에너지 | card-emq-rlc | capacitor emq-transformer
+emq-rlc | 저항·축전기·인덕터의 에너지 | card-emq-rlc text-emq-circuit | capacitor emq-transformer
 emq-semis | 다이오드와 트랜지스터 | card-emq-semis | semicond
-emq-diffraction | 회절과 회절 격자, 홀로그램 | card-emq-diffraction text-emq-hologram | interference
+emq-diffraction | 회절과 회절 격자, 홀로그램 | card-emq-diffraction text-emq-hologram text-adphy-resolution text-labphy-envelope | interference
 emq-aberration | 광학 기기와 수차 | card-emq-aberration | lens
-emq-polarization | 편광 | card-emq-polarizer |
+emq-polarization | 편광 | card-emq-polarizer text-emq-polarize text-adphy-brewster text-labphy-malus |
 emq-photosensor | 광센서와 이미지 센서 | card-emq-pixels | photon bands
-emq-laser | 레이저와 광통신 | card-emq-laser text-emq-fiber | spectrum
-emq-single-quantum | 단일 양자의 간섭과 입자–파동 이중성 | card-emq-single-photon | interference matter-wave
-emq-superposition | 중첩과 측정, 양자 기술 | card-emq-qubit text-emq-quantum-tech | emq-single-quantum emq-polarization
-emq-tunnel | 터널 효과 | card-emq-tunnel | matter-wave
-emq-orbital | 불확정성 원리와 오비탈 | card-emq-orbital | matter-wave spectrum
+emq-laser | 레이저와 광통신 | card-emq-laser text-emq-fiber text-emq-laser | spectrum
+emq-single-quantum | 단일 양자의 간섭과 입자–파동 이중성 | card-emq-single-photon text-adphy-uncertainty | interference matter-wave
+emq-superposition | 중첩과 측정, 양자 기술 | card-emq-qubit text-emq-quantum-tech text-emq-superposition | emq-single-quantum emq-polarization
+emq-tunnel | 터널 효과 | card-emq-tunnel text-emq-tunneling | matter-wave
+emq-orbital | 불확정성 원리와 오비탈 | card-emq-orbital text-emq-atom text-adchem-orbital-1s | matter-wave spectrum
 emq-star-spectrum | 별의 핵융합과 흡수 스펙트럼 | card-emq-star-spectrum | fusion spectrum blackbody
 
 # ── 진로선택: 화학 반응의 세계 ──
-rxn-bronsted | 브뢴스테드–라우리 산과 염기 | card-rxn-conjugate | acid-base
-rxn-ka | 이온화 상수와 약산의 pH | card-rxn-weak-acid | rxn-bronsted eq-const water-ion
-rxn-titration | 중화 적정 곡선 | card-rxn-titration | rxn-ka neutral-q
-rxn-hydrolysis | 염의 가수 분해 | card-rxn-hydrolysis | rxn-ka
+rxn-bronsted | 브뢴스테드–라우리 산과 염기 | card-rxn-conjugate text-adchem-ionization-degree | acid-base
+rxn-ka | 이온화 상수와 약산의 pH | card-rxn-weak-acid text-adchem-weak-base | rxn-bronsted eq-const water-ion
+rxn-titration | 중화 적정 곡선 | card-rxn-titration text-adchem-titration-curve | rxn-ka neutral-q
+rxn-hydrolysis | 염의 가수 분해 | card-rxn-hydrolysis text-rxn-hydrolysis | rxn-ka
 rxn-buffer | 완충 용액 | card-rxn-buffer | rxn-ka le-chat
-rxn-oxnum | 산화수와 반쪽 반응식 | card-rxn-oxnum | redox
+rxn-oxnum | 산화수와 반쪽 반응식 | card-rxn-oxnum text-adchem-redox-titration | redox
 rxn-battery | 화학 전지의 발달 | text-rxn-battery-history | redox
-rxn-cell | 표준 환원 전위와 전지 전위 | card-rxn-cell | rxn-oxnum rxn-battery
-rxn-electrolysis | 전기 분해와 패러데이 법칙 | card-rxn-electrolysis | rxn-cell
-rxn-redox-life | 생명과 전지 속 산화·환원 | text-rxn-redox-life | rxn-cell
-rxn-functional | 작용기와 탄소 화합물 | card-rxn-functional | bonding
-rxn-organic-rxn | 작용기의 변화와 반응 | card-rxn-reaction-map | rxn-functional redox
+rxn-cell | 표준 환원 전위와 전지 전위 | card-rxn-cell text-rxn-potential text-adchem-cell-potential text-labchem-emf | rxn-oxnum rxn-battery
+rxn-electrolysis | 전기 분해와 패러데이 법칙 | card-rxn-electrolysis text-rxn-electrolysis text-adchem-electroplating text-labchem-faraday | rxn-cell
+rxn-redox-life | 생명과 전지 속 산화·환원 | text-rxn-redox-life text-rxn-bio-redox | rxn-cell
+rxn-functional | 작용기와 탄소 화합물 | card-rxn-functional text-rxn-functional-group text-adchem-functional-bp text-labchem-group-tests | bonding
+rxn-organic-rxn | 작용기의 변화와 반응 | card-rxn-reaction-map text-rxn-organic-reaction | rxn-functional redox
 rxn-polymerization | 첨가 중합과 축합 중합 | card-rxn-polymer | rxn-organic-rxn polymer
-rxn-society | 탄소 화합물과 사회 | text-rxn-society | rxn-polymerization
+rxn-society | 탄소 화합물과 사회 | text-rxn-society text-rxn-haber text-labchem-aspirin | rxn-polymerization
 
 # ── 진로선택: 생물의 유전 ──
-gene-sexlinked | 상염색체 유전과 반성 유전 | card-gene-sexlinked | division
-gene-pedigree | 가계도 분석 | card-gene-pedigree | gene-sexlinked blood-type
-gene-polygenic | 다유전자 유전 | card-gene-polygenic | division
+gene-sexlinked | 상염색체 유전과 반성 유전 | card-gene-sexlinked text-labbio-x-linked | division
+gene-pedigree | 가계도 분석 | card-gene-pedigree text-labbio-pedigree | gene-sexlinked blood-type
+gene-polygenic | 다유전자 유전 | card-gene-polygenic text-gene-polygenic | division
 gene-disorder | 염색체 이상과 유전자 이상 | card-gene-nondisjunction text-gene-disorders | division dogma
 gene-material | 유전 물질의 규명과 DNA 구조 | card-gene-hershey text-gene-dna-history | chromosome cell-protein-na
 gene-genome | 유전자 구조와 유전체 | card-gene-genome | chromosome
-gene-replication | 반보존적 DNA 복제 | card-gene-replication | gene-material
-gene-expression | 전사와 번역, RNA 가공 | card-gene-central | dogma gene-genome
-gene-code | 유전 부호와 돌연변이 | card-gene-codon | gene-expression
-gene-regulation | 유전자 발현 조절 | card-gene-lac | gene-expression
-gene-differentiation | 세포 분화와 발생 | card-gene-differentiation | gene-regulation
-gene-welfare | 발현 조절 연구와 인류 복지 | text-gene-regulation-welfare | gene-differentiation
-gene-biotech-history | 생명공학기술의 발달 | text-gene-biotech-history | gene-replication gene-expression
-gene-editing | 유전자 편집·줄기세포·단일클론항체 | card-gene-crispr text-gene-therapies | gene-biotech-history gene-differentiation
-gene-fingerprint | PCR과 전기 영동, DNA 지문 | card-gene-gel | gene-biotech-history
-gene-lmo | 유전자 변형 생물체 | card-gene-bt | gene-biotech-history
-gene-ethics | 생명 윤리 | text-gene-bioethics | gene-editing gene-lmo
+gene-replication | 반보존적 DNA 복제 | card-gene-replication text-gene-replication text-adbio-fidelity | gene-material
+gene-expression | 전사와 번역, RNA 가공 | card-gene-central text-adbio-activator | dogma gene-genome
+gene-code | 유전 부호와 돌연변이 | card-gene-codon text-gene-codon text-adbio-code-cracking | gene-expression
+gene-regulation | 유전자 발현 조절 | card-gene-lac text-gene-operon text-adbio-response-time | gene-expression
+gene-differentiation | 세포 분화와 발생 | card-gene-differentiation text-gene-differentiation text-adbio-bicoid | gene-regulation
+gene-welfare | 발현 조절 연구와 인류 복지 | text-gene-regulation-welfare text-gene-rnai | gene-differentiation
+gene-biotech-history | 생명공학기술의 발달 | text-gene-biotech-history text-gene-restriction | gene-replication gene-expression
+gene-editing | 유전자 편집·줄기세포·단일클론항체 | card-gene-crispr text-gene-therapies text-gene-crispr | gene-biotech-history gene-differentiation
+gene-fingerprint | PCR과 전기 영동, DNA 지문 | card-gene-gel text-gene-profile text-labbio-gel | gene-biotech-history
+gene-lmo | 유전자 변형 생물체 | card-gene-bt text-gene-bt-refuge | gene-biotech-history
+gene-ethics | 생명 윤리 | text-gene-bioethics text-gene-screening text-adbio-off-target | gene-editing gene-lmo
 
 # ── 진로선택: 행성우주과학 ──
-space-exploration | 태양계 탐사와 탐사선 궤도 | card-space-hohmann text-space-exploration | kepler
-space-hazard | 우주 위험 감시 | card-space-impact text-space-weather | space-exploration
+space-exploration | 태양계 탐사와 탐사선 궤도 | card-space-hohmann text-space-exploration text-space-hohmann-orbit | kepler
+space-hazard | 우주 위험 감시 | card-space-impact text-space-weather text-space-impact-energy | space-exploration
 space-kepler3 | 케플러 제3법칙과 천체의 질량 | card-space-kepler3 | kepler
-space-smallbodies | 행성과 소천체 | card-space-smallbodies | space-kepler3 esys-origin
+space-smallbodies | 행성과 소천체 | card-space-smallbodies text-space-dwarf | space-kepler3 esys-origin
 space-exoplanet | 외계 행성계와 생명체 | card-space-exoplanet | doppler space-kepler3 esys-absorb
 space-sun | 태양의 광구와 대기 | card-space-sun | blackbody space-hazard
-space-distance | 별까지의 거리와 거리 사다리 | card-space-distance | hrd
-space-motion | 별의 공간 운동 | card-space-proper-motion | space-distance doppler
+space-distance | 별까지의 거리와 거리 사다리 | card-space-distance text-space-parallax text-adearth-parallax-error | hrd
+space-motion | 별의 공간 운동 | card-space-proper-motion text-space-velocity | space-distance doppler
 space-binary | 쌍성과 별의 질량 | card-space-binary | space-kepler3 hrd
 space-variables | 변광성과 초신성 | card-space-variables | star-evol space-distance
-space-cluster | 성단의 C–M도와 우리은하 | card-space-cluster | hrd space-distance space-variables
-space-dust | 성간 소광과 성간 티끌 | card-space-extinction | space-cluster
-space-darkmatter | 회전 곡선과 암흑 물질 | card-space-rotation | space-kepler3 galaxy doppler
+space-cluster | 성단의 C–M도와 우리은하 | card-space-cluster text-space-turnoff text-labearth-turnoff | hrd space-distance space-variables
+space-dust | 성간 소광과 성간 티끌 | card-space-extinction text-space-dust text-adearth-stromgren text-labearth-reddening | space-cluster
+space-darkmatter | 회전 곡선과 암흑 물질 | card-space-rotation text-labearth-rotation | space-kepler3 galaxy doppler
 space-survey | 적색 편이 탐사 | card-space-redshift-survey | expansion
 space-lss | 우주 거대 구조 | card-space-cosmic-web text-space-large-structure | space-survey space-darkmatter cosmology
 
 # ── 과학탐구실험 ──
-sie-galileo | 갈릴레이의 빗면 실험 | card-sie1-galileo | free-fall
-sie-nature | 과학의 본성과 과학사 | text-sie1-nature |
-sie-induction | 귀납적 탐구 | card-sie1-pendulum | error
+sie-galileo | 갈릴레이의 빗면 실험 | card-sie1-galileo text-sie1-galileo-incline | free-fall
+sie-nature | 과학의 본성과 과학사 | text-sie1-nature text-sie1-light-speed |
+sie-induction | 귀납적 탐구 | card-sie1-pendulum text-sie1-pendulum-induction text-labphy-amplitude | error
 sie-deduction | 가설 연역적 탐구 | card-sie1-pasteur | sci-method sie-induction
-sie-represent | 자료의 분석과 표현 | card-sie1-plot | error
-sie-evidence | 재현성과 증거에 근거한 해석 | text-sie1-peer | error sie-deduction
-sie-everyday | 생활 속 과학 원리 탐구 (확산 시간) | card-sie2-egg | sie-represent
-sie-question | 탐구 문제와 탐구 계획 | text-sie2-question | sie-deduction
+sie-represent | 자료의 분석과 표현 | card-sie1-plot text-fusi-area-distortion text-resr-linearize | error
+sie-evidence | 재현성과 증거에 근거한 해석 | text-sie1-peer text-sie1-replication | error sie-deduction
+sie-everyday | 생활 속 과학 원리 탐구 (확산 시간) | card-sie2-egg text-sie2-egg-cooking | sie-represent
+sie-question | 탐구 문제와 탐구 계획 | text-sie2-question text-sie2-sampling-days | sie-deduction
 sie-design | 공학적 설계 | card-sie2-column | impulse sie-question
 sie-calib | 센서 보정 | card-sie2-calib | digital sie-represent
 sie-iot-data | 실시간 센서 데이터와 공유 | card-sie2-co2 | iot sie-calib
 sie-ethics | 연구 윤리와 실험실 안전 | text-sie2-ethics | ethics sie-evidence
 
 # ── 과학계열: 물리학 실험 ──
-lp-uncertainty | 정확도·정밀도와 오차의 전파 | card-labphy-precision | error units
-lp-lsq | 최소 제곱법과 신뢰구간 | card-labphy-lsq | lp-uncertainty
-lp-scope | 오실로스코프와 함수 발생기 | card-labphy-scope | error units
+lp-uncertainty | 정확도·정밀도와 오차의 전파 | card-labphy-precision text-labphy-density | error units
+lp-lsq | 최소 제곱법과 신뢰구간 | card-labphy-lsq text-labphy-fit-slope | lp-uncertainty
+lp-scope | 오실로스코프와 함수 발생기 | card-labphy-scope text-labphy-divisions | error units
 lp-daq | 센서·표본화와 에일리어싱 | card-labphy-logger | digital shm
 lp-uniform-accel | 등가속도 직선 운동 측정 | card-labphy-ticker | newton2 lp-lsq
-lp-newton2 | 가속도와 질량의 관계 실험 | card-labphy-newton2 | newton2 lp-lsq
-lp-friction | 마찰력과 마찰 계수 측정 | card-labphy-friction | force-vector newton2
-lp-g | 중력 가속도 측정 | card-labphy-g | free-fall lp-lsq
-lp-circular | 구심력 측정 실험 | card-labphy-centripetal | circular
-lp-momentum | 운동량 보존 실험 (분리) | card-labphy-explode | momentum
+lp-newton2 | 가속도와 질량의 관계 실험 | card-labphy-newton2 text-labphy-cart-mass | newton2 lp-lsq
+lp-friction | 마찰력과 마찰 계수 측정 | card-labphy-friction text-labphy-static-kinetic | force-vector newton2
+lp-g | 중력 가속도 측정 | card-labphy-g text-labphy-free-fall | free-fall lp-lsq
+lp-circular | 구심력 측정 실험 | card-labphy-centripetal text-labphy-stopper | circular
+lp-momentum | 운동량 보존 실험 (분리) | card-labphy-explode text-labphy-recoil | momentum
 lp-spring-energy | 용수철 진자의 역학적 에너지 | card-labphy-spring-energy | shm mech-energy
 lp-latent | 얼음의 융해열 측정 | card-labphy-ice-fusion | latent-heat
 lp-joule | 열의 일당량 측정 | card-labphy-joule | work-energy heat-energy
-lp-equipotential | 등전위선과 전기력선 측정 | card-labphy-equipotential | e-field
-lp-capacitor | 평행판 축전기의 전기 용량 측정 | card-labphy-capacitor | lp-equipotential lp-lsq
+lp-equipotential | 등전위선과 전기력선 측정 | card-labphy-equipotential text-labphy-field-map | e-field
+lp-capacitor | 평행판 축전기의 전기 용량 측정 | card-labphy-capacitor text-labphy-foil | lp-equipotential lp-lsq
 lp-ohm | 옴의 법칙과 비옴 소자 | card-labphy-ohm | lp-lsq
-lp-internal-r | 기전력과 내부 저항 | card-labphy-internal-r | lp-ohm
-lp-wheatstone | 휘트스톤 브리지 영점법 | card-labphy-wheatstone | lp-ohm
-lp-lorentz-wire | 자기장 속 도선이 받는 힘 측정 | card-labphy-current-balance | emq-lorentz
-lp-induction | 유도 기전력과 렌츠 법칙 실험 | card-labphy-induction | free-fall lp-lorentz-wire
-lp-rc | RC·RL 회로의 시간 상수 | card-labphy-rc | lp-scope
-lp-rlc | RLC 직렬 회로의 공진 | card-labphy-rlc | lp-rc shm
+lp-internal-r | 기전력과 내부 저항 | card-labphy-internal-r text-labphy-terminal | lp-ohm
+lp-wheatstone | 휘트스톤 브리지 영점법 | card-labphy-wheatstone text-labphy-bridge-error | lp-ohm
+lp-lorentz-wire | 자기장 속 도선이 받는 힘 측정 | card-labphy-current-balance text-labphy-balance | emq-lorentz
+lp-induction | 유도 기전력과 렌츠 법칙 실험 | card-labphy-induction text-labphy-magnet-drop | free-fall lp-lorentz-wire
+lp-rc | RC·RL 회로의 시간 상수 | card-labphy-rc text-labphy-time-constant | lp-scope
+lp-rlc | RLC 직렬 회로의 공진 | card-labphy-rlc text-labphy-q-factor | lp-rc shm
 lp-rectifier | 정류 회로와 평활 | card-labphy-rectifier | lp-rc lp-scope
 lp-resonance | 기주 공명과 음속 측정 | card-labphy-standing | standing-wave
-lp-mirror | 구면 거울의 상과 시차법 | card-labphy-mirror | lens
-lp-refraction | 굴절률과 전반사 측정 | card-labphy-refraction | lens
+lp-mirror | 구면 거울의 상과 시차법 | card-labphy-mirror text-labphy-concave | lens
+lp-refraction | 굴절률과 전반사 측정 | card-labphy-refraction text-labphy-critical | lens
 lp-lens | 오목 렌즈의 초점 거리 측정 | card-labphy-lens2 | lens lp-mirror
-lp-wavelength | 이중 슬릿으로 파장 측정 | card-labphy-double-slit | interference
+lp-wavelength | 이중 슬릿으로 파장 측정 | card-labphy-double-slit text-labphy-fringe | interference
 lp-slit | 슬릿 폭·간격과 회절·간섭무늬 | card-labphy-slit-pattern | lp-wavelength emq-diffraction
 lp-polarization | 말뤼스 법칙과 브루스터 각 | card-labphy-polarization | emq-polarization lp-refraction
 lp-photoelectric | 광전 효과 실험과 플랑크 상수 | card-labphy-photoelectric | photon lp-lsq
-lp-cathode | 음극선의 성질 | card-labphy-cathode | e-field emq-lorentz
-lp-em | 전자의 비전하 측정 | card-labphy-em-ratio | circular emq-lorentz lp-cathode
-lp-franck-hertz | 프랑크–헤르츠 실험 | card-labphy-franck-hertz | energy-level lp-cathode
+lp-cathode | 음극선의 성질 | card-labphy-cathode text-labphy-deflect | e-field emq-lorentz
+lp-em | 전자의 비전하 측정 | card-labphy-em-ratio text-labphy-beam-ring | circular emq-lorentz lp-cathode
+lp-franck-hertz | 프랑크–헤르츠 실험 | card-labphy-franck-hertz text-labphy-mercury | energy-level lp-cathode
 
 # ── 과학계열: 화학 실험 ──
 lc-sigfig | 기구 눈금 읽기와 유효숫자 | card-labchem-sigfig | error
-lc-tools | 측정 도구의 선택과 허용 오차 | card-labchem-tools | lc-sigfig lp-uncertainty water-ion
-lc-instrument | 분광·질량 분석 자료 해석 | card-labchem-instrument | molarity photon rxn-functional
-lc-solution | 용액 제조와 여러 농도 표현 | card-labchem-solution | molarity lc-tools
+lc-tools | 측정 도구의 선택과 허용 오차 | card-labchem-tools text-labchem-tools | lc-sigfig lp-uncertainty water-ion
+lc-instrument | 분광·질량 분석 자료 해석 | card-labchem-instrument text-labchem-beer | molarity photon rxn-functional
+lc-solution | 용액 제조와 여러 농도 표현 | card-labchem-solution text-adchem-solubility-curve text-labchem-solution | molarity lc-tools
 lc-spectrum | 원소의 선 스펙트럼과 에너지 준위 측정 | card-labchem-spectrum | energy-level spectrum
-lc-gas-r | 기체 상수 측정 | card-labchem-gas-r | ideal-gas stoich equilibrium
-lc-dumas | 증기 밀도로 분자량 구하기 | card-labchem-dumas | lc-gas-r mateng-gas-law
-lc-unit-cell | 결정 구조와 단위세포 | card-labchem-unit-cell | mateng-solids mole
-lc-filtration | 여과법과 장치 | card-labchem-filtration | error
-lc-extraction | 추출과 분배 계수 | card-labchem-extraction | imf molarity
-lc-rotavap | 회전 증발 농축과 증기압 | card-labchem-rotavap | equilibrium imf
-lc-recrystal | 재결정과 분별 결정 | card-labchem-recrystal | lc-filtration molarity
-lc-chroma | 크로마토그래피 | card-labchem-chroma | imf lc-extraction
-lc-distill | 분별 증류와 끓는점–조성 도표 | card-labchem-distill | equilibrium imf
-lc-vapor | 증기압 측정과 증발열 | card-labchem-vapor | equilibrium imf
-lc-raoult | 증기압 내림과 라울 법칙 | card-labchem-raoult | lc-vapor entropy molarity
-lc-freezing | 어는점 내림으로 화학식량 구하기 | card-labchem-freezing | mateng-colligative lc-raoult
-lc-osmometer | 삼투압으로 고분자 몰질량 구하기 | card-labchem-osmometer | mateng-osmosis lc-raoult
+lc-gas-r | 기체 상수 측정 | card-labchem-gas-r text-labchem-gas-constant | ideal-gas stoich equilibrium
+lc-dumas | 증기 밀도로 분자량 구하기 | card-labchem-dumas text-labchem-dumas | lc-gas-r mateng-gas-law
+lc-unit-cell | 결정 구조와 단위세포 | card-labchem-unit-cell text-labchem-cell-count | mateng-solids mole
+lc-filtration | 여과법과 장치 | card-labchem-filtration text-labchem-filter | error
+lc-extraction | 추출과 분배 계수 | card-labchem-extraction text-labchem-partition | imf molarity
+lc-rotavap | 회전 증발 농축과 증기압 | card-labchem-rotavap text-labchem-rotavap | equilibrium imf
+lc-recrystal | 재결정과 분별 결정 | card-labchem-recrystal text-labchem-recrystal | lc-filtration molarity
+lc-chroma | 크로마토그래피 | card-labchem-chroma text-labchem-rf | imf lc-extraction
+lc-distill | 분별 증류와 끓는점–조성 도표 | card-labchem-distill text-labchem-azeotrope | equilibrium imf
+lc-vapor | 증기압 측정과 증발열 | card-labchem-vapor text-labchem-vapor | equilibrium imf
+lc-raoult | 증기압 내림과 라울 법칙 | card-labchem-raoult text-labchem-raoult | lc-vapor entropy molarity
+lc-freezing | 어는점 내림으로 화학식량 구하기 | card-labchem-freezing text-labchem-freeze | mateng-colligative lc-raoult
+lc-osmometer | 삼투압으로 고분자 몰질량 구하기 | card-labchem-osmometer text-labchem-osmotic | mateng-osmosis lc-raoult
 lc-calorimetry | 반응열 측정과 헤스 법칙 확인 | card-labchem-calorimetry | mateng-hess mateng-enthalpy
 lc-eq-const | 분광 광도법으로 평형 상수 구하기 | card-labchem-fescn | eq-const le-chat
-lc-acid-titration | 중화 적정으로 미지 산의 농도 구하기 | card-labchem-acid-titration | titration neutral-q
-lc-redox-titration | 과망가니즈산 칼륨 산화·환원 적정 | card-labchem-redox-titration | rxn-oxnum lc-acid-titration
+lc-acid-titration | 중화 적정으로 미지 산의 농도 구하기 | card-labchem-acid-titration text-labchem-titration | titration neutral-q
+lc-redox-titration | 과망가니즈산 칼륨 산화·환원 적정 | card-labchem-redox-titration text-labchem-permanganate | rxn-oxnum lc-acid-titration
 lc-cell-emf | 화학 전지 꾸미기와 기전력 측정 | card-labchem-cell-emf | rxn-cell
 lc-electrolysis | 전기 분해 생성물의 양 측정 | card-labchem-electrolysis | rxn-electrolysis stoich
 lc-initial-rate | 초기 속도법으로 반응 차수 구하기 | card-labchem-clock | mateng-rate-law molarity
 lc-rate-design | 반응 속도 요인 실험 설계와 활성화 에너지 | card-labchem-rate-design | mateng-rate-factors mateng-ea
-lc-hydrocarbon | 탄화수소의 구조와 성질 | card-labchem-hydrocarbon | imf rxn-functional
-lc-alcohol-ox | 알코올의 산화와 생성물 확인 | card-labchem-alcohol-ox | rxn-organic-rxn rxn-oxnum
+lc-hydrocarbon | 탄화수소의 구조와 성질 | card-labchem-hydrocarbon text-labchem-hexene | imf rxn-functional
+lc-alcohol-ox | 알코올의 산화와 생성물 확인 | card-labchem-alcohol-ox text-labchem-alcohol | rxn-organic-rxn rxn-oxnum
 lc-functional-tests | 작용기 확인 반응 | card-labchem-functional-tests | lc-alcohol-ox rxn-organic-rxn
-lc-soap | 비누화와 미셀 | card-labchem-soap | lc-functional-tests imf
-lc-aromatic | 방향족 탄화수소와 비편재 전자 | card-labchem-aromatic | lc-hydrocarbon lewis
+lc-soap | 비누화와 미셀 | card-labchem-soap text-labchem-soap | lc-functional-tests imf
+lc-aromatic | 방향족 탄화수소와 비편재 전자 | card-labchem-aromatic text-labchem-benzene | lc-hydrocarbon lewis
 lc-aspirin | 아스피린 합성과 수득률 | card-labchem-aspirin | lc-functional-tests stoich rxn-society
 
 # ── 과학계열: 생명과학 실험 ──
 lb-transect | 방형구법과 띠 횡단 조사 | card-labbio-transect | population
-lb-pitfall | 함정 트랩과 종 다양도 지수 | card-labbio-pitfall | population biodiversity
-lb-eco-survey | 생물·비생물 요소 측정과 상관 | card-labbio-eco-survey | eco-parts food-web digital
-lb-growth-curve | 미생물 배양과 생장 곡선 측정 | card-labbio-culture | population
-lb-mark-recapture | 표지 재포획법과 개체군 조절 요인 | card-labbio-mark-recapture | population eco-parts
-lb-dose-response | 오염 물질의 농도–반응 실험 | card-labbio-pollutant | sci-method cell-transport
-lb-fly-cross | 초파리 교배와 멘델 법칙 (카이제곱 검정) | card-labbio-fly-cross | division error
+lb-pitfall | 함정 트랩과 종 다양도 지수 | card-labbio-pitfall text-labbio-pitfall | population biodiversity
+lb-eco-survey | 생물·비생물 요소 측정과 상관 | card-labbio-eco-survey text-labbio-abiotic | eco-parts food-web digital
+lb-growth-curve | 미생물 배양과 생장 곡선 측정 | card-labbio-culture text-labbio-logistic | population
+lb-mark-recapture | 표지 재포획법과 개체군 조절 요인 | card-labbio-mark-recapture text-labbio-density | population eco-parts
+lb-dose-response | 오염 물질의 농도–반응 실험 | card-labbio-pollutant text-labbio-dose | sci-method cell-transport
+lb-fly-cross | 초파리 교배와 멘델 법칙 (카이제곱 검정) | card-labbio-fly-cross text-labbio-mendel-fly | division error
 lb-sex-linked | X 염색체 연관 유전 교배 실험 | card-labbio-sex-linked | gene-sexlinked lb-fly-cross
 lb-survey | 가계 조사와 통계 조사로 보는 사람의 유전 | card-labbio-survey | gene-pedigree gene-polygenic blood-type data
 lb-bead-sim | 대립유전자 빈도 모의실험 | card-labbio-bead-sim | evolution lb-fly-cross
@@ -388,79 +388,79 @@ lb-evo-cases | 구조와 기능의 진화 사례 조사 | text-labbio-evo-cases 
 lb-specimen | 채집·표본 제작과 동정 | card-labbio-specimen | classify
 lb-enzyme-rate | 효소 반응 속도 측정 실험 | card-labbio-enzyme-rate | cell-enzyme-kind sci-method
 lb-photosyn-rate | 광합성 속도와 제한 요인 실험 | card-labbio-photosynthesis | photosyn sci-method
-lb-respirometer | 호흡계로 세포 호흡 속도 측정 | card-labbio-respirometer | metabolism sci-method
-lb-ferment | 효모의 발효 실험 설계 | card-labbio-yeast | cell-ferment sci-method
-lb-hematocrit | 적혈구 용적률과 산소 운반 | card-labbio-hematocrit text-labbio-rbc | organ-sys homeostasis
-lb-taxis | 동물의 주성과 무정위 운동성 | card-labbio-taxis | nervous data
-lb-tropism | 식물의 굴성과 옥신 | card-labbio-tropism | sci-method
-lb-division-obs | 세포 분열 관찰과 분열 지수 | card-labbio-mitosis | division
-lb-pollen | 꽃가루관 발아 | card-labbio-pollen | cell-transport
-lb-fly-dev | 초파리의 발생 시기 | card-labbio-fly-dev | division gene-differentiation
-lb-chick-dev | 닭의 발생 단계 | card-labbio-chick | gene-differentiation
-lb-polytene | 다사 염색체와 퍼프 | card-labbio-polytene | chromosome gene-replication gene-expression
-lb-fly-mutants | 초파리 돌연변이 형질과 암수 구별 | card-labbio-fly-mutants | gene-sexlinked
-lb-cell-culture | 동물 세포 계대 배양과 생장 곡선 | card-labbio-cell-culture text-labbio-cell-research | division population
-lb-tissue-culture | 식물 조직 배양과 호르몬 비율 | card-labbio-tissue-culture text-labbio-plant-culture-uses | gene-differentiation division
-lb-dna-extract | DNA 추출 단계의 의미 | card-labbio-dna-extract | membrane gene-material enzyme
+lb-respirometer | 호흡계로 세포 호흡 속도 측정 | card-labbio-respirometer text-labbio-respirometer | metabolism sci-method
+lb-ferment | 효모의 발효 실험 설계 | card-labbio-yeast text-labbio-yeast | cell-ferment sci-method
+lb-hematocrit | 적혈구 용적률과 산소 운반 | card-labbio-hematocrit text-labbio-rbc text-labbio-hematocrit | organ-sys homeostasis
+lb-taxis | 동물의 주성과 무정위 운동성 | card-labbio-taxis text-labbio-choice | nervous data
+lb-tropism | 식물의 굴성과 옥신 | card-labbio-tropism text-labbio-tropism | sci-method
+lb-division-obs | 세포 분열 관찰과 분열 지수 | card-labbio-mitosis text-labbio-mitotic-index | division
+lb-pollen | 꽃가루관 발아 | card-labbio-pollen text-labbio-pollen | cell-transport
+lb-fly-dev | 초파리의 발생 시기 | card-labbio-fly-dev text-labbio-fly-cycle | division gene-differentiation
+lb-chick-dev | 닭의 발생 단계 | card-labbio-chick text-labbio-somite | gene-differentiation
+lb-polytene | 다사 염색체와 퍼프 | card-labbio-polytene text-labbio-polytene | chromosome gene-replication gene-expression
+lb-fly-mutants | 초파리 돌연변이 형질과 암수 구별 | card-labbio-fly-mutants text-labbio-mutants | gene-sexlinked
+lb-cell-culture | 동물 세포 계대 배양과 생장 곡선 | card-labbio-cell-culture text-labbio-cell-research text-labbio-passage | division population
+lb-tissue-culture | 식물 조직 배양과 호르몬 비율 | card-labbio-tissue-culture text-labbio-plant-culture-uses text-adbio-limiting-dilution text-labbio-callus | gene-differentiation division
+lb-dna-extract | DNA 추출 단계의 의미 | card-labbio-dna-extract text-labbio-dna-yield | membrane gene-material enzyme
 lb-electrophoresis | 전기 영동과 표준 곡선 | card-labbio-electrophoresis | lb-dna-extract gene-fingerprint
-lb-restriction | 제한 효소의 인식 서열과 기능 확인 | card-labbio-restriction | lb-electrophoresis gene-biotech-history enzyme
-lb-transformation | 대장균 형질 전환과 선택 배지 | card-labbio-transformation | lb-restriction gene-lmo gene-expression
+lb-restriction | 제한 효소의 인식 서열과 기능 확인 | card-labbio-restriction text-adbio-pcr text-labbio-restriction | lb-electrophoresis gene-biotech-history enzyme
+lb-transformation | 대장균 형질 전환과 선택 배지 | card-labbio-transformation text-labbio-transform | lb-restriction gene-lmo gene-expression
 lb-pcr | PCR 온도 단계와 시약의 역할 | card-labbio-pcr | gene-replication pcr lb-electrophoresis
 lb-bioinfo | 생물정보학과 유전체 분석의 의료 활용 | card-labbio-bioinfo text-labbio-genome-med | gene-code gene-disorder phylo
-lb-plankton | 플랑크톤 관찰과 마이크로미터 | card-labbio-plankton | food-web cell-organelle
-lb-sem | 주사 전자 현미경 | card-labbio-sem | matter-wave cell-organelle
+lb-plankton | 플랑크톤 관찰과 마이크로미터 | card-labbio-plankton text-labbio-micrometer | food-web cell-organelle
+lb-sem | 주사 전자 현미경 | card-labbio-sem text-labbio-electron | matter-wave cell-organelle
 lb-plasmolysis | 원형질 분리와 등장 농도 | card-labbio-plasmolysis | cell-transport
-lb-water-potential | 삼투압과 수분 퍼텐셜 측정 | card-labbio-water-potential | lb-plasmolysis mateng-osmosis
-lb-osmosis-design | 삼투에 영향을 주는 요인 탐구 설계 | card-labbio-osmosis-design | lb-water-potential sci-method
-lb-plant-tissue | 식물의 조직계와 기관 | card-labbio-plant-tissue | bio-levels photosyn
-lb-dissection | 동물 기관의 해부와 구조·기능 | card-labbio-dissection | organ-sys classify sie-ethics
+lb-water-potential | 삼투압과 수분 퍼텐셜 측정 | card-labbio-water-potential text-labbio-water-potential | lb-plasmolysis mateng-osmosis
+lb-osmosis-design | 삼투에 영향을 주는 요인 탐구 설계 | card-labbio-osmosis-design text-labbio-osmosis-rate | lb-water-potential sci-method
+lb-plant-tissue | 식물의 조직계와 기관 | card-labbio-plant-tissue text-labbio-stomata | bio-levels photosyn
+lb-dissection | 동물 기관의 해부와 구조·기능 | card-labbio-dissection text-labbio-heart | organ-sys classify sie-ethics
 
 # ── 과학계열: 지구과학 실험 ──
-le-geoid | 지구타원체와 지오이드 | card-labearth-geoid | gravity
-le-epicenter | 진앙·진원 결정과 지각 두께 | card-labearth-epicenter | esys-interior plate
-le-gravity | 중력 측정과 중력 보정 | card-labearth-gravity | gravity le-geoid
-le-apwp | 고지자기와 극의 겉보기 이동 | card-labearth-apwp | plate magnet
-le-spreading | 해저 확장 속도 | card-labearth-spreading | plate le-apwp
-le-mineral | 광물의 성질과 분류 | card-labearth-mineral-id | silicate
-le-polarizing | 편광 현미경과 광물의 광학적 성질 | card-labearth-polarizing | le-mineral emq-polarization interference
+le-geoid | 지구타원체와 지오이드 | card-labearth-geoid text-adearth-gravity-anomaly text-labearth-heights | gravity
+le-epicenter | 진앙·진원 결정과 지각 두께 | card-labearth-epicenter text-labearth-sp-time | esys-interior plate
+le-gravity | 중력 측정과 중력 보정 | card-labearth-gravity text-labearth-bouguer | gravity le-geoid
+le-apwp | 고지자기와 극의 겉보기 이동 | card-labearth-apwp text-adearth-paleolatitude text-labearth-inclination | plate magnet
+le-spreading | 해저 확장 속도 | card-labearth-spreading text-labearth-stripes | plate le-apwp
+le-mineral | 광물의 성질과 분류 | card-labearth-mineral-id text-labearth-minerals | silicate
+le-polarizing | 편광 현미경과 광물의 광학적 성질 | card-labearth-polarizing text-adearth-birefringence text-labearth-retardation | le-mineral emq-polarization interference
 le-rock-id | 암석의 성인과 분류 | card-labearth-rock-id | magma metamorph rock-cycle sediment
-le-section | 접촉 관계와 층서 대비 | card-labearth-section | rel-age sediment metamorph
+le-section | 접촉 관계와 층서 대비 | card-labearth-section text-adearth-isochron | rel-age sediment metamorph
 le-isochron | 방사성 동위 원소 절대 연령 측정 | card-labearth-isochron | abs-age lp-lsq
 le-trackway | 화석과 고환경 추론 | card-labearth-trackway | geotime sediment
-le-strike-dip | 주향·경사와 지질도 해석 | card-labearth-strike-dip | le-section metamorph
-le-humidity | 혼합비·비습과 수증기량 측정 | card-labearth-humidity | esys-stability mateng-partial
-le-skewt | 단열선도와 LCL·CCL·LFC | card-labearth-skewt | le-humidity esys-stability
+le-strike-dip | 주향·경사와 지질도 해석 | card-labearth-strike-dip text-adearth-apparent-dip text-labearth-dip | le-section metamorph
+le-humidity | 혼합비·비습과 수증기량 측정 | card-labearth-humidity text-labearth-mixing | esys-stability mateng-partial
+le-skewt | 단열선도와 LCL·CCL·LFC | card-labearth-skewt text-labearth-lcl | le-humidity esys-stability
 le-stability | 기온·이슬점 연직 분포와 대기 안정도 | card-labearth-stability | le-skewt esys-stability
-le-coriolis | 회전 원판으로 보는 전향력 | card-labearth-coriolis | inertia circular
+le-coriolis | 회전 원판으로 보는 전향력 | card-labearth-coriolis text-adearth-rossby-number text-labearth-coriolis | inertia circular
 le-geowind | 일기도로 구하는 지균풍과 경도풍 | card-labearth-geowind | esys-winds le-coriolis
-le-circulation | 대기 대순환과 평균 자오면 순환 | card-labearth-circulation | le-coriolis esys-budget wind
+le-circulation | 대기 대순환과 평균 자오면 순환 | card-labearth-circulation text-adearth-angular-momentum text-labearth-circulation | le-coriolis esys-budget wind
 le-argo-float | Argo 플로트 자료 분석과 품질 관리 | card-labearth-argo-float | seawater
 le-wave-tank | 조파 실험과 천해파 | card-labearth-wave-tank | esys-waves esys-surge
 le-geostrophic | 밀도 구조와 지형류 계산 | card-labearth-geostrophic | esys-geostrophic seawater
 le-thermohaline | 열염분 순환 실험 설계 | card-labearth-thermohaline | deep-circ
 le-tide | 조석 자료 분석과 조석 유형 | card-labearth-tide | esys-tide
-le-celestial | 천구 좌표계와 시간각 | card-labearth-celestial |
-le-analemma | 아날렘마와 행성의 겉보기 운동 | card-labearth-analemma | le-celestial retro
-le-equation-time | 시태양시·평균 태양시와 균시차 | card-labearth-equation-time | le-celestial le-analemma
-le-orbit-mass | 인공위성 궤도로 행성 질량 구하기 | card-labearth-orbit-mass | space-kepler3 kepler
-le-telescope | 망원경의 분해능·배율·시야 | card-labearth-telescope | lens emq-diffraction
-le-crater | 달 크레이터의 크기와 높이 | card-labearth-crater | le-telescope
-le-sunspot | 흑점 관측과 태양의 차등 자전 | card-labearth-sunspot | space-sun
-le-msfit-cepheid | 주계열 맞추기와 세페이드 거리 | card-labearth-msfit card-labearth-cepheid | space-distance space-variables hrd
+le-celestial | 천구 좌표계와 시간각 | card-labearth-celestial text-adearth-sidereal-day text-labearth-culmination |
+le-analemma | 아날렘마와 행성의 겉보기 운동 | card-labearth-analemma text-adearth-synodic text-labearth-retrograde | le-celestial retro
+le-equation-time | 시태양시·평균 태양시와 균시차 | card-labearth-equation-time text-labearth-eot | le-celestial le-analemma
+le-orbit-mass | 인공위성 궤도로 행성 질량 구하기 | card-labearth-orbit-mass text-labearth-orbit | space-kepler3 kepler
+le-telescope | 망원경의 분해능·배율·시야 | card-labearth-telescope text-labearth-resolution | lens emq-diffraction
+le-crater | 달 크레이터의 크기와 높이 | card-labearth-crater text-labearth-crater-depth | le-telescope
+le-sunspot | 흑점 관측과 태양의 차등 자전 | card-labearth-sunspot text-labearth-diffrot | space-sun
+le-msfit-cepheid | 주계열 맞추기와 세페이드 거리 | card-labearth-msfit card-labearth-cepheid text-labearth-standard-candle | space-distance space-variables hrd
 le-stellar-spectrum | 별의 스펙트럼과 흑체 복사 관측 | card-labearth-stellar-spectrum | blackbody stellar-spec spectrum
-le-photometry | 차등 측광과 색지수 | card-labearth-photometry | blackbody space-distance
+le-photometry | 차등 측광과 색지수 | card-labearth-photometry text-labearth-photometry | blackbody space-distance
 le-cluster-hr | 성단의 H–R도와 나이 | card-labearth-cluster-hr | space-cluster star-evol le-msfit-cepheid
 le-extinction | 성간 소광과 색초과 | card-labearth-extinction | space-dust le-photometry
-le-shapley | 구상 성단으로 찾는 은하 중심 | card-labearth-shapley | space-cluster space-distance
+le-shapley | 구상 성단으로 찾는 은하 중심 | card-labearth-shapley text-adearth-rotation-curve text-labearth-galactic-center | space-cluster space-distance
 le-rotation-mass | 회전 곡선과 은하의 질량 | card-labearth-rotation-mass | space-darkmatter space-kepler3 doppler
-le-hubble-age | 허블–르메트르 법칙과 우주의 나이 | card-labearth-hubble-age | expansion le-msfit-cepheid doppler
+le-hubble-age | 허블–르메트르 법칙과 우주의 나이 | card-labearth-hubble-age text-adearth-hubble-time | expansion le-msfit-cepheid doppler
 
 # ── 과학계열: 고급 생명과학 ──
 ab-isomer | 생체 분자의 이성질체 | card-adbio-isomer | cell-carb-lipid
 ab-membrane-lipid | 지방산의 기하 이성질체와 막의 유동성 | card-adbio-fatty | cell-carb-lipid
 ab-cyclic | 순환적·비순환적 광인산화 | card-adbio-cyclic | cell-etc-compare cell-calvin
 ab-calvin-trace | 캘빈 회로를 밝힌 탐구 | card-adbio-benson | cell-calvin
-ab-photoresp | 광호흡과 C3·C4·CAM 식물 | card-adbio-rubisco text-adbio-c3c4cam | cell-calvin
+ab-photoresp | 광호흡과 C3·C4·CAM 식물 | card-adbio-rubisco text-adbio-c3c4cam text-adbio-photorespiration | cell-calvin
 ab-metab-hub | 해당 과정·TCA 회로의 중간 산물과 교차로 | text-adbio-hub | cell-resp-steps
 ab-pfk | 해당 과정의 다른 자리 입체성 조절 | card-adbio-pfk | ab-metab-hub cell-enzyme-kinetics
 ab-atp-synthase | ATP 합성 효소의 작동 | card-adbio-synthase | cell-chemiosmosis
@@ -470,8 +470,8 @@ ab-membrane-pot | 막전위: 네른스트 식과 GHK 식 | card-adbio-ghk | neur
 ab-hh | 호지킨–헉슬리 모형과 불응기 | card-adbio-hh | ab-membrane-pot
 ab-demyelination | 말이집 이상과 전도 질환 | text-adbio-demyelination | ab-hh neuron
 ab-psp | 시냅스후 전위와 시간 합·공간 합 | card-adbio-psp | synapse ab-membrane-pot
-ab-innate-adaptive | 선천 면역과 후천 면역의 연계 | text-adbio-immune-players card-adbio-infection | immunity
-ab-lymphocyte | 림프구의 발달, 항체 다양성, MHC와 체액성·세포성 면역 | card-adbio-vdj text-adbio-tcell-mhc | ab-innate-adaptive gene-expression
+ab-innate-adaptive | 선천 면역과 후천 면역의 연계 | text-adbio-immune-players card-adbio-infection text-adbio-innate-race | immunity
+ab-lymphocyte | 림프구의 발달, 항체 다양성, MHC와 체액성·세포성 면역 | card-adbio-vdj text-adbio-tcell-mhc text-adbio-vdj | ab-innate-adaptive gene-expression
 ab-proofread | DNA 복제의 교정과 뉴클레오타이드 절제 수선 | card-adbio-proofread | gene-replication
 ab-transcription | 전사 개시 요소와 원핵·진핵 전사 비교 | card-adbio-promoter | gene-expression
 ab-codebreak | 유전 암호의 실험적 해독 | card-adbio-codebreak | gene-code dogma
@@ -480,7 +480,7 @@ ab-eukreg | 진핵세포의 발현 조절 (염색질·히스톤 코드·RNA 간�
 ab-hox | 호메오 유전자와 발생의 진화 | card-adbio-hox | gene-differentiation evolution
 ab-cell-eng | 핵이식·줄기세포·세포 융합 | text-adbio-cell-eng card-adbio-hybridoma | gene-differentiation immunity lb-tissue-culture lb-cell-culture
 ab-recombinant | 유전자 재조합과 클로닝 설계 | card-adbio-cloning | lb-restriction gene-regulation gene-biotech-history
-ab-omics | 유전체 조립·단백체학·시스템생물학과 생명공학의 활용 | text-adbio-omics card-adbio-assembly | gene-genome gene-expression lb-bioinfo
+ab-omics | 유전체 조립·단백체학·시스템생물학과 생명공학의 활용 | text-adbio-omics card-adbio-assembly text-adbio-coverage | gene-genome gene-expression lb-bioinfo
 ab-bioethics | 생명공학의 윤리·사회 쟁점과 논증 | text-adbio-ethics | gene-ethics gene-editing ethics
 
 # ── 과학계열: 고급 물리학 ──
@@ -497,14 +497,14 @@ ap-dipole | 전기 쌍극자와 돌림힘 | card-adphy-dipole | e-field ap-gauss
 ap-capnet | 축전기의 직렬·병렬 연결과 유전체 | card-adphy-capnet | capacitor emq-polarize ap-gauss
 ap-biot | 비오–사바르 법칙과 암페어 법칙 | card-adphy-biot | emq-bfield
 ap-selfind | 자체 유도 계수와 RL 회로 | card-adphy-selfind | ap-biot em-induction
-ap-emwave | 전자기파의 발생과 맥스웰 방정식 | card-adphy-wave text-adphy-maxwell | ap-gauss ap-biot em-induction elastic-wave
+ap-emwave | 전자기파의 발생과 맥스웰 방정식 | card-adphy-wave text-adphy-maxwell text-adphy-antenna | ap-gauss ap-biot em-induction elastic-wave
 ap-kirchhoff | 키르히호프 법칙 | card-adphy-kirchhoff | elec-power
 ap-ac | 교류 리액턴스·임피던스와 RLC 공진 | card-adphy-ac | ap-selfind ap-capnet emq-rlc ap-kirchhoff
 ap-optical-instrument | 광학 기기의 결합 렌즈와 각배율 | card-adphy-instrument | lens lp-mirror
 ap-interferometer | 간섭계와 정밀 측정 | card-adphy-interferometer | interference
 ap-resolution | 원형 구멍의 회절과 분해능 | card-adphy-rayleigh | emq-diffraction lens
 ap-polarization-tech | 파장판·원편광과 디스플레이 | card-adphy-3d text-adphy-display | emq-polarization interference
-ap-fictitious-force | 가속 좌표계와 관성력 | card-adphy-frames | newton2 circular inertia
+ap-fictitious-force | 가속 좌표계와 관성력 | card-adphy-frames text-adphy-inertial-force | newton2 circular inertia
 ap-spacetime | 로런츠 변환과 시공간 도표 | card-adphy-spacetime text-adphy-sr | relativity ap-fictitious-force
 ap-mass-energy | 질량–에너지 동등성 | card-adphy-mass-energy | relativity work-energy
 ap-blackbody | 흑체 복사와 플랑크의 양자 가설 | card-adphy-planck | blackbody photon
@@ -514,22 +514,22 @@ ap-complementarity | 상보성 원리 | text-adphy-complementarity | emq-single-
 ap-well | 퍼텐셜 상자 속 입자와 슈뢰딩거 방정식 | card-adphy-well | matter-wave standing-wave energy-level
 ap-bands | 이어진 우물과 에너지띠 형성 | card-adphy-bands | ap-well emq-tunnel bands
 ap-nano | 반도체와 나노 물리학 | text-adphy-nano | ap-well semicond emq-tunnel
-ap-standard-model | 기본 입자와 네 가지 상호 작용 | text-adphy-particles | relativity ap-uncertainty
+ap-standard-model | 기본 입자와 네 가지 상호 작용 | text-adphy-particles text-adphy-binding-energy | relativity ap-uncertainty
 ap-nuclear | 핵분열·핵융합과 플라스마 | text-adphy-nuclear | fusion ap-standard-model
 ap-gamow | 별 속 핵융합과 가모프 봉우리 | card-adphy-gamow | fusion emq-tunnel ideal-gas
 
 # ── 과학계열: 고급 화학 ──
 ac-wavefn | 파동 함수와 지름 분포 | card-adchem-wavefn | emq-orbital matter-wave
 ac-config | 전형·전이 원소의 전자 배치 | card-adchem-config | ac-wavefn periodic
-ac-potential | 입자 간 거리와 퍼텐셜 에너지 | card-adchem-potential | bonding imf e-field
+ac-potential | 입자 간 거리와 퍼텐셜 에너지 | card-adchem-potential text-adchem-ion-pair | bonding imf e-field
 ac-formal | 형식 전하와 공명 구조 | card-adchem-formal | lewis en
 ac-hybrid | 원자가 결합 이론과 혼성 오비탈 | card-adchem-hybrid text-adchem-bond-theories | lewis ac-wavefn
-ac-isomer | 탄화수소의 이성질체 | card-adchem-isomer | ac-hybrid rxn-functional
+ac-isomer | 탄화수소의 이성질체 | card-adchem-isomer text-adchem-isomer-count | ac-hybrid rxn-functional
 ac-fg-acid | 작용기의 산 세기와 pKa | card-adchem-fg-acid | rxn-ka rxn-functional ac-formal
 ac-oxlevel | 작용기의 산화 수준 | card-adchem-oxlevel | rxn-oxnum rxn-functional
 ac-kinetic | 기체 분자 운동론과 속력 분포 | card-adchem-maxwell | ideal-gas
 ac-dalton | 혼합 기체와 부분 압력 | card-adchem-stopcock | ac-kinetic mateng-partial
-ac-real-gas | 실제 기체와 상태 방정식 | card-adchem-real-gas | ac-kinetic imf
+ac-real-gas | 실제 기체와 상태 방정식 | card-adchem-real-gas text-adchem-real-gas | ac-kinetic imf
 ac-surface | 표면 장력과 모세관 현상 | card-adchem-capillary | imf lc-vapor
 ac-unit-cell | 이온 결정·공유 결정의 단위세포 | card-adchem-ionic-cell | lc-unit-cell bonding
 ac-solubility | 농도 단위와 용해도 | card-adchem-solubility | lc-solution le-chat
@@ -540,7 +540,7 @@ ac-entropy | 열역학적 엔트로피와 우주의 엔트로피 | card-adchem-s
 ac-gibbs | 깁스 자유 에너지와 자발성 | card-adchem-gibbs-t | ac-entropy mateng-spont
 ac-redox-balance | 산화수와 산화·환원 반응식 완성 | card-adchem-balance | rxn-oxnum
 ac-ered | 표준 환원 전위와 전지 전위 | card-adchem-ered | ac-redox-balance rxn-cell
-ac-nernst | 전지 전위와 자유 에너지·평형 상수 | card-adchem-nernst | ac-ered ac-gibbs eq-const
+ac-nernst | 전지 전위와 자유 에너지·평형 상수 | card-adchem-nernst text-adchem-nernst | ac-ered ac-gibbs eq-const
 ac-electrolysis | 분해 전압과 패러데이 법칙 | card-adchem-elec-v | ac-nernst rxn-electrolysis
 ac-mass-action | 질량 작용 법칙과 평형 계산 | card-adchem-ice | eq-const mateng-partial
 ac-vanthoff | 깁스 자유 에너지와 평형 상수의 온도 변화 | card-adchem-vanthoff | ac-mass-action mateng-spont le-chat
@@ -551,8 +551,8 @@ ac-polyprotic | 다양성자 산의 적정과 완충 능력 | card-adchem-polypr
 ac-arrhenius | 아레니우스 식과 온도 | card-adchem-arrhenius | mateng-rate-factors mateng-ea
 ac-integrated-rate | 적분 속도식과 반감기 | card-adchem-integrated | mateng-rate-law
 ac-collision | 충돌 이론 | card-adchem-collision | mateng-ea ac-arrhenius ideal-gas
-ac-mechanism | 반응 메커니즘과 속도 결정 단계 | card-adchem-mechanism | mateng-rate-law ac-integrated-rate
-ac-catalysis | 촉매와 활성화 에너지 | card-adchem-catalyst text-adchem-catalysts | ac-arrhenius ac-mechanism eq-const enzyme
+ac-mechanism | 반응 메커니즘과 속도 결정 단계 | card-adchem-mechanism text-adchem-mechanism | mateng-rate-law ac-integrated-rate
+ac-catalysis | 촉매와 활성화 에너지 | card-adchem-catalyst text-adchem-catalysts text-adchem-catalyst-rate | ac-arrhenius ac-mechanism eq-const enzyme
 
 # ── 과학계열: 고급 지구과학 ──
 ae-prem | 지진파 속도와 탄성 계수로 본 지구 내부 물질 | card-adearth-prem | esys-interior le-epicenter elastic-wave
@@ -563,7 +563,7 @@ ae-plume | 플룸구조론과 지질학적 변동의 원인 | text-adearth-plume
 ae-solid-solution | 이온 치환과 고용체 | card-adearth-solidsol | silicate le-mineral bonding
 ae-interference-color | 복굴절과 간섭색(미셸-레비 도표) | card-adearth-retard | le-polarizing interference emq-polarization
 ae-crystallize | 상평형 그림과 분별 결정·부분 용융 | card-adearth-crystallize | magma le-rock-id
-ae-facies | 변성상과 지온 구배 | card-adearth-facies | metamorph plate
+ae-facies | 변성상과 지온 구배 | card-adearth-facies text-adearth-decompression | metamorph plate
 ae-ore | 광상과 지하자원의 성인 | text-adearth-ore | rock-cycle sediment
 ae-concordia | U–Pb 콘코디아 연대 측정 | card-adearth-concordia | le-isochron abs-age
 ae-biostrat | 생층서와 화석 생존 범위 | card-adearth-range | geotime rel-age
@@ -590,9 +590,9 @@ ae-sidereal | 항성시·태양시와 시간각 | card-adearth-sidereal | le-cel
 ae-detector | 망원경 검출기와 신호 대 잡음비 | card-adearth-detector | le-telescope photon
 ae-synodic | 회합 주기와 행성의 궤도 반지름 | card-adearth-synodic | retro kepler le-analemma
 ae-distance-error | 연주 시차·분광 시차와 거리 오차 | card-adearth-distance-error | space-distance hrd
-ae-planck | 플랑크 법칙과 빈·슈테판–볼츠만 법칙의 유도 | card-adearth-planck | blackbody photon
+ae-planck | 플랑크 법칙과 빈·슈테판–볼츠만 법칙의 유도 | card-adearth-planck text-adearth-balmer | blackbody photon
 ae-balmer | 볼츠만·사하 식과 분광형·광도 계급 | card-adearth-balmer | stellar-spec spectrum ae-planck
-ae-hydrostatic | 정역학 평형과 별 내부의 에너지 전달 | card-adearth-hydrostatic | gravity ideal-gas fusion
+ae-hydrostatic | 정역학 평형과 별 내부의 에너지 전달 | card-adearth-hydrostatic text-adearth-stellar-lifetime | gravity ideal-gas fusion
 ae-tracks | 질량별 진화 경로와 내부 구조 변화 | card-adearth-tracks | star-evol ae-hydrostatic hrd
 ae-compact | 밀집성과 찬드라세카르 한계 | card-adearth-compact | star-evol fusion
 ae-stellar-fates | 핵융합 단계의 에너지, 맥동 변광성의 원리, 특이성 | text-adearth-stellar-fates | fusion star-evol space-variables
@@ -606,526 +606,539 @@ ae-cmb | 우주 배경 복사와 대폭발 우주론의 증거 | card-adearth-cm
 ae-friedmann | 프리드만 방정식과 ΛCDM 표준 모형 | card-adearth-friedmann | cosmology ae-cmb space-darkmatter
 
 # ── 과학계열: 과학과제 연구 ──
-rs-induct-deduct | 귀납적 연구와 가설 연역적 연구 | card-resr-semmelweis text-resr-twoways | sie-induction sie-deduction
-rs-elements | 과학 탐구의 요소 (변인 통제·결론·일반화) | card-resr-elements | sci-method rs-induct-deduct
-rs-ethics | 연구 윤리 규정과 부정행위 사례 | text-resr-ethics | sie-ethics ethics
+rs-induct-deduct | 귀납적 연구와 가설 연역적 연구 | card-resr-semmelweis text-resr-twoways text-resr-semmelweis | sie-induction sie-deduction
+rs-elements | 과학 탐구의 요소 (변인 통제·결론·일반화) | card-resr-elements text-resr-cans | sci-method rs-induct-deduct
+rs-ethics | 연구 윤리 규정과 부정행위 사례 | text-resr-ethics text-resr-multiple-tests | sie-ethics ethics
 rs-phack | p-해킹과 선택적 보고 | card-resr-phack | data rs-ethics
-rs-topic | 연구 주제 선정 (FINER 기준) | card-resr-topic | sie-question rs-elements
-rs-literature | 문헌 조사와 인용 (DOI) | text-resr-literature | rs-topic
+rs-topic | 연구 주제 선정 (FINER 기준) | card-resr-topic text-resr-sample-size | sie-question rs-elements
+rs-literature | 문헌 조사와 인용 (DOI) | text-resr-literature text-resr-search-terms | rs-topic
 rs-source | 자료의 신뢰도 판단 | card-resr-source | rs-literature sie-evidence
-rs-hypothesis | 연구 문제와 연구 가설 | text-resr-hypothesis card-resr-hypo | rs-induct-deduct rs-literature
-rs-design | 연구 설계: 대조군·무작위 배정·표본 크기 | card-resr-design text-resr-plan | sci-method sie-question
+rs-hypothesis | 연구 문제와 연구 가설 | text-resr-hypothesis card-resr-hypo text-resr-precise-hypothesis | rs-induct-deduct rs-literature
+rs-design | 연구 설계: 대조군·무작위 배정·표본 크기 | card-resr-design text-resr-plan text-resr-replication | sci-method sie-question
 rs-datarep | 연구 일지와 자료의 표·그래프 변환 | card-resr-graph text-resr-logbook | sie-represent error
-rs-ttest | t 검정·p값·효과 크기 | card-resr-ttest | rs-design data
-rs-conclude | 교란 변인과 결론 도출 | card-resr-simpson text-resr-discuss | rs-ttest data
-rs-report | 연구 보고서 작성과 인용 | card-resr-abstract text-resr-report | rs-conclude ethics
-rs-present | 구두·포스터 발표 | card-resr-poster text-resr-present | rs-report
+rs-ttest | t 검정·p값·효과 크기 | card-resr-ttest text-resr-confidence | rs-design data
+rs-conclude | 교란 변인과 결론 도출 | card-resr-simpson text-resr-discuss text-resr-extrapolation | rs-ttest data
+rs-report | 연구 보고서 작성과 인용 | card-resr-abstract text-resr-report text-resr-error-propagation | rs-conclude ethics
+rs-present | 구두·포스터 발표 | card-resr-poster text-resr-present text-resr-poster-font | rs-report
 
 # ── 융합선택: 융합과학 탐구 ──
-fs-convergence | 융합 탐구의 사례: X선 회절과 DNA 구조 | card-fusi-helix text-fusi-dna |
-fs-inquiry-compare | 예술·사회과학·과학 탐구의 비교 | text-fusi-compare card-fusi-pointil | sci-method
-fs-data-types | 데이터의 종류와 측정 척도 | card-fusi-scale text-fusi-data | data error
-fs-digital-ai | 디지털 탐구 도구와 기계 학습 | card-fusi-power card-fusi-knn text-fusi-ai | digital elec-power
-fs-data-question | 공개 데이터 가공과 탐구 문제 발견 | card-fusi-quake | plate fs-data-types sie-represent
-fs-hypo-design | 가설·모형과 판별 가능한 탐구 설계 | card-fusi-cooling | sci-method
-fs-data-quality | 표집 편향과 데이터의 신뢰성·타당성 | card-fusi-sampling card-fusi-pmsensor | error digital sie-calib
+fs-convergence | 융합 탐구의 사례: X선 회절과 DNA 구조 | card-fusi-helix text-fusi-dna text-fusi-xray-helix |
+fs-inquiry-compare | 예술·사회과학·과학 탐구의 비교 | text-fusi-compare card-fusi-pointil text-fusi-color-mixing | sci-method
+fs-data-types | 데이터의 종류와 측정 척도 | card-fusi-scale text-fusi-data text-fusi-measure-scale | data error
+fs-digital-ai | 디지털 탐구 도구와 기계 학습 | card-fusi-power card-fusi-knn text-fusi-ai text-fusi-sampling-interval | digital elec-power
+fs-data-question | 공개 데이터 가공과 탐구 문제 발견 | card-fusi-quake text-fusi-gutenberg | plate fs-data-types sie-represent
+fs-hypo-design | 가설·모형과 판별 가능한 탐구 설계 | card-fusi-cooling text-fusi-cooling-hypothesis | sci-method
+fs-data-quality | 표집 편향과 데이터의 신뢰성·타당성 | card-fusi-sampling card-fusi-pmsensor text-fusi-response-bias | error digital sie-calib
 fs-visual | 목적에 맞는 시각화와 왜곡된 그래프 | card-fusi-misgraph | sie-represent
-fs-mean-sd | 평균·표준편차·표준오차로 가설 평가 | card-fusi-meansd | error sci-method
+fs-mean-sd | 평균·표준편차·표준오차로 가설 평가 | card-fusi-meansd text-fusi-mean-difference | error sci-method
 fs-conclude | 결론 평가: 교란 변수와 심슨의 역설 | card-fusi-simpson | data fs-mean-sd
-fs-present | 탐구 결과 발표와 토론 | text-fusi-present | sie-evidence fs-conclude
-fs-tech-forecast | 미래 융합과학기술의 예측 | card-fusi-moore text-fusi-future | semicond
-fs-grand-challenge | 인류 난제의 융합적 해결 | card-fusi-desal text-fusi-challenges | cell-transport
-fs-ethics | 융합과학 탐구의 윤리와 쟁점 | text-fusi-ethics card-fusi-fairness | sie-ethics ethics ai diag-test
-fs-citizen-sci | 시민 참여와 시민 과학 | card-fusi-crowd text-fusi-citizen | data
+fs-present | 탐구 결과 발표와 토론 | text-fusi-present text-fusi-error-bar | sie-evidence fs-conclude
+fs-tech-forecast | 미래 융합과학기술의 예측 | card-fusi-moore text-fusi-future text-fusi-exponential-trend | semicond
+fs-grand-challenge | 인류 난제의 융합적 해결 | card-fusi-desal text-fusi-challenges text-fusi-desalination | cell-transport
+fs-ethics | 융합과학 탐구의 윤리와 쟁점 | text-fusi-ethics card-fusi-fairness text-fusi-fair-ai | sie-ethics ethics ai diag-test
+fs-citizen-sci | 시민 참여와 시민 과학 | card-fusi-crowd text-fusi-citizen text-fusi-crowd-majority | data
 
 # ── 융합선택: 기후변화와 환경생태 ──
-cl-weather-climate | 날씨와 기후, 평년값 | card-clim-normals |
+cl-weather-climate | 날씨와 기후, 평년값 | card-clim-normals text-clim-normal-anomaly |
 cl-climate-factor | 기후 요소와 기후 인자 | card-clim-factors | cl-weather-climate
-cl-feedback | 기후 되먹임과 기후 민감도 | card-clim-feedback | greenhouse
+cl-feedback | 기후 되먹임과 기후 민감도 | card-clim-feedback text-clim-feedback-gain | greenhouse
 cl-biosphere-feedback | 생물권과 기후의 상호 작용 | card-clim-daisy | cl-feedback earth-system
-cl-impacts | 기후변화가 생태계와 생활에 준 영향 | card-clim-seaice text-clim-impacts | cl-feedback biodiversity
-cl-causes | 기후위기의 원인과 심각성 | card-clim-keeling text-clim-crisis | carbon-cycle greenhouse
-cl-sea-level | 해수면 상승: 열팽창과 빙상 융해 | card-clim-slr card-clim-meltheat | cl-causes
-cl-extremes | 극한 기상 현상과 기온 분포의 꼬리 | card-clim-extremes text-clim-extreme-cases | greenhouse
+cl-impacts | 기후변화가 생태계와 생활에 준 영향 | card-clim-seaice text-clim-impacts text-clim-seaice-season | cl-feedback biodiversity
+cl-causes | 기후위기의 원인과 심각성 | card-clim-keeling text-clim-crisis text-clim-keeling-curve | carbon-cycle greenhouse
+cl-sea-level | 해수면 상승: 열팽창과 빙상 융해 | card-clim-slr card-clim-meltheat text-clim-sea-level | cl-causes
+cl-extremes | 극한 기상 현상과 기온 분포의 꼬리 | card-clim-extremes text-clim-extreme-cases text-clim-extreme-shift | greenhouse
 cl-range-shift | 기후변화 시나리오와 생물 분포 이동 | card-clim-range-shift text-clim-future-reports | greenhouse climate-factor biodiversity
-cl-phenology | 생물 계절과 개화 시기 변화 | card-clim-flowering text-clim-phenology-life | enzyme photosyn
-cl-pollinator | 꽃가루 매개 곤충의 감소와 원인 | card-clim-pollinator text-clim-insect-decline | cl-phenology food-web
-cl-algal-bloom | 물꽃 현상과 수생태계 생물다양성 | card-clim-algal text-clim-water-bloom | photosyn eco-parts biodiversity
-cl-vector | 곤충 매개 감염병과 기후 | card-clim-vector text-clim-vector-cases |
-cl-coral | 산호 백화와 바다 사막화 | card-clim-dhw text-clim-barren | seawater food-web
-cl-land-hazard | 사막화·대형 산불·가뭄과 홍수 | card-clim-wildfire text-clim-land-response | greenhouse
-cl-neutral | 탄소 예산과 탄소중립 기술 | card-clim-budget text-clim-tech | carbon-cycle greenhouse efficiency
-cl-cooperate | 국제 협약과 시민 참여 | card-clim-cooperate text-clim-agreements | cl-neutral biodiversity
+cl-phenology | 생물 계절과 개화 시기 변화 | card-clim-flowering text-clim-phenology-life text-clim-growing-degree | enzyme photosyn
+cl-pollinator | 꽃가루 매개 곤충의 감소와 원인 | card-clim-pollinator text-clim-insect-decline text-clim-phenology-mismatch | cl-phenology food-web
+cl-algal-bloom | 물꽃 현상과 수생태계 생물다양성 | card-clim-algal text-clim-water-bloom text-clim-algal-growth | photosyn eco-parts biodiversity
+cl-vector | 곤충 매개 감염병과 기후 | card-clim-vector text-clim-vector-cases text-clim-vector-temperature |
+cl-coral | 산호 백화와 바다 사막화 | card-clim-dhw text-clim-barren text-clim-degree-heating | seawater food-web
+cl-land-hazard | 사막화·대형 산불·가뭄과 홍수 | card-clim-wildfire text-clim-land-response text-clim-fire-spread | greenhouse
+cl-neutral | 탄소 예산과 탄소중립 기술 | card-clim-budget text-clim-tech text-clim-carbon-budget | carbon-cycle greenhouse efficiency
+cl-cooperate | 국제 협약과 시민 참여 | card-clim-cooperate text-clim-agreements text-clim-public-goods | cl-neutral biodiversity
 
 # ── 과학계열: 정보과학 ──
-if-function | 함수 정의·호출과 매개변수 | card-info-scope text-info-params |
-if-recursion | 재귀 함수와 호출 스택 | card-info-callstack text-info-induction | if-function
-if-iter-vs-rec | 반복구조와 재귀구조의 비교 | card-info-fibtree text-info-loop-rec | if-recursion
-if-stack-queue | 스택과 큐의 구현 | card-info-sq text-info-adt | if-function
-if-sq-use | 스택·큐를 활용한 문제 해결 | card-info-bracket card-info-printer | if-stack-queue
-if-graph-rep | 그래프의 인접 행렬·인접 리스트 | card-info-graphrep | if-stack-queue
+if-function | 함수 정의·호출과 매개변수 | card-info-scope text-info-params text-info-call-stack |
+if-recursion | 재귀 함수와 호출 스택 | card-info-callstack text-info-induction text-info-hanoi | if-function
+if-iter-vs-rec | 반복구조와 재귀구조의 비교 | card-info-fibtree text-info-loop-rec text-info-fib-calls | if-recursion
+if-stack-queue | 스택과 큐의 구현 | card-info-sq text-info-adt text-info-queue-impl | if-function
+if-sq-use | 스택·큐를 활용한 문제 해결 | card-info-bracket card-info-printer text-info-print-queue | if-stack-queue
+if-graph-rep | 그래프의 인접 행렬·인접 리스트 | card-info-graphrep text-info-graph-store | if-stack-queue
 if-tree-rep | 이진 트리의 배열·자식 목록 표현 | card-info-treerep | if-graph-rep if-recursion
-if-graph-search | 그래프 탐색 (BFS·DFS) | card-info-maze | if-graph-rep if-sq-use
+if-graph-search | 그래프 탐색 (BFS·DFS) | card-info-maze text-info-bst-height | if-graph-rep if-sq-use
 if-bst | 이진 탐색 트리 | card-info-bst | if-tree-rep
-if-state-space | 상태 공간과 완전 탐색 | card-info-space | if-recursion
-if-backtracking | 백트래킹과 가지치기 | card-info-queens | if-state-space
+if-state-space | 상태 공간과 완전 탐색 | card-info-space text-info-state-space | if-recursion
+if-backtracking | 백트래킹과 가지치기 | card-info-queens text-info-n-queens | if-state-space
 if-bnb-greedy | 분기 한정법과 탐욕법 | card-info-bnb | if-backtracking
-if-decompose | 문제 분해와 관계식 | card-info-hanoi text-info-decompose | if-recursion
-if-divide-conquer | 분할 정복 | card-info-sort card-info-power | if-decompose
-if-dp | 동적 계획법 (메모이제이션·표 채우기) | card-info-dp-memo card-info-dp-knapsack text-info-dp-dc | if-divide-conquer
-if-bigo | 빅오 표기법과 알고리즘 복잡도 | card-info-bigo-count card-info-bigo-growth | if-dp if-divide-conquer
-if-problem | 컴퓨터과학으로 풀 문제 발견 | text-info-find-problem | if-bigo
-if-project | 프로젝트 설계와 임계 경로 | text-info-project-plan card-info-critical-path | if-problem
-if-oss | 버전 관리 협업과 오픈소스 라이선스 | card-info-git-merge text-info-oss-license | if-project
-if-test | 테스트와 디버깅 | card-info-unit-test text-info-debug | if-project
+if-decompose | 문제 분해와 관계식 | card-info-hanoi text-info-decompose text-info-grid-paths | if-recursion
+if-divide-conquer | 분할 정복 | card-info-sort card-info-power text-info-merge-sort | if-decompose
+if-dp | 동적 계획법 (메모이제이션·표 채우기) | card-info-dp-memo card-info-dp-knapsack text-info-dp-dc text-info-coin-dp | if-divide-conquer
+if-bigo | 빅오 표기법과 알고리즘 복잡도 | card-info-bigo-count card-info-bigo-growth text-info-big-o | if-dp if-divide-conquer
+if-problem | 컴퓨터과학으로 풀 문제 발견 | text-info-find-problem text-info-route-count | if-bigo
+if-project | 프로젝트 설계와 임계 경로 | text-info-project-plan card-info-critical-path text-info-team-size | if-problem
+if-oss | 버전 관리 협업과 오픈소스 라이선스 | card-info-git-merge text-info-oss-license text-info-code-review | if-project
+if-test | 테스트와 디버깅 | card-info-unit-test text-info-debug text-info-boundary-test | if-project
 if-evaluate | 산출물의 기능적·윤리적 평가와 공유 | card-info-eval-groups text-info-share | if-test data ethics
 
 # ── 융합선택: 과학의 역사와 문화 ──
-hs-calendar | 고대 문명의 역법과 측량 | card-hist-calendar text-hist-ancient |
-hs-greek | 고대 그리스의 우주관과 자연관 | card-hist-eratosthenes text-hist-greek | hs-calendar
-hs-medieval | 중세 이슬람·유럽·조선의 과학 | card-hist-aljabr text-hist-medieval text-hist-sejong | hs-greek
-hs-revolution | 과학혁명과 과학·예술의 융합 | card-hist-venus card-hist-perspective text-hist-revolution | hs-greek
-hs-belief | 과학자의 신념과 세계관 | card-hist-kepler-solids text-hist-belief | hs-revolution sie-nature
+hs-calendar | 고대 문명의 역법과 측량 | card-hist-calendar text-hist-ancient text-hist-lunisolar |
+hs-greek | 고대 그리스의 우주관과 자연관 | card-hist-eratosthenes text-hist-greek text-hist-earth-size | hs-calendar
+hs-medieval | 중세 이슬람·유럽·조선의 과학 | card-hist-aljabr text-hist-medieval text-hist-sejong text-hist-completing-square | hs-greek
+hs-revolution | 과학혁명과 과학·예술의 융합 | card-hist-venus card-hist-perspective text-hist-revolution text-hist-venus-phase | hs-greek
+hs-belief | 과학자의 신념과 세계관 | card-hist-kepler-solids text-hist-belief text-hist-kepler-polyhedra | hs-revolution sie-nature
 hs-modern-society | 현대 과학의 등장과 사회문화 | card-hist-eclipse text-hist-modern-culture | relativity
-hs-communication | 과학자의 논쟁과 과학적 의사소통 규범 | card-hist-pasteur text-hist-debates | sci-method ethics
-hs-art-science | 예술·건축 속 과학 원리 | card-hist-catenary text-hist-art-science |
+hs-communication | 과학자의 논쟁과 과학적 의사소통 규범 | card-hist-pasteur text-hist-debates text-hist-spontaneous-debate | sci-method ethics
+hs-art-science | 예술·건축 속 과학 원리 | card-hist-catenary text-hist-art-science text-hist-catenary-arch |
 hs-epidemic-society | 감염병과 사회, 역학 조사 | card-hist-snow text-hist-epidemics | vaccine data
-hs-transport | 교통수단의 발달과 미래 사회 | card-hist-transport-energy text-hist-transport |
-hs-dual-use | 산업혁명 이후 과학기술의 명암 | card-hist-chain text-hist-dual-use | ethics
-hs-tech-culture | 과학기술과 문화의 상호 작용 | text-hist-newculture |
+hs-transport | 교통수단의 발달과 미래 사회 | card-hist-transport-energy text-hist-transport text-hist-energy-per-passenger |
+hs-dual-use | 산업혁명 이후 과학기술의 명암 | card-hist-chain text-hist-dual-use text-hist-chain-reaction | ethics
+hs-tech-culture | 과학기술과 문화의 상호 작용 | text-hist-newculture text-hist-pixel-acuity |
 hs-pointillism | 점묘법·화소와 눈의 분해능 | card-hist-pixel |
-hs-sci-terms | 과학 용어의 일상적 쓰임과 오용 | text-hist-terms card-hist-quantum-leap | spectrum
-hs-temperament | 음률: 삼분손익법·피타고라스 음률·평균율 | card-hist-tuning |
+hs-sci-terms | 과학 용어의 일상적 쓰임과 오용 | text-hist-terms card-hist-quantum-leap text-hist-quantum-scale | spectrum
+hs-temperament | 음률: 삼분손익법·피타고라스 음률·평균율 | card-hist-tuning text-hist-pythagorean-comma |
 hs-timbre | 배음과 음색, 소리 합성 | card-hist-synth |
 hs-ai-music | 인공지능 작곡과 음악 기술의 역사 | card-hist-markov text-hist-music-tech | ai hs-temperament
 hs-network | 연결망과 좁은 세상 | card-hist-smallworld text-hist-connected | iot
-hs-xr | 가상·증강 현실의 원리와 활용 | card-hist-stereo card-hist-latency text-hist-xr | digital
-hs-citizen | 과학기술 쟁점의 집단적 의사결정 | card-hist-values text-hist-citizen | ethics
+hs-xr | 가상·증강 현실의 원리와 활용 | card-hist-stereo card-hist-latency text-hist-xr text-hist-vr-latency | digital
+hs-citizen | 과학기술 쟁점의 집단적 의사결정 | card-hist-values text-hist-citizen text-hist-risk-values | ethics
 
 # ── 수학 (자동 병합: .omo/math/merge.py) ──
 # alg-1
-alg-nth-root | 거듭제곱근 | card-alg-nth-root | 
+alg-nth-root | 거듭제곱근 | card-alg-nth-root text-alg-nth-root | 
 alg-root-rules | 거듭제곱근의 성질 | card-alg-root-rules | alg-nth-root
-alg-exp-integer | 0과 음의 정수 지수 | card-alg-exp-zero-neg | 
+alg-exp-integer | 0과 음의 정수 지수 | card-alg-exp-zero-neg text-alg-exp-extend | 
 alg-exp-rational | 유리수 지수 | card-alg-rational-exp | alg-exp-integer alg-root-rules
 alg-exp-real | 실수 지수 | card-alg-real-exp | alg-exp-rational
-alg-exp-laws | 지수법칙 | card-alg-exp-law-count card-alg-exp-law-graph card-alg-exp-simplify | alg-exp-real
-alg-log | 로그의 뜻 | card-alg-log-def | alg-exp-real
+alg-exp-laws | 지수법칙 | card-alg-exp-law-count card-alg-exp-law-graph card-alg-exp-simplify text-alg-exp-laws | alg-exp-real
+alg-log | 로그의 뜻 | card-alg-log-def text-alg-log | alg-exp-real
 alg-log-rules | 로그의 성질과 밑 변환 | card-alg-log-rules card-alg-log-base-change | alg-log alg-exp-laws
-alg-common-log | 상용로그 | card-alg-log-digits card-alg-log-scale | alg-log-rules
-alg-exp-func | 지수함수 | card-alg-exp-func-def | alg-exp-real
+alg-common-log | 상용로그 | card-alg-log-digits card-alg-log-scale text-alg-common-log | alg-log-rules
+alg-exp-func | 지수함수 | card-alg-exp-func-def text-alg-exp-log-func | alg-exp-real
 alg-log-func | 로그함수 | card-alg-log-func-def | alg-exp-func alg-log
-alg-exp-log-graph | 지수함수와 로그함수의 그래프 | card-alg-exp-graph card-alg-inverse-graph | alg-exp-func alg-log-func
-alg-exp-log-apply | 지수함수와 로그함수의 활용 | card-alg-exp-ineq card-alg-growth-time | alg-exp-log-graph alg-common-log
+alg-exp-log-graph | 지수함수와 로그함수의 그래프 | card-alg-exp-graph card-alg-inverse-graph text-alg-exp-log-graph | alg-exp-func alg-log-func
+alg-exp-log-apply | 지수함수와 로그함수의 활용 | card-alg-exp-ineq card-alg-growth-time text-alg-exp-log-apply | alg-exp-log-graph alg-common-log
 # alg-2
-alg-general-angle | 일반각 | card-alg-general-angle | 
+alg-general-angle | 일반각 | card-alg-general-angle text-alg-radian | 
 alg-radian | 호도법 | card-alg-radian | alg-general-angle
-alg-trig-func | 삼각함수 | card-alg-trig-def | alg-general-angle alg-radian
+alg-trig-func | 삼각함수 | card-alg-trig-def text-alg-trig-func | alg-general-angle alg-radian
 alg-trig-graph | 삼각함수의 그래프와 주기 | card-alg-trig-graph card-alg-sin-param | alg-trig-func
-alg-sine-law | 사인법칙 | card-alg-sine-law | alg-trig-func
+alg-sine-law | 사인법칙 | card-alg-sine-law text-alg-sine-cosine-law | alg-trig-func
 alg-cosine-law | 코사인법칙 | card-alg-cosine-law | alg-trig-func
 alg-triangle-area | 삼각형의 넓이 | card-alg-tri-area | alg-sine-law alg-cosine-law
 # alg-3
-alg-seq | 수열의 뜻 | card-alg-seq-func card-alg-seq-guess | 
-alg-arith-seq | 등차수열 | card-alg-arith-term card-alg-arith-sum card-alg-arith-sn | alg-seq
-alg-geo-seq | 등비수열 | card-alg-geo-term card-alg-geo-sum | alg-seq
-alg-sigma | 합의 기호 ∑ | card-alg-sigma-read card-alg-sigma-rules | alg-seq
-alg-seq-sums | 여러 가지 수열의 합 | card-alg-sum-square card-alg-sum-cube card-alg-sum-telescope | alg-sigma alg-arith-seq
-alg-recursive | 수열의 귀납적 정의 | card-alg-recur-rule card-alg-recur-tiling | alg-arith-seq alg-geo-seq
-alg-induction | 수학적 귀납법 | card-alg-induct-domino card-alg-induct-proof | alg-recursive alg-seq-sums
+alg-seq | 수열의 뜻 | card-alg-seq-func card-alg-seq-guess text-alg-sequence | 
+alg-arith-seq | 등차수열 | card-alg-arith-term card-alg-arith-sum card-alg-arith-sn text-alg-arithmetic | alg-seq
+alg-geo-seq | 등비수열 | card-alg-geo-term card-alg-geo-sum text-alg-geometric | alg-seq
+alg-sigma | 합의 기호 ∑ | card-alg-sigma-read card-alg-sigma-rules text-alg-sigma | alg-seq
+alg-seq-sums | 여러 가지 수열의 합 | card-alg-sum-square card-alg-sum-cube card-alg-sum-telescope text-alg-sum-formulas | alg-sigma alg-arith-seq
+alg-recursive | 수열의 귀납적 정의 | card-alg-recur-rule card-alg-recur-tiling text-alg-recursion | alg-arith-seq alg-geo-seq
+alg-induction | 수학적 귀납법 | card-alg-induct-domino card-alg-induct-proof text-alg-induction | alg-recursive alg-seq-sums
 # calc1-1
-calc1-limit | 함수의 극한 | card-calc1-lim-approach | 
+calc1-limit | 함수의 극한 | card-calc1-lim-approach text-calc1-limit | 
 calc1-one-sided | 좌극한과 우극한 | card-calc1-one-sided | calc1-limit
 calc1-divergence | 발산과 무한대 | card-calc1-infinity | calc1-one-sided
-calc1-limit-laws | 함수의 극한에 대한 성질 | card-calc1-lim-laws | calc1-limit
+calc1-limit-laws | 함수의 극한에 대한 성질 | card-calc1-lim-laws text-calc1-limit-laws | calc1-limit
 calc1-limit-calc | 극한값의 계산 | card-calc1-indeterminate card-calc1-lim-coef | calc1-limit-laws calc1-divergence
-calc1-continuity | 함수의 연속 | card-calc1-cont-three card-calc1-cont-interval | calc1-one-sided calc1-limit-calc
-calc1-cont-props | 연속함수의 성질 | text-calc1-cont-props | calc1-continuity calc1-limit-laws
+calc1-continuity | 함수의 연속 | card-calc1-cont-three card-calc1-cont-interval text-calc1-continuity | calc1-one-sided calc1-limit-calc
+calc1-cont-props | 연속함수의 성질 | text-calc1-cont-props text-calc1-cont-theorems | calc1-continuity calc1-limit-laws
 calc1-evt | 최대·최소 정리 | card-calc1-evt | calc1-continuity
 calc1-ivt | 사잇값 정리 | card-calc1-ivt | calc1-continuity calc1-cont-props
 # calc1-2a
-calc1-derivative-coef | 미분계수 | card-calc1-secant card-calc1-zoom | 
-calc1-differentiability | 미분가능성과 연속성 | card-calc1-corner card-calc1-glue | calc1-derivative-coef
-calc1-derivative-fn | 도함수 | card-calc1-deriv-graph | calc1-derivative-coef
+calc1-derivative-coef | 미분계수 | card-calc1-secant card-calc1-zoom text-calc1-derivative-coef | 
+calc1-differentiability | 미분가능성과 연속성 | card-calc1-corner card-calc1-glue text-calc1-differentiability | calc1-derivative-coef
+calc1-derivative-fn | 도함수 | card-calc1-deriv-graph text-calc1-power-rule | calc1-derivative-coef
 calc1-power-rule | y = xⁿ의 도함수 | card-calc1-power-rule | calc1-derivative-fn
-calc1-sum-rule | 실수배·합·차의 미분법 | card-calc1-sum-rule | calc1-power-rule
+calc1-sum-rule | 실수배·합·차의 미분법 | card-calc1-sum-rule text-calc1-poly-deriv | calc1-power-rule
 calc1-product-rule | 곱의 미분법 | card-calc1-product-rule | calc1-sum-rule
-calc1-tangent | 접선의 방정식 | card-calc1-tangent-line card-calc1-tangent-slope card-calc1-tangent-ext | calc1-derivative-coef calc1-sum-rule
+calc1-tangent | 접선의 방정식 | card-calc1-tangent-line card-calc1-tangent-slope card-calc1-tangent-ext text-calc1-tangent | calc1-derivative-coef calc1-sum-rule
 # calc1-2b
-calc1-rolle | 롤의 정리 | card-calc1-rolle | 
+calc1-rolle | 롤의 정리 | card-calc1-rolle text-calc1-mvt | 
 calc1-mvt | 평균값 정리 | card-calc1-mvt | calc1-rolle
-calc1-incdec | 함수의 증가와 감소 | card-calc1-incdec | calc1-mvt
+calc1-incdec | 함수의 증가와 감소 | card-calc1-incdec text-calc1-extrema | calc1-mvt
 calc1-extremum | 극대와 극소 | card-calc1-extremum | calc1-incdec
-calc1-sketch | 그래프의 개형 | card-calc1-sketch | calc1-extremum
+calc1-sketch | 그래프의 개형 | card-calc1-sketch text-calc1-sketch | calc1-extremum
 calc1-maxmin | 닫힌 구간의 최댓값과 최솟값 | card-calc1-maxmin | calc1-extremum
-calc1-eq-ineq | 방정식과 부등식에의 활용 | card-calc1-root-count card-calc1-ineq-min | calc1-sketch calc1-maxmin
-calc1-velocity | 속도와 가속도 | card-calc1-motion card-calc1-throw | calc1-incdec
+calc1-eq-ineq | 방정식과 부등식에의 활용 | card-calc1-root-count card-calc1-ineq-min text-calc1-eq-ineq | calc1-sketch calc1-maxmin
+calc1-velocity | 속도와 가속도 | card-calc1-motion card-calc1-throw text-calc1-velocity | calc1-incdec
 # calc1-3
-calc1-antideriv | 부정적분과 적분상수 | card-calc1-antideriv-family card-calc1-slope-field | 
-calc1-poly-antideriv | 다항함수의 부정적분 | card-calc1-power-int card-calc1-linear-int | calc1-antideriv
-calc1-definite | 정적분의 뜻 | card-calc1-riemann card-calc1-signed-area | 
+calc1-antideriv | 부정적분과 적분상수 | card-calc1-antideriv-family card-calc1-slope-field text-calc1-antiderivative | 
+calc1-poly-antideriv | 다항함수의 부정적분 | card-calc1-power-int card-calc1-linear-int text-calc1-poly-integral | calc1-antideriv
+calc1-definite | 정적분의 뜻 | card-calc1-riemann card-calc1-signed-area text-calc1-definite | 
 calc1-definite-props | 정적분의 성질 | card-calc1-int-props | calc1-definite
-calc1-ftc | 부정적분과 정적분의 관계 | card-calc1-area-function card-calc1-ftc-eval | calc1-poly-antideriv calc1-definite-props
-calc1-area | 곡선으로 둘러싸인 도형의 넓이 | card-calc1-area-axis card-calc1-area-between | calc1-ftc
-calc1-int-motion | 속도와 거리 | card-calc1-vel-dist card-calc1-chase | calc1-ftc calc1-area
+calc1-ftc | 부정적분과 정적분의 관계 | card-calc1-area-function card-calc1-ftc-eval text-calc1-ftc | calc1-poly-antideriv calc1-definite-props
+calc1-area | 곡선으로 둘러싸인 도형의 넓이 | card-calc1-area-axis card-calc1-area-between text-calc1-area | calc1-ftc
+calc1-int-motion | 속도와 거리 | card-calc1-vel-dist card-calc1-chase text-calc1-distance | calc1-ftc calc1-area
 # calc2-1
-calc2-seq-limit | 수열의 수렴과 발산 | card-calc2-seq-converge card-calc2-seq-far | 
-calc2-seq-limit-laws | 수열의 극한에 대한 성질 | card-calc2-lim-laws card-calc2-rational-seq | calc2-seq-limit
+calc2-seq-limit | 수열의 수렴과 발산 | card-calc2-seq-converge card-calc2-seq-far text-calc2-seq-limit | 
+calc2-seq-limit-laws | 수열의 극한에 대한 성질 | card-calc2-lim-laws card-calc2-rational-seq text-calc2-lim-props | calc2-seq-limit
 calc2-seq-squeeze | 수열의 극한의 대소 관계 | card-calc2-squeeze | calc2-seq-limit
-calc2-geo-seq-limit | 등비수열의 극한 | card-calc2-geo-ratio card-calc2-geo-compare | calc2-seq-limit-laws
-calc2-series | 급수와 부분합 | card-calc2-partial-sum card-calc2-nth-term | calc2-seq-limit-laws
-calc2-geo-series | 등비급수 | card-calc2-geo-series card-calc2-bounce | calc2-series calc2-geo-seq-limit
+calc2-geo-seq-limit | 등비수열의 극한 | card-calc2-geo-ratio card-calc2-geo-compare text-calc2-geo-seq | calc2-seq-limit-laws
+calc2-series | 급수와 부분합 | card-calc2-partial-sum card-calc2-nth-term text-calc2-series | calc2-seq-limit-laws
+calc2-geo-series | 등비급수 | card-calc2-geo-series card-calc2-bounce text-calc2-geo-series | calc2-series calc2-geo-seq-limit
 # calc2-2a
-calc2-e-natlog | 자연상수 e와 자연로그 | card-calc2-e-limit | 
+calc2-e-natlog | 자연상수 e와 자연로그 | card-calc2-e-limit text-calc2-exp-log | 
 calc2-exp-log-deriv | 지수함수와 로그함수의 도함수 | card-calc2-exp-slope card-calc2-log-deriv | calc2-e-natlog
-calc2-trig-addition | 삼각함수의 덧셈정리 | card-calc2-chord-add card-calc2-line-angle card-calc2-wave-sum | 
-calc2-trig-limit | 삼각함수의 극한 | card-calc2-sinx-x | 
+calc2-trig-addition | 삼각함수의 덧셈정리 | card-calc2-chord-add card-calc2-line-angle card-calc2-wave-sum text-calc2-addition | 
+calc2-trig-limit | 삼각함수의 극한 | card-calc2-sinx-x text-calc2-trig-deriv | 
 calc2-trig-deriv | 사인함수와 코사인함수의 도함수 | card-calc2-sin-deriv | calc2-trig-addition calc2-trig-limit
-calc2-quotient-rule | 몫의 미분법 | card-calc2-quotient | 
+calc2-quotient-rule | 몫의 미분법 | card-calc2-quotient text-calc2-quotient | 
 calc2-trig-deriv-more | 여러 가지 삼각함수의 도함수 | card-calc2-trig-table | calc2-quotient-rule calc2-trig-deriv
-calc2-chain-rule | 합성함수의 미분법 | card-calc2-chain-lines | 
+calc2-chain-rule | 합성함수의 미분법 | card-calc2-chain-lines text-calc2-chain | 
 calc2-power-real | 실수 지수 거듭제곱의 도함수와 로그미분법 | card-calc2-power-real | calc2-chain-rule calc2-exp-log-deriv
-calc2-param-deriv | 매개변수로 나타낸 함수의 미분 | card-calc2-param-tangent card-calc2-param-reparam | calc2-chain-rule
+calc2-param-deriv | 매개변수로 나타낸 함수의 미분 | card-calc2-param-tangent card-calc2-param-reparam text-calc2-param | calc2-chain-rule
 # calc2-2b
-calc2-implicit-deriv | 음함수의 미분법 | card-calc2-implicit-slope | 
+calc2-implicit-deriv | 음함수의 미분법 | card-calc2-implicit-slope text-calc2-implicit | 
 calc2-inverse-deriv | 역함수의 미분법 | card-calc2-inverse-slope | calc2-implicit-deriv
-calc2-tangent-curves | 여러 가지 곡선의 접선 | card-calc2-tangent-from-point card-calc2-slope-tangent | calc2-implicit-deriv
-calc2-second-deriv | 이계도함수와 볼록, 변곡점 | card-calc2-concavity | 
+calc2-tangent-curves | 여러 가지 곡선의 접선 | card-calc2-tangent-from-point card-calc2-slope-tangent text-calc2-tangent | calc2-implicit-deriv
+calc2-second-deriv | 이계도함수와 볼록, 변곡점 | card-calc2-concavity text-calc2-graph-shape | 
 calc2-curve-sketch | 그래프의 개형 | card-calc2-curve-sketch | calc2-second-deriv
-calc2-eq-ineq | 방정식과 부등식에의 활용 | card-calc2-root-count card-calc2-exp-bound | calc2-curve-sketch calc2-tangent-curves
-calc2-velocity-accel | 속도와 가속도 | card-calc2-line-motion card-calc2-plane-motion | calc2-second-deriv
+calc2-eq-ineq | 방정식과 부등식에의 활용 | card-calc2-root-count card-calc2-exp-bound text-calc2-eq-ineq | calc2-curve-sketch calc2-tangent-curves
+calc2-velocity-accel | 속도와 가속도 | card-calc2-line-motion card-calc2-plane-motion text-calc2-motion | calc2-second-deriv
 # calc2-3
-calc2-int-functions | 여러 가지 함수의 적분 | card-calc2-xn-integral card-calc2-antideriv-check | 
-calc2-int-substitution | 치환적분법 | card-calc2-substitution card-calc2-sub-bounds | calc2-int-functions
-calc2-int-parts | 부분적분법 | card-calc2-parts-area card-calc2-parts-choice | calc2-int-functions
-calc2-int-series | 정적분과 급수의 합 | card-calc2-sum-read card-calc2-sum-to-int | calc2-int-functions
-calc2-int-area | 곡선으로 둘러싸인 도형의 넓이 | card-calc2-area-slices card-calc2-area-cross | calc2-int-functions calc2-int-parts
-calc2-int-volume | 입체도형의 부피 | card-calc2-cross-section card-calc2-cavalieri | calc2-int-series
-calc2-int-distance | 속도와 거리 | card-calc2-distance-area card-calc2-path-length | calc2-int-functions calc2-int-series
+calc2-int-functions | 여러 가지 함수의 적분 | card-calc2-xn-integral card-calc2-antideriv-check text-calc2-integrals | 
+calc2-int-substitution | 치환적분법 | card-calc2-substitution card-calc2-sub-bounds text-calc2-substitution | calc2-int-functions
+calc2-int-parts | 부분적분법 | card-calc2-parts-area card-calc2-parts-choice text-calc2-parts | calc2-int-functions
+calc2-int-series | 정적분과 급수의 합 | card-calc2-sum-read card-calc2-sum-to-int text-calc2-riemann | calc2-int-functions
+calc2-int-area | 곡선으로 둘러싸인 도형의 넓이 | card-calc2-area-slices card-calc2-area-cross text-calc2-area | calc2-int-functions calc2-int-parts
+calc2-int-volume | 입체도형의 부피 | card-calc2-cross-section card-calc2-cavalieri text-calc2-volume | calc2-int-series
+calc2-int-distance | 속도와 거리 | card-calc2-distance-area card-calc2-path-length text-calc2-distance | calc2-int-functions calc2-int-series
 # cm1-1
-cm1-poly-ops | 다항식의 덧셈·뺄셈·곱셈 | card-cm1-poly-mult | 
+cm1-poly-ops | 다항식의 덧셈·뺄셈·곱셈 | card-cm1-poly-mult text-cm1-poly-ops | 
 cm1-poly-div | 다항식의 나눗셈 | card-cm1-poly-div | cm1-poly-ops
-cm1-identity | 항등식과 미정계수법 | card-cm1-identity | cm1-poly-ops
+cm1-identity | 항등식과 미정계수법 | card-cm1-identity text-cm1-remainder-thm | cm1-poly-ops
 cm1-remainder | 나머지정리와 인수정리 | card-cm1-remainder | cm1-poly-div cm1-identity
 cm1-synthetic | 조립제법 | card-cm1-synthetic | cm1-poly-div
-cm1-factor-formula | 인수분해 공식 | card-cm1-sq3 card-cm1-cube-diff | cm1-poly-ops
+cm1-factor-formula | 인수분해 공식 | card-cm1-sq3 card-cm1-cube-diff text-cm1-factoring | cm1-poly-ops
 cm1-factor-theorem | 인수정리를 이용한 인수분해 | card-cm1-factor-roots | cm1-remainder cm1-synthetic
 # cm1-2a
-cm1-complex | 허수단위와 복소수 | card-cm1-imag-unit | 
+cm1-complex | 허수단위와 복소수 | card-cm1-imag-unit text-cm1-complex | 
 cm1-complex-ops | 복소수의 사칙연산과 켤레복소수 | card-cm1-complex-arith | cm1-complex
-cm1-discriminant | 이차방정식의 판별식과 실근·허근 | card-cm1-discriminant card-cm1-root-path | cm1-complex-ops
-cm1-vieta | 근과 계수의 관계 | card-cm1-vieta card-cm1-sum-product | cm1-discriminant
-cm1-quad-graph | 이차방정식과 이차함수의 관계 | card-cm1-parabola-xaxis card-cm1-level-line | cm1-discriminant
-cm1-line-parabola | 이차함수의 그래프와 직선의 위치 관계 | card-cm1-line-parabola card-cm1-tangent-point | cm1-quad-graph
-cm1-quad-minmax | 제한된 범위에서 이차함수의 최대·최소 | card-cm1-minmax-interval card-cm1-fence | cm1-quad-graph
+cm1-discriminant | 이차방정식의 판별식과 실근·허근 | card-cm1-discriminant card-cm1-root-path text-cm1-discriminant | cm1-complex-ops
+cm1-vieta | 근과 계수의 관계 | card-cm1-vieta card-cm1-sum-product text-cm1-vieta | cm1-discriminant
+cm1-quad-graph | 이차방정식과 이차함수의 관계 | card-cm1-parabola-xaxis card-cm1-level-line text-cm1-quad-func | cm1-discriminant
+cm1-line-parabola | 이차함수의 그래프와 직선의 위치 관계 | card-cm1-line-parabola card-cm1-tangent-point text-cm1-line-parabola | cm1-quad-graph
+cm1-quad-minmax | 제한된 범위에서 이차함수의 최대·최소 | card-cm1-minmax-interval card-cm1-fence text-cm1-quad-minmax | cm1-quad-graph
 # cm1-2b
-cm1-eq-higher | 삼차방정식과 사차방정식 | card-cm1-cubic-solve card-cm1-biquad | 
-cm1-eq-sys2 | 연립이차방정식 | card-cm1-line-conic card-cm1-factor-system | 
-cm1-ineq-lin-sys | 일차부등식과 연립일차부등식 | card-cm1-lin-ineq card-cm1-ineq-system | 
-cm1-ineq-abs | 절댓값을 포함한 부등식 | card-cm1-abs-dist card-cm1-abs-cases | cm1-ineq-lin-sys
-cm1-ineq-quad | 이차부등식과 연립이차부등식 | card-cm1-quad-ineq card-cm1-quad-system | cm1-ineq-lin-sys
+cm1-eq-higher | 삼차방정식과 사차방정식 | card-cm1-cubic-solve card-cm1-biquad text-cm1-higher-eq | 
+cm1-eq-sys2 | 연립이차방정식 | card-cm1-line-conic card-cm1-factor-system text-cm1-quad-system | 
+cm1-ineq-lin-sys | 일차부등식과 연립일차부등식 | card-cm1-lin-ineq card-cm1-ineq-system text-cm1-lin-ineq | 
+cm1-ineq-abs | 절댓값을 포함한 부등식 | card-cm1-abs-dist card-cm1-abs-cases text-cm1-abs-ineq | cm1-ineq-lin-sys
+cm1-ineq-quad | 이차부등식과 연립이차부등식 | card-cm1-quad-ineq card-cm1-quad-system text-cm1-quad-ineq | cm1-ineq-lin-sys
 # cm1-3
-cm1-sum-rule | 합의 법칙 | card-cm1-sum-rule | 
+cm1-sum-rule | 합의 법칙 | card-cm1-sum-rule text-cm1-counting | 
 cm1-product-rule | 곱의 법칙 | card-cm1-product-rule card-cm1-divisors | cm1-sum-rule
-cm1-permutation | 순열과 계승 | card-cm1-perm-slots card-cm1-perm-tree | cm1-product-rule
-cm1-combination | 조합 | card-cm1-comb-group card-cm1-comb-bars | cm1-permutation cm1-sum-rule
+cm1-permutation | 순열과 계승 | card-cm1-perm-slots card-cm1-perm-tree text-cm1-perm | cm1-product-rule
+cm1-combination | 조합 | card-cm1-comb-group card-cm1-comb-bars text-cm1-comb | cm1-permutation cm1-sum-rule
 # cm1-4
-cm1-matrix | 행렬의 뜻과 성분 | card-cm1-matrix-entry card-cm1-road-matrix | 
-cm1-matrix-ops | 행렬의 덧셈·뺄셈·실수배 | card-cm1-matrix-add | cm1-matrix
+cm1-matrix | 행렬의 뜻과 성분 | card-cm1-matrix-entry card-cm1-road-matrix text-cm1-matrix | 
+cm1-matrix-ops | 행렬의 덧셈·뺄셈·실수배 | card-cm1-matrix-add text-cm1-matrix-ops | cm1-matrix
 cm1-matrix-mult | 행렬의 곱셈 | card-cm1-matrix-mult | cm1-matrix
 # cm2-1
-cm2-distance | 두 점 사이의 거리 | card-cm2-distance | 
+cm2-distance | 두 점 사이의 거리 | card-cm2-distance text-cm2-division-point | 
 cm2-internal-div | 선분의 내분점 | card-cm2-internal-div | cm2-distance
-cm2-line-relation | 두 직선의 평행과 수직 | card-cm2-parallel card-cm2-perp | 
-cm2-point-line-dist | 점과 직선 사이의 거리 | card-cm2-point-line card-cm2-tri-area | cm2-distance cm2-line-relation
-cm2-circle-eq | 원의 방정식 | card-cm2-circle-eq card-cm2-general-circle | cm2-distance
-cm2-circle-line | 원과 직선의 위치 관계 | card-cm2-circle-line card-cm2-tangent | cm2-circle-eq cm2-point-line-dist
-cm2-translation | 평행이동 | card-cm2-translate-point card-cm2-translate-graph | 
-cm2-reflection | 대칭이동 | card-cm2-reflect card-cm2-reflect-graph card-cm2-shortest-path | cm2-internal-div cm2-line-relation cm2-distance
+cm2-line-relation | 두 직선의 평행과 수직 | card-cm2-parallel card-cm2-perp text-cm2-parallel-perp | 
+cm2-point-line-dist | 점과 직선 사이의 거리 | card-cm2-point-line card-cm2-tri-area text-cm2-point-line-dist | cm2-distance cm2-line-relation
+cm2-circle-eq | 원의 방정식 | card-cm2-circle-eq card-cm2-general-circle text-cm2-circle | cm2-distance
+cm2-circle-line | 원과 직선의 위치 관계 | card-cm2-circle-line card-cm2-tangent text-cm2-circle-line | cm2-circle-eq cm2-point-line-dist
+cm2-translation | 평행이동 | card-cm2-translate-point card-cm2-translate-graph text-cm2-translate | 
+cm2-reflection | 대칭이동 | card-cm2-reflect card-cm2-reflect-graph card-cm2-shortest-path text-cm2-reflect | cm2-internal-div cm2-line-relation cm2-distance
 # cm2-2
-cm2-set | 집합과 원소 | card-cm2-set-roster card-cm2-set-interval | 
-cm2-subset | 부분집합과 포함관계 | card-cm2-subset-venn card-cm2-subset-count | cm2-set
-cm2-set-ops | 집합의 연산 | card-cm2-set-ops card-cm2-set-laws | cm2-subset
-cm2-prop | 명제와 조건 | card-cm2-all-some card-cm2-prop-truthset text-cm2-prop-terms | cm2-subset
-cm2-converse | 명제의 역과 대우 | card-cm2-converse card-cm2-contra-venn | cm2-prop cm2-set-ops
-cm2-suff-nec | 충분조건과 필요조건 | card-cm2-suff-nec card-cm2-cond-plane | cm2-prop
-cm2-proof | 대우를 이용한 증명과 귀류법 | card-cm2-contra-square card-cm2-sqrt2-absurd text-cm2-proof-ways | cm2-converse
-cm2-abs-ineq | 절대부등식 | card-cm2-ineq-graph card-cm2-amgm | cm2-prop
+cm2-set | 집합과 원소 | card-cm2-set-roster card-cm2-set-interval text-cm2-set | 
+cm2-subset | 부분집합과 포함관계 | card-cm2-subset-venn card-cm2-subset-count text-cm2-subset | cm2-set
+cm2-set-ops | 집합의 연산 | card-cm2-set-ops card-cm2-set-laws text-cm2-set-ops | cm2-subset
+cm2-prop | 명제와 조건 | card-cm2-all-some card-cm2-prop-truthset text-cm2-prop-terms text-cm2-proposition | cm2-subset
+cm2-converse | 명제의 역과 대우 | card-cm2-converse card-cm2-contra-venn text-cm2-converse | cm2-prop cm2-set-ops
+cm2-suff-nec | 충분조건과 필요조건 | card-cm2-suff-nec card-cm2-cond-plane text-cm2-suff-nec | cm2-prop
+cm2-proof | 대우를 이용한 증명과 귀류법 | card-cm2-contra-square card-cm2-sqrt2-absurd text-cm2-proof-ways text-cm2-proof | cm2-converse
+cm2-abs-ineq | 절대부등식 | card-cm2-ineq-graph card-cm2-amgm text-cm2-abs-ineq | cm2-prop
 # cm2-3
-cm2-function | 함수와 그래프 | card-cm2-func-map card-cm2-func-graph | 
-cm2-composite | 합성함수 | card-cm2-compose-arrow card-cm2-compose-machine | cm2-function
-cm2-inverse | 역함수 | card-cm2-inverse-map card-cm2-inverse-graph | cm2-function cm2-composite
-cm2-rational-func | 유리함수 | card-cm2-rational-shift card-cm2-rational-form | cm2-function
-cm2-irrational-func | 무리함수 | card-cm2-sqrt-shift card-cm2-sqrt-line | cm2-function cm2-inverse
+cm2-function | 함수와 그래프 | card-cm2-func-map card-cm2-func-graph text-cm2-function | 
+cm2-composite | 합성함수 | card-cm2-compose-arrow card-cm2-compose-machine text-cm2-compose | cm2-function
+cm2-inverse | 역함수 | card-cm2-inverse-map card-cm2-inverse-graph text-cm2-inverse | cm2-function cm2-composite
+cm2-rational-func | 유리함수 | card-cm2-rational-shift card-cm2-rational-form text-cm2-rational | cm2-function
+cm2-irrational-func | 무리함수 | card-cm2-sqrt-shift card-cm2-sqrt-line text-cm2-irrational | cm2-function cm2-inverse
 # geo-1
-geo-parabola | 포물선의 정의와 방정식 | card-geo-parabola-def card-geo-parabola-shift | 
-geo-ellipse | 타원의 정의와 방정식 | card-geo-ellipse-def card-geo-ellipse-eq | 
-geo-hyperbola | 쌍곡선의 정의와 방정식 | card-geo-hyperbola-def card-geo-hyperbola-asym | geo-ellipse
-geo-conic-tangent | 이차곡선의 접선 | card-geo-tangent-slope card-geo-tangent-point | geo-parabola geo-ellipse geo-hyperbola
+geo-parabola | 포물선의 정의와 방정식 | card-geo-parabola-def card-geo-parabola-shift text-geo-parabola | 
+geo-ellipse | 타원의 정의와 방정식 | card-geo-ellipse-def card-geo-ellipse-eq text-geo-ellipse | 
+geo-hyperbola | 쌍곡선의 정의와 방정식 | card-geo-hyperbola-def card-geo-hyperbola-asym text-geo-hyperbola | geo-ellipse
+geo-conic-tangent | 이차곡선의 접선 | card-geo-tangent-slope card-geo-tangent-point text-geo-conic-tangent | geo-parabola geo-ellipse geo-hyperbola
 geo-conic-uses | 이차곡선의 활용 | text-geo-conic-uses | geo-parabola geo-ellipse geo-hyperbola
 # geo-2
-geo-plane-determine | 평면의 결정 조건 | text-geo-plane-determine | 
+geo-plane-determine | 평면의 결정 조건 | text-geo-plane-determine text-geo-space-lines | 
 geo-line-line | 두 직선의 위치 관계와 꼬인 위치 | card-geo-line-pos | geo-plane-determine
 geo-line-plane | 직선과 평면의 위치 관계와 수직 | card-geo-line-plane | geo-line-line geo-plane-determine
 geo-plane-plane | 두 평면의 위치 관계와 교선 | card-geo-plane-cut | geo-plane-determine geo-line-line
-geo-three-perp | 삼수선 정리 | card-geo-three-perp | geo-line-plane
+geo-three-perp | 삼수선 정리 | card-geo-three-perp text-geo-three-perp | geo-line-plane
 geo-dihedral | 이면각과 두 평면이 이루는 각 | card-geo-dihedral | geo-plane-plane geo-three-perp
-geo-projection | 정사영과 정사영의 길이 | card-geo-proj-segment | geo-line-plane
+geo-projection | 정사영과 정사영의 길이 | card-geo-proj-segment text-geo-projection | geo-line-plane
 geo-proj-area | 정사영의 넓이 | card-geo-proj-area | geo-projection geo-dihedral
-geo-space-coord | 좌표공간과 공간좌표 | card-geo-coord-point | geo-projection
+geo-space-coord | 좌표공간과 공간좌표 | card-geo-coord-point text-geo-coord3 | geo-projection
 geo-dist3 | 좌표공간에서 두 점 사이의 거리 | card-geo-dist3 | geo-space-coord
 geo-section3 | 좌표공간에서 선분의 내분점 | card-geo-section3 | geo-space-coord geo-dist3
-geo-sphere-eq | 구의 방정식 | card-geo-sphere-eq card-geo-sphere-complete | geo-dist3
+geo-sphere-eq | 구의 방정식 | card-geo-sphere-eq card-geo-sphere-complete text-geo-sphere | geo-dist3
 geo-sphere-section | 구와 평면의 위치 관계 | card-geo-sphere-section | geo-sphere-eq
 # geo-3
-geo-vec-def | 벡터의 뜻 | text-geo-vec-terms | 
+geo-vec-def | 벡터의 뜻 | text-geo-vec-terms text-geo-vectors | 
 geo-vec-add | 벡터의 덧셈과 뺄셈 | card-geo-vec-add | geo-vec-def
 geo-vec-scalar | 벡터의 실수배 | card-geo-vec-scalar | geo-vec-def
-geo-pos-vec | 위치벡터 | card-geo-pos-section | geo-vec-add geo-vec-scalar
+geo-pos-vec | 위치벡터 | card-geo-pos-section text-geo-position-vec | geo-vec-add geo-vec-scalar
 geo-vec-comp | 벡터의 성분 | card-geo-components card-geo-space-components | geo-pos-vec
-geo-dot | 벡터의 내적 | card-geo-dot-angle card-geo-dot-space | geo-vec-comp
-geo-line-vec | 벡터를 이용한 직선의 방정식 | card-geo-line-dir card-geo-line-space | geo-pos-vec geo-vec-comp
+geo-dot | 벡터의 내적 | card-geo-dot-angle card-geo-dot-space text-geo-dot | geo-vec-comp
+geo-line-vec | 벡터를 이용한 직선의 방정식 | card-geo-line-dir card-geo-line-space text-geo-line-eq | geo-pos-vec geo-vec-comp
 geo-line-normal | 법선벡터와 직선 | card-geo-line-normal | geo-dot geo-line-vec
-geo-plane-vec | 평면의 방정식 | card-geo-plane-normal | geo-dot geo-line-normal
+geo-plane-vec | 평면의 방정식 | card-geo-plane-normal text-geo-plane-eq | geo-dot geo-line-normal
 geo-sphere-vec | 구의 벡터방정식 | card-geo-sphere-vec | geo-pos-vec geo-vec-comp
 # stat-1
-stat-rep-perm | 중복순열 | card-stat-rep-perm | 
+stat-rep-perm | 중복순열 | card-stat-rep-perm text-stat-perm-rep | 
 stat-same-perm | 같은 것이 있는 순열 | card-stat-same-perm card-stat-grid-path | 
-stat-rep-comb | 중복조합 | card-stat-stars-bars card-stat-int-solutions | stat-same-perm
-stat-binom-thm | 이항정리와 이항계수 | card-stat-binom-expand | 
+stat-rep-comb | 중복조합 | card-stat-stars-bars card-stat-int-solutions text-stat-comb-rep | stat-same-perm
+stat-binom-thm | 이항정리와 이항계수 | card-stat-binom-expand text-stat-binomial-thm | 
 stat-pascal | 파스칼의 삼각형 | card-stat-pascal | stat-binom-thm
 # stat-2
-stat-prob-def | 확률의 뜻과 기본 성질 | card-stat-freq-prob card-stat-sample-grid | 
-stat-add-rule | 확률의 덧셈정리와 배반사건 | card-stat-add-rule card-stat-add-multiples | stat-prob-def
-stat-complement | 여사건의 확률 | card-stat-birthday card-stat-at-least | stat-add-rule
-stat-cond-prob | 조건부확률 | card-stat-cond-table card-stat-cond-test | stat-prob-def
-stat-independence | 사건의 독립과 종속 | card-stat-indep-dice card-stat-indep-area | stat-cond-prob
-stat-mult-rule | 확률의 곱셈정리 | card-stat-tree-draw | stat-cond-prob
+stat-prob-def | 확률의 뜻과 기본 성질 | card-stat-freq-prob card-stat-sample-grid text-stat-probability | 
+stat-add-rule | 확률의 덧셈정리와 배반사건 | card-stat-add-rule card-stat-add-multiples text-stat-addition | stat-prob-def
+stat-complement | 여사건의 확률 | card-stat-birthday card-stat-at-least text-stat-complement | stat-add-rule
+stat-cond-prob | 조건부확률 | card-stat-cond-table card-stat-cond-test text-stat-conditional | stat-prob-def
+stat-independence | 사건의 독립과 종속 | card-stat-indep-dice card-stat-indep-area text-stat-independence | stat-cond-prob
+stat-mult-rule | 확률의 곱셈정리 | card-stat-tree-draw text-stat-multiplication | stat-cond-prob
 stat-indep-trials | 독립시행의 확률 | card-stat-indep-trials | stat-independence stat-mult-rule
 # stat-3
-stat-rv | 확률변수와 확률분포 | card-stat-rv-coins | 
+stat-rv | 확률변수와 확률분포 | card-stat-rv-coins text-stat-random-var | 
 stat-continuous-rv | 연속확률변수와 확률밀도함수 | card-stat-density | stat-rv
-stat-expectation | 이산확률변수의 기댓값과 표준편차 | card-stat-balance card-stat-linear-rv | stat-rv
-stat-binomial | 이항분포 | card-stat-binom-shape | stat-expectation
+stat-expectation | 이산확률변수의 기댓값과 표준편차 | card-stat-balance card-stat-linear-rv text-stat-expectation | stat-rv
+stat-binomial | 이항분포 | card-stat-binom-shape text-stat-binomial | stat-expectation
 stat-large-numbers | 큰 수의 법칙 | card-stat-large-numbers | stat-binomial
-stat-normal | 정규분포와 표준정규분포 | card-stat-normal-curve card-stat-standardize | stat-continuous-rv stat-expectation
+stat-normal | 정규분포와 표준정규분포 | card-stat-normal-curve card-stat-standardize text-stat-normal | stat-continuous-rv stat-expectation
 stat-binom-normal | 이항분포와 정규분포의 관계 | card-stat-binom-normal | stat-binomial stat-normal
-stat-sampling | 모집단과 표본, 임의추출 | card-stat-random-sample card-stat-draw-replace | 
-stat-sample-mean | 표본평균의 분포 | card-stat-xbar-dist | stat-sampling stat-normal
+stat-sampling | 모집단과 표본, 임의추출 | card-stat-random-sample card-stat-draw-replace text-stat-sampling | 
+stat-sample-mean | 표본평균의 분포 | card-stat-xbar-dist text-stat-sample-mean | stat-sampling stat-normal
 stat-sample-prop | 표본비율의 분포 | card-stat-phat-dist | stat-sampling stat-binom-normal
-stat-est-mean | 모평균의 추정 | card-stat-ci-mean | stat-sample-mean
+stat-est-mean | 모평균의 추정 | card-stat-ci-mean text-stat-estimation | stat-sample-mean
 stat-est-prop | 모비율의 추정 | card-stat-ci-prop | stat-sample-prop
 # 전문 수학 Ⅰ. 삼각함수와 미적분
-pm-trig-addition-proof | 덧셈정리의 증명 | card-pmath-add-proof | alg-trig-func calc2-trig-addition
+pm-trig-addition-proof | 덧셈정리의 증명 | card-pmath-add-proof text-pmath-trig-formulas | alg-trig-func calc2-trig-addition
 pm-double-angle | 배각·반각 공식 | card-pmath-double-angle | pm-trig-addition-proof
 pm-sum-product | 삼각함수의 합과 곱의 변환 | card-pmath-beats | pm-trig-addition-proof
-pm-reciprocal-trig | 코시컨트·시컨트·코탄젠트함수 | card-pmath-recip-circle card-pmath-csc-predict | alg-trig-graph cm2-rational-func
-pm-inverse-trig | 역삼각함수 | card-pmath-arc-restrict card-pmath-arc-sawtooth | alg-trig-graph cm2-inverse
-pm-trig-deriv-more | 여러 가지 삼각함수와 역삼각함수의 도함수 | card-pmath-deriv-trace card-pmath-museum | calc2-trig-deriv-more calc2-inverse-deriv pm-reciprocal-trig pm-inverse-trig
+pm-reciprocal-trig | 코시컨트·시컨트·코탄젠트함수 | card-pmath-recip-circle card-pmath-csc-predict text-pmath-reciprocal-trig | alg-trig-graph cm2-rational-func
+pm-inverse-trig | 역삼각함수 | card-pmath-arc-restrict card-pmath-arc-sawtooth text-pmath-inverse-trig | alg-trig-graph cm2-inverse
+pm-trig-deriv-more | 여러 가지 삼각함수와 역삼각함수의 도함수 | card-pmath-deriv-trace card-pmath-museum text-pmath-derivatives | calc2-trig-deriv-more calc2-inverse-deriv pm-reciprocal-trig pm-inverse-trig
 pm-higher-deriv | 고계도함수 | card-pmath-jerk | calc2-velocity-accel
-pm-lhopital | 로피탈의 정리 | card-pmath-lhopital-zoom card-pmath-lhopital-errors card-pmath-growth-race | calc1-limit-laws calc1-mvt calc2-exp-log-deriv
-pm-riemann | 구분구적법과 정적분의 뜻 | card-pmath-riemann card-pmath-pyramid | alg-sigma calc1-definite
-pm-int-methods | 여러 가지 적분법 | card-pmath-int-choose card-pmath-partial-frac | calc2-int-substitution calc2-int-parts
+pm-lhopital | 로피탈의 정리 | card-pmath-lhopital-zoom card-pmath-lhopital-errors card-pmath-growth-race text-pmath-lhopital | calc1-limit-laws calc1-mvt calc2-exp-log-deriv
+pm-riemann | 구분구적법과 정적분의 뜻 | card-pmath-riemann card-pmath-pyramid text-pmath-riemann-sum | alg-sigma calc1-definite
+pm-int-methods | 여러 가지 적분법 | card-pmath-int-choose card-pmath-partial-frac text-pmath-integration | calc2-int-substitution calc2-int-parts
 pm-trig-sub | 삼각치환 | card-pmath-trig-sub | pm-int-methods pm-inverse-trig alg-radian
 # 전문 수학 Ⅱ. 기하
-pm-conic-section | 원뿔곡선 | card-pmath-cone-cut | geo-parabola geo-ellipse geo-hyperbola
+pm-conic-section | 원뿔곡선 | card-pmath-cone-cut text-pmath-conics | geo-parabola geo-ellipse geo-hyperbola
 pm-eccentricity | 이심률 | card-pmath-eccentricity | pm-conic-section
-pm-conic-reflect | 이차곡선의 접선과 반사 성질 | card-pmath-parabolic-mirror card-pmath-ellipse-billiard | geo-conic-tangent
-pm-space-proof | 직선과 평면에 관한 명제의 증명 | card-pmath-three-perp-proof card-pmath-space-counter | geo-line-line geo-line-plane geo-three-perp
-pm-proj-area | 정사영의 넓이와 활용 | card-pmath-disk-shadow card-pmath-solar-panel | geo-proj-area
-pm-space-dist | 공간의 거리와 내분점·외분점 | card-pmath-treasure3d card-pmath-section3d | geo-dist3 geo-section3
+pm-conic-reflect | 이차곡선의 접선과 반사 성질 | card-pmath-parabolic-mirror card-pmath-ellipse-billiard text-pmath-conic-tangent | geo-conic-tangent
+pm-space-proof | 직선과 평면에 관한 명제의 증명 | card-pmath-three-perp-proof card-pmath-space-counter text-pmath-three-perp | geo-line-line geo-line-plane geo-three-perp
+pm-proj-area | 정사영의 넓이와 활용 | card-pmath-disk-shadow card-pmath-solar-panel text-pmath-projection | geo-proj-area
+pm-space-dist | 공간의 거리와 내분점·외분점 | card-pmath-treasure3d card-pmath-section3d text-pmath-sphere-eq | geo-dist3 geo-section3
 pm-trilateration | 구 세 개의 교점과 위치 측정 | card-pmath-trilateration | geo-sphere-eq pm-space-dist
-pm-vec-ops | 벡터의 연산과 활용 | card-pmath-river card-pmath-vec-puzzle | geo-vec-add geo-vec-scalar geo-vec-comp
-pm-dot-work | 내적과 일 | card-pmath-work-dot | geo-dot
+pm-vec-ops | 벡터의 연산과 활용 | card-pmath-river card-pmath-vec-puzzle text-pmath-vector-ops | geo-vec-add geo-vec-scalar geo-vec-comp
+pm-dot-work | 내적과 일 | card-pmath-work-dot text-pmath-dot-cross | geo-dot
 pm-cross | 벡터의 외적 | card-pmath-cross card-pmath-torque | geo-dot geo-pos-vec
 pm-shading | 법선과 조명 | card-pmath-shading | pm-cross pm-dot-work
-pm-vec-figures | 벡터로 나타낸 직선·평면·원·구 | card-pmath-param-line-plane card-pmath-circle-sphere-vec | geo-line-vec geo-plane-vec geo-sphere-vec pm-cross
+pm-vec-figures | 벡터로 나타낸 직선·평면·원·구 | card-pmath-param-line-plane card-pmath-circle-sphere-vec text-pmath-vector-equations | geo-line-vec geo-plane-vec geo-sphere-vec pm-cross
 pm-raytrace | 직선과 구의 교점 | card-pmath-raytrace | pm-vec-figures pm-shading
 # 전문 수학 Ⅲ. 확률과 통계
-pm-circular-perm | 원순열과 염주순열 | card-pmath-round-table card-pmath-necklace | cm1-permutation
+pm-circular-perm | 원순열과 염주순열 | card-pmath-round-table card-pmath-necklace text-pmath-circular-combination | cm1-permutation
 pm-rep-comb | 중복조합(별과 막대) | card-pmath-candy | stat-rep-comb
-pm-binom-thm | 이항정리와 갈톤 보드 | card-pmath-galton card-pmath-binom-approx | stat-binom-thm stat-pascal
-pm-stat-prob | 통계적 확률과 수학적 확률 | card-pmath-buffon card-pmath-thumbtack | stat-prob-def stat-large-numbers
-pm-prob-theorems | 확률의 여러 가지 정리 | card-pmath-monty-hall card-pmath-bayes-area card-pmath-gambler | stat-cond-prob stat-independence stat-mult-rule
-pm-rv-dist | 확률변수와 확률분포 | card-pmath-dice-dist card-pmath-hist-density | stat-rv stat-continuous-rv
-pm-expect-binom | 기댓값과 이항분포 | card-pmath-fair-game card-pmath-binom-slider | stat-expectation stat-binomial
-pm-cont-expect | 연속확률변수의 기댓값과 표준편차 | card-pmath-cont-expect | pm-rv-dist pm-riemann
+pm-binom-thm | 이항정리와 갈톤 보드 | card-pmath-galton card-pmath-binom-approx text-pmath-binomial-theorem | stat-binom-thm stat-pascal
+pm-stat-prob | 통계적 확률과 수학적 확률 | card-pmath-buffon card-pmath-thumbtack text-pmath-statistical-prob | stat-prob-def stat-large-numbers
+pm-prob-theorems | 확률의 여러 가지 정리 | card-pmath-monty-hall card-pmath-bayes-area card-pmath-gambler text-pmath-bayes | stat-cond-prob stat-independence stat-mult-rule
+pm-rv-dist | 확률변수와 확률분포 | card-pmath-dice-dist card-pmath-hist-density text-pmath-random-variable | stat-rv stat-continuous-rv
+pm-expect-binom | 기댓값과 이항분포 | card-pmath-fair-game card-pmath-binom-slider text-pmath-binomial-dist | stat-expectation stat-binomial
+pm-cont-expect | 연속확률변수의 기댓값과 표준편차 | card-pmath-cont-expect text-pmath-normal | pm-rv-dist pm-riemann
 pm-normal | 정규분포와 연속성 보정 | card-pmath-continuity-corr card-pmath-height-normal | stat-normal stat-binom-normal
-pm-sampling | 표본추출 방법과 편향 | card-pmath-sampling-methods text-pmath-literary-digest | stat-sampling
-pm-estimation | 모평균·모비율의 추정 | card-pmath-ci-100 card-pmath-sample-size | stat-est-mean stat-est-prop
+pm-sampling | 표본추출 방법과 편향 | card-pmath-sampling-methods text-pmath-literary-digest text-pmath-sampling | stat-sampling
+pm-estimation | 모평균·모비율의 추정 | card-pmath-ci-100 card-pmath-sample-size text-pmath-estimation | stat-est-mean stat-est-prop
 # 고급 미적분 Ⅰ. 미적분의 활용
-adc-newton | 뉴턴의 방법 | card-adcalc-newton-tangent card-adcalc-newton-sqrt card-adcalc-newton-basin | calc1-tangent calc1-ivt
-adc-hyperbolic | 쌍곡선함수 | card-adcalc-hyp-unit card-adcalc-catenary | calc2-e-natlog
+adc-newton | 뉴턴의 방법 | card-adcalc-newton-tangent card-adcalc-newton-sqrt card-adcalc-newton-basin text-adcalc-newton | calc1-tangent calc1-ivt
+adc-hyperbolic | 쌍곡선함수 | card-adcalc-hyp-unit card-adcalc-catenary text-adcalc-hyperbolic | calc2-e-natlog
 adc-inverse-hyp | 역쌍곡선함수 | card-adcalc-arsinh-proof | adc-hyperbolic
-adc-hyp-deriv | 쌍곡선함수의 도함수 | card-adcalc-hyp-slope card-adcalc-hyp-deriv-spot card-adcalc-skydiver | adc-hyperbolic calc2-exp-log-deriv calc2-chain-rule calc2-inverse-deriv
-adc-hyp-integral | 쌍곡선함수의 적분과 쌍곡선 치환 | card-adcalc-hyp-sub card-adcalc-cable-length | adc-hyp-deriv adc-inverse-hyp calc2-int-substitution calc2-int-distance
-adc-improper | 이상적분 | card-adcalc-improper-p card-adcalc-improper-spot card-adcalc-escape | calc1-ftc calc1-limit
-adc-revolution | 회전체의 부피와 겉넓이 | card-adcalc-vase card-adcalc-band-area | calc2-int-volume calc2-int-distance
+adc-hyp-deriv | 쌍곡선함수의 도함수 | card-adcalc-hyp-slope card-adcalc-hyp-deriv-spot card-adcalc-skydiver text-adcalc-hyp-derivative | adc-hyperbolic calc2-exp-log-deriv calc2-chain-rule calc2-inverse-deriv
+adc-hyp-integral | 쌍곡선함수의 적분과 쌍곡선 치환 | card-adcalc-hyp-sub card-adcalc-cable-length text-adcalc-hyp-integral | adc-hyp-deriv adc-inverse-hyp calc2-int-substitution calc2-int-distance
+adc-improper | 이상적분 | card-adcalc-improper-p card-adcalc-improper-spot card-adcalc-escape text-adcalc-improper | calc1-ftc calc1-limit
+adc-revolution | 회전체의 부피와 겉넓이 | card-adcalc-vase card-adcalc-band-area text-adcalc-revolution | calc2-int-volume calc2-int-distance
 adc-gabriel | 가브리엘의 나팔 | card-adcalc-gabriel | adc-improper adc-revolution
 # 고급 미적분 Ⅱ. 극좌표와 극곡선
-adc-polar-coord | 극좌표 | card-adcalc-radar card-adcalc-polar-spot | alg-radian alg-trig-func
-adc-polar-curve | 극곡선의 그래프와 대칭성 | card-adcalc-polar-trace card-adcalc-rose-predict card-adcalc-mic-pattern | adc-polar-coord alg-trig-graph
-adc-polar-tangent | 극곡선의 접선 | card-adcalc-polar-tangent card-adcalc-log-spiral | adc-polar-curve calc2-param-deriv
-adc-polar-meet | 두 극곡선의 교점과 사잇각 | card-adcalc-polar-meet card-adcalc-polar-angle | adc-polar-curve adc-polar-tangent
-adc-polar-area-length | 극곡선의 넓이와 길이 | card-adcalc-polar-area card-adcalc-roll-length | adc-polar-curve calc2-int-series calc2-int-distance
+adc-polar-coord | 극좌표 | card-adcalc-radar card-adcalc-polar-spot text-adcalc-polar | alg-radian alg-trig-func
+adc-polar-curve | 극곡선의 그래프와 대칭성 | card-adcalc-polar-trace card-adcalc-rose-predict card-adcalc-mic-pattern text-adcalc-polar-graph | adc-polar-coord alg-trig-graph
+adc-polar-tangent | 극곡선의 접선 | card-adcalc-polar-tangent card-adcalc-log-spiral text-adcalc-polar-tangent | adc-polar-curve calc2-param-deriv
+adc-polar-meet | 두 극곡선의 교점과 사잇각 | card-adcalc-polar-meet card-adcalc-polar-angle text-adcalc-polar-intersect | adc-polar-curve adc-polar-tangent
+adc-polar-area-length | 극곡선의 넓이와 길이 | card-adcalc-polar-area card-adcalc-roll-length text-adcalc-polar-area | adc-polar-curve calc2-int-series calc2-int-distance
 # 고급 미적분 Ⅲ. 급수
-adc-monotone | 단조수렴정리 | card-adcalc-monotone card-adcalc-monotone-proof | calc2-seq-limit alg-induction alg-recursive
-adc-positive-tests | 양항급수의 판정법 | card-adcalc-integral-test card-adcalc-test-pick card-adcalc-overhang | adc-monotone adc-improper calc2-series calc2-geo-series
-adc-alternating | 교대급수와 절대수렴·조건수렴 | card-adcalc-alt-zigzag card-adcalc-rearrange | adc-positive-tests
-adc-power-radius | 멱급수와 수렴반경 | card-adcalc-radius card-adcalc-radius-why | adc-positive-tests adc-alternating
-adc-power-ops | 멱급수의 미분·적분과 함수의 표현 | card-adcalc-series-build card-adcalc-pi-race | adc-power-radius pm-inverse-trig calc2-int-functions
-adc-taylor | 테일러다항식과 테일러급수 | card-adcalc-taylor-fit card-adcalc-taylor-build | adc-power-radius calc2-second-deriv pm-higher-deriv
-adc-taylor-uses | 테일러급수의 활용 | card-adcalc-calc-sin card-adcalc-pendulum card-adcalc-relativity | adc-taylor
+adc-monotone | 단조수렴정리 | card-adcalc-monotone card-adcalc-monotone-proof text-adcalc-monotone | calc2-seq-limit alg-induction alg-recursive
+adc-positive-tests | 양항급수의 판정법 | card-adcalc-integral-test card-adcalc-test-pick card-adcalc-overhang text-adcalc-series-tests | adc-monotone adc-improper calc2-series calc2-geo-series
+adc-alternating | 교대급수와 절대수렴·조건수렴 | card-adcalc-alt-zigzag card-adcalc-rearrange text-adcalc-alternating | adc-positive-tests
+adc-power-radius | 멱급수와 수렴반경 | card-adcalc-radius card-adcalc-radius-why text-adcalc-power-series | adc-positive-tests adc-alternating
+adc-power-ops | 멱급수의 미분·적분과 함수의 표현 | card-adcalc-series-build card-adcalc-pi-race text-adcalc-series-functions | adc-power-radius pm-inverse-trig calc2-int-functions
+adc-taylor | 테일러다항식과 테일러급수 | card-adcalc-taylor-fit card-adcalc-taylor-build text-adcalc-taylor | adc-power-radius calc2-second-deriv pm-higher-deriv
+adc-taylor-uses | 테일러급수의 활용 | card-adcalc-calc-sin card-adcalc-pendulum card-adcalc-relativity text-adcalc-taylor-use | adc-taylor
 # 고급 미적분 Ⅳ. 미분방정식
-adc-ode-field | 미분방정식과 방향장 | card-adcalc-slope-field card-adcalc-field-match | calc1-tangent calc1-derivative-fn
-adc-euler | 오일러의 방법 | card-adcalc-euler-steps card-adcalc-euler-orbit | adc-ode-field calc2-e-natlog
-adc-separable | 변수분리형 미분방정식의 풀이 | card-adcalc-separable-proof card-adcalc-separable-spot | adc-ode-field calc2-int-substitution calc2-exp-log-deriv
-adc-ode-models | 미분방정식의 활용 | card-adcalc-coffee card-adcalc-carbon14 card-adcalc-logistic | adc-separable
-ada-vector-space | 벡터공간의 뜻 | card-adalg-nutrition card-adalg-rgb-mix card-adalg-axiom-test card-adalg-poly-vector | geo-vec-add geo-vec-scalar geo-vec-comp
-ada-subspace | 부분공간 | card-adalg-subspace-3d card-adalg-intersect-proof | ada-vector-space
-ada-span-indep | 일차결합·생성·일차독립 | card-adalg-span-3d card-adalg-indep-predict | ada-subspace
-ada-basis-dim | 기저와 차원, 좌표 | card-adalg-basis-grid card-adalg-basis-hunt | ada-span-indep
-ada-inner-product | ℝⁿ의 내적과 코시-슈바르츠 부등식 | card-adalg-cosine-sim card-adalg-cauchy | geo-dot ada-vector-space
-ada-projection | 정사영과 최소제곱법 | card-adalg-proj-shadow card-adalg-least-squares | ada-inner-product ada-basis-dim
-ada-orthonormal | 정규직교기저와 그람-슈미트 과정 | card-adalg-gram-schmidt card-adalg-ortho-coords | ada-projection ada-basis-dim
-ada-gauss | 가우스 소거법 | card-adalg-row-puzzle card-adalg-balance-eq | cm1-matrix ada-span-indep
-ada-inverse | 역행렬과 가우스-조르당 소거법 | card-adalg-inverse-elim card-adalg-hill-cipher | ada-gauss cm1-matrix-mult
-ada-det | 행렬식 | card-adalg-det-area card-adalg-det-spot | ada-inverse pm-cross
-ada-lin-map | 선형변환과 행렬 | card-adalg-grid-transform card-adalg-match-matrix | ada-basis-dim cm1-matrix-mult ada-det
-ada-rot-ref | 대칭변환·닮음변환·회전변환 | card-adalg-transform-target card-adalg-pixel-rotate | ada-lin-map
-ada-compose | 선형변환의 합성과 역변환 | card-adalg-compose-order card-adalg-undo | ada-lin-map ada-inverse ada-rot-ref
-ada-eigen | 고윳값과 고유벡터 | card-adalg-eigen-hunt card-adalg-pagerank | ada-det ada-lin-map
-ada-cayley | 케일리-해밀턴 정리 | card-adalg-cayley-check card-adalg-power-reduce | ada-eigen cm1-matrix-mult
-ada-diag | 행렬의 대각화 | card-adalg-diag-grid card-adalg-fibonacci | ada-eigen ada-basis-dim ada-inverse
-ada-orth-diag | 직교행렬과 직교대각화 | card-adalg-symmetric-ellipse card-adalg-orth-diag-proof | ada-diag ada-orthonormal ada-rot-ref
-ada-quadric | 이차곡선의 표준형 | card-adalg-conic-rotate card-adalg-conic-classify | ada-orth-diag geo-ellipse geo-hyperbola
-ada-diag-apply | 대각화의 활용(마르코프 연쇄·개체군 모형) | card-adalg-markov card-adalg-population | ada-diag ada-eigen
-dm-perm-var | 원순열과 같은 것이 있는 순열 | card-dmath-round-table card-dmath-grid-path | cm1-permutation
-dm-multichoose | 중복조합과 방정식의 정수해 | card-dmath-stars-bars card-dmath-int-solutions | cm1-combination dm-perm-var
-dm-incl-excl | 포함배제의 원리 | card-dmath-venn-count card-dmath-derange | dm-multichoose
-dm-partition | 집합의 분할과 자연수의 분할 | card-dmath-set-partition card-dmath-young | dm-multichoose dm-incl-excl
-dm-pigeonhole | 비둘기집의 원리 | card-dmath-birthday card-dmath-pigeon-pairs | dm-perm-var
-dm-recur-def | 수열의 귀납적 정의와 점화 관계 세우기 | card-dmath-hanoi card-dmath-domino | 
-dm-recur-solve | 점화 관계의 일반항 | card-dmath-recur-plot card-dmath-loan | dm-recur-def alg-geo-seq
-dm-algorithm | 알고리즘과 그 표현 | card-dmath-euclid-flow card-dmath-algo-bug | dm-recur-def
-dm-recursion | 재귀적 알고리즘 | card-dmath-call-tree card-dmath-fast-power | dm-algorithm dm-recur-def
-dm-sort-search | 정렬과 탐색 알고리즘 | card-dmath-sort-race card-dmath-updown | dm-recursion
-dm-base | 진법 | card-dmath-base-convert card-dmath-binary-cards |
-dm-binary-arith | 이진수의 사칙연산과 2의 보수 | card-dmath-binary-add card-dmath-twos-comp | dm-base
-dm-boolean | 부울 함수와 간소화 | card-dmath-truth-table card-dmath-karnaugh | dm-binary-arith cm2-prop
-dm-logic-circuit | 논리 회로와 가산기 | card-dmath-gate-lab card-dmath-adder | dm-boolean dm-binary-arith
-dm-graph | 그래프와 실생활 문제 | card-dmath-konigsberg card-dmath-graph-model | 
-dm-degree | 꼭짓점의 차수와 변의 개수 | card-dmath-handshake card-dmath-degree-seq | dm-graph
-dm-adjacency | 인접행렬 | card-dmath-adj-matrix card-dmath-walk-count | dm-degree cm1-matrix-mult
-dm-planar | 평면그래프와 오일러 공식 | card-dmath-untangle card-dmath-euler-formula | dm-degree
-dm-euler-hamilton | 오일러그래프와 해밀턴그래프 | card-dmath-euler-trail card-dmath-hamilton | dm-degree
-dm-tree | 수형도와 생성수형도 | card-dmath-tree-facts card-dmath-kruskal | dm-degree
-dm-coloring | 채색수와 채색다항식 | card-dmath-map-color card-dmath-chromatic-poly | dm-planar cm1-product-rule
-agx-construct | 기초적인 작도 | card-adgeo-construct-replay card-adgeo-construct-challenge |
-agx-construct2 | 여러 가지 작도(외접원·내접원, 정다각형) | card-adgeo-center-construct card-adgeo-regular-polygon | agx-construct
-agx-constructible | 작도 가능성과 대수 | card-adgeo-constructible-number card-adgeo-gauss-polygon | agx-construct2
-agx-proof | 평면도형의 증명 | card-adgeo-isosceles-proof card-adgeo-fallacy | agx-construct
-agx-triangle | 삼각형에 관한 정리(체바, 오일러 직선) | card-adgeo-ceva card-adgeo-euler-line | agx-proof agx-construct2
-agx-circle | 원에 관한 정리(방멱, 톨레미) | card-adgeo-power-point card-adgeo-ptolemy | agx-proof
-agx-param-plane | 평면곡선의 매개변수 방정식 | card-adgeo-cycloid card-adgeo-lissajous | calc2-param-deriv
-agx-locus | 점의 자취 | card-adgeo-ladder card-adgeo-apollonius | agx-param-plane geo-ellipse
-agx-space-curve | 공간곡선의 매개변수 방정식 | card-adgeo-helix card-adgeo-curve-match | agx-param-plane
-agx-vel-acc | 공간에서의 속도와 가속도 | card-adgeo-vel-acc card-adgeo-drone | agx-space-curve
-agx-regular-length | 정칙곡선과 곡선의 길이 | card-adgeo-regular-cusp card-adgeo-arc-length | agx-vel-acc calc2-int-distance
-agx-unit-speed | 단위속력곡선과 호의 길이 매개변수 | card-adgeo-speed-param card-adgeo-milestones | agx-regular-length
-agx-reparam | 단위속력곡선으로 재매개화 | card-adgeo-reparam card-adgeo-reparam-spot | agx-unit-speed
-agx-curvature | 곡률과 곡률반경 | card-adgeo-osculating card-adgeo-road-curve | agx-reparam pm-cross
-agx-level | 등위곡선과 곡면 | card-adgeo-contour card-adgeo-level-match | geo-space-coord
-agx-quadric | 이차곡면 | card-adgeo-quadric card-adgeo-slice-predict | agx-level geo-ellipse geo-hyperbola geo-parabola geo-sphere-eq
-agx-sph-tri | 구면삼각형 | card-adgeo-sphere-triangle card-adgeo-flight-route | geo-sphere-eq
-agx-sph-law | 구면코사인법칙과 구면사인법칙 | card-adgeo-spherical-law card-adgeo-city-distance | agx-sph-tri alg-cosine-law geo-dot
-econ-index | 경제지표와 물가지수 | card-econ-cpi-basket card-econ-index-trap | 
-econ-fx | 환율 | card-econ-exchange card-econ-cross-rate | econ-index
-econ-tax | 누진세와 세율 | card-econ-progressive-tax card-econ-tax-myth | cm2-function
-econ-interest | 단리와 복리, 현재 가치 | card-econ-compound card-econ-present-value | 
-econ-annuity | 연금 | card-econ-annuity card-econ-lump-or-annuity | econ-interest
-econ-func | 경제 함수와 손익분기점 | card-econ-cost-function card-econ-phone-plan | cm2-function
-econ-demand | 수요곡선과 공급곡선 | card-econ-demand-shift card-econ-demand-fit | econ-func
-econ-utility | 효용함수와 무차별곡선 | card-econ-marginal-utility card-econ-indifference | cm2-function
-econ-equilibrium | 균형 가격 | card-econ-equilibrium card-econ-cobweb | econ-demand
-econ-shift | 세금·소득과 균형의 변화 | card-econ-tax-incidence card-econ-income-shift | econ-equilibrium econ-tax
-econ-lp | 부등식의 영역과 선형계획 | card-econ-lp-production card-econ-diet | cm1-ineq-lin-sys
-econ-matrix | 경제 현상과 행렬 | card-econ-sales-matrix card-econ-market-share | cm1-matrix-mult
-econ-inverse | 역행렬과 연립방정식 | card-econ-inverse-steps card-econ-bundle-price | econ-matrix
-econ-leontief | 행렬로 푸는 경제 문제 | card-econ-leontief card-econ-two-market | econ-inverse econ-equilibrium
-econ-marginal | 한계비용과 한계수입 | card-econ-marginal-cost card-econ-marginal-revenue | econ-func
-econ-shape | 경제 함수의 그래프 개형 | card-econ-avg-marginal card-econ-revenue-shape | econ-marginal
-econ-elasticity | 가격 탄력성 | card-econ-elasticity card-econ-price-hike | econ-marginal econ-demand
-econ-optimize | 경제의 최적화 | card-econ-profit-max card-econ-ticket-price | econ-shape
-ai-learn | 인공지능의 학습과 수학 | card-aimath-teach-machine card-aimath-rule-vs-learn | 
-ai-history | 인공지능과 수학의 역사 | card-aimath-timeline card-aimath-perceptron-xor | ai-learn
-ai-bigdata | 빅데이터와 표본 | card-aimath-bigdata-sample card-aimath-data-bias | 
-ai-text-set | 집합과 벡터로 나타낸 텍스트 | card-aimath-jaccard card-aimath-onehot | cm2-set-ops
-ai-text-freq | 빈도수 벡터와 요약 | card-aimath-word-count card-aimath-tfidf | ai-text-set
-ai-text-analysis | 텍스트 분석의 수학 | card-aimath-cosine-doc card-aimath-spam | ai-text-freq
-ai-image-matrix | 행렬로 나타낸 이미지 | card-aimath-pixel-grid card-aimath-rgb | cm1-matrix
-ai-image-ops | 행렬 연산과 이미지 변환 | card-aimath-image-ops card-aimath-convolution | ai-image-matrix cm1-matrix-ops cm1-matrix-mult
-ai-image-classify | 이미지 분류의 수학 | card-aimath-digit-distance card-aimath-knn | ai-image-matrix ai-learn
-ai-prob-predict | 확률과 예측 | card-aimath-weather-predict card-aimath-base-rate | 
-ai-trendline | 추세선 | card-aimath-trendline card-aimath-extrapolate | cm1-quad-graph
-ai-loss | 손실함수 | card-aimath-loss-curve card-aimath-loss-outlier | ai-trendline
-ai-gradient | 경사하강법 | card-aimath-gradient-descent card-aimath-gd-contour | ai-loss
-ai-cases | 인공지능의 문제 해결 사례 | card-aimath-recommend card-aimath-neuron | ai-text-analysis ai-gradient
-ai-explore | 인공지능 수학 주제 탐구 | card-aimath-explore-plan card-aimath-fairness | ai-bigdata ai-prob-predict
-jm-arith | 직무 속의 수와 사칙연산 | card-jmath-cafe-bill card-jmath-recipe-scale | 
-jm-estimate | 큰 수의 어림 | card-jmath-paint-estimate card-jmath-round-budget | jm-arith
-jm-units | 표준 단위와 단위 환산 | card-jmath-dose-convert card-jmath-unit-error | jm-arith
-jm-ratio | 비와 비례배분 | card-jmath-mix-ratio card-jmath-scale-drawing | jm-arith
-jm-percent | 비율과 백분율 | card-jmath-discount-chain card-jmath-margin-markup | jm-ratio
-jm-correspond | 대응 관계와 규칙 | card-jmath-tile-pattern card-jmath-pay-table | jm-arith
-jm-change-graph | 변화를 나타내는 그래프 | card-jmath-tank-graph card-jmath-delivery-graph | jm-correspond
-jm-linear | 일차방정식과 일차부등식의 활용 | card-jmath-rent-or-buy card-jmath-dilution | jm-correspond jm-percent
-jm-net | 겨냥도와 전개도 | card-jmath-box-net card-jmath-package-board | 
-jm-views | 위, 앞, 옆에서 본 모양 | card-jmath-three-views card-jmath-view-count | 
-jm-transform | 도형의 이동, 합동과 닮음 | card-jmath-tile-transform card-jmath-sign-enlarge | jm-ratio
-jm-area | 평면도형의 둘레와 넓이 | card-jmath-floor-area card-jmath-fence | jm-estimate
-jm-volume | 입체도형의 겉넓이와 부피 | card-jmath-tank-volume card-jmath-paint-surface | jm-net jm-area
-jm-counting | 경우의 수 | card-jmath-shift-schedule card-jmath-password | 
-jm-probability | 가능성의 수치화 | card-jmath-defect-sample card-jmath-overbooking | jm-counting
-jm-tables | 표와 그래프로 정리하기 | card-jmath-choose-chart card-jmath-class-width | 
-jm-interpret | 표와 그래프의 해석 | card-jmath-misleading-graph card-jmath-dashboard | jm-tables
-jm-decision | 목적에 맞는 표현과 의사 결정 | card-jmath-supplier-score card-jmath-stock-decision | jm-interpret jm-probability
-mcu-music | 음악과 수학 | card-mcult-string-ratio card-mcult-equal-temperament |
-mcu-art | 미술과 수학 | card-mcult-perspective card-mcult-golden-myth |
-mcu-literature | 문학과 수학 | card-mcult-fib-poem card-mcult-babel-library |
-mcu-film | 영화와 수학 | card-mcult-wagon-wheel card-mcult-bezier-path | mcu-art
-mcu-sports | 스포츠와 수학 | card-mcult-shot-angle card-mcult-elo-rating |
-mcu-games | 게임과 수학 | card-mcult-nim card-mcult-gacha |
-mcu-digital | 디지털 기술과 수학 | card-mcult-barcode-check card-mcult-run-length | mcu-games
-mcu-voting | 투표와 수학 | card-mcult-voting-methods card-mcult-apportionment |
-mcu-folk | 민속 수학과 건축 | card-mcult-yut-probability card-mcult-frieze |
-mcu-braille | 점자와 수학 | card-mcult-braille-count card-mcult-braille-number |
-mcu-media | 대중매체와 데이터 | card-mcult-poll-margin card-mcult-relative-risk |
-mcu-consume | 가치소비와 의사 결정 | card-mcult-unit-price card-mcult-carbon-choice |
-mcu-food | 식생활과 수학 | card-mcult-nutrition-label card-mcult-food-mileage |
-mcu-air | 대기 오염과 수학 | card-mcult-pm-average card-mcult-emission-path |
-mcu-desert | 사막화와 수학 | card-mcult-desert-automata card-mcult-ndvi |
-mcu-biodiv | 생물 다양성과 수학 | card-mcult-capture-recapture card-mcult-simpson-index |
-pst-useful | 통계의 유용성과 통계적 질문 | card-pstat-cholera-map card-pstat-stat-question |
-pst-process | 통계적 문제해결 과정 | card-pstat-ppdac-order card-pstat-question-refine | pst-useful
-pst-sampling | 모집단과 표본추출 방법 | card-pstat-sampling-methods card-pstat-volunteer-bias | pst-process
-pst-datatype | 자료의 종류(범주형·수치형) | card-pstat-data-types card-pstat-number-not-number | pst-useful
-pst-collect | 자료의 수집 방법(설문·실험) | card-pstat-survey-wording card-pstat-random-assign | pst-sampling
-pst-graphs | 상자그림과 산점도 | card-pstat-boxplot-build card-pstat-scatter-r | pst-datatype
-pst-summary | 대푯값과 산포도 | card-pstat-mean-median card-pstat-sd-spread | pst-datatype
-pst-tdist | 정규분포와 t분포 | card-pstat-t-vs-z card-pstat-why-t | pst-summary
-pst-ci-mean | 모평균의 추정(t분포) | card-pstat-ci-t-cover card-pstat-sample-size | pst-tdist pst-sampling
-pst-ci-prop | 모비율의 추정과 해석 | card-pstat-ci-prop-read card-pstat-lead-margin | pst-sampling
-pst-test | 가설검정 | card-pstat-coin-test card-pstat-p-hacking | pst-ci-prop
-pst-decision | 통계적 탐구와 의사 결정 | card-pstat-ab-test card-pstat-error-cost | pst-test
-pst-reflect | 통계적 탐구의 성찰 | card-pstat-simpson-paradox card-pstat-publication-bias | pst-test pst-collect
-mrs-meaning | 수학과제 탐구의 의미 | card-mres-collatz-explore card-mres-circle-regions |
-mrs-ethics | 연구 윤리 | card-mres-benford-check card-mres-citation-ethics | mrs-meaning
-mrs-literature | 문헌 조사 | card-mres-source-eval card-mres-sequence-search | mrs-ethics
-mrs-case | 사례 조사 | card-mres-tiling-case card-mres-paper-ratio | mrs-meaning
-mrs-experiment | 수학 실험 | card-mres-buffon-needle card-mres-trials-error | mrs-meaning
-mrs-develop | 개발 연구 | card-mres-fair-game-design card-mres-prime-algorithm | mrs-experiment
-mrs-plan | 주제 선정과 탐구 계획 | card-mres-topic-matrix card-mres-critical-path | mrs-meaning
-mrs-perform | 탐구 수행 | card-mres-magic-square-log card-mres-border-tiles | mrs-plan
-mrs-present | 산출물과 발표 | card-mres-chart-redesign card-mres-proof-order | mrs-perform
-mrs-reflect | 반성과 평가 | card-mres-rubric-eval card-mres-euler-polynomial | mrs-present mrs-ethics
+adc-ode-field | 미분방정식과 방향장 | card-adcalc-slope-field card-adcalc-field-match text-adcalc-slope-field | calc1-tangent calc1-derivative-fn
+adc-euler | 오일러의 방법 | card-adcalc-euler-steps card-adcalc-euler-orbit text-adcalc-euler | adc-ode-field calc2-e-natlog
+adc-separable | 변수분리형 미분방정식의 풀이 | card-adcalc-separable-proof card-adcalc-separable-spot text-adcalc-separable | adc-ode-field calc2-int-substitution calc2-exp-log-deriv
+adc-ode-models | 미분방정식의 활용 | card-adcalc-coffee card-adcalc-carbon14 card-adcalc-logistic text-adcalc-de-applications | adc-separable
+ada-vector-space | 벡터공간의 뜻 | card-adalg-nutrition card-adalg-rgb-mix card-adalg-axiom-test card-adalg-poly-vector text-adalg-nvector text-adalg-vector-space | geo-vec-add geo-vec-scalar geo-vec-comp
+ada-subspace | 부분공간 | card-adalg-subspace-3d card-adalg-intersect-proof text-adalg-subspace | ada-vector-space
+ada-span-indep | 일차결합·생성·일차독립 | card-adalg-span-3d card-adalg-indep-predict text-adalg-independence | ada-subspace
+ada-basis-dim | 기저와 차원, 좌표 | card-adalg-basis-grid card-adalg-basis-hunt text-adalg-basis | ada-span-indep
+ada-inner-product | ℝⁿ의 내적과 코시-슈바르츠 부등식 | card-adalg-cosine-sim card-adalg-cauchy text-adalg-ndot | geo-dot ada-vector-space
+ada-projection | 정사영과 최소제곱법 | card-adalg-proj-shadow card-adalg-least-squares text-adalg-projection | ada-inner-product ada-basis-dim
+ada-orthonormal | 정규직교기저와 그람-슈미트 과정 | card-adalg-gram-schmidt card-adalg-ortho-coords text-adalg-orthonormal | ada-projection ada-basis-dim
+ada-gauss | 가우스 소거법 | card-adalg-row-puzzle card-adalg-balance-eq text-adalg-gauss | cm1-matrix ada-span-indep
+ada-inverse | 역행렬과 가우스-조르당 소거법 | card-adalg-inverse-elim card-adalg-hill-cipher text-adalg-inverse | ada-gauss cm1-matrix-mult
+ada-det | 행렬식 | card-adalg-det-area card-adalg-det-spot text-adalg-determinant | ada-inverse pm-cross
+ada-lin-map | 선형변환과 행렬 | card-adalg-grid-transform card-adalg-match-matrix text-adalg-linear-map | ada-basis-dim cm1-matrix-mult ada-det
+ada-rot-ref | 대칭변환·닮음변환·회전변환 | card-adalg-transform-target card-adalg-pixel-rotate text-adalg-rotation | ada-lin-map
+ada-compose | 선형변환의 합성과 역변환 | card-adalg-compose-order card-adalg-undo text-adalg-composition | ada-lin-map ada-inverse ada-rot-ref
+ada-eigen | 고윳값과 고유벡터 | card-adalg-eigen-hunt card-adalg-pagerank text-adalg-eigen | ada-det ada-lin-map
+ada-cayley | 케일리-해밀턴 정리 | card-adalg-cayley-check card-adalg-power-reduce text-adalg-cayley-hamilton | ada-eigen cm1-matrix-mult
+ada-diag | 행렬의 대각화 | card-adalg-diag-grid card-adalg-fibonacci text-adalg-diagonalization | ada-eigen ada-basis-dim ada-inverse
+ada-orth-diag | 직교행렬과 직교대각화 | card-adalg-symmetric-ellipse card-adalg-orth-diag-proof text-adalg-orthogonal-diag | ada-diag ada-orthonormal ada-rot-ref
+ada-quadric | 이차곡선의 표준형 | card-adalg-conic-rotate card-adalg-conic-classify text-adalg-conic-form | ada-orth-diag geo-ellipse geo-hyperbola
+ada-diag-apply | 대각화의 활용(마르코프 연쇄·개체군 모형) | card-adalg-markov card-adalg-population text-adalg-markov | ada-diag ada-eigen
+dm-perm-var | 원순열과 같은 것이 있는 순열 | card-dmath-round-table card-dmath-grid-path text-dmath-permutations | cm1-permutation
+dm-multichoose | 중복조합과 방정식의 정수해 | card-dmath-stars-bars card-dmath-int-solutions text-dmath-multiset | cm1-combination dm-perm-var
+dm-incl-excl | 포함배제의 원리 | card-dmath-venn-count card-dmath-derange text-dmath-inclusion-exclusion | dm-multichoose
+dm-partition | 집합의 분할과 자연수의 분할 | card-dmath-set-partition card-dmath-young text-dmath-partition | dm-multichoose dm-incl-excl
+dm-pigeonhole | 비둘기집의 원리 | card-dmath-birthday card-dmath-pigeon-pairs text-dmath-pigeonhole | dm-perm-var
+dm-recur-def | 수열의 귀납적 정의와 점화 관계 세우기 | card-dmath-hanoi card-dmath-domino text-dmath-recursive | 
+dm-recur-solve | 점화 관계의 일반항 | card-dmath-recur-plot card-dmath-loan text-dmath-recurrence | dm-recur-def alg-geo-seq
+dm-algorithm | 알고리즘과 그 표현 | card-dmath-euclid-flow card-dmath-algo-bug text-dmath-algorithm | dm-recur-def
+dm-recursion | 재귀적 알고리즘 | card-dmath-call-tree card-dmath-fast-power text-dmath-recursion | dm-algorithm dm-recur-def
+dm-sort-search | 정렬과 탐색 알고리즘 | card-dmath-sort-race card-dmath-updown text-dmath-algorithms | dm-recursion
+dm-base | 진법 | card-dmath-base-convert card-dmath-binary-cards text-dmath-bases |
+dm-binary-arith | 이진수의 사칙연산과 2의 보수 | card-dmath-binary-add card-dmath-twos-comp text-dmath-binary-arith | dm-base
+dm-boolean | 부울 함수와 간소화 | card-dmath-truth-table card-dmath-karnaugh text-dmath-boolean | dm-binary-arith cm2-prop
+dm-logic-circuit | 논리 회로와 가산기 | card-dmath-gate-lab card-dmath-adder text-dmath-logic-circuit | dm-boolean dm-binary-arith
+dm-graph | 그래프와 실생활 문제 | card-dmath-konigsberg card-dmath-graph-model text-dmath-graph-model | 
+dm-degree | 꼭짓점의 차수와 변의 개수 | card-dmath-handshake card-dmath-degree-seq text-dmath-degree | dm-graph
+dm-adjacency | 인접행렬 | card-dmath-adj-matrix card-dmath-walk-count text-dmath-adjacency | dm-degree cm1-matrix-mult
+dm-planar | 평면그래프와 오일러 공식 | card-dmath-untangle card-dmath-euler-formula text-dmath-planar | dm-degree
+dm-euler-hamilton | 오일러그래프와 해밀턴그래프 | card-dmath-euler-trail card-dmath-hamilton text-dmath-euler-hamilton | dm-degree
+dm-tree | 수형도와 생성수형도 | card-dmath-tree-facts card-dmath-kruskal text-dmath-tree | dm-degree
+dm-coloring | 채색수와 채색다항식 | card-dmath-map-color card-dmath-chromatic-poly text-dmath-coloring | dm-planar cm1-product-rule
+agx-construct | 기초적인 작도 | card-adgeo-construct-replay card-adgeo-construct-challenge text-adgeo-basic-construction |
+agx-construct2 | 여러 가지 작도(외접원·내접원, 정다각형) | card-adgeo-center-construct card-adgeo-regular-polygon text-adgeo-construction2 | agx-construct
+agx-constructible | 작도 가능성과 대수 | card-adgeo-constructible-number card-adgeo-gauss-polygon text-adgeo-constructible | agx-construct2
+agx-proof | 평면도형의 증명 | card-adgeo-isosceles-proof card-adgeo-fallacy text-adgeo-proof | agx-construct
+agx-triangle | 삼각형에 관한 정리(체바, 오일러 직선) | card-adgeo-ceva card-adgeo-euler-line text-adgeo-triangle-theorems | agx-proof agx-construct2
+agx-circle | 원에 관한 정리(방멱, 톨레미) | card-adgeo-power-point card-adgeo-ptolemy text-adgeo-circle-theorems | agx-proof
+agx-param-plane | 평면곡선의 매개변수 방정식 | card-adgeo-cycloid card-adgeo-lissajous text-adgeo-plane-param | calc2-param-deriv
+agx-locus | 점의 자취 | card-adgeo-ladder card-adgeo-apollonius text-adgeo-locus | agx-param-plane geo-ellipse
+agx-space-curve | 공간곡선의 매개변수 방정식 | card-adgeo-helix card-adgeo-curve-match text-adgeo-space-curve | agx-param-plane
+agx-vel-acc | 공간에서의 속도와 가속도 | card-adgeo-vel-acc card-adgeo-drone text-adgeo-space-motion | agx-space-curve
+agx-regular-length | 정칙곡선과 곡선의 길이 | card-adgeo-regular-cusp card-adgeo-arc-length text-adgeo-regular-curve | agx-vel-acc calc2-int-distance
+agx-unit-speed | 단위속력곡선과 호의 길이 매개변수 | card-adgeo-speed-param card-adgeo-milestones text-adgeo-arc-length | agx-regular-length
+agx-reparam | 단위속력곡선으로 재매개화 | card-adgeo-reparam card-adgeo-reparam-spot text-adgeo-reparam | agx-unit-speed
+agx-curvature | 곡률과 곡률반경 | card-adgeo-osculating card-adgeo-road-curve text-adgeo-curvature | agx-reparam pm-cross
+agx-level | 등위곡선과 곡면 | card-adgeo-contour card-adgeo-level-match text-adgeo-level-curves | geo-space-coord
+agx-quadric | 이차곡면 | card-adgeo-quadric card-adgeo-slice-predict text-adgeo-quadric | agx-level geo-ellipse geo-hyperbola geo-parabola geo-sphere-eq
+agx-sph-tri | 구면삼각형 | card-adgeo-sphere-triangle card-adgeo-flight-route text-adgeo-spherical-triangle | geo-sphere-eq
+agx-sph-law | 구면코사인법칙과 구면사인법칙 | card-adgeo-spherical-law card-adgeo-city-distance text-adgeo-spherical-law | agx-sph-tri alg-cosine-law geo-dot
+econ-index | 경제지표와 물가지수 | card-econ-cpi-basket card-econ-index-trap text-econ-index | 
+econ-fx | 환율 | card-econ-exchange card-econ-cross-rate text-econ-exchange | econ-index
+econ-tax | 누진세와 세율 | card-econ-progressive-tax card-econ-tax-myth text-econ-tax | cm2-function
+econ-interest | 단리와 복리, 현재 가치 | card-econ-compound card-econ-present-value text-econ-interest | 
+econ-annuity | 연금 | card-econ-annuity card-econ-lump-or-annuity text-econ-annuity | econ-interest
+econ-func | 경제 함수와 손익분기점 | card-econ-cost-function card-econ-phone-plan text-econ-functions | cm2-function
+econ-demand | 수요곡선과 공급곡선 | card-econ-demand-shift card-econ-demand-fit text-econ-demand | econ-func
+econ-utility | 효용함수와 무차별곡선 | card-econ-marginal-utility card-econ-indifference text-econ-utility | cm2-function
+econ-equilibrium | 균형 가격 | card-econ-equilibrium card-econ-cobweb text-econ-equilibrium | econ-demand
+econ-shift | 세금·소득과 균형의 변화 | card-econ-tax-incidence card-econ-income-shift text-econ-tax-eq | econ-equilibrium econ-tax
+econ-lp | 부등식의 영역과 선형계획 | card-econ-lp-production card-econ-diet text-econ-lp | cm1-ineq-lin-sys
+econ-matrix | 경제 현상과 행렬 | card-econ-sales-matrix card-econ-market-share text-econ-matrix | cm1-matrix-mult
+econ-inverse | 역행렬과 연립방정식 | card-econ-inverse-steps card-econ-bundle-price text-econ-inverse | econ-matrix
+econ-leontief | 행렬로 푸는 경제 문제 | card-econ-leontief card-econ-two-market text-econ-leontief | econ-inverse econ-equilibrium
+econ-marginal | 한계비용과 한계수입 | card-econ-marginal-cost card-econ-marginal-revenue text-econ-marginal | econ-func
+econ-shape | 경제 함수의 그래프 개형 | card-econ-avg-marginal card-econ-revenue-shape text-econ-avg-cost | econ-marginal
+econ-elasticity | 가격 탄력성 | card-econ-elasticity card-econ-price-hike text-econ-elasticity | econ-marginal econ-demand
+econ-optimize | 경제의 최적화 | card-econ-profit-max card-econ-ticket-price text-econ-optimize | econ-shape
+ai-learn | 인공지능의 학습과 수학 | card-aimath-teach-machine card-aimath-rule-vs-learn text-aimath-learning | 
+ai-history | 인공지능과 수학의 역사 | card-aimath-timeline card-aimath-perceptron-xor text-aimath-history | ai-learn
+ai-bigdata | 빅데이터와 표본 | card-aimath-bigdata-sample card-aimath-data-bias text-aimath-bigdata | 
+ai-text-set | 집합과 벡터로 나타낸 텍스트 | card-aimath-jaccard card-aimath-onehot text-aimath-text-vec | cm2-set-ops
+ai-text-freq | 빈도수 벡터와 요약 | card-aimath-word-count card-aimath-tfidf text-aimath-tfidf | ai-text-set
+ai-text-analysis | 텍스트 분석의 수학 | card-aimath-cosine-doc card-aimath-spam text-aimath-text-analysis | ai-text-freq
+ai-image-matrix | 행렬로 나타낸 이미지 | card-aimath-pixel-grid card-aimath-rgb text-aimath-image-matrix | cm1-matrix
+ai-image-ops | 행렬 연산과 이미지 변환 | card-aimath-image-ops card-aimath-convolution text-aimath-image-ops | ai-image-matrix cm1-matrix-ops cm1-matrix-mult
+ai-image-classify | 이미지 분류의 수학 | card-aimath-digit-distance card-aimath-knn text-aimath-classify | ai-image-matrix ai-learn
+ai-prob-predict | 확률과 예측 | card-aimath-weather-predict card-aimath-base-rate text-aimath-prob | 
+ai-trendline | 추세선 | card-aimath-trendline card-aimath-extrapolate text-aimath-trend | cm1-quad-graph
+ai-loss | 손실함수 | card-aimath-loss-curve card-aimath-loss-outlier text-aimath-loss | ai-trendline
+ai-gradient | 경사하강법 | card-aimath-gradient-descent card-aimath-gd-contour text-aimath-gd | ai-loss
+ai-cases | 인공지능의 문제 해결 사례 | card-aimath-recommend card-aimath-neuron text-aimath-cases | ai-text-analysis ai-gradient
+ai-explore | 인공지능 수학 주제 탐구 | card-aimath-explore-plan card-aimath-fairness text-aimath-explore | ai-bigdata ai-prob-predict
+jm-arith | 직무 속의 수와 사칙연산 | card-jmath-cafe-bill card-jmath-recipe-scale text-jmath-arith | 
+jm-estimate | 큰 수의 어림 | card-jmath-paint-estimate card-jmath-round-budget text-jmath-estimate | jm-arith
+jm-units | 표준 단위와 단위 환산 | card-jmath-dose-convert card-jmath-unit-error text-jmath-units | jm-arith
+jm-ratio | 비와 비례배분 | card-jmath-mix-ratio card-jmath-scale-drawing text-jmath-ratio | jm-arith
+jm-percent | 비율과 백분율 | card-jmath-discount-chain card-jmath-margin-markup text-jmath-percent | jm-ratio
+jm-correspond | 대응 관계와 규칙 | card-jmath-tile-pattern card-jmath-pay-table text-jmath-pattern | jm-arith
+jm-change-graph | 변화를 나타내는 그래프 | card-jmath-tank-graph card-jmath-delivery-graph text-jmath-graphs | jm-correspond
+jm-linear | 일차방정식과 일차부등식의 활용 | card-jmath-rent-or-buy card-jmath-dilution text-jmath-equations | jm-correspond jm-percent
+jm-net | 겨냥도와 전개도 | card-jmath-box-net card-jmath-package-board text-jmath-nets | 
+jm-views | 위, 앞, 옆에서 본 모양 | card-jmath-three-views card-jmath-view-count text-jmath-views | 
+jm-transform | 도형의 이동, 합동과 닮음 | card-jmath-tile-transform card-jmath-sign-enlarge text-jmath-similar | jm-ratio
+jm-area | 평면도형의 둘레와 넓이 | card-jmath-floor-area card-jmath-fence text-jmath-area | jm-estimate
+jm-volume | 입체도형의 겉넓이와 부피 | card-jmath-tank-volume card-jmath-paint-surface text-jmath-volume | jm-net jm-area
+jm-counting | 경우의 수 | card-jmath-shift-schedule card-jmath-password text-jmath-counting | 
+jm-probability | 가능성의 수치화 | card-jmath-defect-sample card-jmath-overbooking text-jmath-probability | jm-counting
+jm-tables | 표와 그래프로 정리하기 | card-jmath-choose-chart card-jmath-class-width text-jmath-tables | 
+jm-interpret | 표와 그래프의 해석 | card-jmath-misleading-graph card-jmath-dashboard text-jmath-interpret | jm-tables
+jm-decision | 목적에 맞는 표현과 의사 결정 | card-jmath-supplier-score card-jmath-stock-decision text-jmath-decision | jm-interpret jm-probability
+mcu-music | 음악과 수학 | card-mcult-string-ratio card-mcult-equal-temperament text-mcult-temperament |
+mcu-art | 미술과 수학 | card-mcult-perspective card-mcult-golden-myth text-mcult-perspective |
+mcu-literature | 문학과 수학 | card-mcult-fib-poem card-mcult-babel-library text-mcult-babel |
+mcu-film | 영화와 수학 | card-mcult-wagon-wheel card-mcult-bezier-path text-mcult-film | mcu-art
+mcu-sports | 스포츠와 수학 | card-mcult-shot-angle card-mcult-elo-rating text-mcult-sports |
+mcu-games | 게임과 수학 | card-mcult-nim card-mcult-gacha text-mcult-games |
+mcu-digital | 디지털 기술과 수학 | card-mcult-barcode-check card-mcult-run-length text-mcult-checkdigit | mcu-games
+mcu-voting | 투표와 수학 | card-mcult-voting-methods card-mcult-apportionment text-mcult-voting |
+mcu-folk | 민속 수학과 건축 | card-mcult-yut-probability card-mcult-frieze text-mcult-yut |
+mcu-braille | 점자와 수학 | card-mcult-braille-count card-mcult-braille-number text-mcult-braille |
+mcu-media | 대중매체와 데이터 | card-mcult-poll-margin card-mcult-relative-risk text-mcult-media |
+mcu-consume | 가치소비와 의사 결정 | card-mcult-unit-price card-mcult-carbon-choice text-mcult-value |
+mcu-food | 식생활과 수학 | card-mcult-nutrition-label card-mcult-food-mileage text-mcult-food |
+mcu-air | 대기 오염과 수학 | card-mcult-pm-average card-mcult-emission-path text-mcult-emission |
+mcu-desert | 사막화와 수학 | card-mcult-desert-automata card-mcult-ndvi text-mcult-desert |
+mcu-biodiv | 생물 다양성과 수학 | card-mcult-capture-recapture card-mcult-simpson-index text-mcult-biodiv |
+pst-useful | 통계의 유용성과 통계적 질문 | card-pstat-cholera-map card-pstat-stat-question text-pstat-nightingale |
+pst-process | 통계적 문제해결 과정 | card-pstat-ppdac-order card-pstat-question-refine text-pstat-cycle | pst-useful
+pst-sampling | 모집단과 표본추출 방법 | card-pstat-sampling-methods card-pstat-volunteer-bias text-pstat-sampling | pst-process
+pst-datatype | 자료의 종류(범주형·수치형) | card-pstat-data-types card-pstat-number-not-number text-pstat-datatypes | pst-useful
+pst-collect | 자료의 수집 방법(설문·실험) | card-pstat-survey-wording card-pstat-random-assign text-pstat-collect | pst-sampling
+pst-graphs | 상자그림과 산점도 | card-pstat-boxplot-build card-pstat-scatter-r text-pstat-graphs | pst-datatype
+pst-summary | 대푯값과 산포도 | card-pstat-mean-median card-pstat-sd-spread text-pstat-center | pst-datatype
+pst-tdist | 정규분포와 t분포 | card-pstat-t-vs-z card-pstat-why-t text-pstat-tdist | pst-summary
+pst-ci-mean | 모평균의 추정(t분포) | card-pstat-ci-t-cover card-pstat-sample-size text-pstat-mean-ci | pst-tdist pst-sampling
+pst-ci-prop | 모비율의 추정과 해석 | card-pstat-ci-prop-read card-pstat-lead-margin text-pstat-prop-ci | pst-sampling
+pst-test | 가설검정 | card-pstat-coin-test card-pstat-p-hacking text-pstat-test | pst-ci-prop
+pst-decision | 통계적 탐구와 의사 결정 | card-pstat-ab-test card-pstat-error-cost text-pstat-decision | pst-test
+pst-reflect | 통계적 탐구의 성찰 | card-pstat-simpson-paradox card-pstat-publication-bias text-pstat-reflect | pst-test pst-collect
+mrs-meaning | 수학과제 탐구의 의미 | card-mres-collatz-explore card-mres-circle-regions text-mres-pattern |
+mrs-ethics | 연구 윤리 | card-mres-benford-check card-mres-citation-ethics text-mres-benford | mrs-meaning
+mrs-literature | 문헌 조사 | card-mres-source-eval card-mres-sequence-search text-mres-literature | mrs-ethics
+mrs-case | 사례 조사 | card-mres-tiling-case card-mres-paper-ratio text-mres-tiling | mrs-meaning
+mrs-experiment | 수학 실험 | card-mres-buffon-needle card-mres-trials-error text-mres-buffon | mrs-meaning
+mrs-develop | 개발 연구 | card-mres-fair-game-design card-mres-prime-algorithm text-mres-develop | mrs-experiment
+mrs-plan | 주제 선정과 탐구 계획 | card-mres-topic-matrix card-mres-critical-path text-mres-plan | mrs-meaning
+mrs-perform | 탐구 수행 | card-mres-magic-square-log card-mres-border-tiles text-mres-magic | mrs-plan
+mrs-present | 산출물과 발표 | card-mres-chart-redesign card-mres-proof-order text-mres-present | mrs-perform
+mrs-reflect | 반성과 평가 | card-mres-rubric-eval card-mres-euler-polynomial text-mres-reflect | mrs-present mrs-ethics
+# extra (교양·심화, 수학 쪽)
+ex-pizza | 직선으로 나눈 조각 수 | text-extra-pizza card-extra-pizza | alg-recursive alg-seq-sums
+ex-queue | 줄 서기와 기다리는 시간 | text-extra-queue card-extra-queue | stat-expectation
+ex-fold | 종이 접기와 거듭제곱 | text-extra-paper-fold card-extra-fold | alg-geo-seq alg-common-log
+ex-temperament | 평균율과 2의 12제곱근 | text-extra-temperament card-extra-piano | alg-exp-rational alg-log
+ex-mobius | 뫼비우스의 띠 | text-extra-mobius card-extra-mobius |
+ex-rainbow | 무지개와 최소 편향각 | text-extra-rainbow card-extra-rainbow | alg-trig-func
+ex-square-cube | 제곱-세제곱 법칙 | text-extra-square-cube card-extra-scale | alg-exp-laws
+ex-gps | GPS 시계와 상대성 | text-extra-gps card-extra-gps |
+ex-random-walk | 마구 걷기와 √n | text-extra-random-walk card-extra-walk | stat-binomial stat-expectation
+ex-logistic | 로지스틱 사상과 혼돈 | text-extra-logistic card-extra-logistic | alg-recursive cm1-quad-graph
+ex-life | 생명 게임 | text-extra-life card-extra-life |
+ex-chaos | 카오스 게임과 프랙털 | text-extra-chaos-game card-extra-chaos | alg-geo-seq alg-log

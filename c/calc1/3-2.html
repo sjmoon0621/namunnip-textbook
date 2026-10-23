@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>다항함수의 부정적분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="xⁿ의 부정적분 공식, 함수의 실수배·합·차의 부정적분, 다항함수의 부정적분 구하기. 후보 함수를 미분해 확인하고 항을 하나씩 적분해 쌓는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-power-int .nums dd { font-size: 14px; overflow-wrap: anywhere; }
@@ -46,18 +51,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-power-int"><span class="mono">3.2.1</span>xⁿ의 부정적분</a></li>
-        <li><a href="#card-calc1-linear-int"><span class="mono">3.2.2</span>실수배·합·차의 부정적분</a></li>
+        <li><a href="#text-calc1-poly-integral"><span class="mono">본문</span>다항함수의 부정적분</a></li>
+        <li><a href="#card-calc1-power-int"><span class="mono">탐구 1</span>xⁿ의 부정적분</a></li>
+        <li><a href="#card-calc1-linear-int"><span class="mono">탐구 2</span>실수배·합·차의 부정적분</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">110문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-3-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">110문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-poly-integral" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>다항함수의 부정적분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(x^3\)을 미분하면 \(3x^2\)이다. 그러면 \(x^2\)을 적분한 결과는 \(x^3\)일까? 미분하면 3이 앞에 나오니, 적분할 때는 그 3을 어떻게 처리해야 할까? 그리고 \(6x^2 - 4x + 5\)처럼 여러 항이 있으면 항마다 따로 적분해도 될까?</p>
+          <figure class="q-fig" data-q="calc1-powint">
+            <svg viewBox="0 0 520 220" role="img" aria-label="미분은 지수를 내려 곱하고 하나 줄이며, 적분은 지수를 하나 올리고 그 수로 나누는 왕복 그림"></svg>
+            <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="0" max="6" step="1" value="2"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 미분은 지수를 앞으로 내려 곱하고 지수를 하나 줄인다. 적분은 그 반대로 지수를 하나 올리고, 올린 지수로 나누어 앞에 생길 수를 미리 없앤다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>부정적분과 적분상수(<a href="3-1.html">부정적분</a>), \(y = x^n\)의 도함수(<a href="2-3.html">y = xⁿ의 도함수</a>), 합·차·상수배의 미분법(<a href="2-4.html">다항함수의 도함수</a>).</div>
+
+          <h3><span class="no">3.2.1</span>\(x^n\)의 부정적분</h3>
+          <p>\(x^2\)의 부정적분을 찾으려면 '미분하면 \(x^2\)이 되는 함수'를 찾아야 한다. 지수가 하나 줄어드는 것이 미분이므로, 원래 함수는 \(x^3\)의 꼴일 것이다. 그런데 \((x^3)' = 3x^2\)이라 3이 남는다. 그래서 미리 3으로 나눈 \(\dfrac{x^3}{3}\)을 미분하면 정확히 \(x^2\)이다.</p>
+          <p>같은 생각으로 \(\left(\dfrac{x^{n+1}}{n + 1}\right)' = \dfrac{(n + 1)x^n}{n + 1} = x^n\)이다. 그림 1에서 \(n\)을 바꾸어 보면, 미분으로 내려오는 수 \(n + 1\)을 적분에서 미리 나누어 둔다는 것이 보인다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">\(x^n\)의 부정적분</span></span>
+            <p>\(n\)이 0 또는 자연수일 때 \[\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\] 특히 \(\int 1\,dx = x + C\), \(\int k\,dx = kx + C\)(\(k\)는 상수)이다.</p>
+          </div>
+
+          <h3><span class="no">3.2.2</span>합, 차, 상수배는 항마다</h3>
+          <p>미분에서 합, 차, 상수배는 항마다 따로 계산할 수 있었다. 적분은 미분의 반대이므로 같은 성질이 그대로 성립한다. \(F' = f\), \(G' = g\)이면 \((F + G)' = f + g\)이므로 \(f + g\)의 부정적분은 \(F + G\)에 상수를 더한 것이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.2 <span class="nm">부정적분의 성질</span></span>
+            <p>\[\int kf(x)\,dx = k\int f(x)\,dx\ (k \ne 0),\quad \int \{f(x) \pm g(x)\}\,dx = \int f(x)\,dx \pm \int g(x)\,dx\]</p>
+          </div>
+          <p>그러나 곱은 그렇지 않다. \(\int x \cdot x\,dx = \dfrac{x^3}{3} + C\)인데, 따로 적분한 \(\dfrac{x^2}{2} \times \dfrac{x^2}{2}\)는 \(\dfrac{x^4}{4}\)로 다르다. 곱으로 된 식은 먼저 전개해서 항의 합으로 바꾼 뒤 적분한다.<sup class="fn"><a href="#fn-calc1-poly-integral-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 130" role="img" aria-label="6x²−4x+5를 항마다 적분하는 계산">
+              <g class="s"><text x="20" y="40">∫(6x² − 4x + 5)dx</text><text x="200" y="40">= 6·x³/3 − 4·x²/2 + 5x + C</text><text x="200" y="80" class="td">= 2x³ − 2x² + 5x + C</text><text x="20" y="115">검산: (2x³ − 2x² + 5x)′ = 6x² − 4x + 5</text></g>
+            </svg>
+            <figcaption>그림 2. 항마다 지수를 하나 올리고 나눈 뒤, 마지막에 적분상수를 한 번 붙인다. 미분해서 원래 식이 나오는지로 검산한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.3</span>
+            <p>\(\displaystyle\int (6x^2 - 4x + 5)\,dx\)와 \(\displaystyle\int (x + 1)(3x - 1)\,dx\)를 구하여라. 또 \(f'(x) = 6x^2 - 4x + 5\)이고 \(f(0) = 1\)일 때 \(f(2)\)를 구하여라.</p>
+          </div>
+          <p>항마다 적분하면 \(\displaystyle\int (6x^2 - 4x + 5)\,dx = 2x^3 - 2x^2 + 5x + C\)이다. 미분하면 \(6x^2 - 4x + 5\)가 나오므로 맞는다.</p>
+          <p>두 번째 식은 먼저 전개한다. \((x + 1)(3x - 1) = 3x^2 + 2x - 1\)이므로 적분하면 \(x^3 + x^2 - x + C\)이다.</p>
+          <p>마지막 질문은 \(f(x) = 2x^3 - 2x^2 + 5x + C\)에서 \(f(0) = C = 1\)이므로 \(f(x) = 2x^3 - 2x^2 + 5x + 1\)이다. 따라서 \(f(2) = 16 - 8 + 10 + 1 = 19\)이다. 아래 탐구 카드에서 지수를 올리고 나누는 규칙을 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-poly-integral-1">\(n = -1\)일 때, 곧 \(\int \tfrac{1}{x}\,dx\)는 이 공식으로 구할 수 없다(분모가 0이 된다). 이 적분은 미적분Ⅱ에서 자연로그로 다룬다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>\(x^n\)을 미분하면 지수 \(n\)이 앞으로 내려오므로, 적분할 때는 지수를 하나 올리고 그 수로 나누어 \(\int x^n\,dx = \tfrac{x^{n+1}}{n + 1} + C\)이다. 다항식은 항마다 적분해 더하고, 곱은 전개한 뒤 적분한다. 그래서 처음 질문의 \(x^2\)의 부정적분은 \(x^3\)이 아니라 \(\tfrac{x^3}{3} + C\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-1.html#card-calc1-antideriv-family"><small class="mono">미적분Ⅰ 3.1</small>도함수가 같은 함수는 몇 개일까?</a><a href="../../c/calc1/3-1.html#card-calc1-slope-field"><small class="mono">미적분Ⅰ 3.1</small>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</a><a href="../../c/calc1/3-1.html#text-calc1-antiderivative"><small class="mono">미적분Ⅰ 3.1</small>부정적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a></div></nav>
+
       <article class="card" id="card-calc1-power-int">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>\(x^n\)을 적분하면 왜 \(n + 1\)로 나눌까?</h2><span class="kind">다항함수의 부정적분 · 거듭제곱</span>
+          <span class="no">탐구 1</span><h2>\(x^n\)을 적분하면 왜 \(n + 1\)로 나눌까?</h2><span class="kind">다항함수의 부정적분 · 거듭제곱</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,30 +135,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>미분하면 \(x^2\)이 되는 함수를 찾고 싶습니다. 지수를 하나 올린 \(x^3\)을 미분하면 \(3x^2\)이라 3배가 남습니다. 이 3을 어떻게 없앨까요?</li>
-            <li><span class="tag">복원</span>\(n\)이 자연수일 때 \((x^n)' = nx^{n-1}\)이고, 상수 \(k\)에 대해 \(\{kf(x)\}' = kf'(x)\)입니다. 부정적분은 미분하면 피적분함수가 되는 함수입니다.</li>
-            <li><span class="tag">설명</span>미분은 지수를 하나 내리면서 원래 지수를 앞에 곱합니다. 거꾸로 가려면 지수를 하나 올리고, 올린 지수로 나눕니다. 실제로 \(\{\frac{x^{n+1}}{n + 1}\}' = \frac{(n + 1)x^n}{n + 1} = x^n\)이므로 <b>\(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)</b> \((n = 0, 1, 2, \cdots)\)입니다. \(n = 0\)이면 \(\int 1\,dx = x + C\), 상수 \(k\)이면 \(\int k\,dx = kx + C\)입니다.</li>
-            <li><span class="tag">연결</span>이 공식과 다음에 볼 실수배·합·차의 성질을 합치면 모든 다항함수의 부정적분을 구할 수 있습니다. 미분 공식을 거꾸로 읽어 적분 공식을 얻는 방법은 미적분Ⅱ에서 삼각함수, 지수함수의 적분으로 이어집니다.</li>
-            <li><span class="tag">적용</span>후보 ①을 고르고 \(n\)을 0부터 4까지 바꾸어 보세요. '\(F'(x) \div f(x)\)'가 언제나 얼마인가요? 그 값과 \(n\) 사이의 관계를 찾은 다음 후보 ②로 바꾸어, 주황 점선이 파란 곡선과 겹치는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>지수를 올리지 않고 내리거나(미분과 헷갈림), 지수는 올렸는데 나누지 않는 실수가 많습니다. 구한 결과를 미분해서 피적분함수로 돌아오는지 확인하면 바로 잡을 수 있습니다. 또 이 공식은 \(n = -1\)이면 0으로 나누게 되어 쓸 수 없습니다. \(\frac{1}{x}\)의 적분은 미적분Ⅱ에서 따로 다룹니다.</li>
+            <li><span class="tag">질문</span>미분하면 \(x^2\)이 되는 함수를 찾고 싶다. 지수를 하나 올린 \(x^3\)을 미분하면 \(3x^2\)이라 3배가 남는다. 이 3을 어떻게 없앨까?</li>
+            <li><span class="tag">복원</span>\(n\)이 자연수일 때 \((x^n)' = nx^{n-1}\)이고, 상수 \(k\)에 대해 \(\{kf(x)\}' = kf'(x)\)이다. 그리고 부정적분은 미분하면 피적분함수가 되는 함수이다.</li>
+            <li><span class="tag">설명</span>미분은 지수를 하나 내리면서 원래 지수를 앞에 곱한다. 그래서 거꾸로 가려면 지수를 하나 올리고, 올린 지수로 나누면 된다. 실제로 \(\{\frac{x^{n+1}}{n + 1}\}' = \frac{(n + 1)x^n}{n + 1} = x^n\)이므로 \(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\) \((n = 0, 1, 2, \cdots)\)이다. \(n = 0\)이면 \(\int 1\,dx = x + C\)이고, 상수 \(k\)이면 \(\int k\,dx = kx + C\)이다.</li>
+            <li><span class="tag">연결</span>이 공식과 다음에 볼 실수배, 합, 차의 성질을 합치면 모든 다항함수의 부정적분을 구할 수 있다. 미분 공식을 거꾸로 읽어 적분 공식을 얻는 방법은 미적분Ⅱ에서 삼각함수, 지수함수의 적분으로 이어진다.</li>
+            <li><span class="tag">적용</span>첫째 후보를 고르고 \(n\)을 0부터 4까지 바꾸며 '\(F'(x) \div f(x)\)'가 언제나 얼마인지, 그 값과 \(n\) 사이에 어떤 관계가 있는지 찾아보자. 그다음 둘째 후보로 바꾸어 주황 점선이 파란 곡선과 겹치는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>지수를 올리지 않고 내리거나(미분과 헷갈림), 지수는 올렸는데 나누지 않는 실수가 많다. 구한 결과를 미분해서 피적분함수로 돌아오는지 확인하면 바로잡을 수 있다. 또 이 공식은 \(n = -1\)이면 0으로 나누게 되어 쓸 수 없고, \(\frac{1}{x}\)의 적분은 미적분Ⅱ에서 따로 다룬다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int x^5\,dx\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{x^6}{6} + C\)<span class="why"><b>맞습니다.</b> 지수를 6으로 올리고 6으로 나눕니다. 미분하면 \(\frac{6x^5}{6} = x^5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(5x^4 + C\)<span class="why"><b>미분을 했습니다.</b> \((x^5)' = 5x^4\)입니다. 적분은 지수를 올리는 쪽입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x^6 + C\)<span class="why"><b>나누는 일을 빠뜨렸습니다.</b> 미분하면 \(6x^5\)이 되어 6배가 남습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{x^6}{5} + C\)<span class="why"><b>원래 지수로 나누었습니다.</b> 미분하면 \(\frac{6x^5}{5}\)가 됩니다. 올린 뒤의 지수 6으로 나누어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{x^6}{6} + C\)<span class="why"><b>맞다.</b> 지수를 6으로 올리고 6으로 나눈다. 미분하면 \(\frac{6x^5}{6} = x^5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(5x^4 + C\)<span class="why"><b>미분을 했다.</b> \((x^5)' = 5x^4\)이다. 적분은 지수를 올리는 쪽이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x^6 + C\)<span class="why"><b>나누는 일을 빠뜨렸다.</b> 미분하면 \(6x^5\)이 되어 6배가 남는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{x^6}{5} + C\)<span class="why"><b>원래 지수로 나누었다.</b> 미분하면 \(\frac{6x^5}{5}\)가 된다. 올린 뒤의 지수 6으로 나누어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-1.html#card-calc1-antideriv-family"><small class="mono">미적분Ⅰ 3.1</small>도함수가 같은 함수는 몇 개일까?</a><a href="../../c/calc1/3-1.html#card-calc1-slope-field"><small class="mono">미적분Ⅰ 3.1</small>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-1.html#card-calc1-antideriv-family"><small class="mono">미적분Ⅰ 3.1</small>도함수가 같은 함수는 몇 개일까?</a><a href="../../c/calc1/3-1.html#card-calc1-slope-field"><small class="mono">미적분Ⅰ 3.1</small>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</a><a href="../../c/calc1/3-1.html#text-calc1-antiderivative"><small class="mono">미적분Ⅰ 3.1</small>부정적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a></div></nav>
 
       <article class="card" id="card-calc1-linear-int">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>여러 항의 합은 항마다 따로 적분해도 될까?</h2><span class="kind">다항함수의 부정적분 · 실수배, 합, 차</span>
+          <span class="no">탐구 2</span><h2>여러 항의 합은 항마다 따로 적분해도 될까?</h2><span class="kind">다항함수의 부정적분 · 실수배, 합, 차</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -131,39 +186,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x^3 - 3x^2 + 2\)를 적분하려면, 미분해서 이 식이 되는 함수를 통째로 찾아야 할까요? 아니면 항마다 따로 적분해서 더해도 될까요?</li>
-            <li><span class="tag">복원</span>미분에서는 \(\{kf(x)\}' = kf'(x), \{f(x) \pm g(x)\}' = f'(x) \pm g'(x)\)입니다. 또 \(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)입니다.</li>
-            <li><span class="tag">설명</span>\(F' = f, G' = g\)이면 미분의 성질에서 \((kF)' = kf, (F \pm G)' = f \pm g\)입니다. 그래서 두 함수 \(f(x), g(x)\)와 상수 \(k\)에 대해 <b>\(\int kf(x)\,dx = k\int f(x)\,dx\ (k \ne 0)\)</b>, <b>\(\int\{f(x) \pm g(x)\}\,dx = \int f(x)\,dx \pm \int g(x)\,dx\)</b>입니다. 다항함수는 거듭제곱의 실수배를 더하고 뺀 것이므로, 항마다 적분해 더하고 적분상수는 마지막에 \(C\) 하나로 모읍니다. 예: \(\int(x^3 - 3x^2 + 2)\,dx = \frac{1}{4}x^4 - x^3 + 2x + C\).</li>
-            <li><span class="tag">연결</span>곱으로 된 식은 먼저 전개해 합의 꼴로 바꾼 뒤 적분합니다. 이 성질은 정적분에서도 그대로 성립하여, 정적분을 항마다 나누어 계산하는 근거가 됩니다.</li>
-            <li><span class="tag">적용</span>'다음 항'을 누를 때마다 주황 점선\((F')\)이 어떻게 파란 곡선\((f)\)에 다가가나요? 끝까지 적분한 뒤 계수를 바꾸어 다른 식도 해 보세요. 상수항만 0이 아닌 식을 적분하면 \(F(x)\)는 어떤 그래프인가요?</li>
-            <li class="warn"><span class="tag">판단</span>합과 차는 항마다 나눌 수 있지만 곱은 나눌 수 없습니다. \(\int x \cdot x\,dx\)는 \(\int x\,dx \cdot \int x\,dx = \frac{1}{4}x^4\)이 아니라 \(\int x^2\,dx = \frac{1}{3}x^3 + C\)입니다. 또 실수배 성질에서 \(k = 0\)이면 왼쪽은 \(\int 0\,dx = C\), 오른쪽은 0이 되어 같지 않으므로 \(k \ne 0\)이라는 조건을 붙입니다.</li>
+            <li><span class="tag">질문</span>\(x^3 - 3x^2 + 2\)를 적분하려면, 미분해서 이 식이 되는 함수를 통째로 찾아야 할까? 아니면 항마다 따로 적분해서 더해도 될까?</li>
+            <li><span class="tag">복원</span>미분에서는 \(\{kf(x)\}' = kf'(x), \{f(x) \pm g(x)\}' = f'(x) \pm g'(x)\)이다. 또 \(\int x^n\,dx = \frac{x^{n+1}}{n + 1} + C\)이다.</li>
+            <li><span class="tag">설명</span>\(F' = f, G' = g\)이면 미분의 성질에서 \((kF)' = kf, (F \pm G)' = f \pm g\)이다. 그래서 두 함수 \(f(x), g(x)\)와 상수 \(k\)에 대해 \(\int kf(x)\,dx = k\int f(x)\,dx\ (k \ne 0)\)이고, \(\int\{f(x) \pm g(x)\}\,dx = \int f(x)\,dx \pm \int g(x)\,dx\)이다. 다항함수는 거듭제곱의 실수배를 더하고 뺀 것이므로, 항마다 적분해 더하고 적분상수는 마지막에 \(C\) 하나로 모은다. 예를 들어 \(\int(x^3 - 3x^2 + 2)\,dx = \frac{1}{4}x^4 - x^3 + 2x + C\)이다.</li>
+            <li><span class="tag">연결</span>곱으로 된 식은 먼저 전개해 합의 꼴로 바꾼 뒤 적분한다. 또 이 성질은 정적분에서도 그대로 성립하여, 정적분을 항마다 나누어 계산하는 근거가 된다.</li>
+            <li><span class="tag">적용</span>'다음 항'을 누를 때마다 주황 점선\((F')\)이 파란 곡선\((f)\)에 어떻게 다가가는지 보자. 끝까지 적분한 뒤 계수를 바꾸어 다른 식도 해 보고, 상수항만 0이 아닌 식을 적분하면 \(F(x)\)가 직선이 되는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>합과 차는 항마다 나눌 수 있지만 곱은 나눌 수 없다. \(\int x \cdot x\,dx\)는 \(\int x\,dx \cdot \int x\,dx = \frac{1}{4}x^4\)이 아니라 \(\int x^2\,dx = \frac{1}{3}x^3 + C\)이다. 또 실수배 성질에서 \(k = 0\)이면 왼쪽은 \(\int 0\,dx = C\), 오른쪽은 0이 되어 같지 않으므로 \(k \ne 0\)이라는 조건을 붙인다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int(x + 1)(x - 3)\,dx\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{3}x^3 - x^2 - 3x + C\)<span class="why"><b>맞습니다.</b> 먼저 전개하면 \(x^2 - 2x - 3\)이고, 항마다 적분합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((\frac{1}{2}x^2 + x)(\frac{1}{2}x^2 - 3x) + C\)<span class="why"><b>곱의 인수를 따로 적분했습니다.</b> 미분하면 피적분함수로 돌아오지 않습니다. 곱은 전개한 뒤 적분합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}x^3 - x^2 + C\)<span class="why"><b>상수항 \(-3\)을 빠뜨렸습니다.</b> 상수 \(-3\)을 적분하면 \(-3x\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(2x - 2 + C\)<span class="why"><b>미분을 했습니다.</b> \(x^2 - 2x - 3\)의 도함수가 \(2x - 2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{3}x^3 - x^2 - 3x + C\)<span class="why"><b>맞다.</b> 먼저 전개하면 \(x^2 - 2x - 3\)이고, 항마다 적분한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((\frac{1}{2}x^2 + x)(\frac{1}{2}x^2 - 3x) + C\)<span class="why"><b>곱의 인수를 따로 적분했다.</b> 미분하면 피적분함수로 돌아오지 않는다. 곱은 전개한 뒤 적분한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}x^3 - x^2 + C\)<span class="why"><b>상수항 \(-3\)을 빠뜨렸다.</b> 상수 \(-3\)을 적분하면 \(-3x\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(2x - 2 + C\)<span class="why"><b>미분을 했다.</b> \(x^2 - 2x - 3\)의 도함수가 \(2x - 2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-1.html#card-calc1-antideriv-family"><small class="mono">미적분Ⅰ 3.1</small>도함수가 같은 함수는 몇 개일까?</a><a href="../../c/calc1/3-1.html#card-calc1-slope-field"><small class="mono">미적분Ⅰ 3.1</small>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-1.html#card-calc1-antideriv-family"><small class="mono">미적분Ⅰ 3.1</small>도함수가 같은 함수는 몇 개일까?</a><a href="../../c/calc1/3-1.html#card-calc1-slope-field"><small class="mono">미적분Ⅰ 3.1</small>한 점을 지나라는 조건이 있으면 적분상수가 정해질까?</a><a href="../../c/calc1/3-1.html#text-calc1-antiderivative"><small class="mono">미적분Ⅰ 3.1</small>부정적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-4.html#card-calc1-area-function"><small class="mono">미적분Ⅰ 3.4</small>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</a><a href="../../c/calc1/3-4.html#card-calc1-ftc-eval"><small class="mono">미적분Ⅰ 3.4</small>넓이를 재지 않고 정적분을 구할 수 있을까?</a><a href="../../c/calc1/3-4.html#text-calc1-ftc"><small class="mono">미적분Ⅰ 3.4</small>부정적분과 정적분의 관계</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">110문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-3-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">110문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -171,6 +227,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/power-int.js"></script>

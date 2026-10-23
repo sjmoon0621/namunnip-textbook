@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>n차원 벡터 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="n개의 수를 순서대로 묶은 n차원 벡터와 그 덧셈·실수배. 음식의 영양 성분을 5차원 벡터로 다루는 카드와, 빛의 세 원색을 3차원 벡터로 섞어 목표 색을 만드는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-nutrition canvas { aspect-ratio: 16 / 9; }
@@ -46,18 +51,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-nutrition"><span class="mono">1.1.1</span>식단을 5차원 벡터로 짜기</a></li>
-        <li><a href="#card-adalg-rgb-mix"><span class="mono">1.1.2</span>조명 세 개로 색 만들기</a></li>
+        <li><a href="#text-adalg-nvector"><span class="mono">본문</span>n차원 벡터</a></li>
+        <li><a href="#card-adalg-nutrition"><span class="mono">탐구 1</span>식단을 5차원 벡터로 짜기</a></li>
+        <li><a href="#card-adalg-rgb-mix"><span class="mono">탐구 2</span>조명 세 개로 색 만들기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-1-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-nvector" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>n차원 벡터</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">학교 급식에서 한 끼에 단백질 60 g, 탄수화물 150 g, 지방 35 g을 맞추려 한다. 메뉴 A 한 그릇에는 단백질 20 g, 탄수화물 50 g, 지방 10 g이, 메뉴 B에는 30 g, 20 g, 20 g이, 메뉴 C에는 10 g, 80 g, 5 g이 들어 있다. 세 메뉴를 각각 몇 그릇씩 섞으면 세 영양소를 한꺼번에 정확히 맞출 수 있을까? 영양소가 네 가지, 다섯 가지로 늘어나도 같은 방법으로 생각할 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="메뉴별 영양소를 벡터로 나타낸 표">
+              <g class="s">
+                <text x="20" y="22">벡터</text><text x="180" y="22">단백질</text><text x="280" y="22">탄수화물</text><text x="390" y="22">지방</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="50">메뉴 A</text><text x="180" y="50">20</text><text x="280" y="50">50</text><text x="390" y="50">10</text>
+                <text x="20" y="70">메뉴 B</text><text x="180" y="70">30</text><text x="280" y="70">20</text><text x="390" y="70">20</text>
+                <text x="20" y="90">메뉴 C</text><text x="180" y="90">10</text><text x="280" y="90">80</text><text x="390" y="90">5</text>
+                <text x="20" y="114">목표</text><text x="180" y="114" class="td">60</text><text x="280" y="114" class="td">150</text><text x="390" y="114" class="td">35</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 각 메뉴는 성분이 세 개인 벡터이고, 식단은 세 벡터를 몇 배씩 더한 일차결합이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>벡터의 성분, 벡터의 덧셈과 실수배, 공간좌표.</div>
+
+          <h3><span class="no">1.1.1</span>성분이 \(n\)개인 벡터</h3>
+          <p>평면벡터는 성분이 2개, 공간벡터는 성분이 3개인 순서쌍이다. 이것을 넓혀 실수 \(n\)개를 순서대로 늘어놓은 \((a_1, a_2, \ldots, a_n)\)을 \(n\)차원 벡터라 하고, 그 전체의 집합을 \(\mathbb{R}^n\)이라 쓴다. 영양소의 양, 학생의 과목별 점수, 사진 한 장의 픽셀 밝기처럼 여러 수를 한 묶음으로 다루어야 하는 자료는 모두 \(n\)차원 벡터이다. 4차원 이상은 그림으로 그릴 수 없지만, 덧셈과 실수배는 2차원, 3차원과 똑같이 성분끼리 계산한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.1.1 <span class="nm">\(n\)차원 벡터의 연산과 일차결합</span></span>
+            <p>\(\vec a = (a_1, \ldots, a_n)\), \(\vec b = (b_1, \ldots, b_n)\)과 실수 \(k\)에 대하여 \(\vec a + \vec b = (a_1 + b_1, \ldots, a_n + b_n)\), \(k\vec a = (ka_1, \ldots, ka_n)\)이다. 벡터 \(\vec v_1, \ldots, \vec v_m\)과 실수 \(c_1, \ldots, c_m\)으로 만든 \(c_1\vec v_1 + \cdots + c_m\vec v_m\)을 일차결합이라 한다.</p>
+          </div>
+          <p>메뉴 A를 \(a\)그릇, B를 \(b\)그릇, C를 \(c\)그릇 먹으면 영양소의 합은 \(a\vec A + b\vec B + c\vec C\)라는 일차결합이다. 목표 벡터를 이 일차결합으로 나타내는 문제는 성분마다 하나씩, 모두 세 개의 일차방정식이 된다. 그래서 일차결합으로 목표를 만들 수 있는지는 연립일차방정식에 해가 있는지와 같은 질문이다. 빛의 세 원색으로 원하는 색을 만드는 일도 빨강, 초록, 파랑의 세기를 성분으로 하는 3차원 벡터의 일차결합이다.<sup class="fn"><a href="#fn-adalg-nvector-1">1</a></sup></p>
+
+          <h3><span class="no">1.1.2</span>맞출 수 없는 목표도 있다</h3>
+          <p>일차결합으로 늘 원하는 벡터를 만들 수 있는 것은 아니다. 메뉴가 두 가지뿐이면 세 영양소를 한꺼번에 맞추기 어려운데, 미지수는 2개인데 맞추어야 할 방정식은 3개이기 때문이다. 또 메뉴가 세 가지라도 한 메뉴가 다른 두 메뉴를 섞은 것과 영양소 비율이 같으면 사실상 두 가지와 다름없다. 그런 경우 만들 수 있는 식단은 공간 전체가 아니라 한 평면 위에 갇힌다. 실제 식단에서는 그릇 수가 음수일 수 없다는 조건도 더해진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="성분별로 세운 연립일차방정식">
+              <g class="s">
+                <text x="20" y="22">영양소</text><text x="160" y="22">방정식</text><text x="400" y="22">a = b = c = 1</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">단백질</text><text x="160" y="52">20a + 30b + 10c = 60</text><text x="400" y="52">60</text>
+                <text x="20" y="74">탄수화물</text><text x="160" y="74">50a + 20b + 80c = 150</text><text x="400" y="74">150</text>
+                <text x="20" y="96">지방</text><text x="160" y="96">10a + 20b + 5c = 35</text><text x="400" y="96" class="td">35</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 벡터의 성분마다 방정식이 하나씩 생겨, 일차결합의 계수를 구하는 일이 연립일차방정식이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.1.2</span>
+            <p>처음 질문의 목표를 맞추는 \(a\), \(b\), \(c\)를 구하여라. 또 목표가 단백질 50 g, 탄수화물 180 g, 지방 25 g으로 바뀌면 그릇 수는 어떻게 되는가?</p>
+          </div>
+          <p>그림 2의 연립방정식에서 \(a = b = c = 1\)을 넣으면 세 식이 모두 성립한다. 셋째 식의 2배를 첫째 식에서 빼면 \(-10b = -10\)이므로 \(b = 1\)이고, 남은 식에서 \(a\)와 \(c\)도 하나로 정해진다. 그래서 세 메뉴를 한 그릇씩 먹으면 목표를 정확히 맞추며, 해는 이것 하나뿐이다.</p>
+          <p>목표가 \((50, 180, 25)\)이면 셋째 식의 2배를 첫째 식에서 빼서 \(-10b = 0\), 곧 \(b = 0\)이다. 남은 \(20a + 10c = 50\), \(50a + 80c = 180\)을 풀면 \(a = 2\), \(c = 1\)이다. 그래서 메뉴 A 두 그릇과 C 한 그릇이면 된다. 즉 여러 수를 한 묶음으로 다루는 \(n\)차원 벡터는 성분끼리 더하고 실수배하며, 목표 벡터를 일차결합으로 만드는 문제는 성분마다 세운 연립일차방정식을 푸는 문제가 된다.</p>
+          <p>아래 탐구 카드에서 메뉴 세 가지의 그릇 수를 바꾸며 목표 영양 식단을 맞추어 보고, 색이 섞인 조명 세 개로 원하는 색을 만들어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-nvector-1">최소 비용으로 영양 기준을 맞추는 식단 문제는 1945년 미국의 경제학자 스티글러가 77가지 식품으로 처음 계산했다. 이 문제는 뒤에 단체법이라는 계산법이 나오는 계기가 되었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>실수 \(n\)개를 순서대로 늘어놓은 \(n\)차원 벡터는 그림으로 그릴 수 없어도 성분끼리 더하고 실수배하며, 여러 수를 한 묶음으로 다루는 자료를 나타낸다. 벡터들을 몇 배씩 더한 일차결합으로 목표 벡터를 만드는 문제는 성분마다 세운 연립일차방정식이 되고, 벡터가 부족하거나 서로 닮으면 만들 수 없는 목표가 생긴다. 처음 질문의 목표 식단은 세 메뉴를 한 그릇씩 먹어 정확히 맞출 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-3.html#card-adalg-subspace-3d"><small class="mono">고급 대수 1.3</small>좌표공간의 어떤 평면과 직선이 부분공간일까?</a><a href="../../c/adalg/1-3.html#card-adalg-intersect-proof"><small class="mono">고급 대수 1.3</small>두 부분공간이 겹치는 부분도 부분공간일까?</a><a href="../../c/adalg/1-3.html#text-adalg-subspace"><small class="mono">고급 대수 1.3</small>부분공간</a><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a></div></nav>
+
       <article class="card" id="card-adalg-nutrition">
         <header class="card-head">
-          <span class="no">1.1.1</span><h2>메뉴 세 가지로 목표 영양 식단을 정확히 맞출 수 있을까?</h2><span class="kind">n차원 벡터의 덧셈과 실수배 · 도전</span>
+          <span class="no">탐구 1</span><h2>메뉴 세 가지로 목표 영양 식단을 정확히 맞출 수 있을까?</h2><span class="kind">n차원 벡터의 덧셈과 실수배 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -73,34 +136,34 @@
               <div class="presets"><button class="chip go-new" type="button">새 목표</button></div>
               <p class="mono small eq">—</p>
               <p class="verdict" role="status"></p>
-              <p class="fig-note">메뉴와 수치는 계산 연습을 위한 가상의 모식 값이며 실제 식품의 영양 정보가 아닙니다. 막대는 목표를 100으로 둔 비율입니다.</p>
+              <p class="fig-note">메뉴와 수치는 계산 연습을 위한 가상의 모식 값이며 실제 식품의 영양 정보가 아니다. 막대는 목표를 100으로 둔 비율이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>영양사는 열량, 탄수화물, 단백질, 지방, 나트륨을 동시에 맞추며 식단을 짭니다. 메뉴 세 가지를 몇 인분씩 섞으면 다섯 가지 목표를 한꺼번에 맞출 수 있을까요?</li>
-            <li><span class="tag">복원</span>평면벡터 \((a_1, a_2)\)와 공간벡터 \((a_1, a_2, a_3)\)는 성분별로 더하고 실수배했습니다: \((a_1, a_2) + (b_1, b_2) = (a_1 + b_1, a_2 + b_2)\), \(k(a_1, a_2) = (ka_1, ka_2)\).</li>
-            <li><span class="tag">설명</span>실수 \(n\)개를 순서대로 늘어놓은 \((a_1, a_2, \ldots, a_n)\)을 <em>n차원 벡터</em>라고 하고, 그 모임을 \(\mathbb{R}^n\)이라고 씁니다. 덧셈과 실수배는 평면에서처럼 <b>성분마다</b> 합니다. 메뉴 한 인분의 영양 성분을 5차원 벡터 \(\vec{a}, \vec{b}, \vec{c}\)로 두면, \(s\)인분, \(t\)인분, \(u\)인분을 먹은 식단은 일차결합 \(s\vec{a} + t\vec{b} + u\vec{c}\)입니다. 목표 식단 \(\vec{g}\)를 맞추는 것은 \(s\vec{a} + t\vec{b} + u\vec{c} = \vec{g}\)를 푸는 일, 곧 미지수 3개, 식 5개인 연립일차방정식입니다.</li>
-            <li><span class="tag">연결</span>식이 미지수보다 많으면 해가 없을 때가 많습니다. 그때는 가장 가까운 식단을 찾아야 하는데, 이것이 이 대단원 7절의 정사영(최소제곱)입니다. 4차원 이상은 그림으로 그릴 수 없지만, 계산 규칙은 그대로라는 것이 n차원 벡터의 힘입니다.</li>
-            <li><span class="tag">적용</span>세 메뉴의 양을 조절해 막대가 모두 목표(100)에 맞도록 해 보세요. "새 목표"를 누르면 어떤 목표는 정확히 맞출 수 없습니다. 그런 목표는 어떤 성분 때문에 맞지 않나요?</li>
-            <li class="warn"><span class="tag">판단</span>n차원 벡터의 성분은 순서가 정해져 있어야 더할 수 있습니다. 열량끼리, 단백질끼리 더해야 하고, 단위가 다른 성분을 서로 더하면 뜻이 없습니다. 또 실제 식단은 음수 인분이 불가능하다는 조건이 더 붙습니다.</li>
+            <li><span class="tag">질문</span>영양사는 열량, 탄수화물, 단백질, 지방, 나트륨을 동시에 맞추며 식단을 짠다. 메뉴 세 가지를 몇 인분씩 섞으면 다섯 가지 목표를 한꺼번에 맞출 수 있을까?</li>
+            <li><span class="tag">복원</span>평면벡터 \((a_1, a_2)\)와 공간벡터 \((a_1, a_2, a_3)\)는 성분별로 더하고 실수배했다. 곧 \((a_1, a_2) + (b_1, b_2) = (a_1 + b_1, a_2 + b_2)\), \(k(a_1, a_2) = (ka_1, ka_2)\)이다.</li>
+            <li><span class="tag">설명</span>실수 \(n\)개를 순서대로 늘어놓은 \((a_1, a_2, \ldots, a_n)\)을 <em>n차원 벡터</em>라고 하고, 그 모임을 \(\mathbb{R}^n\)이라고 쓴다. 덧셈과 실수배는 평면에서처럼 성분마다 한다. 메뉴 한 인분의 영양 성분을 5차원 벡터 \(\vec{a}, \vec{b}, \vec{c}\)로 두면, \(s\)인분, \(t\)인분, \(u\)인분을 먹은 식단은 일차결합 \(s\vec{a} + t\vec{b} + u\vec{c}\)이다. 목표 식단 \(\vec{g}\)를 맞추는 것은 \(s\vec{a} + t\vec{b} + u\vec{c} = \vec{g}\)를 푸는 일, 곧 미지수 3개, 식 5개인 연립일차방정식이다.</li>
+            <li><span class="tag">연결</span>식이 미지수보다 많으면 해가 없을 때가 많다. 그때는 가장 가까운 식단을 찾아야 하는데, 이것이 이 대단원 7절의 정사영(최소제곱)이다. 4차원 이상은 그림으로 그릴 수 없지만, 계산 규칙은 그대로라는 것이 n차원 벡터의 힘이다.</li>
+            <li><span class="tag">적용</span>세 메뉴의 양을 조절해 막대가 모두 목표(100)에 맞도록 해 보자. "새 목표"를 누르면 어떤 목표는 정확히 맞출 수 없다. 그런 목표는 어떤 성분 때문에 맞지 않는가?</li>
+            <li class="warn"><span class="tag">판단</span>n차원 벡터의 성분은 순서가 정해져 있어야 더할 수 있다. 열량끼리, 단백질끼리 더해야 하고, 단위가 다른 성분을 서로 더하면 뜻이 없다. 또 실제 식단은 음수 인분이 불가능하다는 조건이 더 붙는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{a} = (1, 0, 2, -1)\), \(\vec{b} = (0, 3, -1, 2)\)일 때 \(2\vec{a} - \vec{b}\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, -3, 5, -4)\)<span class="why"><b>맞습니다.</b> 성분마다 \(2a_i - b_i\)를 계산합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3, 3, 0)\)<span class="why"><b>\(\vec{b}\)를 더했습니다.</b> 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((2, -3, 5, 0)\)<span class="why"><b>넷째 성분에서 \(-2 - 2\)를 0으로 계산했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-4\)<span class="why"><b>내적처럼 수 하나로 만들었습니다.</b> 덧셈과 실수배의 결과는 벡터입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, -3, 5, -4)\)<span class="why"><b>맞다.</b> 성분마다 \(2a_i - b_i\)를 계산한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3, 3, 0)\)<span class="why"><b>\(\vec{b}\)를 더했다.</b> 빼야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((2, -3, 5, 0)\)<span class="why"><b>넷째 성분에서 \(-2 - 2\)를 0으로 계산했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-4\)<span class="why"><b>내적처럼 수 하나로 만들었다.</b> 덧셈과 실수배의 결과는 벡터이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-3.html#card-adalg-subspace-3d"><small class="mono">고급 대수 1.3</small>좌표공간의 어떤 평면과 직선이 부분공간일까?</a><a href="../../c/adalg/1-3.html#card-adalg-intersect-proof"><small class="mono">고급 대수 1.3</small>두 부분공간이 겹치는 부분도 부분공간일까?</a><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-3.html#card-adalg-subspace-3d"><small class="mono">고급 대수 1.3</small>좌표공간의 어떤 평면과 직선이 부분공간일까?</a><a href="../../c/adalg/1-3.html#card-adalg-intersect-proof"><small class="mono">고급 대수 1.3</small>두 부분공간이 겹치는 부분도 부분공간일까?</a><a href="../../c/adalg/1-3.html#text-adalg-subspace"><small class="mono">고급 대수 1.3</small>부분공간</a><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a></div></nav>
 
       <article class="card" id="card-adalg-rgb-mix">
         <header class="card-head">
-          <span class="no">1.1.2</span><h2>색이 섞인 조명 세 개로 원하는 색을 만들 수 있을까?</h2><span class="kind">3차원 벡터 · 일차결합 · 도전</span>
+          <span class="no">탐구 2</span><h2>색이 섞인 조명 세 개로 원하는 색을 만들 수 있을까?</h2><span class="kind">3차원 벡터 · 일차결합 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig no-invert">
@@ -113,43 +176,43 @@
               <div class="presets"><button class="chip go-new" type="button">새 목표 색</button><button class="chip go-solve" type="button">연립방정식으로 풀기</button></div>
               <p class="mono small eq">—</p>
               <p class="verdict" role="status"></p>
-              <p class="fig-note">색은 (빨강, 초록, 파랑) 세기를 0~1로 나타낸 3차원 벡터입니다. 화면의 색은 이 세 수로 정해집니다(빛의 더하기). 이 카드의 색은 다크 모드에서도 뒤집지 않습니다.</p>
+              <p class="fig-note">색은 (빨강, 초록, 파랑) 세기를 0~1로 나타낸 3차원 벡터이다. 화면의 색은 이 세 수로 정해진다(빛의 더하기). 이 카드의 색은 다크 모드에서도 뒤집지 않는다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>무대 조명의 필터가 순수한 빨강, 초록, 파랑이 아니라 서로 조금씩 섞인 색이라면, 세 조명의 세기만 바꾸어 원하는 색을 정확히 만들 수 있을까요?</li>
-            <li><span class="tag">복원</span>벡터의 일차결합은 \(s\vec{a} + t\vec{b} + u\vec{c}\)이고, 성분마다 계산하면 연립일차방정식이 됩니다.</li>
-            <li><span class="tag">설명</span>화면의 색은 빨강·초록·파랑 빛의 세기로 정해지므로 3차원 벡터 \((r, g, b)\)입니다. 조명 세 개의 색을 \(\vec{l}_1, \vec{l}_2, \vec{l}_3\)이라 하면 섞인 색은 <b>\(s\vec{l}_1 + t\vec{l}_2 + u\vec{l}_3\)</b>이고, 목표 색 \(\vec{c}\)를 맞추는 것은 미지수 3개, 식 3개인 연립방정식을 푸는 일입니다. 세 조명의 색 벡터가 한 평면에 놓이지 않으면(일차독립이면) 해가 하나 있습니다. 다만 세기는 0~1 사이여야 하므로, 해가 이 범위를 벗어나는 색은 이 조명으로 만들 수 없습니다.</li>
-            <li><span class="tag">연결</span>세 조명이 만들 수 있는 색의 모임은 세 벡터를 모서리로 하는 평행육면체 모양입니다. 모니터마다 표현할 수 있는 색의 범위(색역)가 다른 이유입니다. 다음 절에서는 이런 "더하고 실수배할 수 있는 모임"을 일반화합니다.</li>
-            <li><span class="tag">적용</span>슬라이더로 목표 색을 맞춰 보세요. 눈으로 맞추기 어려우면 "연립방정식으로 풀기"를 눌러 정확한 세기를 확인하세요. 어떤 목표 색은 풀이의 세기가 음수나 1보다 크게 나옵니다. 그 색은 왜 만들 수 없나요?</li>
-            <li class="warn"><span class="tag">판단</span>물감은 빛과 반대로 섞을수록 어두워집니다(빼기 섞기). 이 카드의 "더하기 섞기"는 빛(화면, 조명)에만 해당합니다. 또 사람의 눈이 느끼는 색은 이 세 수와 정확히 비례하지 않습니다.</li>
+            <li><span class="tag">질문</span>무대 조명의 필터가 순수한 빨강, 초록, 파랑이 아니라 서로 조금씩 섞인 색이라면, 세 조명의 세기만 바꾸어 원하는 색을 정확히 만들 수 있을까?</li>
+            <li><span class="tag">복원</span>벡터의 일차결합은 \(s\vec{a} + t\vec{b} + u\vec{c}\)이고, 성분마다 계산하면 연립일차방정식이 된다.</li>
+            <li><span class="tag">설명</span>화면의 색은 빨강·초록·파랑 빛의 세기로 정해지므로 3차원 벡터 \((r, g, b)\)이다. 조명 세 개의 색을 \(\vec{l}_1, \vec{l}_2, \vec{l}_3\)이라 하면 섞인 색은 \(s\vec{l}_1 + t\vec{l}_2 + u\vec{l}_3\)이고, 목표 색 \(\vec{c}\)를 맞추는 것은 미지수 3개, 식 3개인 연립방정식을 푸는 일이다. 세 조명의 색 벡터가 한 평면에 놓이지 않으면(일차독립이면) 해가 하나 있다. 다만 세기는 0~1 사이여야 하므로, 해가 이 범위를 벗어나는 색은 이 조명으로 만들 수 없다.</li>
+            <li><span class="tag">연결</span>세 조명이 만들 수 있는 색의 모임은 세 벡터를 모서리로 하는 평행육면체 모양이다. 모니터마다 표현할 수 있는 색의 범위(색역)가 다른 이유이다. 다음 절에서는 이런 "더하고 실수배할 수 있는 모임"을 일반화한다.</li>
+            <li><span class="tag">적용</span>슬라이더로 목표 색을 맞춰 보자. 눈으로 맞추기 어려우면 "연립방정식으로 풀기"를 눌러 정확한 세기를 확인해 보자. 어떤 목표 색은 풀이의 세기가 음수나 1보다 크게 나온다. 그 색은 왜 만들 수 없는가?</li>
+            <li class="warn"><span class="tag">판단</span>물감은 빛과 반대로 섞을수록 어두워진다(빼기 섞기). 이 카드의 "더하기 섞기"는 빛(화면, 조명)에만 해당한다. 또 사람의 눈이 느끼는 색은 이 세 수와 정확히 비례하지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{l}_1 = (1, 0, 0)\), \(\vec{l}_2 = (1, 1, 0)\), \(\vec{l}_3 = (1, 1, 1)\)로 색 \((0.6, 0.5, 0.2)\)를 만들려면 \((s, t, u)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((0.1, 0.3, 0.2)\)<span class="why"><b>맞습니다.</b> 파랑은 \(u = 0.2\), 초록은 \(t + u = 0.5\)에서 \(t = 0.3\), 빨강은 \(s + t + u = 0.6\)에서 \(s = 0.1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((0.6, 0.5, 0.2)\)<span class="why"><b>조명이 순수한 빨강·초록·파랑이라고 보았습니다.</b> 조명 2, 3에는 빨강이 섞여 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((0.2, 0.3, 0.1)\)<span class="why"><b>순서를 뒤집었습니다.</b> 파랑은 조명 3에만 있으므로 \(u\)부터 정해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>만들 수 없다<span class="why"><b>세 벡터는 일차독립이라 해가 있고, 세기도 모두 0~1 안입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((0.1, 0.3, 0.2)\)<span class="why"><b>맞다.</b> 파랑은 \(u = 0.2\), 초록은 \(t + u = 0.5\)에서 \(t = 0.3\), 빨강은 \(s + t + u = 0.6\)에서 \(s = 0.1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((0.6, 0.5, 0.2)\)<span class="why"><b>조명이 순수한 빨강·초록·파랑이라고 보았다.</b> 조명 2, 3에는 빨강이 섞여 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((0.2, 0.3, 0.1)\)<span class="why"><b>순서를 뒤집었다.</b> 파랑은 조명 3에만 있으므로 \(u\)부터 정해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>만들 수 없다<span class="why"><b>세 벡터는 일차독립이라 해가 있고, 세기도 모두 0~1 안이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-3.html#card-adalg-subspace-3d"><small class="mono">고급 대수 1.3</small>좌표공간의 어떤 평면과 직선이 부분공간일까?</a><a href="../../c/adalg/1-3.html#card-adalg-intersect-proof"><small class="mono">고급 대수 1.3</small>두 부분공간이 겹치는 부분도 부분공간일까?</a><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a><a href="../../c/adalg/1-6.html#card-adalg-cauchy"><small class="mono">고급 대수 1.6</small>내적은 두 크기의 곱보다 커질 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/1-3.html#card-adalg-subspace-3d"><small class="mono">고급 대수 1.3</small>좌표공간의 어떤 평면과 직선이 부분공간일까?</a><a href="../../c/adalg/1-3.html#card-adalg-intersect-proof"><small class="mono">고급 대수 1.3</small>두 부분공간이 겹치는 부분도 부분공간일까?</a><a href="../../c/adalg/1-3.html#text-adalg-subspace"><small class="mono">고급 대수 1.3</small>부분공간</a><a href="../../c/adalg/1-6.html#card-adalg-cosine-sim"><small class="mono">고급 대수 1.6</small>컴퓨터는 어떻게 비슷한 기사를 골라낼까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

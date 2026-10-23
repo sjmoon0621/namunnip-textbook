@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>영화와 수학 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="1초 24장 영화에서 바퀴가 멈추거나 거꾸로 보이는 까닭(회전 대칭과 나머지, 에일리어싱), 내분점을 거듭 잡는 작도로 만드는 3차 베지에 곡선과 글꼴·애니메이션. 마차 바퀴 카드와, 베지에 곡선 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-mcult-wagon-wheel canvas { aspect-ratio: 2 / 1; max-width: 560px; margin: 0 auto; }
@@ -45,18 +50,79 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mcult-wagon-wheel"><span class="mono">1.4.1</span>영화 속 바퀴가 거꾸로 도는 까닭 — 프레임 속도와 나머지</a></li>
-        <li><a href="#card-mcult-bezier-path"><span class="mono">1.4.2</span>점 네 개로 매끄러운 곡선을 — 베지에 곡선</a></li>
+        <li><a href="#text-mcult-film"><span class="mono">본문</span>영화와 수학</a></li>
+        <li><a href="#card-mcult-wagon-wheel"><span class="mono">탐구 1</span>영화 속 바퀴가 거꾸로 도는 까닭 — 프레임 속도와 나머지</a></li>
+        <li><a href="#card-mcult-bezier-path"><span class="mono">탐구 2</span>점 네 개로 매끄러운 곡선을 — 베지에 곡선</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mcult-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mcult&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mcult-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mcult-film" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>영화와 수학</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">서부 영화에서 마차가 빨라지면 바퀴가 점점 빨리 돌다가, 어느 순간 멈춘 듯하더니 거꾸로 천천히 돌기 시작한다. 마차는 분명 앞으로 달리고 있다. 카메라가 고장 난 것도 아니다. 영화는 1초에 24장의 사진을 이어 붙인 것인데, 그 사이에 무슨 일이 일어나는 걸까? 그리고 애니메이션 속 공이 그리는 매끄러운 곡선은 컴퓨터에 어떻게 저장되어 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 210" role="img" aria-label="내분점을 거듭해 베지에 곡선 위의 점을 찾는 과정">
+              <path d="M80 180 Q260 30 440 180" class="b"/>
+              <line x1="80" y1="180" x2="260" y2="30" class="gd"/><line x1="260" y1="30" x2="440" y2="180" class="gd"/>
+              <line x1="170" y1="105" x2="350" y2="105" class="c"/>
+              <circle cx="80" cy="180" r="5" class="fk"/><circle cx="260" cy="30" r="5" class="fk"/><circle cx="440" cy="180" r="5" class="fk"/>
+              <circle cx="170" cy="105" r="4" class="fc"/><circle cx="350" cy="105" r="4" class="fc"/><circle cx="260" cy="105" r="5" class="fd"/>
+              <text x="62" y="198" class="s">P₀</text><text x="270" y="28" class="s">P₁ (조절점)</text><text x="448" y="198" class="s">P₂</text>
+              <text x="120" y="100" class="s tc">Q₀</text><text x="360" y="100" class="s tc">Q₁</text><text x="268" y="124" class="s td">B(1/2)</text>
+            </svg>
+            <figcaption>그림 1. 두 선분을 같은 비 \(t\)로 내분한 점 \(Q_0, Q_1\)을 잇고, 그 선분을 다시 \(t\)로 내분한 점이 곡선 위의 점이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>나머지, 내분점과 외분점의 좌표, 일차함수와 이차함수.</div>
+
+          <h3><span class="no">1.4.1</span>바퀴살과 나머지</h3>
+          <p>바퀴살이 8개인 바퀴는 45°만 돌아도 처음과 똑같이 보인다. 영화는 \(1/24\)초마다 한 장을 찍으므로, 우리가 보는 것은 바퀴가 한 장면 사이에 돈 각도 가운데 45°로 나눈 나머지뿐이다. 한 장면 사이에 50°를 돌면 5°를 돈 것과 똑같이 찍히고, 45°를 돌면 전혀 돌지 않은 것처럼 찍힌다. 그런데 뇌는 이웃한 장면 사이의 가장 작은 움직임으로 운동을 해석한다. 그래서 42°를 돌면, 앞으로 42°보다 뒤로 3°가 더 작은 움직임이라 바퀴가 거꾸로 도는 것으로 보인다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">겉보기 회전</span></span>
+            <p>대칭각이 \(\alpha\)인 바퀴가 한 장면 사이에 \(\theta\)만큼 돌면, 보이는 회전은 \(\theta\)를 \(\alpha\)로 나눈 나머지를 \(-\alpha/2\)보다 크고 \(\alpha/2\) 이하인 범위로 옮긴 값 \(\theta'\)이다. \(\theta' &lt; 0\)이면 바퀴는 거꾸로 도는 것처럼 보인다.</p>
+          </div>
+          <p>그림 2에서 바퀴가 1초에 몇 바퀴 도는지에 따라 보이는 움직임이 어떻게 바뀌는지 보자. 바퀴가 빨라져 한 장면 사이의 회전이 22.5°를 넘는 순간부터 거꾸로 돌기 시작하고, 45°에서는 멈춰 보인다. 이 효과는 같은 간격으로 띄엄띄엄 재는 모든 측정에서 생기며 앨리어싱이라 부른다.<sup class="fn"><a href="#fn-mcult-film-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="바퀴의 회전 빠르기와 보이는 회전">
+              <g class="s">
+                <text x="20" y="22">1초에 도는 바퀴 수</text><text x="190" y="22">한 장면 사이 회전</text><text x="350" y="22">보이는 회전</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1</text><text x="190" y="52">15°</text><text x="350" y="52">앞으로 15°</text>
+                <text x="20" y="74">2</text><text x="190" y="74">30°</text><text x="350" y="74">뒤로 15°</text>
+                <text x="20" y="96">2.8</text><text x="190" y="96">42°</text><text x="350" y="96">뒤로 3°</text>
+                <text x="20" y="118">3</text><text x="190" y="118">45°</text><text x="350" y="118">멈춤</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 바퀴살 8개인 바퀴를 1초에 24장으로 찍으면, 회전이 빨라질수록 보이는 회전은 나머지에 따라 앞뒤로 바뀐다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.2</span>점 몇 개로 곡선을 저장하기</h3>
+          <p>컴퓨터 그래픽은 곡선을 수많은 점으로 저장하지 않고, 몇 개의 점과 만드는 규칙만 저장한다. 그림 1처럼 세 점 \(P_0, P_1, P_2\)가 있으면, 0과 1 사이의 수 \(t\)에 대해 두 선분 \(P_0P_1\), \(P_1P_2\)를 각각 \(t\)대 \(1-t\)로 내분한 점을 잇고, 그 선분을 다시 같은 비로 내분한다. \(t\)를 0에서 1까지 바꾸면 이 점이 \(P_0\)에서 출발해 \(P_2\)에 도착하는 매끄러운 곡선을 그린다. 이것이 2차 베지에 곡선이다. 곡선은 \(P_1\)을 지나지 않지만 \(P_1\) 쪽으로 끌려가므로, \(P_1\)을 조절점이라 한다. 글꼴의 윤곽과 애니메이션의 이동 경로가 이렇게 저장된다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.2 <span class="nm">2차 베지에 곡선</span></span>
+            <p>내분을 두 번 거듭한 점은 \[B(t) = (1-t)^2 P_0 + 2t(1-t) P_1 + t^2 P_2 \quad (0 \le t \le 1)\]이다. 세 계수의 합은 늘 1이고, \(t = 0\)과 \(t = 1\)에서 곡선은 각각 \(P_0, P_2\)를 지난다.</p>
+          </div>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.3</span>
+            <p>바퀴살 8개인 바퀴가 1초에 2.8바퀴 돈다. 1초에 24장을 찍는 영화에서 바퀴는 어느 쪽으로, 1초에 몇 바퀴 도는 것처럼 보이는가? 또 \(P_0(0, 0)\), \(P_1(2, 4)\), \(P_2(4, 0)\)으로 정한 공의 경로에서 \(t = 1/2\)일 때의 위치와 공이 오르는 가장 높은 곳을 구하여라.</p>
+          </div>
+          <p>바퀴는 1초에 \(2.8 \times 360 = 1008°\), 한 장면 사이에 \(1008 \div 24 = 42°\)를 돈다. 42를 45로 나눈 나머지 42는 22.5보다 크므로 \(42 - 45 = -3°\)로 옮겨, 장면마다 뒤로 3°씩 도는 것처럼 보인다. 1초에는 \(3 \times 24 = 72°\), 곧 0.2바퀴씩 거꾸로 천천히 돈다.</p>
+          <p>공의 경로에서 \(t = 1/2\)이면 계수가 \(1/4, 1/2, 1/4\)이므로 \(B = \tfrac{1}{4}(0, 0) + \tfrac{1}{2}(2, 4) + \tfrac{1}{4}(4, 0) = (2, 2)\)이다. \(y\)좌표는 \(y = 2t(1-t) \times 4 = 8t(1-t)\)로, \(t = 1/2\)에서 가장 큰 2이다. 조절점의 높이는 4이지만 공은 그 절반까지만 오른다. 그래서 애니메이터는 공을 높이 \(h\)까지 올리고 싶으면 조절점을 \(2h\)에 둔다.</p>
+          <p>아래 탐구 카드에서 나머지로 바퀴의 겉보기 회전을 계산해 보고, 조절점을 옮기며 베지에 곡선으로 경로를 만들어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mcult-film-1">베지에 곡선은 1960년대 프랑스 자동차 회사 르노의 베지에와 시트로엥의 드 카스텔조가 자동차 차체의 곡면을 설계하려고 따로 만들었다. 내분을 거듭하는 그림 1의 방법을 드 카스텔조 알고리즘이라 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>영화는 같은 간격으로 찍은 장면을 이어 보여 주므로, 대칭인 바퀴의 회전은 한 장면 사이 회전각을 대칭각으로 나눈 나머지로만 보이고, 그 나머지가 대칭각의 절반을 넘으면 거꾸로 도는 것처럼 보인다. 컴퓨터 그래픽의 곡선은 내분을 거듭한 베지에 곡선으로 몇 개의 점만 저장해 만든다. 처음 질문의 마차 바퀴는 장면마다 42°씩 돌아 뒤로 3°씩 도는 것처럼 찍힌 것이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/1-2.html#card-mcult-perspective"><small class="mono">수학과 문화 1.2</small>같은 간격으로 선 전봇대를 그림에서는 어떤 간격으로 그려야 할까?</a><a href="../../c/mcult/1-2.html#card-mcult-golden-myth"><small class="mono">수학과 문화 1.2</small>네 직사각형 중 황금 직사각형은? 그리고 황금비는 정말 가장 아름다울까?</a><a href="../../c/mcult/1-2.html#text-mcult-perspective"><small class="mono">수학과 문화 1.2</small>미술과 수학</a></div></nav>
+
       <article class="card" id="card-mcult-wagon-wheel">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>영화 속 마차 바퀴는 왜 가끔 거꾸로 돌아 보일까?</h2><span class="kind">주기와 표본 추출 · 조작</span>
+          <span class="no">탐구 1</span><h2>영화 속 마차 바퀴는 왜 가끔 거꾸로 돌아 보일까?</h2><span class="kind">주기와 표본 추출 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -64,35 +130,35 @@
               <div><label class="mono">바퀴 회전 = <output class="r-out"></output> 바퀴/초</label><input class="r" type="range" min="0" max="6" step="0.05" value="2.8" aria-label="바퀴 회전 속도"></div>
               <div><label class="mono">살의 수 = <output class="k-out"></output></label><input class="k" type="range" min="3" max="12" step="1" value="8" aria-label="바큇살 수"></div>
             </div>
-            <p class="small">카메라는 1초에 24장(24 fps)을 찍습니다. 영상이 빠르면 실제 바퀴는 잘 보이지 않으니, 슬로모션으로 비교합니다.</p>
+            <p class="small">카메라는 1초에 24장(24 fps)을 찍는다. 영상이 빠르면 실제 바퀴는 잘 보이지 않으니, 슬로모션으로 비교한다.</p>
             <canvas aria-label="왼쪽은 실제 바퀴, 오른쪽은 1초에 24장 찍은 영화 속 바퀴"></canvas>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>서부 영화에서 빠르게 달리는 마차의 바퀴가 멈추거나 거꾸로 도는 것처럼 보일 때가 있습니다. 바퀴가 실제로 거꾸로 돌 리는 없는데, 왜 그럴까요?</li>
-            <li><span class="tag">복원</span>살이 \(k\)개인 바퀴는 \(\frac{360^\circ}{k}\)만큼 돌면 처음과 똑같아 보입니다(회전 대칭).</li>
-            <li><span class="tag">설명</span>영화는 1초에 24장의 사진입니다. 한 장과 다음 장 사이에 바퀴가 \(\theta = \frac{360^\circ \times (\text{초당 회전수})}{24}\)만큼 돕니다. 눈은 살이 <em>가장 조금 움직인 쪽</em>으로 이어 보므로, \(\theta\)를 \(\frac{360^\circ}{k}\)로 나눈 나머지가 중요합니다. 나머지가 0이면 멈춘 것처럼, 한 칸의 절반보다 크면 조금 <em>뒤로</em> 간 것으로 보여 거꾸로 도는 것처럼 보입니다.</li>
-            <li><span class="tag">연결</span>디지털 녹음의 샘플링, 형광등 아래의 선풍기, 헬리콥터 날개 영상도 같은 원리입니다(신호 처리의 에일리어싱).</li>
-            <li><span class="tag">적용</span>살이 8개일 때 바퀴가 멈춰 보이는 회전 속도를 모두 찾아보세요. 살의 수를 바꾸면 어떻게 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>사진을 띄엄띄엄 찍으면 빠른 반복 운동은 실제와 전혀 다른 운동으로 기록될 수 있습니다. 측정 간격이 현상의 주기보다 충분히 짧아야 합니다.</li>
+            <li><span class="tag">질문</span>서부 영화에서 빠르게 달리는 마차의 바퀴가 멈추거나 거꾸로 도는 것처럼 보일 때가 있다. 바퀴가 실제로 거꾸로 돌 리는 없는데, 왜 그럴까?</li>
+            <li><span class="tag">복원</span>살이 \(k\)개인 바퀴는 \(\frac{360^\circ}{k}\)만큼 돌면 처음과 똑같아 보인다(회전 대칭).</li>
+            <li><span class="tag">설명</span>영화는 1초에 24장의 사진이다. 한 장과 다음 장 사이에 바퀴가 \(\theta = \frac{360^\circ \times (\text{초당 회전수})}{24}\)만큼 돈다. 눈은 살이 <em>가장 조금 움직인 쪽</em>으로 이어 보므로, \(\theta\)를 \(\frac{360^\circ}{k}\)로 나눈 나머지가 중요하다. 나머지가 0이면 멈춘 것처럼, 한 칸의 절반보다 크면 조금 <em>뒤로</em> 간 것으로 보여 거꾸로 도는 것처럼 보인다.</li>
+            <li><span class="tag">연결</span>디지털 녹음의 샘플링, 형광등 아래의 선풍기, 헬리콥터 날개 영상도 같은 원리이다(신호 처리의 에일리어싱).</li>
+            <li><span class="tag">적용</span>살이 8개일 때 바퀴가 멈춰 보이는 회전 속도를 모두 찾아보자. 살의 수를 바꾸면 어떻게 달라지는가?</li>
+            <li class="warn"><span class="tag">판단</span>사진을 띄엄띄엄 찍으면 빠른 반복 운동은 실제와 전혀 다른 운동으로 기록될 수 있다. 측정 간격이 현상의 주기보다 충분히 짧아야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">살이 6개인 바퀴를 24 fps로 찍었습니다. 바퀴가 초당 몇 바퀴 돌 때 처음으로 멈춰 보일까요?</p>
+          <p class="q">살이 6개인 바퀴를 24 fps로 찍었다. 바퀴가 초당 몇 바퀴 돌 때 처음으로 멈춰 보일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4바퀴<span class="why"><b>맞습니다.</b> 한 장마다 \(\frac{360^\circ \times 4}{24} = 60^\circ = \frac{360^\circ}{6}\)만큼 돕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6바퀴<span class="why"><b>한 장마다 90°입니다.</b> 60°의 배수가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>24바퀴<span class="why"><b>멈춰 보이지만 처음은 아닙니다.</b> 한 장마다 한 바퀴씩 돕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1바퀴<span class="why"><b>한 장마다 15°</b>라 천천히 돌아 보입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4바퀴<span class="why"><b>맞다.</b> 한 장마다 \(\frac{360^\circ \times 4}{24} = 60^\circ = \frac{360^\circ}{6}\)만큼 돈다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>6바퀴<span class="why"><b>한 장마다 90°이다.</b> 60°의 배수가 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>24바퀴<span class="why"><b>멈춰 보이지만 처음은 아니다.</b> 한 장마다 한 바퀴씩 돈다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1바퀴<span class="why"><b>한 장마다 15°</b>라 천천히 돌아 보인다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/1-2.html#card-mcult-perspective"><small class="mono">수학과 문화 1.2</small>같은 간격으로 선 전봇대를 그림에서는 어떤 간격으로 그려야 할까?</a><a href="../../c/mcult/1-2.html#card-mcult-golden-myth"><small class="mono">수학과 문화 1.2</small>네 직사각형 중 황금 직사각형은? 그리고 황금비는 정말 가장 아름다울까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/1-2.html#card-mcult-perspective"><small class="mono">수학과 문화 1.2</small>같은 간격으로 선 전봇대를 그림에서는 어떤 간격으로 그려야 할까?</a><a href="../../c/mcult/1-2.html#card-mcult-golden-myth"><small class="mono">수학과 문화 1.2</small>네 직사각형 중 황금 직사각형은? 그리고 황금비는 정말 가장 아름다울까?</a><a href="../../c/mcult/1-2.html#text-mcult-perspective"><small class="mono">수학과 문화 1.2</small>미술과 수학</a></div></nav>
 
       <article class="card" id="card-mcult-bezier-path">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>디자인 프로그램은 점 네 개로 어떻게 매끄러운 곡선을 그릴까?</h2><span class="kind">베지에 곡선과 내분점 · 만들기</span>
+          <span class="no">탐구 2</span><h2>디자인 프로그램은 점 네 개로 어떻게 매끄러운 곡선을 그릴까?</h2><span class="kind">베지에 곡선과 내분점 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -104,39 +170,39 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>글꼴의 둥근 획, 로고의 곡선, 애니메이션의 이동 경로는 컴퓨터 화면에서 점 몇 개를 끌어 모양을 정합니다. 점 네 개만으로 어떻게 곡선 전체가 정해질까요?</li>
-            <li><span class="tag">복원</span>두 점 \(A\), \(B\)를 \(t : (1 - t)\)로 내분하는 점은 \((1 - t)A + tB\)입니다.</li>
-            <li><span class="tag">설명</span>조절점 \(P_0, P_1, P_2, P_3\)에서 이웃한 두 점을 \(t : (1-t)\)로 내분하면 점 3개, 다시 내분하면 2개, 한 번 더 하면 점 1개가 남습니다. \(t\)를 0에서 1까지 움직일 때 이 마지막 점이 그리는 자취가 <em>3차 베지에 곡선</em>이고, 식으로는 \(B(t) = (1-t)^3P_0 + 3(1-t)^2tP_1 + 3(1-t)t^2P_2 + t^3P_3\)입니다. 곡선은 \(P_0\)에서 출발해 \(P_3\)에서 끝나고, \(P_1\), \(P_2\)는 곡선이 휘는 방향을 정합니다.</li>
-            <li><span class="tag">연결</span>글꼴 파일, 벡터 그림(SVG), 애니메이션의 속도 곡선(ease-in-out)이 모두 베지에 곡선입니다. 확대해도 깨지지 않는 까닭은 점이 아니라 식을 저장하기 때문입니다.</li>
-            <li><span class="tag">적용</span>점을 끌어 하트의 반쪽이나 영문자 S 모양을 만들어 보세요. \(P_1\)과 \(P_2\)를 겹치면 곡선은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>곡선은 대개 \(P_1\), \(P_2\)를 지나지 않습니다. 조절점은 곡선을 끌어당기는 손잡이이지, 곡선 위의 점이 아닙니다.</li>
+            <li><span class="tag">질문</span>글꼴의 둥근 획, 로고의 곡선, 애니메이션의 이동 경로는 컴퓨터 화면에서 점 몇 개를 끌어 모양을 정한다. 점 네 개만으로 어떻게 곡선 전체가 정해질까?</li>
+            <li><span class="tag">복원</span>두 점 \(A\), \(B\)를 \(t : (1 - t)\)로 내분하는 점은 \((1 - t)A + tB\)이다.</li>
+            <li><span class="tag">설명</span>조절점 \(P_0, P_1, P_2, P_3\)에서 이웃한 두 점을 \(t : (1-t)\)로 내분하면 점 3개, 다시 내분하면 2개, 한 번 더 하면 점 1개가 남는다. \(t\)를 0에서 1까지 움직일 때 이 마지막 점이 그리는 자취가 <em>3차 베지에 곡선</em>이고, 식으로는 \(B(t) = (1-t)^3P_0 + 3(1-t)^2tP_1 + 3(1-t)t^2P_2 + t^3P_3\)이다. 곡선은 \(P_0\)에서 출발해 \(P_3\)에서 끝나고, \(P_1\), \(P_2\)는 곡선이 휘는 방향을 정한다.</li>
+            <li><span class="tag">연결</span>글꼴 파일, 벡터 그림(SVG), 애니메이션의 속도 곡선(ease-in-out)이 모두 베지에 곡선이다. 확대해도 깨지지 않는 까닭은 점이 아니라 식을 저장하기 때문이다.</li>
+            <li><span class="tag">적용</span>점을 끌어 하트의 반쪽이나 영문자 S 모양을 만들어 보자. \(P_1\)과 \(P_2\)를 겹치면 곡선은 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>곡선은 대개 \(P_1\), \(P_2\)를 지나지 않는다. 조절점은 곡선을 끌어당기는 손잡이이지, 곡선 위의 점이 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">2차 베지에 곡선 \(B(t) = (1-t)^2P_0 + 2(1-t)tP_1 + t^2P_2\)에서 \(P_0 = (0, 0)\), \(P_1 = (2, 4)\), \(P_2 = (4, 0)\)일 때 \(B\left(\frac12\right)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(2, 2)<span class="why"><b>맞습니다.</b> \(\frac14P_0 + \frac12P_1 + \frac14P_2 = (2, 2)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(2, 4)<span class="why"><b>조절점 \(P_1\)입니다.</b> 곡선은 조절점을 지나지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(2, 0)<span class="why"><b>양 끝점의 중점입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(2, 4/3)<span class="why"><b>세 점의 무게중심입니다.</b> 계수는 \(\frac14, \frac12, \frac14\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>(2, 2)<span class="why"><b>맞다.</b> \(\frac14P_0 + \frac12P_1 + \frac14P_2 = (2, 2)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(2, 4)<span class="why"><b>조절점 \(P_1\)이다.</b> 곡선은 조절점을 지나지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(2, 0)<span class="why"><b>양 끝점의 중점이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>(2, 4/3)<span class="why"><b>세 점의 무게중심이다.</b> 계수는 \(\frac14, \frac12, \frac14\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/1-2.html#card-mcult-perspective"><small class="mono">수학과 문화 1.2</small>같은 간격으로 선 전봇대를 그림에서는 어떤 간격으로 그려야 할까?</a><a href="../../c/mcult/1-2.html#card-mcult-golden-myth"><small class="mono">수학과 문화 1.2</small>네 직사각형 중 황금 직사각형은? 그리고 황금비는 정말 가장 아름다울까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mcult/1-2.html#card-mcult-perspective"><small class="mono">수학과 문화 1.2</small>같은 간격으로 선 전봇대를 그림에서는 어떤 간격으로 그려야 할까?</a><a href="../../c/mcult/1-2.html#card-mcult-golden-myth"><small class="mono">수학과 문화 1.2</small>네 직사각형 중 황금 직사각형은? 그리고 황금비는 정말 가장 아름다울까?</a><a href="../../c/mcult/1-2.html#text-mcult-perspective"><small class="mono">수학과 문화 1.2</small>미술과 수학</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=mcult-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=mcult&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

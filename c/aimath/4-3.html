@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>손실함수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="모델이 틀린 정도를 나타내는 손실함수, 평균제곱오차가 가중치의 이차함수가 되는 모습과 그 최솟값, 평균제곱오차와 평균절댓값오차의 차이, 튀는 자료에 대한 민감도(평균과 중앙값). 손실 곡선 카드와, 튀는 자료 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-aimath-loss-curve .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem; }
@@ -45,22 +50,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-aimath-loss-curve"><span class="mono">4.3.1</span>모델의 값을 바꾸면 손실은 어떤 함수가 될까</a></li>
-        <li><a href="#card-aimath-loss-outlier"><span class="mono">4.3.2</span>튀는 자료 하나에 더 크게 흔들리는 손실함수는?</a></li>
+        <li><a href="#text-aimath-loss"><span class="mono">본문</span>손실함수</a></li>
+        <li><a href="#card-aimath-loss-curve"><span class="mono">탐구 1</span>모델의 값을 바꾸면 손실은 어떤 함수가 될까</a></li>
+        <li><a href="#card-aimath-loss-outlier"><span class="mono">탐구 2</span>튀는 자료 하나에 더 크게 흔들리는 손실함수는?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=aimath-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=aimath&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=aimath-4-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-aimath-loss" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>손실함수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">반 학생 다섯 명의 하루 운동 시간이 3, 4, 5, 6시간이고 한 명은 실수로 60시간이라고 입력되었다. 이 자료로 '대표값'을 하나 예측한다면 얼마로 해야 할까? 평균을 쓰면 15.6시간이 되어 아무도 대표하지 못한다. 예측이 얼마나 틀렸는지를 재는 기준, 곧 손실함수를 어떻게 정하느냐에 따라 답이 달라진다.</p>
+          <figure class="q-fig" data-q="ai-loss">
+            <svg viewBox="0 0 520 230" role="img" aria-label="이상치의 값에 따라 달라지는 제곱 손실과 절댓값 손실의 그래프와 최소점"></svg>
+            <div class="q-ctl"><label>다섯 번째 자료의 값 <input type="range" data-k="o" min="2" max="20" step="0.5" value="7"><output data-k="o"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 자료 3, 4, 5, 6과 다섯 번째 값(아래 빨간 점들)에 대해 하나의 값 \(c\)로 예측할 때의 손실. 제곱 손실(주황)은 평균에서, 절댓값 손실(파랑)은 중앙값에서 최소이다. 다섯 번째 값을 크게 하면 제곱 손실의 최소점만 크게 끌려간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>이차함수의 그래프와 꼭짓점(공통수학1), 절댓값, 평균과 중앙값, 추세선(<a href="4-2.html">추세선</a>).</div>
+
+          <h3><span class="no">4.3.1</span>손실함수</h3>
+          <p>인공지능의 예측이 실제 값과 얼마나 다른지를 하나의 수로 나타내는 함수를 손실함수라 한다. 학습은 손실함수의 값을 가장 작게 하는 매개변수를 찾는 일이다. 어떤 손실함수를 고르느냐가 곧 무엇을 잘 맞히려는지를 정한다. 가장 흔히 쓰는 두 가지는 오차를 제곱해 더하는 제곱 손실과, 오차의 절댓값을 더하는 절댓값 손실이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.3.1 <span class="nm">대표값과 손실함수</span></span>
+            <p>자료 \(x_1, \ldots, x_n\)을 값 하나 \(c\)로 예측할 때, 제곱 손실 \(\sum (x_i - c)^2\)은 \(c\)가 평균일 때 최소이고, 절댓값 손실 \(\sum |x_i - c|\)는 \(c\)가 중앙값일 때 최소이다.</p>
+          </div>
+          <p>제곱 손실은 \(c\)의 이차함수 \(nc^2 - 2c\sum x_i + \sum x_i^2\)이므로 꼭짓점 \(c = \dfrac{\sum x_i}{n}\), 곧 평균에서 최소이다. 절댓값 손실은 꺾은선 모양인데, \(c\)를 중앙값보다 조금 오른쪽으로 옮기면 왼쪽의 자료가 더 많아 손실이 늘어난다. 그래서 왼쪽과 오른쪽의 자료 수가 같아지는 중앙값에서 최소가 된다.<sup class="fn"><a href="#fn-aimath-loss-1">1</a></sup></p>
+
+          <h3><span class="no">4.3.2</span>이상치에 대한 민감도</h3>
+          <p>그림 1에서 다섯 번째 값을 7에서 20으로 늘려 보자. 제곱 손실의 최소점(평균)은 5에서 7.6으로 크게 움직이지만, 절댓값 손실의 최소점(중앙값)은 5 그대로이다. 제곱 손실은 큰 오차를 제곱으로 부풀리므로, 멀리 떨어진 자료 하나가 예측을 자기 쪽으로 강하게 끌어당긴다. 그래서 잘못 입력된 자료가 섞여 있을 수 있을 때는 절댓값 손실이 더 안정적이다. 반면 큰 오차를 특히 피해야 하는 문제에서는 제곱 손실이 알맞다.</p>
+          <p>예측값이 하나가 아니라 추세선 \(y = ax + b\)처럼 기울기와 절편 두 수로 정해지면, 제곱 손실은 \(a\)와 \(b\) 두 수의 함수가 된다. \(a\)를 가로, \(b\)를 세로로 놓고 손실을 높이로 세우면 바닥이 하나뿐인 그릇 모양의 곡면이 생기고, 가장 좋은 추세선은 그 그릇의 바닥에 있다. 매개변수가 많아지면 이런 곡면을 그릴 수는 없지만 바닥을 찾는다는 생각은 같으며, 다음 절의 경사하강법이 그 바닥을 찾아 내려가는 방법이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="제곱 손실과 절댓값 손실의 비교">
+              <g class="s">
+                <text x="30" y="25">손실</text><text x="160" y="25">최소점</text><text x="290" y="25">장점</text><text x="410" y="25">단점</text>
+                <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+                <text x="30" y="60">제곱</text><text x="160" y="60">평균</text><text x="290" y="60">매끈해 미분 쉬움</text><text x="410" y="60">이상치에 민감</text>
+                <text x="30" y="90">절댓값</text><text x="160" y="90">중앙값</text><text x="290" y="90">이상치에 강함</text><text x="410" y="90">꺾인 점이 있음</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 어떤 손실함수를 고르느냐에 따라 예측의 성질이 달라진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.3.2</span>
+            <p>자료 3, 4, 5, 6, 60에 대하여 제곱 손실과 절댓값 손실을 최소로 하는 예측값을 각각 구하고, 그때의 손실을 계산하여라.</p>
+          </div>
+          <p>평균은 \(\dfrac{3 + 4 + 5 + 6 + 60}{5} = 15.6\)이다. 제곱 손실은 \(12.6^2 + 11.6^2 + 10.6^2 + 9.6^2 + 44.4^2 \approx 158.8 + 134.6 + 112.4 + 92.2 + 1971.4 = 2469.2\)이다.</p>
+          <p>중앙값은 5이다. 절댓값 손실은 \(2 + 1 + 0 + 1 + 55 = 59\)이다. 평균 15.6은 다섯 명 가운데 누구와도 가깝지 않지만, 중앙값 5는 잘못 입력된 60을 빼면 나머지 넷의 한가운데이다. 다만 60이 실수가 아니라 정말 중요한 자료라면 그것을 무시하는 중앙값이 오히려 위험할 수 있다. 손실함수는 문제의 성격을 보고 골라야 한다.</p>
+          <p>아래 탐구 카드에서 틀린 정도를 함수로 나타내 보고, 잘못된 자료 하나가 두 손실함수를 얼마나 흔드는지 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-aimath-loss-1">분류 문제에서는 정답일 확률의 로그를 쓰는 교차 엔트로피 손실을 많이 쓴다. 정답에 낮은 확률을 줄수록 손실이 매우 커지도록 만든 함수이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>손실함수는 예측이 틀린 정도를 수로 나타내며, 학습은 손실을 최소로 하는 매개변수를 찾는 일이다. 값 하나로 예측할 때 제곱 손실은 평균에서, 절댓값 손실은 중앙값에서 최소이고, 제곱 손실이 이상치에 훨씬 민감하다. 그래서 처음 질문처럼 잘못된 자료가 섞여 있으면 절댓값 손실로 고른 중앙값이 대표값으로 더 안정적이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/4-2.html#card-aimath-trendline"><small class="mono">인공지능 수학 4.2</small>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</a><a href="../../c/aimath/4-2.html#card-aimath-extrapolate"><small class="mono">인공지능 수학 4.2</small>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</a><a href="../../c/aimath/4-2.html#text-aimath-trend"><small class="mono">인공지능 수학 4.2</small>추세선</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-4.html#card-aimath-gradient-descent"><small class="mono">인공지능 수학 4.4</small>안개 낀 산에서 가장 낮은 곳을 찾아 내려가려면?</a><a href="../../c/aimath/4-4.html#card-aimath-gd-contour"><small class="mono">인공지능 수학 4.4</small>기울기와 절편을 함께 학습하면 어떤 길로 내려갈까?</a><a href="../../c/aimath/4-4.html#text-aimath-gd"><small class="mono">인공지능 수학 4.4</small>경사하강법</a></div></nav>
+
       <article class="card" id="card-aimath-loss-curve">
         <header class="card-head">
-          <span class="no">4.3.1</span><h2>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</h2><span class="kind">손실함수 · 조작</span>
+          <span class="no">탐구 1</span><h2>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</h2><span class="kind">손실함수 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">택시 거리(km)와 요금(천 원)의 가상 자료 6개에 원점을 지나는 모델 \(y = wx\)를 맞춥니다.</p>
+            <p class="small">택시 거리(km)와 요금(천 원)의 가상 자료 6개에 원점을 지나는 모델 \(y = wx\)를 맞춘다.</p>
             <div class="ctl-row"><div><label class="mono">가중치 w = <output class="w-out"></output></label><input class="w" type="range" min="0" max="3" step="0.02" value="0.6" aria-label="가중치 w"></div></div>
             <div class="two">
               <canvas class="fitc" aria-label="자료와 직선 y = wx, 오차 선분"></canvas>
@@ -69,34 +125,34 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>인공지능이 "학습한다"는 것은 무엇을 더 좋게 만드는 걸까요? "얼마나 틀렸는가"를 하나의 수로 나타낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>이차함수 \(L(w) = pw^2 + qw + r\) \((p > 0)\)는 \(w = -\dfrac{q}{2p}\)에서 최솟값을 가집니다.</li>
-            <li><span class="tag">설명</span>모델의 예측값 \(wx_i\)와 실제 값 \(y_i\)의 차를 제곱해 평균 낸 \(L(w) = \dfrac1n\{(y_1 - wx_1)^2 + \cdots + (y_n - wx_n)^2\}\)를 <em>평균제곱오차</em>라 하고, 이처럼 모델이 틀린 정도를 나타내는 함수를 <em>손실함수</em>라 합니다. 이 손실은 \(w\)에 대한 이차함수(아래로 볼록)라서, 꼭짓점 \(w^* = \dfrac{x_1y_1 + \cdots + x_ny_n}{x_1^2 + \cdots + x_n^2}\)에서 가장 작습니다. 학습이란 손실을 가장 작게 하는 모델의 값(가중치)을 찾는 일입니다.</li>
-            <li><span class="tag">연결</span>가중치가 하나면 꼭짓점 공식으로 바로 구하지만, 실제 인공지능은 가중치가 수백만 개라 공식으로 풀 수 없습니다. 그래서 기울기를 따라 조금씩 내려가는 경사하강법을 씁니다.</li>
-            <li><span class="tag">적용</span>막대를 움직여 왼쪽 직선과 오른쪽 손실 곡선 위의 점을 함께 보세요. 손실이 가장 작은 \(w\)는 얼마이고, 그 뜻(1 km당 요금)은 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>손실이 0이 아니라고 모델이 잘못된 것은 아닙니다. 자료에는 측정 오차와 다른 요인이 섞여 있어서, 가장 좋은 모델도 손실이 남습니다.</li>
+            <li><span class="tag">질문</span>인공지능이 학습한다는 것은 무엇을 더 좋게 만드는 걸까? ‘얼마나 틀렸는가’를 하나의 수로 나타낼 수 있을까?</li>
+            <li><span class="tag">복원</span>이차함수 \(L(w) = pw^2 + qw + r\) \((p &gt; 0)\)는 \(w = -\dfrac{q}{2p}\)에서 최솟값을 가진다.</li>
+            <li><span class="tag">설명</span>모델의 예측값 \(wx_i\)와 실제 값 \(y_i\)의 차를 제곱해 평균 낸 \(L(w) = \dfrac1n\{(y_1 - wx_1)^2 + \cdots + (y_n - wx_n)^2\}\)를 <em>평균제곱오차</em>라 하고, 이렇게 모델이 틀린 정도를 나타내는 함수를 <em>손실함수</em>라 한다. 이 손실은 \(w\)에 대한 이차함수(아래로 볼록)라서 꼭짓점 \(w^* = \dfrac{x_1y_1 + \cdots + x_ny_n}{x_1^2 + \cdots + x_n^2}\)에서 가장 작다. 즉 학습이란 손실을 가장 작게 하는 모델의 값(가중치)을 찾는 일이다.</li>
+            <li><span class="tag">연결</span>가중치가 하나면 꼭짓점 공식으로 바로 구하지만, 실제 인공지능은 가중치가 수백만 개라 공식으로 풀 수 없다. 그래서 기울기를 따라 조금씩 내려가는 경사하강법을 쓴다.</li>
+            <li><span class="tag">적용</span>막대를 움직여 왼쪽 직선과 오른쪽 손실 곡선 위의 점을 함께 보자. 손실이 가장 작은 \(w\)가 얼마이고, 그 값이 뜻하는 1 km당 요금이 얼마인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>손실이 0이 아니라고 모델이 잘못된 것은 아니다. 자료에는 측정 오차와 다른 요인이 섞여 있어서, 가장 좋은 모델도 손실이 남는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">자료가 \((1, 2), (2, 5)\)일 때 \(y = wx\)의 평균제곱오차를 가장 작게 하는 \(w\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2.4<span class="why"><b>맞습니다.</b> \(w^* = \frac{1 \cdot 2 + 2 \cdot 5}{1^2 + 2^2} = \frac{12}{5}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2.25<span class="why"><b>두 기울기 2와 2.5의 평균입니다.</b> 제곱오차는 큰 \(x\)에 더 무게를 둡니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac73\)<span class="why"><b>(\(y\)의 합) ÷ (\(x\)의 합)입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5<span class="why"><b>두 번째 점만 맞춘 값입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>2.4<span class="why"><b>맞다.</b> \(w^* = \frac{1 \cdot 2 + 2 \cdot 5}{1^2 + 2^2} = \frac{12}{5}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>2.25<span class="why"><b>두 기울기 2와 2.5의 평균이다.</b> 제곱오차는 큰 \(x\)에 더 무게를 둔다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac73\)<span class="why"><b>(\(y\)의 합) ÷ (\(x\)의 합)이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5<span class="why"><b>두 번째 점만 맞춘 값이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/4-2.html#card-aimath-trendline"><small class="mono">인공지능 수학 4.2</small>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</a><a href="../../c/aimath/4-2.html#card-aimath-extrapolate"><small class="mono">인공지능 수학 4.2</small>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-4.html#card-aimath-gradient-descent"><small class="mono">인공지능 수학 4.4</small>안개 낀 산에서 가장 낮은 곳을 찾아 내려가려면?</a><a href="../../c/aimath/4-4.html#card-aimath-gd-contour"><small class="mono">인공지능 수학 4.4</small>기울기와 절편을 함께 학습하면 어떤 길로 내려갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/4-2.html#card-aimath-trendline"><small class="mono">인공지능 수학 4.2</small>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</a><a href="../../c/aimath/4-2.html#card-aimath-extrapolate"><small class="mono">인공지능 수학 4.2</small>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</a><a href="../../c/aimath/4-2.html#text-aimath-trend"><small class="mono">인공지능 수학 4.2</small>추세선</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-4.html#card-aimath-gradient-descent"><small class="mono">인공지능 수학 4.4</small>안개 낀 산에서 가장 낮은 곳을 찾아 내려가려면?</a><a href="../../c/aimath/4-4.html#card-aimath-gd-contour"><small class="mono">인공지능 수학 4.4</small>기울기와 절편을 함께 학습하면 어떤 길로 내려갈까?</a><a href="../../c/aimath/4-4.html#text-aimath-gd"><small class="mono">인공지능 수학 4.4</small>경사하강법</a></div></nav>
 
       <article class="card" id="card-aimath-loss-outlier">
         <header class="card-head">
-          <span class="no">4.3.2</span><h2>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</h2><span class="kind">제곱오차와 절댓값오차 · 예측→확인</span>
+          <span class="no">탐구 2</span><h2>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</h2><span class="kind">제곱오차와 절댓값오차 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">자료 8개에 \(y = ax + b\)를 맞춥니다(가상). 자료 하나가 잘못 입력되어 크게 튀었다고 할 때, 두 손실함수로 학습한 직선 중 어느 쪽이 더 크게 움직일까요?</p>
+            <p class="small">자료 8개에 \(y = ax + b\)를 맞춘다(가상). 자료 하나가 잘못 입력되어 크게 튀었다고 할 때, 두 손실함수로 학습한 직선 중 어느 쪽이 더 크게 움직일까?</p>
             <div class="presets" role="group" aria-label="예측"><button class="chip" type="button" data-g="mse">제곱오차(MSE)로 학습한 직선</button><button class="chip" type="button" data-g="mae">절댓값오차(MAE)로 학습한 직선</button><button class="chip" type="button" data-g="same">비슷하다</button></div>
             <p class="verdict" role="status"></p>
             <div class="presets"><button class="chip go-toggle" type="button" disabled>튀는 자료 넣기/빼기</button></div>
@@ -104,39 +160,39 @@
             <p class="mono small say"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>센서 오류로 엉뚱한 값 하나가 자료에 섞였습니다. 손실함수를 무엇으로 정하느냐에 따라 학습 결과가 얼마나 달라질까요?</li>
-            <li><span class="tag">복원</span>\(|e|\)와 \(e^2\)은 \(|e| > 1\)이면 \(e^2\)이 더 크고, \(e\)가 커질수록 차이가 빠르게 벌어집니다.</li>
-            <li><span class="tag">설명</span><em>평균제곱오차</em> \(\frac1n\sum e_i^2\)은 큰 오차를 제곱해서 아주 크게 셉니다. 그래서 튀는 자료 하나를 줄이려고 직선 전체가 그쪽으로 끌려갑니다. <em>평균절댓값오차</em> \(\frac1n\sum|e_i|\)는 오차를 그대로 세므로 튀는 자료의 영향이 작습니다. 대신 MAE는 꼭짓점이 뾰족해 미분하기 어려운 곳이 있습니다.</li>
-            <li><span class="tag">연결</span>평균과 중앙값의 관계와 같습니다. 제곱오차를 최소로 하는 상수는 평균, 절댓값오차를 최소로 하는 상수는 중앙값이고, 중앙값이 극단값에 덜 흔들립니다.</li>
-            <li><span class="tag">적용</span>예측한 뒤 튀는 자료를 넣었다 빼며 두 직선의 움직임을 비교하세요. 집값 예측처럼 가끔 아주 큰 값이 있는 자료에는 어떤 손실함수가 알맞을까요?</li>
-            <li class="warn"><span class="tag">판단</span>어느 손실함수가 늘 좋은 것은 아닙니다. 튀는 값이 오류라면 MAE가 낫지만, 드물지만 중요한 진짜 값이라면 그 값을 크게 반영하는 MSE가 맞을 수 있습니다.</li>
+            <li><span class="tag">질문</span>센서 오류로 엉뚱한 값 하나가 자료에 섞였다. 손실함수를 무엇으로 정하느냐에 따라 학습 결과가 얼마나 달라질까?</li>
+            <li><span class="tag">복원</span>\(|e| &gt; 1\)이면 \(e^2\)이 \(|e|\)보다 크고, \(e\)가 커질수록 둘의 차이가 빠르게 벌어진다.</li>
+            <li><span class="tag">설명</span><em>평균제곱오차</em> \(\frac1n\sum e_i^2\)은 큰 오차를 제곱해서 아주 크게 센다. 그래서 튀는 자료 하나를 줄이려고 직선 전체가 그쪽으로 끌려간다. 반면 <em>평균절댓값오차</em> \(\frac1n\sum|e_i|\)는 오차를 그대로 세므로 튀는 자료의 영향이 작은데, 대신 MAE는 꼭짓점이 뾰족해 미분하기 어려운 곳이 있다.</li>
+            <li><span class="tag">연결</span>이것은 평균과 중앙값의 관계와 같다. 제곱오차를 최소로 하는 상수는 평균, 절댓값오차를 최소로 하는 상수는 중앙값이고, 중앙값이 극단값에 덜 흔들린다.</li>
+            <li><span class="tag">적용</span>예측한 뒤 튀는 자료를 넣었다 빼며 두 직선의 움직임을 비교해 보자. 그리고 집값 예측처럼 가끔 아주 큰 값이 있는 자료에는 어떤 손실함수가 알맞을지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>어느 손실함수가 늘 좋은 것은 아니다. 튀는 값이 오류라면 MAE가 낫지만, 드물지만 중요한 진짜 값이라면 그 값을 크게 반영하는 MSE가 맞을 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">자료 1, 2, 3, 4, 100에 상수 하나 \(c\)를 맞출 때, 제곱오차와 절댓값오차를 가장 작게 하는 \(c\)는 각각?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>22, 3<span class="why"><b>맞습니다.</b> 제곱오차는 평균 \(110/5 = 22\), 절댓값오차는 중앙값 3에서 최소입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3, 22<span class="why"><b>둘을 바꿨습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22, 22<span class="why"><b>절댓값오차는 중앙값에서 최소입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5, 3<span class="why"><b>100을 빼고 평균을 냈습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>22, 3<span class="why"><b>맞다.</b> 제곱오차는 평균 \(110/5 = 22\), 절댓값오차는 중앙값 3에서 최소이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3, 22<span class="why"><b>둘을 바꿨다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>22, 22<span class="why"><b>절댓값오차는 중앙값에서 최소이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>2.5, 3<span class="why"><b>100을 빼고 평균을 냈다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/4-2.html#card-aimath-trendline"><small class="mono">인공지능 수학 4.2</small>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</a><a href="../../c/aimath/4-2.html#card-aimath-extrapolate"><small class="mono">인공지능 수학 4.2</small>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-4.html#card-aimath-gradient-descent"><small class="mono">인공지능 수학 4.4</small>안개 낀 산에서 가장 낮은 곳을 찾아 내려가려면?</a><a href="../../c/aimath/4-4.html#card-aimath-gd-contour"><small class="mono">인공지능 수학 4.4</small>기울기와 절편을 함께 학습하면 어떤 길로 내려갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/aimath/4-2.html#card-aimath-trendline"><small class="mono">인공지능 수학 4.2</small>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</a><a href="../../c/aimath/4-2.html#card-aimath-extrapolate"><small class="mono">인공지능 수학 4.2</small>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</a><a href="../../c/aimath/4-2.html#text-aimath-trend"><small class="mono">인공지능 수학 4.2</small>추세선</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-4.html#card-aimath-gradient-descent"><small class="mono">인공지능 수학 4.4</small>안개 낀 산에서 가장 낮은 곳을 찾아 내려가려면?</a><a href="../../c/aimath/4-4.html#card-aimath-gd-contour"><small class="mono">인공지능 수학 4.4</small>기울기와 절편을 함께 학습하면 어떤 길로 내려갈까?</a><a href="../../c/aimath/4-4.html#text-aimath-gd"><small class="mono">인공지능 수학 4.4</small>경사하강법</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=aimath-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=aimath&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -144,6 +200,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/aimath/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/aimath/loss-curve.js"></script>
 <script src="../../js/cards/aimath/loss-outlier.js"></script>

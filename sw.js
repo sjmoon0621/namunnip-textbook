@@ -6,6 +6,10 @@ importScripts("sw-files.js");   // self.PRECACHE = { version, files }
 
 const PREFIX = "namunnip-textbook-";
 const CACHE = PREFIX + self.PRECACHE.version;
+/* 저장 목록에 없는 큰 자료(문제은행·기출 JSON, 기출 그림)는 처음 열 때 따로 담아 두고 오프라인에서 쓴다.
+   이름이 PREFIX로 시작하지 않아 버전이 바뀌어도 남는다(늘 네트워크를 먼저 쓰므로 옛 자료가 보이지는 않는다) */
+const RUNTIME = "namunnip-runtime";
+const RUNTIME_RX = /\/exams\/.+\.(json|webp|png|jpg|svg)$/;
 const BASE = new URL("./", self.location).href;   // 교과서 최상위 (GitHub Pages 하위 경로 포함)
 
 self.addEventListener("install", (event) => {
@@ -42,8 +46,15 @@ self.addEventListener("fetch", (event) => {
     const hit = await cache.match(cacheKey(req.url));
     if (hit) return hit;
     try {
-      return await fetch(req);
+      const res = await fetch(req);
+      if (res.ok && RUNTIME_RX.test(new URL(req.url).pathname)) {
+        const copy = res.clone();
+        caches.open(RUNTIME).then((c) => c.put(cacheKey(req.url), copy));
+      }
+      return res;
     } catch (err) {
+      const kept = await (await caches.open(RUNTIME)).match(cacheKey(req.url));
+      if (kept) return kept;
       // 오프라인이고 저장본에도 없는 페이지: 첫 화면을 보여 준다.
       if (req.mode === "navigate") {
         const home = await cache.match(BASE + "index.html");

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>데이터 시각화 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="탐구에서 얻은 데이터를 목적과 맥락에 맞게 표, 막대그래프, 히스토그램, 분산형 그래프 등의 시각 자료로 표현하고, 세로축 자르기·이중 축·넓이 왜곡처럼 오해를 부르는 표현을 가려낸다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-fusi-misgraph .f2-pane[hidden] { display: none; }
   </style>
@@ -41,18 +47,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-sie1-plot"><span class="mono">2.4.1</span>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</a></li>
-        <li><a href="#card-fusi-misgraph"><span class="mono">2.4.2</span>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</a></li>
+        <li><a href="#text-fusi-area-distortion"><span class="mono">본문</span>데이터 시각화</a></li>
+        <li><a href="#card-sie1-plot"><span class="mono">탐구 1</span>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</a></li>
+        <li><a href="#card-fusi-misgraph"><span class="mono">탐구 2</span>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=fusi-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=fusi&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=fusi-2-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-fusi-area-distortion" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>데이터 시각화</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">어느 신문이 '10년 사이 전기차 판매가 두 배로 늘었다'는 기사에 자동차 그림 두 개를 실었다. 10년 전의 자동차는 작게, 올해의 자동차는 가로와 세로를 모두 두 배로 키워 그렸다. 독자들은 그림을 보고 판매가 엄청나게 늘었다고 느꼈다. 그런데 정말 두 배로 보였을까? 같은 자료라도 그리는 방법에 따라 받는 느낌이 달라진다면, 자료를 정직하게 보여 주는 그래프는 어떻게 그려야 할까?</p>
+          <figure class="q-fig" data-q="fusi-area">
+            <svg viewBox="0 0 520 215" role="img" aria-label="값의 비에 따라 그림의 넓이와 막대 높이가 달라지는 모양"></svg>
+            <div class="q-ctl"><label>두 값의 비 <input type="range" data-k="r" min="1" max="3" step="0.1" value="2"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 같은 비를 가로세로 모두 늘린 그림(왼쪽)과 높이만 늘린 막대(오른쪽)로 나타냈다. 눈은 넓이를 비교하므로 왼쪽 그림은 차이를 비의 제곱만큼 부풀린다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>닮음비와 넓이의 비(수학), 막대그래프와 꺾은선그래프, 자료의 신뢰성(<a href="2-3.html">데이터 수집과 신뢰성 평가</a>).</div>
+
+          <h3><span class="no">2.4.1</span>눈은 무엇을 비교하는가</h3>
+          <p>그래프를 보는 사람은 숫자를 하나하나 읽지 않고 모양의 크기를 한눈에 비교한다. 막대그래프에서는 막대의 길이를, 그림 그래프에서는 그림이 차지하는 넓이를 비교한다. 그런데 닮은 도형은 길이가 \(k\)배가 되면 넓이가 \(k^2\)배, 부피가 \(k^3\)배가 된다. 그래서 값이 두 배일 때 그림의 가로와 세로를 모두 두 배로 키우면, 눈에는 네 배로 보인다. 입체로 그리면 여덟 배로 보이기도 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.4.1 <span class="nm">거짓말 요인</span></span>
+          <p>그래프에서 보이는 변화의 크기를 자료의 실제 변화의 크기로 나눈 값을 거짓말 요인이라 한다. 정직한 그래프는 이 값이 1에 가깝다. 값의 비가 \(r\)일 때 가로세로를 모두 늘린 그림은 거짓말 요인이 \(r\)이고(넓이 \(r^2\)를 비 \(r\)로 나눔), 막대는 1이다.</p>
+          </div>
+          <p>그림 1에서 두 값의 비를 바꾸어 보자. 비가 2이면 그림의 넓이는 4배로 보여 거짓말 요인이 2이다. 비가 3이면 넓이가 9배가 되어 거짓말 요인이 3이 된다. 막대는 언제나 높이만 비만큼 달라지므로 거짓말 요인이 1이다. 그래서 자료의 크기를 비교하는 그래프는 그림보다 막대나 점으로 그리는 것이 정직하다.<sup class="fn"><a href="#fn-fusi-area-distortion-1">1</a></sup></p>
+
+          <h3><span class="no">2.4.2</span>세로축이 0에서 시작하지 않을 때</h3>
+          <p>막대그래프에서도 차이를 부풀릴 수 있다. 세로축을 0이 아닌 값에서 시작하면 막대의 길이가 값에 비례하지 않게 된다. 예를 들어 두 값 96과 100을 세로축 95부터 그리면 막대 길이는 1과 5가 되어, 4%의 차이가 다섯 배로 보인다. 반면 꺾은선그래프는 변화의 흐름을 보여 주는 것이 목적이라서, 기온처럼 0이 의미 없는 자료는 세로축을 자료 범위에 맞추어도 괜찮다. 따라서 그래프의 종류마다 정직하게 그리는 규칙이 다르고, 축의 시작점과 눈금을 꼭 표시해야 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="그래프 종류에 따른 정직한 표현 규칙">
+              <g class="s">
+                <text x="20" y="22">그래프</text><text x="130" y="22">눈이 비교하는 것</text><text x="320" y="22">지킬 규칙</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">막대그래프</text><text x="130" y="52">막대의 길이</text><text x="320" y="52">세로축을 0에서 시작</text>
+                <text x="20" y="74">그림 그래프</text><text x="130" y="74">그림의 넓이</text><text x="320" y="74">크기 대신 그림의 개수로</text>
+                <text x="20" y="96">꺾은선그래프</text><text x="130" y="96">기울기와 흐름</text><text x="320" y="96">축 범위와 눈금을 표시</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 그래프마다 눈이 비교하는 것이 달라 정직하게 그리는 규칙도 다르다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.4.2</span>
+          <p>어느 도시의 자전거 이용자가 1년 사이 5만 명에서 6만 명으로 늘었다. 한 보고서는 자전거 그림을 가로세로 모두 1.2배로 키워 그렸고, 다른 보고서는 세로축이 4만 명에서 시작하는 막대그래프를 그렸다. 두 그래프에서 보이는 변화는 각각 몇 배이며, 거짓말 요인은 얼마인가?</p>
+          </div>
+          <p>실제 변화는 \(6 \div 5 = 1.2\)배이다. 그림은 넓이가 \(1.2^2 = 1.44\)배로 보이므로, 보이는 증가 44%를 실제 증가 20%로 나누어 거짓말 요인은 약 2.2이다.</p>
+          <p>막대그래프는 4만 명부터 그렸으므로 막대 길이가 1만 명과 2만 명에 해당해 2배로 보인다. 보이는 증가 100%를 실제 증가 20%로 나누면 거짓말 요인은 5이다. 즉 세로축을 자른 막대그래프가 그림보다 더 크게 과장한다. 정직하게 그리려면 세로축을 0부터 시작하는 막대를 쓰고, 변화율 20%를 숫자로 함께 적는다.</p>
+          <p>아래 탐구 카드에서 오해를 부르는 그래프를 찾아 고쳐 그려 보고, 같은 자료를 정직하게 보여 주는 방법을 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-fusi-area-distortion-1">거짓말 요인이라는 말은 통계학자 에드워드 터프티가 1983년 책에서 처음 썼다. 그는 신문에 실린 연비 기준 그래프에서 실제 53% 증가를 783% 증가처럼 보이게 그려 거짓말 요인이 약 14.8에 이른 예를 들었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>눈은 그래프에서 길이나 넓이를 비교하므로, 값이 \(r\)배일 때 그림의 가로세로를 모두 키우면 넓이가 \(r^2\)배로 보여 차이를 부풀린다. 막대그래프도 세로축을 0이 아닌 곳에서 시작하면 차이를 과장한다. 그래서 처음 질문의 두 배 늘어난 판매량은 가로세로를 모두 두 배로 키운 그림 때문에 네 배처럼 보였고, 0부터 시작하는 막대로 그려야 정직하게 두 배로 보인다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/resr/2-4.html#text-resr-linearize"><small class="mono">과학과제 연구 2.4</small>자료 수집과 표·그래프 변환</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/1-1.html#text-sie2-egg-cooking"><small class="mono">과학탐구실험2 1.1</small>생활 속 과학 원리 탐구</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/resr/2-4.html#card-resr-graph"><small class="mono">과학과제 연구 2.4</small>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</a></div></nav>
+
       <article class="card" id="card-sie1-plot">
         <header class="card-head">
-          <span class="no">2.4.1</span><h2>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</h2><span class="kind">실험 · 자료의 표현 · 그래프 고르기</span>
+          <span class="no">탐구 1</span><h2>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</h2><span class="kind">실험 · 자료의 표현 · 그래프 고르기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -68,34 +125,34 @@
             <div class="tbl-host" hidden></div>
             <div class="ctl">
               <label class="mono small"><input type="checkbox" class="zero" checked> 세로축을 0부터 시작</label>
-              <label class="mono small out-wrap"><input type="checkbox" class="out"> 70 °C 측정값 빼기 (기록: 저울을 영점 조정하지 않음)</label>
+              <label class="mono small out-wrap"><input type="checkbox" class="out"> 70 °C 측정값 빼기 (저울을 영점 조정하지 않았다는 기록 있음)</label>
               <p class="verdict small"></p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>실험을 마치면 숫자가 가득한 기록이 남습니다. 이 숫자들이 말하는 것을 다른 사람이 한눈에, 그리고 <em>오해 없이</em> 알아보게 하려면 어떻게 보여 줘야 할까요?</li>
-            <li><span class="tag">복원</span>변인에는 이름으로 나뉘는 <em>범주형</em>(반, 혈액형)과 수로 이어지는 <em>연속형</em>(온도, 시간)이 있습니다. 정성적 자료는 말로, 정량적 자료는 수로 기록합니다.</li>
-            <li><span class="tag">설계</span>가로축 변인이 범주형이면 막대그래프, 연속형 두 변인의 관계를 보려면 산점도와 추세선, 시간에 따른 변화를 이어 보려면 꺾은선그래프가 알맞습니다. 정확한 값을 전해야 하면 표를 함께 씁니다.</li>
-            <li><span class="tag">분석</span>같은 자료라도 표현 방식이 해석을 바꿉니다. 범주를 선으로 이으면 반 사이에 없는 "중간값"이 있는 것처럼 보이고, 세로축을 0이 아닌 곳에서 자르면 작은 차이가 크게 보입니다.</li>
-            <li><span class="tag">측정</span>세 자료 각각에 네 가지 표현을 모두 적용해 보세요. 반별 수면 시간에서 "세로축 0부터"를 끄면 반 사이 차이가 몇 배로 보이나요? 용해도 자료에서 튀는 점은 빼도 될까요?</li>
-            <li class="warn"><span class="tag">오차·안전</span>이상값은 "결과와 안 맞아서"가 아니라 <em>기록된 이유</em>가 있을 때만 뺄 수 있고, 뺀 사실과 이유를 보고서에 적어야 합니다. 이유 없이 마음에 안 드는 값을 지우는 것은 연구 부정(변조)입니다.</li>
+            <li><span class="tag">탐구 문제</span>실험을 마치면 숫자가 가득한 기록이 남는다. 이 숫자들이 말하는 것을 다른 사람이 한눈에, 그리고 <em>오해 없이</em> 알아보게 하려면 어떻게 보여 줘야 할까?</li>
+            <li><span class="tag">복원</span>변인에는 이름으로 나뉘는 <em>범주형</em>(반, 혈액형)과 수로 이어지는 <em>연속형</em>(온도, 시간)이 있다. 또 정성적 자료는 말로, 정량적 자료는 수로 기록한다.</li>
+            <li><span class="tag">설계</span>그래서 가로축 변인이 범주형이면 막대그래프, 연속형 두 변인의 관계를 보려면 산점도와 추세선, 시간에 따른 변화를 이어 보려면 꺾은선그래프가 알맞다. 정확한 값을 전해야 하면 표를 함께 쓴다.</li>
+            <li><span class="tag">분석</span>그런데 같은 자료라도 표현 방식이 해석을 바꾼다. 범주를 선으로 이으면 반 사이에 없는 “중간값”이 있는 것처럼 보이고, 세로축을 0이 아닌 곳에서 자르면 작은 차이가 크게 보인다.</li>
+            <li><span class="tag">측정</span>세 자료 각각에 네 가지 표현을 모두 적용해 보자. 반별 수면 시간에서 “세로축 0부터”를 끄면 반 사이 차이가 몇 배로 보이는지 재 보고, 용해도 자료의 튀는 점을 빼도 되는지도 생각해 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>이상값은 “결과와 안 맞아서”가 아니라 <em>기록된 이유</em>가 있을 때만 뺄 수 있고, 뺀 사실과 이유를 보고서에 적어야 한다. 이유 없이 마음에 안 드는 값을 지우는 것은 연구 부정(변조)이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">학급별 휴대 전화 사용 시간(1반 3.1시간, 2반 3.3시간, 3반 3.2시간)을 발표하려 합니다. 가장 알맞은 표현은?</p>
+          <p class="q">학급별 휴대 전화 사용 시간(1반 3.1시간, 2반 3.3시간, 3반 3.2시간)을 발표하려 한다. 가장 알맞은 표현은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세로축을 3.0에서 시작한 꺾은선그래프<span class="why"><b>두 가지가 어긋납니다.</b> 반은 범주라 선으로 이을 수 없고, 축을 잘라 0.2시간 차이가 몇 배로 보입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>세로축을 0에서 시작한 막대그래프<span class="why"><b>맞습니다.</b> 범주형 비교에는 막대가 알맞고, 막대 길이가 값에 비례하려면 축이 0에서 시작해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>산점도와 추세선<span class="why"><b>추세선은 연속형 변인 사이의 관계에 씁니다.</b> 1반 → 3반 사이의 "기울기"는 의미가 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세로축을 3.0에서 시작한 꺾은선그래프<span class="why"><b>두 가지가 어긋난다.</b> 반은 범주라 선으로 이을 수 없고, 축을 잘라 0.2시간 차이가 몇 배로 보인다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>세로축을 0에서 시작한 막대그래프<span class="why"><b>맞다.</b> 범주형 비교에는 막대가 알맞고, 막대 길이가 값에 비례하려면 축이 0에서 시작해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>산점도와 추세선<span class="why"><b>추세선은 연속형 변인 사이의 관계에 쓴다.</b> 1반 → 3반 사이의 "기울기"는 의미가 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/resr/2-4.html#card-resr-graph"><small class="mono">과학과제 연구 2.4</small>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</a><a href="../../c/resr/2-4.html#text-resr-logbook"><small class="mono">과학과제 연구 2.4</small>연구 일지에는 무엇을 적고, 표는 어떻게 만들까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/resr/2-4.html#text-resr-linearize"><small class="mono">과학과제 연구 2.4</small>자료 수집과 표·그래프 변환</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/1-1.html#text-sie2-egg-cooking"><small class="mono">과학탐구실험2 1.1</small>생활 속 과학 원리 탐구</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/resr/2-4.html#card-resr-graph"><small class="mono">과학과제 연구 2.4</small>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</a></div></nav>
 
       <article class="card" id="card-fusi-misgraph">
         <header class="card-head">
-          <span class="no">2.4.2</span><h2>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</h2><span class="kind">데이터 시각화 · 세로축 자르기 · 넓이 왜곡 · 이중 축 (가상 자료)</span>
+          <span class="no">탐구 2</span><h2>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</h2><span class="kind">데이터 시각화 · 세로축 자르기 · 넓이 왜곡 · 이중 축 (가상 자료)</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,46 +185,51 @@
                 <div><dt class="k2">그림에서 B는 A보다</dt><dd class="v2">—</dd></div>
                 <div><dt class="k3">거짓말 지수</dt><dd class="v3">—</dd></div>
               </dl>
-              <p class="fig-note">세 그래프의 자료는 설명을 위해 만든 가상 자료입니다. 거짓말 지수 = 그림에서 보이는 차이 ÷ 자료의 실제 차이(터프티, 1983). 1이면 정직한 그림이고, 1에서 멀수록 차이를 부풀리거나 줄입니다.</p>
+              <p class="fig-note">세 그래프의 자료는 설명을 위해 만든 가상 자료이다. 거짓말 지수 = 그림에서 보이는 차이 ÷ 자료의 실제 차이(터프티, 1983). 1이면 정직한 그림이고, 1에서 멀수록 차이를 부풀리거나 줄인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>정수 필터 광고에 "B 필터는 A 필터보다 납을 훨씬 많이 걸러 냅니다"라는 말과 함께, B의 막대가 A의 세 배쯤 되는 그래프가 실렸습니다. 숫자를 보니 A는 91 %, B는 94 %였습니다. 그래프가 거짓말을 한 걸까요?</li>
-            <li><span class="tag">복원</span>막대그래프는 막대의 <em>길이</em>로, 그림 그래프는 그림의 <em>넓이</em>로, 꺾은선그래프는 선의 <em>위치와 기울기</em>로 값을 전합니다. 눈은 숫자보다 길이와 넓이를 먼저 읽습니다.</li>
-            <li><span class="tag">설명</span>막대의 바닥을 0이 아닌 곳에서 자르면 막대 길이가 값에 비례하지 않게 됩니다. 원이나 그림의 지름(높이)을 값에 비례하게 그리면 넓이는 값의 제곱으로 커집니다. 이중 축 그래프에서는 두 축의 범위를 마음대로 정할 수 있어서, 두 선이 겹치거나 교차하는 위치를 그리는 사람이 고를 수 있습니다.</li>
-            <li><span class="tag">연결</span>그래프는 목적에 맞게 고릅니다. 정확한 값을 전할 때는 <em>표</em>, 범주끼리 크기를 비교할 때는 0에서 시작하는 <em>막대그래프</em>, 한 변인의 값이 어떻게 분포하는지 볼 때는 <em>히스토그램</em>, 두 연속 변인의 관계를 볼 때는 <em>분산형 그래프</em>(산점도), 시간에 따른 변화는 <em>꺾은선그래프</em>가 알맞습니다. 단위가 다른 두 변인은 이중 축 대신 위아래로 나란히 놓은 두 그래프로 그리는 편이 안전합니다.</li>
-            <li><span class="tag">적용</span>세로축 시작값을 0에서 89까지 올리며 거짓말 지수를 읽으세요. 넓이 그림에서 비를 2로 두고 "넓이가 값에 비례" 상자를 껐다 켜 보세요. 이중 축에서는 오른쪽 축의 최솟값과 최댓값만 바꿔 두 선이 교차하는 해를 2008년, 2015년, 2020년으로 옮겨 보세요. 자료는 하나도 바뀌지 않았습니다.</li>
-            <li class="warn"><span class="tag">판단</span>세로축을 자르는 것이 언제나 잘못은 아닙니다. 체온이나 기온 변화처럼 0이 의미 없는 값을 꺾은선으로 그릴 때는 0을 빼야 변화가 보입니다. 다만 길이로 크기를 비교하는 막대그래프는 0에서 시작해야 하고, 축을 자르면 물결 표시나 눈금으로 분명히 알려야 합니다. 이중 축에서 두 선이 함께 움직이는 것처럼 보여도, 그 모양은 축 설정이 만든 것이지 두 변인이 관계있다는 증거가 아닙니다.</li>
+            <li><span class="tag">질문</span>정수 필터 광고에 "B 필터는 A 필터보다 납을 훨씬 많이 걸러 냅니다"라는 말과 함께, B의 막대가 A의 세 배쯤 되는 그래프가 실렸다. 숫자를 보니 A는 91 %, B는 94 %였다. 그래프가 거짓말을 한 걸까?</li>
+            <li><span class="tag">복원</span>막대그래프는 막대의 <em>길이</em>로, 그림 그래프는 그림의 <em>넓이</em>로, 꺾은선그래프는 선의 <em>위치와 기울기</em>로 값을 전한다. 눈은 숫자보다 길이와 넓이를 먼저 읽는다.</li>
+            <li><span class="tag">설명</span>막대의 바닥을 0이 아닌 곳에서 자르면 막대 길이가 값에 비례하지 않게 된다. 원이나 그림의 지름(높이)을 값에 비례하게 그리면 넓이는 값의 제곱으로 커진다. 이중 축 그래프에서는 두 축의 범위를 마음대로 정할 수 있어서, 두 선이 겹치거나 교차하는 위치를 그리는 사람이 고를 수 있다.</li>
+            <li><span class="tag">연결</span>그래프는 목적에 맞게 고른다. 정확한 값을 전할 때는 <em>표</em>, 범주끼리 크기를 비교할 때는 0에서 시작하는 <em>막대그래프</em>, 한 변인의 값이 어떻게 분포하는지 볼 때는 <em>히스토그램</em>, 두 연속 변인의 관계를 볼 때는 <em>분산형 그래프</em>(산점도), 시간에 따른 변화는 <em>꺾은선그래프</em>가 알맞다. 단위가 다른 두 변인은 이중 축 대신 위아래로 나란히 놓은 두 그래프로 그리는 편이 안전하다.</li>
+            <li><span class="tag">적용</span>세로축 시작값을 0에서 89까지 올리며 거짓말 지수를 읽자. 넓이 그림에서 비를 2로 두고 "넓이가 값에 비례" 상자를 껐다 켜 보자. 이중 축에서는 오른쪽 축의 최솟값과 최댓값만 바꿔 두 선이 교차하는 해를 2008년, 2015년, 2020년으로 옮겨 보자. 자료는 하나도 바뀌지 않았다.</li>
+            <li class="warn"><span class="tag">판단</span>세로축을 자르는 것이 언제나 잘못은 아니다. 체온이나 기온 변화처럼 0이 의미 없는 값을 꺾은선으로 그릴 때는 0을 빼야 변화가 보인다. 다만 길이로 크기를 비교하는 막대그래프는 0에서 시작해야 하고, 축을 자르면 물결 표시나 눈금으로 분명히 알려야 한다. 이중 축에서 두 선이 함께 움직이는 것처럼 보여도, 그 모양은 축 설정이 만든 것이지 두 변인이 관계있다는 증거가 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">한 보고서가 학교의 연간 전기 사용량이 2배가 된 것을 전구 그림으로 나타냈습니다. 나중 전구의 높이와 너비를 모두 처음의 2배로 그렸습니다. 독자가 그림에서 받는 인상은?</p>
+          <p class="q">한 보고서가 학교의 연간 전기 사용량이 2배가 된 것을 전구 그림으로 나타냈다. 나중 전구의 높이와 너비를 모두 처음의 2배로 그렸다. 독자가 그림에서 받는 인상은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>높이가 2배이므로 정확히 2배로 보인다<span class="why"><b>높이만 보면 맞지만,</b> 너비도 2배라서 그림의 넓이는 4배가 됩니다. 사람은 그림의 넓이로 크기를 느낍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>넓이가 4배라서 실제보다 훨씬 크게 늘어난 것처럼 보인다<span class="why"><b>맞습니다.</b> 거짓말 지수는 (4 − 1) ÷ (2 − 1) = 3입니다. 넓이를 값에 비례하게 하려면 높이와 너비를 각각 √2 ≈ 1.41배로 그려야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전구가 입체처럼 보이면 부피로 느끼므로 2배보다 작게 보인다<span class="why"><b>방향이 반대입니다.</b> 입체로 느낀다면 부피는 8배라서 차이가 더 크게 부풀려집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>높이가 2배이므로 정확히 2배로 보인다<span class="why"><b>높이만 보면 맞지만,</b> 너비도 2배라서 그림의 넓이는 4배가 된다. 사람은 그림의 넓이로 크기를 느낀다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>넓이가 4배라서 실제보다 훨씬 크게 늘어난 것처럼 보인다<span class="why"><b>맞다.</b> 거짓말 지수는 (4 − 1) ÷ (2 − 1) = 3이다. 넓이를 값에 비례하게 하려면 높이와 너비를 각각 √2 ≈ 1.41배로 그려야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>전구가 입체처럼 보이면 부피로 느끼므로 2배보다 작게 보인다<span class="why"><b>방향이 반대이다.</b> 입체로 느낀다면 부피는 8배라서 차이가 더 크게 부풀려진다.</span></span></button></li>
           </ol>
         </div>
       </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/resr/2-4.html#text-resr-linearize"><small class="mono">과학과제 연구 2.4</small>자료 수집과 표·그래프 변환</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=fusi-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=fusi&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/fusi/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/sie1/plot.js"></script>
 <script src="../../js/cards/fusi/f2-misgraph.js"></script>

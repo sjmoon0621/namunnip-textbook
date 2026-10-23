@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>극곡선의 길이와 넓이 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="극곡선으로 둘러싸인 넓이(부채꼴로 자르기)와 극곡선의 길이. 부채꼴 합으로 넓이에 다가가고 적분 범위를 잘못 잡아 두 번 세는 경우를 보는 카드, 카디오이드의 길이 8과 두루마리 휴지의 길이를 나선으로 구하는 활용 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-polar-area canvas { aspect-ratio: 1 / 1; max-width: 380px; margin: 0 auto; display: block; }
@@ -44,18 +49,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-polar-area"><span class="mono">2.5.1</span>부채꼴로 극곡선의 넓이 구하기</a></li>
-        <li><a href="#card-adcalc-roll-length"><span class="mono">2.5.2</span>두루마리 휴지의 길이</a></li>
+        <li><a href="#text-adcalc-polar-area"><span class="mono">본문</span>극곡선의 길이와 넓이</a></li>
+        <li><a href="#card-adcalc-polar-area"><span class="mono">탐구 1</span>부채꼴로 극곡선의 넓이 구하기</a></li>
+        <li><a href="#card-adcalc-roll-length"><span class="mono">탐구 2</span>두루마리 휴지의 길이</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-polar-area" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>극곡선의 길이와 넓이</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">두루마리 휴지 한 개의 바깥 지름은 11 cm, 가운데 종이 심의 지름은 4 cm이고, 휴지 한 겹의 두께는 0.025 cm이다. 단면을 보면 휴지는 심에서 바깥으로 감겨 나가는 나선이다. 이 나선을 극좌표로 쓰면 한 바퀴 돌 때마다 반지름이 두께만큼 커지는 곡선이 된다. 휴지를 다 풀지 않고도 나선의 길이를 계산해 휴지가 몇 m인지 알 수 있을까? 그리고 극곡선이 둘러싼 넓이는 왜 직사각형이 아니라 부채꼴로 잘라 구할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="휴지 길이를 구하는 두 방법">
+              <g class="s">
+                <text x="20" y="22">방법</text><text x="200" y="22">식</text><text x="400" y="22">길이</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">단면 넓이 ÷ 두께</text><text x="200" y="52">π(5.5² − 2²) / 0.025</text><text x="400" y="52" class="td">약 33 m</text>
+                <text x="20" y="74">나선의 길이 적분</text><text x="200" y="74">∫ √(r² + r′²) dθ</text><text x="400" y="74" class="td">약 33 m</text>
+                <text x="20" y="96">감은 바퀴 수</text><text x="200" y="96">(5.5 − 2) / 0.025</text><text x="400" y="96">140바퀴</text>
+                <text x="20" y="122">두 방법의 차이는 1 mm도 되지 않는다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 휴지의 단면 넓이를 두께로 나눈 값은 나선의 길이를 적분한 값과 거의 같다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>부채꼴의 호의 길이와 넓이, 정적분과 급수의 합, 곡선의 길이, 극곡선의 그래프(<a href="2-2.html">극곡선의 대칭성과 그래프</a>).</div>
+
+          <h3><span class="no">2.5.1</span>부채꼴로 잘라 넓이를 구하다</h3>
+          <p>극곡선 \(r = f(\theta)\)가 \(\theta = \alpha\)부터 \(\beta\)까지 극과 함께 둘러싼 넓이를 구하려면, 넓이를 극에서 퍼져 나가는 가는 부채꼴로 자른다. 중심각 \(\Delta\theta\)인 부채꼴의 넓이는 반지름이 거의 \(f(\theta)\)로 일정하므로 \(\tfrac12f(\theta)^2\Delta\theta\)이다. 이것을 모두 더하고 극한을 취하면 넓이가 된다. 직사각형으로 자르지 않는 것은 극곡선이 각마다 거리를 주는 곡선이어서, 같은 각의 폭으로 자를 때 각 조각의 모양이 가장 간단해지기 때문이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">극곡선의 넓이와 길이</span></span>
+            <p>극곡선 \(r = f(\theta)\)와 두 반직선 \(\theta = \alpha\), \(\theta = \beta\)로 둘러싸인 넓이와 곡선의 길이는 \[S = \frac12\int_\alpha^\beta r^2\,d\theta,\qquad L = \int_\alpha^\beta\sqrt{r^2 + r'^2}\,d\theta\]이다.</p>
+          </div>
+          <p>길이의 식은 매개변수 곡선 \(x = r\cos\theta\), \(y = r\sin\theta\)의 길이 공식에서 나온다. \(\left(\dfrac{dx}{d\theta}\right)^2 + \left(\dfrac{dy}{d\theta}\right)^2\)을 전개하면 교차하는 항이 지워지고 \(r^2 + r'^2\)만 남는다. 뜻으로 보면, 각이 \(\Delta\theta\)만큼 변할 때 원 방향으로 \(r\Delta\theta\), 반지름 방향으로 \(r'\Delta\theta\)만큼 움직이므로 피타고라스 정리로 움직인 거리가 \(\sqrt{r^2 + r'^2}\,\Delta\theta\)이다.<sup class="fn"><a href="#fn-adcalc-polar-area-1">1</a></sup></p>
+
+          <h3><span class="no">2.5.2</span>휴지의 나선</h3>
+          <p>휴지의 단면은 한 바퀴 돌 때마다 반지름이 두께 \(t\)만큼 커지는 아르키메데스 나선 \(r = r_0 + \dfrac{t}{2\pi}\theta\)이다. \(r' = t/2\pi\)는 0.004 cm 정도로 \(r\)에 비해 아주 작으므로 \(\sqrt{r^2 + r'^2} \approx r\)로 볼 수 있다. 그러면 길이는 \(\int r\,d\theta\)이고, 한 바퀴마다 반지름이 거의 일정한 원의 둘레를 더하는 셈이 된다. 이렇게 어림하면 길이는 휴지 단면의 고리 넓이를 두께로 나눈 값과 같아진다. 종이를 펼친 넓이가 길이와 두께의 곱이므로 당연한 결과이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="카디오이드의 넓이와 길이">
+              <g class="s">
+                <text x="20" y="22">양</text><text x="200" y="22">계산</text><text x="420" y="22">값</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">넓이</text><text x="200" y="52">½∫(1 + cos θ)² dθ, 0 ~ 2π</text><text x="420" y="52" class="td">3π/2</text>
+                <text x="20" y="74">√(r² + r′²)</text><text x="200" y="74">√(2 + 2cos θ) = 2|cos(θ/2)|</text><text x="420" y="74"></text>
+                <text x="20" y="96">길이</text><text x="200" y="96">∫2|cos(θ/2)| dθ, 0 ~ 2π</text><text x="420" y="96" class="tb">8</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 카디오이드 \(r = 1 + \cos\theta\)의 넓이는 지름 2인 원의 1.5배, 길이는 지름의 4배이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>처음 질문의 휴지에서 \(r_0 = 2\), 바깥 반지름 5.5, \(t = 0.025\)(cm)이다. 감긴 바퀴 수를 구하고, \(\sqrt{r^2 + r'^2} \approx r\)로 어림하여 휴지의 길이를 구하여라. 이 값을 단면 넓이를 두께로 나눈 값과 비교하여라.</p>
+          </div>
+          <p>바퀴 수는 \((5.5 - 2)/0.025 = 140\)이므로 \(\theta\)는 0부터 \(280\pi\)까지 간다. 길이는 \(\int_0^{280\pi}\left(2 + \dfrac{0.025}{2\pi}\theta\right)d\theta = 2\times280\pi + \dfrac{0.025}{4\pi}(280\pi)^2 = 560\pi + 490\pi = 1050\pi \approx 3299\) cm이다. 곧 약 33 m이다.</p>
+          <p>단면의 고리 넓이는 \(\pi(5.5^2 - 2^2) = 26.25\pi\) cm²이고, 두께 0.025로 나누면 \(1050\pi\) cm로 같다. 무시한 \(r'^2\)의 몫은 \(r'/r\)이 0.002 이하이므로 전체 길이의 백만분의 몇 정도여서 1 mm도 되지 않는다. 그래서 휴지 포장에 적힌 길이는 지름과 두께만 재도 확인할 수 있다. 즉 극곡선의 넓이는 부채꼴로 잘라 \(\tfrac12\int r^2\,d\theta\)로, 길이는 원 방향과 반지름 방향의 변화를 합쳐 \(\int\sqrt{r^2 + r'^2}\,d\theta\)로 구한다.</p>
+          <p>아래 탐구 카드에서 극곡선의 넓이를 부채꼴로 어림해 적분과 비교하고, 두루마리 휴지의 길이를 풀지 않고 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-polar-area-1">카디오이드의 길이가 정확히 8이라는 것은 1708년 프랑스의 라 이르가 구했다. 곡선의 길이가 \(\pi\) 없이 깔끔한 정수로 나오는 경우는 드물어, 카디오이드는 곡선의 길이를 연습하는 대표적인 예가 되었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>극곡선이 둘러싼 넓이는 극에서 퍼지는 가는 부채꼴 \(\tfrac12r^2\Delta\theta\)를 모아 \(\tfrac12\int r^2\,d\theta\)로, 길이는 원 방향 \(r\Delta\theta\)와 반지름 방향 \(r'\Delta\theta\)의 변화를 합쳐 \(\int\sqrt{r^2 + r'^2}\,d\theta\)로 구한다. 카디오이드 \(r = 1 + \cos\theta\)의 넓이는 \(3\pi/2\), 길이는 8이다. 처음 질문의 휴지는 140바퀴 감긴 아르키메데스 나선으로, 길이는 약 \(1050\pi\) cm, 곧 33 m쯤이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
+
       <article class="card" id="card-adcalc-polar-area">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>극곡선의 넓이는 왜 직사각형이 아니라 부채꼴로 잘라 구할까?</h2><span class="kind">극곡선의 넓이 · 조작 · 판단</span>
+          <span class="no">탐구 1</span><h2>극곡선의 넓이는 왜 직사각형이 아니라 부채꼴로 잘라 구할까?</h2><span class="kind">극곡선의 넓이 · 조작 · 판단</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,30 +144,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>직교좌표에서는 넓이를 세로로 긴 직사각형으로 잘라 구했습니다. 카디오이드처럼 극을 둘러싼 곡선도 그렇게 잘라야 할까요?</li>
-            <li><span class="tag">복원</span>반지름 \(r\), 중심각 \(\Delta\theta\)(라디안)인 부채꼴의 넓이는 \(\frac{1}{2}r^2\Delta\theta\)입니다. 넓이를 잘게 나눈 조각의 합의 극한이 정적분입니다.</li>
-            <li><span class="tag">설명</span>극곡선은 극에서 뻗은 방향마다 \(r\)이 정해지므로, 극을 꼭짓점으로 하는 얇은 부채꼴로 자르는 것이 자연스럽습니다. 중심각 \(\Delta\theta\)인 조각은 반지름이 거의 \(f(\theta)\)로 일정한 부채꼴이라 넓이가 \(\frac{1}{2}f(\theta)^2\Delta\theta\)이고, 합의 극한은 \[S = \frac{1}{2}\int_\alpha^\beta \{f(\theta)\}^2\,d\theta\]입니다. 카디오이드 \(1 + \cos\theta\)는 \(\frac{1}{2}\int_0^{2\pi}(1 + \cos\theta)^2d\theta = \frac{3\pi}{2}\)입니다.</li>
-            <li><span class="tag">연결</span>\(r^2\)으로 계산하므로 \(r\)이 음수인 부분도 양의 넓이로 셉니다. 그래서 \(\cos 2\theta\)의 꽃잎 4장은 \(0 \le \theta \le 2\pi\)에서 한 번씩 계산되어 \(\frac{\pi}{2}\)가 됩니다.</li>
-            <li><span class="tag">적용</span>\(n\)을 늘려 부채꼴의 합이 적분값에 다가가는지 보세요. 그다음 원 \(2\cos\theta\)와 \(\cos 3\theta\)를 \(0 \le \theta \le 2\pi\)로 두고 적분값과 실제 넓이를 비교하세요. 왜 두 배가 되나요? 범위를 \(0 \le \theta \le \pi\)로 바꾸면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>적분 범위는 곡선이 <b>한 번</b> 그려지는 범위로 잡아야 합니다. 원 \(r = 2\cos\theta\)는 \(0 \le \theta \le \pi\)에서 한 바퀴를 다 그리므로, \(2\pi\)까지 적분하면 같은 넓이를 두 번 세어 \(2\pi\)라는 틀린 답이 나옵니다. 넓이 공식을 쓰기 전에 그래프부터 그려 보아야 하는 까닭입니다.</li>
+            <li><span class="tag">질문</span>직교좌표에서는 넓이를 세로로 긴 직사각형으로 잘라 구했다. 카디오이드처럼 극을 둘러싼 곡선도 그렇게 잘라야 할까?</li>
+            <li><span class="tag">복원</span>반지름 \(r\), 중심각 \(\Delta\theta\)(라디안)인 부채꼴의 넓이는 \(\frac{1}{2}r^2\Delta\theta\)이다. 넓이를 잘게 나눈 조각의 합의 극한이 정적분이다.</li>
+            <li><span class="tag">설명</span>극곡선은 극에서 뻗은 방향마다 \(r\)이 정해지므로, 극을 꼭짓점으로 하는 얇은 부채꼴로 자르는 것이 자연스럽다. 중심각 \(\Delta\theta\)인 조각은 반지름이 거의 \(f(\theta)\)로 일정한 부채꼴이라 넓이가 \(\frac{1}{2}f(\theta)^2\Delta\theta\)이고, 합의 극한은 \[S = \frac{1}{2}\int_\alpha^\beta \{f(\theta)\}^2\,d\theta\]이다. 카디오이드 \(1 + \cos\theta\)는 \(\frac{1}{2}\int_0^{2\pi}(1 + \cos\theta)^2d\theta = \frac{3\pi}{2}\)이다.</li>
+            <li><span class="tag">연결</span>\(r^2\)으로 계산하므로 \(r\)이 음수인 부분도 양의 넓이로 센다. 그래서 \(\cos 2\theta\)의 꽃잎 4장은 \(0 \le \theta \le 2\pi\)에서 한 번씩 계산되어 \(\frac{\pi}{2}\)가 된다.</li>
+            <li><span class="tag">적용</span>\(n\)을 늘려 부채꼴의 합이 적분값에 다가가는지 보자. 그다음 원 \(2\cos\theta\)와 \(\cos 3\theta\)를 \(0 \le \theta \le 2\pi\)로 두고 적분값과 실제 넓이를 비교해 보자. 왜 두 배가 되는가? 범위를 \(0 \le \theta \le \pi\)로 바꾸면 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>적분 범위는 곡선이 한 번 그려지는 범위로 잡아야 한다. 원 \(r = 2\cos\theta\)는 \(0 \le \theta \le \pi\)에서 한 바퀴를 다 그리므로, \(2\pi\)까지 적분하면 같은 넓이를 두 번 세어 \(2\pi\)라는 틀린 답이 나온다. 넓이 공식을 쓰기 전에 그래프부터 그려 보아야 하는 까닭이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">장미 곡선 \(r = \sin 2\theta\)의 꽃잎 하나의 넓이는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\pi}{8}\)<span class="why"><b>맞습니다.</b> 꽃잎 하나는 \(0 \le \theta \le \frac{\pi}{2}\)에서 그려지고 \(\frac{1}{2}\int_0^{\pi/2}\sin^2 2\theta\,d\theta = \frac{1}{2} \cdot \frac{\pi}{4} = \frac{\pi}{8}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{\pi}{2}\)<span class="why"><b>꽃잎 4장 전체의 넓이입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{\pi}{4}\)<span class="why"><b>\(\frac{1}{2}\)을 곱하지 않았습니다.</b> 부채꼴의 넓이에는 \(\frac{1}{2}\)이 붙습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>\(r\)을 제곱하지 않고 \(\frac{1}{2}\int_0^{\pi/2}\sin 2\theta\,d\theta\)를 계산했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\pi}{8}\)<span class="why"><b>맞다.</b> 꽃잎 하나는 \(0 \le \theta \le \frac{\pi}{2}\)에서 그려지고 \(\frac{1}{2}\int_0^{\pi/2}\sin^2 2\theta\,d\theta = \frac{1}{2} \cdot \frac{\pi}{4} = \frac{\pi}{8}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{\pi}{2}\)<span class="why"><b>꽃잎 4장 전체의 넓이이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{\pi}{4}\)<span class="why"><b>\(\frac{1}{2}\)을 곱하지 않았다.</b> 부채꼴의 넓이에는 \(\frac{1}{2}\)이 붙는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>\(r\)을 제곱하지 않고 \(\frac{1}{2}\int_0^{\pi/2}\sin 2\theta\,d\theta\)를 계산했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
 
       <article class="card" id="card-adcalc-roll-length">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>두루마리 휴지를 풀지 않고 길이를 잴 수 있을까?</h2><span class="kind">극곡선의 길이 · 활용</span>
+          <span class="no">탐구 2</span><h2>두루마리 휴지를 풀지 않고 길이를 잴 수 있을까?</h2><span class="kind">극곡선의 길이 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -131,43 +194,43 @@
                 <div><dt class="l2">\(\int\sqrt{r^2 + (r')^2}\,d\theta\)</dt><dd class="n-2">—</dd></div>
                 <div><dt class="l3">—</dt><dd class="n-3">—</dd></div>
               </dl>
-              <p class="fig-note">두루마리는 심의 반지름 2 cm, 종이가 한 바퀴에 두께만큼 바깥으로 감긴다고 본 모식입니다. 그림은 감긴 수를 줄여서 그립니다.</p>
+              <p class="fig-note">두루마리는 심의 반지름 2 cm, 종이가 한 바퀴에 두께만큼 바깥으로 감긴다고 본 모식이다. 그림은 감긴 수를 줄여서 그린다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>두루마리 휴지 한 롤에 몇 m의 종이가 감겨 있을까요? 풀어서 재면 다시 감기 어렵습니다. 바깥 반지름과 종이 두께만 알면 계산할 수 있을까요?</li>
-            <li><span class="tag">복원</span>매개변수 곡선의 길이는 \(\int\sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt\)입니다. 극곡선은 \(x = r\cos\theta\), \(y = r\sin\theta\)인 매개변수 곡선입니다.</li>
-            <li><span class="tag">설명</span>\(x = f(\theta)\cos\theta\), \(y = f(\theta)\sin\theta\)를 미분해 제곱하여 더하면 교차항이 지워져 \(\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2 = f(\theta)^2 + f'(\theta)^2\)이 됩니다. 그래서 극곡선의 길이는 \[L = \int_\alpha^\beta\sqrt{f(\theta)^2 + f'(\theta)^2}\,d\theta\]입니다. 카디오이드는 \(\sqrt{2 + 2\cos\theta} = 2\left|\cos\frac{\theta}{2}\right|\)이므로 길이가 정확히 8입니다. 두루마리의 단면은 한 바퀴마다 두께 \(d\)만큼 커지는 <em>아르키메데스 나선</em> \(r = r_0 + \frac{d}{2\pi}\theta\)입니다.</li>
-            <li><span class="tag">연결</span>나선의 적분은 손으로 계산하기 번거롭지만, \(r'\)이 \(r\)에 비해 아주 작으므로 \(L \approx \int r\,d\theta\)이고, 이는 "단면의 넓이 ÷ 두께" \(\frac{\pi(R^2 - r_0^2)}{d}\)과 거의 같습니다. 종이를 펼쳐 얇은 띠로 놓아도 넓이는 같다는 생각과 맞습니다.</li>
-            <li><span class="tag">적용</span>카디오이드에서 마디 수를 늘려 꺾은선의 길이가 8에 다가가는지 보세요. 두루마리에서는 적분값과 넓이 어림이 몇 % 다른지 보세요. 두께를 두 배로 하면 길이는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>꺾은선은 언제나 곡선보다 짧으므로 마디 수를 늘리면 아래에서 참값에 다가갑니다. 실제 휴지는 눌리거나 느슨하게 감겨 두께가 일정하지 않으므로, 이 계산은 대략적인 값입니다.</li>
+            <li><span class="tag">질문</span>두루마리 휴지 한 롤에 몇 m의 종이가 감겨 있을까? 풀어서 재면 다시 감기 어렵다. 바깥 반지름과 종이 두께만 알면 계산할 수 있을까?</li>
+            <li><span class="tag">복원</span>매개변수 곡선의 길이는 \(\int\sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt\)이다. 극곡선은 \(x = r\cos\theta\), \(y = r\sin\theta\)인 매개변수 곡선이다.</li>
+            <li><span class="tag">설명</span>\(x = f(\theta)\cos\theta\), \(y = f(\theta)\sin\theta\)를 미분해 제곱하여 더하면 교차항이 지워져 \(\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2 = f(\theta)^2 + f'(\theta)^2\)이 된다. 그래서 극곡선의 길이는 \[L = \int_\alpha^\beta\sqrt{f(\theta)^2 + f'(\theta)^2}\,d\theta\]이다. 카디오이드는 \(\sqrt{2 + 2\cos\theta} = 2\left|\cos\frac{\theta}{2}\right|\)이므로 길이가 정확히 8이다. 두루마리의 단면은 한 바퀴마다 두께 \(d\)만큼 커지는 <em>아르키메데스 나선</em> \(r = r_0 + \frac{d}{2\pi}\theta\)이다.</li>
+            <li><span class="tag">연결</span>나선의 적분은 손으로 계산하기 번거롭지만, \(r'\)이 \(r\)에 비해 아주 작으므로 \(L \approx \int r\,d\theta\)이고, 이는 "단면의 넓이 ÷ 두께" \(\frac{\pi(R^2 - r_0^2)}{d}\)과 거의 같다. 종이를 펼쳐 얇은 띠로 놓아도 넓이는 같다는 생각과 맞다.</li>
+            <li><span class="tag">적용</span>카디오이드에서 마디 수를 늘려 꺾은선의 길이가 8에 다가가는지 보자. 두루마리에서는 적분값과 넓이 어림이 몇 % 다른지 보자. 두께를 두 배로 하면 길이는 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>꺾은선은 언제나 곡선보다 짧으므로 마디 수를 늘리면 아래에서 참값에 다가간다. 실제 휴지는 눌리거나 느슨하게 감겨 두께가 일정하지 않으므로, 이 계산은 대략적인 값이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">원 \(r = 2\cos\theta\ (0 \le \theta \le \pi)\)의 길이를 극곡선의 길이 공식으로 구하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\pi\)<span class="why"><b>맞습니다.</b> \(\sqrt{4\cos^2\theta + 4\sin^2\theta} = 2\)이므로 \(\int_0^\pi 2\,d\theta = 2\pi\)이고, 반지름 1인 원의 둘레와 같습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(4\pi\)<span class="why"><b>\(0\)부터 \(2\pi\)까지 적분했습니다.</b> 이 원은 \(\pi\)까지면 한 바퀴를 다 그립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\pi\)<span class="why"><b>\(\theta\)가 \(\pi\)만큼 움직였으니 반원이라고 보았습니다.</b> 이 원은 \(0 \le \theta \le \pi\) 동안 한 바퀴를 모두 돕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>4<span class="why"><b>\(\int_0^\pi|r|\,d\theta\)를 계산했습니다.</b> 길이에는 \(\sqrt{r^2 + (r')^2}\)이 들어갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\pi\)<span class="why"><b>맞다.</b> \(\sqrt{4\cos^2\theta + 4\sin^2\theta} = 2\)이므로 \(\int_0^\pi 2\,d\theta = 2\pi\)이고, 반지름 1인 원의 둘레와 같다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(4\pi\)<span class="why"><b>\(0\)부터 \(2\pi\)까지 적분했다.</b> 이 원은 \(\pi\)까지면 한 바퀴를 다 그린다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\pi\)<span class="why"><b>\(\theta\)가 \(\pi\)만큼 움직였으니 반원이라고 보았다.</b> 이 원은 \(0 \le \theta \le \pi\) 동안 한 바퀴를 모두 돈다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>4<span class="why"><b>\(\int_0^\pi|r|\,d\theta\)를 계산했다.</b> 길이에는 \(\sqrt{r^2 + (r')^2}\)이 들어간다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/calc2/3-4.html#card-calc2-sum-read"><small class="mono">미적분Ⅱ 3.4</small>항이 n개인 합의 극한을 넓이로 읽을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

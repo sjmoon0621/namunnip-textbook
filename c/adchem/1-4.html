@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>형식 전하와 공명 구조 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="루이스 구조식으로 원자의 형식 전하를 계산하고, 한 분자를 여러 공명 구조로 나타내어 어느 구조가 더 안정한지와 실제 분자의 결합 길이를 비교하여 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-chem-lewis canvas { cursor: pointer; }
     #card-adchem-formal canvas { width: 100%; aspect-ratio: 16 / 10; display: block; cursor: pointer; }
@@ -37,7 +43,7 @@
     <p class="lead">질산 이온의 루이스 구조식을 그리면 N=O 결합 하나와 N–O 결합 둘이 생깁니다. 그런데 실제로 재 보면 세 결합의 길이가 모두 같습니다. 형식 전하와 공명 구조를 이용해 이 차이를 설명하고, 여러 구조 가운데 어느 것이 실제 분자에 더 가까운지 판단해 봅니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
-      <a class="p p-card" href="../../c/chem/2-3.html#card-chem-lewis" title="화학 2.3 · 루이스 전자점식은 어떻게 그릴까?">루이스 전자점식</a><a class="p p-card" href="../../c/chem/2-3.html#card-chem-lewis" title="화학 2.3 · 루이스 전자점식은 어떻게 그릴까?">옥텟 규칙</a><a class="p p-card" href="../../c/chem/2-2.html#card-chem-en" title="화학 2.2 · 전기 음성도: 두 원자 중 누가 전자쌍을 더 세게 당길까?">전기 음성도</a>
+      <a class="p p-card" href="../../c/chem/2-3.html#card-chem-lewis" title="화학 2.3 · 루이스 전자점식은 어떻게 그릴까?">루이스 전자점식</a><a class="p p-card" href="../../c/chem/2-3.html#card-chem-lewis" title="화학 2.3 · 루이스 전자점식은 어떻게 그릴까?">옥텟 규칙</a><a class="p p-card" href="../../c/chem/2-2.html#card-chem-en" title="화학 2.2 · 두 원자 가운데 누가 전자쌍을 더 세게 당길까?">전기 음성도</a>
     </div>
   </section>
 
@@ -45,18 +51,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-chem-lewis"><span class="mono">1.4.1</span>루이스 전자점식은 어떻게 그릴까?</a></li>
-        <li><a href="#card-adchem-formal"><span class="mono">1.4.2</span>형식 전하와 공명 구조</a></li>
+        <li><a href="#text-adchem-formal-charge"><span class="mono">본문</span>형식 전하와 공명 구조</a></li>
+        <li><a href="#card-chem-lewis"><span class="mono">탐구 1</span>루이스 전자점식은 어떻게 그릴까?</a></li>
+        <li><a href="#card-adchem-formal"><span class="mono">탐구 2</span>형식 전하와 공명 구조</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adchem-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adchem&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">8문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adchem-formal-charge" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>형식 전하와 공명 구조</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">웃음 가스로 불리는 일산화 이질소(N₂O)는 치과에서 마취에 쓰인다. 원자 세 개가 N, N, O 순서로 늘어선 이 분자의 루이스 구조를 그려 보면, 옥텟 규칙을 지키는 구조가 셋이나 나온다. 결합의 종류만 다를 뿐 모두 맞는 것처럼 보인다. 그렇다면 실제 분자는 그중 어느 것일까? 아니면 셋 모두와 조금씩 닮은 것일까? 여러 구조 가운데 무엇이 분자를 더 잘 나타내는지 가릴 기준이 필요하다.</p>
+          <figure class="q-fig" data-q="adchem-fc">
+            <svg viewBox="0 0 520 175" role="img" aria-label="N₂O의 세 루이스 구조와 각 원자의 형식 전하"></svg>
+            <div class="q-ctl"><label>루이스 구조 <input type="range" data-k="v" min="0" max="2" step="1" value="0"><output data-k="v"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. N₂O의 세 루이스 구조에서 각 원자의 형식 전하(오른쪽이 +). 형식 전하가 작고, 음의 형식 전하가 전기 음성도가 큰 원자에 놓인 구조일수록 실제 분자에 더 크게 기여한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>루이스 구조와 옥텟 규칙, 전기 음성도(화학), 화학 결합과 입자 간 에너지(<a href="1-3.html">화학 결합과 입자 간 에너지</a>).</div>
+
+          <h3><span class="no">1.4.1</span>형식 전하</h3>
+          <p>루이스 구조에서 공유 전자쌍은 두 원자가 똑같이 나누어 가진다고 가정하고, 비공유 전자쌍은 그 원자의 것으로 센다. 이렇게 센 전자 수를 원자가 원래 가진 원자가 전자 수와 비교하면, 그 원자가 전자를 얻었는지 잃었는지를 따질 수 있다. 이 차이를 형식 전하라 한다. 형식 전하는 실제 전하가 아니라 전자를 세는 약속이지만, 여러 루이스 구조 가운데 무엇이 더 그럴듯한지를 판단하는 데 쓸모가 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">형식 전하와 좋은 구조의 기준</span></span>
+            <p>\[\text{형식 전하} = (\text{원자가 전자 수}) - (\text{비공유 전자 수}) - \frac{1}{2}(\text{공유 전자 수})\] 분자의 형식 전하를 모두 더하면 분자의 전하와 같다. 형식 전하의 절댓값이 작을수록, 음의 형식 전하가 전기 음성도가 큰 원자에 놓일수록 좋은 구조이다.</p>
+          </div>
+          <p>그림 1에서 구조를 바꾸어 보자. N=N=O 구조는 끝 N이 −1, 가운데 N이 +1, O가 0이다. N≡N−O 구조는 끝 N이 0, 가운데 N이 +1, O가 −1이다. 두 구조는 모두 형식 전하가 작고, 두 번째는 음전하가 전기 음성도가 가장 큰 산소에 놓인다. 세 번째 N−N≡O 구조는 끝 N에 −2가 생기고 산소에 +1이 놓여 가장 나쁘다. 그래서 실제 분자는 앞의 두 구조가 섞인 모습에 가깝다.<sup class="fn"><a href="#fn-adchem-formal-charge-1">1</a></sup></p>
+
+          <h3><span class="no">1.4.2</span>공명 구조</h3>
+          <p>질산 이온(NO₃⁻)의 루이스 구조를 그리면, 이중 결합을 세 산소 가운데 어디에 두어도 되므로 같은 모양의 구조가 셋 나온다. 그런데 실제로 재어 보면 세 N−O 결합의 길이가 모두 124 pm로 같다. N−O 단일 결합(약 136 pm)과 N=O 이중 결합(약 115 pm)의 중간이다. 즉 실제 이온은 세 구조 가운데 어느 하나가 아니라, 셋을 평균한 하나의 구조이다. 이렇게 하나의 루이스 구조로 나타낼 수 없어 여러 구조로 나타내는 것을 공명이라 하고, 각 구조를 공명 구조, 실제 구조를 공명 혼성이라 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="공명 구조와 결합 차수">
+              <g class="s">
+                <text x="20" y="22">입자</text><text x="150" y="22">공명 구조 수</text><text x="290" y="22">결합 차수</text><text x="410" y="22">결합 길이</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">오존 O₃</text><text x="150" y="52">2</text><text x="290" y="52">1.5</text><text x="410" y="52">128 pm</text>
+                <text x="20" y="74">질산 이온 NO₃⁻</text><text x="150" y="74">3</text><text x="290" y="74">약 1.33</text><text x="410" y="74">124 pm</text>
+                <text x="20" y="96">벤젠 C₆H₆</text><text x="150" y="96">2</text><text x="290" y="96">1.5</text><text x="410" y="96">140 pm</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 공명 혼성에서 결합은 단일 결합과 이중 결합 사이의 길이를 가진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.2</span>
+            <p>이산화 탄소는 O=C=O로 그리지만, O≡C−O로도 옥텟 규칙을 지키는 구조를 그릴 수 있다. 두 구조에서 각 원자의 형식 전하를 구하고, 어느 구조가 더 좋은지 판단하여라.</p>
+          </div>
+          <p>O=C=O에서 각 산소는 비공유 전자 4개와 공유 전자 4개를 가지므로 \(6 - 4 - 2 = 0\)이다. 탄소는 비공유 전자 없이 공유 전자 8개를 가져 \(4 - 0 - 4 = 0\)이다. 모든 원자의 형식 전하가 0이다.</p>
+          <p>O≡C−O에서 삼중 결합한 산소는 비공유 전자 2개와 공유 전자 6개를 가져 \(6 - 2 - 3 = +1\), 단일 결합한 산소는 비공유 전자 6개와 공유 전자 2개를 가져 \(6 - 6 - 1 = -1\), 탄소는 0이다. 합은 0으로 같지만 전하가 갈라져 있다. 따라서 모든 형식 전하가 0인 O=C=O가 더 좋은 구조이고, 실제로 이산화 탄소의 두 C=O 결합은 길이가 116 pm로 같고 분자는 극성이 없다.</p>
+          <p>아래 탐구 카드에서 여러 분자의 형식 전하를 계산해 보고, 공명 혼성의 결합 길이를 실제 측정값과 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adchem-formal-charge-1">N₂O에서 실제로 잰 N−N 결합 길이는 113 pm, N−O 결합 길이는 119 pm이다. N≡N 삼중 결합(110 pm)과 N=N 이중 결합(125 pm) 사이에 있어, 두 공명 구조가 섞였다는 생각과 맞는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>형식 전하는 공유 전자를 반씩 나누어 센 전자 수와 원자가 전자 수의 차이로, 여러 루이스 구조 가운데 형식 전하가 작고 음전하가 전기 음성도가 큰 원자에 놓인 구조가 더 좋다. 하나의 구조로 나타낼 수 없는 분자는 여러 공명 구조의 평균인 공명 혼성으로 존재한다. 그래서 처음 질문의 N₂O는 세 구조 가운데 어느 하나가 진짜가 아니라, 형식 전하가 작은 두 구조가 섞인 공명 혼성이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/chem/2-3.html#card-chem-vsepr"><small class="mono">화학 2.3</small>물 분자는 왜 굽은 모양일까?</a><a href="../../c/chem/2-3.html#text-chem-shape"><small class="mono">화학 2.3</small>루이스 구조와 분자 모양</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/2-4.html#card-chem-bp"><small class="mono">화학 2.4</small>물의 끓는점은 왜 100 °C나 될까?</a><a href="../../c/chem/2-4.html#card-chem-ice"><small class="mono">화학 2.4</small>물이 얼면 왜 부피가 커질까?</a><a href="../../c/chem/2-4.html#card-chem-mix"><small class="mono">화학 2.4</small>기름과 물은 왜 섞이지 않을까?</a><a href="../../c/chem/2-2.html#card-chem-polar-lab"><small class="mono">화학 2.2</small>대전된 막대를 가까이 대면 물줄기는 휘는데 기름 줄기는 왜 안 휠까?</a></div></nav>
+
       <article class="card" id="card-chem-lewis">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>루이스 전자점식은 어떻게 그릴까?</h2><span class="kind">원자가 전자 · 옥텟 규칙 · 다중 결합</span>
+          <span class="no">탐구 1</span><h2>루이스 전자점식은 어떻게 그릴까?</h2><span class="kind">원자가 전자 · 옥텟 규칙 · 다중 결합</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -79,33 +136,33 @@
                 <div><dt>옥텟을 이룬 원자</dt><dd class="v-ok">—</dd></div>
               </dl>
               <p class="fig-note lw-msg" aria-live="polite"></p>
-              <p class="fig-note">비공유 전자쌍은 남은 전자를 바깥 원자부터 채워 넣어 자동으로 그립니다. 초록 원은 옥텟(H는 전자 2개)을 이룬 원자, 주황 원은 아직 못 이룬 원자입니다.</p>
+              <p class="fig-note">비공유 전자쌍은 남은 전자를 바깥 원자부터 채워 넣어 자동으로 그린다. 초록 원은 옥텟(H는 전자 2개)을 이룬 원자, 주황 원은 아직 못 이룬 원자이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>CO₂에서 탄소와 산소는 전자를 몇 쌍씩 나누고 있을까요? 화학식만 봐서는 알 수 없습니다. 전자를 하나하나 세어 그려 볼 방법이 필요합니다.</li>
-            <li><span class="tag">복원</span>원자가 전자는 가장 바깥 껍질의 전자로, 족 번호의 일의 자리와 같습니다(H 1, C 4, N 5, O 6). 원자들은 전자를 공유해 바깥 껍질에 전자 8개(H는 2개)를 채우려는 경향이 있습니다(옥텟 규칙).</li>
-            <li><span class="tag">설명</span>① 원자가 전자를 모두 더합니다. ② 원자를 단일 결합으로 잇습니다. ③ 남은 전자를 바깥 원자부터 쌍으로 채웁니다. ④ 가운데 원자가 옥텟을 못 이루면, 이웃 원자의 비공유 전자쌍을 결합으로 돌려 <em>2중·3중 결합</em>을 만듭니다.</li>
-            <li><span class="tag">연결</span>전자점식에서 두 원자 사이의 전자쌍은 <em>공유 전자쌍</em>, 한 원자에만 속한 전자쌍은 <em>비공유 전자쌍</em>입니다. 공유 전자쌍을 선 하나로 바꿔 쓴 것이 구조식입니다. 비공유 전자쌍은 전자쌍 반발 이론에서 분자 모양을 정하는 데 쓰입니다.</li>
-            <li><span class="tag">적용</span>CO₂는 처음에 모두 단일 결합입니다. 탄소 둘레 전자는 몇 개인가요? 결합을 눌러 차수를 바꿔 모든 원자가 초록이 되게 만들어 보세요. HCN, N₂, HCHO도 해 보세요. 전자 총수는 결합을 바꿔도 그대로입니다.</li>
-            <li class="warn"><span class="tag">판단</span>CO₂에서 한쪽을 3중 결합, 다른 쪽을 단일 결합으로 해도 모든 원자가 옥텟을 이룹니다. 하지만 이 구조에서는 원자에 전하가 남습니다(형식 전하). 실제 CO₂의 두 결합은 길이가 같아서 O=C=O가 더 잘 맞습니다. 또 BF₃(붕소 둘레 6개)나 SF₆(황 둘레 12개)처럼 옥텟 규칙을 따르지 않는 분자도 있습니다.</li>
+            <li><span class="tag">질문</span>CO₂에서 탄소와 산소는 전자를 몇 쌍씩 나누고 있을까? 화학식만 봐서는 알 수 없으므로, 전자를 하나하나 세어 그려 볼 방법이 필요하다.</li>
+            <li><span class="tag">복원</span>원자가 전자는 가장 바깥 껍질의 전자로, 족 번호의 일의 자리와 같다(H 1, C 4, N 5, O 6). 그리고 원자들은 전자를 공유해 바깥 껍질에 전자 8개(H는 2개)를 채우려는 경향이 있다(옥텟 규칙).</li>
+            <li><span class="tag">설명</span>먼저 원자가 전자를 모두 더하고, 원자를 단일 결합으로 잇는다. 그다음 남은 전자를 바깥 원자부터 쌍으로 채운다. 그래도 가운데 원자가 옥텟을 못 이루면, 이웃 원자의 비공유 전자쌍을 결합으로 돌려 <em>2중 결합이나 3중 결합</em>을 만든다.</li>
+            <li><span class="tag">연결</span>전자점식에서 두 원자 사이의 전자쌍은 <em>공유 전자쌍</em>, 한 원자에만 속한 전자쌍은 <em>비공유 전자쌍</em>이고, 공유 전자쌍을 선 하나로 바꿔 쓴 것이 구조식이다. 비공유 전자쌍은 전자쌍 반발 이론에서 분자 모양을 정하는 데 쓰인다.</li>
+            <li><span class="tag">적용</span>CO₂는 처음에 모두 단일 결합인데, 탄소 둘레 전자가 몇 개인지 세어 보자. 결합을 눌러 차수를 바꿔 모든 원자가 초록이 되게 만들고, HCN, N₂, HCHO도 해 보자. 결합을 바꿔도 전자 총수는 그대로이다.</li>
+            <li class="warn"><span class="tag">판단</span>CO₂에서 한쪽을 3중 결합, 다른 쪽을 단일 결합으로 해도 모든 원자가 옥텟을 이룬다. 하지만 이 구조에서는 원자에 전하가 남는다(형식 전하). 실제 CO₂의 두 결합은 길이가 같아서 O=C=O가 더 잘 맞는다. 또 BF₃(붕소 둘레 6개)나 SF₆(황 둘레 12개)처럼 옥텟 규칙을 따르지 않는 분자도 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">사이안화 수소(H–C–N 순서로 연결된 HCN)의 루이스 구조로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>C와 N 사이 단일 결합, N에 비공유 전자쌍 3개<span class="why"><b>전자 수는 맞지만 탄소가 옥텟을 이루지 못합니다.</b> 탄소 둘레에 전자가 4개뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>C와 N 사이 2중 결합, N에 비공유 전자쌍 2개<span class="why"><b>질소는 옥텟이지만 탄소 둘레가 6개입니다.</b> 한 쌍을 더 결합으로 돌려야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>C와 N 사이 3중 결합, N에 비공유 전자쌍 1개<span class="why"><b>맞습니다.</b> 원자가 전자 1 + 4 + 5 = 10개. H–C에 2개, C≡N에 6개, N의 비공유 전자쌍에 2개. H 2개, C 8개, N 8개입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>C와 N 사이 단일 결합, N에 비공유 전자쌍 3개<span class="why"><b>전자 수는 맞지만 탄소가 옥텟을 이루지 못한다.</b> 탄소 둘레에 전자가 4개뿐이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>C와 N 사이 2중 결합, N에 비공유 전자쌍 2개<span class="why"><b>질소는 옥텟이지만 탄소 둘레가 6개이다.</b> 한 쌍을 더 결합으로 돌려야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>C와 N 사이 3중 결합, N에 비공유 전자쌍 1개<span class="why"><b>맞다.</b> 원자가 전자 1 + 4 + 5 = 10개. H–C에 2개, C≡N에 6개, N의 비공유 전자쌍에 2개. H 2개, C 8개, N 8개이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/2-4.html#card-chem-bp"><small class="mono">화학 2.4</small>물의 끓는점은 왜 100 °C나 될까?</a><a href="../../c/chem/2-4.html#card-chem-ice"><small class="mono">화학 2.4</small>물이 얼면 왜 부피가 커질까?</a><a href="../../c/chem/2-4.html#card-chem-mix"><small class="mono">화학 2.4</small>기름과 물은 왜 섞이지 않을까?</a><a href="../../c/chem/2-2.html#card-chem-polar-lab"><small class="mono">화학 2.2</small>대전된 막대를 가까이 대면 물줄기는 휘는데 기름 줄기는 왜 안 휠까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/adchem/1-5.html#text-adchem-hybrid"><small class="mono">고급 화학 1.5</small>원자가 결합 이론과 혼성 오비탈</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/2-4.html#card-chem-bp"><small class="mono">화학 2.4</small>물의 끓는점은 왜 100 °C나 될까?</a><a href="../../c/chem/2-4.html#card-chem-ice"><small class="mono">화학 2.4</small>물이 얼면 왜 부피가 커질까?</a><a href="../../c/chem/2-4.html#card-chem-mix"><small class="mono">화학 2.4</small>기름과 물은 왜 섞이지 않을까?</a><a href="../../c/chem/2-2.html#card-chem-polar-lab"><small class="mono">화학 2.2</small>대전된 막대를 가까이 대면 물줄기는 휘는데 기름 줄기는 왜 안 휠까?</a></div></nav>
 
       <article class="card" id="card-adchem-formal">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>세 결합의 길이가 같은 질산 이온을 루이스 구조식으로 어떻게 나타낼까?</h2><span class="kind">형식 전하 · 공명 구조 · 안정한 구조 고르기</span>
+          <span class="no">탐구 2</span><h2>세 결합의 길이가 같은 질산 이온을 루이스 구조식으로 어떻게 나타낼까?</h2><span class="kind">형식 전하 · 공명 구조 · 안정한 구조 고르기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,47 +183,51 @@
               </div>
               <p class="verdict">—</p>
               <p class="saved"></p>
-              <p class="fig-note">결합(선)을 누를 때마다 단일 → 이중 → 삼중 결합으로 바뀝니다. 비공유 전자쌍은 바깥 원자부터 옥텟을 채우고 남는 전자를 가운데 원자에 주도록 자동으로 배치합니다. 형식 전하 = (원자가 전자 수) − (비공유 전자 수) − (결합 수). 저장한 구조가 둘 이상이면 결합 옆에 구조들의 단순 평균 결합 차수를 적습니다(모든 구조의 비중을 같다고 가정). 실측 결합 길이: NO₃⁻의 N–O 세 개 모두 약 125 pm, O₃의 O–O 두 개 모두 128 pm.</p>
+              <p class="fig-note">결합(선)을 누를 때마다 단일 → 이중 → 삼중 결합으로 바뀐다. 비공유 전자쌍은 바깥 원자부터 옥텟을 채우고 남는 전자를 가운데 원자에 주도록 자동으로 배치한다. 형식 전하 = (원자가 전자 수) − (비공유 전자 수) − (결합 수). 저장한 구조가 둘 이상이면 결합 옆에 구조들의 단순 평균 결합 차수를 적는다(모든 구조의 비중을 같다고 가정). 실측 결합 길이는 NO₃⁻의 N–O 세 개 모두 약 125 pm, O₃의 O–O 두 개 모두 128 pm.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>질산 이온(NO₃⁻)의 루이스 구조식을 그리면 N=O 하나와 N–O 둘이 나옵니다. 이중 결합은 단일 결합보다 짧아야 하는데, 실제로 재 보면 세 N–O 결합은 모두 125 pm로 같습니다. 구조식이 틀린 것일까요?</li>
-            <li><span class="tag">복원</span>루이스 구조식은 원자가 전자를 결합 전자쌍과 비공유 전자쌍으로 나누어, 각 원자가 옥텟(수소는 2개)을 이루도록 그린 것입니다. 결합 차수가 클수록 결합 길이는 짧고 결합 에너지는 큽니다(대표값: N–O 약 140 pm, N=O 약 120 pm).</li>
-            <li><span class="tag">설명</span>공유 전자쌍을 두 원자가 반씩 나눠 가진다고 가정하고, 원자가 원래 가진 원자가 전자 수와 비교한 값을 <em>형식 전하</em>라 합니다. FC = V − N<sub>비공유</sub> − (결합 수). 형식 전하의 합은 분자의 전하와 같습니다. 원자 배치는 그대로 두고 전자쌍의 위치만 다르게 그린 구조가 여럿 가능하면 이들을 <em>공명 구조</em>라 하며, 실제 분자는 어느 하나가 아니라 이들이 섞인 <em>공명 혼성체</em>입니다. NO₃⁻에서는 이중 결합의 자리만 다른 동등한 구조 세 개가 있으므로 실제 결합 차수는 모두 4/3입니다.</li>
-            <li><span class="tag">연결</span>공명 구조들이 동등하지 않으면 더 안정한 구조가 실제 모습에 더 많이 기여합니다. 판단 기준은 ① 2주기 원자가 옥텟을 이루고, ② 형식 전하의 절댓값이 작으며, ③ 음의 형식 전하가 전기 음성도가 큰 원자에 있고, ④ 같은 부호의 전하가 이웃하지 않는 구조입니다. 전자가 여러 원자에 퍼지는(비편재화) 만큼 에너지가 낮아지는데, 이것이 카복실산 이온·벤젠이 안정한 까닭이며, 뒤에서 다룰 작용기의 산 세기와도 이어집니다.</li>
-            <li><span class="tag">적용</span>NO₃⁻에서 이중 결합의 위치를 바꿔 가며 세 구조를 모두 저장하고 평균 결합 차수를 확인하세요. N₂O(N–N–O)에서는 형식 전하의 배치가 다른 구조를 몇 개 만들 수 있나요? 가장 안정한 구조는 무엇이고, 그 까닭은 무엇인가요? CO₂에서 O≡C–O 구조와 O=C=O 구조를 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>공명 구조는 분자가 여러 구조 사이를 빠르게 오가는 것이 아닙니다. 실제 분자는 언제나 하나의 혼성체이며, 구조식 여러 개는 한 장으로 나타낼 수 없는 전자 분포를 표현하는 도구입니다. 형식 전하도 실제 원자의 부분 전하와 다릅니다(전기 음성도 차이를 무시함). SO₄²⁻에서 형식 전하를 줄이려고 S=O를 그리면 S 주위 전자가 12개가 되는데, 최근 계산은 3d 오비탈의 참여가 거의 없고 S–O 결합이 강한 극성을 띤 구조가 더 실제에 가깝다고 봅니다. ‘형식 전하 최소’ 규칙도 모형의 하나일 뿐입니다.</li>
+            <li><span class="tag">질문</span>질산 이온(NO₃⁻)의 루이스 구조식을 그리면 N=O 하나와 N–O 둘이 나온다. 이중 결합은 단일 결합보다 짧아야 하는데, 실제로 재 보면 세 N–O 결합은 모두 125 pm로 같다. 구조식이 틀린 것일까?</li>
+            <li><span class="tag">복원</span>루이스 구조식은 원자가 전자를 결합 전자쌍과 비공유 전자쌍으로 나누어, 각 원자가 옥텟(수소는 2개)을 이루도록 그린 것이다. 결합 차수가 클수록 결합 길이는 짧고 결합 에너지는 크다(대표값은 N–O 약 140 pm, N=O 약 120 pm).</li>
+            <li><span class="tag">설명</span>공유 전자쌍을 두 원자가 반씩 나눠 가진다고 가정하고, 원자가 원래 가진 원자가 전자 수와 비교한 값을 <em>형식 전하</em>라 한다. FC = V − N<sub>비공유</sub> − (결합 수). 형식 전하의 합은 분자의 전하와 같다. 원자 배치는 그대로 두고 전자쌍의 위치만 다르게 그린 구조가 여럿 가능하면 이들을 <em>공명 구조</em>라 하며, 실제 분자는 어느 하나가 아니라 이들이 섞인 <em>공명 혼성체</em>이다. NO₃⁻에서는 이중 결합의 자리만 다른 동등한 구조 세 개가 있으므로 실제 결합 차수는 모두 4/3이다.</li>
+            <li><span class="tag">연결</span>공명 구조들이 동등하지 않으면 더 안정한 구조가 실제 모습에 더 많이 기여한다. 판단 기준은 ① 2주기 원자가 옥텟을 이루고, ② 형식 전하의 절댓값이 작으며, ③ 음의 형식 전하가 전기 음성도가 큰 원자에 있고, ④ 같은 부호의 전하가 이웃하지 않는 구조이다. 전자가 여러 원자에 퍼지는(비편재화) 만큼 에너지가 낮아지는데, 이것이 카복실산 이온·벤젠이 안정한 까닭이며, 뒤에서 다룰 작용기의 산 세기와도 이어진다.</li>
+            <li><span class="tag">적용</span>NO₃⁻에서 이중 결합의 위치를 바꿔 가며 세 구조를 모두 저장하고 평균 결합 차수를 확인해 보자. N₂O(N–N–O)에서는 형식 전하의 배치가 다른 구조를 몇 개 만들 수 있는가? 가장 안정한 구조는 무엇이고, 그 까닭은 무엇인가? CO₂에서 O≡C–O 구조와 O=C=O 구조를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>공명 구조는 분자가 여러 구조 사이를 빠르게 오가는 것이 아니다. 실제 분자는 언제나 하나의 혼성체이며, 구조식 여러 개는 한 장으로 나타낼 수 없는 전자 분포를 표현하는 도구이다. 형식 전하도 실제 원자의 부분 전하와 다르다(전기 음성도 차이를 무시함). SO₄²⁻에서 형식 전하를 줄이려고 S=O를 그리면 S 주위 전자가 12개가 되는데, 최근 계산은 3d 오비탈의 참여가 거의 없고 S–O 결합이 강한 극성을 띤 구조가 더 실제에 가깝다고 본다. ‘형식 전하 최소’ 규칙도 모형의 하나일 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">사이안산 이온 OCN⁻(O–C–N 순서)의 공명 구조로 ㉠ O=C=N⁻ 꼴(N에 −1), ㉡ ⁻O–C≡N 꼴(O에 −1), ㉢ O≡C–N²⁻ 꼴(O에 +1, N에 −2)이 있습니다. 설명으로 옳은 것은?</p>
+          <p class="q">사이안산 이온 OCN⁻(O–C–N 순서)의 공명 구조로 ㉠ O=C=N⁻ 꼴(N에 −1), ㉡ ⁻O–C≡N 꼴(O에 −1), ㉢ O≡C–N²⁻ 꼴(O에 +1, N에 −2)이 있다. 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>㉡이 가장 크게 기여하고, ㉢의 기여는 가장 작다<span class="why"><b>맞습니다.</b> ㉠과 ㉡은 형식 전하 절댓값의 합이 1로 같지만 ㉡은 음전하가 전기 음성도가 더 큰 O에 있습니다. ㉢은 전하가 크고 O에 양전하가 있어 불리합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>세 구조 모두 C가 옥텟을 이루므로 기여가 같다<span class="why"><b>옥텟은 필요조건일 뿐입니다.</b> 옥텟을 이룬 구조끼리는 형식 전하의 크기와 위치로 비교해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>이온은 ㉠ 구조와 ㉡ 구조 사이를 빠르게 오간다<span class="why"><b>공명을 진동으로 오해했습니다.</b> 실제 이온은 하나의 혼성체이고, C–N 결합은 이중과 삼중 사이, C–O 결합은 단일과 이중 사이의 성질을 가집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>㉡이 가장 크게 기여하고, ㉢의 기여는 가장 작다<span class="why"><b>맞다.</b> ㉠과 ㉡은 형식 전하 절댓값의 합이 1로 같지만 ㉡은 음전하가 전기 음성도가 더 큰 O에 있다. ㉢은 전하가 크고 O에 양전하가 있어 불리하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>세 구조 모두 C가 옥텟을 이루므로 기여가 같다<span class="why"><b>옥텟은 필요조건일 뿐이다.</b> 옥텟을 이룬 구조끼리는 형식 전하의 크기와 위치로 비교해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>이온은 ㉠ 구조와 ㉡ 구조 사이를 빠르게 오간다<span class="why"><b>공명을 진동으로 오해했다.</b> 실제 이온은 하나의 혼성체이고, C–N 결합은 이중과 삼중 사이, C–O 결합은 단일과 이중 사이의 성질을 가진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/chem/2-3.html#card-chem-vsepr"><small class="mono">화학 2.3</small>물 분자는 왜 굽은 모양일까?</a><a href="../../c/chem/2-2.html#card-chem-en"><small class="mono">화학 2.2</small>전기 음성도: 두 원자 중 누가 전자쌍을 더 세게 당길까?</a><a href="../../c/chem/2-2.html#card-chem-dipole"><small class="mono">화학 2.2</small>CO₂는 극성 결합이 있는데 왜 무극성 분자일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/1-7.html#card-adchem-fg-acid"><small class="mono">고급 화학 1.7</small>페놀은 왜 수산화 나트륨에는 녹고 탄산수소 나트륨에는 안 녹을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/chem/2-3.html#card-chem-vsepr"><small class="mono">화학 2.3</small>물 분자는 왜 굽은 모양일까?</a><a href="../../c/chem/2-3.html#text-chem-shape"><small class="mono">화학 2.3</small>루이스 구조와 분자 모양</a><a href="../../c/adchem/1-5.html#text-adchem-hybrid"><small class="mono">고급 화학 1.5</small>원자가 결합 이론과 혼성 오비탈</a><a href="../../c/chem/2-2.html#card-chem-en"><small class="mono">화학 2.2</small>두 원자 가운데 누가 전자쌍을 더 세게 당길까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/1-7.html#card-adchem-fg-acid"><small class="mono">고급 화학 1.7</small>페놀은 왜 수산화 나트륨에는 녹고 탄산수소 나트륨에는 안 녹을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adchem-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adchem&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">8문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adchem/body.js"></script>
 <script src="../../js/cards/chem/a-lewis.js"></script>
 <script src="../../js/cards/adchem/st-formal.js"></script>
 </body>

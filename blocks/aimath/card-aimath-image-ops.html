@@ -24,25 +24,25 @@
       <div class="ctl-row"><div><label class="mono">값 = <output class="k-out"></output></label><input class="k" type="range" min="-100" max="100" step="5" value="60" aria-label="변환의 세기"></div></div>
       <div class="two"><div><canvas class="src no-invert" aria-label="원래 24×24 흑백 이미지"></canvas><p class="lab">원래 A</p></div><div><canvas class="dst no-invert" aria-label="변환한 이미지"></canvas><p class="lab dl"></p></div></div>
       <p class="mono small say" role="status"></p>
-      <p class="fig-note">원과 네모, 줄로 만든 24×24 가상 이미지입니다. 계산 결과가 0보다 작으면 0, 255보다 크면 255로 자릅니다.</p>
+      <p class="fig-note">원과 네모, 줄로 만든 24×24 가상 이미지이다. 계산 결과가 0보다 작으면 0, 255보다 크면 255로 자른다.</p>
     </div>
     <ol class="steps">
-      <li><span class="tag">질문</span>사진 편집 앱에서 "밝게", "대비", "뒤집기"를 누르면 사진이 바로 바뀝니다. 앱은 사진의 행렬에 어떤 계산을 하는 걸까요?</li>
-      <li><span class="tag">복원</span>행렬의 실수배 \(kA\), 행렬의 덧셈과 뺄셈, 행렬의 곱셈.</li>
-      <li><span class="tag">설명</span>밝기는 모든 성분에 같은 수를 더하는 것(\(A + kJ\), \(J\)는 성분이 모두 1인 행렬), 대비는 128을 기준으로 차이를 늘리는 것(\(c(A - 128J) + 128J\)), 반전은 \(255J - A\)입니다. 이미지를 대각선으로 뒤집으면 \((i, j)\) 성분과 \((j, i)\) 성분이 바뀐 행렬이 되는데, 이를 <em>전치행렬</em> \(A^T\)라 합니다. 좌우로 뒤집으려면 오른쪽에 반대각선이 1인 행렬 \(R\)을 곱합니다(\(AR\)). 이처럼 이미지 처리는 대부분 행렬 연산입니다.</li>
-      <li><span class="tag">연결</span>인공지능에 사진을 학습시킬 때 같은 사진을 뒤집거나 밝기를 바꿔 자료를 늘리기도 합니다(데이터 증강). 다음 카드는 주변 픽셀을 함께 쓰는 계산(합성곱)입니다.</li>
-      <li><span class="tag">적용</span>각 변환을 해 보며 성분이 어떻게 바뀌는지 설명하세요. 반전을 두 번 하면 어떻게 되나요? 전치를 두 번 하면요?</li>
-      <li class="warn"><span class="tag">판단</span>255를 넘거나 0보다 작아진 값은 잘려서 원래 정보가 사라집니다. 너무 밝게 한 뒤 다시 어둡게 해도 원래 사진으로 돌아오지 않습니다.</li>
+      <li><span class="tag">질문</span>사진 편집 앱에서 ‘밝게’, ‘대비’, ‘뒤집기’를 누르면 사진이 바로 바뀐다. 앱은 사진의 행렬에 어떤 계산을 하는 걸까?</li>
+      <li><span class="tag">복원</span>행렬에는 실수배 \(kA\), 덧셈과 뺄셈, 곱셈이 있다.</li>
+      <li><span class="tag">설명</span>밝기는 모든 성분에 같은 수를 더하는 것(\(A + kJ\), \(J\)는 성분이 모두 1인 행렬)이고, 대비는 128을 기준으로 차이를 늘리는 것(\(c(A - 128J) + 128J\)), 반전은 \(255J - A\)이다. 이미지를 대각선으로 뒤집으면 \((i, j)\) 성분과 \((j, i)\) 성분이 바뀐 행렬이 되는데, 이를 <em>전치행렬</em> \(A^T\)라 한다. 또 좌우로 뒤집으려면 오른쪽에 반대각선이 1인 행렬 \(R\)을 곱한다(\(AR\)). 즉 이미지 처리는 대부분 행렬 연산이다.</li>
+      <li><span class="tag">연결</span>인공지능에 사진을 학습시킬 때는 같은 사진을 뒤집거나 밝기를 바꿔 자료를 늘리기도 한다(데이터 증강). 다음 카드에서는 주변 픽셀을 함께 쓰는 계산(합성곱)을 다룬다.</li>
+      <li><span class="tag">적용</span>각 변환을 해 보며 성분이 어떻게 바뀌는지 설명해 보자. 그리고 반전을 두 번 하면, 전치를 두 번 하면 어떻게 되는지도 확인해 보자.</li>
+      <li class="warn"><span class="tag">판단</span>255를 넘거나 0보다 작아진 값은 잘려서 원래 정보가 사라진다. 그래서 너무 밝게 한 뒤 다시 어둡게 해도 원래 사진으로 돌아오지 않는다.</li>
     </ol>
   </div>
   <div class="quiz">
     <h3><span class="mono">확인</span>조건이 달라지면</h3>
     <p class="q">밝기 200인 픽셀을 반전한 뒤 밝기를 60만큼 올리면?</p>
     <ol>
-      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>115<span class="why"><b>맞습니다.</b> \(255 - 200 = 55\), \(55 + 60 = 115\)입니다.</span></span></button></li>
-      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>-5<span class="why"><b>순서를 바꿔 \(255 - 260\)으로 했습니다.</b> 게다가 음수는 0으로 잘립니다.</span></span></button></li>
-      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>260<span class="why"><b>반전을 빼먹었습니다.</b> 255를 넘으면 잘립니다.</span></span></button></li>
-      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>55<span class="why"><b>밝기 올리기를 빼먹었습니다.</b></span></span></button></li>
+      <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>115<span class="why"><b>맞다.</b> \(255 - 200 = 55\), \(55 + 60 = 115\)이다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>-5<span class="why"><b>순서를 바꿔 \(255 - 260\)으로 했다.</b> 게다가 음수는 0으로 잘린다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>260<span class="why"><b>반전을 빼먹었다.</b> 255를 넘으면 잘린다.</span></span></button></li>
+      <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>55<span class="why"><b>밝기 올리기를 빼먹었다.</b></span></span></button></li>
     </ol>
   </div>
 </article>

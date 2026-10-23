@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>퍼텐셜 상자와 띠 이론 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="1차원 무한 퍼텐셜 상자 속 입자의 파동 함수와 에너지 준위를 정량적으로 구하고, 에너지띠 이론으로 반도체를 이해하며, 나노 물리학의 전망을 토의한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-lm-hyd .chip:disabled { opacity: .35; cursor: default; }
     #card-phy-lm-hyd .row-lab { font-family: var(--f-mono); font-size: 12px; color: var(--ink-3); align-self: center; min-width: 5.5em; }
@@ -44,22 +50,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-lm-hyd"><span class="mono">4.5.1</span>수소는 왜 몇 가지 색의 빛만 낼까?</a></li>
-        <li><a href="#card-adphy-well"><span class="mono">4.5.2</span>퍼텐셜 상자 속 입자</a></li>
-        <li><a href="#card-emq-tunnel"><span class="mono">4.5.3</span>에너지가 모자란 전자가 어떻게 벽을 통과할까?</a></li>
-        <li><a href="#card-phy-lm-bands"><span class="mono">4.5.4</span>규소는 도체일까, 절연체일까?</a></li>
-        <li><a href="#card-adphy-bands"><span class="mono">4.5.5</span>우물을 이어 만든 에너지띠</a></li>
-        <li><a href="#text-adphy-nano"><span class="mono">4.5.6</span>반도체와 나노 물리학의 전망</a></li>
+        <li><a href="#text-adphy-quantum-box"><span class="mono">본문</span>퍼텐셜 상자와 띠 이론</a></li>
+        <li><a href="#card-phy-lm-hyd"><span class="mono">탐구 1</span>수소는 왜 몇 가지 색의 빛만 낼까?</a></li>
+        <li><a href="#card-adphy-well"><span class="mono">탐구 2</span>퍼텐셜 상자 속 입자</a></li>
+        <li><a href="#card-emq-tunnel"><span class="mono">탐구 3</span>에너지가 모자란 전자가 어떻게 벽을 통과할까?</a></li>
+        <li><a href="#card-phy-lm-bands"><span class="mono">탐구 4</span>규소는 도체일까, 절연체일까?</a></li>
+        <li><a href="#card-adphy-bands"><span class="mono">탐구 5</span>우물을 이어 만든 에너지띠</a></li>
+        <li><a href="#text-adphy-nano"><span class="mono">읽기 6</span>반도체와 나노 물리학의 전망</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-4-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=4-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-4-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">22문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-4-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-quantum-box" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>퍼텐셜 상자와 띠 이론</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">퀀텀닷 텔레비전에는 지름이 몇 나노미터인 반도체 알갱이가 들어 있다. 같은 물질로 만든 알갱이인데도, 작은 것은 파란빛을, 조금 큰 것은 초록빛을, 더 큰 것은 빨간빛을 낸다. 보통의 물질은 크기를 바꾸어도 색이 그대로인데, 나노미터 세계에서는 왜 크기가 색을 바꿀까? 전자를 아주 작은 상자에 가두면 무슨 일이 생길까?</p>
+          <figure class="q-fig" data-q="adphy-box">
+            <svg viewBox="0 0 520 215" role="img" aria-label="상자 길이에 따른 전자의 에너지 준위와 내는 빛의 파장"></svg>
+            <div class="q-ctl"><label>상자 길이 L (nm) <input type="range" data-k="L" min="0.3" max="3" step="0.05" value="1"><output data-k="L"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 길이 L인 일차원 상자에 갇힌 전자의 에너지 준위. 상자가 작을수록 준위 사이가 넓어져, 전자가 n = 2에서 n = 1로 떨어질 때 에너지가 큰 짧은 파장의 빛을 낸다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>드브로이 파장(<a href="4-3.html">빛의 이중성과 물질파</a>), 정상파, 수소 원자의 에너지 준위(물리학).</div>
+
+          <h3><span class="no">4.5.1</span>상자 속의 정상파</h3>
+          <p>전자가 길이 \(L\)인 상자 속에 갇혀 벽 밖으로 나갈 수 없다고 하자. 전자의 물질파는 벽에서 0이 되어야 하므로, 양 끝이 고정된 줄의 정상파처럼 상자 길이가 반파장의 정수배일 때만 존재한다. 즉 \(L = n\dfrac{\lambda}{2}\)이고, 파장은 \(\lambda = 2L/n\)으로 정해진다. 드브로이 관계에서 운동량은 \(p = h/\lambda = nh/(2L)\)이 되어, 에너지도 아무 값이나 가질 수 없고 띄엄띄엄한 값만 가진다. 이것을 에너지의 양자화라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.5.1 <span class="nm">상자 속 입자의 에너지 준위</span></span>
+            <p>질량 \(m\)인 입자가 길이 \(L\)인 상자에 갇히면 에너지는 \[E_n = \frac{p^2}{2m} = \frac{n^2 h^2}{8mL^2}\qquad (n = 1, 2, 3, \dots)\]이다. 전자의 경우 \(L\)을 nm로 쓰면 \(E_1 \approx 0.376/L^2\) eV이다. 가장 낮은 에너지 \(E_1\)도 0이 아니며, 준위의 간격은 \(L^2\)에 반비례한다.</p>
+          </div>
+          <p>그림 1에서 상자 길이를 바꾸어 보자. \(L = 1\) nm이면 \(E_1 \approx 0.38\) eV, \(E_2 \approx 1.50\) eV이다. 전자가 n = 2에서 1로 떨어지면 1.13 eV의 광자를 내고, 그 파장은 \(1240 \div 1.13 \approx 1100\) nm인 적외선이다. 상자를 0.6 nm로 줄이면 간격이 약 2.8배 넓어져 파장 약 400 nm인 보랏빛이 된다. 즉 상자의 크기가 빛의 색을 정한다.<sup class="fn"><a href="#fn-adphy-quantum-box-1">1</a></sup></p>
+
+          <h3><span class="no">4.5.2</span>상자를 이어 붙이면 띠가 된다</h3>
+          <p>원자 하나 속의 전자도 핵의 끌어당김이라는 상자에 갇혀 있어 띄엄띄엄한 에너지 준위를 가진다. 원자 두 개가 가까이 오면 각 준위가 두 개로 갈라지고, 원자 \(N\)개가 모여 결정을 이루면 각 준위가 \(N\)개로 갈라져 촘촘한 띠를 이룬다. 띠와 띠 사이에는 전자가 가질 수 없는 에너지 구간인 띠틈이 남는다. 전자가 다 찬 띠 위에 빈 띠가 띠틈을 두고 있으면 절연체나 반도체이고, 띠가 반쯤 차 있으면 도체이다. 반도체 알갱이를 몇 nm로 줄이면 띠의 양 끝이 상자 효과로 다시 벌어져 띠틈이 커진다. 퀀텀닷의 색이 크기에 따라 바뀌는 까닭이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="갇힌 정도에 따른 에너지 구조">
+              <g class="s">
+                <text x="20" y="22">계</text><text x="190" y="22">에너지 구조</text><text x="370" y="22">예</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">원자 하나</text><text x="190" y="52">띄엄띄엄한 준위</text><text x="370" y="52">수소의 선 스펙트럼</text>
+                <text x="20" y="74">나노 알갱이</text><text x="190" y="74">크기에 따라 벌어지는 띠틈</text><text x="370" y="74">퀀텀닷</text>
+                <text x="20" y="96">큰 결정</text><text x="190" y="96">촘촘한 띠와 띠틈</text><text x="370" y="96">규소, 구리</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 전자가 갇힌 공간의 크기에 따라 에너지 구조가 준위에서 띠까지 이어진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.5.2</span>
+            <p>일차원 상자 모형에서, 전자가 n = 2에서 n = 1로 떨어질 때 파장 650 nm인 빨간빛을 내려면 상자의 길이가 얼마여야 하는가? 같은 모형으로 파장 450 nm인 파란빛을 내는 상자의 길이도 구하여라.</p>
+          </div>
+          <p>650 nm 광자의 에너지는 \(1240 \div 650 \approx 1.91\) eV이다. 이것이 \(E_2 - E_1 = 3E_1\)이므로 \(E_1 \approx 0.636\) eV이고, \(0.376/L^2 = 0.636\)에서 \(L \approx 0.77\) nm이다.</p>
+          <p>450 nm는 \(1240 \div 450 \approx 2.76\) eV이므로 \(E_1 \approx 0.92\) eV이고 \(L \approx 0.64\) nm이다. 파란빛을 내는 상자가 빨간빛보다 작다. 실제 퀀텀닷은 삼차원 알갱이이고 반도체 속 전자의 유효 질량이 가벼워 지름이 수 nm에 이르지만, '작을수록 파랗다'는 결론은 같다. 그래서 같은 재료로 알갱이의 크기만 다르게 만들어 화면의 세 가지 색을 낸다.</p>
+          <p>아래 탐구 카드에서 상자에 갇힌 전자가 아무 에너지나 가질 수 없는 까닭과, 원자가 많이 모이면 준위가 띠가 되는 과정을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-quantum-box-1">2023년 노벨 화학상은 퀀텀닷을 발견하고 만드는 방법을 개발한 바웬디, 브루스, 예키모프에게 돌아갔다. 예키모프는 1981년 색유리 속의 염화 구리 알갱이 크기에 따라 유리의 색이 달라지는 것을 발견했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>상자에 갇힌 전자의 물질파는 정상파만 가능하여 에너지가 \(n^2h^2/(8mL^2)\)로 띄엄띄엄 정해지고, 준위의 간격은 상자 길이의 제곱에 반비례한다. 원자가 많이 모이면 준위가 띠로 퍼지고, 나노 크기의 알갱이에서는 상자 효과로 띠틈이 다시 벌어진다. 그래서 처음 질문의 퀀텀닷은 같은 물질이라도 알갱이가 작을수록 띠틈이 커져 짧은 파장의 파란빛을, 클수록 빨간빛을 낸다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-photo"><small class="mono">물리학 3.3</small>빛을 세게 비추면 전자가 더 빨리 튀어나올까?</a><a href="../../c/phy/3-3.html#text-phy-image-sensor"><small class="mono">물리학 3.3</small>디지털카메라는 빛을 어떻게 숫자로 저장할까?</a><a href="../../c/phy/3-3.html#card-phy-compton"><small class="mono">물리학 3.3</small>X선이 전자에 부딪혀 튕겨 나오면 왜 색(파장)이 바뀔까?</a><a href="../../c/phy/3-3.html#text-phy-duality"><small class="mono">물리학 3.3</small>빛과 물질의 이중성</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/phy/3-4.html#card-phy-lm-spec"><small class="mono">물리학 3.4</small>빛만 보고 무엇이 빛나는지 알 수 있을까?</a><a href="../../c/phy/3-4.html#card-phy-prism"><small class="mono">물리학 3.4</small>프리즘은 하얀빛 속에 숨은 무지개를 어떻게 꺼낼까?</a><a href="../../c/phy/3-4.html#text-phy-levels"><small class="mono">물리학 3.4</small>에너지 준위와 스펙트럼</a><a href="../../c/labchem/2-1.html#text-labchem-lines"><small class="mono">화학 실험 2.1</small>원소의 스펙트럼과 에너지 준위</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/5-4.html#card-labphy-franck-hertz"><small class="mono">물리학 실험 5.4</small>전압을 올리는데 왜 전류가 4.9 V마다 줄어들까?</a><a href="../../c/labphy/5-4.html#text-labphy-mercury"><small class="mono">물리학 실험 5.4</small>프랑크–헤르츠 실험</a><a href="../../c/labchem/2-1.html#card-labchem-spectrum"><small class="mono">화학 실험 2.1</small>분광기로 본 몇 줄의 빛에서 에너지 준위를 어떻게 알아낼까?</a></div></nav>
+
       <article class="card" id="card-phy-lm-hyd">
         <header class="card-head">
-          <span class="no">4.5.1</span><h2>수소는 왜 몇 가지 색의 빛만 낼까?</h2><span class="kind">에너지 준위 · 선 스펙트럼</span>
+          <span class="no">탐구 1</span><h2>수소는 왜 몇 가지 색의 빛만 낼까?</h2><span class="kind">에너지 준위 · 선 스펙트럼</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,33 +139,33 @@
                 <div><dt>파장</dt><dd class="lamh">—</dd></div>
                 <div><dt>영역</dt><dd class="region" style="font-size:13px">—</dd></div>
               </dl>
-              <p class="fig-note">에너지 준위 E<sub>n</sub> = −13.6 eV / n². 파장은 뤼드베리 식으로 계산했고, 200 nm보다 긴 파장은 관측표와 같이 공기 중 값으로 나타냈습니다.</p>
+              <p class="fig-note">에너지 준위는 E<sub>n</sub> = −13.6 eV / n²이다. 파장은 뤼드베리 식으로 계산했고, 200 nm보다 긴 파장은 관측표와 같이 공기 중 값으로 나타냈다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수소 기체를 유리관에 넣고 높은 전압을 걸면 분홍빛이 납니다. 이 빛을 프리즘으로 나누면 무지개가 아니라 선 몇 개만 보입니다. 왜 정해진 색만 나올까요?</li>
-            <li><span class="tag">복원</span>광자 하나의 에너지는 <span class="formula">E = hf = hc / λ</span>입니다. 에너지가 클수록 파장이 짧습니다.</li>
-            <li><span class="tag">설명</span>1913년 보어는 원자 속 전자가 정해진 에너지 값(에너지 준위)만 가질 수 있다고 보았습니다. 수소에서는 <span class="formula">E<sub>n</sub> = −13.6 eV / n²</span>입니다. 전자가 높은 준위에서 낮은 준위로 옮겨 갈 때, 두 준위의 차이만큼의 에너지를 광자 하나로 내보냅니다.</li>
-            <li><span class="tag">연결</span><span class="formula">hc / λ = E<sub>처음</sub> − E<sub>나중</sub></span>. 준위가 띄엄띄엄하니 그 차이도 띄엄띄엄하고, 그래서 연속 스펙트럼이 아니라 선 스펙트럼이 됩니다. n = 2로 옮겨 가는 전이(발머 계열) 가운데 네 개가 가시광선입니다.</li>
-            <li><span class="tag">적용</span>나중 n을 2로 두고 처음 n을 3부터 7까지 바꾸며 선을 모아 보세요. 선 사이 간격은 어떻게 변하나요? 나중 n을 1이나 3으로 바꾸고 ‘이 계열 모두’를 누르면 선이 어느 영역에 생기나요?</li>
-            <li class="warn"><span class="tag">판단</span><span class="formula">−13.6 / n²</span>은 수소처럼 전자가 하나인 원자에만 맞습니다. 전자가 여럿이면 준위가 복잡해지고 선도 훨씬 많아집니다. 전자가 정해진 궤도를 돈다는 보어의 그림은 뒤에 양자역학으로 바뀌었지만, 에너지 준위라는 생각은 그대로 남았습니다.</li>
+            <li><span class="tag">질문</span>수소 기체를 유리관에 넣고 높은 전압을 걸면 분홍빛이 난다. 이 빛을 프리즘으로 나누면 무지개가 아니라 선 몇 개만 보인다. 왜 정해진 색만 나올까?</li>
+            <li><span class="tag">복원</span>광자 하나의 에너지는 <span class="formula">E = hf = hc / λ</span>이다. 즉 에너지가 클수록 파장이 짧다.</li>
+            <li><span class="tag">설명</span>1913년 보어는 원자 속 전자가 정해진 에너지 값(에너지 준위)만 가질 수 있다고 보았다. 수소에서는 <span class="formula">E<sub>n</sub> = −13.6 eV / n²</span>이다. 그래서 전자가 높은 준위에서 낮은 준위로 옮겨 갈 때, 두 준위의 차이만큼의 에너지를 광자 하나로 내보낸다.</li>
+            <li><span class="tag">연결</span>따라서 <span class="formula">hc / λ = E<sub>처음</sub> − E<sub>나중</sub></span>이다. 준위가 띄엄띄엄하니 그 차이도 띄엄띄엄하고, 그래서 연속 스펙트럼이 아니라 선 스펙트럼이 된다. n = 2로 옮겨 가는 전이(발머 계열) 가운데 네 개가 가시광선이다.</li>
+            <li><span class="tag">적용</span>나중 n을 2로 두고 처음 n을 3부터 7까지 바꾸며 선을 모아, 선 사이 간격이 어떻게 변하는지 보자. 나중 n을 1이나 3으로 바꾸고 ‘이 계열 모두’를 누르면 선이 어느 영역에 생기는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span><span class="formula">−13.6 / n²</span>은 수소처럼 전자가 하나인 원자에만 맞는다. 전자가 여럿이면 준위가 복잡해지고 선도 훨씬 많아진다. 또 전자가 정해진 궤도를 돈다는 보어의 그림은 뒤에 양자역학으로 바뀌었지만, 에너지 준위라는 생각은 그대로 남았다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">수소 원자의 전자가 n = 3에서 n = 2가 아니라 n = 1로 곧바로 옮겨 갔습니다. 나오는 광자는?</p>
+          <p class="q">수소 원자의 전자가 n = 3에서 n = 2가 아니라 n = 1로 곧바로 옮겨 갔다. 나오는 광자는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1.89 eV, 빨간빛(656 nm)<span class="why"><b>n = 3 → 2 전이의 값입니다.</b> 출발한 준위가 같아도 도착한 준위가 다르면 에너지 차이가 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12.1 eV, 자외선(103 nm)<span class="why"><b>맞습니다.</b> −1.51 − (−13.6) ≈ 12.1 eV. 에너지가 커서 파장이 짧은 자외선이 됩니다. 라이먼 계열의 두 번째 선입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>13.6 eV<span class="why"><b>n = 1의 에너지 크기 전체입니다.</b> 이것은 전자를 원자 밖으로 떼어 낼 때(n = ∞) 필요한 에너지입니다. n = 3에서 출발했으니 그보다 작습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1.89 eV, 빨간빛(656 nm)<span class="why"><b>n = 3 → 2 전이의 값이다.</b> 출발한 준위가 같아도 도착한 준위가 다르면 에너지 차이가 다르다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12.1 eV, 자외선(103 nm)<span class="why"><b>맞다.</b> −1.51 − (−13.6) ≈ 12.1 eV. 에너지가 커서 파장이 짧은 자외선이 된다. 라이먼 계열의 두 번째 선이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>13.6 eV<span class="why"><b>n = 1의 에너지 크기 전체이다.</b> 이것은 전자를 원자 밖으로 떼어 낼 때(n = ∞) 필요한 에너지이다. n = 3에서 출발했으니 그보다 작다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-photo"><small class="mono">물리학 3.3</small>빛을 세게 비추면 전자가 더 빨리 튀어나올까?</a><a href="../../c/phy/3-3.html#text-phy-image-sensor"><small class="mono">물리학 3.3</small>디지털카메라는 빛을 어떻게 숫자로 저장할까?</a><a href="../../c/phy/3-3.html#card-phy-compton"><small class="mono">물리학 3.3</small>X선이 전자에 부딪혀 튕겨 나오면 왜 색(파장)이 바뀔까?</a><a href="../../c/is1/2-1.html#card-is1-spectrum"><small class="mono">통합과학1 2.1</small>별빛에서 원소를 어떻게 읽을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/5-4.html#card-labphy-franck-hertz"><small class="mono">물리학 실험 5.4</small>전압을 올리는데 왜 전류가 4.9 V마다 줄어들까?</a><a href="../../c/labchem/2-1.html#card-labchem-spectrum"><small class="mono">화학 실험 2.1</small>분광기로 본 몇 줄의 빛에서 에너지 준위를 어떻게 알아낼까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-photo"><small class="mono">물리학 3.3</small>빛을 세게 비추면 전자가 더 빨리 튀어나올까?</a><a href="../../c/phy/3-3.html#text-phy-image-sensor"><small class="mono">물리학 3.3</small>디지털카메라는 빛을 어떻게 숫자로 저장할까?</a><a href="../../c/phy/3-3.html#card-phy-compton"><small class="mono">물리학 3.3</small>X선이 전자에 부딪혀 튕겨 나오면 왜 색(파장)이 바뀔까?</a><a href="../../c/phy/3-3.html#text-phy-duality"><small class="mono">물리학 3.3</small>빛과 물질의 이중성</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labchem/2-1.html#text-labchem-lines"><small class="mono">화학 실험 2.1</small>원소의 스펙트럼과 에너지 준위</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/5-4.html#card-labphy-franck-hertz"><small class="mono">물리학 실험 5.4</small>전압을 올리는데 왜 전류가 4.9 V마다 줄어들까?</a><a href="../../c/labphy/5-4.html#text-labphy-mercury"><small class="mono">물리학 실험 5.4</small>프랑크–헤르츠 실험</a><a href="../../c/labchem/2-1.html#card-labchem-spectrum"><small class="mono">화학 실험 2.1</small>분광기로 본 몇 줄의 빛에서 에너지 준위를 어떻게 알아낼까?</a></div></nav>
 
       <article class="card" id="card-adphy-well">
         <header class="card-head">
-          <span class="no">4.5.2</span><h2>상자에 갇힌 전자는 왜 아무 에너지나 가질 수 없을까?</h2><span class="kind">슈뢰딩거 방정식 · 무한·유한 퍼텐셜 상자의 파동 함수와 에너지 준위</span>
+          <span class="no">탐구 2</span><h2>상자에 갇힌 전자는 왜 아무 에너지나 가질 수 없을까?</h2><span class="kind">슈뢰딩거 방정식 · 무한·유한 퍼텐셜 상자의 파동 함수와 에너지 준위</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -136,33 +194,33 @@
                 <div><dt>벽 밖에서 발견될 확률</dt><dd class="n-out">—</dd></div>
                 <div><dt>속박 상태 수</dt><dd class="n-nb">—</dd></div>
               </dl>
-              <p class="fig-note">전자(m = 9.109×10⁻³¹ kg) 하나를 1차원 상자에 가둔 모형입니다. 무한 상자: E<sub>n</sub> = n²h²/8mL² = 0.376 n²/L² eV (L은 nm). 유한 상자는 벽 경계에서 ψ와 dψ/dx가 이어지는 조건을 수치로 풀었습니다. 에너지 축은 상자 바닥을 0으로 잡았습니다.</p>
+              <p class="fig-note">전자(m = 9.109×10⁻³¹ kg) 하나를 1차원 상자에 가둔 모형이다. 무한 상자: E<sub>n</sub> = n²h²/8mL² = 0.376 n²/L² eV (L은 nm). 유한 상자는 벽 경계에서 ψ와 dψ/dx가 이어지는 조건을 수치로 풀었다. 에너지 축은 상자 바닥을 0으로 잡았다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>줄의 양 끝을 고정하면 특정한 파장의 정상파만 생깁니다. 전자가 파동이라면, 폭 L인 상자에 갇힌 전자도 특정한 파장만 가질 것입니다. 그러면 에너지는 어떤 값들만 허용될까요? 벽이 무한히 높지 않으면 무엇이 달라질까요?</li>
-            <li><span class="tag">복원</span>드브로이 관계 p = h/λ와 운동 에너지 E = p²/2m을 씁니다. 양 끝이 고정된 줄의 정상파는 L = nλ/2(n = 1, 2, 3, …)를 만족합니다. 보어 모형에서 수소의 에너지가 E<sub>n</sub> = −13.6 eV/n²로 양자화된 것도 전자의 파동이 원 둘레에 정상파를 이룬다고 보면 설명됩니다.</li>
-            <li><span class="tag">설명</span>슈뢰딩거는 물질파가 따르는 방정식을 세웠습니다. 시간에 무관한 1차원 꼴은 <span class="formula">−(ħ²/2m) d²ψ/dx² + V(x)ψ = Eψ</span>입니다. 무한 상자 안에서는 V = 0이므로 ψ = sin kx 꼴이고, 벽에서 ψ = 0이어야 하므로 kL = nπ입니다. 따라서 ψ<sub>n</sub>(x) = √(2/L) sin(nπx/L), <em>E<sub>n</sub> = n²h²/8mL²</em>입니다. 가장 낮은 에너지도 0이 아니며(영점 에너지), 준위 간격은 n이 클수록 넓어집니다. 상자가 작을수록 에너지는 1/L²로 커집니다.</li>
-            <li><span class="tag">연결</span>벽 높이가 유한하면 벽 안쪽에서 ψ는 지수적으로 줄어드는 꼬리 e<sup>−κx</sup>(κ = √(2m(V₀ − E))/ħ)를 가집니다. 파동이 벽 속으로 스며드는 만큼 실제 상자가 넓어진 효과가 생겨 에너지가 무한 상자보다 낮고, V₀보다 높은 상태는 갇히지 않으므로 속박 상태의 수가 유한합니다. 이 꼬리가 얇은 벽을 뚫고 나가면 터널 효과가 됩니다. 수 nm 크기의 반도체 알갱이(양자점)는 이 원리로 크기만 바꿔 빛의 색을 조절합니다.</li>
-            <li><span class="tag">적용</span>무한 상자에서 L을 1 nm에서 2 nm로 바꾸면 E₁은 몇 배가 되나요? n = 1~3에서 상자 안 마디(ψ = 0인 점)의 수를 세어 보세요. 벽을 유한하게 하고 V₀를 줄이며 속박 상태가 하나씩 사라지는 V₀를 찾으세요. V₀가 아무리 작아도 남는 상태가 있나요? 벽 밖에서 발견될 확률은 n이 클수록 어떻게 변하나요?</li>
-            <li class="warn"><span class="tag">판단</span>“상자 안의 전자가 벽 사이를 왔다 갔다 한다”는 그림은 맞지 않습니다. 정상 상태의 |ψ|²는 시간에 따라 변하지 않으며, n = 2 상태에서 전자는 가운데 마디에서 발견되지 않지만 양쪽 모두에서 발견됩니다. 또 이 모형은 1차원, 전자 하나, 매끈한 벽을 가정했습니다. 실제 고체 속 전자는 유효 질량이 다르고, 3차원 양자점은 세 방향의 양자수를 함께 가집니다.</li>
+            <li><span class="tag">질문</span>줄의 양 끝을 고정하면 특정한 파장의 정상파만 생긴다. 전자가 파동이라면, 폭 L인 상자에 갇힌 전자도 특정한 파장만 가질 것이다. 그러면 에너지는 어떤 값들만 허용될까? 벽이 무한히 높지 않으면 무엇이 달라질까?</li>
+            <li><span class="tag">복원</span>드브로이 관계 p = h/λ와 운동 에너지 E = p²/2m을 쓴다. 양 끝이 고정된 줄의 정상파는 L = nλ/2(n = 1, 2, 3, …)를 만족한다. 보어 모형에서 수소의 에너지가 E<sub>n</sub> = −13.6 eV/n²로 양자화된 것도 전자의 파동이 원 둘레에 정상파를 이룬다고 보면 설명된다.</li>
+            <li><span class="tag">설명</span>슈뢰딩거는 물질파가 따르는 방정식을 세웠다. 시간에 무관한 1차원 꼴은 <span class="formula">−(ħ²/2m) d²ψ/dx² + V(x)ψ = Eψ</span>이다. 무한 상자 안에서는 V = 0이므로 ψ = sin kx 꼴이고, 벽에서 ψ = 0이어야 하므로 kL = nπ이다. 따라서 ψ<sub>n</sub>(x) = √(2/L) sin(nπx/L), <em>E<sub>n</sub> = n²h²/8mL²</em>이다. 가장 낮은 에너지도 0이 아니며(영점 에너지), 준위 간격은 n이 클수록 넓어진다. 상자가 작을수록 에너지는 1/L²로 커진다.</li>
+            <li><span class="tag">연결</span>벽 높이가 유한하면 벽 안쪽에서 ψ는 지수적으로 줄어드는 꼬리 e<sup>−κx</sup>(κ = √(2m(V₀ − E))/ħ)를 가진다. 파동이 벽 속으로 스며드는 만큼 실제 상자가 넓어진 효과가 생겨 에너지가 무한 상자보다 낮고, V₀보다 높은 상태는 갇히지 않으므로 속박 상태의 수가 유한한다. 이 꼬리가 얇은 벽을 뚫고 나가면 터널 효과가 된다. 수 nm 크기의 반도체 알갱이(양자점)는 이 원리로 크기만 바꿔 빛의 색을 조절한다.</li>
+            <li><span class="tag">적용</span>무한 상자에서 L을 1 nm에서 2 nm로 바꾸면 E₁은 몇 배가 되는가? n = 1~3에서 상자 안 마디(ψ = 0인 점)의 수를 세어 보자. 벽을 유한하게 하고 V₀를 줄이며 속박 상태가 하나씩 사라지는 V₀를 찾자. V₀가 아무리 작아도 남는 상태가 있는가? 벽 밖에서 발견될 확률은 n이 클수록 어떻게 변하는가?</li>
+            <li class="warn"><span class="tag">판단</span>“상자 안의 전자가 벽 사이를 왔다 갔다 한다”는 그림은 맞지 않다. 정상 상태의 |ψ|²는 시간에 따라 변하지 않으며, n = 2 상태에서 전자는 가운데 마디에서 발견되지 않지만 양쪽 모두에서 발견된다. 또 이 모형은 1차원, 전자 하나, 매끈한 벽을 가정했다. 실제 고체 속 전자는 유효 질량이 다르고, 3차원 양자점은 세 방향의 양자수를 함께 가진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">무한 퍼텐셜 상자 속 전자가 n = 2에서 n = 1로 떨어지며 광자를 냅니다. 상자 폭을 2배로 늘리면 방출되는 광자의 파장은 어떻게 될까요?</p>
+          <p class="q">무한 퍼텐셜 상자 속 전자가 n = 2에서 n = 1로 떨어지며 광자를 낸다. 상자 폭을 2배로 늘리면 방출되는 광자의 파장은 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2배로 길어진다<span class="why"><b>파장과 상자 폭의 비례(λ = 2L/n)를 광자에 그대로 쓴 답입니다.</b> 그것은 전자의 드브로이 파장이고, 광자의 파장은 에너지 차이로 정해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4배로 길어진다<span class="why"><b>맞습니다.</b> E₂ − E₁ = 3h²/8mL²는 1/L²에 비례하므로 L이 2배면 에너지 차가 1/4, 광자 파장(hc/ΔE)은 4배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/4로 짧아진다<span class="why"><b>에너지와 파장의 관계를 거꾸로 썼습니다.</b> 에너지 차가 1/4로 줄면 광자의 파장은 4배로 길어집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>2배로 길어진다<span class="why"><b>파장과 상자 폭의 비례(λ = 2L/n)를 광자에 그대로 쓴 답이다.</b> 그것은 전자의 드브로이 파장이고, 광자의 파장은 에너지 차이로 정해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>4배로 길어진다<span class="why"><b>맞다.</b> E₂ − E₁ = 3h²/8mL²는 1/L²에 비례하므로 L이 2배면 에너지 차가 1/4, 광자 파장(hc/ΔE)은 4배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1/4로 짧아진다<span class="why"><b>에너지와 파장의 관계를 거꾸로 썼다.</b> 에너지 차가 1/4로 줄면 광자의 파장은 4배로 길어진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-emicro"><small class="mono">물리학 3.3</small>전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?</a><a href="../../c/mech/3-5.html#card-mech-standing"><small class="mono">역학과 에너지 3.5</small>기타 줄과 리코더는 왜 정해진 음만 낼까?</a><a href="../../c/phy/3-4.html#card-phy-lm-spec"><small class="mono">물리학 3.4</small>빛만 보고 무엇이 빛나는지 알 수 있을까?</a><a href="../../c/phy/3-4.html#card-phy-prism"><small class="mono">물리학 3.4</small>프리즘은 하얀빛 속에 숨은 무지개를 어떻게 꺼낼까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-emicro"><small class="mono">물리학 3.3</small>전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?</a><a href="../../c/emq/3-1.html#text-emq-single-quantum"><small class="mono">전자기와 양자 3.1</small>단일 양자의 이중 슬릿 실험</a><a href="../../c/mech/3-5.html#card-mech-standing"><small class="mono">역학과 에너지 3.5</small>기타 줄과 리코더는 왜 정해진 음만 낼까?</a><a href="../../c/mech/3-5.html#text-mech-standing"><small class="mono">역학과 에너지 3.5</small>정상파와 악기</a></div></nav>
 
       <article class="card" id="card-emq-tunnel">
         <header class="card-head">
-          <span class="no">4.5.3</span><h2>에너지가 모자란 전자가 어떻게 벽을 통과할까?</h2><span class="kind">터널 효과 · 장벽의 두께와 투과 확률</span>
+          <span class="no">탐구 3</span><h2>에너지가 모자란 전자가 어떻게 벽을 통과할까?</h2><span class="kind">터널 효과 · 장벽의 두께와 투과 확률</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -177,33 +235,33 @@
                 <div><dt>장벽 속에서 파동이 1/e로 줄어드는 거리</dt><dd class="n-k">—</dd></div>
                 <div><dt>두께가 0.1 nm 늘면 T는</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">전자가 높이 5 eV의 사각형 장벽을 만날 때의 정확한 1차원 해로 계산했습니다. 위 그림의 파동은 실수 부분을 보기 좋게 그린 모식입니다.</p>
+              <p class="fig-note">전자가 높이 5 eV의 사각형 장벽을 만날 때의 정확한 1차원 해로 계산했다. 위 그림의 파동은 실수 부분을 보기 좋게 그린 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공을 언덕으로 굴릴 때 에너지가 모자라면 공은 반드시 되돌아옵니다. 그런데 전자는 에너지가 모자라도 얇은 벽 너머에서 발견되곤 합니다. 어떻게 가능할까요?</li>
-            <li><span class="tag">복원</span>고전 역학에서 물체는 운동 에너지가 퍼텐셜 에너지 언덕보다 작으면 넘지 못합니다. 전자는 파동처럼 행동하며, 파동의 세기 |ψ|²가 그곳에서 발견될 확률입니다.</li>
-            <li><span class="tag">설명</span>전자의 파동은 장벽에 부딪혀도 경계에서 딱 끊기지 않고, 장벽 속으로 스며들며 지수적으로 줄어듭니다. 장벽이 충분히 얇으면 반대편에 파동이 조금 남고, 그만큼의 확률로 전자가 장벽 너머에서 발견됩니다. 이것이 <em>터널 효과</em>입니다. 투과 확률은 장벽이 두꺼울수록, 에너지 차이(V₀ − E)가 클수록, 입자가 무거울수록 지수적으로 급격히 작아집니다.</li>
-            <li><span class="tag">연결</span><em>주사 터널링 현미경(STM)</em>은 뾰족한 바늘과 시료 사이의 좁은 틈(진공 장벽)을 흐르는 터널 전류가 거리 0.1 nm에 따라 크게 변하는 성질로 원자 하나하나를 봅니다. USB의 <em>플래시 메모리</em>는 얇은 절연막을 뚫고 전자를 넣고 빼서 데이터를 저장합니다. 원자핵의 <em>알파 붕괴</em>, 그리고 태양 중심에서 양성자끼리의 전기적 반발을 넘는 <em>핵융합</em>도 터널 효과 덕분에 일어납니다.</li>
-            <li><span class="tag">적용</span>두께를 0.1 nm씩 늘리며 투과 확률이 몇 배씩 줄어드는지 보세요. 에너지를 장벽 높이(5 eV)보다 크게 하면 투과 확률은 반드시 100 %가 될까요?</li>
-            <li class="warn"><span class="tag">판단</span>“터널 효과로 사람도 벽을 통과할 수 있다”는 말은 원리적으로는 0이 아니지만 현실적으로는 의미가 없습니다. 투과 확률은 질량과 두께에 대해 지수적으로 줄어서, 사람 크기의 물체에서는 우주의 나이 동안 기다려도 일어나지 않을 만큼 작습니다.</li>
+            <li><span class="tag">질문</span>공을 언덕으로 굴릴 때 에너지가 모자라면 공은 반드시 되돌아온다. 그런데 전자는 에너지가 모자라도 얇은 벽 너머에서 발견되곤 한다. 어떻게 가능할까?</li>
+            <li><span class="tag">복원</span>고전 역학에서 물체는 운동 에너지가 퍼텐셜 에너지 언덕보다 작으면 넘지 못한다. 그리고 전자는 파동처럼 행동하며, 파동의 세기 |ψ|²가 그곳에서 발견될 확률이다.</li>
+            <li><span class="tag">설명</span>전자의 파동은 장벽에 부딪혀도 경계에서 딱 끊기지 않고, 장벽 속으로 스며들며 지수적으로 줄어든다. 그래서 장벽이 충분히 얇으면 반대편에 파동이 조금 남고, 그만큼의 확률로 전자가 장벽 너머에서 발견되는데, 이것이 <em>터널 효과</em>이다. 투과 확률은 장벽이 두꺼울수록, 에너지 차이(V₀ − E)가 클수록, 입자가 무거울수록 지수적으로 급격히 작아진다.</li>
+            <li><span class="tag">연결</span><em>주사 터널링 현미경(STM)</em>은 뾰족한 바늘과 시료 사이의 좁은 틈(진공 장벽)을 흐르는 터널 전류가 거리 0.1 nm에 따라 크게 변하는 성질로 원자 하나하나를 본다. USB의 <em>플래시 메모리</em>는 얇은 절연막을 뚫고 전자를 넣고 빼서 데이터를 저장한다. 원자핵의 <em>알파 붕괴</em>, 그리고 태양 중심에서 양성자끼리의 전기적 반발을 넘는 <em>핵융합</em>도 터널 효과 덕분에 일어난다.</li>
+            <li><span class="tag">적용</span>두께를 0.1 nm씩 늘리며 투과 확률이 몇 배씩 줄어드는지 보자. 그리고 에너지를 장벽 높이(5 eV)보다 크게 하면 투과 확률이 반드시 100 %가 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>터널 효과로 사람도 벽을 통과할 수 있다는 말은 원리적으로는 0이 아니지만 현실적으로는 의미가 없다. 투과 확률은 질량과 두께에 대해 지수적으로 줄어서, 사람 크기의 물체에서는 우주의 나이 동안 기다려도 일어나지 않을 만큼 작기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">STM에서 바늘과 시료 사이 거리가 조금 줄면 터널 전류는 어떻게 될까요?</p>
+          <p class="q">STM에서 바늘과 시료 사이 거리가 조금 줄면 터널 전류는 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>지수적으로 크게 늘어난다<span class="why"><b>맞습니다.</b> 투과 확률이 장벽 두께에 지수적으로 의존하므로, 원자 크기의 높낮이 차이도 전류의 큰 변화로 나타납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>거리에 반비례해 조금 늘어난다<span class="why"><b>변화는 반비례보다 훨씬 급격합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>변하지 않는다<span class="why"><b>장벽 두께가 투과 확률을 크게 좌우합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>지수적으로 크게 늘어난다<span class="why"><b>맞다.</b> 투과 확률이 장벽 두께에 지수적으로 의존하므로, 원자 크기의 높낮이 차이도 전류의 큰 변화로 나타난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>거리에 반비례해 조금 늘어난다<span class="why"><b>변화는 반비례보다 훨씬 급격한다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>변하지 않는다<span class="why"><b>장벽 두께가 투과 확률을 크게 좌우한다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-emicro"><small class="mono">물리학 3.3</small>전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/4-6.html#card-adphy-gamow"><small class="mono">고급 물리학 4.6</small>태양 중심은 쿨롱 장벽을 넘기에 너무 차가운데, 어떻게 핵융합이 일어날까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/3-3.html#card-phy-lm-emicro"><small class="mono">물리학 3.3</small>전자 현미경은 왜 광학 현미경보다 더 작은 것을 볼까?</a><a href="../../c/emq/3-1.html#text-emq-single-quantum"><small class="mono">전자기와 양자 3.1</small>단일 양자의 이중 슬릿 실험</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/4-6.html#card-adphy-gamow"><small class="mono">고급 물리학 4.6</small>태양 중심은 쿨롱 장벽을 넘기에 너무 차가운데, 어떻게 핵융합이 일어날까?</a></div></nav>
 
       <article class="card" id="card-phy-lm-bands">
         <header class="card-head">
-          <span class="no">4.5.4</span><h2>규소는 도체일까, 절연체일까?</h2><span class="kind">띠 간격 · 온도 · 도핑</span>
+          <span class="no">탐구 4</span><h2>규소는 도체일까, 절연체일까?</h2><span class="kind">띠 간격 · 온도 · 도핑</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -224,33 +282,33 @@
                 <div><dt>전도 전자 농도</dt><dd class="ncar" style="font-size:14px">—</dd></div>
                 <div><dt>원자 몇 개에 1개?</dt><dd class="ratio" style="font-size:13px">—</dd></div>
               </dl>
-              <p class="fig-note">순수한 반도체의 농도는 n<sub>i</sub> = √(N<sub>c</sub>N<sub>v</sub>)·e<sup>−E<sub>g</sub>/2kT</sup>로 계산했습니다. 띠 간격이 온도에 따라 조금 변하는 것은 무시했고, 다이아몬드의 N<sub>c</sub>, N<sub>v</sub>는 어림값입니다. 규소의 300 K 값은 문헌에서 흔히 약 10¹⁰ cm⁻³으로 씁니다.</p>
+              <p class="fig-note">순수한 반도체의 농도는 n<sub>i</sub> = √(N<sub>c</sub>N<sub>v</sub>)·e<sup>−E<sub>g</sub>/2kT</sup>로 계산했다. 띠 간격이 온도에 따라 조금 변하는 것은 무시했고, 다이아몬드의 N<sub>c</sub>, N<sub>v</sub>는 어림값이다. 규소의 300 K 값은 문헌에서 흔히 약 10¹⁰ cm⁻³으로 쓴다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>규소는 컴퓨터 칩의 재료입니다. 전기가 잘 통하는 구리와, 거의 통하지 않는 유리 사이 어디쯤일까요? 그리고 왜 하필 이런 물질로 칩을 만들까요?</li>
-            <li><span class="tag">복원</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위에 있습니다(3.4). 전자는 비어 있는 에너지 자리가 바로 위에 있어야 전기장에서 에너지를 얻어 움직일 수 있습니다.</li>
-            <li><span class="tag">설명</span>고체에서는 수많은 원자의 준위가 겹쳐 에너지띠가 됩니다. 구리는 띠가 절반만 차 있어 전자가 쉽게 움직입니다. 규소와 다이아몬드는 원자가 띠가 꽉 차 있고, 그 위 전도띠와의 사이에 전자가 가질 수 없는 틈(띠 간격)이 있습니다. 열에너지로 이 틈을 건너뛴 전자만 전류를 나릅니다.</li>
-            <li><span class="tag">연결</span>열에너지 kT는 300 K에서 약 0.026 eV로, 띠 간격보다 훨씬 작습니다. 그래서 틈을 건너는 전자 수는 <span class="formula">e<sup>−E<sub>g</sub>/2kT</sup></span>에 따라 띠 간격에 아주 민감합니다. 띠 간격이 1 eV 안팎이면 반도체, 수 eV 이상이면 절연체라 부릅니다. 원자가 띠에 전자가 빠져나간 빈자리(양공)도 전류를 나릅니다.</li>
-            <li><span class="tag">적용</span>규소에서 온도를 300 K에서 400 K로 올려 보세요. 전도 전자는 몇 배가 되나요? 그다음 ‘인 넣기’를 켜 보세요. 불순물 원자 500만 개에 1개가 전도 전자 수를 얼마나 바꾸나요? 게르마늄으로 바꿔 온도를 높이면 도핑 효과는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>반도체가 쓸모 있는 것은 ‘전기가 어중간하게 통해서’가 아니라, 불순물의 종류와 양으로 전도를 원하는 만큼 조절할 수 있어서입니다. 인처럼 전자가 하나 더 많은 원소를 넣으면 n형, 붕소처럼 하나 적은 원소를 넣으면 p형이 됩니다. 온도가 너무 높아지면 저절로 생긴 전자가 도핑으로 넣은 전자보다 많아져 조절이 어려워집니다.</li>
+            <li><span class="tag">질문</span>규소는 컴퓨터 칩의 재료이다. 전기가 잘 통하는 구리와, 거의 통하지 않는 유리 사이 어디쯤일까? 그리고 왜 하필 이런 물질로 칩을 만들까?</li>
+            <li><span class="tag">복원</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위에 있다(3.4). 그리고 전자는 비어 있는 에너지 자리가 바로 위에 있어야 전기장에서 에너지를 얻어 움직일 수 있다.</li>
+            <li><span class="tag">설명</span>고체에서는 수많은 원자의 준위가 겹쳐 에너지띠가 된다. 구리는 띠가 절반만 차 있어 전자가 쉽게 움직인다. 반면 규소와 다이아몬드는 원자가 띠가 꽉 차 있고, 그 위 전도띠와의 사이에 전자가 가질 수 없는 틈(띠 간격)이 있다. 그래서 열에너지로 이 틈을 건너뛴 전자만 전류를 나른다.</li>
+            <li><span class="tag">연결</span>열에너지 kT는 300 K에서 약 0.026 eV로, 띠 간격보다 훨씬 작다. 그래서 틈을 건너는 전자 수는 <span class="formula">e<sup>−E<sub>g</sub>/2kT</sup></span>에 따라 띠 간격에 아주 민감하다. 띠 간격이 1 eV 안팎이면 반도체, 수 eV 이상이면 절연체라 부르고, 원자가 띠에 전자가 빠져나간 빈자리(양공)도 전류를 나른다.</li>
+            <li><span class="tag">적용</span>규소에서 온도를 300 K에서 400 K로 올려 전도 전자가 몇 배가 되는지 보자. 그다음 ‘인 넣기’를 켜서 불순물 원자 500만 개에 1개가 전도 전자 수를 얼마나 바꾸는지 확인하고, 게르마늄으로 바꿔 온도를 높이면 도핑 효과가 어떻게 되는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>반도체가 쓸모 있는 것은 ‘전기가 어중간하게 통해서’가 아니라, 불순물의 종류와 양으로 전도를 원하는 만큼 조절할 수 있어서이다. 인처럼 전자가 하나 더 많은 원소를 넣으면 n형, 붕소처럼 하나 적은 원소를 넣으면 p형이 된다. 다만 온도가 너무 높아지면 저절로 생긴 전자가 도핑으로 넣은 전자보다 많아져 조절이 어려워진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">순수한 규소와 구리 도선을 함께 데웠습니다. 온도가 오를 때 두 물질의 전기 저항은 어떻게 변할까요?</p>
+          <p class="q">순수한 규소와 구리 도선을 함께 데웠다. 온도가 오를 때 두 물질의 전기 저항은 어떻게 변할까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 커진다.<span class="why"><b>금속만 보면 맞습니다.</b> 구리는 원자 진동이 커져 전자가 더 자주 부딪히므로 저항이 커집니다. 하지만 규소는 전도 전자 수 자체가 크게 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>구리는 커지고, 규소는 크게 작아진다.<span class="why"><b>맞습니다.</b> 규소는 300 K에서 400 K로 가면 전도 전자가 약 350배가 됩니다. 이 성질을 이용한 온도 센서가 서미스터입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 조금 작아진다.<span class="why"><b>구리의 전도 전자 수는 온도와 거의 관계없습니다.</b> 이미 원자마다 하나씩 있으므로 데워도 늘지 않고, 원자 진동 때문에 저항만 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>둘 다 커진다.<span class="why"><b>금속만 보면 맞다.</b> 구리는 원자 진동이 커져 전자가 더 자주 부딪히므로 저항이 커진다. 하지만 규소는 전도 전자 수 자체가 크게 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>구리는 커지고, 규소는 크게 작아진다.<span class="why"><b>맞다.</b> 규소는 300 K에서 400 K로 가면 전도 전자가 약 350배가 된다. 이 성질을 이용한 온도 센서가 서미스터이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 조금 작아진다.<span class="why"><b>구리의 전도 전자 수는 온도와 거의 관계없다.</b> 이미 원자마다 하나씩 있으므로 데워도 늘지 않고, 원자 진동 때문에 저항만 커진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is1/2-6.html#card-is1-doping"><small class="mono">통합과학1 2.6</small>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a><a href="../../c/phy/3-5.html#card-phy-lm-led"><small class="mono">물리학 3.5</small>LED는 색마다 왜 필요한 전압이 다를까?</a><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a><a href="../../c/emq/1-7.html#text-emq-semiconductor"><small class="mono">전자기와 양자 1.7</small>반도체 소자와 전자 회로</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/is1/2-6.html#card-is1-doping"><small class="mono">통합과학1 2.6</small>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a><a href="../../c/phy/3-5.html#card-phy-lm-led"><small class="mono">물리학 3.5</small>LED는 색마다 왜 필요한 전압이 다를까?</a><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a></div></nav>
 
       <article class="card" id="card-adphy-bands">
         <header class="card-head">
-          <span class="no">4.5.5</span><h2>원자가 많이 모이면 에너지 준위는 왜 띠가 될까?</h2><span class="kind">띠 이론 · 이어진 퍼텐셜 우물의 준위 갈라짐과 띠틈</span>
+          <span class="no">탐구 5</span><h2>원자가 많이 모이면 에너지 준위는 왜 띠가 될까?</h2><span class="kind">띠 이론 · 이어진 퍼텐셜 우물의 준위 갈라짐과 띠틈</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -273,47 +331,48 @@
                 <div><dt>두 띠 사이 틈</dt><dd class="n-g">—</dd></div>
                 <div><dt>맨 위 전자 → 빈 준위</dt><dd class="n-f">—</dd></div>
               </dl>
-              <p class="fig-note">우물 폭 0.40 nm, 벽 높이 8.0 eV인 1차원 사각 우물 N개(크로니히–페니 모형을 유한하게 자른 모식)에 전자를 넣고 슈뢰딩거 방정식을 격자 간격 0.01 nm로 수치 풀이했습니다. 준위 하나에는 스핀이 반대인 전자 2개까지 들어갑니다(파울리 배타 원리). 전자끼리의 반발은 무시했습니다.</p>
+              <p class="fig-note">우물 폭 0.40 nm, 벽 높이 8.0 eV인 1차원 사각 우물 N개(크로니히–페니 모형을 유한하게 자른 모식)에 전자를 넣고 슈뢰딩거 방정식을 격자 간격 0.01 nm로 수치 풀이했다. 준위 하나에는 스핀이 반대인 전자 2개까지 들어간다(파울리 배타 원리). 전자끼리의 반발은 무시했다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위만 가집니다. 그런데 고체의 전자는 거의 연속인 ‘띠’ 안에서 에너지를 가지고, 띠와 띠 사이에는 전자가 가질 수 없는 틈이 있다고 합니다. 원자를 하나씩 가까이 붙여 가면 준위가 어떻게 띠로 바뀔까요?</li>
-            <li><span class="tag">복원</span>퍼텐셜 상자 속 전자의 에너지는 양자화되고, 벽이 유한하면 파동 함수가 벽 속으로 지수적으로 스며듭니다. 얇은 벽은 터널 효과로 통과할 수 있습니다. 파울리 배타 원리에 따라 한 상태(준위)에는 스핀이 반대인 전자가 2개까지만 들어갑니다.</li>
-            <li><span class="tag">설명</span>우물 두 개가 멀리 떨어져 있으면 각 우물의 바닥 상태는 같은 에너지를 가집니다. 벽이 얇아져 꼬리가 겹치면, 두 파동 함수를 같은 부호로 더한 상태와 반대 부호로 더한 상태로 갈라지고 에너지도 둘로 나뉩니다. 우물이 N개면 준위 하나가 N개로 갈라지는데, 그 퍼짐 폭은 N이 커져도 일정한 값에 다가가므로 N이 아보가드로수 정도면 사실상 연속인 <em>에너지띠</em>가 됩니다. 원래 준위가 서로 달랐던 두 묶음 사이에는 상태가 없는 <em>띠틈</em>이 남습니다.</li>
-            <li><span class="tag">연결</span>원자마다 전자를 2개 내놓으면 N개 준위로 이루어진 아래 띠가 정확히 꽉 찹니다. 맨 위 전자가 움직이려면 띠틈을 건너뛰어야 하므로 절연체나 반도체가 됩니다. 전자가 1개씩이면 띠가 절반만 차서, 아주 작은 에너지로도 바로 위 빈 준위로 옮겨 갈 수 있으니 도체가 됩니다. 규소의 띠틈은 1.12 eV, 다이아몬드는 약 5.5 eV로, 상온의 열에너지(kT ≈ 0.026 eV)에 비해 띠틈이 얼마나 큰지가 반도체와 절연체를 가릅니다.</li>
-            <li><span class="tag">적용</span>N = 1에서 시작해 2, 3, 4…로 늘리며 바닥 준위가 몇 개로 갈라지는지 세어 보세요. N = 12에서 벽 두께를 0.12 nm와 0.8 nm로 바꾸면 띠의 폭은 어떻게 되나요? 원자당 전자 수를 1개와 2개로 바꾸며 ‘맨 위 전자 → 빈 준위’ 값을 비교하세요. 띠 안에서 가장 낮은 상태와 가장 높은 상태의 파동 함수는 이웃 우물 사이 부호가 어떻게 다른가요?</li>
-            <li class="warn"><span class="tag">판단</span>이 모형은 1차원, 같은 우물의 규칙적인 배열, 전자 사이 상호 작용 무시라는 큰 단순화를 했습니다. 실제 결정에서는 3차원 구조와 오비탈의 겹침 때문에 띠가 서로 겹치기도 합니다. 예를 들어 마그네슘은 원자당 전자 2개(3s²)인데도 3s 띠와 3p 띠가 겹쳐 도체입니다. ‘전자 수가 짝수면 절연체’라는 규칙은 띠가 겹치지 않을 때만 맞습니다.</li>
+            <li><span class="tag">질문</span>원자 하나의 전자는 띄엄띄엄한 에너지 준위만 가진다. 그런데 고체의 전자는 거의 연속인 ‘띠’ 안에서 에너지를 가지고, 띠와 띠 사이에는 전자가 가질 수 없는 틈이 있다고 한다. 원자를 하나씩 가까이 붙여 가면 준위가 어떻게 띠로 바뀔까?</li>
+            <li><span class="tag">복원</span>퍼텐셜 상자 속 전자의 에너지는 양자화되고, 벽이 유한하면 파동 함수가 벽 속으로 지수적으로 스며든다. 얇은 벽은 터널 효과로 통과할 수 있다. 파울리 배타 원리에 따라 한 상태(준위)에는 스핀이 반대인 전자가 2개까지만 들어간다.</li>
+            <li><span class="tag">설명</span>우물 두 개가 멀리 떨어져 있으면 각 우물의 바닥 상태는 같은 에너지를 가진다. 벽이 얇아져 꼬리가 겹치면, 두 파동 함수를 같은 부호로 더한 상태와 반대 부호로 더한 상태로 갈라지고 에너지도 둘로 나뉜다. 우물이 N개면 준위 하나가 N개로 갈라지는데, 그 퍼짐 폭은 N이 커져도 일정한 값에 다가가므로 N이 아보가드로수 정도면 사실상 연속인 <em>에너지띠</em>가 된다. 원래 준위가 서로 달랐던 두 묶음 사이에는 상태가 없는 <em>띠틈</em>이 남는다.</li>
+            <li><span class="tag">연결</span>원자마다 전자를 2개 내놓으면 N개 준위로 이루어진 아래 띠가 정확히 꽉 찬다. 맨 위 전자가 움직이려면 띠틈을 건너뛰어야 하므로 절연체나 반도체가 된다. 전자가 1개씩이면 띠가 절반만 차서, 아주 작은 에너지로도 바로 위 빈 준위로 옮겨 갈 수 있으니 도체가 된다. 규소의 띠틈은 1.12 eV, 다이아몬드는 약 5.5 eV로, 상온의 열에너지(kT ≈ 0.026 eV)에 비해 띠틈이 얼마나 큰지가 반도체와 절연체를 가른다.</li>
+            <li><span class="tag">적용</span>N = 1에서 시작해 2, 3, 4…로 늘리며 바닥 준위가 몇 개로 갈라지는지 세어 보자. N = 12에서 벽 두께를 0.12 nm와 0.8 nm로 바꾸면 띠의 폭은 어떻게 되는가? 원자당 전자 수를 1개와 2개로 바꾸며 ‘맨 위 전자 → 빈 준위’ 값을 비교해 보자. 띠 안에서 가장 낮은 상태와 가장 높은 상태의 파동 함수는 이웃 우물 사이 부호가 어떻게 다른가?</li>
+            <li class="warn"><span class="tag">판단</span>이 모형은 1차원, 같은 우물의 규칙적인 배열, 전자 사이 상호 작용 무시라는 큰 단순화를 했다. 실제 결정에서는 3차원 구조와 오비탈의 겹침 때문에 띠가 서로 겹치기도 한다. 예를 들어 마그네슘은 원자당 전자 2개(3s²)인데도 3s 띠와 3p 띠가 겹쳐 도체이다. ‘전자 수가 짝수면 절연체’라는 규칙은 띠가 겹치지 않을 때만 맞다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">원자 사이 거리를 압력으로 크게 줄여 이웃 원자의 파동 함수가 훨씬 많이 겹치게 하면, 띠틈이 작은 절연체에서는 어떤 일이 일어날 수 있을까요?</p>
+          <p class="q">원자 사이 거리를 압력으로 크게 줄여 이웃 원자의 파동 함수가 훨씬 많이 겹치게 하면, 띠틈이 작은 절연체에서는 어떤 일이 일어날 수 있을까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>띠가 넓어져 띠틈이 줄거나 사라지고, 전기가 통하게 될 수 있다<span class="why"><b>맞습니다.</b> 겹침이 클수록 띠가 넓어지므로 띠틈이 닫힐 수 있습니다. 실제로 아이오딘 같은 물질은 고압에서 금속처럼 전기가 통합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>준위 수가 늘어나 전자가 더 꽉 차므로 더 강한 절연체가 된다<span class="why"><b>준위 수는 원자 수로 정해집니다.</b> 거리를 줄여도 띠 하나의 준위 수(N)는 그대로이고, 바뀌는 것은 띠의 폭입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>원자 수가 그대로이므로 아무 변화가 없다<span class="why"><b>띠의 폭은 원자 수가 아니라 이웃끼리의 겹침에 달려 있습니다.</b> 벽 두께를 바꾼 그림에서 확인할 수 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>띠가 넓어져 띠틈이 줄거나 사라지고, 전기가 통하게 될 수 있다<span class="why"><b>맞다.</b> 겹침이 클수록 띠가 넓어지므로 띠틈이 닫힐 수 있다. 실제로 아이오딘 같은 물질은 고압에서 금속처럼 전기가 통한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>준위 수가 늘어나 전자가 더 꽉 차므로 더 강한 절연체가 된다<span class="why"><b>준위 수는 원자 수로 정해진다.</b> 거리를 줄여도 띠 하나의 준위 수(N)는 그대로이고, 바뀌는 것은 띠의 폭이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>원자 수가 그대로이므로 아무 변화가 없다<span class="why"><b>띠의 폭은 원자 수가 아니라 이웃끼리의 겹침에 달려 있다.</b> 벽 두께를 바꾼 그림에서 확인할 수 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/3-3.html#text-emq-tunneling"><small class="mono">전자기와 양자 3.3</small>터널 효과</a><a href="../../c/is1/2-6.html#card-is1-bands"><small class="mono">통합과학1 2.6</small>도체·반도체·절연체는 무엇이 다를까?</a><a href="../../c/is1/2-6.html#text-is1-electric-materials"><small class="mono">통합과학1 2.6</small>물질의 전기적 성질</a><a href="../../c/phy/3-5.html#text-phy-semiconductor"><small class="mono">물리학 3.5</small>에너지띠와 반도체</a></div></nav>
 
       <article class="card reading" id="text-adphy-nano">
         <header class="card-head">
-          <span class="no">4.5.6</span><h2>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</h2><span class="kind">읽기 · 반도체와 정보 혁명, 나노 물리학의 전망</span>
+          <span class="no">읽기 6</span><h2>물질을 나노미터 크기로 줄이면 무엇이 달라질까?</h2><span class="kind">읽기 · 반도체와 정보 혁명, 나노 물리학의 전망</span>
         </header>
         <div class="reading-body">
-          <p class="ask">1947년 벨 연구소의 첫 트랜지스터는 손바닥만 했습니다. 지금 스마트폰 칩 하나에는 트랜지스터가 백억 개 넘게 들어 있고, 그 핵심 부분은 원자 수십 개 폭입니다. 이렇게 작아지면 물질은 더 이상 ‘같은 물질의 작은 조각’이 아닙니다.</p>
+          <p class="ask">1947년 벨 연구소의 첫 트랜지스터는 손바닥만 했다. 지금 스마트폰 칩 하나에는 트랜지스터가 백억 개 넘게 들어 있고, 그 핵심 부분은 원자 수십 개 폭이다. 이렇게 작아지면 물질은 더 이상 ‘같은 물질의 작은 조각’이 아니다.</p>
 
           <h3><span class="mono">1</span>반도체가 정보 혁명을 만든 방법</h3>
-          <p>규소처럼 띠틈이 1 eV 안팎인 반도체는 불순물을 아주 조금 넣는 것(도핑)만으로 전도 전자나 양공의 수를 수십만 배 바꿀 수 있습니다. p형과 n형을 붙인 접합은 한쪽으로만 전류를 흘리고, 전압 하나로 전류를 켜고 끄는 트랜지스터는 0과 1을 나타내는 스위치가 됩니다. 컴퓨터의 계산, 메모리, 통신 신호의 증폭과 변환이 모두 이 스위치로 이루어집니다. 컴퓨터와 통신이 하나로 합쳐진 정보화 사회는 띠 이론으로 설계된 반도체 위에 서 있습니다.</p>
-          <p>트랜지스터를 작게 만들수록 빠르고 전력을 덜 씁니다. 그런데 크기가 수 nm에 이르면 양자 효과가 문제를 일으킵니다. 게이트 절연막이 1~2 nm로 얇아지면 전자가 터널 효과로 새어 나가고(누설 전류), 채널이 짧아지면 전원을 꺼도 전류가 완전히 막히지 않습니다. 그래서 산업계는 유전율이 큰 새 절연막, 게이트가 채널을 세 면이나 네 면에서 감싸는 3차원 구조를 도입했습니다.</p>
+          <p>규소처럼 띠틈이 1 eV 안팎인 반도체는 불순물을 아주 조금 넣는 것(도핑)만으로 전도 전자나 양공의 수를 수십만 배 바꿀 수 있다. p형과 n형을 붙인 접합은 한쪽으로만 전류를 흘리고, 전압 하나로 전류를 켜고 끄는 트랜지스터는 0과 1을 나타내는 스위치가 된다. 컴퓨터의 계산, 메모리, 통신 신호의 증폭과 변환이 모두 이 스위치로 이루어진다. 컴퓨터와 통신이 하나로 합쳐진 정보화 사회는 띠 이론으로 설계된 반도체 위에 서 있다.</p>
+          <p>트랜지스터를 작게 만들수록 빠르고 전력을 덜 쓴다. 그런데 크기가 수 nm에 이르면 양자 효과가 문제를 일으킨다. 게이트 절연막이 1~2 nm로 얇아지면 전자가 터널 효과로 새어 나가고(누설 전류), 채널이 짧아지면 전원을 꺼도 전류가 완전히 막히지 않는다. 그래서 산업계는 유전율이 큰 새 절연막, 게이트가 채널을 세 면이나 네 면에서 감싸는 3차원 구조를 도입했다.</p>
 
           <h3><span class="mono">2</span>크기가 성질을 바꾼다</h3>
-          <ul class="dots">
-            <li><b>양자 크기 효과</b> — 전자를 L 크기에 가두면 에너지 준위가 h²/8mL² 규모로 벌어집니다. 지름이 수 nm인 반도체 알갱이(양자점)에서는 이 값이 띠틈에 더해져, 같은 셀레늄화 카드뮴(CdSe)이라도 지름 약 2 nm이면 푸른빛, 약 6 nm이면 붉은빛을 냅니다. 양자점을 발견하고 만드는 방법을 개발한 공로로 2023년 노벨 화학상이 수여되었고, 양자점은 디스플레이에 쓰입니다.</li>
-            <li><b>표면의 비율</b> — 지름 3 nm인 알갱이에서는 원자의 상당 부분이 표면에 있습니다. 덩어리 금은 반응하지 않지만, 수 nm 금 나노 입자는 촉매로 작용하고 색도 붉게 보입니다.</li>
-            <li><b>터널 효과의 이용</b> — 주사 터널링 현미경(STM)은 바늘 끝과 시료 사이 1 nm 정도 틈에 흐르는 터널 전류가 거리에 지수적으로 민감하다는 점을 이용해 원자 하나하나를 봅니다(1986년 노벨 물리학상). 플래시 메모리도 얇은 절연막을 터널링하는 전자로 정보를 쓰고 지웁니다.</li>
-          </ul>
+          <h4>양자 크기 효과</h4>
+          <p>전자를 L 크기에 가두면 에너지 준위가 h²/8mL² 규모로 벌어진다. 지름이 수 nm인 반도체 알갱이(양자점)에서는 이 값이 띠틈에 더해져, 같은 셀레늄화 카드뮴(CdSe)이라도 지름 약 2 nm이면 푸른빛, 약 6 nm이면 붉은빛을 낸다. 양자점을 발견하고 만드는 방법을 개발한 공로로 2023년 노벨 화학상이 수여되었고, 양자점은 디스플레이에 쓰인다.</p>
+          <h4>표면의 비율</h4>
+          <p>지름 3 nm인 알갱이에서는 원자의 상당 부분이 표면에 있다. 덩어리 금은 반응하지 않지만, 수 nm 금 나노 입자는 촉매로 작용하고 색도 붉게 보인다.</p>
+          <h4>터널 효과의 이용</h4>
+          <p>주사 터널링 현미경(STM)은 바늘 끝과 시료 사이 1 nm 정도 틈에 흐르는 터널 전류가 거리에 지수적으로 민감하다는 점을 이용해 원자 하나하나를 본다(1986년 노벨 물리학상). 플래시 메모리도 얇은 절연막을 터널링하는 전자로 정보를 쓰고 지운다.</p>
 
           <figure>
             <svg viewBox="0 0 560 170" role="img" aria-label="지름이 작은 양자점일수록 에너지 간격이 커서 짧은 파장의 빛을 낸다는 모식도">
@@ -324,7 +383,7 @@
                 <text x="440" y="40">작을수록</text><text x="440" y="56">준위 간격 ↑</text><text x="440" y="72">파장 ↓</text>
               </g>
             </svg>
-            <figcaption>CdSe 양자점의 크기와 발광색(모식, 크기는 대략값). 같은 물질이라도 크기만으로 띠틈이 달라집니다.</figcaption>
+            <figcaption>CdSe 양자점의 크기와 발광색(모식, 크기는 대략값). 같은 물질이라도 크기만으로 띠틈이 달라진다.</figcaption>
           </figure>
 
           <h3><span class="mono">3</span>탄소로 만든 나노 신소재</h3>
@@ -339,42 +398,47 @@
 
           <h3><span class="mono">4</span>토의해 볼 질문</h3>
           <ul class="dots">
-            <li>트랜지스터를 계속 작게 만들 수 있을까요? 원자 간격(약 0.2 nm)과 터널 효과가 주는 한계는 무엇이고, 이를 넘기 위한 방법(새 소재, 3차원 적층, 양자 컴퓨터)은 각각 무엇을 바꾸려는 것일까요?</li>
-            <li>나노 입자는 크기가 작아 몸속이나 환경에서 덩어리 물질과 다르게 행동할 수 있습니다. 새로운 나노 소재를 쓰기 전에 어떤 안전성 시험이 필요할까요?</li>
-            <li>그래핀은 발견 직후 ‘꿈의 소재’로 불렸지만, 실리콘을 대신하지는 못했습니다. 실험실의 성질과 산업에서 쓰이는 조건은 어떻게 다를까요?</li>
+            <li>트랜지스터를 계속 작게 만들 수 있을까? 원자 간격(약 0.2 nm)과 터널 효과가 주는 한계는 무엇이고, 이를 넘기 위한 방법(새 소재, 3차원 적층, 양자 컴퓨터)은 각각 무엇을 바꾸려는 것일까?</li>
+            <li>나노 입자는 크기가 작아 몸속이나 환경에서 덩어리 물질과 다르게 행동할 수 있다. 새로운 나노 소재를 쓰기 전에 어떤 안전성 시험이 필요할까?</li>
+            <li>그래핀은 발견 직후 ‘꿈의 소재’로 불렸지만, 실리콘을 대신하지는 못했다. 실험실의 성질과 산업에서 쓰이는 조건은 어떻게 다를까?</li>
           </ul>
 
-          <p class="judge"><b>판단</b>반도체 공정의 ‘3 nm 공정’ 같은 이름은 트랜지스터의 실제 게이트 길이가 3 nm라는 뜻이 아닙니다. 세대를 구분하는 상품 이름에 가깝고, 실제 최소 구조는 그보다 큽니다. 또 ‘나노’는 크기만을 뜻하므로, 나노 크기라고 해서 저절로 새 성질이 생기는 것은 아닙니다. 양자 크기 효과는 가둔 크기가 전자의 드브로이 파장과 비슷해질 때 뚜렷해집니다.</p>
+          <p class="judge"><b>판단</b>반도체 공정의 ‘3 nm 공정’ 같은 이름은 트랜지스터의 실제 게이트 길이가 3 nm라는 뜻이 아니다. 세대를 구분하는 상품 이름에 가깝고, 실제 최소 구조는 그보다 크다. 또 ‘나노’는 크기만을 뜻하므로, 나노 크기라고 해서 저절로 새 성질이 생기는 것은 아니다. 양자 크기 효과는 가둔 크기가 전자의 드브로이 파장과 비슷해질 때 뚜렷해진다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">같은 물질로 만든 양자점 A(지름 3 nm)와 B(지름 5 nm)가 있습니다. 두 양자점이 내는 빛에 대한 설명으로 옳은 것은?</p>
+          <p class="q">같은 물질로 만든 양자점 A(지름 3 nm)와 B(지름 5 nm)가 있다. 두 양자점이 내는 빛에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>같은 물질이므로 같은 색의 빛을 낸다<span class="why"><b>덩어리 물질에서만 맞는 생각입니다.</b> 나노 크기에서는 가둔 크기가 준위 간격을 바꿉니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>B가 더 크므로 에너지가 큰 짧은 파장의 빛을 낸다<span class="why"><b>상자 속 입자의 결과와 반대입니다.</b> 에너지 간격은 1/L²에 비례하므로 큰 쪽이 간격이 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>A가 B보다 짧은 파장의 빛을 낸다<span class="why"><b>맞습니다.</b> 작은 A는 전자를 더 좁게 가두어 준위 간격이 커지므로 광자 에너지가 크고 파장이 짧습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>같은 물질이므로 같은 색의 빛을 낸다<span class="why"><b>덩어리 물질에서만 맞는 생각이다.</b> 나노 크기에서는 가둔 크기가 준위 간격을 바꾼다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>B가 더 크므로 에너지가 큰 짧은 파장의 빛을 낸다<span class="why"><b>상자 속 입자의 결과와 반대이다.</b> 에너지 간격은 1/L²에 비례하므로 큰 쪽이 간격이 작다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>A가 B보다 짧은 파장의 빛을 낸다<span class="why"><b>맞다.</b> 작은 A는 전자를 더 좁게 가두어 준위 간격이 커지므로 광자 에너지가 크고 파장이 짧다.</span></span></button></li>
           </ol>
         </div>
       </article>
       <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-6.html#card-is1-doping"><small class="mono">통합과학1 2.6</small>반도체에 불순물을 넣으면 왜 전기가 잘 통할까?</a><a href="../../c/phy/3-5.html#card-phy-lm-led"><small class="mono">물리학 3.5</small>LED는 색마다 왜 필요한 전압이 다를까?</a><a href="../../c/phy/3-5.html#card-phy-diode-iv"><small class="mono">물리학 3.5</small>다이오드는 왜 한쪽으로만 전류를 흘릴까?</a><a href="../../c/phy/3-5.html#card-phy-solar-panel"><small class="mono">물리학 3.5</small>작은 태양 전지 12장으로 휴대 전화를 충전하려면 어떻게 이어야 할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-4-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=4-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-4-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">22문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/phy/lm-hydrogen.js"></script>
 <script src="../../js/cards/adphy/q5-well.js"></script>
 <script src="../../js/cards/emq/q-tunnel.js"></script>

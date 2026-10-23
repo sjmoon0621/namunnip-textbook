@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>속도와 가속도 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="삼각함수·지수함수·로그함수로 나타낸 수직선 위의 운동에서 속도 v = dx/dt와 가속도 a = dv/dt, 단진동 x = A sin ωt에서 a = −ω²x, 감쇠 진동, 속력이 커질 조건(v와 a의 부호가 같음), 평면 위를 움직이는 점의 속도 벡터와 속력, 가속도, 등속 원운동의 가속도와 포물선 운동, 미분의 유용성.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-line-motion canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -47,18 +52,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-line-motion"><span class="mono">2.11.1</span>진동하는 점의 속도와 가속도</a></li>
-        <li><a href="#card-calc2-plane-motion"><span class="mono">2.11.2</span>평면 위의 운동</a></li>
+        <li><a href="#text-calc2-motion"><span class="mono">본문</span>속도와 가속도</a></li>
+        <li><a href="#card-calc2-line-motion"><span class="mono">탐구 1</span>진동하는 점의 속도와 가속도</a></li>
+        <li><a href="#card-calc2-plane-motion"><span class="mono">탐구 2</span>평면 위의 운동</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-2-11"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">21문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=2-11"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-2-11"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">21문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-2-11">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-motion" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>속도와 가속도</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">용수철에 매달린 추는 위아래로 일정하게 흔들린다. 추가 가장 높이 올라간 순간에는 잠깐 멈추고, 가운데를 지날 때는 가장 빠르다. 그렇다면 가속도는 어디에서 가장 클까? 가장 빠른 가운데일까, 멈춘 끝일까? 또 일정한 빠르기로 원을 도는 물체에도 가속도가 있을까?</p>
+          <figure class="q-fig" data-q="calc2-shm">
+            <svg viewBox="0 0 520 230" role="img" aria-label="단진동하는 물체의 위치, 속도, 가속도 그래프와 물체의 위치"></svg>
+            <div class="q-ctl"><label>시각 \(t\) <input type="range" data-k="t" min="0" max="6.28" step="0.02" value="1.57"><output data-k="t"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 위치 \(x = \cos t\)(파랑), 속도 \(v = -\sin t\)(주황), 가속도 \(a = -\cos t\)(빨강). 오른쪽 점은 물체의 실제 위치이다. 가속도는 언제나 위치와 부호가 반대이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>직선 운동의 속도와 가속도(미적분Ⅰ), 삼각함수·지수함수의 도함수(<a href="2-3.html">삼각함수의 극한과 미분</a>), 매개변수 함수의 미분(<a href="2-6.html">매개변수 함수의 미분</a>).</div>
+
+          <h3><span class="no">2.11.1</span>직선 위의 운동</h3>
+          <p>수직선 위를 움직이는 점의 시각 \(t\)에서의 위치가 \(x = f(t)\)이면, 속도는 \(v = \dfrac{dx}{dt} = f'(t)\), 가속도는 \(a = \dfrac{dv}{dt} = f''(t)\)이다. 미적분Ⅰ에서 다항함수로 다루던 것을 이제 삼각함수와 지수함수로 나타낸 운동에도 쓴다.</p>
+          <p>추의 위치가 \(x = \cos t\)이면 \(v = -\sin t\), \(a = -\cos t\)이다. 그림 1에서 시각을 옮겨 보자. \(t = \dfrac{\pi}{2}\)처럼 \(x = 0\)인 가운데에서는 속도의 크기가 1로 가장 크고 가속도는 0이다. \(t = 0\)이나 \(t = \pi\)처럼 끝에서는 속도가 0이고 가속도의 크기가 1로 가장 크다. 가속도 \(a = -x\)는 언제나 가운데를 향한다.<sup class="fn"><a href="#fn-calc2-motion-1">1</a></sup></p>
+
+          <h3><span class="no">2.11.2</span>평면 위의 운동</h3>
+          <p>평면 위를 움직이는 점의 위치가 \((x, y) = (f(t), g(t))\)이면 각 성분을 따로 미분한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.11.1 <span class="nm">평면 운동의 속도와 가속도</span></span>
+            <p>속도 \(\vec v = \left(\dfrac{dx}{dt}, \dfrac{dy}{dt}\right)\), 속력 \(|\vec v| = \sqrt{\left(\dfrac{dx}{dt}\right)^2 + \left(\dfrac{dy}{dt}\right)^2}\), 가속도 \(\vec a = \left(\dfrac{d^2x}{dt^2}, \dfrac{d^2y}{dt^2}\right)\)</p>
+          </div>
+          <p>반지름 \(r\)인 원을 \(x = r\cos\omega t\), \(y = r\sin\omega t\)로 도는 점의 속도는 \((-r\omega\sin\omega t, r\omega\cos\omega t)\)이고 속력은 \(r\omega\)로 일정하다. 그런데 가속도는 \((-r\omega^2\cos\omega t, -r\omega^2\sin\omega t) = -\omega^2(x, y)\)로, 크기 \(r\omega^2\)이고 늘 원의 중심을 향한다. 빠르기는 그대로여도 방향이 바뀌므로 가속도가 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="등속 원운동에서 속도는 접선 방향, 가속도는 중심 방향">
+              <g class="s">
+                <circle cx="120" cy="70" r="55" class="gd"/><circle cx="120" cy="70" r="3" class="fk"/>
+                <circle cx="159" cy="31" r="5" class="fb"/>
+                <line x1="159" y1="31" x2="199" y2="71" class="c"/><path d="M199 71 l-3 -9 l-6 6 Z" class="fc"/>
+                <line x1="159" y1="31" x2="133" y2="57" class="d"/><path d="M133 57 l9 -2 l-6 -6 Z" class="fd"/>
+                <text x="205" y="80" class="tc">속도 (접선 방향)</text><text x="60" y="130" class="td">가속도 (중심 방향)</text>
+                <text x="270" y="50">속력 rω 일정</text><text x="270" y="80">가속도 크기 rω²</text><text x="270" y="110">방향이 바뀌므로 가속도가 있다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 등속 원운동에서 속도는 원의 접선 방향, 가속도는 중심 방향을 향한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.11.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.11.2</span>
+            <p>평면 위를 움직이는 점 P의 시각 \(t\)에서의 위치가 \(x = t - \sin t\), \(y = 1 - \cos t\)이다. \(t = \dfrac{\pi}{2}\)일 때 점 P의 속력과 가속도의 크기를 구하여라.</p>
+          </div>
+          <p>\(\dfrac{dx}{dt} = 1 - \cos t\), \(\dfrac{dy}{dt} = \sin t\)이다. \(t = \dfrac{\pi}{2}\)이면 속도는 \((1, 1)\)이고 속력은 \(\sqrt{1 + 1} = \sqrt{2}\)이다.</p>
+          <p>\(\dfrac{d^2x}{dt^2} = \sin t\), \(\dfrac{d^2y}{dt^2} = \cos t\)이므로 \(t = \dfrac{\pi}{2}\)에서 가속도는 \((1, 0)\)이고 크기는 1이다. 사실 가속도의 크기는 \(\sqrt{\sin^2 t + \cos^2 t} = 1\)로 언제나 일정하다. 이 점은 반지름 1인 바퀴가 굴러갈 때 바퀴 테두리의 한 점이 그리는 사이클로이드 위를 움직인다.</p>
+          <p>아래 탐구 카드에서 흔들리는 물체와 원운동하는 점의 속도와 가속도를 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-motion-1">가속도가 위치에 비례하고 방향이 반대인 운동, 곧 \(a = -\omega^2 x\)인 운동을 단진동이라 한다. 용수철 진자와 짧게 흔들리는 진자가 대표적인 예이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>위치를 시간에 대해 미분하면 속도, 한 번 더 미분하면 가속도이며, 평면 운동은 성분별로 미분한다. 단진동 \(x = \cos t\)에서는 가속도가 \(-x\)로 위치와 반대이고, 등속 원운동에도 중심을 향하는 가속도가 있다. 그래서 처음 질문의 추는 가운데에서 가장 빠르고, 가속도는 멈춘 끝에서 가장 크다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a><a href="../../c/calc2/2-9.html#text-calc2-graph-shape"><small class="mono">미적분Ⅱ 2.9</small>그래프의 개형</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div></nav>
+
       <article class="card" id="card-calc2-line-motion">
         <header class="card-head">
-          <span class="no">2.11.1</span><h2>흔들리는 물체는 어디에서 가장 빠르고, 어디에서 가속도가 가장 클까?</h2><span class="kind">속도와 가속도 · 조작</span>
+          <span class="no">탐구 1</span><h2>흔들리는 물체는 어디에서 가장 빠르고, 어디에서 가속도가 가장 클까?</h2><span class="kind">속도와 가속도 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,34 +139,34 @@
                 <div><dt>가속도 \(a = \frac{dv}{dt}\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>속력</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">주황 화살표는 속도, 파랑 화살표는 가속도입니다(길이는 크기에 비례, 모식). 넷째 칸은 \(v\)와 \(a\)의 부호를 비교해 속력이 커지는지 작아지는지 알려 줍니다.</p>
+              <p class="fig-note">주황 화살표는 속도, 파랑 화살표는 가속도이다(길이는 크기에 비례, 모식). 넷째 칸은 \(v\)와 \(a\)의 부호를 비교해 속력이 커지는지 작아지는지 알려 준다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>용수철 끝에 매달린 물체의 위치가 \(x = 2\sin t\)일 때, 물체는 어디에서 가장 빠를까요? 가속도는 어디에서 가장 클까요?</li>
-            <li><span class="tag">복원</span>수직선 위를 움직이는 점의 위치가 \(x(t)\)이면 속도는 \(v = \frac{dx}{dt}\), 가속도는 \(a = \frac{dv}{dt} = \frac{d^2x}{dt^2}\)입니다. 속력은 \(|v|\)입니다.</li>
-            <li><span class="tag">설명</span>삼각함수의 도함수로 \(v = 2\cos t\), \(a = -2\sin t\)를 얻습니다. 곧 <b>\(a = -x\)</b>입니다. 가속도는 늘 원점을 향하고 원점에서 멀수록 큽니다. 원점\((x = 0)\)을 지날 때 속력이 최대 2이고 가속도는 0입니다. 양 끝\((x = \pm 2)\)에서는 \(v = 0\)이고 \(|a|\)가 최대 2입니다. 또 \(v\)와 \(a\)의 부호가 같으면 속력이 커지고, 다르면 작아집니다.</li>
-            <li><span class="tag">연결</span>일반적으로 \(x = A \sin \omega t\)이면 \(a = -\omega^2x\)입니다. 용수철의 힘 \(F = -kx\)와 뉴턴의 운동 법칙 \(F = ma\)를 함께 쓰면 바로 이 꼴이 나옵니다. 위치를 두 번 미분하는 것만으로 진동의 원리를 읽어 낼 수 있습니다. 공기 저항이 있으면 \(e^{-bt}\)가 곱해진 감쇠 진동이 됩니다.</li>
-            <li><span class="tag">적용</span>\(t\)를 움직이며 속도가 0인 순간과 가속도가 0인 순간을 찾으세요. 두 순간에 점은 각각 어디에 있나요? 감쇠 진동에서는 끝점에 이를 때마다 무엇이 줄어드나요? 셋째 식에서 점이 방향을 바꾸는 시각을 찾고, 그 시각을 \(v = 0\)으로 계산해 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>가속도가 음수라고 느려지는 것이 아닙니다. 속도도 음수이면 음의 방향으로 점점 빨라집니다. 또 \(v = 0\)인 순간에도 \(a \ne 0\)이면 점은 멈춰 있지 않고 곧 반대 방향으로 움직입니다. '정지'는 순간의 속도가 0이라는 뜻일 뿐입니다.</li>
+            <li><span class="tag">질문</span>용수철 끝에 매달린 물체의 위치가 \(x = 2\sin t\)일 때, 물체는 어디에서 가장 빠를까? 가속도는 어디에서 가장 클까?</li>
+            <li><span class="tag">복원</span>수직선 위를 움직이는 점의 위치가 \(x(t)\)이면 속도는 \(v = \frac{dx}{dt}\), 가속도는 \(a = \frac{dv}{dt} = \frac{d^2x}{dt^2}\)이고, 속력은 \(|v|\)이다.</li>
+            <li><span class="tag">설명</span>삼각함수의 도함수로 \(v = 2\cos t\), \(a = -2\sin t\)를 얻으므로 \(a = -x\)이다. 즉 가속도는 늘 원점을 향하고 원점에서 멀수록 크다. 그래서 원점\((x = 0)\)을 지날 때 속력이 최대 2이고 가속도는 0이며, 양 끝\((x = \pm 2)\)에서는 \(v = 0\)이고 \(|a|\)가 최대 2이다. 또 \(v\)와 \(a\)의 부호가 같으면 속력이 커지고, 다르면 작아진다.</li>
+            <li><span class="tag">연결</span>일반적으로 \(x = A \sin \omega t\)이면 \(a = -\omega^2x\)이다. 용수철의 힘 \(F = -kx\)와 뉴턴의 운동 법칙 \(F = ma\)를 함께 쓰면 바로 이 꼴이 나오므로, 위치를 두 번 미분하는 것만으로 진동의 원리를 읽어 낼 수 있다. 공기 저항이 있으면 \(e^{-bt}\)가 곱해진 감쇠 진동이 된다.</li>
+            <li><span class="tag">적용</span>\(t\)를 움직이며 속도가 0인 순간과 가속도가 0인 순간을 찾고, 두 순간에 점이 각각 어디에 있는지 보자. 감쇠 진동에서는 끝점에 이를 때마다 무엇이 줄어드는지 보고, 셋째 식에서 점이 방향을 바꾸는 시각을 찾아 그 시각을 \(v = 0\)으로 계산해 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>가속도가 음수라고 느려지는 것이 아니어서, 속도도 음수이면 음의 방향으로 점점 빨라진다. 또 \(v = 0\)인 순간에도 \(a \ne 0\)이면 점은 멈춰 있지 않고 곧 반대 방향으로 움직이므로, 정지는 순간의 속도가 0이라는 뜻일 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">수직선 위를 움직이는 점의 위치가 \(x = t + 2\cos t (0 &lt; t &lt; 2\pi)\)일 때, 점이 처음으로 운동 방향을 바꾸는 시각은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\pi}{6}\)<span class="why"><b>맞습니다.</b> \(v = 1 - 2\sin t\)는 \(\sin t = \frac{1}{2}\)인 \(t = \frac{\pi}{6}\)에서 0이 되고, 그 좌우에서 부호가 +에서 −로 바뀝니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{\pi}{2}\)<span class="why"><b>가속도가 0인 순간을 골랐습니다.</b> \(a = -2\cos t\)가 0이 되는 이 순간은 속도가 가장 작은\((-1)\) 때이지 방향이 바뀌는 때가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{5\pi}{6}\)<span class="why"><b>두 번째로 방향을 바꾸는 시각입니다.</b> \(v\)는 \(\frac{\pi}{6}\)에서 먼저 0이 되어 음수가 되고, \(\frac{5\pi}{6}\)에서 다시 양수로 돌아옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\pi\)<span class="why"><b>위치의 \(\cos\) 부분만 보았습니다.</b> \(2\cos t\)는 \(\pi\)에서 최소이지만, \(t\)가 더해져 있어 \(x\)는 그때 이미 다시 증가하고 있습니다\((v(\pi) = 1)\).</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{\pi}{6}\)<span class="why"><b>맞다.</b> \(v = 1 - 2\sin t\)는 \(\sin t = \frac{1}{2}\)인 \(t = \frac{\pi}{6}\)에서 0이 되고, 그 좌우에서 부호가 +에서 −로 바뀐다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{\pi}{2}\)<span class="why"><b>가속도가 0인 순간을 골랐다.</b> \(a = -2\cos t\)가 0이 되는 이 순간은 속도가 가장 작은\((-1)\) 때이지 방향이 바뀌는 때가 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{5\pi}{6}\)<span class="why"><b>두 번째로 방향을 바꾸는 시각이다.</b> \(v\)는 \(\frac{\pi}{6}\)에서 먼저 0이 되어 음수가 되고, \(\frac{5\pi}{6}\)에서 다시 양수로 돌아온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\pi\)<span class="why"><b>위치의 \(\cos\) 부분만 보았다.</b> \(2\cos t\)는 \(\pi\)에서 최소이지만, \(t\)가 더해져 있어 \(x\)는 그때 이미 다시 증가하고 있습니다\((v(\pi) = 1)\).</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a><a href="../../c/calc2/2-9.html#text-calc2-graph-shape"><small class="mono">미적분Ⅱ 2.9</small>그래프의 개형</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div></nav>
 
       <article class="card" id="card-calc2-plane-motion">
         <header class="card-head">
-          <span class="no">2.11.2</span><h2>일정한 빠르기로 원을 도는 점에도 가속도가 있을까?</h2><span class="kind">평면 운동 · 조작</span>
+          <span class="no">탐구 2</span><h2>일정한 빠르기로 원을 도는 점에도 가속도가 있을까?</h2><span class="kind">평면 운동 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,43 +185,44 @@
                 <div><dt>가속도 \((x'', y'')\)</dt><dd class="n-a">—</dd></div>
                 <div><dt>가속도의 크기</dt><dd class="n-m">—</dd></div>
               </dl>
-              <p class="fig-note">화살표는 벡터를 0.5배로 줄여 그렸습니다. 주황은 속도, 파랑은 가속도입니다. 속도는 늘 경로의 접선 방향입니다.</p>
+              <p class="fig-note">화살표는 벡터를 0.5배로 줄여 그렸다. 주황은 속도, 파랑은 가속도이고, 속도는 늘 경로의 접선 방향이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점 \(P(2\cos t, 2\sin t)\)는 원 위를 일정한 빠르기로 돕니다. 빠르기가 변하지 않으니 가속도는 0일까요?</li>
-            <li><span class="tag">복원</span>매개변수로 나타낸 곡선 위의 점에서 \((\frac{dx}{dt}, \frac{dy}{dt})\)는 접선 방향을 가리킵니다. 직선 운동에서는 위치를 미분하면 속도, 한 번 더 미분하면 가속도입니다.</li>
-            <li><span class="tag">설명</span>평면 위를 움직이는 점 \(P(x(t), y(t))\)의 <em>속도</em>는 \((\frac{dx}{dt}, \frac{dy}{dt})\), <em>속력</em>은 \(\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\), <em>가속도</em>는 \((\frac{d^2x}{dt^2}, \frac{d^2y}{dt^2})\)입니다. 원에서는 속도 \((-2\sin t, 2\cos t)\), 속력 2로 일정합니다. 그러나 가속도는 \((-2\cos t, -2\sin t)\)로 <b>\(P\)의 위치 벡터의 \(-1\)배</b>입니다. 크기 2로 늘 원의 중심을 향합니다. 속도의 크기는 그대로여도 방향이 바뀌므로 가속도가 있습니다.</li>
-            <li><span class="tag">연결</span>물리에서 등속 원운동의 가속도는 중심을 향하고 크기가 \(\frac{v^2}{r}\)입니다. 여기서는 \(\frac{2^2}{2} = 2\)로 맞습니다. 던진 공의 경로 \((2t, 4t - 2t^2)\)는 가속도가 \((0, -4)\)로 늘 일정한 아래 방향입니다. 중력만 받는 운동이 이런 모양입니다.</li>
-            <li><span class="tag">적용</span>원에서 \(t\)를 움직이며 속력이 정말 바뀌지 않는지, 파랑 화살표가 늘 중심을 향하는지 확인하세요. 타원에서는 속력이 가장 큰 곳과 가장 작은 곳을 찾으세요. 던진 공이 가장 높이 올라간 순간 속력은 0인가요?</li>
-            <li class="warn"><span class="tag">판단</span>'속력이 일정하면 가속도가 0'은 직선 운동에서만 맞습니다. 평면에서는 방향만 바뀌어도 가속도가 생깁니다. 또 가속도의 방향은 속도의 방향과 다를 수 있습니다. 던진 공의 꼭대기에서는 세로 속도만 0이고 가로 속도 2가 남아 있어 속력은 2입니다.</li>
+            <li><span class="tag">질문</span>점 \(P(2\cos t, 2\sin t)\)는 원 위를 일정한 빠르기로 돈다. 빠르기가 변하지 않으니 가속도는 0일까?</li>
+            <li><span class="tag">복원</span>매개변수로 나타낸 곡선 위의 점에서 \((\frac{dx}{dt}, \frac{dy}{dt})\)는 접선 방향을 가리킨다. 그리고 직선 운동에서는 위치를 미분하면 속도, 한 번 더 미분하면 가속도이다.</li>
+            <li><span class="tag">설명</span>평면 위를 움직이는 점 \(P(x(t), y(t))\)의 <em>속도</em>는 \((\frac{dx}{dt}, \frac{dy}{dt})\), <em>속력</em>은 \(\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2}\), <em>가속도</em>는 \((\frac{d^2x}{dt^2}, \frac{d^2y}{dt^2})\)이다. 원에서는 속도가 \((-2\sin t, 2\cos t)\)이고 속력은 2로 일정하다. 그러나 가속도는 \((-2\cos t, -2\sin t)\)로 \(P\)의 위치 벡터의 \(-1\)배여서, 크기 2로 늘 원의 중심을 향한다. 즉 속도의 크기는 그대로여도 방향이 바뀌므로 가속도가 있다.</li>
+            <li><span class="tag">연결</span>물리에서 등속 원운동의 가속도는 중심을 향하고 크기가 \(\frac{v^2}{r}\)인데, 여기서는 \(\frac{2^2}{2} = 2\)로 맞는다. 던진 공의 경로 \((2t, 4t - 2t^2)\)는 가속도가 \((0, -4)\)로 늘 일정한 아래 방향이고, 중력만 받는 운동이 이런 모양이다.</li>
+            <li><span class="tag">적용</span>원에서 \(t\)를 움직이며 속력이 정말 바뀌지 않는지, 파랑 화살표가 늘 중심을 향하는지 확인해 보자. 타원에서는 속력이 가장 큰 곳과 가장 작은 곳을 찾고, 던진 공이 가장 높이 올라간 순간 속력이 0인지도 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘속력이 일정하면 가속도가 0’은 직선 운동에서만 맞고, 평면에서는 방향만 바뀌어도 가속도가 생긴다. 또 가속도의 방향은 속도의 방향과 다를 수 있어서, 던진 공의 꼭대기에서는 세로 속도만 0이고 가로 속도 2가 남아 있어 속력은 2이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">평면 위를 움직이는 점 \(P\)의 시각 \(t\)에서의 위치가 \((e^t, e^{-t})\)일 때, \(t = 0\)에서 \(P\)의 속력은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{2}\)<span class="why"><b>맞습니다.</b> 속도는 \((e^t, -e^{-t})\)이고 \(t = 0\)에서 \((1, -1)\)이므로 속력은 \(\sqrt{1 + 1} = \sqrt{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>두 성분을 더했습니다.</b> \(1 + (-1) = 0\)이지만, 속력은 성분의 합이 아니라 속도 벡터의 크기입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>성분의 절댓값을 더했습니다.</b> \(|1| + |-1| = 2\)는 가로·세로로 따로 간 거리의 합입니다. 실제로 움직이는 방향은 대각선입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>한 성분만 보았습니다.</b> \(\frac{dx}{dt} = 1\)이지만 세로 방향으로도 같은 빠르기로 움직이고 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\sqrt{2}\)<span class="why"><b>맞다.</b> 속도는 \((e^t, -e^{-t})\)이고 \(t = 0\)에서 \((1, -1)\)이므로 속력은 \(\sqrt{1 + 1} = \sqrt{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>두 성분을 더했다.</b> \(1 + (-1) = 0\)이지만, 속력은 성분의 합이 아니라 속도 벡터의 크기이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>성분의 절댓값을 더했다.</b> \(|1| + |-1| = 2\)는 가로·세로로 따로 간 거리의 합이다. 실제로 움직이는 방향은 대각선이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>한 성분만 보았다.</b> \(\frac{dx}{dt} = 1\)이지만 세로 방향으로도 같은 빠르기로 움직이고 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a><a href="../../c/calc2/2-9.html#text-calc2-graph-shape"><small class="mono">미적분Ⅱ 2.9</small>그래프의 개형</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-2-11"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">21문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=2-11"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-2-11"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">21문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -170,6 +230,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/line-motion.js"></script>
 <script src="../../js/cards/calc2/plane-motion.js"></script>

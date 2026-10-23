@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>양항급수의 판정법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="양항급수의 수렴 판정: 적분판정법, p급수, 비교판정법, 극한비교판정법, 비판정법, 근판정법. 막대와 곡선으로 보는 적분판정법, 급수마다 알맞은 판정법을 고르는 도전 카드, 조화급수로 책을 탁자 밖으로 내미는 활용 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-integral-test canvas { aspect-ratio: 16 / 10; }
@@ -45,19 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-integral-test"><span class="mono">3.2.1</span>막대와 곡선으로 판정하기</a></li>
-        <li><a href="#card-adcalc-test-pick"><span class="mono">3.2.2</span>판정법 고르기 도전</a></li>
-        <li><a href="#card-adcalc-overhang"><span class="mono">3.2.3</span>책을 얼마나 내밀 수 있을까</a></li>
+        <li><a href="#text-adcalc-series-tests"><span class="mono">본문</span>양항급수의 판정법</a></li>
+        <li><a href="#card-adcalc-integral-test"><span class="mono">탐구 1</span>막대와 곡선으로 판정하기</a></li>
+        <li><a href="#card-adcalc-test-pick"><span class="mono">탐구 2</span>판정법 고르기 도전</a></li>
+        <li><a href="#card-adcalc-overhang"><span class="mono">탐구 3</span>책을 얼마나 내밀 수 있을까</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-series-tests" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>양항급수의 판정법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">똑같은 책을 탁자 끝에 쌓되, 위에서부터 차례로 무게 중심이 바로 아래 책의 끝에 오도록 조금씩 내민다. 맨 위 책은 둘째 책보다 책 길이의 \(1/2\), 둘째 책은 셋째 책보다 \(1/4\), 셋째 책은 넷째 책보다 \(1/6\)만큼 내밀 수 있다. 그러면 \(n\)권을 쌓았을 때 맨 위 책이 탁자 밖으로 나간 길이는 \(\tfrac12\left(1 + \tfrac12 + \tfrac13 + \cdots + \tfrac1n\right)\)이다. 책을 많이 쌓으면 이 길이는 어디까지 커질까? 맨 위 책이 탁자에서 완전히 벗어나려면 몇 권이 필요할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="탁자 끝에 쌓은 네 권의 책">
+              <rect x="20" y="140" width="200" height="20" class="lk"/><text x="30" y="155" class="s">탁자</text>
+              <line x1="220" y1="20" x2="220" y2="160" class="dsh"/>
+              <rect x="45" y="116" width="200" height="22" class="la"/>
+              <rect x="78.3" y="92" width="200" height="22" class="la"/>
+              <rect x="128.3" y="68" width="200" height="22" class="la"/>
+              <rect x="228.3" y="44" width="200" height="22" class="ld"/>
+              <line x1="220" y1="32" x2="428.3" y2="32" class="d"/><text x="250" y="26" class="s td">탁자 밖 25/24 ≈ 1.04권</text>
+              <text x="440" y="60" class="s">1/2</text><text x="340" y="84" class="s">1/4</text><text x="290" y="108" class="s">1/6</text><text x="256" y="132" class="s">1/8</text>
+            </svg>
+            <figcaption>그림 1. 네 권을 쌓으면 맨 위 책은 탁자 끝에서 책 한 권 길이보다 조금 더 나간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>급수와 부분합, 등비급수, 정적분과 급수의 합, 단조수렴정리(<a href="3-1.html">단조수렴정리</a>).</div>
+
+          <h3><span class="no">3.2.1</span>항이 0으로 가도 발산할 수 있다</h3>
+          <p>모든 항이 양수인 양항급수는 부분합이 늘어나기만 하므로, 단조수렴정리에 따라 부분합이 어떤 수를 넘지 못하면 수렴하고, 그렇지 않으면 무한대로 발산한다. 조화급수 \(\sum\frac1n\)은 항이 0으로 가지만 발산한다. 항을 \(1, \tfrac12, \tfrac13 + \tfrac14, \tfrac15 + \cdots + \tfrac18, \ldots\)처럼 묶으면 각 묶음이 \(\tfrac12\)보다 크므로, 묶음을 많이 더할수록 부분합이 끝없이 커지기 때문이다. 그래서 항이 0으로 가는 것은 수렴하기 위한 조건일 뿐, 그것만으로 수렴하지는 않는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">양항급수의 판정법</span></span>
+            <p>\(f\)가 \([1, \infty)\)에서 양수이고 감소하며 \(a_n = f(n)\)이면 \(\sum a_n\)과 \(\int_1^\infty f(x)\,dx\)는 함께 수렴하거나 함께 발산한다(적분 판정법). \(0 \le a_n \le b_n\)일 때 \(\sum b_n\)이 수렴하면 \(\sum a_n\)도 수렴한다(비교 판정법). \(\lim a_{n+1}/a_n = \rho\)가 1보다 작으면 수렴하고 1보다 크면 발산한다(비 판정법).</p>
+          </div>
+          <p>적분 판정법은 급수를 직사각형 넓이의 합으로 보고 곡선 아래 넓이와 비교한 것이다. \(1/n\)의 직사각형들은 곡선 \(y = 1/x\) 아래의 넓이보다 크고, 그 넓이 \(\ln b\)가 끝없이 커지므로 조화급수도 발산한다. 반대로 \(1/n^2\)은 첫 항을 빼면 직사각형들이 곡선 \(y = 1/x^2\) 아래에 들어가고 그 넓이가 1이므로, \(\sum\frac{1}{n^2} &lt; 1 + 1 = 2\)로 수렴한다. 그래서 급수 \(\sum\frac{1}{n^p}\)은 이상적분과 똑같이 \(p > 1\)일 때만 수렴한다.<sup class="fn"><a href="#fn-adcalc-series-tests-1">1</a></sup></p>
+
+          <h3><span class="no">3.2.2</span>어떤 판정법을 쓸까</h3>
+          <p>판정법은 급수의 모양을 보고 고른다. \(\sum\frac{1}{n^2 + n}\)처럼 이미 아는 급수와 닮았으면 비교 판정법을 쓴다. \(\sum\frac{n}{2^n}\)이나 \(\sum\frac{1}{n!}\)처럼 거듭제곱이나 계승이 있으면 비 판정법이 편하다. 비 판정법은 \(\rho = 1\)일 때는 아무것도 알려 주지 않는데, \(\sum\frac1n\)과 \(\sum\frac{1}{n^2}\)이 모두 \(\rho = 1\)이면서 하나는 발산하고 하나는 수렴하기 때문이다. 그런 급수에는 적분 판정법이나 비교 판정법을 쓴다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="책 수에 따른 탁자 밖 길이">
+              <g class="s">
+                <text x="20" y="22">책 수 n</text><text x="140" y="22">1</text><text x="210" y="22">4</text><text x="280" y="22">31</text><text x="360" y="22">227</text><text x="440" y="22">1만</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">½ Hₙ (권)</text><text x="140" y="52">0.5</text><text x="210" y="52" class="td">1.04</text><text x="280" y="52">2.01</text><text x="360" y="52">3.00</text><text x="440" y="52">4.89</text>
+                <text x="20" y="80">Hₙ ≈ ln n + 0.577이어서 끝없이 커지지만 매우 느리다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 조화급수가 발산하므로 책을 충분히 쌓으면 얼마든지 멀리 내밀 수 있지만, 필요한 책 수는 지수적으로 늘어난다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+            <p>처음 질문에서 맨 위 책이 탁자에서 완전히 벗어나는 데 필요한 책 수를 구하여라. 적분 판정법의 부등식 \(\ln(n + 1) &lt; H_n &lt; 1 + \ln n\)을 써서, 탁자 밖으로 책 10권 길이만큼 내밀려면 대략 몇 권이 필요한지 어림하여라.</p>
+          </div>
+          <p>탁자 밖 길이가 1을 넘으려면 \(H_n > 2\)이어야 한다. \(H_3 = 1 + 0.5 + 0.333 = 1.833\), \(H_4 = 2.083\)이므로 네 권이면 \(\tfrac12\times2.083 \approx 1.04\)권 길이만큼 나가 맨 위 책이 탁자에서 완전히 벗어난다.</p>
+          <p>10권 길이를 내밀려면 \(H_n > 20\)이어야 한다. \(H_n &lt; 1 + \ln n\)이므로 적어도 \(\ln n > 19\), 곧 \(n > e^{19} \approx 1.8\times10^8\)이다. 또 \(H_n > \ln(n + 1)\)이므로 \(n + 1 > e^{20}\)이면 충분해, 대략 2억에서 5억 권 사이가 필요하다. 그래서 조화급수는 분명히 발산하지만 그 속도가 로그처럼 느려서, 실제로 쌓을 수 있는 책으로는 몇 권 길이밖에 내밀 수 없다. 즉 양항급수의 수렴은 부분합이 어떤 수를 넘지 못하는지로 정해지고, 적분 판정법은 급수를 넓이와 비교해 수렴 여부와 부분합의 크기를 함께 알려 준다.</p>
+          <p>아래 탐구 카드에서 \(\sum\frac{1}{n^2}\)과 \(\sum\frac1n\)을 넓이와 비교해 보고, 여러 급수에 맞는 판정법을 골라 보고, 책을 쌓아 내밀어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-series-tests-1">\(\sum\frac{1}{n^2}\)의 정확한 값이 \(\pi^2/6\)이라는 것은 1734년 오일러가 밝혀, 수십 년 동안 풀리지 않던 바젤 문제를 해결했다. 조화급수가 발산한다는 것은 이미 14세기 프랑스의 오렘이 항을 묶는 방법으로 보였다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>양항급수는 부분합이 늘어나기만 하므로 어떤 수를 넘지 못하면 수렴하며, 항이 0으로 가는 것만으로는 수렴하지 않는다. 적분 판정법은 급수를 곡선 아래 넓이와, 비교 판정법은 아는 급수와, 비 판정법은 이웃한 항의 비와 견주어 판정하고, \(\sum 1/n^p\)은 \(p > 1\)일 때만 수렴한다. 처음 질문의 책 쌓기는 조화급수가 발산하므로 끝없이 멀리 내밀 수 있지만, 한 권 길이는 네 권, 열 권 길이는 수억 권이 필요하다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-3.html#text-adcalc-alternating"><small class="mono">고급 미적분 3.3</small>교대급수와 절대수렴·조건수렴</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a></div></nav>
+
       <article class="card" id="card-adcalc-integral-test">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>\(\sum\frac{1}{n^2}\)은 유한하고 \(\sum\frac{1}{n}\)은 무한한 까닭은?</h2><span class="kind">적분판정법 · \(p\)급수 · 조작</span>
+          <span class="no">탐구 1</span><h2>\(\sum\frac{1}{n^2}\)은 유한하고 \(\sum\frac{1}{n}\)은 무한한 까닭은?</h2><span class="kind">적분판정법 · \(p\)급수 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,30 +140,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(1 + \frac{1}{4} + \frac{1}{9} + \cdots\)은 약 1.645에 머물지만 \(1 + \frac{1}{2} + \frac{1}{3} + \cdots\)은 끝없이 커집니다. 두 급수 모두 항이 0으로 가는데 왜 다를까요? 항을 하나하나 더하지 않고 판정할 방법이 있을까요?</li>
-            <li><span class="tag">복원</span>\(\int_1^\infty\frac{dx}{x^p}\)은 \(p &gt; 1\)일 때 \(\frac{1}{p - 1}\)로 수렴하고 \(p \le 1\)일 때 발산합니다. 양항급수의 부분합은 증가수열이므로 위로 유계이면 수렴합니다(단조수렴정리).</li>
-            <li><span class="tag">설명</span>높이 \(\frac{1}{n^p}\), 폭 1인 막대를 \([n - 1, n]\)에 놓으면 곡선 \(y = \frac{1}{x^p}\) 아래에 들어가므로 \(\sum_{n=2}^{N}\frac{1}{n^p} \le \int_1^N\frac{dx}{x^p}\)이고, \([n, n + 1]\)에 놓으면 곡선을 덮으므로 \(\sum_{n=1}^{N}\frac{1}{n^p} \ge \int_1^{N+1}\frac{dx}{x^p}\)입니다. 그래서 급수와 이상적분은 함께 수렴하거나 함께 발산합니다. 이것이 <em>적분판정법</em>입니다(\(f\)가 양수이고 감소할 때). 결과적으로 <em>\(p\)급수</em> \(\sum\frac{1}{n^p}\)은 \(p &gt; 1\)이면 수렴, \(p \le 1\)이면 발산합니다.</li>
-            <li><span class="tag">연결</span>\(\sum\frac{1}{n^2} = \frac{\pi^2}{6}\)임은 오일러가 1735년 무렵 밝혔습니다. 적분판정법은 수렴만 알려 주고 합은 알려 주지 않지만, \(S_N\)과 \(1 + \int_1^\infty\)처럼 합이 들어갈 범위를 줍니다. 다음 카드에서는 비교판정법, 비판정법 같은 다른 판정법을 고르는 연습을 합니다.</li>
-            <li><span class="tag">적용</span>\(p = 2\)에서 \(N\)을 늘리며 부분합이 \(1 + \int_1^\infty = 2\)를 넘지 않는지 보세요. \(p = 1\)로 바꾸면 부분합과 \(\ln N\)이 함께 커지나요? 막대 놓는 방식을 바꿔 두 부등식을 그림으로 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>급수의 합과 적분값은 같지 않습니다. \(\sum_{n=1}^\infty\frac{1}{n^2} \approx 1.645\)이지만 \(\int_1^\infty\frac{dx}{x^2} = 1\)입니다. 적분판정법이 말해 주는 것은 "수렴하느냐"뿐입니다. 또 함수가 감소하지 않으면 막대와 곡선의 대소 관계가 깨져 판정법을 쓸 수 없습니다.</li>
+            <li><span class="tag">질문</span>\(1 + \frac{1}{4} + \frac{1}{9} + \cdots\)은 약 1.645에 머물지만 \(1 + \frac{1}{2} + \frac{1}{3} + \cdots\)은 끝없이 커진다. 두 급수 모두 항이 0으로 가는데 왜 다를까? 항을 하나하나 더하지 않고 판정할 방법이 있을까?</li>
+            <li><span class="tag">복원</span>\(\int_1^\infty\frac{dx}{x^p}\)은 \(p &gt; 1\)일 때 \(\frac{1}{p - 1}\)로 수렴하고 \(p \le 1\)일 때 발산한다. 양항급수의 부분합은 증가수열이므로 위로 유계이면 수렴한다(단조수렴정리).</li>
+            <li><span class="tag">설명</span>높이 \(\frac{1}{n^p}\), 폭 1인 막대를 \([n - 1, n]\)에 놓으면 곡선 \(y = \frac{1}{x^p}\) 아래에 들어가므로 \(\sum_{n=2}^{N}\frac{1}{n^p} \le \int_1^N\frac{dx}{x^p}\)이고, \([n, n + 1]\)에 놓으면 곡선을 덮으므로 \(\sum_{n=1}^{N}\frac{1}{n^p} \ge \int_1^{N+1}\frac{dx}{x^p}\)이다. 그래서 급수와 이상적분은 함께 수렴하거나 함께 발산한다. 이것이 <em>적분판정법</em>이다(\(f\)가 양수이고 감소할 때). 결과적으로 <em>\(p\)급수</em> \(\sum\frac{1}{n^p}\)은 \(p &gt; 1\)이면 수렴, \(p \le 1\)이면 발산한다.</li>
+            <li><span class="tag">연결</span>\(\sum\frac{1}{n^2} = \frac{\pi^2}{6}\)임은 오일러가 1735년 무렵 밝혔다. 적분판정법은 수렴만 알려 주고 합은 알려 주지 않지만, \(S_N\)과 \(1 + \int_1^\infty\)처럼 합이 들어갈 범위를 준다. 다음 카드에서는 비교판정법, 비판정법 같은 다른 판정법을 고르는 연습을 한다.</li>
+            <li><span class="tag">적용</span>\(p = 2\)에서 \(N\)을 늘리며 부분합이 \(1 + \int_1^\infty = 2\)를 넘지 않는지 보자. \(p = 1\)로 바꾸면 부분합과 \(\ln N\)이 함께 커지는가? 막대 놓는 방식을 바꿔 두 부등식을 그림으로 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>급수의 합과 적분값은 같지 않다. \(\sum_{n=1}^\infty\frac{1}{n^2} \approx 1.645\)이지만 \(\int_1^\infty\frac{dx}{x^2} = 1\)이다. 적분판정법이 말해 주는 것은 "수렴하느냐"뿐이다. 또 함수가 감소하지 않으면 막대와 곡선의 대소 관계가 깨져 판정법을 쓸 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\sum_{n=2}^{\infty}\frac{1}{n(\ln n)^2}\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>수렴한다<span class="why"><b>맞습니다.</b> \(\int_2^\infty\frac{dx}{x(\ln x)^2} = \left[-\frac{1}{\ln x}\right]_2^\infty = \frac{1}{\ln 2}\)로 유한합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>발산한다. \(\frac{1}{n}\)과 거의 같으니까<span class="why"><b>\((\ln n)^2\)이 느리게라도 커진다는 것을 무시했습니다.</b> 그 작은 차이로 적분이 수렴합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>수렴하고 합은 \(\frac{1}{\ln 2}\)이다<span class="why"><b>적분값과 급수의 합을 같다고 보았습니다.</b> 적분판정법은 합을 알려 주지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>판정할 수 없다<span class="why"><b>\(\frac{1}{x(\ln x)^2}\)은 \(x \ge 2\)에서 양수이고 감소하므로 적분판정법을 쓸 수 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>수렴한다<span class="why"><b>맞다.</b> \(\int_2^\infty\frac{dx}{x(\ln x)^2} = \left[-\frac{1}{\ln x}\right]_2^\infty = \frac{1}{\ln 2}\)로 유한한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>발산한다. \(\frac{1}{n}\)과 거의 같으니까<span class="why"><b>\((\ln n)^2\)이 느리게라도 커진다는 것을 무시했다.</b> 그 작은 차이로 적분이 수렴한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>수렴하고 합은 \(\frac{1}{\ln 2}\)이다<span class="why"><b>적분값과 급수의 합을 같다고 보았다.</b> 적분판정법은 합을 알려 주지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>판정할 수 없다<span class="why"><b>\(\frac{1}{x(\ln x)^2}\)은 \(x \ge 2\)에서 양수이고 감소하므로 적분판정법을 쓸 수 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-3.html#text-adcalc-alternating"><small class="mono">고급 미적분 3.3</small>교대급수와 절대수렴·조건수렴</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a></div></nav>
 
       <article class="card" id="card-adcalc-test-pick">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>이 급수에는 어떤 판정법이 통할까?</h2><span class="kind">양항급수의 판정법 · 도전</span>
+          <span class="no">탐구 2</span><h2>이 급수에는 어떤 판정법이 통할까?</h2><span class="kind">양항급수의 판정법 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -137,30 +199,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>양항급수의 수렴을 판정하는 방법은 여러 가지입니다. 같은 급수라도 어떤 판정법은 한 줄로 끝나고 어떤 판정법은 아무것도 알려 주지 않습니다. 급수의 생김새를 보고 알맞은 판정법을 고를 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(\sum\frac{1}{n^p}\)은 \(p &gt; 1\)일 때만 수렴합니다. 등비급수 \(\sum r^n\)은 \(|r| &lt; 1\)일 때만 수렴합니다.</li>
-            <li><span class="tag">설명</span>모두 \(a_n &gt; 0\)인 급수에 씁니다. <b>비교</b>: \(a_n \le b_n\)이고 \(\sum b_n\)이 수렴하면 \(\sum a_n\)도 수렴(발산은 반대 방향). <b>극한비교</b>: \(\frac{a_n}{b_n} \to c\ (0 &lt; c &lt; \infty)\)이면 둘은 함께 수렴하거나 발산. <b>비</b>: \(\frac{a_{n+1}}{a_n} \to L\)이 1보다 작으면 수렴, 크면 발산. <b>근</b>: \(\sqrt[n]{a_n} \to L\)에서 같은 결론. <b>적분</b>: \(a_n = f(n)\)이고 \(f\)가 양수이고 감소하면 \(\int^\infty f\)와 함께 수렴하거나 발산. 요령은 이렇습니다. \(n\)의 다항식 꼴의 분수이면 \(\frac{1}{n^p}\)과 (극한)비교, 지수나 계승(\(n!\))이 있으면 비판정법, 전체가 \(n\)제곱이면 근판정법, \(\ln\)이 섞이면 적분판정법.</li>
-            <li><span class="tag">연결</span>비판정법과 근판정법은 사실 등비급수와 비교하는 것입니다. 극한 \(L\)이 1이면 두 판정법은 아무것도 알려 주지 않습니다. \(\sum\frac{1}{n}\)과 \(\sum\frac{1}{n^2}\)은 모두 \(L = 1\)이지만 결과가 다릅니다.</li>
-            <li><span class="tag">적용</span>여섯 급수마다 판정법과 결론을 고르세요. 판정법은 통하는 것이 여러 개일 수 있습니다. 맞히면 부분합 그래프가 나타납니다. \(\sum\frac{1}{n\ln n}\)의 부분합은 \(n = 10^5\)에서도 3 남짓입니다. 이것은 수렴한다는 뜻일까요?</li>
-            <li class="warn"><span class="tag">판단</span>컴퓨터로 많이 더해 본 결과는 판정이 아닙니다. \(\sum\frac{1}{n\ln n}\)의 부분합은 \(\ln(\ln n)\)처럼 자라서, 10을 넘으려면 \(n\)이 약 \(10^{4300}\)은 되어야 합니다. 그래도 발산합니다.</li>
+            <li><span class="tag">질문</span>양항급수의 수렴을 판정하는 방법은 여러 가지이다. 같은 급수라도 어떤 판정법은 한 줄로 끝나고 어떤 판정법은 아무것도 알려 주지 않는다. 급수의 생김새를 보고 알맞은 판정법을 고를 수 있을까?</li>
+            <li><span class="tag">복원</span>\(\sum\frac{1}{n^p}\)은 \(p &gt; 1\)일 때만 수렴한다. 등비급수 \(\sum r^n\)은 \(|r| &lt; 1\)일 때만 수렴한다.</li>
+            <li><span class="tag">설명</span>모두 \(a_n &gt; 0\)인 급수에 쓴다. 비교판정법은 \(a_n \le b_n\)이고 \(\sum b_n\)이 수렴하면 \(\sum a_n\)도 수렴한다는 것이다(발산은 반대 방향). 극한비교판정법에서는 \(\frac{a_n}{b_n} \to c\ (0 &lt; c &lt; \infty)\)이면 둘이 함께 수렴하거나 발산한다. 비판정법은 \(\frac{a_{n+1}}{a_n} \to L\)이 1보다 작으면 수렴, 크면 발산으로 보고, 근판정법은 \(\sqrt[n]{a_n} \to L\)로 같은 결론을 낸다. 적분판정법은 \(a_n = f(n)\)이고 \(f\)가 양수이고 감소하면 \(\int^\infty f\)와 함께 수렴하거나 발산한다는 것이다. 고르는 요령은 이렇다. \(n\)의 다항식 꼴의 분수이면 \(\frac{1}{n^p}\)과 (극한)비교, 지수나 계승(\(n!\))이 있으면 비판정법, 전체가 \(n\)제곱이면 근판정법, \(\ln\)이 섞이면 적분판정법을 쓴다.</li>
+            <li><span class="tag">연결</span>비판정법과 근판정법은 사실 등비급수와 비교하는 것이다. 극한 \(L\)이 1이면 두 판정법은 아무것도 알려 주지 않는다. \(\sum\frac{1}{n}\)과 \(\sum\frac{1}{n^2}\)은 모두 \(L = 1\)이지만 결과가 다르다.</li>
+            <li><span class="tag">적용</span>여섯 급수마다 판정법과 결론을 고르자. 판정법은 통하는 것이 여러 개일 수 있다. 맞히면 부분합 그래프가 나타난다. \(\sum\frac{1}{n\ln n}\)의 부분합은 \(n = 10^5\)에서도 3 남짓이다. 이것은 수렴한다는 뜻일까?</li>
+            <li class="warn"><span class="tag">판단</span>컴퓨터로 많이 더해 본 결과는 판정이 아니다. \(\sum\frac{1}{n\ln n}\)의 부분합은 \(\ln(\ln n)\)처럼 자라서, 10을 넘으려면 \(n\)이 약 \(10^{4300}\)은 되어야 한다. 그래도 발산한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\sum\frac{3^n}{n!}\)에 비판정법을 쓰면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(L = 0\)이므로 수렴한다<span class="why"><b>맞습니다.</b> \(\frac{a_{n+1}}{a_n} = \frac{3}{n + 1} \to 0 &lt; 1\)입니다. 계승은 어떤 지수함수보다도 빨리 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(L = 3\)이므로 발산한다<span class="why"><b>분자만 비교했습니다.</b> 분모의 \((n + 1)!/n! = n + 1\)도 함께 나누어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(L = 1\)이므로 판정할 수 없다<span class="why"><b>\(L\)을 잘못 구했습니다.</b> \(\frac{3}{n + 1}\)은 0으로 갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>항이 처음에 커지므로 발산한다<span class="why"><b>처음 몇 항은 수렴과 상관없습니다.</b> \(n \ge 3\)부터 항이 줄고, 결국 0으로 빨리 갑니다(합은 \(e^3 - 1\)).</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(L = 0\)이므로 수렴한다<span class="why"><b>맞다.</b> \(\frac{a_{n+1}}{a_n} = \frac{3}{n + 1} \to 0 &lt; 1\)이다. 계승은 어떤 지수함수보다도 빨리 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(L = 3\)이므로 발산한다<span class="why"><b>분자만 비교했다.</b> 분모의 \((n + 1)!/n! = n + 1\)도 함께 나누어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(L = 1\)이므로 판정할 수 없다<span class="why"><b>\(L\)을 잘못 구했다.</b> \(\frac{3}{n + 1}\)은 0으로 간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>항이 처음에 커지므로 발산한다<span class="why"><b>처음 몇 항은 수렴과 상관없다.</b> \(n \ge 3\)부터 항이 줄고, 결국 0으로 빨리 간다(합은 \(e^3 - 1\)).</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-3.html#text-adcalc-alternating"><small class="mono">고급 미적분 3.3</small>교대급수와 절대수렴·조건수렴</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a></div></nav>
 
       <article class="card" id="card-adcalc-overhang">
         <header class="card-head">
-          <span class="no">3.2.3</span><h2>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</h2><span class="kind">조화급수의 발산 · 활용 · 예측 → 확인</span>
+          <span class="no">탐구 3</span><h2>책을 쌓아 맨 위 책을 탁자 밖으로 얼마나 내밀 수 있을까?</h2><span class="kind">조화급수의 발산 · 활용 · 예측 → 확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -168,9 +230,9 @@
             <div class="ctl">
               <p class="mono small">먼저 예측하세요. 맨 위 책이 탁자 모서리에서 책 두 권 길이만큼 완전히 벗어나려면 몇 권이 필요할까요?</p>
               <div class="ctl-row">
-                <div><label class="mono">내 예측: <output class="g-out">8</output>권</label>
+                <div><label class="mono">내 예측 <output class="g-out">8</output>권</label>
                 <input class="sg" type="range" min="2" max="60" step="1" value="8" aria-label="예측한 책의 수"></div>
-                <div><label class="mono">쌓은 책: <output class="n-out">4</output>권</label>
+                <div><label class="mono">쌓은 책 <output class="n-out">4</output>권</label>
                 <input class="sn" type="range" min="1" max="60" step="1" value="4" aria-label="쌓은 책의 수"></div>
               </div>
               <dl class="nums">
@@ -178,43 +240,43 @@
                 <div><dt>\(H_n = \sum_{k=1}^{n}\frac{1}{k}\)</dt><dd class="n-h">—</dd></div>
                 <div><dt>돌출 2를 넘는 최소 권수</dt><dd class="n-m">?</dd></div>
               </dl>
-              <p class="fig-note">책의 길이를 1로 둡니다. 돌출은 탁자 모서리에서 맨 위 책의 바깥 끝까지의 거리입니다. 책을 60권까지 쌓으면 최소 권수가 나타납니다.</p>
+              <p class="fig-note">책의 길이를 1로 둔다. 돌출은 탁자 모서리에서 맨 위 책의 바깥 끝까지의 거리이다. 책을 60권까지 쌓으면 최소 권수가 나타난다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>같은 책을 탁자 모서리에 한 권씩 어긋나게 쌓습니다. 무너지지 않게 쌓으면 맨 위 책을 얼마나 멀리 내밀 수 있을까요? 탁자 밖으로 완전히 벗어나게 할 수도 있을까요?</li>
-            <li><span class="tag">복원</span>물체들이 넘어지지 않으려면 위에 있는 것들 전체의 무게중심이 아래에서 받치는 면 위에 있어야 합니다. 조화급수 \(\sum\frac{1}{k}\)은 발산합니다.</li>
-            <li><span class="tag">설명</span>위에서부터 셉니다. 맨 위 책은 둘째 책 위에서 \(\frac{1}{2}\)만큼 내밀 수 있습니다. 위의 두 권의 무게중심은 셋째 책 위에서 \(\frac{1}{4}\)만큼, 위의 \(k\)권의 무게중심은 그 아래 책 위에서 \(\frac{1}{2k}\)만큼 내밀 수 있습니다. 그래서 \(n\)권의 돌출은 \[\frac{1}{2}\left(1 + \frac{1}{2} + \cdots + \frac{1}{n}\right) = \frac{H_n}{2}\]입니다. 조화급수가 발산하므로 책만 충분하면 돌출은 <b>얼마든지</b> 커집니다. 하지만 \(H_n\)은 \(\ln n\)처럼 아주 느리게 커집니다.</li>
-            <li><span class="tag">연결</span>돌출 1(맨 위 책이 탁자 밖으로 완전히 벗어남)에는 \(H_n &gt; 2\), 곧 4권이면 됩니다. 돌출 2에는 \(H_n &gt; 4\)로 31권, 돌출 3에는 227권이 필요합니다. 적분판정법에서 본 \(H_n \approx \ln n + 0.577\)로 어림할 수 있습니다.</li>
-            <li><span class="tag">적용</span>예측을 정한 뒤 책을 한 권씩 쌓아 보세요. 돌출 2를 넘는 최소 권수는 예측과 얼마나 다른가요? 돌출 10을 원하면 책이 대략 몇 권 필요할지 \(\ln\)으로 어림해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이 계산은 한 층에 한 권씩만 쌓는다는 조건에서 가장 멀리 내미는 방법입니다. 한 층에 여러 권을 놓아 균형을 맞추면 훨씬 적은 책으로 더 멀리 내밀 수 있다는 연구(패터슨과 츠윅, 2006)도 있습니다. 또 실제 책은 조금만 흔들려도 무너지므로, 한계에 딱 맞춰 쌓는 것은 이상화한 모형입니다.</li>
+            <li><span class="tag">질문</span>같은 책을 탁자 모서리에 한 권씩 어긋나게 쌓는다. 무너지지 않게 쌓으면 맨 위 책을 얼마나 멀리 내밀 수 있을까? 탁자 밖으로 완전히 벗어나게 할 수도 있을까?</li>
+            <li><span class="tag">복원</span>물체들이 넘어지지 않으려면 위에 있는 것들 전체의 무게중심이 아래에서 받치는 면 위에 있어야 한다. 조화급수 \(\sum\frac{1}{k}\)은 발산한다.</li>
+            <li><span class="tag">설명</span>위에서부터 센다. 맨 위 책은 둘째 책 위에서 \(\frac{1}{2}\)만큼 내밀 수 있다. 위의 두 권의 무게중심은 셋째 책 위에서 \(\frac{1}{4}\)만큼, 위의 \(k\)권의 무게중심은 그 아래 책 위에서 \(\frac{1}{2k}\)만큼 내밀 수 있다. 그래서 \(n\)권의 돌출은 \[\frac{1}{2}\left(1 + \frac{1}{2} + \cdots + \frac{1}{n}\right) = \frac{H_n}{2}\]이다. 조화급수가 발산하므로 책만 충분하면 돌출은 얼마든지 커진다. 하지만 \(H_n\)은 \(\ln n\)처럼 아주 느리게 커진다.</li>
+            <li><span class="tag">연결</span>돌출 1(맨 위 책이 탁자 밖으로 완전히 벗어남)에는 \(H_n &gt; 2\), 곧 4권이면 된다. 돌출 2에는 \(H_n &gt; 4\)로 31권, 돌출 3에는 227권이 필요하다. 적분판정법에서 본 \(H_n \approx \ln n + 0.577\)로 어림할 수 있다.</li>
+            <li><span class="tag">적용</span>예측을 정한 뒤 책을 한 권씩 쌓아 보자. 돌출 2를 넘는 최소 권수는 예측과 얼마나 다른가? 돌출 10을 원하면 책이 대략 몇 권 필요할지 \(\ln\)으로 어림해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이 계산은 한 층에 한 권씩만 쌓는다는 조건에서 가장 멀리 내미는 방법이다. 한 층에 여러 권을 놓아 균형을 맞추면 훨씬 적은 책으로 더 멀리 내밀 수 있다는 연구(패터슨과 츠윅, 2006)도 있다. 또 실제 책은 조금만 흔들려도 무너지므로, 한계에 딱 맞춰 쌓는 것은 이상화한 모형이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">길이가 20 cm인 책 4권을 이 방법으로 쌓으면 맨 위 책의 돌출은 약 몇 cm인가요?</p>
+          <p class="q">길이가 20 cm인 책 4권을 이 방법으로 쌓으면 맨 위 책의 돌출은 약 몇 cm인가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 20.8 cm<span class="why"><b>맞습니다.</b> \(\frac{H_4}{2} = \frac{1}{2}\cdot\frac{25}{12} \approx 1.042\)이고, 책 길이 20 cm를 곱하면 약 20.8 cm입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 41.7 cm<span class="why"><b>\(\frac{1}{2}\)을 빠뜨렸습니다.</b> 각 책은 \(\frac{1}{k}\)이 아니라 \(\frac{1}{2k}\)만큼 내밉니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>40 cm<span class="why"><b>책마다 \(\frac{1}{2}\)씩 내밀 수 있다고 보았습니다.</b> 위에 쌓인 책이 많을수록 조금씩만 내밀 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10 cm<span class="why"><b>맨 위 한 권만 생각했습니다.</b> 아래 책들도 조금씩 내밀어 돌출이 더해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 20.8 cm<span class="why"><b>맞다.</b> \(\frac{H_4}{2} = \frac{1}{2}\cdot\frac{25}{12} \approx 1.042\)이고, 책 길이 20 cm를 곱하면 약 20.8 cm이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 41.7 cm<span class="why"><b>\(\frac{1}{2}\)을 빠뜨렸다.</b> 각 책은 \(\frac{1}{k}\)이 아니라 \(\frac{1}{2k}\)만큼 내민다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>40 cm<span class="why"><b>책마다 \(\frac{1}{2}\)씩 내밀 수 있다고 보았다.</b> 위에 쌓인 책이 많을수록 조금씩만 내밀 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10 cm<span class="why"><b>맨 위 한 권만 생각했다.</b> 아래 책들도 조금씩 내밀어 돌출이 더해진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-spot"><small class="mono">고급 미적분 1.5</small>넓이가 음수로 나온 이 풀이, 어디가 틀렸을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a><a href="../../c/adcalc/1-5.html#card-adcalc-improper-p"><small class="mono">고급 미적분 1.5</small>끝없이 뻗은 꼬리 아래의 넓이는 유한할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-3.html#card-adcalc-alt-zigzag"><small class="mono">고급 미적분 3.3</small>더했다 뺐다를 되풀이하면 어디로 모일까?</a><a href="../../c/adcalc/3-3.html#card-adcalc-rearrange"><small class="mono">고급 미적분 3.3</small>더하는 순서만 바꿨는데 합이 달라질 수 있을까?</a><a href="../../c/adcalc/3-3.html#text-adcalc-alternating"><small class="mono">고급 미적분 3.3</small>교대급수와 절대수렴·조건수렴</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

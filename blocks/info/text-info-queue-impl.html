@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/info/body.js"],
+  "sec": "2-1",
+  "short": "본문 · 스택과 큐의 구현"
+}
+-->
+<article class="card reading" id="text-info-queue-impl" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>스택과 큐의 구현</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">매표소 대기 줄을 프로그램으로 흉내 내려고 리스트를 썼다. 새 손님은 append로 맨 뒤에 붙이고, 차례가 된 손님은 pop(0)으로 맨 앞에서 뺀다. 손님 1000명일 때는 잘 돌아갔는데, 10만 명을 넣자 프로그램이 거의 1분을 멈춰 있었다. 맨 뒤에서 빼는 pop()으로 바꾸면 순식간에 끝나지만, 그건 줄이 아니라 쌓아 둔 접시처럼 동작한다. 같은 리스트인데 앞에서 빼는 것과 뒤에서 빼는 것이 왜 이렇게 다를까?</p>
+    <figure class="q-fig" data-q="info-queue">
+      <svg viewBox="0 0 520 140" role="img" aria-label="원소 수에 따른 두 큐 구현의 원소 이동 횟수"></svg>
+      <div class="q-ctl"><label>원소의 수 <input type="range" data-k="ln" min="1" max="7" step="0.1" value="5"><output data-k="ln"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 원소 n개를 넣은 뒤 앞에서부터 모두 꺼낼 때, 리스트의 pop(0)과 앞 위치만 옮기는 원형 큐가 하는 일의 양(막대는 로그 길이).</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>리스트와 인덱스(정보), 함수와 호출 스택(<a href="1-1.html">함수와 매개변수</a>), 반복과 재귀(<a href="1-3.html">반복과 재귀 비교</a>).</div>
+
+    <h3><span class="no">2.1.1</span>스택과 큐</h3>
+    <p>스택은 마지막에 넣은 것을 먼저 꺼내는 구조이고(후입 선출), 큐는 먼저 넣은 것을 먼저 꺼내는 구조이다(선입 선출). 스택은 쌓아 둔 접시, 함수의 호출 스택, 실행 취소 기록에 쓰이고, 큐는 대기 줄, 인쇄 대기열, 너비 우선 탐색에 쓰인다. 두 구조는 넣고 꺼내는 순서만 정한 추상 자료형이라, 같은 규칙을 여러 방법으로 구현할 수 있다. 그런데 구현 방법에 따라 같은 연산의 속도가 크게 다를 수 있다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.1.1 <span class="nm">리스트 끝과 앞의 연산</span></span>
+      <p>파이썬 리스트는 원소를 메모리에 빈틈없이 이어 저장한다. 맨 뒤에 붙이거나 맨 뒤에서 빼는 일은 다른 원소를 건드리지 않아 원소 수와 상관없이 빠르다. 그런데 맨 앞에서 빼면 나머지 원소를 모두 한 칸씩 앞으로 당겨야 해서, 원소가 \(m\)개이면 \(m\)번 옮긴다. 그래서 \(n\)개를 앞에서 모두 꺼내면 모두 \(\dfrac{n(n-1)}{2}\)번 옮긴다.</p>
+    </div>
+    <p>그림 1에서 원소 수를 바꾸어 보자. 1000명이면 pop(0)이 약 50만 번 옮겨도 금방 끝난다. 10만 명이면 약 50억 번으로, 1초에 1억 번 옮긴다 해도 50초가 걸린다. 앞 위치를 가리키는 변수 하나만 옮기는 원형 큐나 파이썬의 deque를 쓰면 10만 번이면 되어 1000분의 1초 남짓이다. 그래서 스택은 리스트의 끝을 쓰면 충분하지만, 큐는 앞에서 빼는 일이 많으므로 다른 구현을 써야 한다.<sup class="fn"><a href="#fn-info-queue-impl-1">1</a></sup></p>
+
+    <h3><span class="no">2.1.2</span>원형 큐</h3>
+    <p>원형 큐는 크기가 정해진 리스트의 양 끝을 이어 둥글게 쓴다고 생각하는 구현이다. 맨 앞 원소의 위치(front)와 다음에 넣을 위치(rear)를 변수로 기억해 두고, 넣을 때는 rear 자리에 놓고 rear를 한 칸 옮기며, 뺄 때는 front 자리의 값을 꺼내고 front를 한 칸 옮긴다. 끝에 이르면 나머지 연산으로 다시 0번 자리로 돌아간다. 원소는 한 번도 옮겨지지 않으므로 넣기와 빼기가 모두 원소 수와 상관없이 빠르다. 다만 리스트의 크기를 미리 정해야 하고, 꽉 차면 더 큰 리스트로 옮겨야 한다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="구현에 따른 연산의 비용">
+        <g class="s">
+          <text x="20" y="22">구현</text><text x="200" y="22">넣기</text><text x="320" y="22">빼기</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">스택 (리스트 끝)</text><text x="200" y="52">append, 빠름</text><text x="320" y="52">pop(), 빠름</text>
+          <text x="20" y="74">큐 (리스트 앞에서 빼기)</text><text x="200" y="74">append, 빠름</text><text x="320" y="74">pop(0), 원소 수만큼 느림</text>
+          <text x="20" y="96">원형 큐, deque</text><text x="200" y="96">빠름</text><text x="320" y="96">빠름</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 같은 규칙의 자료 구조도 구현에 따라 연산의 비용이 다르다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+      <p>크기 5인 원형 큐에 front = 0, rear = 0에서 시작해 A, B, C를 넣고, 하나를 빼고, D, E, F를 넣었다. 각 단계의 front와 rear 값과, 마지막에 큐에 남은 원소를 앞에서부터 쓰여라. 위치는 (위치 + 1) % 5로 옮긴다.</p>
+    </div>
+    <p>A, B, C를 넣으면 0, 1, 2번 자리에 놓이고 rear는 3이 된다. 하나를 빼면 0번 자리의 A가 나오고 front는 1이 된다. D를 넣으면 3번 자리에 놓이고 rear는 4, E를 넣으면 4번 자리에 놓이고 rear는 (4 + 1) % 5 = 0이 된다.</p>
+    <p>F를 넣으면 0번 자리, 곧 A가 빠져 비어 있던 자리에 놓이고 rear는 1이 된다. 이제 front와 rear가 모두 1이므로 큐가 꽉 찼다. 남은 원소는 front부터 B, C, D, E, F이다. 원소는 한 번도 자리를 옮기지 않았고, front와 rear 두 변수만 움직였다. 그래서 원형 큐는 원소가 아무리 많아도 넣고 빼는 데 같은 시간이 든다.</p>
+    <p>아래 탐구 카드에서 리스트로 스택과 큐를 직접 만들고, 구현에 따라 실행 시간이 어떻게 달라지는지 재어 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-info-queue-impl-1">원형 큐에서는 꽉 찬 상태와 빈 상태가 모두 front = rear가 되어 구별되지 않는다. 그래서 한 칸을 일부러 비워 두거나, 원소 수를 따로 세는 변수를 둔다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>스택은 나중에 넣은 것을, 큐는 먼저 넣은 것을 먼저 꺼내는 추상 자료형이며, 같은 규칙도 구현에 따라 속도가 크게 다르다. 리스트는 끝에서 넣고 빼기는 빠르지만 앞에서 빼면 나머지를 모두 당겨야 해서, 큐를 리스트의 pop(0)으로 만들면 일이 원소 수의 제곱으로 늘어난다. 그래서 처음 질문의 큐는 손님이 많아지면 앞에서 뺄 때마다 수만 명을 한 칸씩 당기느라 느려지고, 원형 큐로 바꾸면 해결된다.</p></div>
+  </div>
+</article>

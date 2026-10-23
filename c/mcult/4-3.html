@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>사막화와 수학 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이웃 칸의 수로 자라고 죽는 확률을 정한 식생 세포 자동자(모식 모형)와 강수 지수에 따른 급격한 변화, 근적외선과 빨간빛 반사율로 구하는 정규식생지수 NDVI, 기준값에 따라 달라지는 식생 면적 비율(가상 위성 자료). 사막화 모형 카드와, NDVI 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-mcult-desert-automata canvas { aspect-ratio: 16 / 8; max-width: 620px; margin: .3rem auto 0; }
@@ -45,93 +50,149 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mcult-desert-automata"><span class="mono">4.3.1</span>비가 조금 줄었을 뿐인데 초원이 사라진다 — 세포 자동자 모형</a></li>
-        <li><a href="#card-mcult-ndvi"><span class="mono">4.3.2</span>위성은 식물을 어떻게 알아볼까 — 정규식생지수 NDVI</a></li>
+        <li><a href="#text-mcult-desert"><span class="mono">본문</span>사막화와 수학</a></li>
+        <li><a href="#card-mcult-desert-automata"><span class="mono">탐구 1</span>비가 조금 줄었을 뿐인데 초원이 사라진다 — 세포 자동자 모형</a></li>
+        <li><a href="#card-mcult-ndvi"><span class="mono">탐구 2</span>위성은 식물을 어떻게 알아볼까 — 정규식생지수 NDVI</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mcult-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mcult&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mcult-4-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mcult-desert" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>사막화와 수학</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">사막 가장자리의 초원은 해마다 비의 양이 조금씩 달라도 풀이 덮인 넓이가 꽤 일정하게 유지된다. 그런데 기록을 보면 어떤 때는 비가 몇 해 동안 조금 줄었을 뿐인데 풀밭이 빠르게 사라져 다시 돌아오지 않았다. 작은 원인이 왜 이렇게 큰 결과를 낼까? 그리고 넓은 땅의 풀이 얼마나 살아 있는지를 하늘에서 어떻게 숫자로 잴까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 230" role="img" aria-label="씨앗이 뿌리내릴 확률에 따른 풀이 덮인 비율">
+              <line x1="60" y1="190" x2="490" y2="190" class="ax"/><line x1="60" y1="15" x2="60" y2="190" class="ax"/>
+              <line x1="60" y1="105" x2="490" y2="105" class="gd"/><line x1="60" y1="20" x2="490" y2="20" class="gd"/>
+              <text x="54" y="194" class="s" text-anchor="end">0</text><text x="54" y="109" class="s" text-anchor="end">0.5</text><text x="54" y="24" class="s" text-anchor="end">1</text>
+              <text x="60" y="206" class="s" text-anchor="middle">0</text><text x="200" y="206" class="s" text-anchor="middle">0.2</text><text x="340" y="206" class="s" text-anchor="middle">0.4</text><text x="480" y="206" class="s" text-anchor="middle">0.6</text>
+              <path d="M60.0 190.0 L228.0 190.0 L242.0 172.9 L256.0 144.4 L270.0 121.7 L284.0 103.5 L298.0 88.8 L312.0 76.8 L326.0 67.0 L340.0 58.9 L354.0 52.1 L368.0 46.6 L382.0 41.9 L396.0 38.1 L410.0 34.9 L424.0 32.2 L438.0 29.9 L452.0 28.1 L466.0 26.5 L480.0 25.2" class="b"/>
+              <line x1="235" y1="20" x2="235" y2="190" class="gd dsh"/><text x="140" y="60" class="s td">0.25 아래에서 사라짐</text>
+              <text x="66" y="12" class="s">오래 지난 뒤 풀이 덮인 비율</text><text x="490" y="222" class="s" text-anchor="end">씨앗이 뿌리내릴 확률 q (비의 양을 나타냄)</text>
+            </svg>
+            <figcaption>그림 1. 씨앗이 뿌리내릴 확률이 0.25를 넘으면 풀밭이 유지되지만, 그 근처에서는 확률이 조금만 줄어도 풀이 덮인 비율이 급격히 떨어진다(모형).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>독립시행의 확률, 여사건의 확률, 비율과 백분율.</div>
+
+          <h3><span class="no">4.3.1</span>이웃에 기대는 풀밭의 모형</h3>
+          <p>땅을 바둑판처럼 작은 칸으로 나누고, 칸마다 풀이 있거나 없다고 하자. 그런데 메마른 땅에서 풀은 오래 살지 못하므로 해마다 새로 뿌리내려야 하고, 씨앗은 주로 이웃한 칸의 풀에서 날아온다. 이웃한 네 칸이 저마다 풀이 있을 확률을 \(v\), 풀이 있는 이웃의 씨앗이 뿌리내릴 확률을 \(q\)라 하자. \(q\)는 비가 많을수록 크다. 그러면 한 칸이 다음 해에 풀로 덮이려면 네 이웃 가운데 적어도 하나에서 씨앗이 뿌리내리면 된다. 여사건을 쓰면 네 이웃 모두 실패할 확률을 1에서 빼서 구한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.3.1 <span class="nm">풀밭 모형</span></span>
+            <p>올해 풀이 덮인 비율이 \(v_n\)이면 다음 해의 비율은 \[v_{n+1} = 1 - (1 - q\,v_n)^4\]이다. \(v_n\)이 작을 때 \(v_{n+1} \approx 4q\,v_n\)이므로, \(4q &lt; 1\)이면 풀이 해마다 줄어 사라지고 \(4q > 1\)이면 풀밭이 일정한 비율로 유지된다.</p>
+          </div>
+          <p>풀이 듬성듬성하면 이웃에 풀이 적어 씨앗이 덜 날아오고, 그래서 다음 해에 더 듬성해지는 되먹임이 생긴다. 그림 1에서 \(q\)가 0.5에서 0.3으로 줄 때 풀이 덮인 비율은 91%에서 40%로 줄지만, 0.3에서 0.25로 조금 더 줄면 0에 가까워진다. 경계 \(q = 0.25\) 근처에서는 비의 작은 변화가 풀밭의 존망을 가른다. 실제 사막화에는 가축의 방목, 토양의 침식, 지역의 강수 변화가 함께 얽혀 있지만, 이웃에 기대는 되먹임이 작은 변화를 키운다는 생각은 같다.<sup class="fn"><a href="#fn-mcult-desert-1">1</a></sup></p>
+
+          <h3><span class="no">4.3.2</span>빛의 비율로 식생 재기</h3>
+          <p>살아 있는 잎은 광합성에 쓰는 붉은빛을 많이 흡수하고, 근적외선은 잎 속 구조에서 많이 반사한다. 반면 맨땅은 두 빛을 비슷하게 반사한다. 위성은 땅에서 반사된 붉은빛과 근적외선의 세기를 재고, 둘의 차를 합으로 나눈 정규 식생 지수(NDVI)를 계산한다. 이 값은 −1과 1 사이에 있고, 무성한 숲은 0.6 넘게, 맨땅은 0.1 안팎, 물은 0보다 작게 나온다. 차를 합으로 나누었으므로 햇빛이 약한 날이나 그늘에서도 값이 크게 흔들리지 않는다. 그래서 같은 지역의 지수를 해마다 비교하면 사막화가 어디서 얼마나 진행되는지 지도로 그릴 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="땅의 종류별 반사율과 정규 식생 지수">
+              <g class="s">
+                <text x="20" y="22">땅</text><text x="140" y="22">근적외선 반사</text><text x="270" y="22">붉은빛 반사</text><text x="400" y="22">NDVI</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">무성한 풀밭</text><text x="140" y="52">0.50</text><text x="270" y="52">0.08</text><text x="400" y="52">0.72</text>
+                <text x="20" y="74">메마른 풀밭</text><text x="140" y="74">0.35</text><text x="270" y="74">0.18</text><text x="400" y="74">0.32</text>
+                <text x="20" y="96">맨땅</text><text x="140" y="96">0.30</text><text x="270" y="96">0.25</text><text x="400" y="96">0.09</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 살아 있는 잎은 붉은빛을 흡수하고 근적외선을 반사하여, 식생이 무성할수록 NDVI가 크다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.3.2</span>
+            <p>풀이 덮인 비율이 0.5인 풀밭에서 \(q = 0.4\)이면 다음 해와 그다음 해의 비율은 얼마인가? 가뭄으로 \(q\)가 0.2로 줄면 어떻게 되는가? 또 그림 2의 무성한 풀밭의 NDVI를 계산하여 확인하여라.</p>
+          </div>
+          <p>\(q = 0.4\)이면 \(v_1 = 1 - (1 - 0.4 \times 0.5)^4 = 1 - 0.8^4 = 1 - 0.410 = 0.590\)이고, \(v_2 = 1 - (1 - 0.4 \times 0.590)^4 = 1 - 0.764^4 \approx 0.659\)이다. 이렇게 비율은 점점 늘어 약 0.77에서 멈춘다. \(q = 0.2\)이면 \(4q = 0.8 &lt; 1\)이므로 \(v_1 = 1 - 0.9^4 \approx 0.344\), \(v_2 \approx 0.248\), \(v_3 \approx 0.184\)로 해마다 약 4분의 1씩 줄어 풀밭이 사라진다. 뿌리내릴 확률이 절반으로 줄었을 뿐인데, 한쪽은 풀밭이 넓어지고 다른 쪽은 사라진다.</p>
+          <p>무성한 풀밭의 NDVI는 \(\dfrac{0.50 - 0.08}{0.50 + 0.08} = \dfrac{0.42}{0.58} \approx 0.72\)이고, 맨땅은 \(\dfrac{0.05}{0.55} \approx 0.09\)이다. 위성 지도에서 어느 지역의 NDVI가 해마다 0.3 근처로 내려온다면, 풀밭이 모형의 경계 근처로 다가가고 있다는 경고로 읽을 수 있다.</p>
+          <p>아래 탐구 카드에서 확률 모형으로 풀밭의 변화를 따라가 보고, 위성 자료의 반사율로 식생 지수를 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mcult-desert-1">아프리카 사헬 지역은 1970년대와 1980년대에 긴 가뭄을 겪으며 식생이 크게 줄었고, 그 뒤 비가 어느 정도 돌아온 뒤에도 일부 지역은 이전 상태로 회복되지 않았다. 이 경험이 생태계의 되먹임과 급격한 변화에 대한 연구를 이끌었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>풀이 이웃의 씨앗에 기대어 해마다 다시 뿌리내리는 모형 \(v_{n+1} = 1 - (1 - qv_n)^4\)에서는 \(4q\)가 1보다 작아지는 순간 풀밭이 사라져, 경계 근처의 작은 변화가 큰 결과를 낸다. 위성은 근적외선과 붉은빛 반사의 차를 합으로 나눈 NDVI로 넓은 땅의 식생을 수치화한다. 처음 질문의 초원은 비가 줄어 씨앗이 뿌리내릴 확률이 이 경계 아래로 내려가면서 한꺼번에 사라진 것으로 볼 수 있다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-mcult-desert-automata">
         <header class="card-head">
-          <span class="no">4.3.1</span><h2>비가 조금씩 줄어들면 초원도 조금씩 줄어들까?</h2><span class="kind">규칙과 모형 · 시뮬레이션</span>
+          <span class="no">탐구 1</span><h2>비가 조금씩 줄어들면 초원도 조금씩 줄어들까?</h2><span class="kind">규칙과 모형 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">칸마다 식물(초록)이 있거나 맨땅(갈색)입니다. 아래 규칙으로 한 해씩 바뀌는 <b>모식 모형</b>입니다.</p>
+            <p class="small">칸마다 식물(초록)이 있거나 맨땅(갈색)이다. 아래 규칙으로 한 해씩 바뀌는 모식 모형이다.</p>
             <div class="ctl-row"><div><label class="mono">강수 지수 \(R\) = <output class="r-out"></output></label><input class="r" type="range" min="0.1" max="1" step="0.01" value="0.6" aria-label="강수 지수"></div></div>
             <div class="presets"><button class="chip play" type="button" aria-pressed="true">멈춤</button><button class="chip seed" type="button">다시 심기(60%)</button></div>
             <canvas aria-label="왼쪽은 식물과 맨땅 격자, 오른쪽은 해마다 식물 덮개 비율 그래프"></canvas>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사막 주변의 초원은 가뭄이 이어지면 사막으로 바뀌기도 합니다. 비가 조금 줄면 초원도 조금만 줄어들까요, 아니면 어느 순간 한꺼번에 사라질까요?</li>
-            <li><span class="tag">복원</span>확률, 이웃한 칸의 개수 세기.</li>
-            <li><span class="tag">설명</span>이 모형의 규칙은 두 가지입니다. 맨땅은 이웃 8칸 중 식물이 \(n\)칸이면 확률 \(0.5R \cdot \frac{n}{8}\)로 식물이 자라고, 식물은 확률 \(0.1\left(1 - 0.7 \cdot \frac{n}{8}\right)\)로 죽습니다. 식물이 많을수록 그늘과 수분이 지켜져 서로 돕는다는 뜻입니다. 이렇게 단순한 규칙의 칸들을 <em>세포 자동자</em>라 합니다. 이 모형에서는 \(R\)을 줄여도 한동안은 덮개가 천천히 줄다가, 어느 값 아래에서 <em>급격히 0</em>이 됩니다.</li>
-            <li><span class="tag">연결</span>생태학에서는 이렇게 어떤 문턱을 넘으면 상태가 크게 바뀌는 현상을 '임계 전이'라 부르며, 건조 지역의 식생 패턴을 이런 모형으로 연구합니다.</li>
-            <li><span class="tag">적용</span>\(R\)을 조금씩 낮추며 덮개가 사라지는 값을 찾아보세요. 모두 사라진 뒤 \(R\)을 다시 높이면 초원이 돌아오나요? 왜 그럴까요?</li>
-            <li class="warn"><span class="tag">판단</span>모형은 현실을 크게 단순화한 것입니다. 이 모형의 수치로 실제 지역의 사막화 시점을 예측할 수는 없으며, 모형이 보여 주는 것은 "작은 변화가 큰 변화를 부를 수 있다"는 가능성입니다.</li>
+            <li><span class="tag">질문</span>사막 주변의 초원은 가뭄이 이어지면 사막으로 바뀌기도 한다. 비가 조금 줄면 초원도 조금만 줄어들까요, 아니면 어느 순간 한꺼번에 사라질까?</li>
+            <li><span class="tag">복원</span>확률과 이웃한 칸의 개수 세기를 떠올리자.</li>
+            <li><span class="tag">설명</span>이 모형의 규칙은 두 가지이다. 맨땅은 이웃 8칸 중 식물이 \(n\)칸이면 확률 \(0.5R \cdot \frac{n}{8}\)로 식물이 자라고, 식물은 확률 \(0.1\left(1 - 0.7 \cdot \frac{n}{8}\right)\)로 죽는다. 식물이 많을수록 그늘과 수분이 지켜져 서로 돕는다는 뜻이다. 이렇게 단순한 규칙의 칸들을 <em>세포 자동자</em>라 한다. 이 모형에서는 \(R\)을 줄여도 한동안은 덮개가 천천히 줄다가, 어느 값 아래에서 <em>급격히 0</em>이 된다.</li>
+            <li><span class="tag">연결</span>생태학에서는 이렇게 어떤 문턱을 넘으면 상태가 크게 바뀌는 현상을 '임계 전이'라 부르며, 건조 지역의 식생 패턴을 이런 모형으로 연구한다.</li>
+            <li><span class="tag">적용</span>\(R\)을 조금씩 낮추며 덮개가 사라지는 값을 찾아보자. 모두 사라진 뒤 \(R\)을 다시 높이면 초원이 돌아오는가? 왜 그럴까?</li>
+            <li class="warn"><span class="tag">판단</span>모형은 현실을 크게 단순화한 것이다. 이 모형의 수치로 실제 지역의 사막화 시점을 예측할 수는 없으며, 모형이 보여 주는 것은 "작은 변화가 큰 변화를 부를 수 있다"는 가능성이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">이 모형에서 식물이 하나도 남지 않으면, 비를 크게 늘려도 초원이 돌아오지 않습니다. 까닭은?</p>
+          <p class="q">이 모형에서 식물이 하나도 남지 않으면, 비를 크게 늘려도 초원이 돌아오지 않는다. 까닭은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>식물이 자랄 확률이 이웃 식물 수에 비례해 0이 되기 때문<span class="why"><b>맞습니다.</b> \(n = 0\)이면 자랄 확률 \(0.5R \cdot 0 = 0\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>강수 지수가 1을 넘을 수 없기 때문<span class="why"><b>\(R = 1\)이어도 이웃이 없으면 자라지 않습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>식물이 죽을 확률이 1이 되기 때문<span class="why"><b>죽을 확률은 최대 0.1입니다.</b> 문제는 새로 자라지 못하는 것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>격자의 크기가 작기 때문<span class="why"><b>격자가 커도 같은 규칙이면 결과가 같습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>식물이 자랄 확률이 이웃 식물 수에 비례해 0이 되기 때문<span class="why"><b>맞다.</b> \(n = 0\)이면 자랄 확률 \(0.5R \cdot 0 = 0\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>강수 지수가 1을 넘을 수 없기 때문<span class="why"><b>\(R = 1\)이어도 이웃이 없으면 자라지 않는다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>식물이 죽을 확률이 1이 되기 때문<span class="why"><b>죽을 확률은 최대 0.1이다.</b> 문제는 새로 자라지 못하는 것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>격자의 크기가 작기 때문<span class="why"><b>격자가 커도 같은 규칙이면 결과가 같다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-mcult-ndvi">
         <header class="card-head">
-          <span class="no">4.3.2</span><h2>인공위성 사진으로 사막이 넓어졌는지 어떻게 잴까?</h2><span class="kind">비율로 만든 지표 · 조작</span>
+          <span class="no">탐구 2</span><h2>인공위성 사진으로 사막이 넓어졌는지 어떻게 잴까?</h2><span class="kind">비율로 만든 지표 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">같은 지역을 20년 간격으로 찍은 <b>가상</b> 위성 자료입니다. 칸을 누르면 그 칸의 값을 계산해 보여 줍니다.</p>
+            <p class="small">같은 지역을 20년 간격으로 찍은 가상 위성 자료이다. 칸을 누르면 그 칸의 값을 계산해 보여 준다.</p>
             <div class="ctl-row"><div><label class="mono">식생으로 볼 NDVI 기준 = <output class="k-out"></output></label><input class="k" type="range" min="0.1" max="0.6" step="0.05" value="0.3" aria-label="식생 판정 기준"></div></div>
             <canvas aria-label="두 해의 NDVI 지도. 초록일수록 식생이 많음"></canvas>
             <p class="mono small pick" role="status">칸을 눌러 보세요.</p>
             <p class="mono small say"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>넓은 지역의 사막화를 직접 걸어 다니며 조사하기는 어렵습니다. 인공위성은 어떤 수치로 땅 위의 식물을 알아볼까요?</li>
-            <li><span class="tag">복원</span>비율과 분수식의 값의 범위.</li>
-            <li><span class="tag">설명</span>건강한 잎은 빨간빛(Red)을 광합성에 많이 흡수하고 근적외선(NIR)은 많이 반사합니다. 그래서 <em>정규식생지수</em> \(\mathrm{NDVI} = \frac{\mathrm{NIR} - \mathrm{Red}}{\mathrm{NIR} + \mathrm{Red}}\)는 식물이 많은 곳에서 크고(0.6 이상), 맨땅에서는 0에 가깝고, 물에서는 음수입니다. 차를 합으로 나누어 −1과 1 사이로 맞추었기 때문에 햇빛의 밝기가 달라도 비교하기 좋습니다. 칸마다 NDVI를 구해 기준 이상인 칸의 비율을 세면 식생 면적의 변화를 잴 수 있습니다.</li>
-            <li><span class="tag">연결</span>농작물 작황 예측, 산불 피해 조사, 도시 녹지 측정에도 NDVI가 널리 쓰입니다.</li>
-            <li><span class="tag">적용</span>기준을 바꾸면 두 해의 식생 비율과 그 변화량은 어떻게 달라지나요? 기준에 따라 "사막화가 심하다"는 결론이 바뀔 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>NDVI는 계절, 구름, 촬영 각도의 영향을 받습니다. 두 시점을 비교할 때는 같은 계절, 같은 조건의 자료를 써야 합니다.</li>
+            <li><span class="tag">질문</span>넓은 지역의 사막화를 직접 걸어 다니며 조사하기는 어렵다. 인공위성은 어떤 수치로 땅 위의 식물을 알아볼까?</li>
+            <li><span class="tag">복원</span>비율과 분수식의 값의 범위를 떠올리자.</li>
+            <li><span class="tag">설명</span>건강한 잎은 빨간빛(Red)을 광합성에 많이 흡수하고 근적외선(NIR)은 많이 반사한다. 그래서 <em>정규식생지수</em> \(\mathrm{NDVI} = \frac{\mathrm{NIR} - \mathrm{Red}}{\mathrm{NIR} + \mathrm{Red}}\)는 식물이 많은 곳에서 크고(0.6 이상), 맨땅에서는 0에 가깝고, 물에서는 음수이다. 차를 합으로 나누어 −1과 1 사이로 맞추었기 때문에 햇빛의 밝기가 달라도 비교하기 좋다. 칸마다 NDVI를 구해 기준 이상인 칸의 비율을 세면 식생 면적의 변화를 잴 수 있다.</li>
+            <li><span class="tag">연결</span>농작물 작황 예측, 산불 피해 조사, 도시 녹지 측정에도 NDVI가 널리 쓰인다.</li>
+            <li><span class="tag">적용</span>기준을 바꾸면 두 해의 식생 비율과 그 변화량은 어떻게 달라지는가? 기준에 따라 "사막화가 심하다"는 결론이 바뀔 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>NDVI는 계절, 구름, 촬영 각도의 영향을 받는다. 두 시점을 비교할 때는 같은 계절, 같은 조건의 자료를 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">NIR 반사율 0.6, Red 반사율 0.2인 칸의 NDVI는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.5<span class="why"><b>맞습니다.</b> \(\frac{0.6 - 0.2}{0.6 + 0.2} = \frac{0.4}{0.8}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.4<span class="why"><b>차만 계산했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>NIR ÷ Red입니다.</b> 정규화하지 않은 비입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>−0.5<span class="why"><b>분자의 순서를 바꾸었습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0.5<span class="why"><b>맞다.</b> \(\frac{0.6 - 0.2}{0.6 + 0.2} = \frac{0.4}{0.8}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.4<span class="why"><b>차만 계산했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3<span class="why"><b>NIR ÷ Red이다.</b> 정규화하지 않은 비이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>−0.5<span class="why"><b>분자의 순서를 바꾸었다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
 
-      <a class="px-go" href="../../practice.html?sec=mcult-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=mcult&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

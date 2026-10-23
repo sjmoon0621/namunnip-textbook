@@ -16,13 +16,13 @@
   const ch = c && c.chapters.find((x) => x.n === +m[2]);
   const s = ch && ch.sections.find((x) => x.n === +m[3]);
   const head = document.getElementById("px-head");
-  if (!s) { head.innerHTML = `<h1>연습문제</h1><p class="lead">절을 찾을 수 없습니다. <a href="./">전체 목차</a>에서 절을 고른 뒤 절 끝의 <b>연습문제</b> 버튼을 눌러 주세요.</p>`; return; }
+  if (!s) { head.innerHTML = `<h1>기출문제</h1><p class="lead">절을 찾을 수 없습니다. <a href="./">전체 목차</a>에서 절을 고른 뒤 절 끝의 <b>기출문제 풀어보기</b> 버튼을 눌러 주세요.</p>`; return; }
 
   const secHref = `c/${c.id}/${ch.n}-${s.n}.html`;
-  document.title = `연습문제 · ${s.title} — 나뭇잎 교과서`;
-  document.querySelector(".crumbs").innerHTML = `<span aria-hidden="true">/</span><a href="c/${c.id}/">${esc(c.name)}</a><span aria-hidden="true">/</span><a href="${secHref}">${ch.n}.${s.n} ${esc(s.title)}</a><span aria-hidden="true">/</span><b>연습문제</b>`;
+  document.title = `기출문제 · ${s.title} — 나뭇잎 교과서`;
+  document.querySelector(".crumbs").innerHTML = `<span aria-hidden="true">/</span><a href="c/${c.id}/">${esc(c.name)}</a><span aria-hidden="true">/</span><a href="${secHref}">${ch.n}.${s.n} ${esc(s.title)}</a><span aria-hidden="true">/</span><b>기출문제</b>`;
   head.innerHTML = `<span class="mono dim">${esc(c.name)} · ${ch.n}.${s.n}${/\d/.test(s.code) ? ` · [${esc(s.code)}]` : ""}</span>
-    <h1>${esc(s.title)} <em>연습문제</em></h1>
+    <h1>${esc(s.title)} <em>기출문제</em></h1>
     <p class="lead">이 절에 해당하는 수능·모의평가·학력평가 기출 문항입니다. 처음 풀 때 틀린 문항은 <a href="notes.html#wrong">오답노트</a>에 모입니다.</p>
     <p class="mono small dim" id="px-stat"></p>`;
 

@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/alg/body.js"],
+  "sec": "3-3",
+  "short": "본문 · 등비수열"
+}
+-->
+<article class="card reading" id="text-alg-geometric" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>등비수열</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">바둑판 첫째 칸에 쌀 1톨, 둘째 칸에 2톨, 셋째 칸에 4톨처럼 칸마다 두 배씩 놓으면 64번째 칸까지 쌀은 모두 몇 톨일까? 등차수열처럼 거꾸로 더하는 방법은 여기서 통하지 않는다. 곱해 가는 수열의 합에는 어떤 요령이 있을까?</p>
+    <figure class="q-fig" data-q="alg-geo">
+      <svg viewBox="0 0 520 260" role="img" aria-label="공비 r에 따라 등비수열의 항이 커지거나 줄어드는 막대 그림"></svg>
+      <div class="q-ctl"><label>공비 \(r\) = <input type="range" data-k="r" min="-2" max="2" step="0.25" value="1.5"><output data-k="r"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 공비의 절댓값이 1보다 크면 항이 점점 커지고, 1보다 작으면 0에 가까워지며, 음수이면 부호가 번갈아 바뀐다(첫째항 1).</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>등차수열의 일반항과 합(<a href="3-2.html">등차수열</a>), 지수와 지수법칙, 지수함수의 그래프(<a href="1-7.html">지수함수와 로그함수의 그래프</a>).</div>
+
+    <h3><span class="no">3.3.1</span>같은 수씩 곱해 가는 수열</h3>
+    <p>1, 2, 4, 8, …처럼 첫째항부터 차례로 일정한 수를 곱해 얻는 수열을 <em>등비수열</em>이라 하고, 곱하는 일정한 수를 공비라 한다. 첫째항이 \(a\), 공비가 \(r\)이면 제\(n\)항까지는 \(r\)을 \(n - 1\)번 곱하므로 일반항은 \(a_n = ar^{n-1}\)이다.</p>
+    <p>일반항이 지수함수의 꼴이므로, \(r &gt; 1\)이면 항이 지수함수처럼 빠르게 커진다. 그림 1에서 공비를 바꾸어 보자. \(|r| &lt; 1\)이면 항이 0에 가까워지고, \(r &lt; 0\)이면 부호가 번갈아 바뀐다. 세 수 \(a\), \(b\), \(c\)가 이 순서로 등비수열이면 \(\dfrac{b}{a} = \dfrac{c}{b}\)이므로 \(b^2 = ac\)이고, 이때 \(b\)를 등비중항이라 한다.</p>
+
+    <h3><span class="no">3.3.2</span>공비를 곱해 빼기</h3>
+    <p>바둑판의 쌀을 \(S = 1 + 2 + 4 + \cdots + 2^{63}\)이라 하자. 양변에 공비 2를 곱하면 \(2S = 2 + 4 + \cdots + 2^{63} + 2^{64}\)이다. 두 식을 위아래로 놓고 빼면, 가운데 항들이 모두 지워지고 \(2S - S = 2^{64} - 1\)만 남는다. 따라서 \(S = 2^{64} - 1\)이다.</p>
+    <p>즉 등비수열의 합은 '공비를 곱한 식과 원래 식이 한 칸씩 어긋나 겹친다'는 성질로 구한다. 이 방법을 일반적인 경우에 쓰면 다음 공식이 나온다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">등비수열의 합</span></span>
+      <p>첫째항이 \(a\), 공비가 \(r\)인 등비수열의 첫째항부터 제\(n\)항까지의 합은 \[S_n = \frac{a(r^n - 1)}{r - 1} = \frac{a(1 - r^n)}{1 - r}\ (r \ne 1),\qquad S_n = na\ (r = 1)\]</p>
+    </div>
+    <p>공비가 1이면 모든 항이 같아 빼는 방법을 쓸 수 없으므로 따로 둔다. \(r &gt; 1\)이면 앞의 꼴을, \(r &lt; 1\)이면 뒤의 꼴을 쓰면 분자와 분모가 양수가 되어 계산이 편하다.<sup class="fn"><a href="#fn-alg-geometric-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="S와 rS를 한 칸 어긋나게 놓고 빼면 처음과 끝만 남는 그림">
+        <g class="s">
+          <text x="20" y="40">S</text><text x="60" y="40">= a</text><text x="120" y="40">+ ar</text><text x="190" y="40">+ ar²</text><text x="270" y="40">+ …</text><text x="330" y="40">+ arⁿ⁻¹</text>
+          <text x="20" y="80">rS</text><text x="120" y="80">= ar</text><text x="190" y="80">+ ar²</text><text x="270" y="80">+ …</text><text x="330" y="80">+ arⁿ⁻¹</text><text x="420" y="80">+ arⁿ</text>
+          <line x1="20" y1="92" x2="490" y2="92" class="k"/>
+          <text x="20" y="120">rS − S</text><text x="100" y="120">= −a</text><text x="420" y="120" class="td">+ arⁿ</text>
+        </g>
+        <rect x="112" y="24" width="270" height="62" class="lk" opacity="0.5"/>
+      </svg>
+      <figcaption>그림 2. 공비를 곱한 식과 원래 식은 가운데 항이 모두 겹치므로, 빼면 첫째항과 마지막에 새로 생긴 항만 남는다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>처음 질문의 쌀은 모두 몇 톨이고, 쌀 한 톨을 0.02 g이라 하면 몇 톤인가? (\(2^{10} \approx 10^3\)으로 어림한다.) 또 매년 초에 100만 원씩 연이율 5%의 복리로 10년 동안 적립하면 10년 말에 모이는 돈은 얼마인가? (\(1.05^{10} \approx 1.63\))</p>
+    </div>
+    <p>쌀은 \(2^{64} - 1\)톨이다. \(2^{64} = 2^4 \times (2^{10})^6 \approx 16 \times 10^{18}\)이므로 약 \(1.6 \times 10^{19}\)톨이다. 무게는 \(1.6 \times 10^{19} \times 0.02 = 3.2 \times 10^{17}\) g, 곧 약 \(3.2 \times 10^{11}\)톤, 3200억 톤이다. 이것은 지금 전 세계가 한 해에 생산하는 쌀(약 5억 톤)의 수백 배이다.</p>
+    <p>적금은 첫해에 넣은 100만 원이 10년 동안 \(1.05^{10}\)배, 둘째 해에 넣은 돈이 \(1.05^9\)배, …, 마지막 해에 넣은 돈이 \(1.05\)배가 된다. 따라서 합은 \(100(1.05 + 1.05^2 + \cdots + 1.05^{10})\)만 원이다.</p>
+    <p>이것은 첫째항 \(1.05\), 공비 \(1.05\), 항이 10개인 등비수열의 합이므로 \(100 \times \dfrac{1.05(1.05^{10} - 1)}{0.05} \approx 100 \times \dfrac{1.05 \times 0.63}{0.05} \approx 1323\)만 원이다. 넣은 원금 1000만 원보다 약 323만 원이 많다. 아래 탐구 카드에서 공비를 바꾸며 항과 합이 어떻게 자라는지 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-alg-geometric-1">\(|r| &lt; 1\)이면 \(n\)이 커질수록 \(r^n\)이 0에 가까워져 합이 \(\tfrac{a}{1 - r}\)에 가까워진다. 이것은 미적분Ⅱ의 급수에서 다룬다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>등비수열은 공비를 거듭 곱해 얻으므로 일반항이 \(ar^{n-1}\)인 지수함수 꼴이고, 합은 공비를 곱한 식과 원래 식을 빼서 가운데 항을 지우면 \(\tfrac{a(r^n - 1)}{r - 1}\)이 된다. 그래서 처음 질문의 바둑판 쌀은 \(2^{64} - 1\)톨, 곧 수천억 톤에 이른다.</p></div>
+  </div>
+</article>

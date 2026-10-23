@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>자료 수집과 표·그래프 변환 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="과학 연구를 수행하며 연구 일지에 자료를 기록하고, 변인 사이의 관계가 잘 드러나고 읽기 쉽도록 자료를 표와 그래프로 변환한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-resr-graph .gr-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 5px 0 2px; }
     #card-resr-graph .gr-row > .mono { margin: 0 4px 0 0; min-width: 4.5em; }
@@ -47,19 +53,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-sie1-plot"><span class="mono">2.4.1</span>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</a></li>
-        <li><a href="#card-resr-graph"><span class="mono">2.4.2</span>축 변환과 오차 막대</a></li>
-        <li><a href="#text-resr-logbook"><span class="mono">2.4.3</span>연구 일지와 표 만들기</a></li>
+        <li><a href="#text-resr-linearize"><span class="mono">본문</span>자료 수집과 표·그래프 변환</a></li>
+        <li><a href="#card-sie1-plot"><span class="mono">탐구 1</span>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</a></li>
+        <li><a href="#card-resr-graph"><span class="mono">탐구 2</span>축 변환과 오차 막대</a></li>
+        <li><a href="#text-resr-logbook"><span class="mono">읽기 3</span>연구 일지와 표 만들기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=resr-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=resr&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">19문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=resr-2-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-resr-linearize" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>자료 수집과 표·그래프 변환</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공을 떨어뜨리며 0.2초마다 떨어진 거리를 연구 일지에 적었다. 표의 숫자를 시간–거리 그래프로 그리니 점들이 위로 휘어진 곡선을 그렸다. 곡선은 '시간이 지날수록 빨라진다'는 것만 말해 줄 뿐, 정확히 어떤 관계인지는 알려 주지 않는다. 그런데 가로축을 시간 대신 시간의 제곱으로 바꾸어 그렸더니 점들이 곧은 직선 위에 늘어섰다. 그 직선의 기울기에서 무엇을 알 수 있을까? 자료를 표와 그래프로 정리할 때는 무엇을 고려해야 할까?</p>
+          <figure class="q-fig" data-q="resr-lin">
+            <svg viewBox="0 0 520 230" role="img" aria-label="가로축을 시간의 거듭제곱으로 바꾼 그래프와 상관 계수"></svg>
+            <div class="q-ctl"><label>가로축의 지수 p (t^p) <input type="range" data-k="p" min="1" max="3" step="0.1" value="1"><output data-k="p"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 낙하 거리 자료(파란 점)를 가로축 t^p에 대해 그린 그래프와 맞춘 직선(회색). p = 2일 때 점들이 가장 곧게 늘어서며 상관 계수가 1에 가장 가깝다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>등가속도 운동(물리학), 일차 함수와 거듭제곱(수학), 연구 설계(<a href="2-3.html">연구 설계와 재료·기기 준비</a>).</div>
+
+          <h3><span class="no">2.4.1</span>표와 그래프</h3>
+          <p>연구 일지에 날마다 적은 측정값은 먼저 표로 정리한다. 표에는 제목, 변인의 이름과 단위, 반복 측정값과 평균을 적고, 조작 변인을 왼쪽 열에, 종속 변인을 오른쪽 열에 둔다. 그다음 변인 사이의 관계를 보려고 그래프로 그린다. 연속적인 두 양의 관계는 꺾은선그래프나 산점도로, 범주끼리의 비교는 막대그래프로 그린다. 조작 변인을 가로축에, 종속 변인을 세로축에 두고, 반복 측정의 흩어짐은 오차 막대로 나타낸다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.4.1 <span class="nm">직선으로 바꾸기</span></span>
+            <p>두 양이 \(y = kx^n\)의 관계라면, 가로축을 \(x^n\)으로 바꾸어 그리면 기울기가 \(k\)인 직선이 된다. \(n\)을 모를 때는 \(\log y\)를 \(\log x\)에 대해 그리면 기울기가 \(n\)인 직선이 된다. 직선은 눈으로 판단하기 쉽고, 기울기와 절편이 물리량의 의미를 가진다.</p>
+          </div>
+          <p>그림 1에서 지수를 바꾸어 보자. 가로축이 시간이면(\(p = 1\)) 점들이 휘어 있고, 직선을 그어도 끝에서 어긋난다. \(p = 2\)로 시간의 제곱을 가로축으로 쓰면 점들이 직선 위에 늘어서고, 상관 계수가 1에 가장 가깝다. 이 직선의 기울기 약 4.9 m/s²는 \(\dfrac{1}{2}g\)이므로, 중력 가속도가 약 9.8 m/s²임을 알 수 있다. \(p = 3\)으로 더 키우면 거꾸로 아래로 휜다. 즉 알맞은 변환은 자료 속의 법칙을 직선이라는 가장 읽기 쉬운 모양으로 드러낸다.<sup class="fn"><a href="#fn-resr-linearize-1">1</a></sup></p>
+
+          <h3><span class="no">2.4.2</span>같은 자료, 다른 그림</h3>
+          <p>같은 자료라도 어떻게 그리느냐에 따라 보이는 것이 달라진다. 세로축을 0이 아닌 곳에서 시작하면 작은 차이가 커 보이고, 로그 눈금은 몇 배씩 차이 나는 값들을 한눈에 보여 준다. 반복 측정이 있으면 평균만 점으로 찍지 말고 흩어짐도 함께 보여야 차이가 의미 있는지 판단할 수 있다. 그리고 축의 이름과 단위, 그래프의 제목, 무엇을 나타낸 오차 막대인지를 반드시 적는다. 그래프는 자료를 꾸미는 것이 아니라, 읽는 사람이 관계를 정확히 보도록 돕는 도구이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="관계에 따른 직선 변환">
+              <g class="s">
+                <text x="20" y="22">관계</text><text x="170" y="22">직선이 되는 그래프</text><text x="380" y="22">기울기의 뜻</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">y = kx²</text><text x="170" y="52">y – x²</text><text x="380" y="52">k</text>
+                <text x="20" y="74">y = k/x</text><text x="170" y="74">y – 1/x</text><text x="380" y="74">k</text>
+                <text x="20" y="96">y = kxⁿ (n을 모름)</text><text x="170" y="96">log y – log x</text><text x="380" y="96">n</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 관계에 맞게 축을 바꾸면 곡선이 직선이 되고, 기울기가 물리량을 알려 준다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.4.2</span>
+            <p>공을 떨어뜨린 뒤 0.4 s, 0.8 s, 1.2 s에 낙하 거리가 0.79 m, 3.10 m, 7.06 m였다. 가로축을 \(t^2\)으로 그렸을 때의 기울기를 처음과 끝 두 점으로 구하고, 중력 가속도를 구하여라. \(\log\)–\(\log\) 그래프로 그리면 기울기는 얼마인가?</p>
+          </div>
+          <p>\(t^2\)은 0.16 s²와 1.44 s²이므로 기울기는 \((7.06 - 0.79) \div (1.44 - 0.16) = 6.27 \div 1.28 \approx 4.90\) m/s²이다. 이것이 \(\dfrac{1}{2}g\)이므로 \(g \approx 9.8\) m/s²이다.</p>
+          <p>\(\log\)–\(\log\) 그래프의 기울기는 \(\dfrac{\log 7.06 - \log 0.79}{\log 1.2 - \log 0.4} = \dfrac{0.849 - (-0.102)}{0.079 - (-0.398)} = \dfrac{0.951}{0.477} \approx 2.0\)이다. 지수 2가 나와, 거리가 시간의 제곱에 비례한다는 것을 지수를 미리 몰라도 알아냈다. 즉 축을 바꾸는 것은 자료를 왜곡하는 것이 아니라, 관계의 꼴과 그 속의 상수를 함께 읽어 내는 방법이다. 그래서 연구 보고서의 그래프는 자료가 직선으로 드러나는 축을 골라 그린다.</p>
+          <p>아래 탐구 카드에서 연구 일지의 자료를 표로 정리하고, 관계가 잘 드러나는 그래프로 바꾸어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-resr-linearize-1">케플러는 행성의 공전 주기와 궤도 반지름 자료를 오래 들여다본 끝에 주기의 제곱이 반지름의 세제곱에 비례한다는 법칙을 찾았다. 오늘날이라면 log–log 그래프의 기울기 1.5로 바로 알아낼 수 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>연구 일지의 측정값은 변인과 단위를 밝힌 표로 정리하고, 관계를 보기 위해 알맞은 그래프로 그린다. 두 양이 거듭제곱 관계이면 가로축을 그 거듭제곱으로, 지수를 모르면 log–log로 바꾸어 직선을 만들고, 그 기울기와 절편에서 물리량을 읽는다. 그래서 처음 질문의 휘어진 곡선은 가로축을 시간의 제곱으로 바꾸면 직선이 되고, 그 기울기의 두 배가 중력 가속도를 알려 준다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/fusi/2-4.html#text-fusi-area-distortion"><small class="mono">융합과학 탐구 2.4</small>데이터 시각화</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/1-1.html#text-sie2-egg-cooking"><small class="mono">과학탐구실험2 1.1</small>생활 속 과학 원리 탐구</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/fusi/2-1.html#card-fusi-quake"><small class="mono">융합과학 탐구 2.1</small>지진 4500개가 든 표에서 어떻게 탐구 문제를 찾을까?</a></div></nav>
+
       <article class="card" id="card-sie1-plot">
         <header class="card-head">
-          <span class="no">2.4.1</span><h2>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</h2><span class="kind">실험 · 자료의 표현 · 그래프 고르기</span>
+          <span class="no">탐구 1</span><h2>같은 자료인데 왜 그래프마다 다른 이야기를 할까?</h2><span class="kind">실험 · 자료의 표현 · 그래프 고르기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,34 +132,34 @@
             <div class="tbl-host" hidden></div>
             <div class="ctl">
               <label class="mono small"><input type="checkbox" class="zero" checked> 세로축을 0부터 시작</label>
-              <label class="mono small out-wrap"><input type="checkbox" class="out"> 70 °C 측정값 빼기 (기록: 저울을 영점 조정하지 않음)</label>
+              <label class="mono small out-wrap"><input type="checkbox" class="out"> 70 °C 측정값 빼기 (저울을 영점 조정하지 않았다는 기록 있음)</label>
               <p class="verdict small"></p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>실험을 마치면 숫자가 가득한 기록이 남습니다. 이 숫자들이 말하는 것을 다른 사람이 한눈에, 그리고 <em>오해 없이</em> 알아보게 하려면 어떻게 보여 줘야 할까요?</li>
-            <li><span class="tag">복원</span>변인에는 이름으로 나뉘는 <em>범주형</em>(반, 혈액형)과 수로 이어지는 <em>연속형</em>(온도, 시간)이 있습니다. 정성적 자료는 말로, 정량적 자료는 수로 기록합니다.</li>
-            <li><span class="tag">설계</span>가로축 변인이 범주형이면 막대그래프, 연속형 두 변인의 관계를 보려면 산점도와 추세선, 시간에 따른 변화를 이어 보려면 꺾은선그래프가 알맞습니다. 정확한 값을 전해야 하면 표를 함께 씁니다.</li>
-            <li><span class="tag">분석</span>같은 자료라도 표현 방식이 해석을 바꿉니다. 범주를 선으로 이으면 반 사이에 없는 "중간값"이 있는 것처럼 보이고, 세로축을 0이 아닌 곳에서 자르면 작은 차이가 크게 보입니다.</li>
-            <li><span class="tag">측정</span>세 자료 각각에 네 가지 표현을 모두 적용해 보세요. 반별 수면 시간에서 "세로축 0부터"를 끄면 반 사이 차이가 몇 배로 보이나요? 용해도 자료에서 튀는 점은 빼도 될까요?</li>
-            <li class="warn"><span class="tag">오차·안전</span>이상값은 "결과와 안 맞아서"가 아니라 <em>기록된 이유</em>가 있을 때만 뺄 수 있고, 뺀 사실과 이유를 보고서에 적어야 합니다. 이유 없이 마음에 안 드는 값을 지우는 것은 연구 부정(변조)입니다.</li>
+            <li><span class="tag">탐구 문제</span>실험을 마치면 숫자가 가득한 기록이 남는다. 이 숫자들이 말하는 것을 다른 사람이 한눈에, 그리고 <em>오해 없이</em> 알아보게 하려면 어떻게 보여 줘야 할까?</li>
+            <li><span class="tag">복원</span>변인에는 이름으로 나뉘는 <em>범주형</em>(반, 혈액형)과 수로 이어지는 <em>연속형</em>(온도, 시간)이 있다. 또 정성적 자료는 말로, 정량적 자료는 수로 기록한다.</li>
+            <li><span class="tag">설계</span>그래서 가로축 변인이 범주형이면 막대그래프, 연속형 두 변인의 관계를 보려면 산점도와 추세선, 시간에 따른 변화를 이어 보려면 꺾은선그래프가 알맞다. 정확한 값을 전해야 하면 표를 함께 쓴다.</li>
+            <li><span class="tag">분석</span>그런데 같은 자료라도 표현 방식이 해석을 바꾼다. 범주를 선으로 이으면 반 사이에 없는 “중간값”이 있는 것처럼 보이고, 세로축을 0이 아닌 곳에서 자르면 작은 차이가 크게 보인다.</li>
+            <li><span class="tag">측정</span>세 자료 각각에 네 가지 표현을 모두 적용해 보자. 반별 수면 시간에서 “세로축 0부터”를 끄면 반 사이 차이가 몇 배로 보이는지 재 보고, 용해도 자료의 튀는 점을 빼도 되는지도 생각해 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>이상값은 “결과와 안 맞아서”가 아니라 <em>기록된 이유</em>가 있을 때만 뺄 수 있고, 뺀 사실과 이유를 보고서에 적어야 한다. 이유 없이 마음에 안 드는 값을 지우는 것은 연구 부정(변조)이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">학급별 휴대 전화 사용 시간(1반 3.1시간, 2반 3.3시간, 3반 3.2시간)을 발표하려 합니다. 가장 알맞은 표현은?</p>
+          <p class="q">학급별 휴대 전화 사용 시간(1반 3.1시간, 2반 3.3시간, 3반 3.2시간)을 발표하려 한다. 가장 알맞은 표현은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세로축을 3.0에서 시작한 꺾은선그래프<span class="why"><b>두 가지가 어긋납니다.</b> 반은 범주라 선으로 이을 수 없고, 축을 잘라 0.2시간 차이가 몇 배로 보입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>세로축을 0에서 시작한 막대그래프<span class="why"><b>맞습니다.</b> 범주형 비교에는 막대가 알맞고, 막대 길이가 값에 비례하려면 축이 0에서 시작해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>산점도와 추세선<span class="why"><b>추세선은 연속형 변인 사이의 관계에 씁니다.</b> 1반 → 3반 사이의 "기울기"는 의미가 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>세로축을 3.0에서 시작한 꺾은선그래프<span class="why"><b>두 가지가 어긋난다.</b> 반은 범주라 선으로 이을 수 없고, 축을 잘라 0.2시간 차이가 몇 배로 보인다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>세로축을 0에서 시작한 막대그래프<span class="why"><b>맞다.</b> 범주형 비교에는 막대가 알맞고, 막대 길이가 값에 비례하려면 축이 0에서 시작해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>산점도와 추세선<span class="why"><b>추세선은 연속형 변인 사이의 관계에 쓴다.</b> 1반 → 3반 사이의 "기울기"는 의미가 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/fusi/2-1.html#card-fusi-quake"><small class="mono">융합과학 탐구 2.1</small>지진 4500개가 든 표에서 어떻게 탐구 문제를 찾을까?</a><a href="../../c/fusi/2-4.html#card-fusi-misgraph"><small class="mono">융합과학 탐구 2.4</small>같은 숫자로 그린 그래프가 왜 다른 인상을 줄까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a><a href="../../c/is1/1-3.html#text-is1-measurement"><small class="mono">통합과학1 1.3</small>측정과 어림</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/fusi/2-4.html#text-fusi-area-distortion"><small class="mono">융합과학 탐구 2.4</small>데이터 시각화</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/sie2/1-1.html#card-sie2-egg"><small class="mono">과학탐구실험2 1.1</small>큰 달걀은 얼마나 더 오래 삶아야 할까?</a><a href="../../c/sie2/1-1.html#text-sie2-egg-cooking"><small class="mono">과학탐구실험2 1.1</small>생활 속 과학 원리 탐구</a><a href="../../c/sie2/2-1.html#card-sie2-calib"><small class="mono">과학탐구실험2 2.1</small>센서가 보낸 숫자를 어떻게 온도로 바꿀까?</a><a href="../../c/fusi/2-1.html#card-fusi-quake"><small class="mono">융합과학 탐구 2.1</small>지진 4500개가 든 표에서 어떻게 탐구 문제를 찾을까?</a></div></nav>
 
       <article class="card" id="card-resr-graph">
         <header class="card-head">
-          <span class="no">2.4.2</span><h2>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</h2><span class="kind">실험 · 자료의 변환 · 축 고르기 · 오차 막대</span>
+          <span class="no">탐구 2</span><h2>기포 수를 세어 적은 표를 어떤 그래프로 바꿔야 관계가 드러날까?</h2><span class="kind">실험 · 자료의 변환 · 축 고르기 · 오차 막대</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -134,44 +191,45 @@
             <canvas class="cv-plot" aria-label="고른 축과 표현으로 그린 기포 수 그래프"></canvas>
             <div class="gr-check"><label class="mono small"><input type="checkbox" class="lab" checked> 축 이름과 단위 쓰기</label></div>
             <p class="verdict small"></p>
-            <p class="fig-note">모식 실험입니다. 검정말을 탄산수소 나트륨 용액에 넣고 램프 거리 d를 바꿔 가며 1분 동안 나온 기포 수를 셉니다. 빛의 세기는 1/d²에 비례한다고 가정했고, 빛이 아주 강하면 광합성이 포화되도록 했습니다. 기포를 세는 값은 정수이고 우연한 흩어짐이 있습니다.</p>
+            <p class="fig-note">모식 실험이다. 검정말을 탄산수소 나트륨 용액에 넣고 램프 거리 d를 바꿔 가며 1분 동안 나온 기포 수를 센다. 빛의 세기는 1/d²에 비례한다고 가정했고, 빛이 아주 강하면 광합성이 포화되도록 했다. 기포를 세는 값은 정수이고 우연한 흩어짐이 있다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>램프를 가까이 댈수록 검정말에서 기포가 많이 나옵니다. 연구 일지에 거리마다 세 번씩 센 기포 수가 적혀 있습니다. 이 표에서 "빛의 세기와 광합성 속도의 관계"를 한눈에 보여 주려면 어떻게 그려야 할까요?</li>
-            <li><span class="tag">복원</span>점광원에서 나온 빛의 세기는 거리의 제곱에 반비례합니다. 그래프의 가로축에는 조작 변인(또는 그것을 변환한 값), 세로축에는 종속 변인을 놓습니다.</li>
-            <li><span class="tag">설계</span>표는 거리마다 한 줄, 반복 측정값을 나란히 적고 평균과 표준편차 칸을 둡니다. 열 이름에는 단위를 적습니다. 그래프로 옮길 때는 ① 무엇을 가로축으로 할지 ② 평균만 그릴지, 개별 값도 보일지 ③ 흩어짐을 어떤 막대로 보일지 ④ 점을 이을지, 직선을 맞출지를 고릅니다.</li>
-            <li><span class="tag">분석</span>d를 가로축으로 하면 곡선이라 관계를 말하기 어렵습니다. 가로축을 1/d²(빛의 세기에 비례)로 바꾸면 빛이 약한 쪽에서 점들이 직선에 놓이고, 빛이 강한 쪽에서는 직선 아래로 처집니다. 직선 구간의 기울기가 "빛의 세기 한 단위당 광합성 속도"이고, 처지는 구간은 다른 요인(CO₂, 효소)이 속도를 제한하기 시작한 곳입니다.</li>
-            <li><span class="tag">측정</span>가로축 셋을 차례로 고르고 직선 맞춤의 결정계수 r²를 비교하세요. 오차 막대를 표준편차에서 표준오차로 바꾸면 막대 길이가 몇 배가 되나요(반복 3회)? 축 이름을 끄면 이 그래프만 보고 무엇을 알 수 없게 되나요?</li>
-            <li class="warn"><span class="tag">오차·안전</span>오차 막대가 무엇인지(표준편차, 표준오차, 신뢰구간)를 범례나 캡션에 밝히지 않으면 읽는 사람이 해석할 수 없습니다. 표준편차는 개체의 흩어짐, 표준오차는 평균의 불확실성을 나타냅니다. 측정점이 셋뿐인 거리에서는 둘 다 거칠게 추정된 값입니다. 램프가 물을 데우면 온도도 함께 바뀌므로, 물이 든 비커를 사이에 두어 열을 막고 뜨거운 전구에 손을 대지 않습니다.</li>
+            <li><span class="tag">탐구 문제</span>램프를 가까이 댈수록 검정말에서 기포가 많이 나온다. 연구 일지에 거리마다 세 번씩 센 기포 수가 적혀 있다. 이 표에서 "빛의 세기와 광합성 속도의 관계"를 한눈에 보여 주려면 어떻게 그려야 할까?</li>
+            <li><span class="tag">복원</span>점광원에서 나온 빛의 세기는 거리의 제곱에 반비례한다. 그래프의 가로축에는 조작 변인(또는 그것을 변환한 값), 세로축에는 종속 변인을 놓는다.</li>
+            <li><span class="tag">설계</span>표는 거리마다 한 줄, 반복 측정값을 나란히 적고 평균과 표준편차 칸을 둔다. 열 이름에는 단위를 적는다. 그래프로 옮길 때는 ① 무엇을 가로축으로 할지 ② 평균만 그릴지, 개별 값도 보일지 ③ 흩어짐을 어떤 막대로 보일지 ④ 점을 이을지, 직선을 맞출지를 고른다.</li>
+            <li><span class="tag">분석</span>d를 가로축으로 하면 곡선이라 관계를 말하기 어렵다. 가로축을 1/d²(빛의 세기에 비례)로 바꾸면 빛이 약한 쪽에서 점들이 직선에 놓이고, 빛이 강한 쪽에서는 직선 아래로 처진다. 직선 구간의 기울기가 "빛의 세기 한 단위당 광합성 속도"이고, 처지는 구간은 다른 요인(CO₂, 효소)이 속도를 제한하기 시작한 곳이다.</li>
+            <li><span class="tag">측정</span>가로축 셋을 차례로 고르고 직선 맞춤의 결정계수 r²를 비교해 보자. 오차 막대를 표준편차에서 표준오차로 바꾸면 막대 길이가 몇 배가 되는가(반복 3회)? 축 이름을 끄면 이 그래프만 보고 무엇을 알 수 없게 되는가?</li>
+            <li class="warn"><span class="tag">오차·안전</span>오차 막대가 무엇인지(표준편차, 표준오차, 신뢰구간)를 범례나 캡션에 밝히지 않으면 읽는 사람이 해석할 수 없다. 표준편차는 개체의 흩어짐, 표준오차는 평균의 불확실성을 나타낸다. 측정점이 셋뿐인 거리에서는 둘 다 거칠게 추정된 값이다. 램프가 물을 데우면 온도도 함께 바뀌므로, 물이 든 비커를 사이에 두어 열을 막고 뜨거운 전구에 손을 대지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">온도를 5 °C 간격으로 바꾸며 효소의 반응 속도를 다섯 번씩 재었습니다. 속도는 어느 온도까지 오르다가 그 뒤 급히 떨어집니다. 가장 알맞은 표현은?</p>
+          <p class="q">온도를 5 °C 간격으로 바꾸며 효소의 반응 속도를 다섯 번씩 재었다. 속도는 어느 온도까지 오르다가 그 뒤 급히 떨어진다. 가장 알맞은 표현은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>온도를 가로축으로 평균을 점으로 찍고, 표준오차 막대와 함께 점을 잇는다 (막대의 뜻을 캡션에 밝힌다)<span class="why"><b>맞습니다.</b> 꼭짓점이 있는 관계라 직선을 맞추면 안 되고, 반복의 불확실성은 막대로 보입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 점에 직선 하나를 맞추고 기울기를 보고한다<span class="why"><b>관계의 모양을 먼저 봐야 합니다.</b> 오르다 내려가는 자료에 직선을 맞추면 기울기가 0에 가까워져 "관계없음"처럼 보입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도별 평균을 막대그래프로 그리고 오차 막대는 생략한다<span class="why"><b>온도는 연속형 변인입니다.</b> 막대는 범주 비교에 알맞고, 반복 측정을 했다면 흩어짐도 보여야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>온도를 가로축으로 평균을 점으로 찍고, 표준오차 막대와 함께 점을 잇는다 (막대의 뜻을 캡션에 밝힌다)<span class="why"><b>맞다.</b> 꼭짓점이 있는 관계라 직선을 맞추면 안 되고, 반복의 불확실성은 막대로 보인다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 점에 직선 하나를 맞추고 기울기를 보고한다<span class="why"><b>관계의 모양을 먼저 봐야 한다.</b> 오르다 내려가는 자료에 직선을 맞추면 기울기가 0에 가까워져 "관계없음"처럼 보인다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>온도별 평균을 막대그래프로 그리고 오차 막대는 생략한다<span class="why"><b>온도는 연속형 변인이다.</b> 막대는 범주 비교에 알맞고, 반복 측정을 했다면 흩어짐도 보여야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/fusi/2-4.html#text-fusi-area-distortion"><small class="mono">융합과학 탐구 2.4</small>데이터 시각화</a><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div></nav>
 
       <article class="card reading" id="text-resr-logbook">
         <header class="card-head">
-          <span class="no">2.4.3</span><h2>연구 일지에는 무엇을 적고, 표는 어떻게 만들까?</h2><span class="kind">읽기 · 연구 일지 · 원자료 · 표와 그래프의 규칙</span>
+          <span class="no">읽기 3</span><h2>연구 일지에는 무엇을 적고, 표는 어떻게 만들까?</h2><span class="kind">읽기 · 연구 일지 · 원자료 · 표와 그래프의 규칙</span>
         </header>
         <div class="reading-body">
-          <p class="ask">석 달 뒤 보고서를 쓰다가 "3회차 값은 왜 이렇게 낮았지?"라는 질문이 생겼다고 합시다. 그날 무슨 일이 있었는지 알려 줄 수 있는 것은 그날 쓴 연구 일지뿐입니다.</p>
+          <p class="ask">석 달 뒤 보고서를 쓰다가 "3회차 값은 왜 이렇게 낮았지?"라는 질문이 생겼다고 하자. 그날 무슨 일이 있었는지 알려 줄 수 있는 것은 그날 쓴 연구 일지뿐이다.</p>
           <h3><span class="mono">1</span>연구 일지에 적을 것</h3>
-          <ul class="dots">
-            <li><b>날짜와 시각, 기록한 사람</b> — 페이지마다 번호를 매기고 날짜와 기록한 사람의 이름을 적습니다.</li>
-            <li><b>조건</b> — 실온, 사용한 기기와 그 설정, 시약의 농도와 만든 날, 시료 번호.</li>
-            <li><b>원자료</b> — 계산하기 전의 값을 그 자리에서 바로 적습니다. 평균만 적고 개별 값을 버리면 나중에 다시 계산할 수 없습니다.</li>
-            <li><b>계획과 달랐던 일</b> — 전구가 꺼졌다, 용액을 쏟았다, 측정자가 바뀌었다. 이상값을 나중에 판단할 근거가 됩니다.</li>
-            <li><b>생각과 다음 계획</b> — 결과를 보고 떠오른 생각, 고칠 점.</li>
-          </ul>
-          <p>틀린 값은 지우지 않고 한 줄을 그어 읽을 수 있게 남긴 뒤 옆에 고친 값과 이유를 적습니다. 종이 일지는 쪽을 찢지 않고, 전자 일지는 수정 기록이 남는 방식으로 씁니다. 사진이나 센서 파일은 파일 이름을 일지에 적어 연결합니다. 일지는 실험이 정직하게 이루어졌다는 증거이기도 합니다.</p>
+          <h4>날짜와 시각, 기록한 사람</h4>
+          <p>페이지마다 번호를 매기고 날짜와 기록한 사람의 이름을 적는다.</p>
+          <p>조건은 실온, 사용한 기기와 그 설정, 시약의 농도와 만든 날, 시료 번호이다.</p>
+          <h4>원자료</h4>
+          <p>계산하기 전의 값을 그 자리에서 바로 적는다. 평균만 적고 개별 값을 버리면 나중에 다시 계산할 수 없다.</p>
+          <h4>계획과 달랐던 일</h4>
+          <p>전구가 꺼졌다, 용액을 쏟았다, 측정자가 바뀌었다. 이상값을 나중에 판단할 근거가 된다.</p>
+          <p>생각과 다음 계획은 결과를 보고 떠오른 생각, 고칠 점이다.</p>
+          <p>틀린 값은 지우지 않고 한 줄을 그어 읽을 수 있게 남긴 뒤 옆에 고친 값과 이유를 적는다. 종이 일지는 쪽을 찢지 않고, 전자 일지는 수정 기록이 남는 방식으로 쓴다. 사진이나 센서 파일은 파일 이름을 일지에 적어 연결한다. 일지는 실험이 정직하게 이루어졌다는 증거이기도 하다.</p>
           <h3><span class="mono">2</span>일지에서 표로</h3>
           <div class="lg-pair">
             <div>
@@ -179,7 +237,7 @@
                 <thead><tr><th>거리</th><th>기포</th></tr></thead>
                 <tbody><tr><td>40</td><td>4, 4, 2</td></tr><tr><td>10</td><td>31.33</td></tr><tr><td>20cm</td><td>약 14</td></tr></tbody>
               </table></div>
-              <p>고칠 점: 단위가 열 이름에 없고 칸마다 다름, 원자료와 평균이 섞임, 순서가 뒤죽박죽, 자릿수가 들쭉날쭉함, 무엇을 잰 표인지 제목이 없음.</p>
+              <p>고칠 점은 단위가 열 이름에 없고 칸마다 다르다는 것, 원자료와 평균이 섞이고 순서가 뒤죽박죽이라는 것, 자릿수가 들쭉날쭉하고 무엇을 잰 표인지 제목이 없다는 것이다.</p>
             </div>
             <div>
               <div class="tbl"><table>
@@ -187,10 +245,10 @@
                 <thead><tr><th>거리 (cm)</th><th>1회</th><th>2회</th><th>3회</th><th>평균 ± 표준편차 (개/분)</th></tr></thead>
                 <tbody><tr><td>10</td><td>33</td><td>30</td><td>31</td><td>31.3 ± 1.5</td></tr><tr><td>20</td><td>13</td><td>15</td><td>14</td><td>14.0 ± 1.0</td></tr><tr><td>40</td><td>4</td><td>4</td><td>2</td><td>3.3 ± 1.2</td></tr></tbody>
               </table></div>
-              <p>조작 변인을 첫 열에 차례로, 반복은 옆으로, 단위는 열 이름에 한 번만 적습니다.</p>
+              <p>조작 변인을 첫 열에 차례로, 반복은 옆으로, 단위는 열 이름에 한 번만 적는다.</p>
             </div>
           </div>
-          <p>표의 값은 측정의 정밀도에 맞는 자릿수로 적습니다. 기포를 정수로 셌다면 평균은 소수 첫째 자리 정도면 충분합니다. 31.3333처럼 계산기가 보여 준 자리를 모두 옮기면 그만큼 정밀하게 잰 것처럼 보입니다.</p>
+          <p>표의 값은 측정의 정밀도에 맞는 자릿수로 적는다. 기포를 정수로 셌다면 평균은 소수 첫째 자리 정도면 충분하다. 31.3333처럼 계산기가 보여 준 자리를 모두 옮기면 그만큼 정밀하게 잰 것처럼 보인다.</p>
           <h3><span class="mono">3</span>표에서 그래프로</h3>
           <div class="tbl"><table>
             <thead><tr><th>보여 주려는 것</th><th>알맞은 그래프</th></tr></thead>
@@ -202,38 +260,42 @@
               <tr><td>전체에 대한 비율 (대기 성분)</td><td>띠그래프 (항목이 적을 때 원그래프)</td></tr>
             </tbody>
           </table></div>
-          <p>그래프에는 번호와 설명(그림 1. …)을 아래에 붙이고, 두 축에 이름과 단위를, 오차 막대가 있으면 무엇인지를 적습니다. 여러 계열은 범례와 모양으로 구분해 흑백으로 인쇄해도 알아볼 수 있게 합니다.</p>
-          <p class="judge"><b>판단</b>그래프는 자료를 "예쁘게" 꾸미는 일이 아니라 변인 사이의 관계를 정직하게 전하는 일입니다. 축을 잘라 차이를 부풀리거나, 맞지 않는 점을 빼고 그리거나, 3차원 효과로 막대 크기를 왜곡하면 읽는 사람이 잘못 판단합니다. 원자료는 보고서 부록이나 일지에 남겨, 누구든 그래프를 다시 그려 볼 수 있게 합니다.</p>
+          <p>그래프에는 번호와 설명(그림 1. …)을 아래에 붙이고, 두 축에 이름과 단위를, 오차 막대가 있으면 무엇인지를 적는다. 여러 계열은 범례와 모양으로 구분해 흑백으로 인쇄해도 알아볼 수 있게 한다.</p>
+          <p class="judge"><b>판단</b>그래프는 자료를 "예쁘게" 꾸미는 일이 아니라 변인 사이의 관계를 정직하게 전하는 일이다. 축을 잘라 차이를 부풀리거나, 맞지 않는 점을 빼고 그리거나, 3차원 효과로 막대 크기를 왜곡하면 읽는 사람이 잘못 판단한다. 원자료는 보고서 부록이나 일지에 남겨, 누구든 그래프를 다시 그려 볼 수 있게 한다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">실험 중 2회차에 온도계를 떨어뜨려 다른 온도계로 바꿨습니다. 그 뒤로 값이 조금씩 높게 나옵니다. 연구 일지 처리로 가장 알맞은 것은?</p>
+          <p class="q">실험 중 2회차에 온도계를 떨어뜨려 다른 온도계로 바꿨다. 그 뒤로 값이 조금씩 높게 나온다. 연구 일지 처리로 가장 알맞은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>온도계를 바꾼 시각과 기기 번호를 적고, 두 온도계를 같은 물에 넣어 차이를 재어 함께 기록한다<span class="why"><b>맞습니다.</b> 계통 오차의 원인과 크기를 남겨야 나중에 보정하거나 그 자료를 따로 다룰 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>보고서에 쓸 때 2회차 이후 값을 처음 값과 비슷하게 고쳐 적는다<span class="why"><b>자료 변조입니다.</b> 이유가 있어도 값을 바꿔 적으면 안 되고, 원자료와 보정 방법을 함께 밝혀야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>사소한 일이니 적지 않고 평균만 기록한다<span class="why"><b>그럴듯하지만 위험합니다.</b> 나중에 값이 왜 바뀌었는지 설명할 근거가 사라집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>온도계를 바꾼 시각과 기기 번호를 적고, 두 온도계를 같은 물에 넣어 차이를 재어 함께 기록한다<span class="why"><b>맞다.</b> 계통 오차의 원인과 크기를 남겨야 나중에 보정하거나 그 자료를 따로 다룰 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>보고서에 쓸 때 2회차 이후 값을 처음 값과 비슷하게 고쳐 적는다<span class="why"><b>자료 변조이다.</b> 이유가 있어도 값을 바꿔 적으면 안 되고, 원자료와 보정 방법을 함께 밝혀야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>사소한 일이니 적지 않고 평균만 기록한다<span class="why"><b>그럴듯하지만 위험하다.</b> 나중에 값이 왜 바뀌었는지 설명할 근거가 사라진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/fusi/2-4.html#text-fusi-area-distortion"><small class="mono">융합과학 탐구 2.4</small>데이터 시각화</a><a href="../../c/is1/1-3.html#card-is1-error"><small class="mono">통합과학1 1.3</small>여러 번 재면 오차가 사라질까?</a><a href="../../c/is1/1-3.html#card-is1-sigfig"><small class="mono">통합과학1 1.3</small>계산기에 나온 숫자를 다 적어도 될까?</a><a href="../../c/is1/1-3.html#card-is1-four-measure"><small class="mono">통합과학1 1.3</small>길이·시간·질량·온도 중 가장 정밀하게 잴 수 있는 것은?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=resr-2-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=resr&amp;sec=2-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">19문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/resr/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/sie1/plot.js"></script>
 <script src="../../js/cards/resr/r2-graph.js"></script>

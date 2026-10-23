@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>정적분과 급수의 합 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="정적분과 급수의 합: 구간을 n등분한 직사각형 넓이의 합의 극한 lim Σ f(xₖ)Δx = ∫ₐᵇ f(x)dx(구분구적법), lim Σ (1/n) f(k/n) = ∫₀¹ f(x)dx, Σ 1/(n+k) → ln 2 같은 급수의 합을 정적분으로 구하기, 같은 합을 여러 정적분으로 읽기. n을 늘리며 직사각형의 합이 정적분 값으로 다가가는 것을 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-sum-read canvas { width: 100%; aspect-ratio: 16 / 11; }
@@ -47,18 +52,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-sum-read"><span class="mono">3.4.1</span>급수의 합을 정적분으로</a></li>
-        <li><a href="#card-calc2-sum-to-int"><span class="mono">3.4.2</span>같은 합, 여러 정적분</a></li>
+        <li><a href="#text-calc2-riemann"><span class="mono">본문</span>정적분과 급수의 합</a></li>
+        <li><a href="#card-calc2-sum-read"><span class="mono">탐구 1</span>급수의 합을 정적분으로</a></li>
+        <li><a href="#card-calc2-sum-to-int"><span class="mono">탐구 2</span>같은 합, 여러 정적분</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">27문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-3-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">27문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-3-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-riemann" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>정적분과 급수의 합</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\lim_{n \to \infty} \dfrac{1}{n}\left\{\left(\dfrac{1}{n}\right)^2 + \left(\dfrac{2}{n}\right)^2 + \cdots + \left(\dfrac{n}{n}\right)^2\right\}\)을 구하라는 문제가 있다. 제곱수의 합 공식으로 계산할 수도 있지만, 이 식을 가만히 보면 폭이 \(\dfrac{1}{n}\)인 막대 \(n\)개의 넓이를 더한 것처럼 생겼다. 합의 극한을 넓이로, 곧 정적분으로 읽을 수 있다면 계산이 훨씬 간단해지지 않을까?</p>
+          <figure class="q-fig" data-q="calc2-riemann">
+            <svg viewBox="0 0 520 230" role="img" aria-label="y = x² 아래를 n개의 직사각형으로 채운 넓이의 합"></svg>
+            <div class="q-ctl"><label>직사각형의 수 \(n\) <input type="range" data-k="n" min="2" max="60" step="1" value="6"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 구간 \([0, 1]\)을 \(n\)등분하고 각 소구간의 오른쪽 끝 높이 \(\left(\dfrac{k}{n}\right)^2\)으로 직사각형을 세운다. \(n\)이 커질수록 넓이의 합이 \(\int_0^1 x^2\,dx = \dfrac{1}{3}\)에 다가간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합의 기호 \(\sum\)와 자연수의 거듭제곱의 합(대수), 수열의 극한(<a href="1-2.html">수열의 극한의 성질</a>), 정적분과 넓이(미적분Ⅰ).</div>
+
+          <h3><span class="no">3.4.1</span>구분구적법</h3>
+          <p>구간 \([a, b]\)를 \(n\)등분하면 소구간의 폭은 \(\Delta x = \dfrac{b - a}{n}\)이고, \(k\)번째 오른쪽 끝은 \(x_k = a + k\Delta x\)이다. 높이 \(f(x_k)\)인 직사각형의 넓이를 모두 더한 \(\sum_{k=1}^{n} f(x_k)\Delta x\)는 곡선 아래 넓이의 근삿값이다. \(n\)을 한없이 키우면 막대가 가늘어지며 근삿값이 넓이에 한없이 가까워진다. 이렇게 넓이를 구하는 방법을 구분구적법이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">정적분과 급수의 합</span></span>
+            <p>함수 \(f(x)\)가 구간 \([a, b]\)에서 연속이면 \[\lim_{n \to \infty} \sum_{k=1}^{n} f\!\left(a + \frac{b - a}{n}k\right)\frac{b - a}{n} = \int_a^b f(x)\,dx\]</p>
+          </div>
+          <p>그림 1에서 \(n\)을 늘려 보자. \(n = 6\)이면 합은 약 0.42로 \(\dfrac{1}{3}\)보다 크지만, \(n = 60\)이면 약 0.342로 줄어든다. 직사각형이 곡선 위로 삐져나온 조각이 점점 작아지기 때문이다.<sup class="fn"><a href="#fn-calc2-riemann-1">1</a></sup></p>
+
+          <h3><span class="no">3.4.2</span>합을 정적분으로 읽는 요령</h3>
+          <p>주어진 합에서 \(\dfrac{1}{n}\)을 \(dx\), \(\dfrac{k}{n}\)을 \(x\)로 바꾸어 읽는다. \(\dfrac{k}{n}\)이 \(k = 1\)일 때 \(\dfrac{1}{n} \to 0\), \(k = n\)일 때 1이므로 적분 구간은 \([0, 1]\)이다. \(\dfrac{2k}{n}\)처럼 쓰여 있으면 \(x = \dfrac{2k}{n}\), \(dx = \dfrac{2}{n}\)으로 보아 구간을 \([0, 2]\)로 읽을 수도 있다. 같은 합을 여러 정적분으로 읽을 수 있지만 값은 같다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="합의 기호를 정적분으로 바꾸어 읽는 대응">
+              <g class="s">
+                <text x="30" y="30">합</text><text x="200" y="30">정적분</text>
+                <line x1="20" y1="38" x2="360" y2="38" class="gd"/>
+                <text x="30" y="60">lim Σ (k = 1 ~ n)</text><text x="200" y="60">∫ (0 ~ 1)</text>
+                <text x="30" y="82">k / n</text><text x="200" y="82">x</text>
+                <text x="30" y="104">1 / n</text><text x="200" y="104">dx</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(\sum\)는 \(\int\)로, \(\dfrac{k}{n}\)은 \(x\)로, \(\dfrac{1}{n}\)은 \(dx\)로 바꾸어 읽는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+            <p>\(\lim_{n \to \infty} \sum_{k=1}^{n} \dfrac{1}{n + k}\)의 값을 구하여라.</p>
+          </div>
+          <p>\(\dfrac{1}{n + k} = \dfrac{1}{n} \cdot \dfrac{1}{1 + \frac{k}{n}}\)이다. \(\dfrac{k}{n}\)을 \(x\), \(\dfrac{1}{n}\)을 \(dx\)로 읽으면 구간은 \([0, 1]\)이고 함수는 \(\dfrac{1}{1 + x}\)이다.</p>
+          <p>따라서 \[\lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{n + k} = \int_0^1 \frac{1}{1 + x}\,dx = \Big[\ln(1 + x)\Big]_0^1 = \ln 2 \approx 0.693\] 이다. \(n = 100\)으로 직접 더하면 약 0.6907로, \(\ln 2\)에 가깝다. 이 합은 \(\dfrac{1}{n+1} + \cdots + \dfrac{1}{2n}\)으로, 조화급수의 한 토막이다. 이렇게 공식으로 계산하기 어려운 합도 정적분으로 읽으면 쉽게 구할 수 있다.</p>
+          <p>아래 탐구 카드에서 합의 극한을 넓이로 읽고, 같은 합을 서로 다른 정적분으로 읽어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-riemann-1">제곱수의 합 공식으로 직접 계산하면 \(\dfrac{1}{n^3} \cdot \dfrac{n(n+1)(2n+1)}{6} = \dfrac{(n+1)(2n+1)}{6n^2}\)이고, \(n \to \infty\)이면 \(\dfrac{2}{6} = \dfrac{1}{3}\)이다. 정적분과 같은 값이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>구간을 \(n\)등분한 직사각형 넓이의 합 \(\sum f(x_k)\Delta x\)는 \(n \to \infty\)일 때 정적분 \(\int_a^b f(x)dx\)가 된다. 거꾸로 합의 극한에서 \(\frac{k}{n}\)을 \(x\), \(\frac{1}{n}\)을 \(dx\)로 읽으면 정적분으로 바꾸어 계산할 수 있다. 그래서 처음 질문의 합의 극한은 \(\int_0^1 x^2dx = \frac{1}{3}\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-6.html#card-calc2-cross-section"><small class="mono">미적분Ⅱ 3.6</small>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</a><a href="../../c/calc2/3-6.html#card-calc2-cavalieri"><small class="mono">미적분Ⅱ 3.6</small>입체를 비스듬히 밀면 부피가 바뀔까?</a><a href="../../c/calc2/3-6.html#text-calc2-volume"><small class="mono">미적분Ⅱ 3.6</small>부피</a><a href="../../c/calc2/3-7.html#card-calc2-distance-area"><small class="mono">미적분Ⅱ 3.7</small>속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?</a></div></nav>
+
       <article class="card" id="card-calc2-sum-read">
         <header class="card-head">
-          <span class="no">3.4.1</span><h2>항이 \(n\)개인 합의 극한을 넓이로 읽을 수 있을까?</h2><span class="kind">정적분과 급수의 합 · 조작</span>
+          <span class="no">탐구 1</span><h2>항이 \(n\)개인 합의 극한을 넓이로 읽을 수 있을까?</h2><span class="kind">정적분과 급수의 합 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,33 +139,33 @@
                 <div><dt>정적분 값</dt><dd class="n-i">—</dd></div>
                 <div><dt>차이</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">합 \(S_n\)는 주어진 식에 \(k\)를 차례로 넣어 더한 값입니다. 직사각형 하나의 넓이가 항 하나입니다.</p>
+              <p class="fig-note">합 \(S_n\)는 주어진 식에 \(k\)를 차례로 넣어 더한 값이고, 직사각형 하나의 넓이가 항 하나이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\lim_{n\to \infty} \{\frac{1}{n + 1} + \frac{1}{n + 2} + \cdots + \frac{1}{2n}\}\)은 얼마일까요? 항은 점점 작아지지만 개수는 늘어납니다.</li>
-            <li><span class="tag">복원</span>\(f\)가 \([a, b]\)에서 연속이면 구간을 \(n\)등분해 \(\Delta x = \frac{b - a}{n}\), \(x_k = a + k\Delta x\)로 둘 때 \(\lim_{n\to \infty} \sum_{k=1}^n f(x_k)\Delta x = \int_a^b f(x)\,dx\)입니다.</li>
-            <li><span class="tag">설명</span>합의 각 항을 '높이 × 너비'로 쪼개 봅니다. \(\frac{1}{n + k} = (\frac{1}{n}) \cdot \frac{1}{1 + \frac{k}{n}}\)이므로 너비는 \(\frac{1}{n}\), 높이는 \(f(\frac{k}{n}) = \frac{1}{1 + \frac{k}{n}}\)입니다. \(\frac{k}{n}\)이 0에서 1까지 움직이므로 <b>\(\lim \sum_{k=1}^n (\frac{1}{n}) f(\frac{k}{n}) = \int_0^1 f(x)\,dx\)</b>를 써서 \(\int_0^1 \frac{1}{1 + x}\,dx = \ln 2\)를 얻습니다. 일반적으로 \(\frac{1}{n}\) 또는 \(\frac{b - a}{n}\)은 \(dx\), \(\frac{k}{n}\)을 포함한 식은 \(x\), \(k = 1\)과 \(k = n\)일 때의 값은 적분 구간의 끝으로 읽습니다.</li>
-            <li><span class="tag">연결</span>\(k\)를 0부터 \(n - 1\)까지 더하면 직사각형의 왼쪽 끝 높이를 쓰는 셈입니다. 두 합의 차는 맨 끝 직사각형 두 개의 차 \(\{f(b) - f(a)\}\Delta x\)뿐이므로 \(n \to \infty\)이면 0이 되어 극한은 같습니다. 이 생각은 부피, 움직인 거리처럼 '잘게 나누어 더하는' 모든 계산의 바탕이 됩니다.</li>
-            <li><span class="tag">적용</span>둘째 보기에서 \(n\)을 1, 10, 80으로 바꾸며 \(S_n\)가 \(\ln 2 \approx 0.6931\)로 다가가는지 보세요. 오른쪽 끝과 왼쪽 끝 중 어느 합이 더 큰가요? 함수가 감소하는 것과 어떤 관계인가요? 셋째 보기는 너비가 \(\frac{\pi}{n}\)입니다. 적분 구간은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>각 항이 0으로 간다고 합도 0으로 간다고 생각하면 안 됩니다. 항의 개수가 함께 늘어나기 때문입니다. 또 너비를 잘못 읽기 쉽습니다. \((\frac{\pi}{n}) \sin(\frac{k\pi}{n})\)을 \(\int_0^1 \sin(\pi x)\,dx\)로 읽으면 너비 \(\frac{\pi}{n}\)과 \(\frac{1}{n}\)의 차이인 \(\pi\)배만큼 틀립니다.</li>
+            <li><span class="tag">질문</span>\(\lim_{n\to \infty} \{\frac{1}{n + 1} + \frac{1}{n + 2} + \cdots + \frac{1}{2n}\}\)은 얼마일까? 항은 점점 작아지지만 개수는 늘어난다.</li>
+            <li><span class="tag">복원</span>\(f\)가 \([a, b]\)에서 연속이면 구간을 \(n\)등분해 \(\Delta x = \frac{b - a}{n}\), \(x_k = a + k\Delta x\)로 둘 때 \(\lim_{n\to \infty} \sum_{k=1}^n f(x_k)\Delta x = \int_a^b f(x)\,dx\)이다.</li>
+            <li><span class="tag">설명</span>합의 각 항을 높이 × 너비로 쪼개 본다. \(\frac{1}{n + k} = (\frac{1}{n}) \cdot \frac{1}{1 + \frac{k}{n}}\)이므로 너비는 \(\frac{1}{n}\), 높이는 \(f(\frac{k}{n}) = \frac{1}{1 + \frac{k}{n}}\)이다. \(\frac{k}{n}\)이 0에서 1까지 움직이므로 \(\lim \sum_{k=1}^n (\frac{1}{n}) f(\frac{k}{n}) = \int_0^1 f(x)\,dx\)를 써서 \(\int_0^1 \frac{1}{1 + x}\,dx = \ln 2\)를 얻는다. 일반적으로 \(\frac{1}{n}\) 또는 \(\frac{b - a}{n}\)은 \(dx\)로, \(\frac{k}{n}\)을 포함한 식은 \(x\)로, \(k = 1\)과 \(k = n\)일 때의 값은 적분 구간의 끝으로 읽는다.</li>
+            <li><span class="tag">연결</span>\(k\)를 0부터 \(n - 1\)까지 더하면 직사각형의 왼쪽 끝 높이를 쓰는 셈이다. 두 합의 차는 맨 끝 직사각형 두 개의 차 \(\{f(b) - f(a)\}\Delta x\)뿐이므로 \(n \to \infty\)이면 0이 되어 극한은 같다. 이 생각은 부피, 움직인 거리처럼 잘게 나누어 더하는 모든 계산의 바탕이 된다.</li>
+            <li><span class="tag">적용</span>둘째 보기에서 \(n\)을 1, 10, 80으로 바꾸며 \(S_n\)가 \(\ln 2 \approx 0.6931\)로 다가가는지 보고, 오른쪽 끝과 왼쪽 끝 중 어느 합이 더 큰지, 그것이 함수가 감소하는 것과 어떤 관계인지 생각해 보자. 셋째 보기는 너비가 \(\frac{\pi}{n}\)인데, 적분 구간이 어떻게 되는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>각 항이 0으로 간다고 합도 0으로 간다고 생각하면 안 되는데, 항의 개수가 함께 늘어나기 때문이다. 또 너비를 잘못 읽기 쉬워서, \((\frac{\pi}{n}) \sin(\frac{k\pi}{n})\)을 \(\int_0^1 \sin(\pi x)\,dx\)로 읽으면 너비 \(\frac{\pi}{n}\)과 \(\frac{1}{n}\)의 차이인 \(\pi\)배만큼 틀린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{n\to \infty} \sum_{k=1}^n (\frac{k}{n^2}) e^{\frac{k}{n}}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞습니다.</b> \((\frac{1}{n}) \cdot (\frac{k}{n})e^{\frac{k}{n}}\)이므로 \(\int_0^1 x e^x\,dx\)이고, 부분적분으로 \([(x - 1)e^x]_0^1 = 0 - (-1) = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>\(\frac{k}{n}\)을 너비로 써 버렸습니다.</b> \(\frac{k}{n^2}\)에서 \(\frac{1}{n}\)만 너비이고 남은 \(\frac{k}{n}\)은 높이의 일부인 \(x\)입니다. 이 값은 \(\int_0^1 e^x\,dx\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>항만 보고 판단했습니다.</b> 각 항은 0으로 가지만 항의 개수 \(n\)이 함께 늘어납니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1<span class="why"><b>맞다.</b> \((\frac{1}{n}) \cdot (\frac{k}{n})e^{\frac{k}{n}}\)이므로 \(\int_0^1 x e^x\,dx\)이고, 부분적분으로 \([(x - 1)e^x]_0^1 = 0 - (-1) = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(e - 1\)<span class="why"><b>\(\frac{k}{n}\)을 너비로 써 버렸다.</b> \(\frac{k}{n^2}\)에서 \(\frac{1}{n}\)만 너비이고 남은 \(\frac{k}{n}\)은 높이의 일부인 \(x\)이다. 이 값은 \(\int_0^1 e^x\,dx\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>항만 보고 판단했다.</b> 각 항은 0으로 가지만 항의 개수 \(n\)이 함께 늘어난다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-6.html#card-calc2-cross-section"><small class="mono">미적분Ⅱ 3.6</small>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</a><a href="../../c/calc2/3-6.html#card-calc2-cavalieri"><small class="mono">미적분Ⅱ 3.6</small>입체를 비스듬히 밀면 부피가 바뀔까?</a><a href="../../c/calc2/3-7.html#card-calc2-distance-area"><small class="mono">미적분Ⅱ 3.7</small>속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?</a><a href="../../c/calc2/3-7.html#card-calc2-path-length"><small class="mono">미적분Ⅱ 3.7</small>평면 위를 움직인 점은 얼마나 먼 길을 갔을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-6.html#card-calc2-cross-section"><small class="mono">미적분Ⅱ 3.6</small>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</a><a href="../../c/calc2/3-6.html#card-calc2-cavalieri"><small class="mono">미적분Ⅱ 3.6</small>입체를 비스듬히 밀면 부피가 바뀔까?</a><a href="../../c/calc2/3-6.html#text-calc2-volume"><small class="mono">미적분Ⅱ 3.6</small>부피</a><a href="../../c/calc2/3-7.html#card-calc2-distance-area"><small class="mono">미적분Ⅱ 3.7</small>속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?</a></div></nav>
 
       <article class="card" id="card-calc2-sum-to-int">
         <header class="card-head">
-          <span class="no">3.4.2</span><h2>같은 합을 서로 다른 정적분으로 읽어도 될까?</h2><span class="kind">정적분과 급수의 합 · 비교</span>
+          <span class="no">탐구 2</span><h2>같은 합을 서로 다른 정적분으로 읽어도 될까?</h2><span class="kind">정적분과 급수의 합 · 비교</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,42 +186,43 @@
                 <div><dt>이 해석의 정적분 값</dt><dd class="n-i">—</dd></div>
                 <div><dt>판정</dt><dd class="n-ok">—</dd></div>
               </dl>
-              <p class="fig-note">직사각형은 고른 정적분의 구간을 \(n\)등분하고 오른쪽 끝의 높이를 쓴 것입니다. 첫째 값과 둘째 값이 \(n\)마다 똑같은지 보세요.</p>
+              <p class="fig-note">직사각형은 고른 정적분의 구간을 \(n\)등분하고 오른쪽 끝의 높이를 쓴 것이다. 첫째 값과 둘째 값이 \(n\)마다 똑같은지 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\lim \sum_{k=1}^n (\frac{2}{n})(1 + \frac{2k}{n})^2\)를 정적분으로 바꾸는 방법은 하나뿐일까요?</li>
-            <li><span class="tag">복원</span>구간 \([a, b]\)를 \(n\)등분하면 \(\Delta x = \frac{b - a}{n}\), \(x_k = a + k\Delta x\)이고 \(\lim \sum f(x_k)\Delta x = \int_a^b f(x)\,dx\)입니다.</li>
-            <li><span class="tag">설명</span>\(\frac{2}{n}\)을 \(\Delta x\)로 보면 구간 길이는 2입니다. \(x_k = 1 + \frac{2k}{n}\)으로 읽으면 \(x\)는 1에서 3까지 움직이고 높이는 \(x^2\)이므로 \(\int_1^3 x^2\,dx\)입니다. \(x_k = \frac{2k}{n}\)으로 읽으면 높이는 \((1 + x)^2\)이고 구간은 [0, 2]입니다. \(\frac{1}{n}\)을 \(\Delta x\)로 보면 남은 2는 높이에 들어가 \(\int_0^1 2(1 + 2x)^2\,dx\)가 됩니다. 세 해석은 <b>직사각형의 넓이가 하나하나 같으므로</b> 모두 같은 값 \(\frac{26}{3}\)을 줍니다. 핵심은 \(\Delta x\), \(x_k\), \(f\)를 하나의 짝으로 맞추어 읽는 것입니다.</li>
-            <li><span class="tag">연결</span>세 정적분이 같은 것은 치환적분으로도 확인됩니다. \(\int_1^3 x^2\,dx\)에서 \(x = 1 + t\)로 놓으면 \(\int_0^2 (1 + t)^2\,dt\), \(x = 1 + 2s\)로 놓으면 \(\int_0^1 2(1 + 2s)^2\,ds\)입니다. 급수의 합을 정적분으로 바꾸는 일과 변수를 바꾸는 일은 같은 생각입니다.</li>
-            <li><span class="tag">적용</span>네 해석을 차례로 골라 첫째 값과 둘째 값을 비교하세요. 어느 해석에서 두 값이 어긋나나요? \(n\)을 60까지 늘리면 \(S_n\)는 어떤 수에 다가가나요? \(\frac{26}{3} \approx 8.667\)과 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(\frac{2}{n}\)을 너비로 정했다면 구간 길이는 2이고 \(x_k\)도 \(\frac{2}{n}\) 간격으로 움직여야 합니다. 넷째 해석처럼 구간만 [0, 2]로 정하고 높이에서 1을 빠뜨리면 다른 값 \(\frac{8}{3}\)이 됩니다. 너비와 구간 길이, \(x_k\)의 간격이 서로 맞는지 꼭 확인하세요.</li>
+            <li><span class="tag">질문</span>\(\lim \sum_{k=1}^n (\frac{2}{n})(1 + \frac{2k}{n})^2\)를 정적분으로 바꾸는 방법은 하나뿐일까?</li>
+            <li><span class="tag">복원</span>구간 \([a, b]\)를 \(n\)등분하면 \(\Delta x = \frac{b - a}{n}\), \(x_k = a + k\Delta x\)이고 \(\lim \sum f(x_k)\Delta x = \int_a^b f(x)\,dx\)이다.</li>
+            <li><span class="tag">설명</span>\(\frac{2}{n}\)을 \(\Delta x\)로 보면 구간 길이는 2이다. 이때 \(x_k = 1 + \frac{2k}{n}\)으로 읽으면 \(x\)는 1에서 3까지 움직이고 높이는 \(x^2\)이므로 \(\int_1^3 x^2\,dx\)이고, \(x_k = \frac{2k}{n}\)으로 읽으면 높이는 \((1 + x)^2\)이고 구간은 [0, 2]이다. 한편 \(\frac{1}{n}\)을 \(\Delta x\)로 보면 남은 2는 높이에 들어가 \(\int_0^1 2(1 + 2x)^2\,dx\)가 된다. 세 해석은 직사각형의 넓이가 하나하나 같으므로 모두 같은 값 \(\frac{26}{3}\)을 주며, 그래서 \(\Delta x\), \(x_k\), \(f\)를 하나의 짝으로 맞추어 읽어야 한다.</li>
+            <li><span class="tag">연결</span>세 정적분이 같은 것은 치환적분으로도 확인된다. \(\int_1^3 x^2\,dx\)에서 \(x = 1 + t\)로 놓으면 \(\int_0^2 (1 + t)^2\,dt\), \(x = 1 + 2s\)로 놓으면 \(\int_0^1 2(1 + 2s)^2\,ds\)이다. 즉 급수의 합을 정적분으로 바꾸는 일과 변수를 바꾸는 일은 같은 생각이다.</li>
+            <li><span class="tag">적용</span>네 해석을 차례로 골라 첫째 값과 둘째 값을 비교하며 어느 해석에서 두 값이 어긋나는지 보자. 그리고 \(n\)을 60까지 늘리면 \(S_n\)가 어떤 수에 다가가는지 \(\frac{26}{3} \approx 8.667\)과 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\frac{2}{n}\)을 너비로 정했다면 구간 길이는 2이고 \(x_k\)도 \(\frac{2}{n}\) 간격으로 움직여야 한다. 넷째 해석처럼 구간만 [0, 2]로 정하고 높이에서 1을 빠뜨리면 다른 값 \(\frac{8}{3}\)이 되므로, 너비와 구간 길이, \(x_k\)의 간격이 서로 맞는지 꼭 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{n\to \infty} \sum_{k=1}^n (\frac{1}{n})(1 + \frac{k}{n})^3\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{15}{4}\)<span class="why"><b>맞습니다.</b> \(x_k = 1 + \frac{k}{n}\), \(\Delta x = \frac{1}{n}\)으로 읽으면 \(\int_1^2 x^3\,dx = \frac{16 - 1}{4} = \frac{15}{4}\)입니다. \(\int_0^1 (1 + x)^3\,dx\)로 읽어도 같은 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{4}\)<span class="why"><b>높이에서 1을 빠뜨렸습니다.</b> 구간을 [0, 1]로 두고 높이를 \(x^3\)으로 쓰면 \(\int_0^1 x^3\,dx\)가 됩니다. \(x = \frac{k}{n}\)이면 높이는 \((1 + x)^3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>구간을 [0, 2]로 읽었습니다.</b> \(\int_0^2 x^3\,dx = 4\)입니다. 너비가 \(\frac{1}{n}\)이므로 구간 길이는 1입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{15}{4}\)<span class="why"><b>맞다.</b> \(x_k = 1 + \frac{k}{n}\), \(\Delta x = \frac{1}{n}\)으로 읽으면 \(\int_1^2 x^3\,dx = \frac{16 - 1}{4} = \frac{15}{4}\)이다. \(\int_0^1 (1 + x)^3\,dx\)로 읽어도 같은 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{4}\)<span class="why"><b>높이에서 1을 빠뜨렸다.</b> 구간을 [0, 1]로 두고 높이를 \(x^3\)으로 쓰면 \(\int_0^1 x^3\,dx\)가 된다. \(x = \frac{k}{n}\)이면 높이는 \((1 + x)^3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>구간을 [0, 2]로 읽었다.</b> \(\int_0^2 x^3\,dx = 4\)이다. 너비가 \(\frac{1}{n}\)이므로 구간 길이는 1이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-6.html#card-calc2-cross-section"><small class="mono">미적분Ⅱ 3.6</small>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</a><a href="../../c/calc2/3-6.html#card-calc2-cavalieri"><small class="mono">미적분Ⅱ 3.6</small>입체를 비스듬히 밀면 부피가 바뀔까?</a><a href="../../c/calc2/3-7.html#card-calc2-distance-area"><small class="mono">미적분Ⅱ 3.7</small>속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?</a><a href="../../c/calc2/3-7.html#card-calc2-path-length"><small class="mono">미적분Ⅱ 3.7</small>평면 위를 움직인 점은 얼마나 먼 길을 갔을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/3-1.html#card-calc2-xn-integral"><small class="mono">미적분Ⅱ 3.1</small>xⁿ의 적분 공식은 n = -1에서 왜 멈출까?</a><a href="../../c/calc2/3-1.html#card-calc2-antideriv-check"><small class="mono">미적분Ⅱ 3.1</small>어느 후보가 ex, sin x의 진짜 원시함수일까?</a><a href="../../c/calc2/3-1.html#text-calc2-integrals"><small class="mono">미적분Ⅱ 3.1</small>여러 가지 함수의 적분</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc2/3-6.html#card-calc2-cross-section"><small class="mono">미적분Ⅱ 3.6</small>얇게 썬 조각을 모으면 부피를 구할 수 있을까?</a><a href="../../c/calc2/3-6.html#card-calc2-cavalieri"><small class="mono">미적분Ⅱ 3.6</small>입체를 비스듬히 밀면 부피가 바뀔까?</a><a href="../../c/calc2/3-6.html#text-calc2-volume"><small class="mono">미적분Ⅱ 3.6</small>부피</a><a href="../../c/calc2/3-7.html#card-calc2-distance-area"><small class="mono">미적분Ⅱ 3.7</small>속도 그래프만 보고 얼마나 움직였는지 알 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">27문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-3-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">27문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +230,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/integ.js"></script>
 <script src="../../js/cards/calc2/sum-read.js"></script>

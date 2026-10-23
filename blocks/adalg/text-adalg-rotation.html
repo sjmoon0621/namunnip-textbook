@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "sec": "2-5",
+  "short": "본문 · 대칭변환·닮음변환·회전변환"
+}
+-->
+<article class="card reading" id="text-adalg-rotation" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>대칭변환·닮음변환·회전변환</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">사진 편집 프로그램을 직접 만들어, 원래 사진의 각 픽셀 좌표 \((x, y)\)에 회전 행렬을 곱해 새 좌표를 구하고 거기에 색을 칠했다. 90°로 돌리면 깔끔했는데, 30°로 돌리니 결과 사진 곳곳에 아무 색도 칠해지지 않은 검은 점이 뚫렸다. 회전은 넓이를 바꾸지 않으니 픽셀 수도 그대로일 텐데, 왜 빈 곳이 생길까? 회전, 대칭, 닮음 변환은 각각 어떤 행렬이고, 빈 점 없이 돌리려면 어떻게 계산해야 할까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 132" role="img" aria-label="세 가지 변환의 행렬">
+        <g class="s">
+          <text x="20" y="22">변환</text><text x="200" y="22">행렬</text><text x="400" y="22">행렬식</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">원점 둘레 θ 회전</text><text x="200" y="52">(cos θ, −sin θ / sin θ, cos θ)</text><text x="400" y="52">1</text>
+          <text x="20" y="74">직선 y = x 대칭</text><text x="200" y="74">(0, 1 / 1, 0)</text><text x="400" y="74">−1</text>
+          <text x="20" y="96">k배 닮음</text><text x="200" y="96">(k, 0 / 0, k)</text><text x="400" y="96">k²</text>
+          <text x="20" y="122">회전과 대칭은 길이와 각을 보존하고, 닮음은 모양만 보존한다.</text>
+        </g>
+      </svg>
+      <figcaption>그림 1. 회전은 넓이와 방향을, 대칭은 넓이를 보존하고 방향을 뒤집으며, 닮음은 넓이를 \(k^2\)배 한다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>선형변환과 행렬(<a href="2-4.html">선형변환과 행렬</a>), 삼각함수의 덧셈정리, 행렬식.</div>
+
+    <h3><span class="no">2.5.1</span>기저의 행선지로 행렬 만들기</h3>
+    <p>원점 둘레로 \(\theta\)만큼 돌리면 \((1, 0)\)은 \((\cos\theta, \sin\theta)\)로, \((0, 1)\)은 \((-\sin\theta, \cos\theta)\)로 간다. 이 둘을 열로 쓰면 회전 행렬이 된다. 직선 \(y = x\)에 대한 대칭은 \((1, 0)\)과 \((0, 1)\)을 서로 바꾸므로 \(\begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}\)이고, 원점을 중심으로 \(k\)배 늘이는 닮음변환은 두 기저를 모두 \(k\)배 하므로 \(kI\)이다. 이렇게 기저 벡터가 어디로 가는지만 그려 보면 각 변환의 행렬을 바로 쓸 수 있다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">회전과 대칭의 행렬</span></span>
+      <p>원점 둘레 \(\theta\) 회전의 행렬은 \(R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}\)이고 \(R_\alpha R_\beta = R_{\alpha + \beta}\)이다. 원점을 지나고 \(x\)축과 \(\theta\)를 이루는 직선에 대한 대칭의 행렬은 \(\begin{pmatrix}\cos2\theta & \sin2\theta\\ \sin2\theta & -\cos2\theta\end{pmatrix}\)이다.</p>
+    </div>
+    <p>두 회전을 차례로 하면 각이 더해지므로 \(R_\alpha R_\beta = R_{\alpha + \beta}\)이다. 행렬을 곱해 성분을 비교하면 \(\cos(\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta\)가 나와, 삼각함수의 덧셈정리가 회전 행렬의 곱셈에 그대로 들어 있다. 회전과 대칭은 모두 길이를 보존하지만, 회전은 행렬식이 1이고 대칭은 \(-1\)이다. 그래서 회전은 시계 방향의 순서를 지키고 대칭은 뒤집는다.<sup class="fn"><a href="#fn-adalg-rotation-1">1</a></sup></p>
+
+    <h3><span class="no">2.5.2</span>거꾸로 찾아가면 빈 점이 없다</h3>
+    <p>원래 사진의 픽셀 중심에 회전 행렬을 곱하면 결과 좌표는 대부분 정수가 아니어서 가장 가까운 픽셀로 반올림한다. 그런데 30°처럼 비스듬히 돌리면 원래 픽셀 둘이 같은 결과 픽셀로 반올림되는 곳이 생기고, 넓이는 같으므로 그만큼 아무도 찾아오지 않는 결과 픽셀이 생긴다. 그것이 빈 점이다. 그래서 실제 프로그램은 거꾸로 계산한다. 결과 사진의 각 픽셀에 역행렬 \(R_{-\theta}\)를 곱해 원래 사진의 어느 위치에서 왔는지 찾고, 그 위치의 색을 가져온다. 그러면 결과의 모든 픽셀이 색을 하나씩 받는다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="정방향과 역방향 계산의 비교">
+        <g class="s">
+          <text x="20" y="22">방법</text><text x="160" y="22">계산</text><text x="400" y="22">결과</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">정방향</text><text x="160" y="52">원래 픽셀 → R_θ → 반올림</text><text x="400" y="52" class="tb">빈 점, 겹침</text>
+          <text x="20" y="74">역방향</text><text x="160" y="74">결과 픽셀 → R_(−θ) → 색 가져옴</text><text x="400" y="74" class="td">빈 점 없음</text>
+          <text x="20" y="96">90° 회전</text><text x="160" y="96">정수 좌표가 정수로</text><text x="400" y="96">어느 방법이든 깔끔</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 결과 픽셀마다 역행렬로 원래 위치를 찾아가면 모든 픽셀이 칠해진다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+      <p>점 \((2, 1)\)을 원점 둘레로 90°, 30° 돌린 점을 구하여라. 결과 사진의 픽셀 \((1, 2)\)이 30° 회전에서 원래 사진의 어느 위치에서 왔는지 역행렬로 구하여라. \(\sqrt3 \approx 1.732\)이다.</p>
+    </div>
+    <p>90° 회전은 \(R_{90°} = \begin{pmatrix}0 & -1\\ 1 & 0\end{pmatrix}\)이므로 \((2, 1)\)은 \((-1, 2)\)로 간다. 정수 좌표가 정수 좌표로 가서 깔끔하다. 30° 회전은 \((2\cos30° - \sin30°,\ 2\sin30° + \cos30°) = (\sqrt3 - 0.5,\ 1 + \tfrac{\sqrt3}{2}) \approx (1.232, 1.866)\)으로, 반올림하면 \((1, 2)\)이다.</p>
+    <p>결과 픽셀 \((1, 2)\)에 \(R_{-30°} = \begin{pmatrix}\cos30° & \sin30°\\ -\sin30° & \cos30°\end{pmatrix}\)를 곱하면 \((0.866 + 1,\ -0.5 + 1.732) \approx (1.866, 1.232)\)이고, 원래 사진에서 가장 가까운 픽셀은 \((2, 1)\)이다. 이렇게 결과의 모든 픽셀에서 출발하면 빈 픽셀이 없다. 즉 회전, 대칭, 닮음 변환은 기저의 행선지로 행렬을 바로 쓸 수 있고, 회전 행렬의 역행렬은 반대 방향의 회전이어서 결과 픽셀에서 원래 위치를 거꾸로 찾는 데 쓴다.</p>
+    <p>아래 탐구 카드에서 회전, 대칭, 닮음 행렬로 도형을 목표 모양에 맞추어 보고, 픽셀 사진을 돌리면 구멍이 뚫리는 까닭을 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adalg-rotation-1">회전 행렬의 성분이 정확한 실수여도, 컴퓨터는 \(\cos\)과 \(\sin\)을 유한한 자릿수로 저장한다. 그래서 작은 회전을 수만 번 거듭하면 오차가 쌓여 행렬식이 1에서 조금씩 벗어나고, 게임 속 물체가 서서히 커지거나 찌그러지기도 한다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>회전, 대칭, 닮음 변환은 기저 벡터의 행선지를 열로 써서 행렬로 나타내며, 회전 행렬은 \(R_\alpha R_\beta = R_{\alpha + \beta}\)를 만족해 덧셈정리를 품고 있다. 회전은 행렬식 1로 길이와 방향을, 대칭은 행렬식 \(-1\)로 길이를 보존하고 방향을 뒤집으며, 닮음은 넓이를 \(k^2\)배 한다. 처음 질문의 빈 점은 원래 픽셀을 돌려 반올림하다 생긴 것이며, 결과 픽셀마다 역행렬 \(R_{-\theta}\)로 원래 위치를 찾아가면 생기지 않는다.</p></div>
+  </div>
+</article>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>가우스 소거법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="첨가행렬과 기본 행 연산, 행 사다리꼴과 기약 행 사다리꼴, 가우스 소거법으로 연립일차방정식 풀기. 행 연산을 직접 골라 적용하는 카드와, 화학 반응식의 계수를 동차 연립방정식으로 맞추는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-row-puzzle .board { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .8rem; align-items: center; }
@@ -54,18 +59,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-row-puzzle"><span class="mono">2.1.1</span>행 연산 세 가지로 연립방정식 풀기</a></li>
-        <li><a href="#card-adalg-balance-eq"><span class="mono">2.1.2</span>화학 반응식의 계수는 연립방정식의 해</a></li>
+        <li><a href="#text-adalg-gauss"><span class="mono">본문</span>가우스 소거법</a></li>
+        <li><a href="#card-adalg-row-puzzle"><span class="mono">탐구 1</span>행 연산 세 가지로 연립방정식 풀기</a></li>
+        <li><a href="#card-adalg-balance-eq"><span class="mono">탐구 2</span>화학 반응식의 계수는 연립방정식의 해</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-gauss" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>가우스 소거법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">가스레인지의 프로페인이 타는 반응은 \(a\,\mathrm{C_3H_8} + b\,\mathrm{O_2} \to c\,\mathrm{CO_2} + d\,\mathrm{H_2O}\)이다. 반응 전후에 탄소, 수소, 산소 원자의 수가 같아야 하므로 원소마다 방정식이 하나씩 생긴다. 미지수는 넷인데 방정식은 셋이다. 손으로 이리저리 맞추어 보면 계수를 찾을 수 있지만, 원소와 물질이 많은 반응에서는 그렇게 하기 어렵다. 어떤 연립일차방정식이든 같은 순서로 차례차례 풀어 가는 방법이 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="원소별로 세운 방정식과 첨가행렬">
+              <g class="s">
+                <text x="20" y="22">원소</text><text x="120" y="22">방정식</text><text x="320" y="22">행 (a, b, c, d)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">탄소</text><text x="120" y="52">3a − c = 0</text><text x="320" y="52">(3, 0, −1, 0)</text>
+                <text x="20" y="74">수소</text><text x="120" y="74">8a − 2d = 0</text><text x="320" y="74">(8, 0, 0, −2)</text>
+                <text x="20" y="96">산소</text><text x="120" y="96">2b − 2c − d = 0</text><text x="320" y="96">(0, 2, −2, −1)</text>
+                <text x="20" y="122">상수항이 모두 0인 동차 연립방정식이다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 반응식의 계수 맞추기는 원소마다 원자 수가 같다는 연립일차방정식이 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>연립일차방정식, 행렬의 뜻과 성분, 일차독립과 일차종속(<a href="1-4.html">일차독립과 일차종속</a>).</div>
+
+          <h3><span class="no">2.1.1</span>세 가지 행 연산</h3>
+          <p>연립일차방정식의 계수와 상수항을 행렬로 늘어놓은 것을 첨가행렬이라 한다. 방정식을 풀 때 하는 일은 두 방정식의 순서를 바꾸기, 한 방정식에 0이 아닌 수를 곱하기, 한 방정식의 실수배를 다른 방정식에 더하기의 세 가지이다. 이 세 가지 기본 행 연산은 해를 바꾸지 않는다. 그래서 첨가행렬에 행 연산을 되풀이해 아래쪽 행부터 미지수를 하나씩 없애 계단 모양으로 만들고, 맨 아래 행에서부터 거꾸로 대입하면 해를 얻는다. 이것이 가우스 소거법이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.1.1 <span class="nm">가우스 소거법과 해의 개수</span></span>
+            <p>기본 행 연산으로 첨가행렬을 행사다리꼴로 바꾸면, \(0 = (\text{0이 아닌 수})\) 꼴의 행이 생길 때 해가 없고, 그렇지 않으면 해가 있다. 해가 있을 때 각 행의 맨 앞 0이 아닌 성분이 있는 열의 미지수를 기본 변수, 나머지를 자유 변수라 하며, 자유 변수가 있으면 해가 무수히 많다.</p>
+          </div>
+          <p>미지수가 방정식보다 많은 동차 연립방정식은 자유 변수가 반드시 생기므로 0이 아닌 해가 무수히 많다. 반응식에서 이것은 계수를 모두 두 배, 세 배 해도 여전히 맞는 반응식이 된다는 뜻이다. 그래서 자유 변수 하나에 적당한 값을 주고 나머지를 정한 뒤, 계수가 가장 작은 자연수가 되도록 맞춘다. 가우스 소거법은 정해진 순서를 따르기만 하면 되므로 컴퓨터로 수천 개의 미지수가 있는 방정식도 풀 수 있다.<sup class="fn"><a href="#fn-adalg-gauss-1">1</a></sup></p>
+
+          <h3><span class="no">2.1.2</span>계단을 만들어 풀기</h3>
+          <p>연립방정식 \(x + y + z = 6\), \(2x + y - z = 1\), \(x - y + 2z = 5\)에 가우스 소거법을 써 보자. 둘째 행에서 첫째 행의 2배를, 셋째 행에서 첫째 행을 빼면 \(x\)가 사라져 \(-y - 3z = -11\), \(-2y + z = -1\)이 된다. 다시 셋째 행에서 둘째 행의 2배를 빼면 \(7z = 21\)이 되어 \(z = 3\)이다. 거꾸로 대입하면 \(-y - 9 = -11\)에서 \(y = 2\), 첫째 식에서 \(x = 1\)이다. 그래서 해는 \((1, 2, 3)\) 하나뿐이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="가우스 소거법으로 만든 계단 모양">
+              <g class="s">
+                <text x="20" y="22">행</text><text x="120" y="22">원래</text><text x="270" y="22">소거 뒤</text><text x="420" y="22">대입</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1</text><text x="120" y="52">x + y + z = 6</text><text x="270" y="52">x + y + z = 6</text><text x="420" y="52">x = 1</text>
+                <text x="20" y="74">2</text><text x="120" y="74">2x + y − z = 1</text><text x="270" y="74">−y − 3z = −11</text><text x="420" y="74">y = 2</text>
+                <text x="20" y="96">3</text><text x="120" y="96">x − y + 2z = 5</text><text x="270" y="96">7z = 21</text><text x="420" y="96" class="td">z = 3</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 아래 행으로 갈수록 미지수가 하나씩 줄어든 계단을 만들고 맨 아래부터 거꾸로 대입한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+            <p>그림 1의 연립방정식을 가우스 소거법으로 풀어 프로페인 연소 반응식의 가장 작은 자연수 계수를 구하여라.</p>
+          </div>
+          <p>탄소의 식에서 \(c = 3a\), 수소의 식에서 \(d = 4a\)이다. 행 연산으로 쓰면 첫째 행을 3으로, 둘째 행을 2로 나누어 \(a\)의 계수를 맞추고 빼는 과정이다. 산소의 식에 넣으면 \(2b = 2c + d = 6a + 4a = 10a\)이므로 \(b = 5a\)이다. 미지수 넷에 방정식이 셋이어서 \(a\)가 자유 변수로 남는다.</p>
+          <p>계수가 가장 작은 자연수가 되도록 \(a = 1\)로 놓으면 \(b = 5\), \(c = 3\), \(d = 4\)이다. 그래서 반응식은 \(\mathrm{C_3H_8} + 5\,\mathrm{O_2} \to 3\,\mathrm{CO_2} + 4\,\mathrm{H_2O}\)이다. 확인하면 산소 원자는 왼쪽 10개, 오른쪽 \(6 + 4 = 10\)개로 같다. 즉 가우스 소거법은 세 가지 행 연산으로 미지수를 하나씩 없애 계단 모양을 만들고 거꾸로 대입하는 정해진 순서여서, 해가 하나인지, 없는지, 무수히 많은지까지 함께 알려 준다.</p>
+          <p>아래 탐구 카드에서 행 연산 세 가지로 여러 연립방정식을 풀어 보고, 화학 반응식의 계수를 가우스 소거법으로 한 번에 정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-gauss-1">이 방법은 가우스보다 훨씬 앞서 기원전 1세기 무렵 중국의 수학책 『구장산술』에 방정이라는 이름으로 실려 있다. 산가지를 표처럼 늘어놓고 열끼리 빼는 방식이어서 오늘날의 행렬과 거의 같다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>가우스 소거법은 행의 순서 바꾸기, 0이 아닌 수 곱하기, 한 행의 실수배를 다른 행에 더하기의 세 가지 행 연산으로 첨가행렬을 계단 모양으로 만들고, 맨 아래부터 거꾸로 대입해 해를 구한다. \(0 = \)(0이 아닌 수)인 행이 생기면 해가 없고, 자유 변수가 남으면 해가 무수히 많다. 처음 질문의 반응식은 자유 변수 \(a = 1\)로 놓아 \(\mathrm{C_3H_8} + 5\,\mathrm{O_2} \to 3\,\mathrm{CO_2} + 4\,\mathrm{H_2O}\)로 계수가 정해진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-1.html#card-cm1-matrix-entry"><small class="mono">공통수학1 4.1</small>표의 칸 하나를 어떻게 정확히 가리킬까?</a><a href="../../c/cm1/4-1.html#card-cm1-road-matrix"><small class="mono">공통수학1 4.1</small>도로 지도를 수의 표로 바꿀 수 있을까?</a><a href="../../c/cm1/4-1.html#text-cm1-matrix"><small class="mono">공통수학1 4.1</small>행렬의 뜻</a><a href="../../c/adalg/1-4.html#card-adalg-span-3d"><small class="mono">고급 대수 1.4</small>세 벡터가 공간을 채우지 못하고 평면에 갇히는 때는 언제일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a><a href="../../c/adalg/2-2.html#text-adalg-inverse"><small class="mono">고급 대수 2.2</small>역행렬</a></div></nav>
+
       <article class="card" id="card-adalg-row-puzzle">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</h2><span class="kind">가우스 소거법 · 조작</span>
+          <span class="no">탐구 1</span><h2>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</h2><span class="kind">가우스 소거법 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -91,30 +154,30 @@
             <p class="verdict" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>미지수가 셋인 연립방정식을 풀 때 우리는 식끼리 더하고 빼고, 식에 수를 곱했습니다. 이 손놀림을 몇 가지 규칙으로 정리하면 미지수가 100개여도 컴퓨터가 똑같이 풀 수 있을까요?</li>
-            <li><span class="tag">복원</span>연립방정식의 한 식에 0이 아닌 수를 곱하거나, 한 식에 다른 식의 몇 배를 더해도 해는 바뀌지 않습니다. 식의 순서를 바꾸어도 마찬가지입니다.</li>
-            <li><span class="tag">설명</span>계수와 상수항만 모은 <em>첨가행렬</em>에서 이 세 가지를 <em>기본 행 연산</em>이라고 합니다: ① 두 행 바꾸기, ② 한 행에 0이 아닌 수 곱하기, ③ 한 행에 다른 행의 실수배 더하기. 왼쪽 위부터 피벗(각 행의 처음 0이 아닌 수) 아래를 0으로 만들어 계단 모양(<em>행 사다리꼴</em>)으로 만드는 것이 <em>가우스 소거법</em>이고, 피벗을 1로, 피벗 위까지 0으로 만들면 <em>기약 행 사다리꼴</em>이 되어 해를 바로 읽습니다.</li>
-            <li><span class="tag">연결</span>1단원에서 일차독립을 판정할 때 쓴 "피벗의 개수"도 이 계산에서 나옵니다. 공학 시뮬레이션, 회로 해석, 3D 그래픽이 매일 수백만 개의 미지수로 이 계산을 합니다.</li>
-            <li><span class="tag">적용</span>문제 1을 기약 행 사다리꼴까지 바꿔 보세요. 몇 번 만에 되나요? 문제 2, 3에서는 사다리꼴이 된 뒤 마지막 행을 보고 해가 몇 개인지 판단하세요. 오른쪽 방정식이 행 연산과 함께 어떻게 바뀌는지도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>한 행에 0을 곱하는 것은 행 연산이 아닙니다. 식 하나를 지워 버려 해가 늘어납니다. 또 마지막 행이 \([0\ 0\ 0 \mid 5]\)이면 \(0 = 5\)라는 뜻이므로 해가 없습니다.</li>
+            <li><span class="tag">질문</span>미지수가 셋인 연립방정식을 풀 때 우리는 식끼리 더하고 빼고, 식에 수를 곱했다. 이 손놀림을 몇 가지 규칙으로 정리하면 미지수가 100개여도 컴퓨터가 똑같이 풀 수 있을까?</li>
+            <li><span class="tag">복원</span>연립방정식의 한 식에 0이 아닌 수를 곱하거나, 한 식에 다른 식의 몇 배를 더해도 해는 바뀌지 않는다. 식의 순서를 바꾸어도 마찬가지이다.</li>
+            <li><span class="tag">설명</span>계수와 상수항만 모은 <em>첨가행렬</em>에서 이 세 가지를 <em>기본 행 연산</em>이라고 한다. ① 두 행 바꾸기, ② 한 행에 0이 아닌 수 곱하기, ③ 한 행에 다른 행의 실수배 더하기. 왼쪽 위부터 피벗(각 행의 처음 0이 아닌 수) 아래를 0으로 만들어 계단 모양(<em>행 사다리꼴</em>)으로 만드는 것이 <em>가우스 소거법</em>이고, 피벗을 1로, 피벗 위까지 0으로 만들면 <em>기약 행 사다리꼴</em>이 되어 해를 바로 읽는다.</li>
+            <li><span class="tag">연결</span>1단원에서 일차독립을 판정할 때 쓴 "피벗의 개수"도 이 계산에서 나온다. 공학 시뮬레이션, 회로 해석, 3D 그래픽이 매일 수백만 개의 미지수로 이 계산을 한다.</li>
+            <li><span class="tag">적용</span>문제 1을 기약 행 사다리꼴까지 바꿔 보자. 몇 번 만에 되는가? 문제 2, 3에서는 사다리꼴이 된 뒤 마지막 행을 보고 해가 몇 개인지 판단해 보자. 오른쪽 방정식이 행 연산과 함께 어떻게 바뀌는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>한 행에 0을 곱하는 것은 행 연산이 아니다. 식 하나를 지워 버려 해가 늘어난다. 또 마지막 행이 \([0\ 0\ 0 \mid 5]\)이면 \(0 = 5\)라는 뜻이므로 해가 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">미지수가 3개인 연립방정식의 첨가행렬을 행 사다리꼴로 바꾸었더니 피벗이 계수 부분에 2개 있고, \([0\ 0\ 0 \mid 0]\)인 행이 하나 생겼습니다. 해는?</p>
+          <p class="q">미지수가 3개인 연립방정식의 첨가행렬을 행 사다리꼴로 바꾸었더니 피벗이 계수 부분에 2개 있고, \([0\ 0\ 0 \mid 0]\)인 행이 하나 생겼다. 해는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>무수히 많다(자유변수 1개).<span class="why"><b>맞습니다.</b> 피벗이 없는 열의 미지수 하나를 자유롭게 정할 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>해가 없다.<span class="why"><b>\(0 = 0\)은 늘 참입니다.</b> 해가 없는 것은 \([0\ 0\ 0 \mid c]\), \(c \ne 0\)일 때입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>하나뿐이다.<span class="why"><b>피벗이 미지수 수(3)보다 적습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>정확히 두 개다.<span class="why"><b>연립일차방정식의 해는 0개, 1개, 무수히 많음 셋 중 하나입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>무수히 많다(자유변수 1개).<span class="why"><b>맞다.</b> 피벗이 없는 열의 미지수 하나를 자유롭게 정할 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>해가 없다.<span class="why"><b>\(0 = 0\)은 늘 참이다.</b> 해가 없는 것은 \([0\ 0\ 0 \mid c]\), \(c \ne 0\)일 때이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>하나뿐이다.<span class="why"><b>피벗이 미지수 수(3)보다 적다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>정확히 두 개다.<span class="why"><b>연립일차방정식의 해는 0개, 1개, 무수히 많음 셋 중 하나이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-1.html#card-cm1-matrix-entry"><small class="mono">공통수학1 4.1</small>표의 칸 하나를 어떻게 정확히 가리킬까?</a><a href="../../c/cm1/4-1.html#card-cm1-road-matrix"><small class="mono">공통수학1 4.1</small>도로 지도를 수의 표로 바꿀 수 있을까?</a><a href="../../c/adalg/1-4.html#card-adalg-span-3d"><small class="mono">고급 대수 1.4</small>세 벡터가 공간을 채우지 못하고 평면에 갇히는 때는 언제일까?</a><a href="../../c/adalg/1-4.html#card-adalg-indep-predict"><small class="mono">고급 대수 1.4</small>계산하기 전에 일차독립인지 알아볼 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-1.html#card-cm1-matrix-entry"><small class="mono">공통수학1 4.1</small>표의 칸 하나를 어떻게 정확히 가리킬까?</a><a href="../../c/cm1/4-1.html#card-cm1-road-matrix"><small class="mono">공통수학1 4.1</small>도로 지도를 수의 표로 바꿀 수 있을까?</a><a href="../../c/cm1/4-1.html#text-cm1-matrix"><small class="mono">공통수학1 4.1</small>행렬의 뜻</a><a href="../../c/adalg/1-4.html#card-adalg-span-3d"><small class="mono">고급 대수 1.4</small>세 벡터가 공간을 채우지 못하고 평면에 갇히는 때는 언제일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a><a href="../../c/adalg/2-2.html#text-adalg-inverse"><small class="mono">고급 대수 2.2</small>역행렬</a></div></nav>
 
       <article class="card" id="card-adalg-balance-eq">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>화학 반응식의 계수는 어떻게 한 번에 정할까?</h2><span class="kind">동차 연립방정식 · 활용</span>
+          <span class="no">탐구 2</span><h2>화학 반응식의 계수는 어떻게 한 번에 정할까?</h2><span class="kind">동차 연립방정식 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,39 +189,39 @@
             <div class="mx small"></div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>프로페인이 탈 때 \(\mathrm{C_3H_8} + \mathrm{O_2} \to \mathrm{CO_2} + \mathrm{H_2O}\)의 계수를 어림으로 맞추다 보면 한쪽을 맞추면 다른 쪽이 틀어집니다. 반응식 맞추기를 연립방정식 문제로 바꿀 수 있을까요?</li>
-            <li><span class="tag">복원</span>화학 반응 전후에 원소마다 원자의 개수는 같습니다(질량 보존). 우변이 모두 0인 연립방정식은 늘 \(\vec{0}\)이라는 해를 가집니다.</li>
-            <li><span class="tag">설명</span>계수를 \(a, b, c, d\)로 두면 원소마다 식이 하나씩 생깁니다. 프로페인이면 C: \(3a = c\), H: \(8a = 2d\), O: \(2b = 2c + d\). 우변이 0인 <em>동차 연립방정식</em> \(A\vec{x} = \vec{0}\)이고, 미지수(4)가 식의 피벗 수(3)보다 많아 자유변수가 하나 생깁니다. 가우스 소거법으로 해를 \(t(1, 5, 3, 4)\) 꼴로 구한 뒤 가장 작은 자연수가 되게 \(t\)를 고릅니다.</li>
-            <li><span class="tag">연결</span>열에 분자 하나씩, 행에 원소 하나씩을 둔 행렬 \(A\)에서 계수 벡터는 열들의 일차종속 관계식입니다. 1단원의 일차종속이 화학에서 이렇게 쓰입니다. 화학 공정 설계 프로그램이 복잡한 반응식을 같은 방식으로 맞춥니다.</li>
-            <li><span class="tag">적용</span>먼저 + − 버튼으로 계수를 직접 맞춰 보세요. 원소별 표가 모두 초록이 되면 성공입니다. 그다음 "가우스 소거법으로 풀기"로 행렬과 해를 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>모든 계수를 2배 해도 식은 맞습니다. 해가 하나가 아니라 직선 하나만큼 있기 때문입니다. 관례로 가장 작은 자연수 비를 씁니다. 식이 맞는다고 그 반응이 실제로 일어난다는 뜻은 아닙니다.</li>
+            <li><span class="tag">질문</span>프로페인이 탈 때 \(\mathrm{C_3H_8} + \mathrm{O_2} \to \mathrm{CO_2} + \mathrm{H_2O}\)의 계수를 어림으로 맞추다 보면 한쪽을 맞추면 다른 쪽이 틀어진다. 반응식 맞추기를 연립방정식 문제로 바꿀 수 있을까?</li>
+            <li><span class="tag">복원</span>화학 반응 전후에 원소마다 원자의 개수는 같다(질량 보존). 우변이 모두 0인 연립방정식은 늘 \(\vec{0}\)이라는 해를 가진다.</li>
+            <li><span class="tag">설명</span>계수를 \(a, b, c, d\)로 두면 원소마다 식이 하나씩 생긴다. 프로페인이면 C: \(3a = c\), H: \(8a = 2d\), O: \(2b = 2c + d\). 우변이 0인 <em>동차 연립방정식</em> \(A\vec{x} = \vec{0}\)이고, 미지수(4)가 식의 피벗 수(3)보다 많아 자유변수가 하나 생긴다. 가우스 소거법으로 해를 \(t(1, 5, 3, 4)\) 꼴로 구한 뒤 가장 작은 자연수가 되게 \(t\)를 고른다.</li>
+            <li><span class="tag">연결</span>열에 분자 하나씩, 행에 원소 하나씩을 둔 행렬 \(A\)에서 계수 벡터는 열들의 일차종속 관계식이다. 1단원의 일차종속이 화학에서 이렇게 쓰인다. 화학 공정 설계 프로그램이 복잡한 반응식을 같은 방식으로 맞춘다.</li>
+            <li><span class="tag">적용</span>먼저 + − 버튼으로 계수를 직접 맞춰 보자. 원소별 표가 모두 초록이 되면 성공이다. 그다음 "가우스 소거법으로 풀기"로 행렬과 해를 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>모든 계수를 2배 해도 식은 맞다. 해가 하나가 아니라 직선 하나만큼 있기 때문이다. 관례로 가장 작은 자연수 비를 쓴다. 식이 맞는다고 그 반응이 실제로 일어난다는 뜻은 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(a\,\mathrm{H_2} + b\,\mathrm{O_2} \to c\,\mathrm{H_2O}\)를 동차 연립방정식으로 쓰고 풀면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((a, b, c) = t(2, 1, 2)\)<span class="why"><b>맞습니다.</b> H: \(2a = 2c\), O: \(2b = c\)이므로 \(a = c = 2b\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((a, b, c) = (1, 1, 1)\)뿐<span class="why"><b>O가 맞지 않습니다.</b> 왼쪽 2개, 오른쪽 1개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((0, 0, 0)\)뿐<span class="why"><b>자명한 해 말고도 해가 있습니다.</b> 미지수가 피벗보다 많습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(t(1, 2, 1)\)<span class="why"><b>O를 거꾸로 세었습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((a, b, c) = t(2, 1, 2)\)<span class="why"><b>맞다.</b> H: \(2a = 2c\), O: \(2b = c\)이므로 \(a = c = 2b\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((a, b, c) = (1, 1, 1)\)뿐<span class="why"><b>O가 맞지 않다.</b> 왼쪽 2개, 오른쪽 1개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((0, 0, 0)\)뿐<span class="why"><b>자명한 해 말고도 해가 있다.</b> 미지수가 피벗보다 많다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(t(1, 2, 1)\)<span class="why"><b>O를 거꾸로 세었다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-1.html#card-cm1-matrix-entry"><small class="mono">공통수학1 4.1</small>표의 칸 하나를 어떻게 정확히 가리킬까?</a><a href="../../c/cm1/4-1.html#card-cm1-road-matrix"><small class="mono">공통수학1 4.1</small>도로 지도를 수의 표로 바꿀 수 있을까?</a><a href="../../c/adalg/1-4.html#card-adalg-span-3d"><small class="mono">고급 대수 1.4</small>세 벡터가 공간을 채우지 못하고 평면에 갇히는 때는 언제일까?</a><a href="../../c/adalg/1-4.html#card-adalg-indep-predict"><small class="mono">고급 대수 1.4</small>계산하기 전에 일차독립인지 알아볼 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-1.html#card-cm1-matrix-entry"><small class="mono">공통수학1 4.1</small>표의 칸 하나를 어떻게 정확히 가리킬까?</a><a href="../../c/cm1/4-1.html#card-cm1-road-matrix"><small class="mono">공통수학1 4.1</small>도로 지도를 수의 표로 바꿀 수 있을까?</a><a href="../../c/cm1/4-1.html#text-cm1-matrix"><small class="mono">공통수학1 4.1</small>행렬의 뜻</a><a href="../../c/adalg/1-4.html#card-adalg-span-3d"><small class="mono">고급 대수 1.4</small>세 벡터가 공간을 채우지 못하고 평면에 갇히는 때는 언제일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-2.html#card-adalg-inverse-elim"><small class="mono">고급 대수 2.2</small>역행렬이 있는지 계산하기 전에 알 수 있을까?</a><a href="../../c/adalg/2-2.html#card-adalg-hill-cipher"><small class="mono">고급 대수 2.2</small>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</a><a href="../../c/adalg/2-2.html#text-adalg-inverse"><small class="mono">고급 대수 2.2</small>역행렬</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

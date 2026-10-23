@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>상태 변화와 이상 기체 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="비열과 잠열을 정량적으로 이해해 가열할 때 물질의 온도와 상태가 어떻게 변하는지 설명하고, 이상 기체의 온도, 압력, 부피 사이의 관계를 입자의 운동으로 이해한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body data-course="mech" data-sec="2-2">
 
@@ -38,18 +44,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-heating-curve"><span class="mono">2.2.1</span>물이 끓는 동안 가한 열은 어디로 갈까?</a></li>
-        <li><a href="#card-mech-ideal-gas"><span class="mono">2.2.2</span>기체를 데우면 압력은 왜 커질까?</a></li>
+        <li><a href="#text-mech-ideal-gas"><span class="mono">본문</span>상태 변화와 이상 기체</a></li>
+        <li><a href="#card-mech-heating-curve"><span class="mono">탐구 1</span>물이 끓는 동안 가한 열은 어디로 갈까?</a></li>
+        <li><a href="#card-mech-ideal-gas"><span class="mono">탐구 2</span>기체를 데우면 압력은 왜 커질까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=mech-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">42문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=mech&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=mech-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">43문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=mech-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-mech-ideal-gas" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>상태 변화와 이상 기체</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">여름 한낮 자동차 타이어의 공기압이 아침보다 높아지고, 뜨거운 차 안에 둔 스프레이 통은 터질 위험이 있다. 기체를 데우면 왜 압력이 커질까? 또 물을 끓일 때 100 °C에서 계속 열을 주는데도 온도가 오르지 않는 까닭은 무엇일까? 기체 분자의 운동으로 보면 두 현상이 설명된다.</p>
+          <figure class="q-fig" data-q="mech-gas">
+            <svg viewBox="0 0 520 220" role="img" aria-label="기체 1 mol의 온도와 부피에 따른 압력"></svg>
+            <div class="q-ctl"><label>절대 온도 (K) <input type="range" data-k="T" min="200" max="600" step="10" value="300"><output data-k="T"></output></label><label>부피 (L) <input type="range" data-k="V" min="10" max="35" step="1" value="25"><output data-k="V"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 기체 1 mol을 피스톤 안에 가두고 온도와 부피를 바꾼다. 온도가 높을수록 분자가 빠르게 벽에 부딪쳐 압력이 커지고, 부피가 작을수록 더 자주 부딪쳐 압력이 커진다(\(PV = nRT\)).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>온도와 입자의 운동, 물질의 세 가지 상태(중학교), 압력 = 힘 ÷ 넓이, 열의 이동(<a href="2-1.html">열의 이동과 단열·열팽창</a>).</div>
+
+          <h3><span class="no">2.2.1</span>이상 기체 상태 방정식</h3>
+          <p>기체 분자는 끊임없이 움직이며 용기의 벽에 부딪친다. 한 번 부딪칠 때마다 벽에 작은 힘을 주고, 수많은 충돌의 평균이 압력이 된다. 온도가 높으면 분자가 빠르게 움직여 더 세게, 더 자주 부딪치므로 압력이 커진다. 부피가 작으면 같은 분자가 벽에 더 자주 부딪쳐 압력이 커진다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">이상 기체 상태 방정식</span></span>
+            <p>\(n\) mol인 이상 기체의 압력 \(P\), 부피 \(V\), 절대 온도 \(T\) 사이에는 \[PV = nRT,\quad R \approx 8.31\ \text{J/(mol·K)}\] 가 성립한다. 온도가 일정하면 \(PV\)가 일정하고(보일 법칙), 압력이 일정하면 \(V \propto T\)이다(샤를 법칙).</p>
+          </div>
+          <p>그림 1에서 부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력이 두 배가 된다. 온도를 그대로 두고 부피를 절반으로 줄여도 압력이 두 배가 된다. 이때 온도는 반드시 절대 온도(K)를 쓴다. 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나온다.<sup class="fn"><a href="#fn-mech-ideal-gas-1">1</a></sup></p>
+
+          <h3><span class="no">2.2.2</span>상태 변화와 숨은열</h3>
+          <p>얼음에 열을 계속 주면 0 °C에서 녹는 동안, 물은 100 °C에서 끓는 동안 온도가 오르지 않는다. 이때 받은 열은 분자의 운동을 빠르게 하는 데 쓰이지 않고, 분자 사이의 인력을 끊어 고체를 액체로, 액체를 기체로 바꾸는 데 쓰인다. 상태 변화에 쓰이는 이 열을 숨은열(잠열)이라 한다. 물 1 kg을 끓여 모두 수증기로 바꾸려면 약 2260 kJ이 필요한데, 이는 같은 물을 0 °C에서 100 °C까지 데우는 열 420 kJ의 5배가 넘는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 130" role="img" aria-label="얼음에 열을 계속 줄 때의 온도 그래프">
+              <g class="s">
+                <line x1="40" y1="110" x2="480" y2="110" class="ax"/><line x1="40" y1="110" x2="40" y2="10" class="ax"/>
+                <path d="M40 100 L70 80 L130 80 L190 30 L400 30 L440 15" class="b"/>
+                <text x="100" y="74" text-anchor="middle">녹는 중 0 °C</text><text x="295" y="24" text-anchor="middle">끓는 중 100 °C</text>
+                <text x="480" y="125" text-anchor="end">가한 열</text><text x="46" y="18">온도</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 상태가 바뀌는 동안에는 열을 주어도 온도가 오르지 않는다. 끓는 구간이 녹는 구간보다 훨씬 길다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>아침 기온 7 °C에서 타이어의 게이지 압력과 대기압을 합한 절대 압력이 336 kPa였다. 한낮에 타이어 속 공기가 42 °C가 되면 압력은 얼마인가? 타이어의 부피는 변하지 않는다고 하자.</p>
+          </div>
+          <p>먼저 섭씨온도를 절대 온도로 바꾼다. 절대 온도는 \(7 + 273 = 280\) K에서 \(42 + 273 = 315\) K가 된다. 부피와 기체의 양이 일정하므로 \(\dfrac{P}{T}\)가 일정하다.</p>
+          <p>\(P_2 = 336 \times \dfrac{315}{280} = 378\) kPa이다. 압력이 42 kPa, 약 12.5% 올랐다. 섭씨온도로 \(\dfrac{42}{7} = 6\)배 했다면 2000 kPa이 넘는 엉터리 값이 나왔을 것이다. 그래서 타이어 공기압은 차가 식은 상태에서 재는 것이 정확하다.</p>
+          <p>아래 탐구 카드에서 물이 끓는 동안 열이 어디로 가는지, 기체를 데우면 압력이 커지는 까닭을 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-mech-ideal-gas-1">이상 기체는 분자 자체의 크기와 분자 사이의 인력을 무시한 모형이다. 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 실제 기체가 이 식에서 벗어난다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>기체의 압력은 분자들이 벽에 부딪치는 충돌의 평균이며, 이상 기체에서는 \(PV = nRT\)가 성립한다. 상태가 바뀌는 동안 받은 열은 숨은열로 분자 사이의 인력을 끊는 데 쓰여 온도가 오르지 않는다. 그래서 처음 질문의 기체를 데우면 분자가 더 빠르게 벽에 부딪쳐, 부피가 일정할 때 압력이 절대 온도에 비례하여 커진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a><a href="../../c/phy/1-5.html#text-phy-heat"><small class="mono">물리학 1.5</small>열과 에너지 보존</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labphy/2-9.html#text-labphy-latent"><small class="mono">물리학 실험 2.9</small>얼음의 융해열</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-9.html#card-labphy-ice-fusion"><small class="mono">물리학 실험 2.9</small>따뜻한 물이 식은 만큼으로 얼음의 융해열을 잴 수 있을까?</a><a href="../../c/adearth/2-1.html#card-adearth-cloud"><small class="mono">고급 지구과학 2.1</small>안개와 구름은 어떤 길로 포화에 이를까?</a><a href="../../c/adearth/2-1.html#card-adearth-droplet"><small class="mono">고급 지구과학 2.1</small>구름 물방울이 빗방울로 자라는 데는 얼마나 걸릴까?</a></div></nav>
+
       <article class="card" id="card-mech-heating-curve">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>물이 끓는 동안 가한 열은 어디로 갈까?</h2><span class="kind">비열과 잠열 · 가열 곡선</span>
+          <span class="no">탐구 1</span><h2>물이 끓는 동안 가한 열은 어디로 갈까?</h2><span class="kind">비열과 잠열 · 가열 곡선</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -67,33 +124,33 @@
                 <div><dt>이 구간에서 열이 하는 일</dt><dd class="n-use">—</dd></div>
                 <div><dt>걸린 시간</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">물 1 kg, 1기압. 비열(kJ/(kg·K)): 얼음 2.1, 물 4.19, 수증기 2.0. 융해열 334 kJ/kg, 기화열 2257 kJ/kg. 가한 열이 모두 물에 흡수된다고 가정했습니다.</p>
+              <p class="fig-note">물 1 kg, 1기압으로 계산했다. 비열(kJ/(kg·K))은 얼음 2.1, 물 4.19, 수증기 2.0이고, 융해열은 334 kJ/kg, 기화열은 2257 kJ/kg이며, 가한 열이 모두 물에 흡수된다고 가정했다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>냄비의 물이 끓기 시작한 뒤에도 불은 계속 열을 가하는데, 온도계는 100 °C에서 움직이지 않습니다. 그 열은 어디에 쓰일까요?</li>
-            <li><span class="tag">복원</span>온도는 입자들의 평균 운동 에너지를 나타냅니다. 같은 열을 받아도 물질마다 온도가 오르는 정도가 다른데, 1 kg의 온도를 1 °C 올리는 데 드는 열을 <em>비열</em>이라고 합니다. 물의 비열은 매우 커서 잘 데워지지 않고 잘 식지도 않습니다.</li>
-            <li><span class="tag">설명</span>상태가 바뀌는 동안에는 가한 열이 입자의 운동을 빠르게 하는 데가 아니라, 입자 사이의 인력을 끊는 데 쓰입니다. 그래서 온도가 일정합니다. 1 kg을 녹이는 데 드는 열을 <em>융해열</em>, 기체로 만드는 데 드는 열을 <em>기화열</em>이라 하고, 둘을 합쳐 <em>잠열</em>(숨은 열)이라 부릅니다.</li>
-            <li><span class="tag">연결</span>물의 기화열 2257 kJ는 물 1 kg을 0 °C에서 100 °C로 데우는 열(약 419 kJ)의 5배가 넘습니다. 액체에서 기체가 될 때는 입자들이 서로 거의 완전히 떨어져야 해서, 녹을 때보다 훨씬 많은 인력을 끊어야 하기 때문입니다. 땀이 증발하며 몸을 식히는 것도 이 큰 기화열 덕분입니다.</li>
-            <li><span class="tag">적용</span>가한 열 막대를 천천히 움직이며 그래프에서 평평한 구간 두 곳을 찾으세요. 두 구간의 가로 길이 비는 얼마인가요? 가열 세기를 바꾸면 그래프의 모양이 바뀌나요, 시간만 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>“끓는 물에 불을 더 세게 하면 온도가 더 오른다”는 오개념입니다. 1기압에서 물은 100 °C를 넘지 못하고, 더 센 불은 더 빨리 증발시킬 뿐입니다. 온도를 높이려면 압력솥처럼 압력을 올려 끓는점 자체를 높여야 합니다. 또 100 °C의 수증기가 100 °C의 물보다 화상을 심하게 입히는 것은, 피부에 닿아 응결하며 기화열만큼의 열을 더 내놓기 때문입니다.</li>
+            <li><span class="tag">질문</span>냄비의 물이 끓기 시작한 뒤에도 불은 계속 열을 가하는데, 온도계는 100 °C에서 움직이지 않는다. 그 열은 어디에 쓰일까?</li>
+            <li><span class="tag">복원</span>온도는 입자들의 평균 운동 에너지를 나타낸다. 같은 열을 받아도 물질마다 온도가 오르는 정도가 다른데, 1 kg의 온도를 1 °C 올리는 데 드는 열을 <em>비열</em>이라 하며, 물의 비열은 매우 커서 잘 데워지지 않고 잘 식지도 않는다.</li>
+            <li><span class="tag">설명</span>상태가 바뀌는 동안에는 가한 열이 입자의 운동을 빠르게 하는 데가 아니라 입자 사이의 인력을 끊는 데 쓰이므로 온도가 일정하다. 1 kg을 녹이는 데 드는 열을 <em>융해열</em>, 기체로 만드는 데 드는 열을 <em>기화열</em>이라 하고, 둘을 합쳐 <em>잠열</em>(숨은 열)이라 부른다.</li>
+            <li><span class="tag">연결</span>물의 기화열 2257 kJ는 물 1 kg을 0 °C에서 100 °C로 데우는 열(약 419 kJ)의 5배가 넘는다. 액체에서 기체가 될 때는 입자들이 서로 거의 완전히 떨어져야 해서, 녹을 때보다 훨씬 많은 인력을 끊어야 하기 때문이다. 그리고 땀이 증발하며 몸을 식히는 것도 이 큰 기화열 덕분이다.</li>
+            <li><span class="tag">적용</span>가한 열 막대를 천천히 움직이며 그래프에서 평평한 구간 두 곳을 찾고, 두 구간의 가로 길이 비를 구해 보자. 그리고 가열 세기를 바꾸면 그래프의 모양이 바뀌는지 시간만 바뀌는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>끓는 물에 불을 더 세게 하면 온도가 더 오른다는 생각은 오개념이다. 1기압에서 물은 100 °C를 넘지 못하고 더 센 불은 더 빨리 증발시킬 뿐이어서, 온도를 높이려면 압력솥처럼 압력을 올려 끓는점 자체를 높여야 한다. 또 100 °C의 수증기가 100 °C의 물보다 화상을 심하게 입히는 것은, 피부에 닿아 응결하며 기화열만큼의 열을 더 내놓기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">같은 가열기로 0 °C 물 1 kg을 100 °C까지 데우는 데 5분이 걸렸습니다. 이어서 이 물이 모두 수증기가 되려면 대략 얼마나 더 걸릴까요?</p>
+          <p class="q">같은 가열기로 0 °C 물 1 kg을 100 °C까지 데우는 데 5분이 걸렸다. 이어서 이 물이 모두 수증기가 되려면 대략 얼마나 더 걸릴까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 5분<span class="why"><b>온도만 오르는 구간과 같다고 본 답입니다.</b> 상태 변화에는 훨씬 많은 열이 듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 27분<span class="why"><b>맞습니다.</b> 419 kJ에 5분이 걸렸으니 기화열 2257 kJ에는 5 × 2257 ÷ 419 ≈ 27분이 걸립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>시간이 들지 않는다 — 이미 100 °C이므로<span class="why"><b>100 °C가 되었다고 바로 기체가 되지는 않습니다.</b> 입자 사이 인력을 끊는 데 큰 열이 필요합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 5분<span class="why"><b>온도만 오르는 구간과 같다고 본 답이다.</b> 상태 변화에는 훨씬 많은 열이 든다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 27분<span class="why"><b>맞다.</b> 419 kJ에 5분이 걸렸으니 기화열 2257 kJ에는 5 × 2257 ÷ 419 ≈ 27분이 걸린다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>시간이 들지 않는다 — 이미 100 °C이므로<span class="why"><b>100 °C가 되었다고 바로 기체가 되지는 않는다.</b> 입자 사이 인력을 끊는 데 큰 열이 필요하다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-9.html#card-labphy-ice-fusion"><small class="mono">물리학 실험 2.9</small>따뜻한 물이 식은 만큼으로 얼음의 융해열을 잴 수 있을까?</a><a href="../../c/adearth/2-1.html#card-adearth-cloud"><small class="mono">고급 지구과학 2.1</small>안개와 구름은 어떤 길로 포화에 이를까?</a><a href="../../c/adearth/2-1.html#card-adearth-droplet"><small class="mono">고급 지구과학 2.1</small>구름 물방울이 빗방울로 자라는 데는 얼마나 걸릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a><a href="../../c/phy/1-5.html#text-phy-heat"><small class="mono">물리학 1.5</small>열과 에너지 보존</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/labphy/2-9.html#text-labphy-latent"><small class="mono">물리학 실험 2.9</small>얼음의 융해열</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-9.html#card-labphy-ice-fusion"><small class="mono">물리학 실험 2.9</small>따뜻한 물이 식은 만큼으로 얼음의 융해열을 잴 수 있을까?</a><a href="../../c/adearth/2-1.html#card-adearth-cloud"><small class="mono">고급 지구과학 2.1</small>안개와 구름은 어떤 길로 포화에 이를까?</a><a href="../../c/adearth/2-1.html#card-adearth-droplet"><small class="mono">고급 지구과학 2.1</small>구름 물방울이 빗방울로 자라는 데는 얼마나 걸릴까?</a></div></nav>
 
       <article class="card" id="card-mech-ideal-gas">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>기체를 데우면 압력은 왜 커질까?</h2><span class="kind">이상 기체 · PV = nRT</span>
+          <span class="no">탐구 2</span><h2>기체를 데우면 압력은 왜 커질까?</h2><span class="kind">이상 기체 · PV = nRT</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -112,47 +169,52 @@
                 <div><dt>분자의 평균 속력(질소)</dt><dd class="n-vr">—</dd></div>
                 <div><dt>PV ÷ T</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">P = nRT/V, R = 8.314 J/(mol·K). 그림의 분자 수와 속력은 모식입니다(실제 1 mol은 6×10²³개). 평균 속력은 질소 분자의 √(3RT/M)입니다.</p>
+              <p class="fig-note">P = nRT/V, R = 8.314 J/(mol·K)로 계산했다. 그림의 분자 수와 속력은 모식이고(실제 1 mol은 6×10²³개), 평균 속력은 질소 분자의 √(3RT/M)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>여름 햇볕 아래 둔 자동차 타이어는 공기압이 올라갑니다. 공기를 더 넣지도 않았는데 왜 압력이 커질까요?</li>
-            <li><span class="tag">복원</span>기체의 압력은 수많은 분자가 벽에 부딪치며 미는 힘을 넓이로 나눈 것입니다. 온도가 높을수록 분자는 빠르게 움직입니다.</li>
-            <li><span class="tag">설명</span>실험에 따르면 기체의 양이 일정할 때 압력은 부피에 반비례하고(보일 법칙), 부피가 일정하면 압력은 절대 온도에 비례합니다(샤를 법칙과 같은 관계). 이를 합치면 <em>PV = nRT</em>, 곧 이상 기체 상태 방정식입니다. 여기서 온도는 반드시 절대 온도(K = °C + 273)를 씁니다.</li>
-            <li><span class="tag">연결</span>분자 운동으로 보면, 부피를 줄이면 분자가 벽에 더 자주 부딪치고, 온도를 올리면 더 빠르게 더 세게 부딪칩니다. 분자의 평균 운동 에너지는 절대 온도에 비례하므로 평균 속력은 √T에 비례합니다. 0 K에서는 분자 운동이 가장 작아져 이상 기체의 압력이 0이 됩니다.</li>
-            <li><span class="tag">적용</span>부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력은 몇 배가 되나요? 이때 분자의 평균 속력은 몇 배가 되나요? 그다음 온도를 고정하고 부피를 절반으로 줄여 압력을 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이상 기체는 분자 자체의 크기와 분자 사이 인력을 무시한 모형입니다. 상온·상압의 공기는 이 모형을 잘 따르지만, 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 어긋납니다. 또 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나오므로, 반드시 절대 온도를 써야 합니다.</li>
+            <li><span class="tag">질문</span>여름 햇볕 아래 둔 자동차 타이어는 공기압이 올라간다. 공기를 더 넣지도 않았는데 왜 압력이 커질까?</li>
+            <li><span class="tag">복원</span>기체의 압력은 수많은 분자가 벽에 부딪치며 미는 힘을 넓이로 나눈 것이다. 그리고 온도가 높을수록 분자는 빠르게 움직인다.</li>
+            <li><span class="tag">설명</span>실험에 따르면 기체의 양이 일정할 때 압력은 부피에 반비례하고(보일 법칙), 부피가 일정하면 압력은 절대 온도에 비례한다(샤를 법칙과 같은 관계). 이를 합치면 <em>PV = nRT</em>, 곧 이상 기체 상태 방정식이고, 여기서 온도는 반드시 절대 온도(K = °C + 273)를 쓴다.</li>
+            <li><span class="tag">연결</span>분자 운동으로 보면, 부피를 줄이면 분자가 벽에 더 자주 부딪치고, 온도를 올리면 더 빠르게 더 세게 부딪친다. 분자의 평균 운동 에너지는 절대 온도에 비례하므로 평균 속력은 √T에 비례하며, 0 K에서는 분자 운동이 가장 작아져 이상 기체의 압력이 0이 된다.</li>
+            <li><span class="tag">적용</span>부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력이 몇 배가 되는지, 이때 분자의 평균 속력은 몇 배가 되는지 보자. 그다음 온도를 고정하고 부피를 절반으로 줄여 압력을 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이상 기체는 분자 자체의 크기와 분자 사이 인력을 무시한 모형이다. 상온과 상압의 공기는 이 모형을 잘 따르지만, 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 어긋난다. 또 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나오므로, 반드시 절대 온도를 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">27 °C에서 공기압이 2.0기압인 타이어가 햇볕에 57 °C가 되었습니다. 부피가 거의 변하지 않는다면 공기압은 대략?</p>
+          <p class="q">27 °C에서 공기압이 2.0기압인 타이어가 햇볕에 57 °C가 되었다. 부피가 거의 변하지 않는다면 공기압은 대략?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 4.2기압 — 온도가 2배 넘게 올랐으므로<span class="why"><b>섭씨온도로 비를 낸 답입니다.</b> 압력은 절대 온도에 비례합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 2.2기압<span class="why"><b>맞습니다.</b> 300 K에서 330 K로 1.1배가 되었으므로 2.0 × 1.1 = 2.2기압입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.0기압 그대로 — 공기를 넣지 않았으므로<span class="why"><b>기체의 양이 같아도</b> 온도가 오르면 분자가 더 세게 부딪쳐 압력이 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 4.2기압 — 온도가 2배 넘게 올랐으므로<span class="why"><b>섭씨온도로 비를 낸 답이다.</b> 압력은 절대 온도에 비례한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 2.2기압<span class="why"><b>맞다.</b> 300 K에서 330 K로 1.1배가 되었으므로 2.0 × 1.1 = 2.2기압이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.0기압 그대로 — 공기를 넣지 않았으므로<span class="why"><b>기체의 양이 같아도</b> 온도가 오르면 분자가 더 세게 부딪쳐 압력이 커진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a><a href="../../c/mateng/4-3.html#card-mateng-ea"><small class="mono">물질과 에너지 4.3</small>부딪친다고 모두 반응할까?</a><a href="../../c/labchem/2-2.html#card-labchem-gas-r"><small class="mono">화학 실험 2.2</small>마그네슘 리본 한 조각으로 기체 상수 R을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a><a href="../../c/phy/1-5.html#text-phy-heat"><small class="mono">물리학 1.5</small>열과 에너지 보존</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adphy/1-5.html#text-adphy-expansion-work"><small class="mono">고급 물리학 1.5</small>이상 기체와 열역학 제1법칙</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a><a href="../../c/mateng/4-3.html#card-mateng-ea"><small class="mono">물질과 에너지 4.3</small>부딪친다고 모두 반응할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=mech-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">42문항</span></a>
+      <a class="px-go" href="../../bank.html?c=mech&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=mech-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">43문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/mech/body.js"></script>
 <script src="../../js/cards/mech/t-heating-curve.js"></script>
 <script src="../../js/cards/mech/t-ideal-gas.js"></script>
 </body>

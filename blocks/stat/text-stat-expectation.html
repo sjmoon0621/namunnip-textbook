@@ -1,0 +1,55 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "3-2",
+  "short": "본문 · 기댓값과 표준편차"
+}
+-->
+<article class="card reading" id="text-stat-expectation" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>기댓값과 표준편차</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">한 번에 1000원을 내는 뽑기에서 5000원 상품이 10%, 1000원 상품이 30%, 꽝이 60%의 확률로 나온다. 이 뽑기를 여러 번 하면 한 번에 평균 얼마를 받게 될까? 또 받는 금액이 평균에서 얼마나 흩어지는지는 어떻게 나타낼까?</p>
+    <figure class="q-fig" data-q="stat-balance">
+      <svg viewBox="0 0 520 240" role="img" aria-label="확률분포를 막대 위의 무게로 보고 균형이 맞는 점이 기댓값인 그림"></svg>
+      <div class="q-ctl"><label>5000원의 확률(%) <input type="range" data-k="p" min="0" max="40" step="5" value="10"><output data-k="p"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 값마다 확률만큼의 무게를 올려 둔 막대가 균형을 이루는 받침점이 기댓값이다. 무게가 받침점에서 멀리 퍼질수록 표준편차가 크다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>확률변수와 확률분포(<a href="3-1.html">확률변수와 확률분포</a>), 중학교의 자료의 평균과 분산, \(\sum\) 기호(대수).</div>
+
+    <h3><span class="no">3.2.1</span>기댓값</h3>
+    <p>뽑기를 100번 한다고 생각하자. 확률대로라면 5000원은 약 10번, 1000원은 약 30번, 꽝은 약 60번 나온다. 받는 돈의 합은 \(5000 \times 10 + 1000 \times 30 + 0 \times 60 = 80000\)원이고, 한 번에 평균 800원이다. 이것은 각 값에 확률을 곱해 더한 \(5000 \times 0.1 + 1000 \times 0.3 + 0 \times 0.6\)과 같다.</p>
+    <div class="tb-env"><span class="lb">정의 3.2.1 <span class="nm">기댓값, 분산, 표준편차</span></span>
+      <p>이산확률변수 \(X\)의 확률분포가 \(P(X = x_i) = p_i\ (i = 1, \ldots, n)\)일 때 \[E(X) = \sum x_ip_i,\quad V(X) = \sum (x_i - m)^2p_i = E(X^2) - \{E(X)\}^2,\quad \sigma(X) = \sqrt{V(X)}\] 이고, 각각 기댓값(평균) \(m\), 분산, 표준편차라 한다.</p>
+    </div>
+    <p>처음 질문의 기댓값은 800원으로, 내는 1000원보다 200원 적다. 그러니 이 뽑기를 오래 할수록 손해가 쌓인다. 그림 1에서 5000원의 확률을 바꾸면 받침점, 곧 기댓값이 옮겨 간다. 기댓값은 분포의 '무게중심'이다.</p>
+
+    <h3><span class="no">3.2.2</span>분산과 표준편차</h3>
+    <p>분산은 각 값이 평균에서 떨어진 거리를 제곱해 확률로 평균한 것이다. 거리를 제곱하는 것은 위로 떨어진 것과 아래로 떨어진 것이 서로 지워지지 않게 하기 위해서이고, 제곱근을 씌운 표준편차는 원래 값과 단위가 같아져 '평균에서 대략 얼마나 떨어지는가'로 읽을 수 있다.</p>
+    <p>계산할 때는 \(V(X) = E(X^2) - m^2\)이 편하다. 처음 질문에서 \(E(X^2) = 5000^2 \times 0.1 + 1000^2 \times 0.3 = 2\,800\,000\)이므로 \(V(X) = 2\,800\,000 - 800^2 = 2\,160\,000\)이고, \(\sigma(X) \approx 1470\)원이다.<sup class="fn"><a href="#fn-stat-expectation-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 140" role="img" aria-label="평균이 같지만 퍼짐이 다른 두 분포">
+        <g transform="translate(20 10)"><line x1="0" y1="100" x2="220" y2="100" class="ax"/><rect x="80" y="40" width="20" height="60" class="lb"/><rect x="100" y="20" width="20" height="80" class="lb"/><rect x="120" y="40" width="20" height="60" class="lb"/><path d="M110 100 l-6 10 h12 Z" class="fd"/><text x="110" y="128" text-anchor="middle" class="s">평균 같음, 표준편차 작음</text></g>
+        <g transform="translate(280 10)"><line x1="0" y1="100" x2="220" y2="100" class="ax"/><rect x="20" y="60" width="20" height="40" class="lb"/><rect x="100" y="60" width="20" height="40" class="lb"/><rect x="180" y="60" width="20" height="40" class="lb"/><path d="M110 100 l-6 10 h12 Z" class="fd"/><text x="110" y="128" text-anchor="middle" class="s">평균 같음, 표준편차 큼</text></g>
+      </svg>
+      <figcaption>그림 2. 평균이 같아도 확률이 평균 근처에 모여 있으면 표준편차가 작고, 멀리 퍼져 있으면 크다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.2.3</span>\(aX + b\)의 평균과 표준편차</h3>
+    <p>모든 값을 \(a\)배 하고 \(b\)를 더하면 무게중심도 똑같이 옮겨 가므로 \(E(aX + b) = aE(X) + b\)이다. 그런데 퍼짐은 \(b\)만큼 옮겨도 그대로이고 \(a\)배 늘리면 \(|a|\)배가 된다. 따라서 \(\sigma(aX + b) = |a|\sigma(X)\), \(V(aX + b) = a^2V(X)\)이다.</p>
+
+    <h3><span class="no">3.2.4</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+      <p>주사위 한 개를 던져 나온 눈을 \(X\)라 할 때 \(E(X)\)와 \(\sigma(X)\)를 구하여라. 또 \(Y = 2X - 3\)의 평균과 표준편차를 구하여라.</p>
+    </div>
+    <p>\(E(X) = \dfrac{1 + 2 + \cdots + 6}{6} = \dfrac{21}{6} = 3.5\)이다. \(E(X^2) = \dfrac{1 + 4 + 9 + 16 + 25 + 36}{6} = \dfrac{91}{6}\)이므로 \(V(X) = \dfrac{91}{6} - \dfrac{49}{4} = \dfrac{182 - 147}{12} = \dfrac{35}{12}\)이고, \(\sigma(X) = \sqrt{\dfrac{35}{12}} \approx 1.71\)이다.</p>
+    <p>\(Y = 2X - 3\)의 평균은 \(2 \times 3.5 - 3 = 4\)이고, 표준편차는 \(2 \times 1.71 \approx 3.42\)이다. \(-3\)은 평균만 옮기고 퍼짐에는 영향을 주지 않는다.</p>
+    <p>주사위의 기댓값 3.5는 실제로 나올 수 없는 값이다. 기댓값은 '한 번에 나올 값'이 아니라 '많이 했을 때의 평균'이라는 것을 이 예가 보여 준다. 아래 탐구 카드에서 확률분포의 무게를 옮기며 평균과 퍼짐이 어떻게 변하는지 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-expectation-1">기댓값보다 표준편차가 훨씬 크다는 것은, 한두 번 할 때 받는 금액이 평균 800원에서 크게 벗어나기 쉽다는 뜻이다. 실제로 대부분은 0원이고 가끔 5000원이 나온다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>기댓값은 값마다 확률을 곱해 더한 분포의 무게중심이고, 분산과 표준편차는 값들이 기댓값에서 얼마나 퍼져 있는지를 잰다. \(aX + b\)의 평균은 \(aE(X) + b\), 표준편차는 \(|a|\sigma(X)\)이다. 그래서 처음 질문의 뽑기는 한 번에 평균 800원을 받으므로, 1000원을 내고 오래 할수록 손해이다.</p></div>
+  </div>
+</article>

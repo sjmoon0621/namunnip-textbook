@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>로피탈의 정리 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="로피탈의 정리: 0/0, ∞/∞ 꼴 극한을 도함수의 비로 구한다. 확대하면 곡선이 직선처럼 보이는 이유, 조건을 확인하지 않아 생기는 오류 찾기, 다항함수·지수함수·로그함수의 증가 속도 비교.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-lhopital-zoom canvas { aspect-ratio: 16 / 9; }
@@ -48,19 +53,78 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-lhopital-zoom"><span class="mono">1.5.1</span>확대경으로 보는 로피탈의 정리</a></li>
-        <li><a href="#card-pmath-lhopital-errors"><span class="mono">1.5.2</span>로피탈을 잘못 쓴 풀이 찾기</a></li>
-        <li><a href="#card-pmath-growth-race"><span class="mono">1.5.3</span>무한대 경주</a></li>
+        <li><a href="#text-pmath-lhopital"><span class="mono">본문</span>로피탈의 정리</a></li>
+        <li><a href="#card-pmath-lhopital-zoom"><span class="mono">탐구 1</span>확대경으로 보는 로피탈의 정리</a></li>
+        <li><a href="#card-pmath-lhopital-errors"><span class="mono">탐구 2</span>로피탈을 잘못 쓴 풀이 찾기</a></li>
+        <li><a href="#card-pmath-growth-race"><span class="mono">탐구 3</span>무한대 경주</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-1-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-lhopital" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>로피탈의 정리</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\dfrac{1 - \cos x}{x^2}\)에 \(x = 0\)을 넣으면 분자와 분모가 모두 0이 되어 값을 알 수 없다. 계산기로 \(x = 0.1\), \(0.01\), \(0.001\)을 넣으니 0.4996, 0.499996, 0.5000에 가까워졌다. 분자와 분모가 함께 0으로 갈 때 두 함수의 그래프를 원점 근처에서 크게 확대하면 어떻게 보일까? 그 모습에서 극한값 0.5를 계산 없이 읽어 낼 방법이 있을까? 그리고 \(x^{10}\)과 \(e^x\) 가운데 무한대로 갈 때 누가 더 빨리 커질까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="0 근처에서 두 0/0 꼴 극한의 값">
+              <g class="s">
+                <text x="20" y="22">x</text><text x="150" y="22">0.1</text><text x="250" y="22">0.01</text><text x="350" y="22">0.001</text><text x="440" y="22">극한</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(sin x)/x</text><text x="150" y="52">0.99833</text><text x="250" y="52">0.99998</text><text x="350" y="52">1.00000</text><text x="440" y="52" class="td">1</text>
+                <text x="20" y="74">(1 − cos x)/x²</text><text x="150" y="74">0.49958</text><text x="250" y="74">0.49999</text><text x="350" y="74">0.50000</text><text x="440" y="74" class="td">1/2</text>
+                <text x="20" y="96">(eˣ − 1)/x</text><text x="150" y="96">1.05171</text><text x="250" y="96">1.00502</text><text x="350" y="96">1.00050</text><text x="440" y="96" class="td">1</text>
+                <text x="20" y="122">x를 0에 가까이 할수록 분수의 값이 하나의 수로 모인다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 분자와 분모가 함께 0으로 가도 그 비는 일정한 값으로 모일 수 있다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수의 극한, 미분계수의 기하적 의미, 평균값 정리, 지수함수와 로그함수의 도함수.</div>
+
+          <h3><span class="no">1.5.1</span>확대하면 직선이 남는다</h3>
+          <p>미분 가능한 함수의 그래프는 한 점 근처를 크게 확대하면 그 점에서의 접선과 거의 구별되지 않는다. \(f(a) = g(a) = 0\)이면 \(a\) 근처에서 \(f(x) \approx f'(a)(x - a)\), \(g(x) \approx g'(a)(x - a)\)이다. 그래서 두 함수의 비는 \((x - a)\)가 약분되어 두 접선의 기울기의 비 \(f'(a)/g'(a)\)에 가까워진다. 이것이 로피탈의 정리를 그림으로 본 것이다. 예를 들어 \(\sin x\)와 \(x\)는 원점에서 기울기가 둘 다 1이므로 \((\sin x)/x\)의 극한은 1이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">로피탈의 정리</span></span>
+            <p>\(\lim f(x) = \lim g(x) = 0\)이거나 둘 다 \(\pm\infty\)이고, \(\lim\dfrac{f'(x)}{g'(x)}\)가 존재하면 \[\lim\frac{f(x)}{g(x)} = \lim\frac{f'(x)}{g'(x)}\]이다. 우변이 다시 \(0/0\) 꼴이면 같은 정리를 거듭 쓸 수 있다.</p>
+          </div>
+          <p>정리를 쓸 때는 먼저 \(0/0\)이나 \(\infty/\infty\) 꼴인지 확인해야 한다. 예를 들어 \(\lim_{x\to0}\dfrac{x + 1}{x + 2}\)는 값을 넣으면 바로 \(1/2\)인데, 확인하지 않고 분자와 분모를 미분하면 \(1/1 = 1\)이라는 틀린 답이 나온다. 또 분수 전체를 몫의 미분법으로 미분하는 것이 아니라, 분자와 분모를 따로 미분해야 한다. 엄밀한 증명은 코시의 평균값 정리를 쓴다.<sup class="fn"><a href="#fn-pmath-lhopital-1">1</a></sup></p>
+          <p>같은 정리를 다른 그림으로도 볼 수 있다. 분모와 분자를 짝지어 점 \(P(t) = (g(t), f(t))\)를 찍으면, \(t\)가 움직일 때 \(P\)는 평면 위에 곡선을 그린다. 이때 \(\dfrac{f(t)}{g(t)}\)는 원점과 \(P\)를 잇는 선분의 기울기이고, \(\dfrac{f'(t)}{g'(t)}\)는 매개변수로 나타낸 곡선의 미분법에 따라 \(P\)에서 그은 접선의 기울기이다. \(0/0\) 꼴이면 \(t \to a\)일 때 \(P\)가 원점으로 들어오는데, 원점에 아주 가까워진 곳에서는 원점까지 잇는 짧은 선분이 곡선 자체와 거의 겹치므로 두 기울기가 같아진다. \(\infty/\infty\) 꼴이면 \(P\)가 한없이 멀어지면서 곡선이 기울기 \(L\)인 방향으로 곧게 뻗어 나가고, 그렇게 멀리서 보면 원점에서 \(P\)까지의 기울기도 \(L\)에 다가간다. 코시의 평균값 정리는 원점과 \(P\) 사이 어딘가에 선분과 나란한 접선이 있다는 사실을 말한다.</p>
+
+          <h3><span class="no">1.5.2</span>누가 더 빨리 커질까</h3>
+          <p>로피탈의 정리는 \(\infty/\infty\) 꼴에도 쓸 수 있어, 두 함수 가운데 무엇이 더 빨리 커지는지 겨루는 데 쓴다. \(x^{10}/e^x\)에 정리를 열 번 쓰면 분자는 \(10!\)이라는 상수가 되고 분모는 그대로 \(e^x\)이므로 극한은 0이다. 그래서 \(x^{10}\)은 처음에는 \(e^x\)보다 훨씬 크지만 결국 뒤처진다. 같은 방법으로 \(\ln x\)는 어떤 양수 거듭제곱 \(x^p\)보다도 느리게 커진다. 그래서 무한대로 갈 때 지수함수, 거듭제곱 함수, 로그함수의 순서로 빨리 커진다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="x^10과 e^x의 값 비교">
+              <g class="s">
+                <text x="20" y="22">x</text><text x="140" y="22">10</text><text x="230" y="22">30</text><text x="320" y="22">35.8</text><text x="420" y="22">40</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">x¹⁰</text><text x="140" y="52" class="tb">10¹⁰</text><text x="230" y="52" class="tb">5.9 × 10¹⁴</text><text x="320" y="52">약 3.5 × 10¹⁵</text><text x="420" y="52">1.0 × 10¹⁶</text>
+                <text x="20" y="74">eˣ</text><text x="140" y="74">2.2 × 10⁴</text><text x="230" y="74">1.1 × 10¹³</text><text x="320" y="74">약 3.5 × 10¹⁵</text><text x="420" y="74" class="td">2.4 × 10¹⁷</text>
+                <text x="20" y="100">x ≈ 35.8에서 둘이 같아지고, 그 뒤로는 eˣ가 앞선다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 거듭제곱 함수는 처음에 크게 앞서지만, 지수함수가 결국 따라잡아 앞지른다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+            <p>로피탈의 정리로 \(\lim_{x\to0}\dfrac{1 - \cos x}{x^2}\)와 \(\lim_{x\to0}\dfrac{e^x - 1 - x}{x^2}\)를 구하여라. 각 단계에서 정리를 쓸 수 있는 꼴인지 확인하여라.</p>
+          </div>
+          <p>\(x \to 0\)이면 \(1 - \cos x \to 0\), \(x^2 \to 0\)이므로 \(0/0\) 꼴이다. 분자와 분모를 미분하면 \(\dfrac{\sin x}{2x}\)이고, 이것도 \(0/0\) 꼴이다. 한 번 더 미분하면 \(\dfrac{\cos x}{2} \to \dfrac12\)이다. 그래서 극한은 \(1/2\)로, 처음 질문의 계산기 값과 맞는다.</p>
+          <p>\(e^x - 1 - x\)와 \(x^2\)도 모두 0으로 가므로 \(0/0\) 꼴이다. 미분하면 \(\dfrac{e^x - 1}{2x}\)로 다시 \(0/0\) 꼴이고, 한 번 더 미분하면 \(\dfrac{e^x}{2} \to \dfrac12\)이다. 두 극한이 모두 \(1/2\)인 것은 \(1 - \cos x\)와 \(e^x - 1 - x\)가 원점 근처에서 모두 \(x^2/2\)와 거의 같기 때문이다. 즉 \(0/0\) 꼴의 극한은 확대했을 때 남는 접선의 기울기, 그것도 0이면 그다음 도함수의 비로 정해진다.</p>
+          <p>아래 탐구 카드에서 \(0/0\) 꼴 극한의 두 그래프를 확대해 보고, 로피탈의 정리를 잘못 쓴 풀이의 틀린 곳을 찾고, \(x^{10}\)과 \(e^x\)의 경주를 지켜보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-lhopital-1">이 정리는 1696년 프랑스의 귀족 로피탈이 낸 세계 최초의 미분학 교과서에 실렸다. 그러나 실제로 정리를 찾은 사람은 로피탈에게 돈을 받고 연구 결과를 보내 주던 스위스의 수학자 요한 베르누이였다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>분자와 분모가 함께 0으로 가는 극한은 한 점 근처를 확대하면 두 그래프가 접선처럼 보여, 그 기울기의 비인 \(f'/g'\)의 극한과 같아지며, 이것이 로피탈의 정리이다. 정리는 \(0/0\)이나 \(\infty/\infty\) 꼴에서만 쓰고 분자와 분모를 따로 미분하며, 무한대에서 지수함수가 거듭제곱 함수보다, 거듭제곱 함수가 로그함수보다 빨리 커진다는 것도 보여 준다. 처음 질문의 \((1 - \cos x)/x^2\)은 정리를 두 번 써서 \(1/2\)로 모인다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a></div></nav>
+
       <article class="card" id="card-pmath-lhopital-zoom">
         <header class="card-head">
-          <span class="no">1.5.1</span><h2>0/0 근처를 크게 확대하면 무엇이 남을까?</h2><span class="kind">로피탈의 정리 · 조작</span>
+          <span class="no">탐구 1</span><h2>0/0 근처를 크게 확대하면 무엇이 남을까?</h2><span class="kind">로피탈의 정리 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -79,34 +143,34 @@
                 <div><dt>\(\frac{f'(x)}{g'(x)}\)</dt><dd class="n-d">—</dd></div>
                 <div><dt>\(\frac{f'(a)}{g'(a)}\) (접선)</dt><dd class="n-l">—</dd></div>
               </dl>
-              <p class="fig-note">\(x\)는 \(a\)에서 보이는 폭의 60 % 떨어진 곳에 둡니다. 확대할수록 \(x\)가 \(a\)에 다가갑니다.</p>
+              <p class="fig-note">\(x\)는 \(a\)에서 보이는 폭의 60 % 떨어진 곳에 둔다. 확대할수록 \(x\)가 \(a\)에 다가간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\lim_{x \to 0}\frac{\sin x}{x}\)는 0을 넣으면 \(\frac{0}{0}\)이 됩니다. 분자와 분모가 함께 0으로 갈 때, 어느 쪽이 "더 빨리" 0으로 가는지는 무엇으로 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>미분가능한 함수는 한 점 근처를 크게 확대하면 접선과 거의 구별되지 않습니다. 곧 \(x\)가 \(a\)에 가까우면 \(f(x) \approx f(a) + f'(a)(x - a)\)입니다.</li>
-            <li><span class="tag">설명</span>\(f(a) = g(a) = 0\)이면 \(a\) 근처에서 \(f(x) \approx f'(a)(x - a)\), \(g(x) \approx g'(a)(x - a)\)이므로 \(\frac{f(x)}{g(x)} \approx \frac{f'(a)}{g'(a)}\)입니다. 이를 정확히 한 것이 <em>로피탈의 정리</em>입니다. <b>\(f(a) = g(a) = 0\)이고 \(\lim_{x \to a}\frac{f'(x)}{g'(x)}\)가 존재하면 \(\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}\)</b>입니다. 오른쪽 그림에서 \(\frac{f(x)}{g(x)}\)는 원점과 점 \((g(x), f(x))\)를 잇는 선분의 기울기이고, \(x \to a\)이면 이 선분이 원점에서의 접선(기울기 \(\frac{f'}{g'}\))으로 다가갑니다. 정리의 증명에 쓰는 코시의 평균값 정리가 바로 이 그림입니다.</li>
-            <li><span class="tag">연결</span>\(\frac{\infty}{\infty}\) 꼴에도 같은 결론이 성립합니다. 또 \(\frac{f'}{g'}\)도 \(\frac{0}{0}\)이면 한 번 더 미분할 수 있습니다. 네 번째 보기 \(\frac{1 - \cos x}{x^2}\)가 그런 경우입니다. 이 정리로 다음 카드에서 지수함수와 다항함수의 경주를 판정합니다.</li>
-            <li><span class="tag">적용</span>배율을 천천히 올리며 왼쪽의 두 곡선이 직선처럼 펴지는 것을 보세요. 오른쪽 선분의 기울기는 어디로 가나요? 네 번째 보기에서는 \(f'(0)\)과 \(g'(0)\)이 모두 0이라 접선의 기울기를 정할 수 없습니다. 이때 곡선은 어떻게 생겼나요?</li>
-            <li class="warn"><span class="tag">판단</span>로피탈의 정리는 몫 \(\frac{f}{g}\)를 미분하는 것이 아니라, 분자와 분모를 <b>따로</b> 미분하는 것입니다. 또 \(\frac{0}{0}\)이나 \(\frac{\infty}{\infty}\) 꼴이 아닐 때 쓰면 틀린 답이 나옵니다. 다음 카드에서 그런 오류를 찾아봅니다.</li>
+            <li><span class="tag">질문</span>\(\lim_{x \to 0}\frac{\sin x}{x}\)는 0을 넣으면 \(\frac{0}{0}\)이 된다. 분자와 분모가 함께 0으로 갈 때, 어느 쪽이 "더 빨리" 0으로 가는지는 무엇으로 알 수 있을까?</li>
+            <li><span class="tag">복원</span>미분가능한 함수는 한 점 근처를 크게 확대하면 접선과 거의 구별되지 않는다. 곧 \(x\)가 \(a\)에 가까우면 \(f(x) \approx f(a) + f'(a)(x - a)\)이다.</li>
+            <li><span class="tag">설명</span>\(f(a) = g(a) = 0\)이면 \(a\) 근처에서 \(f(x) \approx f'(a)(x - a)\), \(g(x) \approx g'(a)(x - a)\)이므로 \(\frac{f(x)}{g(x)} \approx \frac{f'(a)}{g'(a)}\)이다. 이를 정확히 한 것이 <em>로피탈의 정리</em>이다. \(f(a) = g(a) = 0\)이고 \(\lim_{x \to a}\frac{f'(x)}{g'(x)}\)가 존재하면 \(\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}\)이다. 오른쪽 그림에서 \(\frac{f(x)}{g(x)}\)는 원점과 점 \((g(x), f(x))\)를 잇는 선분의 기울기이고, \(x \to a\)이면 이 선분이 원점에서의 접선(기울기 \(\frac{f'}{g'}\))으로 다가간다. 정리의 증명에 쓰는 코시의 평균값 정리가 바로 이 그림이다.</li>
+            <li><span class="tag">연결</span>\(\frac{\infty}{\infty}\) 꼴에도 같은 결론이 성립한다. 또 \(\frac{f'}{g'}\)도 \(\frac{0}{0}\)이면 한 번 더 미분할 수 있다. 네 번째 보기 \(\frac{1 - \cos x}{x^2}\)가 그런 경우이다. 이 정리로 다음 카드에서 지수함수와 다항함수의 경주를 판정한다.</li>
+            <li><span class="tag">적용</span>배율을 천천히 올리며 왼쪽의 두 곡선이 직선처럼 펴지는 것을 보자. 오른쪽 선분의 기울기는 어디로 가는가? 네 번째 보기에서는 \(f'(0)\)과 \(g'(0)\)이 모두 0이라 접선의 기울기를 정할 수 없다. 이때 곡선은 어떻게 생겼는가?</li>
+            <li class="warn"><span class="tag">판단</span>로피탈의 정리는 몫 \(\frac{f}{g}\)를 미분하는 것이 아니라, 분자와 분모를 따로 미분하는 것이다. 또 \(\frac{0}{0}\)이나 \(\frac{\infty}{\infty}\) 꼴이 아닐 때 쓰면 틀린 답이 나온다. 다음 카드에서 그런 오류를 찾아본다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{x \to 0}\frac{\tan 3x}{\sin x}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> \(\frac{0}{0}\) 꼴이므로 분자와 분모를 따로 미분하면 \(\frac{3\sec^2 3x}{\cos x}\)이고, \(x = 0\)을 넣으면 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>속미분 3을 빠뜨렸습니다.</b> \((\tan 3x)' = 3\sec^2 3x\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}\)<span class="why"><b>분자와 분모를 바꾸어 읽었습니다.</b> 분자 \(\tan 3x\)가 분모보다 세 배 빨리 0을 떠납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>극한이 없다<span class="why"><b>\(\frac{0}{0}\)을 "정할 수 없음"으로 끝냈습니다.</b> \(\frac{0}{0}\)은 값이 정해지지 않았다는 뜻이지, 극한이 없다는 뜻이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞다.</b> \(\frac{0}{0}\) 꼴이므로 분자와 분모를 따로 미분하면 \(\frac{3\sec^2 3x}{\cos x}\)이고, \(x = 0\)을 넣으면 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>속미분 3을 빠뜨렸다.</b> \((\tan 3x)' = 3\sec^2 3x\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3}\)<span class="why"><b>분자와 분모를 바꾸어 읽었다.</b> 분자 \(\tan 3x\)가 분모보다 세 배 빨리 0을 떠난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>극한이 없다<span class="why"><b>\(\frac{0}{0}\)을 "정할 수 없음"으로 끝냈다.</b> \(\frac{0}{0}\)은 값이 정해지지 않았다는 뜻이지, 극한이 없다는 뜻이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a><a href="../../c/calc2/2-1.html#card-calc2-log-deriv"><small class="mono">미적분Ⅱ 2.1</small>y = ln x의 접선의 기울기는 왜 1/x일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a></div></nav>
 
       <article class="card" id="card-pmath-lhopital-errors">
         <header class="card-head">
-          <span class="no">1.5.2</span><h2>로피탈의 정리를 쓴 이 풀이, 어디가 틀렸을까?</h2><span class="kind">로피탈의 정리의 조건 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>로피탈의 정리를 쓴 이 풀이, 어디가 틀렸을까?</h2><span class="kind">로피탈의 정리의 조건 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -154,30 +218,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>로피탈의 정리는 "분자, 분모를 미분하면 된다"로 짧게 외우기 쉽습니다. 그런데 이렇게 외우면 어디서 틀리게 될까요?</li>
-            <li><span class="tag">복원</span>정리의 조건은 세 가지입니다. ① \(\frac{0}{0}\) 또는 \(\frac{\infty}{\infty}\) 꼴이다. ② 분자와 분모를 따로 미분한다. ③ \(\lim\frac{f'}{g'}\)가 존재한다(또는 \(\pm\infty\)이다).</li>
-            <li><span class="tag">설명</span>①을 어기면 정리를 쓸 이유가 없는데 틀린 값이 나옵니다(풀이 1). ②를 어기면 몫의 도함수라는 전혀 다른 식을 계산합니다(풀이 2). ③은 방향이 중요합니다. <b>\(\frac{f'}{g'}\)의 극한이 있으면 \(\frac{f}{g}\)의 극한도 같지만, \(\frac{f'}{g'}\)의 극한이 없다고 \(\frac{f}{g}\)의 극한이 없는 것은 아닙니다</b>(풀이 3). 정리는 한쪽 방향만 말해 줍니다.</li>
-            <li><span class="tag">연결</span>"\(p\)이면 \(q\)"가 참이어도 그 역 "\(q\)이면 \(p\)"는 참이 아닐 수 있다는 명제의 성질이 여기서도 그대로 나타납니다. 수학의 정리를 쓸 때는 늘 가정과 결론을 구분해야 합니다.</li>
-            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾으세요. 찾으면 그래프에 참값이 점선으로 나타납니다. 풀이 3의 그래프는 \(x\)가 커질 때 어떻게 움직이나요? 진동하면서도 한 값에 다가갈 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>로피탈의 정리를 쓸 수 있어도 다른 방법이 더 빠를 때가 많습니다. 풀이 3은 분자와 분모를 \(x\)로 나누기만 하면 끝나고, \(\frac{\sin x}{x}\)의 극한은 원래 \((\sin x)' = \cos x\)를 증명하는 데 쓰이므로, 이것을 로피탈로 구하면 순환 논법이 된다는 지적도 있습니다.</li>
+            <li><span class="tag">질문</span>로피탈의 정리는 "분자, 분모를 미분하면 된다"로 짧게 외우기 쉽다. 그런데 이렇게 외우면 어디서 틀리게 될까?</li>
+            <li><span class="tag">복원</span>정리의 조건은 세 가지이다. ① \(\frac{0}{0}\) 또는 \(\frac{\infty}{\infty}\) 꼴이다. ② 분자와 분모를 따로 미분한다. ③ \(\lim\frac{f'}{g'}\)가 존재한다(또는 \(\pm\infty\)이다).</li>
+            <li><span class="tag">설명</span>①을 어기면 정리를 쓸 이유가 없는데 틀린 값이 나온다(풀이 1). ②를 어기면 몫의 도함수라는 전혀 다른 식을 계산한다(풀이 2). ③은 방향이 중요하다. \(\frac{f'}{g'}\)의 극한이 있으면 \(\frac{f}{g}\)의 극한도 같지만, \(\frac{f'}{g'}\)의 극한이 없다고 \(\frac{f}{g}\)의 극한이 없는 것은 아니다(풀이 3). 정리는 한쪽 방향만 말해 준다.</li>
+            <li><span class="tag">연결</span>"\(p\)이면 \(q\)"가 참이어도 그 역 "\(q\)이면 \(p\)"는 참이 아닐 수 있다는 명제의 성질이 여기서도 그대로 나타난다. 수학의 정리를 쓸 때는 늘 가정과 결론을 구분해야 한다.</li>
+            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾자. 찾으면 그래프에 참값이 점선으로 나타난다. 풀이 3의 그래프는 \(x\)가 커질 때 어떻게 움직이는가? 진동하면서도 한 값에 다가갈 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>로피탈의 정리를 쓸 수 있어도 다른 방법이 더 빠를 때가 많다. 풀이 3은 분자와 분모를 \(x\)로 나누기만 하면 끝나고, \(\frac{\sin x}{x}\)의 극한은 원래 \((\sin x)' = \cos x\)를 증명하는 데 쓰이므로, 이것을 로피탈로 구하면 순환 논법이 된다는 지적도 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(\lim_{x \to 0}\frac{\cos x}{x^2 + 1}\)에 로피탈의 정리를 쓰면 어떻게 될까요?</p>
+          <p class="q">\(\lim_{x \to 0}\frac{\cos x}{x^2 + 1}\)에 로피탈의 정리를 쓰면 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>쓸 수 없다. 극한은 1이다<span class="why"><b>맞습니다.</b> \(x = 0\)을 넣으면 \(\frac{1}{1}\)이라 \(\frac{0}{0}\) 꼴이 아닙니다. 그대로 넣으면 1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\lim\frac{-\sin x}{2x} = -\frac{1}{2}\)<span class="why"><b>조건을 확인하지 않았습니다.</b> 꼴을 확인하지 않고 미분하면 이렇게 엉뚱한 값이 나옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>극한이 없다<span class="why"><b>연속함수의 극한입니다.</b> 분모가 0이 아니므로 값을 넣으면 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(\cos 0\)을 0으로 계산했습니다.</b> \(\cos 0 = 1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>쓸 수 없다. 극한은 1이다<span class="why"><b>맞다.</b> \(x = 0\)을 넣으면 \(\frac{1}{1}\)이라 \(\frac{0}{0}\) 꼴이 아니다. 그대로 넣으면 1이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\lim\frac{-\sin x}{2x} = -\frac{1}{2}\)<span class="why"><b>조건을 확인하지 않았다.</b> 꼴을 확인하지 않고 미분하면 이렇게 엉뚱한 값이 나온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>극한이 없다<span class="why"><b>연속함수의 극한이다.</b> 분모가 0이 아니므로 값을 넣으면 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>\(\cos 0\)을 0으로 계산했다.</b> \(\cos 0 = 1\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a><a href="../../c/calc2/2-1.html#card-calc2-log-deriv"><small class="mono">미적분Ⅱ 2.1</small>y = ln x의 접선의 기울기는 왜 1/x일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a></div></nav>
 
       <article class="card" id="card-pmath-growth-race">
         <header class="card-head">
-          <span class="no">1.5.3</span><h2>\(x^{10}\)과 \(e^x\)가 무한대까지 달리면 누가 이길까?</h2><span class="kind">로피탈의 정리 · 증가 속도 비교 · 도전</span>
+          <span class="no">탐구 3</span><h2>\(x^{10}\)과 \(e^x\)가 무한대까지 달리면 누가 이길까?</h2><span class="kind">로피탈의 정리 · 증가 속도 비교 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -208,42 +272,42 @@
               </dl>
             </div>
             <p class="verdict" role="status"></p>
-            <p class="fig-note">세로축은 로그 눈금이라 한 칸이 10배입니다. 예측을 고른 뒤에 결승선을 움직일 수 있습니다.</p>
+            <p class="fig-note">세로축은 로그 눈금이라 한 칸이 10배이다. 예측을 고른 뒤에 결승선을 움직일 수 있다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x = 10\)에서 \(x^{10}\)은 100억, \(e^{10}\)은 약 2만 2천입니다. 이 차이를 보면 \(x^{10}\)이 영원히 앞설 것 같습니다. 정말 그럴까요?</li>
-            <li><span class="tag">복원</span>\(\frac{\infty}{\infty}\) 꼴에도 로피탈의 정리를 쓸 수 있습니다. \((x^n)' = nx^{n-1}\), \((e^x)' = e^x\), \((\ln x)' = \frac{1}{x}\)입니다.</li>
-            <li><span class="tag">설명</span>"누가 이기는가"는 \(\lim_{x \to \infty}\frac{A(x)}{B(x)}\)가 \(\infty\)인지 0인지로 판정합니다. \(\frac{x^{10}}{e^x}\)에 로피탈의 정리를 10번 쓰면 \(\frac{10!}{e^x} \to 0\)이므로 <b>\(e^x\)가 이깁니다</b>. 차수가 아무리 높아도 다항함수는 미분할 때마다 차수가 줄지만, \(e^x\)는 그대로이기 때문입니다. 반대로 \(\frac{\ln x}{\sqrt{x}}\)는 한 번 미분하면 \(\frac{1/x}{1/(2\sqrt{x})} = \frac{2}{\sqrt{x}} \to 0\)이므로 \(\sqrt{x}\)가 이깁니다. 정리하면 <b>로그함수 ≪ 다항함수 ≪ 지수함수</b>입니다.</li>
-            <li><span class="tag">연결</span>알고리즘의 실행 시간을 비교하는 빅오 표기법이 바로 이 순서를 씁니다. \(O(\log n)\)인 이진 탐색은 \(O(n)\)보다, \(O(n^{10})\)이라도 \(O(2^n)\)보다 결국 빠릅니다. 단 "결국"이 언제인지는 직접 계산해야 합니다.</li>
-            <li><span class="tag">적용</span>\(x^{10}\)과 \(e^x\)로 예측한 뒤 결승선을 움직여 두 곡선이 엇갈리는 곳을 찾으세요. 대략 몇에서 \(e^x\)가 따라잡나요? 다른 선수 짝도 예측한 뒤 확인해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"결국 이긴다"는 극한에 대한 말이지, 모든 \(x\)에서 크다는 말이 아닙니다. \(x^{10}\)은 \(x\)가 약 36이 될 때까지 \(e^x\)보다 큽니다. 실제 문제에서 \(x\)가 그만큼 크지 않다면 극한의 승자가 실제의 승자가 아닐 수 있습니다.</li>
+            <li><span class="tag">질문</span>\(x = 10\)에서 \(x^{10}\)은 100억, \(e^{10}\)은 약 2만 2천이다. 이 차이를 보면 \(x^{10}\)이 영원히 앞설 것 같다. 정말 그럴까?</li>
+            <li><span class="tag">복원</span>\(\frac{\infty}{\infty}\) 꼴에도 로피탈의 정리를 쓸 수 있다. \((x^n)' = nx^{n-1}\), \((e^x)' = e^x\), \((\ln x)' = \frac{1}{x}\)이다.</li>
+            <li><span class="tag">설명</span>"누가 이기는가"는 \(\lim_{x \to \infty}\frac{A(x)}{B(x)}\)가 \(\infty\)인지 0인지로 판정한다. \(\frac{x^{10}}{e^x}\)에 로피탈의 정리를 10번 쓰면 \(\frac{10!}{e^x} \to 0\)이므로 \(e^x\)가 이긴다. 차수가 아무리 높아도 다항함수는 미분할 때마다 차수가 줄지만, \(e^x\)는 그대로이기 때문이다. 반대로 \(\frac{\ln x}{\sqrt{x}}\)는 한 번 미분하면 \(\frac{1/x}{1/(2\sqrt{x})} = \frac{2}{\sqrt{x}} \to 0\)이므로 \(\sqrt{x}\)가 이긴다. 정리하면 로그함수 ≪ 다항함수 ≪ 지수함수이다.</li>
+            <li><span class="tag">연결</span>알고리즘의 실행 시간을 비교하는 빅오 표기법이 바로 이 순서를 쓴다. \(O(\log n)\)인 이진 탐색은 \(O(n)\)보다, \(O(n^{10})\)이라도 \(O(2^n)\)보다 결국 빠르다. 단 "결국"이 언제인지는 직접 계산해야 한다.</li>
+            <li><span class="tag">적용</span>\(x^{10}\)과 \(e^x\)로 예측한 뒤 결승선을 움직여 두 곡선이 엇갈리는 곳을 찾자. 대략 몇에서 \(e^x\)가 따라잡는가? 다른 선수 짝도 예측한 뒤 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"결국 이긴다"는 극한에 대한 말이지, 모든 \(x\)에서 크다는 말이 아니다. \(x^{10}\)은 \(x\)가 약 36이 될 때까지 \(e^x\)보다 크다. 실제 문제에서 \(x\)가 그만큼 크지 않다면 극한의 승자가 실제의 승자가 아닐 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\lim_{x \to \infty}\frac{(\ln x)^2}{x}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0<span class="why"><b>맞습니다.</b> 로피탈의 정리를 두 번 쓰면 \(\frac{2\ln x/x}{1} \to \frac{2/x}{1} \to 0\)입니다. 로그를 제곱해도 다항함수 \(x\)를 이기지 못합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\infty\)<span class="why"><b>제곱이 크게 만든다고 보았습니다.</b> 로그는 아무리 거듭제곱해도 \(x\)보다 느리게 커집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>로피탈을 한 번만 쓰고 멈췄습니다.</b> \(\frac{2\ln x}{x}\)는 아직 \(\frac{\infty}{\infty}\) 꼴입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>두 함수가 비긴다고 보았습니다.</b> 비율이 0으로 가므로 분모가 이깁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0<span class="why"><b>맞다.</b> 로피탈의 정리를 두 번 쓰면 \(\frac{2\ln x/x}{1} \to \frac{2/x}{1} \to 0\)이다. 로그를 제곱해도 다항함수 \(x\)를 이기지 못한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\infty\)<span class="why"><b>제곱이 크게 만든다고 보았다.</b> 로그는 아무리 거듭제곱해도 \(x\)보다 느리게 커진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>로피탈을 한 번만 쓰고 멈췄다.</b> \(\frac{2\ln x}{x}\)는 아직 \(\frac{\infty}{\infty}\) 꼴이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>두 함수가 비긴다고 보았다.</b> 비율이 0으로 가므로 분모가 이긴다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a><a href="../../c/calc2/2-1.html#card-calc2-log-deriv"><small class="mono">미적분Ⅱ 2.1</small>y = ln x의 접선의 기울기는 왜 1/x일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/1-2.html#card-calc1-lim-laws"><small class="mono">미적분Ⅰ 1.2</small>두 함수를 더하고 곱하면 극한값도 더하고 곱하면 될까?</a><a href="../../c/calc1/1-2.html#text-calc1-limit-laws"><small class="mono">미적분Ⅰ 1.2</small>극한의 성질과 극한값</a><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a><a href="../../c/calc2/2-1.html#card-calc2-exp-slope"><small class="mono">미적분Ⅱ 2.1</small>접선의 기울기가 높이와 같은 지수함수의 밑은?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

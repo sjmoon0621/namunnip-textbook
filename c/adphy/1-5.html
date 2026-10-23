@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이상 기체와 열역학 제1법칙 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이상 기체 상태 방정식, 열역학 제1법칙, 분자 운동 모형으로 이상 기체의 등압·등온·단열·등적 과정에서의 일, 열, 내부 에너지 변화와 몰비열을 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adphy-process .nums dd { font-size: 14px; }
   </style>
@@ -41,18 +47,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-ideal-gas"><span class="mono">1.5.1</span>기체를 데우면 압력은 왜 커질까?</a></li>
-        <li><a href="#card-adphy-process"><span class="mono">1.5.2</span>기체의 상태 변화와 몰비열</a></li>
+        <li><a href="#text-adphy-expansion-work"><span class="mono">본문</span>이상 기체와 열역학 제1법칙</a></li>
+        <li><a href="#card-mech-ideal-gas"><span class="mono">탐구 1</span>기체를 데우면 압력은 왜 커질까?</a></li>
+        <li><a href="#card-adphy-process"><span class="mono">탐구 2</span>기체의 상태 변화와 몰비열</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">88문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-1-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-expansion-work" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이상 기체와 열역학 제1법칙</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">탈취제 스프레이를 길게 뿌리면 손에 쥔 깡통이 눈에 띄게 차가워진다. 자전거 바퀴에 바람을 넣고 나면 펌프의 끝이 따뜻해진다. 기체가 늘어나면 식고, 눌리면 데워지는 것이다. 그런데 기체를 천천히 늘이며 바깥에서 열을 넣어 주면 온도가 그대로일 수도 있다. 같은 부피만큼 늘어나도 왜 이렇게 다른 일이 생길까? 기체가 하는 일은 어떻게 계산할까?</p>
+          <figure class="q-fig" data-q="adphy-pv">
+            <svg viewBox="0 0 520 230" role="img" aria-label="부피비에 따른 등온 팽창과 단열 팽창의 압력 변화와 일"></svg>
+            <div class="q-ctl"><label>나중 부피 ÷ 처음 부피 <input type="range" data-k="r" min="1" max="4" step="0.1" value="2"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 처음 압력 100 kPa, 부피 1 L인 이원자 기체가 온도를 유지하며 늘어날 때(등온, 파랑)와 열을 주고받지 않고 늘어날 때(단열, 주황)의 압력. 색칠한 넓이가 등온 팽창에서 기체가 한 일이다(1 kPa·L = 1 J).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>이상 기체 상태 방정식, 열역학 제1법칙(물리학), 적분과 그래프 아래 넓이(수학).</div>
+
+          <h3><span class="no">1.5.1</span>기체가 하는 일과 제1법칙</h3>
+          <p>피스톤 넓이 \(A\)에 압력 \(P\)가 작용하면 힘은 \(PA\)이고, 피스톤이 \(dx\)만큼 밀려나면 기체는 \(PA\,dx = P\,dV\)의 일을 한다. 부피가 \(V_1\)에서 \(V_2\)까지 늘어나는 동안의 일은 \(W = \int P\,dV\)로, P–V 그래프 아래의 넓이이다. 그리고 기체에 들어온 열 \(Q\)는 내부 에너지의 증가 \(\Delta U\)와 바깥에 한 일 \(W\)로 나뉜다. 이것이 열역학 제1법칙 \(Q = \Delta U + W\)이다. 이상 기체의 내부 에너지는 분자의 운동 에너지의 합이라 절대 온도에만 비례한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">등온 과정과 단열 과정</span></span>
+            <p>등온 과정에서는 \(PV\)가 일정하여 \(\Delta U = 0\)이고 \(Q = W = P_1V_1 \ln\dfrac{V_2}{V_1}\)이다. 단열 과정에서는 \(Q = 0\)이고 \(PV^\gamma\)가 일정하여(이원자 기체는 \(\gamma = 1.4\)) \[W = \frac{P_1V_1}{\gamma - 1}\left[1 - \left(\frac{V_1}{V_2}\right)^{\gamma - 1}\right],\qquad \frac{T_2}{T_1} = \left(\frac{V_1}{V_2}\right)^{\gamma - 1}\]이다. 단열 팽창의 일은 모두 내부 에너지에서 나오므로 온도가 내려간다.</p>
+          </div>
+          <p>그림 1에서 부피비를 바꾸어 보자. 두 배로 늘어날 때 등온 과정의 기체는 약 69 J의 일을 하고, 같은 양의 열을 바깥에서 받아 온도를 지킨다. 단열 과정의 기체는 약 61 J의 일을 하는데, 열을 받지 못하므로 그만큼 내부 에너지가 줄어 절대 온도가 약 0.76배가 된다. 단열 곡선이 등온 곡선보다 가파르게 떨어져 넓이가 작은 것도 이 때문이다.<sup class="fn"><a href="#fn-adphy-expansion-work-1">1</a></sup></p>
+
+          <h3><span class="no">1.5.2</span>분자의 눈으로 본 압력과 온도</h3>
+          <p>기체의 압력은 수많은 분자가 벽에 부딪치며 운동량을 넘겨주어 생긴다. 분자 운동론에 따르면 \(PV = \dfrac{2}{3}N\langle E_k \rangle\)이고, 이를 상태 방정식 \(PV = NkT\)와 견주면 분자 하나의 평균 병진 운동 에너지가 \(\dfrac{3}{2}kT\)이다. 그래서 피스톤이 바깥으로 물러나면, 피스톤에 부딪친 분자는 물러나는 벽에서 튕겨 나오며 속력을 조금 잃는다. 반대로 피스톤이 안으로 들어오면 분자는 다가오는 벽에 맞아 빨라진다. 즉 단열 팽창의 냉각과 단열 압축의 가열은 분자가 움직이는 벽과 부딪칠 때 생기는 일이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="기체 과정에서 열, 일, 내부 에너지의 관계">
+              <g class="s">
+                <text x="20" y="22">과정</text><text x="140" y="22">일정한 것</text><text x="290" y="22">열역학 제1법칙</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">등온</text><text x="140" y="52">온도, PV</text><text x="290" y="52">받은 열이 모두 일로 (Q = W)</text>
+                <text x="20" y="74">단열</text><text x="140" y="74">열 출입 없음, PVᵞ</text><text x="290" y="74">일이 내부 에너지에서 (W = −ΔU)</text>
+                <text x="20" y="96">정적</text><text x="140" y="96">부피</text><text x="290" y="96">받은 열이 모두 내부 에너지로</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 같은 기체라도 과정에 따라 열, 일, 내부 에너지가 나뉘는 몫이 다르다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+            <p>처음 온도 300 K, 압력 100 kPa, 부피 1 L인 공기(\(\gamma = 1.4\))가 부피 2 L로 늘어난다. 등온 팽창과 단열 팽창 각각에서 기체가 한 일, 받은 열, 나중 온도를 구하여라.</p>
+          </div>
+          <p>\(P_1V_1 = 100\ \text{kPa} \times 1\ \text{L} = 100\) J이다. 등온 팽창에서는 \(W = 100 \ln 2 \approx 69\) J이고 \(\Delta U = 0\)이므로 받은 열도 69 J, 나중 온도는 300 K 그대로이다.</p>
+          <p>단열 팽창에서는 \(2^{-0.4} \approx 0.758\)이므로 \(W = \dfrac{100}{0.4}(1 - 0.758) \approx 61\) J이고, 받은 열은 0이다. 나중 온도는 \(300 \times 0.758 \approx 227\) K, 곧 약 −46 °C이다. 따라서 열을 받지 못한 채 빨리 늘어나는 기체는 크게 식는다. 스프레이 깡통 속의 기체가 빠르게 늘어나며 식는 것, 높이 올라간 공기 덩어리가 식어 구름이 생기는 것도 이 단열 냉각이다.</p>
+          <p>아래 탐구 카드에서 같은 부피만큼 팽창하는 여러 과정을 P–V 그래프로 비교하고, 필요한 열이 왜 다른지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-expansion-work-1">스프레이 깡통이 차가워지는 데에는 액체로 담긴 추진제가 기체로 증발하며 열을 빼앗는 효과도 크게 더해진다. 냉장고와 에어컨은 이 두 효과를 함께 써서 열을 옮긴다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>기체가 하는 일은 P–V 그래프 아래의 넓이이고, 들어온 열은 내부 에너지의 증가와 바깥에 한 일로 나뉜다. 등온 팽창에서는 받은 열이 모두 일로 가지만, 단열 팽창에서는 일을 내부 에너지로 치러 온도가 내려간다. 그래서 처음 질문의 스프레이 깡통은 속의 기체가 열을 받을 새 없이 빨리 늘어나 단열 팽창하므로 차가워진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a><a href="../../c/phy/1-5.html#text-phy-heat"><small class="mono">물리학 1.5</small>열과 에너지 보존</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a><a href="../../c/mateng/4-3.html#card-mateng-ea"><small class="mono">물질과 에너지 4.3</small>부딪친다고 모두 반응할까?</a></div></nav>
+
       <article class="card" id="card-mech-ideal-gas">
         <header class="card-head">
-          <span class="no">1.5.1</span><h2>기체를 데우면 압력은 왜 커질까?</h2><span class="kind">이상 기체 · PV = nRT</span>
+          <span class="no">탐구 1</span><h2>기체를 데우면 압력은 왜 커질까?</h2><span class="kind">이상 기체 · PV = nRT</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,33 +129,33 @@
                 <div><dt>분자의 평균 속력(질소)</dt><dd class="n-vr">—</dd></div>
                 <div><dt>PV ÷ T</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">P = nRT/V, R = 8.314 J/(mol·K). 그림의 분자 수와 속력은 모식입니다(실제 1 mol은 6×10²³개). 평균 속력은 질소 분자의 √(3RT/M)입니다.</p>
+              <p class="fig-note">P = nRT/V, R = 8.314 J/(mol·K)로 계산했다. 그림의 분자 수와 속력은 모식이고(실제 1 mol은 6×10²³개), 평균 속력은 질소 분자의 √(3RT/M)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>여름 햇볕 아래 둔 자동차 타이어는 공기압이 올라갑니다. 공기를 더 넣지도 않았는데 왜 압력이 커질까요?</li>
-            <li><span class="tag">복원</span>기체의 압력은 수많은 분자가 벽에 부딪치며 미는 힘을 넓이로 나눈 것입니다. 온도가 높을수록 분자는 빠르게 움직입니다.</li>
-            <li><span class="tag">설명</span>실험에 따르면 기체의 양이 일정할 때 압력은 부피에 반비례하고(보일 법칙), 부피가 일정하면 압력은 절대 온도에 비례합니다(샤를 법칙과 같은 관계). 이를 합치면 <em>PV = nRT</em>, 곧 이상 기체 상태 방정식입니다. 여기서 온도는 반드시 절대 온도(K = °C + 273)를 씁니다.</li>
-            <li><span class="tag">연결</span>분자 운동으로 보면, 부피를 줄이면 분자가 벽에 더 자주 부딪치고, 온도를 올리면 더 빠르게 더 세게 부딪칩니다. 분자의 평균 운동 에너지는 절대 온도에 비례하므로 평균 속력은 √T에 비례합니다. 0 K에서는 분자 운동이 가장 작아져 이상 기체의 압력이 0이 됩니다.</li>
-            <li><span class="tag">적용</span>부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력은 몇 배가 되나요? 이때 분자의 평균 속력은 몇 배가 되나요? 그다음 온도를 고정하고 부피를 절반으로 줄여 압력을 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이상 기체는 분자 자체의 크기와 분자 사이 인력을 무시한 모형입니다. 상온·상압의 공기는 이 모형을 잘 따르지만, 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 어긋납니다. 또 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나오므로, 반드시 절대 온도를 써야 합니다.</li>
+            <li><span class="tag">질문</span>여름 햇볕 아래 둔 자동차 타이어는 공기압이 올라간다. 공기를 더 넣지도 않았는데 왜 압력이 커질까?</li>
+            <li><span class="tag">복원</span>기체의 압력은 수많은 분자가 벽에 부딪치며 미는 힘을 넓이로 나눈 것이다. 그리고 온도가 높을수록 분자는 빠르게 움직인다.</li>
+            <li><span class="tag">설명</span>실험에 따르면 기체의 양이 일정할 때 압력은 부피에 반비례하고(보일 법칙), 부피가 일정하면 압력은 절대 온도에 비례한다(샤를 법칙과 같은 관계). 이를 합치면 <em>PV = nRT</em>, 곧 이상 기체 상태 방정식이고, 여기서 온도는 반드시 절대 온도(K = °C + 273)를 쓴다.</li>
+            <li><span class="tag">연결</span>분자 운동으로 보면, 부피를 줄이면 분자가 벽에 더 자주 부딪치고, 온도를 올리면 더 빠르게 더 세게 부딪친다. 분자의 평균 운동 에너지는 절대 온도에 비례하므로 평균 속력은 √T에 비례하며, 0 K에서는 분자 운동이 가장 작아져 이상 기체의 압력이 0이 된다.</li>
+            <li><span class="tag">적용</span>부피를 그대로 두고 온도를 300 K에서 600 K로 올리면 압력이 몇 배가 되는지, 이때 분자의 평균 속력은 몇 배가 되는지 보자. 그다음 온도를 고정하고 부피를 절반으로 줄여 압력을 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이상 기체는 분자 자체의 크기와 분자 사이 인력을 무시한 모형이다. 상온과 상압의 공기는 이 모형을 잘 따르지만, 압력이 아주 높거나 온도가 낮아 액체가 되기 직전에는 어긋난다. 또 섭씨온도로 계산하면 0 °C에서 압력이 0이 되는 엉뚱한 결과가 나오므로, 반드시 절대 온도를 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">27 °C에서 공기압이 2.0기압인 타이어가 햇볕에 57 °C가 되었습니다. 부피가 거의 변하지 않는다면 공기압은 대략?</p>
+          <p class="q">27 °C에서 공기압이 2.0기압인 타이어가 햇볕에 57 °C가 되었다. 부피가 거의 변하지 않는다면 공기압은 대략?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 4.2기압 — 온도가 2배 넘게 올랐으므로<span class="why"><b>섭씨온도로 비를 낸 답입니다.</b> 압력은 절대 온도에 비례합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 2.2기압<span class="why"><b>맞습니다.</b> 300 K에서 330 K로 1.1배가 되었으므로 2.0 × 1.1 = 2.2기압입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.0기압 그대로 — 공기를 넣지 않았으므로<span class="why"><b>기체의 양이 같아도</b> 온도가 오르면 분자가 더 세게 부딪쳐 압력이 커집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 4.2기압 — 온도가 2배 넘게 올랐으므로<span class="why"><b>섭씨온도로 비를 낸 답이다.</b> 압력은 절대 온도에 비례한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 2.2기압<span class="why"><b>맞다.</b> 300 K에서 330 K로 1.1배가 되었으므로 2.0 × 1.1 = 2.2기압이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2.0기압 그대로 — 공기를 넣지 않았으므로<span class="why"><b>기체의 양이 같아도</b> 온도가 오르면 분자가 더 세게 부딪쳐 압력이 커진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a><a href="../../c/mateng/4-3.html#card-mateng-ea"><small class="mono">물질과 에너지 4.3</small>부딪친다고 모두 반응할까?</a><a href="../../c/labchem/2-2.html#card-labchem-gas-r"><small class="mono">화학 실험 2.2</small>마그네슘 리본 한 조각으로 기체 상수 R을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a><a href="../../c/phy/1-5.html#text-phy-heat"><small class="mono">물리학 1.5</small>열과 에너지 보존</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mateng/1-1.html#card-mateng-gas-use"><small class="mono">물질과 에너지 1.1</small>에어백을 부풀리려면 기체가 몇 몰 필요할까?</a><a href="../../c/mateng/4-3.html#card-mateng-ea"><small class="mono">물질과 에너지 4.3</small>부딪친다고 모두 반응할까?</a></div></nav>
 
       <article class="card" id="card-adphy-process">
         <header class="card-head">
-          <span class="no">1.5.2</span><h2>같은 부피만큼 팽창해도 필요한 열은 왜 다를까?</h2><span class="kind">W = ∫P dV · 등압·등온·단열·등적 과정 · C<sub>V</sub>와 C<sub>P</sub></span>
+          <span class="no">탐구 2</span><h2>같은 부피만큼 팽창해도 필요한 열은 왜 다를까?</h2><span class="kind">W = ∫P dV · 등압·등온·단열·등적 과정 · C<sub>V</sub>와 C<sub>P</sub></span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -121,47 +179,52 @@
                 <div><dt>Q = ΔU + W</dt><dd class="n-q">—</dd></div>
                 <div><dt>나중 온도</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">이상 기체 1 mol, 처음 상태 300 K, 24.9 L, 100 kPa. R = 8.314 J/(mol·K). 단원자 C<sub>V</sub> = (3/2)R, 이원자(상온) C<sub>V</sub> = (5/2)R, C<sub>P</sub> = C<sub>V</sub> + R, γ = C<sub>P</sub>/C<sub>V</sub>. ‘등적’은 부피를 그대로 두고 등압 과정과 같은 나중 온도까지 데우거나 식히는 과정입니다. 모든 과정은 천천히 일어나는 준정적 과정으로 봅니다.</p>
+              <p class="fig-note">이상 기체 1 mol, 처음 상태 300 K, 24.9 L, 100 kPa. R = 8.314 J/(mol·K). 단원자 C<sub>V</sub> = (3/2)R, 이원자(상온) C<sub>V</sub> = (5/2)R, C<sub>P</sub> = C<sub>V</sub> + R, γ = C<sub>P</sub>/C<sub>V</sub>. ‘등적’은 부피를 그대로 두고 등압 과정과 같은 나중 온도까지 데우거나 식히는 과정이다. 모든 과정은 천천히 일어나는 준정적 과정으로 본다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>같은 기체를 같은 부피만큼 팽창시켜도, 압력을 일정하게 두느냐 온도를 일정하게 두느냐, 열을 막느냐에 따라 기체가 하는 일과 필요한 열이 달라집니다. 무엇이 이 차이를 만들까요?</li>
-            <li><span class="tag">복원</span>이상 기체는 PV = nRT를 따르고, 열역학 제1법칙은 Q = ΔU + W입니다. 기체가 피스톤을 dV만큼 밀면 하는 일은 P dV입니다.</li>
-            <li><span class="tag">설명</span>분자 운동 모형에서 벽에 부딪치는 분자의 운동량 변화를 모두 더하면 <em>P = (1/3)(N/V)m⟨v²⟩</em>이고, PV = nRT와 비교하면 분자 한 개의 평균 병진 운동 에너지가 <em>(3/2)kT</em>입니다. 단원자 기체의 내부 에너지는 U = (3/2)nRT로 온도만의 함수이고, 이원자 분자는 회전 두 방향이 더해져 (5/2)nRT입니다. 압력이 변하는 과정의 일은 넓이 <em>W = ∫P dV</em>로 구합니다. 등온 과정은 W = nRT ln(V/V₀), 단열 과정은 Q = 0이라 W = −ΔU이고 PV<sup>γ</sup>가 일정합니다.</li>
-            <li><span class="tag">연결</span>등적 과정에서 온도를 1 K 올리는 데 드는 열이 C<sub>V</sub>, 등압 과정에서 드는 열이 C<sub>P</sub>입니다. 등압이면 같은 ΔU에 더해 피스톤을 미는 일 nRΔT까지 해야 하므로 <em>C<sub>P</sub> = C<sub>V</sub> + R</em>입니다. 단열 팽창은 열을 받지 않고 일을 하므로 내부 에너지가 줄어 기체가 식고, 그래서 P–V 곡선이 등온선보다 가파릅니다.</li>
-            <li><span class="tag">적용</span>부피 비를 2로 두고 등압, 등온, 단열을 차례로 눌러 W와 Q를 비교하세요. ‘등적’과 ‘등압’은 나중 온도가 같은데 Q의 비가 얼마인가요? 단원자에서 이원자로 바꾸면 그 비(γ)가 어떻게 변하나요? 부피 비를 1보다 작게 해 압축하면 단열 과정의 온도는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“열을 주면 반드시 온도가 오른다”, “온도가 오르려면 열을 주어야 한다”는 오개념입니다. 등온 팽창은 열을 받아도 온도가 그대로이고, 단열 압축은 열 없이 온도가 오릅니다. 또 이원자 분자의 C<sub>V</sub> = (5/2)R는 상온에서의 값입니다. 아주 낮은 온도에서는 회전이, 높은 온도에서는 진동까지 관여해 비열이 달라지며, 이것은 고전 모형이 아니라 양자 역학으로 설명됩니다.</li>
+            <li><span class="tag">질문</span>같은 기체를 같은 부피만큼 팽창시켜도, 압력을 일정하게 두느냐 온도를 일정하게 두느냐, 열을 막느냐에 따라 기체가 하는 일과 필요한 열이 달라진다. 무엇이 이 차이를 만들까?</li>
+            <li><span class="tag">복원</span>이상 기체는 PV = nRT를 따르고, 열역학 제1법칙은 Q = ΔU + W이다. 기체가 피스톤을 dV만큼 밀면 하는 일은 P dV이다.</li>
+            <li><span class="tag">설명</span>분자 운동 모형에서 벽에 부딪치는 분자의 운동량 변화를 모두 더하면 <em>P = (1/3)(N/V)m⟨v²⟩</em>이고, PV = nRT와 비교하면 분자 한 개의 평균 병진 운동 에너지가 <em>(3/2)kT</em>이다. 단원자 기체의 내부 에너지는 U = (3/2)nRT로 온도만의 함수이고, 이원자 분자는 회전 두 방향이 더해져 (5/2)nRT이다. 압력이 변하는 과정의 일은 넓이 <em>W = ∫P dV</em>로 구한다. 등온 과정은 W = nRT ln(V/V₀), 단열 과정은 Q = 0이라 W = −ΔU이고 PV<sup>γ</sup>가 일정하다.</li>
+            <li><span class="tag">연결</span>등적 과정에서 온도를 1 K 올리는 데 드는 열이 C<sub>V</sub>, 등압 과정에서 드는 열이 C<sub>P</sub>이다. 등압이면 같은 ΔU에 더해 피스톤을 미는 일 nRΔT까지 해야 하므로 <em>C<sub>P</sub> = C<sub>V</sub> + R</em>이다. 단열 팽창은 열을 받지 않고 일을 하므로 내부 에너지가 줄어 기체가 식고, 그래서 P–V 곡선이 등온선보다 가파르다.</li>
+            <li><span class="tag">적용</span>부피 비를 2로 두고 등압, 등온, 단열을 차례로 눌러 W와 Q를 비교해 보자. ‘등적’과 ‘등압’은 나중 온도가 같은데 Q의 비가 얼마인가? 단원자에서 이원자로 바꾸면 그 비(γ)가 어떻게 변하는가? 부피 비를 1보다 작게 해 압축하면 단열 과정의 온도는 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>“열을 주면 반드시 온도가 오른다”, “온도가 오르려면 열을 주어야 한다”는 오개념이다. 등온 팽창은 열을 받아도 온도가 그대로이고, 단열 압축은 열 없이 온도가 오른다. 또 이원자 분자의 C<sub>V</sub> = (5/2)R는 상온에서의 값이다. 아주 낮은 온도에서는 회전이, 높은 온도에서는 진동까지 관여해 비열이 달라지며, 이것은 고전 모형이 아니라 양자 역학으로 설명된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">자전거 바람 넣는 펌프의 입구를 손가락으로 막고 빠르게 눌러 공기를 압축했더니 펌프가 따뜻해졌습니다. 이 과정에 대한 설명으로 가장 적절한 것은?</p>
+          <p class="q">자전거 바람 넣는 펌프의 입구를 손가락으로 막고 빠르게 눌러 공기를 압축했더니 펌프가 따뜻해졌다. 이 과정에 대한 설명으로 가장 적절한 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>빠른 압축이라 열이 거의 빠져나가지 못해(Q ≈ 0) 외부가 한 일이 내부 에너지가 되었다<span class="why"><b>맞습니다.</b> 단열에 가까운 압축에서는 W &lt; 0(기체가 일을 받음)이므로 ΔU = −W &gt; 0이 되어 온도가 오릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>손의 열이 공기로 전달되어 온도가 올랐다<span class="why"><b>열의 방향이 반대입니다.</b> 압축된 공기가 손보다 뜨거워지므로 열은 오히려 공기에서 빠져나갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>부피가 줄어도 이상 기체의 온도는 압력과 부피의 곱으로 정해지므로 변하지 않는다<span class="why"><b>PV가 일정한 것은 등온 과정일 때뿐입니다.</b> 단열 압축에서는 PV<sup>γ</sup>가 일정하므로 PV가 커지고 온도가 오릅니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>빠른 압축이라 열이 거의 빠져나가지 못해(Q ≈ 0) 외부가 한 일이 내부 에너지가 되었다<span class="why"><b>맞다.</b> 단열에 가까운 압축에서는 W &lt; 0(기체가 일을 받음)이므로 ΔU = −W &gt; 0이 되어 온도가 오른다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>손의 열이 공기로 전달되어 온도가 올랐다<span class="why"><b>열의 방향이 반대이다.</b> 압축된 공기가 손보다 뜨거워지므로 열은 오히려 공기에서 빠져나간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>부피가 줄어도 이상 기체의 온도는 압력과 부피의 곱으로 정해지므로 변하지 않는다<span class="why"><b>PV가 일정한 것은 등온 과정일 때뿐이다.</b> 단열 압축에서는 PV<sup>γ</sup>가 일정하므로 PV가 커지고 온도가 오른다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/1-6.html#card-adphy-carnot"><small class="mono">고급 물리학 1.6</small>열기관의 효율에는 왜 넘을 수 없는 한계가 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-3.html#card-mech-first-law"><small class="mono">역학과 에너지 2.3</small>기체에 준 열은 어디에 쓰일까?</a><a href="../../c/adchem/3-1.html#text-adchem-internal-energy"><small class="mono">고급 화학 3.1</small>내부 에너지와 열역학 제1법칙</a><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/1-6.html#card-adphy-carnot"><small class="mono">고급 물리학 1.6</small>열기관의 효율에는 왜 넘을 수 없는 한계가 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-1-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=1-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-1-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">88문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/mech/t-ideal-gas.js"></script>
 <script src="../../js/cards/adphy/me-process.js"></script>
 </body>

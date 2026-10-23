@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/econ/body.js"],
+  "sec": "3-1",
+  "short": "본문 · 경제 현상과 행렬"
+}
+-->
+<article class="card reading" id="text-econ-matrix" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>경제 현상과 행렬</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">두 통신사 A와 B가 시장을 반씩 나누고 있다. 해마다 A의 고객 가운데 20%는 B로, B의 고객 가운데 30%는 A로 옮긴다고 하자. 내년, 그다음 해의 점유율은 어떻게 될까? 이 과정이 10년, 20년 이어지면 한쪽이 시장을 모두 차지하게 될까, 아니면 어떤 비율에 머무를까? 행렬을 쓰면 이 계산이 곱셈 한 번으로 정리된다.</p>
+    <figure class="q-fig" data-q="econ-markov">
+      <svg viewBox="0 0 520 230" role="img" aria-label="해마다 고객이 옮겨 가는 비율에 따른 두 회사의 점유율 변화"></svg>
+      <div class="q-ctl"><label>지난 햇수 \(n\) <input type="range" data-k="n" min="0" max="15" step="1" value="2"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 처음 점유율 A 50%, B 50%에서 시작하여 해마다 전이 행렬을 곱한다. 몇 해 지나지 않아 A 60%, B 40%에 다가가며 더는 변하지 않는다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 뜻과 성분, 행렬의 곱셈(공통수학1).</div>
+
+    <h3><span class="no">3.1.1</span>표를 행렬로</h3>
+    <p>경제 자료는 흔히 표로 정리된다. 세 지점이 판매한 상품별 수량을 행렬 \(A\)로, 상품별 값을 열 행렬 \(B\)로 놓으면 곱 \(AB\)의 각 성분이 지점별 매출이 된다. 행렬의 곱셈은 '수량 × 값'을 더하는 계산을 한꺼번에 해 준다.</p>
+    <div class="tb-env thm"><span class="lb">정의 3.1.1 <span class="nm">전이 행렬</span></span>
+      <p>한 기간 동안 각 상태에서 다른 상태로 옮겨 가는 비율을 성분으로 하는 행렬을 전이 행렬이라 한다. 지금의 점유율을 열 행렬 \(X_n\)으로 놓으면 다음 기간의 점유율은 \(X_{n+1} = TX_n\)이고, \(n\)기간 뒤에는 \(X_n = T^nX_0\)이다.</p>
+    </div>
+    <p>A에 남는 비율 0.8, B에서 A로 오는 비율 0.3을 첫째 행에, A에서 B로 가는 0.2와 B에 남는 0.7을 둘째 행에 놓으면 \[T = \begin{pmatrix} 0.8 &amp; 0.3 \\ 0.2 &amp; 0.7 \end{pmatrix}\] 이다. 그리고 각 열의 합이 1인 것은 한 회사의 고객이 남거나 옮겨 갈 뿐 사라지지 않기 때문이다. 그래서 두 회사의 점유율을 더하면 언제나 100%이다.</p>
+    <p>\(T\)를 열 단위로 읽으면 뜻이 더 잘 보인다. 첫째 열 \(\begin{pmatrix} 0.8 \\ 0.2 \end{pmatrix}\)은 A의 고객 한 명이 내년에 어디에 있는지를, 둘째 열 \(\begin{pmatrix} 0.3 \\ 0.7 \end{pmatrix}\)은 B의 고객 한 명이 어디에 있는지를 나눈 것이다. 그러면 \(TX_n\)은 A 고객의 몫만큼 첫째 열을, B 고객의 몫만큼 둘째 열을 더한 것, 곧 두 회사의 고객이 각자 흩어진 결과를 합친 것이다. 각 열의 합이 1이라는 조건도 '한 사람은 어딘가에 반드시 있다'는 말로 읽힌다.</p>
+
+    <h3><span class="no">3.1.2</span>안정 상태</h3>
+    <p>그림 1에서 햇수를 늘려 보자. 점유율은 \((0.5, 0.5)\)에서 \((0.55, 0.45)\), \((0.575, 0.425)\)로 변하며 \((0.6, 0.4)\)에 다가간다. 따라서 이 점에서는 \(TX = X\)가 되어 더는 변하지 않는다. 이를 안정 상태라 한다. 안정 상태에서는 A에서 B로 가는 고객 수와 B에서 A로 오는 고객 수가 같다.<sup class="fn"><a href="#fn-econ-matrix-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 120" role="img" aria-label="두 회사 사이의 고객 이동">
+        <g class="s">
+          <circle cx="140" cy="60" r="34" class="lb"/><text x="140" y="65" text-anchor="middle">A</text>
+          <circle cx="380" cy="60" r="34" class="lc"/><text x="380" y="65" text-anchor="middle">B</text>
+          <path d="M176 48 Q 260 18 344 48" class="k"/><path d="M344 48 l-9 -1 l4 8 Z" class="fk"/><text x="260" y="22" text-anchor="middle">20%</text>
+          <path d="M344 72 Q 260 102 176 72" class="k"/><path d="M176 72 l9 1 l-4 -8 Z" class="fk"/><text x="260" y="108" text-anchor="middle">30%</text>
+          <text x="70" y="65" text-anchor="end">80% 남음</text><text x="450" y="65">70% 남음</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 해마다 A 고객의 20%가 B로, B 고객의 30%가 A로 옮긴다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+      <p>위 전이 행렬에서 처음 점유율이 A 50%, B 50%일 때 1년 뒤 점유율을 구하여라. 또 안정 상태의 점유율을 구하여라.</p>
+    </div>
+    <p>\[TX_0 = \begin{pmatrix} 0.8 &amp; 0.3 \\ 0.2 &amp; 0.7 \end{pmatrix}\begin{pmatrix} 0.5 \\ 0.5 \end{pmatrix} = \begin{pmatrix} 0.4 + 0.15 \\ 0.1 + 0.35 \end{pmatrix} = \begin{pmatrix} 0.55 \\ 0.45 \end{pmatrix}\] 이므로 1년 뒤 A 55%, B 45%이다.</p>
+    <p>안정 상태를 \((a, 1 - a)\)로 놓으면 \(0.8a + 0.3(1 - a) = a\)이므로 \(0.5a + 0.3 = a\), 곧 \(a = 0.6\)이다. A에서 B로 가는 양 \(0.2 \times 0.6 = 0.12\)와 B에서 A로 오는 양 \(0.3 \times 0.4 = 0.12\)가 같다. 처음 점유율이 어떻든 이 비율에 다가가므로, 한쪽이 시장을 모두 차지하지는 않는다.</p>
+    <p>아래 탐구 카드에서 지점별 매출을 행렬로 계산하고, 점유율이 어디로 가는지 직접 따라가 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-econ-matrix-1">이렇게 다음 상태가 지금 상태에만 달려 있는 과정을 마르코프 연쇄라 한다. 날씨 예측, 검색 엔진의 웹 페이지 순위 계산 등에도 같은 원리가 쓰인다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>경제 자료의 표는 행렬로 나타낼 수 있고, 행렬의 곱셈으로 매출이나 다음 기간의 상태를 한꺼번에 계산한다. 옮겨 가는 비율을 담은 전이 행렬 \(T\)를 거듭 곱하면 상태가 안정 상태 \(TX = X\)에 다가간다. 그래서 처음 질문의 두 통신사는 해마다 고객이 오가도 결국 A 60%, B 40%의 점유율에 머무른다.</p></div>
+  </div>
+</article>

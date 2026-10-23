@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>수학적 귀납법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="수학적 귀납법의 두 단계(n = 1일 때 성립, n = k일 때 성립하면 n = k + 1일 때도 성립)와 그 원리, 몇 개의 예만 확인하는 것과의 차이, 간단한 등식의 증명.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-induct-domino canvas { width: 100%; aspect-ratio: 2 / 1; }
@@ -47,18 +52,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-induct-domino"><span class="mono">3.7.1</span>도미노와 귀납법</a></li>
-        <li><a href="#card-alg-induct-proof"><span class="mono">3.7.2</span>귀납법으로 증명하기</a></li>
+        <li><a href="#text-alg-induction"><span class="mono">본문</span>수학적 귀납법</a></li>
+        <li><a href="#card-alg-induct-domino"><span class="mono">탐구 1</span>도미노와 귀납법</a></li>
+        <li><a href="#card-alg-induct-proof"><span class="mono">탐구 2</span>귀납법으로 증명하기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">37문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=3-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-3-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">37문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-3-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-induction" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>수학적 귀납법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(1 + 3 + 5 + \cdots + (2n - 1) = n^2\)은 \(n = 1, 2, 3, \ldots, 100\)까지 모두 확인해 보니 맞았다. 그렇다고 \(n = 101\)에서도 맞는다고 할 수 있을까? 자연수는 끝없이 많은데, 유한한 단계만으로 '모든 자연수에서 참'임을 보이려면 어떻게 해야 할까?</p>
+          <figure class="q-fig" data-q="alg-domino">
+            <svg viewBox="0 0 520 200" role="img" aria-label="첫 도미노가 쓰러지고 각 도미노가 다음 것을 쓰러뜨리면 모두 쓰러지는 그림"></svg>
+            <div class="q-ctl"><label>쓰러뜨린 단계 <input type="range" data-k="t" min="0" max="12" step="1" value="5"><output data-k="t"></output></label><label>\(k \to k + 1\)이 끊긴 자리 <input type="range" data-k="b" min="0" max="10" step="1" value="0"><output data-k="b"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 첫 도미노가 쓰러지고, 어느 도미노든 쓰러지면 다음 것을 쓰러뜨린다면 모든 도미노가 쓰러진다. 이음이 하나라도 끊기면 그 뒤는 쓰러지지 않는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>명제와 증명(공통수학2), \(\sum\)의 뜻(<a href="3-4.html">합의 기호 ∑</a>), 수열의 귀납적 정의(<a href="3-6.html">수열의 귀납적 정의</a>).</div>
+
+          <h3><span class="no">3.7.1</span>도미노처럼 이어서 증명하기</h3>
+          <p>자연수 \(n\)에 대한 명제 \(p(n)\)이 모든 자연수에서 참임을 보이고 싶다. 하나씩 확인해서는 끝이 없다. 그래서 두 가지만 보인다. 먼저 \(n = 1\)일 때 참이다. 다음으로, 어떤 자연수 \(k\)에서 참이라고 가정하면 \(k + 1\)에서도 참이다.</p>
+          <p>이 두 가지가 보이면, 1에서 참이므로 2에서 참이고, 2에서 참이므로 3에서 참이며, 이렇게 끝없이 이어진다. 그림 1의 도미노와 같다. 첫 도미노를 쓰러뜨리고, 모든 도미노가 바로 다음 도미노를 쓰러뜨리도록 세워 두었다면 결국 모두 쓰러진다.</p>
+          <div class="tb-env"><span class="lb">방법 3.7.1 <span class="nm">수학적 귀납법</span></span>
+            <p>자연수 \(n\)에 대한 명제 \(p(n)\)이 모든 자연수 \(n\)에 대하여 성립함을 증명하려면 다음 두 가지를 보이면 된다. (ⅰ) \(n = 1\)일 때 \(p(n)\)이 성립한다. (ⅱ) \(n = k\)일 때 \(p(n)\)이 성립한다고 가정하면 \(n = k + 1\)일 때도 성립한다.</p>
+          </div>
+          <p>두 단계는 모두 필요하다. 그림 1에서 이음이 끊긴 자리를 만들어 보면, 첫 도미노가 쓰러져도 그 자리 뒤로는 전달되지 않는다. 반대로 (ⅱ)가 성립해도 (ⅰ)이 없으면 아무것도 시작되지 않는다.<sup class="fn"><a href="#fn-alg-induction-1">1</a></sup></p>
+
+          <h3><span class="no">3.7.2</span>처음 질문 증명하기</h3>
+          <p>(ⅰ) \(n = 1\)이면 좌변은 1, 우변은 \(1^2 = 1\)이므로 성립한다.</p>
+          <p>(ⅱ) \(n = k\)일 때 \(1 + 3 + \cdots + (2k - 1) = k^2\)이 성립한다고 가정하자. 양변에 다음 홀수 \(2(k + 1) - 1 = 2k + 1\)을 더하면, 좌변은 \(n = k + 1\)일 때의 좌변이 되고, 우변은 \(k^2 + 2k + 1 = (k + 1)^2\)이 된다. 따라서 \(n = k + 1\)일 때도 성립한다.</p>
+          <p class="tb-proof">(ⅰ), (ⅱ)에 따라 모든 자연수 \(n\)에 대하여 \(1 + 3 + \cdots + (2n - 1) = n^2\)이다.<span class="qed"></span></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="한 변 k인 정사각형에 L자 띠 2k+1개를 두르면 한 변 k+1인 정사각형">
+              <rect x="60" y="30" width="100" height="100" class="lb"/><rect x="60" y="30" width="100" height="100" class="k"/><text x="110" y="85" text-anchor="middle">k²</text>
+              <path d="M160 30 L185 30 L185 155 L60 155 L60 130 L160 130 Z" class="lc"/><path d="M160 30 L185 30 L185 155 L60 155 L60 130 L160 130 Z" class="k"/>
+              <text x="200" y="100" class="s tc">2k + 1</text>
+              <text x="260" y="70">k² + (2k + 1) = (k + 1)²</text><text x="260" y="100" class="s">다음 홀수를 더하는 것은</text><text x="260" y="120" class="s">정사각형에 L자 띠를 두르는 것</text>
+            </svg>
+            <figcaption>그림 2. 증명의 (ⅱ) 단계는 한 변 \(k\)인 정사각형에 다음 홀수만큼의 L자 띠를 둘러 한 변 \(k + 1\)인 정사각형을 만드는 일이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.7.2</span>
+            <p>모든 자연수 \(n\)에 대하여 \(4^n - 1\)이 3의 배수임을 수학적 귀납법으로 증명하여라.</p>
+          </div>
+          <p>(ⅰ) \(n = 1\)이면 \(4 - 1 = 3\)이므로 3의 배수이다.</p>
+          <p>(ⅱ) \(n = k\)일 때 \(4^k - 1 = 3m\)(\(m\)은 자연수)이라 가정하자. 그러면 \(4^{k+1} - 1 = 4 \times 4^k - 1 = 4(3m + 1) - 1 = 12m + 3 = 3(4m + 1)\)이다. 따라서 \(n = k + 1\)일 때도 3의 배수이다.</p>
+          <p class="tb-proof">(ⅰ), (ⅱ)에 따라 모든 자연수 \(n\)에 대하여 \(4^n - 1\)은 3의 배수이다.<span class="qed"></span></p>
+          <p>(ⅱ)에서 길을 연 것은 \(4^{k+1}\)을 \(4^k\)으로 나타내 가정을 쓸 수 있게 만든 한 줄이다. 가정을 어디에 넣을지 찾는 것이 귀납법 증명의 대부분이다. 아래 탐구 카드에서 도미노의 이음을 끊어 보고, \(P(k)\)에서 \(P(k + 1)\)로 건너가는 단계를 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-induction-1">'\(n^2 + n + 41\)은 소수이다'는 \(n = 1\)부터 39까지 참이지만 \(n = 40\)에서 \(40^2 + 40 + 41 = 41^2\)이 되어 거짓이다. 많은 경우를 확인하는 것만으로는 증명이 되지 않는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>수학적 귀납법은 첫 경우에서 참이고, 어느 자연수에서 참이면 다음 자연수에서도 참이라는 두 가지를 보여, 도미노처럼 모든 자연수에서 참임을 이끌어 낸다. 두 단계 가운데 하나라도 빠지면 증명이 되지 않는다. 그래서 처음 질문의 등식은 100개를 확인하는 대신 두 단계를 보여 모든 자연수에서 참임을 증명한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-6.html#card-alg-recur-rule"><small class="mono">대수 3.6</small>첫째항과 규칙만으로 수열이 정해질까?</a><a href="../../c/alg/3-6.html#card-alg-recur-tiling"><small class="mono">대수 3.6</small>2× n 판을 덮는 방법은 몇 가지일까?</a><a href="../../c/alg/3-6.html#text-alg-recursion"><small class="mono">대수 3.6</small>수열의 귀납적 정의</a><a href="../../c/alg/3-5.html#card-alg-sum-square"><small class="mono">대수 3.5</small>1² + 2² + … + n²은 어떻게 구할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a></div></nav>
+
       <article class="card" id="card-alg-induct-domino">
         <header class="card-head">
-          <span class="no">3.7.1</span><h2>몇 개를 확인하면 모든 자연수에서 참일까?</h2><span class="kind">수학적 귀납법 · 원리</span>
+          <span class="no">탐구 1</span><h2>몇 개를 확인하면 모든 자연수에서 참일까?</h2><span class="kind">수학적 귀납법 · 원리</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,34 +139,34 @@
                 <div><dt>처음 멈춘 곳</dt><dd class="v-x">—</dd></div>
                 <div><dt>\(P(k) \Rightarrow P(k+1)\)</dt><dd class="v-i">—</dd></div>
               </dl>
-              <p class="fig-note">도미노 사이의 초록 점은 '\(P(k)\)가 참이면 \(P(k + 1)\)도 참'이 그 자리에서 성립함을, 주황 ×는 깨짐을 뜻합니다. 화면에는 12개씩 보입니다.</p>
+              <p class="fig-note">도미노 사이의 초록 점은 '\(P(k)\)가 참이면 \(P(k + 1)\)도 참'이 그 자리에서 성립함을, 주황 ×는 깨짐을 뜻한다. 화면에는 12개씩 보인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(n^2 + n + 41\)은 \(n = 1, 2, 3, \cdots, 39\)에서 모두 소수입니다. 39개나 확인했으니 모든 자연수 \(n\)에서 소수라고 해도 될까요?</li>
-            <li><span class="tag">복원</span>명제 \(P(n)\)은 자연수 \(n\)마다 참 또는 거짓이 정해지는 문장입니다. 수열의 귀납적 정의에서는 첫째항과 '앞 항에서 다음 항'의 규칙으로 모든 항이 정해졌습니다.</li>
-            <li><span class="tag">설명</span>자연수 \(n\)에 대한 명제 \(P(n)\)이 모든 자연수에서 참임을 보이려면 다음 두 가지를 보이면 됩니다. <b>① \(n = 1\)일 때 P(1)이 참이다. ② \(n = k\)일 때 \(P(k)\)가 참이라고 가정하면 \(n = k + 1\)일 때 \(P(k + 1)\)도 참이다.</b> 이것을 <em>수학적 귀납법</em>이라고 합니다. ①로 1번 도미노가 쓰러지고, ②로 1번이 2번을, 2번이 3번을 쓰러뜨리므로 모든 도미노가 쓰러집니다. ②는 특정한 \(k\)가 아니라 <b>모든 자연수 \(k\)</b>에 대해 보여야 합니다.</li>
-            <li><span class="tag">연결</span>수열의 귀납적 정의가 '첫째항 + 관계식'으로 모든 항을 정하듯, 수학적 귀납법은 '첫 경우 + 이어지는 규칙'으로 모든 경우의 참을 보장합니다. ①을 \(n = m\)으로 바꾸면 \(n \ge m\)인 모든 자연수에서 참임을 보일 수 있습니다.</li>
-            <li><span class="tag">적용</span>세 명제를 차례로 고르고 보는 구간을 옮겨 보세요. 소수 명제는 어디서 멈추나요? 그 앞의 39개는 무엇을 증명하지 못했나요? \(2^n &gt; n^2\)에서 처음 미는 도미노를 1과 5로 바꾸면 무엇이 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>몇 개의 예를 확인하는 것은 증명이 아닙니다. 소수 명제는 \(n = 40\)에서 \(40^2 + 40 + 41 = 41^2\)이 되어 거짓입니다. 반대로 ②만 보이고 ①을 빠뜨려도 안 됩니다. '\(P(k)\)이면 \(P(k + 1)\)'은 '\(n = n + 1\)'처럼 거짓인 명제에서도 성립할 수 있지만, 첫 도미노가 쓰러지지 않으면 아무것도 쓰러지지 않습니다.</li>
+            <li><span class="tag">질문</span>\(n^2 + n + 41\)은 \(n = 1, 2, 3, \cdots, 39\)에서 모두 소수이다. 39개나 확인했으니 모든 자연수 \(n\)에서 소수라고 해도 될까?</li>
+            <li><span class="tag">복원</span>명제 \(P(n)\)은 자연수 \(n\)마다 참 또는 거짓이 정해지는 문장이다. 그리고 수열의 귀납적 정의에서는 첫째항과 '앞 항에서 다음 항'의 규칙으로 모든 항이 정해졌다.</li>
+            <li><span class="tag">설명</span>자연수 \(n\)에 대한 명제 \(P(n)\)이 모든 자연수에서 참임을 보이려면 두 가지를 보이면 된다. 하나는 \(n = 1\)일 때 P(1)이 참이라는 것이고, 다른 하나는 \(P(k)\)가 참이라고 가정하면 \(P(k + 1)\)도 참이라는 것이다. 이것을 <em>수학적 귀납법</em>이라고 한다. 첫째 조건으로 1번 도미노가 쓰러지고, 둘째 조건으로 1번이 2번을, 2번이 3번을 쓰러뜨리므로 모든 도미노가 쓰러진다. 이때 둘째 조건은 특정한 \(k\)가 아니라 모든 자연수 \(k\)에 대해 보여야 한다.</li>
+            <li><span class="tag">연결</span>수열의 귀납적 정의가 첫째항과 관계식으로 모든 항을 정하듯, 수학적 귀납법은 첫 경우와 이어지는 규칙으로 모든 경우의 참을 보장한다. 또 첫째 조건을 \(n = m\)으로 바꾸면 \(n \ge m\)인 모든 자연수에서 참임을 보일 수 있다.</li>
+            <li><span class="tag">적용</span>세 명제를 차례로 고르고 보는 구간을 옮겨 보자. 소수 명제가 어디서 멈추는지 찾으면, 그 앞의 39개가 무엇을 증명하지 못했는지 알 수 있다. 그리고 \(2^n &gt; n^2\)에서 처음 미는 도미노를 1과 5로 바꾸면 무엇이 달라지는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>몇 개의 예를 확인하는 것은 증명이 아니다. 소수 명제는 \(n = 40\)에서 \(40^2 + 40 + 41 = 41^2\)이 되어 거짓이다. 반대로 둘째 조건만 보이고 첫째를 빠뜨려도 안 된다. '\(P(k)\)이면 \(P(k + 1)\)'은 '\(n = n + 1\)'처럼 거짓인 명제에서도 성립할 수 있지만, 첫 도미노가 쓰러지지 않으면 아무것도 쓰러지지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">명제 \(P(n)\)에 대해 P(1)이 참이고, \(P(k)\)가 참이면 \(P(k + 2)\)가 참임을 보였습니다. 이것만으로 참임이 보장되는 \(n\)은?</p>
+          <p class="q">명제 \(P(n)\)에 대해 P(1)이 참이고, \(P(k)\)가 참이면 \(P(k + 2)\)가 참임을 보였다. 이것만으로 참임이 보장되는 \(n\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>모든 홀수<span class="why"><b>맞습니다.</b> 1번이 3번을, 3번이 5번을 쓰러뜨립니다. 짝수 번호로 건너가는 연결은 보이지 않았습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 자연수<span class="why"><b>한 칸씩 이어진다고 보았습니다.</b> 보인 것은 두 칸씩 건너뛰는 연결이라 2번 도미노는 쓰러지지 않을 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n = 1\)뿐<span class="why"><b>②의 역할을 놓쳤습니다.</b> P(1)에서 \(P(3), P(5), \cdots\)로 이어집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모든 짝수<span class="why"><b>시작점을 잘못 보았습니다.</b> 출발이 P(1)이고 두 칸씩 가므로 홀수에만 닿습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>모든 홀수<span class="why"><b>맞다.</b> 1번이 3번을, 3번이 5번을 쓰러뜨린다. 짝수 번호로 건너가는 연결은 보이지 않았다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>모든 자연수<span class="why"><b>한 칸씩 이어진다고 보았다.</b> 보인 것은 두 칸씩 건너뛰는 연결이라 2번 도미노는 쓰러지지 않을 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n = 1\)뿐<span class="why"><b>②의 역할을 놓쳤다.</b> P(1)에서 \(P(3), P(5), \cdots\)로 이어진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모든 짝수<span class="why"><b>시작점을 잘못 보았다.</b> 출발이 P(1)이고 두 칸씩 가므로 홀수에만 닿는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-6.html#card-alg-recur-rule"><small class="mono">대수 3.6</small>첫째항과 규칙만으로 수열이 정해질까?</a><a href="../../c/alg/3-6.html#card-alg-recur-tiling"><small class="mono">대수 3.6</small>2× n 판을 덮는 방법은 몇 가지일까?</a><a href="../../c/alg/3-5.html#card-alg-sum-square"><small class="mono">대수 3.5</small>1² + 2² + … + n²은 어떻게 구할까?</a><a href="../../c/alg/3-5.html#card-alg-sum-cube"><small class="mono">대수 3.5</small>세제곱을 모으면 왜 정사각형이 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-6.html#card-alg-recur-rule"><small class="mono">대수 3.6</small>첫째항과 규칙만으로 수열이 정해질까?</a><a href="../../c/alg/3-6.html#card-alg-recur-tiling"><small class="mono">대수 3.6</small>2× n 판을 덮는 방법은 몇 가지일까?</a><a href="../../c/alg/3-6.html#text-alg-recursion"><small class="mono">대수 3.6</small>수열의 귀납적 정의</a><a href="../../c/alg/3-5.html#card-alg-sum-square"><small class="mono">대수 3.5</small>1² + 2² + … + n²은 어떻게 구할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a></div></nav>
 
       <article class="card" id="card-alg-induct-proof">
         <header class="card-head">
-          <span class="no">3.7.2</span><h2>P(k)에서 \(P(k + 1)\)로 어떻게 건너갈까?</h2><span class="kind">수학적 귀납법 · 등식의 증명</span>
+          <span class="no">탐구 2</span><h2>P(k)에서 \(P(k + 1)\)로 어떻게 건너갈까?</h2><span class="kind">수학적 귀납법 · 등식의 증명</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,39 +187,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>모든 자연수 \(n\)에 대해 \(1 + 3 + 5 + \cdots + (2n - 1) = n^2\)임을 수학적 귀납법으로 증명해 봅시다. 가장 어려운 곳은 '\(P(k)\)이면 \(P(k + 1)\)'입니다. 무엇을 가정하고 무엇을 보여야 할까요?</li>
-            <li><span class="tag">복원</span>수학적 귀납법은 ① P(1)이 참이고 ② \(P(k)\)가 참이라고 가정하면 \(P(k + 1)\)도 참임을 보이는 증명 방법입니다. 1부터 \(k\)번째 홀수까지의 합에 \((k + 1)\)번째 홀수 \(2k + 1\)을 더하면 \((k + 1)\)번째 홀수까지의 합입니다.</li>
-            <li><span class="tag">설명</span>① \(n = 1\)일 때 왼쪽은 1, 오른쪽은 \(1^2 = 1\)이므로 성립합니다. ② \(n = k\)일 때 \(1 + 3 + \cdots + (2k - 1) = k^2\)이 성립한다고 <b>가정</b>합니다. 양변에 다음 홀수 \(2k + 1\)을 더하면 \(1 + 3 + \cdots + (2k - 1) + (2k + 1) = k^2 + 2k + 1\) = <b>\((k + 1)^2\)</b>입니다. 이것은 \(P(k + 1)\)입니다. ①, ②에서 모든 자연수 \(n\)에 대해 등식이 성립합니다.</li>
-            <li><span class="tag">연결</span>그림에서 한 변이 \(k\)인 정사각형(가정)에 \(2k + 1\)개의 칸을 ㄱ자로 붙이면 한 변이 \(k + 1\)인 정사각형이 됩니다. 식의 \(k^2 + 2k + 1 = (k + 1)^2\)이 바로 이 그림입니다. 같은 틀로 \(\sum k = \frac{n(n + 1)}{2}\), \(\sum k^2 = \frac{n(n + 1)(2n + 1)}{6}\)도 증명할 수 있습니다. 앞 절에서 구한 공식들이 모든 \(n\)에서 맞다는 보증이 여기서 나옵니다.</li>
-            <li><span class="tag">적용</span>'다음 단계'를 눌러 증명의 네 단계를 따라가세요. \(k\)를 바꾸어도 ㄱ자 조각의 칸 수가 늘 \(2k + 1\)이고, 결과가 늘 정사각형인지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>②에서 \(P(k)\)는 증명할 대상이 아니라 <b>가정</b>입니다. '증명하려는 것을 가정했으니 순환 논리'라는 오해가 흔하지만, 가정한 것은 \(P(k)\)이고 보인 것은 \(P(k + 1)\)입니다. 또 \(P(k + 1)\)의 식에서 양변을 따로 계산해 맞추지 말고, \(P(k)\)의 식에서 출발해 \(P(k + 1)\)의 식에 이르러야 합니다.</li>
+            <li><span class="tag">질문</span>모든 자연수 \(n\)에 대해 \(1 + 3 + 5 + \cdots + (2n - 1) = n^2\)임을 수학적 귀납법으로 증명해 보자. 가장 어려운 곳은 '\(P(k)\)이면 \(P(k + 1)\)'이다. 무엇을 가정하고 무엇을 보여야 할까?</li>
+            <li><span class="tag">복원</span>수학적 귀납법은 P(1)이 참이고, \(P(k)\)가 참이라고 가정하면 \(P(k + 1)\)도 참임을 보이는 증명 방법이다. 그리고 1부터 \(k\)번째 홀수까지의 합에 \((k + 1)\)번째 홀수 \(2k + 1\)을 더하면 \((k + 1)\)번째 홀수까지의 합이 된다.</li>
+            <li><span class="tag">설명</span>먼저 \(n = 1\)일 때 왼쪽은 1, 오른쪽은 \(1^2 = 1\)이므로 성립한다. 다음으로 \(n = k\)일 때 \(1 + 3 + \cdots + (2k - 1) = k^2\)이 성립한다고 <em>가정</em>하자. 양변에 다음 홀수 \(2k + 1\)을 더하면 \(1 + 3 + \cdots + (2k - 1) + (2k + 1) = k^2 + 2k + 1 = (k + 1)^2\)이고, 이것이 바로 \(P(k + 1)\)이다. 따라서 모든 자연수 \(n\)에 대해 등식이 성립한다.</li>
+            <li><span class="tag">연결</span>그림에서 한 변이 \(k\)인 정사각형(가정)에 \(2k + 1\)개의 칸을 ㄱ자로 붙이면 한 변이 \(k + 1\)인 정사각형이 된다. 식의 \(k^2 + 2k + 1 = (k + 1)^2\)이 바로 이 그림이다. 같은 틀로 \(\sum k = \frac{n(n + 1)}{2}\), \(\sum k^2 = \frac{n(n + 1)(2n + 1)}{6}\)도 증명할 수 있으므로, 앞 절에서 구한 공식들이 모든 \(n\)에서 맞다는 보증이 여기서 나온다.</li>
+            <li><span class="tag">적용</span>'다음 단계'를 눌러 증명의 네 단계를 따라가 보자. \(k\)를 바꾸어도 ㄱ자 조각의 칸 수가 늘 \(2k + 1\)이고, 결과가 늘 정사각형인지 확인할 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>둘째 조건에서 \(P(k)\)는 증명할 대상이 아니라 <em>가정</em>이다. '증명하려는 것을 가정했으니 순환 논리'라는 오해가 흔하지만, 가정한 것은 \(P(k)\)이고 보인 것은 \(P(k + 1)\)이다. 또 \(P(k + 1)\)의 식에서 양변을 따로 계산해 맞추지 말고, \(P(k)\)의 식에서 출발해 \(P(k + 1)\)의 식에 이르러야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(1 + 2 + 4 + \cdots + 2^{n-1} = 2^n - 1\)을 수학적 귀납법으로 증명합니다. \(n = k\)일 때 성립한다고 가정한 뒤 양변에 더할 것은?</p>
+          <p class="q">\(1 + 2 + 4 + \cdots + 2^{n-1} = 2^n - 1\)을 수학적 귀납법으로 증명한다. \(n = k\)일 때 성립한다고 가정한 뒤 양변에 더할 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2^k\)<span class="why"><b>맞습니다.</b> \((k + 1)\)번째 항은 \(2^{(k+1)-1} = 2^k\)입니다. \(2^k - 1 + 2^k = 2^{k+1} - 1\)이 되어 \(P(k + 1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(2^{k+1}\)<span class="why"><b>한 항을 건너뛰었습니다.</b> \(2^{k+1}\)은 \((k + 2)\)번째 항입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2^{k-1}\)<span class="why"><b>이미 있는 항을 다시 더했습니다.</b> \(2^{k-1}\)은 \(P(k)\)의 마지막 항입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k + 1\)<span class="why"><b>번호를 더했습니다.</b> 더하는 것은 다음 번호 \(k + 1\)이 아니라 그 번호의 항입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2^k\)<span class="why"><b>맞다.</b> \((k + 1)\)번째 항은 \(2^{(k+1)-1} = 2^k\)이다. \(2^k - 1 + 2^k = 2^{k+1} - 1\)이 되어 \(P(k + 1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(2^{k+1}\)<span class="why"><b>한 항을 건너뛰었다.</b> \(2^{k+1}\)은 \((k + 2)\)번째 항이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2^{k-1}\)<span class="why"><b>이미 있는 항을 다시 더했다.</b> \(2^{k-1}\)은 \(P(k)\)의 마지막 항이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(k + 1\)<span class="why"><b>번호를 더했다.</b> 더하는 것은 다음 번호 \(k + 1\)이 아니라 그 번호의 항이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-6.html#card-alg-recur-rule"><small class="mono">대수 3.6</small>첫째항과 규칙만으로 수열이 정해질까?</a><a href="../../c/alg/3-6.html#card-alg-recur-tiling"><small class="mono">대수 3.6</small>2× n 판을 덮는 방법은 몇 가지일까?</a><a href="../../c/alg/3-5.html#card-alg-sum-square"><small class="mono">대수 3.5</small>1² + 2² + … + n²은 어떻게 구할까?</a><a href="../../c/alg/3-5.html#card-alg-sum-cube"><small class="mono">대수 3.5</small>세제곱을 모으면 왜 정사각형이 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/3-6.html#card-alg-recur-rule"><small class="mono">대수 3.6</small>첫째항과 규칙만으로 수열이 정해질까?</a><a href="../../c/alg/3-6.html#card-alg-recur-tiling"><small class="mono">대수 3.6</small>2× n 판을 덮는 방법은 몇 가지일까?</a><a href="../../c/alg/3-6.html#text-alg-recursion"><small class="mono">대수 3.6</small>수열의 귀납적 정의</a><a href="../../c/alg/3-5.html#card-alg-sum-square"><small class="mono">대수 3.5</small>1² + 2² + … + n²은 어떻게 구할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-1.html#card-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>계속 커지는데 어떤 수도 넘지 못하는 수열은 어디로 갈까?</a><a href="../../c/adcalc/3-1.html#card-adcalc-monotone-proof"><small class="mono">고급 미적분 3.1</small>극한을 L로 놓고 방정식을 풀면 끝일까?</a><a href="../../c/adcalc/3-1.html#text-adcalc-monotone"><small class="mono">고급 미적분 3.1</small>단조수렴정리</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">37문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=3-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-3-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">37문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -169,6 +228,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/seq-lib.js"></script>
 <script src="../../js/cards/alg/induct-domino.js"></script>
 <script src="../../js/cards/alg/induct-proof.js"></script>

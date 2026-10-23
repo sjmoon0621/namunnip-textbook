@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/econ/body.js"],
+  "sec": "1-5",
+  "short": "본문 · 연금"
+}
+-->
+<article class="card reading" id="text-econ-annuity" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>연금</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">해마다 말에 100만 원씩 20년 동안 저축하면 낸 돈은 2000만 원이다. 그런데 일찍 넣은 돈일수록 이자가 오래 붙으므로 모인 돈은 그보다 많을 것이다. 해마다 넣은 돈마다 이자가 붙는 기간이 다른데, 모두 합한 금액은 어떻게 계산할까? 그리고 복권 당첨금을 한꺼번에 받는 것과 나누어 받는 것은 어느 쪽이 나을까?</p>
+    <figure class="q-fig" data-q="econ-annuity">
+      <svg viewBox="0 0 520 230" role="img" aria-label="해마다 낸 적립금과 그 이자가 쌓인 연금의 미래 가치"></svg>
+      <div class="q-ctl"><label>연이율 (%) <input type="range" data-k="r" min="0" max="10" step="0.5" value="5"><output data-k="r"></output></label><label>기간 (년) <input type="range" data-k="n" min="1" max="30" step="1" value="20"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 해마다 말에 낸 100만 원이 기간 끝까지 복리로 불어난 금액을 차례로 쌓은 막대. 가장 먼저 낸 돈이 가장 많이 불어나며, 전체는 등비수열의 합이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>복리와 원리합계, 현재 가치(<a href="1-4.html">단리와 복리, 현재 가치</a>), 등비수열의 합(대수).</div>
+
+    <h3><span class="no">1.5.1</span>연금의 미래 가치</h3>
+    <p>일정한 기간마다 같은 금액을 내거나 받는 것을 연금이라 한다. 해마다 말에 \(a\)원씩 \(n\)년 동안 연이율 \(r\)의 복리로 적립한다고 하자. 첫해 말에 낸 돈은 \(n - 1\)년 동안 불어나 \(a(1 + r)^{n-1}\)이 되고, 둘째 해 말에 낸 돈은 \(a(1 + r)^{n-2}\)이 되며, 마지막 해에 낸 돈은 \(a\) 그대로이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 1.5.1 <span class="nm">연금의 미래 가치(적립금의 원리합계)</span></span>
+      <p>\[S = a + a(1 + r) + \cdots + a(1 + r)^{n-1} = \frac{a\{(1 + r)^n - 1\}}{r}\] 첫째항 \(a\), 공비 \(1 + r\)인 등비수열의 합이다.</p>
+    </div>
+    <p>그림 1에서 연이율 5%, 20년으로 맞추면 모인 돈은 약 3307만 원으로, 낸 돈 2000만 원보다 1300만 원 이상 많다. 연이율을 0으로 하면 정확히 2000만 원이 되고, 기간을 늘리면 이자의 몫이 빠르게 커진다. 30년이면 낸 돈 3000만 원이 약 6644만 원으로, 이자가 원금보다 많아진다.</p>
+
+    <h3><span class="no">1.5.2</span>연금의 현재 가치</h3>
+    <p>반대로 앞으로 해마다 \(a\)원씩 \(n\)번 받는 연금이 지금 얼마의 가치인지도 구할 수 있다. 각 해의 수령액을 현재 가치로 바꾸어 더하면 \[P = \frac{a}{1 + r} + \frac{a}{(1 + r)^2} + \cdots + \frac{a}{(1 + r)^n} = \frac{a\{1 - (1 + r)^{-n}\}}{r}\] 이다. 이 값과 일시금을 비교하면 어느 쪽이 나은지 판단할 수 있다. 미래 가치를 \((1 + r)^n\)으로 나누어도 같은 값이 나온다.<sup class="fn"><a href="#fn-econ-annuity-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 120" role="img" aria-label="연금의 미래 가치와 현재 가치의 관계">
+        <g class="s">
+          <line x1="40" y1="70" x2="480" y2="70" class="ax"/>
+          <circle cx="80" cy="70" r="4" class="fk"/><text x="80" y="95" text-anchor="middle">지금</text>
+          <rect x="130" y="50" width="16" height="20" class="lc"/><rect x="200" y="50" width="16" height="20" class="lc"/><rect x="270" y="50" width="16" height="20" class="lc"/><rect x="340" y="50" width="16" height="20" class="lc"/><rect x="410" y="50" width="16" height="20" class="lc"/>
+          <text x="80" y="35" text-anchor="middle" class="tb">현재 가치 P</text><text x="418" y="35" text-anchor="middle" class="td">미래 가치 S</text>
+          <text x="270" y="110" text-anchor="middle">S = P × (1 + r)ⁿ</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 해마다의 금액을 모두 지금으로 당기면 현재 가치, 모두 마지막 해로 밀면 미래 가치이다.</figcaption>
+    </figure>
+
+    <h3><span class="no">1.5.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 1.5.2</span>
+      <p>복권 당첨자가 지금 일시금 10억 원을 받거나, 해마다 말에 7000만 원씩 20년 동안 받는 것 가운데 하나를 고를 수 있다. 연이율 4%의 복리일 때 어느 쪽이 유리한가? (\(1.04^{-20} \approx 0.456\))</p>
+    </div>
+    <p>나누어 받는 연금의 현재 가치는 \(\dfrac{7000\{1 - 1.04^{-20}\}}{0.04} = \dfrac{7000 \times 0.544}{0.04} = 95\,200\)만 원, 곧 약 9억 5200만 원이다.</p>
+    <p>받는 총액은 \(7000 \times 20 = 14\)억 원으로 일시금보다 많지만, 현재 가치로 따지면 일시금 10억 원보다 작다. 따라서 이자율이 4%라면 일시금이 유리하다. 이자율이 2%라면 현재 가치가 약 11억 4500만 원이 되어 연금이 유리해진다. 이자율에 따라 선택이 바뀌는 것이다.</p>
+    <p>아래 탐구 카드에서 해마다 모은 돈의 원리합계와, 일시금과 연금의 선택을 직접 계산해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-econ-annuity-1">주택 담보 대출을 다달이 같은 금액으로 갚는 원리금 균등 상환도 같은 원리이다. 다달이 갚는 금액의 현재 가치의 합이 빌린 돈과 같아지도록 정한다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>해마다 같은 금액을 적립한 연금의 미래 가치는 등비수열의 합 \(\frac{a\{(1 + r)^n - 1\}}{r}\)이고, 앞으로 받을 연금의 현재 가치는 \(\frac{a\{1 - (1 + r)^{-n}\}}{r}\)이다. 그래서 처음 질문의 100만 원씩 20년 적립은 연 5%이면 약 3307만 원이 되고, 일시금과 연금의 선택은 현재 가치를 비교하여 정한다.</p></div>
+  </div>
+</article>

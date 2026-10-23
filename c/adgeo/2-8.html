@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>곡률과 곡률반경 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="곡률 κ = |dT/ds| = |r′ × r″|/|r′|³, 곡률반경과 접촉원, 직선과 원의 곡률, 도로 설계의 완화곡선(클로소이드). 곡선에 가장 잘 맞는 원을 찾는 카드와, 굽은 길에서 옆 가속도의 변화를 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adgeo-osculating canvas.c { aspect-ratio: 4 / 3; max-width: 480px; margin: 0 auto; display: block; }
@@ -46,18 +51,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adgeo-osculating"><span class="mono">2.8.1</span>곡선에 가장 잘 맞는 원과 곡률</a></li>
-        <li><a href="#card-adgeo-road-curve"><span class="mono">2.8.2</span>직선과 원 사이에 완화곡선을 넣는 까닭</a></li>
+        <li><a href="#text-adgeo-curvature"><span class="mono">본문</span>곡률과 곡률반경</a></li>
+        <li><a href="#card-adgeo-osculating"><span class="mono">탐구 1</span>곡선에 가장 잘 맞는 원과 곡률</a></li>
+        <li><a href="#card-adgeo-road-curve"><span class="mono">탐구 2</span>직선과 원 사이에 완화곡선을 넣는 까닭</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adgeo-2-8"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adgeo&amp;sec=2-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adgeo-2-8">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adgeo-curvature" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>곡률과 곡률반경</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">곧은 고속도로가 반지름 500 m인 원 모양의 굽은 길로 바로 이어진다고 해 보자. 운전자는 직선에서 원으로 들어서는 순간 핸들을 갑자기 돌려야 하고, 승객은 몸이 옆으로 갑자기 쏠린다. 그래서 실제 도로는 직선과 원 사이에 휘는 정도가 조금씩 커지는 곡선을 끼워 넣는다. 곡선이 얼마나 휘었는지를 수 하나로 나타낼 수 있을까? 직선은 휘는 정도가 0, 반지름 500 m인 원은 \(1/500\)이라고 하는데, 일반적인 곡선에서는 어떻게 구할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="여러 곡선의 곡률">
+              <g class="s">
+                <text x="20" y="22">곡선</text><text x="230" y="22">곡률 κ</text><text x="380" y="22">곡률반경</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="50">직선</text><text x="230" y="50">0</text><text x="380" y="50">무한대</text>
+                <text x="20" y="70">반지름 500 m 원</text><text x="230" y="70">1/500</text><text x="380" y="70">500 m</text>
+                <text x="20" y="90">y = x² 의 꼭짓점</text><text x="230" y="90">2</text><text x="380" y="90">0.5</text>
+                <text x="20" y="110">나선 (cos t, sin t, t)</text><text x="230" y="110" class="td">1/2</text><text x="380" y="110" class="td">2</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 곡률은 곡선이 휘는 정도이고, 그 역수인 곡률반경은 그 점에 가장 잘 맞는 원의 반지름이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>단위속력 재매개화(<a href="2-7.html">단위속력곡선으로 재매개화</a>), 공간에서의 속도와 가속도, 벡터의 외적.</div>
+
+          <h3><span class="no">2.8.1</span>방향이 바뀌는 빠르기</h3>
+          <p>곡선이 휘었다는 것은 곡선을 따라갈 때 접선의 방향이 바뀐다는 뜻이다. 그래서 휘는 정도는 단위 접선벡터 \(\vec T\)가 거리 1을 갈 때마다 얼마나 바뀌는지로 잰다. 시간이 아니라 거리를 기준으로 하므로, 빨리 지나가든 천천히 지나가든 같은 곡선이면 같은 값이 나온다. 단위속력곡선 \(\vec r(s)\)에서는 \(\vec T = \vec r'(s)\)이므로 곡률은 \(\kappa = |\vec r''(s)|\)이다. 반지름 \(R\)인 원은 거리 \(2\pi R\)을 가는 동안 접선이 한 바퀴 \(2\pi\) 돌므로 곡률이 \(1/R\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.8.1 <span class="nm">곡률의 공식</span></span>
+            <p>단위속력곡선에서 곡률은 \(\kappa = |\vec r''(s)|\)이다. 일반적인 매개변수 \(t\)로 나타낸 정칙곡선에서는 \[\kappa = \frac{|\vec r'(t)\times\vec r''(t)|}{|\vec r'(t)|^3}\]이고, 곡률반경은 \(\rho = 1/\kappa\)이다. 평면곡선 \(y = f(x)\)에서는 \(\kappa = \dfrac{|f''(x)|}{(1 + f'(x)^2)^{3/2}}\)이다.</p>
+          </div>
+          <p>일반 매개변수로 나타낸 곡선에서 가속도에는 빠르기가 바뀌는 부분과 방향이 바뀌는 부분이 섞여 있다. 속도와 가속도의 외적을 취하면 속도와 나란한 부분, 곧 빠르기가 바뀌는 부분이 지워지고 방향이 바뀌는 부분만 남는다. 여기에 빠르기의 세제곱으로 나누면 거리 기준의 휘는 정도가 된다. 곡률반경 \(\rho\)는 그 점에서 곡선과 접선과 휘는 정도가 모두 같은 원, 곧 접촉원의 반지름이다.<sup class="fn"><a href="#fn-adgeo-curvature-1">1</a></sup></p>
+
+          <h3><span class="no">2.8.2</span>휘는 정도가 이어져야 한다</h3>
+          <p>차가 곡률 \(\kappa\)인 길을 빠르기 \(v\)로 달리면 옆으로 \(v^2\kappa\)의 가속도를 받는다. 직선에서 원으로 바로 이으면 곡률이 0에서 \(1/R\)로 갑자기 뛰어 옆 가속도도 갑자기 생긴다. 그래서 도로는 곡률이 거리에 비례해 0부터 \(1/R\)까지 고르게 커지는 클로소이드라는 곡선을 사이에 넣는다. 그러면 운전자는 일정한 빠르기로 핸들을 천천히 돌리기만 하면 되고, 옆 가속도도 서서히 커진다. 철도와 롤러코스터도 같은 이유로 클로소이드를 쓴다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="나선의 곡률 계산">
+              <g class="s">
+                <text x="20" y="22">양</text><text x="220" y="22">값 (나선 (cos t, sin t, t))</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">r′, r″</text><text x="220" y="52">(−sin t, cos t, 1), (−cos t, −sin t, 0)</text>
+                <text x="20" y="74">r′ × r″, 크기</text><text x="220" y="74">(sin t, −cos t, 1), √2</text>
+                <text x="20" y="96">κ = √2 / (√2)³</text><text x="220" y="96" class="td">1/2, 곡률반경 2</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 반지름 1인 원기둥을 감는 나선이지만, 위로 오르는 만큼 덜 휘어 곡률반경이 2이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.8.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.8.2</span>
+            <p>포물선 \(y = x^2\)의 \(x = 0\)과 \(x = 1\)에서의 곡률반경을 구하여라. 반지름 500 m인 굽은 길을 시속 108 km(초속 30 m)로 달리는 차가 받는 옆 가속도를 구하여라.</p>
+          </div>
+          <p>\(f' = 2x\), \(f'' = 2\)이므로 \(\kappa = \dfrac{2}{(1 + 4x^2)^{3/2}}\)이다. \(x = 0\)에서 \(\kappa = 2\), 곡률반경 0.5이고, \(x = 1\)에서 \(\kappa = 2/5^{3/2} \approx 0.179\), 곡률반경 약 5.59이다. 포물선은 꼭짓점에서 가장 많이 휘고 멀어질수록 펴진다.</p>
+          <p>굽은 길의 곡률은 \(1/500\)이므로 옆 가속도는 \(v^2\kappa = 30^2/500 = 1.8\) m/s²로, 중력 가속도의 약 18%이다. 직선에서 바로 원으로 이어지면 이 가속도가 한순간에 생기지만, 클로소이드를 넣으면 몇 초에 걸쳐 0에서 1.8까지 서서히 커진다. 즉 곡률은 단위 접선벡터가 거리에 따라 바뀌는 빠르기로 곡선이 휘는 정도를 나타내며, \(|\vec r'\times\vec r''|/|\vec r'|^3\)으로 구하고, 그 역수인 곡률반경은 그 점에 가장 잘 맞는 원의 반지름이다.</p>
+          <p>아래 탐구 카드에서 곡선에 가장 잘 맞는 원을 그려 휘는 정도를 재 보고, 고속도로의 굽은 길이 원을 바로 잇지 않는 까닭을 곡률로 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adgeo-curvature-1">곡률반경이라는 생각은 17세기 하위헌스가 진자시계를 연구하며 처음 썼고, 뉴턴이 곡률을 계산하는 공식을 정리했다. 클로소이드는 19세기 철도 기술자들이 열차의 탈선을 막으려고 널리 쓰기 시작했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>곡률은 곡선을 따라 거리 1을 갈 때 단위 접선벡터가 바뀌는 크기로, 단위속력곡선에서는 \(|\vec r''(s)|\), 일반 매개변수에서는 \(|\vec r'\times\vec r''|/|\vec r'|^3\)이며, 그 역수인 곡률반경은 접촉원의 반지름이다. 빠르기 \(v\)로 곡률 \(\kappa\)인 길을 지나면 옆으로 \(v^2\kappa\)의 가속도를 받는다. 처음 질문의 고속도로는 곡률이 0에서 \(1/500\)으로 갑자기 뛰지 않도록, 곡률이 고르게 커지는 클로소이드로 직선과 원을 잇는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adgeo/2-7.html#card-adgeo-reparam"><small class="mono">고급 기하 2.7</small>나선 위를 속력 1로 움직이게 하려면 매개변수를 어떻게 바꿀까?</a><a href="../../c/adgeo/2-7.html#card-adgeo-reparam-spot"><small class="mono">고급 기하 2.7</small>이 재매개화 풀이는 어디서 틀렸을까?</a><a href="../../c/adgeo/2-7.html#text-adgeo-reparam"><small class="mono">고급 기하 2.7</small>단위속력곡선으로 재매개화</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
+
       <article class="card" id="card-adgeo-osculating">
         <header class="card-head">
-          <span class="no">2.8.1</span><h2>곡선이 얼마나 휘었는지를 원으로 잴 수 있을까?</h2><span class="kind">곡률과 곡률반경 · 조작</span>
+          <span class="no">탐구 1</span><h2>곡선이 얼마나 휘었는지를 원으로 잴 수 있을까?</h2><span class="kind">곡률과 곡률반경 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -70,30 +133,30 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원은 어디서나 똑같이 휘어 있고, 반지름이 작을수록 더 심하게 휩니다. 그렇다면 포물선처럼 곳에 따라 휘는 정도가 다른 곡선은, 각 점에서 "얼마나 휘었는지"를 어떤 원으로 나타낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>단위속력곡선 \(\vec{r}(s)\)의 \(\frac{d\vec{r}}{ds}\)는 단위접선벡터 \(\vec{T}\)입니다. 반지름 \(r\)인 원의 단위접선벡터는 단위 길이당 \(\frac{1}{r}\)라디안씩 돌아갑니다.</li>
-            <li><span class="tag">설명</span>곡선의 <em>곡률</em>은 단위접선벡터가 길이 1을 갈 때 얼마나 빨리 돌아가는지, 곧 \(\kappa = \left|\frac{d\vec{T}}{ds}\right| = \left|\frac{d^2\vec{r}}{ds^2}\right|\)입니다. 일반 매개변수로는 \(\kappa = \frac{|\vec{r}\,' \times \vec{r}\,''|}{|\vec{r}\,'|^3}\)이고, 평면곡선 \(y = f(x)\)이면 \(\kappa = \frac{|f''|}{(1 + f'^2)^{3/2}}\)입니다. \(R = \frac{1}{\kappa}\)을 <em>곡률반경</em>이라 하며, 그 점에서 곡선과 같은 접선, 같은 곡률을 가지는 원(<em>접촉원</em>, 곡률원)의 반지름입니다. 원의 곡률은 \(\frac{1}{r}\)로 일정합니다.</li>
-            <li><span class="tag">연결</span>곡률은 매개변수를 바꿔도 변하지 않는 곡선 자체의 성질입니다. 도로와 철도의 굽은 정도, 렌즈의 휘어진 정도를 곡률반경으로 나타냅니다(다음 카드).</li>
-            <li><span class="tag">적용</span>점을 움직이며 접촉원의 크기를 보세요. 포물선에서 곡률이 가장 큰 곳은 어디인가요? 타원의 긴 축 끝과 짧은 축 끝 중 어디가 더 휘었나요? 사인 곡선이 휘는 방향이 바뀌는 곳에서 곡률은 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>곡률을 \(|f''(x)|\)로만 계산하면 기울기가 클 때 틀립니다. 분모 \((1 + f'^2)^{3/2}\)은 매개변수(여기서는 \(x\))가 길이와 다르게 늘어나는 것을 보정합니다. 꼭짓점처럼 \(f' = 0\)인 곳에서만 두 값이 같습니다.</li>
+            <li><span class="tag">질문</span>원은 어디서나 똑같이 휘어 있고, 반지름이 작을수록 더 심하게 휜다. 그렇다면 포물선처럼 곳에 따라 휘는 정도가 다른 곡선은, 각 점에서 "얼마나 휘었는지"를 어떤 원으로 나타낼 수 있을까?</li>
+            <li><span class="tag">복원</span>단위속력곡선 \(\vec{r}(s)\)의 \(\frac{d\vec{r}}{ds}\)는 단위접선벡터 \(\vec{T}\)이다. 반지름 \(r\)인 원의 단위접선벡터는 단위 길이당 \(\frac{1}{r}\)라디안씩 돌아간다.</li>
+            <li><span class="tag">설명</span>곡선의 <em>곡률</em>은 단위접선벡터가 길이 1을 갈 때 얼마나 빨리 돌아가는지, 곧 \(\kappa = \left|\frac{d\vec{T}}{ds}\right| = \left|\frac{d^2\vec{r}}{ds^2}\right|\)이다. 일반 매개변수로는 \(\kappa = \frac{|\vec{r}\,' \times \vec{r}\,''|}{|\vec{r}\,'|^3}\)이고, 평면곡선 \(y = f(x)\)이면 \(\kappa = \frac{|f''|}{(1 + f'^2)^{3/2}}\)이다. \(R = \frac{1}{\kappa}\)을 <em>곡률반경</em>이라 하며, 그 점에서 곡선과 같은 접선, 같은 곡률을 가지는 원(<em>접촉원</em>, 곡률원)의 반지름이다. 원의 곡률은 \(\frac{1}{r}\)로 일정하다.</li>
+            <li><span class="tag">연결</span>곡률은 매개변수를 바꿔도 변하지 않는 곡선 자체의 성질이다. 도로와 철도의 굽은 정도, 렌즈의 휘어진 정도를 곡률반경으로 나타낸다(다음 카드).</li>
+            <li><span class="tag">적용</span>점을 움직이며 접촉원의 크기를 보자. 포물선에서 곡률이 가장 큰 곳은 어디인가? 타원의 긴 축 끝과 짧은 축 끝 중 어디가 더 휘었는가? 사인 곡선이 휘는 방향이 바뀌는 곳에서 곡률은 얼마인가?</li>
+            <li class="warn"><span class="tag">판단</span>곡률을 \(|f''(x)|\)로만 계산하면 기울기가 클 때 틀린다. 분모 \((1 + f'^2)^{3/2}\)은 매개변수(여기서는 \(x\))가 길이와 다르게 늘어나는 것을 보정한다. 꼭짓점처럼 \(f' = 0\)인 곳에서만 두 값이 같다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">포물선 \(y = x^2\)의 꼭짓점에서의 곡률반경은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>맞습니다.</b> \(\kappa = \frac{|2|}{(1 + 0)^{3/2}} = 2\)이므로 \(R = \frac{1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(2\)<span class="why"><b>곡률입니다.</b> 곡률반경은 역수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>초점까지의 거리입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무한대<span class="why"><b>직선일 때만 곡률이 0입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{2}\)<span class="why"><b>맞다.</b> \(\kappa = \frac{|2|}{(1 + 0)^{3/2}} = 2\)이므로 \(R = \frac{1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(2\)<span class="why"><b>곡률이다.</b> 곡률반경은 역수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>초점까지의 거리이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>무한대<span class="why"><b>직선일 때만 곡률이 0이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adgeo/2-7.html#card-adgeo-reparam"><small class="mono">고급 기하 2.7</small>나선 위를 속력 1로 움직이게 하려면 매개변수를 어떻게 바꿀까?</a><a href="../../c/adgeo/2-7.html#card-adgeo-reparam-spot"><small class="mono">고급 기하 2.7</small>이 재매개화 풀이는 어디서 틀렸을까?</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a><a href="../../c/pmath/2-7.html#card-pmath-torque"><small class="mono">전문 수학 2.7</small>녹슨 볼트를 풀려면 렌치의 어디를 어느 방향으로 밀어야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adgeo/2-7.html#card-adgeo-reparam"><small class="mono">고급 기하 2.7</small>나선 위를 속력 1로 움직이게 하려면 매개변수를 어떻게 바꿀까?</a><a href="../../c/adgeo/2-7.html#card-adgeo-reparam-spot"><small class="mono">고급 기하 2.7</small>이 재매개화 풀이는 어디서 틀렸을까?</a><a href="../../c/adgeo/2-7.html#text-adgeo-reparam"><small class="mono">고급 기하 2.7</small>단위속력곡선으로 재매개화</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
 
       <article class="card" id="card-adgeo-road-curve">
         <header class="card-head">
-          <span class="no">2.8.2</span><h2>고속도로의 굽은 길은 왜 원을 바로 잇지 않을까?</h2><span class="kind">곡률의 활용 · 활용</span>
+          <span class="no">탐구 2</span><h2>고속도로의 굽은 길은 왜 원을 바로 잇지 않을까?</h2><span class="kind">곡률의 활용 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -105,42 +168,42 @@
             <canvas class="c" aria-label="위에서 본 길(모의 설계)과 자동차의 위치"></canvas>
             <canvas class="g" aria-label="길을 따라간 거리에 따른 곡률과 옆 방향 가속도"></canvas>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">반지름 300 m의 원, 길이 120 m의 완화곡선은 수업용으로 정한 모의 설계입니다.</p>
+            <p class="fig-note">반지름 300 m의 원, 길이 120 m의 완화곡선은 수업용으로 정한 모의 설계이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>곧은 길에서 반지름 300 m인 원 모양의 굽은 길로 들어갈 때, 직선과 원을 그대로 이으면 접선이 매끄럽게 이어지므로 문제없어 보입니다. 그런데 실제 고속도로는 그 사이에 다른 곡선을 넣습니다. 왜일까요?</li>
-            <li><span class="tag">복원</span>곡률 \(\kappa\)인 곳을 속력 \(v\)로 지나면 옆 방향(구심) 가속도는 \(v^2\kappa = \frac{v^2}{R}\)입니다(속도와 가속도).</li>
-            <li><span class="tag">설명</span>직선의 곡률은 0, 원의 곡률은 \(\frac{1}{R}\)이므로 그대로 이으면 이음매에서 곡률이 갑자기 뜁니다. 그러면 옆 가속도도 갑자기 생겨 운전자는 핸들을 순간적으로 꺾어야 하고 승객은 휘청입니다. 그래서 곡률이 거리에 비례해 0에서 \(\frac{1}{R}\)까지 서서히 커지는 곡선(\(\kappa = \frac{s}{A^2}\), <em>클로소이드</em>)을 사이에 넣습니다. 이 <em>완화곡선</em> 덕분에 핸들을 일정한 빠르기로 천천히 돌리면 됩니다.</li>
-            <li><span class="tag">연결</span>도로, 철도, 롤러코스터의 설계 기준에 완화곡선이 들어 있습니다. 곡률이 연속인 곡선은 "곡률 그래프가 끊기지 않는" 곡선이며, 컴퓨터 그래픽의 매끄러운 곡선 설계에서도 같은 생각을 씁니다.</li>
-            <li><span class="tag">적용</span>두 설계에서 자동차를 움직이며 아래 그래프를 비교하세요. "직선 + 원"에서 이음매의 옆 가속도는 어떻게 변하나요? 속력을 높이면 원 구간의 옆 가속도는 몇 배가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>완화곡선은 원 구간의 옆 가속도 자체를 줄이지는 않습니다. 그것은 반지름과 속력이 정합니다. 완화곡선이 줄이는 것은 가속도가 "갑자기" 바뀌는 정도입니다. 실제 도로는 바깥쪽을 높이는 경사(편경사)도 함께 둡니다.</li>
+            <li><span class="tag">질문</span>곧은 길에서 반지름 300 m인 원 모양의 굽은 길로 들어갈 때, 직선과 원을 그대로 이으면 접선이 매끄럽게 이어지므로 문제없어 보인다. 그런데 실제 고속도로는 그 사이에 다른 곡선을 넣는다. 왜일까?</li>
+            <li><span class="tag">복원</span>곡률 \(\kappa\)인 곳을 속력 \(v\)로 지나면 옆 방향(구심) 가속도는 \(v^2\kappa = \frac{v^2}{R}\)이다(속도와 가속도).</li>
+            <li><span class="tag">설명</span>직선의 곡률은 0, 원의 곡률은 \(\frac{1}{R}\)이므로 그대로 이으면 이음매에서 곡률이 갑자기 뛴다. 그러면 옆 가속도도 갑자기 생겨 운전자는 핸들을 순간적으로 꺾어야 하고 승객은 휘청이다. 그래서 곡률이 거리에 비례해 0에서 \(\frac{1}{R}\)까지 서서히 커지는 곡선(\(\kappa = \frac{s}{A^2}\), <em>클로소이드</em>)을 사이에 넣는다. 이 <em>완화곡선</em> 덕분에 핸들을 일정한 빠르기로 천천히 돌리면 된다.</li>
+            <li><span class="tag">연결</span>도로, 철도, 롤러코스터의 설계 기준에 완화곡선이 들어 있다. 곡률이 연속인 곡선은 "곡률 그래프가 끊기지 않는" 곡선이며, 컴퓨터 그래픽의 매끄러운 곡선 설계에서도 같은 생각을 쓴다.</li>
+            <li><span class="tag">적용</span>두 설계에서 자동차를 움직이며 아래 그래프를 비교해 보자. "직선 + 원"에서 이음매의 옆 가속도는 어떻게 변하는가? 속력을 높이면 원 구간의 옆 가속도는 몇 배가 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>완화곡선은 원 구간의 옆 가속도 자체를 줄이지는 않는다. 그것은 반지름과 속력이 정한다. 완화곡선이 줄이는 것은 가속도가 "갑자기" 바뀌는 정도이다. 실제 도로는 바깥쪽을 높이는 경사(편경사)도 함께 둔다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">반지름 200 m인 굽은 길을 20 m/s로 달릴 때 옆 방향 가속도는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\ \mathrm{m/s^2}\)<span class="why"><b>맞습니다.</b> \(\frac{v^2}{R} = \frac{400}{200}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0.1\ \mathrm{m/s^2}\)<span class="why"><b>제곱하지 않았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(10\ \mathrm{m/s^2}\)<span class="why"><b>나누는 수를 잘못 골랐습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(0\)<span class="why"><b>속력이 일정해도 방향이 바뀌므로 가속도가 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\ \mathrm{m/s^2}\)<span class="why"><b>맞다.</b> \(\frac{v^2}{R} = \frac{400}{200}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0.1\ \mathrm{m/s^2}\)<span class="why"><b>제곱하지 않았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(10\ \mathrm{m/s^2}\)<span class="why"><b>나누는 수를 잘못 골랐다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(0\)<span class="why"><b>속력이 일정해도 방향이 바뀌므로 가속도가 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adgeo/2-7.html#card-adgeo-reparam"><small class="mono">고급 기하 2.7</small>나선 위를 속력 1로 움직이게 하려면 매개변수를 어떻게 바꿀까?</a><a href="../../c/adgeo/2-7.html#card-adgeo-reparam-spot"><small class="mono">고급 기하 2.7</small>이 재매개화 풀이는 어디서 틀렸을까?</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a><a href="../../c/pmath/2-7.html#card-pmath-torque"><small class="mono">전문 수학 2.7</small>녹슨 볼트를 풀려면 렌치의 어디를 어느 방향으로 밀어야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adgeo/2-7.html#card-adgeo-reparam"><small class="mono">고급 기하 2.7</small>나선 위를 속력 1로 움직이게 하려면 매개변수를 어떻게 바꿀까?</a><a href="../../c/adgeo/2-7.html#card-adgeo-reparam-spot"><small class="mono">고급 기하 2.7</small>이 재매개화 풀이는 어디서 틀렸을까?</a><a href="../../c/adgeo/2-7.html#text-adgeo-reparam"><small class="mono">고급 기하 2.7</small>단위속력곡선으로 재매개화</a><a href="../../c/pmath/2-7.html#card-pmath-cross"><small class="mono">전문 수학 2.7</small>두 벡터에 모두 수직인 벡터는 어느 쪽을 향하고, 길이는 얼마일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adgeo-2-8"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adgeo&amp;sec=2-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

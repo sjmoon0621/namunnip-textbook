@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/aimath/body.js"],
+  "sec": "4-2",
+  "short": "본문 · 추세선"
+}
+-->
+<article class="card reading" id="text-aimath-trend" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>추세선</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">공부 시간과 시험 점수, 광고비와 매출처럼 두 양의 자료를 좌표평면에 찍으면 점들이 대체로 한 방향으로 늘어서지만, 한 직선 위에 정확히 놓이지는 않는다. 점들 사이로 직선을 하나 긋는다면 사람마다 조금씩 다르게 그을 것이다. '가장 잘 나타내는' 직선을 하나로 정하는 기준은 무엇일까?</p>
+    <figure class="q-fig" data-q="ai-trend">
+      <svg viewBox="0 0 520 230" role="img" aria-label="점 여섯 개와 기울기를 바꿀 수 있는 직선, 각 점의 오차"></svg>
+      <div class="q-ctl"><label>직선의 기울기 \(a\) <input type="range" data-k="a" min="0.3" max="1.7" step="0.01" value="0.6"><output data-k="a"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 점 여섯 개와 그 중심을 지나는 직선(파랑). 빨간 세로선은 각 점의 오차이다. 기울기를 바꾸며 오차 제곱합이 가장 작아지는 직선을 찾으면 기울기가 약 0.98이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>일차함수의 그래프, 이차함수의 그래프와 꼭짓점(공통수학1), 평균.</div>
+
+    <h3><span class="no">4.2.1</span>오차와 최소제곱법</h3>
+    <p>직선 \(y = ax + b\)로 자료를 나타낼 때, 점 \((x_i, y_i)\)에서 실제 값과 직선의 값의 차이 \(e_i = y_i - (ax_i + b)\)를 오차(잔차)라 한다. 오차는 양수도 음수도 있어 그냥 더하면 서로 지워진다. 그래서 오차를 제곱해 더한 값이 가장 작은 직선을 고른다. 이 방법을 최소제곱법이라 하고, 얻은 직선을 추세선 또는 회귀직선이라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">최소제곱법의 추세선</span></span>
+      <p>\(\displaystyle S(a, b) = \sum_{i=1}^{n} \{y_i - (ax_i + b)\}^2\)을 가장 작게 하는 직선은 점들의 평균점 \((\bar x, \bar y)\)를 지나고, 기울기는 \[a = \frac{\sum (x_i - \bar x)(y_i - \bar y)}{\sum (x_i - \bar x)^2}\] 이다.</p>
+    </div>
+    <p>그림 1의 직선은 평균점 \((3.5, 4.5)\)를 지나도록 해 두었으므로, 기울기만 바꾸면 된다. 기울기를 0.6에서 늘려 가면 빨간 오차들이 줄어들다가 약 0.98을 지나며 다시 커진다. 오차 제곱합은 기울기 \(a\)의 이차함수이므로, 그래프는 아래로 볼록한 포물선이고 꼭짓점에서 최소가 된다.<sup class="fn"><a href="#fn-aimath-trend-1">1</a></sup></p>
+
+    <h3><span class="no">4.2.2</span>추세선으로 예측할 때 주의할 점</h3>
+    <p>추세선은 자료가 있는 범위 안에서 값을 어림하는 데 쓸모가 있다. 그러나 자료 범위 밖으로 멀리 늘여 예측하는 것은 위험하다. 처음 몇 해 동안 빠르게 늘던 판매량이 시장이 포화되면 멈추는 것처럼, 관계가 범위 밖에서도 직선이라는 보장은 없다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="자료 범위 안의 예측과 밖의 예측">
+        <g class="s">
+          <line x1="40" y1="95" x2="480" y2="95" class="ax"/>
+          <rect x="60" y="20" width="160" height="75" class="la" opacity="0.5"/><text x="140" y="15" text-anchor="middle">자료가 있는 범위</text>
+          <line x1="60" y1="85" x2="220" y2="45" class="b"/><line x1="220" y1="45" x2="400" y2="0" class="gd"/>
+          <path d="M220 45 Q 320 25 470 22" class="c"/>
+          <text x="300" y="80">범위 밖에서는 실제 관계(주황)와</text><text x="300" y="100">직선(점선)이 크게 다를 수 있다</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 추세선은 자료 범위 안에서는 믿을 만하지만, 범위 밖으로 멀리 늘이면 실제와 크게 어긋날 수 있다.</figcaption>
+    </figure>
+
+    <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+      <p>세 점 \((1, 2)\), \(( 2, 3)\), \((3, 7)\)에 대하여 최소제곱법으로 추세선을 구하여라.</p>
+    </div>
+    <p>평균은 \(\bar x = 2\), \(\bar y = 4\)이다. \(\sum(x_i - \bar x)(y_i - \bar y) = (-1)(-2) + 0 \cdot (-1) + 1 \cdot 3 = 5\), \(\sum(x_i - \bar x)^2 = 1 + 0 + 1 = 2\)이므로 기울기는 \(a = \dfrac{5}{2} = 2.5\)이다.</p>
+    <p>직선이 \((2, 4)\)를 지나므로 \(4 = 2.5 \times 2 + b\)에서 \(b = -1\)이다. 추세선은 \(y = 2.5x - 1\)이다. 오차는 차례로 \(2 - 1.5 = 0.5\), \(3 - 4 = -1\), \(7 - 6.5 = 0.5\)이고 그 합은 0이다. 평균점을 지나는 추세선에서는 오차의 합이 늘 0이 된다.</p>
+    <p>아래 탐구 카드에서 흩어진 점들을 가장 잘 나타내는 직선을 찾고, 추세선으로 먼 미래를 예측할 때의 함정을 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-aimath-trend-1">오차를 제곱하는 까닭은 부호를 없애고, 미분하기 쉬운 매끈한 함수를 얻기 위해서이다. 그 대가로 큰 오차가 제곱으로 크게 부풀려져 이상치에 민감해진다. 이 점은 다음 절에서 다룬다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>추세선은 오차 제곱합이 가장 작은 직선으로 정하며, 이 직선은 평균점을 지나고 기울기는 \(\frac{\sum(x_i - \bar x)(y_i - \bar y)}{\sum(x_i - \bar x)^2}\)이다. 오차 제곱합은 기울기의 이차함수라 꼭짓점에서 최소가 된다. 그래서 처음 질문의 '가장 잘 나타내는 직선'은 오차 제곱합이라는 하나의 기준으로 정할 수 있으며, 자료 범위 밖의 예측에는 조심해야 한다.</p></div>
+  </div>
+</article>

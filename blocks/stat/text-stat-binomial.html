@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "3-3",
+  "short": "본문 · 이항분포"
+}
+-->
+<article class="card reading" id="text-stat-binomial" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>이항분포</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">자유투 성공률이 0.7인 선수가 10번 던진다. 성공 횟수는 0부터 10까지 어느 값이든 될 수 있지만, 7번 근처가 가장 흔할 것이다. 성공 횟수의 분포는 정확히 어떤 모양이고, 평균과 표준편차는 확률을 하나하나 계산하지 않고 바로 구할 수 있을까?</p>
+    <figure class="q-fig" data-q="stat-binom">
+      <svg viewBox="0 0 520 250" role="img" aria-label="이항분포 B(n, p)의 막대그래프와 평균 np"></svg>
+      <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="1" max="40" step="1" value="10"><output data-k="n"></output></label><label>\(p\) = <input type="range" data-k="p" min="0.05" max="0.95" step="0.05" value="0.7"><output data-k="p"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 이항분포 \(\mathrm{B}(n, p)\)는 평균 \(np\) 근처에서 가장 높고, \(n\)이 커질수록 좌우로 고른 종 모양에 가까워진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>독립시행의 확률(<a href="../stat/2-6.html">확률의 곱셈정리</a>), 조합 \({}_n\mathrm{C}_r\), 기댓값과 표준편차(<a href="3-2.html">기댓값과 표준편차</a>).</div>
+
+    <h3><span class="no">3.3.1</span>이항분포</h3>
+    <p>한 번의 시행에서 성공할 확률이 \(p\)인 시행을 \(n\)번 독립적으로 되풀이할 때, 성공 횟수를 \(X\)라 하자. 독립시행의 확률에 따라 \(X = r\)일 확률은 \(P(X = r) = {}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\)이다. 이 확률분포를 <em>이항분포</em>라 하고 \(\mathrm{B}(n, p)\)로 나타낸다. 확률을 모두 더하면 이항정리에 따라 \(\{p + (1 - p)\}^n = 1\)이 된다.</p>
+    <p>그림 1에서 \(n = 10\), \(p = 0.7\)이면 막대는 \(X = 7\)에서 가장 높다. \(p\)를 0.5로 바꾸면 좌우 대칭이 되고, 0.2로 바꾸면 왼쪽으로 쏠린다. \(n\)을 늘리면 막대가 많아지며 모양이 매끄러운 종에 가까워진다.</p>
+
+    <h3><span class="no">3.3.2</span>평균과 표준편차</h3>
+    <p>성공 횟수는 '한 번씩의 성공 여부'를 더한 것이다. \(i\)번째 시행에서 성공하면 1, 실패하면 0인 확률변수 \(X_i\)를 생각하면 \(X = X_1 + X_2 + \cdots + X_n\)이다. 각 \(X_i\)의 평균은 \(1 \times p + 0 \times (1 - p) = p\)이므로, 합의 평균은 \(np\)이다. 분산도 각 \(X_i\)의 분산 \(p(1 - p)\)를 \(n\)개 더한 \(np(1 - p)\)이다.<sup class="fn"><a href="#fn-stat-binomial-1">1</a></sup></p>
+    <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">이항분포의 평균과 표준편차</span></span>
+      <p>확률변수 \(X\)가 이항분포 \(\mathrm{B}(n, p)\)를 따르면 \[E(X) = np,\quad V(X) = np(1 - p),\quad \sigma(X) = \sqrt{np(1 - p)}\]</p>
+    </div>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 140" role="img" aria-label="성공 횟수는 한 번씩의 성공 여부 0 또는 1을 더한 것">
+        <g class="s">
+          <text x="20" y="40">시행</text><text x="80" y="40">1</text><text x="120" y="40">2</text><text x="160" y="40">3</text><text x="200" y="40">…</text><text x="240" y="40">n</text>
+          <text x="20" y="75">성공 여부</text><text x="80" y="75" class="ta">1</text><text x="120" y="75">0</text><text x="160" y="75" class="ta">1</text><text x="200" y="75">…</text><text x="240" y="75" class="ta">1</text>
+          <text x="300" y="75">→ 더하면 성공 횟수 X</text>
+          <text x="20" y="115">각각의 평균 p, 분산 p(1 − p) → 합의 평균 np, 분산 np(1 − p)</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 성공 횟수를 한 번씩의 0과 1의 합으로 보면 평균과 분산이 \(n\)배가 된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>큰수의 법칙</h3>
+    <p>성공 비율 \(\dfrac{X}{n}\)의 평균은 \(p\)이고 표준편차는 \(\dfrac{\sqrt{np(1 - p)}}{n} = \sqrt{\dfrac{p(1 - p)}{n}}\)이다. \(n\)이 커지면 이 표준편차는 0에 가까워진다. 즉 시행 횟수를 늘릴수록 성공 비율은 \(p\) 근처에 점점 좁게 모인다. 이것이 큰수의 법칙이고, 통계적 확률이 수학적 확률에 다가가는 까닭이다.</p>
+
+    <h3><span class="no">3.3.4</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>처음 질문의 선수가 10번 던질 때 성공 횟수 \(X\)의 평균과 표준편차를 구하여라. 또 같은 선수가 100번 던질 때와 비교해 성공 비율의 표준편차는 어떻게 변하는가?</p>
+    </div>
+    <p>\(X\)는 \(\mathrm{B}(10, 0.7)\)을 따르므로 평균은 \(10 \times 0.7 = 7\)번, 분산은 \(10 \times 0.7 \times 0.3 = 2.1\), 표준편차는 \(\sqrt{2.1} \approx 1.45\)번이다. 대체로 7번에서 1~2번 정도 벗어난다고 볼 수 있다.</p>
+    <p>성공 비율의 표준편차는 10번이면 \(\sqrt{\dfrac{0.21}{10}} \approx 0.145\), 100번이면 \(\sqrt{\dfrac{0.21}{100}} \approx 0.046\)이다. 던지는 횟수를 10배 늘리면 비율의 흔들림은 \(\sqrt{10} \approx 3.2\)분의 1로 준다.</p>
+    <p>한편 성공 횟수 자체의 표준편차는 100번이면 \(\sqrt{21} \approx 4.6\)번으로 오히려 커진다. 횟수는 더 크게 흔들리지만 전체에 대한 비율은 덜 흔들리는 것이다. 아래 탐구 카드에서 \(n\)과 \(p\)를 바꾸며 분포의 모양과 비율의 흔들림을 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-binomial-1">독립인 확률변수의 합의 분산은 각 분산의 합과 같다. 이 성질은 고등학교에서 증명하지 않지만, 두 개의 경우 \(V(X + Y) = V(X) + V(Y)\)를 확률분포표로 확인할 수 있다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>성공률이 \(p\)인 시행을 \(n\)번 독립적으로 할 때 성공 횟수는 이항분포 \(\mathrm{B}(n, p)\)를 따르며, 평균은 \(np\), 표준편차는 \(\sqrt{np(1 - p)}\)이다. 시행이 많아질수록 성공 비율은 \(p\) 근처에 좁게 모인다. 그래서 처음 질문의 선수는 10번 가운데 평균 7번, 대략 1.45번의 표준편차로 성공한다.</p></div>
+  </div>
+</article>

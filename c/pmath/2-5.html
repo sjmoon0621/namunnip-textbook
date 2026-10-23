@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>공간좌표와 구의 방정식 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="좌표공간에서 두 점 사이의 거리, 선분의 내분점·외분점의 좌표, 구의 방정식. 3차원 보물찾기, 공간의 내분점·외분점, 구 세 개의 교점으로 위치를 찾는 GPS 삼변측량 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-treasure3d canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -46,19 +51,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-treasure3d"><span class="mono">2.5.1</span>3차원 보물찾기</a></li>
-        <li><a href="#card-pmath-section3d"><span class="mono">2.5.2</span>공간의 내분점과 외분점</a></li>
-        <li><a href="#card-pmath-trilateration"><span class="mono">2.5.3</span>GPS와 구 세 개의 교점</a></li>
+        <li><a href="#text-pmath-sphere-eq"><span class="mono">본문</span>공간좌표와 구의 방정식</a></li>
+        <li><a href="#card-pmath-treasure3d"><span class="mono">탐구 1</span>3차원 보물찾기</a></li>
+        <li><a href="#card-pmath-section3d"><span class="mono">탐구 2</span>공간의 내분점과 외분점</a></li>
+        <li><a href="#card-pmath-trilateration"><span class="mono">탐구 3</span>GPS와 구 세 개의 교점</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">7문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-sphere-eq" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>공간좌표와 구의 방정식</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">운동장 바닥에 기지국 세 개를 두고, 기지국 \(O(0, 0, 0)\), \(A(6, 0, 0)\), \(B(0, 8, 0)\)의 좌표를 m 단위로 정했다. 하늘에 뜬 드론은 각 기지국까지의 거리만 잴 수 있는데, 세 거리가 모두 13 m였다. 거리 하나만 알면 드론은 기지국을 중심으로 하는 구 위의 어딘가에 있다. 거리 두 개, 세 개를 알면 드론이 있을 수 있는 곳은 어떻게 좁혀질까? 드론의 좌표를 정확히 구할 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="거리를 아는 기지국 수에 따라 좁혀지는 위치">
+              <g class="s">
+                <text x="20" y="22">아는 거리</text><text x="170" y="22">드론이 있을 수 있는 곳</text><text x="380" y="22">자유도</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1개</text><text x="170" y="52">구 (곡면)</text><text x="380" y="52">2</text>
+                <text x="20" y="74">2개</text><text x="170" y="74">두 구가 만나는 원</text><text x="380" y="74">1</text>
+                <text x="20" y="96">3개</text><text x="170" y="96" class="td">원과 셋째 구가 만나는 두 점</text><text x="380" y="96">0</text>
+                <text x="20" y="122">두 점 가운데 땅 위에 있는 점을 고른다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 거리를 하나 알 때마다 드론이 있을 수 있는 곳이 곡면, 곡선, 점으로 줄어든다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>공간좌표, 두 점 사이의 거리, 내분점과 외분점의 좌표, 원의 방정식.</div>
+
+          <h3><span class="no">2.5.1</span>공간의 거리와 구</h3>
+          <p>공간의 점은 서로 수직인 세 축으로 좌표 \((x, y, z)\)를 정한다. 두 점 사이의 거리는 피타고라스 정리를 두 번 써서 구한다. 먼저 바닥 평면에서 두 점의 그림자 사이 거리를 구하고, 그 거리와 높이 차를 두 변으로 하는 직각삼각형의 빗변을 구하면 된다. 그래서 \(P(x_1, y_1, z_1)\)과 \(Q(x_2, y_2, z_2)\) 사이의 거리는 세 좌표 차의 제곱의 합의 제곱근이다. 한 점에서 거리가 일정한 점들의 자취가 구이므로, 이 거리 공식이 곧 구의 방정식이 된다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">거리와 구의 방정식</span></span>
+            <p>두 점 사이의 거리는 \(\overline{PQ} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}\)이다. 중심 \((a, b, c)\), 반지름 \(r\)인 구의 방정식은 \[(x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\]이다. 선분 \(PQ\)를 \(m : n\)으로 내분하는 점은 \(\left(\dfrac{mx_2 + nx_1}{m + n}, \dfrac{my_2 + ny_1}{m + n}, \dfrac{mz_2 + nz_1}{m + n}\right)\)이다.</p>
+          </div>
+          <p>두 구의 방정식을 빼면 \(x^2\), \(y^2\), \(z^2\) 항이 지워져 일차식, 곧 평면의 방정식이 남는다. 두 구가 만나는 점들은 모두 이 평면 위에 있으므로, 두 구의 교선은 이 평면과 한 구가 만나는 원이다. 그래서 거리를 하나 더 알 때마다 일차방정식이 하나씩 생기고, 세 구의 방정식에서 두 번 빼면 일차방정식 두 개와 구의 방정식 하나가 남는다.<sup class="fn"><a href="#fn-pmath-sphere-eq-1">1</a></sup></p>
+
+          <h3><span class="no">2.5.2</span>두 점 가운데 하나를 고르다</h3>
+          <p>일차방정식 두 개는 공간의 직선 하나를 나타내고, 그 직선이 구와 만나는 점은 많아야 두 개이다. 그래서 거리 세 개로는 위치가 두 점까지 좁혀진다. 세 기지국이 같은 평면 위에 있으면 두 점은 그 평면에 대해 대칭이어서, 하나는 땅 위, 하나는 땅속에 있다. GPS도 같은 방법으로 위성까지의 거리를 재는데, 두 점 가운데 하나는 우주 공간이나 땅속 깊이 있어 버린다. 다만 수신기의 시계 오차까지 풀어야 하므로 실제로는 위성 네 개가 필요하다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="세 구의 방정식을 빼서 얻는 식">
+              <g class="s">
+                <text x="20" y="22">식</text><text x="280" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(구 A) − (구 O)</text><text x="280" y="52">−12x + 36 = 0, 곧 x = 3</text>
+                <text x="20" y="74">(구 B) − (구 O)</text><text x="280" y="74">−16y + 64 = 0, 곧 y = 4</text>
+                <text x="20" y="96">구 O에 대입</text><text x="280" y="96" class="td">9 + 16 + z² = 169, z = ±12</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 구의 방정식끼리 빼면 제곱 항이 지워져 일차방정식이 남는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>처음 질문의 세 기지국과 거리 13 m로 드론의 좌표를 구하여라. 또 기지국 \(O\)와 드론을 잇는 선분을 \(1 : 2\)로 내분하는 점, 곧 \(O\)에서 드론까지 3분의 1 지점의 좌표를 구하여라.</p>
+          </div>
+          <p>세 구는 \(x^2 + y^2 + z^2 = 169\), \((x - 6)^2 + y^2 + z^2 = 169\), \(x^2 + (y - 8)^2 + z^2 = 169\)이다. 둘째 식에서 첫째 식을 빼면 \(-12x + 36 = 0\)으로 \(x = 3\), 셋째 식에서 첫째 식을 빼면 \(-16y + 64 = 0\)으로 \(y = 4\)이다. 첫째 식에 넣으면 \(z^2 = 169 - 9 - 16 = 144\)이므로 \(z = \pm12\)이다. 드론은 땅 위에 있으므로 \((3, 4, 12)\)이다.</p>
+          <p>\(O(0, 0, 0)\)과 \((3, 4, 12)\)를 \(1 : 2\)로 내분하는 점은 \(\left(\dfrac{1\times3 + 2\times0}{3}, \dfrac{1\times4}{3}, \dfrac{1\times12}{3}\right) = (1, \tfrac43, 4)\)이다. 이 점과 \(O\) 사이의 거리는 \(\sqrt{1 + 16/9 + 16} = 13/3\)으로, 13 m의 3분의 1이 맞다. 즉 공간의 거리 공식은 구의 방정식이 되고, 구의 방정식끼리 빼면 일차방정식이 남아, 세 거리만으로 공간 속 위치를 두 점까지 좁혀 구할 수 있다.</p>
+          <p>아래 탐구 카드에서 거리만 알려 주는 탐지기로 공간 속 보물을 찾고, 선분 밖에서 \(m : n\)으로 나누는 외분점과 GPS의 원리를 알아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-sphere-eq-1">세 점까지의 거리로 위치를 정하는 방법을 삼변 측량이라 한다. 지진이 났을 때도 세 관측소에서 잰 진원 거리로 진앙을 정하는데, 땅 위에서는 원 세 개, 땅속 진원까지 따지면 구 세 개가 만나는 점을 찾는 셈이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>공간의 두 점 사이 거리는 세 좌표 차의 제곱의 합의 제곱근이고, 한 점에서 거리가 일정한 점의 자취인 구는 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)으로 나타낸다. 구의 방정식끼리 빼면 일차방정식이 남으므로, 세 점까지의 거리를 알면 위치가 두 점으로 좁혀진다. 처음 질문의 드론은 \((3, 4, \pm12)\) 가운데 땅 위의 점 \((3, 4, 12)\)에 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/2-4.html#card-geo-dist3"><small class="mono">기하 2.4</small>공간에서 두 점 사이의 거리는 피타고라스 정리를 몇 번 쓰면 될까?</a><a href="../../c/geo/2-4.html#card-geo-section3"><small class="mono">기하 2.4</small>공간의 선분을 m : n으로 나누는 점은 좌표마다 따로 구해도 될까?</a></div></nav>
+
       <article class="card" id="card-pmath-treasure3d">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>거리만 알려 주는 탐지기로 공간 속 보물을 찾을 수 있을까?</h2><span class="kind">좌표공간의 거리 · 도전</span>
+          <span class="no">탐구 1</span><h2>거리만 알려 주는 탐지기로 공간 속 보물을 찾을 수 있을까?</h2><span class="kind">좌표공간의 거리 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -76,22 +139,22 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>보물이 어디 있는지는 알려 주지 않고 "여기서 몇 m 떨어져 있다"만 알려 주는 탐지기가 있습니다. 측정을 몇 번 하면 보물의 정확한 위치를 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>좌표공간의 두 점 \(\mathrm{A}(x_1, y_1, z_1)\), \(\mathrm{B}(x_2, y_2, z_2)\) 사이의 거리는 \(\overline{\mathrm{AB}} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}\)입니다.</li>
-            <li><span class="tag">설명</span>한 점에서 거리 \(d\)를 재면 보물은 그 점을 중심으로 하고 반지름이 \(d\)인 <b>구 위</b> 어딘가에 있습니다. 거리의 제곱 \(d^2\)이 세 정수의 제곱의 합이라는 것이 단서가 됩니다. 예를 들어 원점에서 \(d^2 = 5\)이면 보물의 좌표는 \((\pm 1, \pm 2, 0)\)을 섞은 것뿐입니다. 측정할 때마다 후보가 여러 구의 교집합으로 줄어듭니다. 좌표를 하나씩 바꾸어 재면 \(d^2\)의 변화로 그 좌표를 바로 알아낼 수 있습니다.</li>
-            <li><span class="tag">연결</span>실제 위치 측정도 같은 원리입니다. 다음 카드의 GPS는 위성 여러 개까지의 거리로 구의 교점을 구해 위치를 정합니다.</li>
-            <li><span class="tag">적용</span>5번 안에 보물을 찾아보세요. 원점에서 처음 재고, \(x\)만 1 바꾸어 다시 재면 \(d^2\)이 얼마나 바뀌나요? 그 변화로 보물의 \(x\)좌표를 알 수 있는 이유를 설명해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>측정값을 소수로 반올림해 읽으면 후보를 잘못 지울 수 있습니다. 거리 대신 거리의 제곱으로 계산하면 정수로만 다룰 수 있어 오차가 없습니다. 실제 탐지기는 측정 오차가 있어 구가 두께를 가진 껍질이 되므로, 측정을 더 많이 해서 겹치는 부분을 좁힙니다.</li>
+            <li><span class="tag">질문</span>보물이 어디 있는지는 알려 주지 않고 "여기서 몇 m 떨어져 있다"만 알려 주는 탐지기가 있다. 측정을 몇 번 하면 보물의 정확한 위치를 알 수 있을까?</li>
+            <li><span class="tag">복원</span>좌표공간의 두 점 \(\mathrm{A}(x_1, y_1, z_1)\), \(\mathrm{B}(x_2, y_2, z_2)\) 사이의 거리는 \(\overline{\mathrm{AB}} = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}\)이다.</li>
+            <li><span class="tag">설명</span>한 점에서 거리 \(d\)를 재면 보물은 그 점을 중심으로 하고 반지름이 \(d\)인 구 위 어딘가에 있다. 거리의 제곱 \(d^2\)이 세 정수의 제곱의 합이라는 것이 단서가 된다. 예를 들어 원점에서 \(d^2 = 5\)이면 보물의 좌표는 \((\pm 1, \pm 2, 0)\)을 섞은 것뿐이다. 측정할 때마다 후보가 여러 구의 교집합으로 줄어든다. 좌표를 하나씩 바꾸어 재면 \(d^2\)의 변화로 그 좌표를 바로 알아낼 수 있다.</li>
+            <li><span class="tag">연결</span>실제 위치 측정도 같은 원리이다. 다음 카드의 GPS는 위성 여러 개까지의 거리로 구의 교점을 구해 위치를 정한다.</li>
+            <li><span class="tag">적용</span>5번 안에 보물을 찾아보자. 원점에서 처음 재고, \(x\)만 1 바꾸어 다시 재면 \(d^2\)이 얼마나 바뀌는가? 그 변화로 보물의 \(x\)좌표를 알 수 있는 이유를 설명해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>측정값을 소수로 반올림해 읽으면 후보를 잘못 지울 수 있다. 거리 대신 거리의 제곱으로 계산하면 정수로만 다룰 수 있어 오차가 없다. 실제 탐지기는 측정 오차가 있어 구가 두께를 가진 껍질이 되므로, 측정을 더 많이 해서 겹치는 부분을 좁힌다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">원점에서 잰 거리가 3이고, 점 \((1, 0, 0)\)에서 잰 거리가 \(\sqrt{10}\)일 때 보물의 \(x\)좌표는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0<span class="why"><b>맞습니다.</b> \(x^2 + y^2 + z^2 = 9\), \((x - 1)^2 + y^2 + z^2 = 10\)을 빼면 \(-2x + 1 = 1\), 곧 \(x = 0\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>거리가 1만큼 늘었으니 1이라고 보았습니다.</b> 거리의 제곱이 1만큼 늘었고, 이것은 \(-2x + 1 = 1\)에서 \(x = 0\)을 뜻합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−1<span class="why"><b>부호를 거꾸로 보았습니다.</b> \(x = -1\)이면 두 번째 거리의 제곱은 \(9 + 2 + 1 = 12\)가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>두 식을 빼 보지 않았습니다.</b> 두 구의 방정식을 빼면 \(y, z\)가 사라져 \(x\)만 남습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>0<span class="why"><b>맞다.</b> \(x^2 + y^2 + z^2 = 9\), \((x - 1)^2 + y^2 + z^2 = 10\)을 빼면 \(-2x + 1 = 1\), 곧 \(x = 0\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>거리가 1만큼 늘었으니 1이라고 보았다.</b> 거리의 제곱이 1만큼 늘었고, 이것은 \(-2x + 1 = 1\)에서 \(x = 0\)을 뜻한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>−1<span class="why"><b>부호를 거꾸로 보았다.</b> \(x = -1\)이면 두 번째 거리의 제곱은 \(9 + 2 + 1 = 12\)가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>알 수 없다<span class="why"><b>두 식을 빼 보지 않았다.</b> 두 구의 방정식을 빼면 \(y, z\)가 사라져 \(x\)만 남는다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -99,7 +162,7 @@
 
       <article class="card" id="card-pmath-section3d">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>선분 밖에서도 선분을 \(m : n\)으로 나눌 수 있을까?</h2><span class="kind">공간의 내분점과 외분점 · 조작</span>
+          <span class="no">탐구 2</span><h2>선분 밖에서도 선분을 \(m : n\)으로 나눌 수 있을까?</h2><span class="kind">공간의 내분점과 외분점 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -116,26 +179,26 @@
                 <div><dt>\(\overline{\mathrm{PB}}\)</dt><dd class="n-pb">—</dd></div>
                 <div><dt>\(\overline{\mathrm{AP}} : \overline{\mathrm{PB}}\)</dt><dd class="n-r">—</dd></div>
               </dl>
-              <p class="fig-note">A(−2, −1, 2), B(2, 2, 0)입니다. 점선은 P를 각 좌표축 방향으로 따라간 그림자입니다. 그림을 끌면 돌아갑니다.</p>
+              <p class="fig-note">A(−2, −1, 2), B(2, 2, 0)이다. 점선은 P를 각 좌표축 방향으로 따라간 그림자이다. 그림을 끌면 돌아간다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>선분 AB를 \(2 : 1\)로 나누는 점은 선분 위에 있습니다. 그런데 선분 바깥, A에서 B 쪽으로 계속 가다가 A까지의 거리와 B까지의 거리가 \(2 : 1\)이 되는 점도 있습니다. 이 점의 좌표는 어떻게 구할까요?</li>
-            <li><span class="tag">복원</span>수직선 위에서 \(a\)와 \(b\)를 \(m : n\)으로 내분하는 점은 \(\frac{mb + na}{m + n}\), 외분하는 점은 \(\frac{mb - na}{m - n}\)입니다.</li>
-            <li><span class="tag">설명</span>공간에서 A, B, P를 x축으로 정사영하면 세 점의 x좌표가 같은 비 \(m : n\)을 지킵니다(평행선이 선분을 같은 비로 자르기 때문입니다). y, z좌표도 마찬가지이므로 좌표마다 따로 계산하면 됩니다. 곧 내분점은 <b>\(\left(\frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n}, \frac{mz_2 + nz_1}{m + n}\right)\)</b>, 외분점은 분모와 뒤의 부호를 바꾼 \(\left(\frac{mx_2 - nx_1}{m - n}, \cdots\right)\) (\(m \ne n\))입니다.</li>
-            <li><span class="tag">연결</span>위치벡터로 쓰면 내분점은 \(\vec{p} = \frac{m\vec{b} + n\vec{a}}{m + n}\)이고, 무게중심 \(\frac{\vec{a} + \vec{b} + \vec{c}}{3}\)도 이 식에서 나옵니다. 외분점은 \(m &gt; n\)이면 B 쪽 바깥에, \(m &lt; n\)이면 A 쪽 바깥에 생깁니다.</li>
-            <li><span class="tag">적용</span>내분에서 \(m = n\)으로 두어 P가 중점인지 확인하세요. 외분으로 바꾸어 \(m\)을 \(n\)에 가깝게 할수록 P가 어디로 가는지 보세요. \(m = n\)인 외분점은 왜 그려지지 않을까요?</li>
-            <li class="warn"><span class="tag">판단</span>외분점 공식에서 분모 \(m - n\)이 음수가 될 수 있습니다. 이때도 같은 식을 그대로 쓰면 됩니다. 또 외분점의 비 \(\overline{\mathrm{AP}} : \overline{\mathrm{PB}} = m : n\)은 거리의 비이지, P가 선분 위에 있다는 뜻이 아닙니다.</li>
+            <li><span class="tag">질문</span>선분 AB를 \(2 : 1\)로 나누는 점은 선분 위에 있다. 그런데 선분 바깥, A에서 B 쪽으로 계속 가다가 A까지의 거리와 B까지의 거리가 \(2 : 1\)이 되는 점도 있다. 이 점의 좌표는 어떻게 구할까?</li>
+            <li><span class="tag">복원</span>수직선 위에서 \(a\)와 \(b\)를 \(m : n\)으로 내분하는 점은 \(\frac{mb + na}{m + n}\), 외분하는 점은 \(\frac{mb - na}{m - n}\)이다.</li>
+            <li><span class="tag">설명</span>공간에서 A, B, P를 x축으로 정사영하면 세 점의 x좌표가 같은 비 \(m : n\)을 지킨다(평행선이 선분을 같은 비로 자르기 때문이다). y, z좌표도 마찬가지이므로 좌표마다 따로 계산하면 된다. 곧 내분점은 \(\left(\frac{mx_2 + nx_1}{m + n}, \frac{my_2 + ny_1}{m + n}, \frac{mz_2 + nz_1}{m + n}\right)\), 외분점은 분모와 뒤의 부호를 바꾼 \(\left(\frac{mx_2 - nx_1}{m - n}, \cdots\right)\) (\(m \ne n\))이다.</li>
+            <li><span class="tag">연결</span>위치벡터로 쓰면 내분점은 \(\vec{p} = \frac{m\vec{b} + n\vec{a}}{m + n}\)이고, 무게중심 \(\frac{\vec{a} + \vec{b} + \vec{c}}{3}\)도 이 식에서 나온다. 외분점은 \(m &gt; n\)이면 B 쪽 바깥에, \(m &lt; n\)이면 A 쪽 바깥에 생긴다.</li>
+            <li><span class="tag">적용</span>내분에서 \(m = n\)으로 두어 P가 중점인지 확인해 보자. 외분으로 바꾸어 \(m\)을 \(n\)에 가깝게 할수록 P가 어디로 가는지 보자. \(m = n\)인 외분점은 왜 그려지지 않을까?</li>
+            <li class="warn"><span class="tag">판단</span>외분점 공식에서 분모 \(m - n\)이 음수가 될 수 있다. 이때도 같은 식을 그대로 쓰면 된다. 또 외분점의 비 \(\overline{\mathrm{AP}} : \overline{\mathrm{PB}} = m : n\)은 거리의 비이지, P가 선분 위에 있다는 뜻이 아니다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 점 A(1, 2, 3), B(4, 5, 0)에 대하여 선분 AB를 \(1 : 2\)로 외분하는 점은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((-2, -1, 6)\)<span class="why"><b>맞습니다.</b> \(\left(\frac{1 \cdot 4 - 2 \cdot 1}{1 - 2}, \frac{5 - 4}{-1}, \frac{0 - 6}{-1}\right) = (-2, -1, 6)\)이고, A 쪽 바깥에 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3, 2)\)<span class="why"><b>내분점을 구했습니다.</b> \(1 : 2\) 내분점은 선분 위의 점입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((7, 8, -3)\)<span class="why"><b>\(2 : 1\) 외분점을 구했습니다.</b> \(m\)과 \(n\)을 바꾸면 B 쪽 바깥으로 갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((2, 1, -6)\)<span class="why"><b>분모의 부호를 빠뜨렸습니다.</b> 분모 \(m - n = -1\)로 나누어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((-2, -1, 6)\)<span class="why"><b>맞다.</b> \(\left(\frac{1 \cdot 4 - 2 \cdot 1}{1 - 2}, \frac{5 - 4}{-1}, \frac{0 - 6}{-1}\right) = (-2, -1, 6)\)이고, A 쪽 바깥에 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3, 2)\)<span class="why"><b>내분점을 구했다.</b> \(1 : 2\) 내분점은 선분 위의 점이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((7, 8, -3)\)<span class="why"><b>\(2 : 1\) 외분점을 구했다.</b> \(m\)과 \(n\)을 바꾸면 B 쪽 바깥으로 간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((2, 1, -6)\)<span class="why"><b>분모의 부호를 빠뜨렸다.</b> 분모 \(m - n = -1\)로 나누어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -143,7 +206,7 @@
 
       <article class="card" id="card-pmath-trilateration">
         <header class="card-head">
-          <span class="no">2.5.3</span><h2>위성까지의 거리만으로 내 위치를 어떻게 알아낼까?</h2><span class="kind">구의 방정식 · 삼변측량 · 활용</span>
+          <span class="no">탐구 3</span><h2>위성까지의 거리만으로 내 위치를 어떻게 알아낼까?</h2><span class="kind">구의 방정식 · 삼변측량 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -162,43 +225,43 @@
                 <div><dt>위치 오차</dt><dd class="n-err">—</dd></div>
               </dl>
               <p class="mono small step">—</p>
-              <p class="fig-note">축척은 모식입니다(실제 위성은 약 2만 km 위에 있습니다). 세 구는 보통 두 점에서 만나는데, 하나는 지면 가까이, 하나는 우주 쪽에 있습니다.</p>
+              <p class="fig-note">축척은 모식이다(실제 위성은 약 2만 km 위에 있다). 세 구는 보통 두 점에서 만나는데, 하나는 지면 가까이, 하나는 우주 쪽에 있다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>스마트폰은 위성이 보낸 신호가 도착하는 데 걸린 시간으로 위성까지의 거리를 잽니다. 위성의 위치와 거리만 알면 내 위치가 정해질까요? 위성은 몇 개가 필요할까요?</li>
-            <li><span class="tag">복원</span>중심이 \((a, b, c)\)이고 반지름이 \(r\)인 구의 방정식은 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)입니다. 두 구가 만나는 곳은 원이고, 그 원은 한 평면 위에 있습니다.</li>
-            <li><span class="tag">설명</span>위성 \(\mathrm{S}_i\)까지의 거리가 \(d_i\)이면 내 위치는 구 \(|\vec{p} - \vec{s}_i| = d_i\) 위에 있습니다. 구의 방정식 두 개를 빼면 \(x^2, y^2, z^2\)이 사라져 <b>평면의 방정식</b>(일차식)이 남습니다. 구가 세 개면 이런 평면 두 개가 생기고, 두 평면의 교선(직선)을 첫 번째 구의 방정식에 넣으면 이차방정식이 되어 <b>해가 두 개</b> 나옵니다. 하나는 지면 근처, 하나는 우주 공간이므로 지면 쪽을 고릅니다.</li>
-            <li><span class="tag">연결</span>실제 GPS는 위성을 최소 네 개 씁니다. 수신기의 시계가 위성의 원자시계만큼 정확하지 않아서, 모든 거리에 같은 크기의 오차가 섞이기 때문입니다. 시계 오차를 네 번째 미지수로 두고 위성 네 개로 \(x, y, z\)와 함께 구합니다. 빛은 1초에 약 30만 km를 가므로 시계가 1백만분의 1초만 틀려도 거리는 약 300 m 틀립니다.</li>
-            <li><span class="tag">적용</span>수신기 위치를 바꾸며 계산한 위치가 실제 위치와 같은지 확인하세요. 그다음 시계 오차를 넣어 모든 거리를 조금씩 늘리거나 줄이면 계산한 위치가 얼마나 틀어지나요? 거리 오차보다 위치 오차가 더 클 수도 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>세 위성이 한 직선 위에 거의 놓이면 두 평면이 거의 나란해져 교선을 정하기 어렵고, 작은 거리 오차에도 위치가 크게 흔들립니다. 그래서 위성이 하늘에 고루 퍼져 있을수록 위치가 정확해집니다.</li>
+            <li><span class="tag">질문</span>스마트폰은 위성이 보낸 신호가 도착하는 데 걸린 시간으로 위성까지의 거리를 잰다. 위성의 위치와 거리만 알면 내 위치가 정해질까? 위성은 몇 개가 필요할까?</li>
+            <li><span class="tag">복원</span>중심이 \((a, b, c)\)이고 반지름이 \(r\)인 구의 방정식은 \((x - a)^2 + (y - b)^2 + (z - c)^2 = r^2\)이다. 두 구가 만나는 곳은 원이고, 그 원은 한 평면 위에 있다.</li>
+            <li><span class="tag">설명</span>위성 \(\mathrm{S}_i\)까지의 거리가 \(d_i\)이면 내 위치는 구 \(|\vec{p} - \vec{s}_i| = d_i\) 위에 있다. 구의 방정식 두 개를 빼면 \(x^2, y^2, z^2\)이 사라져 평면의 방정식(일차식)이 남는다. 구가 세 개면 이런 평면 두 개가 생기고, 두 평면의 교선(직선)을 첫 번째 구의 방정식에 넣으면 이차방정식이 되어 해가 두 개 나온다. 하나는 지면 근처, 하나는 우주 공간이므로 지면 쪽을 고른다.</li>
+            <li><span class="tag">연결</span>실제 GPS는 위성을 최소 네 개 쓴다. 수신기의 시계가 위성의 원자시계만큼 정확하지 않아서, 모든 거리에 같은 크기의 오차가 섞이기 때문이다. 시계 오차를 네 번째 미지수로 두고 위성 네 개로 \(x, y, z\)와 함께 구한다. 빛은 1초에 약 30만 km를 가므로 시계가 1백만분의 1초만 틀려도 거리는 약 300 m 틀린다.</li>
+            <li><span class="tag">적용</span>수신기 위치를 바꾸며 계산한 위치가 실제 위치와 같은지 확인해 보자. 그다음 시계 오차를 넣어 모든 거리를 조금씩 늘리거나 줄이면 계산한 위치가 얼마나 틀어지는가? 거리 오차보다 위치 오차가 더 클 수도 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>세 위성이 한 직선 위에 거의 놓이면 두 평면이 거의 나란해져 교선을 정하기 어렵고, 작은 거리 오차에도 위치가 크게 흔들린다. 그래서 위성이 하늘에 고루 퍼져 있을수록 위치가 정확해진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 구 \(x^2 + y^2 + z^2 = 25\)와 \((x - 2)^2 + y^2 + z^2 = 21\)이 만나는 원이 놓인 평면은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 2\)<span class="why"><b>맞습니다.</b> 두 식을 빼면 \(4x - 4 = 4\), 곧 \(x = 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)<span class="why"><b>두 중심의 중점을 골랐습니다.</b> 반지름이 다르면 교선의 평면은 중점을 지나지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 4\)<span class="why"><b>\((x - 2)^2\)을 \(x^2 - 2x + 4\)로 전개했습니다.</b> \(x^2 - 4x + 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(z = 0\)<span class="why"><b>두 중심이 xy평면 위에 있어서 골랐습니다.</b> 교선의 평면은 두 중심을 잇는 직선(x축)에 수직입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 2\)<span class="why"><b>맞다.</b> 두 식을 빼면 \(4x - 4 = 4\), 곧 \(x = 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)<span class="why"><b>두 중심의 중점을 골랐다.</b> 반지름이 다르면 교선의 평면은 중점을 지나지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 4\)<span class="why"><b>\((x - 2)^2\)을 \(x^2 - 2x + 4\)로 전개했다.</b> \(x^2 - 4x + 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(z = 0\)<span class="why"><b>두 중심이 xy평면 위에 있어서 골랐다.</b> 교선의 평면은 두 중심을 잇는 직선(x축)에 수직이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/2-5.html#card-geo-sphere-eq"><small class="mono">기하 2.5</small>중심과 반지름을 알면 구를 식 하나로 쓸 수 있을까?</a><a href="../../c/geo/2-5.html#card-geo-sphere-complete"><small class="mono">기하 2.5</small>전개된 식에서 구의 중심과 반지름을 되찾을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/2-5.html#card-geo-sphere-eq"><small class="mono">기하 2.5</small>중심과 반지름을 알면 구를 식 하나로 쓸 수 있을까?</a><a href="../../c/geo/2-5.html#card-geo-sphere-complete"><small class="mono">기하 2.5</small>전개된 식에서 구의 중심과 반지름을 되찾을 수 있을까?</a><a href="../../c/geo/2-5.html#text-geo-sphere"><small class="mono">기하 2.5</small>구의 방정식</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">7문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

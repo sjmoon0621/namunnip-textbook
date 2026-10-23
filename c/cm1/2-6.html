@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이차함수의 최대·최소 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="제한된 범위에서 이차함수의 최댓값과 최솟값: 꼭짓점이 범위 안에 있는지에 따라 꼭짓점과 양 끝 값 비교, 울타리로 둘러싼 넓이처럼 실생활 문제에서 범위를 정하고 최대를 찾기. 구간과 길이를 바꾸는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-minmax-interval .eq { font-size: 13px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
@@ -46,18 +51,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm1-minmax-interval"><span class="mono">2.6.1</span>제한된 범위에서 최대·최소</a></li>
-        <li><a href="#card-cm1-fence"><span class="mono">2.6.2</span>울타리로 가장 넓게 둘러싸기</a></li>
+        <li><a href="#text-cm1-quad-minmax"><span class="mono">본문</span>이차함수의 최대·최소</a></li>
+        <li><a href="#card-cm1-minmax-interval"><span class="mono">탐구 1</span>제한된 범위에서 최대·최소</a></li>
+        <li><a href="#card-cm1-fence"><span class="mono">탐구 2</span>울타리로 가장 넓게 둘러싸기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm1-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">71문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm1&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm1-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">71문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm1-quad-minmax" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이차함수의 최대·최소</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(y = x^2 - 4x + 1\)은 꼭짓점 \(x = 2\)에서 가장 작은 값 \(-3\)을 갖는다. 그런데 \(x\)가 \(3 \le x \le 5\)처럼 꼭짓점을 비켜 간 범위에서만 움직인다면, 가장 작은 값과 가장 큰 값은 어디서 나올까?</p>
+          <figure class="q-fig" data-q="cm1-minmax">
+            <svg viewBox="0 0 520 280" role="img" aria-label="y=x²−4x+1의 그래프에서 길이 2인 범위를 옮기며 최댓값과 최솟값을 표시하는 그림"></svg>
+            <div class="q-ctl"><label>범위의 왼쪽 끝 \(p\) = <input type="range" data-k="p" min="-1" max="4" step="0.25" value="3"><output data-k="p"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 범위 \(p \le x \le p + 2\) 안에 꼭짓점이 들어오면 최솟값은 꼭짓점에서 나오고, 그렇지 않으면 최댓값과 최솟값이 모두 범위의 양 끝에서 나온다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>중학교의 이차함수 \(y = a(x - p)^2 + q\)의 꼭짓점과 축, 완전제곱식 만들기, 이차함수의 그래프(<a href="2-4.html">이차방정식과 이차함수</a>).</div>
+
+          <h3><span class="no">2.6.1</span>범위가 없을 때의 최대·최소</h3>
+          <p>\(y = x^2 - 4x + 1\)을 완전제곱식으로 바꾸면 \(y = (x - 2)^2 - 3\)이다. 제곱 \((x - 2)^2\)은 0 이상이므로 \(y\)는 \(-3\) 이상이고, \(x = 2\)일 때 정확히 \(-3\)이 된다. 따라서 최솟값은 \(-3\)이다. 그런데 \(x\)가 2에서 멀어질수록 \(y\)는 한없이 커지므로 최댓값은 없다.</p>
+          <p>함수가 가질 수 있는 값 가운데 가장 큰 값을 <em>최댓값</em>, 가장 작은 값을 <em>최솟값</em>이라 한다. \(x\)의 범위에 제한이 없으면 \(y = a(x - p)^2 + q\)는 \(a &gt; 0\)일 때 최솟값 \(q\)만, \(a &lt; 0\)일 때 최댓값 \(q\)만 갖는다. 꼭짓점이 그래프의 맨 아래나 맨 위이기 때문이다.</p>
+
+          <h3><span class="no">2.6.2</span>범위가 정해지면 끝점이 후보가 된다</h3>
+          <p>이제 \(x\)를 \(3 \le x \le 5\)로 제한하자. 그림 1에서 \(p = 3\)에 두면 이 범위의 그래프는 꼭짓점의 오른쪽 부분이라 계속 올라가기만 한다. 그러면 가장 낮은 점은 왼쪽 끝 \(x = 3\)이고, 가장 높은 점은 오른쪽 끝 \(x = 5\)이다. 값을 계산하면 \(x = 3\)일 때 \(y = -2\), \(x = 5\)일 때 \(y = 6\)이므로 최솟값은 \(-2\), 최댓값은 6이다.</p>
+          <p>슬라이더로 \(p\)를 1로 옮겨 범위를 \(1 \le x \le 3\)으로 바꾸면 사정이 달라진다. 꼭짓점 \(x = 2\)가 범위 안에 들어오므로 최솟값은 꼭짓점의 \(-3\)이다. 최댓값은 두 끝 \(x = 1\)과 \(x = 3\)에서의 값 가운데 큰 것인데, 둘 다 \(-2\)로 같다. 두 끝이 축 \(x = 2\)에서 같은 거리에 있기 때문이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">제한된 범위에서의 최대·최소</span></span>
+            <p>\(\alpha \le x \le \beta\)에서 이차함수 \(f(x) = a(x - p)^2 + q\)의 최댓값과 최솟값은 \(f(\alpha)\), \(f(\beta)\), 그리고 꼭짓점이 범위 안에 있을 때의 \(f(p) = q\) 가운데에서 나온다.</p>
+          </div>
+          <p>정리가 후보를 세 개로 줄여 주는 까닭은 그래프의 모양에 있다. 포물선은 축의 한쪽에서는 계속 내려가거나 계속 올라가기만 한다. 그래서 범위 안에서 방향이 바뀔 수 있는 곳은 꼭짓점뿐이고, 나머지 가장 높거나 낮은 점은 범위가 끊기는 끝에서 생긴다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 190" role="img" aria-label="꼭짓점이 범위의 왼쪽, 안, 오른쪽에 있을 때 최댓값과 최솟값의 위치">
+              <path d="M15 20 Q85 220 155 20" class="gd"/><path d="M110 70 Q125 40 140 20" class="b"/><circle cx="110" cy="70" r="4" class="fb"/><circle cx="140" cy="20" r="4" class="fd"/>
+              <path d="M190 20 Q260 220 330 20" class="gd"/><path d="M225 70 Q260 170 295 70" class="b"/><circle cx="260" cy="120" r="4" class="fb"/><circle cx="225" cy="70" r="4" class="fd"/><circle cx="295" cy="70" r="4" class="fd"/>
+              <path d="M365 20 Q435 220 505 20" class="gd"/><path d="M380 20 Q395 40 410 70" class="b"/><circle cx="410" cy="70" r="4" class="fb"/><circle cx="380" cy="20" r="4" class="fd"/>
+              <text x="85" y="176" text-anchor="middle">꼭짓점이 범위 왼쪽</text><text x="260" y="176" text-anchor="middle">꼭짓점이 범위 안</text><text x="435" y="176" text-anchor="middle">꼭짓점이 범위 오른쪽</text>
+            </svg>
+            <figcaption>그림 2. 굵은 선이 범위 안의 그래프이다. 파란 점이 최솟값, 붉은 점이 최댓값이며, 꼭짓점이 범위 밖이면 둘 다 끝점이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>길이가 40 m인 철망으로 한쪽 면이 담장인 직사각형 밭을 두르려고 한다. 담장에 수직인 변의 길이를 \(x\) m라 할 때, 밭의 넓이가 가장 큰 경우를 구하여라. 또 담장의 길이가 16 m여서 담장과 평행한 변이 16 m를 넘을 수 없다면 어떻게 되는지 구하여라.</p>
+          </div>
+          <p>담장에 수직인 두 변이 각각 \(x\)이므로 담장과 평행한 변은 \(40 - 2x\)이다. 변의 길이는 양수여야 하므로 \(0 &lt; x &lt; 20\)이다. 넓이는 \(S = x(40 - 2x) = -2x^2 + 40x\)이고, 완전제곱식으로 바꾸면 \(S = -2(x - 10)^2 + 200\)이다.</p>
+          <p>\(a = -2 &lt; 0\)이므로 그래프는 위로 볼록하고, 꼭짓점 \(x = 10\)이 범위 \(0 &lt; x &lt; 20\) 안에 있다. 따라서 \(x = 10\)일 때 넓이가 최대 \(200\ \text{m}^2\)이고, 이때 밭은 \(10 \times 20\)이다.</p>
+          <p>그런데 담장이 16 m뿐이면 \(40 - 2x \le 16\), 곧 \(x \ge 12\)라는 조건이 붙는다. 범위는 \(12 \le x &lt; 20\)이 되어 꼭짓점 \(x = 10\)이 범위의 왼쪽 밖으로 나간다. 이 범위에서 그래프는 내려가기만 하므로 최댓값은 왼쪽 끝 \(x = 12\)에서 나온다. 따라서 \(S = 12 \times 16 = 192\ \text{m}^2\)이 최대이다.<sup class="fn"><a href="#fn-cm1-quad-minmax-1">1</a></sup> 같은 식이라도 범위가 바뀌자 답이 꼭짓점에서 끝점으로 옮겨 갔다. 아래 탐구 카드에서 범위를 옮기며 최댓값과 최솟값이 어디로 이동하는지 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm1-quad-minmax-1">범위가 \(12 \le x &lt; 20\)처럼 한쪽 끝을 포함하지 않으면, 그쪽에서는 값이 한없이 가까워지기만 하고 도달하지 않는다. 그래서 이 예제에서 최솟값은 없다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>포물선은 축의 한쪽에서는 한 방향으로만 움직이므로, 범위가 정해진 이차함수의 최댓값과 최솟값은 양 끝점과 범위 안의 꼭짓점 가운데에서만 나온다. 처음 질문의 \(3 \le x \le 5\)는 꼭짓점 \(x = 2\)를 포함하지 않으므로, 최솟값 \(-2\)는 왼쪽 끝에서, 최댓값 6은 오른쪽 끝에서 나온다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div></nav>
+
       <article class="card" id="card-cm1-minmax-interval">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>범위가 정해지면 최솟값은 언제나 꼭짓점에서 생길까?</h2><span class="kind">이차함수의 최대·최소 · 제한된 범위</span>
+          <span class="no">탐구 1</span><h2>범위가 정해지면 최솟값은 언제나 꼭짓점에서 생길까?</h2><span class="kind">이차함수의 최대·최소 · 제한된 범위</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,30 +136,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f(x) = x^2 - 4x + 1\)은 \(x = 2\)에서 가장 작은 값 \(-3\)을 가집니다. 그런데 \(x\)가 3 이상 5 이하로 정해져 있다면 최솟값도 \(-3\)일까요? 최댓값은 있을까요?</li>
-            <li><span class="tag">복원</span>\(f(x) = a(x - p)^2 + q\)에서 \(a &gt; 0\)이면 꼭짓점에서 최솟값 \(q\)를 가지고 최댓값은 없습니다. 그래프는 축 \(x = p\)에서 멀어질수록 높아집니다.</li>
-            <li><span class="tag">설명</span>\(\alpha \le x \le \beta\)에서 그래프는 끊기지 않는 한 조각이므로 최댓값과 최솟값이 모두 있습니다. 후보는 <b>꼭짓점(범위 안에 있을 때만)과 양 끝 \(f(\alpha)\), \(f(\beta)\)</b>뿐입니다. \(a &gt; 0\)일 때 꼭짓점이 범위 안이면 최솟값은 \(q\), 최댓값은 양 끝 가운데 축에서 더 먼 쪽의 값입니다. 꼭짓점이 범위 밖이면 범위 안에서 그래프가 한쪽으로만 올라가거나 내려가므로, 최댓값과 최솟값이 모두 양 끝에서 생깁니다. \(a &lt; 0\)이면 최대와 최소의 역할이 바뀝니다.</li>
-            <li><span class="tag">연결</span>꼭짓점은 완전제곱식으로 고쳐 찾습니다. 범위가 정해진 최대·최소는 길이, 넓이, 이익처럼 \(x\)에 현실적인 제한이 있는 문제를 풀 때 쓰입니다. 미적분에서 닫힌 구간의 최대·최소를 찾는 방법도 같은 생각입니다.</li>
-            <li><span class="tag">적용</span>범위를 \(0 \le x \le 3\)으로 두고 최솟값이 꼭짓점에서 생기는지 보세요. 왼쪽 끝을 3으로 옮기면 최솟값은 어디서 생기나요? 범위가 축 \(x = 2\)를 사이에 두고 한쪽으로 더 길게 뻗을 때 최댓값이 어느 끝에서 생기는지 확인하세요. 위로 볼록한 두 번째 함수에서도 같은 규칙이 통하나요?</li>
-            <li class="warn"><span class="tag">판단</span>꼭짓점의 값을 무조건 답으로 쓰는 실수가 흔합니다. 꼭짓점이 범위 밖에 있으면 그 값은 \(f(x)\)가 범위 안에서 가지지 않는 값입니다. 또 범위에 끝점이 포함되지 않으면(예: \(3 &lt; x &lt; 5\)) 최댓값이나 최솟값이 없을 수 있습니다. 꼭짓점이 범위 안인지, 끝점이 포함되는지를 먼저 확인하세요.</li>
+            <li><span class="tag">질문</span>\(f(x) = x^2 - 4x + 1\)은 \(x = 2\)에서 가장 작은 값 \(-3\)을 가진다. 그런데 \(x\)가 3 이상 5 이하로 정해져 있다면 최솟값도 \(-3\)일까? 최댓값은 있을까?</li>
+            <li><span class="tag">복원</span>\(f(x) = a(x - p)^2 + q\)에서 \(a &gt; 0\)이면 꼭짓점에서 최솟값 \(q\)를 가지고 최댓값은 없다. 그래프는 축 \(x = p\)에서 멀어질수록 높아진다.</li>
+            <li><span class="tag">설명</span>\(\alpha \le x \le \beta\)에서 그래프는 끊기지 않는 한 조각이므로 최댓값과 최솟값이 모두 있다. 그리고 그 후보는 범위 안에 있을 때의 꼭짓점과 양 끝 \(f(\alpha)\), \(f(\beta)\)뿐이다. \(a &gt; 0\)일 때 꼭짓점이 범위 안이면 최솟값은 \(q\), 최댓값은 양 끝 가운데 축에서 더 먼 쪽의 값이다. 반면 꼭짓점이 범위 밖이면 범위 안에서 그래프가 한쪽으로만 올라가거나 내려가므로, 최댓값과 최솟값이 모두 양 끝에서 생긴다. \(a &lt; 0\)이면 최대와 최소의 역할이 바뀐다.</li>
+            <li><span class="tag">연결</span>꼭짓점은 완전제곱식으로 고쳐 찾는다. 범위가 정해진 최대와 최소는 길이, 넓이, 이익처럼 \(x\)에 현실적인 제한이 있는 문제를 풀 때 쓰이고, 미적분에서 닫힌 구간의 최대와 최소를 찾는 방법도 같은 생각이다.</li>
+            <li><span class="tag">적용</span>범위를 \(0 \le x \le 3\)으로 두면 최솟값이 꼭짓점에서 생긴다. 왼쪽 끝을 3으로 옮기면 꼭짓점이 범위 밖으로 나가 최솟값이 왼쪽 끝으로 옮겨 간다. 범위가 축 \(x = 2\)를 사이에 두고 한쪽으로 더 길게 뻗을 때 최댓값이 어느 끝에서 생기는지 확인하고, 위로 볼록한 두 번째 함수에서도 같은 규칙이 통하는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>꼭짓점의 값을 무조건 답으로 쓰는 실수가 흔하다. 꼭짓점이 범위 밖에 있으면 그 값은 \(f(x)\)가 범위 안에서 가지지 않는 값이다. 또 \(3 &lt; x &lt; 5\)처럼 끝점이 포함되지 않으면 최댓값이나 최솟값이 없을 수 있다. 그래서 꼭짓점이 범위 안인지, 끝점이 포함되는지를 먼저 확인한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(3 \le x \le 5\)에서 \(f(x) = x^2 - 4x + 1\)의 최솟값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(-3\)<span class="why"><b>꼭짓점의 값을 그대로 썼습니다.</b> 꼭짓점은 \(x = 2\)로 범위 밖에 있으므로, 범위 안에서 \(f(x)\)는 \(-3\)이 될 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-2\)<span class="why"><b>맞습니다.</b> 범위 전체가 축 \(x = 2\)의 오른쪽이라 \(f(x)\)는 계속 커집니다. 최솟값은 \(f(3) = 9 - 12 + 1 = -2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>최댓값입니다.</b> \(f(5) = 25 - 20 + 1 = 6\)은 범위에서 가장 큰 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(f(0)\)을 계산했습니다.</b> 상수항 1은 \(x = 0\)일 때의 값인데, 0은 범위 밖입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(-3\)<span class="why"><b>꼭짓점의 값을 그대로 썼다.</b> 꼭짓점은 \(x = 2\)로 범위 밖에 있으므로, 범위 안에서 \(f(x)\)는 \(-3\)이 될 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(-2\)<span class="why"><b>맞다.</b> 범위 전체가 축 \(x = 2\)의 오른쪽이라 \(f(x)\)는 계속 커진다. 최솟값은 \(f(3) = 9 - 12 + 1 = -2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>6<span class="why"><b>최댓값이다.</b> \(f(5) = 25 - 20 + 1 = 6\)은 범위에서 가장 큰 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(f(0)\)을 계산했다.</b> 상수항 1은 \(x = 0\)일 때의 값인데, 0은 범위 밖이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div></nav>
 
       <article class="card" id="card-cm1-fence">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>벽에 붙여 울타리를 칠 때 가장 넓은 땅은 언제 생길까?</h2><span class="kind">이차함수의 최대·최소 · 실생활 활용</span>
+          <span class="no">탐구 2</span><h2>벽에 붙여 울타리를 칠 때 가장 넓은 땅은 언제 생길까?</h2><span class="kind">이차함수의 최대·최소 · 실생활 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -121,43 +177,44 @@
                 <div><dt>지금 넓이</dt><dd class="n-a">—</dd></div>
                 <div><dt>가장 큰 넓이</dt><dd class="n-max">—</dd></div>
               </dl>
-              <p class="fig-note">벽 쪽에는 울타리를 치지 않습니다. 벽과 평행한 변은 벽보다 길 수 없다고 가정한 모식입니다.</p>
+              <p class="fig-note">벽 쪽에는 울타리를 치지 않는다. 벽과 평행한 변은 벽보다 길 수 없다고 가정한 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>길이 40 m인 울타리로 길이 12 m인 벽에 붙은 직사각형 텃밭을 만들려고 합니다. 벽 쪽에는 울타리가 필요 없습니다. 텃밭을 가장 넓게 하려면 각 변을 몇 m로 해야 할까요?</li>
-            <li><span class="tag">복원</span>\(f(x) = a(x - p)^2 + q(a &lt; 0)\)는 꼭짓점에서 최댓값을 가집니다. 범위가 정해져 있으면 꼭짓점이 범위 안인지 먼저 보고, 밖이면 범위의 끝에서 최대가 생깁니다.</li>
-            <li><span class="tag">설명</span>벽과 수직인 변을 \(x\) m라 하면 벽과 평행한 변은 \((L - 2x)\) m이고, 넓이는 \(A = x(L - 2x) = -2(x - L/4)^2 + L^2/8\)입니다. 그런데 \(x\)는 아무 값이나 될 수 없습니다. 평행한 변은 양수이면서 벽보다 길 수 없으므로 \(0 &lt; L - 2x \le W\), 곧 \((L - W)/2 \le x &lt; L/2\)입니다. \(L = 40\), \(W = 12\)이면 \(14 \le x &lt; 20\)인데 꼭짓점 \(x = 10\)은 이 범위 밖입니다. 범위 안에서 \(A\)는 \(x\)가 커질수록 줄어들므로 최대는 \(x = 14\)일 때 \(14 \times 12 = 168 \text{ m}^2\)입니다. 꼭짓점의 값 \(200 \text{ m}^2\)는 벽이 20 m 이상이어야 얻을 수 있습니다.</li>
-            <li><span class="tag">연결</span>실생활 문제는 ① 변수를 정하고 ② 식을 세우고 ③ <b>변수의 범위를 정한 뒤</b> ④ 그 범위에서 최대·최소를 찾는 순서로 풉니다. 둘레가 정해진 직사각형의 넓이가 정사각형일 때 가장 크다는 결과(합과 곱으로 두 수 찾기)와 같은 생각이 여기서는 벽 하나가 빠진 모양으로 나타납니다.</li>
-            <li><span class="tag">적용</span>\(L = 40\), \(W = 12\)에서 \(x\)를 움직여 넓이가 가장 큰 곳을 찾으세요. 그다음 \(W\)를 키우며 최대가 생기는 자리가 범위 끝에서 꼭짓점으로 바뀌는 \(W\)를 찾으세요. 그 \(W\)와 \(L\) 사이에는 어떤 관계가 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>꼭짓점에서 최대라는 결론을 바로 쓰면 현실에서 불가능한 답(벽보다 긴 변)이 나올 수 있습니다. 식을 세운 뒤에는 반드시 변수의 범위를 함께 적으세요. 이 카드는 벽과 울타리를 선분으로 보고 두께, 문, 땅 모양을 무시한 모식입니다.</li>
+            <li><span class="tag">질문</span>길이 40 m인 울타리로 길이 12 m인 벽에 붙은 직사각형 텃밭을 만들려고 한다. 벽 쪽에는 울타리가 필요 없다. 텃밭을 가장 넓게 하려면 각 변을 몇 m로 해야 할까?</li>
+            <li><span class="tag">복원</span>\(f(x) = a(x - p)^2 + q(a &lt; 0)\)는 꼭짓점에서 최댓값을 가진다. 그런데 범위가 정해져 있으면 꼭짓점이 범위 안인지 먼저 보고, 밖이면 범위의 끝에서 최대가 생긴다.</li>
+            <li><span class="tag">설명</span>벽과 수직인 변을 \(x\) m라 하면 벽과 평행한 변은 \((L - 2x)\) m이고, 넓이는 \(A = x(L - 2x) = -2(x - L/4)^2 + L^2/8\)이다. 그런데 \(x\)는 아무 값이나 될 수 없다. 평행한 변은 양수이면서 벽보다 길 수 없으므로 \(0 &lt; L - 2x \le W\), 곧 \((L - W)/2 \le x &lt; L/2\)이다. \(L = 40\), \(W = 12\)이면 \(14 \le x &lt; 20\)인데 꼭짓점 \(x = 10\)은 이 범위 밖이다. 범위 안에서 \(A\)는 \(x\)가 커질수록 줄어들므로 최대는 \(x = 14\)일 때 \(14 \times 12 = 168 \text{ m}^2\)이다. 꼭짓점의 값 \(200 \text{ m}^2\)를 얻으려면 벽이 20 m 이상이어야 한다.</li>
+            <li><span class="tag">연결</span>그래서 실생활 문제는 변수를 정하고, 식을 세우고, 변수의 범위를 정한 뒤, 그 범위에서 최대와 최소를 찾는 순서로 푼다. 둘레가 정해진 직사각형은 정사각형일 때 넓이가 가장 크다는 결과와 같은 생각이 여기서는 벽 하나가 빠진 모양으로 나타난다.</li>
+            <li><span class="tag">적용</span>\(L = 40\), \(W = 12\)에서 \(x\)를 움직여 넓이가 가장 큰 곳을 찾아보자. 그다음 \(W\)를 키우며 최대가 생기는 자리가 범위 끝에서 꼭짓점으로 바뀌는 \(W\)를 찾으면, 그 값이 \(L\)의 절반인 20이라는 것을 알 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>꼭짓점에서 최대라는 결론을 바로 쓰면 벽보다 긴 변처럼 현실에서 불가능한 답이 나올 수 있다. 그러므로 식을 세운 뒤에는 반드시 변수의 범위를 함께 적는다. 또 이 카드는 벽과 울타리를 선분으로 보고 두께, 문, 땅 모양을 무시한 모식이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">울타리 24 m로 길이 8 m인 벽에 붙여 직사각형을 만들 때(벽 쪽은 울타리 없음, 벽과 평행한 변은 벽보다 길 수 없음), 넓이의 최댓값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(72 \text{ m}^2\)<span class="why"><b>범위를 확인하지 않았습니다.</b> 꼭짓점 \(x = 6\)이면 평행한 변이 12 m로 벽 8 m보다 깁니다. \(x\)의 범위는 \(8 \le x &lt; 12\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(64 \text{ m}^2\)<span class="why"><b>맞습니다.</b> \(24 - 2x \le 8\)에서 \(x \ge 8\)이고, 꼭짓점 6이 범위 밖이므로 \(x = 8\)에서 최대 \(8 \times 8 = 64 \text{ m}^2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(40 \text{ m}^2\)<span class="why"><b>범위의 가운데를 골랐습니다.</b> \(x = 10\)이면 \(10 \times 4 = 40 \text{ m}^2\)입니다. 범위 안에서 넓이는 \(x\)가 커질수록 줄어들므로 가운데가 최대가 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(36 \text{ m}^2\)<span class="why"><b>네 변 모두에 울타리를 쳤습니다.</b> 둘레 24 m인 정사각형(한 변 6 m)의 넓이입니다. 벽 쪽은 울타리가 필요 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(72 \text{ m}^2\)<span class="why"><b>범위를 확인하지 않았다.</b> 꼭짓점 \(x = 6\)이면 평행한 변이 12 m로 벽 8 m보다 길다. \(x\)의 범위는 \(8 \le x &lt; 12\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(64 \text{ m}^2\)<span class="why"><b>맞다.</b> \(24 - 2x \le 8\)에서 \(x \ge 8\)이고, 꼭짓점 6이 범위 밖이므로 \(x = 8\)에서 최대 \(8 \times 8 = 64 \text{ m}^2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(40 \text{ m}^2\)<span class="why"><b>범위의 가운데를 골랐다.</b> \(x = 10\)이면 \(10 \times 4 = 40 \text{ m}^2\)이다. 범위 안에서 넓이는 \(x\)가 커질수록 줄어들므로 가운데가 최대가 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(36 \text{ m}^2\)<span class="why"><b>네 변 모두에 울타리를 쳤다.</b> 둘레 24 m인 정사각형(한 변 6 m)의 넓이이다. 벽 쪽은 울타리가 필요 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=cm1-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">71문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm1&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm1-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">71문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -165,6 +222,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm1/body.js"></script>
 <script src="../../js/cards/cm1/poly.js"></script>
 <script src="../../js/cards/cm1/eqplot.js"></script>
 <script src="../../js/cards/cm1/minmax-interval.js"></script>

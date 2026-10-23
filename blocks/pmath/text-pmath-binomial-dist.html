@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "text",
+  "sec": "3-6",
+  "short": "본문 · 이산확률변수와 이항분포"
+}
+-->
+<article class="card reading" id="text-pmath-binomial-dist" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>이산확률변수와 이항분포</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">자유투 성공률이 70%인 농구 선수가 연습 시간에 자유투를 20번 던졌다. 평균으로 생각하면 14번 넣어야 하지만, 실제로 꼭 14번만 넣는 것은 아니어서 어떤 날은 11번, 어떤 날은 17번을 넣는다. 14번을 정확히 넣을 확률은 얼마이고, 넣은 횟수는 보통 몇 번에서 몇 번 사이에 흩어질까? 학교 축제에서 주사위 게임을 열 때 상금을 얼마로 해야 공정한지도 같은 방법으로 정할 수 있을까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 210" role="img" aria-label="B(20, 0.7)의 확률분포">
+        <line x1="40" y1="180" x2="500" y2="180" class="ax"/>
+        <rect x="132" y="179" width="16" height="1" class="la"/><rect x="152" y="178" width="16" height="2" class="la"/><rect x="172" y="173.5" width="16" height="6.5" class="la"/><rect x="192" y="163" width="16" height="17" class="la"/><rect x="212" y="145" width="16" height="35" class="la"/><rect x="232" y="118" width="16" height="62" class="la"/><rect x="252" y="91" width="16" height="89" class="la"/><rect x="272" y="76" width="16" height="104" class="ld"/><rect x="292" y="83" width="16" height="97" class="la"/><rect x="312" y="110" width="16" height="70" class="la"/><rect x="332" y="141" width="16" height="39" class="la"/><rect x="352" y="165" width="16" height="15" class="la"/><rect x="372" y="176" width="16" height="4" class="la"/><rect x="392" y="179" width="16" height="1" class="la"/>
+        <g class="s" text-anchor="middle"><text x="140" y="196">7</text><text x="220" y="196">11</text><text x="280" y="196">14</text><text x="340" y="196">17</text><text x="400" y="196">20</text></g>
+        <text x="280" y="68" class="s td" text-anchor="middle">0.192</text>
+        <text x="40" y="30" class="s">P(X = x), 평균 14, 표준편차 약 2.05</text>
+      </svg>
+      <figcaption>그림 1. 20번 가운데 넣은 횟수는 14번이 가장 그럴듯하지만, 그 확률도 20%가 되지 않는다. 대부분은 12번에서 16번 사이에 놓인다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>기댓값과 표준편차, 독립시행의 확률, 이항정리(<a href="3-2.html">이항정리</a>), 확률분포(<a href="3-5.html">확률변수와 확률분포</a>).</div>
+
+    <h3><span class="no">3.6.1</span>평균과 흩어짐</h3>
+    <p>이산확률변수 \(X\)의 평균, 곧 기댓값은 각 값에 그 확률을 곱해 모두 더한 \(E(X) = \sum x_i p_i\)이다. 같은 시행을 아주 많이 되풀이하면 \(X\)의 값들의 평균이 이 값에 가까워진다. 값들이 평균에서 얼마나 흩어지는지는 분산 \(V(X) = E\big((X - m)^2\big) = E(X^2) - m^2\)과 그 제곱근인 표준편차로 나타낸다. 또 \(X\)를 \(a\)배하고 \(b\)를 더하면 평균은 \(aE(X) + b\), 표준편차는 \(|a|\sigma(X)\)가 된다. 그래서 점수를 상금으로 바꾸는 것처럼 확률변수를 일차식으로 바꿀 때 평균과 표준편차를 바로 구할 수 있다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.6.1 <span class="nm">이항분포</span></span>
+      <p>성공 확률이 \(p\)인 독립시행을 \(n\)번 할 때 성공 횟수 \(X\)는 이항분포 \(B(n, p)\)를 따르고 \[P(X = r) = {}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\]이다. \(E(X) = np\), \(V(X) = np(1 - p)\), \(\sigma(X) = \sqrt{np(1 - p)}\)이다.</p>
+    </div>
+    <p>\(n\)번 가운데 \(r\)번 성공하는 확률은, 성공할 \(r\)번을 고르는 방법 \({}_n\mathrm{C}_r\)가지마다 확률이 \(p^r(1 - p)^{n-r}\)이므로 둘을 곱한 것이다. 이 확률들을 모두 더하면 이항정리에 따라 \((p + (1 - p))^n = 1\)이 된다. 평균 \(np\)는 시행 한 번의 평균 \(p\)를 \(n\)번 더한 것이고, 분산 \(np(1 - p)\)도 시행 한 번의 분산 \(p(1 - p)\)를 \(n\)번 더한 것이다. 독립인 확률변수를 더하면 분산도 더해지기 때문이다.<sup class="fn"><a href="#fn-pmath-binomial-dist-1">1</a></sup></p>
+
+    <h3><span class="no">3.6.2</span>공정한 게임</h3>
+    <p>한 판에 1000원을 내고 주사위를 던져 6이 나오면 상금을 받는 축제 게임이 있다. 참가자가 받는 상금의 기댓값이 참가비와 같으면 오래 하면 할수록 주최 측도 참가자도 손해를 보지 않으므로, 공정한 게임이라 한다. 상금을 \(a\)원이라 하면 기댓값은 \(a\times\tfrac16\)이므로, \(a = 6000\)원일 때 공정하다. 상금이 그보다 적으면 주최 측이 평균적으로 이익을 보고, 축제의 기금 마련 게임은 보통 이렇게 정한다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="자유투 성공 횟수의 분포 요약">
+        <g class="s">
+          <text x="20" y="22">양</text><text x="200" y="22">식</text><text x="380" y="22">값</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">평균</text><text x="200" y="52">np = 20 × 0.7</text><text x="380" y="52">14</text>
+          <text x="20" y="74">표준편차</text><text x="200" y="74">√(20 × 0.7 × 0.3)</text><text x="380" y="74">약 2.05</text>
+          <text x="20" y="96">P(X = 14)</text><text x="200" y="96">₂₀C₁₄ × 0.7¹⁴ × 0.3⁶</text><text x="380" y="96" class="td">약 0.192</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 평균은 가장 그럴듯한 값이지만, 정확히 평균만큼 성공할 확률은 생각보다 작다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+      <p>처음 질문의 선수가 20번 던질 때 성공 횟수 \(X\)의 평균, 표준편차, \(P(X = 14)\)를 구하여라. 이 선수에게 한 번 넣을 때마다 2점, 놓칠 때마다 \(-1\)점을 주면 점수의 평균과 표준편차는 얼마인가?</p>
+    </div>
+    <p>\(X\)는 \(B(20, 0.7)\)을 따르므로 평균은 14, 분산은 \(20\times0.7\times0.3 = 4.2\), 표준편차는 \(\sqrt{4.2} \approx 2.05\)이다. \(P(X = 14) = {}_{20}\mathrm{C}_{14}\times0.7^{14}\times0.3^6 = 38760\times0.006782\times0.000729 \approx 0.192\)이다.</p>
+    <p>점수는 \(S = 2X - (20 - X) = 3X - 20\)이므로 평균은 \(3\times14 - 20 = 22\)점, 표준편차는 \(3\times2.05 \approx 6.1\)점이다. 그래서 넣은 횟수가 평균에서 2번쯤 벗어나면 점수는 6점쯤 벗어난다. 즉 독립인 시행을 되풀이할 때 성공 횟수는 이항분포를 따르고, 그 평균 \(np\)와 표준편차 \(\sqrt{np(1 - p)}\)가 결과가 어디쯤에 얼마나 흩어질지를 알려 준다.</p>
+    <p>아래 탐구 카드에서 성공률과 던지는 횟수를 바꾸며 이항분포의 모양을 살펴보고, 축제 주사위 게임의 공정한 상금을 정해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-pmath-binomial-dist-1">이항분포는 1713년 출판된 야코프 베르누이의 책에서 처음 체계적으로 다루어져, 성공과 실패 두 가지 결과만 있는 시행을 베르누이 시행이라 부른다. 그는 같은 책에서 큰수의 법칙도 처음 증명했다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>이산확률변수의 평균은 값과 확률의 곱의 합, 분산은 평균에서 벗어난 정도의 제곱의 평균이며, \(aX + b\)의 평균은 \(aE(X) + b\), 표준편차는 \(|a|\sigma(X)\)이다. 성공 확률 \(p\)인 독립시행 \(n\)번의 성공 횟수는 이항분포 \(B(n, p)\)를 따르고 평균 \(np\), 분산 \(np(1 - p)\)이다. 처음 질문의 선수는 20번 가운데 평균 14번을 넣고 표준편차는 약 2.05이며, 정확히 14번 넣을 확률은 약 0.19이다.</p></div>
+  </div>
+</article>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>벡터의 연산 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="벡터의 뜻과 덧셈·뺄셈·실수배. 물살을 거슬러 강을 건너는 배의 속도를 벡터의 합으로 구하는 카드와, 주어진 벡터를 조합해 목표점에 도달하는 퍼즐 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-river canvas { aspect-ratio: 16 / 10; }
@@ -43,18 +48,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-river"><span class="mono">2.6.1</span>물살을 거슬러 강 건너기</a></li>
-        <li><a href="#card-pmath-vec-puzzle"><span class="mono">2.6.2</span>벡터 퍼즐</a></li>
+        <li><a href="#text-pmath-vector-ops"><span class="mono">본문</span>벡터의 연산</a></li>
+        <li><a href="#card-pmath-river"><span class="mono">탐구 1</span>물살을 거슬러 강 건너기</a></li>
+        <li><a href="#card-pmath-vec-puzzle"><span class="mono">탐구 2</span>벡터 퍼즐</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-vector-ops" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>벡터의 연산</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">폭 200 m인 강이 동쪽으로 초속 3 m로 흐른다. 잔잔한 물에서 초속 5 m로 가는 배를 타고 남쪽 기슭에서 바로 맞은편 북쪽 선착장으로 가려 한다. 뱃머리를 정북쪽으로 두면 배는 물살에 떠밀려 선착장보다 동쪽에 닿는다. 뱃머리를 상류 쪽, 곧 서쪽으로 조금 돌려야 할 텐데, 몇 도 돌려야 할까? 그리고 그렇게 가면 강을 건너는 데 몇 초 걸릴까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="배의 속도와 물살의 속도를 더한 합속도">
+              <line x1="40" y1="170" x2="480" y2="170" class="k"/><line x1="40" y1="30" x2="480" y2="30" class="k"/>
+              <text x="420" y="190" class="s">남쪽 기슭</text><text x="420" y="22" class="s">북쪽 기슭</text>
+              <line x1="250" y1="170" x2="166" y2="58" class="b"/><path d="M168 68 L166 58 L175 63" class="b"/><text x="120" y="110" class="s tb">배 5 m/s</text>
+              <line x1="166" y1="58" x2="250" y2="58" class="a"/><path d="M242 53 L250 58 L242 63" class="a"/><text x="186" y="50" class="s ta">물살 3 m/s</text>
+              <line x1="250" y1="170" x2="250" y2="58" class="d"/><path d="M245 66 L250 58 L255 66" class="d"/><text x="258" y="110" class="s td">합속도 4 m/s</text>
+              <path d="M250 140 A30 30 0 0 0 232 146" class="b"/><text x="222" y="134" class="s tb">θ</text>
+              <text x="300" y="80" class="s">강의 폭 200 m</text>
+            </svg>
+            <figcaption>그림 1. 배의 속도와 물살의 속도를 더한 합속도가 정북쪽을 향하도록 뱃머리를 상류로 \(\theta\)만큼 돌린다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>벡터의 합성, 벡터의 실수배, 벡터의 성분, 삼각비.</div>
+
+          <h3><span class="no">2.6.1</span>속도를 화살표로 더하다</h3>
+          <p>속도는 크기와 방향을 함께 가진 양이어서 화살표, 곧 벡터로 나타낸다. 강 위의 배는 물에 대해서 움직이고 물은 땅에 대해서 흐르므로, 땅에서 본 배의 속도는 두 속도 벡터의 합이다. 두 벡터의 합은 한 화살표의 끝에 다른 화살표의 시작을 이어 붙였을 때 처음 시작에서 마지막 끝으로 가는 화살표이다. 그래서 배가 정북쪽으로 가려면 배의 속도와 물살의 속도를 이어 붙인 끝이 정북쪽에 놓이도록 배의 방향을 골라야 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">벡터의 성분과 일차결합</span></span>
+            <p>평면벡터는 \(\vec a = (a_1, a_2)\)처럼 성분으로 나타내며, \(\vec a + \vec b = (a_1 + b_1, a_2 + b_2)\), \(k\vec a = (ka_1, ka_2)\)이다. 서로 평행하지 않은 두 벡터 \(\vec a\), \(\vec b\)가 있으면 평면의 모든 벡터 \(\vec p\)를 \(\vec p = s\vec a + t\vec b\)로 단 한 가지로 나타낼 수 있다.</p>
+          </div>
+          <p>성분을 쓰면 화살표를 그리지 않고도 계산할 수 있다. 동쪽을 \(x\)축, 북쪽을 \(y\)축으로 잡으면 물살의 속도는 \((3, 0)\)이고, 뱃머리를 서쪽으로 \(\theta\)만큼 돌린 배의 속도는 \((-5\sin\theta, 5\cos\theta)\)이다. 두 벡터의 합의 \(x\)성분이 0이 되어야 정북쪽으로 가므로 \(5\sin\theta = 3\)이다. 그래서 문제는 연립방정식 하나로 바뀐다.<sup class="fn"><a href="#fn-pmath-vector-ops-1">1</a></sup></p>
+
+          <h3><span class="no">2.6.2</span>두 화살표로 어디든 가기</h3>
+          <p>평행하지 않은 두 벡터를 정해 두면 평면의 어느 점이든 두 벡터를 몇 배씩 더해 갈 수 있다. 예를 들어 \(\vec a = (2, 1)\), \(\vec b = (1, -1)\)로 점 \((7, 1)\)에 가려면 \(s(2, 1) + t(1, -1) = (7, 1)\)에서 \(2s + t = 7\), \(s - t = 1\)을 풀어 \(s = 8/3\), \(t = 5/3\)을 얻는다. 두 벡터가 평행하면 그 방향의 직선 위만 갈 수 있으므로, 두 벡터가 평행하지 않다는 조건이 꼭 필요하다. 이 두 벡터는 좌표축처럼 평면 위의 위치를 정하는 기준이 된다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="뱃머리 각도에 따른 합속도">
+              <g class="s">
+                <text x="20" y="22">뱃머리 (서쪽으로)</text><text x="170" y="22">배의 속도</text><text x="300" y="22">합속도</text><text x="420" y="22">닿는 곳</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">0°</text><text x="170" y="52">(0, 5)</text><text x="300" y="52">(3, 5)</text><text x="420" y="52">동쪽 120 m</text>
+                <text x="20" y="74">20°</text><text x="170" y="74">(−1.71, 4.70)</text><text x="300" y="74">(1.29, 4.70)</text><text x="420" y="74">동쪽 55 m</text>
+                <text x="20" y="96">36.9°</text><text x="170" y="96">(−3, 4)</text><text x="300" y="96" class="td">(0, 4)</text><text x="420" y="96" class="td">바로 맞은편</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 뱃머리를 상류로 돌릴수록 합속도의 동쪽 성분이 줄고, 36.9°에서 0이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>처음 질문에서 배가 바로 맞은편 선착장에 닿으려면 뱃머리를 서쪽으로 몇 도 돌려야 하는가? 그때 강을 건너는 데 걸리는 시간을 구하고, 뱃머리를 정북쪽으로 둘 때와 비교하여라.</p>
+          </div>
+          <p>합속도의 \(x\)성분이 0이려면 \(5\sin\theta = 3\), 곧 \(\sin\theta = 0.6\)이므로 \(\theta \approx 36.9°\)이다. 그때 배의 속도는 \((-3, 4)\)이고 합속도는 \((0, 4)\)이므로, 배는 정북쪽으로 초속 4 m로 간다. 200 m를 건너는 데 \(200/4 = 50\)초가 걸린다.</p>
+          <p>뱃머리를 정북쪽으로 두면 합속도는 \((3, 5)\)이고, 북쪽 성분이 5이므로 \(200/5 = 40\)초 만에 건너지만 그동안 동쪽으로 \(3\times40 = 120\) m 떠밀린다. 그래서 가장 빨리 건너는 방법과 바로 맞은편에 닿는 방법은 다르다. 물살이 배보다 빠르면 \(\sin\theta = 3/5\)처럼 1보다 작은 값이 나오지 않아, 아무리 돌려도 맞은편에 닿을 수 없다. 즉 속도처럼 방향이 있는 양은 벡터로 더하고, 성분으로 나누어 계산하면 원하는 방향을 만드는 조건을 방정식으로 풀 수 있다.</p>
+          <p>아래 탐구 카드에서 물살과 배의 속력을 바꾸며 뱃머리의 방향을 찾고, 주어진 두 화살표만으로 목표점에 가는 방법을 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-vector-ops-1">비행기 조종사도 같은 계산을 한다. 옆바람이 부는 활주로에 내릴 때 비행기는 기수를 바람 쪽으로 비스듬히 돌린 채 활주로와 나란히 다가오는데, 이를 크랩 착륙이라 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>속도처럼 크기와 방향을 가진 양은 벡터로 나타내며, 두 벡터의 합은 화살표를 이어 붙여 구하고 성분으로는 각 성분끼리 더한다. 평행하지 않은 두 벡터의 일차결합으로 평면의 모든 벡터를 단 한 가지로 나타낼 수 있다. 처음 질문의 배는 뱃머리를 상류로 약 36.9° 돌리면 합속도 \((0, 4)\)로 정북쪽으로 가서 50초 만에 맞은편 선착장에 닿는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div></nav>
+
       <article class="card" id="card-pmath-river">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>물살이 센 강에서 맞은편 선착장에 닿으려면 뱃머리를 어디로 돌려야 할까?</h2><span class="kind">벡터의 덧셈 · 활용</span>
+          <span class="no">탐구 1</span><h2>물살이 센 강에서 맞은편 선착장에 닿으려면 뱃머리를 어디로 돌려야 할까?</h2><span class="kind">벡터의 덧셈 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -76,22 +138,22 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>강 건너 정면에 선착장이 있습니다. 뱃머리를 선착장 쪽으로 똑바로 두고 출발하면 물살에 떠내려가 하류에 닿습니다. 정확히 선착장에 닿으려면 뱃머리를 상류 쪽으로 얼마나 돌려야 할까요?</li>
-            <li><span class="tag">복원</span>벡터는 크기와 방향을 함께 가진 양이고, 두 벡터의 합은 한 벡터의 끝에 다른 벡터의 시작을 이어 붙여 얻습니다(삼각형법). 속도는 벡터입니다.</li>
-            <li><span class="tag">설명</span>배의 실제 속도는 <b>배가 물에 대해 내는 속도 \(\vec{v}\)와 물살의 속도 \(\vec{c}\)의 합 \(\vec{v} + \vec{c}\)</b>입니다. 정면으로 건너려면 이 합이 강을 가로지르는 방향이어야 하므로, \(\vec{v}\)의 상류 쪽 성분이 물살을 정확히 지워야 합니다. 뱃머리를 정면에서 \(\theta\)만큼 상류로 돌리면 상류 성분은 \(|\vec{v}|\sin\theta\)이므로 <b>\(\sin\theta = \frac{|\vec{c}|}{|\vec{v}|}\)</b>일 때 똑바로 건넙니다. 이때 건너는 속력은 \(|\vec{v}|\cos\theta\)로 줄어듭니다.</li>
-            <li><span class="tag">연결</span>비행기도 옆바람 속에서 같은 계산으로 기수를 바람 쪽으로 돌립니다. 이처럼 벡터를 성분으로 나누어 한 방향씩 맞추는 방법은 힘의 평형, 속도의 합성 등 물리 전체에서 쓰입니다.</li>
-            <li><span class="tag">적용</span>뱃머리 방향을 바꾸며 선착장에 정확히 닿는 각을 찾고, 그 각의 사인값이 \(\frac{\text{물살}}{\text{배}}\)와 같은지 확인하세요. 가장 빨리 건너는 방향은 어디인가요? 물살이 배보다 빠르면 무슨 일이 생기나요?</li>
-            <li class="warn"><span class="tag">판단</span>"가장 빨리 건너는 길"과 "가장 짧은 길"은 다릅니다. 뱃머리를 정면으로 두면 건너는 시간은 가장 짧지만 떠내려가고, 정면으로 가려면 시간이 더 걸립니다. 또 물살이 배보다 빠르면(\(|\vec{c}| &gt; |\vec{v}|\)) 어떻게 돌려도 정면으로 건널 수 없습니다.</li>
+            <li><span class="tag">질문</span>강 건너 정면에 선착장이 있다. 뱃머리를 선착장 쪽으로 똑바로 두고 출발하면 물살에 떠내려가 하류에 닿는다. 정확히 선착장에 닿으려면 뱃머리를 상류 쪽으로 얼마나 돌려야 할까?</li>
+            <li><span class="tag">복원</span>벡터는 크기와 방향을 함께 가진 양이고, 두 벡터의 합은 한 벡터의 끝에 다른 벡터의 시작을 이어 붙여 얻는다(삼각형법). 속도는 벡터이다.</li>
+            <li><span class="tag">설명</span>배의 실제 속도는 배가 물에 대해 내는 속도 \(\vec{v}\)와 물살의 속도 \(\vec{c}\)의 합 \(\vec{v} + \vec{c}\)이다. 정면으로 건너려면 이 합이 강을 가로지르는 방향이어야 하므로, \(\vec{v}\)의 상류 쪽 성분이 물살을 정확히 지워야 한다. 뱃머리를 정면에서 \(\theta\)만큼 상류로 돌리면 상류 성분은 \(|\vec{v}|\sin\theta\)이므로 \(\sin\theta = \frac{|\vec{c}|}{|\vec{v}|}\)일 때 똑바로 건넌다. 이때 건너는 속력은 \(|\vec{v}|\cos\theta\)로 줄어든다.</li>
+            <li><span class="tag">연결</span>비행기도 옆바람 속에서 같은 계산으로 기수를 바람 쪽으로 돌린다. 이렇게 벡터를 성분으로 나누어 한 방향씩 맞추는 방법은 힘의 평형, 속도의 합성 등 물리 전체에서 쓰인다.</li>
+            <li><span class="tag">적용</span>뱃머리 방향을 바꾸며 선착장에 정확히 닿는 각을 찾고, 그 각의 사인값이 \(\frac{\text{물살}}{\text{배}}\)와 같은지 확인해 보자. 가장 빨리 건너는 방향은 어디인가? 물살이 배보다 빠르면 무슨 일이 생기는가?</li>
+            <li class="warn"><span class="tag">판단</span>"가장 빨리 건너는 길"과 "가장 짧은 길"은 다르다. 뱃머리를 정면으로 두면 건너는 시간은 가장 짧지만 떠내려가고, 정면으로 가려면 시간이 더 걸린다. 또 물살이 배보다 빠르면(\(|\vec{c}| &gt; |\vec{v}|\)) 어떻게 돌려도 정면으로 건널 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">잔잔한 물에서 4 m/s로 가는 배가 2 m/s로 흐르는 강을 정면으로 건너려면 뱃머리를 정면에서 상류 쪽으로 몇 도 돌려야 할까요?</p>
+          <p class="q">잔잔한 물에서 4 m/s로 가는 배가 2 m/s로 흐르는 강을 정면으로 건너려면 뱃머리를 정면에서 상류 쪽으로 몇 도 돌려야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(30^\circ\)<span class="why"><b>맞습니다.</b> \(\sin\theta = \frac{2}{4} = \frac{1}{2}\)이므로 \(\theta = 30^\circ\)이고, 건너는 속력은 \(4\cos 30^\circ \approx 3.46\) m/s입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(60^\circ\)<span class="why"><b>코사인으로 계산했습니다.</b> 물살을 지우는 것은 상류 쪽 성분 \(4\sin\theta\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 \(26.6^\circ\)<span class="why"><b>탄젠트로 계산했습니다.</b> \(\tan\theta = \frac{2}{4}\)는 뱃머리를 정면으로 두었을 때 떠내려가는 각입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(45^\circ\)<span class="why"><b>어림했습니다.</b> 이 각에서는 상류 성분이 \(4\sin 45^\circ \approx 2.83\)이라 상류 쪽으로 밀려 올라갑니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(30^\circ\)<span class="why"><b>맞다.</b> \(\sin\theta = \frac{2}{4} = \frac{1}{2}\)이므로 \(\theta = 30^\circ\)이고, 건너는 속력은 \(4\cos 30^\circ \approx 3.46\) m/s이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(60^\circ\)<span class="why"><b>코사인으로 계산했다.</b> 물살을 지우는 것은 상류 쪽 성분 \(4\sin\theta\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 \(26.6^\circ\)<span class="why"><b>탄젠트로 계산했다.</b> \(\tan\theta = \frac{2}{4}\)는 뱃머리를 정면으로 두었을 때 떠내려가는 각이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(45^\circ\)<span class="why"><b>어림했다.</b> 이 각에서는 상류 성분이 \(4\sin 45^\circ \approx 2.83\)이라 상류 쪽으로 밀려 올라간다.</span></span></button></li>
           </ol>
         </div>
       </article>
@@ -99,7 +161,7 @@
 
       <article class="card" id="card-pmath-vec-puzzle">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>주어진 화살표 두 개만으로 목표점에 갈 수 있을까?</h2><span class="kind">벡터의 덧셈과 실수배 · 도전</span>
+          <span class="no">탐구 2</span><h2>주어진 화살표 두 개만으로 목표점에 갈 수 있을까?</h2><span class="kind">벡터의 덧셈과 실수배 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -113,43 +175,43 @@
               <p class="mono small eq">—</p>
               <div class="presets"><button class="chip go-imp" type="button">불가능하다고 답하기</button><button class="chip go-next" type="button" disabled>다음 단계</button></div>
               <p class="verdict" role="status"></p>
-              <p class="fig-note">음수 횟수는 반대 방향으로 쓰는 것입니다. 횟수는 정수만 쓸 수 있습니다.</p>
+              <p class="fig-note">음수 횟수는 반대 방향으로 쓰는 것이다. 횟수는 정수만 쓸 수 있다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>로봇이 두 가지 이동 명령만 알아듣습니다. 명령 \(\vec{a}\)와 \(\vec{b}\)를 몇 번씩 쓰면 목표 지점에 도착할까요? 어떤 목표든 갈 수 있을까요?</li>
-            <li><span class="tag">복원</span>벡터의 실수배 \(k\vec{a}\)는 방향은 그대로(\(k &lt; 0\)이면 반대) 두고 크기만 \(|k|\)배 한 것입니다. 성분으로는 \(k(a_1, a_2) = (ka_1, ka_2)\), 덧셈은 \((a_1, a_2) + (b_1, b_2) = (a_1 + b_1, a_2 + b_2)\)입니다.</li>
-            <li><span class="tag">설명</span>목표 \(\vec{T}\)에 가려면 \(s\vec{a} + t\vec{b} = \vec{T}\)인 \(s, t\)를 찾아야 합니다. 성분으로 쓰면 연립방정식 \(sa_1 + tb_1 = T_1\), \(sa_2 + tb_2 = T_2\)입니다. 평행하지 않은 두 벡터라면 이 연립방정식의 해는 늘 하나뿐이므로 <b>실수배를 허락하면 평면의 모든 점에 갈 수 있습니다</b>. 그런데 횟수를 정수로 제한하면, 해가 분수로 나오는 목표에는 갈 수 없습니다.</li>
-            <li><span class="tag">연결</span>평면의 모든 벡터를 \(s\vec{a} + t\vec{b}\)로 나타낼 수 있다는 사실이 좌표의 출발점입니다. \(\vec{a} = (1, 0)\), \(\vec{b} = (0, 1)\)로 고르면 \(s, t\)가 바로 \(x, y\)좌표가 됩니다. 고급 대수에서는 이것을 "기저"라고 부릅니다.</li>
-            <li><span class="tag">적용</span>단계마다 \(s\)와 \(t\)를 맞춰 목표점에 도착하세요. 3단계는 한쪽 벡터를 거꾸로 써야 합니다. 4단계는 정말 갈 수 없을까요? 갈 수 없다고 생각하면 이유를 말할 수 있어야 합니다.</li>
-            <li class="warn"><span class="tag">판단</span>격자를 눈으로 따라가며 맞히면 우연히 맞을 수 있지만, 불가능을 보이려면 계산이 필요합니다. 연립방정식을 풀어 \(s, t\)가 정수가 아니면 정수 횟수로는 도달할 수 없습니다.</li>
+            <li><span class="tag">질문</span>로봇이 두 가지 이동 명령만 알아듣는다. 명령 \(\vec{a}\)와 \(\vec{b}\)를 몇 번씩 쓰면 목표 지점에 도착할까? 어떤 목표든 갈 수 있을까?</li>
+            <li><span class="tag">복원</span>벡터의 실수배 \(k\vec{a}\)는 방향은 그대로(\(k &lt; 0\)이면 반대) 두고 크기만 \(|k|\)배 한 것이다. 성분으로는 \(k(a_1, a_2) = (ka_1, ka_2)\), 덧셈은 \((a_1, a_2) + (b_1, b_2) = (a_1 + b_1, a_2 + b_2)\)이다.</li>
+            <li><span class="tag">설명</span>목표 \(\vec{T}\)에 가려면 \(s\vec{a} + t\vec{b} = \vec{T}\)인 \(s, t\)를 찾아야 한다. 성분으로 쓰면 연립방정식 \(sa_1 + tb_1 = T_1\), \(sa_2 + tb_2 = T_2\)이다. 평행하지 않은 두 벡터라면 이 연립방정식의 해는 늘 하나뿐이므로 실수배를 허락하면 평면의 모든 점에 갈 수 있다. 그런데 횟수를 정수로 제한하면, 해가 분수로 나오는 목표에는 갈 수 없다.</li>
+            <li><span class="tag">연결</span>평면의 모든 벡터를 \(s\vec{a} + t\vec{b}\)로 나타낼 수 있다는 사실이 좌표의 출발점이다. \(\vec{a} = (1, 0)\), \(\vec{b} = (0, 1)\)로 고르면 \(s, t\)가 바로 \(x, y\)좌표가 된다. 고급 대수에서는 이것을 "기저"라고 부른다.</li>
+            <li><span class="tag">적용</span>단계마다 \(s\)와 \(t\)를 맞춰 목표점에 도착해 보자. 3단계는 한쪽 벡터를 거꾸로 써야 한다. 4단계는 정말 갈 수 없을까? 갈 수 없다고 생각하면 이유를 말할 수 있어야 한다.</li>
+            <li class="warn"><span class="tag">판단</span>격자를 눈으로 따라가며 맞히면 우연히 맞을 수 있지만, 불가능을 보이려면 계산이 필요하다. 연립방정식을 풀어 \(s, t\)가 정수가 아니면 정수 횟수로는 도달할 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{a} = (1, 2)\), \(\vec{b} = (3, 1)\)일 때 \(s\vec{a} + t\vec{b} = (5, 5)\)를 만족하는 \(s, t\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(s = 2\), \(t = 1\)<span class="why"><b>맞습니다.</b> \(2(1, 2) + (3, 1) = (5, 5)\)입니다. 연립방정식 \(s + 3t = 5\), \(2s + t = 5\)의 해입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(s = 1\), \(t = 2\)<span class="why"><b>두 횟수를 바꾸었습니다.</b> \((1, 2) + 2(3, 1) = (7, 4)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(s = 5\), \(t = 5\)<span class="why"><b>목표의 성분을 그대로 횟수로 썼습니다.</b> 기저가 \((1, 0), (0, 1)\)일 때만 그렇습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>해가 없다<span class="why"><b>두 벡터가 평행하지 않으면 해는 반드시 하나 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(s = 2\), \(t = 1\)<span class="why"><b>맞다.</b> \(2(1, 2) + (3, 1) = (5, 5)\)이다. 연립방정식 \(s + 3t = 5\), \(2s + t = 5\)의 해이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(s = 1\), \(t = 2\)<span class="why"><b>두 횟수를 바꾸었다.</b> \((1, 2) + 2(3, 1) = (7, 4)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(s = 5\), \(t = 5\)<span class="why"><b>목표의 성분을 그대로 횟수로 썼다.</b> 기저가 \((1, 0), (0, 1)\)일 때만 그렇다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>해가 없다<span class="why"><b>두 벡터가 평행하지 않으면 해는 반드시 하나 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
       <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/geo/3-1.html#card-geo-vec-add"><small class="mono">기하 3.1</small>두 이동을 하나로 합치면 어떤 화살표가 될까?</a><a href="../../c/geo/3-1.html#card-geo-vec-scalar"><small class="mono">기하 3.1</small>벡터에 음수를 곱하면 무엇이 바뀔까?</a><a href="../../c/geo/3-2.html#card-geo-components"><small class="mono">기하 3.2</small>화살표를 수 두 개로 바꿀 수 있을까?</a><a href="../../c/geo/3-2.html#card-geo-space-components"><small class="mono">기하 3.2</small>공간의 화살표는 수 몇 개로 정해질까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>논리 회로 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="논리 게이트(AND, OR, NOT, XOR, NAND)와 논리 회로, 부울 식과 회로의 대응, 반가산기와 전가산기. 스위치를 켜며 회로의 신호를 따라가는 카드와, 전가산기를 이어 4비트 덧셈 회로를 만드는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-gate-lab canvas { aspect-ratio: 16 / 9; max-width: 580px; margin: 0 auto; display: block; }
@@ -51,18 +56,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-gate-lab"><span class="mono">3.4.1</span>스위치를 켜며 보는 논리 회로</a></li>
-        <li><a href="#card-dmath-adder"><span class="mono">3.4.2</span>전가산기를 이어 만든 4비트 덧셈 회로</a></li>
+        <li><a href="#text-dmath-logic-circuit"><span class="mono">본문</span>논리 회로</a></li>
+        <li><a href="#card-dmath-gate-lab"><span class="mono">탐구 1</span>스위치를 켜며 보는 논리 회로</a></li>
+        <li><a href="#card-dmath-adder"><span class="mono">탐구 2</span>전가산기를 이어 만든 4비트 덧셈 회로</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-3-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-logic-circuit" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>논리 회로</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">계산기 안에는 전기가 흐르면 1, 흐르지 않으면 0인 신호를 주고받는 작은 부품들이 있다. 두 신호가 모두 1일 때만 1을 내보내는 그리고 게이트, 하나라도 1이면 1을 내보내는 또는 게이트, 신호를 뒤집는 부정 게이트가 대표적이다. 이 세 가지 부품만 이어 붙여 이진수 두 자리의 덧셈, 예를 들어 \(1 + 1 = 10_{(2)}\)을 하는 회로를 만들 수 있을까? 여러 자리의 덧셈은 어떻게 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="반가산기의 진리표">
+              <g class="s">
+                <text x="20" y="22">A</text><text x="80" y="22">B</text><text x="150" y="22">합 S = A ⊕ B</text><text x="300" y="22">올림 C = AB</text><text x="430" y="22">이진수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="50">0</text><text x="80" y="50">0</text><text x="150" y="50">0</text><text x="300" y="50">0</text><text x="430" y="50">00</text>
+                <text x="20" y="70">0</text><text x="80" y="70">1</text><text x="150" y="70">1</text><text x="300" y="70">0</text><text x="430" y="70">01</text>
+                <text x="20" y="90">1</text><text x="80" y="90">0</text><text x="150" y="90">1</text><text x="300" y="90">0</text><text x="430" y="90">01</text>
+                <text x="20" y="110">1</text><text x="80" y="110">1</text><text x="150" y="110" class="td">0</text><text x="300" y="110" class="td">1</text><text x="430" y="110" class="td">10</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 한 자리 이진수 둘의 합은 합 비트와 올림 비트로 나뉘며, 각각이 하나의 부울 함수이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>부울 함수와 간소화(<a href="3-3.html">부울 함수와 간소화</a>), 이진수의 덧셈(<a href="3-2.html">이진수의 사칙연산</a>).</div>
+
+          <h3><span class="no">3.4.1</span>식을 회로로 옮기다</h3>
+          <p>부울 함수의 식은 그대로 회로가 된다. 곱은 그리고 게이트, 합은 또는 게이트, 부정은 부정 게이트로 바꾸고, 식의 계산 순서대로 게이트를 잇는다. 그래서 진리표로 원하는 규칙을 정하고, 곱의 합 꼴로 식을 쓰고, 간소화한 뒤 회로로 옮기면 어떤 규칙이든 기계로 만들 수 있다. 간소화한 식일수록 게이트가 적게 들어 회로가 작고 빠르다. 두 입력이 서로 다를 때만 1인 배타적 또는 \(A \oplus B = \bar AB + A\bar B\)도 이렇게 세 가지 게이트로 만든다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">반가산기와 전가산기</span></span>
+            <p>한 자리 이진수 \(A\), \(B\)를 더하는 반가산기는 합 \(S = A \oplus B\)와 올림 \(C = AB\)를 낸다. 아래 자리에서 올라온 \(C_{\text{in}}\)까지 더하는 전가산기는 \[S = A \oplus B \oplus C_{\text{in}},\qquad C_{\text{out}} = AB + BC_{\text{in}} + C_{\text{in}}A\]를 낸다. 전가산기를 자릿수만큼 이어 붙이면 여러 자리 이진수의 덧셈 회로가 된다.</p>
+          </div>
+          <p>전가산기의 올림 \(C_{\text{out}}\)은 세 입력 가운데 둘 이상이 1일 때 1이므로, 앞에서 본 다수결 함수와 같다. 합 \(S\)는 세 입력 가운데 1이 홀수 개일 때 1이다. 반가산기 두 개와 또는 게이트 하나로 전가산기를 만들 수도 있다. 첫째 반가산기로 \(A\)와 \(B\)를 더하고, 둘째 반가산기로 그 합과 \(C_{\text{in}}\)을 더한 뒤, 두 올림 가운데 하나라도 1이면 올림을 낸다.<sup class="fn"><a href="#fn-dmath-logic-circuit-1">1</a></sup></p>
+
+          <h3><span class="no">3.4.2</span>여러 자리 더하기</h3>
+          <p>네 자리 이진수 두 개를 더하려면 전가산기 네 개를 한 줄로 잇는다. 맨 아래 자리의 올림 입력은 0으로 두고, 각 전가산기의 올림 출력을 바로 위 자리 전가산기의 올림 입력에 잇는다. 그러면 사람이 손으로 아래 자리부터 받아올리며 더하는 과정이 그대로 회로가 된다. 다만 위 자리는 아래 자리의 올림이 정해질 때까지 기다려야 해서, 자릿수가 많으면 올림이 차례로 전해지는 데 시간이 걸린다. 그래서 실제 컴퓨터는 올림을 미리 내다보는 더 복잡한 회로를 쓴다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="네 자리 덧셈 1011 + 0110의 자리별 계산">
+              <g class="s">
+                <text x="20" y="22">자리</text><text x="100" y="22">A</text><text x="150" y="22">B</text><text x="200" y="22">올림 입력</text><text x="310" y="22">합 S</text><text x="400" y="22">올림 출력</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1, 2자리</text><text x="100" y="52">1, 1</text><text x="150" y="52">0, 1</text><text x="200" y="52">0, 0</text><text x="310" y="52">1, 0</text><text x="400" y="52">0, 1</text>
+                <text x="20" y="74">3, 4자리</text><text x="100" y="74">0, 1</text><text x="150" y="74">1, 0</text><text x="200" y="74">1, 1</text><text x="310" y="74">0, 0</text><text x="400" y="74">1, 1</text>
+                <text x="20" y="96">결과</text><text x="100" y="96"></text><text x="150" y="96"></text><text x="200" y="96"></text><text x="310" y="96" class="td">10001₍₂₎ = 17</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 아래 자리의 올림 출력이 위 자리의 올림 입력으로 이어지며 11 + 6 = 17을 계산한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+            <p>배타적 또는 \(A \oplus B\)를 그리고, 또는, 부정 게이트로 만들 때 필요한 게이트 수를 세어라. 전가산기에 \(A = 1\), \(B = 1\), \(C_{\text{in}} = 1\)을 넣었을 때의 출력을 구하고, 십진법으로 확인하여라.</p>
+          </div>
+          <p>\(A \oplus B = \bar AB + A\bar B\)이므로 부정 게이트 2개로 \(\bar A\), \(\bar B\)를 만들고, 그리고 게이트 2개로 \(\bar AB\), \(A\bar B\)를 만든 뒤, 또는 게이트 1개로 더한다. 모두 5개이다. 그래서 반가산기는 배타적 또는 회로와 그리고 게이트 하나로 만들어진다.</p>
+          <p>전가산기에 1, 1, 1을 넣으면 1이 세 개로 홀수이므로 \(S = 1\)이고, 둘 이상이 1이므로 \(C_{\text{out}} = 1\)이다. 출력은 이진수 \(11_{(2)} = 3\)이어서 \(1 + 1 + 1 = 3\)과 같다. 즉 진리표로 정한 규칙을 부울 식으로 쓰고 게이트로 옮기면 덧셈 같은 계산도 회로로 만들 수 있으며, 반가산기와 전가산기를 이어 붙인 회로가 컴퓨터 덧셈의 기본 부품이다.</p>
+          <p>아래 탐구 카드에서 스위치와 게이트로 원하는 규칙의 회로를 만들어 보고, 게이트만으로 덧셈하는 기계를 조립해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-logic-circuit-1">그리고 게이트와 부정 게이트를 합친 NAND 게이트 한 종류만으로도 모든 부울 함수를 만들 수 있다. 그래서 실제 반도체 칩은 만들기 쉬운 NAND 게이트를 수십억 개 늘어놓아 계산 장치를 만든다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>부울 함수의 곱, 합, 부정은 각각 그리고, 또는, 부정 게이트가 되어, 진리표로 정한 규칙을 식으로 쓰고 간소화한 뒤 게이트로 옮기면 회로가 된다. 반가산기는 합 \(A \oplus B\)와 올림 \(AB\)를 내고, 전가산기는 아래 자리의 올림까지 더하며, 전가산기를 자릿수만큼 이으면 여러 자리 덧셈 회로가 된다. 처음 질문의 덧셈 기계는 세 가지 게이트만으로 만든 가산기들을 이어 붙여 만들 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-3.html#card-dmath-truth-table"><small class="mono">이산 수학 3.3</small>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</a><a href="../../c/dmath/3-3.html#card-dmath-karnaugh"><small class="mono">이산 수학 3.3</small>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</a><a href="../../c/dmath/3-3.html#text-dmath-boolean"><small class="mono">이산 수학 3.3</small>부울 함수와 간소화</a><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a></div></nav>
+
       <article class="card" id="card-dmath-gate-lab">
         <header class="card-head">
-          <span class="no">3.4.1</span><h2>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</h2><span class="kind">논리 회로 · 조작</span>
+          <span class="no">탐구 1</span><h2>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</h2><span class="kind">논리 회로 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,30 +137,30 @@
             <table class="tt" aria-label="이 회로의 참값표"></table>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>계단 아래와 위 어느 스위치로든 전등을 켜고 끌 수 있는 회로, 열쇠와 비밀번호가 함께 맞아야 열리는 금고는 어떻게 만들까요? 앞 절의 부울 식이 실제 전기 회로가 될 수 있을까요?</li>
-            <li><span class="tag">복원</span>부울 함수는 곱(AND), 합(OR), 보수(NOT)로 나타낼 수 있습니다.</li>
-            <li><span class="tag">설명</span>AND, OR, NOT 연산을 하는 전자 부품을 <em>논리 게이트</em>라 하고, 게이트를 선으로 이어 부울 함수를 계산하는 것을 <em>논리 회로</em>라 합니다. 이 밖에 XOR(배타적 논리합, 둘이 다를 때 1)과 NAND(AND의 보수)가 자주 쓰입니다. 부울 식의 구조가 그대로 회로의 연결이 되므로, 식을 간단히 하면 게이트가 줄어듭니다. 특히 NAND 하나로 NOT(\(\overline{AA}\)), AND, OR을 모두 만들 수 있어 NAND를 <em>만능 게이트</em>라고 합니다.</li>
-            <li><span class="tag">연결</span>컴퓨터의 처리 장치는 수십억 개의 트랜지스터로 만든 이런 게이트의 연결입니다. 다음 카드에서는 게이트로 이진수 덧셈 회로를 만듭니다.</li>
-            <li><span class="tag">적용</span>회로마다 스위치를 켜고 끄며 선의 색이 어떻게 흐르는지 보고, 참값표의 어느 줄에 해당하는지 확인하세요. "NAND로 만든 OR"의 참값표가 OR과 같은지 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>실제 회로에서는 신호가 게이트를 지날 때마다 아주 짧은 지연이 생겨, 거쳐야 하는 게이트 수가 많으면 회로가 느려집니다. 그래서 식의 글자 수뿐 아니라 "몇 단계를 거치는지"도 설계에서 중요합니다.</li>
+            <li><span class="tag">질문</span>계단 아래와 위 어느 스위치로든 전등을 켜고 끌 수 있는 회로, 열쇠와 비밀번호가 함께 맞아야 열리는 금고는 어떻게 만들까? 앞 절의 부울 식이 실제 전기 회로가 될 수 있을까?</li>
+            <li><span class="tag">복원</span>부울 함수는 곱(AND), 합(OR), 보수(NOT)로 나타낼 수 있다.</li>
+            <li><span class="tag">설명</span>AND, OR, NOT 연산을 하는 전자 부품을 <em>논리 게이트</em>라 하고, 게이트를 선으로 이어 부울 함수를 계산하는 것을 <em>논리 회로</em>라 한다. 이 밖에 XOR(배타적 논리합, 둘이 다를 때 1)과 NAND(AND의 보수)가 자주 쓰인다. 부울 식의 구조가 그대로 회로의 연결이 되므로, 식을 간단히 하면 게이트가 줄어든다. 특히 NAND 하나로 NOT(\(\overline{AA}\)), AND, OR을 모두 만들 수 있어 NAND를 <em>만능 게이트</em>라고 한다.</li>
+            <li><span class="tag">연결</span>컴퓨터의 처리 장치는 수십억 개의 트랜지스터로 만든 이런 게이트의 연결이다. 다음 카드에서는 게이트로 이진수 덧셈 회로를 만든다.</li>
+            <li><span class="tag">적용</span>회로마다 스위치를 켜고 끄며 선의 색이 어떻게 흐르는지 보고, 참값표의 어느 줄에 해당하는지 확인해 보자. "NAND로 만든 OR"의 참값표가 OR과 같은지 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>실제 회로에서는 신호가 게이트를 지날 때마다 아주 짧은 지연이 생겨, 거쳐야 하는 게이트 수가 많으면 회로가 느려진다. 그래서 식의 글자 수뿐 아니라 "몇 단계를 거치는지"도 설계에서 중요하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">NAND 게이트의 두 입력에 같은 신호 \(A\)를 넣으면 출력은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A'\)<span class="why"><b>맞습니다.</b> \(\overline{A \cdot A} = \overline{A} = A'\)이므로 NOT 게이트가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(A\)<span class="why"><b>AND에 같은 신호를 넣은 경우입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>늘 1<span class="why"><b>\(A = 1\)이면 0이 나옵니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>늘 0<span class="why"><b>\(A = 0\)이면 1이 나옵니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A'\)<span class="why"><b>맞다.</b> \(\overline{A \cdot A} = \overline{A} = A'\)이므로 NOT 게이트가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(A\)<span class="why"><b>AND에 같은 신호를 넣은 경우이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>늘 1<span class="why"><b>\(A = 1\)이면 0이 나온다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>늘 0<span class="why"><b>\(A = 0\)이면 1이 나온다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-3.html#card-dmath-truth-table"><small class="mono">이산 수학 3.3</small>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</a><a href="../../c/dmath/3-3.html#card-dmath-karnaugh"><small class="mono">이산 수학 3.3</small>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</a><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-3.html#card-dmath-truth-table"><small class="mono">이산 수학 3.3</small>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</a><a href="../../c/dmath/3-3.html#card-dmath-karnaugh"><small class="mono">이산 수학 3.3</small>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</a><a href="../../c/dmath/3-3.html#text-dmath-boolean"><small class="mono">이산 수학 3.3</small>부울 함수와 간소화</a><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a></div></nav>
 
       <article class="card" id="card-dmath-adder">
         <header class="card-head">
-          <span class="no">3.4.2</span><h2>게이트만으로 덧셈하는 기계를 만들 수 있을까?</h2><span class="kind">가산기 회로 · 활용</span>
+          <span class="no">탐구 2</span><h2>게이트만으로 덧셈하는 기계를 만들 수 있을까?</h2><span class="kind">가산기 회로 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -110,39 +173,39 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>이진수 덧셈의 규칙은 몇 줄뿐이었습니다. 그렇다면 스위치와 게이트만으로 두 수를 더하는 기계를 만들 수 있을까요? 계산기의 덧셈은 안에서 어떻게 일어날까요?</li>
-            <li><span class="tag">복원</span>한 자리 덧셈: \(0 + 0 = 00\), \(0 + 1 = 01\), \(1 + 1 = 10\)(받아올림 1). XOR은 둘이 다를 때 1, AND는 둘 다 1일 때 1입니다.</li>
-            <li><span class="tag">설명</span>한 자리 두 비트의 합의 자리는 \(S = A \oplus B\), 받아올림은 \(C = AB\)입니다. 이것이 <em>반가산기</em>입니다. 아랫자리에서 올라온 받아올림 \(C_{in}\)까지 더하는 <em>전가산기</em>는 \(S = A \oplus B \oplus C_{in}\), \(C_{out} = AB + C_{in}(A \oplus B)\)입니다. 전가산기 네 개를 받아올림 선으로 이으면 4비트 덧셈 회로가 됩니다. 2의 보수와 함께 쓰면 같은 회로로 뺄셈도 합니다.</li>
-            <li><span class="tag">연결</span>받아올림이 오른쪽부터 차례로 전해져야 하므로 자리가 많을수록 느려집니다. 실제 처리 장치는 받아올림을 미리 계산하는 회로(자리올림 예측)로 이 지연을 줄입니다.</li>
-            <li><span class="tag">적용</span>A, B의 자리를 눌러 여러 덧셈을 해 보세요. 1111 + 0001처럼 받아올림이 끝까지 전해지는 경우를 "받아올림 전파 보기"로 확인하세요. 마지막 받아올림 \(C_4\)는 무엇을 뜻하나요?</li>
-            <li class="warn"><span class="tag">판단</span>4비트 회로는 0~15만 나타내므로 합이 15를 넘으면 \(C_4 = 1\)로 넘침이 생깁니다. 회로는 틀린 것이 아니라 정해진 자리만큼만 계산한 것이며, 넘침을 확인하는 일은 따로 해야 합니다.</li>
+            <li><span class="tag">질문</span>이진수 덧셈의 규칙은 몇 줄뿐이었다. 그렇다면 스위치와 게이트만으로 두 수를 더하는 기계를 만들 수 있을까? 계산기의 덧셈은 안에서 어떻게 일어날까?</li>
+            <li><span class="tag">복원</span>한 자리 덧셈은 \(0 + 0 = 00\), \(0 + 1 = 01\), \(1 + 1 = 10\)(받아올림 1). XOR은 둘이 다를 때 1, AND는 둘 다 1일 때 1이다.</li>
+            <li><span class="tag">설명</span>한 자리 두 비트의 합의 자리는 \(S = A \oplus B\), 받아올림은 \(C = AB\)이다. 이것이 <em>반가산기</em>이다. 아랫자리에서 올라온 받아올림 \(C_{in}\)까지 더하는 <em>전가산기</em>는 \(S = A \oplus B \oplus C_{in}\), \(C_{out} = AB + C_{in}(A \oplus B)\)이다. 전가산기 네 개를 받아올림 선으로 이으면 4비트 덧셈 회로가 된다. 2의 보수와 함께 쓰면 같은 회로로 뺄셈도 한다.</li>
+            <li><span class="tag">연결</span>받아올림이 오른쪽부터 차례로 전해져야 하므로 자리가 많을수록 느려진다. 실제 처리 장치는 받아올림을 미리 계산하는 회로(자리올림 예측)로 이 지연을 줄인다.</li>
+            <li><span class="tag">적용</span>A, B의 자리를 눌러 여러 덧셈을 해 보자. 1111 + 0001처럼 받아올림이 끝까지 전해지는 경우를 "받아올림 전파 보기"로 확인해 보자. 마지막 받아올림 \(C_4\)는 무엇을 뜻하는가?</li>
+            <li class="warn"><span class="tag">판단</span>4비트 회로는 0~15만 나타내므로 합이 15를 넘으면 \(C_4 = 1\)로 넘침이 생긴다. 회로는 틀린 것이 아니라 정해진 자리만큼만 계산한 것이며, 넘침을 확인하는 일은 따로 해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">전가산기에 \(A = 1, B = 1, C_{in} = 1\)이 들어가면 \(S\)와 \(C_{out}\)은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(S = 1\), \(C_{out} = 1\)<span class="why"><b>맞습니다.</b> \(1 + 1 + 1 = 11_{(2)}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(S = 0\), \(C_{out} = 1\)<span class="why"><b>\(C_{in}\)을 빠뜨렸습니다.</b> 반가산기의 결과입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(S = 1\), \(C_{out} = 0\)<span class="why"><b>합이 3이라 받아올림이 있습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(S = 3\)<span class="why"><b>한 비트에는 0과 1만 들어갑니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(S = 1\), \(C_{out} = 1\)<span class="why"><b>맞다.</b> \(1 + 1 + 1 = 11_{(2)}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(S = 0\), \(C_{out} = 1\)<span class="why"><b>\(C_{in}\)을 빠뜨렸다.</b> 반가산기의 결과이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(S = 1\), \(C_{out} = 0\)<span class="why"><b>합이 3이라 받아올림이 있다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(S = 3\)<span class="why"><b>한 비트에는 0과 1만 들어간다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-3.html#card-dmath-truth-table"><small class="mono">이산 수학 3.3</small>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</a><a href="../../c/dmath/3-3.html#card-dmath-karnaugh"><small class="mono">이산 수학 3.3</small>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</a><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-3.html#card-dmath-truth-table"><small class="mono">이산 수학 3.3</small>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</a><a href="../../c/dmath/3-3.html#card-dmath-karnaugh"><small class="mono">이산 수학 3.3</small>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</a><a href="../../c/dmath/3-3.html#text-dmath-boolean"><small class="mono">이산 수학 3.3</small>부울 함수와 간소화</a><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

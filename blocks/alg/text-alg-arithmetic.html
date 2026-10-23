@@ -1,0 +1,49 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/alg/body.js"],
+  "sec": "3-2",
+  "short": "본문 · 등차수열"
+}
+-->
+<article class="card reading" id="text-alg-arithmetic" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>등차수열</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">계단을 쌓는데 맨 아래 단에 벽돌 3개, 그 위 단에 5개, 7개, …처럼 2개씩 늘려 간다. 20번째 단에는 몇 개가 필요하고, 20단을 모두 쌓는 데는 몇 개가 필요할까? 하나하나 더하지 않고 구할 방법이 있을까?</p>
+    <figure class="q-fig" data-q="alg-arith">
+      <svg viewBox="0 0 520 260" role="img" aria-label="같은 계단을 거꾸로 붙여 직사각형을 만드는 등차수열의 합 그림"></svg>
+      <div class="q-ctl"><label>항의 개수 \(n\) = <input type="range" data-k="n" min="2" max="12" step="1" value="6"><output data-k="n"></output></label><label>공차 \(d\) = <input type="range" data-k="d" min="1" max="3" step="1" value="2"><output data-k="d"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 같은 계단을 거꾸로 붙이면 높이가 모두 \(a_1 + a_n\)인 직사각형이 되므로, 합은 \(\dfrac{n(a_1 + a_n)}{2}\)이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>수열과 일반항(<a href="3-1.html">수열의 뜻</a>), 일차함수의 기울기, 일차방정식.</div>
+
+    <h3><span class="no">3.2.1</span>같은 수씩 커지는 수열</h3>
+    <p>3, 5, 7, 9, …처럼 첫째항부터 차례로 일정한 수를 더해 얻는 수열을 <em>등차수열</em>이라 하고, 더하는 일정한 수를 공차라 한다. 첫째항이 \(a\), 공차가 \(d\)이면 둘째항은 \(a + d\), 셋째항은 \(a + 2d\)이고, 제\(n\)항까지는 공차를 \(n - 1\)번 더한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">등차수열의 일반항</span></span>
+      <p>첫째항이 \(a\), 공차가 \(d\)인 등차수열의 일반항은 \(a_n = a + (n - 1)d\)이다.</p>
+    </div>
+    <p>일반항은 \(n\)에 대한 일차식이므로, 점그래프의 점들은 기울기가 \(d\)인 직선 위에 놓인다. 처음 질문의 계단은 \(a = 3\), \(d = 2\)이므로 20번째 단은 \(a_{20} = 3 + 19 \times 2 = 41\)개이다. 또 세 수 \(a\), \(b\), \(c\)가 이 순서로 등차수열이면 \(b - a = c - b\)이므로 \(b = \dfrac{a + c}{2}\)이다. 이때 \(b\)를 \(a\)와 \(c\)의 등차중항이라 한다.</p>
+
+    <h3><span class="no">3.2.2</span>거꾸로 더해서 합 구하기</h3>
+    <p>1부터 100까지의 합 \(S\)를 앞에서부터 쓰고, 그 아래에 거꾸로 써 보자. 위아래로 짝지은 \(1 + 100\), \(2 + 99\), …는 모두 101이다. 이런 짝이 100개이므로 \(2S = 100 \times 101\), 곧 \(S = 5050\)이다.</p>
+    <p>그림 1은 같은 생각을 그림으로 보인 것이다. 계단 하나를 거꾸로 뒤집어 붙이면, 칸마다 높이가 첫째항과 끝항의 합 \(a_1 + a_n\)으로 같아져 직사각형이 된다. 직사각형의 넓이는 \(n(a_1 + a_n)\)이고 계단은 그 절반이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.2.2 <span class="nm">등차수열의 합</span></span>
+      <p>첫째항이 \(a\), 공차가 \(d\), 제\(n\)항이 \(l\)인 등차수열의 첫째항부터 제\(n\)항까지의 합은 \[S_n = \frac{n(a + l)}{2} = \frac{n\{2a + (n - 1)d\}}{2}\]</p>
+    </div>
+    <p>두 번째 식은 \(l = a + (n - 1)d\)를 넣은 것이다. 끝항을 알면 첫째 식을, 공차를 알면 둘째 식을 쓰면 된다. 거꾸로 합 \(S_n\)을 알면 \(a_n = S_n - S_{n-1}\ (n \ge 2)\), \(a_1 = S_1\)으로 각 항을 되찾을 수 있다.<sup class="fn"><a href="#fn-alg-arithmetic-1">1</a></sup></p>
+
+    <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.2.3</span>
+      <p>처음 질문의 계단(3, 5, 7, …) 20단에 필요한 벽돌의 수를 구하여라. 또 첫째항이 50, 공차가 \(-3\)인 등차수열에서 처음으로 음수가 되는 항은 제몇 항이고, 첫째항부터 몇째 항까지의 합이 가장 큰가?</p>
+    </div>
+    <p>첫째항 3, 끝항 \(a_{20} = 41\)이므로 \(S_{20} = \dfrac{20 \times (3 + 41)}{2} = 440\)개이다. 공차로 계산해도 \(\dfrac{20\{6 + 19 \times 2\}}{2} = 440\)으로 같다.</p>
+    <p>두 번째 수열의 일반항은 \(a_n = 50 - 3(n - 1) = 53 - 3n\)이다. \(53 - 3n &lt; 0\)에서 \(n &gt; 17.6\)이므로 처음으로 음수가 되는 항은 제18항(\(-1\))이다.</p>
+    <p>합은 양수인 항을 더하는 동안 커지다가 음수인 항부터 줄어든다. 따라서 제17항(\(a_{17} = 2\))까지의 합이 가장 크고, 그 값은 \(S_{17} = \dfrac{17 \times (50 + 2)}{2} = 442\)이다. 아래 탐구 카드에서 계단을 직접 뒤집어 붙여 보며 합의 공식을 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-alg-arithmetic-1">등차수열의 합 \(S_n = \tfrac{d}{2}n^2 + \left(a - \tfrac{d}{2}\right)n\)은 상수항이 없는 \(n\)의 이차식이다. 거꾸로 \(S_n = pn^2 + qn\) 꼴이면 그 수열은 등차수열이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>등차수열은 공차를 거듭 더해 얻으므로 일반항이 \(a + (n - 1)d\)인 일차식이고, 합은 앞뒤를 짝지어 더하면 짝마다 \(a_1 + a_n\)으로 같아져 \(\tfrac{n(a_1 + a_n)}{2}\)이다. 그래서 처음 질문의 계단 20단에는 맨 위 단 41개, 모두 440개의 벽돌이 필요하다.</p></div>
+  </div>
+</article>

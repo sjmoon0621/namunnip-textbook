@@ -1,0 +1,54 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/jmath/body.js"],
+  "sec": "4-2",
+  "short": "본문 · 가능성의 수치화"
+}
+-->
+<article class="card reading" id="text-jmath-probability" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>가능성의 수치화</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">품질 관리 담당자가 불량률이 2%인 생산 라인에서 제품 10개를 뽑아 검사했더니 불량품이 하나도 없었다. "불량이 거의 없으니 안심해도 된다"고 보고해도 될까? 사실 불량률 2%인 라인에서도 10개 가운데 불량이 하나도 없을 가능성은 꽤 크다. 가능성을 수로 나타내면 이런 판단을 정확히 할 수 있다.</p>
+    <figure class="q-fig" data-q="jm-defect">
+      <svg viewBox="0 0 520 230" role="img" aria-label="불량률과 검사 개수에 따른, 불량품이 하나도 없을 확률"></svg>
+      <div class="q-ctl"><label>불량률 (%) <input type="range" data-k="p" min="0.5" max="10" step="0.5" value="2"><output data-k="p"></output></label><label>검사 개수 <input type="range" data-k="n" min="1" max="50" step="1" value="10"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 불량률 \(p\)인 라인에서 \(n\)개가 모두 정상일 확률 \((1 - p)^n\). 불량률 2%이면 10개를 검사해도 약 82%의 확률로 불량품이 하나도 나오지 않는다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>확률의 뜻, 확률의 곱셈(중학교), 경우의 수(<a href="4-1.html">경우의 수</a>), 거듭제곱.</div>
+
+    <h3><span class="no">4.2.1</span>확률과 여사건</h3>
+    <p>어떤 일이 일어날 가능성을 0과 1 사이의 수로 나타낸 것이 확률이다. 같은 조건에서 여러 번 되풀이할 때 그 일이 일어나는 비율이 확률에 가까워진다. 불량률 2%는 제품 하나가 불량일 확률이 0.02라는 뜻이다. 제품 1000개를 만들면 평균적으로 20개쯤 불량이 나온다는 뜻이기도 하다. 어떤 일이 일어나지 않을 확률은 1에서 일어날 확률을 뺀 값이다. 이를 여사건의 확률이라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">독립 시행과 '적어도 하나'</span></span>
+      <p>제품마다 불량 여부가 서로 영향을 주지 않으면, \(n\)개가 모두 정상일 확률은 \((1 - p)^n\)이다. 따라서 적어도 하나가 불량일 확률은 \[1 - (1 - p)^n\] 이다.</p>
+    </div>
+    <p>불량률 2%, 10개이면 모두 정상일 확률은 \(0.98^{10} \approx 0.817\)이다. 그림 1에서 검사 개수를 늘려 보자. 50개를 검사해도 모두 정상일 확률이 약 36%나 된다. 그러므로 10개에서 불량이 없었다는 것만으로는 불량률이 2%인지 0%인지 구별하기 어렵다. 검사를 믿으려면 개수를 충분히 늘려야 한다. 검사 결과는 표본에 따라 달라질 수 있으므로, 결론을 말할 때는 몇 개를 검사했는지도 함께 밝힌다.<sup class="fn"><a href="#fn-jmath-probability-1">1</a></sup></p>
+
+    <h3><span class="no">4.2.2</span>기댓값으로 판단하기</h3>
+    <p>확률은 '평균적으로 얼마나'를 계산하는 데도 쓰인다. 식당에 40석이 있고 예약 손님이 각자 90%의 확률로 온다면, 44팀의 예약을 받을 때 평균적으로 \(44 \times 0.9 = 39.6\)팀이 온다. 이렇게 확률을 곱해 더한 평균을 기댓값이라 한다. 기댓값만 보면 44팀을 받아도 될 것 같지만, 실제로 41팀 이상 오는 날도 생긴다. 그런 날의 가능성까지 따져 몇 팀을 받을지 정한다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="일어날 확률과 일어나지 않을 확률">
+        <g class="s">
+          <rect x="40" y="35" width="360" height="36" class="lb"/><rect x="400" y="35" width="80" height="36" class="ld"/>
+          <text x="220" y="58" text-anchor="middle">10개 모두 정상 약 82%</text><text x="440" y="58" text-anchor="middle">18%</text>
+          <text x="440" y="95" text-anchor="middle">불량 1개 이상</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 모두 정상일 확률과 적어도 하나가 불량일 확률은 합이 1이다.</figcaption>
+    </figure>
+
+    <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+      <p>불량률이 2%인 라인에서, 적어도 하나의 불량품을 95% 이상의 확률로 찾아내려면 제품을 몇 개 이상 검사해야 하는가? (\(0.98^{148} \approx 0.050\), \(0.98^{149} \approx 0.049\))</p>
+    </div>
+    <p>적어도 하나가 불량일 확률이 0.95 이상이려면 \(1 - 0.98^n \ge 0.95\), 곧 \(0.98^n \le 0.05\)이어야 한다.</p>
+    <p>주어진 값에서 \(0.98^{148} \approx 0.050\)은 경계에 걸리고 \(0.98^{149} \approx 0.049\)는 확실히 0.05보다 작으므로, 약 149개 이상을 검사해야 한다. 10개 검사로는 불량을 찾을 확률이 18%에 불과하다는 것과 비교하면, 표본 검사의 개수를 정하는 데 확률 계산이 꼭 필요하다는 것을 알 수 있다.</p>
+    <p>아래 탐구 카드에서 불량품 검사의 확률과 식당 예약을 몇 팀까지 받을지를 직접 계산해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-jmath-probability-1">\(0.98^n\)처럼 같은 수를 거듭 곱하는 계산은 계산기의 거듭제곱 기능이나 로그를 쓰면 쉽다. 이렇게 거듭 곱해지는 확률은 개수가 늘수록 빠르게 0에 가까워진다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>확률은 가능성을 0과 1 사이의 수로 나타내며, 서로 영향을 주지 않는 일이 모두 일어날 확률은 곱하고, '적어도 하나'는 1에서 '하나도 없을' 확률을 빼서 구한다. 기댓값은 확률을 곱해 더한 평균이다. 그래서 처음 질문의 검사에서 불량이 없었다는 것은 불량률 2%에서도 82%의 확률로 일어나는 일이므로, 그것만으로 안심하기는 이르다.</p></div>
+  </div>
+</article>

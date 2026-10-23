@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>전기장과 등전위면 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="점전하 주위의 전기장을 쿨롱 법칙으로 정량적으로 구하고, 전기력선과 등전위면의 모양으로 전기장의 세기와 방향을 추리한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-field canvas { touch-action: none; cursor: crosshair; }
     #card-phy-field .ctl .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 6px 0 4px; }
@@ -52,19 +58,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-field"><span class="mono">1.1.1</span>보이지 않는 전기장을 어떻게 그릴까?</a></li>
-        <li><a href="#card-phy-potential"><span class="mono">1.1.2</span>전위차는 ‘전기의 높이’일까?</a></li>
-        <li><a href="#card-emq-equipotential"><span class="mono">1.1.3</span>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</a></li>
+        <li><a href="#text-emq-field"><span class="mono">본문</span>전기장과 등전위면</a></li>
+        <li><a href="#card-phy-field"><span class="mono">탐구 1</span>보이지 않는 전기장을 어떻게 그릴까?</a></li>
+        <li><a href="#card-phy-potential"><span class="mono">탐구 2</span>전위차는 ‘전기의 높이’일까?</a></li>
+        <li><a href="#card-emq-equipotential"><span class="mono">탐구 3</span>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=emq-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">82문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=emq&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=emq-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">83문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=emq-1-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-emq-field" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>전기장과 등전위면</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">지도의 등고선은 높이가 같은 곳을 이은 선이다. 등고선이 촘촘한 곳은 비탈이 가파르고, 공을 놓으면 그쪽으로 빠르게 굴러간다. 전기에도 높이에 해당하는 전위가 있고, 전위가 같은 곳을 이은 면을 등전위면이라 한다. 그렇다면 등전위면 지도만 보고도 전하가 어느 쪽으로 얼마나 센 힘을 받는지 알 수 있을까?</p>
+          <figure class="q-fig" data-q="emq-equip">
+            <svg viewBox="0 0 520 220" role="img" aria-label="점전하 둘레의 등전위면과 한 점의 전기장"></svg>
+            <div class="q-ctl"><label>점전하에서의 거리 \(r\) (m) <input type="range" data-k="r" min="0.1" max="0.45" step="0.01" value="0.2"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 1 nC 점전하 둘레에 10 V 간격으로 그린 등전위면(회색 원). 전하에 가까울수록 등전위면이 촘촘하고, 그곳의 전기장(파란 화살표)이 세다. 전기장은 늘 등전위면에 수직이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>쿨롱 법칙, 전기장과 전기력선(물리학), 일과 퍼텐셜 에너지, 중력장에서의 높이와 위치 에너지.</div>
+
+          <h3><span class="no">1.1.1</span>전기장과 전위</h3>
+          <p>전하 \(q\)가 어떤 점에서 받는 전기력을 \(F\)라 하면, 그 점의 전기장은 \(E = \dfrac{F}{q}\)이다. 즉 단위 양전하가 받는 힘이다. 한편 전위는 단위 양전하가 가진 전기적 퍼텐셜 에너지로, 기준점에서 그 점까지 단위 양전하를 옮기는 데 드는 일이다. 전위의 단위는 V(볼트)이고, 1 V는 1 C의 전하를 옮기는 데 1 J이 드는 전위 차이다.</p>
+          <p>점전하 \(Q\)에서 거리 \(r\)인 곳의 전위는 무한히 먼 곳을 0으로 잡아 \(V = \dfrac{kQ}{r}\)이고, 전기장의 세기는 \(E = \dfrac{kQ}{r^2}\)이다. 그런데 거리가 같은 점들은 전위도 같으므로, 점전하의 등전위면은 전하를 중심으로 하는 구면이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.1.1 <span class="nm">전기장과 전위차</span></span>
+            <p>전기장은 등전위면에 수직이며 전위가 낮아지는 쪽을 향한다. 균일한 전기장에서 거리 \(d\)만큼 떨어진 두 등전위면의 전위차가 \(V\)이면 \[E = \frac{V}{d}\] 이다. 따라서 같은 전위차 간격의 등전위면이 촘촘할수록 전기장이 세다.</p>
+          </div>
+          <p>그림 1에서 거리를 바꾸어 보자. 0.1 m에서는 10 V 간격의 등전위면이 거의 붙어 있고 전기장이 900 V/m이다. 0.3 m로 멀어지면 등전위면 사이가 넓어지고 전기장은 9분의 1인 100 V/m로 줄어든다. 등고선이 촘촘한 비탈이 가파른 것과 똑같다. 그리고 전하는 등전위면을 따라 움직일 때는 일을 받지 않는다.<sup class="fn"><a href="#fn-emq-field-1">1</a></sup></p>
+
+          <h3><span class="no">1.1.2</span>평행판 사이의 균일한 전기장</h3>
+          <p>넓은 금속판 두 장을 나란히 놓고 전압을 걸면 판 사이에 세기와 방향이 어디서나 같은 균일한 전기장이 생긴다. 등전위면은 판에 나란한 평면들이고 간격이 일정하다. 전자 현미경이나 브라운관은 이런 전기장으로 전자를 가속하거나 휘게 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 130" role="img" aria-label="평행판 사이의 전기력선과 등전위면">
+              <g class="s">
+                <rect x="60" y="20" width="12" height="90" class="ld"/><rect x="300" y="20" width="12" height="90" class="lb"/>
+                <text x="66" y="125" text-anchor="middle">+100 V</text><text x="306" y="125" text-anchor="middle">0 V</text>
+                <line x1="132" y1="20" x2="132" y2="110" class="gd"/><line x1="186" y1="20" x2="186" y2="110" class="gd"/><line x1="240" y1="20" x2="240" y2="110" class="gd"/>
+                <line x1="72" y1="45" x2="300" y2="45" class="k"/><line x1="72" y1="85" x2="300" y2="85" class="k"/>
+                <text x="340" y="50">전기력선은 판에 수직</text><text x="340" y="75">등전위면은 판에 나란함</text><text x="340" y="100">간격이 일정, E = V/d</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 평행판 사이에서는 등전위면(회색)이 같은 간격으로 늘어서고, 전기력선(검정)은 그에 수직이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.1.2</span>
+            <p>간격 2 cm인 평행판에 100 V를 걸었다. 판 사이 전기장의 세기와, 전자(전하량 \(1.6 \times 10^{-19}\) C)가 받는 힘을 구하여라. 전자가 음극판에서 정지 상태로 출발해 양극판에 닿을 때의 운동 에너지는 얼마인가?</p>
+          </div>
+          <p>전기장은 \(E = \dfrac{V}{d} = \dfrac{100}{0.02} = 5000\) V/m이다. 전자가 받는 힘은 \(F = eE = 1.6 \times 10^{-19} \times 5000 = 8.0 \times 10^{-16}\) N이다.</p>
+          <p>전기력이 한 일은 힘 × 거리 \(= 8.0 \times 10^{-16} \times 0.02 = 1.6 \times 10^{-17}\) J이다. 그런데 이 값은 \(eV = 1.6 \times 10^{-19} \times 100\)과 같다. 즉 전하가 전위차 \(V\)를 지나며 얻는 에너지는 판 간격과 관계없이 \(qV\)이다. 그래서 원자의 세계에서는 1 V의 전위차를 지난 전자가 얻는 에너지를 1 eV라 하여 에너지 단위로 쓴다. 이 전자는 100 eV를 얻었다.</p>
+          <p>아래 탐구 카드에서 등전위면의 간격으로 전기장의 세기를 읽는 연습을 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-emq-field-1">새가 고압선 위에 앉아도 감전되지 않는 것은 두 발이 거의 같은 전위에 있어 몸에 전류가 흐르지 않기 때문이다. 같은 등전위면 위에서는 전하를 옮겨도 에너지 변화가 없다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>전기장은 단위 양전하가 받는 힘이고, 전위는 단위 양전하의 퍼텐셜 에너지이다. 전기장은 등전위면에 수직으로 전위가 낮아지는 쪽을 향하며, 균일한 전기장에서는 \(E = \frac{V}{d}\)이다. 그래서 처음 질문의 답은 '그렇다'이다. 같은 전위차 간격의 등전위면이 촘촘한 곳일수록 전위가 가파르게 변하므로 전기장이 세다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/adphy/2-1.html#text-adphy-gauss-sphere"><small class="mono">고급 물리학 2.1</small>가우스 법칙과 전기장</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a></div></nav>
+
       <article class="card" id="card-phy-field">
         <header class="card-head">
-          <span class="no">1.1.1</span><h2>보이지 않는 전기장을 어떻게 그릴까?</h2><span class="kind">전기력선 · 등전위선 · 중첩</span>
+          <span class="no">탐구 1</span><h2>보이지 않는 전기장을 어떻게 그릴까?</h2><span class="kind">전기력선 · 등전위선 · 중첩</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -91,33 +150,33 @@
                 <div><dt>전기장 세기</dt><dd class="pe">—</dd></div>
                 <div><dt>전하의 합</dt><dd class="pq">—</dd></div>
               </dl>
-              <p class="fig-note">전하는 끌어서 옮기고, 빈 곳을 누르면 초록 탐침이 그 자리의 전기장 방향을 가리킵니다. 전기력선은 1 nC당 12가닥, 등전위선은 ±100·200·400·800·1600 V(빨강 +, 파랑 −, 점선 0 V)입니다.</p>
+              <p class="fig-note">전하는 끌어서 옮기고, 빈 곳을 누르면 초록 탐침이 그 자리의 전기장 방향을 가리킨다. 전기력선은 1 nC당 12가닥, 등전위선은 ±100·200·400·800·1600 V(빨강 +, 파랑 −, 점선 0 V)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>전기장은 눈에 보이지 않습니다. 그런데 교과서에는 전기장이 선으로 그려져 있습니다. 그 선은 어떤 규칙으로 그린 걸까요?</li>
-            <li><span class="tag">복원</span>점전하 q가 거리 r인 곳에 만드는 전기장은 세기가 <span class="formula">E = kq / r²</span>이고, 양전하라면 전하에서 멀어지는 쪽을 향합니다. 전하가 여럿이면 각 전하가 만든 전기장을 벡터로 더합니다.</li>
-            <li><span class="tag">설명</span>전기력선은 한 점에서 그 점의 전기장 방향으로 조금 나아가고, 거기서 다시 방향을 구해 나아가기를 되풀이해 이은 선입니다. 위 그림도 화면의 점마다 벡터 합을 계산해 이렇게 그렸습니다. 선은 양전하에서 나와 음전하로 들어가고, 선이 빽빽한 곳일수록 전기장이 셉니다.</li>
-            <li><span class="tag">연결</span>등전위선은 전위가 같은 점을 이은 선입니다. 점전하의 전위 <span class="formula">V = kq / r</span>는 방향이 없는 양이라 그냥 더하면 됩니다. 등전위선을 따라 전하를 옮기면 전기장이 하는 일이 0이므로, 전기력선과 등전위선은 언제나 수직으로 만납니다.</li>
-            <li><span class="tag">적용</span>‘+2와 −1’을 눌러 보세요. +2에서 나온 24가닥 가운데 −1로 들어가는 선은 몇 가닥인가요? 나머지는 멀리 빠져나갑니다. 멀리서 보면 이 한 쌍은 +1 전하 하나처럼 보입니다.</li>
-            <li class="warn"><span class="tag">판단</span>전기력선은 실제로 있는 줄이 아니라 전기장을 나타내는 약속입니다. 선과 선 사이에도 전기장은 있습니다. 또 전기력선은 전하가 지나가는 길이 아닙니다. 힘은 선의 방향이지만, 이미 속도가 있는 전하는 선을 벗어나 움직입니다.</li>
+            <li><span class="tag">질문</span>전기장은 눈에 보이지 않는다. 그런데 교과서에는 전기장이 선으로 그려져 있다. 그 선은 어떤 규칙으로 그린 걸까?</li>
+            <li><span class="tag">복원</span>점전하 q가 거리 r인 곳에 만드는 전기장은 세기가 <span class="formula">E = kq / r²</span>이고, 양전하라면 전하에서 멀어지는 쪽을 향한다. 그리고 전하가 여럿이면 각 전하가 만든 전기장을 벡터로 더한다.</li>
+            <li><span class="tag">설명</span>전기력선은 한 점에서 그 점의 전기장 방향으로 조금 나아가고, 거기서 다시 방향을 구해 나아가기를 되풀이해 이은 선이다. 위 그림도 화면의 점마다 벡터 합을 계산해 이렇게 그렸다. 그래서 선은 양전하에서 나와 음전하로 들어가고, 선이 빽빽한 곳일수록 전기장이 세다.</li>
+            <li><span class="tag">연결</span>등전위선은 전위가 같은 점을 이은 선이다. 점전하의 전위 <span class="formula">V = kq / r</span>는 방향이 없는 양이라 그냥 더하면 된다. 또 등전위선을 따라 전하를 옮기면 전기장이 하는 일이 0이므로, 전기력선과 등전위선은 언제나 수직으로 만난다.</li>
+            <li><span class="tag">적용</span>‘+2와 −1’을 눌러 +2에서 나온 24가닥 가운데 −1로 들어가는 선이 몇 가닥인지 세어 보자. 나머지는 멀리 빠져나가서, 멀리서 보면 이 한 쌍은 +1 전하 하나처럼 보인다.</li>
+            <li class="warn"><span class="tag">판단</span>전기력선은 실제로 있는 줄이 아니라 전기장을 나타내는 약속이어서, 선과 선 사이에도 전기장은 있다. 또 전기력선은 전하가 지나가는 길이 아니다. 힘은 선의 방향이지만, 이미 속도가 있는 전하는 선을 벗어나 움직인다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">+1 nC 전하 두 개를 5 cm 떨어뜨려 놓았습니다. 두 전하의 한가운데 점에서 맞는 것은?</p>
+          <p class="q">+1 nC 전하 두 개를 5 cm 떨어뜨려 놓았다. 두 전하의 한가운데 점에서 맞는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>전기장도 0이고 전위도 0이다.<span class="why"><b>전기장과 전위를 같은 방식으로 더했습니다.</b> 전기장은 방향이 반대라 상쇄되지만, 전위는 방향이 없어서 두 양수가 그대로 더해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>전기장은 0이지만 전위는 0이 아니다.<span class="why"><b>맞습니다.</b> 각 전하의 전위는 kq/r ≈ 360 V이고 둘을 더하면 약 720 V입니다. ‘+1과 +1’을 눌러 가운데에 탐침을 놓아 확인해 보세요.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 전하의 영향이 겹쳐서 전기장이 가장 세다.<span class="why"><b>세기만 더하고 방향을 잊었습니다.</b> 왼쪽 전하는 오른쪽으로, 오른쪽 전하는 왼쪽으로 미니 가운데에서는 정확히 상쇄됩니다. 그림에서도 그 자리에는 선이 지나가지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>전기장도 0이고 전위도 0이다.<span class="why"><b>전기장과 전위를 같은 방식으로 더했다.</b> 전기장은 방향이 반대라 상쇄되지만, 전위는 방향이 없어서 두 양수가 그대로 더해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>전기장은 0이지만 전위는 0이 아니다.<span class="why"><b>맞다.</b> 각 전하의 전위는 kq/r ≈ 360 V이고 둘을 더하면 약 720 V이다. ‘+1과 +1’을 눌러 가운데에 탐침을 놓아 확인해 보아라.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 전하의 영향이 겹쳐서 전기장이 가장 세다.<span class="why"><b>세기만 더하고 방향을 잊었다.</b> 왼쪽 전하는 오른쪽으로, 오른쪽 전하는 왼쪽으로 미니 가운데에서는 정확히 상쇄된다. 그림에서도 그 자리에는 선이 지나가지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-3.html#card-phy-capacitor"><small class="mono">물리학 2.3</small>축전기는 전기 에너지를 어떻게 저장할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">다른 과목에서</span><a href="../../c/adphy/2-1.html#text-adphy-gauss-sphere"><small class="mono">고급 물리학 2.1</small>가우스 법칙과 전기장</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a></div></nav>
 
       <article class="card" id="card-phy-potential">
         <header class="card-head">
-          <span class="no">1.1.2</span><h2>전위차는 ‘전기의 높이’일까?</h2><span class="kind">평행판 · 퍼텐셜 에너지 · 일</span>
+          <span class="no">탐구 2</span><h2>전위차는 ‘전기의 높이’일까?</h2><span class="kind">평행판 · 퍼텐셜 에너지 · 일</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -144,33 +203,33 @@
                 <div><dt>옮긴 경로 길이</dt><dd class="n-len">—</dd></div>
                 <div><dt>전기장이 한 일</dt><dd class="n-w">—</dd></div>
               </dl>
-              <p class="fig-note">입자를 끌어서 옮겨 보세요. 판 사이 전기장 E = <span class="n-e">—</span>. 1 eV = 1.6×10⁻¹⁹ J. ‘놓기’를 누르면 정지 상태에서 출발합니다(움직임은 느리게 보여 줍니다).</p>
+              <p class="fig-note">입자를 끌어서 옮겨 보자. 판 사이 전기장은 E = <span class="n-e">—</span>이고, 1 eV = 1.6×10⁻¹⁹ J이다. ‘놓기’를 누르면 정지 상태에서 출발한다(움직임은 느리게 보여 준다).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>전위를 흔히 ‘전기의 높이’라고 합니다. 공이 높은 곳에서 낮은 곳으로 구르듯, 전하도 전위가 높은 곳에서 낮은 곳으로 갈까요?</li>
-            <li><span class="tag">복원</span>높이 h에 있는 물체의 중력 퍼텐셜 에너지는 mgh입니다. 중력이 하는 일은 지나간 길과 상관없이 처음과 나중의 높이 차로만 정해집니다.</li>
-            <li><span class="tag">설명</span>전위 V는 전하 1 C이 그 자리에서 갖는 전기 퍼텐셜 에너지입니다. 전하 q의 퍼텐셜 에너지는 <span class="formula">U = qV</span>이고, A에서 B로 옮길 때 전기장이 하는 일은 <span class="formula">W = q(V<sub>A</sub> − V<sub>B</sub>)</span>입니다. 이 값도 경로와 상관이 없습니다.</li>
-            <li><span class="tag">연결</span>평행판 사이에는 세기가 고른 전기장이 생기고 <span class="formula">E = V / d</span>입니다. 그래서 전위는 판 사이에서 거리에 비례해 고르게 떨어집니다. 전하량 e인 입자가 전위차 1 V를 지나며 얻는 에너지가 1 eV입니다.</li>
-            <li><span class="tag">적용</span>입자를 이리저리 끌어 보세요. 판과 나란하게 움직이면 일이 0이고, 먼 길을 돌아 제자리에 오면 누적된 일도 0입니다. 이번에는 전자를 고르고 ‘놓기’를 눌러 보세요. 전자는 어느 판으로 가나요?</li>
-            <li class="warn"><span class="tag">판단</span>‘높이’ 비유는 양전하에만 그대로 맞습니다. 전자는 전위가 <em>높은</em> 쪽으로 끌려가는데, 이때도 퍼텐셜 에너지 qV는 줄어듭니다. 전하가 늘 내려가는 것은 전위가 아니라 퍼텐셜 에너지입니다. 또 0 V를 어디로 잡든 전위는 모두 같은 값만큼 바뀔 뿐, 전위차와 일은 그대로입니다.</li>
+            <li><span class="tag">질문</span>전위를 흔히 ‘전기의 높이’라고 한다. 공이 높은 곳에서 낮은 곳으로 구르듯, 전하도 전위가 높은 곳에서 낮은 곳으로 갈까?</li>
+            <li><span class="tag">복원</span>높이 h에 있는 물체의 중력 퍼텐셜 에너지는 mgh이다. 그리고 중력이 하는 일은 지나간 길과 상관없이 처음과 나중의 높이 차로만 정해진다.</li>
+            <li><span class="tag">설명</span>전위 V는 전하 1 C이 그 자리에서 갖는 전기 퍼텐셜 에너지이다. 그래서 전하 q의 퍼텐셜 에너지는 <span class="formula">U = qV</span>이고, A에서 B로 옮길 때 전기장이 하는 일은 <span class="formula">W = q(V<sub>A</sub> − V<sub>B</sub>)</span>이다. 이 값도 경로와 상관이 없다.</li>
+            <li><span class="tag">연결</span>평행판 사이에는 세기가 고른 전기장이 생기고 <span class="formula">E = V / d</span>이다. 그래서 전위는 판 사이에서 거리에 비례해 고르게 떨어진다. 전하량 e인 입자가 전위차 1 V를 지나며 얻는 에너지가 1 eV이다.</li>
+            <li><span class="tag">적용</span>입자를 이리저리 끌어 보면 판과 나란하게 움직일 때 일이 0이고, 먼 길을 돌아 제자리에 오면 누적된 일도 0이다. 이번에는 전자를 고르고 ‘놓기’를 눌러 전자가 어느 판으로 가는지 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘높이’ 비유는 양전하에만 그대로 맞는다. 전자는 전위가 <em>높은</em> 쪽으로 끌려가는데, 이때도 퍼텐셜 에너지 qV는 줄어든다. 즉 전하가 늘 내려가는 것은 전위가 아니라 퍼텐셜 에너지이다. 또 0 V를 어디로 잡든 전위는 모두 같은 값만큼 바뀔 뿐, 전위차와 일은 그대로이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">전위차 12 V인 평행판의 간격만 2배로 벌렸습니다. 전자를 − 판에 가만히 놓았을 때, + 판에 닿는 순간의 운동 에너지는?</p>
+          <p class="q">전위차 12 V인 평행판의 간격만 2배로 벌렸다. 전자를 − 판에 가만히 놓았을 때, + 판에 닿는 순간의 운동 에너지는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>6 eV로 절반이 된다.<span class="why"><b>전기장이 절반이 된 것만 보았습니다.</b> 힘은 절반이 되지만 힘을 받는 거리가 2배라, 일 = 힘 × 거리는 그대로입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12 eV로 그대로다.<span class="why"><b>맞습니다.</b> 전기장이 한 일은 전하 × 전위차로만 정해집니다. 판 간격을 바꾸고 전자를 놓아 확인해 보세요.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>24 eV로 2배가 된다.<span class="why"><b>거리가 늘어난 것만 보았습니다.</b> 전위차가 그대로인 채 간격이 넓어지면 E = V/d가 작아집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>6 eV로 절반이 된다.<span class="why"><b>전기장이 절반이 된 것만 보았다.</b> 힘은 절반이 되지만 힘을 받는 거리가 2배라, 일 = 힘 × 거리는 그대로이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12 eV로 그대로다.<span class="why"><b>맞다.</b> 전기장이 한 일은 전하 × 전위차로만 정해진다. 판 간격을 바꾸고 전자를 놓아 확인해 보아라.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>24 eV로 2배가 된다.<span class="why"><b>거리가 늘어난 것만 보았다.</b> 전위차가 그대로인 채 간격이 넓어지면 E = V/d가 작아진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-3.html#card-phy-capacitor"><small class="mono">물리학 2.3</small>축전기는 전기 에너지를 어떻게 저장할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">다른 과목에서</span><a href="../../c/adphy/2-1.html#text-adphy-gauss-sphere"><small class="mono">고급 물리학 2.1</small>가우스 법칙과 전기장</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a></div></nav>
 
       <article class="card" id="card-emq-equipotential">
         <header class="card-head">
-          <span class="no">1.1.3</span><h2>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</h2><span class="kind">점전하의 전기장과 전위 · E = −ΔV/Δr</span>
+          <span class="no">탐구 3</span><h2>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</h2><span class="kind">점전하의 전기장과 전위 · E = −ΔV/Δr</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -185,47 +244,52 @@
                 <div><dt>전기장 E = kQ/r²</dt><dd class="n-e">—</dd></div>
                 <div><dt>이웃한 등전위면 간격으로 구한 E ≈ ΔV/Δr</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">k = 9.0 × 10⁹ N·m²/C². 등전위면은 전위가 20 V씩 차이 나도록 그렸고, 실제로는 공 모양 면을 자른 원으로 보입니다.</p>
+              <p class="fig-note">k = 9.0 × 10⁹ N·m²/C²이다. 등전위면은 전위가 20 V씩 차이 나도록 그렸고, 실제로는 공 모양 면을 자른 원으로 보인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지도에서 등고선이 촘촘한 곳은 경사가 가파릅니다. 전하 둘레에 전위가 같은 점을 이은 등전위면을 그리면, 그 간격에서 무엇을 읽을 수 있을까요?</li>
-            <li><span class="tag">복원</span>두 점전하 사이의 힘은 F = kq₁q₂/r²입니다(쿨롱 법칙). 전기장은 +1 C이 받는 힘, 전위는 +1 C이 가진 전기적 퍼텐셜 에너지입니다(물리학).</li>
-            <li><span class="tag">설명</span>점전하 Q에서 r만큼 떨어진 곳의 전기장은 E = kQ/r²이고, 전위는 V = kQ/r입니다. 등전위면을 따라 전하를 옮길 때는 일이 필요 없으므로, 전기장(전기력선)은 언제나 등전위면에 수직입니다. 이웃한 두 등전위면의 전위차 ΔV를 그 사이 거리 Δr로 나누면 전기장의 세기가 됩니다(E = −ΔV/Δr). 그래서 등전위면이 촘촘한 곳일수록 전기장이 셉니다.</li>
-            <li><span class="tag">연결</span>나란한 두 금속판 사이처럼 등전위면이 같은 간격으로 늘어선 곳에서는 전기장이 어디서나 같습니다(균일한 전기장, E = V/d). 점전하 둘레에서는 멀어질수록 등전위면 간격이 넓어지고, 전기장이 거리의 제곱에 반비례해 약해집니다. 도체의 표면은 하나의 등전위면이며, 뾰족한 곳에서는 등전위면이 몰려 전기장이 매우 셉니다(피뢰침).</li>
-            <li><span class="tag">적용</span>측정점을 옮기며 E = kQ/r²과 ΔV/Δr로 어림한 값을 비교해 보세요. 전하에 가까울수록 두 값의 차이가 커지는 까닭은 무엇일까요? 전하량을 음수로 바꾸면 전위와 전기장의 방향은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“전위가 0인 곳은 전기장도 0이다”는 틀린 말입니다. 전기장은 전위의 값이 아니라 전위가 변하는 빠르기로 정해집니다. 크기가 같은 +, − 전하 한가운데는 전위가 0이지만 전기장은 셉니다.</li>
+            <li><span class="tag">질문</span>지도에서 등고선이 촘촘한 곳은 경사가 가파르다. 전하 둘레에 전위가 같은 점을 이은 등전위면을 그리면, 그 간격에서 무엇을 읽을 수 있을까?</li>
+            <li><span class="tag">복원</span>두 점전하 사이의 힘은 F = kq₁q₂/r²이다(쿨롱 법칙). 그리고 전기장은 +1 C이 받는 힘, 전위는 +1 C이 가진 전기적 퍼텐셜 에너지이다(물리학).</li>
+            <li><span class="tag">설명</span>점전하 Q에서 r만큼 떨어진 곳의 전기장은 E = kQ/r²이고, 전위는 V = kQ/r이다. 등전위면을 따라 전하를 옮길 때는 일이 필요 없으므로, 전기장(전기력선)은 언제나 등전위면에 수직이다. 또 이웃한 두 등전위면의 전위차 ΔV를 그 사이 거리 Δr로 나누면 전기장의 세기가 되므로(E = −ΔV/Δr), 등전위면이 촘촘한 곳일수록 전기장이 세다.</li>
+            <li><span class="tag">연결</span>나란한 두 금속판 사이처럼 등전위면이 같은 간격으로 늘어선 곳에서는 전기장이 어디서나 같다(균일한 전기장, E = V/d). 반면 점전하 둘레에서는 멀어질수록 등전위면 간격이 넓어지고, 전기장이 거리의 제곱에 반비례해 약해진다. 도체의 표면은 하나의 등전위면이며, 뾰족한 곳에서는 등전위면이 몰려 전기장이 매우 세다(피뢰침).</li>
+            <li><span class="tag">적용</span>측정점을 옮기며 E = kQ/r²과 ΔV/Δr로 어림한 값을 비교하고, 전하에 가까울수록 두 값의 차이가 커지는 까닭을 생각해 보자. 그리고 전하량을 음수로 바꾸면 전위와 전기장의 방향이 어떻게 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘전위가 0인 곳은 전기장도 0이다’는 틀린 말이다. 전기장은 전위의 값이 아니라 전위가 변하는 빠르기로 정해지기 때문이다. 그래서 크기가 같은 +, − 전하 한가운데는 전위가 0이지만 전기장은 세다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점전하에서 거리 r인 곳과 2r인 곳을 비교할 때, 전위와 전기장의 세기는 각각 몇 배가 될까요?</p>
+          <p class="q">점전하에서 거리 r인 곳과 2r인 곳을 비교할 때, 전위와 전기장의 세기는 각각 몇 배가 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전위는 1/2배, 전기장은 1/4배<span class="why"><b>맞습니다.</b> V ∝ 1/r, E ∝ 1/r²입니다. 그래서 멀리 갈수록 같은 전위차의 등전위면 사이가 넓어집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 1/4배<span class="why"><b>전위는 거리에 반비례합니다.</b> 제곱에 반비례하는 것은 전기장입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 1/2배<span class="why"><b>전기장은 거리의 제곱에 반비례합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전위는 1/2배, 전기장은 1/4배<span class="why"><b>맞다.</b> V ∝ 1/r, E ∝ 1/r²이다. 그래서 멀리 갈수록 같은 전위차의 등전위면 사이가 넓어진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 1/4배<span class="why"><b>전위는 거리에 반비례한다.</b> 제곱에 반비례하는 것은 전기장이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 1/2배<span class="why"><b>전기장은 거리의 제곱에 반비례한다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-1.html#card-adphy-gauss"><small class="mono">고급 물리학 2.1</small>닫힌 면 하나로 전기장을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/adphy/2-1.html#text-adphy-gauss-sphere"><small class="mono">고급 물리학 2.1</small>가우스 법칙과 전기장</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-1.html#card-adphy-gauss"><small class="mono">고급 물리학 2.1</small>닫힌 면 하나로 전기장을 구할 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=emq-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">82문항</span></a>
+      <a class="px-go" href="../../bank.html?c=emq&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=emq-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">83문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/emq/body.js"></script>
 <script src="../../js/cards/phy/em-field.js"></script>
 <script src="../../js/cards/phy/em-potential.js"></script>
 <script src="../../js/cards/emq/e-equipotential.js"></script>

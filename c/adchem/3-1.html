@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>내부 에너지와 열역학 제1법칙 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="계가 주고받는 열과 일로 내부 에너지 변화를 나타내고(ΔU = q + w), 이를 에너지 보존 법칙으로 설명한다. 내부 에너지는 상태 함수이고 열과 일은 경로에 따라 달라짐을 구별한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
 </head>
 <body data-course="adchem" data-sec="3-1">
 
@@ -38,18 +44,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-first-law"><span class="mono">3.1.1</span>기체에 준 열은 어디에 쓰일까?</a></li>
-        <li><a href="#card-adchem-path"><span class="mono">3.1.2</span>내부 에너지는 상태 함수</a></li>
+        <li><a href="#text-adchem-internal-energy"><span class="mono">본문</span>내부 에너지와 열역학 제1법칙</a></li>
+        <li><a href="#card-mech-first-law"><span class="mono">탐구 1</span>기체에 준 열은 어디에 쓰일까?</a></li>
+        <li><a href="#card-adchem-path"><span class="mono">탐구 2</span>내부 에너지는 상태 함수</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adchem-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adchem&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">7문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adchem-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adchem-internal-energy" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>내부 에너지와 열역학 제1법칙</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">식품의 열량은 '통 열량계'라는 장치로 잰다. 음식을 단단한 강철 통에 산소와 함께 밀봉하고 태워, 통을 둘러싼 물의 온도가 얼마나 오르는지 본다. 그런데 이렇게 잰 열과, 같은 반응을 대기압의 열린 그릇에서 일으켰을 때 나오는 열은 조금 다르다. 같은 반응인데 왜 두 값이 다를까? 그 차이는 어디로 간 것일까?</p>
+          <figure class="q-fig" data-q="adchem-bomb">
+            <svg viewBox="0 0 520 150" role="img" aria-label="기체 몰수 변화에 따른 엔탈피 변화와 내부 에너지 변화의 차이"></svg>
+            <div class="q-ctl"><label>반응 전후 기체 몰수 변화 Δn <input type="range" data-k="dn" min="-3" max="3" step="0.5" value="-1.5"><output data-k="dn"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 25 °C에서 반응의 엔탈피 변화와 내부 에너지 변화의 차이 ΔnRT. 기체가 줄어드는 반응(Δn &lt; 0)은 대기가 계를 눌러 일을 해 주므로 ΔH가 ΔU보다 작다(더 음수).</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>화학 반응과 열의 출입, 이상 기체 상태 방정식(화학), 일과 에너지(물리학), 실제 기체(<a href="2-3.html">실제 기체</a>).</div>
+
+          <h3><span class="no">3.1.1</span>내부 에너지와 제1법칙</h3>
+          <p>물질 속의 분자는 움직이며 운동 에너지를 가지고, 원자 사이의 결합과 분자 사이의 힘에 따른 위치 에너지도 가진다. 이 모든 에너지의 합을 내부 에너지 \(U\)라 한다. 화학 반응이 일어나면 결합이 끊어지고 새로 생기며 내부 에너지가 변한다. 그 변화량 \(\Delta U\)는 계가 주위와 주고받은 열 \(q\)와 일 \(w\)의 합과 같다. 에너지는 새로 생기거나 사라지지 않는다는 이 원리가 열역학 제1법칙이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.1.1 <span class="nm">제1법칙과 엔탈피</span></span>
+            <p>계가 받은 열을 \(q\), 받은 일을 \(w\)라 하면 \(\Delta U = q + w\)이다. 부피가 일정하면 일이 0이라 \(q_V = \Delta U\)이다. 압력이 일정하면 계가 팽창하며 \(-P\Delta V\)의 일을 하므로, 이때 출입한 열을 엔탈피 변화 \(\Delta H = \Delta U + P\Delta V\)로 정의한다. 기체의 몰수가 \(\Delta n\)만큼 변하면 \(\Delta H = \Delta U + \Delta n RT\)이다.</p>
+          </div>
+          <p>그림 1에서 기체 몰수 변화를 바꾸어 보자. 통 열량계는 부피가 일정하므로 \(\Delta U\)를 잰다. 수소 연소 H₂ + ½O₂ → H₂O(l)처럼 기체 1.5 mol이 액체로 사라지는 반응은, 열린 그릇에서라면 대기가 줄어든 부피만큼 계를 눌러 \(1.5 \times 8.314 \times 298 \approx 3.7\) kJ의 일을 해 준다. 그 에너지까지 열로 나오므로 \(\Delta H\)가 \(\Delta U\)보다 3.7 kJ 더 음수이다. 포도당의 연소처럼 기체의 몰수가 변하지 않으면 두 값이 같다.<sup class="fn"><a href="#fn-adchem-internal-energy-1">1</a></sup></p>
+
+          <h3><span class="no">3.1.2</span>상태 함수</h3>
+          <p>내부 에너지와 엔탈피는 계의 현재 상태만으로 정해지는 상태 함수이다. 산에서 어느 지점의 해발 고도가 그렇듯, 어떤 길로 올라왔는지가 아니라 지금 어디에 있는지만으로 값이 정해진다. 그래서 반응물에서 생성물로 가는 \(\Delta U\)와 \(\Delta H\)는 반응이 어떤 경로로 일어났는지에 상관없다. 반면 열과 일은 경로에 따라 달라진다. 같은 연료를 엔진에서 태우면 일부가 일이 되고, 그냥 태우면 모두 열이 된다. 하지만 두 경우의 \(\Delta U\)는 같다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="반응에 따른 기체 몰수 변화와 ΔH, ΔU의 관계">
+              <g class="s">
+                <text x="20" y="22">반응</text><text x="270" y="22">Δn (기체)</text><text x="380" y="22">ΔH − ΔU</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">H₂(g) + ½O₂(g) → H₂O(l)</text><text x="270" y="52">−1.5</text><text x="380" y="52">−3.7 kJ</text>
+                <text x="20" y="74">C₆H₁₂O₆(s) + 6O₂(g) → 6CO₂(g) + 6H₂O(l)</text><text x="270" y="74">0</text><text x="380" y="74">0</text>
+                <text x="20" y="96">CaCO₃(s) → CaO(s) + CO₂(g)</text><text x="270" y="96">+1</text><text x="380" y="96">+2.5 kJ</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 고체와 액체의 부피 변화는 아주 작으므로, 기체 몰수의 변화만 따지면 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>열용량이 10.0 kJ/K인 통 열량계에서 벤조산(C₆H₅COOH, 몰질량 122.1 g/mol) 1.000 g을 완전히 태웠더니 온도가 2.64 K 올랐다. 벤조산의 몰당 \(\Delta U\)와 25 °C에서의 \(\Delta H\)를 구하여라. 반응식은 C₆H₅COOH(s) + 7.5O₂(g) → 7CO₂(g) + 3H₂O(l)이다.</p>
+          </div>
+          <p>열량계가 받은 열은 \(10.0 \times 2.64 = 26.4\) kJ이다. 이 열은 반응계가 내놓은 것이므로 1.000 g당 \(\Delta U = -26.4\) kJ, 몰당 \(-26.4 \times 122.1 \approx -3223\) kJ/mol이다.</p>
+          <p>기체 몰수 변화는 \(7 - 7.5 = -0.5\)이므로 \(\Delta H = \Delta U + \Delta nRT = -3223 + (-0.5)(8.314 \times 10^{-3})(298) \approx -3223 - 1.2 = -3224\) kJ/mol이다. 차이는 0.04%로 아주 작다. 그래서 식품 열량처럼 대략의 값을 쓸 때는 두 값을 구별하지 않지만, 정밀한 열화학 자료에는 \(\Delta n\)의 보정을 반드시 넣는다. 벤조산은 연소열이 정확히 알려져 있어 열량계의 열용량을 맞추는 표준 물질로 쓰인다.</p>
+          <p>아래 탐구 카드에서 열량계로 반응열을 재어 보고, 부피가 일정할 때와 압력이 일정할 때의 열이 왜 다른지 정리해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adchem-internal-energy-1">화학에서는 계가 받은 일을 양수로 쓰는 것이 보통이지만, 물리학이나 공학 책에서는 계가 한 일을 양수로 써서 \(\Delta U = Q - W\)로 적기도 한다. 부호의 약속만 다를 뿐 같은 법칙이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>내부 에너지는 물질 속 입자들의 모든 에너지의 합이며, 그 변화는 주고받은 열과 일의 합과 같다. 부피가 일정한 통 열량계는 내부 에너지 변화를 재고, 압력이 일정한 열린 그릇에서 출입한 열은 엔탈피 변화로, 둘은 기체 몰수 변화만큼 \(\Delta nRT\) 다르다. 그래서 처음 질문의 두 연소열은 열린 그릇에서 대기가 계와 주고받는 일만큼 차이가 난다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-2.html#card-mech-ideal-gas"><small class="mono">역학과 에너지 2.2</small>기체를 데우면 압력은 왜 커질까?</a><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adphy/1-5.html#text-adphy-expansion-work"><small class="mono">고급 물리학 1.5</small>이상 기체와 열역학 제1법칙</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a><a href="../../c/adphy/1-6.html#text-adphy-entropy-flow"><small class="mono">고급 물리학 1.6</small>열효율과 엔트로피</a><a href="../../c/mech/2-5.html#card-mech-entropy"><small class="mono">역학과 에너지 2.5</small>퍼진 기체는 왜 저절로 다시 모이지 않을까?</a><a href="../../c/mech/2-5.html#text-mech-entropy"><small class="mono">역학과 에너지 2.5</small>엔트로피와 비가역 현상</a></div></nav>
+
       <article class="card" id="card-mech-first-law">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>기체에 준 열은 어디에 쓰일까?</h2><span class="kind">열역학 제1법칙 · Q = ΔU + W</span>
+          <span class="no">탐구 1</span><h2>기체에 준 열은 어디에 쓰일까?</h2><span class="kind">열역학 제1법칙 · Q = ΔU + W</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -66,33 +123,33 @@
                 <div><dt>기체가 한 일 W</dt><dd class="n-w">—</dd></div>
                 <div><dt>나중 온도</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">단원자 이상 기체 1 mol, 처음 상태 300 K, 약 100 kPa, 24.9 L. 내부 에너지 U = (3/2)nRT. W는 기체가 바깥에 한 일로, 부피가 늘면 양(+), 줄면 음(−)입니다.</p>
+              <p class="fig-note">단원자 이상 기체 1 mol을 다루며, 처음 상태는 300 K, 약 100 kPa, 24.9 L이다. 내부 에너지는 U = (3/2)nRT이고, W는 기체가 바깥에 한 일로 부피가 늘면 양(+), 줄면 음(−)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>같은 1000 J의 열을 기체에 주어도, 피스톤을 고정했을 때와 피스톤이 자유롭게 움직일 때 기체의 온도는 똑같이 오를까요?</li>
-            <li><span class="tag">복원</span>기체 분자들의 운동 에너지를 모두 더한 것을 <em>내부 에너지</em>라고 하고, 이상 기체에서는 절대 온도에 비례합니다. 기체가 피스톤을 밀며 부피가 ΔV만큼 늘면 압력 P로 PΔV만큼 일을 합니다. 이 일은 P–V 그래프에서 경로 아래의 넓이입니다.</li>
-            <li><span class="tag">설명</span>에너지 보존에 따라 기체에 들어온 열 Q는 내부 에너지를 늘리는 데(ΔU)와 바깥에 일을 하는 데(W) 나뉘어 쓰입니다. <em>Q = ΔU + W</em>, 곧 열역학 제1법칙입니다. 부피가 일정하면 W = 0이라 열이 모두 온도를 올리고, 압력이 일정하면 일부가 일로 빠져나가 온도가 덜 오릅니다.</li>
-            <li><span class="tag">연결</span>온도가 일정한 과정에서는 ΔU = 0이라 받은 열이 모두 일로 바뀝니다. 열이 전혀 드나들지 않는 <em>단열</em> 과정에서는 Q = 0이라, 기체를 압축하면(W &lt; 0) 그만큼 내부 에너지가 늘어 온도가 오르고, 팽창하면 온도가 내려갑니다. 자전거 펌프가 뜨거워지고, 스프레이를 오래 뿌리면 캔이 차가워지는 까닭입니다.</li>
-            <li><span class="tag">적용</span>“부피 일정”과 “압력 일정”에서 같은 1000 J을 주고 나중 온도를 비교하세요. 두 온도 변화의 비는 얼마인가요? “단열”에서 부피를 절반으로 줄이면 온도는 몇 K가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“열을 받으면 반드시 온도가 오른다”는 오개념입니다. 온도 일정 과정에서는 열을 받아도 온도가 그대로이고, 단열 압축에서는 열을 받지 않아도 온도가 오릅니다. 온도를 바꾸는 것은 열이 아니라 내부 에너지의 변화이고, 내부 에너지는 열과 일 둘 다로 바뀝니다.</li>
+            <li><span class="tag">질문</span>같은 1000 J의 열을 기체에 주어도, 피스톤을 고정했을 때와 피스톤이 자유롭게 움직일 때 기체의 온도는 똑같이 오를까?</li>
+            <li><span class="tag">복원</span>기체 분자들의 운동 에너지를 모두 더한 것을 <em>내부 에너지</em>라 하고, 이상 기체에서는 절대 온도에 비례한다. 그리고 기체가 피스톤을 밀며 부피가 ΔV만큼 늘면 압력 P로 PΔV만큼 일을 하며, 이 일은 P–V 그래프에서 경로 아래의 넓이이다.</li>
+            <li><span class="tag">설명</span>에너지 보존에 따라 기체에 들어온 열 Q는 내부 에너지를 늘리는 데(ΔU)와 바깥에 일을 하는 데(W) 나뉘어 쓰이며, 이것이 <em>Q = ΔU + W</em>, 곧 열역학 제1법칙이다. 그래서 부피가 일정하면 W = 0이라 열이 모두 온도를 올리고, 압력이 일정하면 일부가 일로 빠져나가 온도가 덜 오른다.</li>
+            <li><span class="tag">연결</span>온도가 일정한 과정에서는 ΔU = 0이라 받은 열이 모두 일로 바뀐다. 반면 열이 전혀 드나들지 않는 <em>단열</em> 과정에서는 Q = 0이라, 기체를 압축하면(W &lt; 0) 그만큼 내부 에너지가 늘어 온도가 오르고 팽창하면 온도가 내려간다. 자전거 펌프가 뜨거워지고 스프레이를 오래 뿌리면 캔이 차가워지는 까닭이 이것이다.</li>
+            <li><span class="tag">적용</span>‘부피 일정’과 ‘압력 일정’에서 같은 1000 J을 주고 나중 온도를 비교하며 두 온도 변화의 비를 구해 보자. 그리고 ‘단열’에서 부피를 절반으로 줄이면 온도가 몇 K가 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>열을 받으면 반드시 온도가 오른다는 생각은 오개념이다. 온도 일정 과정에서는 열을 받아도 온도가 그대로이고, 단열 압축에서는 열을 받지 않아도 온도가 오르기 때문이다. 즉 온도를 바꾸는 것은 열이 아니라 내부 에너지의 변화이고, 내부 에너지는 열과 일 둘 다로 바뀐다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">기체에 열 500 J을 주었더니 기체가 피스톤을 밀어 바깥에 200 J의 일을 했습니다. 기체의 내부 에너지는?</p>
+          <p class="q">기체에 열 500 J을 주었더니 기체가 피스톤을 밀어 바깥에 200 J의 일을 했다. 기체의 내부 에너지는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>300 J 늘었다<span class="why"><b>맞습니다.</b> ΔU = Q − W = 500 − 200 = 300 J입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>700 J 늘었다<span class="why"><b>일의 부호를 거꾸로 본 답입니다.</b> 기체가 바깥에 일을 하면 그만큼 에너지가 빠져나갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>500 J 늘었다<span class="why"><b>일로 빠져나간 에너지를 빠뜨렸습니다.</b> 받은 열이 모두 내부 에너지로 가는 것은 부피가 일정할 때뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>300 J 늘었다<span class="why"><b>맞다.</b> ΔU = Q − W = 500 − 200 = 300 J이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>700 J 늘었다<span class="why"><b>일의 부호를 거꾸로 본 답이다.</b> 기체가 바깥에 일을 하면 그만큼 에너지가 빠져나간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>500 J 늘었다<span class="why"><b>일로 빠져나간 에너지를 빠뜨렸다.</b> 받은 열이 모두 내부 에너지로 가는 것은 부피가 일정할 때뿐이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-2.html#card-mech-ideal-gas"><small class="mono">역학과 에너지 2.2</small>기체를 데우면 압력은 왜 커질까?</a><a href="../../c/phy/1-5.html#card-phy-brake"><small class="mono">물리학 1.5</small>멈춘 자동차의 운동 에너지는 어디로 갔을까?</a><a href="../../c/phy/1-5.html#card-phy-joule"><small class="mono">물리학 1.5</small>물을 저어서 데울 수 있을까?</a><a href="../../c/phy/1-5.html#card-phy-heat-transfer"><small class="mono">물리학 1.5</small>난로의 열은 어떤 길로 나에게 올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a><a href="../../c/mech/2-5.html#card-mech-entropy"><small class="mono">역학과 에너지 2.5</small>퍼진 기체는 왜 저절로 다시 모이지 않을까?</a><a href="../../c/adphy/1-5.html#card-adphy-process"><small class="mono">고급 물리학 1.5</small>같은 부피만큼 팽창해도 필요한 열은 왜 다를까?</a><a href="../../c/adearth/2-2.html#card-adearth-lapse"><small class="mono">고급 지구과학 2.2</small>밀려 올라간 공기 덩어리는 되돌아올까, 계속 올라갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-2.html#card-mech-ideal-gas"><small class="mono">역학과 에너지 2.2</small>기체를 데우면 압력은 왜 커질까?</a><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adphy/1-5.html#text-adphy-expansion-work"><small class="mono">고급 물리학 1.5</small>이상 기체와 열역학 제1법칙</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/2-4.html#card-mech-cycle"><small class="mono">역학과 에너지 2.4</small>한 바퀴 돌 때 열기관은 얼마만큼 일을 할까?</a><a href="../../c/adphy/1-6.html#text-adphy-entropy-flow"><small class="mono">고급 물리학 1.6</small>열효율과 엔트로피</a><a href="../../c/mech/2-5.html#card-mech-entropy"><small class="mono">역학과 에너지 2.5</small>퍼진 기체는 왜 저절로 다시 모이지 않을까?</a><a href="../../c/mech/2-5.html#text-mech-entropy"><small class="mono">역학과 에너지 2.5</small>엔트로피와 비가역 현상</a></div></nav>
 
       <article class="card" id="card-adchem-path">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>같은 곳에 도착해도 길에 따라 열과 일이 달라질까?</h2><span class="kind">ΔU = q + w · 상태 함수와 경로 함수 · P–V 도표</span>
+          <span class="no">탐구 2</span><h2>같은 곳에 도착해도 길에 따라 열과 일이 달라질까?</h2><span class="kind">ΔU = q + w · 상태 함수와 경로 함수 · P–V 도표</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -119,47 +176,51 @@
                 <div><dt>받은 일 w</dt><dd class="n-w">—</dd></div>
                 <div><dt>ΔU = q + w</dt><dd class="n-u">—</dd></div>
               </dl>
-              <p class="fig-note">계: 이상 기체 1 mol. 상태 A는 1.00 bar, 24.8 L(298 K)로 고정했습니다. 일은 바깥 압력과 기체 압력이 같게 천천히 움직인다고 보고 w = −∫P dV로 계산했고(1 bar·L = 100 J), ΔU = nC<sub>V</sub>ΔT입니다(C<sub>V</sub> = 3/2 R 또는 5/2 R). 부호는 화학의 약속대로 계가 받으면 +입니다.</p>
+              <p class="fig-note">계: 이상 기체 1 mol. 상태 A는 1.00 bar, 24.8 L(298 K)로 고정했다. 일은 바깥 압력과 기체 압력이 같게 천천히 움직인다고 보고 w = −∫P dV로 계산했고(1 bar·L = 100 J), ΔU = nC<sub>V</sub>ΔT이다(C<sub>V</sub> = 3/2 R 또는 5/2 R). 부호는 화학의 약속대로 계가 받으면 +이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>서울에서 부산까지 고속 열차로 가든 국도로 가든 도착지의 높이는 같지만, 쓴 연료의 양은 다릅니다. 기체가 상태 A에서 상태 B로 바뀔 때도, 어떤 길로 가느냐에 따라 달라지는 양과 달라지지 않는 양이 있을까요?</li>
-            <li><span class="tag">복원</span>물리에서는 기체에 준 열 Q가 내부 에너지 증가 ΔU와 기체가 바깥에 한 일 W로 나뉜다고 배웠습니다(Q = ΔU + W). 이상 기체의 내부 에너지는 온도만으로 정해지고, 기체가 한 일은 P–V 도표에서 경로 아래 넓이입니다.</li>
-            <li><span class="tag">설명</span>화학에서는 관심 있는 물질(계)의 입장에서 들어온 에너지를 +로 셉니다. 계가 받은 열을 q, 계가 받은 일을 w라 하면 <em>ΔU = q + w</em>입니다. 기체가 팽창하면 바깥을 밀어 일을 해 주므로 w = −P<sub>ext</sub>ΔV로 음수가 됩니다. 내부 에너지 U는 지금의 상태(온도, 압력, 부피, 조성)만으로 정해지는 <em>상태 함수</em>이지만, q와 w는 거쳐 간 경로에 따라 값이 달라지는 <em>경로 함수</em>입니다.</li>
-            <li><span class="tag">연결</span>계와 주위를 합친 우주의 에너지는 늘거나 줄지 않습니다. 계의 ΔU가 −100 kJ이면 주위가 열과 일로 정확히 100 kJ을 받습니다. 반응을 단단한 밀폐 용기(봄베 열량계)에서 하면 ΔV = 0이라 w = 0이고, 이때 잰 열이 곧 ΔU입니다. 열린 비커처럼 압력이 일정하면 기체가 생기거나 없어질 때 일이 끼어드므로, 다음 절에서 엔탈피라는 새 상태 함수를 씁니다.</li>
-            <li><span class="tag">적용</span>B를 고정한 채 경로 ①, ②, ③을 바꿔 보세요. q, w, ΔU 가운데 바뀌지 않는 것은 무엇인가요? P<sub>B</sub> = 1.00 bar, V<sub>B</sub> = 24.8 L로 A와 같은 온도에 놓으면 ΔU는 얼마이고, q와 w는 어떤 관계인가요? 기체를 단원자에서 이원자로 바꾸면 무엇이 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>물리 교과서의 Q = ΔU + W와 화학의 ΔU = q + w는 같은 법칙입니다. 다만 W는 계가 ‘한’ 일, w는 계가 ‘받은’ 일이라 w = −W입니다. 또 “열을 많이 가진 물체”라는 말은 틀린 표현입니다. 물체가 가진 것은 내부 에너지이고, 열과 일은 경계를 넘어가는 동안의 에너지 이동일 뿐입니다.</li>
+            <li><span class="tag">질문</span>서울에서 부산까지 고속 열차로 가든 국도로 가든 도착지의 높이는 같지만, 쓴 연료의 양은 다르다. 기체가 상태 A에서 상태 B로 바뀔 때도, 어떤 길로 가느냐에 따라 달라지는 양과 달라지지 않는 양이 있을까?</li>
+            <li><span class="tag">복원</span>물리에서는 기체에 준 열 Q가 내부 에너지 증가 ΔU와 기체가 바깥에 한 일 W로 나뉜다고 배웠다(Q = ΔU + W). 이상 기체의 내부 에너지는 온도만으로 정해지고, 기체가 한 일은 P–V 도표에서 경로 아래 넓이이다.</li>
+            <li><span class="tag">설명</span>화학에서는 관심 있는 물질(계)의 입장에서 들어온 에너지를 +로 센다. 계가 받은 열을 q, 계가 받은 일을 w라 하면 <em>ΔU = q + w</em>이다. 기체가 팽창하면 바깥을 밀어 일을 해 주므로 w = −P<sub>ext</sub>ΔV로 음수가 된다. 내부 에너지 U는 지금의 상태(온도, 압력, 부피, 조성)만으로 정해지는 <em>상태 함수</em>이지만, q와 w는 거쳐 간 경로에 따라 값이 달라지는 <em>경로 함수</em>이다.</li>
+            <li><span class="tag">연결</span>계와 주위를 합친 우주의 에너지는 늘거나 줄지 않는다. 계의 ΔU가 −100 kJ이면 주위가 열과 일로 정확히 100 kJ을 받는다. 반응을 단단한 밀폐 용기(봄베 열량계)에서 하면 ΔV = 0이라 w = 0이고, 이때 잰 열이 곧 ΔU이다. 열린 비커처럼 압력이 일정하면 기체가 생기거나 없어질 때 일이 끼어드므로, 다음 절에서 엔탈피라는 새 상태 함수를 쓴다.</li>
+            <li><span class="tag">적용</span>B를 고정한 채 경로 ①, ②, ③을 바꿔 보자. q, w, ΔU 가운데 바뀌지 않는 것은 무엇인가? P<sub>B</sub> = 1.00 bar, V<sub>B</sub> = 24.8 L로 A와 같은 온도에 놓으면 ΔU는 얼마이고, q와 w는 어떤 관계인가? 기체를 단원자에서 이원자로 바꾸면 무엇이 달라지는가?</li>
+            <li class="warn"><span class="tag">판단</span>물리 교과서의 Q = ΔU + W와 화학의 ΔU = q + w는 같은 법칙이다. 다만 W는 계가 ‘한’ 일, w는 계가 ‘받은’ 일이라 w = −W이다. 또 “열을 많이 가진 물체”라는 말은 틀린 표현이다. 물체가 가진 것은 내부 에너지이고, 열과 일은 경계를 넘어가는 동안의 에너지 이동일 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 계가 A → B → A로 한 바퀴 돌아 처음 상태로 돌아왔습니다. 이 동안 계는 바깥에 모두 150 J의 일을 했습니다(w = −150 J). 한 바퀴 동안 계가 받은 열 q와 ΔU는?</p>
+          <p class="q">어떤 계가 A → B → A로 한 바퀴 돌아 처음 상태로 돌아왔다. 이 동안 계는 바깥에 모두 150 J의 일을 했다(w = −150 J). 한 바퀴 동안 계가 받은 열 q와 ΔU는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>q = 0, ΔU = −150 J<span class="why"><b>ΔU는 처음과 나중 상태만으로 정해집니다.</b> 처음 상태로 돌아왔으니 ΔU = 0이어야 합니다. 일을 한 만큼 에너지가 줄었다고 생각하기 쉽지만, 그만큼 열이 들어왔습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>q = +150 J, ΔU = 0<span class="why"><b>맞습니다.</b> U는 상태 함수라 순환 과정에서 ΔU = 0이고, q = ΔU − w = +150 J입니다. 열기관이 받은 열을 일로 바꾸는 원리가 바로 이것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>q = 0, ΔU = 0<span class="why"><b>q와 w는 경로 함수입니다.</b> 제자리로 돌아와도 0이 될 이유가 없습니다. ΔU = q + w = 0이 성립하려면 q = +150 J이어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>q = 0, ΔU = −150 J<span class="why"><b>ΔU는 처음과 나중 상태만으로 정해진다.</b> 처음 상태로 돌아왔으니 ΔU = 0이어야 한다. 일을 한 만큼 에너지가 줄었다고 생각하기 쉽지만, 그만큼 열이 들어왔다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>q = +150 J, ΔU = 0<span class="why"><b>맞다.</b> U는 상태 함수라 순환 과정에서 ΔU = 0이고, q = ΔU − w = +150 J이다. 열기관이 받은 열을 일로 바꾸는 원리가 바로 이것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>q = 0, ΔU = 0<span class="why"><b>q와 w는 경로 함수이다.</b> 제자리로 돌아와도 0이 될 이유가 없다. ΔU = q + w = 0이 성립하려면 q = +150 J이어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-2.html#card-mech-ideal-gas"><small class="mono">역학과 에너지 2.2</small>기체를 데우면 압력은 왜 커질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/3-2.html#card-adchem-formation"><small class="mono">고급 화학 3.2</small>표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/2-2.html#card-mech-ideal-gas"><small class="mono">역학과 에너지 2.2</small>기체를 데우면 압력은 왜 커질까?</a><a href="../../c/mateng/1-1.html#text-mateng-gas-law"><small class="mono">물질과 에너지 1.1</small>이상 기체 방정식</a><a href="../../c/adphy/1-5.html#text-adphy-expansion-work"><small class="mono">고급 물리학 1.5</small>이상 기체와 열역학 제1법칙</a><a href="../../c/adchem/2-1.html#text-adchem-speed-distribution"><small class="mono">고급 화학 2.1</small>기체 분자 운동론과 속력 분포</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adchem/3-2.html#card-adchem-formation"><small class="mono">고급 화학 3.2</small>표준 생성 엔탈피 표 하나로 모든 반응열을 구할 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adchem-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adchem&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">7문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adchem/body.js"></script>
 <script src="../../js/cards/mech/t-first-law.js"></script>
 <script src="../../js/cards/adchem/th-path.js"></script>
 </body>

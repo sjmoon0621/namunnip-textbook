@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>가설검정 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="귀무가설 p = 0.5, 동전 100번의 앞면 수로 구하는 양측 유의확률(이항분포와 2000회 시뮬레이션), 유의수준과 기각, 효과 없는 것을 m번 검정할 때 적어도 하나 유의할 확률 1 − 0.95^m과 결과를 골라 보고하는 문제. 동전 검정 카드와, 여러 번 검정 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pstat-coin-test canvas { aspect-ratio: 16 / 8; max-width: 600px; margin: .3rem auto 0; }
@@ -45,18 +50,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pstat-coin-test"><span class="mono">3.4.1</span>100번 중 61번 앞면 — 이 동전은 공정할까? 유의확률로 판단</a></li>
-        <li><a href="#card-pstat-p-hacking"><span class="mono">3.4.2</span>효과 없는 것을 20번 검정하면 — 여러 번 검정의 함정</a></li>
+        <li><a href="#text-pstat-test"><span class="mono">본문</span>가설검정</a></li>
+        <li><a href="#card-pstat-coin-test"><span class="mono">탐구 1</span>100번 중 61번 앞면 — 이 동전은 공정할까? 유의확률로 판단</a></li>
+        <li><a href="#card-pstat-p-hacking"><span class="mono">탐구 2</span>효과 없는 것을 20번 검정하면 — 여러 번 검정의 함정</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pstat-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pstat&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">19문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pstat-3-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pstat-test" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>가설검정</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">친구가 가져온 동전을 100번 던졌더니 앞면이 61번 나왔다. 공정한 동전이라면 50번 근처가 나와야 하지만, 공정한 동전도 우연히 55번이나 45번쯤은 나올 수 있다. 61번은 우연으로 볼 수 있을 만큼 흔한 결과일까, 아니면 동전이 치우쳤다고 의심할 만큼 드문 결과일까? 그리고 이런 판단을 여러 번 되풀이하면 어떤 함정이 생길까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 220" role="img" aria-label="공정한 동전을 100번 던질 때 앞면 수의 분포">
+              <line x1="56" y1="190" x2="496" y2="190" class="ax"/>
+              <rect x="60" y="188.4" width="12" height="1.6" class="ld"/><rect x="74" y="187.1" width="12" height="2.9" class="ld"/><rect x="88" y="184.9" width="12" height="5.1" class="ld"/><rect x="102" y="181.6" width="12" height="8.4" class="ld"/><rect x="116" y="176.6" width="12" height="13.4" class="ld"/><rect x="130" y="169.6" width="12" height="20.4" class="lb"/><rect x="144" y="160.1" width="12" height="29.9" class="lb"/><rect x="158" y="148.0" width="12" height="42.0" class="lb"/><rect x="172" y="133.4" width="12" height="56.6" class="lb"/><rect x="186" y="116.7" width="12" height="73.3" class="lb"/><rect x="200" y="98.8" width="12" height="91.2" class="lb"/><rect x="214" y="80.9" width="12" height="109.1" class="lb"/><rect x="228" y="64.7" width="12" height="125.3" class="lb"/><rect x="242" y="51.6" width="12" height="138.4" class="lb"/><rect x="256" y="43.1" width="12" height="146.9" class="lb"/><rect x="270" y="40.2" width="12" height="149.8" class="lb"/><rect x="284" y="43.1" width="12" height="146.9" class="lb"/><rect x="298" y="51.6" width="12" height="138.4" class="lb"/><rect x="312" y="64.7" width="12" height="125.3" class="lb"/><rect x="326" y="80.9" width="12" height="109.1" class="lb"/><rect x="340" y="98.8" width="12" height="91.2" class="lb"/><rect x="354" y="116.7" width="12" height="73.3" class="lb"/><rect x="368" y="133.4" width="12" height="56.6" class="lb"/><rect x="382" y="148.0" width="12" height="42.0" class="lb"/><rect x="396" y="160.1" width="12" height="29.9" class="lb"/><rect x="410" y="169.6" width="12" height="20.4" class="lb"/><rect x="424" y="176.6" width="12" height="13.4" class="ld"/><rect x="438" y="181.6" width="12" height="8.4" class="ld"/><rect x="452" y="184.9" width="12" height="5.1" class="ld"/><rect x="466" y="187.1" width="12" height="2.9" class="ld"/><rect x="480" y="188.4" width="12" height="1.6" class="ld"/>
+              <text x="66" y="206" class="s" text-anchor="middle">35</text><text x="276" y="206" class="s" text-anchor="middle">50</text><text x="430" y="206" class="s" text-anchor="middle">61</text><text x="486" y="206" class="s" text-anchor="middle">65</text>
+              <text x="430" y="150" class="s td" text-anchor="middle">61 이상</text><text x="430" y="164" class="s td" text-anchor="middle">1.8%</text>
+              <text x="110" y="150" class="s td" text-anchor="middle">39 이하</text><text x="110" y="164" class="s td" text-anchor="middle">1.8%</text>
+              <text x="496" y="218" class="s" text-anchor="end">앞면의 수</text>
+            </svg>
+            <figcaption>그림 1. 공정한 동전을 100번 던질 때 앞면 수의 분포. 61번 이상이거나 39번 이하로 50에서 11 이상 벗어날 확률은 합쳐 3.5%이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>이항분포, 여사건의 확률, 정규분포와 표준화(<a href="3-1.html">정규분포와 t분포</a>).</div>
+
+          <h3><span class="no">3.4.1</span>귀무가설을 세우고 반박하기</h3>
+          <p>가설검정은 먼저 '아무 일도 없다'는 가설을 세운다. 동전이라면 '앞면이 나올 확률은 0.5이다'가 그것이며, 이를 귀무가설이라 한다. 그리고 귀무가설이 참이라고 가정할 때, 관찰한 결과만큼 또는 그보다 더 극단적인 결과가 나올 확률을 계산한다. 이 확률을 유의확률(p값)이라 한다. 유의확률이 미리 정한 기준인 유의수준, 흔히 5%보다 작으면, 귀무가설 아래에서는 좀처럼 일어나지 않을 일이 일어났다고 보고 귀무가설을 기각한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">가설검정의 판단</span></span>
+            <p>유의확률이 유의수준 \(\alpha\)보다 작으면 귀무가설을 기각하고, 그렇지 않으면 기각하지 않는다. 귀무가설이 참인데도 기각할 확률, 곧 우연을 효과로 잘못 판단할 확률은 \(\alpha\)이다.</p>
+          </div>
+          <p>그림 1에서 50을 가운데로 하는 종 모양의 분포가 귀무가설 아래의 분포이다. 61번 이상 나올 확률은 약 1.8%이고, 동전이 어느 쪽으로든 치우쳤는지 묻는다면 39번 이하인 반대쪽 꼬리도 더해 유의확률은 약 3.5%이다. 5%보다 작으므로 공정한 동전이라는 가설을 기각한다. 그런데 기각하지 못하는 경우, 곧 유의확률이 5%를 넘는 경우에도 동전이 공정하다고 증명된 것은 아니다. 치우쳤다는 증거가 충분하지 않다는 뜻일 뿐이다.<sup class="fn"><a href="#fn-pstat-test-1">1</a></sup></p>
+          <p>보이고 싶은 것은 '동전이 치우쳤다'인데 왜 반대인 '공정하다'를 먼저 세울까? 치우쳤다는 말은 앞면 확률이 0.6인지 0.55인지 정해 주지 않아서 그 아래에서 확률을 계산할 수가 없지만, 공정하다는 가설은 0.5 하나로 분포를 정확히 정해 준다. 그래서 계산할 수 있는 쪽을 가정하고, 그 가정 아래에서 관찰 결과가 얼마나 어색한지를 따진다. 귀류법에서 결론의 부정을 가정해 모순을 찾는 것과 같은 짜임이고, 재판에서 '죄가 없다'고 가정한 채 그것을 뒤집을 만한 증거가 있는지 보는 것과도 닮았다. 이때 생길 수 있는 잘못은 두 가지이다. 불이 나지 않았는데 화재 경보가 울리듯 귀무가설이 참인데 기각하는 것을 제1종 오류, 불이 났는데 경보가 조용하듯 귀무가설이 거짓인데 기각하지 못하는 것을 제2종 오류라 한다. 유의수준 \(\alpha\)는 제1종 오류를 얼마까지 감수할지 미리 정해 둔 값이다.</p>
+
+          <h3><span class="no">3.4.2</span>여러 번 검정하는 함정</h3>
+          <p>유의수준 5%는 효과가 없어도 20번에 한 번쯤은 우연히 '유의하다'는 결과가 나온다는 뜻이다. 아무 효과 없는 영양제를 두통, 피로, 피부, 수면 등 20가지 증상에 대해 각각 검정하면, 적어도 하나에서 '효과 있음'이 나올 확률은 \(1 - 0.95^{20} \approx 64\)%이다. 그 하나만 골라 발표하면 효과가 있는 것처럼 보인다. 이런 일을 막으려면 무엇을 검정할지 실험 전에 정해 두고, 여러 번 검정할 때는 유의수준을 검정 횟수로 나누어 더 엄격하게 잡는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="검정 횟수와 적어도 한 번 잘못 기각할 확률">
+              <g class="s">
+                <text x="20" y="22">검정 횟수</text><text x="140" y="22">1</text><text x="220" y="22">5</text><text x="300" y="22">10</text><text x="380" y="22">20</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">적어도 한 번</text><text x="140" y="52">5%</text><text x="220" y="52">23%</text><text x="300" y="52">40%</text><text x="380" y="52" class="td">64%</text>
+                <text x="20" y="74">유의수준을 5%/횟수로 나누면</text><text x="380" y="74">약 5%</text>
+                <text x="20" y="96">효과가 전혀 없을 때, 우연히 '유의함'이 하나라도 나올 확률</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 검정을 여러 번 하면 효과가 없어도 '유의한' 결과가 나올 확률이 빠르게 커진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.4.2</span>
+            <p>공정한 동전을 100번 던질 때 앞면의 수 \(X\)의 평균과 표준편차를 구하고, 61번을 표준화하여라. 정규분포로 어림한 양쪽 유의확률은 얼마이고, 유의수준 5%에서 결론은 무엇인가? 만약 앞면이 58번이었다면 결론은 어떻게 되는가?</p>
+          </div>
+          <p>\(X\)는 이항분포 \(\mathrm{B}(100, 0.5)\)를 따르므로 평균은 50, 표준편차는 \(\sqrt{100 \times 0.5 \times 0.5} = 5\)이다. 61번을 표준화하면 \(z = (61 - 50)/5 = 2.2\)이고, \(P(|Z| \ge 2.2) \approx 2 \times 0.0139 = 0.028\)이다. 이항분포로 정확히 계산한 3.5%와 조금 다르지만 둘 다 5%보다 작으므로, 유의수준 5%에서 동전이 공정하다는 가설을 기각한다.</p>
+          <p>58번이었다면 \(z = 8/5 = 1.6\)이고 양쪽 유의확률은 약 11%이다. 5%보다 크므로 귀무가설을 기각하지 못한다. 이때도 '동전은 공정하다'가 아니라 '100번으로는 치우침을 보이기에 증거가 부족하다'고 말한다. 같은 58%의 비율이라도 400번 던져 232번이 나왔다면 \(z = 32/10 = 3.2\)로 기각된다. 즉 같은 치우침이라도 자료가 많을수록 우연과 구별하기 쉬워진다.</p>
+          <p>아래 탐구 카드에서 동전 던지기 결과로 가설검정을 해 보고, 여러 번 검정할 때 우연한 '유의함'이 얼마나 자주 나오는지 시뮬레이션으로 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pstat-test-1">1920년대 영국의 피셔는 차에 우유를 먼저 넣었는지 나중에 넣었는지 맞힐 수 있다는 한 학자의 주장을 시험하는 실험을 예로 들어 가설검정의 논리를 설명했다. 유의수준 5%를 기준으로 쓰는 관습도 그의 책에서 널리 퍼졌다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>가설검정은 '효과가 없다'는 귀무가설 아래에서 관찰한 결과만큼 극단적인 결과가 나올 확률인 유의확률을 구해, 그것이 유의수준보다 작으면 귀무가설을 기각하는 방법이다. 기각하지 못한 것은 귀무가설이 참이라는 증명이 아니고, 검정을 여러 번 하면 우연한 '유의함'이 생기기 쉬우므로 검정할 것을 미리 정하고 유의수준을 엄격하게 잡는다. 처음 질문의 61번은 공정한 동전에서 3.5%의 확률로만 나올 만큼 드문 결과여서, 유의수준 5%에서 동전이 치우쳤다고 판단한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/3-3.html#card-pstat-ci-prop-read"><small class="mono">실용 통계 3.3</small>"찬성 54%, 95% 신뢰구간 50.9~57.1%"를 보고 할 수 있는 말과 없는 말은?</a><a href="../../c/pstat/3-3.html#card-pstat-lead-margin"><small class="mono">실용 통계 3.3</small>후보 A 47%, B 43%인 여론조사에서 A가 앞선다고 말할 수 있을까?</a><a href="../../c/pstat/3-3.html#text-pstat-prop-ci"><small class="mono">실용 통계 3.3</small>모비율의 추정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/4-1.html#card-pstat-ab-test"><small class="mono">실용 통계 4.1</small>온라인 쇼핑몰이 새 화면을 쓸지, A/B 테스트 결과로 결정할 수 있을까?</a><a href="../../c/pstat/4-1.html#card-pstat-error-cost"><small class="mono">실용 통계 4.1</small>불량품 검사의 기준선을 어디에 그어야 손해가 가장 적을까?</a><a href="../../c/pstat/4-1.html#text-pstat-decision"><small class="mono">실용 통계 4.1</small>통계적 탐구와 의사 결정</a><a href="../../c/pstat/4-2.html#card-pstat-simpson-paradox"><small class="mono">실용 통계 4.2</small>두 병원 중 어디가 수술을 더 잘할까? 합쳐 본 결과와 나눠 본 결과가 반대라면?</a></div></nav>
+
       <article class="card" id="card-pstat-coin-test">
         <header class="card-head">
-          <span class="no">3.4.1</span><h2>동전을 100번 던져 앞면이 61번 나왔다면, 이 동전은 치우친 걸까?</h2><span class="kind">가설검정과 유의확률 · 시뮬레이션</span>
+          <span class="no">탐구 1</span><h2>동전을 100번 던져 앞면이 61번 나왔다면, 이 동전은 치우친 걸까?</h2><span class="kind">가설검정과 유의확률 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -66,73 +128,73 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공정한 동전이라도 100번 던지면 앞면이 꼭 50번 나오지는 않습니다. 61번이면 우연이라고 보기에 너무 많은 걸까요? 어디부터 "치우쳤다"고 판단할까요?</li>
-            <li><span class="tag">복원</span>이항분포 \(B(100, 0.5)\), 평균 50, 표준편차 5.</li>
-            <li><span class="tag">설명</span>먼저 "동전은 공정하다(\(p = 0.5\))"는 <em>귀무가설</em>을 세웁니다. 귀무가설이 참일 때 관찰한 결과만큼 또는 그보다 더 극단적인 결과가 나올 확률을 <em>유의확률</em>(p값)이라 합니다. 61번이면 50에서 11 이상 벗어난 경우(앞면 61 이상 또는 39 이하)의 확률로, 약 3.5%입니다. 이 값이 미리 정한 <em>유의수준</em> 5%보다 작으면 귀무가설을 기각하고 "공정하지 않다고 판단할 근거가 있다"고 말합니다.</li>
-            <li><span class="tag">연결</span>새 약의 효과, 공정의 불량률 변화, A/B 테스트 결과를 판단할 때 같은 논리를 씁니다(통계적 탐구와 의사 결정 절).</li>
-            <li><span class="tag">적용</span>앞면 수를 바꾸며 유의확률이 5%보다 작아지기 시작하는 값을 찾아보세요. 시뮬레이션 결과와 이항분포로 계산한 값이 비슷한가요?</li>
-            <li class="warn"><span class="tag">판단</span>기각하지 못했다고 귀무가설이 참이라는 증명은 아닙니다. 또한 유의확률은 "동전이 공정할 확률"이 아닙니다(다음 카드).</li>
+            <li><span class="tag">질문</span>공정한 동전이라도 100번 던지면 앞면이 꼭 50번 나오지는 않는다. 61번이면 우연이라고 보기에 너무 많은 걸까? 어디부터 "치우쳤다"고 판단할까?</li>
+            <li><span class="tag">복원</span>이항분포 \(B(100, 0.5)\)의 평균은 50, 표준편차는 5이다.</li>
+            <li><span class="tag">설명</span>먼저 "동전은 공정하다(\(p = 0.5\))"는 <em>귀무가설</em>을 세운다. 귀무가설이 참일 때 관찰한 결과만큼 또는 그보다 더 극단적인 결과가 나올 확률을 <em>유의확률</em>(p값)이라 한다. 61번이면 50에서 11 이상 벗어난 경우(앞면 61 이상 또는 39 이하)의 확률로, 약 3.5%이다. 이 값이 미리 정한 <em>유의수준</em> 5%보다 작으면 귀무가설을 기각하고 "공정하지 않다고 판단할 근거가 있다"고 말한다.</li>
+            <li><span class="tag">연결</span>새 약의 효과, 공정의 불량률 변화, A/B 테스트 결과를 판단할 때 같은 논리를 쓴다(통계적 탐구와 의사 결정 절).</li>
+            <li><span class="tag">적용</span>앞면 수를 바꾸며 유의확률이 5%보다 작아지기 시작하는 값을 찾아보자. 시뮬레이션 결과와 이항분포로 계산한 값이 비슷한가?</li>
+            <li class="warn"><span class="tag">판단</span>기각하지 못했다고 귀무가설이 참이라는 증명은 아니다. 또한 유의확률은 "동전이 공정할 확률"이 아니다(다음 카드).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">유의수준 5%에서 유의확률이 0.12로 나왔습니다. 올바른 결론은?</p>
+          <p class="q">유의수준 5%에서 유의확률이 0.12로 나왔다. 올바른 결론은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>귀무가설을 기각할 근거가 부족하다<span class="why"><b>맞습니다.</b> 0.12 &gt; 0.05입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>동전이 공정하다는 것이 증명되었다<span class="why"><b>기각하지 못한 것은 증명이 아닙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>동전이 치우쳤을 확률이 12%다<span class="why"><b>유의확률의 뜻이 아닙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>귀무가설을 기각한다<span class="why"><b>유의확률이 유의수준보다 큽니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>귀무가설을 기각할 근거가 부족하다<span class="why"><b>맞다.</b> 0.12 &gt; 0.05이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>동전이 공정하다는 것이 증명되었다<span class="why"><b>기각하지 못한 것은 증명이 아니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>동전이 치우쳤을 확률이 12%다<span class="why"><b>유의확률의 뜻이 아니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>귀무가설을 기각한다<span class="why"><b>유의확률이 유의수준보다 크다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/3-3.html#card-pstat-ci-prop-read"><small class="mono">실용 통계 3.3</small>"찬성 54%, 95% 신뢰구간 50.9~57.1%"를 보고 할 수 있는 말과 없는 말은?</a><a href="../../c/pstat/3-3.html#card-pstat-lead-margin"><small class="mono">실용 통계 3.3</small>후보 A 47%, B 43%인 여론조사에서 A가 앞선다고 말할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/4-1.html#card-pstat-ab-test"><small class="mono">실용 통계 4.1</small>온라인 쇼핑몰이 새 화면을 쓸지, A/B 테스트 결과로 결정할 수 있을까?</a><a href="../../c/pstat/4-1.html#card-pstat-error-cost"><small class="mono">실용 통계 4.1</small>불량품 검사의 기준선을 어디에 그어야 손해가 가장 적을까?</a><a href="../../c/pstat/4-2.html#card-pstat-simpson-paradox"><small class="mono">실용 통계 4.2</small>두 병원 중 어디가 수술을 더 잘할까? 합쳐 본 결과와 나눠 본 결과가 반대라면?</a><a href="../../c/pstat/4-2.html#card-pstat-publication-bias"><small class="mono">실용 통계 4.2</small>'효과 있음'만 발표된다면, 발표된 연구들의 평균 효과는 믿을 만할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/3-3.html#card-pstat-ci-prop-read"><small class="mono">실용 통계 3.3</small>"찬성 54%, 95% 신뢰구간 50.9~57.1%"를 보고 할 수 있는 말과 없는 말은?</a><a href="../../c/pstat/3-3.html#card-pstat-lead-margin"><small class="mono">실용 통계 3.3</small>후보 A 47%, B 43%인 여론조사에서 A가 앞선다고 말할 수 있을까?</a><a href="../../c/pstat/3-3.html#text-pstat-prop-ci"><small class="mono">실용 통계 3.3</small>모비율의 추정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/4-1.html#card-pstat-ab-test"><small class="mono">실용 통계 4.1</small>온라인 쇼핑몰이 새 화면을 쓸지, A/B 테스트 결과로 결정할 수 있을까?</a><a href="../../c/pstat/4-1.html#card-pstat-error-cost"><small class="mono">실용 통계 4.1</small>불량품 검사의 기준선을 어디에 그어야 손해가 가장 적을까?</a><a href="../../c/pstat/4-1.html#text-pstat-decision"><small class="mono">실용 통계 4.1</small>통계적 탐구와 의사 결정</a><a href="../../c/pstat/4-2.html#card-pstat-simpson-paradox"><small class="mono">실용 통계 4.2</small>두 병원 중 어디가 수술을 더 잘할까? 합쳐 본 결과와 나눠 본 결과가 반대라면?</a></div></nav>
 
       <article class="card" id="card-pstat-p-hacking">
         <header class="card-head">
-          <span class="no">3.4.2</span><h2>아무 효과 없는 영양제를 20가지 증상에 대해 검정하면 '효과 있음'이 나올까?</h2><span class="kind">여러 번 검정과 1종 오류 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>아무 효과 없는 영양제를 20가지 증상에 대해 검정하면 '효과 있음'이 나올까?</h2><span class="kind">여러 번 검정과 1종 오류 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small"><b>가상</b> 연구: 효과가 전혀 없는 영양제를 먹은 집단과 먹지 않은 집단을 여러 증상에 대해 비교합니다. 증상마다 유의수준 5%로 검정합니다.</p>
+            <p class="small">가상 연구이다. 효과가 전혀 없는 영양제를 먹은 집단과 먹지 않은 집단을 여러 증상에 대해 비교한다. 증상마다 유의수준 5%로 검정한다.</p>
             <div class="ctl-row"><div><label class="mono">검정한 증상 수 = <output class="m-out"></output></label><input class="m" type="range" min="1" max="40" step="1" value="20" aria-label="검정 횟수"></div></div>
             <div class="presets"><button class="chip one" type="button">연구 한 번 하기</button><button class="chip many" type="button">연구 1000번 하기</button></div>
             <canvas aria-label="증상별 유의확률 막대와 0.05 기준선"></canvas>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>어떤 연구가 "영양제가 두통을 줄인다(유의확률 0.03)"고 발표했습니다. 그런데 연구자는 두통 말고도 19가지 증상을 함께 검정했다고 합니다. 이 발표를 믿어도 될까요?</li>
-            <li><span class="tag">복원</span>유의수준, 1종 오류(참인 귀무가설을 기각), 여사건의 확률.</li>
-            <li><span class="tag">설명</span>귀무가설이 참이어도 유의수준 5%로 검정하면 5%의 확률로 '유의하다'는 결과가 나옵니다(<em>1종 오류</em>). 서로 독립인 검정을 20번 하면 적어도 한 번 유의하게 나올 확률은 \(1 - 0.95^{20} \approx 0.64\)입니다. 유의한 것만 골라 보고하면 우연을 발견처럼 보이게 만듭니다. 그래서 무엇을 검정할지 미리 정하고, 검정을 여러 번 하면 기준을 더 엄격하게 하거나(예: \(\frac{0.05}{m}\)) 모든 결과를 함께 보고해야 합니다.</li>
-            <li><span class="tag">연결</span>의학 연구는 시작 전에 주요 결과 변수를 등록하게 하여 이런 문제를 줄이려 합니다.</li>
-            <li><span class="tag">적용</span>"연구 1000번 하기"로 적어도 하나가 유의하게 나온 연구의 비율을 보세요. 검정 수를 1, 5, 20, 40으로 바꾸며 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>유의확률 0.03은 "효과가 없을 확률이 3%"라는 뜻이 아닙니다. 효과가 없다는 가정에서 이만큼 극단적인 결과가 나올 확률일 뿐입니다.</li>
+            <li><span class="tag">질문</span>어떤 연구가 "영양제가 두통을 줄인다(유의확률 0.03)"고 발표했다. 그런데 연구자는 두통 말고도 19가지 증상을 함께 검정했다고 한다. 이 발표를 믿어도 될까?</li>
+            <li><span class="tag">복원</span>유의수준, 1종 오류(참인 귀무가설을 기각), 여사건의 확률을 떠올리자.</li>
+            <li><span class="tag">설명</span>귀무가설이 참이어도 유의수준 5%로 검정하면 5%의 확률로 '유의하다'는 결과가 나온다(<em>1종 오류</em>). 서로 독립인 검정을 20번 하면 적어도 한 번 유의하게 나올 확률은 \(1 - 0.95^{20} \approx 0.64\)이다. 유의한 것만 골라 보고하면 우연을 발견처럼 보이게 만든다. 그래서 무엇을 검정할지 미리 정하고, 검정을 여러 번 하면 기준을 더 엄격하게 하거나(예를 들어 \(\frac{0.05}{m}\)) 모든 결과를 함께 보고해야 한다.</li>
+            <li><span class="tag">연결</span>의학 연구는 시작 전에 주요 결과 변수를 등록하게 하여 이런 문제를 줄이려 한다.</li>
+            <li><span class="tag">적용</span>"연구 1000번 하기"로 적어도 하나가 유의하게 나온 연구의 비율을 보자. 검정 수를 1, 5, 20, 40으로 바꾸며 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>유의확률 0.03은 "효과가 없을 확률이 3%"라는 뜻이 아니다. 효과가 없다는 가정에서 이만큼 극단적인 결과가 나올 확률일 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">효과가 없는 것을 서로 독립으로 10번 검정(유의수준 5%)할 때 적어도 한 번 유의하게 나올 확률은 약?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>40%<span class="why"><b>맞습니다.</b> \(1 - 0.95^{10} \approx 0.401\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50%<span class="why"><b>5%를 10번 더했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5%<span class="why"><b>한 번 검정할 때입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>60%<span class="why"><b>\(0.95^{10}\)으로 한 번도 유의하지 않을 확률입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>40%<span class="why"><b>맞다.</b> \(1 - 0.95^{10} \approx 0.401\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50%<span class="why"><b>5%를 10번 더했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5%<span class="why"><b>한 번 검정할 때이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>60%<span class="why"><b>\(0.95^{10}\)으로 한 번도 유의하지 않을 확률이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/3-3.html#card-pstat-ci-prop-read"><small class="mono">실용 통계 3.3</small>"찬성 54%, 95% 신뢰구간 50.9~57.1%"를 보고 할 수 있는 말과 없는 말은?</a><a href="../../c/pstat/3-3.html#card-pstat-lead-margin"><small class="mono">실용 통계 3.3</small>후보 A 47%, B 43%인 여론조사에서 A가 앞선다고 말할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/4-1.html#card-pstat-ab-test"><small class="mono">실용 통계 4.1</small>온라인 쇼핑몰이 새 화면을 쓸지, A/B 테스트 결과로 결정할 수 있을까?</a><a href="../../c/pstat/4-1.html#card-pstat-error-cost"><small class="mono">실용 통계 4.1</small>불량품 검사의 기준선을 어디에 그어야 손해가 가장 적을까?</a><a href="../../c/pstat/4-2.html#card-pstat-simpson-paradox"><small class="mono">실용 통계 4.2</small>두 병원 중 어디가 수술을 더 잘할까? 합쳐 본 결과와 나눠 본 결과가 반대라면?</a><a href="../../c/pstat/4-2.html#card-pstat-publication-bias"><small class="mono">실용 통계 4.2</small>'효과 있음'만 발표된다면, 발표된 연구들의 평균 효과는 믿을 만할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/3-3.html#card-pstat-ci-prop-read"><small class="mono">실용 통계 3.3</small>"찬성 54%, 95% 신뢰구간 50.9~57.1%"를 보고 할 수 있는 말과 없는 말은?</a><a href="../../c/pstat/3-3.html#card-pstat-lead-margin"><small class="mono">실용 통계 3.3</small>후보 A 47%, B 43%인 여론조사에서 A가 앞선다고 말할 수 있을까?</a><a href="../../c/pstat/3-3.html#text-pstat-prop-ci"><small class="mono">실용 통계 3.3</small>모비율의 추정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/4-1.html#card-pstat-ab-test"><small class="mono">실용 통계 4.1</small>온라인 쇼핑몰이 새 화면을 쓸지, A/B 테스트 결과로 결정할 수 있을까?</a><a href="../../c/pstat/4-1.html#card-pstat-error-cost"><small class="mono">실용 통계 4.1</small>불량품 검사의 기준선을 어디에 그어야 손해가 가장 적을까?</a><a href="../../c/pstat/4-1.html#text-pstat-decision"><small class="mono">실용 통계 4.1</small>통계적 탐구와 의사 결정</a><a href="../../c/pstat/4-2.html#card-pstat-simpson-paradox"><small class="mono">실용 통계 4.2</small>두 병원 중 어디가 수술을 더 잘할까? 합쳐 본 결과와 나눠 본 결과가 반대라면?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pstat-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pstat&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">19문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

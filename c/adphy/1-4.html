@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>행성의 운동과 인공위성 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="뉴턴의 운동 법칙과 만유인력 법칙으로 케플러의 세 법칙을 이해하여 행성의 운동을 분석하고, 인공위성의 궤도 속력, 주기, 궤도 에너지, 탈출 속도를 구한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adphy-orbit .nums dd { font-size: 14px; }
   </style>
@@ -41,19 +47,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-mech-kepler"><span class="mono">1.4.1</span>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a></li>
-        <li><a href="#card-mech-escape"><span class="mono">1.4.2</span>달에는 왜 대기가 없을까?</a></li>
-        <li><a href="#card-adphy-orbit"><span class="mono">1.4.3</span>인공위성의 궤도와 속도</a></li>
+        <li><a href="#text-adphy-circular-orbit"><span class="mono">본문</span>행성의 운동과 인공위성</a></li>
+        <li><a href="#card-mech-kepler"><span class="mono">탐구 1</span>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</a></li>
+        <li><a href="#card-mech-escape"><span class="mono">탐구 2</span>달에는 왜 대기가 없을까?</a></li>
+        <li><a href="#card-adphy-orbit"><span class="mono">탐구 3</span>인공위성의 궤도와 속도</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">45문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-circular-orbit" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>행성의 운동과 인공위성</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">국제 우주 정거장은 고도 약 400 km에서 90분마다 지구를 한 바퀴 돈다. 그래서 하루에 16번 해돋이를 본다. 반면 위성 방송을 보내는 정지 위성은 하늘의 한 자리에 멈춰 있는 것처럼 보여, 집의 위성 안테나를 한 방향으로 고정해 둘 수 있다. 정지 위성은 고도 약 36000 km를 돈다. 왜 그 높이일까? 위성의 높이와 속력, 주기 사이에는 어떤 관계가 있을까?</p>
+          <figure class="q-fig" data-q="adphy-sat">
+            <svg viewBox="0 0 520 230" role="img" aria-label="고도에 따른 원 궤도의 속력과 주기"></svg>
+            <div class="q-ctl"><label>고도 (km) <input type="range" data-k="h" min="200" max="40000" step="100" value="400"><output data-k="h"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 지구 둘레 원 궤도의 속력. 높이 올라갈수록 속력은 느려지고 궤도는 길어져, 주기가 빠르게 늘어난다. 주기가 지구 자전 주기와 같아지는 높이가 정지 궤도이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>만유인력 법칙, 케플러 법칙, 등속 원운동의 구심 가속도, 역학적 에너지 보존(물리학).</div>
+
+          <h3><span class="no">1.4.1</span>원 궤도의 조건</h3>
+          <p>지구 둘레를 원으로 도는 위성은 늘 지구 중심을 향해 떨어지고 있다. 다만 옆으로 충분히 빠르게 움직이므로, 떨어지는 만큼 지구 표면도 둥글게 휘어 멀어져 땅에 닿지 않는다. 이 때 만유인력이 원운동에 필요한 구심력 노릇을 한다. 질량 \(m\)인 위성이 지구 중심에서 \(r\)만큼 떨어져 속력 \(v\)로 돌면 \(\dfrac{GMm}{r^2} = \dfrac{mv^2}{r}\)이다. 양변의 \(m\)이 지워지므로 궤도 속력은 위성의 질량과 관계없다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">원 궤도의 속력과 주기</span></span>
+            <p>지구 질량 \(M\)에 대해 \(GM = 3.99 \times 10^{14}\ \text{m}^3/\text{s}^2\)이다. 반지름 \(r\)인 원 궤도의 속력과 주기는 \[v = \sqrt{\frac{GM}{r}},\qquad T = \frac{2\pi r}{v} = 2\pi\sqrt{\frac{r^3}{GM}}\]이다. 주기의 제곱은 반지름의 세제곱에 비례한다(케플러 제3법칙).</p>
+          </div>
+          <p>그림 1에서 고도를 바꾸어 보자. 고도 400 km에서는 \(r = 6771\) km이므로 속력이 약 7.67 km/s이고 한 바퀴에 약 92분이 걸린다. 고도를 높이면 속력은 줄고 둘레는 늘어나 주기가 빠르게 길어진다. 고도 약 35800 km에서 주기가 지구의 자전 주기 23시간 56분과 같아진다. 적도 위의 이 궤도를 지구와 같은 방향으로 돌면, 땅에서 볼 때 위성이 하늘의 한 점에 멈춰 있다.<sup class="fn"><a href="#fn-adphy-circular-orbit-1">1</a></sup></p>
+
+          <h3><span class="no">1.4.2</span>궤도의 에너지</h3>
+          <p>원 궤도를 도는 위성의 운동 에너지는 \(\dfrac{GMm}{2r}\)이고, 위치 에너지는 무한히 먼 곳을 0으로 잡으면 \(-\dfrac{GMm}{r}\)이다. 그래서 역학적 에너지는 \(-\dfrac{GMm}{2r}\)로 음수이며, 높은 궤도일수록 0에 가까워져 크다. 즉 위성을 높은 궤도로 올리려면 에너지를 더 주어야 하지만, 올라간 위성은 오히려 느리게 돈다. 역학적 에너지가 0 이상이 되면 위성은 지구를 벗어난다. 지표에서 이 조건을 만족하는 속력이 탈출 속도 \(\sqrt{2GM/R} \approx 11.2\) km/s이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="대표적인 지구 궤도">
+              <g class="s">
+                <text x="20" y="22">궤도</text><text x="160" y="22">고도</text><text x="270" y="22">속력과 주기</text><text x="420" y="22">쓰임</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">저궤도</text><text x="160" y="52">약 400 km</text><text x="270" y="52">7.7 km/s, 92분</text><text x="420" y="52">우주 정거장</text>
+                <text x="20" y="74">중궤도</text><text x="160" y="74">약 20200 km</text><text x="270" y="74">3.9 km/s, 12시간</text><text x="420" y="74">GPS</text>
+                <text x="20" y="96">정지 궤도</text><text x="160" y="96">약 35800 km</text><text x="270" y="96">3.1 km/s, 24시간</text><text x="420" y="96">방송, 기상</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 쓰임에 따라 궤도의 높이가 다르고, 높이가 속력과 주기를 정한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.2</span>
+            <p>주기가 정확히 23시간 56분(86160 s)인 원 궤도의 반지름과 고도, 속력을 구하여라. 지구 반지름은 6371 km이다.</p>
+          </div>
+          <p>\(T = 2\pi\sqrt{r^3/GM}\)을 \(r\)에 대해 풀면 \(r^3 = \dfrac{GMT^2}{4\pi^2} = \dfrac{3.99 \times 10^{14} \times (86160)^2}{39.5} \approx 7.50 \times 10^{22}\ \text{m}^3\)이다. 세제곱근을 구하면 \(r \approx 4.22 \times 10^7\) m, 곧 약 42200 km이다.</p>
+          <p>고도는 \(42200 - 6371 \approx 35800\) km이고, 속력은 \(2\pi r / T = 2\pi \times 4.22 \times 10^7 \div 86160 \approx 3.08\) km/s이다. 즉 정지 궤도의 높이는 사람이 고른 것이 아니라 지구의 질량과 자전 주기가 정해 준 값이다. 그래서 정지 위성을 원하는 나라는 모두 같은 높이의 적도 위 원에 위성을 놓아야 하고, 그 자리는 국제 기구가 나누어 배정한다.</p>
+          <p>아래 탐구 카드에서 인공위성을 원 궤도에 올리려면 얼마나 빠르게 던져야 하는지 확인하고, 궤도의 높이에 따른 속력과 주기를 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-circular-orbit-1">정지 궤도에 통신 위성을 두자는 생각은 1945년 공상 과학 작가 아서 클라크가 잡지 기고에서 널리 알렸다. 그래서 정지 궤도를 '클라크 궤도'라고도 부른다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>원 궤도에서는 만유인력이 구심력 노릇을 하여 속력이 \(\sqrt{GM/r}\)로 정해지고, 주기의 제곱은 반지름의 세제곱에 비례한다. 높은 궤도일수록 느리게 돌지만 둘레가 길어 주기가 빠르게 늘어나고, 역학적 에너지는 커진다. 그래서 처음 질문의 정지 위성은 주기가 지구 자전 주기와 같아지는 유일한 높이인 고도 약 35800 km를 돈다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-3.html#card-mech-circular"><small class="mono">역학과 에너지 1.3</small>줄이 끊기면 공은 어느 쪽으로 날아갈까?</a><a href="../../c/mech/1-3.html#text-mech-circular"><small class="mono">역학과 에너지 1.3</small>원운동</a><a href="../../c/is1/3-3.html#card-inverse-square"><small class="mono">통합과학1 3.3</small>우주정거장에는 중력이 없을까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a><a href="../../c/space/1-3.html#text-space-kepler-mass"><small class="mono">행성우주과학 1.3</small>케플러 법칙과 태양계 천체의 운동</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/space/1-1.html#card-space-hohmann"><small class="mono">행성우주과학 1.1</small>화성에 가려면 왜 2년 2개월마다 한 번씩만 떠날 수 있을까?</a><a href="../../c/space/1-1.html#text-space-exploration"><small class="mono">행성우주과학 1.1</small>탐사선과 인공위성은 무엇을 알아냈을까?</a><a href="../../c/space/1-1.html#text-space-hohmann-orbit"><small class="mono">행성우주과학 1.1</small>태양계 탐사</a><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a></div></nav>
+
       <article class="card" id="card-mech-kepler">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</h2><span class="kind">케플러 제3법칙 · 실제 궤도 자료</span>
+          <span class="no">탐구 1</span><h2>행성의 공전 주기와 거리 사이에는 어떤 규칙이 있을까?</h2><span class="kind">케플러 제3법칙 · 실제 궤도 자료</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -70,33 +128,33 @@
                 <div><dt>그래서 중심 천체의 질량</dt><dd class="n-m">—</dd></div>
                 <div><dt>실제 값</dt><dd class="n-real">—</dd></div>
               </dl>
-              <p class="fig-note">궤도 긴반지름과 공전 주기는 실측값입니다(행성: NASA 행성 자료, 목성 위성: 갈릴레이 위성 네 개). 질량은 원궤도를 가정해 T² = 4π²a³ ÷ (GM)으로 계산했습니다.</p>
+              <p class="fig-note">궤도 긴반지름과 공전 주기는 실측값이다(행성은 NASA 행성 자료, 목성 위성은 갈릴레이 위성 네 개). 질량은 원궤도를 가정해 T² = 4π²a³ ÷ (GM)으로 계산했다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수성은 88일, 지구는 1년, 해왕성은 165년에 태양을 한 바퀴 돕니다. 멀수록 느린 것은 알겠는데, 거리와 주기 사이에 정확한 규칙이 있을까요?</li>
-            <li><span class="tag">복원</span>원운동을 하려면 중심을 향하는 구심력 mv²/r이 필요합니다. 행성에서는 태양이 당기는 중력이 이 역할을 합니다.</li>
-            <li><span class="tag">설명</span>케플러는 1619년, 행성의 공전 주기 T의 제곱이 궤도 반지름(긴반지름) a의 세제곱에 비례한다는 것을 찾았습니다(제3법칙). 그래프를 로그 눈금으로 그리면 모든 행성이 기울기 3/2인 한 직선 위에 놓입니다.</li>
-            <li><span class="tag">연결</span>뉴턴은 이 규칙을 설명했습니다. 원궤도에서 GMm/a² = m(2πa/T)²/a로 두면 T² = 4π²a³ ÷ (GM)이 됩니다. 곧 T²/a³이 모든 행성에서 같은 까닭은 모두 같은 태양(질량 M)을 돌기 때문이고, 그 값에서 태양의 질량을 구할 수 있습니다. 거리의 제곱에 반비례하는 힘이어야만 세제곱과 제곱의 관계가 나옵니다.</li>
-            <li><span class="tag">적용</span>세 가지 축으로 바꿔 보며 어느 그래프에서 점들이 직선 위에 서는지 보세요. 그다음 자료를 목성의 위성으로 바꾸세요. T²/a³은 태양계 행성과 같나요? 그 값으로 구한 목성의 질량은 태양의 몇 분의 1인가요?</li>
-            <li class="warn"><span class="tag">판단</span>실제 행성 궤도는 원이 아니라 타원이고(제1법칙), 이때는 반지름 대신 긴반지름을 씁니다. 이 카드는 원궤도로 근사했습니다. 또 T²/a³이 같다는 것은 <em>같은 중심 천체</em>를 도는 경우에만 성립합니다. 태양을 도는 행성과 목성을 도는 위성은 비율이 다릅니다.</li>
+            <li><span class="tag">질문</span>수성은 88일, 지구는 1년, 해왕성은 165년에 태양을 한 바퀴 돈다. 멀수록 느린 것은 알겠는데, 거리와 주기 사이에 정확한 규칙이 있을까?</li>
+            <li><span class="tag">복원</span>원운동을 하려면 중심을 향하는 구심력 mv²/r이 필요하고, 행성에서는 태양이 당기는 중력이 이 역할을 한다.</li>
+            <li><span class="tag">설명</span>케플러는 1619년, 행성의 공전 주기 T의 제곱이 궤도 반지름(긴반지름) a의 세제곱에 비례한다는 것을 찾았다(제3법칙). 그래서 그래프를 로그 눈금으로 그리면 모든 행성이 기울기 3/2인 한 직선 위에 놓인다.</li>
+            <li><span class="tag">연결</span>뉴턴은 이 규칙을 설명했다. 원궤도에서 GMm/a² = m(2πa/T)²/a로 두면 T² = 4π²a³ ÷ (GM)이 되므로, T²/a³이 모든 행성에서 같은 까닭은 모두 같은 태양(질량 M)을 돌기 때문이고, 그 값에서 태양의 질량을 구할 수 있다. 그리고 거리의 제곱에 반비례하는 힘이어야만 세제곱과 제곱의 관계가 나온다.</li>
+            <li><span class="tag">적용</span>세 가지 축으로 바꿔 보며 어느 그래프에서 점들이 직선 위에 서는지 보자. 그다음 자료를 목성의 위성으로 바꾸어 T²/a³이 태양계 행성과 같은지, 그 값으로 구한 목성의 질량이 태양의 몇 분의 1인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>실제 행성 궤도는 원이 아니라 타원이고(제1법칙), 이때는 반지름 대신 긴반지름을 쓰는데, 이 카드는 원궤도로 근사했다. 또 T²/a³이 같다는 것은 <em>같은 중심 천체</em>를 도는 경우에만 성립하므로, 태양을 도는 행성과 목성을 도는 위성은 비율이 다르다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 소행성이 태양으로부터 지구보다 4배 먼 곳에서 거의 원궤도로 돌고 있습니다. 이 소행성의 공전 주기는?</p>
+          <p class="q">어떤 소행성이 태양으로부터 지구보다 4배 먼 곳에서 거의 원궤도로 돌고 있다. 이 소행성의 공전 주기는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4년<span class="why"><b>주기가 거리에 비례한다고 본 답입니다.</b> 먼 궤도는 둘레도 길지만 속력도 느립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>8년<span class="why"><b>맞습니다.</b> T² ∝ a³이므로 T ∝ a^(3/2) = 4^(3/2) = 8입니다. 지구 기준 1년의 8배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>16년<span class="why"><b>제곱으로 계산한 답입니다.</b> T가 a²에 비례하는 것이 아니라 T²이 a³에 비례합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4년<span class="why"><b>주기가 거리에 비례한다고 본 답이다.</b> 먼 궤도는 둘레도 길지만 속력도 느리다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>8년<span class="why"><b>맞다.</b> T² ∝ a³이므로 T ∝ a^(3/2) = 4^(3/2) = 8이다. 지구 기준 1년의 8배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>16년<span class="why"><b>제곱으로 계산한 답이다.</b> T가 a²에 비례하는 것이 아니라 T²이 a³에 비례한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-3.html#card-mech-circular"><small class="mono">역학과 에너지 1.3</small>줄이 끊기면 공은 어느 쪽으로 날아갈까?</a><a href="../../c/is1/3-3.html#card-inverse-square"><small class="mono">통합과학1 3.3</small>우주정거장에는 중력이 없을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/space/1-1.html#card-space-hohmann"><small class="mono">행성우주과학 1.1</small>화성에 가려면 왜 2년 2개월마다 한 번씩만 떠날 수 있을까?</a><a href="../../c/space/1-1.html#text-space-exploration"><small class="mono">행성우주과학 1.1</small>탐사선과 인공위성은 무엇을 알아냈을까?</a><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a><a href="../../c/labearth/3-4.html#card-labearth-orbit-mass"><small class="mono">지구과학 실험 3.4</small>인공위성의 높이와 주기만으로 지구의 질량을 잴 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-3.html#card-mech-circular"><small class="mono">역학과 에너지 1.3</small>줄이 끊기면 공은 어느 쪽으로 날아갈까?</a><a href="../../c/mech/1-3.html#text-mech-circular"><small class="mono">역학과 에너지 1.3</small>원운동</a><a href="../../c/is1/3-3.html#card-inverse-square"><small class="mono">통합과학1 3.3</small>우주정거장에는 중력이 없을까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/space/1-3.html#text-space-kepler-mass"><small class="mono">행성우주과학 1.3</small>케플러 법칙과 태양계 천체의 운동</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/space/1-1.html#card-space-hohmann"><small class="mono">행성우주과학 1.1</small>화성에 가려면 왜 2년 2개월마다 한 번씩만 떠날 수 있을까?</a><a href="../../c/space/1-1.html#text-space-exploration"><small class="mono">행성우주과학 1.1</small>탐사선과 인공위성은 무엇을 알아냈을까?</a><a href="../../c/space/1-1.html#text-space-hohmann-orbit"><small class="mono">행성우주과학 1.1</small>태양계 탐사</a><a href="../../c/space/1-3.html#card-space-kepler3"><small class="mono">행성우주과학 1.3</small>위성의 궤도만 보고 목성의 질량을 잴 수 있을까?</a></div></nav>
 
       <article class="card" id="card-mech-escape">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>달에는 왜 대기가 없을까?</h2><span class="kind">탈출 속도 · 역학적 에너지 보존</span>
+          <span class="no">탐구 2</span><h2>달에는 왜 대기가 없을까?</h2><span class="kind">탈출 속도 · 역학적 에너지 보존</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -112,33 +170,33 @@
                 <div><dt>발사체의 운명</dt><dd class="n-fate">—</dd></div>
                 <div><dt>실제 대기</dt><dd class="n-T">—</dd></div>
               </dl>
-              <p class="fig-note">탈출 속도 = √(2GM/R). 분자의 평균 속력은 √(3kT/m)(제곱 평균 제곱근 속력)이고, 온도는 기체가 우주로 빠져나가는 대기 윗부분(외기권)의 대략값입니다(대기가 없는 달·수성은 낮 표면 온도). 분자 속력은 넓게 퍼져 있어서, 평균 속력이 탈출 속도의 약 1/6보다 크면 수십억 년 사이에 대부분 빠져나간다는 어림을 썼습니다. 실제 대기 탈출은 상층 대기 온도, 태양풍, 자기장에도 좌우됩니다.</p>
+              <p class="fig-note">탈출 속도는 √(2GM/R)이고, 분자의 평균 속력은 √(3kT/m)(제곱 평균 제곱근 속력)이며, 온도는 기체가 우주로 빠져나가는 대기 윗부분(외기권)의 대략값이다(대기가 없는 달과 수성은 낮 표면 온도). 분자 속력은 넓게 퍼져 있어서, 평균 속력이 탈출 속도의 약 1/6보다 크면 수십억 년 사이에 대부분 빠져나간다는 어림을 썼고, 실제 대기 탈출은 상층 대기 온도, 태양풍, 자기장에도 좌우된다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지구에는 두꺼운 대기가 있지만, 달에는 대기가 거의 없습니다. 목성은 가장 가벼운 기체인 수소까지 붙잡고 있습니다. 무엇이 이 차이를 만들까요?</li>
-            <li><span class="tag">복원</span>위로 던진 물체는 올라가면서 운동 에너지가 위치 에너지로 바뀝니다. 지표 근처에서는 위치 에너지를 mgh로 쓰지만, 멀리 올라가면 중력이 약해지므로 만유인력의 위치 에너지 −GMm/r을 써야 합니다.</li>
-            <li><span class="tag">설명</span>무한히 먼 곳의 위치 에너지를 0으로 잡으면, 표면에서 발사한 물체의 역학적 에너지는 ½mv² − GMm/R입니다. 이 값이 0 이상이면 물체는 다시 떨어지지 않고 영원히 멀어집니다. 그 경계의 속력이 <em>탈출 속도</em> v = √(2GM/R)이고, 지구에서는 약 11.2 km/s입니다. 물체의 질량과는 관계가 없습니다.</li>
-            <li><span class="tag">연결</span>기체 분자도 같은 규칙을 따릅니다. 분자는 온도에 따라 빠르게 움직이는데, 가볍고 뜨거울수록 빠릅니다. 탈출 속도가 작은 천체에서는 빠른 분자가 조금씩 우주로 빠져나가고, 오랜 시간이 지나면 대기가 사라집니다. 달은 질량이 작아 탈출 속도가 지구의 약 5분의 1입니다.</li>
-            <li><span class="tag">적용</span>지구에서 발사 속력을 올려 궤적이 “떨어짐”에서 “탈출”로 바뀌는 지점을 찾아보세요. 천체를 달로 바꾸고, 대기로 남을 수 있는 기체가 몇 가지인지 세어 보세요. 목성과 타이탄은 왜 탈출 속도가 크게 다른데도 둘 다 대기가 있을까요?</li>
-            <li class="warn"><span class="tag">판단</span>탈출 속도는 “엔진 없이 한 번 던졌을 때” 필요한 속력입니다. 로켓은 계속 연료를 태우며 올라가므로 처음부터 11.2 km/s일 필요가 없고, 궤도에 올리려면 탈출 속도보다 작은 약 7.9 km/s의 수평 속도가 필요합니다. 또 대기가 남는지는 탈출 속도만이 아니라 온도, 자기장, 태양풍에도 달려 있습니다.</li>
+            <li><span class="tag">질문</span>지구에는 두꺼운 대기가 있지만, 달에는 대기가 거의 없다. 목성은 가장 가벼운 기체인 수소까지 붙잡고 있는데, 무엇이 이 차이를 만들까?</li>
+            <li><span class="tag">복원</span>위로 던진 물체는 올라가면서 운동 에너지가 위치 에너지로 바뀐다. 지표 근처에서는 위치 에너지를 mgh로 쓰지만, 멀리 올라가면 중력이 약해지므로 만유인력의 위치 에너지 −GMm/r을 써야 한다.</li>
+            <li><span class="tag">설명</span>무한히 먼 곳의 위치 에너지를 0으로 잡으면, 표면에서 발사한 물체의 역학적 에너지는 ½mv² − GMm/R이고, 이 값이 0 이상이면 물체는 다시 떨어지지 않고 영원히 멀어진다. 그 경계의 속력이 <em>탈출 속도</em> v = √(2GM/R)이고, 지구에서는 약 11.2 km/s이며, 물체의 질량과는 관계가 없다.</li>
+            <li><span class="tag">연결</span>기체 분자도 같은 규칙을 따른다. 분자는 온도에 따라 빠르게 움직이는데 가볍고 뜨거울수록 빠르므로, 탈출 속도가 작은 천체에서는 빠른 분자가 조금씩 우주로 빠져나가고 오랜 시간이 지나면 대기가 사라진다. 달은 질량이 작아 탈출 속도가 지구의 약 5분의 1이다.</li>
+            <li><span class="tag">적용</span>지구에서 발사 속력을 올려 궤적이 ‘떨어짐’에서 ‘탈출’로 바뀌는 지점을 찾아보자. 그리고 천체를 달로 바꾸어 대기로 남을 수 있는 기체가 몇 가지인지 세어 보고, 목성과 타이탄은 왜 탈출 속도가 크게 다른데도 둘 다 대기가 있는지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>탈출 속도는 엔진 없이 한 번 던졌을 때 필요한 속력이다. 로켓은 계속 연료를 태우며 올라가므로 처음부터 11.2 km/s일 필요가 없고, 궤도에 올리려면 탈출 속도보다 작은 약 7.9 km/s의 수평 속도가 필요하다. 또 대기가 남는지는 탈출 속도만이 아니라 온도, 자기장, 태양풍에도 달려 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">질량은 지구와 같고 반지름만 지구의 4분의 1인 행성이 있다면, 이 행성의 탈출 속도는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지구의 4배<span class="why"><b>R에 반비례한다고 본 답입니다.</b> 탈출 속도는 √(1/R)에 비례합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>지구의 2배<span class="why"><b>맞습니다.</b> v = √(2GM/R)에서 R이 1/4이면 v는 √4 = 2배입니다. 표면이 중심에 가까워 퍼텐셜 우물이 더 깊습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지구와 같다 — 질량이 같으므로<span class="why"><b>질량만 본 답입니다.</b> 같은 질량이라도 표면이 중심에 가까울수록 빠져나오기 어렵습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>지구의 4배<span class="why"><b>R에 반비례한다고 본 답이다.</b> 탈출 속도는 √(1/R)에 비례한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>지구의 2배<span class="why"><b>맞다.</b> v = √(2GM/R)에서 R이 1/4이면 v는 √4 = 2배이다. 표면이 중심에 가까워 퍼텐셜 우물이 더 깊다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>지구와 같다 — 질량이 같으므로<span class="why"><b>질량만 본 답이다.</b> 같은 질량이라도 표면이 중심에 가까울수록 빠져나오기 어렵다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/phy/1-4.html#card-phy-coaster"><small class="mono">물리학 1.4</small>롤러코스터는 왜 첫 언덕이 가장 높을까?</a><a href="../../c/phy/1-4.html#text-phy-spring"><small class="mono">물리학 1.4</small>눌린 용수철에는 에너지가 얼마나 저장될까?</a><a href="../../c/phy/1-4.html#card-pendulum"><small class="mono">물리학 1.4</small>진자 공식은 언제 틀릴까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/1-6.html#text-mech-gr"><small class="mono">역학과 에너지 1.6</small>중력은 힘일까, 휘어진 시공간일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a><a href="../../c/space/1-3.html#text-space-kepler-mass"><small class="mono">행성우주과학 1.3</small>케플러 법칙과 태양계 천체의 운동</a><a href="../../c/phy/1-4.html#card-phy-coaster"><small class="mono">물리학 1.4</small>롤러코스터는 왜 첫 언덕이 가장 높을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/mech/1-6.html#text-mech-gr"><small class="mono">역학과 에너지 1.6</small>중력은 힘일까, 휘어진 시공간일까?</a></div></nav>
 
       <article class="card" id="card-adphy-orbit">
         <header class="card-head">
-          <span class="no">1.4.3</span><h2>인공위성은 얼마나 빨리 던져야 지구를 돌까?</h2><span class="kind">만유인력과 케플러 법칙 · 궤도 에너지 · 탈출 속도 · 전이 궤도</span>
+          <span class="no">탐구 3</span><h2>인공위성은 얼마나 빨리 던져야 지구를 돌까?</h2><span class="kind">만유인력과 케플러 법칙 · 궤도 에너지 · 탈출 속도 · 전이 궤도</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -166,47 +224,52 @@
                 <div><dt>공전 주기 T</dt><dd class="n-t">—</dd></div>
                 <div><dt>이심률</dt><dd class="n-ecc">—</dd></div>
               </dl>
-              <p class="fig-note">GM<sub>지구</sub> = 3.986×10¹⁴ m³/s², 지구 반지름 6371 km, 정지 궤도 반지름 42 164 km. 궤도는 만유인력만 받는다고 보고 운동 방정식을 수치로 풀어 그렸습니다(대기 저항, 지구의 자전과 편평도 무시). 칠한 부채꼴은 한 주기를 12등분한 같은 시간 동안 위성과 지구 중심을 잇는 선이 쓸고 간 넓이입니다.</p>
+              <p class="fig-note">GM<sub>지구</sub> = 3.986×10¹⁴ m³/s², 지구 반지름 6371 km, 정지 궤도 반지름 42 164 km. 궤도는 만유인력만 받는다고 보고 운동 방정식을 수치로 풀어 그렸다(대기 저항, 지구의 자전과 편평도 무시). 칠한 부채꼴은 한 주기를 12등분한 같은 시간 동안 위성과 지구 중심을 잇는 선이 쓸고 간 넓이이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>국제 우주 정거장은 초속 7.7 km로 90분마다 지구를 한 바퀴 돌고, 정지 궤도 위성은 초속 3.1 km로 하루에 한 바퀴 돕니다. 높이 있는 위성은 왜 더 느릴까요? 그리고 높은 궤도로 올라가려면 왜 오히려 속력을 높여야 할까요?</li>
-            <li><span class="tag">복원</span>만유인력 F = GMm/r²은 물체 사이를 잇는 방향으로 작용하고 거리의 제곱에 반비례합니다. 케플러는 행성 관측에서 타원 궤도(제1법칙), 면적 속도 일정(제2법칙), T² ∝ a³(제3법칙)을 찾았습니다.</li>
-            <li><span class="tag">설명</span>원궤도에서는 만유인력이 구심력이므로 GMm/r² = mv²/r, 곧 <em>v = √(GM/r)</em>이고 T = 2πr/v에서 <em>T² = (4π²/GM)r³</em>, 제3법칙이 나옵니다. 만유인력은 중심을 향하므로 돌림힘이 0이고 각운동량 L = mr²(dθ/dt)이 보존됩니다. 면적 속도 dA/dt = L/(2m)가 일정하다는 것이 제2법칙입니다. 거리의 제곱에 반비례하는 힘을 받는 물체의 궤도는 원뿔 곡선(원, 타원, 포물선, 쌍곡선)이 되며, 이것이 제1법칙입니다.</li>
-            <li><span class="tag">연결</span>역학적 에너지 E = ½mv² − GMm/r은 타원 궤도에서 <em>E = −GMm/(2a)</em>로, 긴반지름 a만으로 정해집니다. 그래서 주기도 a로만 정해집니다. E가 0 이상이 되는 속력 √(2GM/r) = √2 × 원궤도 속력이 <em>탈출 속력</em>입니다. 낮은 원궤도에서 앞으로 가속하면 그 점이 근지점인 타원이 되고, 원지점에서 한 번 더 가속하면 높은 원궤도에 들어갑니다(호만 전이).</li>
-            <li><span class="tag">적용</span>속력을 1.00배에서 조금씩 올려 궤도가 타원 → 포물선 → 쌍곡선으로 바뀌는 순간을 찾고, 그때 에너지의 부호를 보세요. 방향을 위로 20° 꺾고 속력을 1.00배로 두면, 같은 속력의 원궤도와 주기가 같은지 비교하세요. 전이 궤도에서 원지점은 어디에 닿나요?</li>
-            <li class="warn"><span class="tag">판단</span>“위성은 무중력이라 떨어지지 않는다”는 오개념입니다. 400 km 높이에서도 중력 가속도는 지표의 약 89 %이고, 위성은 계속 떨어지면서 옆으로 빨리 움직여 지면을 비껴갈 뿐입니다. 또 위성을 앞으로 가속하면 높은 궤도로 올라가 결국 평균 속력은 느려집니다. 실제 낮은 궤도는 희박한 대기의 저항으로 높이가 서서히 낮아져, 우주 정거장은 주기적으로 궤도를 다시 올립니다.</li>
+            <li><span class="tag">질문</span>국제 우주 정거장은 초속 7.7 km로 90분마다 지구를 한 바퀴 돌고, 정지 궤도 위성은 초속 3.1 km로 하루에 한 바퀴 돈다. 높이 있는 위성은 왜 더 느릴까? 그리고 높은 궤도로 올라가려면 왜 오히려 속력을 높여야 할까?</li>
+            <li><span class="tag">복원</span>만유인력 F = GMm/r²은 물체 사이를 잇는 방향으로 작용하고 거리의 제곱에 반비례한다. 케플러는 행성 관측에서 타원 궤도(제1법칙), 면적 속도 일정(제2법칙), T² ∝ a³(제3법칙)을 찾았다.</li>
+            <li><span class="tag">설명</span>원궤도에서는 만유인력이 구심력이므로 GMm/r² = mv²/r, 곧 <em>v = √(GM/r)</em>이고 T = 2πr/v에서 <em>T² = (4π²/GM)r³</em>, 제3법칙이 나온다. 만유인력은 중심을 향하므로 돌림힘이 0이고 각운동량 L = mr²(dθ/dt)이 보존된다. 면적 속도 dA/dt = L/(2m)가 일정하다는 것이 제2법칙이다. 거리의 제곱에 반비례하는 힘을 받는 물체의 궤도는 원뿔 곡선(원, 타원, 포물선, 쌍곡선)이 되며, 이것이 제1법칙이다.</li>
+            <li><span class="tag">연결</span>역학적 에너지 E = ½mv² − GMm/r은 타원 궤도에서 <em>E = −GMm/(2a)</em>로, 긴반지름 a만으로 정해진다. 그래서 주기도 a로만 정해진다. E가 0 이상이 되는 속력 √(2GM/r) = √2 × 원궤도 속력이 <em>탈출 속력</em>이다. 낮은 원궤도에서 앞으로 가속하면 그 점이 근지점인 타원이 되고, 원지점에서 한 번 더 가속하면 높은 원궤도에 들어간다(호만 전이).</li>
+            <li><span class="tag">적용</span>속력을 1.00배에서 조금씩 올려 궤도가 타원 → 포물선 → 쌍곡선으로 바뀌는 순간을 찾고, 그때 에너지의 부호를 보자. 방향을 위로 20° 꺾고 속력을 1.00배로 두면, 같은 속력의 원궤도와 주기가 같은지 비교해 보자. 전이 궤도에서 원지점은 어디에 닿는가?</li>
+            <li class="warn"><span class="tag">판단</span>“위성은 무중력이라 떨어지지 않는다”는 오개념이다. 400 km 높이에서도 중력 가속도는 지표의 약 89 %이고, 위성은 계속 떨어지면서 옆으로 빨리 움직여 지면을 비껴갈 뿐이다. 또 위성을 앞으로 가속하면 높은 궤도로 올라가 결국 평균 속력은 느려진다. 실제 낮은 궤도는 희박한 대기의 저항으로 높이가 서서히 낮아져, 우주 정거장은 주기적으로 궤도를 다시 올린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">원궤도를 돌던 위성이 진행 방향으로 짧게 엔진을 분사해 속력을 10 % 높였습니다. 분사 직후 위성의 운동에 대한 설명으로 옳은 것은?</p>
+          <p class="q">원궤도를 돌던 위성이 진행 방향으로 짧게 엔진을 분사해 속력을 10 % 높였다. 분사 직후 위성의 운동에 대한 설명으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>분사한 곳이 근지점인 타원 궤도를 돌고, 공전 주기는 길어진다<span class="why"><b>맞습니다.</b> 에너지가 커져 긴반지름 a가 커지고, T² ∝ a³이므로 주기가 길어집니다. 분사 지점에서 속도는 여전히 반지름에 수직이므로 그곳이 가장 가까운 점입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>더 빨라졌으므로 같은 원궤도를 더 짧은 주기로 돈다<span class="why"><b>원궤도는 반지름마다 속력이 하나로 정해집니다.</b> 속력이 √(GM/r)보다 크면 중력이 구심력으로 모자라 바깥으로 벌어집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>속력이 원궤도 속력보다 크므로 지구를 탈출한다<span class="why"><b>탈출하려면 원궤도 속력의 √2배(약 1.41배)가 필요합니다.</b> 10 % 늘린 것으로는 E가 여전히 음수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>분사한 곳이 근지점인 타원 궤도를 돌고, 공전 주기는 길어진다<span class="why"><b>맞다.</b> 에너지가 커져 긴반지름 a가 커지고, T² ∝ a³이므로 주기가 길어진다. 분사 지점에서 속도는 여전히 반지름에 수직이므로 그곳이 가장 가까운 점이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>더 빨라졌으므로 같은 원궤도를 더 짧은 주기로 돈다<span class="why"><b>원궤도는 반지름마다 속력이 하나로 정해진다.</b> 속력이 √(GM/r)보다 크면 중력이 구심력으로 모자라 바깥으로 벌어진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>속력이 원궤도 속력보다 크므로 지구를 탈출한다<span class="why"><b>탈출하려면 원궤도 속력의 √2배(약 1.41배)가 필요하다.</b> 10 % 늘린 것으로는 E가 여전히 음수이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/adphy/1-3.html#card-adphy-spin"><small class="mono">고급 물리학 1.3</small>회전의자에서 팔을 오므리면 왜 빨리 돌까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mech/1-4.html#text-mech-kepler-history"><small class="mono">역학과 에너지 1.4</small>관측 자료에서 만유인력까지, 무엇이 이어졌을까?</a><a href="../../c/mech/1-4.html#text-mech-kepler"><small class="mono">역학과 에너지 1.4</small>케플러 법칙과 만유인력</a><a href="../../c/space/1-3.html#text-space-kepler-mass"><small class="mono">행성우주과학 1.3</small>케플러 법칙과 태양계 천체의 운동</a><a href="../../c/adphy/1-3.html#card-adphy-spin"><small class="mono">고급 물리학 1.3</small>회전의자에서 팔을 오므리면 왜 빨리 돌까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">45문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/mech/f-kepler.js"></script>
 <script src="../../js/cards/mech/f-escape.js"></script>
 <script src="../../js/cards/adphy/me-orbit.js"></script>

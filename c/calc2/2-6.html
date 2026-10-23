@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>매개변수 함수의 미분 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="매개변수 t로 나타낸 함수 x = f(t), y = g(t)의 도함수 dy/dx = (dy/dt)/(dx/dt) (f′(t) ≠ 0), 매개변수의 소거, 원과 사이클로이드의 접선, dx/dt = 0일 때 세로 접선과 0/0의 판단, 같은 곡선을 다른 매개변수로 나타낼 때 기울기가 같은 이유.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc2-param-tangent canvas { width: 100%; aspect-ratio: 16 / 10; }
@@ -51,18 +56,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc2-param-tangent"><span class="mono">2.6.1</span>매개변수로 나타낸 함수의 미분</a></li>
-        <li><a href="#card-calc2-param-reparam"><span class="mono">2.6.2</span>매개변수의 소거와 기울기</a></li>
+        <li><a href="#text-calc2-param"><span class="mono">본문</span>매개변수 함수의 미분</a></li>
+        <li><a href="#card-calc2-param-tangent"><span class="mono">탐구 1</span>매개변수로 나타낸 함수의 미분</a></li>
+        <li><a href="#card-calc2-param-reparam"><span class="mono">탐구 2</span>매개변수의 소거와 기울기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc2-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">29문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc2&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">7문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc2-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">29문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc2-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc2-param" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>매개변수 함수의 미분</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">운동장 트랙을 도는 사람의 위치는 시간 \(t\)에 따라 \(x\)좌표와 \(y\)좌표가 함께 바뀐다. 트랙처럼 둥근 곡선은 \(y\)를 \(x\)의 함수 하나로 나타내기 어렵다. 한 \(x\)에 \(y\)가 두 개씩 있기 때문이다. 이런 곡선 위 한 점에서 접선의 기울기는 어떻게 구할까?</p>
+          <figure class="q-fig" data-q="calc2-param">
+            <svg viewBox="0 0 520 230" role="img" aria-label="매개변수로 나타낸 타원 위의 점과 접선"></svg>
+            <div class="q-ctl"><label>매개변수 \(t\) <input type="range" data-k="t" min="0" max="6.28" step="0.02" value="0.8"><output data-k="t"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 타원 \(x = 2\cos t\), \(y = \sin t\). 점이 움직이는 방향의 속도 \(\left(\dfrac{dx}{dt}, \dfrac{dy}{dt}\right)\)가 접선의 방향이고, 기울기는 \(\dfrac{dy/dt}{dx/dt}\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>합성함수의 미분법(<a href="2-5.html">합성함수의 미분법</a>), 사인·코사인함수의 도함수, 접선의 방정식(미적분Ⅰ).</div>
+
+          <h3><span class="no">2.6.1</span>매개변수로 나타낸 곡선</h3>
+          <p>두 변수 \(x\), \(y\)를 제3의 변수 \(t\)의 함수 \(x = f(t)\), \(y = g(t)\)로 나타낸 것을 매개변수로 나타낸 함수라 하고, \(t\)를 매개변수라 한다. \(t\)를 시간으로 보면 점이 평면 위를 움직이는 경로가 된다. 원 \(x^2 + y^2 = 1\)은 \(x = \cos t\), \(y = \sin t\)로, 그림 1의 타원 \(\dfrac{x^2}{4} + y^2 = 1\)은 \(x = 2\cos t\), \(y = \sin t\)로 나타낼 수 있다.</p>
+
+          <h3><span class="no">2.6.2</span>매개변수로 나타낸 함수의 미분</h3>
+          <p>곡선의 일부에서 \(y\)를 \(x\)의 함수로 볼 수 있다면, 합성함수의 미분법에 의해 \(\dfrac{dy}{dt} = \dfrac{dy}{dx} \cdot \dfrac{dx}{dt}\)이다. 따라서 \(\dfrac{dx}{dt} \ne 0\)인 곳에서 양변을 \(\dfrac{dx}{dt}\)로 나누면 접선의 기울기를 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">매개변수로 나타낸 함수의 미분법</span></span>
+            <p>\(x = f(t)\), \(y = g(t)\)가 미분가능하고 \(f'(t) \ne 0\)이면 \[\frac{dy}{dx} = \frac{dy/dt}{dx/dt} = \frac{g'(t)}{f'(t)}\]</p>
+          </div>
+          <p>그림 1에서 \(t\)를 움직여 보자. \(t = 0\)이나 \(t = \pi\)에서는 \(\dfrac{dx}{dt} = -2\sin t = 0\)이므로 접선이 세로선이 된다. \(t = \dfrac{\pi}{2}\)에서는 \(\dfrac{dy}{dt} = \cos t = 0\)이므로 접선이 가로선이다. 한 \(x\)에 \(y\)가 두 개인 곡선이지만, \(t\)를 거치면 각 점의 접선을 문제없이 구할 수 있다.<sup class="fn"><a href="#fn-calc2-param-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="속도 벡터의 가로 성분과 세로 성분의 비가 접선의 기울기">
+              <g class="s">
+                <circle cx="100" cy="80" r="4" class="fd"/>
+                <line x1="100" y1="80" x2="220" y2="80" class="gd"/><line x1="220" y1="80" x2="220" y2="30" class="gd"/>
+                <line x1="100" y1="80" x2="220" y2="30" class="c"/><path d="M220 30 l-10 0 l5 8 Z" class="fc"/>
+                <text x="160" y="98" text-anchor="middle">dx/dt</text><text x="228" y="58">dy/dt</text>
+                <text x="280" y="50">기울기 = (dy/dt) ÷ (dx/dt)</text><text x="280" y="80">dx/dt = 0 이면 세로 접선</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 매개변수 곡선 위의 점이 움직이는 속도의 가로 성분과 세로 성분의 비가 접선의 기울기이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>곡선 \(x = 2\cos t\), \(y = \sin t\) 위에서 \(t = \dfrac{\pi}{4}\)인 점에서의 접선의 방정식을 구하여라.</p>
+          </div>
+          <p>\(t = \dfrac{\pi}{4}\)인 점은 \(\left(2 \cdot \dfrac{\sqrt{2}}{2}, \dfrac{\sqrt{2}}{2}\right) = \left(\sqrt{2}, \dfrac{\sqrt{2}}{2}\right)\)이다. \(\dfrac{dx}{dt} = -2\sin t = -\sqrt{2}\), \(\dfrac{dy}{dt} = \cos t = \dfrac{\sqrt{2}}{2}\)이므로 기울기는 \(\dfrac{\sqrt{2}/2}{-\sqrt{2}} = -\dfrac{1}{2}\)이다.</p>
+          <p>접선은 \(y - \dfrac{\sqrt{2}}{2} = -\dfrac{1}{2}(x - \sqrt{2})\), 정리하면 \(y = -\dfrac{1}{2}x + \sqrt{2}\)이다. 확인으로 타원의 방정식 \(\dfrac{x^2}{4} + y^2 = 1\)을 음함수로 미분하면 \(\dfrac{x}{2} + 2yy' = 0\)에서 \(y' = -\dfrac{x}{4y} = -\dfrac{\sqrt{2}}{4 \cdot \sqrt{2}/2} = -\dfrac{1}{2}\)로 같은 기울기가 나온다.</p>
+          <p>아래 탐구 카드에서 매개변수 곡선의 접선과, 같은 곡선을 다른 매개변수로 나타낼 때의 기울기를 직접 비교해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc2-param-1">같은 곡선을 \(x = 2\cos 2t\), \(y = \sin 2t\)처럼 다른 매개변수로 나타내면 점이 두 배 빨리 돌지만, \(\dfrac{dy/dt}{dx/dt}\)에서 2가 약분되어 기울기는 같다. 기울기는 곡선의 모양에만 달려 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>매개변수 \(t\)로 나타낸 곡선 \(x = f(t)\), \(y = g(t)\)의 접선 기울기는 \(\dfrac{dy}{dx} = \dfrac{g'(t)}{f'(t)}\)이며, \(f'(t) = 0\)인 곳에서는 세로 접선이 된다. 그래서 처음 질문의 트랙처럼 \(y\)를 \(x\)의 함수 하나로 쓰기 어려운 곡선도, 시간에 따른 \(x\)와 \(y\)의 변화율을 나누어 접선의 기울기를 구할 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-5.html#card-calc2-chain-lines"><small class="mono">미적분Ⅱ 2.5</small>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</a><a href="../../c/calc2/2-5.html#text-calc2-chain"><small class="mono">미적분Ⅱ 2.5</small>합성함수의 미분법</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-3.html#card-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>카디오이드에서 접선이 수평인 곳은 어디일까?</a><a href="../../c/adcalc/2-3.html#card-adcalc-log-spiral"><small class="mono">고급 미적분 2.3</small>목표를 늘 같은 각도로 보며 날면 어떤 길이 될까?</a><a href="../../c/adcalc/2-3.html#text-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>극곡선의 접선</a><a href="../../c/adgeo/2-1.html#card-adgeo-cycloid"><small class="mono">고급 기하 2.1</small>굴러가는 바퀴 위의 점은 어떤 곡선을 그릴까?</a></div></nav>
+
       <article class="card" id="card-calc2-param-tangent">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>\(x\)와 \(y\)가 모두 \(t\)의 함수일 때 접선의 기울기는?</h2><span class="kind">매개변수 함수의 미분 · 조작</span>
+          <span class="no">탐구 1</span><h2>\(x\)와 \(y\)가 모두 \(t\)의 함수일 때 접선의 기울기는?</h2><span class="kind">매개변수 함수의 미분 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,34 +139,34 @@
                 <div><dt>\(\frac{\Delta y}{\Delta x} (\Delta t = 0.001)\)</dt><dd class="n-d">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">화살표는 속도를 0.4배로 줄여 그렸습니다. 파란 화살표는 \(\frac{dx}{dt}\), 주황 화살표는 \(\frac{dy}{dt}\), 붉은 화살표는 두 성분을 합친 속도입니다. 점선은 접선입니다.</p>
+              <p class="fig-note">화살표는 속도를 0.4배로 줄여 그렸다. 파란 화살표는 \(\frac{dx}{dt}\), 주황 화살표는 \(\frac{dy}{dt}\), 붉은 화살표는 두 성분을 합친 속도이고, 점선은 접선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>원 위를 도는 점의 위치가 \(x = 2\cos t\), \(y = 2\sin t\)로 주어질 때, \(y\)를 \(x\)의 식으로 고치지 않고도 점에서의 접선의 기울기를 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>기울기는 세로 변화량 ÷ 가로 변화량의 극한입니다. 합성함수의 미분법에 따르면 \(y\)가 \(x\)를 거쳐 \(t\)의 함수일 때 \(\frac{dy}{dt} = (\frac{dy}{dx})(\frac{dx}{dt})\)입니다.</li>
-            <li><span class="tag">설명</span>\(x = f(t)\), \(y = g(t)\)처럼 두 변수를 제3의 변수 \(t\)로 나타낼 때 \(t\)를 <em>매개변수</em>라고 합니다. \(t\)가 \(\Delta t\)만큼 변할 때 \(\frac{\Delta y}{\Delta x} = \frac{\frac{\Delta y}{\Delta t}}{\frac{\Delta x}{\Delta t}}\)이므로, \(f\), \(g\)가 미분가능하고 \(f'(t) \ne 0\)이면 <b>\(\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{g'(t)}{f'(t)}\)</b>입니다. 원에서는 \(\frac{dy}{dx} = \frac{2\cos t}{-2\sin t} = -\cot t\)입니다.</li>
-            <li><span class="tag">연결</span>\((\frac{dx}{dt}, \frac{dy}{dt})\)는 움직이는 점의 속도입니다. 그래서 접선의 방향은 그 순간 점이 움직이는 방향과 같습니다. 바퀴 위의 한 점이 그리는 사이클로이드는 \(y\)를 \(x\)의 식으로 쓰기 어려워 이 방법이 특히 쓸모 있습니다.</li>
-            <li><span class="tag">적용</span>원에서 \(t\)를 움직이며 접선이 수평이 되는 곳과 수직이 되는 곳을 찾으세요. 그때 \(\frac{dx}{dt}\), \(\frac{dy}{dt}\) 가운데 어느 것이 0인가요? 사이클로이드에서 \(t\)를 0 가까이 보내면 접선은 어떻게 되나요? \((t^2, t^3)\)에서 \(t = 0\)으로 가면 두 속도가 모두 0이 되는데, 넷째 칸은 어디로 가나요?</li>
-            <li class="warn"><span class="tag">판단</span>공식은 \(\frac{dx}{dt} \ne 0\)일 때만 씁니다. \(\frac{dx}{dt} = 0\)이고 \(\frac{dy}{dt} \ne 0\)이면 접선은 세로선이고 기울기가 없습니다. 둘 다 0이면 공식은 \(\frac{0}{0}\)이 되어 아무것도 알려 주지 않습니다. 이때는 \(t\)가 그 값에 가까워질 때 \(\frac{g'(t)}{f'(t)}\)의 극한을 따로 살핍니다. \((t^2, t^3)\)에서는 \(\frac{3t}{2} \to 0\)입니다. 또 분자와 분모를 바꾸어 \(\frac{\frac{dx}{dt}}{\frac{dy}{dt}}\)로 쓰는 실수에 주의합니다.</li>
+            <li><span class="tag">질문</span>원 위를 도는 점의 위치가 \(x = 2\cos t\), \(y = 2\sin t\)로 주어질 때, \(y\)를 \(x\)의 식으로 고치지 않고도 점에서의 접선의 기울기를 구할 수 있을까?</li>
+            <li><span class="tag">복원</span>기울기는 세로 변화량 ÷ 가로 변화량의 극한이다. 그리고 합성함수의 미분법에 따르면 \(y\)가 \(x\)를 거쳐 \(t\)의 함수일 때 \(\frac{dy}{dt} = (\frac{dy}{dx})(\frac{dx}{dt})\)이다.</li>
+            <li><span class="tag">설명</span>\(x = f(t)\), \(y = g(t)\)처럼 두 변수를 제3의 변수 \(t\)로 나타낼 때 \(t\)를 <em>매개변수</em>라고 한다. \(t\)가 \(\Delta t\)만큼 변할 때 \(\frac{\Delta y}{\Delta x} = \frac{\frac{\Delta y}{\Delta t}}{\frac{\Delta x}{\Delta t}}\)이므로, \(f\), \(g\)가 미분가능하고 \(f'(t) \ne 0\)이면 \(\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{g'(t)}{f'(t)}\)이다. 원에서는 \(\frac{dy}{dx} = \frac{2\cos t}{-2\sin t} = -\cot t\)이다.</li>
+            <li><span class="tag">연결</span>\((\frac{dx}{dt}, \frac{dy}{dt})\)는 움직이는 점의 속도이므로, 접선의 방향은 그 순간 점이 움직이는 방향과 같다. 또 바퀴 위의 한 점이 그리는 사이클로이드는 \(y\)를 \(x\)의 식으로 쓰기 어려워서 이 방법이 특히 쓸모 있다.</li>
+            <li><span class="tag">적용</span>원에서 \(t\)를 움직이며 접선이 수평이 되는 곳과 수직이 되는 곳을 찾고, 그때 \(\frac{dx}{dt}\), \(\frac{dy}{dt}\) 가운데 어느 것이 0인지 보자. 사이클로이드에서 \(t\)를 0 가까이 보내면 접선이 어떻게 되는지, \((t^2, t^3)\)에서 \(t = 0\)으로 가면 두 속도가 모두 0이 되는데 넷째 칸은 어디로 가는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>공식은 \(\frac{dx}{dt} \ne 0\)일 때만 쓴다. \(\frac{dx}{dt} = 0\)이고 \(\frac{dy}{dt} \ne 0\)이면 접선은 세로선이고 기울기가 없으며, 둘 다 0이면 공식은 \(\frac{0}{0}\)이 되어 아무것도 알려 주지 않는다. 이때는 \(t\)가 그 값에 가까워질 때 \(\frac{g'(t)}{f'(t)}\)의 극한을 따로 살피는데, \((t^2, t^3)\)에서는 \(\frac{3t}{2} \to 0\)이다. 또 분자와 분모를 바꾸어 \(\frac{\frac{dx}{dt}}{\frac{dy}{dt}}\)로 쓰는 실수에 주의해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">곡선 \(x = t^2\), \(y = t^3 - 3t\) 위에서 \(t = 2\)인 점의 접선의 기울기는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{9}{4}\)<span class="why"><b>맞습니다.</b> \(\frac{dx}{dt} = 2t = 4\), \(\frac{dy}{dt} = 3t^2 - 3 = 9\)이므로 \(\frac{dy}{dx} = \frac{9}{4}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{4}{9}\)<span class="why"><b>분자와 분모를 바꾸었습니다.</b> 기울기는 세로 ÷ 가로이므로 \(\frac{dy}{dt}\)가 분자입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>\(\frac{dy}{dt}\)만 구했습니다.</b> 9는 \(t\)에 대한 \(y\)의 변화율입니다. \(x\)에 대한 변화율을 얻으려면 \(\frac{dx}{dt} = 4\)로 나눕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>좌표의 비를 구했습니다.</b> 점 \((4, 2)\)에서 \(\frac{y}{x} = \frac{1}{2}\)은 원점과 잇는 직선의 기울기이지 접선의 기울기가 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{9}{4}\)<span class="why"><b>맞다.</b> \(\frac{dx}{dt} = 2t = 4\), \(\frac{dy}{dt} = 3t^2 - 3 = 9\)이므로 \(\frac{dy}{dx} = \frac{9}{4}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{4}{9}\)<span class="why"><b>분자와 분모를 바꾸었다.</b> 기울기는 세로 ÷ 가로이므로 \(\frac{dy}{dt}\)가 분자이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>\(\frac{dy}{dt}\)만 구했다.</b> 9는 \(t\)에 대한 \(y\)의 변화율이다. \(x\)에 대한 변화율을 얻으려면 \(\frac{dx}{dt} = 4\)로 나눈다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{2}\)<span class="why"><b>좌표의 비를 구했다.</b> 점 \((4, 2)\)에서 \(\frac{y}{x} = \frac{1}{2}\)은 원점과 잇는 직선의 기울기이지 접선의 기울기가 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-5.html#card-calc2-chain-lines"><small class="mono">미적분Ⅱ 2.5</small>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-3.html#card-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>카디오이드에서 접선이 수평인 곳은 어디일까?</a><a href="../../c/adcalc/2-3.html#card-adcalc-log-spiral"><small class="mono">고급 미적분 2.3</small>목표를 늘 같은 각도로 보며 날면 어떤 길이 될까?</a><a href="../../c/adgeo/2-1.html#card-adgeo-cycloid"><small class="mono">고급 기하 2.1</small>굴러가는 바퀴 위의 점은 어떤 곡선을 그릴까?</a><a href="../../c/adgeo/2-1.html#card-adgeo-lissajous"><small class="mono">고급 기하 2.1</small>가로와 세로로 따로 흔들리는 점은 어떤 무늬를 그릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-5.html#card-calc2-chain-lines"><small class="mono">미적분Ⅱ 2.5</small>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</a><a href="../../c/calc2/2-5.html#text-calc2-chain"><small class="mono">미적분Ⅱ 2.5</small>합성함수의 미분법</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-3.html#card-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>카디오이드에서 접선이 수평인 곳은 어디일까?</a><a href="../../c/adcalc/2-3.html#card-adcalc-log-spiral"><small class="mono">고급 미적분 2.3</small>목표를 늘 같은 각도로 보며 날면 어떤 길이 될까?</a><a href="../../c/adcalc/2-3.html#text-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>극곡선의 접선</a><a href="../../c/adgeo/2-1.html#card-adgeo-cycloid"><small class="mono">고급 기하 2.1</small>굴러가는 바퀴 위의 점은 어떤 곡선을 그릴까?</a></div></nav>
 
       <article class="card" id="card-calc2-param-reparam">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>같은 곡선을 다른 매개변수로 나타내면 기울기도 달라질까?</h2><span class="kind">매개변수의 소거 · 비교</span>
+          <span class="no">탐구 2</span><h2>같은 곡선을 다른 매개변수로 나타내면 기울기도 달라질까?</h2><span class="kind">매개변수의 소거 · 비교</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -125,43 +182,44 @@
                   <tr class="r-c"><td>\(C (t^3, t^6)\)</td><td></td><td></td><td></td><td class="m"></td></tr>
                 </tbody>
               </table>
-              <p class="fig-note">화살표는 각 매개변수로 잰 속도 \((\frac{dx}{dt}, \frac{dy}{dt})\)를 0.15배로 줄여 그렸습니다. 파랑 \(A\), 주황 \(B\), 붉은색 \(C\)입니다. 점 \(P\)는 그림을 가로로 끌어도 움직입니다.</p>
+              <p class="fig-note">화살표는 각 매개변수로 잰 속도 \((\frac{dx}{dt}, \frac{dy}{dt})\)를 0.15배로 줄여 그렸다. 파랑은 \(A\), 주황은 \(B\), 붉은색은 \(C\)이고, 점 \(P\)는 그림을 가로로 끌어도 움직인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(A\): \(x = t\), \(y = t^2\), \(B\): \(x = 2t\), \(y = 4t^2\), \(C\): \(x = t^3\), \(y = t^6\)은 모두 같은 곡선을 그립니다. 같은 점에서 세 방법으로 구한 \(\frac{dy}{dx}\)도 같을까요?</li>
-            <li><span class="tag">복원</span>매개변수로 나타낸 함수에서 \(\frac{dx}{dt} \ne 0\)이면 \(\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)입니다. \(y = x^2\)의 도함수는 \(2x\)입니다.</li>
-            <li><span class="tag">설명</span>세 식에서 \(t\)를 없애면 모두 \(y = x^2\)이 됩니다. 이렇게 매개변수를 없애 \(x\), \(y\)의 관계식을 얻는 것을 <em>매개변수의 소거</em>라고 합니다. 매개변수는 같은 길을 <b>어떤 빠르기로</b> 지나가는지를 정할 뿐이므로, \(\frac{dx}{dt}\)와 \(\frac{dy}{dt}\)는 매개변수마다 다르지만 두 값이 같은 비율로 커지고 작아집니다. 예를 들어 \(B\)에서는 \(\frac{dx}{dt} = 2\), \(\frac{dy}{dt} = 8t\)이고 \(t = \frac{x}{2}\)이므로 \(\frac{dy}{dx} = 4t = 2x\)입니다. 그래서 <b>접선의 기울기는 곡선이 정하는 값</b>이고 매개변수를 고르는 방법과 상관없습니다.</li>
-            <li><span class="tag">연결</span>매개변수를 쉽게 소거할 수 있으면 \(y\)를 \(x\)의 식으로 고쳐 미분해도 되고, 소거하기 어려우면 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)를 씁니다. 두 방법의 결과는 같으므로 하나로 구하고 다른 하나로 검산할 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(P\)를 옮기며 세 줄의 \(\frac{dx}{dt}\), \(\frac{dy}{dt}\)와 \(\frac{dy}{dx}\)를 비교하세요. 화살표의 길이는 다른데 방향은 어떤가요? \(P\)를 \(x = 0\)으로 옮기면 \(C\)의 줄은 어떻게 되나요? 그때도 접선은 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(C\)에서 \(x = 0\)이면 \(\frac{dx}{dt} = \frac{dy}{dt} = 0\)이라 공식이 \(\frac{0}{0}\)이 됩니다. 그렇다고 접선이 없는 것은 아닙니다. 곡선은 같은 \(y = x^2\)이고 원점의 접선은 \(x\)축입니다. 매개변수의 속도가 0이 된 것은 그 순간 점이 멈춘 것일 뿐, 곡선의 모양이 바뀐 것이 아닙니다. 또 매개변수를 소거할 때는 \(t\)의 범위에 따라 \(x\)의 범위가 제한될 수 있습니다. \(x = t^2\), \(y = t^4\)이면 \(y = x^2\)의 \(x \ge 0\)인 부분만 그립니다.</li>
+            <li><span class="tag">질문</span>\(x = t\), \(y = t^2\)인 \(A\)와 \(x = 2t\), \(y = 4t^2\)인 \(B\), \(x = t^3\), \(y = t^6\)인 \(C\)는 모두 같은 곡선을 그린다. 같은 점에서 세 방법으로 구한 \(\frac{dy}{dx}\)도 같을까?</li>
+            <li><span class="tag">복원</span>매개변수로 나타낸 함수에서 \(\frac{dx}{dt} \ne 0\)이면 \(\frac{dy}{dx} = \frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)이다. 그리고 \(y = x^2\)의 도함수는 \(2x\)이다.</li>
+            <li><span class="tag">설명</span>세 식에서 \(t\)를 없애면 모두 \(y = x^2\)이 되는데, 이렇게 매개변수를 없애 \(x\), \(y\)의 관계식을 얻는 것을 <em>매개변수의 소거</em>라고 한다. 매개변수는 같은 길을 <em>어떤 빠르기로</em> 지나가는지를 정할 뿐이므로, \(\frac{dx}{dt}\)와 \(\frac{dy}{dt}\)는 매개변수마다 다르지만 두 값이 같은 비율로 커지고 작아진다. 예를 들어 \(B\)에서는 \(\frac{dx}{dt} = 2\), \(\frac{dy}{dt} = 8t\)이고 \(t = \frac{x}{2}\)이므로 \(\frac{dy}{dx} = 4t = 2x\)이다. 그래서 접선의 기울기는 곡선이 정하는 값이고, 매개변수를 고르는 방법과 상관없다.</li>
+            <li><span class="tag">연결</span>매개변수를 쉽게 소거할 수 있으면 \(y\)를 \(x\)의 식으로 고쳐 미분해도 되고, 소거하기 어려우면 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)를 쓴다. 두 방법의 결과는 같으므로 하나로 구하고 다른 하나로 검산할 수 있다.</li>
+            <li><span class="tag">적용</span>\(P\)를 옮기며 세 줄의 \(\frac{dx}{dt}\), \(\frac{dy}{dt}\)와 \(\frac{dy}{dx}\)를 비교하고, 화살표의 길이는 다른데 방향은 어떤지 보자. 그리고 \(P\)를 \(x = 0\)으로 옮기면 \(C\)의 줄이 어떻게 되는지, 그때도 접선이 있는지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(C\)에서 \(x = 0\)이면 \(\frac{dx}{dt} = \frac{dy}{dt} = 0\)이라 공식이 \(\frac{0}{0}\)이 되지만, 그렇다고 접선이 없는 것은 아니다. 곡선은 같은 \(y = x^2\)이고 원점의 접선은 \(x\)축이며, 매개변수의 속도가 0이 된 것은 그 순간 점이 멈춘 것일 뿐 곡선의 모양이 바뀐 것이 아니다. 또 매개변수를 소거할 때는 \(t\)의 범위에 따라 \(x\)의 범위가 제한될 수 있어서, \(x = t^2\), \(y = t^4\)이면 \(y = x^2\)의 \(x \ge 0\)인 부분만 그린다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">곡선 \(x = 2t + 1\), \(y = 4t^2\) 위의 점 \((3, 4)\)에서 접선의 기울기는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞습니다.</b> 점 \((3, 4)\)는 \(t = 1\)일 때이고 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{8t}{2} = 4\)입니다. 소거하면 \(y = (x - 1)^2\)이고 \(x = 3\)에서 \(2(x - 1) = 4\)로 같습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>8<span class="why"><b>\(\frac{dy}{dt}\)만 구했습니다.</b> \(t = 1\)에서 \(\frac{dy}{dt} = 8\)이지만 \(\frac{dx}{dt} = 2\)로 나누어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>분자와 분모를 바꾸었습니다.</b> 기울기는 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>곡선을 \(y = x^2\)으로 보았습니다.</b> \(2x\)에 \(x = 3\)을 넣었지만, 이 곡선을 소거하면 \(y = (x - 1)^2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞다.</b> 점 \((3, 4)\)는 \(t = 1\)일 때이고 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}} = \frac{8t}{2} = 4\)이다. 소거하면 \(y = (x - 1)^2\)이고 \(x = 3\)에서 \(2(x - 1) = 4\)로 같다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>8<span class="why"><b>\(\frac{dy}{dt}\)만 구했다.</b> \(t = 1\)에서 \(\frac{dy}{dt} = 8\)이지만 \(\frac{dx}{dt} = 2\)로 나누어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{4}\)<span class="why"><b>분자와 분모를 바꾸었다.</b> 기울기는 \(\frac{\frac{dy}{dt}}{\frac{dx}{dt}}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>곡선을 \(y = x^2\)으로 보았다.</b> \(2x\)에 \(x = 3\)을 넣었지만, 이 곡선을 소거하면 \(y = (x - 1)^2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-5.html#card-calc2-chain-lines"><small class="mono">미적분Ⅱ 2.5</small>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-3.html#card-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>카디오이드에서 접선이 수평인 곳은 어디일까?</a><a href="../../c/adcalc/2-3.html#card-adcalc-log-spiral"><small class="mono">고급 미적분 2.3</small>목표를 늘 같은 각도로 보며 날면 어떤 길이 될까?</a><a href="../../c/adgeo/2-1.html#card-adgeo-cycloid"><small class="mono">고급 기하 2.1</small>굴러가는 바퀴 위의 점은 어떤 곡선을 그릴까?</a><a href="../../c/adgeo/2-1.html#card-adgeo-lissajous"><small class="mono">고급 기하 2.1</small>가로와 세로로 따로 흔들리는 점은 어떤 무늬를 그릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc2/2-5.html#card-calc2-chain-lines"><small class="mono">미적분Ⅱ 2.5</small>안쪽 함수와 바깥 함수의 변화율은 어떻게 합쳐질까?</a><a href="../../c/calc2/2-5.html#text-calc2-chain"><small class="mono">미적분Ⅱ 2.5</small>합성함수의 미분법</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-3.html#card-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>카디오이드에서 접선이 수평인 곳은 어디일까?</a><a href="../../c/adcalc/2-3.html#card-adcalc-log-spiral"><small class="mono">고급 미적분 2.3</small>목표를 늘 같은 각도로 보며 날면 어떤 길이 될까?</a><a href="../../c/adcalc/2-3.html#text-adcalc-polar-tangent"><small class="mono">고급 미적분 2.3</small>극곡선의 접선</a><a href="../../c/adgeo/2-1.html#card-adgeo-cycloid"><small class="mono">고급 기하 2.1</small>굴러가는 바퀴 위의 점은 어떤 곡선을 그릴까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc2-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">29문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc2&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">7문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc2-2-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">29문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -169,6 +227,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc2/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc2/param-tangent.js"></script>
 <script src="../../js/cards/calc2/param-reparam.js"></script>

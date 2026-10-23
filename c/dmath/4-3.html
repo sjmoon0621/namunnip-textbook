@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>인접행렬 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="그래프의 인접행렬(방향 없는 그래프와 방향그래프), 행의 합과 차수, 인접행렬의 거듭제곱과 경로의 수. 그래프와 행렬을 함께 편집하는 카드와, 가상 항공 노선의 경로를 Aᵏ로 세는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-adj-matrix .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .6rem; align-items: center; }
@@ -58,18 +63,82 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-adj-matrix"><span class="mono">4.3.1</span>그래프와 인접행렬을 오가며 바꾸기</a></li>
-        <li><a href="#card-dmath-walk-count"><span class="mono">4.3.2</span>인접행렬의 거듭제곱으로 경로 세기</a></li>
+        <li><a href="#text-dmath-adjacency"><span class="mono">본문</span>인접행렬</a></li>
+        <li><a href="#card-dmath-adj-matrix"><span class="mono">탐구 1</span>그래프와 인접행렬을 오가며 바꾸기</a></li>
+        <li><a href="#card-dmath-walk-count"><span class="mono">탐구 2</span>인접행렬의 거듭제곱으로 경로 세기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-4-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-4-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-adjacency" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>인접행렬</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">네 도시 1, 2, 3, 4 사이에 직항 노선이 1–2, 2–3, 3–1, 3–4로 놓여 있다. 노선마다 양방향으로 다닌다. 도시 1에서 출발해 비행기를 정확히 세 번 타서 도시 4에 도착하는 경로는 몇 가지일까? 같은 도시를 다시 지나도 된다. 노선이 많아지면 그림을 보고 세기가 어렵다. 그래프를 수의 표로 바꾸어 행렬의 곱셈으로 이런 경로의 수를 계산할 수 있다고 한다. 어떻게 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="네 도시의 노선 그래프와 인접행렬">
+              <line x1="60" y1="40" x2="60" y2="140" class="k"/><line x1="60" y1="140" x2="160" y2="90" class="k"/><line x1="160" y1="90" x2="60" y2="40" class="k"/><line x1="160" y1="90" x2="250" y2="90" class="k"/>
+              <circle cx="60" cy="40" r="7" class="fk"/><text x="40" y="36" class="s">1</text>
+              <circle cx="60" cy="140" r="7" class="fk"/><text x="40" y="146" class="s">2</text>
+              <circle cx="160" cy="90" r="7" class="fk"/><text x="156" y="76" class="s">3</text>
+              <circle cx="250" cy="90" r="7" class="fd"/><text x="262" y="94" class="s td">4</text>
+              <g class="s">
+                <text x="320" y="30">인접행렬 A</text>
+                <text x="320" y="56">0  1  1  0</text>
+                <text x="320" y="80">1  0  1  0</text>
+                <text x="320" y="104">1  1  0  1</text>
+                <text x="320" y="128">0  0  1  0</text>
+                <text x="320" y="156">i행 j열이 1이면 i와 j 사이에 노선</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 그래프를 인접행렬로 바꾸면 각 행의 합이 그 도시의 차수이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 곱셈, 꼭짓점의 차수(<a href="4-2.html">꼭짓점의 차수와 변의 개수</a>).</div>
+
+          <h3><span class="no">4.3.1</span>그래프를 표로 바꾸다</h3>
+          <p>꼭짓점이 \(n\)개인 그래프에서, \(i\)번째와 \(j\)번째 꼭짓점이 변으로 이어져 있으면 1, 아니면 0을 \(i\)행 \(j\)열에 적은 \(n\times n\) 행렬을 인접행렬이라 한다. 변에 방향이 없으면 \(i\)와 \(j\)가 이어진 것과 \(j\)와 \(i\)가 이어진 것이 같으므로 인접행렬은 대칭행렬이다. 자기 자신과 잇는 변이 없으면 대각성분은 모두 0이다. 각 행의 성분을 더하면 그 꼭짓점과 이어진 꼭짓점의 수, 곧 차수가 된다. 그래프를 표로 바꾸면 컴퓨터가 다루기 쉽고, 행렬의 계산으로 그래프의 성질을 구할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.3.1 <span class="nm">인접행렬의 거듭제곱</span></span>
+            <p>그래프의 인접행렬을 \(A\)라 하면 \(A^k\)의 \(i\)행 \(j\)열 성분은 꼭짓점 \(i\)에서 \(j\)로 가는 길이 \(k\)인 길(같은 꼭짓점을 다시 지나도 됨)의 개수이다. 특히 \(A^2\)의 대각성분은 각 꼭짓점의 차수이고, \(A^3\)의 대각성분의 합을 6으로 나누면 삼각형의 개수이다.</p>
+          </div>
+          <p>\(A^2\)의 \(i\)행 \(j\)열 성분은 \(\sum_k a_{ik}a_{kj}\)인데, \(a_{ik}a_{kj}\)는 \(i\)에서 \(k\)로, \(k\)에서 \(j\)로 가는 변이 모두 있을 때만 1이다. 그래서 이 합은 \(i\)에서 한 번 갈아타 \(j\)로 가는 경로의 수이다. 같은 생각을 되풀이하면 \(A^k\)의 성분은 \(k\)번 이동하는 경로의 수이다. 삼각형 하나는 세 꼭짓점 각각에서 두 방향으로 돌아오는 길이 3인 길 6개를 만들므로, \(A^3\)의 대각합을 6으로 나누면 삼각형의 수가 된다.<sup class="fn"><a href="#fn-dmath-adjacency-1">1</a></sup></p>
+
+          <h3><span class="no">4.3.2</span>제곱이 알려 주는 것</h3>
+          <p>그림 1의 인접행렬을 제곱하면 첫째 행은 \((2, 1, 1, 1)\)이다. 대각성분 2는 도시 1의 차수이고, 나머지 성분 1은 도시 1에서 한 번 갈아타 도시 2, 3, 4에 가는 경로가 하나씩 있다는 뜻이다. 예를 들어 1에서 4로는 1→3→4 하나뿐이다. 이렇게 행렬을 곱하는 계산이 경로를 일일이 따라가는 일을 대신한다. 노선이 수백 개인 실제 항공망에서도 행렬의 곱셈만으로 경로의 수를 셀 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="인접행렬의 제곱과 세제곱의 첫째 행">
+              <g class="s">
+                <text x="20" y="22">행렬</text><text x="140" y="22">1행 (도시 1에서 출발)</text><text x="380" y="22">뜻</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">A</text><text x="140" y="52">(0, 1, 1, 0)</text><text x="380" y="52">직항</text>
+                <text x="20" y="74">A²</text><text x="140" y="74">(2, 1, 1, 1)</text><text x="380" y="74">두 번 타기</text>
+                <text x="20" y="96">A³</text><text x="140" y="96">(2, 3, 4, 1)</text><text x="380" y="96" class="td">세 번 타기, 4로 1가지</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 인접행렬을 거듭 곱하면 정해진 횟수만큼 이동하는 경로의 수가 나온다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.3.2</span>
+            <p>처음 질문의 인접행렬로 \(A^3\)의 1행 4열 성분을 구해, 도시 1에서 세 번 타서 도시 4에 가는 경로의 수를 구하여라. 그 경로를 적어라. 또 \(A^3\)의 대각합으로 삼각형의 개수를 구하여라.</p>
+          </div>
+          <p>\(A^2\)의 1행은 \((2, 1, 1, 1)\)이고, \(A\)의 4열은 \((0, 0, 1, 0)\)이므로 \(A^3\)의 1행 4열은 \(2\times0 + 1\times0 + 1\times1 + 1\times0 = 1\)이다. 그래서 경로는 한 가지이고, 1→2→3→4이다. 1→3에서 바로 4로 가면 두 번이고, 세 번 타려면 3에 도착하기 전에 한 번 더 갈아타야 하는데 그런 길은 2를 거치는 것뿐이다.</p>
+          <p>\(A^3\)의 대각성분은 같은 방법으로 \((2, 2, 2, 0)\)이므로 대각합은 6이고, 삼각형은 \(6/6 = 1\)개이다. 실제로 그래프에는 1, 2, 3으로 이루어진 삼각형 하나가 있다. 도시 4는 삼각형에 속하지 않아 대각성분이 0이다. 즉 인접행렬은 그래프를 수의 표로 바꾼 것이며, 그 거듭제곱의 성분은 정해진 횟수만큼 이동하는 경로의 수여서, 그림을 따라가지 않고도 경로와 삼각형을 셀 수 있다.</p>
+          <p>아래 탐구 카드에서 그래프를 인접행렬로 바꾸어 보고, 행렬의 곱셈으로 세 번 갈아타는 항공편 경로의 수를 세어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-adjacency-1">사회 연결망 연구에서는 인접행렬로 친구의 친구 수나 삼각형의 비율을 계산한다. 내 친구 둘이 서로도 친구인 비율을 뭉침 계수라 하며, 실제 사람들의 연결망은 아무렇게나 이은 그래프보다 이 값이 훨씬 크다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>인접행렬은 두 꼭짓점이 이어져 있으면 1, 아니면 0을 적은 정사각행렬로, 방향 없는 그래프에서는 대칭이고 행의 합이 차수이다. 인접행렬의 \(k\)제곱의 성분은 두 꼭짓점 사이의 길이 \(k\)인 길의 개수이고, \(A^3\)의 대각합을 6으로 나누면 삼각형의 수이다. 처음 질문에서 도시 1에서 세 번 타서 도시 4에 가는 경로는 \(A^3\)의 1행 4열 성분인 1가지, 곧 1→2→3→4이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
+
       <article class="card" id="card-dmath-adj-matrix">
         <header class="card-head">
-          <span class="no">4.3.1</span><h2>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</h2><span class="kind">인접행렬 · 조작</span>
+          <span class="no">탐구 1</span><h2>그래프를 수의 표로 바꾸면 무엇을 계산할 수 있을까?</h2><span class="kind">인접행렬 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,30 +150,30 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>컴퓨터는 그림을 볼 수 없습니다. 꼭짓점이 수천 개인 연결망을 컴퓨터에 넣으려면 그래프를 어떤 모양의 자료로 바꿔야 할까요?</li>
-            <li><span class="tag">복원</span>행렬의 \((i, j)\) 성분은 \(i\)행 \(j\)열의 수입니다.</li>
-            <li><span class="tag">설명</span>꼭짓점이 \(n\)개인 그래프에서 \(i\)와 \(j\)가 변으로 이어져 있으면 1, 아니면 0을 \((i, j)\) 성분으로 하는 \(n \times n\) 행렬을 <em>인접행렬</em>이라 합니다. 방향 없는 그래프의 인접행렬은 대각선에 대해 대칭이고, 대각성분은 0(고리 없음)이며, <b>\(i\)행의 합이 꼭짓점 \(i\)의 차수</b>입니다. 방향그래프에서는 \(i \to j\)일 때만 \((i, j)\) 성분이 1이라 대칭이 아닐 수 있고, 행의 합은 나가는 변, 열의 합은 들어오는 변의 수입니다.</li>
-            <li><span class="tag">연결</span>인접행렬을 거듭제곱하면 경로의 수를 셀 수 있습니다(다음 카드). 고급 대수의 페이지랭크도 방향그래프의 인접행렬에서 시작했습니다.</li>
-            <li><span class="tag">적용</span>그래프에서 변을 잇고 행렬이 어떻게 바뀌는지, 행렬의 칸을 눌러 그래프가 어떻게 바뀌는지 보세요. "방향 있음"으로 바꾸면 행렬의 대칭이 어떻게 되나요? 행의 합과 차수를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>꼭짓점의 번호를 바꾸면 인접행렬의 모양은 달라지지만 그래프는 같습니다. 그래서 두 행렬이 다르게 생겼다고 두 그래프가 다르다고 단정할 수 없습니다.</li>
+            <li><span class="tag">질문</span>컴퓨터는 그림을 볼 수 없다. 꼭짓점이 수천 개인 연결망을 컴퓨터에 넣으려면 그래프를 어떤 모양의 자료로 바꿔야 할까?</li>
+            <li><span class="tag">복원</span>행렬의 \((i, j)\) 성분은 \(i\)행 \(j\)열의 수이다.</li>
+            <li><span class="tag">설명</span>꼭짓점이 \(n\)개인 그래프에서 \(i\)와 \(j\)가 변으로 이어져 있으면 1, 아니면 0을 \((i, j)\) 성분으로 하는 \(n \times n\) 행렬을 <em>인접행렬</em>이라 한다. 방향 없는 그래프의 인접행렬은 대각선에 대해 대칭이고, 대각성분은 0(고리 없음)이며, \(i\)행의 합이 꼭짓점 \(i\)의 차수이다. 방향그래프에서는 \(i \to j\)일 때만 \((i, j)\) 성분이 1이라 대칭이 아닐 수 있고, 행의 합은 나가는 변, 열의 합은 들어오는 변의 수이다.</li>
+            <li><span class="tag">연결</span>인접행렬을 거듭제곱하면 경로의 수를 셀 수 있다(다음 카드). 고급 대수의 페이지랭크도 방향그래프의 인접행렬에서 시작했다.</li>
+            <li><span class="tag">적용</span>그래프에서 변을 잇고 행렬이 어떻게 바뀌는지, 행렬의 칸을 눌러 그래프가 어떻게 바뀌는지 보자. "방향 있음"으로 바꾸면 행렬의 대칭이 어떻게 되는가? 행의 합과 차수를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>꼭짓점의 번호를 바꾸면 인접행렬의 모양은 달라지지만 그래프는 같다. 그래서 두 행렬이 다르게 생겼다고 두 그래프가 다르다고 단정할 수 없다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">방향 없는 그래프의 인접행렬에서 모든 성분의 합이 14입니다. 변은 몇 개일까요?</p>
+          <p class="q">방향 없는 그래프의 인접행렬에서 모든 성분의 합이 14이다. 변은 몇 개일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(7\)개<span class="why"><b>맞습니다.</b> 변 하나가 \((i, j)\), \((j, i)\) 두 칸에 1을 씁니다. 차수의 합 = 2 × 변의 수와 같은 이야기입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(14\)개<span class="why"><b>대칭인 두 칸을 따로 셌습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(28\)개<span class="why"><b>두 배를 한 번 더 했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>꼭짓점 수를 알아야 한다<span class="why"><b>성분의 합만으로 정해집니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(7\)개<span class="why"><b>맞다.</b> 변 하나가 \((i, j)\), \((j, i)\) 두 칸에 1을 쓴다. 차수의 합 = 2 × 변의 수와 같은 이야기이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(14\)개<span class="why"><b>대칭인 두 칸을 따로 셌다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(28\)개<span class="why"><b>두 배를 한 번 더 했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>꼭짓점 수를 알아야 한다<span class="why"><b>성분의 합만으로 정해진다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
 
       <article class="card" id="card-dmath-walk-count">
         <header class="card-head">
-          <span class="no">4.3.2</span><h2>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</h2><span class="kind">인접행렬의 거듭제곱 · 활용</span>
+          <span class="no">탐구 2</span><h2>세 번 갈아타서 도착하는 항공편 경로는 몇 가지일까?</h2><span class="kind">인접행렬의 거듭제곱 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -121,39 +190,40 @@
             <div class="walks" aria-label="가능한 경로 목록"></div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>다섯 도시 사이에 직항 노선이 있습니다. 서울에서 출발해 비행기를 정확히 세 번 타고 부산에 도착하는 경로(같은 도시를 다시 들러도 됨)는 몇 가지일까요? 하나하나 세지 않고 계산할 수 있을까요?</li>
-            <li><span class="tag">복원</span>인접행렬 \(A\)의 \((i, j)\) 성분은 \(i\)와 \(j\) 사이의 변의 수입니다. 행렬의 곱 \(AB\)의 \((i, j)\) 성분은 \(A\)의 \(i\)행과 \(B\)의 \(j\)열에서 같은 순서의 성분끼리 곱해 더한 값입니다.</li>
-            <li><span class="tag">설명</span>\((A^2)_{ij} = A_{i1}A_{1j} + A_{i2}A_{2j} + \cdots + A_{in}A_{nj}\)는 "\(i\)에서 \(m\)으로, \(m\)에서 \(j\)로" 가는 길을 중간 도시 \(m\)마다 세어 더한 것이므로 길이 2인 경로의 수입니다. 같은 이유로 <b>\((A^k)_{ij}\)는 \(i\)에서 \(j\)로 가는 길이 \(k\)인 경로(같은 꼭짓점을 다시 지나도 됨)의 수</b>입니다. 대각성분 \((A^2)_{ii}\)는 꼭짓점 \(i\)의 차수와 같습니다.</li>
-            <li><span class="tag">연결</span>\((A^3)_{ii}\)의 합을 6으로 나누면 그래프 속 삼각형의 개수가 됩니다. 사회 연결망 분석에서 "친구의 친구의 친구" 수를 세거나, 고급 대수의 마르코프 연쇄에서 여러 단계 뒤의 확률을 계산할 때 같은 원리를 씁니다.</li>
-            <li><span class="tag">적용</span>출발, 도착, \(k\)를 바꾸며 표의 강조된 수와 아래 경로 목록의 개수가 같은지 확인하세요. \(k = 2\)에서 대각선의 수는 각 도시의 노선 수와 같나요?</li>
-            <li class="warn"><span class="tag">판단</span>\((A^k)_{ij}\)는 같은 도시를 여러 번 지나는 경로까지 셉니다. 한 도시를 한 번만 지나는 경로(단순 경로)의 수는 이렇게 쉽게 구할 수 없습니다. 노선은 수업용으로 만든 가상의 것입니다.</li>
+            <li><span class="tag">질문</span>다섯 도시 사이에 직항 노선이 있다. 서울에서 출발해 비행기를 정확히 세 번 타고 부산에 도착하는 경로(같은 도시를 다시 들러도 됨)는 몇 가지일까? 하나하나 세지 않고 계산할 수 있을까?</li>
+            <li><span class="tag">복원</span>인접행렬 \(A\)의 \((i, j)\) 성분은 \(i\)와 \(j\) 사이의 변의 수이다. 행렬의 곱 \(AB\)의 \((i, j)\) 성분은 \(A\)의 \(i\)행과 \(B\)의 \(j\)열에서 같은 순서의 성분끼리 곱해 더한 값이다.</li>
+            <li><span class="tag">설명</span>\((A^2)_{ij} = A_{i1}A_{1j} + A_{i2}A_{2j} + \cdots + A_{in}A_{nj}\)는 "\(i\)에서 \(m\)으로, \(m\)에서 \(j\)로" 가는 길을 중간 도시 \(m\)마다 세어 더한 것이므로 길이 2인 경로의 수이다. 같은 이유로 \((A^k)_{ij}\)는 \(i\)에서 \(j\)로 가는 길이 \(k\)인 경로(같은 꼭짓점을 다시 지나도 됨)의 수이다. 대각성분 \((A^2)_{ii}\)는 꼭짓점 \(i\)의 차수와 같다.</li>
+            <li><span class="tag">연결</span>\((A^3)_{ii}\)의 합을 6으로 나누면 그래프 속 삼각형의 개수가 된다. 사회 연결망 분석에서 "친구의 친구의 친구" 수를 세거나, 고급 대수의 마르코프 연쇄에서 여러 단계 뒤의 확률을 계산할 때 같은 원리를 쓴다.</li>
+            <li><span class="tag">적용</span>출발, 도착, \(k\)를 바꾸며 표의 강조된 수와 아래 경로 목록의 개수가 같은지 확인해 보자. \(k = 2\)에서 대각선의 수는 각 도시의 노선 수와 같은가?</li>
+            <li class="warn"><span class="tag">판단</span>\((A^k)_{ij}\)는 같은 도시를 여러 번 지나는 경로까지 센다. 한 도시를 한 번만 지나는 경로(단순 경로)의 수는 이렇게 쉽게 구할 수 없다. 노선은 수업용으로 만든 가상의 것이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">삼각형 그래프(세 꼭짓점이 서로 모두 이어짐)에서 한 꼭짓점에서 출발해 길이 2로 같은 꼭짓점에 돌아오는 경로의 수는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\)<span class="why"><b>맞습니다.</b> 이웃 둘 중 하나에 갔다가 돌아오므로 차수와 같은 2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0\)<span class="why"><b>같은 변을 되돌아오는 것도 경로로 셉니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(1\)<span class="why"><b>이웃이 둘입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(3\)<span class="why"><b>길이 3인 경로와 헷갈렸습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(2\)<span class="why"><b>맞다.</b> 이웃 둘 중 하나에 갔다가 돌아오므로 차수와 같은 2이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(0\)<span class="why"><b>같은 변을 되돌아오는 것도 경로로 센다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(1\)<span class="why"><b>이웃이 둘이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(3\)<span class="why"><b>길이 3인 경로와 헷갈렸다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-4-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=4-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-4-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

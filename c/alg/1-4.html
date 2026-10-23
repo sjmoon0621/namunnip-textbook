@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>로그 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="로그의 뜻(밑, 진수, 조건)과 로그의 성질, 밑 변환 공식을 지수의 성질과 이어 이해한다. 그래프에서 지수를 읽고, 로그 눈금자로 곱셈을 덧셈으로 바꾸는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-log-def .eq { font-size: 14px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
@@ -45,19 +50,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-log-def"><span class="mono">1.4.1</span>로그의 뜻과 조건</a></li>
-        <li><a href="#card-alg-log-rules"><span class="mono">1.4.2</span>로그의 성질 — 로그 눈금자</a></li>
-        <li><a href="#card-alg-log-base-change"><span class="mono">1.4.3</span>로그의 밑 변환</a></li>
+        <li><a href="#text-alg-log"><span class="mono">본문</span>로그</a></li>
+        <li><a href="#card-alg-log-def"><span class="mono">탐구 1</span>로그의 뜻과 조건</a></li>
+        <li><a href="#card-alg-log-rules"><span class="mono">탐구 2</span>로그의 성질 — 로그 눈금자</a></li>
+        <li><a href="#card-alg-log-base-change"><span class="mono">탐구 3</span>로그의 밑 변환</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">291문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">15문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">295문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-log" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>로그</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(2^x = 8\)이면 \(x = 3\)이다. 그런데 \(2^x = 5\)를 만족하는 \(x\)는 2와 3 사이 어딘가에 있지만, 정수도 깔끔한 분수도 아니다. 이 수를 어떻게 이름 붙이고, 어떻게 계산할까?</p>
+          <figure class="q-fig" data-q="alg-logdef">
+            <svg viewBox="0 0 520 280" role="img" aria-label="y=2^x 그래프에서 높이 N에 해당하는 x를 읽어 log₂N을 얻는 그림"></svg>
+            <div class="q-ctl"><label>\(N\) = <input type="range" data-k="n" min="0.25" max="16" step="0.25" value="5"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(y = 2^x\)의 그래프에서 높이가 \(N\)인 점의 \(x\)좌표가 \(\log_2 N\)이다. 높이를 2배 하면 \(x\)좌표는 1만큼 늘어난다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>실수 지수의 뜻(<a href="1-2.html">지수의 확장</a>), 지수법칙(<a href="1-3.html">지수법칙</a>), \(y = a^x\) 꼴의 그래프.</div>
+
+          <h3><span class="no">1.4.1</span>지수를 묻는 기호</h3>
+          <p>\(2^x\)는 \(x\)가 커지면 계속 커지고, 모든 양수 값을 한 번씩 지난다. 그림 1처럼 높이 5를 지나는 곳이 한 군데뿐이므로, \(2^x = 5\)인 실수 \(x\)는 하나로 정해진다. 이 수를 '2를 밑으로 하는 5의 로그'라 하고 \(\log_2 5\)로 쓴다. 즉 \(\log_2 5\)는 '2를 몇 제곱하면 5가 되는가'의 답이다.</p>
+          <div class="tb-env"><span class="lb">정의 1.4.1 <span class="nm">로그</span></span>
+            <p>\(a &gt; 0\), \(a \ne 1\), \(N &gt; 0\)일 때, \(a^x = N\)을 만족하는 실수 \(x\)를 \(a\)를 밑으로 하는 \(N\)의 <em>로그</em>라 하고 \(x = \log_a N\)으로 나타낸다. 이때 \(N\)을 진수라 한다. \[a^x = N \iff x = \log_a N\]</p>
+          </div>
+          <p>정의의 조건에는 까닭이 있다. 밑이 1이면 \(1^x\)은 언제나 1이라 5가 될 수 없고, 밑이 음수이면 실수 지수가 정해지지 않는다. 진수가 양수인 것은 \(a^x\)가 언제나 양수이기 때문이다. 정의에서 바로 \(\log_a 1 = 0\), \(\log_a a = 1\)이 나온다.</p>
+
+          <h3><span class="no">1.4.2</span>로그의 성질</h3>
+          <p>로그는 지수를 돌려 읽은 것이므로, 지수법칙이 그대로 로그의 성질이 된다. \(\log_a M = x\), \(\log_a N = y\)로 두면 \(M = a^x\), \(N = a^y\)이다. 그러면 \(MN = a^{x+y}\)이므로 \(\log_a MN = x + y\)이다. 다시 말해 진수의 곱셈이 로그의 덧셈으로 바뀐다. 그림 1에서 높이를 2배 할 때마다 \(x\)좌표가 1씩 늘어나는 것도 이 성질이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.2 <span class="nm">로그의 성질</span></span>
+            <p>\(a &gt; 0\), \(a \ne 1\), \(M &gt; 0\), \(N &gt; 0\)일 때 \[\log_a MN = \log_a M + \log_a N,\quad \log_a \frac{M}{N} = \log_a M - \log_a N,\quad \log_a M^k = k\log_a M\ (k\text{는 실수})\]</p>
+          </div>
+          <p>밑이 다른 로그는 밑을 바꾸어 비교한다. \(\log_a b = x\)이면 \(a^x = b\)이고, 양변에 밑이 \(c\)인 로그를 취하면 \(x\log_c a = \log_c b\)이다. 따라서 \(\log_a b = \dfrac{\log_c b}{\log_c a}\)이고, 이것을 밑변환 공식이라 한다.<sup class="fn"><a href="#fn-alg-log-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="지수와 로그가 같은 관계를 반대 방향으로 읽는 그림">
+              <rect x="40" y="40" width="160" height="60" class="lb"/><text x="120" y="76" text-anchor="middle">2³ = 8</text>
+              <rect x="320" y="40" width="160" height="60" class="lc"/><text x="400" y="76" text-anchor="middle">log₂ 8 = 3</text>
+              <path d="M202 60 L318 60" class="k"/><path d="M318 80 L202 80" class="k"/><path d="M310 56 l8 4 -8 4 Z" class="fk"/><path d="M210 76 l-8 4 8 4 Z" class="fk"/>
+              <text x="260" y="52" text-anchor="middle" class="s">지수를 묻는다</text><text x="260" y="98" text-anchor="middle" class="s">결과를 묻는다</text>
+              <text x="260" y="135" text-anchor="middle" class="s">같은 관계를 반대 방향으로 읽은 것</text>
+            </svg>
+            <figcaption>그림 2. 지수 표기와 로그 표기는 같은 관계를 서로 다른 쪽에서 묻는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.3</span>
+            <p>\(\log_2 3 = a\), \(\log_2 5 = b\)일 때 \(\log_2 60\)과 \(\log_3 10\)을 \(a\), \(b\)로 나타내어라.</p>
+          </div>
+          <p>\(60 = 2^2 \times 3 \times 5\)이므로 \(\log_2 60 = \log_2 2^2 + \log_2 3 + \log_2 5 = 2 + a + b\)이다. 곱셈이 덧셈으로 바뀌어 각 소인수의 로그만 알면 된다.</p>
+          <p>\(\log_3 10\)은 밑이 3이므로 밑을 2로 바꾼다. \(\log_3 10 = \dfrac{\log_2 10}{\log_2 3} = \dfrac{\log_2 2 + \log_2 5}{a} = \dfrac{1 + b}{a}\)이다.</p>
+          <p>확인해 보자. \(a \approx 1.585\), \(b \approx 2.322\)이므로 \(\log_2 60 \approx 5.907\)이고, 실제로 \(2^{5.907} \approx 60\)이다. 또 \(\dfrac{1 + b}{a} \approx 2.096\)이고 \(3^{2.096} \approx 10\)이다. 아래 탐구 카드에서 그래프의 높이와 가로 좌표를 오가며 로그를 직접 읽어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-log-1">밑변환 공식에서 \(c = b\)로 두면 \(\log_a b = \dfrac{1}{\log_b a}\)이다. 가령 \(\log_2 8 = 3\)이고 \(\log_8 2 = \tfrac{1}{3}\)이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>로그 \(\log_a N\)은 '\(a\)를 몇 제곱하면 \(N\)이 되는가'의 답으로, 지수 관계를 거꾸로 읽은 것이다. 그래서 지수법칙이 로그의 성질이 되어 진수의 곱은 로그의 합으로, 거듭제곱은 곱으로 바뀐다. 처음 질문의 수는 \(\log_2 5\)이고, 약 2.32이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-6.html#card-alg-log-func-def"><small class="mono">대수 1.6</small>지수함수의 화살표를 거꾸로 하면 함수가 될까?</a><a href="../../c/extra/1-5.html#text-extra-temperament"><small class="mono">교양·심화 1.5</small>평균율과 2의 12제곱근</a><a href="../../c/extra/1-5.html#card-extra-piano"><small class="mono">교양·심화 1.5</small>평균율의 화음과 순정한 화음은 귀로 구별될까?</a><a href="../../c/extra/1-13.html#text-extra-chaos-game"><small class="mono">교양·심화 1.13</small>카오스 게임과 프랙털</a></div></nav>
+
       <article class="card" id="card-alg-log-def">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>2를 몇 제곱하면 5가 될까?</h2><span class="kind">로그의 뜻 · 밑과 진수의 조건</span>
+          <span class="no">탐구 1</span><h2>2를 몇 제곱하면 5가 될까?</h2><span class="kind">로그의 뜻 · 밑과 진수의 조건</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,34 +139,34 @@
                 <div><dt>\(\log_a N\)</dt><dd class="n-l">—</dd></div>
                 <div><dt>검산 \(a^{\log_aN}\)</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">그림을 위아래로 끌면 수평선 \(y = N\)이 움직입니다.</p>
+              <p class="fig-note">그림을 위아래로 끌면 수평선 \(y = N\)이 움직인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2^x = 8\)의 해는 3입니다. 그러면 \(2^x = 5\)의 해는 있을까요? 있다면 어떻게 나타낼까요?</li>
-            <li><span class="tag">복원</span>밑 \(a\)가 양수이면 \(a^x\)는 모든 실수 \(x\)에서 정해지고 언제나 양수입니다. \(a &gt; 1\)이면 \(x\)가 커질 때 \(a^x\)도 커지고, \(0 &lt; a &lt; 1\)이면 작아집니다.</li>
-            <li><span class="tag">설명</span>\(a &gt; 0\), \(a \ne 1\)이면 \(y = a^x\)는 계속 증가하거나 계속 감소하면서 모든 양수 값을 한 번씩 지납니다. 그래서 \(N &gt; 0\)이면 \(a^x = N\)을 만족하는 실수 \(x\)가 오직 하나 있고, 이 수를 <em>\(\log_a N\)</em>으로 씁니다. \(a\)를 <em>밑</em>, \(N\)을 <em>진수</em>라 합니다. 곧 \(a^x = N \Leftrightarrow x = \log_a N\)입니다. 조건은 세 가지입니다. 밑은 \(a &gt; 0\), \(a \ne 1\)이고 진수는 \(N &gt; 0\)입니다. 정의에서 바로 \(\log_a 1 = 0(a^0 = 1)\), \(\log_a a = 1\), \(a^{\log_aN} = N\)이 나옵니다.</li>
-            <li><span class="tag">연결</span>\(2^x = 5\)의 해는 \(\log_2 5 \approx 2.322\)입니다. \(2^2 = 4\)와 \(2^3 = 8\) 사이이므로 2와 3 사이의 값이 나오는 것이 자연스럽습니다. 지진 규모, 소리의 세기(dB), 산성도(pH)는 모두 로그로 정한 양이고, 밑이 10인 상용로그로 다룹니다.</li>
-            <li><span class="tag">적용</span>다섯 보기를 차례로 눌러 교점이 몇 개인지 확인하세요. 밑이 1일 때와 진수가 음수일 때 무엇이 문제인가요? 밑 0.5에서 진수를 1보다 크게 하면 로그 값의 부호는 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\log_2(-4)\)를 \(-2\)라고 하는 실수가 있습니다. \(2^{-2} = \frac{1}{4}\)이지 \(-4\)가 아닙니다. 양수 밑의 거듭제곱은 음수가 될 수 없으므로 진수가 0 이하이면 로그는 정의되지 않습니다. 밑이 1이면 \(1^x = 1\)이라 \(N \ne 1\)이면 해가 없고, \(N = 1\)이면 해가 무수히 많아 값이 하나로 정해지지 않습니다.</li>
+            <li><span class="tag">질문</span>\(2^x = 8\)의 해는 3이다. 그러면 \(2^x = 5\)의 해는 있을까? 있다면 어떻게 나타낼까?</li>
+            <li><span class="tag">복원</span>밑 \(a\)가 양수이면 \(a^x\)는 모든 실수 \(x\)에서 정해지고 언제나 양수이다. 그리고 \(a &gt; 1\)이면 \(x\)가 커질 때 \(a^x\)도 커지고, \(0 &lt; a &lt; 1\)이면 작아진다.</li>
+            <li><span class="tag">설명</span>\(a &gt; 0\), \(a \ne 1\)이면 \(y = a^x\)는 계속 증가하거나 계속 감소하면서 모든 양수 값을 한 번씩 지난다. 그래서 \(N &gt; 0\)이면 \(a^x = N\)을 만족하는 실수 \(x\)가 오직 하나 있고, 이 수를 <em>\(\log_a N\)</em>으로 쓴다. 이때 \(a\)를 <em>밑</em>, \(N\)을 <em>진수</em>라 하며, 곧 \(a^x = N \Leftrightarrow x = \log_a N\)이다. 따라서 밑은 \(a &gt; 0\), \(a \ne 1\)이고 진수는 \(N &gt; 0\)이어야 한다. 정의에서 바로 \(\log_a 1 = 0(a^0 = 1)\), \(\log_a a = 1\), \(a^{\log_aN} = N\)이 나온다.</li>
+            <li><span class="tag">연결</span>그러면 \(2^x = 5\)의 해는 \(\log_2 5 \approx 2.322\)이다. \(2^2 = 4\)와 \(2^3 = 8\) 사이이므로 2와 3 사이의 값이 나오는 것이 자연스럽다. 지진 규모, 소리의 세기(dB), 산성도(pH)는 모두 로그로 정한 양이고, 밑이 10인 상용로그로 다룬다.</li>
+            <li><span class="tag">적용</span>다섯 보기를 차례로 눌러 교점이 몇 개인지 확인하고, 밑이 1일 때와 진수가 음수일 때 무엇이 문제인지 보자. 밑 0.5에서 진수를 1보다 크게 하면 로그 값이 음수가 된다.</li>
+            <li class="warn"><span class="tag">판단</span>\(\log_2(-4)\)를 \(-2\)라고 하는 실수가 있는데, \(2^{-2} = \frac{1}{4}\)이지 \(-4\)가 아니다. 양수 밑의 거듭제곱은 음수가 될 수 없으므로 진수가 0 이하이면 로그는 정의되지 않는다. 또 밑이 1이면 \(1^x = 1\)이라 \(N \ne 1\)이면 해가 없고, \(N = 1\)이면 해가 무수히 많아 값이 하나로 정해지지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\log_{1/3} 27\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-3\)<span class="why"><b>맞습니다.</b> \((\frac{1}{3})^x = 3^{-x} = 27 = 3^3\)이므로 \(x = -3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3<span class="why"><b>밑을 3으로 보았습니다.</b> \(\log_3 27 = 3\)이지만, 밑이 \(\frac{1}{3}\)이면 부호가 바뀝니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>진수를 밑으로 나누었습니다.</b> \(27 \div 3 = 9\)는 로그와 상관없습니다. 로그는 지수를 묻습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>밑이 1보다 작아서 정의되지 않는다.<span class="why"><b>조건을 잘못 기억했습니다.</b> 밑의 조건은 양수이면서 1이 아닌 것입니다. \(\frac{1}{3}\)은 이 조건을 만족합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-3\)<span class="why"><b>맞다.</b> \((\frac{1}{3})^x = 3^{-x} = 27 = 3^3\)이므로 \(x = -3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3<span class="why"><b>밑을 3으로 보았다.</b> \(\log_3 27 = 3\)이지만, 밑이 \(\frac{1}{3}\)이면 부호가 바뀐다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>진수를 밑으로 나누었다.</b> \(27 \div 3 = 9\)는 로그와 상관없다. 로그는 지수를 묻는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>밑이 1보다 작아서 정의되지 않는다.<span class="why"><b>조건을 잘못 기억했다.</b> 밑의 조건은 양수이면서 1이 아닌 것이다. \(\frac{1}{3}\)은 이 조건을 만족한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-6.html#card-alg-log-func-def"><small class="mono">대수 1.6</small>지수함수의 화살표를 거꾸로 하면 함수가 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-2.html#card-alg-real-exp"><small class="mono">대수 1.2</small>2√²처럼 지수가 무리수인 수는 어떻게 정할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-6.html#card-alg-log-func-def"><small class="mono">대수 1.6</small>지수함수의 화살표를 거꾸로 하면 함수가 될까?</a><a href="../../c/extra/1-5.html#text-extra-temperament"><small class="mono">교양·심화 1.5</small>평균율과 2의 12제곱근</a><a href="../../c/extra/1-5.html#card-extra-piano"><small class="mono">교양·심화 1.5</small>평균율의 화음과 순정한 화음은 귀로 구별될까?</a><a href="../../c/extra/1-13.html#text-extra-chaos-game"><small class="mono">교양·심화 1.13</small>카오스 게임과 프랙털</a></div></nav>
 
       <article class="card" id="card-alg-log-rules">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>로그를 쓰면 왜 곱셈이 덧셈이 될까?</h2><span class="kind">로그의 성질 · 로그 눈금자</span>
+          <span class="no">탐구 2</span><h2>로그를 쓰면 왜 곱셈이 덧셈이 될까?</h2><span class="kind">로그의 성질 · 로그 눈금자</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -130,34 +189,34 @@
                 <div><dt>도착점의 로그 값</dt><dd class="n-l">—</dd></div>
                 <div><dt>도착점의 수</dt><dd class="n-v">—</dd></div>
               </dl>
-              <p class="fig-note">밑이 10인 로그(\(\log\))로 그렸습니다. 아래 눈금에서 수 사이의 간격은 그 수의 로그 값의 차입니다.</p>
+              <p class="fig-note">밑이 10인 로그(\(\log\))로 그렸다. 아래 눈금에서 수 사이의 간격은 그 수의 로그 값의 차이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2 \times 4 = 8\)을 덧셈만으로 계산할 수 있을까요? 계산기가 없던 시절 천문학자와 항해사는 큰 수의 곱셈을 덧셈으로 바꾸어 계산했습니다. 어떻게 했을까요?</li>
-            <li><span class="tag">복원</span>\(a^x = M \Leftrightarrow x = \log_a M\)입니다. 지수법칙은 \(a^xa^y = a^{x+y}\), \(a^x \div a^y = a^{x-y}\), \((a^x)^k = a^{kx}\)입니다.</li>
-            <li><span class="tag">설명</span>\(\log_a M = x\), \(\log_a N = y\)로 두면 \(M = a^x\), \(N = a^y\)입니다. 그러면 \(MN = a^{x+y}\)이므로 \(\log_a MN = x + y\)입니다. 같은 방법으로 \(a &gt; 0\), \(a \ne 1\), \(M &gt; 0\), \(N &gt; 0\)이고 \(k\)가 실수일 때 다음이 성립합니다. <em>\(\log_a MN = \log_a M + \log_a N\)</em>, <em>\(\log_a (\frac{M}{N}) = \log_a M - \log_a N\)</em>, <em>\(\log_a M^k = k \log_a M\)</em>. 지수의 덧셈·뺄셈·곱셈이 그대로 로그의 성질이 됩니다. 아래 눈금자는 수를 그 로그 값의 자리에 찍은 것이라, 길이를 이어 붙이면 수가 곱해집니다.</li>
-            <li><span class="tag">연결</span>이 눈금 두 개를 맞대어 미끄러뜨리는 도구가 계산자입니다. 17세기 네이피어가 로그를 만든 뒤, 계산자는 전자계산기가 나오기 전까지 공학 계산에 쓰였습니다. 지진 규모나 소리의 세기처럼 몇 배씩 변하는 양을 로그 눈금으로 그리는 까닭도 같습니다.</li>
-            <li><span class="tag">적용</span>곱에서 \(M = 2\), \(N = 5\)로 두면 도착점은 어디인가요? 몫에서 \(M\)보다 큰 \(N\)을 고르면 도착점은 1의 어느 쪽에 생기고, 로그 값의 부호는 어떻게 되나요? 거듭제곱에서 \(k = -1\)과 \(k = 0.5\)는 각각 무엇을 계산하나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\log_a(M + N) = \log_a M + \log_a N\)은 틀린 식입니다. 로그가 덧셈으로 바꾸는 것은 곱셈입니다. \((\log_a M)^k\)와 \(\log_a M^k\)도 다릅니다. 또 성질은 진수가 양수일 때만 씁니다. \(\log_2((-2)(-4)) = 3\)이지만 \(\log_2(-2)\)와 \(\log_2(-4)\)는 정의되지 않습니다.</li>
+            <li><span class="tag">질문</span>\(2 \times 4 = 8\)을 덧셈만으로 계산할 수 있을까? 계산기가 없던 시절 천문학자와 항해사는 큰 수의 곱셈을 덧셈으로 바꾸어 계산했다. 어떻게 했을까?</li>
+            <li><span class="tag">복원</span>\(a^x = M \Leftrightarrow x = \log_a M\)이다. 그리고 지수법칙은 \(a^xa^y = a^{x+y}\), \(a^x \div a^y = a^{x-y}\), \((a^x)^k = a^{kx}\)이다.</li>
+            <li><span class="tag">설명</span>\(\log_a M = x\), \(\log_a N = y\)로 두면 \(M = a^x\), \(N = a^y\)이다. 그러면 \(MN = a^{x+y}\)이므로 \(\log_a MN = x + y\)이다. 같은 방법으로 \(a &gt; 0\), \(a \ne 1\), \(M &gt; 0\), \(N &gt; 0\)이고 \(k\)가 실수일 때 <em>\(\log_a MN = \log_a M + \log_a N\)</em>, <em>\(\log_a (\frac{M}{N}) = \log_a M - \log_a N\)</em>, <em>\(\log_a M^k = k \log_a M\)</em>이 성립한다. 즉 지수의 덧셈, 뺄셈, 곱셈이 그대로 로그의 성질이 된다. 아래 눈금자는 수를 그 로그 값의 자리에 찍은 것이라, 길이를 이어 붙이면 수가 곱해진다.</li>
+            <li><span class="tag">연결</span>이 눈금 두 개를 맞대어 미끄러뜨리는 도구가 계산자이다. 17세기 네이피어가 로그를 만든 뒤, 계산자는 전자계산기가 나오기 전까지 공학 계산에 쓰였다. 지진 규모나 소리의 세기처럼 몇 배씩 변하는 양을 로그 눈금으로 그리는 까닭도 같다.</li>
+            <li><span class="tag">적용</span>곱에서 \(M = 2\), \(N = 5\)로 두고 도착점이 어디인지 보자. 몫에서 \(M\)보다 큰 \(N\)을 고르면 도착점이 1의 왼쪽에 생기고 로그 값이 음수가 된다. 거듭제곱에서는 \(k = -1\)과 \(k = 0.5\)가 각각 무엇을 계산하는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\log_a(M + N) = \log_a M + \log_a N\)은 틀린 식이다. 로그가 덧셈으로 바꾸는 것은 곱셈이기 때문이다. 또 \((\log_a M)^k\)와 \(\log_a M^k\)는 다르다. 그리고 이 성질은 진수가 양수일 때만 쓴다. \(\log_2((-2)(-4)) = 3\)이지만 \(\log_2(-2)\)와 \(\log_2(-4)\)는 정의되지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\log 2 = 0.3010\), \(\log 3 = 0.4771\)일 때 \(\log 12\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1.0791<span class="why"><b>맞습니다.</b> \(12 = 2^2 \times 3\)이므로 \(2 \log 2 + \log 3 = 0.6020 + 0.4771 = 1.0791\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.7781<span class="why"><b>2를 한 번만 곱했습니다.</b> \(\log 2 + \log 3 = \log 6\)입니다. 12에는 2가 두 번 들어 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.2872<span class="why"><b>로그끼리 곱했습니다.</b> \(0.6020 \times 0.4771\)입니다. 진수의 곱은 로그의 합입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1.3010<span class="why"><b>12를 \(10 + 2\)로 나누어 로그를 더했습니다.</b> \(\log(10 + 2)\)는 \(\log 10 + \log 2\)가 아닙니다. 로그는 합이 아니라 곱을 나눕니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1.0791<span class="why"><b>맞다.</b> \(12 = 2^2 \times 3\)이므로 \(2 \log 2 + \log 3 = 0.6020 + 0.4771 = 1.0791\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0.7781<span class="why"><b>2를 한 번만 곱했다.</b> \(\log 2 + \log 3 = \log 6\)이다. 12에는 2가 두 번 들어 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.2872<span class="why"><b>로그끼리 곱했다.</b> \(0.6020 \times 0.4771\)이다. 진수의 곱은 로그의 합이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1.3010<span class="why"><b>12를 \(10 + 2\)로 나누어 로그를 더했다.</b> \(\log(10 + 2)\)는 \(\log 10 + \log 2\)가 아니다. 로그는 합이 아니라 곱을 나눈다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a><a href="../../c/alg/1-3.html#text-alg-exp-laws"><small class="mono">대수 1.3</small>지수법칙</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a><a href="../../c/alg/1-5.html#text-alg-common-log"><small class="mono">대수 1.5</small>상용로그</a></div></nav>
 
       <article class="card" id="card-alg-log-base-change">
         <header class="card-head">
-          <span class="no">1.4.3</span><h2>밑이 다른 로그는 서로 어떤 관계일까?</h2><span class="kind">밑 변환 공식 · 두 로그 곡선의 비</span>
+          <span class="no">탐구 3</span><h2>밑이 다른 로그는 서로 어떤 관계일까?</h2><span class="kind">밑 변환 공식 · 두 로그 곡선의 비</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -175,43 +234,44 @@
                 <div><dt>비 \(\log_bx / \log_ax\)</dt><dd class="n-r">—</dd></div>
                 <div><dt>\(1 / \log_a b\)</dt><dd class="n-c">—</dd></div>
               </dl>
-              <p class="fig-note">그림을 좌우로 끌면 진수 \(x\)가 움직입니다. \(x = 1\)에서는 두 높이가 모두 0이라 비를 정할 수 없습니다.</p>
+              <p class="fig-note">그림을 좌우로 끌면 진수 \(x\)가 움직인다. \(x = 1\)에서는 두 높이가 모두 0이라 비를 정할 수 없다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>계산기에는 보통 밑이 10인 \(\log\)만 있습니다. 그러면 \(\log_2 5\)는 어떻게 계산할까요? 밑이 다른 로그 사이에는 어떤 관계가 있을까요?</li>
-            <li><span class="tag">복원</span>\(\log_a M^k = k \log_a M\)이고, \(a^{\log_ax} = x\)입니다.</li>
-            <li><span class="tag">설명</span>\(\log_b x = t\)로 두면 \(x = b^t\)입니다. 양변에 밑이 \(a\)인 로그를 취하면 \(\log_a x = t \log_a b\)이므로 <em>\(\log_b x = \log_a x / \log_a b\)</em>입니다(\(a, b\)는 1이 아닌 양수, \(x &gt; 0\)). 이것이 <em>밑 변환 공식</em>입니다. 그래프로 보면 \(y = \log_b x\)는 \(y = \log_a x\)를 세로로 \(1/\log_a b\)배 한 곡선입니다. 그래서 어느 \(x\)에서나 두 높이의 비가 같습니다. 특히 \(x = a\)로 두면 \(\log_b a = 1/\log_a b\), 곧 \(\log_a b \times \log_b a = 1\)입니다.</li>
-            <li><span class="tag">연결</span>\(\log_2 5 = \log 5 / \log 2 \approx 0.6990 / 0.3010 \approx 2.322\)입니다. 컴퓨터 과학에서 자료를 반씩 나누는 횟수는 \(\log_2\), 소리와 지진은 \(\log_{10}\)를 쓰지만, 밑 변환 공식이 있으므로 한 가지 밑의 로그만 알면 나머지는 상수배로 얻습니다.</li>
-            <li><span class="tag">적용</span>\(a = 2\), \(b = 4\)로 두고 \(x\)를 움직이며 비가 변하는지 보세요. 그 비는 무엇과 같나요? \(b\)를 \(a\)와 같게 하면 두 곡선은 어떻게 되나요? \(a = 2\), \(b = 8\)에서는 비가 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\log_a x / \log_a b\)를 \(\log_a(\frac{x}{b})\)나 \(\log_a x - \log_a b\)로 바꾸는 실수가 흔합니다. 로그끼리 나눈 것은 진수의 나눗셈이 아닙니다. 분모와 분자의 밑이 같아야 공식이 성립한다는 점도 확인하세요.</li>
+            <li><span class="tag">질문</span>계산기에는 보통 밑이 10인 \(\log\)만 있다. 그러면 \(\log_2 5\)는 어떻게 계산할까? 밑이 다른 로그 사이에는 어떤 관계가 있을까?</li>
+            <li><span class="tag">복원</span>\(\log_a M^k = k \log_a M\)이고, \(a^{\log_ax} = x\)이다.</li>
+            <li><span class="tag">설명</span>\(\log_b x = t\)로 두면 \(x = b^t\)이다. 양변에 밑이 \(a\)인 로그를 취하면 \(\log_a x = t \log_a b\)이므로 <em>\(\log_b x = \log_a x / \log_a b\)</em>이다(\(a, b\)는 1이 아닌 양수, \(x &gt; 0\)). 이것이 <em>밑 변환 공식</em>이다. 그래프로 보면 \(y = \log_b x\)는 \(y = \log_a x\)를 세로로 \(1/\log_a b\)배 한 곡선이고, 그래서 어느 \(x\)에서나 두 높이의 비가 같다. 특히 \(x = a\)로 두면 \(\log_b a = 1/\log_a b\), 곧 \(\log_a b \times \log_b a = 1\)이다.</li>
+            <li><span class="tag">연결</span>가령 \(\log_2 5 = \log 5 / \log 2 \approx 0.6990 / 0.3010 \approx 2.322\)이다. 컴퓨터 과학에서 자료를 반씩 나누는 횟수는 \(\log_2\), 소리와 지진은 \(\log_{10}\)를 쓰지만, 밑 변환 공식이 있으므로 한 가지 밑의 로그만 알면 나머지는 상수배로 얻는다.</li>
+            <li><span class="tag">적용</span>\(a = 2\), \(b = 4\)로 두고 \(x\)를 움직이며 비가 변하는지, 그 비가 무엇과 같은지 보자. 다음에는 \(b\)를 \(a\)와 같게 해 두 곡선이 어떻게 되는지 보고, \(a = 2\), \(b = 8\)에서 비가 얼마인지도 구해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(\log_a x / \log_a b\)를 \(\log_a(\frac{x}{b})\)나 \(\log_a x - \log_a b\)로 바꾸는 실수가 흔하다. 로그끼리 나눈 것은 진수의 나눗셈이 아니기 때문이다. 또 분모와 분자의 밑이 같아야 공식이 성립한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\log_4 8\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{3}{2}\)<span class="why"><b>맞습니다.</b> 밑을 2로 바꾸면 \(\log_2 8 / \log_2 4 = \frac{3}{2}\)입니다. 실제로 \(4^{3/2} = 8\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{2}{3}\)<span class="why"><b>분자와 분모를 바꾸었습니다.</b> \(\frac{2}{3}\)은 \(\log_8 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>진수를 밑으로 나누었습니다.</b> \(8 \div 4 = 2\)이지만 \(4^2 = 16 \ne 8\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>로그끼리 뺐습니다.</b> \(\log_2 8 - \log_2 4 = \log_2 2 = 1\)입니다. 밑 변환은 나눗셈입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{3}{2}\)<span class="why"><b>맞다.</b> 밑을 2로 바꾸면 \(\log_2 8 / \log_2 4 = \frac{3}{2}\)이다. 실제로 \(4^{3/2} = 8\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{2}{3}\)<span class="why"><b>분자와 분모를 바꾸었다.</b> \(\frac{2}{3}\)은 \(\log_8 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>2<span class="why"><b>진수를 밑으로 나누었다.</b> \(8 \div 4 = 2\)이지만 \(4^2 = 16 \ne 8\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>로그끼리 뺐다.</b> \(\log_2 8 - \log_2 4 = \log_2 2 = 1\)이다. 밑 변환은 나눗셈이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a><a href="../../c/alg/1-3.html#text-alg-exp-laws"><small class="mono">대수 1.3</small>지수법칙</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a><a href="../../c/alg/1-5.html#text-alg-common-log"><small class="mono">대수 1.5</small>상용로그</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">291문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">15문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">295문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -219,6 +279,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>
 <script src="../../js/cards/alg/log-def.js"></script>
 <script src="../../js/cards/alg/log-rules.js"></script>

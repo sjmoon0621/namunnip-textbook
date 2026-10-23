@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>수형도와 생성수형도 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="수형도의 뜻과 성질(변의 수 n − 1, 두 꼭짓점 사이의 유일한 길), 생성수형도, 가중그래프와 최소 생성수형도, 크러스컬 방법. 회로 없이 점을 이어 수형도를 만드는 카드와, 마을을 가장 싸게 연결하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-tree-facts canvas { aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; display: block; }
@@ -44,18 +49,83 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-tree-facts"><span class="mono">4.6.1</span>회로 없이 모두 잇는 수형도의 성질</a></li>
-        <li><a href="#card-dmath-kruskal"><span class="mono">4.6.2</span>가장 싸게 모든 마을을 잇는 망</a></li>
+        <li><a href="#text-dmath-tree"><span class="mono">본문</span>수형도와 생성수형도</a></li>
+        <li><a href="#card-dmath-tree-facts"><span class="mono">탐구 1</span>회로 없이 모두 잇는 수형도의 성질</a></li>
+        <li><a href="#card-dmath-kruskal"><span class="mono">탐구 2</span>가장 싸게 모든 마을을 잇는 망</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-4-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=4-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-4-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">17문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-4-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-tree" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>수형도와 생성수형도</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">다섯 마을 A, B, C, D, E를 광케이블로 연결하려 한다. 두 마을 사이에 케이블을 놓을 수 있는 구간과 그 비용(억 원)은 AB 4, AC 2, BC 5, BD 10, CD 3, CE 8, DE 6이다. 모든 마을이 서로 직접이든 다른 마을을 거쳐서든 연결되기만 하면 된다. 케이블을 몇 개 놓아야 하고, 어느 구간을 골라야 비용이 가장 적을까? 같은 마을로 돌아오는 고리가 생기면 낭비라는데 왜 그럴까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="다섯 마을의 케이블 구간과 최소 생성수형도">
+              <circle cx="80" cy="40" r="7" class="fk"/><text x="60" y="34" class="s">A</text>
+              <circle cx="80" cy="160" r="7" class="fk"/><text x="60" y="166" class="s">B</text>
+              <circle cx="200" cy="100" r="7" class="fk"/><text x="196" y="86" class="s">C</text>
+              <circle cx="320" cy="160" r="7" class="fk"/><text x="330" y="176" class="s">D</text>
+              <circle cx="320" cy="40" r="7" class="fk"/><text x="330" y="36" class="s">E</text>
+              <line x1="80" y1="40" x2="80" y2="160" class="d"/><text x="56" y="104" class="s td">4</text>
+              <line x1="80" y1="40" x2="200" y2="100" class="d"/><text x="134" y="62" class="s td">2</text>
+              <line x1="80" y1="160" x2="200" y2="100" class="gd"/><text x="134" y="146" class="s">5</text>
+              <line x1="80" y1="160" x2="320" y2="160" class="gd"/><text x="196" y="178" class="s">10</text>
+              <line x1="200" y1="100" x2="320" y2="160" class="d"/><text x="262" y="122" class="s td">3</text>
+              <line x1="200" y1="100" x2="320" y2="40" class="gd"/><text x="262" y="62" class="s">8</text>
+              <line x1="320" y1="160" x2="320" y2="40" class="d"/><text x="330" y="104" class="s td">6</text>
+              <text x="380" y="90" class="s td">굵은 선 4개</text><text x="380" y="112" class="s td">합계 15억 원</text>
+            </svg>
+            <figcaption>그림 1. 싼 구간부터 고리가 생기지 않게 고르면 4개의 구간으로 다섯 마을이 모두 연결된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>그래프와 차수(<a href="4-1.html">그래프와 실생활 문제</a>), 악수 정리(<a href="4-2.html">꼭짓점의 차수와 변의 개수</a>).</div>
+
+          <h3><span class="no">4.6.1</span>고리 없이 모두 잇다</h3>
+          <p>연결되어 있으면서 회로, 곧 같은 꼭짓점으로 돌아오는 고리가 없는 그래프를 수형도라 한다. 수형도에서는 어느 두 꼭짓점 사이에도 길이 꼭 하나뿐이다. 길이 둘이면 그 두 길이 고리를 만들기 때문이다. 수형도에서 변 하나를 지우면 그래프가 둘로 나뉘고, 변 하나를 더하면 고리가 생긴다. 그래서 수형도는 모든 꼭짓점을 잇는 데 꼭 필요한 만큼만 변을 가진 그래프이다. 케이블망에 고리가 있으면 그 고리의 케이블 하나를 빼도 모든 마을이 여전히 연결되므로, 고리는 낭비이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.6.1 <span class="nm">수형도의 성질</span></span>
+            <p>꼭짓점이 \(n\)개인 수형도의 변은 정확히 \(n - 1\)개이다. 연결된 그래프의 모든 꼭짓점을 포함하는 수형도를 생성수형도라 하며, 변에 비용이 있을 때 비용의 합이 가장 작은 생성수형도를 최소 생성수형도라 한다. 비용이 작은 변부터 고리를 만들지 않는 것만 차례로 고르면 최소 생성수형도를 얻는다(크러스컬 알고리즘).</p>
+          </div>
+          <p>변이 \(n - 1\)개인 까닭은 귀납법으로 보인다. 꼭짓점이 둘 이상인 수형도에는 차수가 1인 꼭짓점, 곧 잎이 늘 있다. 가장 긴 길의 끝 점은 다른 점과 이어지면 길이 더 길어지거나 고리가 생기므로 차수가 1이어야 하기 때문이다. 잎과 그 변을 함께 지우면 꼭짓점과 변이 하나씩 준 수형도가 남고, 이것을 꼭짓점이 하나 남을 때까지 되풀이하면 변의 수가 꼭짓점의 수보다 하나 적다는 것이 나온다.<sup class="fn"><a href="#fn-dmath-tree-1">1</a></sup></p>
+
+          <h3><span class="no">4.6.2</span>싼 것부터 고르기</h3>
+          <p>크러스컬 알고리즘은 모든 구간을 비용 순으로 늘어놓고, 싼 것부터 하나씩 살펴 이미 고른 구간들과 고리를 만들지 않으면 고르고 만들면 버린다. \(n - 1\)개를 고르면 멈춘다. 매 순간 가장 싼 것을 고르는 이런 방법을 탐욕 알고리즘이라 하는데, 대부분의 문제에서는 탐욕 알고리즘이 가장 좋은 답을 보장하지 못한다. 그러나 최소 생성수형도에서는 늘 가장 좋은 답을 준다는 것이 증명되어 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="크러스컬 알고리즘의 단계">
+              <g class="s">
+                <text x="20" y="22">비용 순</text><text x="120" y="22">구간</text><text x="200" y="22">고리 생김?</text><text x="340" y="22">결정</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="50">2, 3, 4</text><text x="120" y="50">AC, CD, AB</text><text x="200" y="50">아니오</text><text x="340" y="50" class="td">모두 고름</text>
+                <text x="20" y="70">5</text><text x="120" y="70">BC</text><text x="200" y="70">예 (A−B−C−A)</text><text x="340" y="70" class="tb">버림</text>
+                <text x="20" y="90">6</text><text x="120" y="90">DE</text><text x="200" y="90">아니오</text><text x="340" y="90" class="td">고름, 4개 완성</text>
+                <text x="20" y="114">8, 10</text><text x="120" y="114">CE, BD</text><text x="200" y="114">살필 필요 없음</text><text x="340" y="114">멈춤</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 싼 구간부터 고리를 만들지 않는 것만 고르며, 마을 수보다 하나 적은 4개를 고르면 멈춘다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.6.2</span>
+            <p>처음 질문의 다섯 마을에 크러스컬 알고리즘을 써서 최소 생성수형도와 그 비용을 구하여라. 또 비용이 가장 싼 네 구간 AC, CD, AB, BC를 그대로 고르면 왜 안 되는가?</p>
+          </div>
+          <p>비용 순으로 AC(2), CD(3), AB(4)를 고른다. 다음 BC(5)는 이미 A–B와 A–C가 이어져 있어 고리 A–B–C–A를 만들므로 버린다. DE(6)를 고르면 다섯 마을이 모두 이어지고 구간이 4개가 되어 멈춘다. 비용은 \(2 + 3 + 4 + 6 = 15\)억 원이다.</p>
+          <p>가장 싼 네 구간 AC, CD, AB, BC를 고르면 비용은 14억 원으로 더 적지만, A, B, C가 고리를 이루어 그중 한 구간은 쓸모가 없고, 마을 E는 어디에도 이어지지 않는다. 다섯 마을을 잇는 수형도는 정확히 4개의 구간이 필요하므로, 고리에 쓴 한 구간 대신 E를 잇는 구간이 꼭 있어야 한다. 즉 수형도는 고리 없이 모든 꼭짓점을 잇는 그래프로 변이 꼭짓점보다 하나 적고, 최소 생성수형도는 싼 변부터 고리를 만들지 않게 고르는 크러스컬 알고리즘으로 얻는다.</p>
+          <p>아래 탐구 카드에서 회로 없이 모든 점을 잇는 데 선이 몇 개 필요한지 확인하고, 크러스컬 알고리즘으로 마을들을 가장 싸게 연결해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-tree-1">최소 생성수형도 문제는 1926년 체코의 보루프카가 모라비아 지방의 전력망을 가장 싸게 놓는 방법을 찾으며 처음 풀었다. 크러스컬은 1956년 같은 문제를 더 간단한 방법으로 다시 풀었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>연결되어 있고 고리가 없는 그래프를 수형도라 하며, 두 꼭짓점 사이의 길이 하나뿐이고 꼭짓점이 \(n\)개이면 변은 정확히 \(n - 1\)개이다. 모든 꼭짓점을 포함하는 수형도 가운데 비용이 가장 작은 최소 생성수형도는 싼 변부터 고리를 만들지 않는 것만 고르는 크러스컬 알고리즘으로 구한다. 처음 질문의 다섯 마을은 AC, CD, AB, DE의 네 구간으로 15억 원에 가장 싸게 연결된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
+
       <article class="card" id="card-dmath-tree-facts">
         <header class="card-head">
-          <span class="no">4.6.1</span><h2>회로 없이 모든 점을 이으려면 선이 몇 개 필요할까?</h2><span class="kind">수형도의 성질 · 조작</span>
+          <span class="no">탐구 1</span><h2>회로 없이 모든 점을 이으려면 선이 몇 개 필요할까?</h2><span class="kind">수형도의 성질 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -65,30 +135,30 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>마을 몇 곳을 도로로 이어 어느 마을에서나 다른 모든 마을로 갈 수 있게 하되, 도로를 최소로 놓으려고 합니다. 도로는 몇 개 필요할까요? 그때의 도로망에는 어떤 특징이 있을까요?</li>
-            <li><span class="tag">복원</span>같은 변을 두 번 지나지 않고 출발점으로 돌아오는 길을 회로(사이클)라고 합니다.</li>
-            <li><span class="tag">설명</span>연결되어 있고 회로가 없는 그래프를 <em>수형도</em>(나무)라 합니다. 꼭짓점이 \(n\)개인 그래프에 대해 다음은 모두 같은 말입니다. ① 수형도이다. ② 연결되어 있고 변이 \(n - 1\)개이다. ③ 회로가 없고 변이 \(n - 1\)개이다. ④ 임의의 두 꼭짓점 사이의 길이 <b>단 하나</b>이다. 그래서 수형도에 변을 하나 더하면 회로가 꼭 하나 생기고, 변을 하나 빼면 연결이 끊어집니다. 차수가 1인 꼭짓점을 잎이라 하며, 꼭짓점이 2개 이상인 수형도에는 잎이 적어도 2개 있습니다.</li>
-            <li><span class="tag">연결</span>가계도, 컴퓨터의 폴더 구조, 경우의 수를 세는 수형도가 모두 수형도입니다. 다음 카드에서는 비용이 가장 적은 수형도(최소 생성수형도)를 찾습니다.</li>
-            <li><span class="tag">적용</span>회로가 생기지 않게 변을 이어 모든 점을 연결해 보세요. 연결이 끝났을 때 변은 몇 개인가요? 그 상태에서 변을 하나 더 이으면 무엇이 생기나요? "두 점 사이의 길 찾기"로 길이 하나뿐인지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>변이 \(n - 1\)개라고 늘 수형도는 아닙니다. 회로가 있으면서 끊어진 그래프도 변이 \(n - 1\)개일 수 있습니다. "연결" 또는 "회로 없음" 중 하나를 함께 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>마을 몇 곳을 도로로 이어 어느 마을에서나 다른 모든 마을로 갈 수 있게 하되, 도로를 최소로 놓으려고 한다. 도로는 몇 개 필요할까? 그때의 도로망에는 어떤 특징이 있을까?</li>
+            <li><span class="tag">복원</span>같은 변을 두 번 지나지 않고 출발점으로 돌아오는 길을 회로(사이클)라고 한다.</li>
+            <li><span class="tag">설명</span>연결되어 있고 회로가 없는 그래프를 <em>수형도</em>(나무)라 한다. 꼭짓점이 \(n\)개인 그래프에 대해 다음은 모두 같은 말이다. ① 수형도이다. ② 연결되어 있고 변이 \(n - 1\)개이다. ③ 회로가 없고 변이 \(n - 1\)개이다. ④ 임의의 두 꼭짓점 사이의 길이 단 하나이다. 그래서 수형도에 변을 하나 더하면 회로가 꼭 하나 생기고, 변을 하나 빼면 연결이 끊어진다. 차수가 1인 꼭짓점을 잎이라 하며, 꼭짓점이 2개 이상인 수형도에는 잎이 적어도 2개 있다.</li>
+            <li><span class="tag">연결</span>가계도, 컴퓨터의 폴더 구조, 경우의 수를 세는 수형도가 모두 수형도이다. 다음 카드에서는 비용이 가장 적은 수형도(최소 생성수형도)를 찾는다.</li>
+            <li><span class="tag">적용</span>회로가 생기지 않게 변을 이어 모든 점을 연결해 보자. 연결이 끝났을 때 변은 몇 개인가? 그 상태에서 변을 하나 더 이으면 무엇이 생기는가? "두 점 사이의 길 찾기"로 길이 하나뿐인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>변이 \(n - 1\)개라고 늘 수형도는 아니다. 회로가 있으면서 끊어진 그래프도 변이 \(n - 1\)개일 수 있다. "연결" 또는 "회로 없음" 중 하나를 함께 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">꼭짓점이 20개인 수형도에서 차수의 합은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(38\)<span class="why"><b>맞습니다.</b> 변이 19개이므로 \(2 \times 19 = 38\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(19\)<span class="why"><b>변의 개수입니다.</b> 차수의 합은 두 배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(40\)<span class="why"><b>변을 20개로 셌습니다.</b> 그러면 회로가 생깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모양에 따라 다르다<span class="why"><b>변의 수가 정해져 있어 차수의 합도 정해집니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(38\)<span class="why"><b>맞다.</b> 변이 19개이므로 \(2 \times 19 = 38\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(19\)<span class="why"><b>변의 개수이다.</b> 차수의 합은 두 배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(40\)<span class="why"><b>변을 20개로 셌다.</b> 그러면 회로가 생긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모양에 따라 다르다<span class="why"><b>변의 수가 정해져 있어 차수의 합도 정해진다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
 
       <article class="card" id="card-dmath-kruskal">
         <header class="card-head">
-          <span class="no">4.6.2</span><h2>모든 마을에 광케이블을 가장 싸게 연결하려면?</h2><span class="kind">최소 생성수형도 · 활용</span>
+          <span class="no">탐구 2</span><h2>모든 마을에 광케이블을 가장 싸게 연결하려면?</h2><span class="kind">최소 생성수형도 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -98,39 +168,40 @@
             <div class="log" aria-label="크러스컬 방법의 과정"></div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>마을 일곱 곳을 광케이블로 이어, 어느 마을끼리도 통신할 수 있게 하려고 합니다. 후보 구간마다 공사비가 다릅니다. 비용의 합을 가장 작게 하려면 어떤 구간을 골라야 할까요?</li>
-            <li><span class="tag">복원</span>꼭짓점이 \(n\)개인 수형도는 변이 \(n - 1\)개이고 회로가 없습니다.</li>
-            <li><span class="tag">설명</span>그래프의 모든 꼭짓점을 포함하는 수형도를 <em>생성수형도</em>라 하고, 변에 비용(가중치)이 있을 때 비용의 합이 가장 작은 생성수형도를 <em>최소 생성수형도</em>라 합니다. <em>크러스컬 방법</em>은 변을 비용이 작은 순서로 보면서 "회로를 만들지 않으면 고르고, 만들면 버리기"를 \(n - 1\)개를 고를 때까지 반복합니다. 매 순간 가장 싼 것을 고르는 단순한 방법(탐욕 알고리즘)인데도 늘 최소가 됩니다.</li>
-            <li><span class="tag">연결</span>통신망, 전력망, 수도관 설계에 쓰이고, 자료를 비슷한 것끼리 묶는 데에도 쓰입니다. 비용이 같은 변이 있으면 최소 생성수형도가 여러 개일 수 있지만 최소 비용은 같습니다.</li>
-            <li><span class="tag">적용</span>먼저 변을 눌러 직접 골라 보세요. 모든 마을이 이어지고 회로가 없으면 비용이 표시됩니다. 그다음 크러스컬 방법을 한 단계씩 따라가며 내 답과 비교하세요. 버려지는 변은 왜 버려지나요?</li>
-            <li class="warn"><span class="tag">판단</span>최소 생성수형도는 "전체 공사비"를 최소로 할 뿐, 두 마을 사이의 통신 거리를 최소로 하지는 않습니다. 끝과 끝 마을은 먼 길로 이어질 수 있고, 한 구간이 끊기면 망이 나뉩니다. 공사비는 수업용 모의 값입니다.</li>
+            <li><span class="tag">질문</span>마을 일곱 곳을 광케이블로 이어, 어느 마을끼리도 통신할 수 있게 하려고 한다. 후보 구간마다 공사비가 다르다. 비용의 합을 가장 작게 하려면 어떤 구간을 골라야 할까?</li>
+            <li><span class="tag">복원</span>꼭짓점이 \(n\)개인 수형도는 변이 \(n - 1\)개이고 회로가 없다.</li>
+            <li><span class="tag">설명</span>그래프의 모든 꼭짓점을 포함하는 수형도를 <em>생성수형도</em>라 하고, 변에 비용(가중치)이 있을 때 비용의 합이 가장 작은 생성수형도를 <em>최소 생성수형도</em>라 한다. <em>크러스컬 방법</em>은 변을 비용이 작은 순서로 보면서 "회로를 만들지 않으면 고르고, 만들면 버리기"를 \(n - 1\)개를 고를 때까지 반복한다. 매 순간 가장 싼 것을 고르는 단순한 방법(탐욕 알고리즘)인데도 늘 최소가 된다.</li>
+            <li><span class="tag">연결</span>통신망, 전력망, 수도관 설계에 쓰이고, 자료를 비슷한 것끼리 묶는 데에도 쓰인다. 비용이 같은 변이 있으면 최소 생성수형도가 여러 개일 수 있지만 최소 비용은 같다.</li>
+            <li><span class="tag">적용</span>먼저 변을 눌러 직접 골라 보자. 모든 마을이 이어지고 회로가 없으면 비용이 표시된다. 그다음 크러스컬 방법을 한 단계씩 따라가며 내 답과 비교해 보자. 버려지는 변은 왜 버려지는가?</li>
+            <li class="warn"><span class="tag">판단</span>최소 생성수형도는 "전체 공사비"를 최소로 할 뿐, 두 마을 사이의 통신 거리를 최소로 하지는 않는다. 끝과 끝 마을은 먼 길로 이어질 수 있고, 한 구간이 끊기면 망이 나뉜다. 공사비는 수업용 모의 값이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">크러스컬 방법에서 다음으로 싼 변을 보았더니 이미 같은 조각에 속한 두 마을을 잇는 변이었습니다. 어떻게 할까요?</p>
+          <p class="q">크러스컬 방법에서 다음으로 싼 변을 보았더니 이미 같은 조각에 속한 두 마을을 잇는 변이었다. 어떻게 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>버린다.<span class="why"><b>맞습니다.</b> 고르면 회로가 생기고, 회로의 변 하나는 필요 없는 비용입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>가장 싸니까 고른다.<span class="why"><b>회로가 생겨 수형도가 아니게 됩니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>처음부터 다시 시작한다.<span class="why"><b>버리고 다음 변을 보면 됩니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>앞에서 고른 변 하나를 빼고 이 변을 고른다.<span class="why"><b>앞에서 고른 변이 더 싸므로 바꿀 이유가 없습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>버린다.<span class="why"><b>맞다.</b> 고르면 회로가 생기고, 회로의 변 하나는 필요 없는 비용이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>가장 싸니까 고른다.<span class="why"><b>회로가 생겨 수형도가 아니게 된다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>처음부터 다시 시작한다.<span class="why"><b>버리고 다음 변을 보면 된다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>앞에서 고른 변 하나를 빼고 이 변을 고른다.<span class="why"><b>앞에서 고른 변이 더 싸므로 바꿀 이유가 없다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/4-2.html#card-dmath-handshake"><small class="mono">이산 수학 4.2</small>악수한 횟수를 모두 더하면 왜 늘 짝수일까?</a><a href="../../c/dmath/4-2.html#card-dmath-degree-seq"><small class="mono">이산 수학 4.2</small>차수 목록만 보고 그런 그래프가 있는지 알 수 있을까?</a><a href="../../c/dmath/4-2.html#text-dmath-degree"><small class="mono">이산 수학 4.2</small>꼭짓점의 차수와 변의 개수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-4-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=4-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-4-6"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">17문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

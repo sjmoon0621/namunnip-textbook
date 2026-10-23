@@ -1,0 +1,116 @@
+/* 본문 카드 공통 서식 — 나뭇잎과 QURI 두 저장소에 똑같은 파일을 둔다(STYLE.md 5절).
+   고칠 때는 두 곳을 함께 고치고, tools/style_sync.py로 같은지 확인한다.
+   범위는 본문 카드(data-kind="본문")의 글 영역(.q-text)이다. 각 사이트 css 뒤에 읽어서 같은 모양이 되게 한다.
+   선택자를 [data-kind="본문"] .q-text …로 써서 사이트 css(.reading-body …, .tb-page …)보다 앞서게 했다. */
+
+/* 색: 그림 색 --fa~--fd는 사이트마다 브랜드 색으로 정한다(나뭇잎 초록 계열, QURI 남색 계열).
+   정의·정리·예제 상자의 색은 그 그림 색에서 얻으므로, 모양은 같고 색만 사이트를 따른다. */
+:root {
+  --env-def: color-mix(in srgb, var(--fa) 8%, var(--card));
+  --env-thm: color-mix(in srgb, var(--fb) 8%, var(--card));
+  --env-ex: color-mix(in srgb, var(--fc) 9%, var(--card));
+  --env-def-ink: var(--fa); --env-thm-ink: var(--fb); --env-ex-ink: var(--fc);
+}
+
+/* 글 영역 */
+[data-kind="본문"] .q-text { max-width: none; padding: clamp(18px, 3vw, 30px) clamp(16px, 4vw, 44px) 26px; font-size: 16px; line-height: 1.8; color: var(--ink); }
+[data-kind="본문"] .q-text > * { max-width: 42em; }
+[data-kind="본문"] .q-text > * + * { margin-top: .9em; }
+[data-kind="본문"] .q-text em { font-style: normal; font-weight: 700; }
+[data-kind="본문"] .q-text b { font-weight: 700; }
+
+/* 소제목: 번호(2.10.1)는 제목 앞에 작게 */
+[data-kind="본문"] .q-text h3 { margin-top: 1.9em; padding-top: .8em; border-top: 1px solid var(--rule); font-size: 18.5px; font-weight: 800; letter-spacing: -.02em; line-height: 1.45; scroll-margin-top: 80px; }
+[data-kind="본문"] .q-text h3 :is(.no, .mono) { display: inline; margin: 0 8px 0 0; font-family: var(--f-mono); font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--forest); }
+[data-kind="본문"] .q-text .tb-goal + h3 { margin-top: 1.4em; }
+[data-kind="본문"] .q-text h4 { margin-top: 1.2em; font-size: 15.5px; font-weight: 700; color: var(--ink); }
+[data-kind="본문"] .q-text h4 + p { margin-top: 4px; }
+
+/* 따로 선 수식 */
+[data-kind="본문"] .q-text .katex-display { margin: .8em 0; overflow-x: auto; overflow-y: hidden; }
+
+/* 상자 셋(도입, 먼저 알아야 할 것, 마무리): 같은 모양, 위에 작은 이름 */
+[data-kind="본문"] .q-text :is(.q-ask, .tb-goal, .tb-summary) { display: block; padding: 12px 16px; background: var(--paper); border: 1px solid var(--rule); border-radius: 2px; font-size: 15px; font-weight: 400; line-height: 1.75; }
+[data-kind="본문"] .q-text .q-ask { font-size: 16px; }
+[data-kind="본문"] .q-text .q-ask::before { content: "도입"; display: block; margin-bottom: 2px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+[data-kind="본문"] .q-text :is(.tb-goal, .tb-summary) > :is(.lb, b:first-child) { display: block; margin: 0 0 2px !important; font-family: var(--f-kr); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+[data-kind="본문"] .q-text .tb-goal a { color: var(--forest); }
+[data-kind="본문"] .q-text :is(.tb-goal, .tb-summary) :is(ul, ol) { padding-left: 1.3em; list-style: disc; }
+[data-kind="본문"] .q-text .tb-summary ol { list-style: decimal; }
+[data-kind="본문"] .q-text :is(.tb-goal, .tb-summary) li + li { margin-top: 3px; }
+[data-kind="본문"] .q-text :is(.tb-goal, .tb-summary) > p + p { margin-top: .5em; }
+
+/* 정의·정리·예제: 옅은 바탕색으로 구별, 이름은 같은 계열의 진한 색 */
+[data-kind="본문"] .q-text .tb-env { padding: 12px 16px; background: var(--env-def); border: 0; border-radius: 0; }
+[data-kind="본문"] .q-text .tb-env.thm { background: var(--env-thm); }
+[data-kind="본문"] .q-text .tb-env.ex { background: var(--env-ex); }
+[data-kind="본문"] .q-text .tb-env > .lb { display: block; margin-bottom: 3px; font-size: 14.5px; font-weight: 800; color: var(--env-def-ink); }
+[data-kind="본문"] .q-text .tb-env.thm > .lb { color: var(--env-thm-ink); }
+[data-kind="본문"] .q-text .tb-env.ex > .lb { color: var(--env-ex-ink); }
+[data-kind="본문"] .q-text .tb-env > .lb .nm { font-weight: 500; color: var(--ink-2); }
+[data-kind="본문"] .q-text .tb-env > * + * { margin-top: .5em; }
+[data-kind="본문"] .q-text .tb-env :is(ul, ol) { padding-left: 1.3em; list-style: disc; }
+[data-kind="본문"] .q-text .tb-env ol { list-style: decimal; }
+
+/* 증명 */
+[data-kind="본문"] .q-text .tb-proof { font-size: inherit; }
+[data-kind="본문"] .q-text .tb-proof > .lb { font-style: normal; font-weight: 800; color: var(--env-thm-ink); margin-right: 8px; }
+[data-kind="본문"] .q-text .qed { float: right; margin-left: 8px; color: var(--ink-3); }
+[data-kind="본문"] .q-text .qed:empty::before { content: "∎"; }
+
+/* 주의, 곁들임 */
+[data-kind="본문"] .q-text .tb-note { padding: 10px 14px; background: var(--warn-bg); border-radius: 0; font-size: 15px; }
+[data-kind="본문"] .q-text .tb-note > :is(.lb, b:first-child) { display: inline; margin: 0 6px 0 0; font-weight: 700; color: var(--warn); }
+[data-kind="본문"] .q-text .tb-aside { padding: 2px 0 2px 14px; border-left: 1px solid var(--rule); font-size: 14.5px; line-height: 1.75; color: var(--ink-2); }
+
+/* 각주 */
+[data-kind="본문"] .q-text sup.fn { font-size: 11px; line-height: 0; color: var(--forest); }
+[data-kind="본문"] .q-text sup.fn a { text-decoration: none; }
+[data-kind="본문"] .q-text ol.fn-list { margin-top: 20px; padding: 10px 0 0 1.4em; border-top: 1px solid var(--rule); list-style: decimal; font-size: 13.5px; line-height: 1.7; color: var(--ink-2); }
+[data-kind="본문"] .q-text ol.fn-list li + li { margin-top: 4px; }
+
+/* 그림: 색은 CSS 변수로 그리므로 다크 모드에서 뒤집지 않는다 */
+[data-kind="본문"] .q-text figure.q-fig { margin: 18px 0 8px; }
+[data-kind="본문"] .q-text figure.q-fig svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; border: 1px solid var(--rule); background: var(--card); font-family: var(--f-kr); filter: none; }
+[data-kind="본문"] .q-text figure.q-fig figcaption { max-width: 560px; margin: 6px auto 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-2); }
+.q-fig svg text { fill: var(--ink); font-size: 13px; }
+.q-fig svg text.s { font-size: 11px; fill: var(--ink-2); }
+.q-fig svg text.i { font-style: italic; font-family: var(--f-serif); font-size: 15px; }
+.q-fig svg .ax { stroke: var(--ink-3); stroke-width: 1; fill: none; }
+.q-fig svg .gd { stroke: var(--rule); stroke-width: 1; fill: none; }
+.q-fig svg .k { stroke: var(--ink); stroke-width: 1.6; fill: none; }
+.q-fig svg .dsh { stroke-dasharray: 4 4; }
+.q-fig svg .a { stroke: var(--fa); stroke-width: 2.2; fill: none; }
+.q-fig svg .b { stroke: var(--fb); stroke-width: 2.2; fill: none; }
+.q-fig svg .c { stroke: var(--fc); stroke-width: 2.2; fill: none; }
+.q-fig svg .d { stroke: var(--fd); stroke-width: 2.2; fill: none; }
+.q-fig svg .fk { fill: var(--ink); } .q-fig svg .fa { fill: var(--fa); } .q-fig svg .fb { fill: var(--fb); } .q-fig svg .fc { fill: var(--fc); } .q-fig svg .fd { fill: var(--fd); }
+.q-fig svg .la { fill: color-mix(in srgb, var(--fa) 18%, transparent); } .q-fig svg .lb { fill: color-mix(in srgb, var(--fb) 18%, transparent); }
+.q-fig svg .lc { fill: color-mix(in srgb, var(--fc) 20%, transparent); } .q-fig svg .ld { fill: color-mix(in srgb, var(--fd) 18%, transparent); }
+.q-fig svg .lk { fill: var(--paper-2); }
+.q-fig svg text.ta { fill: var(--fa); } .q-fig svg text.tb { fill: var(--fb); } .q-fig svg text.tc { fill: var(--fc); } .q-fig svg text.td { fill: var(--fd); }
+.q-fig svg .drag { cursor: grab; }
+.q-fig .q-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; max-width: 560px; margin: 8px auto 0; font-size: 13.5px; }
+.q-fig .q-ctl label { display: flex; align-items: center; gap: 8px; }
+.q-fig .q-ctl input[type="range"] { width: 150px; accent-color: var(--forest); }
+.q-fig .q-ctl output { min-width: 2.5em; font-family: var(--f-mono); font-size: 13px; }
+.q-fig .q-ctl button { font: inherit; font-size: 13px; padding: 3px 10px; border: 1px solid var(--forest); border-radius: 2px; background: var(--card); color: var(--forest); cursor: pointer; }
+.q-fig .q-read { max-width: 560px; margin: 4px auto 0; font-size: 14px; color: var(--ink-2); min-height: 1.5em; }
+
+/* 본문 끝 문제은행 링크: 연습문제는 본문 안에 두지 않고 문제은행에서 푼다(STYLE.md 1절 5) */
+[data-kind="본문"] .q-text .tb-bank { margin-top: 1.6em; padding: 12px 16px; border: 1px solid var(--rule); border-radius: 2px; background: var(--card); }
+[data-kind="본문"] .q-text .tb-bank a { font-weight: 700; color: var(--forest); }
+[data-kind="본문"] .q-text .tb-bank .dim { display: block; margin-top: 2px; font-size: 13px; }
+
+/* 표 */
+[data-kind="본문"] .q-text :is(.tbl, table.tb-table) { display: block; max-width: 100%; overflow-x: auto; }
+[data-kind="본문"] .q-text table { border-collapse: collapse; font-size: 14.5px; line-height: 1.55; }
+[data-kind="본문"] .q-text :is(th, td) { border: 1px solid var(--rule); padding: 7px 11px; text-align: left; vertical-align: top; }
+[data-kind="본문"] .q-text thead th { background: var(--paper); font-weight: 700; }
+
+/* 좁은 화면 */
+@media (max-width: 640px) {
+  [data-kind="본문"] .q-text { padding: 18px 14px 22px; font-size: 15.5px; }
+  [data-kind="본문"] .q-text h3 { font-size: 17.5px; }
+  [data-kind="본문"] .q-text :is(.q-ask, .tb-goal, .tb-summary, .tb-env) { padding: 10px 12px; }
+}

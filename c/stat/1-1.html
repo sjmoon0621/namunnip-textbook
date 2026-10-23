@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>중복순열과 같은 것이 있는 순열 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="중복순열 nΠr = n^r, 같은 것이 있는 순열 n!/(p!q!r!), 바둑판 모양 길의 최단 경로. 자리마다 갈래가 갈리는 나무, 번호를 붙였다 지우는 배열, 직접 그리는 경로로 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-rep-perm canvas { aspect-ratio: 5 / 4; cursor: pointer; }
@@ -50,19 +55,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-stat-rep-perm"><span class="mono">1.1.1</span>중복순열</a></li>
-        <li><a href="#card-stat-same-perm"><span class="mono">1.1.2</span>같은 것이 있는 순열</a></li>
-        <li><a href="#card-stat-grid-path"><span class="mono">1.1.3</span>최단 경로의 수</a></li>
+        <li><a href="#text-stat-perm-rep"><span class="mono">본문</span>중복순열과 같은 것이 있는 순열</a></li>
+        <li><a href="#card-stat-rep-perm"><span class="mono">탐구 1</span>중복순열</a></li>
+        <li><a href="#card-stat-same-perm"><span class="mono">탐구 2</span>같은 것이 있는 순열</a></li>
+        <li><a href="#card-stat-grid-path"><span class="mono">탐구 3</span>최단 경로의 수</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=stat-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">136문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=stat&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=stat-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">136문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=stat-1-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-stat-perm-rep" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>중복순열과 같은 것이 있는 순열</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">숫자 0~9로 네 자리 비밀번호를 만들면 같은 숫자를 여러 번 써도 되니 순열 \({}_{10}\mathrm{P}_4\)와는 다르다. 또 BANANA의 여섯 글자를 늘어놓을 때 두 N이나 세 A끼리 자리를 바꾸어도 같은 단어이다. 이런 경우의 수는 어떻게 셀까?</p>
+          <figure class="q-fig" data-q="stat-grid">
+            <svg viewBox="0 0 520 260" role="img" aria-label="바둑판 모양 길에서 오른쪽 m번, 위쪽 n번 가는 가장 짧은 길"></svg>
+            <div class="q-ctl"><label>가로 \(m\) = <input type="range" data-k="m" min="1" max="7" step="1" value="4"><output data-k="m"></output></label><label>세로 \(n\) = <input type="range" data-k="n" min="1" max="5" step="1" value="3"><output data-k="n"></output></label><label>길 고르기 <input type="range" data-k="k" min="0" max="20" step="1" value="0"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 가장 짧은 길은 '→' \(m\)개와 '↑' \(n\)개를 늘어놓은 것이므로, 같은 것이 있는 순열의 수 \(\dfrac{(m + n)!}{m!\,n!}\)만큼 있다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>곱의 법칙, 순열 \({}_n\mathrm{P}_r\)와 \(n!\), 조합 \({}_n\mathrm{C}_r\)(공통수학1).</div>
+
+          <h3><span class="no">1.1.1</span>중복순열</h3>
+          <p>네 자리 비밀번호의 첫째 자리에 올 수 있는 숫자는 10가지이다. 같은 숫자를 다시 써도 되므로 둘째, 셋째, 넷째 자리도 각각 10가지이다. 곱의 법칙에 따라 \(10 \times 10 \times 10 \times 10 = 10^4\)가지이다. 순열에서는 자리마다 고를 것이 하나씩 줄었지만, 여기서는 줄지 않는다.</p>
+          <div class="tb-env"><span class="lb">정의 1.1.1 <span class="nm">중복순열</span></span>
+            <p>서로 다른 \(n\)개에서 중복을 허락하여 \(r\)개를 택해 일렬로 나열하는 순열을 중복순열이라 하고, 그 수를 \({}_n\Pi_r\)로 나타낸다. \[{}_n\Pi_r = n^r\]</p>
+          </div>
+          <p>중복을 허락하므로 \(r\)이 \(n\)보다 커도 된다. 가령 0과 1 두 숫자로 8자리를 만드는 방법은 \({}_2\Pi_8 = 2^8 = 256\)가지이고, 이것이 1바이트로 나타낼 수 있는 수의 개수이다.</p>
+
+          <h3><span class="no">1.1.2</span>같은 것이 있는 순열</h3>
+          <p>BANANA의 글자를 모두 다른 것으로 보면, 곧 \(\text{A}_1\text{A}_2\text{A}_3\), \(\text{N}_1\text{N}_2\)로 구별하면 배열은 \(6! = 720\)가지이다. 그런데 실제로는 세 A끼리 자리를 바꾼 \(3! = 6\)가지와 두 N끼리 바꾼 \(2! = 2\)가지가 모두 같은 단어이다. 따라서 720을 \(3! \times 2!\)로 나누어 \(\dfrac{720}{12} = 60\)가지이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.1.2 <span class="nm">같은 것이 있는 순열</span></span>
+            <p>\(n\)개 가운데 같은 것이 각각 \(p\)개, \(q\)개, …, \(r\)개씩 있을 때, 이들을 모두 일렬로 나열하는 방법의 수는 \[\frac{n!}{p!\,q!\,\cdots\,r!}\ (p + q + \cdots + r = n)\]</p>
+          </div>
+          <p>그림 1의 바둑판 길도 같은 순열이다. 왼쪽 아래에서 오른쪽 위로 가장 짧게 가려면 오른쪽으로 \(m\)칸, 위로 \(n\)칸 가야 하고, 길 하나는 '→'와 '↑'를 늘어놓은 순서 하나와 같다. 슬라이더로 길을 바꾸어 보면 화살표의 순서가 바뀐다.<sup class="fn"><a href="#fn-stat-perm-rep-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="BANANA를 모두 구별한 720가지를 같은 글자끼리 묶으면 60가지">
+              <g class="s"><text x="20" y="40">구별하면</text><text x="110" y="40">B A₁ N₁ A₂ N₂ A₃ …</text><text x="330" y="40">6! = 720</text>
+                <text x="20" y="80">A끼리 바꿔도 같음</text><text x="180" y="80">÷ 3! = 6</text><text x="300" y="80">N끼리 바꿔도 같음</text><text x="450" y="80">÷ 2! = 2</text>
+                <text x="20" y="120" class="td">같은 단어로 묶으면 720 ÷ 12 = 60가지</text></g>
+            </svg>
+            <figcaption>그림 2. 같은 것을 구별해 센 순열을, 같은 것끼리 자리를 바꾸는 경우의 수로 나누면 같은 것이 있는 순열이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.1.3</span>
+            <p>그림 1에서 \(m = 4\), \(n = 3\)인 바둑판 길에서 가장 짧은 길의 수를 구하여라. 또 이 가운데 가운데 점 \((2, 1)\)을 반드시 지나는 길의 수를 구하여라.</p>
+          </div>
+          <p>길은 → 4개와 ↑ 3개를 늘어놓은 것이므로 \(\dfrac{7!}{4!\,3!} = 35\)가지이다.</p>
+          <p>점 \((2, 1)\)을 지나는 길은 두 부분으로 나뉜다. 출발점에서 \((2, 1)\)까지는 → 2개, ↑ 1개이므로 \(\dfrac{3!}{2!\,1!} = 3\)가지이다. \((2, 1)\)에서 도착점까지는 → 2개, ↑ 2개이므로 \(\dfrac{4!}{2!\,2!} = 6\)가지이다.</p>
+          <p>앞부분을 어떻게 가든 뒷부분은 6가지이므로 곱의 법칙에 따라 \(3 \times 6 = 18\)가지이다. 전체 35가지 가운데 18가지가 그 점을 지나는 셈이다. 아래 탐구 카드에서 같은 것이 있는 순열과 바둑판 길을 직접 세어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-stat-perm-rep-1">→ \(m\)개와 ↑ \(n\)개의 순서는 \(m + n\)개의 자리 가운데 →가 올 \(m\)자리를 고르는 것과 같으므로 \({}_{m+n}\mathrm{C}_m\)으로도 셀 수 있다. 두 식의 값은 같다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>중복을 허락하면 자리마다 고르는 수가 줄지 않으므로 중복순열의 수는 \(n^r\)이다. 같은 것이 섞여 있으면, 모두 구별한 순열의 수를 같은 것끼리 자리를 바꾸는 경우의 수로 나눈다. 그래서 처음 질문의 비밀번호는 \(10^4\)가지, BANANA의 배열은 \(\tfrac{6!}{3!\,2!} = 60\)가지이다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-stat-rep-perm">
         <header class="card-head">
-          <span class="no">1.1.1</span><h2>같은 것을 여러 번 골라도 되면 경우의 수는 어떻게 될까?</h2><span class="kind">중복순열 · 자리마다 갈래 세기</span>
+          <span class="no">탐구 1</span><h2>같은 것을 여러 번 골라도 되면 경우의 수는 어떻게 될까?</h2><span class="kind">중복순열 · 자리마다 갈래 세기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -83,33 +139,33 @@
                 <div><dt class="d-p">\({}_{n}\mathrm{P}_{r}\) (중복 없이)</dt><dd class="n-p">—</dd></div>
                 <div><dt>지금 배열의 순서</dt><dd class="n-k">—</dd></div>
               </dl>
-              <p class="fig-note">맨 위 칸을 누르면 그 자리의 숫자가 바뀝니다. 왼쪽 수는 그 단계까지 갈라진 길의 수입니다. 길이 81개를 넘는 단계는 점을 그리지 않고 개수만 적습니다.</p>
+              <p class="fig-note">맨 위 칸을 누르면 그 자리의 숫자가 바뀐다. 왼쪽 수는 그 단계까지 갈라진 길의 수이고, 길이 81개를 넘는 단계는 점을 그리지 않고 개수만 적는다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>숫자 1, 2, 3만 써서 네 자리 비밀번호를 만듭니다. 같은 숫자를 다시 써도 된다면 비밀번호는 몇 가지일까요?</li>
-            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 \(r\)개를 골라 한 줄로 세우는 순열의 수는 \({}_{n}\mathrm{P}_{r} = n(n - 1)(n - 2)\cdots(n - r + 1)\)입니다. 한 번 쓴 것은 다시 쓸 수 없어서 자리마다 고를 수 있는 것이 하나씩 줄어듭니다. 각 단계의 가짓수를 곱하는 것은 곱의 법칙입니다.</li>
-            <li><span class="tag">설명</span>같은 것을 다시 써도 되면 자리마다 고를 수 있는 것이 줄지 않습니다. 첫째 자리 \(n\)가지, 둘째 자리도 \(n\)가지, …, \(r\)째 자리도 \(n\)가지이므로 곱의 법칙에 따라 \(n \times n \times \cdots \times n = n^r\)가지입니다. 이처럼 서로 다른 \(n\)개에서 중복을 허락하여 \(r\)개를 택해 일렬로 나열하는 순열을 <em>중복순열</em>이라 하고, 그 수를 \({}_{n}\Pi_{r}\)로 나타냅니다. <b>\({}_{n}\Pi_{r} = n^r\)</b>입니다. 같은 것을 거듭 쓸 수 있으므로 순열과 달리 \(r\)가 \(n\)보다 커도 됩니다.</li>
-            <li><span class="tag">연결</span>'다음 배열'을 누르면 맨 끝 자리부터 바뀌고, \(n\)가지를 다 돌면 앞자리가 하나 올라갑니다. 자동차 주행 거리계와 같은 방식이어서, 중복순열은 \(n\)진법으로 쓴 \(r\)자리 수와 하나씩 짝지어집니다. 0부터 9까지 쓰는 네 자리 자물쇠는 \(10^4 = 10000\)가지이고, 0과 1만 쓰는 \(r\)비트 신호는 \(2^r\)가지입니다. 원소가 \(r\)개인 집합에서 원소가 \(n\)개인 집합으로 가는 함수의 개수도 \(n^r\)입니다. 정의역의 원소마다 함숫값을 하나씩 고르기 때문입니다.</li>
-            <li><span class="tag">적용</span>\(n = 3\), \(r = 4\)로 두고 '다음 배열'을 여러 번 눌러 숫자가 바뀌는 순서를 보세요. 수형도 맨 아랫줄의 개수와 \({}_{3}\Pi_{4}\)를 비교하세요. 칸을 눌러 3333을 만들면 몇 번째 배열인가요? \(r\)를 \(n\)보다 크게 하면 \({}_{n}\mathrm{P}_{r}\)와 \({}_{n}\Pi_{r}\)는 각각 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>"3명이 방 4개 가운데 하나씩 골라 들어가는 방법"에서 \(n\)과 \(r\)를 바꾸어 쓰기 쉽습니다. 사람마다 방을 하나씩 고르므로 정하는 일이 3번\((r = 3)\), 매번 고를 수 있는 것이 방 4개\((n = 4)\)이고, 답은 \(4^3 = 64\)입니다. \(3^4\)으로 쓰면 방이 사람을 하나씩 고르는 셈이 되는데, 그러면 한 사람이 두 방에 들어가는 경우도 세게 됩니다. 먼저 '한 번씩 정해 주어야 하는 대상'과 '그때마다 고르는 선택지'를 구별하세요.</li>
+            <li><span class="tag">질문</span>숫자 1, 2, 3만 써서 네 자리 비밀번호를 만든다. 같은 숫자를 다시 써도 된다면 비밀번호는 몇 가지일까?</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개에서 \(r\)개를 골라 한 줄로 세우는 순열의 수는 \({}_{n}\mathrm{P}_{r} = n(n - 1)(n - 2)\cdots(n - r + 1)\)이다. 한 번 쓴 것은 다시 쓸 수 없어서 자리마다 고를 수 있는 것이 하나씩 줄기 때문이다. 그리고 각 단계의 가짓수를 곱하는 것은 곱의 법칙이다.</li>
+            <li><span class="tag">설명</span>그런데 같은 것을 다시 써도 되면 자리마다 고를 수 있는 것이 줄지 않는다. 첫째 자리 \(n\)가지, 둘째 자리도 \(n\)가지, …, \(r\)째 자리도 \(n\)가지이므로 곱의 법칙에 따라 \(n \times n \times \cdots \times n = n^r\)가지이다. 이렇게 서로 다른 \(n\)개에서 중복을 허락하여 \(r\)개를 택해 일렬로 나열하는 순열을 <em>중복순열</em>이라 하고, 그 수를 \({}_{n}\Pi_{r}\)로 나타내며 \({}_{n}\Pi_{r} = n^r\)이다. 같은 것을 거듭 쓸 수 있으므로 순열과 달리 \(r\)가 \(n\)보다 커도 된다.</li>
+            <li><span class="tag">연결</span>'다음 배열'을 누르면 맨 끝 자리부터 바뀌고, \(n\)가지를 다 돌면 앞자리가 하나 올라간다. 자동차 주행 거리계와 같은 방식이어서, 중복순열은 \(n\)진법으로 쓴 \(r\)자리 수와 하나씩 짝지어진다. 그래서 0부터 9까지 쓰는 네 자리 자물쇠는 \(10^4 = 10000\)가지이고, 0과 1만 쓰는 \(r\)비트 신호는 \(2^r\)가지이다. 원소가 \(r\)개인 집합에서 원소가 \(n\)개인 집합으로 가는 함수의 개수도 \(n^r\)인데, 정의역의 원소마다 함숫값을 하나씩 고르기 때문이다.</li>
+            <li><span class="tag">적용</span>\(n = 3\), \(r = 4\)로 두고 '다음 배열'을 여러 번 눌러 숫자가 바뀌는 순서를 보고, 수형도 맨 아랫줄의 개수와 \({}_{3}\Pi_{4}\)를 비교해 보자. 칸을 눌러 3333을 만들면 몇 번째 배열인지 세어 보고, \(r\)를 \(n\)보다 크게 했을 때 \({}_{n}\mathrm{P}_{r}\)와 \({}_{n}\Pi_{r}\)가 각각 어떻게 되는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"3명이 방 4개 가운데 하나씩 골라 들어가는 방법"에서 \(n\)과 \(r\)를 바꾸어 쓰기 쉽다. 사람마다 방을 하나씩 고르므로 정하는 일이 3번\((r = 3)\), 매번 고를 수 있는 것이 방 4개\((n = 4)\)이고, 답은 \(4^3 = 64\)이다. \(3^4\)으로 쓰면 방이 사람을 하나씩 고르는 셈이 되어, 한 사람이 두 방에 들어가는 경우까지 센다. 그래서 먼저 '한 번씩 정해 주어야 하는 대상'과 '그때마다 고르는 선택지'를 구별해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">학생 5명이 두 동아리 A, B 가운데 한 곳에 각각 가입하는 방법의 수는? (아무도 가입하지 않은 동아리가 있어도 됩니다.)</p>
+          <p class="q">학생 5명이 두 동아리 A, B 가운데 한 곳에 각각 가입하는 방법의 수는? (아무도 가입하지 않은 동아리가 있어도 된다.)</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>25<span class="why"><b>\(5^2\)을 계산했습니다.</b> 동아리가 학생을 하나씩 고르는 셈입니다. 정할 대상은 학생 5명이고, 각자 고르는 선택지가 2개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>32<span class="why"><b>맞습니다.</b> 학생마다 A, B 중 하나를 고르므로 \({}_{2}\Pi_{5} = 2^5 = 32\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>20<span class="why"><b>\({}_{5}\mathrm{P}_{2}\)입니다.</b> 서로 다른 두 학생을 골라 동아리에 하나씩 배정한 것처럼 세었습니다. 한 동아리에 여러 명이 들어갈 수 있으므로 중복을 허락해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10<span class="why"><b>\({}_{5}\mathrm{C}_{2}\)입니다.</b> A에 들어갈 두 명만 고른 경우입니다. A에 들어가는 사람 수는 0명부터 5명까지 모두 가능합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>25<span class="why"><b>\(5^2\)을 계산했다.</b> 동아리가 학생을 하나씩 고르는 셈이다. 정할 대상은 학생 5명이고, 각자 고르는 선택지가 2개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>32<span class="why"><b>맞다.</b> 학생마다 A, B 중 하나를 고르므로 \({}_{2}\Pi_{5} = 2^5 = 32\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>20<span class="why"><b>\({}_{5}\mathrm{P}_{2}\)이다.</b> 서로 다른 두 학생을 골라 동아리에 하나씩 배정한 것처럼 세었다. 한 동아리에 여러 명이 들어갈 수 있으므로 중복을 허락해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10<span class="why"><b>\({}_{5}\mathrm{C}_{2}\)이다.</b> A에 들어갈 두 명만 고른 경우이다. A에 들어가는 사람 수는 0명부터 5명까지 모두 가능하다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-stat-same-perm">
         <header class="card-head">
-          <span class="no">1.1.2</span><h2>같은 글자끼리 자리를 바꾸면 새 배열일까?</h2><span class="kind">같은 것이 있는 순열 · 나누어 세기</span>
+          <span class="no">탐구 2</span><h2>같은 글자끼리 자리를 바꾸면 새 배열일까?</h2><span class="kind">같은 것이 있는 순열 · 나누어 세기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -131,34 +187,34 @@
                 <div><dt>한 칸에 겹친 배열 수</dt><dd class="n-grp">—</dd></div>
                 <div><dt>서로 다른 배열 수</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">칸을 누르면 그 칸이 강조됩니다. 글자가 5개 이상이면 칸이 너무 많아 그림 대신 곱셈 관계만 보여 줍니다.</p>
+              <p class="fig-note">칸을 누르면 그 칸이 강조된다. 글자가 5개 이상이면 칸이 너무 많아 그림 대신 곱셈 관계만 보여 준다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>BANANA의 여섯 글자를 한 줄로 늘어놓는 방법은 \(6! = 720\)가지일까요? 두 N의 자리를 바꾼 배열은 눈으로 보면 똑같습니다.</li>
-            <li><span class="tag">복원</span>서로 다른 \(n\)개를 모두 한 줄로 세우는 방법은 \(n!\)가지입니다. 또 같은 결과를 몇 번씩 겹쳐 세었는지 알면, 전체를 그 수로 나누어 겹침을 없앨 수 있습니다.</li>
-            <li><span class="tag">설명</span>같은 글자에 잠시 번호를 붙여 \(A_1, A_2\)처럼 모두 다르게 만들면 배열은 \(n!\)가지입니다. 이제 번호를 지우면, 같은 글자끼리 자리만 바꾼 배열들이 하나로 합쳐집니다. A가 \(p\)개이면 그 A들의 자리를 바꾸는 방법이 \(p!\)가지이므로, 한 배열에 \(p!\)개씩 겹쳐 있던 것입니다. 다른 글자도 같은 글자가 \(q\)개, \(r\)개 있으면 \(q!, r!\)배씩 더 겹칩니다. 그래서 \(n\)개 가운데 같은 것이 각각 \(p\)개, \(q\)개, …, \(r\)개씩 있을 때\((p + q + \cdots + r = n)\), 이들을 모두 일렬로 나열하는 <em>같은 것이 있는 순열</em>의 수는 <b>\(\frac{n!}{p!q!\cdots r!}\)</b>입니다.</li>
-            <li><span class="tag">연결</span>글자가 두 종류뿐이면 이 수는 조합과 같습니다. AABB는 \(\frac{4!}{2!2!} = 6\)이고, 네 자리 가운데 A가 들어갈 두 자리를 고르는 \({}_{4}\mathrm{C}_{2} = 6\)과 같습니다. 바둑판 모양 길에서 최단 경로를 셀 때, 그리고 \((a + b)^n\)을 전개할 때 이 생각이 다시 나옵니다.</li>
-            <li><span class="tag">적용</span>AABB를 고르고 '같은 글자에 번호 붙이기'를 눌러 보세요. 칸은 몇 개이고, 한 칸에 번호 붙은 배열이 몇 개씩 들어 있나요? AAAB, AABC로 바꾸어 한 칸의 개수가 어떤 계승의 곱인지 찾아보세요. 마지막으로 BANANA를 직접 입력해 서로 다른 배열 수를 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>나누는 수는 같은 글자 묶음마다 따로 구한 계승의 <b>곱</b>입니다. BANANA는 A 3개, N 2개이므로 \(3!\cdot2! = 12\)로 나누어 \(\frac{720}{12} = 60\)입니다. \((3 + 2)! = 120\)으로 나누면 틀립니다. A와 N은 서로 다른 글자라서 A와 N이 자리를 바꾸면 다른 배열이 되기 때문입니다. 또 이 공식은 주어진 것을 <b>모두</b> 늘어놓을 때만 씁니다. 일부만 골라 늘어놓을 때는 어떤 글자를 몇 개 골랐는지 경우를 나누어 세어야 합니다.</li>
+            <li><span class="tag">질문</span>BANANA의 여섯 글자를 한 줄로 늘어놓는 방법은 \(6! = 720\)가지일까? 두 N의 자리를 바꾼 배열은 눈으로 보면 똑같다.</li>
+            <li><span class="tag">복원</span>서로 다른 \(n\)개를 모두 한 줄로 세우는 방법은 \(n!\)가지이다. 또 같은 결과를 몇 번씩 겹쳐 세었는지 알면, 전체를 그 수로 나누어 겹침을 없앨 수 있다.</li>
+            <li><span class="tag">설명</span>같은 글자에 잠시 번호를 붙여 \(A_1, A_2\)처럼 모두 다르게 만들면 배열은 \(n!\)가지이다. 이제 번호를 지우면, 같은 글자끼리 자리만 바꾼 배열들이 하나로 합쳐진다. A가 \(p\)개이면 그 A들의 자리를 바꾸는 방법이 \(p!\)가지이므로, 한 배열에 \(p!\)개씩 겹쳐 있던 것이다. 다른 글자도 같은 글자가 \(q\)개, \(r\)개 있으면 \(q!, r!\)배씩 더 겹친다. 그래서 \(n\)개 가운데 같은 것이 각각 \(p\)개, \(q\)개, …, \(r\)개씩 있을 때\((p + q + \cdots + r = n)\), 이들을 모두 일렬로 나열하는 <em>같은 것이 있는 순열</em>의 수는 \(\frac{n!}{p!q!\cdots r!}\)이다.</li>
+            <li><span class="tag">연결</span>글자가 두 종류뿐이면 이 수는 조합과 같다. AABB는 \(\frac{4!}{2!2!} = 6\)이고, 네 자리 가운데 A가 들어갈 두 자리를 고르는 \({}_{4}\mathrm{C}_{2} = 6\)과 같다. 바둑판 모양 길에서 최단 경로를 셀 때, 그리고 \((a + b)^n\)을 전개할 때 이 생각이 다시 나온다.</li>
+            <li><span class="tag">적용</span>AABB를 고르고 '같은 글자에 번호 붙이기'를 눌러 칸이 몇 개이고 한 칸에 번호 붙은 배열이 몇 개씩 들어 있는지 보자. AAAB, AABC로 바꾸어 한 칸의 개수가 어떤 계승의 곱인지 찾고, 마지막으로 BANANA를 직접 입력해 서로 다른 배열 수를 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>나누는 수는 같은 글자 묶음마다 따로 구한 계승의 곱이다. BANANA는 A 3개, N 2개이므로 \(3!\cdot2! = 12\)로 나누어 \(\frac{720}{12} = 60\)이고, \((3 + 2)! = 120\)으로 나누면 틀린다. A와 N은 서로 다른 글자라서 A와 N이 자리를 바꾸면 다른 배열이 되기 때문이다. 또 이 공식은 주어진 것을 모두 늘어놓을 때만 쓴다. 일부만 골라 늘어놓을 때는 어떤 글자를 몇 개 골랐는지 경우를 나누어 세어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">숫자 1, 1, 2, 2, 2, 3을 모두 한 번씩 써서 만들 수 있는 여섯 자리 자연수의 개수는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>720<span class="why"><b>6!입니다.</b> 1끼리, 2끼리 자리를 바꾼 수를 서로 다른 수로 세었습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>60<span class="why"><b>맞습니다.</b> 1이 2개, 2가 3개이므로 \(\frac{6!}{2!\cdot3!} = \frac{720}{12} = 60\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>120<span class="why"><b>3!로만 나누었습니다.</b> 2끼리 겹친 것만 없앴고, 1이 2개라서 생긴 겹침(2!)이 남아 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>\((2 + 3)! = 120\)으로 나누었습니다.</b> 같은 숫자 묶음마다 계승을 따로 구해 곱해야 합니다. 1과 2가 자리를 바꾸면 다른 수가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>720<span class="why"><b>6!이다.</b> 1끼리, 2끼리 자리를 바꾼 수를 서로 다른 수로 세었다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>60<span class="why"><b>맞다.</b> 1이 2개, 2가 3개이므로 \(\frac{6!}{2!\cdot3!} = \frac{720}{12} = 60\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>120<span class="why"><b>3!로만 나누었다.</b> 2끼리 겹친 것만 없앴고, 1이 2개라서 생긴 겹침(2!)이 남아 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>6<span class="why"><b>\((2 + 3)! = 120\)으로 나누었다.</b> 같은 숫자 묶음마다 계승을 따로 구해 곱해야 한다. 1과 2가 자리를 바꾸면 다른 수가 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a><a href="../../c/stat/1-2.html#text-stat-comb-rep"><small class="mono">확률과 통계 1.2</small>중복조합</a></div></nav>
 
       <article class="card" id="card-stat-grid-path">
         <header class="card-head">
-          <span class="no">1.1.3</span><h2>바둑판 길에서 가장 짧은 길은 몇 가지일까?</h2><span class="kind">같은 것이 있는 순열 · 최단 경로</span>
+          <span class="no">탐구 3</span><h2>바둑판 길에서 가장 짧은 길은 몇 가지일까?</h2><span class="kind">같은 것이 있는 순열 · 최단 경로</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -185,43 +241,44 @@
                 <div><dt>P를 지나는 경로</dt><dd class="n-p">—</dd></div>
               </dl>
               <p class="msg">—</p>
-              <p class="fig-note">'P를 꼭 지나기'를 켜면 점 P를 끌어서 다른 교차점으로 옮길 수 있습니다.</p>
+              <p class="fig-note">'P를 꼭 지나기'를 켜면 점 P를 끌어서 다른 교차점으로 옮길 수 있다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>가로 4칸, 세로 3칸인 바둑판 모양 길에서 A에서 B까지 가장 짧게 가는 방법은 몇 가지일까요? 하나하나 그려서 세면 빠뜨리기 쉽습니다.</li>
-            <li><span class="tag">복원</span>같은 것이 \(p\)개, \(q\)개 있는 \(n\)개를 모두 늘어놓는 방법은 \(\frac{n!}{p!q!}\)가지입니다. 동시에 일어나지 않는 경우들은 더하고(합의 법칙), 잇달아 일어나는 단계는 곱합니다(곱의 법칙).</li>
-            <li><span class="tag">설명</span>최단 경로는 왼쪽이나 아래로 돌아가지 않으므로 반드시 오른쪽으로 \(m\)번, 위로 \(n\)번 움직입니다. 그래서 경로 하나는 → \(m\)개와 ↑ \(n\)개를 한 줄로 늘어놓은 배열 하나와 짝지어지고, 거꾸로 그런 배열 하나는 경로 하나를 정합니다. 따라서 최단 경로의 수는 같은 것이 있는 순열의 수 <b>\(\frac{(m + n)!}{m!n!}\)</b>입니다. 가로 4칸, 세로 3칸이면 \(\frac{7!}{4!3!} = 35\)가지입니다. P를 꼭 지나야 하면 \(A\to P\)와 \(P\to B\)를 잇달아 가는 것이므로 두 구간의 경로 수를 곱합니다.</li>
-            <li><span class="tag">연결</span>'점마다 경로 수 적기'를 켜면 각 교차점에 그 점까지 가는 최단 경로 수가 적힙니다. 어느 점에 들어가는 길은 왼쪽 점에서 오는 길과 아래 점에서 오는 길뿐이므로, 두 수를 더하면 됩니다. 이 덧셈 규칙은 파스칼의 삼각형을 만드는 규칙과 같고, 바둑판을 45° 돌려 보면 그 수들이 파스칼의 삼각형으로 늘어서 있습니다.</li>
-            <li><span class="tag">적용</span>→와 ↑ 버튼으로 경로 하나를 끝까지 그리고, 아래에 적힌 기호 배열을 보세요. 다른 경로를 그리면 배열의 무엇이 바뀌나요? 'P를 꼭 지나기'를 켜고 P를 옮겨 보세요. P가 어디에 있을 때 지나는 경로가 가장 많나요? 점마다 경로 수를 켜서 B에 적힌 수가 위의 '전체' 또는 'P를 지나는' 값과 같은지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>P를 지나는 경로를 셀 때 \(A\to P\)와 \(P\to B\)의 경로 수를 <b>더하는</b> 실수가 흔합니다. 두 구간은 차례로 이어지는 단계이므로 곱해야 합니다. 또 이 공식은 모든 길이 이어져 있는 바둑판에서만 그대로 씁니다. 공사 중인 길이나 대각선 길이 있으면 덧셈 규칙으로 점마다 수를 적어 나가거나 경우를 나누어야 합니다.</li>
+            <li><span class="tag">질문</span>가로 4칸, 세로 3칸인 바둑판 모양 길에서 A에서 B까지 가장 짧게 가는 방법은 몇 가지일까? 하나하나 그려서 세면 빠뜨리기 쉽다.</li>
+            <li><span class="tag">복원</span>같은 것이 \(p\)개, \(q\)개 있는 \(n\)개를 모두 늘어놓는 방법은 \(\frac{n!}{p!q!}\)가지이다. 또 동시에 일어나지 않는 경우들은 더하고(합의 법칙), 잇달아 일어나는 단계는 곱한다(곱의 법칙).</li>
+            <li><span class="tag">설명</span>최단 경로는 왼쪽이나 아래로 돌아가지 않으므로 반드시 오른쪽으로 \(m\)번, 위로 \(n\)번 움직인다. 그래서 경로 하나는 → \(m\)개와 ↑ \(n\)개를 한 줄로 늘어놓은 배열 하나와 짝지어지고, 거꾸로 그런 배열 하나는 경로 하나를 정한다. 따라서 최단 경로의 수는 같은 것이 있는 순열의 수 \(\frac{(m + n)!}{m!n!}\)이고, 가로 4칸, 세로 3칸이면 \(\frac{7!}{4!3!} = 35\)가지이다. 또 P를 꼭 지나야 하면 \(A\to P\)와 \(P\to B\)를 잇달아 가는 것이므로 두 구간의 경로 수를 곱한다.</li>
+            <li><span class="tag">연결</span>'점마다 경로 수 적기'를 켜면 각 교차점에 그 점까지 가는 최단 경로 수가 적힌다. 어느 점에 들어가는 길은 왼쪽 점에서 오는 길과 아래 점에서 오는 길뿐이므로, 두 수를 더하면 된다. 이 덧셈 규칙은 파스칼의 삼각형을 만드는 규칙과 같아서, 바둑판을 45° 돌려 보면 그 수들이 파스칼의 삼각형으로 늘어서 있다.</li>
+            <li><span class="tag">적용</span>→와 ↑ 버튼으로 경로 하나를 끝까지 그리고 아래에 적힌 기호 배열을 본 뒤, 다른 경로를 그려 배열의 무엇이 바뀌는지 보자. 'P를 꼭 지나기'를 켜고 P를 옮겨 지나는 경로가 가장 많아지는 위치를 찾고, 점마다 경로 수를 켜서 B에 적힌 수가 위의 '전체' 또는 'P를 지나는' 값과 같은지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>P를 지나는 경로를 셀 때 \(A\to P\)와 \(P\to B\)의 경로 수를 더하는 실수가 흔하지만, 두 구간은 차례로 이어지는 단계이므로 곱해야 한다. 또 이 공식은 모든 길이 이어져 있는 바둑판에서만 그대로 쓴다. 공사 중인 길이나 대각선 길이 있으면 덧셈 규칙으로 점마다 수를 적어 나가거나 경우를 나누어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">가로 4칸, 세로 3칸인 바둑판 모양 길에서 A(왼쪽 아래)에서 B(오른쪽 위)까지 가는 최단 경로 가운데, A에서 오른쪽으로 2칸, 위로 1칸 간 점 P를 <b>지나지 않는</b> 경로의 수는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>18<span class="why"><b>P를 지나는 경로 수입니다.</b> \(A\to P\)가 \(\frac{3!}{2!1!} = 3\)가지, \(P\to B\)가 \(\frac{4!}{2!2!} = 6\)가지이므로 지나는 경로가 18가지입니다. 묻는 것은 그 나머지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>17<span class="why"><b>맞습니다.</b> 전체 \(\frac{7!}{4!3!} = 35\)가지에서 P를 지나는 \(3 \times 6 = 18\)가지를 빼면 17가지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>26<span class="why"><b>지나는 경로를 \(3 + 6 = 9\)로 세었습니다.</b> \(A\to P\)와 \(P\to B\)는 이어지는 단계이므로 곱의 법칙을 써야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>35<span class="why"><b>전체 최단 경로 수입니다.</b> P를 지나는 경로를 빼지 않았습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>18<span class="why"><b>P를 지나는 경로 수이다.</b> \(A\to P\)가 \(\frac{3!}{2!1!} = 3\)가지, \(P\to B\)가 \(\frac{4!}{2!2!} = 6\)가지이므로 지나는 경로가 18가지이다. 묻는 것은 그 나머지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>17<span class="why"><b>맞다.</b> 전체 \(\frac{7!}{4!3!} = 35\)가지에서 P를 지나는 \(3 \times 6 = 18\)가지를 빼면 17가지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>26<span class="why"><b>지나는 경로를 \(3 + 6 = 9\)로 세었다.</b> \(A\to P\)와 \(P\to B\)는 이어지는 단계이므로 곱의 법칙을 써야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>35<span class="why"><b>전체 최단 경로 수이다.</b> P를 지나는 경로를 빼지 않았다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/stat/1-2.html#card-stat-stars-bars"><small class="mono">확률과 통계 1.2</small>종류마다 몇 개씩 고를지는 몇 가지로 정할 수 있을까?</a><a href="../../c/stat/1-2.html#card-stat-int-solutions"><small class="mono">확률과 통계 1.2</small>x + y + z = r를 만족하는 정수해는 몇 개일까?</a><a href="../../c/stat/1-2.html#text-stat-comb-rep"><small class="mono">확률과 통계 1.2</small>중복조합</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=stat-1-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">136문항</span></a>
+      <a class="px-go" href="../../bank.html?c=stat&amp;sec=1-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=stat-1-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">136문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -229,6 +286,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/stat/body.js"></script>
 <script src="../../js/cards/stat/rep-perm.js"></script>
 <script src="../../js/cards/stat/same-perm.js"></script>
 <script src="../../js/cards/stat/grid-path.js"></script>

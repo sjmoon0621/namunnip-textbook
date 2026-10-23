@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>추세선 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="오차(잔차)와 오차 제곱합, 최소제곱 추세선의 기울기와 절편, 평균점을 지나는 성질, 내삽과 외삽, 초기 자료로 만든 직선·이차 추세선이 성장 곡선을 빗나가는 예, 과대적합. 오차의 제곱을 넓이로 보는 카드와, 앱 사용자 수 예측 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-aimath-trendline canvas { aspect-ratio: 16 / 11; max-width: 560px; width: 100%; margin: 0 auto; display: block; }
@@ -45,22 +50,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-aimath-trendline"><span class="mono">4.2.1</span>오차의 제곱을 넓이로 보며 추세선 맞추기</a></li>
-        <li><a href="#card-aimath-extrapolate"><span class="mono">4.2.2</span>추세선으로 먼 미래를 예측하면 생기는 일</a></li>
+        <li><a href="#text-aimath-trend"><span class="mono">본문</span>추세선</a></li>
+        <li><a href="#card-aimath-trendline"><span class="mono">탐구 1</span>오차의 제곱을 넓이로 보며 추세선 맞추기</a></li>
+        <li><a href="#card-aimath-extrapolate"><span class="mono">탐구 2</span>추세선으로 먼 미래를 예측하면 생기는 일</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=aimath-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=aimath&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">17문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=aimath-4-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-aimath-trend" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>추세선</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공부 시간과 시험 점수, 광고비와 매출처럼 두 양의 자료를 좌표평면에 찍으면 점들이 대체로 한 방향으로 늘어서지만, 한 직선 위에 정확히 놓이지는 않는다. 점들 사이로 직선을 하나 긋는다면 사람마다 조금씩 다르게 그을 것이다. '가장 잘 나타내는' 직선을 하나로 정하는 기준은 무엇일까?</p>
+          <figure class="q-fig" data-q="ai-trend">
+            <svg viewBox="0 0 520 230" role="img" aria-label="점 여섯 개와 기울기를 바꿀 수 있는 직선, 각 점의 오차"></svg>
+            <div class="q-ctl"><label>직선의 기울기 \(a\) <input type="range" data-k="a" min="0.3" max="1.7" step="0.01" value="0.6"><output data-k="a"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 점 여섯 개와 그 중심을 지나는 직선(파랑). 빨간 세로선은 각 점의 오차이다. 기울기를 바꾸며 오차 제곱합이 가장 작아지는 직선을 찾으면 기울기가 약 0.98이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>일차함수의 그래프, 이차함수의 그래프와 꼭짓점(공통수학1), 평균.</div>
+
+          <h3><span class="no">4.2.1</span>오차와 최소제곱법</h3>
+          <p>직선 \(y = ax + b\)로 자료를 나타낼 때, 점 \((x_i, y_i)\)에서 실제 값과 직선의 값의 차이 \(e_i = y_i - (ax_i + b)\)를 오차(잔차)라 한다. 오차는 양수도 음수도 있어 그냥 더하면 서로 지워진다. 그래서 오차를 제곱해 더한 값이 가장 작은 직선을 고른다. 이 방법을 최소제곱법이라 하고, 얻은 직선을 추세선 또는 회귀직선이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.2.1 <span class="nm">최소제곱법의 추세선</span></span>
+            <p>\(\displaystyle S(a, b) = \sum_{i=1}^{n} \{y_i - (ax_i + b)\}^2\)을 가장 작게 하는 직선은 점들의 평균점 \((\bar x, \bar y)\)를 지나고, 기울기는 \[a = \frac{\sum (x_i - \bar x)(y_i - \bar y)}{\sum (x_i - \bar x)^2}\] 이다.</p>
+          </div>
+          <p>그림 1의 직선은 평균점 \((3.5, 4.5)\)를 지나도록 해 두었으므로, 기울기만 바꾸면 된다. 기울기를 0.6에서 늘려 가면 빨간 오차들이 줄어들다가 약 0.98을 지나며 다시 커진다. 오차 제곱합은 기울기 \(a\)의 이차함수이므로, 그래프는 아래로 볼록한 포물선이고 꼭짓점에서 최소가 된다.<sup class="fn"><a href="#fn-aimath-trend-1">1</a></sup></p>
+
+          <h3><span class="no">4.2.2</span>추세선으로 예측할 때 주의할 점</h3>
+          <p>추세선은 자료가 있는 범위 안에서 값을 어림하는 데 쓸모가 있다. 그러나 자료 범위 밖으로 멀리 늘여 예측하는 것은 위험하다. 처음 몇 해 동안 빠르게 늘던 판매량이 시장이 포화되면 멈추는 것처럼, 관계가 범위 밖에서도 직선이라는 보장은 없다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="자료 범위 안의 예측과 밖의 예측">
+              <g class="s">
+                <line x1="40" y1="95" x2="480" y2="95" class="ax"/>
+                <rect x="60" y="20" width="160" height="75" class="la" opacity="0.5"/><text x="140" y="15" text-anchor="middle">자료가 있는 범위</text>
+                <line x1="60" y1="85" x2="220" y2="45" class="b"/><line x1="220" y1="45" x2="400" y2="0" class="gd"/>
+                <path d="M220 45 Q 320 25 470 22" class="c"/>
+                <text x="300" y="80">범위 밖에서는 실제 관계(주황)와</text><text x="300" y="100">직선(점선)이 크게 다를 수 있다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 추세선은 자료 범위 안에서는 믿을 만하지만, 범위 밖으로 멀리 늘이면 실제와 크게 어긋날 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.2.2</span>
+            <p>세 점 \((1, 2)\), \(( 2, 3)\), \((3, 7)\)에 대하여 최소제곱법으로 추세선을 구하여라.</p>
+          </div>
+          <p>평균은 \(\bar x = 2\), \(\bar y = 4\)이다. \(\sum(x_i - \bar x)(y_i - \bar y) = (-1)(-2) + 0 \cdot (-1) + 1 \cdot 3 = 5\), \(\sum(x_i - \bar x)^2 = 1 + 0 + 1 = 2\)이므로 기울기는 \(a = \dfrac{5}{2} = 2.5\)이다.</p>
+          <p>직선이 \((2, 4)\)를 지나므로 \(4 = 2.5 \times 2 + b\)에서 \(b = -1\)이다. 추세선은 \(y = 2.5x - 1\)이다. 오차는 차례로 \(2 - 1.5 = 0.5\), \(3 - 4 = -1\), \(7 - 6.5 = 0.5\)이고 그 합은 0이다. 평균점을 지나는 추세선에서는 오차의 합이 늘 0이 된다.</p>
+          <p>아래 탐구 카드에서 흩어진 점들을 가장 잘 나타내는 직선을 찾고, 추세선으로 먼 미래를 예측할 때의 함정을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-aimath-trend-1">오차를 제곱하는 까닭은 부호를 없애고, 미분하기 쉬운 매끈한 함수를 얻기 위해서이다. 그 대가로 큰 오차가 제곱으로 크게 부풀려져 이상치에 민감해진다. 이 점은 다음 절에서 다룬다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>추세선은 오차 제곱합이 가장 작은 직선으로 정하며, 이 직선은 평균점을 지나고 기울기는 \(\frac{\sum(x_i - \bar x)(y_i - \bar y)}{\sum(x_i - \bar x)^2}\)이다. 오차 제곱합은 기울기의 이차함수라 꼭짓점에서 최소가 된다. 그래서 처음 질문의 '가장 잘 나타내는 직선'은 오차 제곱합이라는 하나의 기준으로 정할 수 있으며, 자료 범위 밖의 예측에는 조심해야 한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-3.html#card-aimath-loss-curve"><small class="mono">인공지능 수학 4.3</small>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</a><a href="../../c/aimath/4-3.html#card-aimath-loss-outlier"><small class="mono">인공지능 수학 4.3</small>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</a><a href="../../c/aimath/4-3.html#text-aimath-loss"><small class="mono">인공지능 수학 4.3</small>손실함수</a></div></nav>
+
       <article class="card" id="card-aimath-trendline">
         <header class="card-head">
-          <span class="no">4.2.1</span><h2>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</h2><span class="kind">추세선과 최소제곱 · 조작</span>
+          <span class="no">탐구 1</span><h2>흩어진 점들을 가장 잘 나타내는 직선은 어떻게 고를까?</h2><span class="kind">추세선과 최소제곱 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">하루 최고 기온과 한 매장의 아이스크림 판매량(가상 자료 12일). 기울기와 절편을 바꿔 정사각형(오차의 제곱)의 넓이 합을 가장 작게 만드세요.</p>
+            <p class="small">하루 최고 기온과 한 매장의 아이스크림 판매량(가상 자료 12일)이다. 기울기와 절편을 바꿔 정사각형(오차의 제곱)의 넓이 합을 가장 작게 만들어 보자.</p>
             <div class="ctl-row">
               <div><label class="mono">기울기 a = <output class="a-out"></output></label><input class="a" type="range" min="0" max="12" step="0.1" value="4" aria-label="기울기 a"></div>
               <div><label class="mono">절편 b = <output class="b-out"></output></label><input class="b" type="range" min="-150" max="100" step="1" value="0" aria-label="절편 b"></div>
@@ -70,34 +126,34 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점들 사이로 "대충" 직선을 그으면 사람마다 다른 직선을 긋습니다. 가장 잘 맞는 직선을 하나로 정하려면 무엇을 기준으로 해야 할까요?</li>
-            <li><span class="tag">복원</span>이차함수 \(f(x) = px^2 + qx + r\) \((p > 0)\)는 꼭짓점에서 최솟값을 가집니다.</li>
-            <li><span class="tag">설명</span>점 \((x_i, y_i)\)마다 직선의 예측값 \(ax_i + b\)와의 차 \(e_i = y_i - (ax_i + b)\)를 <em>오차</em>(잔차)라 합니다. 오차의 제곱 \(e_i^2\)은 그림에서 정사각형의 넓이입니다. 넓이의 합 \(\sum e_i^2\)이 가장 작은 직선을 <em>최소제곱 직선</em>(추세선)이라 하고, 이때 \(a = \dfrac{\sum(x_i - \bar x)(y_i - \bar y)}{\sum(x_i - \bar x)^2}\), \(b = \bar y - a\bar x\)입니다. 추세선은 늘 평균점 \((\bar x, \bar y)\)를 지납니다.</li>
-            <li><span class="tag">연결</span>이 직선은 가장 단순한 예측 모델(선형 회귀)입니다. 다음 절에서는 오차의 제곱합을 손실함수로 보고, 경사하강법으로 최솟값을 찾습니다.</li>
-            <li><span class="tag">적용</span>막대로 넓이 합을 가능한 한 줄인 뒤 최소제곱 직선과 비교하세요. 내일 최고 기온이 30℃라면 판매량을 얼마로 예측하나요?</li>
-            <li class="warn"><span class="tag">판단</span>추세선은 두 양이 함께 변하는 경향을 나타낼 뿐, 한쪽이 다른 쪽의 원인이라는 뜻은 아닙니다. 또 자료 범위(17~33℃) 밖에서는 직선이 계속 맞는다는 보장이 없습니다(다음 카드).</li>
+            <li><span class="tag">질문</span>점들 사이로 대충 직선을 그으면 사람마다 다른 직선을 긋는다. 가장 잘 맞는 직선을 하나로 정하려면 무엇을 기준으로 해야 할까?</li>
+            <li><span class="tag">복원</span>이차함수 \(f(x) = px^2 + qx + r\) \((p &gt; 0)\)는 꼭짓점에서 최솟값을 가진다.</li>
+            <li><span class="tag">설명</span>점 \((x_i, y_i)\)마다 직선의 예측값 \(ax_i + b\)와의 차 \(e_i = y_i - (ax_i + b)\)를 <em>오차</em>(잔차)라 하고, 오차의 제곱 \(e_i^2\)은 그림에서 정사각형의 넓이이다. 넓이의 합 \(\sum e_i^2\)이 가장 작은 직선을 <em>최소제곱 직선</em>(추세선)이라 하며, 이때 \(a = \dfrac{\sum(x_i - \bar x)(y_i - \bar y)}{\sum(x_i - \bar x)^2}\), \(b = \bar y - a\bar x\)이다. 그래서 추세선은 늘 평균점 \((\bar x, \bar y)\)를 지난다.</li>
+            <li><span class="tag">연결</span>이 직선은 가장 단순한 예측 모델(선형 회귀)이다. 다음 절에서는 오차의 제곱합을 손실함수로 보고, 경사하강법으로 최솟값을 찾는다.</li>
+            <li><span class="tag">적용</span>막대로 넓이 합을 가능한 한 줄인 뒤 최소제곱 직선과 비교해 보자. 그리고 내일 최고 기온이 30℃라면 판매량을 얼마로 예측할지 구해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>추세선은 두 양이 함께 변하는 경향을 나타낼 뿐, 한쪽이 다른 쪽의 원인이라는 뜻은 아니다. 또 자료 범위(17~33℃) 밖에서는 직선이 계속 맞는다는 보장이 없다(다음 카드).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">세 점 \((1, 2), (2, 3), (3, 7)\)에 맞춘 최소제곱 직선이 지나는 점은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, 4)\)<span class="why"><b>맞습니다.</b> 평균점 \((\bar x, \bar y) = (2, 4)\)를 지납니다(기울기는 2.5).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3)\)<span class="why"><b>가운데 자료점입니다.</b> 직선은 평균점을 지납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((1, 2)\)과 \((3, 7)\)<span class="why"><b>양 끝 점을 잇는 직선은 최소제곱 직선이 아닙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>원점<span class="why"><b>절편이 0일 이유가 없습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, 4)\)<span class="why"><b>맞다.</b> 평균점 \((\bar x, \bar y) = (2, 4)\)를 지난다(기울기는 2.5).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((2, 3)\)<span class="why"><b>가운데 자료점이다.</b> 직선은 평균점을 지난다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((1, 2)\)과 \((3, 7)\)<span class="why"><b>양 끝 점을 잇는 직선은 최소제곱 직선이 아니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>원점<span class="why"><b>절편이 0일 이유가 없다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-3.html#card-aimath-loss-curve"><small class="mono">인공지능 수학 4.3</small>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</a><a href="../../c/aimath/4-3.html#card-aimath-loss-outlier"><small class="mono">인공지능 수학 4.3</small>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-3.html#card-aimath-loss-curve"><small class="mono">인공지능 수학 4.3</small>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</a><a href="../../c/aimath/4-3.html#card-aimath-loss-outlier"><small class="mono">인공지능 수학 4.3</small>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</a><a href="../../c/aimath/4-3.html#text-aimath-loss"><small class="mono">인공지능 수학 4.3</small>손실함수</a></div></nav>
 
       <article class="card" id="card-aimath-extrapolate">
         <header class="card-head">
-          <span class="no">4.2.2</span><h2>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</h2><span class="kind">추세선과 외삽 · 활용</span>
+          <span class="no">탐구 2</span><h2>처음 몇 해의 추세로 10년 뒤를 예측해도 될까?</h2><span class="kind">추세선과 외삽 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">새로 나온 앱의 사용자 수(가상). 처음 몇 해의 자료만으로 추세선을 만들어 앞으로를 예측합니다.</p>
+            <p class="small">새로 나온 앱의 사용자 수(가상)이다. 처음 몇 해의 자료만으로 추세선을 만들어 앞으로를 예측한다.</p>
             <div class="ctl-row">
               <div><label class="mono">학습에 쓴 기간 = 처음 <output class="n-out"></output>년</label><input class="n" type="range" min="3" max="12" step="1" value="5" aria-label="학습에 쓴 햇수"></div>
               <div><label class="mono">모델 <select class="m" aria-label="추세선 모양"><option value="1">직선</option><option value="2">이차곡선</option></select></label></div>
@@ -107,39 +163,39 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>새 앱의 사용자가 해마다 빠르게 늘고 있습니다. 지금까지의 추세가 계속된다고 보고 10년 뒤를 예측해도 될까요?</li>
-            <li><span class="tag">복원</span>최소제곱 추세선은 오차의 제곱합이 가장 작은 선으로, 자료가 있는 범위의 경향을 나타냅니다.</li>
-            <li><span class="tag">설명</span>자료 범위 안에서 값을 추정하는 것을 <em>내삽</em>, 범위 밖을 예측하는 것을 <em>외삽</em>이라 합니다. 사용자 수처럼 처음에는 빠르게 늘다가 점점 한계(시장 크기)에 가까워지는 현상은, 초기 자료로 만든 직선이나 이차곡선이 먼 미래를 크게 잘못 예측합니다. 학습 자료에 잘 맞는 모델이 꼭 미래에도 잘 맞는 것은 아닙니다.</li>
-            <li><span class="tag">연결</span>인공지능도 학습한 자료와 크게 다른 상황에서는 엉뚱한 답을 낼 수 있습니다. 그래서 모델은 학습에 쓰지 않은 자료로 따로 검증합니다.</li>
-            <li><span class="tag">적용</span>학습 기간을 3년, 5년, 8년으로 바꾸고 직선과 이차곡선을 비교하세요. 15년째의 예측 오차는 어떻게 달라지나요? 실제 값을 본 뒤, 더 알맞은 모양의 곡선을 생각해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이차곡선은 학습 자료에 더 잘 맞을 수 있지만, 범위 밖에서는 더 크게 빗나가기도 합니다. 자료에 더 잘 맞는 복잡한 모델이 늘 더 좋은 것은 아닙니다(과대적합).</li>
+            <li><span class="tag">질문</span>새 앱의 사용자가 해마다 빠르게 늘고 있다. 지금까지의 추세가 계속된다고 보고 10년 뒤를 예측해도 될까?</li>
+            <li><span class="tag">복원</span>최소제곱 추세선은 오차의 제곱합이 가장 작은 선으로, 자료가 있는 범위의 경향을 나타낸다.</li>
+            <li><span class="tag">설명</span>자료 범위 안에서 값을 추정하는 것을 <em>내삽</em>, 범위 밖을 예측하는 것을 <em>외삽</em>이라 한다. 그런데 사용자 수처럼 처음에는 빠르게 늘다가 점점 한계(시장 크기)에 가까워지는 현상에서는, 초기 자료로 만든 직선이나 이차곡선이 먼 미래를 크게 잘못 예측한다. 즉 학습 자료에 잘 맞는 모델이 꼭 미래에도 잘 맞는 것은 아니다.</li>
+            <li><span class="tag">연결</span>인공지능도 학습한 자료와 크게 다른 상황에서는 엉뚱한 답을 낼 수 있다. 그래서 모델은 학습에 쓰지 않은 자료로 따로 검증한다.</li>
+            <li><span class="tag">적용</span>학습 기간을 3년, 5년, 8년으로 바꾸고 직선과 이차곡선을 비교하며 15년째의 예측 오차가 어떻게 달라지는지 보자. 실제 값을 본 뒤에는 더 알맞은 모양의 곡선을 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이차곡선은 학습 자료에 더 잘 맞을 수 있지만, 범위 밖에서는 더 크게 빗나가기도 한다. 자료에 더 잘 맞는 복잡한 모델이 늘 더 좋은 것은 아니다(과대적합).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">기온 17~33℃ 자료로 만든 아이스크림 판매량 추세선으로 예측하기에 가장 위험한 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>기온 45℃일 때의 판매량<span class="why"><b>맞습니다.</b> 자료 범위 밖(외삽)이고, 그런 더위에는 사람들이 외출을 줄이는 등 다른 요인이 생길 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>기온 26℃일 때의 판매량<span class="why"><b>범위 안의 내삽입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기온 20℃일 때의 판매량<span class="why"><b>범위 안의 내삽입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모두 같다<span class="why"><b>범위 밖일수록 위험합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>기온 45℃일 때의 판매량<span class="why"><b>맞다.</b> 자료 범위 밖(외삽)이고, 그런 더위에는 사람들이 외출을 줄이는 등 다른 요인이 생길 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>기온 26℃일 때의 판매량<span class="why"><b>범위 안의 내삽이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>기온 20℃일 때의 판매량<span class="why"><b>범위 안의 내삽이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>모두 같다<span class="why"><b>범위 밖일수록 위험하다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-3.html#card-aimath-loss-curve"><small class="mono">인공지능 수학 4.3</small>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</a><a href="../../c/aimath/4-3.html#card-aimath-loss-outlier"><small class="mono">인공지능 수학 4.3</small>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-4.html#card-cm1-parabola-xaxis"><small class="mono">공통수학1 2.4</small>그래프만 보고 이차방정식의 실근이 몇 개인지 알 수 있을까?</a><a href="../../c/cm1/2-4.html#card-cm1-level-line"><small class="mono">공통수학1 2.4</small>x² − 4x + 1 = k의 실근은 k에 따라 몇 개일까?</a><a href="../../c/cm1/2-4.html#text-cm1-quad-func"><small class="mono">공통수학1 2.4</small>이차방정식과 이차함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/aimath/4-3.html#card-aimath-loss-curve"><small class="mono">인공지능 수학 4.3</small>모델이 틀린 정도를 함수로 나타내면 어떤 모양일까?</a><a href="../../c/aimath/4-3.html#card-aimath-loss-outlier"><small class="mono">인공지능 수학 4.3</small>잘못 입력된 자료 하나가 들어오면 어떤 손실함수가 더 크게 흔들릴까?</a><a href="../../c/aimath/4-3.html#text-aimath-loss"><small class="mono">인공지능 수학 4.3</small>손실함수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=aimath-4-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=aimath&amp;sec=4-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">17문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -147,6 +203,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/aimath/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/aimath/ai.js"></script>
 <script src="../../js/cards/aimath/trendline.js"></script>

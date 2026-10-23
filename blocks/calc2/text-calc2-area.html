@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "3-5",
+  "short": "본문 · 넓이"
+}
+-->
+<article class="card reading" id="text-calc2-area" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>넓이</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">포물선 \(y = x^2\)과 직선 \(y = 2x\)는 원점과 점 \((2, 4)\)에서 만나 렌즈 모양의 영역을 만든다. 이 영역의 넓이는 어떻게 구할까? 또 \(y = \ln x\)처럼 \(x\)로 적분하기 불편한 곡선은 가로로 잘라서 \(y\)로 적분할 수도 있을까?</p>
+    <figure class="q-fig" data-q="calc2-between">
+      <svg viewBox="0 0 520 230" role="img" aria-label="y = x² 과 y = ax 로 둘러싸인 영역"></svg>
+      <div class="q-ctl"><label>직선의 기울기 \(a\) <input type="range" data-k="a" min="0.5" max="3.2" step="0.05" value="2"><output data-k="a"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. \(y = x^2\)(파랑)과 \(y = ax\)(주황)로 둘러싸인 영역. 넓이는 \(\int_0^a (ax - x^2)\,dx = \dfrac{a^3}{6}\)으로, 기울기의 세제곱에 비례한다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>정적분과 넓이, 두 곡선 사이의 넓이(미적분Ⅰ), 부분적분법(<a href="3-3.html">부분적분법</a>), 역함수.</div>
+
+    <h3><span class="no">3.5.1</span>두 곡선 사이의 넓이</h3>
+    <p>구간 \([a, b]\)에서 \(f(x) \ge g(x)\)이면 두 곡선 사이에 세로로 가는 막대를 세울 수 있다. 막대의 높이는 \(f(x) - g(x)\), 폭은 \(dx\)이므로 넓이는 이 막대들을 모두 더한 정적분이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.5.1 <span class="nm">두 곡선 사이의 넓이</span></span>
+      <p>\[S = \int_a^b |f(x) - g(x)|\,dx\] 두 곡선이 구간 안에서 엇갈리면 교점에서 구간을 나누어 위아래를 바꾸어 계산한다.</p>
+    </div>
+    <p>\(y = x^2\)과 \(y = ax\)의 교점은 \(x^2 = ax\)에서 \(x = 0, a\)이고, 그 사이에서 직선이 위에 있다. 넓이는 \(\int_0^a (ax - x^2)\,dx = \dfrac{a^3}{2} - \dfrac{a^3}{3} = \dfrac{a^3}{6}\)이다. 처음 질문처럼 \(a = 2\)이면 \(\dfrac{8}{6} = \dfrac{4}{3}\)이다. 그림 1에서 \(a\)를 두 배로 키우면 넓이는 8배가 된다.<sup class="fn"><a href="#fn-calc2-area-1">1</a></sup></p>
+
+    <h3><span class="no">3.5.2</span>가로로 자르기</h3>
+    <p>곡선이 \(x = h(y)\) 꼴로 주어지거나 역함수가 다루기 쉬우면, 영역을 가로로 잘라 \(y\)에 대해 적분하는 것이 편하다. 곡선 \(x = h(y)\)와 \(y\)축, 두 직선 \(y = c\), \(y = d\)로 둘러싸인 넓이는 \(\int_c^d |h(y)|\,dy\)이다.</p>
+    <p>예를 들어 \(y = \ln x\)와 \(x\)축, 직선 \(x = e\)로 둘러싸인 넓이는 세로로 자르면 \(\int_1^e \ln x\,dx\)로 부분적분이 필요하다. 가로로 자르면 \(x = e^y\)이므로, 높이 \(y\)에서 막대의 길이는 \(e - e^y\)이고 넓이는 \(\int_0^1 (e - e^y)\,dy = e - (e - 1) = 1\)로 간단하다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 140" role="img" aria-label="같은 영역을 세로 막대와 가로 막대로 자르는 두 방법">
+        <g class="s">
+          <path d="M40 120 Q 90 60 200 30 L200 120 Z" class="la"/>
+          <line x1="80" y1="120" x2="80" y2="82" class="c"/><line x1="120" y1="120" x2="120" y2="56" class="c"/><line x1="160" y1="120" x2="160" y2="40" class="c"/>
+          <path d="M300 120 Q 350 60 460 30 L460 120 Z" class="la"/>
+          <line x1="345" y1="100" x2="460" y2="100" class="b"/><line x1="385" y1="70" x2="460" y2="70" class="b"/><line x1="425" y1="45" x2="460" y2="45" class="b"/>
+          <text x="120" y="137" text-anchor="middle">세로로 자르면 dx</text><text x="380" y="137" text-anchor="middle">가로로 자르면 dy</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 같은 영역도 세로 막대로 \(x\)에 대해, 가로 막대로 \(y\)에 대해 적분할 수 있다. 계산이 쉬운 쪽을 고른다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.5.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.5.2</span>
+      <p>두 곡선 \(y = \sin x\)와 \(y = \cos x\), 그리고 두 직선 \(x = 0\), \(x = \pi\)로 둘러싸인 넓이를 구하여라.</p>
+    </div>
+    <p>두 곡선은 \(\sin x = \cos x\)에서 \(x = \dfrac{\pi}{4}\)에서 엇갈린다. \(0 \le x \le \dfrac{\pi}{4}\)에서는 \(\cos x \ge \sin x\), \(\dfrac{\pi}{4} \le x \le \pi\)에서는 \(\sin x \ge \cos x\)이다.</p>
+    <p>\[S = \int_0^{\pi/4} (\cos x - \sin x)\,dx + \int_{\pi/4}^{\pi} (\sin x - \cos x)\,dx\] 첫째 적분은 \(\Big[\sin x + \cos x\Big]_0^{\pi/4} = \sqrt{2} - 1\), 둘째 적분은 \(\Big[-\cos x - \sin x\Big]_{\pi/4}^{\pi} = 1 + \sqrt{2}\)이다. 넓이는 \(2\sqrt{2} \approx 2.83\)이다. 엇갈리는 점에서 나누지 않고 한 번에 적분하면 위아래가 상쇄되어 \(\int_0^{\pi}(\sin x - \cos x)\,dx = 2\)라는 틀린 값이 나온다.</p>
+    <p>아래 탐구 카드에서 세로와 가로로 자르는 방법을 비교하고, 엇갈리는 두 곡선의 넓이를 직접 구해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-area-1">포물선과 직선으로 둘러싸인 넓이는 언제나 \(\dfrac{|k|}{6}(\beta - \alpha)^3\)이다(\(k\)는 포물선의 이차항 계수, \(\alpha\), \(\beta\)는 교점의 \(x\)좌표). 아르키메데스가 이미 기하로 구한 결과이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>두 곡선 사이의 넓이는 위 곡선에서 아래 곡선을 뺀 막대 높이를 적분하여 구하고, 곡선이 엇갈리면 교점에서 구간을 나눈다. 계산이 쉬우면 가로로 잘라 \(y\)에 대해 적분한다. 그래서 처음 질문의 \(y = x^2\)과 \(y = 2x\) 사이 렌즈 모양의 넓이는 \(\int_0^2 (2x - x^2)dx = \frac{4}{3}\)이다.</p></div>
+  </div>
+</article>

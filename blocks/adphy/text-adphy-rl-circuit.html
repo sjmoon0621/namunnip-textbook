@@ -1,0 +1,56 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/adphy/body.js"],
+  "sec": "2-3",
+  "short": "본문 · 전류의 자기장과 자체 유도"
+}
+-->
+<article class="card reading" id="text-adphy-rl-circuit" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>전류의 자기장과 자체 유도</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">전구와 저항만 있는 회로는 스위치를 켜자마자 전류가 최대로 흐른다. 그런데 도선을 수천 번 감은 코일을 넣으면 전류가 천천히 늘어난다. 반대로 코일에 흐르던 전류를 갑자기 끊으면 스위치에서 불꽃이 튄다. 자동차 엔진의 점화 플러그는 이 불꽃으로 연료에 불을 붙인다. 코일은 왜 전류의 변화를 싫어할까? 그리고 그 정도는 무엇이 정할까?</p>
+    <figure class="q-fig" data-q="adphy-rl">
+      <svg viewBox="0 0 520 230" role="img" aria-label="자체 유도 계수에 따른 RL 회로의 전류 증가"></svg>
+      <div class="q-ctl"><label>자체 유도 계수 L (mH) <input type="range" data-k="L" min="10" max="500" step="10" value="200"><output data-k="L"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 기전력 10 V, 저항 10 Ω인 회로에 코일을 넣고 스위치를 켠 뒤의 전류. 전류는 최종값 1 A에 지수 함수로 다가가며, 시간 상수(회색 세로선) L/R 동안 63%에 이른다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>직선 전류와 원형 전류의 자기장, 패러데이 법칙과 렌츠 법칙(물리학), 지수 함수와 미분(수학), 축전기(<a href="2-2.html">축전기의 연결과 유전체</a>).</div>
+
+    <h3><span class="no">2.3.1</span>솔레노이드의 자기장과 자체 유도</h3>
+    <p>단위 길이에 \(n\)번 감긴 긴 솔레노이드에 전류 \(I\)가 흐르면, 속의 자기장은 \(B = \mu_0 nI\)로 거의 고르다. 이 자기장이 코일 자신을 지나가므로, 전류가 변하면 코일을 지나는 자기 선속도 변한다. 그러면 패러데이 법칙에 따라 코일 자신에게 유도 기전력이 생기고, 렌츠 법칙에 따라 그 방향은 전류의 변화를 방해하는 쪽이다. 이를 자체 유도라 한다. 코일을 지나는 전체 선속은 전류에 비례하므로, 그 비례 상수를 자체 유도 계수 \(L\)이라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.3.1 <span class="nm">자체 유도와 RL 회로</span></span>
+      <p>자체 유도 기전력은 \(\varepsilon = -L\dfrac{dI}{dt}\)이다. 기전력 \(E\), 저항 \(R\), 코일 \(L\)을 직렬로 잇고 스위치를 켜면 \(E - L\dfrac{dI}{dt} = IR\)이 되어 \[I(t) = \frac{E}{R}\left(1 - e^{-t/\tau}\right),\qquad \tau = \frac{L}{R}\]이다. 길이 \(l\), 단면적 \(A\), 감은 수 \(N\)인 솔레노이드는 \(L = \mu_0 N^2 A/l\)이다.</p>
+    </div>
+    <p>그림 1에서 \(L\)을 바꾸어 보자. 200 mH 코일이면 시간 상수가 \(0.2 \div 10 = 20\) ms이므로, 20 ms 뒤 전류는 0.63 A, 60 ms 뒤 0.95 A이다. 감은 수를 두 배로 늘리면 \(L\)은 \(N^2\)에 비례하여 네 배가 되고, 전류가 차오르는 시간도 네 배가 된다. 코일이 처음에 전류를 막는 것은 저항 때문이 아니라, 늘어나는 자기 선속에 맞서는 역기전력 때문이다.<sup class="fn"><a href="#fn-adphy-rl-circuit-1">1</a></sup></p>
+
+    <h3><span class="no">2.3.2</span>코일에 저장되는 에너지</h3>
+    <p>전류를 0에서 \(I\)까지 키우는 동안 전원은 역기전력을 거슬러 일을 한다. 그 일은 \(\int LI\,dI = \dfrac{1}{2}LI^2\)으로, 코일 속 자기장에 에너지로 저장된다. 축전기가 전기장에 \(\dfrac{1}{2}CV^2\)을 저장하는 것과 짝을 이룬다. 그래서 전류를 갑자기 끊으면 이 에너지가 빠져나갈 곳을 찾아, \(L\,dI/dt\)가 아주 커지며 수천 볼트의 전압이 생긴다. 점화 코일은 이 전압으로 점화 플러그에 불꽃을 일으키고, 전자 회로에서는 이 전압이 부품을 망가뜨리지 않도록 코일 옆에 다이오드를 달아 전류가 돌아갈 길을 만들어 준다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="축전기와 코일의 대응">
+        <g class="s">
+          <text x="20" y="22">성질</text><text x="170" y="22">축전기 (RC)</text><text x="350" y="22">코일 (RL)</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">갑자기 바꿀 수 없는 것</text><text x="170" y="52">전압</text><text x="350" y="52">전류</text>
+          <text x="20" y="74">시간 상수</text><text x="170" y="74">RC</text><text x="350" y="74">L/R</text>
+          <text x="20" y="96">저장하는 에너지</text><text x="170" y="96">CV²/2 (전기장)</text><text x="350" y="96">LI²/2 (자기장)</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 축전기는 전압의 급변을, 코일은 전류의 급변을 막으며 둘 다 지수 함수로 변한다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.3.2</span>
+      <p>길이 20 cm, 단면적 10 cm², 감은 수 2000회인 솔레노이드의 자체 유도 계수를 구하여라. 이 코일을 저항 10 Ω, 기전력 10 V와 직렬로 잇고 스위치를 켰을 때 시간 상수와, 전류가 다 찬 뒤 코일에 저장된 에너지를 구하여라. \(\mu_0 = 4\pi \times 10^{-7}\ \text{T·m/A}\)이다.</p>
+    </div>
+    <p>\(L = \mu_0 N^2 A/l = 4\pi \times 10^{-7} \times 2000^2 \times \dfrac{1.0 \times 10^{-3}}{0.20} \approx 2.5 \times 10^{-2}\) H, 곧 약 25 mH이다. 시간 상수는 \(\tau = L/R = 0.025 \div 10 = 2.5\) ms이다.</p>
+    <p>최종 전류는 \(E/R = 1\) A이므로 저장된 에너지는 \(\dfrac{1}{2} \times 0.025 \times 1^2 \approx 0.013\) J이다. 이 에너지를 1 μs 만에 내보내면 평균 출력이 1만 W를 넘는다. 즉 작은 에너지라도 아주 짧은 시간에 풀리면 큰 전압과 불꽃이 된다. 그래서 코일이 든 회로를 끊을 때는 그 에너지가 안전하게 빠져나갈 길을 함께 설계한다.</p>
+    <p>아래 탐구 카드에서 솔레노이드 속 자기장 공식을 언제 믿을 수 있는지 따져 보고, 코일을 두 배로 감으면 자체 유도 계수가 왜 네 배가 되는지 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adphy-rl-circuit-1">자체 유도 계수의 단위 헨리(H)는 미국의 조지프 헨리의 이름에서 왔다. 그는 1832년 코일에 흐르던 전류를 끊을 때 불꽃이 튀는 현상을 연구해, 패러데이와 거의 같은 때에 자체 유도를 발견했다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>코일에 흐르는 전류가 변하면 자기 선속이 변해 그 변화를 막는 자체 유도 기전력이 생기므로, RL 회로의 전류는 시간 상수 \(L/R\)로 천천히 늘어난다. 코일은 자기장에 \(\dfrac{1}{2}LI^2\)의 에너지를 저장하고, 전류를 갑자기 끊으면 그 에너지가 큰 전압이 되어 나온다. 그래서 처음 질문의 코일은 스위치를 켜는 순간 역기전력으로 전류의 증가를 막아, 전류가 곧바로 흐르지 않고 차츰 차오른다.</p></div>
+  </div>
+</article>

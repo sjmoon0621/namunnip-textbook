@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "sec": "3-3",
+  "short": "본문 · 행렬의 대각화"
+}
+-->
+<article class="card reading" id="text-adalg-diagonalization" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>행렬의 대각화</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">피보나치 수열 1, 1, 2, 3, 5, 8, 13, ⋯은 모든 항이 자연수인데, 일반항은 \(F_n = \dfrac{1}{\sqrt5}\left[\left(\dfrac{1 + \sqrt5}{2}\right)^n - \left(\dfrac{1 - \sqrt5}{2}\right)^n\right]\)처럼 무리수 \(\sqrt5\)로 쓰인다. 자연수만 나오는 수열의 식에 왜 무리수가 들어 있을까? 이웃한 두 항을 벡터 \((F_{n+1}, F_n)\)으로 묶으면, 다음 벡터는 행렬 \(\begin{pmatrix}1 & 1\\ 1 & 0\end{pmatrix}\)을 곱해 얻는다. 이 행렬을 거듭 곱하는 계산을 간단하게 바꾸는 방법이 있을까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 132" role="img" aria-label="피보나치 수와 황금비의 거듭제곱">
+        <g class="s">
+          <text x="20" y="22">n</text><text x="100" y="22">5</text><text x="180" y="22">10</text><text x="260" y="22">15</text><text x="340" y="22">20</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">Fₙ</text><text x="100" y="52">5</text><text x="180" y="52">55</text><text x="260" y="52">610</text><text x="340" y="52">6765</text>
+          <text x="20" y="74">φⁿ/√5</text><text x="100" y="74">4.96</text><text x="180" y="74">55.004</text><text x="260" y="74">609.9997</text><text x="340" y="74" class="td">6765.00003</text>
+          <text x="20" y="104">φ = (1 + √5)/2 ≈ 1.618, ψ = (1 − √5)/2 ≈ −0.618</text>
+          <text x="20" y="124">ψⁿ은 빠르게 0으로 줄어 φⁿ/√5를 반올림하면 Fₙ이다.</text>
+        </g>
+      </svg>
+      <figcaption>그림 1. 무리수 두 개의 거듭제곱의 차가 늘 자연수가 되고, 큰 \(n\)에서는 \(\varphi^n/\sqrt5\)만으로도 거의 맞는다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>고윳값과 고유벡터(<a href="3-1.html">고윳값과 고유벡터</a>), 기저와 좌표(<a href="1-5.html">기저</a>), 역행렬.</div>
+
+    <h3><span class="no">3.3.1</span>고유벡터의 격자에서 보면</h3>
+    <p>\(2\times2\) 행렬 \(A\)가 일차독립인 고유벡터 \(\vec v_1\), \(\vec v_2\)를 가지면, 두 고유벡터를 기저로 삼은 격자에서 \(A\)는 각 방향을 고윳값만큼 늘이기만 한다. 비스듬한 격자에서는 모양이 복잡하게 바뀌어 보이던 변환이, 고유벡터의 격자에서는 가로세로로 늘이는 단순한 변환이 되는 것이다. 이것을 식으로 쓰면 고유벡터를 열로 하는 행렬 \(P\)와 고윳값을 대각에 놓은 행렬 \(D\)로 \(A = PDP^{-1}\)이다. 이렇게 바꾸는 것을 대각화라 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">대각화와 거듭제곱</span></span>
+      <p>\(A\)의 고유벡터 \(\vec v_1, \vec v_2\)가 일차독립이고 고윳값이 \(\lambda_1, \lambda_2\)이면, \(P = (\vec v_1\ \vec v_2)\), \(D = \begin{pmatrix}\lambda_1 & 0\\ 0 & \lambda_2\end{pmatrix}\)에 대해 \(A = PDP^{-1}\)이고 \[A^n = PD^nP^{-1},\qquad D^n = \begin{pmatrix}\lambda_1^n & 0\\ 0 & \lambda_2^n\end{pmatrix}\]이다. 서로 다른 고윳값을 가지면 늘 대각화할 수 있다.</p>
+    </div>
+    <p>\(A^n = PDP^{-1}PDP^{-1}\cdots\)에서 가운데의 \(P^{-1}P\)가 모두 \(I\)로 지워지므로 \(A^n = PD^nP^{-1}\)이다. 대각행렬의 거듭제곱은 대각성분을 각각 거듭제곱하면 되므로 계산이 아주 쉽다. 그래서 대각화는 거듭제곱을 고윳값의 거듭제곱으로 바꾸어 준다. 고윳값이 무리수이면 \(A^n\)의 성분도 그 무리수의 거듭제곱으로 쓰이고, \(A\)의 성분이 정수이면 무리수 부분이 서로 지워져 결과는 정수가 된다.<sup class="fn"><a href="#fn-adalg-diagonalization-1">1</a></sup></p>
+
+    <h3><span class="no">3.3.2</span>피보나치 행렬의 고윳값</h3>
+    <p>피보나치 행렬 \(Q = \begin{pmatrix}1 & 1\\ 1 & 0\end{pmatrix}\)은 \(\mathrm{tr}\,Q = 1\), \(\det Q = -1\)이므로 특성방정식이 \(\lambda^2 - \lambda - 1 = 0\)이다. 근은 \(\varphi = \dfrac{1 + \sqrt5}{2}\), \(\psi = \dfrac{1 - \sqrt5}{2}\)이고, 고유벡터는 \((\varphi, 1)\), \((\psi, 1)\)이다. 그래서 \(\sqrt5\)는 특성방정식의 판별식 \(1 + 4 = 5\)에서 나온다. \(Q\)를 거듭 곱하면 큰 고윳값 \(\varphi\)의 고유벡터 방향이 압도하므로, 이웃한 두 항의 비 \(F_{n+1}/F_n\)은 황금비 \(\varphi\)에 다가간다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="피보나치 행렬의 대각화">
+        <g class="s">
+          <text x="20" y="22">양</text><text x="200" y="22">값</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">특성방정식</text><text x="200" y="52">λ² − λ − 1 = 0, 판별식 5</text>
+          <text x="20" y="74">고윳값, 고유벡터</text><text x="200" y="74">φ ≈ 1.618, (φ, 1)  ·  ψ ≈ −0.618, (ψ, 1)</text>
+          <text x="20" y="96">(1, 0)의 분해</text><text x="200" y="96" class="td">(1, 0) = [(φ, 1) − (ψ, 1)] / √5</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 출발 벡터를 고유벡터로 나누는 계수에 \(1/\sqrt5\)가 나타난다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+      <p>\((F_{n+1}, F_n) = Q^n(1, 0)\)임을 이용해, 대각화로 피보나치 수열의 일반항을 구하여라. \(F_{10}\)을 일반항으로 확인하여라.</p>
+    </div>
+    <p>\((F_2, F_1) = (1, 1) = Q(1, 0)\)이고 \(Q(F_{n+1}, F_n) = (F_{n+1} + F_n, F_{n+1}) = (F_{n+2}, F_{n+1})\)이므로 \((F_{n+1}, F_n) = Q^n(1, 0)\)이다. \(\varphi - \psi = \sqrt5\)이므로 \((1, 0) = \dfrac{1}{\sqrt5}[(\varphi, 1) - (\psi, 1)]\)이다. 각 고유벡터에 \(Q^n\)을 곱하면 고윳값의 \(n\)제곱이 곱해지므로 \(Q^n(1, 0) = \dfrac{1}{\sqrt5}[\varphi^n(\varphi, 1) - \psi^n(\psi, 1)]\)이다.</p>
+    <p>둘째 성분을 읽으면 \(F_n = \dfrac{\varphi^n - \psi^n}{\sqrt5}\)이다. \(n = 10\)이면 \(\varphi^{10} \approx 122.992\), \(\psi^{10} \approx 0.008\)이므로 \(F_{10} \approx (122.992 - 0.008)/2.236 \approx 55.00\)이다. \(\varphi^n\)과 \(\psi^n\)을 이항정리로 전개하면 \(\sqrt5\)의 홀수 거듭제곱 항만 남고, 그것을 \(\sqrt5\)로 나누면 정수가 된다. 즉 대각화는 행렬을 고유벡터의 격자에서 보아 거듭제곱을 고윳값의 거듭제곱으로 바꾸며, 피보나치 수열의 \(\sqrt5\)는 피보나치 행렬의 고윳값에서 나온다.</p>
+    <p>아래 탐구 카드에서 고유벡터의 격자로 바꾸면 행렬이 늘이기만 하는 모습을 보고, 피보나치 행렬을 대각화해 일반항을 구해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adalg-diagonalization-1">피보나치 수열의 일반항은 1843년 프랑스의 비네가 발표해 비네 공식이라 부르지만, 그보다 100년쯤 앞서 드무아브르와 오일러도 알고 있었다. 두 항의 비가 황금비로 다가간다는 것은 17세기의 케플러가 처음 적었다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>일차독립인 고유벡터를 가진 행렬은 고유벡터를 열로 하는 \(P\)와 고윳값의 대각행렬 \(D\)로 \(A = PDP^{-1}\)로 대각화되며, 고유벡터의 격자에서는 각 방향을 고윳값만큼 늘이기만 한다. 그래서 \(A^n = PD^nP^{-1}\)로 거듭제곱이 고윳값의 거듭제곱으로 바뀐다. 처음 질문의 피보나치 수열은 행렬 \(\begin{pmatrix}1 & 1\\ 1 & 0\end{pmatrix}\)의 거듭제곱이고, 그 고윳값 \((1 \pm \sqrt5)/2\)가 일반항의 \(\sqrt5\)를 만든다.</p></div>
+  </div>
+</article>

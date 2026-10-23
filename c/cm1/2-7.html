@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>삼차방정식과 사차방정식 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="인수정리와 조립제법으로 삼차방정식·사차방정식 풀기, 근의 후보 고르기, x² = t 치환과 A² − B² 꼴 인수분해. 후보를 하나씩 대입하고 차수를 낮추는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-cubic-solve .eq { font-size: 13.5px; margin: 8px 0 2px; line-height: 1.6; overflow-wrap: anywhere; }
@@ -50,18 +55,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm1-cubic-solve"><span class="mono">2.7.1</span>인수정리로 차수 낮추기</a></li>
-        <li><a href="#card-cm1-biquad"><span class="mono">2.7.2</span>x² = t 치환</a></li>
+        <li><a href="#text-cm1-higher-eq"><span class="mono">본문</span>삼차방정식과 사차방정식</a></li>
+        <li><a href="#card-cm1-cubic-solve"><span class="mono">탐구 1</span>인수정리로 차수 낮추기</a></li>
+        <li><a href="#card-cm1-biquad"><span class="mono">탐구 2</span>x² = t 치환</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm1-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">73문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm1&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm1-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">73문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-2-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm1-higher-eq" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>삼차방정식과 사차방정식</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">상자를 만들려고 가로 10 cm, 세로 8 cm인 종이의 네 귀퉁이에서 한 변이 \(x\) cm인 정사각형을 잘라 냈더니 부피가 48 \(\text{cm}^3\)이었다. \(x\)는 얼마일까? 식을 세우면 삼차방정식이 되는데, 이차방정식처럼 쓸 근의 공식이 없다면 어떻게 풀어야 할까?</p>
+          <figure class="q-fig" data-q="cm1-cubic">
+            <svg viewBox="0 0 520 280" role="img" aria-label="y=x(10−2x)(8−2x)의 그래프와 직선 y=48의 교점"></svg>
+            <div class="q-ctl"><label>\(x\) = <input type="range" data-k="x" min="0" max="4" step="0.25" value="1"><output data-k="x"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 부피 \(V = x(10 - 2x)(8 - 2x)\)의 그래프가 \(V = 48\)과 만나는 \(x\)가 방정식의 해이고, 그 가운데 하나는 \(x = 1\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>인수정리와 조립제법(<a href="1-2.html">항등식과 나머지정리</a>), 인수분해(<a href="1-3.html">인수분해</a>), 이차방정식의 근과 판별식(<a href="2-2.html">이차방정식의 판별식</a>).</div>
+
+          <h3><span class="no">2.7.1</span>식 세우기</h3>
+          <p>귀퉁이를 잘라 접으면 상자의 밑면은 가로 \(10 - 2x\), 세로 \(8 - 2x\)이고 높이는 \(x\)이다. 그러면 부피는 \(x(10 - 2x)(8 - 2x)\)이고, 이것이 48이므로 전개해서 정리하면 \(4x^3 - 36x^2 + 80x - 48 = 0\)이다. 양변을 4로 나누면 \(x^3 - 9x^2 + 20x - 12 = 0\)이다.</p>
+          <p>최고차항이 삼차인 방정식을 <em>삼차방정식</em>, 사차인 방정식을 <em>사차방정식</em>이라 한다. 삼차와 사차 방정식에도 근의 공식이 있기는 하지만 너무 복잡해서 고등학교에서는 쓰지 않는다.<sup class="fn"><a href="#fn-cm1-higher-eq-1">1</a></sup> 그 대신 인수분해를 이용한다.</p>
+
+          <h3><span class="no">2.7.2</span>곱이 0이면 어느 하나가 0</h3>
+          <p>이차방정식을 인수분해로 풀 때 쓴 원리는 '\(AB = 0\)이면 \(A = 0\) 또는 \(B = 0\)'이었다. 이 원리는 곱해진 식이 셋이든 넷이든 그대로 통한다. 따라서 삼차식을 일차식과 이차식의 곱으로 쪼개면, 일차방정식 하나와 이차방정식 하나를 푸는 문제가 된다.</p>
+          <p>인수를 찾는 단서는 인수정리이다. \(P(x) = x^3 - 9x^2 + 20x - 12\)에서 상수항 \(-12\)의 약수를 넣어 보면 \(P(1) = 1 - 9 + 20 - 12 = 0\)이다. 그림 1의 슬라이더를 \(x = 1\)에 두면 부피가 정확히 48이 되는 것도 확인된다.</p>
+          <p>그러면 \(x - 1\)이 인수이다. 조립제법으로 나누면 몫이 \(x^2 - 8x + 12\)이므로 \(P(x) = (x - 1)(x^2 - 8x + 12) = (x - 1)(x - 2)(x - 6)\)이다. 따라서 해는 \(x = 1, 2, 6\)이다.</p>
+          <div class="tb-env"><span class="lb">방법 2.7.1 <span class="nm">삼차방정식과 사차방정식의 풀이</span></span>
+            <p>\(P(x) = 0\)에서 \(P(x)\)를 인수분해 공식, 인수정리와 조립제법, 치환 등으로 일차식과 이차식의 곱으로 나타낸 뒤, 각 인수가 0이 되는 \(x\)를 구한다.</p>
+          </div>
+          <p>여기서 문제의 뜻을 다시 보아야 한다. 세로가 8 cm이므로 \(8 - 2x &gt; 0\), 곧 \(0 &lt; x &lt; 4\)이다. 해 가운데 6은 이 조건을 어기므로 버리고, 상자의 높이는 1 cm 또는 2 cm이다. \(x = 2\)이면 \(2 \times 6 \times 4 = 48\)로 맞는다.</p>
+
+          <h3><span class="no">2.7.3</span>사차방정식과 치환</h3>
+          <p>사차방정식 가운데 \(x^4 - 5x^2 + 4 = 0\)처럼 \(x^2\)의 식으로만 이루어진 것을 복이차방정식이라 한다. \(x^2 = X\)로 두면 \(X^2 - 5X + 4 = 0\)이라는 이차방정식이 되고, \(X = 1\) 또는 \(X = 4\)이다. 다시 \(x^2 = 1\), \(x^2 = 4\)를 풀면 \(x = \pm 1, \pm 2\)이다.</p>
+          <p>그런데 \(x^4 + x^2 + 1 = 0\)처럼 치환해도 바로 인수분해되지 않는 경우가 있다. 이때는 적당한 항을 더하고 빼서 \(A^2 - B^2\)꼴을 만든다. \(x^4 + x^2 + 1 = (x^4 + 2x^2 + 1) - x^2 = (x^2 + 1)^2 - x^2 = (x^2 + x + 1)(x^2 - x + 1)\)이다. 그러면 두 이차방정식을 풀어 \(x = \dfrac{-1 \pm \sqrt{3}i}{2}\), \(\dfrac{1 \pm \sqrt{3}i}{2}\)를 얻는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 180" role="img" aria-label="삼차, 사차 방정식을 일차와 이차 방정식으로 쪼개는 흐름">
+              <rect x="20" y="30" width="140" height="60" class="lk"/><text x="90" y="56" text-anchor="middle">P(x) = 0</text><text x="90" y="78" text-anchor="middle" class="s">삼차·사차</text>
+              <rect x="200" y="20" width="140" height="80" class="lk"/><text x="270" y="46" text-anchor="middle">인수분해</text><text x="270" y="68" text-anchor="middle" class="s">공식, 인수정리,</text><text x="270" y="86" text-anchor="middle" class="s">치환, A² − B²</text>
+              <rect x="380" y="10" width="120" height="40" class="la"/><text x="440" y="36" text-anchor="middle">일차식 = 0</text>
+              <rect x="380" y="70" width="120" height="40" class="lb"/><text x="440" y="96" text-anchor="middle">이차식 = 0</text>
+              <path d="M162 60 L198 60" class="k"/><path d="M342 52 L378 30" class="k"/><path d="M342 68 L378 90" class="k"/>
+              <text x="260" y="150" text-anchor="middle" class="s">이차식 = 0은 판별식으로 실근인지 허근인지 가린다</text>
+            </svg>
+            <figcaption>그림 2. 고차방정식은 인수분해로 일차와 이차 방정식으로 쪼개어 푼다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.7.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.7.2</span>
+            <p>삼차방정식 \(x^3 - 1 = 0\)의 한 허근을 \(\omega\)라 할 때, \(\omega^2 + \omega + 1\)과 \(\omega^{10} + \omega^5 + 1\)의 값을 구하여라.</p>
+          </div>
+          <p>인수분해 공식으로 \(x^3 - 1 = (x - 1)(x^2 + x + 1)\)이다. 실근은 \(x = 1\)이고, 허근은 \(x^2 + x + 1 = 0\)의 근이다. \(\omega\)는 허근이므로 이 이차방정식을 만족하고, 따라서 \(\omega^2 + \omega + 1 = 0\)이다.</p>
+          <p>또 \(\omega\)는 원래 방정식의 근이므로 \(\omega^3 = 1\)이다. 이 사실로 거듭제곱을 줄일 수 있다. \(\omega^{10} = (\omega^3)^3 \cdot \omega = \omega\)이고, \(\omega^5 = \omega^3 \cdot \omega^2 = \omega^2\)이다. 그러면 \(\omega^{10} + \omega^5 + 1 = \omega + \omega^2 + 1 = 0\)이다.</p>
+          <p>근을 직접 넣어 확인할 수도 있다. \(\omega = \dfrac{-1 + \sqrt{3}i}{2}\)로 두면 \(\omega^2 = \dfrac{1 - 2\sqrt{3}i - 3}{4} = \dfrac{-1 - \sqrt{3}i}{2}\)이고, \(\omega^2 + \omega + 1 = \dfrac{-1 - \sqrt{3}i - 1 + \sqrt{3}i + 2}{2} = 0\)이다. 근을 구하지 않고 '\(\omega\)가 만족하는 식'만으로 계산한 쪽이 훨씬 짧다. 아래 탐구 카드에서 그래프와 조립제법을 함께 보며 삼차식이 쪼개지는 과정을 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm1-higher-eq-1">삼차방정식의 근의 공식은 16세기 이탈리아의 타르탈리아와 카르다노, 사차방정식의 공식은 페라리가 찾았다. 오차 이상의 방정식에는 계수의 사칙연산과 거듭제곱근만으로 된 일반적인 근의 공식이 없다는 것이 19세기에 아벨과 갈루아에 의해 밝혀졌다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>삼차방정식과 사차방정식은 인수정리, 인수분해 공식, 치환으로 좌변을 일차식과 이차식의 곱으로 쪼갠 뒤, 곱이 0이면 어느 인수가 0이라는 원리로 푼다. 처음 질문의 상자는 \((x - 1)(x - 2)(x - 6) = 0\)에서 나온 세 해 가운데 조건 \(0 &lt; x &lt; 4\)에 맞는 1 cm와 2 cm가 답이다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-cm1-cubic-solve">
         <header class="card-head">
-          <span class="no">2.7.1</span><h2>근의 공식이 없는 삼차방정식은 어떻게 풀까?</h2><span class="kind">삼차·사차방정식 · 인수정리와 조립제법</span>
+          <span class="no">탐구 1</span><h2>근의 공식이 없는 삼차방정식은 어떻게 풀까?</h2><span class="kind">삼차·사차방정식 · 인수정리와 조립제법</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -73,7 +135,7 @@
                 <button class="chip" type="button" data-p="2,1,-5,2">\(2x^3 - 5x^2 + x + 2\)</button>
                 <button class="chip" type="button" data-p="6,1,-7,-1,1">\(x^4 - x^3 - 7x^2 + x + 6\)</button>
               </div>
-              <label class="mono">근의 후보 ±(상수항의 약수)/(최고차항 계수의 약수) — 하나를 골라 대입하세요</label>
+              <label class="mono">근의 후보 ±(상수항의 약수)/(최고차항 계수의 약수) 가운데 하나를 골라 대입하세요</label>
               <div class="presets cands"></div>
               <div class="presets run">
                 <button class="chip go-div" type="button" disabled>조립제법으로 나누기</button>
@@ -89,29 +151,29 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x^3 - 2x^2 - 5x + 6 = 0\)은 근의 공식으로 풀 수 없습니다. 그래도 근을 모두 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>인수정리에 따르면 \(P(a) = 0\)일 때 \(P(x)\)는 \(x - a\)로 나누어떨어집니다. 조립제법은 \(x - a\)로 나눈 몫을 계수만으로 빠르게 구합니다. 이차방정식은 근의 공식으로 복소수 범위에서 언제나 풀립니다.</li>
-            <li><span class="tag">설명</span>계수가 정수인 방정식이 유리수 근 \(p/q\)를 가지면, \(p\)는 상수항의 약수이고 \(q\)는 최고차항 계수의 약수입니다. 그래서 근의 <em>후보</em>는 ±(상수항의 약수)/(최고차항 계수의 약수)로 한정됩니다. ① 후보를 대입해 \(P(a) = 0\)인 \(a\)를 찾고 ② 조립제법으로 \(P(x) = (x - a)Q(x)\)를 얻으면 ③ 남은 \(Q(x) = 0\)은 차수가 하나 낮습니다. 이차식이 남을 때까지 되풀이한 뒤 근의 공식을 씁니다. \(x^3 - 8\)처럼 인수분해 공식 \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)이 바로 보이면 그것을 써도 됩니다.</li>
-            <li><span class="tag">연결</span>실근은 그래프 \(y = P(x)\)가 \(x\)축과 만나는 점의 \(x\)좌표입니다. 허근은 그래프에 나타나지 않지만, 계수가 실수이면 \(a + bi\)와 켤레 \(a - bi\)가 짝으로 나옵니다. 그래서 삼차방정식은 실근을 적어도 하나 가집니다. 중근을 겹쳐 세면 \(n\)차방정식의 근은 복소수 범위에서 \(n\)개입니다.</li>
-            <li><span class="tag">적용</span>첫 번째 식에서 후보를 하나씩 눌러 보세요. 값이 0인 후보를 찾으면 '조립제법으로 나누기'를 누릅니다. \(x^3 - 8\)에서는 실근이 몇 개 나오나요? \(2x^3 - 5x^2 + x + 2\)에서 \(-1/2\)을 먼저 골라 보고, 사차식에서는 나누기를 두 번 해야 하는지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>후보를 모두 대입해도 0이 안 나오면 유리수 근이 없다는 뜻입니다. 이때는 이 방법으로 풀리지 않으며, 교과서에서는 인수정리·조립제법·인수분해 공식으로 풀리는 방정식만 다룹니다. 또 그래프에서 실근만 세고 "삼차방정식의 근은 1개"라고 하면 안 됩니다. 복소수 범위의 근 3개 가운데 허근 2개가 그래프에 보이지 않을 뿐입니다.</li>
+            <li><span class="tag">질문</span>\(x^3 - 2x^2 - 5x + 6 = 0\)은 근의 공식으로 풀 수 없다. 그래도 근을 모두 구할 방법이 있을까?</li>
+            <li><span class="tag">복원</span>인수정리에 따르면 \(P(a) = 0\)일 때 \(P(x)\)는 \(x - a\)로 나누어떨어진다. 조립제법은 \(x - a\)로 나눈 몫을 계수만으로 빠르게 구한다. 또 이차방정식은 근의 공식으로 복소수 범위에서 언제나 풀린다.</li>
+            <li><span class="tag">설명</span>계수가 정수인 방정식이 유리수 근 \(p/q\)를 가지면 \(p\)는 상수항의 약수이고 \(q\)는 최고차항 계수의 약수이다. 그래서 근의 <em>후보</em>는 ±(상수항의 약수)/(최고차항 계수의 약수)로 좁혀진다. 후보를 대입해 \(P(a) = 0\)인 \(a\)를 찾고, 조립제법으로 \(P(x) = (x - a)Q(x)\)를 얻으면, 남은 \(Q(x) = 0\)은 차수가 하나 낮다. 이것을 이차식이 남을 때까지 되풀이한 뒤 근의 공식을 쓴다. 물론 \(x^3 - 8\)처럼 인수분해 공식 \(a^3 - b^3 = (a - b)(a^2 + ab + b^2)\)이 바로 보이면 그것을 써도 된다.</li>
+            <li><span class="tag">연결</span>실근은 그래프 \(y = P(x)\)가 \(x\)축과 만나는 점의 \(x\)좌표이다. 허근은 그래프에 나타나지 않지만, 계수가 실수이면 \(a + bi\)와 켤레 \(a - bi\)가 짝으로 나온다. 그래서 삼차방정식은 실근을 적어도 하나 가진다. 중근을 겹쳐 세면 \(n\)차방정식의 근은 복소수 범위에서 \(n\)개이다.</li>
+            <li><span class="tag">적용</span>첫 번째 식에서 후보를 하나씩 눌러 보고, 값이 0인 후보를 찾으면 '조립제법으로 나누기'를 누르자. \(x^3 - 8\)에서는 실근이 하나뿐이라는 것을 볼 수 있다. \(2x^3 - 5x^2 + x + 2\)에서는 \(-1/2\)을 먼저 골라 보고, 사차식에서는 나누기를 두 번 해야 하는지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>후보를 모두 대입해도 0이 나오지 않으면 유리수 근이 없다는 뜻이고, 이때는 이 방법으로 풀리지 않는다. 교과서에서는 인수정리, 조립제법, 인수분해 공식으로 풀리는 방정식만 다룬다. 또 그래프에서 실근만 세고 "삼차방정식의 근은 1개"라고 하면 안 된다. 복소수 범위의 근 3개 가운데 허근 2개가 그래프에 보이지 않을 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">삼차방정식 \(x^3 - 3x^2 + 4x - 2 = 0\)의 근을 모두 고르면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 1\) 또는 \(x = 1 \pm i\)<span class="why"><b>맞습니다.</b> \(P(1) = 1 - 3 + 4 - 2 = 0\)이므로 조립제법으로 나누면 \((x - 1)(x^2 - 2x + 2)\)입니다. \(x^2 - 2x + 2 = 0\)에서 \(x = 1 \pm i\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)뿐<span class="why"><b>실근만 셌습니다.</b> 그래프가 \(x\)축과 한 번 만나는 것은 맞지만, 남은 이차식이 허근 두 개를 줍니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 1\) 또는 \(x = -1 \pm i\)<span class="why"><b>근의 공식에서 \(-b\)의 부호를 놓쳤습니다.</b> \(x^2 - 2x + 2\)에서 \(b = -2\)이므로 \(-b/2 = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = -1\) 또는 \(x = 1 \pm i\)<span class="why"><b>근을 확인하지 않았습니다.</b> \(P(-1) = -1 - 3 - 4 - 2 = -10 \ne 0\)이므로 \(-1\)은 근이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = 1\) 또는 \(x = 1 \pm i\)<span class="why"><b>맞다.</b> \(P(1) = 1 - 3 + 4 - 2 = 0\)이므로 조립제법으로 나누면 \((x - 1)(x^2 - 2x + 2)\)이다. \(x^2 - 2x + 2 = 0\)에서 \(x = 1 \pm i\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = 1\)뿐<span class="why"><b>실근만 셌다.</b> 그래프가 \(x\)축과 한 번 만나는 것은 맞지만, 남은 이차식이 허근 두 개를 준다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 1\) 또는 \(x = -1 \pm i\)<span class="why"><b>근의 공식에서 \(-b\)의 부호를 놓쳤다.</b> \(x^2 - 2x + 2\)에서 \(b = -2\)이므로 \(-b/2 = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = -1\) 또는 \(x = 1 \pm i\)<span class="why"><b>근을 확인하지 않았다.</b> \(P(-1) = -1 - 3 - 4 - 2 = -10 \ne 0\)이므로 \(-1\)은 근이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-cm1-biquad">
         <header class="card-head">
-          <span class="no">2.7.2</span><h2>사차방정식을 이차방정식처럼 풀 수 있을까?</h2><span class="kind">사차방정식 · \(x^2 = t\) 치환</span>
+          <span class="no">탐구 2</span><h2>사차방정식을 이차방정식처럼 풀 수 있을까?</h2><span class="kind">사차방정식 · \(x^2 = t\) 치환</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -135,42 +197,43 @@
                 <div><dt>\(x\)의 값</dt><dd class="n-x">—</dd></div>
                 <div><dt>실근의 개수</dt><dd class="n-c">—</dd></div>
               </dl>
-              <p class="fig-note">왼쪽 그림의 회색 띠는 \(t &lt; 0\)인 곳입니다. \(t = x^2\)이 음수이면 \(x\)는 허수입니다.</p>
+              <p class="fig-note">왼쪽 그림의 회색 띠는 \(t &lt; 0\)인 곳이다. \(t = x^2\)이 음수이면 \(x\)는 허수이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x^4 - 5x^2 + 4 = 0\)에는 \(x^4\)과 \(x^2\)만 있고 홀수 차수 항이 없습니다. 이 모양을 이용하면 더 쉽게 풀 수 있을까요?</li>
-            <li><span class="tag">복원</span>이차방정식 \(t^2 + pt + q = 0\)은 인수분해나 근의 공식으로 풉니다. 또 \(x^2 = k\)의 근은 \(k &gt; 0\)이면 \(\pm\sqrt{k}\), \(k = 0\)이면 0, \(k &lt; 0\)이면 \(\pm\sqrt{-k}i\)입니다.</li>
-            <li><span class="tag">설명</span>\(x^2 = t\)로 놓으면 \(x^4 + px^2 + q = 0\)은 \(t^2 + pt + q = 0\)이 됩니다. 이 식을 풀어 \(t\)를 구한 뒤 \(x^2 = t\)를 다시 풉니다. \(x^4 - 5x^2 + 4 = 0\)이면 \((t - 1)(t - 4) = 0\)이므로 \(x^2 = 1\) 또는 \(x^2 = 4\), 곧 \(x = \pm1\), \(\pm2\)입니다. \(t\)에 대한 식이 인수분해되지 않을 때는 <em>\(A^2 - B^2\) 꼴</em>로 바꿉니다. \(x^4 + x^2 + 1 = (x^2 + 1)^2 - x^2 = (x^2 + x + 1)(x^2 - x + 1)\)처럼 완전제곱식에서 제곱식을 빼면 합차 공식으로 인수분해됩니다.</li>
-            <li><span class="tag">연결</span>양수 \(t\) 하나는 실근 두 개\((\pm\sqrt{t})\)를, 음수 \(t\) 하나는 허근 두 개를 줍니다. 그래서 오른쪽 그래프가 \(x\)축과 만나는 횟수는 왼쪽 그래프의 근 가운데 양수인 것의 두 배입니다. 오른쪽 그래프는 \(y\)축에 대칭인데, \(x\)와 \(-x\)를 넣은 값이 같기 때문입니다.</li>
-            <li><span class="tag">적용</span>\(p\)와 \(q\)를 움직이며 실근이 4개, 3개, 2개, 1개, 0개가 되는 경우를 하나씩 찾아보세요. 실근이 3개일 때 \(t\)의 값에는 어떤 공통점이 있나요? 네 번째 식에서 \(t\)는 어떤 수인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(t\)의 값을 구하고 끝내면 안 됩니다. \(t = 4\)는 \(x\)의 값이 아니라 \(x^2\)의 값입니다. 또 \(t\)가 음수라고 버리면 허근을 잃습니다. 문제가 실근만 묻는지, 복소수 범위의 근을 모두 묻는지 확인하세요.</li>
+            <li><span class="tag">질문</span>\(x^4 - 5x^2 + 4 = 0\)에는 \(x^4\)과 \(x^2\)만 있고 홀수 차수의 항이 없다. 이 모양을 이용하면 사차방정식을 더 쉽게 풀 수 있지 않을까?</li>
+            <li><span class="tag">복원</span>이차방정식 \(t^2 + pt + q = 0\)은 인수분해나 근의 공식으로 푼다. 또 \(x^2 = k\)의 근은 \(k &gt; 0\)이면 \(\pm\sqrt{k}\), \(k = 0\)이면 0, \(k &lt; 0\)이면 \(\pm\sqrt{-k}i\)이다.</li>
+            <li><span class="tag">설명</span>그래서 \(x^2 = t\)로 놓으면 \(x^4 + px^2 + q = 0\)은 \(t^2 + pt + q = 0\)이 된다. 이 식에서 \(t\)를 구한 뒤 \(x^2 = t\)를 다시 풀면 된다. 예를 들어 \(x^4 - 5x^2 + 4 = 0\)은 \((t - 1)(t - 4) = 0\)이므로 \(x^2 = 1\) 또는 \(x^2 = 4\), 곧 \(x = \pm1\), \(\pm2\)이다. 그런데 \(t\)에 대한 식이 인수분해되지 않으면 <em>\(A^2 - B^2\) 꼴</em>로 바꾸어 본다. \(x^4 + x^2 + 1 = (x^2 + 1)^2 - x^2 = (x^2 + x + 1)(x^2 - x + 1)\)처럼 완전제곱식에서 제곱식을 빼면 합차 공식으로 인수분해된다.</li>
+            <li><span class="tag">연결</span>양수 \(t\) 하나는 실근 두 개 \(\pm\sqrt{t}\)를, 음수 \(t\) 하나는 허근 두 개를 준다. 따라서 오른쪽 그래프가 \(x\)축과 만나는 횟수는 왼쪽 그래프의 근 가운데 양수인 것의 두 배이다. 또 오른쪽 그래프가 \(y\)축에 대칭인 것은 \(x\)와 \(-x\)를 넣은 값이 같기 때문이다.</li>
+            <li><span class="tag">적용</span>\(p\)와 \(q\)를 움직이며 실근이 4개, 3개, 2개, 1개, 0개가 되는 경우를 하나씩 찾아보자. 실근이 3개일 때는 \(t\)의 값 하나가 꼭 0이라는 공통점이 보인다. 네 번째 식에서는 \(t\)가 어떤 수인지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(t\)의 값을 구하고 끝내면 안 된다. \(t = 4\)는 \(x\)의 값이 아니라 \(x^2\)의 값이기 때문이다. 또 \(t\)가 음수라고 버리면 허근을 잃는다. 그래서 문제가 실근만 묻는지, 복소수 범위의 근을 모두 묻는지 먼저 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">사차방정식 \(x^4 - 2x^2 - 8 = 0\)의 근을 복소수 범위에서 모두 구하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = \pm2\), \(\pm\sqrt{2}i\)<span class="why"><b>맞습니다.</b> \(t^2 - 2t - 8 = (t - 4)(t + 2) = 0\)에서 \(x^2 = 4\) 또는 \(x^2 = -2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = \pm2\), \(\pm\sqrt{2}\)<span class="why"><b>\(x^2 = -2\)를 \(x^2 = 2\)로 풀었습니다.</b> 제곱해서 음수가 되는 수는 허수이므로 \(\pm\sqrt{2}i\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 4\), \(-2\)<span class="why"><b>\(t\)의 값에서 멈추었습니다.</b> 4와 \(-2\)는 \(x^2\)의 값입니다. \(x^2 = t\)를 한 번 더 풀어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = \pm2\)<span class="why"><b>실근만 남겼습니다.</b> 실근은 \(\pm2\)뿐이지만, 복소수 범위에서는 사차방정식의 근이 4개입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x = \pm2\), \(\pm\sqrt{2}i\)<span class="why"><b>맞다.</b> \(t^2 - 2t - 8 = (t - 4)(t + 2) = 0\)에서 \(x^2 = 4\) 또는 \(x^2 = -2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x = \pm2\), \(\pm\sqrt{2}\)<span class="why"><b>\(x^2 = -2\)를 \(x^2 = 2\)로 풀었다.</b> 제곱해서 음수가 되는 수는 허수이므로 \(\pm\sqrt{2}i\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 4\), \(-2\)<span class="why"><b>\(t\)의 값에서 멈추었다.</b> 4와 \(-2\)는 \(x^2\)의 값이다. \(x^2 = t\)를 한 번 더 풀어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x = \pm2\)<span class="why"><b>실근만 남겼다.</b> 실근은 \(\pm2\)뿐이지만, 복소수 범위에서는 사차방정식의 근이 4개이다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
-      <a class="px-go" href="../../practice.html?sec=cm1-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">73문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm1&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm1-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">73문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -178,6 +241,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm1/body.js"></script>
 <script src="../../js/cards/cm1/poly.js"></script>
 <script src="../../js/cards/cm1/eqlib.js"></script>
 <script src="../../js/cards/cm1/cubic-solve.js"></script>

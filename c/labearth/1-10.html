@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>방사성 동위 원소와 절대 연령 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="방사성 동위 원소의 붕괴와 반감기를 이용한 절대 연령 측정 원리를 이해하고, 반감기가 다른 여러 동위 원소(Rb–Sr, K–Ar, U–Pb, ¹⁴C)로 암석과 유물의 절대 연령을 계산하며 시료에 맞는 방법을 고른다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-earth-half-life .iso-note { min-height: 3em; }
     @media (max-width: 640px) { #card-earth-half-life canvas { aspect-ratio: 4 / 3; } }
@@ -46,18 +52,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-earth-half-life"><span class="mono">1.10.1</span>방사성 동위 원소 시계는 어떻게 읽을까?</a></li>
-        <li><a href="#card-labearth-isochron"><span class="mono">1.10.2</span>어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?</a></li>
+        <li><a href="#text-labearth-clocks"><span class="mono">본문</span>방사성 동위 원소와 절대 연령</a></li>
+        <li><a href="#card-earth-half-life"><span class="mono">탐구 1</span>방사성 동위 원소 시계는 어떻게 읽을까?</a></li>
+        <li><a href="#card-labearth-isochron"><span class="mono">탐구 2</span>어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labearth-1-10"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labearth&amp;sec=1-10"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">5문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-1-10">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labearth-clocks" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>방사성 동위 원소와 절대 연령</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">한 학생이 박물관의 공룡 뼈 화석 나이를 방사성 탄소로 재자고 했다. 방사성 탄소는 고대 유물의 나이를 재는 데 널리 쓰이니 공룡 뼈에도 쓸 수 있을 것 같다. 그런데 선생님은 공룡 뼈에는 맞지 않는 시계라고 했다. 대신 그 뼈가 묻힌 지층 바로 아래 화산재층의 지르콘 알갱이로 우라늄-납 연대를 재면 된다고 했다. 방사성 시계마다 잴 수 있는 나이의 범위가 다른 까닭은 무엇일까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 230" role="img" aria-label="반감기마다 절반으로 줄어드는 모원소">
+              <line x1="60" y1="190" x2="490" y2="190" class="ax"/><line x1="60" y1="15" x2="60" y2="190" class="ax"/>
+              <path d="M60 20.0 L81 47.0 L102 69.8 L123 88.9 L144 105.0 L165 118.5 L186 129.9 L207 139.5 L228 147.5 L249 154.3 L270 159.9 L291 164.7 L312 168.8 L333 172.1 L354 175.0 L375 177.4 L396 179.4 L417 181.1 L438 182.5 L459 183.7 L480 184.7" class="b"/>
+              <circle cx="144" cy="105" r="4" class="fd"/><circle cx="228" cy="147.5" r="4" class="fd"/><circle cx="312" cy="168.8" r="4" class="fd"/>
+              <text x="150" y="98" class="s td">1/2</text><text x="234" y="140" class="s td">1/4</text><text x="318" y="162" class="s td">1/8</text>
+              <text x="54" y="194" class="s" text-anchor="end">0</text><text x="54" y="24" class="s" text-anchor="end">1</text>
+              <text x="60" y="206" class="s" text-anchor="middle">0</text><text x="144" y="206" class="s" text-anchor="middle">1</text><text x="228" y="206" class="s" text-anchor="middle">2</text><text x="312" y="206" class="s" text-anchor="middle">3</text><text x="396" y="206" class="s" text-anchor="middle">4</text><text x="480" y="206" class="s" text-anchor="middle">5</text>
+              <text x="66" y="12" class="s">남은 모원소의 비율</text><text x="490" y="222" class="s" text-anchor="end">반감기의 몇 배</text>
+            </svg>
+            <figcaption>그림 1. 방사성 모원소는 반감기마다 절반으로 줄어, 반감기를 열 번 지나면 0.1%만 남는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>원자핵과 동위 원소, 지수 함수와 로그, 상대 연령(<a href="1-9.html">층서 대비와 상대 연령</a>).</div>
+
+          <h3><span class="no">1.10.1</span>반감기라는 눈금</h3>
+          <p>방사성 동위 원소의 원자핵은 정해진 확률로 붕괴하여 다른 원소인 자원소가 된다. 원자 하나가 언제 붕괴할지는 알 수 없지만, 많은 원자를 모아 보면 남은 양이 절반이 되는 시간이 언제나 같다. 이 시간이 반감기이다. 온도나 압력이 바뀌어도 반감기는 거의 변하지 않으므로, 광물이 굳어 모원소가 갇힌 때부터 시계가 일정하게 간다. 남은 모원소와 생긴 자원소의 비를 재면 그 뒤로 몇 번의 반감기가 지났는지 알 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.10.1 <span class="nm">방사성 연대</span></span>
+            <p>처음에 자원소가 없었다면, 지금 자원소와 모원소의 비가 \(D/P\)일 때 경과 시간은 \[t = \frac{T_{1/2}}{\ln 2}\,\ln\!\left(1 + \frac{D}{P}\right)\]이다. 남은 모원소가 처음의 \(1/2^n\)이면 \(t = nT_{1/2}\)이다.</p>
+          </div>
+          <p>그림 1에서 처음 몇 번의 반감기 동안은 모원소가 빠르게 줄어 비율의 변화가 크다. 그러나 반감기를 열 번쯤 지나면 모원소가 0.1%만 남아 재기가 아주 어려워지고, 조금의 오염도 결과를 크게 바꾼다. 반대로 반감기에 비해 너무 짧은 시간이 지나면 자원소가 거의 생기지 않아 잴 수 없다. 그래서 시계는 재려는 나이가 반감기의 0.1배에서 10배쯤일 때 가장 잘 맞는다.<sup class="fn"><a href="#fn-labearth-clocks-1">1</a></sup></p>
+
+          <h3><span class="no">1.10.2</span>무엇으로 무엇을 잴까</h3>
+          <p>시계를 고를 때는 반감기와 함께, 그 원소가 재려는 물질에 들어 있는지를 본다. 방사성 탄소는 살아 있는 생물이 대기에서 받아들이다가 죽으면 멈추므로 생물의 유해를 잰다. 반감기가 5730년이어서 5만 년 안쪽만 잴 수 있다. 우라늄-납 연대는 화성암 속 지르콘이 굳을 때 우라늄은 받아들이고 납은 거의 받아들이지 않는 성질을 이용하며, 반감기가 45억 년이어서 수백만 년에서 수십억 년을 잰다. 퇴적암 속 화석은 직접 재기 어려워, 위아래 화산암의 나이로 사이에 끼워 넣어 어림한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="방사성 시계별 반감기와 쓰임">
+              <g class="s">
+                <text x="20" y="22">시계</text><text x="140" y="22">반감기</text><text x="250" y="22">재는 대상</text><text x="400" y="22">재는 범위</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">탄소-14</text><text x="140" y="52">5730년</text><text x="250" y="52">뼈, 숯, 나무</text><text x="400" y="52">약 5만 년까지</text>
+                <text x="20" y="74">칼륨-아르곤</text><text x="140" y="74">12.5억 년</text><text x="250" y="74">화산암</text><text x="400" y="74">수만 년 이상</text>
+                <text x="20" y="96">우라늄-238 → 납-206</text><text x="140" y="96">44.7억 년</text><text x="250" y="96">지르콘</text><text x="400" y="96">수백만 년 이상</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 재려는 나이와 물질에 맞는 반감기의 시계를 골라야 한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.10.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.10.2</span>
+            <p>공룡이 살았던 7000만 년 전의 뼈에 방사성 탄소가 처음의 몇 분의 1 남아 있겠는가? 그 아래 화산재층의 지르콘에서 \(\mathrm{^{206}Pb}/\mathrm{^{238}U} = 0.0725\)를 얻었다면 나이는 얼마인가? 우라늄-238의 반감기는 44.68억 년이다.</p>
+          </div>
+          <p>7000만 년은 탄소-14 반감기의 \(7 \times 10^7/5730 \approx 12\,200\)배이므로, 남은 비율은 \(2^{-12\,200}\)으로 사실상 0이다. 원자 하나도 남지 않으므로 방사성 탄소로는 잴 수 없다.</p>
+          <p>지르콘의 나이는 \(t = \dfrac{44.68\text{억 년}}{0.693} \times \ln 1.0725 \approx 64.5\text{억 년} \times 0.0700 \approx 4.51\)억 년이다. 이 값이라면 그 화산재층은 고생대 오르도비스기의 것이어서, 그 위의 지층에서 나온 화석은 공룡보다 훨씬 오래된 것이다. 실제로 공룡 화석 아래의 화산재라면 비가 약 0.011이 나와 약 7000만 년이 된다. 즉 방사성 시계는 반감기가 재려는 나이와 맞고 재려는 물질에 들어 있는 것을 골라야 하며, 화석은 주변 화산암의 연대로 사이에 끼워 나이를 정한다.</p>
+          <p>아래 탐구 카드에서 여러 방사성 시계의 반감기와 쓰임을 비교하고, 동위 원소 비로 암석의 나이를 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labearth-clocks-1">1956년 미국의 패터슨은 운석의 납 동위 원소를 분석해 지구의 나이를 45.5억 년으로 구했다. 이 연구 중 실험실의 납 오염이 심각하다는 것을 깨달은 그는, 휘발유에 넣던 납을 금지하는 운동에도 앞장섰다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>방사성 동위 원소는 정해진 반감기마다 절반으로 줄어, 모원소와 자원소의 비로 \(t = (T_{1/2}/\ln 2)\ln(1 + D/P)\)의 나이를 구한다. 시계는 재려는 나이가 반감기의 0.1배에서 10배쯤이고 그 원소가 재려는 물질에 들어 있을 때 잘 맞는다. 처음 질문의 공룡 뼈는 반감기의 1만 배가 넘는 시간이 지나 방사성 탄소가 남아 있지 않으므로, 주변 화산재의 지르콘을 우라늄-납으로 재야 한다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/earth/2-1.html#card-earth-relative-age"><small class="mono">지구과학 2.1</small>지층의 순서만으로 나이를 알 수 있을까?</a><a href="../../c/earth/2-1.html#text-earth-age"><small class="mono">지구과학 2.1</small>지층과 연령</a><a href="../../c/labearth/1-9.html#text-labearth-sequence"><small class="mono">지구과학 실험 1.9</small>층서 대비와 상대 연령</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/4-2.html#text-mateng-first-order"><small class="mono">물질과 에너지 4.2</small>1차 반응과 반감기</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/earth/2-5.html#card-earth-korea-rocks"><small class="mono">지구과학 2.5</small>한반도의 암석은 언제 만들어졌을까?</a><a href="../../c/earth/2-5.html#card-earth-geopark"><small class="mono">지구과학 2.5</small>국가지질공원에서는 무엇을 보고, 왜 지켜야 할까?</a><a href="../../c/earth/2-5.html#text-earth-korea-geology"><small class="mono">지구과학 2.5</small>한반도의 지질과 국가지질공원</a><a href="../../c/mateng/4-2.html#card-mateng-half-life"><small class="mono">물질과 에너지 4.2</small>약을 두 알 먹으면 몸에서 빠져나가는 데 두 배가 걸릴까?</a></div></nav>
+
       <article class="card" id="card-earth-half-life">
         <header class="card-head">
-          <span class="no">1.10.1</span><h2>방사성 동위 원소 시계는 어떻게 읽을까?</h2><span class="kind">절대 연령 · 반감기</span>
+          <span class="no">탐구 1</span><h2>방사성 동위 원소 시계는 어떻게 읽을까?</h2><span class="kind">절대 연령 · 반감기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -86,29 +149,29 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>상대 연령으로는 순서만 압니다. 암석이 몇 년 전에 생겼는지는 무엇으로 잴까요?</li>
-            <li><span class="tag">복원</span>원소 가운데에는 원자핵이 불안정해서 스스로 다른 원소로 바뀌는 것이 있습니다. 바뀌기 전을 <em>모원소</em>, 바뀐 뒤를 <em>자원소</em>라고 합니다.</li>
-            <li><span class="tag">설명</span>모원소가 처음 양의 절반으로 줄어드는 데 걸리는 시간을 <em>반감기</em>라고 합니다. 반감기는 온도나 압력에 따라 거의 변하지 않아서 시계로 쓸 수 있습니다. 반감기가 두 번 지나면 1/4, 세 번이면 1/8이 남습니다.</li>
-            <li><span class="tag">연결</span>광물이 굳을 때 들어간 모원소가 그 뒤 자원소로 바뀌어 쌓입니다. 그래서 <span class="formula">자원소 / 모원소 = 2<sup>t/T</sup> − 1</span>이고, 비를 재면 <span class="formula">t = T · log₂(1 + 자원소/모원소)</span>로 나이가 나옵니다.</li>
-            <li><span class="tag">적용</span>‘1 : 1’을 누르면 반감기 한 번, ‘3 : 1’이면 두 번입니다. 같은 비라도 동위 원소를 바꾸면 나이가 얼마나 달라지나요? 왼쪽 원자 100개가 곡선과 조금씩 어긋나는 것도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>개별 원자가 언제 붕괴할지는 알 수 없습니다. 반감기는 원자가 아주 많을 때의 통계입니다. 또 이 방법은 광물이 굳은 뒤 모원소와 자원소가 드나들지 않았다고 가정합니다. 퇴적암은 다른 암석의 부스러기라서 그 나이가 퇴적된 때를 말해 주지 않습니다. 그래서 주로 화성암을 재고, 그 위아래 지층의 나이를 상대 연령으로 좁힙니다.</li>
+            <li><span class="tag">질문</span>상대 연령으로는 순서만 안다. 암석이 몇 년 전에 생겼는지는 무엇으로 잴까?</li>
+            <li><span class="tag">복원</span>원소 가운데에는 원자핵이 불안정해서 스스로 다른 원소로 바뀌는 것이 있다. 바뀌기 전을 <em>모원소</em>, 바뀐 뒤를 <em>자원소</em>라고 한다.</li>
+            <li><span class="tag">설명</span>모원소가 처음 양의 절반으로 줄어드는 데 걸리는 시간을 <em>반감기</em>라고 한다. 반감기는 온도나 압력에 따라 거의 변하지 않아서 시계로 쓸 수 있고, 반감기가 두 번 지나면 1/4, 세 번이면 1/8이 남는다.</li>
+            <li><span class="tag">연결</span>광물이 굳을 때 들어간 모원소가 그 뒤 자원소로 바뀌어 쌓인다. 그래서 <span class="formula">자원소 / 모원소 = 2<sup>t/T</sup> − 1</span>이고, 비를 재면 <span class="formula">t = T · log₂(1 + 자원소/모원소)</span>로 나이가 나온다.</li>
+            <li><span class="tag">적용</span>‘1 : 1’을 누르면 반감기 한 번, ‘3 : 1’이면 두 번이다. 같은 비라도 동위 원소를 바꾸면 나이가 얼마나 달라지는지 보고, 왼쪽 원자 100개가 곡선과 조금씩 어긋나는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>개별 원자가 언제 붕괴할지는 알 수 없고, 반감기는 원자가 아주 많을 때의 통계이다. 또 이 방법은 광물이 굳은 뒤 모원소와 자원소가 드나들지 않았다고 가정한다. 그런데 퇴적암은 다른 암석의 부스러기라서 그 나이가 퇴적된 때를 말해 주지 않는다. 그래서 주로 화성암을 재고, 그 위아래 지층의 나이를 상대 연령으로 좁힌다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 화성암 속 광물에서 ²³⁵U(반감기 약 7억 년)와 그 자원소 ²⁰⁷Pb의 비가 1 : 7로 측정되었습니다. 이 광물의 나이에 가장 가까운 것은?</p>
+          <p class="q">어떤 화성암 속 광물에서 ²³⁵U(반감기 약 7억 년)와 그 자원소 ²⁰⁷Pb의 비가 1 : 7로 측정되었다. 이 광물의 나이에 가장 가까운 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 7억 년<span class="why"><b>반감기 한 번이면 모원소와 자원소가 1 : 1입니다.</b> 여기서는 자원소가 7배나 많습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 49억 년<span class="why"><b>비 7을 반감기 7번으로 읽은 답입니다.</b> 반감기마다 남은 양이 절반이 되므로, 비는 1, 3, 7, 15…로 늘어납니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 21억 년<span class="why"><b>맞습니다.</b> 모원소가 전체의 1/8 남았으니 반감기 세 번(1/2 → 1/4 → 1/8), 7억 × 3 = 21억 년입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>약 7억 년<span class="why"><b>반감기 한 번이면 모원소와 자원소가 1 : 1이다.</b> 여기서는 자원소가 7배나 많다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 49억 년<span class="why"><b>비 7을 반감기 7번으로 읽은 답이다.</b> 반감기마다 남은 양이 절반이 되므로, 비는 1, 3, 7, 15…로 늘어난다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>약 21억 년<span class="why"><b>맞다.</b> 모원소가 전체의 1/8 남았으니 반감기 세 번(1/2 → 1/4 → 1/8), 7억 × 3 = 21억 년이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/earth/2-1.html#card-earth-relative-age"><small class="mono">지구과학 2.1</small>지층의 순서만으로 나이를 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/earth/2-5.html#card-earth-korea-rocks"><small class="mono">지구과학 2.5</small>한반도의 암석은 언제 만들어졌을까?</a><a href="../../c/earth/2-5.html#card-earth-geopark"><small class="mono">지구과학 2.5</small>국가지질공원에서는 무엇을 보고, 왜 지켜야 할까?</a><a href="../../c/mateng/4-2.html#card-mateng-half-life"><small class="mono">물질과 에너지 4.2</small>약을 두 알 먹으면 몸에서 빠져나가는 데 두 배가 걸릴까?</a><a href="../../c/adearth/1-8.html#card-adearth-concordia"><small class="mono">고급 지구과학 1.8</small>열을 받아 납이 빠져나간 지르콘으로도 처음 굳은 나이를 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/earth/2-1.html#card-earth-relative-age"><small class="mono">지구과학 2.1</small>지층의 순서만으로 나이를 알 수 있을까?</a><a href="../../c/earth/2-1.html#text-earth-age"><small class="mono">지구과학 2.1</small>지층과 연령</a><a href="../../c/labearth/1-9.html#text-labearth-sequence"><small class="mono">지구과학 실험 1.9</small>층서 대비와 상대 연령</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/mateng/4-2.html#text-mateng-first-order"><small class="mono">물질과 에너지 4.2</small>1차 반응과 반감기</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/earth/2-5.html#card-earth-korea-rocks"><small class="mono">지구과학 2.5</small>한반도의 암석은 언제 만들어졌을까?</a><a href="../../c/earth/2-5.html#card-earth-geopark"><small class="mono">지구과학 2.5</small>국가지질공원에서는 무엇을 보고, 왜 지켜야 할까?</a><a href="../../c/earth/2-5.html#text-earth-korea-geology"><small class="mono">지구과학 2.5</small>한반도의 지질과 국가지질공원</a><a href="../../c/mateng/4-2.html#card-mateng-half-life"><small class="mono">물질과 에너지 4.2</small>약을 두 알 먹으면 몸에서 빠져나가는 데 두 배가 걸릴까?</a></div></nav>
 
       <article class="card" id="card-labearth-isochron">
         <header class="card-head">
-          <span class="no">1.10.2</span><h2>어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?</h2><span class="kind">실험 · 절대 연령 · Rb–Sr 등시선 · K–Ar · U–Pb · ¹⁴C</span>
+          <span class="no">탐구 2</span><h2>어떤 방사성 시계를 골라야 암석의 나이를 제대로 잴 수 있을까?</h2><span class="kind">실험 · 절대 연령 · Rb–Sr 등시선 · K–Ar · U–Pb · ¹⁴C</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -131,44 +194,46 @@
               <div class="tbl-host"></div>
               <canvas class="cv-plot ic-plot" aria-label="등시선 그래프 또는 자원소/모원소 비의 성장 곡선"></canvas>
               <dl class="nums"><div><dt class="n1-l">등시선 기울기</dt><dd class="n1">—</dd></div><div><dt class="n2-l">초기 ⁸⁷Sr/⁸⁶Sr</dt><dd class="n2">—</dd></div><div><dt>구한 나이</dt><dd class="n3">—</dd></div></dl>
-              <p class="ic-const">반감기: ⁸⁷Rb 496억 년 (λ = 1.3972×10⁻¹¹/년) · ⁴⁰K 12.5억 년 (λ = 5.543×10⁻¹⁰/년, 이 가운데 10.5 %가 ⁴⁰Ar로) · ²³⁸U 44.68억 년 (λ = 1.55125×10⁻¹⁰/년) · ¹⁴C 5730년</p>
-              <p class="fig-note">붕괴 상수는 국제 지질 연대 학계의 권고값(Steiger &amp; Jäger 1977; Rb은 Villa 외 2015)입니다. 네 시료는 실제 암석이 아니라 우리나라 암석의 나이 범위를 본뜬 가상 시료이고, 측정값의 오차(동위 원소 비 0.5~1.5 %, ⁸⁷Sr/⁸⁶Sr ±0.00005)는 대학 실험실 수준으로 둔 모식입니다.</p>
+              <p class="ic-const">반감기 ⁸⁷Rb 496억 년 (λ = 1.3972×10⁻¹¹/년) · ⁴⁰K 12.5억 년 (λ = 5.543×10⁻¹⁰/년, 이 가운데 10.5 %가 ⁴⁰Ar로) · ²³⁸U 44.68억 년 (λ = 1.55125×10⁻¹⁰/년) · ¹⁴C 5730년</p>
+              <p class="fig-note">붕괴 상수는 국제 지질 연대 학계의 권고값(Steiger &amp; Jäger 1977; Rb은 Villa 외 2015)이다. 네 시료는 실제 암석이 아니라 우리나라 암석의 나이 범위를 본뜬 가상 시료이고, 측정값의 오차(동위 원소 비 0.5~1.5 %, ⁸⁷Sr/⁸⁶Sr ±0.00005)는 대학 실험실 수준으로 둔 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>방사성 동위 원소는 정해진 반감기로 붕괴하므로 시계가 됩니다. 그런데 반감기가 5730년인 시계와 496억 년인 시계는 잴 수 있는 시간 범위가 전혀 다릅니다. 시료마다 어떤 시계를 고르고, 측정값에서 어떻게 나이를 계산할까요?</li>
-            <li><span class="tag">복원</span>모원소 P는 N = N₀e<sup>−λt</sup>로 줄고(λ = ln2 / 반감기), 그만큼 자원소 D가 생깁니다. 처음에 자원소가 없었다면 <em>D/P = e<sup>λt</sup> − 1</em>, 곧 <em>t = (1/λ)·ln(1 + D/P)</em>입니다. ¹⁴C는 살아 있을 때 대기와 같던 비율이 죽은 뒤 줄어드는 양으로 잽니다: t = −(반감기/ln2)·ln(N/N₀).</li>
-            <li><span class="tag">설계</span>시계는 측정 대상의 나이가 반감기의 약 0.001배~몇 배 사이일 때 잘 맞습니다. 너무 젊으면 자원소가 너무 적어 오차에 묻히고, 너무 늙으면 모원소가 남지 않습니다. 또 시료에 그 원소가 들어 있어야 합니다(¹⁴C는 생물 유해, K–Ar은 칼륨이 든 화산암·운모, U–Pb는 우라늄을 품은 지르콘). Rb–Sr 등시선법은 한 암석에서 Rb/Sr 비가 다른 광물 여러 개를 분리해 잽니다.</li>
-            <li><span class="tag">분석</span>처음에 ⁸⁷Sr이 얼마 있었는지 모르는 문제를 등시선이 풀어 줍니다. 같은 마그마에서 굳은 광물은 처음 ⁸⁷Sr/⁸⁶Sr이 같고, 그 뒤 Rb이 많은 광물일수록 ⁸⁷Sr이 더 늘어납니다. 그래서 가로축 ⁸⁷Rb/⁸⁶Sr, 세로축 ⁸⁷Sr/⁸⁶Sr에 찍은 점들이 직선에 놓이고, <em>기울기 = e<sup>λt</sup> − 1</em>, 세로 절편 = 처음 ⁸⁷Sr/⁸⁶Sr입니다.</li>
-            <li><span class="tag">측정</span>화강암에서 광물 다섯 가지를 Rb–Sr로 재어 등시선을 그리고 나이를 구하세요. 같은 화강암을 K–Ar, U–Pb로도 재어 비교하세요. 그다음 현무암, 편마암, 숯에서 네 방법을 모두 시도해 보고, 어느 방법이 왜 실패하는지 표에 적으세요. 편마암의 K–Ar 나이는 왜 다른 방법보다 훨씬 젊게 나올까요?</li>
-            <li class="warn"><span class="tag">오차·안전</span>방사성 시계는 광물이 굳은 뒤 모원소와 자원소가 드나들지 않았다(닫힌 계)는 가정 위에 있습니다. 아르곤은 기체라서 암석이 나중에 300 °C 안팎으로 데워지면 빠져나가 K–Ar 나이가 젊어집니다(계통 오차). ¹⁴C 시료에 요즘 탄소가 2 %만 섞여도 수만 년 된 시료는 수천 년 젊게 나옵니다. 상자를 켜서 확인하세요. 실제 분석에서는 광물 분리에 쓰는 중액과 산(불산 등)이 매우 위험하므로 전문 실험실에서 보호 장비를 갖추고 다룹니다.</li>
+            <li><span class="tag">탐구 문제</span>방사성 동위 원소는 정해진 반감기로 붕괴하므로 시계가 된다. 그런데 반감기가 5730년인 시계와 496억 년인 시계는 잴 수 있는 시간 범위가 전혀 다르다. 시료마다 어떤 시계를 고르고, 측정값에서 어떻게 나이를 계산할까?</li>
+            <li><span class="tag">복원</span>모원소 P는 N = N₀e<sup>−λt</sup>로 줄고(λ = ln2 / 반감기), 그만큼 자원소 D가 생긴다. 처음에 자원소가 없었다면 <em>D/P = e<sup>λt</sup> − 1</em>, 곧 <em>t = (1/λ)·ln(1 + D/P)</em>이다. ¹⁴C는 살아 있을 때 대기와 같던 비율이 죽은 뒤 줄어드는 양으로 잰다. 곧 t = −(반감기/ln2)·ln(N/N₀)이다.</li>
+            <li><span class="tag">설계</span>시계는 측정 대상의 나이가 반감기의 약 0.001배~몇 배 사이일 때 잘 맞다. 너무 젊으면 자원소가 너무 적어 오차에 묻히고, 너무 늙으면 모원소가 남지 않는다. 또 시료에 그 원소가 들어 있어야 한다(¹⁴C는 생물 유해, K–Ar은 칼륨이 든 화산암·운모, U–Pb는 우라늄을 품은 지르콘). Rb–Sr 등시선법은 한 암석에서 Rb/Sr 비가 다른 광물 여러 개를 분리해 잰다.</li>
+            <li><span class="tag">분석</span>처음에 ⁸⁷Sr이 얼마 있었는지 모르는 문제를 등시선이 풀어 준다. 같은 마그마에서 굳은 광물은 처음 ⁸⁷Sr/⁸⁶Sr이 같고, 그 뒤 Rb이 많은 광물일수록 ⁸⁷Sr이 더 늘어난다. 그래서 가로축 ⁸⁷Rb/⁸⁶Sr, 세로축 ⁸⁷Sr/⁸⁶Sr에 찍은 점들이 직선에 놓이고, <em>기울기 = e<sup>λt</sup> − 1</em>, 세로 절편 = 처음 ⁸⁷Sr/⁸⁶Sr이다.</li>
+            <li><span class="tag">측정</span>화강암에서 광물 다섯 가지를 Rb–Sr로 재어 등시선을 그리고 나이를 구해 보자. 같은 화강암을 K–Ar, U–Pb로도 재어 비교해 보자. 그다음 현무암, 편마암, 숯에서 네 방법을 모두 시도해 보고, 어느 방법이 왜 실패하는지 표에 적자. 편마암의 K–Ar 나이는 왜 다른 방법보다 훨씬 젊게 나올까?</li>
+            <li class="warn"><span class="tag">오차·안전</span>방사성 시계는 광물이 굳은 뒤 모원소와 자원소가 드나들지 않았다(닫힌 계)는 가정 위에 있다. 아르곤은 기체라서 암석이 나중에 300 °C 안팎으로 데워지면 빠져나가 K–Ar 나이가 젊어진다(계통 오차). ¹⁴C 시료에 요즘 탄소가 2 %만 섞여도 수만 년 된 시료는 수천 년 젊게 나온다. 상자를 켜서 확인해 보자. 실제 분석에서는 광물 분리에 쓰는 중액과 산(불산 등)이 매우 위험하므로 전문 실험실에서 보호 장비를 갖추고 다룬다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 화산재층 바로 위의 지층에서 나온 매머드 뼈(약 3만 년 전으로 짐작)와 그 화산재층에서 나온 흑운모(약 3억 년 전으로 짐작)의 나이를 재려고 합니다. 알맞은 짝은?</p>
+          <p class="q">어떤 화산재층 바로 위의 지층에서 나온 매머드 뼈(약 3만 년 전으로 짐작)와 그 화산재층에서 나온 흑운모(약 3억 년 전으로 짐작)의 나이를 재려고 한다. 알맞은 짝은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>뼈는 ¹⁴C, 흑운모는 K–Ar<span class="why"><b>맞습니다.</b> 3만 년은 ¹⁴C 반감기의 약 5배로 아직 잴 수 있는 범위이고, 흑운모는 칼륨이 많아 3억 년이면 ⁴⁰Ar이 충분히 쌓여 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 ¹⁴C<span class="why"><b>3억 년이면 ¹⁴C가 남지 않습니다.</b> 반감기 5만 번 이상이 지나 원자가 하나도 남지 않으므로 잴 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>뼈는 U–Pb, 흑운모는 ¹⁴C<span class="why"><b>거꾸로입니다.</b> 3만 년이면 ²³⁸U의 납은 반감기의 15만분의 1만큼밖에 쌓이지 않아 측정 오차에 묻히고, 흑운모에는 ¹⁴C가 남아 있지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>뼈는 ¹⁴C, 흑운모는 K–Ar<span class="why"><b>맞다.</b> 3만 년은 ¹⁴C 반감기의 약 5배로 아직 잴 수 있는 범위이고, 흑운모는 칼륨이 많아 3억 년이면 ⁴⁰Ar이 충분히 쌓여 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 ¹⁴C<span class="why"><b>3억 년이면 ¹⁴C가 남지 않는다.</b> 반감기 5만 번 이상이 지나 원자가 하나도 남지 않으므로 잴 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>뼈는 U–Pb, 흑운모는 ¹⁴C<span class="why"><b>거꾸로이다.</b> 3만 년이면 ²³⁸U의 납은 반감기의 15만분의 1만큼밖에 쌓이지 않아 측정 오차에 묻히고, 흑운모에는 ¹⁴C가 남아 있지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/resr/3-1.html#card-labphy-lsq"><small class="mono">과학과제 연구 3.1</small>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/1-8.html#card-adearth-concordia"><small class="mono">고급 지구과학 1.8</small>열을 받아 납이 빠져나간 지르콘으로도 처음 굳은 나이를 알 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/mateng/4-2.html#text-mateng-first-order"><small class="mono">물질과 에너지 4.2</small>1차 반응과 반감기</a><a href="../../c/resr/3-1.html#card-labphy-lsq"><small class="mono">과학과제 연구 3.1</small>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</a><a href="../../c/labphy/1-2.html#text-labphy-fit-slope"><small class="mono">물리학 실험 1.2</small>최소 제곱법과 신뢰구간</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/1-8.html#card-adearth-concordia"><small class="mono">고급 지구과학 1.8</small>열을 받아 납이 빠져나간 지르콘으로도 처음 굳은 나이를 알 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labearth-1-10"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labearth&amp;sec=1-10"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">5문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>

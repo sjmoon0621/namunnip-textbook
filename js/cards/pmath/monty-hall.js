@@ -33,7 +33,7 @@
     const win = pick === car, k = sw ? "sw" : "stay";
     mine[k][1]++; if (win) mine[k][0]++;
     stage = 2; msg.textContent = win ? "자동차! 이겼습니다." : "염소였습니다."; render();
-    $(".mine").textContent = `내 기록 — 그대로: ${mine.stay[0]}승/${mine.stay[1]}판 · 바꾸기: ${mine.sw[0]}승/${mine.sw[1]}판`;
+    $(".mine").textContent = `내 기록, 그대로 ${mine.stay[0]}승/${mine.stay[1]}판 · 바꾸기 ${mine.sw[0]}승/${mine.sw[1]}판`;
   };
   bStay.addEventListener("click", () => finish(false));
   bSwitch.addEventListener("click", () => finish(true));

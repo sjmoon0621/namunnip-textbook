@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부정적분과 정적분의 관계 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="위끝이 변수인 정적분을 미분하면 피적분함수가 된다는 사실과, 정적분을 부정적분의 차 F(b) − F(a)로 계산하는 방법. 다항함수의 정적분 구하기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-area-function canvas { aspect-ratio: 1 / 1; }
@@ -47,18 +52,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-area-function"><span class="mono">3.4.1</span>정적분으로 정의한 함수의 미분</a></li>
-        <li><a href="#card-calc1-ftc-eval"><span class="mono">3.4.2</span>다항함수의 정적분 계산</a></li>
+        <li><a href="#text-calc1-ftc"><span class="mono">본문</span>부정적분과 정적분의 관계</a></li>
+        <li><a href="#card-calc1-area-function"><span class="mono">탐구 1</span>정적분으로 정의한 함수의 미분</a></li>
+        <li><a href="#card-calc1-ftc-eval"><span class="mono">탐구 2</span>다항함수의 정적분 계산</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">142문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-3-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">142문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-3-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-ftc" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부정적분과 정적분의 관계</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">정적분은 직사각형을 잘게 나누어 더한 극한으로 정했고, 부정적분은 미분을 거꾸로 한 것이었다. 전혀 다른 두 생각이다. 그런데 \(\displaystyle\int_0^1 x^2\,dx = \tfrac{1}{3}\)은 \(x^2\)의 부정적분 \(\tfrac{x^3}{3}\)에 1과 0을 넣은 차와 같다. 이것은 우연일까?</p>
+          <figure class="q-fig" data-q="calc1-areafn">
+            <svg viewBox="0 0 520 280" role="img" aria-label="위끝 x까지의 넓이 S(x)와, x를 조금 늘릴 때 늘어나는 가는 띠"></svg>
+            <div class="q-ctl"><label>위끝 \(x\) = <input type="range" data-k="x" min="0.2" max="2" step="0.05" value="1.2"><output data-k="x"></output></label><label>늘린 폭 \(h\) = <input type="range" data-k="h" min="0.02" max="0.5" step="0.02" value="0.3"><output data-k="h"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 위끝을 \(x\)에서 \(x + h\)로 옮기면 넓이는 폭 \(h\), 높이 약 \(f(x)\)인 띠만큼 는다. 따라서 넓이 함수 \(S(x)\)의 순간변화율은 \(f(x)\)이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>부정적분(<a href="3-2.html">다항함수의 부정적분</a>), 정적분의 뜻과 성질(<a href="3-3.html">정적분</a>), 미분계수의 정의(<a href="2-1.html">미분계수</a>).</div>
+
+          <h3><span class="no">3.4.1</span>위끝이 움직이는 넓이</h3>
+          <p>구간의 위끝을 변수로 둔 정적분 \(S(x) = \displaystyle\int_a^x f(t)\,dt\)를 생각하자. \(S(x)\)는 \(a\)에서 \(x\)까지 곡선 아래의 넓이이므로 \(x\)의 함수이다. 위끝을 \(x\)에서 \(x + h\)로 조금 옮기면, 넓이는 그 사이의 가는 띠만큼 는다.</p>
+          <p>그림 1에서 보듯 그 띠는 폭이 \(h\)이고 높이가 \(f(x)\) 근처이므로 넓이가 약 \(f(x)h\)이다. 따라서 \(\dfrac{S(x + h) - S(x)}{h}\)는 \(f(x)\)에 가깝고, \(h\)를 줄일수록 더 가까워진다. 즉 \(S'(x) = f(x)\)이다.<sup class="fn"><a href="#fn-calc1-ftc-1">1</a></sup> 넓이 함수를 미분하면 높이의 함수가 나오는 것이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.1 <span class="nm">정적분과 미분의 관계</span></span>
+            <p>함수 \(f(x)\)가 닫힌구간 \([a, b]\)에서 연속일 때 \[\frac{d}{dx}\int_a^x f(t)\,dt = f(x)\ (a &lt; x &lt; b)\]</p>
+          </div>
+
+          <h3><span class="no">3.4.2</span>부정적분으로 정적분 계산하기</h3>
+          <p>정리에 따르면 \(S(x)\)는 \(f(x)\)의 부정적분 가운데 하나이다. 그러면 \(f\)의 다른 부정적분 \(F(x)\)와는 상수만큼만 다르므로 \(S(x) = F(x) + C\)이다. \(S(a) = 0\)이므로 \(C = -F(a)\)이고, \(x = b\)를 넣으면 \(S(b) = F(b) - F(a)\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.4.2 <span class="nm">정적분의 계산</span></span>
+            <p>\(f(x)\)가 닫힌구간 \([a, b]\)에서 연속이고 \(F(x)\)가 \(f(x)\)의 한 부정적분이면 \[\int_a^b f(x)\,dx = \Big[F(x)\Big]_a^b = F(b) - F(a)\]</p>
+          </div>
+          <p>이 정리 덕분에 직사각형 합의 극한을 계산하지 않고도 정적분을 구할 수 있다. 부정적분 하나를 찾아 양 끝 값의 차를 구하면 된다. 처음 질문의 일치는 우연이 아니라 이 정리의 결과이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="넓이를 쌓아 가는 것과 기울기를 재는 것이 서로 거꾸로인 관계">
+              <rect x="40" y="40" width="180" height="60" class="lb"/><text x="130" y="66" text-anchor="middle" class="s">높이 f(x)</text><text x="130" y="86" text-anchor="middle" class="s">(그래프의 높이)</text>
+              <rect x="300" y="40" width="180" height="60" class="lc"/><text x="390" y="66" text-anchor="middle" class="s">넓이 S(x) = ∫ₐˣ f(t)dt</text><text x="390" y="86" text-anchor="middle" class="s">(쌓인 넓이)</text>
+              <path d="M222 58 L298 58" class="k"/><path d="M298 82 L222 82" class="k"/><path d="M290 54 l8 4 -8 4 Z" class="fk"/><path d="M230 78 l-8 4 8 4 Z" class="fk"/>
+              <text x="260" y="50" text-anchor="middle" class="s">쌓는다(적분)</text><text x="260" y="100" text-anchor="middle" class="s">변화율(미분)</text>
+            </svg>
+            <figcaption>그림 2. 높이를 쌓으면 넓이가 되고, 넓이의 변화율을 재면 다시 높이가 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.4.3</span>
+            <p>\(\displaystyle\int_1^3 (3x^2 - 2x)\,dx\)를 구하여라. 또 \(\displaystyle\int_1^x f(t)\,dt = x^3 - ax + 2\)를 만족하는 다항함수 \(f(x)\)와 상수 \(a\)를 구하여라.</p>
+          </div>
+          <p>\(3x^2 - 2x\)의 한 부정적분은 \(F(x) = x^3 - x^2\)이다. 따라서 \(\displaystyle\int_1^3 (3x^2 - 2x)\,dx = F(3) - F(1) = (27 - 9) - (1 - 1) = 18\)이다.</p>
+          <p>두 번째 식에 \(x = 1\)을 넣으면 왼쪽은 넓이가 0이므로 \(0 = 1 - a + 2\), 곧 \(a = 3\)이다. 또 양변을 \(x\)에 대해 미분하면 정리에 따라 왼쪽은 \(f(x)\)이므로 \(f(x) = 3x^2 - a = 3x^2 - 3\)이다.</p>
+          <p>확인하면 \(\displaystyle\int_1^x (3t^2 - 3)\,dt = (x^3 - 3x) - (1 - 3) = x^3 - 3x + 2\)로 주어진 식과 같다. 위끝이 변수인 정적분에서는 '\(x = a\)를 넣는 것'과 '미분하는 것'이 두 가지 정보를 준다. 아래 탐구 카드에서 위끝을 움직이며 넓이가 늘어나는 빠르기를 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-ftc-1">정확히 말하면 띠의 넓이는 그 사이 \(f\)의 최솟값과 최댓값에 \(h\)를 곱한 값 사이에 있다. \(f\)가 연속이므로 \(h \to 0\)이면 둘 다 \(f(x)\)로 다가가 \(S'(x) = f(x)\)가 된다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>위끝이 변수인 정적분 \(S(x) = \int_a^x f(t)\,dt\)는 위끝을 조금 옮길 때 높이 \(f(x)\)인 띠만큼 늘어나므로 \(S'(x) = f(x)\)이고, 따라서 정적분은 부정적분 하나의 양 끝 값의 차 \(F(b) - F(a)\)로 계산된다. 그래서 처음 질문의 \(\tfrac{1}{3}\)은 넓이와 미분의 역관계가 만든 필연적인 일치이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a><a href="../../c/calc1/3-3.html#card-calc1-int-props"><small class="mono">미적분Ⅰ 3.3</small>구간을 둘로 나누어 적분해도 값이 같을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a><a href="../../c/calc1/3-5.html#text-calc1-area"><small class="mono">미적분Ⅰ 3.5</small>넓이</a><a href="../../c/calc1/3-6.html#card-calc1-vel-dist"><small class="mono">미적분Ⅰ 3.6</small>속도만 알면 움직인 거리를 알 수 있을까?</a></div></nav>
+
       <article class="card" id="card-calc1-area-function">
         <header class="card-head">
-          <span class="no">3.4.1</span><h2>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</h2><span class="kind">부정적분과 정적분 · 미적분의 기본정리</span>
+          <span class="no">탐구 1</span><h2>위끝을 조금 옮기면 정적분은 얼마나 빨리 변할까?</h2><span class="kind">부정적분과 정적분 · 미적분의 기본정리</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -80,34 +138,34 @@
                 <div><dt>\(\{S(x+h) - S(x)\} \div h\)</dt><dd class="n-q">—</dd></div>
                 <div><dt>\(f(x)\)</dt><dd class="n-f">—</dd></div>
               </dl>
-              <p class="fig-note">노란 띠의 넓이가 \(S(x + h) - S(x)\)입니다. 위 그래프의 주황 점을 끌어 \(x\)를 옮길 수 있습니다. 아래 그래프의 주황 직선은 기울기가 \(f(x)\)인 직선, 노란 점선은 \(x\)와 \(x + h\)를 잇는 할선입니다.</p>
+              <p class="fig-note">노란 띠의 넓이가 \(S(x + h) - S(x)\)이다. 위 그래프의 주황 점을 끌어 \(x\)를 옮길 수 있다. 아래 그래프의 주황 직선은 기울기가 \(f(x)\)인 직선이고, 노란 점선은 \(x\)와 \(x + h\)를 잇는 할선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>아래끝 \(a\)는 두고 위끝 \(x\)를 움직이면 정적분 \(S(x) = \int_a^x f(t)\,dt\)는 \(x\)의 함수가 됩니다. 이 함수를 미분하면 무엇이 나올까요?</li>
-            <li><span class="tag">복원</span>미분계수는 평균변화율 \(\frac{S(x + h) - S(x)}{h}\)에서 \(h \to 0\)인 극한입니다. 정적분은 구간을 나누어 더할 수 있고\((\int_a^{x+h} = \int_a^x + \int_x^{x+h}), \int_a^a = 0\)입니다.</li>
-            <li><span class="tag">설명</span>\(S(x + h) - S(x) = \int_x^{x+h} f(t)\,dt\)는 노란 띠의 넓이입니다. \(h\)가 작으면 띠는 높이가 거의 \(f(x)\), 폭이 \(h\)인 직사각형이라 넓이 ≈ \(f(x) \times h\)입니다. 양변을 \(h\)로 나누고 \(h \to 0\)으로 보내면, \(f\)가 연속이므로 <b>\((\frac{d}{dx})\int_a^x f(t)\,dt = f(x)\)</b>입니다. 곧 \(S(x)\)는 \(f(x)\)의 부정적분 가운데 하나입니다. 넓이를 재는 일(정적분)과 미분이 서로 거꾸로 가는 계산이라는 이 사실을 미적분의 기본정리라고도 부릅니다.</li>
-            <li><span class="tag">연결</span>\(S(x)\)가 부정적분이므로 다른 부정적분 \(F(x)\)와는 상수만큼 다릅니다. \(S(a) = 0\)을 쓰면 \(\int_a^b f(x)\,dx = F(b) - F(a)\)가 나오고, 이것으로 정적분을 넓이를 재지 않고 계산합니다. 넓이를 직사각형으로 쪼개던 일이 부정적분 한 번으로 바뀝니다.</li>
-            <li><span class="tag">적용</span>\(h\)를 0.01까지 줄이며 가운데 값이 \(f(x)\)에 다가가는지 확인하세요. \(t^2 - 1\)에서 \(x\)를 \(-1\) 또는 1에 두면 \(S(x)\)의 그래프에서 무엇이 보이나요? 아래끝 \(a\)를 바꾸면 \(S(x)\)의 그래프는 어떻게 움직이고, 기울기는 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>"정적분은 수이므로 미분하면 0"이라는 오해가 있습니다. \(\int_a^b f(t)\,dt\)처럼 두 끝이 모두 상수이면 그 말이 맞지만, 위끝이 변수 \(x\)이면 값이 \(x\)에 따라 바뀌는 함수입니다. 또 \(f(x) &lt; 0\)인 곳에서는 위끝을 오른쪽으로 옮길 때 정적분이 줄어들므로 \(S(x)\)가 감소합니다.</li>
+            <li><span class="tag">질문</span>아래끝 \(a\)는 두고 위끝 \(x\)를 움직이면 정적분 \(S(x) = \int_a^x f(t)\,dt\)는 \(x\)의 함수가 된다. 이 함수를 미분하면 무엇이 나올까?</li>
+            <li><span class="tag">복원</span>미분계수는 평균변화율 \(\frac{S(x + h) - S(x)}{h}\)에서 \(h \to 0\)인 극한이다. 그리고 정적분은 구간을 나누어 더할 수 있고\((\int_a^{x+h} = \int_a^x + \int_x^{x+h}), \int_a^a = 0\)이다.</li>
+            <li><span class="tag">설명</span>\(S(x + h) - S(x) = \int_x^{x+h} f(t)\,dt\)는 노란 띠의 넓이이다. \(h\)가 작으면 띠는 높이가 거의 \(f(x)\), 폭이 \(h\)인 직사각형이라 넓이는 \(f(x) \times h\)에 가깝다. 양변을 \(h\)로 나누고 \(h \to 0\)으로 보내면, \(f\)가 연속이므로 \((\frac{d}{dx})\int_a^x f(t)\,dt = f(x)\)이다. 곧 \(S(x)\)는 \(f(x)\)의 부정적분 가운데 하나이다. 넓이를 재는 일(정적분)과 미분이 서로 거꾸로 가는 계산이라는 이 사실을 미적분의 기본정리라고도 부른다.</li>
+            <li><span class="tag">연결</span>\(S(x)\)가 부정적분이므로 다른 부정적분 \(F(x)\)와는 상수만큼 다르다. 여기에 \(S(a) = 0\)을 쓰면 \(\int_a^b f(x)\,dx = F(b) - F(a)\)가 나오고, 이것으로 정적분을 넓이를 재지 않고 계산한다. 그래서 넓이를 직사각형으로 쪼개던 일이 부정적분 한 번으로 바뀐다.</li>
+            <li><span class="tag">적용</span>\(h\)를 0.01까지 줄이며 가운데 값이 \(f(x)\)에 다가가는지 확인해 보자. \(t^2 - 1\)에서 \(x\)를 \(-1\) 또는 1에 두면 \(S(x)\)의 그래프가 그 자리에서 평평해진다. 아래끝 \(a\)를 바꾸면 \(S(x)\)의 그래프가 위아래로만 움직이고 기울기는 그대로인지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"정적분은 수이므로 미분하면 0"이라는 오해가 있다. \(\int_a^b f(t)\,dt\)처럼 두 끝이 모두 상수이면 그 말이 맞지만, 위끝이 변수 \(x\)이면 값이 \(x\)에 따라 바뀌는 함수이다. 또 \(f(x) &lt; 0\)인 곳에서는 위끝을 오른쪽으로 옮길 때 정적분이 줄어들므로 \(S(x)\)가 감소한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(G(x) = \int_1^x (t^3 - 2t)\,dt\)일 때 \(G'(2)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞습니다.</b> \(G'(x) = x^3 - 2x\)이므로 \(G'(2) = 8 - 4 = 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{3}{4}\)<span class="why"><b>\(G(2)\)를 구했습니다.</b> \(\int_1^2 (t^3 - 2t)\,dt = \frac{3}{4}\)는 함숫값이고, 문제는 미분계수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>피적분함수를 한 번 더 미분했습니다.</b> \(3x^2 - 2\)에 2를 넣은 값입니다. 적분하고 미분하면 피적분함수로 돌아옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>정적분을 상수로 보았습니다.</b> 위끝이 \(x\)이므로 \(G(x)\)는 상수가 아닌 함수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>4<span class="why"><b>맞다.</b> \(G'(x) = x^3 - 2x\)이므로 \(G'(2) = 8 - 4 = 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{3}{4}\)<span class="why"><b>\(G(2)\)를 구했다.</b> \(\int_1^2 (t^3 - 2t)\,dt = \frac{3}{4}\)는 함숫값이고, 문제는 미분계수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>10<span class="why"><b>피적분함수를 한 번 더 미분했다.</b> \(3x^2 - 2\)에 2를 넣은 값이다. 적분하고 미분하면 피적분함수로 돌아온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0<span class="why"><b>정적분을 상수로 보았다.</b> 위끝이 \(x\)이므로 \(G(x)\)는 상수가 아닌 함수이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-3.html#card-calc1-int-props"><small class="mono">미적분Ⅰ 3.3</small>구간을 둘로 나누어 적분해도 값이 같을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a><a href="../../c/calc1/3-6.html#card-calc1-vel-dist"><small class="mono">미적분Ⅰ 3.6</small>속도만 알면 움직인 거리를 알 수 있을까?</a><a href="../../c/calc1/3-6.html#card-calc1-chase"><small class="mono">미적분Ⅰ 3.6</small>두 속도 그래프가 만나는 순간, 두 물체도 만날까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a><a href="../../c/calc1/3-3.html#card-calc1-int-props"><small class="mono">미적분Ⅰ 3.3</small>구간을 둘로 나누어 적분해도 값이 같을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a><a href="../../c/calc1/3-5.html#text-calc1-area"><small class="mono">미적분Ⅰ 3.5</small>넓이</a><a href="../../c/calc1/3-6.html#card-calc1-vel-dist"><small class="mono">미적분Ⅰ 3.6</small>속도만 알면 움직인 거리를 알 수 있을까?</a></div></nav>
 
       <article class="card" id="card-calc1-ftc-eval">
         <header class="card-head">
-          <span class="no">3.4.2</span><h2>넓이를 재지 않고 정적분을 구할 수 있을까?</h2><span class="kind">부정적분과 정적분 · \(F(b) - F(a)\)</span>
+          <span class="no">탐구 2</span><h2>넓이를 재지 않고 정적분을 구할 수 있을까?</h2><span class="kind">부정적분과 정적분 · \(F(b) - F(a)\)</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -134,39 +192,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\int_0^2 (3x^2 - 2x)\,dx\)를 구하려고 직사각형을 수천 개 더할 수는 없습니다. 부정적분을 알면 정적분을 바로 구할 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(S(x) = \int_a^x f(t)\,dt\)는 \(f(x)\)의 부정적분이고 \(S(a) = 0\)입니다. 같은 함수의 두 부정적분은 상수만큼 다릅니다.</li>
-            <li><span class="tag">설명</span>\(F(x)\)를 \(f(x)\)의 한 부정적분이라 하면 \(S(x) = F(x) + k\) (\(k\)는 상수)입니다. \(x = a\)를 넣으면 \(0 = F(a) + k\), 곧 \(k = -F(a)\)이므로 \(S(x) = F(x) - F(a)\)입니다. \(x = b\)를 넣으면 <b>\(\int_a^b f(x)\,dx = [F(x)]_a^b = F(b) - F(a)\)</b>입니다. 기호 \([F(x)]_a^b\)는 \(F(b) - F(a)\)를 줄여 쓴 것입니다. 예: \(\int_0^2 (3x^2 - 2x)\,dx = [x^3 - x^2]_0^2 = (8 - 4) - 0 = 4\).</li>
-            <li><span class="tag">연결</span>넓이를 직접 재던 일이 부정적분의 두 함숫값의 차로 바뀌었습니다. 아래 그래프에서 이 차는 \(x = a\)와 \(x = b\)에서의 높이 차입니다. 위치 함수의 높이 차가 변위인 것처럼, 부정적분의 높이 차가 정적분입니다.</li>
-            <li><span class="tag">적용</span>\(C\)를 바꾸어도 '차 = 정적분'이 바뀌지 않는지 확인하세요. 그 값이 '직사각형 2000개 합'과 같은가요? \(4 - x^2\)에서 \(a = -1.5, b = 2.5\)로 두면 정적분이 음수가 됩니다. 위 그래프의 어느 부분 때문인가요? \(a\)와 \(b\)를 바꾸면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>정적분은 부정적분과 달리 하나의 수입니다. \(F(b) + C\)와 \(F(a) + C\)를 빼면 \(C\)가 지워지므로 계산할 때 적분상수는 0으로 두면 됩니다. 흔한 실수는 \(F\)가 아닌 \(f\)에 \(b, a\)를 넣는 것과, \(F(a)\)를 뺄 때 괄호를 빠뜨려 부호를 틀리는 것입니다.</li>
+            <li><span class="tag">질문</span>\(\int_0^2 (3x^2 - 2x)\,dx\)를 구하려고 직사각형을 수천 개 더할 수는 없다. 부정적분을 알면 정적분을 바로 구할 수 있을까?</li>
+            <li><span class="tag">복원</span>\(S(x) = \int_a^x f(t)\,dt\)는 \(f(x)\)의 부정적분이고 \(S(a) = 0\)이다. 그리고 같은 함수의 두 부정적분은 상수만큼 다르다.</li>
+            <li><span class="tag">설명</span>\(F(x)\)를 \(f(x)\)의 한 부정적분이라 하면 \(S(x) = F(x) + k\) (\(k\)는 상수)이다. \(x = a\)를 넣으면 \(0 = F(a) + k\), 곧 \(k = -F(a)\)이므로 \(S(x) = F(x) - F(a)\)이다. 여기에 \(x = b\)를 넣으면 \(\int_a^b f(x)\,dx = [F(x)]_a^b = F(b) - F(a)\)이고, 기호 \([F(x)]_a^b\)는 \(F(b) - F(a)\)를 줄여 쓴 것이다. 예를 들어 \(\int_0^2 (3x^2 - 2x)\,dx = [x^3 - x^2]_0^2 = (8 - 4) - 0 = 4\)이다.</li>
+            <li><span class="tag">연결</span>즉 넓이를 직접 재던 일이 부정적분의 두 함숫값의 차로 바뀌었다. 아래 그래프에서 이 차는 \(x = a\)와 \(x = b\)에서의 높이 차이다. 위치 함수의 높이 차가 변위인 것처럼, 부정적분의 높이 차가 정적분이다.</li>
+            <li><span class="tag">적용</span>\(C\)를 바꾸어도 '차 = 정적분'이 바뀌지 않는지, 그 값이 '직사각형 2000개 합'과 같은지 확인해 보자. \(4 - x^2\)에서 \(a = -1.5, b = 2.5\)로 두면 정적분이 음수가 되는데, 위 그래프의 어느 부분 때문인지 찾아보고, \(a\)와 \(b\)를 바꾸면 부호가 뒤집히는 것도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>정적분은 부정적분과 달리 하나의 수이다. \(F(b) + C\)와 \(F(a) + C\)를 빼면 \(C\)가 지워지므로, 계산할 때 적분상수는 0으로 두면 된다. 흔한 실수는 \(F\)가 아닌 \(f\)에 \(b, a\)를 넣는 것과, \(F(a)\)를 뺄 때 괄호를 빠뜨려 부호를 틀리는 것이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\int_1^3 (3x^2 - 2x)\,dx\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>18<span class="why"><b>맞습니다.</b> \([x^3 - x^2]_1^3 = (27 - 9) - (1 - 1) = 18\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>20<span class="why"><b>피적분함수에 값을 넣었습니다.</b> \(f(3) - f(1) = 21 - 1 = 20\)입니다. 부정적분 \(F\)에 넣어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>26<span class="why"><b>\(-2x\) 항을 빠뜨렸습니다.</b> \([x^3]_1^3 = 26\)이고, \(-[x^2]_1^3 = -8\)을 더해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(18 + C\)<span class="why"><b>적분상수를 남겼습니다.</b> 정적분에서는 \(C\)가 빼는 과정에서 지워져 하나의 수가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>18<span class="why"><b>맞다.</b> \([x^3 - x^2]_1^3 = (27 - 9) - (1 - 1) = 18\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>20<span class="why"><b>피적분함수에 값을 넣었다.</b> \(f(3) - f(1) = 21 - 1 = 20\)이다. 부정적분 \(F\)에 넣어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>26<span class="why"><b>\(-2x\) 항을 빠뜨렸다.</b> \([x^3]_1^3 = 26\)이고, \(-[x^2]_1^3 = -8\)을 더해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(18 + C\)<span class="why"><b>적분상수를 남겼다.</b> 정적분에서는 \(C\)가 빼는 과정에서 지워져 하나의 수가 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-3.html#card-calc1-int-props"><small class="mono">미적분Ⅰ 3.3</small>구간을 둘로 나누어 적분해도 값이 같을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a><a href="../../c/calc1/3-6.html#card-calc1-vel-dist"><small class="mono">미적분Ⅰ 3.6</small>속도만 알면 움직인 거리를 알 수 있을까?</a><a href="../../c/calc1/3-6.html#card-calc1-chase"><small class="mono">미적분Ⅰ 3.6</small>두 속도 그래프가 만나는 순간, 두 물체도 만날까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/3-2.html#card-calc1-power-int"><small class="mono">미적분Ⅰ 3.2</small>xⁿ을 적분하면 왜 n + 1로 나눌까?</a><a href="../../c/calc1/3-2.html#card-calc1-linear-int"><small class="mono">미적분Ⅰ 3.2</small>여러 항의 합은 항마다 따로 적분해도 될까?</a><a href="../../c/calc1/3-2.html#text-calc1-poly-integral"><small class="mono">미적분Ⅰ 3.2</small>다항함수의 부정적분</a><a href="../../c/calc1/3-3.html#card-calc1-int-props"><small class="mono">미적분Ⅰ 3.3</small>구간을 둘로 나누어 적분해도 값이 같을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/3-5.html#card-calc1-area-axis"><small class="mono">미적분Ⅰ 3.5</small>정적분이 0이면 넓이도 0일까?</a><a href="../../c/calc1/3-5.html#card-calc1-area-between"><small class="mono">미적분Ⅰ 3.5</small>두 그래프로 둘러싸인 도형의 넓이는 어떻게 구할까?</a><a href="../../c/calc1/3-5.html#text-calc1-area"><small class="mono">미적분Ⅰ 3.5</small>넓이</a><a href="../../c/calc1/3-6.html#card-calc1-vel-dist"><small class="mono">미적분Ⅰ 3.6</small>속도만 알면 움직인 거리를 알 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-3-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">142문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=3-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-3-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">142문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -174,6 +233,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/int-lib.js"></script>
 <script src="../../js/cards/calc1/area-function.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>세금 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="초과 누진세의 구조, 구간별로 정의된 세금 함수, 한계세율과 실효세율, 세후 소득의 연속성과 &#x27;구간이 오르면 손해&#x27;라는 오해. 과세표준을 움직이는 카드와, 구간 경계에서 세후 소득을 예측하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-econ-progressive-tax canvas.bar { aspect-ratio: 16 / 4; width: 100%; display: block; }
@@ -46,18 +51,68 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-econ-progressive-tax"><span class="mono">1.3.1</span>누진세의 한계세율과 실효세율</a></li>
-        <li><a href="#card-econ-tax-myth"><span class="mono">1.3.2</span>구간이 올라가면 손해일까</a></li>
+        <li><a href="#text-econ-tax"><span class="mono">본문</span>세금</a></li>
+        <li><a href="#card-econ-progressive-tax"><span class="mono">탐구 1</span>누진세의 한계세율과 실효세율</a></li>
+        <li><a href="#card-econ-tax-myth"><span class="mono">탐구 2</span>구간이 올라가면 손해일까</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=econ-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=econ&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=econ-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-econ-tax" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>세금</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">"연봉이 오르면 세율 구간이 올라가서 오히려 손에 쥐는 돈이 줄어든다"는 말을 들은 적이 있을 것이다. 소득이 1억 원인 사람의 세율이 35%라면, 정말로 3500만 원을 세금으로 낼까? 소득세는 실제로 어떻게 계산될까?</p>
+          <figure class="q-fig" data-q="econ-tax">
+            <svg viewBox="0 0 520 230" role="img" aria-label="과세 표준에 따른 누진 소득세액 그래프"></svg>
+            <div class="q-ctl"><label>과세 표준 (만 원) <input type="range" data-k="m" min="500" max="15000" step="100" value="10000"><output data-k="m"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 단순화한 누진 세율(1400만 원까지 6%, 5000만 원까지 15%, 8800만 원까지 24%, 1억 5천만 원까지 35%)로 계산한 세액. 그래프는 구간마다 기울기가 커지는 꺾은선이며, 끊어지거나 뛰어오르는 곳이 없다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>함수와 그래프, 일차함수의 기울기(중학교), 비율과 백분율.</div>
+
+          <h3><span class="no">1.3.1</span>누진세의 계산</h3>
+          <p>소득이 많을수록 더 높은 비율의 세금을 매기는 제도를 누진세라 한다. 우리나라 소득세는 소득을 여러 구간으로 나누고, 구간마다 다른 세율을 그 구간에 속한 금액에만 적용한다. 이를 초과 누진 세율이라 한다. 소득 전체에 하나의 세율을 매기는 방식과 달리, 소득이 한 구간을 넘어가도 이미 아래 구간에 속한 소득의 세금은 바뀌지 않는다.</p>
+          <div class="tb-env thm"><span class="lb">정의 1.3.1 <span class="nm">한계 세율과 실효 세율</span></span>
+            <p>소득이 한 단위 늘어날 때 그 추가 소득에 붙는 세율을 한계 세율이라 하고, 전체 세금을 전체 소득으로 나눈 비율을 실효 세율(평균 세율)이라 한다. 초과 누진 세율에서는 실효 세율이 언제나 한계 세율보다 작거나 같다.</p>
+          </div>
+          <p>그림 1에서 과세 표준을 1억 원으로 맞추어 보자. 처음 1400만 원에는 6%, 그다음 3600만 원에는 15%, 그다음 3800만 원에는 24%, 마지막 1200만 원에만 35%가 붙는다. 세액은 \(84 + 540 + 912 + 420 = 1956\)만 원이고 실효 세율은 약 19.6%이다. 한계 세율 35%와 크게 다르다. 뉴스에서 말하는 '세율 구간'은 대개 한계 세율이므로, 실제로 내는 세금의 비율과 혼동하지 않아야 한다.<sup class="fn"><a href="#fn-econ-tax-1">1</a></sup></p>
+
+          <h3><span class="no">1.3.2</span>세금은 소득의 연속함수</h3>
+          <p>세액을 과세 표준의 함수로 그리면, 구간마다 기울기가 그 구간의 세율인 꺾은선이 된다. 구간 경계에서 기울기만 커질 뿐 세액이 갑자기 뛰지 않는다. 수학적으로 말하면 세액은 과세 표준의 연속함수이고, 구간 경계에서만 미분계수가 바뀐다. 그러므로 소득이 늘면 세금도 늘지만, 늘어난 소득 가운데 세금으로 나가는 몫은 한계 세율만큼뿐이고 나머지는 손에 남는다. 구간이 올라가서 손에 쥐는 돈이 줄어드는 일은 생기지 않는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="과세 표준 1억 원의 구간별 세액">
+              <g class="s">
+                <rect x="30" y="35" width="56" height="30" class="la"/><rect x="86" y="35" width="144" height="30" class="lb"/><rect x="230" y="35" width="152" height="30" class="lc"/><rect x="382" y="35" width="48" height="30" class="ld"/>
+                <text x="58" y="55" text-anchor="middle">6%</text><text x="158" y="55" text-anchor="middle">15%</text><text x="306" y="55" text-anchor="middle">24%</text><text x="406" y="55" text-anchor="middle">35%</text>
+                <text x="58" y="85" text-anchor="middle">84</text><text x="158" y="85" text-anchor="middle">540</text><text x="306" y="85" text-anchor="middle">912</text><text x="406" y="85" text-anchor="middle">420</text>
+                <text x="440" y="55">만 원</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 과세 표준 1억 원을 구간으로 나누면 각 구간의 금액에 그 구간의 세율만 적용된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>그림 1의 세율에서 과세 표준이 4900만 원에서 5100만 원으로 200만 원 늘었다. 세금은 얼마나 늘고, 세후 소득은 얼마나 늘었는가? 세율 구간이 올라가서 손해를 보았는가?</p>
+          </div>
+          <p>4900만 원의 세액은 \(1400 \times 0.06 + 3500 \times 0.15 = 84 + 525 = 609\)만 원이다. 5100만 원의 세액은 \(84 + 3600 \times 0.15 + 100 \times 0.24 = 84 + 540 + 24 = 648\)만 원이다.</p>
+          <p>세금은 39만 원 늘었고, 세후 소득은 \(200 - 39 = 161\)만 원 늘었다. 5000만 원을 넘는 100만 원에만 24%가 붙고, 그 아래 100만 원에는 여전히 15%가 붙었다. 구간이 올라가도 늘어난 소득의 일부만 더 높은 세율을 적용받으므로 손해를 보지 않는다. 한계 세율이 100%를 넘지 않는 한 이 결론은 언제나 성립한다.</p>
+          <p>아래 탐구 카드에서 누진세를 직접 계산하고, '구간이 올라가면 손해'라는 말이 왜 틀렸는지 따져 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-econ-tax-1">세액을 빨리 구할 때는 '과세 표준 × 그 구간 세율 − 누진 공제액'을 쓴다. 누진 공제액은 아래 구간들이 낮은 세율을 적용받은 만큼을 미리 계산해 둔 값이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>초과 누진 세율에서는 각 구간의 세율이 그 구간에 속한 소득에만 적용되므로, 세액은 기울기가 점점 커지는 꺾은선 함수이고 실효 세율은 한계 세율보다 작다. 그래서 처음 질문의 세율 35%인 사람이 내는 세금은 소득의 35%가 아니라 그보다 훨씬 적으며, 구간이 올라가도 손에 쥐는 돈은 줄지 않는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/3-1.html#card-cm2-func-map"><small class="mono">공통수학2 3.1</small>어떤 대응을 함수라고 부를까?</a><a href="../../c/cm2/3-1.html#card-cm2-func-graph"><small class="mono">공통수학2 3.1</small>그래프만 보고 함수인지 알 수 있을까?</a><a href="../../c/cm2/3-1.html#text-cm2-function"><small class="mono">공통수학2 3.1</small>함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/2-5.html#card-econ-tax-incidence"><small class="mono">경제 수학 2.5</small>판매자에게 1잔에 500원씩 세금을 매기면 누가 그 세금을 낼까?</a><a href="../../c/econ/2-5.html#card-econ-income-shift"><small class="mono">경제 수학 2.5</small>소득이 늘면 라면 값은 오를까 내릴까?</a><a href="../../c/econ/2-5.html#text-econ-tax-eq"><small class="mono">경제 수학 2.5</small>세금·소득과 균형 가격</a></div></nav>
+
       <article class="card" id="card-econ-progressive-tax">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>세율이 35%인 사람은 소득의 35%를 세금으로 낼까?</h2><span class="kind">누진세 · 조작</span>
+          <span class="no">탐구 1</span><h2>세율이 35%인 사람은 소득의 35%를 세금으로 낼까?</h2><span class="kind">누진세 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -65,37 +120,37 @@
             <canvas class="bar" aria-label="소득을 세율 구간별로 나눈 막대와 구간마다의 세금"></canvas>
             <canvas class="gr" aria-label="소득에 따른 한계세율(계단)과 실효세율(곡선)"></canvas>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">세율표는 수업용 가상 값입니다(1000만 원까지 5%, 4000만 원까지 15%, 8000만 원까지 25%, 그 위 35%). 실제 소득세는 구간과 세율이 다르고 여러 공제가 먼저 적용됩니다.</p>
+            <p class="fig-note">세율표는 수업용 가상 값이다(1000만 원까지 5%, 4000만 원까지 15%, 8000만 원까지 25%, 그 위 35%). 실제 소득세는 구간과 세율이 다르고 여러 공제가 먼저 적용된다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>"최고 세율 35% 구간"에 든 사람은 소득의 35%를 세금으로 낼까요? 실제로 내는 비율은 얼마일까요?</li>
-            <li><span class="tag">복원</span>구간마다 식이 다른 함수(구간별로 정의된 함수)의 그래프는 꺾인 선이 될 수 있습니다.</li>
-            <li><span class="tag">설명</span><em>초과 누진세</em>는 소득을 구간으로 나누어, 각 구간에 속한 몫에만 그 구간의 세율을 매깁니다. 소득이 1만 원 더 늘 때 붙는 세율이 <em>한계세율</em>이고, 전체 세금을 전체 소득으로 나눈 값이 <em>실효세율</em>입니다. 세금 함수 \(T(x)\)는 구간마다 기울기(한계세율)가 커지는 꺾은선이고, 실효세율 \(T(x)/x\)는 한계세율보다 늘 작거나 같습니다.</li>
-            <li><span class="tag">연결</span>실효세율은 원점과 \((x, T(x))\)를 이은 직선의 기울기, 한계세율은 그 점에서 \(T\)의 기울기입니다. 평균과 한계의 이런 관계는 4단원의 평균비용·한계비용에서 다시 나옵니다.</li>
-            <li><span class="tag">적용</span>과세표준을 1억 원에 맞추세요. 한계세율과 실효세율은 각각 얼마인가요? 실효세율이 20%가 되는 소득을 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>"세율 구간이 올라가면 소득 전체에 높은 세율이 붙는다"는 오해가 흔합니다. 초과 누진에서는 구간 경계를 넘은 몫에만 높은 세율이 붙습니다(다음 카드).</li>
+            <li><span class="tag">질문</span>최고 세율 35% 구간에 든 사람은 소득의 35%를 세금으로 낼까? 실제로 내는 비율은 얼마일까?</li>
+            <li><span class="tag">복원</span>구간마다 식이 다른 함수(구간별로 정의된 함수)의 그래프는 꺾인 선이 될 수 있다.</li>
+            <li><span class="tag">설명</span><em>초과 누진세</em>는 소득을 구간으로 나누어, 각 구간에 속한 몫에만 그 구간의 세율을 매긴다. 소득이 1만 원 더 늘 때 붙는 세율이 <em>한계세율</em>이고, 전체 세금을 전체 소득으로 나눈 값이 <em>실효세율</em>이다. 그래서 세금 함수 \(T(x)\)는 구간마다 기울기(한계세율)가 커지는 꺾은선이고, 실효세율 \(T(x)/x\)는 한계세율보다 늘 작거나 같다.</li>
+            <li><span class="tag">연결</span>실효세율은 원점과 \((x, T(x))\)를 이은 직선의 기울기, 한계세율은 그 점에서 \(T\)의 기울기이다. 평균과 한계의 이런 관계는 4단원의 평균비용과 한계비용에서 다시 나온다.</li>
+            <li><span class="tag">적용</span>과세표준을 1억 원에 맞추고 한계세율과 실효세율이 각각 얼마인지 보자. 그리고 실효세율이 20%가 되는 소득을 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘세율 구간이 올라가면 소득 전체에 높은 세율이 붙는다’는 오해가 흔하다. 초과 누진에서는 구간 경계를 넘은 몫에만 높은 세율이 붙는다(다음 카드).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">이 카드의 가상 세율표에서 과세표준 5000만 원의 세금은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>750만 원<span class="why"><b>맞습니다.</b> \(1000 \times 0.05 + 3000 \times 0.15 + 1000 \times 0.25 = 50 + 450 + 250 = 750\)만 원, 실효세율 15%입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1250만 원<span class="why"><b>소득 전체에 25%를 매겼습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>250만 원<span class="why"><b>마지막 구간의 몫만 셌습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1000만 원<span class="why"><b>구간 하한을 잘못 나눴습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>750만 원<span class="why"><b>맞다.</b> \(1000 \times 0.05 + 3000 \times 0.15 + 1000 \times 0.25 = 50 + 450 + 250 = 750\)만 원, 실효세율 15%이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1250만 원<span class="why"><b>소득 전체에 25%를 매겼다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>250만 원<span class="why"><b>마지막 구간의 몫만 셌다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1000만 원<span class="why"><b>구간 하한을 잘못 나눴다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/3-1.html#card-cm2-func-map"><small class="mono">공통수학2 3.1</small>어떤 대응을 함수라고 부를까?</a><a href="../../c/cm2/3-1.html#card-cm2-func-graph"><small class="mono">공통수학2 3.1</small>그래프만 보고 함수인지 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/2-5.html#card-econ-tax-incidence"><small class="mono">경제 수학 2.5</small>판매자에게 1잔에 500원씩 세금을 매기면 누가 그 세금을 낼까?</a><a href="../../c/econ/2-5.html#card-econ-income-shift"><small class="mono">경제 수학 2.5</small>소득이 늘면 라면 값은 오를까 내릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/3-1.html#card-cm2-func-map"><small class="mono">공통수학2 3.1</small>어떤 대응을 함수라고 부를까?</a><a href="../../c/cm2/3-1.html#card-cm2-func-graph"><small class="mono">공통수학2 3.1</small>그래프만 보고 함수인지 알 수 있을까?</a><a href="../../c/cm2/3-1.html#text-cm2-function"><small class="mono">공통수학2 3.1</small>함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/2-5.html#card-econ-tax-incidence"><small class="mono">경제 수학 2.5</small>판매자에게 1잔에 500원씩 세금을 매기면 누가 그 세금을 낼까?</a><a href="../../c/econ/2-5.html#card-econ-income-shift"><small class="mono">경제 수학 2.5</small>소득이 늘면 라면 값은 오를까 내릴까?</a><a href="../../c/econ/2-5.html#text-econ-tax-eq"><small class="mono">경제 수학 2.5</small>세금·소득과 균형 가격</a></div></nav>
 
       <article class="card" id="card-econ-tax-myth">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>세율 구간이 올라가면 오히려 손에 쥐는 돈이 줄어들까?</h2><span class="kind">누진세의 연속성 · 예측→확인</span>
+          <span class="no">탐구 2</span><h2>세율 구간이 올라가면 오히려 손에 쥐는 돈이 줄어들까?</h2><span class="kind">누진세의 연속성 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small"><b>상황</b>: 과세표준이 3990만 원에서 4010만 원으로 20만 원 늘어, 앞 카드의 가상 세율표에서 15% 구간을 넘어 25% 구간에 들어갔습니다. 세금을 낸 뒤 남는 돈(세후 소득)은?</p>
+            <p class="small">과세표준이 3990만 원에서 4010만 원으로 20만 원 늘어, 앞 카드의 가상 세율표에서 15% 구간을 넘어 25% 구간에 들어갔다. 세금을 낸 뒤 남는 돈(세후 소득)은 어떻게 될까?</p>
             <div class="presets" role="group" aria-label="예측">
               <button class="chip" type="button" data-g="up">늘어난다</button><button class="chip" type="button" data-g="same">같다</button><button class="chip" type="button" data-g="down">줄어든다</button>
             </div>
@@ -105,42 +160,42 @@
               <canvas aria-label="두 과세 방식에서 소득에 따른 세후 소득"></canvas>
               <p class="mono small say"></p>
             </div>
-            <p class="fig-note">세율표는 앞 카드와 같은 수업용 가상 값입니다. "단순 구간 방식"은 비교를 위해 만든 가상의 방식입니다.</p>
+            <p class="fig-note">세율표는 앞 카드와 같은 수업용 가상 값이다. 단순 구간 방식은 비교를 위해 만든 가상의 방식이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>연봉 협상에서 "조금 더 받으면 세율 구간이 올라가서 오히려 손해"라는 말을 듣곤 합니다. 정말 그럴까요?</li>
-            <li><span class="tag">복원</span>함수가 연속이면 그래프가 끊기지 않습니다. 기울기가 양수인 일차함수는 증가합니다.</li>
-            <li><span class="tag">설명</span>초과 누진에서는 구간 경계를 넘은 몫에만 높은 세율이 붙습니다. 그래서 세금 \(T(x)\)는 끊기지 않는 연속함수이고, 세후 소득 \(x - T(x)\)의 기울기는 \(1 - (\text{한계세율}) > 0\)이라 소득이 늘면 세후 소득도 반드시 늘어납니다. 만약 소득 전체에 그 구간의 세율을 매긴다면(단순 구간 방식) 경계에서 세금이 갑자기 뛰어 세후 소득이 줄어드는 구간이 생깁니다.</li>
-            <li><span class="tag">연결</span>실제 세금과 복지 제도에서도 "기준선을 넘으면 혜택이 통째로 사라지는" 설계는 이런 불연속을 만들어 문제가 됩니다. 제도를 설계할 때 연속성을 따지는 이유입니다.</li>
-            <li><span class="tag">적용</span>예측한 뒤 결과를 보고, 막대로 소득을 움직여 단순 구간 방식에서 세후 소득이 줄어드는 소득 범위를 찾아보세요.</li>
-            <li class="warn"><span class="tag">판단</span>한계세율이 100%보다 작은 초과 누진 체계에서는 소득이 늘어 손해 보는 일이 없습니다. "구간"이라는 말만 듣고 소득 전체에 높은 세율이 붙는다고 생각하면 안 됩니다.</li>
+            <li><span class="tag">질문</span>연봉 협상에서 조금 더 받으면 세율 구간이 올라가서 오히려 손해라는 말을 듣곤 한다. 정말 그럴까?</li>
+            <li><span class="tag">복원</span>함수가 연속이면 그래프가 끊기지 않고, 기울기가 양수인 일차함수는 증가한다.</li>
+            <li><span class="tag">설명</span>초과 누진에서는 구간 경계를 넘은 몫에만 높은 세율이 붙는다. 그래서 세금 \(T(x)\)는 끊기지 않는 연속함수이고, 세후 소득 \(x - T(x)\)의 기울기는 \(1 - (\text{한계세율}) &gt; 0\)이라 소득이 늘면 세후 소득도 반드시 늘어난다. 반면 소득 전체에 그 구간의 세율을 매긴다면(단순 구간 방식) 경계에서 세금이 갑자기 뛰어 세후 소득이 줄어드는 구간이 생긴다.</li>
+            <li><span class="tag">연결</span>실제 세금과 복지 제도에서도 기준선을 넘으면 혜택이 통째로 사라지는 설계는 이런 불연속을 만들어 문제가 된다. 제도를 설계할 때 연속성을 따지는 까닭이 이것이다.</li>
+            <li><span class="tag">적용</span>예측한 뒤 결과를 보고, 막대로 소득을 움직여 단순 구간 방식에서 세후 소득이 줄어드는 소득 범위를 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>한계세율이 100%보다 작은 초과 누진 체계에서는 소득이 늘어 손해 보는 일이 없다. 그래서 구간이라는 말만 듣고 소득 전체에 높은 세율이 붙는다고 생각하면 안 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">가상 세율표(초과 누진)에서 과세표준이 8000만 원에서 8100만 원으로 늘면 세금은 얼마나 늘까요?</p>
+          <p class="q">가상 세율표(초과 누진)에서 과세표준이 8000만 원에서 8100만 원으로 늘면 세금은 얼마나 늘까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>35만 원<span class="why"><b>맞습니다.</b> 늘어난 100만 원에만 35%가 붙습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>835만 원<span class="why"><b>소득 전체의 세율을 25%에서 35%로 바꿔 계산했습니다(단순 구간 방식).</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>25만 원<span class="why"><b>8000만 원을 넘은 몫은 35% 구간입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10만 원<span class="why"><b>세율의 차 10%p를 곱했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>35만 원<span class="why"><b>맞다.</b> 늘어난 100만 원에만 35%가 붙는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>835만 원<span class="why"><b>소득 전체의 세율을 25%에서 35%로 바꿔 계산했다(단순 구간 방식).</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>25만 원<span class="why"><b>8000만 원을 넘은 몫은 35% 구간이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>10만 원<span class="why"><b>세율의 차 10%p를 곱했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/3-1.html#card-cm2-func-map"><small class="mono">공통수학2 3.1</small>어떤 대응을 함수라고 부를까?</a><a href="../../c/cm2/3-1.html#card-cm2-func-graph"><small class="mono">공통수학2 3.1</small>그래프만 보고 함수인지 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/2-5.html#card-econ-tax-incidence"><small class="mono">경제 수학 2.5</small>판매자에게 1잔에 500원씩 세금을 매기면 누가 그 세금을 낼까?</a><a href="../../c/econ/2-5.html#card-econ-income-shift"><small class="mono">경제 수학 2.5</small>소득이 늘면 라면 값은 오를까 내릴까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/3-1.html#card-cm2-func-map"><small class="mono">공통수학2 3.1</small>어떤 대응을 함수라고 부를까?</a><a href="../../c/cm2/3-1.html#card-cm2-func-graph"><small class="mono">공통수학2 3.1</small>그래프만 보고 함수인지 알 수 있을까?</a><a href="../../c/cm2/3-1.html#text-cm2-function"><small class="mono">공통수학2 3.1</small>함수</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/2-5.html#card-econ-tax-incidence"><small class="mono">경제 수학 2.5</small>판매자에게 1잔에 500원씩 세금을 매기면 누가 그 세금을 낼까?</a><a href="../../c/econ/2-5.html#card-econ-income-shift"><small class="mono">경제 수학 2.5</small>소득이 늘면 라면 값은 오를까 내릴까?</a><a href="../../c/econ/2-5.html#text-econ-tax-eq"><small class="mono">경제 수학 2.5</small>세금·소득과 균형 가격</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=econ-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=econ&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -148,6 +203,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/econ/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/econ/tax.js"></script>
 <script src="../../js/cards/econ/progressive-tax.js"></script>

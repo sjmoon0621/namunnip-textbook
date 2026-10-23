@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이차곡선의 표준형 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="이차형식 xᵀAx, 직교대각화로 축을 돌려 xy항 없애기, 고윳값의 부호로 이차곡선 분류하기. 좌표축을 고유벡터 방향으로 돌려 표준형을 얻는 카드와, 여섯 식의 모양을 예측하고 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-conic-rotate canvas { aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; display: block; }
@@ -46,18 +51,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-conic-rotate"><span class="mono">3.5.1</span>축을 돌려 xy항 없애기</a></li>
-        <li><a href="#card-adalg-conic-classify"><span class="mono">3.5.2</span>고윳값의 부호로 이차곡선 가리기</a></li>
+        <li><a href="#text-adalg-conic-form"><span class="mono">본문</span>이차곡선의 표준형</a></li>
+        <li><a href="#card-adalg-conic-rotate"><span class="mono">탐구 1</span>축을 돌려 xy항 없애기</a></li>
+        <li><a href="#card-adalg-conic-classify"><span class="mono">탐구 2</span>고윳값의 부호로 이차곡선 가리기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=3-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-3-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-conic-form" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이차곡선의 표준형</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">방정식 \(2x^2 + 2xy + 2y^2 = 3\)과 \(x^2 + 4xy + y^2 = 3\)은 생김새가 비슷하지만, 그려 보면 하나는 비스듬히 누운 타원이고 다른 하나는 비스듬한 쌍곡선이다. \(xy\)항이 있으면 교과서에서 배운 표준형과 모양이 달라 바로 알아보기 어렵다. 좌표축을 알맞게 돌리면 \(xy\)항이 사라진다는데, 몇 도를 돌려야 할까? 그리고 돌리지 않고도 타원인지 쌍곡선인지 가려낼 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="두 이차곡선의 행렬과 고윳값">
+              <g class="s">
+                <text x="20" y="22">방정식</text><text x="200" y="22">행렬</text><text x="320" y="22">고윳값</text><text x="420" y="22">모양</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">2x² + 2xy + 2y² = 3</text><text x="200" y="52">(2, 1 / 1, 2)</text><text x="320" y="52">3, 1</text><text x="420" y="52" class="td">타원</text>
+                <text x="20" y="74">x² + 4xy + y² = 3</text><text x="200" y="74">(1, 2 / 2, 1)</text><text x="320" y="74">3, −1</text><text x="420" y="74" class="tb">쌍곡선</text>
+                <text x="20" y="104">고윳값의 부호가 같으면 타원, 다르면 쌍곡선이다.</text>
+                <text x="20" y="124">xy의 계수는 반으로 나누어 대각선 밖의 두 자리에 넣는다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 이차식의 계수로 만든 대칭행렬의 고윳값이 곡선의 모양을 정한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>직교대각화(<a href="3-4.html">직교행렬과 직교대각화</a>), 타원과 쌍곡선의 방정식, 회전변환.</div>
+
+          <h3><span class="no">3.5.1</span>이차식을 행렬로 쓰다</h3>
+          <p>이차식 \(ax^2 + bxy + cy^2\)은 \(\vec x = (x, y)\)와 대칭행렬 \(A = \begin{pmatrix}a & b/2\\ b/2 & c\end{pmatrix}\)으로 \(\vec x^TA\vec x\)라 쓸 수 있다. \(xy\)의 계수를 반씩 나누어 두 자리에 넣어야 행렬이 대칭이 된다. 대칭행렬은 \(A = QDQ^T\)로 직교대각화되므로, 새 좌표 \(\vec X = Q^T\vec x\)를 쓰면 \(\vec x^TA\vec x = \vec X^TD\vec X = \lambda_1X^2 + \lambda_2Y^2\)이 된다. 직교행렬 \(Q\)는 회전이므로, 좌표축을 고유벡터 방향으로 돌리면 \(xy\)항이 사라진 표준형을 얻는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.5.1 <span class="nm">주축 정리</span></span>
+            <p>\(ax^2 + bxy + cy^2 = k\)는 행렬 \(\begin{pmatrix}a & b/2\\ b/2 & c\end{pmatrix}\)의 고윳값 \(\lambda_1\), \(\lambda_2\)와 단위 고유벡터 방향의 좌표 \(X\), \(Y\)로 \(\lambda_1X^2 + \lambda_2Y^2 = k\)가 된다. \(k > 0\)일 때 두 고윳값이 모두 양수이면 타원, 부호가 다르면 쌍곡선이다. 행렬식 \(ac - b^2/4\)가 고윳값의 곱이므로 그 부호로도 판정한다.</p>
+          </div>
+          <p>그래서 그래프를 그리거나 축을 돌리지 않고도, 행렬식의 부호만 보고 곡선의 종류를 안다. 행렬식이 양수이면 두 고윳값의 부호가 같고, 대각합이 양수이면 둘 다 양수여서 \(k > 0\)일 때 타원이다. 행렬식이 음수이면 부호가 달라 쌍곡선이고, 0이면 한 고윳값이 0이어서 평행한 두 직선 같은 퇴화한 경우가 된다. 축을 돌리는 각은 고유벡터의 방향이 정하며, \(a = c\)이면 고유벡터가 \((1, 1)\)과 \((1, -1)\)이어서 늘 45°이다.<sup class="fn"><a href="#fn-adalg-conic-form-1">1</a></sup></p>
+
+          <h3><span class="no">3.5.2</span>표준형에서 크기 읽기</h3>
+          <p>표준형 \(\lambda_1X^2 + \lambda_2Y^2 = k\)에서 타원이면 반축의 길이는 \(\sqrt{k/\lambda_1}\)과 \(\sqrt{k/\lambda_2}\)이다. 고윳값이 클수록 그 방향의 반축이 짧다. 쌍곡선이면 양수 고윳값의 방향으로 꼭짓점이 놓이고, 점근선의 기울기는 고윳값의 비로 정해진다. 이렇게 행렬의 고윳값과 고유벡터만으로 곡선의 종류, 방향, 크기를 모두 알 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 곡선의 표준형">
+              <g class="s">
+                <text x="20" y="22">원래 식</text><text x="200" y="22">45° 돌린 표준형</text><text x="380" y="22">크기</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">2x² + 2xy + 2y² = 3</text><text x="200" y="52">X² + Y²/3 = 1</text><text x="380" y="52">반축 1, √3</text>
+                <text x="20" y="74">x² + 4xy + y² = 3</text><text x="200" y="74">X² − Y²/3 = 1</text><text x="380" y="74">꼭짓점 X = ±1</text>
+                <text x="20" y="96">판정</text><text x="200" y="96">det = 3 > 0, det = −3 &lt; 0</text><text x="380" y="96" class="td">타원, 쌍곡선</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 고유벡터 방향으로 45° 돌린 좌표에서 두 곡선은 교과서의 표준형이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.5.2</span>
+            <p>\(2x^2 + 2xy + 2y^2 = 3\)을 표준형으로 바꾸고 반축의 길이와 방향을 구하여라. 또 \(5x^2 - 4xy + 2y^2 = 6\)이 어떤 곡선인지 그리지 않고 판정하여라.</p>
+          </div>
+          <p>행렬은 \(\begin{pmatrix}2 & 1\\ 1 & 2\end{pmatrix}\)이고 고윳값 3, 1에 단위 고유벡터 \(\tfrac{1}{\sqrt2}(1, 1)\), \(\tfrac{1}{\sqrt2}(1, -1)\)이다. 이 방향의 좌표 \(X\), \(Y\)로 \(3X^2 + Y^2 = 3\), 곧 \(X^2 + \dfrac{Y^2}{3} = 1\)이다. 반축은 \(y = x\) 방향으로 1, \(y = -x\) 방향으로 \(\sqrt3\)인 타원이다.</p>
+          <p>\(5x^2 - 4xy + 2y^2\)의 행렬은 \(\begin{pmatrix}5 & -2\\ -2 & 2\end{pmatrix}\)이고 행렬식은 \(10 - 4 = 6 > 0\), 대각합은 \(7 > 0\)이므로 두 고윳값이 모두 양수이다. 그래서 오른쪽이 6으로 양수인 이 곡선은 타원이다. 실제로 특성방정식 \(\lambda^2 - 7\lambda + 6 = 0\)에서 고윳값은 6과 1이고, 표준형은 \(6X^2 + Y^2 = 6\)이다. 즉 \(xy\)항이 있는 이차곡선은 계수로 만든 대칭행렬을 직교대각화해 좌표축을 고유벡터 방향으로 돌리면 표준형이 되고, 고윳값의 부호가 곡선의 종류를 정한다.</p>
+          <p>아래 탐구 카드에서 \(xy\)항이 있는 이차곡선의 좌표축을 돌려 표준형으로 바꾸어 보고, 그리지 않고 곡선의 모양을 판정해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-conic-form-1">고윳값의 부호로 이차식의 모양을 가르는 방법은 함수의 극값 판정에도 쓰인다. 두 변수 함수의 이계도함수로 만든 대칭행렬의 고윳값이 모두 양수이면 극소, 모두 음수이면 극대, 부호가 다르면 말안장 모양의 안장점이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>이차식 \(ax^2 + bxy + cy^2\)은 \(xy\)의 계수를 반씩 나눈 대칭행렬로 쓸 수 있고, 이 행렬을 직교대각화해 좌표축을 고유벡터 방향으로 돌리면 \(xy\)항이 사라진 표준형 \(\lambda_1X^2 + \lambda_2Y^2 = k\)가 된다. 두 고윳값의 부호가 같으면 타원, 다르면 쌍곡선이며, 행렬식의 부호만으로도 판정한다. 처음 질문의 두 곡선은 45° 돌리면 \(X^2 + Y^2/3 = 1\)인 타원과 \(X^2 - Y^2/3 = 1\)인 쌍곡선이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div></nav>
+
       <article class="card" id="card-adalg-conic-rotate">
         <header class="card-head">
-          <span class="no">3.5.1</span><h2>xy항이 있는 이차곡선은 어떻게 표준형으로 바꿀까?</h2><span class="kind">이차형식과 축의 회전 · 조작</span>
+          <span class="no">탐구 1</span><h2>xy항이 있는 이차곡선은 어떻게 표준형으로 바꿀까?</h2><span class="kind">이차형식과 축의 회전 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -72,30 +135,30 @@
             <p class="mono small std" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(5x^2 - 4xy + 8y^2 = 36\)은 타원일까요, 쌍곡선일까요? \(xy\)항 때문에 표준형으로 바로 읽을 수 없습니다. 좌표축을 얼마나 돌리면 \(xy\)항이 사라질까요?</li>
-            <li><span class="tag">복원</span>대칭행렬은 \(A = QDQ^T\)로 직교대각화되고, \(Q\)는 회전(또는 대칭)입니다.</li>
-            <li><span class="tag">설명</span>\(ax^2 + 2bxy + cy^2 = \vec{x}^TA\vec{x}\), \(A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}\)로 씁니다(<em>이차형식</em>). 새 좌표 \(\vec{X} = Q^T\vec{x}\)를 쓰면 \(\vec{x}^TA\vec{x} = \vec{X}^TD\vec{X} = \lambda_1X^2 + \lambda_2Y^2\)이 되어 \(XY\)항이 사라집니다. 새 축은 \(A\)의 고유벡터 방향이고, 고윳값의 부호로 모양이 정해집니다: 둘 다 양수이면 타원, 부호가 다르면 쌍곡선입니다.</li>
-            <li><span class="tag">연결</span>회전한 각 \(\theta\)는 \(\tan2\theta = \dfrac{2b}{a - c}\)로도 구할 수 있습니다. 3차원에서는 같은 방법으로 \(x^2 + y^2 + z^2 + 2xy + \cdots\) 꼴의 이차곡면을 타원면, 쌍곡면으로 분류합니다.</li>
-            <li><span class="tag">적용</span>"좌표축 돌리기"를 100%까지 움직이며 곡선이 새 축에 대해 반듯해지는 것을 보세요. 표준형의 계수가 고윳값과 같은지 확인하세요. \(a\), \(c\)를 작게 하고 \(b\)를 키우면 모양이 타원에서 쌍곡선으로 바뀌는 순간이 있나요? 그때 \(\det A = ac - b^2\)은 얼마인가요?</li>
-            <li class="warn"><span class="tag">판단</span>곡선은 그대로이고 좌표축만 돌린 것입니다. 표준형에서 읽은 꼭짓점과 초점은 새 좌표 \((X, Y)\)의 값이므로, 원래 좌표로 돌려놓으려면 \(\vec{x} = Q\vec{X}\)를 계산해야 합니다.</li>
+            <li><span class="tag">질문</span>\(5x^2 - 4xy + 8y^2 = 36\)은 타원일까요, 쌍곡선일까? \(xy\)항 때문에 표준형으로 바로 읽을 수 없다. 좌표축을 얼마나 돌리면 \(xy\)항이 사라질까?</li>
+            <li><span class="tag">복원</span>대칭행렬은 \(A = QDQ^T\)로 직교대각화되고, \(Q\)는 회전(또는 대칭)이다.</li>
+            <li><span class="tag">설명</span>\(ax^2 + 2bxy + cy^2 = \vec{x}^TA\vec{x}\), \(A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}\)로 쓴다(<em>이차형식</em>). 새 좌표 \(\vec{X} = Q^T\vec{x}\)를 쓰면 \(\vec{x}^TA\vec{x} = \vec{X}^TD\vec{X} = \lambda_1X^2 + \lambda_2Y^2\)이 되어 \(XY\)항이 사라진다. 새 축은 \(A\)의 고유벡터 방향이고, 고윳값의 부호로 모양이 정해진다. 둘 다 양수이면 타원, 부호가 다르면 쌍곡선이다.</li>
+            <li><span class="tag">연결</span>회전한 각 \(\theta\)는 \(\tan2\theta = \dfrac{2b}{a - c}\)로도 구할 수 있다. 3차원에서는 같은 방법으로 \(x^2 + y^2 + z^2 + 2xy + \cdots\) 꼴의 이차곡면을 타원면, 쌍곡면으로 분류한다.</li>
+            <li><span class="tag">적용</span>"좌표축 돌리기"를 100%까지 움직이며 곡선이 새 축에 대해 반듯해지는 것을 보자. 표준형의 계수가 고윳값과 같은지 확인해 보자. \(a\), \(c\)를 작게 하고 \(b\)를 키우면 모양이 타원에서 쌍곡선으로 바뀌는 순간이 있는가? 그때 \(\det A = ac - b^2\)은 얼마인가?</li>
+            <li class="warn"><span class="tag">판단</span>곡선은 그대로이고 좌표축만 돌린 것이다. 표준형에서 읽은 꼭짓점과 초점은 새 좌표 \((X, Y)\)의 값이므로, 원래 좌표로 돌려놓으려면 \(\vec{x} = Q\vec{X}\)를 계산해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(2xy = 1\)을 표준형으로 바꾸면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(X^2 - Y^2 = 1\)(45° 돌린 쌍곡선)<span class="why"><b>맞습니다.</b> \(A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)의 고윳값은 1, \(-1\)이고 고유벡터는 \((1, 1)\), \((1, -1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(X^2 + Y^2 = 1\)<span class="why"><b>고윳값의 부호가 다릅니다.</b> \(\det A = -1 < 0\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2X^2 = 1\)<span class="why"><b>\(xy\)의 계수 2를 그대로 가져왔습니다.</b> 행렬에는 절반인 1이 들어갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>표준형으로 바꿀 수 없다.<span class="why"><b>대칭행렬은 늘 직교대각화됩니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(X^2 - Y^2 = 1\)(45° 돌린 쌍곡선)<span class="why"><b>맞다.</b> \(A = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)의 고윳값은 1, \(-1\)이고 고유벡터는 \((1, 1)\), \((1, -1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(X^2 + Y^2 = 1\)<span class="why"><b>고윳값의 부호가 다르다.</b> \(\det A = -1 < 0\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(2X^2 = 1\)<span class="why"><b>\(xy\)의 계수 2를 그대로 가져왔다.</b> 행렬에는 절반인 1이 들어간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>표준형으로 바꿀 수 없다.<span class="why"><b>대칭행렬은 늘 직교대각화된다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-eq"><small class="mono">기하 1.2</small>방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div></nav>
 
       <article class="card" id="card-adalg-conic-classify">
         <header class="card-head">
-          <span class="no">3.5.2</span><h2>그리지 않고 이차곡선의 모양을 알 수 있을까?</h2><span class="kind">고윳값으로 분류하기 · 예측→확인</span>
+          <span class="no">탐구 2</span><h2>그리지 않고 이차곡선의 모양을 알 수 있을까?</h2><span class="kind">고윳값으로 분류하기 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -112,39 +175,39 @@
             <div class="presets"><button class="chip go-next" type="button" disabled>다음 식</button></div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x^2 + 4xy + y^2 = 3\)은 \(x^2\)과 \(y^2\)의 계수가 모두 양수라 타원처럼 보입니다. 정말 그럴까요? 계산 몇 번으로 모양을 알아낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(ax^2 + 2bxy + cy^2 = k\)는 축을 돌려 \(\lambda_1X^2 + \lambda_2Y^2 = k\)로 바꿀 수 있고, \(\lambda_1, \lambda_2\)는 \(A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}\)의 고윳값입니다.</li>
-            <li><span class="tag">설명</span>\(k > 0\)일 때 ① \(\lambda_1, \lambda_2\)가 모두 양수이면 타원, ② 부호가 다르면 쌍곡선, ③ 하나가 0이고 하나가 양수이면 평행한 두 직선, ④ 모두 0 이하이면 그래프가 없습니다. 고윳값을 다 구하지 않아도 \(\det A = \lambda_1\lambda_2\), \(\mathrm{tr}\,A = \lambda_1 + \lambda_2\)로 부호를 알 수 있습니다: \(\det A > 0\)이고 \(\mathrm{tr}\,A > 0\)이면 타원, \(\det A < 0\)이면 쌍곡선입니다.</li>
-            <li><span class="tag">연결</span>이 판정은 다변수 함수의 극대·극소 판정(헤세 행렬), 구조물이 안정한지 판정하는 데도 같은 모양으로 나옵니다. 모두 "대칭행렬의 고윳값 부호"를 봅니다.</li>
-            <li><span class="tag">적용</span>여섯 식의 모양을 먼저 고르고 확인하세요. 확인할 때마다 \(\det A\)와 \(\mathrm{tr}\,A\)만으로도 같은 답이 나오는지 따져 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(x^2\)과 \(y^2\)의 계수만 보고 판단하면 \(xy\)항의 효과를 놓칩니다. 또 우변 \(k\)의 부호도 봐야 합니다. \(k < 0\)이면 양변에 \(-1\)을 곱해 생각합니다.</li>
+            <li><span class="tag">질문</span>\(x^2 + 4xy + y^2 = 3\)은 \(x^2\)과 \(y^2\)의 계수가 모두 양수라 타원처럼 보인다. 정말 그럴까? 계산 몇 번으로 모양을 알아낼 수 있을까?</li>
+            <li><span class="tag">복원</span>\(ax^2 + 2bxy + cy^2 = k\)는 축을 돌려 \(\lambda_1X^2 + \lambda_2Y^2 = k\)로 바꿀 수 있고, \(\lambda_1, \lambda_2\)는 \(A = \begin{pmatrix} a & b \\ b & c \end{pmatrix}\)의 고윳값이다.</li>
+            <li><span class="tag">설명</span>\(k > 0\)일 때 ① \(\lambda_1, \lambda_2\)가 모두 양수이면 타원, ② 부호가 다르면 쌍곡선, ③ 하나가 0이고 하나가 양수이면 평행한 두 직선, ④ 모두 0 이하이면 그래프가 없다. 고윳값을 다 구하지 않아도 \(\det A = \lambda_1\lambda_2\), \(\mathrm{tr}\,A = \lambda_1 + \lambda_2\)로 부호를 알 수 있다. \(\det A > 0\)이고 \(\mathrm{tr}\,A > 0\)이면 타원, \(\det A < 0\)이면 쌍곡선이다.</li>
+            <li><span class="tag">연결</span>이 판정은 다변수 함수의 극대·극소 판정(헤세 행렬), 구조물이 안정한지 판정하는 데도 같은 모양으로 나온다. 모두 "대칭행렬의 고윳값 부호"를 본다.</li>
+            <li><span class="tag">적용</span>여섯 식의 모양을 먼저 고르고 확인해 보자. 확인할 때마다 \(\det A\)와 \(\mathrm{tr}\,A\)만으로도 같은 답이 나오는지 따져 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(x^2\)과 \(y^2\)의 계수만 보고 판단하면 \(xy\)항의 효과를 놓친다. 또 우변 \(k\)의 부호도 봐야 한다. \(k < 0\)이면 양변에 \(-1\)을 곱해 생각한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(3x^2 + 2bxy + 3y^2 = 1\)이 쌍곡선이 되는 \(b\)의 조건은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(|b| > 3\)<span class="why"><b>맞습니다.</b> \(\det A = 9 - b^2 < 0\)이어야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(b < 0\)<span class="why"><b>\(b\)의 부호는 축의 기울기 방향만 바꿉니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(|b| > 6\)<span class="why"><b>\(xy\)의 계수 \(2b\)와 행렬 성분 \(b\)를 헷갈렸습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(b\)로도 안 된다.<span class="why"><b>\(b = 4\)이면 고윳값이 7, \(-1\)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(|b| > 3\)<span class="why"><b>맞다.</b> \(\det A = 9 - b^2 < 0\)이어야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(b < 0\)<span class="why"><b>\(b\)의 부호는 축의 기울기 방향만 바꾼다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(|b| > 6\)<span class="why"><b>\(xy\)의 계수 \(2b\)와 행렬 성분 \(b\)를 헷갈렸다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>어떤 \(b\)로도 안 된다.<span class="why"><b>\(b = 4\)이면 고윳값이 7, \(-1\)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a><a href="../../c/geo/1-2.html#card-geo-ellipse-eq"><small class="mono">기하 1.2</small>방정식만 보고 타원의 초점과 장축을 찾을 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a><a href="../../c/geo/1-2.html#card-geo-ellipse-def"><small class="mono">기하 1.2</small>두 핀과 끈으로 그린 곡선은 무엇일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-3-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=3-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

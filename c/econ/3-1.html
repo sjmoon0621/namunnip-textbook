@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>경제 현상과 행렬 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="판매량·가격 자료를 행렬로 정리하기, 행렬의 곱으로 매출 계산, 전이 행렬과 행렬의 거듭제곱으로 시장 점유율 변화 예측, 안정 상태. 세 지점의 매출을 한 번에 구하는 카드와, 고객 이동으로 점유율을 시뮬레이션하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-econ-sales-matrix .mx { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .4rem 0; font-family: var(--mono, monospace); font-size: .9rem; }
@@ -51,22 +56,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-econ-sales-matrix"><span class="mono">3.1.1</span>판매량 행렬 × 가격 행렬 = 매출</a></li>
-        <li><a href="#card-econ-market-share"><span class="mono">3.1.2</span>갈아타는 비율로 시장 점유율 예측</a></li>
+        <li><a href="#text-econ-matrix"><span class="mono">본문</span>경제 현상과 행렬</a></li>
+        <li><a href="#card-econ-sales-matrix"><span class="mono">탐구 1</span>판매량 행렬 × 가격 행렬 = 매출</a></li>
+        <li><a href="#card-econ-market-share"><span class="mono">탐구 2</span>갈아타는 비율로 시장 점유율 예측</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=econ-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=econ&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=econ-3-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-econ-matrix" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>경제 현상과 행렬</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">두 통신사 A와 B가 시장을 반씩 나누고 있다. 해마다 A의 고객 가운데 20%는 B로, B의 고객 가운데 30%는 A로 옮긴다고 하자. 내년, 그다음 해의 점유율은 어떻게 될까? 이 과정이 10년, 20년 이어지면 한쪽이 시장을 모두 차지하게 될까, 아니면 어떤 비율에 머무를까? 행렬을 쓰면 이 계산이 곱셈 한 번으로 정리된다.</p>
+          <figure class="q-fig" data-q="econ-markov">
+            <svg viewBox="0 0 520 230" role="img" aria-label="해마다 고객이 옮겨 가는 비율에 따른 두 회사의 점유율 변화"></svg>
+            <div class="q-ctl"><label>지난 햇수 \(n\) <input type="range" data-k="n" min="0" max="15" step="1" value="2"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 처음 점유율 A 50%, B 50%에서 시작하여 해마다 전이 행렬을 곱한다. 몇 해 지나지 않아 A 60%, B 40%에 다가가며 더는 변하지 않는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 뜻과 성분, 행렬의 곱셈(공통수학1).</div>
+
+          <h3><span class="no">3.1.1</span>표를 행렬로</h3>
+          <p>경제 자료는 흔히 표로 정리된다. 세 지점이 판매한 상품별 수량을 행렬 \(A\)로, 상품별 값을 열 행렬 \(B\)로 놓으면 곱 \(AB\)의 각 성분이 지점별 매출이 된다. 행렬의 곱셈은 '수량 × 값'을 더하는 계산을 한꺼번에 해 준다.</p>
+          <div class="tb-env thm"><span class="lb">정의 3.1.1 <span class="nm">전이 행렬</span></span>
+            <p>한 기간 동안 각 상태에서 다른 상태로 옮겨 가는 비율을 성분으로 하는 행렬을 전이 행렬이라 한다. 지금의 점유율을 열 행렬 \(X_n\)으로 놓으면 다음 기간의 점유율은 \(X_{n+1} = TX_n\)이고, \(n\)기간 뒤에는 \(X_n = T^nX_0\)이다.</p>
+          </div>
+          <p>A에 남는 비율 0.8, B에서 A로 오는 비율 0.3을 첫째 행에, A에서 B로 가는 0.2와 B에 남는 0.7을 둘째 행에 놓으면 \[T = \begin{pmatrix} 0.8 &amp; 0.3 \\ 0.2 &amp; 0.7 \end{pmatrix}\] 이다. 그리고 각 열의 합이 1인 것은 한 회사의 고객이 남거나 옮겨 갈 뿐 사라지지 않기 때문이다. 그래서 두 회사의 점유율을 더하면 언제나 100%이다.</p>
+          <p>\(T\)를 열 단위로 읽으면 뜻이 더 잘 보인다. 첫째 열 \(\begin{pmatrix} 0.8 \\ 0.2 \end{pmatrix}\)은 A의 고객 한 명이 내년에 어디에 있는지를, 둘째 열 \(\begin{pmatrix} 0.3 \\ 0.7 \end{pmatrix}\)은 B의 고객 한 명이 어디에 있는지를 나눈 것이다. 그러면 \(TX_n\)은 A 고객의 몫만큼 첫째 열을, B 고객의 몫만큼 둘째 열을 더한 것, 곧 두 회사의 고객이 각자 흩어진 결과를 합친 것이다. 각 열의 합이 1이라는 조건도 '한 사람은 어딘가에 반드시 있다'는 말로 읽힌다.</p>
+
+          <h3><span class="no">3.1.2</span>안정 상태</h3>
+          <p>그림 1에서 햇수를 늘려 보자. 점유율은 \((0.5, 0.5)\)에서 \((0.55, 0.45)\), \((0.575, 0.425)\)로 변하며 \((0.6, 0.4)\)에 다가간다. 따라서 이 점에서는 \(TX = X\)가 되어 더는 변하지 않는다. 이를 안정 상태라 한다. 안정 상태에서는 A에서 B로 가는 고객 수와 B에서 A로 오는 고객 수가 같다.<sup class="fn"><a href="#fn-econ-matrix-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="두 회사 사이의 고객 이동">
+              <g class="s">
+                <circle cx="140" cy="60" r="34" class="lb"/><text x="140" y="65" text-anchor="middle">A</text>
+                <circle cx="380" cy="60" r="34" class="lc"/><text x="380" y="65" text-anchor="middle">B</text>
+                <path d="M176 48 Q 260 18 344 48" class="k"/><path d="M344 48 l-9 -1 l4 8 Z" class="fk"/><text x="260" y="22" text-anchor="middle">20%</text>
+                <path d="M344 72 Q 260 102 176 72" class="k"/><path d="M176 72 l9 1 l-4 -8 Z" class="fk"/><text x="260" y="108" text-anchor="middle">30%</text>
+                <text x="70" y="65" text-anchor="end">80% 남음</text><text x="450" y="65">70% 남음</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 해마다 A 고객의 20%가 B로, B 고객의 30%가 A로 옮긴다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+            <p>위 전이 행렬에서 처음 점유율이 A 50%, B 50%일 때 1년 뒤 점유율을 구하여라. 또 안정 상태의 점유율을 구하여라.</p>
+          </div>
+          <p>\[TX_0 = \begin{pmatrix} 0.8 &amp; 0.3 \\ 0.2 &amp; 0.7 \end{pmatrix}\begin{pmatrix} 0.5 \\ 0.5 \end{pmatrix} = \begin{pmatrix} 0.4 + 0.15 \\ 0.1 + 0.35 \end{pmatrix} = \begin{pmatrix} 0.55 \\ 0.45 \end{pmatrix}\] 이므로 1년 뒤 A 55%, B 45%이다.</p>
+          <p>안정 상태를 \((a, 1 - a)\)로 놓으면 \(0.8a + 0.3(1 - a) = a\)이므로 \(0.5a + 0.3 = a\), 곧 \(a = 0.6\)이다. A에서 B로 가는 양 \(0.2 \times 0.6 = 0.12\)와 B에서 A로 오는 양 \(0.3 \times 0.4 = 0.12\)가 같다. 처음 점유율이 어떻든 이 비율에 다가가므로, 한쪽이 시장을 모두 차지하지는 않는다.</p>
+          <p>아래 탐구 카드에서 지점별 매출을 행렬로 계산하고, 점유율이 어디로 가는지 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-econ-matrix-1">이렇게 다음 상태가 지금 상태에만 달려 있는 과정을 마르코프 연쇄라 한다. 날씨 예측, 검색 엔진의 웹 페이지 순위 계산 등에도 같은 원리가 쓰인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>경제 자료의 표는 행렬로 나타낼 수 있고, 행렬의 곱셈으로 매출이나 다음 기간의 상태를 한꺼번에 계산한다. 옮겨 가는 비율을 담은 전이 행렬 \(T\)를 거듭 곱하면 상태가 안정 상태 \(TX = X\)에 다가간다. 그래서 처음 질문의 두 통신사는 해마다 고객이 오가도 결국 A 60%, B 40%의 점유율에 머무른다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-2.html#card-econ-inverse-steps"><small class="mono">경제 수학 3.2</small>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</a><a href="../../c/econ/3-2.html#card-econ-bundle-price"><small class="mono">경제 수학 3.2</small>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</a><a href="../../c/econ/3-2.html#text-econ-inverse"><small class="mono">경제 수학 3.2</small>역행렬</a></div></nav>
+
       <article class="card" id="card-econ-sales-matrix">
         <header class="card-head">
-          <span class="no">3.1.1</span><h2>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</h2><span class="kind">행렬의 곱셈 · 조작</span>
+          <span class="no">탐구 1</span><h2>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</h2><span class="kind">행렬의 곱셈 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">빵집 세 지점의 하루 판매량(개)과 품목별 가격(원)입니다. 숫자를 바꾸고, 결과 칸을 눌러 어떤 행과 열을 곱했는지 보세요.</p>
+            <p class="small">빵집 세 지점의 하루 판매량(개)과 품목별 가격(원)이다. 숫자를 바꾸고, 결과 칸을 눌러 어떤 행과 열을 곱했는지 보자.</p>
             <div class="mx">
               <div><span class="lab">판매량 A (지점 × 품목)</span><table class="m qa"></table></div>
               <span>×</span>
@@ -75,37 +132,37 @@
               <div><span class="lab">매출 AB (지점 × 1)</span><table class="m rc"></table></div>
             </div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">판매량과 가격은 수업용 모의 값입니다.</p>
+            <p class="fig-note">판매량과 가격은 수업용 모의 값이다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지점마다 식빵, 크루아상, 케이크의 판매량이 다르고, 가격도 품목마다 다릅니다. 가격이 바뀔 때마다 세 지점의 매출을 빠르게 다시 계산하려면 어떻게 정리하면 좋을까요?</li>
-            <li><span class="tag">복원</span>\(m \times n\) 행렬과 \(n \times p\) 행렬의 곱은 \(m \times p\) 행렬이고, \((i, j)\) 성분은 앞 행렬의 \(i\)행과 뒤 행렬의 \(j\)열의 성분을 차례로 곱해 더한 값입니다.</li>
-            <li><span class="tag">설명</span>판매량을 지점(행) × 품목(열)의 행렬 \(A\)로, 가격을 품목(행) × 1의 행렬 \(B\)로 쓰면, \(AB\)의 \(i\)행은 \(i\)번째 지점의 (판매량 × 가격)의 합, 곧 <em>매출</em>입니다. 가격 행렬에 원가 열을 하나 더 붙이면 매출과 총원가를 한 번의 곱셈으로 함께 구할 수 있습니다.</li>
-            <li><span class="tag">연결</span>표 계산 프로그램의 SUMPRODUCT, 회사의 재고·판매 집계가 모두 이런 행렬 곱입니다. 다음 카드에서는 행렬을 거듭 곱해 시간에 따른 변화를 계산합니다.</li>
-            <li><span class="tag">적용</span>케이크 값을 1000원 올리면 어느 지점 매출이 가장 많이 늘까요? 먼저 예측한 뒤 확인하세요. \(BA\)는 계산할 수 있을까요?</li>
-            <li class="warn"><span class="tag">판단</span>행렬의 곱은 앞 행렬의 열의 수와 뒤 행렬의 행의 수가 같아야 정의됩니다. 행과 열이 무엇을 뜻하는지(지점인지 품목인지) 맞춰 써야 곱의 결과도 의미가 있습니다.</li>
+            <li><span class="tag">질문</span>지점마다 식빵, 크루아상, 케이크의 판매량이 다르고, 가격도 품목마다 다르다. 가격이 바뀔 때마다 세 지점의 매출을 빠르게 다시 계산하려면 어떻게 정리하면 좋을까?</li>
+            <li><span class="tag">복원</span>\(m \times n\) 행렬과 \(n \times p\) 행렬의 곱은 \(m \times p\) 행렬이고, \((i, j)\) 성분은 앞 행렬의 \(i\)행과 뒤 행렬의 \(j\)열의 성분을 차례로 곱해 더한 값이다.</li>
+            <li><span class="tag">설명</span>판매량을 지점(행) × 품목(열)의 행렬 \(A\)로, 가격을 품목(행) × 1의 행렬 \(B\)로 쓰면, \(AB\)의 \(i\)행은 \(i\)번째 지점의 (판매량 × 가격)의 합, 곧 <em>매출</em>이다. 또 가격 행렬에 원가 열을 하나 더 붙이면 매출과 총원가를 한 번의 곱셈으로 함께 구할 수 있다.</li>
+            <li><span class="tag">연결</span>표 계산 프로그램의 SUMPRODUCT, 회사의 재고와 판매 집계가 모두 이런 행렬 곱이다. 다음 카드에서는 행렬을 거듭 곱해 시간에 따른 변화를 계산한다.</li>
+            <li><span class="tag">적용</span>케이크 값을 1000원 올리면 어느 지점 매출이 가장 많이 늘지 먼저 예측한 뒤 확인해 보자. 그리고 \(BA\)를 계산할 수 있는지도 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>행렬의 곱은 앞 행렬의 열의 수와 뒤 행렬의 행의 수가 같아야 정의된다. 그리고 행과 열이 지점인지 품목인지 맞춰 써야 곱의 결과도 의미가 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(A = \begin{pmatrix} 2 & 3 \\ 1 & 4 \end{pmatrix}\), \(B = \begin{pmatrix} 1000 \\ 500 \end{pmatrix}\)일 때 \(AB\)의 2행의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3000<span class="why"><b>맞습니다.</b> \(1 \times 1000 + 4 \times 500 = 3000\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3500<span class="why"><b>1행의 값입니다.</b> \(2 \times 1000 + 3 \times 500\).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5000<span class="why"><b>행 대신 2열의 성분을 썼습니다.</b> \(3 \times 1000 + 4 \times 500\).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>계산할 수 없다<span class="why"><b>\(2 \times 2\)와 \(2 \times 1\)이라 곱할 수 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3000<span class="why"><b>맞다.</b> \(1 \times 1000 + 4 \times 500 = 3000\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>3500<span class="why"><b>1행의 값이다.</b> \(2 \times 1000 + 3 \times 500\).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5000<span class="why"><b>행 대신 2열의 성분을 썼다.</b> \(3 \times 1000 + 4 \times 500\).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>계산할 수 없다<span class="why"><b>\(2 \times 2\)와 \(2 \times 1\)이라 곱할 수 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-2.html#card-econ-inverse-steps"><small class="mono">경제 수학 3.2</small>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</a><a href="../../c/econ/3-2.html#card-econ-bundle-price"><small class="mono">경제 수학 3.2</small>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-2.html#card-econ-inverse-steps"><small class="mono">경제 수학 3.2</small>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</a><a href="../../c/econ/3-2.html#card-econ-bundle-price"><small class="mono">경제 수학 3.2</small>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</a><a href="../../c/econ/3-2.html#text-econ-inverse"><small class="mono">경제 수학 3.2</small>역행렬</a></div></nav>
 
       <article class="card" id="card-econ-market-share">
         <header class="card-head">
-          <span class="no">3.1.2</span><h2>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</h2><span class="kind">행렬의 거듭제곱 · 시뮬레이션</span>
+          <span class="no">탐구 2</span><h2>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</h2><span class="kind">행렬의 거듭제곱 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">가상의 두 통신사 A, B. 해마다 A 고객의 일부는 B로, B 고객의 일부는 A로 옮깁니다.</p>
+            <p class="small">가상의 두 통신사 A, B이다. 해마다 A 고객의 일부는 B로, B 고객의 일부는 A로 옮긴다.</p>
             <div class="ctl-row">
               <div><label class="mono">A → B로 옮기는 비율 = <output class="ab-out"></output>%</label><input class="ab" type="range" min="0" max="50" step="1" value="10" aria-label="A 고객이 B로 옮기는 비율"></div>
               <div><label class="mono">B → A로 옮기는 비율 = <output class="ba-out"></output>%</label><input class="ba" type="range" min="0" max="50" step="1" value="20" aria-label="B 고객이 A로 옮기는 비율"></div>
@@ -114,42 +171,42 @@
             <table class="m" aria-label="전이 행렬"><tbody class="tm"></tbody></table>
             <canvas aria-label="해마다 A와 B의 점유율 꺾은선과 수렴하는 값"></canvas>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">통신사와 비율은 수업용 가상 값입니다. 실제로는 비율이 해마다 바뀌고 새 고객과 떠나는 고객도 있습니다.</p>
+            <p class="fig-note">통신사와 비율은 수업용 가상 값이다. 실제로는 비율이 해마다 바뀌고 새 고객과 떠나는 고객도 있다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점유율 30%인 A가 B보다 고객을 덜 잃는다면(해마다 10% 대 20%) A의 점유율은 끝없이 늘어날까요, 어떤 값에서 멈출까요?</li>
-            <li><span class="tag">복원</span>행렬과 열벡터의 곱 \(\begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}\).</li>
-            <li><span class="tag">설명</span>올해 점유율을 \(\begin{pmatrix} a_n \\ b_n \end{pmatrix}\)이라 하면 내년 점유율은 <em>전이 행렬</em> \(T = \begin{pmatrix} 1 - p & q \\ p & 1 - q \end{pmatrix}\)을 곱한 \(T\begin{pmatrix} a_n \\ b_n \end{pmatrix}\)입니다(\(p\): A→B, \(q\): B→A 비율). \(n\)년 뒤는 \(T^n\)을 곱하면 됩니다. 옮겨 가는 양과 옮겨 오는 양이 같아지면(\(pa = qb\)) 더 변하지 않는데, 이 <em>안정 상태</em>는 \(a = \dfrac{q}{p + q}\)입니다.</li>
-            <li><span class="tag">연결</span>이런 모형을 마르코프 연쇄라 합니다. 브랜드 점유율, 인구 이동, 웹 페이지 순위(페이지랭크) 계산에 쓰입니다. 고급 대수의 고윳값과 고유벡터로 안정 상태를 구할 수도 있습니다.</li>
-            <li><span class="tag">적용</span>처음 점유율을 0%나 100%로 바꿔도 같은 값으로 가는지 확인하세요. 안정 상태의 A 점유율을 70%로 만들려면 비율을 어떻게 정해야 하나요?</li>
-            <li class="warn"><span class="tag">판단</span>안정 상태는 처음 점유율과 상관없고 옮기는 비율로만 정해집니다. 지금 점유율이 높다고 앞으로도 높을 거라 예측하면 안 됩니다.</li>
+            <li><span class="tag">질문</span>점유율 30%인 A가 B보다 고객을 덜 잃는다면(해마다 10% 대 20%) A의 점유율은 끝없이 늘어날까, 어떤 값에서 멈출까?</li>
+            <li><span class="tag">복원</span>행렬과 열벡터의 곱은 \(\begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}\)이다.</li>
+            <li><span class="tag">설명</span>올해 점유율을 \(\begin{pmatrix} a_n \\ b_n \end{pmatrix}\)이라 하고, A에서 B로 옮기는 비율을 \(p\), B에서 A로 옮기는 비율을 \(q\)라 하면, 내년 점유율은 <em>전이 행렬</em> \(T = \begin{pmatrix} 1 - p & q \\ p & 1 - q \end{pmatrix}\)을 곱한 \(T\begin{pmatrix} a_n \\ b_n \end{pmatrix}\)이고, \(n\)년 뒤는 \(T^n\)을 곱하면 된다. 옮겨 가는 양과 옮겨 오는 양이 같아지면(\(pa = qb\)) 더 변하지 않는데, 이 <em>안정 상태</em>는 \(a = \dfrac{q}{p + q}\)이다.</li>
+            <li><span class="tag">연결</span>이런 모형을 마르코프 연쇄라 하며, 브랜드 점유율, 인구 이동, 웹 페이지 순위(페이지랭크) 계산에 쓰인다. 고급 대수의 고윳값과 고유벡터로 안정 상태를 구할 수도 있다.</li>
+            <li><span class="tag">적용</span>처음 점유율을 0%나 100%로 바꿔도 같은 값으로 가는지 확인해 보자. 그리고 안정 상태의 A 점유율을 70%로 만들려면 비율을 어떻게 정해야 하는지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>안정 상태는 처음 점유율과 상관없고 옮기는 비율로만 정해진다. 그래서 지금 점유율이 높다고 앞으로도 높을 거라 예측하면 안 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">A → B 비율이 30%, B → A 비율이 10%이면 안정 상태에서 A의 점유율은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25%<span class="why"><b>맞습니다.</b> \(\frac{0.1}{0.3 + 0.1} = 0.25\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>75%<span class="why"><b>B의 점유율입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>33%<span class="why"><b>\(\frac{0.1}{0.3}\)으로 계산했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>처음 점유율에 따라 다르다<span class="why"><b>안정 상태는 처음 값과 무관합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>25%<span class="why"><b>맞다.</b> \(\frac{0.1}{0.3 + 0.1} = 0.25\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>75%<span class="why"><b>B의 점유율이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>33%<span class="why"><b>\(\frac{0.1}{0.3}\)으로 계산했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>처음 점유율에 따라 다르다<span class="why"><b>안정 상태는 처음 값과 무관하다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-2.html#card-econ-inverse-steps"><small class="mono">경제 수학 3.2</small>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</a><a href="../../c/econ/3-2.html#card-econ-bundle-price"><small class="mono">경제 수학 3.2</small>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-2.html#card-econ-inverse-steps"><small class="mono">경제 수학 3.2</small>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</a><a href="../../c/econ/3-2.html#card-econ-bundle-price"><small class="mono">경제 수학 3.2</small>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</a><a href="../../c/econ/3-2.html#text-econ-inverse"><small class="mono">경제 수학 3.2</small>역행렬</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=econ-3-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=econ&amp;sec=3-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -157,6 +214,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/econ/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/econ/sales-matrix.js"></script>
 <script src="../../js/cards/econ/market-share.js"></script>

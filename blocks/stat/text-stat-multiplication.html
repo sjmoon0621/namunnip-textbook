@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "2-6",
+  "short": "본문 · 확률의 곱셈정리"
+}
+-->
+<article class="card reading" id="text-stat-multiplication" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>확률의 곱셈정리</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">빨간 공 3개와 파란 공 2개가 든 주머니에서 공을 하나씩 두 번 꺼낸다. 꺼낸 공을 다시 넣지 않는다면 두 번 모두 빨간 공일 확률은 얼마일까? 또 두 번째 공이 빨간 공일 확률은 첫 번째에 무엇을 꺼냈는지에 달려 있을까?</p>
+    <figure class="q-fig" data-q="stat-tree">
+      <svg viewBox="0 0 520 250" role="img" aria-label="두 번 꺼내는 나뭇가지 그림, 가지마다 조건부확률, 끝마다 곱"></svg>
+      <div class="q-ctl"><label>다시 넣기 <input type="range" data-k="r" min="0" max="1" step="1" value="0"><output data-k="r"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 나뭇가지의 각 가지에는 앞에서 일어난 일을 조건으로 한 확률을 적고, 한 갈래 길의 확률은 가지의 확률을 곱해 얻는다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>조건부확률(<a href="2-4.html">조건부확률</a>), 독립과 종속(<a href="2-5.html">독립과 종속</a>), 조합 \({}_n\mathrm{C}_r\).</div>
+
+    <h3><span class="no">2.6.1</span>곱셈정리</h3>
+    <p>조건부확률의 정의 \(P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}\)의 양변에 \(P(A)\)를 곱하면, 두 사건이 함께 일어날 확률을 얻는다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">확률의 곱셈정리</span></span>
+      <p>\(P(A) &gt; 0\)일 때 \[P(A \cap B) = P(A)P(B \mid A)\] 특히 \(A\)와 \(B\)가 독립이면 \(P(A \cap B) = P(A)P(B)\)이다.</p>
+    </div>
+    <p>처음 질문에서 첫째 공이 빨간 공일 확률은 \(\tfrac{3}{5}\)이다. 첫째로 빨간 공을 꺼냈다면 주머니에는 빨간 공 2개, 파란 공 2개가 남으므로 둘째도 빨간 공일 확률은 \(\tfrac{2}{4}\)이다. 따라서 두 번 모두 빨간 공일 확률은 \(\tfrac{3}{5} \times \tfrac{2}{4} = \tfrac{3}{10}\)이다. 그림 1의 나뭇가지에서 위쪽 길을 따라 확률을 곱한 것이다.</p>
+
+    <h3><span class="no">2.6.2</span>둘째 공의 확률</h3>
+    <p>두 번째 공이 빨간 공이 되는 길은 '빨강 → 빨강'과 '파랑 → 빨강' 두 갈래이다. 두 길은 동시에 일어나지 않으므로 확률을 더한다. \(\tfrac{3}{5} \times \tfrac{2}{4} + \tfrac{2}{5} \times \tfrac{3}{4} = \tfrac{6}{20} + \tfrac{6}{20} = \tfrac{3}{5}\)이다. 즉 첫째 공을 모르면, 둘째 공이 빨간 공일 확률은 첫째와 똑같이 \(\tfrac{3}{5}\)이다.<sup class="fn"><a href="#fn-stat-multiplication-1">1</a></sup></p>
+    <p>그림 1의 슬라이더로 '다시 넣기'를 켜면, 둘째 가지의 확률이 첫째 결과와 상관없이 \(\tfrac{3}{5}\), \(\tfrac{2}{5}\)로 같아진다. 이때 두 번의 시행은 독립이다. 이렇게 같은 시행을 독립적으로 되풀이하는 것을 독립시행이라 한다.</p>
+
+    <h3><span class="no">2.6.3</span>독립시행의 확률</h3>
+    <p>동전을 4번 던져 앞면이 정확히 2번 나올 확률을 생각하자. '앞앞뒤뒤'처럼 특정한 순서 하나의 확률은 독립이므로 \(\left(\tfrac{1}{2}\right)^4\)이다. 앞면이 나올 두 자리를 고르는 방법이 \({}_4\mathrm{C}_2 = 6\)가지이므로 확률은 \(6 \times \tfrac{1}{16} = \tfrac{3}{8}\)이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.6.2 <span class="nm">독립시행의 확률</span></span>
+      <p>한 번의 시행에서 사건 \(A\)가 일어날 확률이 \(p\)일 때, 이 시행을 \(n\)번 독립적으로 되풀이해 \(A\)가 정확히 \(r\)번 일어날 확률은 \[{}_n\mathrm{C}_r\,p^r(1 - p)^{n-r}\]</p>
+    </div>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 120" role="img" aria-label="동전 4번 중 앞면 2번이 나오는 6가지 순서">
+        <g class="s"><text x="20" y="30">앞앞뒤뒤</text><text x="110" y="30">앞뒤앞뒤</text><text x="200" y="30">앞뒤뒤앞</text><text x="290" y="30">뒤앞앞뒤</text><text x="380" y="30">뒤앞뒤앞</text><text x="460" y="30">뒤뒤앞앞</text>
+          <text x="20" y="70">순서 하나의 확률 (1/2)⁴ = 1/16, 순서의 수 ₄C₂ = 6</text><text x="20" y="100" class="td">앞면 2번의 확률 6 × 1/16 = 3/8</text></g>
+      </svg>
+      <figcaption>그림 2. 독립시행에서는 순서 하나의 확률에 그런 순서의 수를 곱한다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.6.4</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.6.3</span>
+      <p>자유투 성공률이 0.7인 선수가 5번 던질 때 정확히 4번 성공할 확률과, 4번 이상 성공할 확률을 구하여라. (\(0.7^4 = 0.2401\), \(0.7^5 = 0.16807\))</p>
+    </div>
+    <p>정확히 4번 성공할 확률은 \({}_5\mathrm{C}_4 \times 0.7^4 \times 0.3 = 5 \times 0.2401 \times 0.3 = 0.36015\)이다.</p>
+    <p>5번 모두 성공할 확률은 \(0.7^5 = 0.16807\)이다. 4번 이상 성공하는 것은 '정확히 4번'과 '정확히 5번'으로 나뉘고 두 경우는 배반이므로 더한다. 따라서 \(0.36015 + 0.16807 = 0.52822\), 곧 약 0.53이다.</p>
+    <p>성공률이 70%인 선수라도 5번 가운데 4번 이상 넣을 확률은 절반을 조금 넘는 정도이다. 곱셈정리로 한 길의 확률을, 조합으로 길의 수를, 덧셈정리로 여러 경우를 묶었다. 아래 탐구 카드에서 나뭇가지와 독립시행을 직접 조작해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-multiplication-1">제비뽑기에서 먼저 뽑든 나중에 뽑든 당첨될 확률이 같은 것도 같은 이유이다. 앞 사람이 뽑은 결과를 모르는 한, 몇 번째로 뽑든 확률은 처음과 같다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>잇달아 일어나는 사건의 확률은 \(P(A \cap B) = P(A)P(B \mid A)\)로 곱하며, 나뭇가지 그림에서 길을 따라 가지의 확률을 곱하는 것과 같다. 독립이면 조건이 빠져 확률을 그대로 곱하고, 독립시행에서 \(r\)번 성공할 확률은 \({}_n\mathrm{C}_rp^r(1 - p)^{n-r}\)이다. 그래서 처음 질문의 두 번 모두 빨간 공일 확률은 \(\tfrac{3}{10}\)이고, 둘째 공이 빨간 공일 확률은 첫째를 모를 때 \(\tfrac{3}{5}\)이다.</p></div>
+  </div>
+</article>

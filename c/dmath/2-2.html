@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>점화 관계와 일반항 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="aₙ₊₁ = paₙ + q 꼴의 일반항과 수열이 다가가는 값, 이웃한 세 항의 점화식과 특성방정식. 거미줄 그림으로 수열의 행방을 보는 카드와, 대출 잔액의 점화식으로 매달 갚을 돈을 구하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-recur-plot .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .5rem; }
@@ -46,18 +51,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-recur-plot"><span class="mono">2.2.1</span>aₙ₊₁ = paₙ + q의 거미줄 그림</a></li>
-        <li><a href="#card-dmath-loan"><span class="mono">2.2.2</span>대출 잔액의 점화식과 매달 갚을 돈</a></li>
+        <li><a href="#text-dmath-recurrence"><span class="mono">본문</span>점화 관계와 일반항</a></li>
+        <li><a href="#card-dmath-recur-plot"><span class="mono">탐구 1</span>aₙ₊₁ = paₙ + q의 거미줄 그림</a></li>
+        <li><a href="#card-dmath-loan"><span class="mono">탐구 2</span>대출 잔액의 점화식과 매달 갚을 돈</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=dmath-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">17문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-recurrence" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>점화 관계와 일반항</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">1000만 원을 월 이자율 0.5%로 빌렸다. 매달 말에 이자가 붙고, 같은 금액 \(x\)원씩 갚는다. 그러면 \(n\)개월 뒤 남은 빚 \(a_n\)은 \(a_{n+1} = 1.005a_n - x\)라는 점화 관계를 따른다. 24개월 뒤 빚이 정확히 0이 되려면 \(x\)는 얼마여야 할까? 한 달씩 24번 계산해 맞추어 보는 대신, \(a_n\)을 \(n\)의 식으로 바로 쓸 수 있다면 한 번에 풀 수 있을 것이다. 이런 점화 관계의 일반항은 어떻게 구할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="매달 443206원씩 갚을 때 남은 빚">
+              <g class="s">
+                <text x="20" y="22">개월 n</text><text x="120" y="22">0</text><text x="200" y="22">6</text><text x="280" y="22">12</text><text x="360" y="22">18</text><text x="440" y="22">24</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">남은 빚 (만 원)</text><text x="120" y="52">1000</text><text x="200" y="52">761</text><text x="280" y="52">515</text><text x="360" y="52">261</text><text x="440" y="52" class="td">0</text>
+                <text x="20" y="82">aₙ₊₁ = 1.005aₙ − x, x ≈ 443206원</text>
+                <text x="20" y="104">처음에는 이자가 커서 빚이 천천히 줄고,</text>
+                <text x="20" y="124">나중에는 원금이 빨리 줄어든다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 같은 금액을 갚아도 이자가 줄어드는 만큼 원금이 점점 빨리 줄어든다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>점화 관계(<a href="2-1.html">수열의 귀납적 정의</a>), 등비수열의 일반항과 합.</div>
+
+          <h3><span class="no">2.2.1</span>고정점을 기준으로 보기</h3>
+          <p>\(a_{n+1} = pa_n + q\) 꼴의 점화 관계는 수열이 변하지 않는 값, 곧 \(\alpha = p\alpha + q\)인 고정점을 먼저 찾으면 풀린다. 두 식을 빼면 \(a_{n+1} - \alpha = p(a_n - \alpha)\)이므로, 고정점에서 벗어난 정도 \(a_n - \alpha\)는 공비 \(p\)인 등비수열이다. 그래서 \(a_n = \alpha + (a_0 - \alpha)p^n\)이다. \(|p| &lt; 1\)이면 수열은 고정점으로 다가가고, \(|p| > 1\)이면 고정점에서 점점 멀어진다. 그래서 점화식만 보고도 수열이 어디로 갈지 알 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">일차 점화 관계의 일반항</span></span>
+            <p>\(a_{n+1} = pa_n + q\)이고 \(p \ne 1\)이면 고정점 \(\alpha = \dfrac{q}{1 - p}\)에 대해 \[a_n = \alpha + (a_0 - \alpha)p^n\]이다. \(a_{n+2} = pa_{n+1} + qa_n\) 꼴이면 특성방정식 \(t^2 = pt + q\)의 서로 다른 두 근 \(t_1\), \(t_2\)로 \(a_n = Ct_1^n + Dt_2^n\)이다.</p>
+          </div>
+          <p>대출의 점화 관계는 \(p = 1.005\), \(q = -x\)이므로 고정점은 \(\alpha = \dfrac{-x}{1 - 1.005} = 200x\)이다. 고정점은 빚이 늘지도 줄지도 않는 금액, 곧 매달 갚는 \(x\)원이 이자와 꼭 같은 빚이다. 빚이 고정점보다 작으면 \(a_n - \alpha\)가 음수이고 1.005배씩 커지므로 빚은 점점 빨리 줄어든다. 두 항 점화 관계도 같은 생각으로, 등비수열 \(t^n\)이 점화식을 만족하도록 \(t\)를 정한 뒤 두 해를 섞어 처음 항에 맞춘다.<sup class="fn"><a href="#fn-dmath-recurrence-1">1</a></sup></p>
+
+          <h3><span class="no">2.2.2</span>점화식만 보고 내다보기</h3>
+          <p>\(a_{n+1} = 0.5a_n + 3\)은 고정점이 6이고 \(p = 0.5\)이므로, 어디서 출발하든 6으로 다가가며 6과의 차이가 매번 절반이 된다. \(a_{n+1} = 2a_n - 3\)은 고정점이 3이지만 \(p = 2\)이므로, 3에서 조금만 벗어나도 차이가 두 배씩 커져 멀어진다. \(a_{n+1} = -a_n + 4\)는 \(p = -1\)이어서 고정점 2를 사이에 두고 두 값을 번갈아 오간다. 그래서 \(p\)의 크기와 부호를 보면 수열이 모이는지, 퍼지는지, 진동하는지 알 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="세 점화식의 고정점과 행동">
+              <g class="s">
+                <text x="20" y="22">점화식</text><text x="200" y="22">고정점</text><text x="290" y="22">p</text><text x="360" y="22">행동</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">aₙ₊₁ = 0.5aₙ + 3</text><text x="200" y="52">6</text><text x="290" y="52">0.5</text><text x="360" y="52" class="td">6으로 모임</text>
+                <text x="20" y="74">aₙ₊₁ = 2aₙ − 3</text><text x="200" y="74">3</text><text x="290" y="74">2</text><text x="360" y="74" class="tb">3에서 멀어짐</text>
+                <text x="20" y="96">aₙ₊₁ = −aₙ + 4</text><text x="200" y="96">2</text><text x="290" y="96">−1</text><text x="360" y="96">두 값을 번갈아</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 고정점과 공비 \(p\)만 보면 수열의 앞날을 알 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>처음 질문의 대출에서 \(a_{24} = 0\)이 되는 \(x\)를 구하여라. \(1.005^{24} \approx 1.12716\)이다. 24개월 동안 낸 이자는 모두 얼마인가?</p>
+          </div>
+          <p>일반항은 \(a_n = 200x + (10^7 - 200x)\times1.005^n\)이다. \(a_{24} = 0\)이면 \(200x = (200x - 10^7)\times1.12716\)이므로 \(200x\times0.12716 = 10^7\times1.12716\), 곧 \(x = \dfrac{10^7\times0.005\times1.12716}{0.12716} \approx 443206\)원이다.</p>
+          <p>24개월 동안 갚은 돈은 \(443206\times24 \approx 1063.7\)만 원이므로 이자는 약 63.7만 원이다. 원금 1000만 원의 0.5%씩 24개월이면 120만 원이지만, 원금이 매달 줄어들어 실제 이자는 그 절반 남짓이다. 즉 \(a_{n+1} = pa_n + q\) 꼴의 점화 관계는 고정점을 기준으로 등비수열로 바꾸어 일반항을 구하고, 그 일반항으로 몇 번째 항의 조건을 한 번에 풀거나 수열이 어디로 갈지 내다볼 수 있다.</p>
+          <p>아래 탐구 카드에서 점화식만 보고 수열이 어디로 갈지 예측해 그래프로 확인하고, 대출을 갚는 매달 금액을 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-recurrence-1">이 방식처럼 매달 같은 금액을 갚는 것을 원리금 균등 상환이라 한다. 매달 원금을 같은 금액씩 갚는 원금 균등 상환은 처음에 더 많이 내지만, 원금이 빨리 줄어 전체 이자는 조금 적다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>\(a_{n+1} = pa_n + q\) 꼴의 점화 관계는 고정점 \(\alpha = q/(1 - p)\)에서 벗어난 정도가 공비 \(p\)인 등비수열이어서 \(a_n = \alpha + (a_0 - \alpha)p^n\)이고, \(|p|\)가 1보다 작으면 모이고 크면 멀어진다. 두 항 점화 관계는 특성방정식의 근으로 일반항을 구한다. 처음 질문의 대출은 일반항으로 \(a_{24} = 0\)을 풀어 매달 약 443206원씩 갚아야 하고, 이자는 모두 약 63.7만 원이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/2-1.html#card-dmath-hanoi"><small class="mono">이산 수학 2.1</small>원판 n개를 옮기는 최소 횟수는 어떻게 구할까?</a><a href="../../c/dmath/2-1.html#card-dmath-domino"><small class="mono">이산 수학 2.1</small>2×n 복도에 1×2 타일을 까는 방법은 몇 가지일까?</a><a href="../../c/dmath/2-1.html#text-dmath-recursive"><small class="mono">이산 수학 2.1</small>수열의 귀납적 정의</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div></nav>
+
       <article class="card" id="card-dmath-recur-plot">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>점화식만 보고 수열이 어디로 갈지 알 수 있을까?</h2><span class="kind">점화 관계와 일반항 · 조작</span>
+          <span class="no">탐구 1</span><h2>점화식만 보고 수열이 어디로 갈지 알 수 있을까?</h2><span class="kind">점화 관계와 일반항 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -73,30 +137,30 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(a_{n+1} = 0.5a_n + 2\)이면 수열은 커질까요, 작아질까요, 어느 값에 머물까요? 항을 하나하나 계산하지 않고 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>한 단계마다 같은 수 \(p\)를 곱하는 수열 \(b_{n+1} = pb_n\)(대수의 등비수열)의 일반항은 \(b_n = b_1p^{n-1}\)이고, \(|p| < 1\)이면 \(b_n\)은 0에 한없이 가까워집니다.</li>
-            <li><span class="tag">설명</span>\(\alpha = p\alpha + q\)인 수 \(\alpha = \dfrac{q}{1 - p}\) (\(p \ne 1\))를 찾아 빼면 \(a_{n+1} - \alpha = p(a_n - \alpha)\)가 되어 등비수열이 나옵니다. 그래서 일반항은 \(a_n = \alpha + (a_1 - \alpha)p^{n-1}\)이고, \(|p| < 1\)이면 \(\alpha\)에 한없이 가까워지고, \(|p| > 1\)이면 \(\alpha\)에서 멀어지며, \(p < 0\)이면 \(\alpha\)의 양쪽을 번갈아 오갑니다. 거미줄 그림에서 \(\alpha\)는 두 직선 \(y = px + q\)와 \(y = x\)의 교점입니다. 이웃한 세 항의 관계 \(a_{n+2} = ra_{n+1} + sa_n\)은 특성방정식 \(t^2 = rt + s\)의 근으로 풉니다.</li>
-            <li><span class="tag">연결</span>약을 일정한 간격으로 먹을 때 몸속 약의 양(매번 일정 비율이 빠져나가고 일정량이 들어옴), 다음 카드의 대출 잔액이 모두 이 꼴의 점화식입니다.</li>
-            <li><span class="tag">적용</span>\(p\)를 0.5, −0.5, 1.2, −1.2로 바꾸며 거미줄이 교점으로 모이는지, 계단 모양인지, 소용돌이인지 보세요. \(a_1 = \alpha\)로 맞추면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(p = 1\)이면 \(\alpha\)가 없고 수열은 공차 \(q\)인 등차수열입니다. 공식 \(\frac{q}{1 - p}\)에 그대로 넣으면 0으로 나누게 됩니다. 공식이 성립하는 조건을 먼저 확인하세요.</li>
+            <li><span class="tag">질문</span>\(a_{n+1} = 0.5a_n + 2\)이면 수열은 커질까요, 작아질까요, 어느 값에 머물까? 항을 하나하나 계산하지 않고 알 수 있을까?</li>
+            <li><span class="tag">복원</span>한 단계마다 같은 수 \(p\)를 곱하는 수열 \(b_{n+1} = pb_n\)(대수의 등비수열)의 일반항은 \(b_n = b_1p^{n-1}\)이고, \(|p| < 1\)이면 \(b_n\)은 0에 한없이 가까워진다.</li>
+            <li><span class="tag">설명</span>\(\alpha = p\alpha + q\)인 수 \(\alpha = \dfrac{q}{1 - p}\) (\(p \ne 1\))를 찾아 빼면 \(a_{n+1} - \alpha = p(a_n - \alpha)\)가 되어 등비수열이 나온다. 그래서 일반항은 \(a_n = \alpha + (a_1 - \alpha)p^{n-1}\)이고, \(|p| < 1\)이면 \(\alpha\)에 한없이 가까워지고, \(|p| > 1\)이면 \(\alpha\)에서 멀어지며, \(p < 0\)이면 \(\alpha\)의 양쪽을 번갈아 오간다. 거미줄 그림에서 \(\alpha\)는 두 직선 \(y = px + q\)와 \(y = x\)의 교점이다. 이웃한 세 항의 관계 \(a_{n+2} = ra_{n+1} + sa_n\)은 특성방정식 \(t^2 = rt + s\)의 근으로 푼다.</li>
+            <li><span class="tag">연결</span>약을 일정한 간격으로 먹을 때 몸속 약의 양(매번 일정 비율이 빠져나가고 일정량이 들어옴), 다음 카드의 대출 잔액이 모두 이 꼴의 점화식이다.</li>
+            <li><span class="tag">적용</span>\(p\)를 0.5, −0.5, 1.2, −1.2로 바꾸며 거미줄이 교점으로 모이는지, 계단 모양인지, 소용돌이인지 보자. \(a_1 = \alpha\)로 맞추면 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>\(p = 1\)이면 \(\alpha\)가 없고 수열은 공차 \(q\)인 등차수열이다. 공식 \(\frac{q}{1 - p}\)에 그대로 넣으면 0으로 나누게 된다. 공식이 성립하는 조건을 먼저 확인해 보자.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(a_1 = 1\), \(a_{n+1} = \frac{1}{3}a_n + 4\)인 수열의 극한값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(6\)<span class="why"><b>맞습니다.</b> \(\alpha = \frac{4}{1 - 1/3} = 6\)이고 \(|p| < 1\)이라 6에 한없이 가까워집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(4\)<span class="why"><b>\(q\)만 보았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(3\)<span class="why"><b>\(\frac{q}{1 + p}\)로 계산했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>\(|p| = \frac{1}{3} < 1\)입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(6\)<span class="why"><b>맞다.</b> \(\alpha = \frac{4}{1 - 1/3} = 6\)이고 \(|p| < 1\)이라 6에 한없이 가까워진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(4\)<span class="why"><b>\(q\)만 보았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(3\)<span class="why"><b>\(\frac{q}{1 + p}\)로 계산했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>발산한다<span class="why"><b>\(|p| = \frac{1}{3} < 1\)이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/2-1.html#card-dmath-hanoi"><small class="mono">이산 수학 2.1</small>원판 n개를 옮기는 최소 횟수는 어떻게 구할까?</a><a href="../../c/dmath/2-1.html#card-dmath-domino"><small class="mono">이산 수학 2.1</small>2×n 복도에 1×2 타일을 까는 방법은 몇 가지일까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a><a href="../../c/alg/3-3.html#card-alg-geo-sum"><small class="mono">대수 3.3</small>곱해 가는 수열의 합은 어떻게 구할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/2-1.html#card-dmath-hanoi"><small class="mono">이산 수학 2.1</small>원판 n개를 옮기는 최소 횟수는 어떻게 구할까?</a><a href="../../c/dmath/2-1.html#card-dmath-domino"><small class="mono">이산 수학 2.1</small>2×n 복도에 1×2 타일을 까는 방법은 몇 가지일까?</a><a href="../../c/dmath/2-1.html#text-dmath-recursive"><small class="mono">이산 수학 2.1</small>수열의 귀납적 정의</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div></nav>
 
       <article class="card" id="card-dmath-loan">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>매달 얼마씩 갚아야 24개월 만에 대출이 끝날까?</h2><span class="kind">점화 관계의 활용 · 도전</span>
+          <span class="no">탐구 2</span><h2>매달 얼마씩 갚아야 24개월 만에 대출이 끝날까?</h2><span class="kind">점화 관계의 활용 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -108,42 +172,43 @@
             <canvas aria-label="개월에 따른 남은 빚. 목표는 24개월째에 0"></canvas>
             <div class="presets"><button class="chip go-show" type="button">공식으로 확인</button></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">수치는 수업용으로 정한 모의 값입니다. 실제 대출은 이자 계산 방식과 수수료가 상품마다 다릅니다.</p>
+            <p class="fig-note">수치는 수업용으로 정한 모의 값이다. 실제 대출은 이자 계산 방식과 수수료가 상품마다 다르다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>1000만 원을 월 0.5% 이자로 빌려 매달 같은 금액을 갚습니다. 24개월 만에 다 갚으려면 매달 얼마씩 내야 할까요? 이자 없이 나누면 약 41.7만 원인데, 이자가 붙으면 얼마나 더 필요할까요?</li>
-            <li><span class="tag">복원</span>\(a_{n+1} = pa_n + q\)는 \(\alpha = \frac{q}{1 - p}\)를 빼서 등비수열로 바꿉니다. 등비수열의 합(대수) \(1 + p + \cdots + p^{k-1} = \frac{p^k - 1}{p - 1}\)은 합에 \(p\)를 곱한 식에서 원래 합을 빼서 얻습니다.</li>
-            <li><span class="tag">설명</span>\(n\)개월 뒤 남은 빚을 \(b_n\)이라 하면 한 달 동안 이자가 붙고 \(M\)을 갚으므로 \(b_{n+1} = (1 + r)b_n - M\)입니다. 일반항은 \(b_n = (1 + r)^nB - M\dfrac{(1 + r)^n - 1}{r}\)이고, \(b_N = 0\)으로 놓으면 매달 갚을 돈은 \(M = \dfrac{Br(1 + r)^N}{(1 + r)^N - 1}\)입니다(원리금 균등 상환).</li>
-            <li><span class="tag">연결</span>적금(매달 넣고 이자가 붙음)은 \(a_{n+1} = (1 + r)a_n + M\)으로 부호만 다릅니다. 연금, 할부 구매도 같은 점화식으로 계산합니다.</li>
-            <li><span class="tag">적용</span>"매달 갚는 돈"을 조절해 24개월째에 빚이 정확히 0 근처가 되게 맞추세요. 그다음 공식으로 확인하세요. 이자율을 두 배로 하면 매달 갚는 돈은 얼마나 늘어나나요? 갚는 돈이 첫 달 이자보다 적으면 그래프가 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>매달 갚는 돈이 이자 \(rB\)보다 작으면 빚이 오히려 늘어납니다(\(p = 1 + r > 1\)이라 \(\alpha\)에서 멀어짐). 총 이자는 "갚은 돈의 합 \(-\) 빌린 돈"이므로 기간이 길수록 매달 부담은 줄어도 총 이자는 커집니다.</li>
+            <li><span class="tag">질문</span>1000만 원을 월 0.5% 이자로 빌려 매달 같은 금액을 갚는다. 24개월 만에 다 갚으려면 매달 얼마씩 내야 할까? 이자 없이 나누면 약 41.7만 원인데, 이자가 붙으면 얼마나 더 필요할까?</li>
+            <li><span class="tag">복원</span>\(a_{n+1} = pa_n + q\)는 \(\alpha = \frac{q}{1 - p}\)를 빼서 등비수열로 바꾼다. 등비수열의 합(대수) \(1 + p + \cdots + p^{k-1} = \frac{p^k - 1}{p - 1}\)은 합에 \(p\)를 곱한 식에서 원래 합을 빼서 얻는다.</li>
+            <li><span class="tag">설명</span>\(n\)개월 뒤 남은 빚을 \(b_n\)이라 하면 한 달 동안 이자가 붙고 \(M\)을 갚으므로 \(b_{n+1} = (1 + r)b_n - M\)이다. 일반항은 \(b_n = (1 + r)^nB - M\dfrac{(1 + r)^n - 1}{r}\)이고, \(b_N = 0\)으로 놓으면 매달 갚을 돈은 \(M = \dfrac{Br(1 + r)^N}{(1 + r)^N - 1}\)이다(원리금 균등 상환).</li>
+            <li><span class="tag">연결</span>적금(매달 넣고 이자가 붙음)은 \(a_{n+1} = (1 + r)a_n + M\)으로 부호만 다르다. 연금, 할부 구매도 같은 점화식으로 계산한다.</li>
+            <li><span class="tag">적용</span>"매달 갚는 돈"을 조절해 24개월째에 빚이 정확히 0 근처가 되게 맞추자. 그다음 공식으로 확인해 보자. 이자율을 두 배로 하면 매달 갚는 돈은 얼마나 늘어나는가? 갚는 돈이 첫 달 이자보다 적으면 그래프가 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>매달 갚는 돈이 이자 \(rB\)보다 작으면 빚이 오히려 늘어난다(\(p = 1 + r > 1\)이라 \(\alpha\)에서 멀어짐). 총 이자는 "갚은 돈의 합 \(-\) 빌린 돈"이므로 기간이 길수록 매달 부담은 줄어도 총 이자는 커진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(b_{n+1} = 1.01b_n - 20\), \(b_0 = 1000\)일 때 빚이 줄어들지도 늘어나지도 않으려면 매달 얼마를 갚아야 할까요?</p>
+          <p class="q">\(b_{n+1} = 1.01b_n - 20\), \(b_0 = 1000\)일 때 빚이 줄어들지도 늘어나지도 않으려면 매달 얼마를 갚아야 할까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(10\)<span class="why"><b>맞습니다.</b> 이자 \(0.01 \times 1000 = 10\)만큼만 갚으면 \(b_n = 1000\)에 머뭅니다(\(\alpha = b_0\)).</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(20\)<span class="why"><b>20을 갚으면 빚이 줄어듭니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(0\)<span class="why"><b>이자가 붙어 빚이 늘어납니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>이자율 1%를 금액으로 착각했습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(10\)<span class="why"><b>맞다.</b> 이자 \(0.01 \times 1000 = 10\)만큼만 갚으면 \(b_n = 1000\)에 머문다(\(\alpha = b_0\)).</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(20\)<span class="why"><b>20을 갚으면 빚이 줄어든다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(0\)<span class="why"><b>이자가 붙어 빚이 늘어난다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>이자율 1%를 금액으로 착각했다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/2-1.html#card-dmath-hanoi"><small class="mono">이산 수학 2.1</small>원판 n개를 옮기는 최소 횟수는 어떻게 구할까?</a><a href="../../c/dmath/2-1.html#card-dmath-domino"><small class="mono">이산 수학 2.1</small>2×n 복도에 1×2 타일을 까는 방법은 몇 가지일까?</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a><a href="../../c/alg/3-3.html#card-alg-geo-sum"><small class="mono">대수 3.3</small>곱해 가는 수열의 합은 어떻게 구할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/2-1.html#card-dmath-hanoi"><small class="mono">이산 수학 2.1</small>원판 n개를 옮기는 최소 횟수는 어떻게 구할까?</a><a href="../../c/dmath/2-1.html#card-dmath-domino"><small class="mono">이산 수학 2.1</small>2×n 복도에 1×2 타일을 까는 방법은 몇 가지일까?</a><a href="../../c/dmath/2-1.html#text-dmath-recursive"><small class="mono">이산 수학 2.1</small>수열의 귀납적 정의</a><a href="../../c/alg/3-3.html#card-alg-geo-term"><small class="mono">대수 3.3</small>같은 수를 계속 곱하면 항은 어떻게 변할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=dmath-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">17문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

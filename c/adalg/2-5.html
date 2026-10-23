@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>대칭변환·닮음변환·회전변환 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="원점을 지나는 직선에 대한 대칭변환, 원점 중심 닮음변환, 회전변환의 행렬과 행렬식. 세 변환으로 목표 모양을 만드는 카드와, 사진 회전에서 역방향 계산이 필요한 까닭을 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-transform-target canvas { aspect-ratio: 1 / 1; max-width: 420px; margin: 0 auto; display: block; }
@@ -44,18 +49,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-transform-target"><span class="mono">2.5.1</span>회전·대칭·닮음 행렬로 목표 맞히기</a></li>
-        <li><a href="#card-adalg-pixel-rotate"><span class="mono">2.5.2</span>사진을 돌릴 때 구멍이 생기는 까닭</a></li>
+        <li><a href="#text-adalg-rotation"><span class="mono">본문</span>대칭변환·닮음변환·회전변환</a></li>
+        <li><a href="#card-adalg-transform-target"><span class="mono">탐구 1</span>회전·대칭·닮음 행렬로 목표 맞히기</a></li>
+        <li><a href="#card-adalg-pixel-rotate"><span class="mono">탐구 2</span>사진을 돌릴 때 구멍이 생기는 까닭</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-rotation" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>대칭변환·닮음변환·회전변환</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">사진 편집 프로그램을 직접 만들어, 원래 사진의 각 픽셀 좌표 \((x, y)\)에 회전 행렬을 곱해 새 좌표를 구하고 거기에 색을 칠했다. 90°로 돌리면 깔끔했는데, 30°로 돌리니 결과 사진 곳곳에 아무 색도 칠해지지 않은 검은 점이 뚫렸다. 회전은 넓이를 바꾸지 않으니 픽셀 수도 그대로일 텐데, 왜 빈 곳이 생길까? 회전, 대칭, 닮음 변환은 각각 어떤 행렬이고, 빈 점 없이 돌리려면 어떻게 계산해야 할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="세 가지 변환의 행렬">
+              <g class="s">
+                <text x="20" y="22">변환</text><text x="200" y="22">행렬</text><text x="400" y="22">행렬식</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">원점 둘레 θ 회전</text><text x="200" y="52">(cos θ, −sin θ / sin θ, cos θ)</text><text x="400" y="52">1</text>
+                <text x="20" y="74">직선 y = x 대칭</text><text x="200" y="74">(0, 1 / 1, 0)</text><text x="400" y="74">−1</text>
+                <text x="20" y="96">k배 닮음</text><text x="200" y="96">(k, 0 / 0, k)</text><text x="400" y="96">k²</text>
+                <text x="20" y="122">회전과 대칭은 길이와 각을 보존하고, 닮음은 모양만 보존한다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 회전은 넓이와 방향을, 대칭은 넓이를 보존하고 방향을 뒤집으며, 닮음은 넓이를 \(k^2\)배 한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>선형변환과 행렬(<a href="2-4.html">선형변환과 행렬</a>), 삼각함수의 덧셈정리, 행렬식.</div>
+
+          <h3><span class="no">2.5.1</span>기저의 행선지로 행렬 만들기</h3>
+          <p>원점 둘레로 \(\theta\)만큼 돌리면 \((1, 0)\)은 \((\cos\theta, \sin\theta)\)로, \((0, 1)\)은 \((-\sin\theta, \cos\theta)\)로 간다. 이 둘을 열로 쓰면 회전 행렬이 된다. 직선 \(y = x\)에 대한 대칭은 \((1, 0)\)과 \((0, 1)\)을 서로 바꾸므로 \(\begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}\)이고, 원점을 중심으로 \(k\)배 늘이는 닮음변환은 두 기저를 모두 \(k\)배 하므로 \(kI\)이다. 이렇게 기저 벡터가 어디로 가는지만 그려 보면 각 변환의 행렬을 바로 쓸 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">회전과 대칭의 행렬</span></span>
+            <p>원점 둘레 \(\theta\) 회전의 행렬은 \(R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}\)이고 \(R_\alpha R_\beta = R_{\alpha + \beta}\)이다. 원점을 지나고 \(x\)축과 \(\theta\)를 이루는 직선에 대한 대칭의 행렬은 \(\begin{pmatrix}\cos2\theta & \sin2\theta\\ \sin2\theta & -\cos2\theta\end{pmatrix}\)이다.</p>
+          </div>
+          <p>두 회전을 차례로 하면 각이 더해지므로 \(R_\alpha R_\beta = R_{\alpha + \beta}\)이다. 행렬을 곱해 성분을 비교하면 \(\cos(\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta\)가 나와, 삼각함수의 덧셈정리가 회전 행렬의 곱셈에 그대로 들어 있다. 회전과 대칭은 모두 길이를 보존하지만, 회전은 행렬식이 1이고 대칭은 \(-1\)이다. 그래서 회전은 시계 방향의 순서를 지키고 대칭은 뒤집는다.<sup class="fn"><a href="#fn-adalg-rotation-1">1</a></sup></p>
+
+          <h3><span class="no">2.5.2</span>거꾸로 찾아가면 빈 점이 없다</h3>
+          <p>원래 사진의 픽셀 중심에 회전 행렬을 곱하면 결과 좌표는 대부분 정수가 아니어서 가장 가까운 픽셀로 반올림한다. 그런데 30°처럼 비스듬히 돌리면 원래 픽셀 둘이 같은 결과 픽셀로 반올림되는 곳이 생기고, 넓이는 같으므로 그만큼 아무도 찾아오지 않는 결과 픽셀이 생긴다. 그것이 빈 점이다. 그래서 실제 프로그램은 거꾸로 계산한다. 결과 사진의 각 픽셀에 역행렬 \(R_{-\theta}\)를 곱해 원래 사진의 어느 위치에서 왔는지 찾고, 그 위치의 색을 가져온다. 그러면 결과의 모든 픽셀이 색을 하나씩 받는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="정방향과 역방향 계산의 비교">
+              <g class="s">
+                <text x="20" y="22">방법</text><text x="160" y="22">계산</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">정방향</text><text x="160" y="52">원래 픽셀 → R_θ → 반올림</text><text x="400" y="52" class="tb">빈 점, 겹침</text>
+                <text x="20" y="74">역방향</text><text x="160" y="74">결과 픽셀 → R_(−θ) → 색 가져옴</text><text x="400" y="74" class="td">빈 점 없음</text>
+                <text x="20" y="96">90° 회전</text><text x="160" y="96">정수 좌표가 정수로</text><text x="400" y="96">어느 방법이든 깔끔</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 결과 픽셀마다 역행렬로 원래 위치를 찾아가면 모든 픽셀이 칠해진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>점 \((2, 1)\)을 원점 둘레로 90°, 30° 돌린 점을 구하여라. 결과 사진의 픽셀 \((1, 2)\)이 30° 회전에서 원래 사진의 어느 위치에서 왔는지 역행렬로 구하여라. \(\sqrt3 \approx 1.732\)이다.</p>
+          </div>
+          <p>90° 회전은 \(R_{90°} = \begin{pmatrix}0 & -1\\ 1 & 0\end{pmatrix}\)이므로 \((2, 1)\)은 \((-1, 2)\)로 간다. 정수 좌표가 정수 좌표로 가서 깔끔하다. 30° 회전은 \((2\cos30° - \sin30°,\ 2\sin30° + \cos30°) = (\sqrt3 - 0.5,\ 1 + \tfrac{\sqrt3}{2}) \approx (1.232, 1.866)\)으로, 반올림하면 \((1, 2)\)이다.</p>
+          <p>결과 픽셀 \((1, 2)\)에 \(R_{-30°} = \begin{pmatrix}\cos30° & \sin30°\\ -\sin30° & \cos30°\end{pmatrix}\)를 곱하면 \((0.866 + 1,\ -0.5 + 1.732) \approx (1.866, 1.232)\)이고, 원래 사진에서 가장 가까운 픽셀은 \((2, 1)\)이다. 이렇게 결과의 모든 픽셀에서 출발하면 빈 픽셀이 없다. 즉 회전, 대칭, 닮음 변환은 기저의 행선지로 행렬을 바로 쓸 수 있고, 회전 행렬의 역행렬은 반대 방향의 회전이어서 결과 픽셀에서 원래 위치를 거꾸로 찾는 데 쓴다.</p>
+          <p>아래 탐구 카드에서 회전, 대칭, 닮음 행렬로 도형을 목표 모양에 맞추어 보고, 픽셀 사진을 돌리면 구멍이 뚫리는 까닭을 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-rotation-1">회전 행렬의 성분이 정확한 실수여도, 컴퓨터는 \(\cos\)과 \(\sin\)을 유한한 자릿수로 저장한다. 그래서 작은 회전을 수만 번 거듭하면 오차가 쌓여 행렬식이 1에서 조금씩 벗어나고, 게임 속 물체가 서서히 커지거나 찌그러지기도 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>회전, 대칭, 닮음 변환은 기저 벡터의 행선지를 열로 써서 행렬로 나타내며, 회전 행렬은 \(R_\alpha R_\beta = R_{\alpha + \beta}\)를 만족해 덧셈정리를 품고 있다. 회전은 행렬식 1로 길이와 방향을, 대칭은 행렬식 \(-1\)로 길이를 보존하고 방향을 뒤집으며, 닮음은 넓이를 \(k^2\)배 한다. 처음 질문의 빈 점은 원래 픽셀을 돌려 반올림하다 생긴 것이며, 결과 픽셀마다 역행렬 \(R_{-\theta}\)로 원래 위치를 찾아가면 생기지 않는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a><a href="../../c/adalg/2-6.html#text-adalg-composition"><small class="mono">고급 대수 2.6</small>선형변환의 합성과 역변환</a><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a></div></nav>
+
       <article class="card" id="card-adalg-transform-target">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>회전, 대칭, 닮음 중 어느 것으로 목표 모양을 만들까?</h2><span class="kind">회전·대칭·닮음변환 · 도전</span>
+          <span class="no">탐구 1</span><h2>회전, 대칭, 닮음 중 어느 것으로 목표 모양을 만들까?</h2><span class="kind">회전·대칭·닮음변환 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -74,30 +137,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>회전, 대칭, 확대는 모양을 바꾸는 가장 기본적인 방법입니다. 이 셋을 행렬로 쓰면 어떤 모양일까요? 서로 다른 종류의 변환이 같은 결과를 낼 수도 있을까요?</li>
-            <li><span class="tag">복원</span>행렬의 1열은 \((1, 0)\)의 상, 2열은 \((0, 1)\)의 상입니다. \((1, 0)\)을 \(\theta\)만큼 돌리면 \((\cos\theta, \sin\theta)\)입니다.</li>
-            <li><span class="tag">설명</span>원점을 중심으로 \(\theta\)만큼 도는 <em>회전변환</em>은 \(\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}\), 원점을 지나고 \(x\)축과 \(\varphi\)를 이루는 직선에 대한 <em>대칭변환</em>은 \(\begin{pmatrix} \cos2\varphi & \sin2\varphi \\ \sin2\varphi & -\cos2\varphi \end{pmatrix}\), 원점을 중심으로 \(k\)배 하는 <em>닮음변환</em>은 \(\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}\)입니다. 회전의 \(\det\)는 1, 대칭의 \(\det\)는 \(-1\), 닮음의 \(\det\)는 \(k^2\)입니다.</li>
-            <li><span class="tag">연결</span>회전과 대칭은 길이와 각을 바꾸지 않습니다. 이런 행렬은 3단원의 직교행렬이고, 열벡터들이 1단원의 정규직교기저를 이룹니다.</li>
-            <li><span class="tag">적용</span>목표마다 변환 종류와 매개변수를 골라 맞춰 보세요. 대칭은 모양이 뒤집히고(\(\det < 0\)), 회전은 뒤집히지 않습니다. 원점 대칭인 목표는 몇 가지 방법으로 만들 수 있나요?</li>
-            <li class="warn"><span class="tag">판단</span>대칭축이 \(\varphi\)이면 행렬에는 \(2\varphi\)가 들어갑니다. \(\varphi\) 대신 \(\varphi\)를 그대로 넣는 실수가 흔합니다. \(\varphi = 45°\)(직선 \(y = x\))로 확인하면 \(\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)이 나와야 합니다.</li>
+            <li><span class="tag">질문</span>회전, 대칭, 확대는 모양을 바꾸는 가장 기본적인 방법이다. 이 셋을 행렬로 쓰면 어떤 모양일까? 서로 다른 종류의 변환이 같은 결과를 낼 수도 있을까?</li>
+            <li><span class="tag">복원</span>행렬의 1열은 \((1, 0)\)의 상, 2열은 \((0, 1)\)의 상이다. \((1, 0)\)을 \(\theta\)만큼 돌리면 \((\cos\theta, \sin\theta)\)이다.</li>
+            <li><span class="tag">설명</span>원점을 중심으로 \(\theta\)만큼 도는 <em>회전변환</em>은 \(\begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}\), 원점을 지나고 \(x\)축과 \(\varphi\)를 이루는 직선에 대한 <em>대칭변환</em>은 \(\begin{pmatrix} \cos2\varphi & \sin2\varphi \\ \sin2\varphi & -\cos2\varphi \end{pmatrix}\), 원점을 중심으로 \(k\)배 하는 <em>닮음변환</em>은 \(\begin{pmatrix} k & 0 \\ 0 & k \end{pmatrix}\)이다. 회전의 \(\det\)는 1, 대칭의 \(\det\)는 \(-1\), 닮음의 \(\det\)는 \(k^2\)이다.</li>
+            <li><span class="tag">연결</span>회전과 대칭은 길이와 각을 바꾸지 않는다. 이런 행렬은 3단원의 직교행렬이고, 열벡터들이 1단원의 정규직교기저를 이룬다.</li>
+            <li><span class="tag">적용</span>목표마다 변환 종류와 매개변수를 골라 맞춰 보자. 대칭은 모양이 뒤집히고(\(\det < 0\)), 회전은 뒤집히지 않는다. 원점 대칭인 목표는 몇 가지 방법으로 만들 수 있는가?</li>
+            <li class="warn"><span class="tag">판단</span>대칭축이 \(\varphi\)이면 행렬에는 \(2\varphi\)가 들어간다. \(\varphi\) 대신 \(\varphi\)를 그대로 넣는 실수가 흔하다. \(\varphi = 45°\)(직선 \(y = x\))로 확인하면 \(\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)이 나와야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">원점을 중심으로 \(90°\) 회전한 뒤 원점을 중심으로 2배 확대하는 변환의 행렬은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 0 & -2 \\ 2 & 0 \end{pmatrix}\)<span class="why"><b>맞습니다.</b> \(2I\)와 회전행렬의 곱입니다. 이 경우에는 순서를 바꿔도 같습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 0 & 2 \\ -2 & 0 \end{pmatrix}\)<span class="why"><b>\(-90°\) 회전입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 2 & -1 \\ 1 & 2 \end{pmatrix}\)<span class="why"><b>행렬을 더했습니다.</b> 변환을 잇따라 하는 것은 곱입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)<span class="why"><b>직선 \(y = x\)에 대한 대칭입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 0 & -2 \\ 2 & 0 \end{pmatrix}\)<span class="why"><b>맞다.</b> \(2I\)와 회전행렬의 곱이다. 이 경우에는 순서를 바꿔도 같다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 0 & 2 \\ -2 & 0 \end{pmatrix}\)<span class="why"><b>\(-90°\) 회전이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 2 & -1 \\ 1 & 2 \end{pmatrix}\)<span class="why"><b>행렬을 더했다.</b> 변환을 잇따라 하는 것은 곱이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\)<span class="why"><b>직선 \(y = x\)에 대한 대칭이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a><a href="../../c/adalg/2-6.html#text-adalg-composition"><small class="mono">고급 대수 2.6</small>선형변환의 합성과 역변환</a><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a></div></nav>
 
       <article class="card" id="card-adalg-pixel-rotate">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>사진을 돌리면 왜 구멍이 뚫릴까?</h2><span class="kind">회전변환과 역변환 · 활용</span>
+          <span class="no">탐구 2</span><h2>사진을 돌리면 왜 구멍이 뚫릴까?</h2><span class="kind">회전변환과 역변환 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -105,8 +168,8 @@
             <div class="ctl">
               <div class="ctl-row"><div><label class="mono">회전각 θ = <output class="a-out">30</output>°</label><input class="a" type="range" min="0" max="90" step="1" value="30" aria-label="회전각"></div></div>
               <div class="presets" role="group" aria-label="계산 방식">
-                <button class="chip" type="button" data-m="fwd" aria-pressed="true">정방향: 원본 칸마다 R을 곱해 옮기기</button>
-                <button class="chip" type="button" data-m="inv">역방향: 결과 칸마다 R⁻¹을 곱해 가져오기</button>
+                <button class="chip" type="button" data-m="fwd" aria-pressed="true">정방향 (원본 칸마다 R을 곱해 옮기기)</button>
+                <button class="chip" type="button" data-m="inv">역방향 (결과 칸마다 R⁻¹을 곱해 가져오기)</button>
               </div>
               <dl class="nums">
                 <div><dt>원본 색칠 칸</dt><dd class="n-src">—</dd></div>
@@ -116,39 +179,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>사진은 격자 위의 점(픽셀)들입니다. 회전행렬을 각 픽셀 좌표에 곱하면 사진을 돌릴 수 있을 것 같습니다. 그런데 이렇게 하면 결과에 군데군데 빈 점이 생깁니다. 왜 그럴까요?</li>
-            <li><span class="tag">복원</span>회전행렬 \(R_\theta = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}\)의 역행렬은 \(R_{-\theta}\)이고, 이것은 \(R_\theta^T\)와 같습니다.</li>
-            <li><span class="tag">설명</span>정방향 방식은 원본 칸 \(\vec{p}\)를 \(R\vec{p}\)로 보낸 뒤 가장 가까운 격자 칸에 칠합니다. 반올림 때문에 두 원본 칸이 같은 칸에 떨어지기도 하고, 아무도 오지 않는 칸이 생깁니다. 역방향 방식은 결과의 칸 \(\vec{q}\)마다 "어디서 왔는가"를 \(R^{-1}\vec{q}\)로 거꾸로 계산해 그 원본 칸의 색을 가져옵니다. 결과의 모든 칸이 한 번씩 색을 받으므로 구멍이 생기지 않습니다. 역변환을 쓰는 것이 핵심입니다.</li>
-            <li><span class="tag">연결</span>사진 편집 프로그램, 게임의 텍스처, 의료 영상의 재구성이 모두 역방향 방식을 씁니다. 여기에 가까운 칸 네 개의 색을 섞는 보간을 더해 매끄럽게 만듭니다.</li>
-            <li><span class="tag">적용</span>정방향 방식에서 각을 바꾸며 구멍 수를 보세요. 0°와 90°에서는 왜 구멍이 없나요? 역방향 방식으로 바꾸면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>회전은 넓이를 바꾸지 않는데(\(\det R = 1\)) 정방향 결과의 칠한 칸 수가 원본보다 적어지는 것은 계산 방식의 문제입니다. 수학의 변환은 연속인 평면에서 정의되고, 픽셀은 그것을 격자로 근사한 것이라는 점을 구별해야 합니다.</li>
+            <li><span class="tag">질문</span>사진은 격자 위의 점(픽셀)들이다. 회전행렬을 각 픽셀 좌표에 곱하면 사진을 돌릴 수 있을 것 같다. 그런데 이렇게 하면 결과에 군데군데 빈 점이 생긴다. 왜 그럴까?</li>
+            <li><span class="tag">복원</span>회전행렬 \(R_\theta = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}\)의 역행렬은 \(R_{-\theta}\)이고, 이것은 \(R_\theta^T\)와 같다.</li>
+            <li><span class="tag">설명</span>정방향 방식은 원본 칸 \(\vec{p}\)를 \(R\vec{p}\)로 보낸 뒤 가장 가까운 격자 칸에 칠한다. 반올림 때문에 두 원본 칸이 같은 칸에 떨어지기도 하고, 아무도 오지 않는 칸이 생긴다. 역방향 방식은 결과의 칸 \(\vec{q}\)마다 "어디서 왔는가"를 \(R^{-1}\vec{q}\)로 거꾸로 계산해 그 원본 칸의 색을 가져온다. 결과의 모든 칸이 한 번씩 색을 받으므로 구멍이 생기지 않는다. 역변환을 쓰는 것이 핵심이다.</li>
+            <li><span class="tag">연결</span>사진 편집 프로그램, 게임의 텍스처, 의료 영상의 재구성이 모두 역방향 방식을 쓴다. 여기에 가까운 칸 네 개의 색을 섞는 보간을 더해 매끄럽게 만든다.</li>
+            <li><span class="tag">적용</span>정방향 방식에서 각을 바꾸며 구멍 수를 보자. 0°와 90°에서는 왜 구멍이 없는가? 역방향 방식으로 바꾸면 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>회전은 넓이를 바꾸지 않는데(\(\det R = 1\)) 정방향 결과의 칠한 칸 수가 원본보다 적어지는 것은 계산 방식의 문제이다. 수학의 변환은 연속인 평면에서 정의되고, 픽셀은 그것을 격자로 근사한 것이라는 점을 구별해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">역방향 방식으로 \(30°\) 회전한 사진을 만들 때, 결과의 칸 \(\vec{q}\)의 색은 원본의 어느 칸에서 가져올까요?</p>
+          <p class="q">역방향 방식으로 \(30°\) 회전한 사진을 만들 때, 결과의 칸 \(\vec{q}\)의 색은 원본의 어느 칸에서 가져올까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(R_{-30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>맞습니다.</b> 결과 칸이 원래 있던 자리를 거꾸로 돌려 찾습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(R_{30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>방향이 반대입니다.</b> 이렇게 하면 \(-30°\) 회전한 사진이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\vec{q}\)와 같은 칸<span class="why"><b>회전하지 않은 것입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(R_{30°}^T R_{30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>\(R^TR = I\)라 \(\vec{q}\) 그대로입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(R_{-30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>맞다.</b> 결과 칸이 원래 있던 자리를 거꾸로 돌려 찾는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(R_{30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>방향이 반대이다.</b> 이렇게 하면 \(-30°\) 회전한 사진이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\vec{q}\)와 같은 칸<span class="why"><b>회전하지 않은 것이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(R_{30°}^T R_{30°}\vec{q}\)에 가장 가까운 칸<span class="why"><b>\(R^TR = I\)라 \(\vec{q}\) 그대로이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-4.html#card-adalg-grid-transform"><small class="mono">고급 대수 2.4</small>행렬 하나가 평면 전체를 어떻게 움직일까?</a><a href="../../c/adalg/2-4.html#card-adalg-match-matrix"><small class="mono">고급 대수 2.4</small>바뀐 그림만 보고 행렬을 알아낼 수 있을까?</a><a href="../../c/adalg/2-4.html#text-adalg-linear-map"><small class="mono">고급 대수 2.4</small>선형변환과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a><a href="../../c/adalg/2-6.html#text-adalg-composition"><small class="mono">고급 대수 2.6</small>선형변환의 합성과 역변환</a><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

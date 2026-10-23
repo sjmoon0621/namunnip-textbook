@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>독립과 종속 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="두 사건의 독립과 종속, P(B|A) = P(B)와 P(A∩B) = P(A)P(B)로 판단하기, 배반과 독립의 차이. 주사위 표본공간과 넓이 모형에서 독립을 찾아보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-stat-indep-dice canvas { width: 100%; aspect-ratio: 1 / 1; }
@@ -46,18 +51,66 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-stat-indep-dice"><span class="mono">2.5.1</span>독립과 종속의 판단</a></li>
-        <li><a href="#card-stat-indep-area"><span class="mono">2.5.2</span>독립: 넓이 모형</a></li>
+        <li><a href="#text-stat-independence"><span class="mono">본문</span>독립과 종속</a></li>
+        <li><a href="#card-stat-indep-dice"><span class="mono">탐구 1</span>독립과 종속의 판단</a></li>
+        <li><a href="#card-stat-indep-area"><span class="mono">탐구 2</span>독립: 넓이 모형</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=stat-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">57문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=stat&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=stat-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">57문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=stat-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-stat-independence" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>독립과 종속</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">주사위 두 개를 던질 때, 첫째 주사위가 6이라는 것을 알면 '두 눈의 합이 7'일 확률이 바뀔까? '두 눈의 합이 12'일 확률은 어떨까? 어떤 정보는 확률을 바꾸고 어떤 정보는 바꾸지 않는데, 이 차이를 어떻게 판단할까?</p>
+          <figure class="q-fig" data-q="stat-indep">
+            <svg viewBox="0 0 520 260" role="img" aria-label="정사각형 안의 두 직사각형 A, B가 겹친 넓이가 두 넓이의 곱과 같은지 비교"></svg>
+            <div class="q-ctl"><label>B의 왼쪽 끝 <input type="range" data-k="x" min="0" max="0.6" step="0.05" value="0"><output data-k="x"></output></label><label>B의 아래쪽 끝 <input type="range" data-k="y" min="0" max="0.5" step="0.05" value="0"><output data-k="y"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 넓이가 확률인 정사각형에서 \(A\)는 위쪽 가로띠, \(B\)는 직사각형이다. \(B\)가 세로로 정사각형을 가득 채우면 \(P(A \cap B) = P(A)P(B)\)가 되어 독립이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>조건부확률(<a href="2-4.html">조건부확률</a>), 확률의 덧셈정리와 배반사건(<a href="2-2.html">확률의 덧셈정리</a>).</div>
+
+          <h3><span class="no">2.5.1</span>독립의 뜻</h3>
+          <p>'합이 7'인 경우는 36가지 가운데 6가지이므로 확률이 \(\tfrac{1}{6}\)이다. 첫째 눈이 6이라는 조건 아래에서는 6가지 경우 가운데 \((6, 1)\) 하나만 합이 7이므로 역시 \(\tfrac{1}{6}\)이다. 조건이 확률을 바꾸지 않았다. 반면 '합이 12'는 처음 \(\tfrac{1}{36}\)에서, 첫째 눈이 6이라는 조건 아래에서는 \(\tfrac{1}{6}\)으로 바뀐다.</p>
+          <p>이렇게 사건 \(A\)가 일어났다는 사실이 \(B\)의 확률을 바꾸지 않는 경우, 곧 \(P(B \mid A) = P(B)\)일 때 두 사건은 서로 <em>독립</em>이라 한다. 확률이 바뀌면 종속이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">두 사건이 독립일 조건</span></span>
+            <p>두 사건 \(A\), \(B\)가 서로 독립이기 위한 필요충분조건은 \[P(A \cap B) = P(A)P(B)\] 이다(\(P(A) &gt; 0\), \(P(B) &gt; 0\)).</p>
+          </div>
+          <p>조건부확률의 정의 \(P(B \mid A) = \dfrac{P(A \cap B)}{P(A)}\)에 \(P(B \mid A) = P(B)\)를 넣으면 이 식이 된다. 그림 1에서 \(B\)를 옮겨 보면, \(B\)가 정사각형의 위아래를 가득 채우는 세로띠일 때 \(A\) 안에서 차지하는 비율과 전체에서 차지하는 비율이 같아져 독립이 된다.</p>
+
+          <h3><span class="no">2.5.2</span>독립과 배반은 다르다</h3>
+          <p>배반사건은 동시에 일어나지 않는 사건이므로 \(P(A \cap B) = 0\)이다. 그런데 \(P(A)\), \(P(B)\)가 모두 양수이면 \(P(A)P(B) &gt; 0\)이므로 독립일 수 없다. 오히려 \(A\)가 일어났다는 것을 알면 \(B\)는 절대 일어나지 않으므로, 배반사건은 강하게 종속된 사건이다.<sup class="fn"><a href="#fn-stat-independence-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="배반사건은 겹치지 않아 종속, 독립사건은 겹친 비율이 같다">
+              <g transform="translate(20 10)"><rect width="220" height="100" class="k"/><rect x="10" y="10" width="80" height="80" class="la"/><rect x="130" y="10" width="80" height="80" class="lb"/><text x="110" y="125" text-anchor="middle" class="s">배반, 겹침 0, 종속</text></g>
+              <g transform="translate(280 10)"><rect width="220" height="100" class="k"/><rect x="0" y="0" width="220" height="50" class="la"/><rect x="0" y="0" width="88" height="100" class="lb"/><text x="110" y="125" text-anchor="middle" class="s">독립, 겹친 비율이 같다</text></g>
+            </svg>
+            <figcaption>그림 2. 배반사건은 한쪽이 일어나면 다른 쪽이 불가능해지므로 종속이고, 독립사건은 한쪽 안에서도 다른 쪽의 비율이 그대로이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>1부터 12까지의 수에서 하나를 뽑는다. \(A\)는 '짝수', \(B\)는 '3의 배수', \(C\)는 '4의 배수'일 때, \(A\)와 \(B\), \(A\)와 \(C\)가 각각 독립인지 판단하여라.</p>
+          </div>
+          <p>\(P(A) = \tfrac{6}{12} = \tfrac{1}{2}\), \(P(B) = \tfrac{4}{12} = \tfrac{1}{3}\)이다. \(A \cap B\)는 6의 배수 \(\{6, 12\}\)이므로 \(P(A \cap B) = \tfrac{2}{12} = \tfrac{1}{6}\)이다. \(P(A)P(B) = \tfrac{1}{6}\)과 같으므로 \(A\)와 \(B\)는 독립이다. 3의 배수 가운데 짝수의 비율도 \(\tfrac{2}{4} = \tfrac{1}{2}\)로 전체의 비율과 같다.</p>
+          <p>\(P(C) = \tfrac{3}{12} = \tfrac{1}{4}\)이고, \(A \cap C\)는 4의 배수 전체 \(\{4, 8, 12\}\)이므로 \(P(A \cap C) = \tfrac{1}{4}\)이다. 그런데 \(P(A)P(C) = \tfrac{1}{8}\)이므로 같지 않아 종속이다. 4의 배수이면 반드시 짝수이니, \(C\)가 일어났다는 정보가 \(A\)의 확률을 \(\tfrac{1}{2}\)에서 1로 바꾼다.</p>
+          <p>독립인지는 직관보다 계산으로 확인해야 한다. 같은 '짝수'라도 3의 배수와는 독립이고 4의 배수와는 종속이었다. 아래 탐구 카드에서 두 사각형을 움직이며 독립이 되는 배치를 직접 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-stat-independence-1">두 사건이 독립이면 \(A\)와 \(B^C\), \(A^C\)와 \(B\), \(A^C\)와 \(B^C\)도 모두 독립이다. 가령 \(P(A \cap B^C) = P(A) - P(A)P(B) = P(A)P(B^C)\)이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>두 사건이 독립이라는 것은 한 사건이 일어났다는 정보가 다른 사건의 확률을 바꾸지 않는다는 뜻이며, \(P(A \cap B) = P(A)P(B)\)로 판정한다. 동시에 일어나지 않는 배반사건은 오히려 종속이다. 그래서 처음 질문에서 첫째 눈이 6이라는 정보는 '합이 7'과는 독립이라 확률을 바꾸지 않고, '합이 12'와는 종속이라 확률을 바꾼다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a><a href="../../c/stat/2-4.html#text-stat-conditional"><small class="mono">확률과 통계 2.4</small>조건부확률</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-6.html#card-stat-indep-trials"><small class="mono">확률과 통계 2.6</small>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</a><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
+
       <article class="card" id="card-stat-indep-dice">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>'합이 7'은 첫째 눈의 영향을 받을까?</h2><span class="kind">독립 · 종속 판단</span>
+          <span class="no">탐구 1</span><h2>'합이 7'은 첫째 눈의 영향을 받을까?</h2><span class="kind">독립 · 종속 판단</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -83,34 +136,34 @@
                 <div><dt>\(P(A\cap B)\)</dt><dd class="n-ab">—</dd></div>
                 <div><dt>\(P(A)P(B)\)</dt><dd class="n-pp">—</dd></div>
               </dl>
-              <p class="fig-note">A가 일어났다고 하면 연두색 칸만 남습니다. 그 안에서 점이 있는 칸의 비율이 \(P(B\mid A)\), 36칸 전체에서 점이 있는 칸의 비율이 \(P(B)\)입니다.</p>
+              <p class="fig-note">A가 일어났다고 하면 연두색 칸만 남는다. 그 안에서 점이 있는 칸의 비율이 \(P(B\mid A)\), 36칸 전체에서 점이 있는 칸의 비율이 \(P(B)\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>주사위 두 개를 던져 첫째 눈이 1임을 알았습니다. 두 눈의 합이 7일 확률은 이 정보를 알기 전과 달라질까요? 합이 8이라면 어떨까요?</li>
-            <li><span class="tag">복원</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)는 A가 일어났을 때 B의 확률입니다. 표본공간을 A로 줄이고, 그 안에서 B가 차지하는 비율을 봅니다.</li>
-            <li><span class="tag">설명</span>\(P(B\mid A) = P(B)\)이면 A가 일어났다는 정보가 B의 확률을 바꾸지 않습니다. 이때 두 사건 A와 B는 서로 <em>독립</em>이라 하고, 독립이 아니면 <em>종속</em>이라고 합니다. \(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)이므로, \(P(A) &gt; 0\), \(P(B) &gt; 0\)일 때 A와 B가 서로 독립일 필요충분조건은 \(P(A\cap B) = P(A)P(B)\)입니다. 이 식은 A와 B를 바꿔도 같으므로 \(P(A\mid B) = P(A)\)와도 같습니다. 또 A와 B가 독립이면 A와 \(B^c, A^c\)와 \(B, A^c\)와 \(B^c\)도 각각 독립입니다.</li>
-            <li><span class="tag">연결</span>서로 다른 동전이나 주사위처럼 따로 일어나는 시행의 사건은 독립입니다. 그런데 이 카드에서 보듯 같은 시행 안의 두 사건도 독립일 수 있습니다. 독립인 사건에서는 곱셈정리가 \(P(A\cap B) = P(A)P(B)\)로 간단해지고, 이것이 독립시행의 확률로 이어집니다.</li>
-            <li><span class="tag">적용</span>A = '첫째 눈이 1', B = '합이 7'에서 A의 여섯 칸 중 점이 있는 칸을 세어 보세요. B를 '합이 8'로 바꾸면 어떻게 되나요? A = '두 눈이 같음', B = '둘째 눈이 5 이상'은 판정이 무엇인가요? 모든 조합에서 \(P(B\mid A) = P(B)\)와 \(P(A\cap B) = P(A)P(B)\)의 판정이 늘 일치하는지도 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"배반사건이면 서로 관계가 없으니 독립"이라는 생각은 틀립니다. \(P(A) &gt; 0\), \(P(B) &gt; 0\)인 두 사건이 배반이면, A가 일어났을 때 B는 절대 일어나지 않으므로 \(P(B\mid A) = 0 \ne P(B)\)입니다. 배반은 '함께 일어날 수 없다', 독립은 '한쪽의 정보가 다른 쪽의 확률을 바꾸지 않는다'는 서로 다른 개념입니다.</li>
+            <li><span class="tag">질문</span>주사위 두 개를 던져 첫째 눈이 1임을 알았다. 두 눈의 합이 7일 확률은 이 정보를 알기 전과 달라질까? 합이 8이라면 어떨까?</li>
+            <li><span class="tag">복원</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)는 A가 일어났을 때 B의 확률이다. 즉 표본공간을 A로 줄이고, 그 안에서 B가 차지하는 비율을 본다.</li>
+            <li><span class="tag">설명</span>\(P(B\mid A) = P(B)\)이면 A가 일어났다는 정보가 B의 확률을 바꾸지 않는다. 이때 두 사건 A와 B는 서로 <em>독립</em>이라 하고, 독립이 아니면 <em>종속</em>이라고 한다. \(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)이므로, \(P(A) &gt; 0\), \(P(B) &gt; 0\)일 때 A와 B가 서로 독립일 필요충분조건은 \(P(A\cap B) = P(A)P(B)\)이다. 이 식은 A와 B를 바꿔도 같으므로 \(P(A\mid B) = P(A)\)와도 같다. 또 A와 B가 독립이면 A와 \(B^c\), \(A^c\)와 B, \(A^c\)와 \(B^c\)도 각각 독립이다.</li>
+            <li><span class="tag">연결</span>서로 다른 동전이나 주사위처럼 따로 일어나는 시행의 사건은 독립이다. 그런데 이 카드에서 보듯 같은 시행 안의 두 사건도 독립일 수 있다. 독립인 사건에서는 곱셈정리가 \(P(A\cap B) = P(A)P(B)\)로 간단해지고, 이것이 독립시행의 확률로 이어진다.</li>
+            <li><span class="tag">적용</span>A = '첫째 눈이 1', B = '합이 7'에서 A의 여섯 칸 가운데 점이 있는 칸을 세어 보고, B를 '합이 8'로 바꾸어 비교하자. A = '두 눈이 같음', B = '둘째 눈이 5 이상'의 판정도 보고, 모든 조합에서 \(P(B\mid A) = P(B)\)와 \(P(A\cap B) = P(A)P(B)\)의 판정이 늘 일치하는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"배반사건이면 서로 관계가 없으니 독립"이라는 생각은 틀린다. \(P(A) &gt; 0\), \(P(B) &gt; 0\)인 두 사건이 배반이면, A가 일어났을 때 B는 절대 일어나지 않으므로 \(P(B\mid A) = 0 \ne P(B)\)이다. 즉 배반은 '함께 일어날 수 없다', 독립은 '한쪽의 정보가 다른 쪽의 확률을 바꾸지 않는다'는 서로 다른 개념이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">주사위 한 개를 던질 때 짝수의 눈이 나오는 사건을 A라 합시다. 다음 중 A와 서로 독립인 사건 B는?</p>
+          <p class="q">주사위 한 개를 던질 때 짝수의 눈이 나오는 사건을 A라 하자. 다음 중 A와 서로 독립인 사건 B는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(B = \{1, 3, 5\}\)<span class="why"><b>배반이므로 종속입니다.</b> \(A\cap B = \varnothing\)이므로 \(P(A\cap B) = 0\)이지만 \(P(A)P(B) = \frac{1}{4}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(B = \{2, 4\}\)<span class="why"><b>종속입니다.</b> A가 일어나면 B의 확률이 \(\frac{1}{3}\)에서 \(\frac{2}{3}\)로 커집니다. \(P(A\cap B) = \frac{1}{3}\), \(P(A)P(B) = \frac{1}{6}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(B = \{1, 2\}\)<span class="why"><b>맞습니다.</b> \(P(A\cap B) = P(\{2\}) = \frac{1}{6}\)이고 \(P(A)P(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}\)입니다. 주사위 한 번을 던지는 같은 시행 안에서도 독립일 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(B = \{1, 2, 3\}\)<span class="why"><b>종속입니다.</b> \(P(A\cap B) = P(\{2\}) = \frac{1}{6}\)이지만 \(P(A)P(B) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(B = \{1, 3, 5\}\)<span class="why"><b>배반이므로 종속이다.</b> \(A\cap B = \varnothing\)이므로 \(P(A\cap B) = 0\)이지만 \(P(A)P(B) = \frac{1}{4}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(B = \{2, 4\}\)<span class="why"><b>종속이다.</b> A가 일어나면 B의 확률이 \(\frac{1}{3}\)에서 \(\frac{2}{3}\)로 커진다. \(P(A\cap B) = \frac{1}{3}\), \(P(A)P(B) = \frac{1}{6}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>\(B = \{1, 2\}\)<span class="why"><b>맞다.</b> \(P(A\cap B) = P(\{2\}) = \frac{1}{6}\)이고 \(P(A)P(B) = \frac{1}{2} \times \frac{1}{3} = \frac{1}{6}\)이다. 주사위 한 번을 던지는 같은 시행 안에서도 독립일 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(B = \{1, 2, 3\}\)<span class="why"><b>종속이다.</b> \(P(A\cap B) = P(\{2\}) = \frac{1}{6}\)이지만 \(P(A)P(B) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-6.html#card-stat-indep-trials"><small class="mono">확률과 통계 2.6</small>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</a><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a><a href="../../c/stat/2-4.html#text-stat-conditional"><small class="mono">확률과 통계 2.4</small>조건부확률</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-6.html#card-stat-indep-trials"><small class="mono">확률과 통계 2.6</small>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</a><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
 
       <article class="card" id="card-stat-indep-area">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>두 사각형이 어떻게 겹치면 독립일까?</h2><span class="kind">독립 · 넓이 모형</span>
+          <span class="no">탐구 2</span><h2>두 사각형이 어떻게 겹치면 독립일까?</h2><span class="kind">독립 · 넓이 모형</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,43 +181,44 @@
                 <div><dt>\(P(A\cap B)\)</dt><dd class="n-ab">—</dd></div>
                 <div><dt>\(P(A)P(B)\)</dt><dd class="n-pp">—</dd></div>
               </dl>
-              <p class="fig-note">정사각형 안에 점 하나를 아무 곳에나 찍는 시행입니다. 전체 넓이가 1이므로 영역의 넓이가 곧 확률입니다. 사각형 안을 끌어 옮기고, 오른쪽 아래 모서리의 네모를 끌어 크기를 바꿉니다. 눈금 한 칸은 0.05입니다.</p>
+              <p class="fig-note">정사각형 안에 점 하나를 아무 곳에나 찍는 시행이다. 전체 넓이가 1이므로 영역의 넓이가 곧 확률이다. 사각형 안을 끌어 옮기고, 오른쪽 아래 모서리의 네모를 끌어 크기를 바꾼다. 눈금 한 칸은 0.05이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>넓이가 1인 정사각형 안에 점 하나를 아무 곳에나 찍습니다. 점이 사각형 A에 들어가는 사건과 사각형 B에 들어가는 사건은 언제 독립일까요?</li>
-            <li><span class="tag">복원</span>점을 고르게 찍으면 어떤 영역에 들어갈 확률은 그 영역의 넓이입니다. 두 사건 A, B가 독립일 조건은 \(P(A\cap B) = P(A)P(B)\)입니다.</li>
-            <li><span class="tag">설명</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)는 'A 안에서 B가 차지하는 비율'입니다. 독립이려면 이 비율이 정사각형 전체에서 B가 차지하는 비율 \(P(B)\)와 같아야 합니다. A가 세로 띠, B가 가로 띠이면 A 안에서도 전체에서도 B는 같은 높이 비율을 차지하므로 언제나 독립입니다. 두 사각형이 떨어져 있으면 \(P(A\cap B) = 0\)이므로 종속입니다. B가 A 안에 들어가 있으면 \(P(B\mid A) = \frac{P(B)}{P(A)}\)가 \(P(B)\)보다 커지므로(\(P(A) &lt; 1\)일 때) 역시 종속입니다.</li>
-            <li><span class="tag">연결</span>두 사건이 독립이면 덧셈정리는 \(P(A\cup B) = P(A) + P(B) - P(A)P(B)\)가 됩니다. 넓이로 확률을 재는 생각은 통계 단원에서 연속확률변수의 확률을 넓이로 구할 때 다시 씁니다.</li>
-            <li><span class="tag">적용</span>'세로 띠와 가로 띠'에서 띠를 옮기거나 폭을 바꿔도 판정이 독립으로 남는지 확인하세요. 그다음 띠가 아닌 두 사각형을 일부만 겹치게 하면서 \(P(A\cap B) = P(A)P(B)\)가 되는 위치를 찾아보세요. 예를 들어 A가 정사각형의 절반을 차지하면, B는 A 안에 얼마만큼 들어가야 할까요?</li>
-            <li class="warn"><span class="tag">판단</span>독립은 그림의 모양이 아니라 수치로 판단합니다. 겹쳐 있다고 독립인 것도 아니고, 떨어져 있다고 서로 무관한 것도 아닙니다. 떨어진 두 사각형은 '한쪽이 일어나면 다른 쪽은 절대 일어나지 않는다'는 강한 관계, 곧 종속입니다.</li>
+            <li><span class="tag">질문</span>넓이가 1인 정사각형 안에 점 하나를 아무 곳에나 찍는다. 점이 사각형 A에 들어가는 사건과 사각형 B에 들어가는 사건은 언제 독립일까?</li>
+            <li><span class="tag">복원</span>점을 고르게 찍으면 어떤 영역에 들어갈 확률은 그 영역의 넓이이다. 그리고 두 사건 A, B가 독립일 조건은 \(P(A\cap B) = P(A)P(B)\)이다.</li>
+            <li><span class="tag">설명</span>\(P(B\mid A) = \frac{P(A\cap B)}{P(A)}\)는 'A 안에서 B가 차지하는 비율'이므로, 독립이려면 이 비율이 정사각형 전체에서 B가 차지하는 비율 \(P(B)\)와 같아야 한다. A가 세로 띠, B가 가로 띠이면 A 안에서도 전체에서도 B는 같은 높이 비율을 차지하므로 언제나 독립이다. 반면 두 사각형이 떨어져 있으면 \(P(A\cap B) = 0\)이므로 종속이다. 또 B가 A 안에 들어가 있으면 \(P(B\mid A) = \frac{P(B)}{P(A)}\)가 \(P(B)\)보다 커지므로(\(P(A) &lt; 1\)일 때) 역시 종속이다.</li>
+            <li><span class="tag">연결</span>두 사건이 독립이면 덧셈정리는 \(P(A\cup B) = P(A) + P(B) - P(A)P(B)\)가 된다. 넓이로 확률을 재는 이 생각은 통계 단원에서 연속확률변수의 확률을 넓이로 구할 때 다시 쓴다.</li>
+            <li><span class="tag">적용</span>'세로 띠와 가로 띠'에서 띠를 옮기거나 폭을 바꿔도 판정이 독립으로 남는지 확인해 보자. 그다음 띠가 아닌 두 사각형을 일부만 겹치게 하면서 \(P(A\cap B) = P(A)P(B)\)가 되는 위치를 찾아보자. 예를 들어 A가 정사각형의 절반을 차지하면, B는 넓이의 절반이 A 안에 들어가야 한다.</li>
+            <li class="warn"><span class="tag">판단</span>독립은 그림의 모양이 아니라 수치로 판단한다. 겹쳐 있다고 독립인 것도 아니고, 떨어져 있다고 서로 무관한 것도 아니다. 떨어진 두 사각형은 '한쪽이 일어나면 다른 쪽은 절대 일어나지 않는다'는 강한 관계, 곧 종속이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">두 사건 A, B가 서로 독립이고 \(P(A) = 0.4\), \(P(B) = 0.5\)일 때, \(P(A\cup B)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.9<span class="why"><b>배반처럼 더했습니다.</b> 독립인 두 사건은 \(P(A\cap B) = 0.2 &gt; 0\)이므로 겹친 부분을 빼야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.7<span class="why"><b>맞습니다.</b> 독립이므로 \(P(A\cap B) = 0.4 \times 0.5 = 0.2\)이고, \(P(A\cup B) = 0.4 + 0.5 - 0.2 = 0.7\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.2<span class="why"><b>\(P(A\cap B)\)입니다.</b> '그리고'의 확률을 구했습니다. '또는'은 합집합입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.8<span class="why"><b>\(1 - P(A\cap B)\)입니다.</b> 이것은 A와 B가 함께 일어나지 않을 확률입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0.9<span class="why"><b>배반처럼 더했다.</b> 독립인 두 사건은 \(P(A\cap B) = 0.2 &gt; 0\)이므로 겹친 부분을 빼야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>0.7<span class="why"><b>맞다.</b> 독립이므로 \(P(A\cap B) = 0.4 \times 0.5 = 0.2\)이고, \(P(A\cup B) = 0.4 + 0.5 - 0.2 = 0.7\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0.2<span class="why"><b>\(P(A\cap B)\)이다.</b> '그리고'의 확률을 구했다. '또는'은 합집합이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>0.8<span class="why"><b>\(1 - P(A\cap B)\)이다.</b> 이것은 A와 B가 함께 일어나지 않을 확률이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-6.html#card-stat-indep-trials"><small class="mono">확률과 통계 2.6</small>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</a><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/2-4.html#card-stat-cond-table"><small class="mono">확률과 통계 2.4</small>버스로 오는 학생만 보면 지각할 확률이 달라질까?</a><a href="../../c/stat/2-4.html#card-stat-cond-test"><small class="mono">확률과 통계 2.4</small>검사에서 양성이 나오면 정말 병에 걸린 것일까?</a><a href="../../c/stat/2-4.html#text-stat-conditional"><small class="mono">확률과 통계 2.4</small>조건부확률</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/stat/2-6.html#card-stat-indep-trials"><small class="mono">확률과 통계 2.6</small>동전을 네 번 던져 앞면이 두 번 나오는 길은 몇 가지일까?</a><a href="../../c/pmath/3-4.html#card-pmath-monty-hall"><small class="mono">전문 수학 3.4</small>사회자가 빈 문을 열어 주면, 고른 문을 바꾸는 게 나을까?</a><a href="../../c/pmath/3-4.html#card-pmath-bayes-area"><small class="mono">전문 수학 3.4</small>정확도 99 %인 검사에서 양성이 나오면, 병에 걸렸을 확률도 99 %일까?</a><a href="../../c/pmath/3-4.html#card-pmath-gambler"><small class="mono">전문 수학 3.4</small>동전이 다섯 번 연속 앞면이 나왔다면, 다음은 뒷면이 나올 차례일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=stat-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">57문항</span></a>
+      <a class="px-go" href="../../bank.html?c=stat&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=stat-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">57문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +226,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/stat/body.js"></script>
 <script src="../../js/cards/stat/dice-grid.js"></script>
 <script src="../../js/cards/stat/indep-dice.js"></script>
 <script src="../../js/cards/stat/indep-area.js"></script>

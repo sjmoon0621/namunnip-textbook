@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>스택·큐로 문제 해결 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="후입선출 구조인 스택과 선입선출 구조인 큐를 활용해 괄호 짝 검사, 후위 표기식 계산, 대기열 시뮬레이션 같은 문제를 효율적으로 해결하는 프로그램을 작성한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-info-bracket .code { margin: 10px 0 0; padding: 8px 0; background: var(--paper-2); font-family: var(--f-mono); font-size: 12.5px; line-height: 1.6; overflow-x: auto; counter-reset: ln; }
     #card-info-bracket .code .ln { display: block; position: relative; padding: 0 12px 0 38px; white-space: pre; }
@@ -70,18 +76,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-info-bracket"><span class="mono">2.2.1</span>스택으로 괄호 검사·후위식 계산</a></li>
-        <li><a href="#card-info-printer"><span class="mono">2.2.2</span>큐 시뮬레이션: 프린터 대기열</a></li>
+        <li><a href="#text-info-print-queue"><span class="mono">본문</span>스택·큐로 문제 해결</a></li>
+        <li><a href="#card-info-bracket"><span class="mono">탐구 1</span>스택으로 괄호 검사·후위식 계산</a></li>
+        <li><a href="#card-info-printer"><span class="mono">탐구 2</span>큐 시뮬레이션: 프린터 대기열</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=info-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=info&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=info-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-info-print-queue" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>스택·큐로 문제 해결</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">교무실 프린터에 문서가 평소 한 시간에 40개쯤 들어온다. 프린터는 한 시간에 50개를 출력할 수 있다. 이때 대기열에는 평균 4개쯤의 문서가 쌓여 있다. 그런데 시험 기간에 문서가 한 시간에 45개로, 고작 12% 늘었는데 대기열은 9개로 두 배 넘게 길어졌다. 왜 조금 바빠졌을 뿐인데 줄이 이렇게 크게 늘어날까? 그리고 큐와 스택 같은 자료 구조로 이런 문제를 어떻게 다룰까?</p>
+          <figure class="q-fig" data-q="info-mm1">
+            <svg viewBox="0 0 520 230" role="img" aria-label="이용률에 따른 대기열의 평균 길이"></svg>
+            <div class="q-ctl"><label>이용률 ρ (도착 ÷ 처리) <input type="range" data-k="r" min="0.1" max="0.97" step="0.01" value="0.8"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 문서가 무작위로 도착하고 출력 시간도 무작위인 대기열(M/M/1 모형)에서, 이용률에 따른 대기열 속 평균 문서 수. 이용률이 1에 다가가면 줄이 끝없이 길어진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>스택과 큐(<a href="2-1.html">스택과 큐의 구현</a>), 확률과 평균(수학).</div>
+
+          <h3><span class="no">2.2.1</span>큐로 대기열 흉내 내기</h3>
+          <p>인쇄 대기열은 먼저 들어온 문서를 먼저 출력하는 큐이다. 프로그램으로 흉내 내려면 시간을 조금씩 흘려 보내며, 문서가 도착하면 큐에 넣고, 프린터가 비면 큐 앞에서 문서를 꺼내 출력한다. 도착 간격과 출력 시간을 무작위로 정하면 실제 대기열과 비슷한 모습이 나온다. 이런 시뮬레이션으로 줄이 얼마나 길어지는지, 문서 하나가 얼마나 기다리는지 잴 수 있다. 중요한 문서를 먼저 출력해야 한다면, 우선순위가 높은 것부터 꺼내는 우선순위 큐를 쓴다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">대기열의 평균 길이</span></span>
+            <p>문서가 평균 도착률 \(\lambda\)로 무작위로 오고, 프린터가 평균 처리율 \(\mu\)로 무작위 시간에 출력하면, 이용률 \(\rho = \lambda/\mu\)에서 시스템 안의 평균 문서 수는 \[L = \frac{\rho}{1 - \rho}\]이다. 문서 하나가 시스템에 머무는 평균 시간은 출력 시간의 \(\dfrac{1}{1 - \rho}\)배이다.</p>
+          </div>
+          <p>그림 1에서 이용률을 바꾸어 보자. 이용률 0.8이면 평균 4개, 0.9이면 9개, 0.95이면 19개가 쌓인다. 0.8에서 0.9로 12% 바빠졌을 뿐인데 줄은 두 배 넘게 길어진다. 도착과 출력이 무작위라서, 잠깐 문서가 몰리면 프린터가 따라잡을 여유가 거의 없기 때문이다. 그래서 대기열을 설계할 때는 처리 능력을 도착률보다 넉넉하게, 이용률이 0.7~0.8을 넘지 않게 잡는다.<sup class="fn"><a href="#fn-info-print-queue-1">1</a></sup></p>
+
+          <h3><span class="no">2.2.2</span>스택으로 괄호 검사하기</h3>
+          <p>스택은 짝을 맞추는 문제에 알맞다. 수식이나 코드의 괄호가 바르게 닫혔는지 검사하려면 문자를 왼쪽부터 읽으며, 여는 괄호를 만나면 스택에 넣고, 닫는 괄호를 만나면 스택 맨 위의 여는 괄호를 꺼내 짝이 맞는지 확인한다. 짝이 다르거나 스택이 비어 있으면 틀린 식이고, 끝까지 읽은 뒤 스택이 비어야 바른 식이다. 가장 나중에 연 괄호가 가장 먼저 닫혀야 한다는 규칙이 바로 스택의 후입 선출이다. 웹 브라우저의 뒤로 가기, 편집기의 실행 취소도 같은 원리이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="문제와 알맞은 자료 구조">
+              <g class="s">
+                <text x="20" y="22">문제</text><text x="200" y="22">자료 구조</text><text x="350" y="22">까닭</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">괄호 짝 검사</text><text x="200" y="52">스택</text><text x="350" y="52">나중에 연 것이 먼저 닫힘</text>
+                <text x="20" y="74">인쇄 대기열</text><text x="200" y="74">큐</text><text x="350" y="74">먼저 온 것이 먼저 나감</text>
+                <text x="20" y="96">급한 문서 먼저</text><text x="200" y="96">우선순위 큐</text><text x="350" y="96">순서보다 중요도가 먼저</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 무엇을 먼저 꺼내야 하는지가 알맞은 자료 구조를 정한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>프린터가 한 시간에 문서 50개를 출력한다. 문서가 한 시간에 40개 올 때와 45개 올 때, 대기열 속 평균 문서 수와 문서 하나가 시스템에 머무는 평균 시간을 구하여라. 문서 하나의 평균 출력 시간은 1.2분이다.</p>
+          </div>
+          <p>40개이면 \(\rho = 0.8\)이므로 평균 \(0.8 \div 0.2 = 4\)개가 있고, 문서 하나는 출력 시간의 \(1 \div 0.2 = 5\)배인 6분을 머문다.</p>
+          <p>45개이면 \(\rho = 0.9\)이므로 평균 \(0.9 \div 0.1 = 9\)개가 있고, 문서 하나는 출력 시간의 10배인 12분을 머문다. 문서가 12.5% 늘었는데 기다리는 시간은 두 배가 되었다. 프린터를 한 대 더 두어 처리율을 두 배로 하면 이용률이 0.45가 되어, 문서가 평균 0.8개만 쌓인다. 즉 대기열은 이용률이 1에 가까울수록 아주 민감해진다. 그래서 시뮬레이션과 계산으로 이용률을 어림하면, 프린터를 언제 늘려야 할지 미리 판단할 수 있다.</p>
+          <p>아래 탐구 카드에서 괄호 검사기와 우선순위가 있는 인쇄 대기열을 스택과 큐로 직접 만들어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-info-print-queue-1">이 공식은 1909년 덴마크의 엔지니어 얼랑이 전화 교환기에 걸려 오는 통화를 분석하며 시작한 대기 이론에서 나왔다. 지금은 서버, 은행 창구, 고속도로 요금소의 설계에 두루 쓰인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>큐는 먼저 온 것을 먼저 처리하는 대기열을, 스택은 나중에 연 것을 먼저 닫는 짝 맞추기를 자연스럽게 나타내며, 큐로 대기열을 시뮬레이션하면 줄의 길이와 기다리는 시간을 잴 수 있다. 무작위로 도착하고 처리되는 대기열의 평균 길이는 \(\rho/(1-\rho)\)로, 이용률이 1에 가까워질수록 폭발적으로 늘어난다. 그래서 처음 질문의 프린터는 이용률이 0.8에서 0.9로 올라가 여유가 거의 사라지면서, 대기 줄이 두 배 넘게 길어졌다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/2-1.html#card-info-sq"><small class="mono">정보과학 2.1</small>스택과 큐를 리스트로 만들면 무엇이 다를까?</a><a href="../../c/info/2-1.html#text-info-adt"><small class="mono">정보과학 2.1</small>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</a><a href="../../c/info/2-1.html#text-info-queue-impl"><small class="mono">정보과학 2.1</small>스택과 큐의 구현</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/2-4.html#card-info-maze"><small class="mono">정보과학 2.4</small>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</a><a href="../../c/info/2-4.html#text-info-bst-height"><small class="mono">정보과학 2.4</small>트리·그래프로 문제 해결</a></div></nav>
+
       <article class="card" id="card-info-bracket">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>괄호의 짝과 수식의 값을 스택 하나로 어떻게 판단할까?</h2><span class="kind">스택 활용 · 괄호 짝 검사 · 후위 표기식 계산</span>
+          <span class="no">탐구 1</span><h2>괄호의 짝과 수식의 값을 스택 하나로 어떻게 판단할까?</h2><span class="kind">스택 활용 · 괄호 짝 검사 · 후위 표기식 계산</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -104,33 +161,33 @@
                 <span class="mono small dim s-pos"></span>
               </div>
               <p class="note"></p>
-              <p class="fig-note">후위 표기식은 수와 연산자를 빈칸으로 띄어 씁니다(정수와 + − * /). 괄호 검사는 ( ) [ ] { }만 보고 나머지 글자는 건너뜁니다.</p>
+              <p class="fig-note">후위 표기식은 수와 연산자를 빈칸으로 띄어 쓴다(정수와 + − * /). 괄호 검사는 ( ) [ ] { }만 보고 나머지 글자는 건너뛴다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>코드 편집기는 괄호 짝이 틀리면 곧바로 표시합니다. 여는 괄호와 닫는 괄호의 개수만 세면 될까요? <code>([)]</code>는 개수가 맞는데도 틀린 식입니다. 또 계산기는 <code>(3 + 4) * 2</code>에서 무엇을 먼저 계산할지 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>스택은 맨 위에서만 넣고 꺼내는 후입선출 구조입니다. 보통 쓰는 수식(중위 표기)은 연산자가 두 수 사이에 있고, 곱셈이 덧셈보다 먼저라는 우선순위와 괄호로 계산 순서를 정합니다.</li>
-            <li><span class="tag">설명</span>괄호는 <em>가장 나중에 열린 것이 가장 먼저 닫혀야</em> 합니다. 이 성질이 바로 후입선출이므로, 여는 괄호는 스택에 넣고 닫는 괄호를 만나면 맨 위를 꺼내 종류가 맞는지 봅니다. 중간에 짝이 틀리거나 스택이 비어 있으면 실패, 끝까지 읽은 뒤 스택이 비어야 성공입니다. <em>후위 표기식</em>은 연산자를 두 수 뒤에 씁니다. <code>(3 + 4) * 2</code>는 <code>3 4 + 2 *</code>가 됩니다. 수는 스택에 넣고, 연산자를 만나면 두 수를 꺼내 계산한 결과를 다시 넣습니다. 괄호도 우선순위도 필요 없고, 왼쪽에서 오른쪽으로 한 번만 읽으면 됩니다.</li>
-            <li><span class="tag">연결</span>두 알고리즘 모두 입력을 한 번씩만 읽으므로 걸리는 시간이 입력 길이에 비례합니다. 계산기와 컴파일러는 중위식을 먼저 후위식으로 바꾼 뒤 이 방법으로 계산하는데, 이 변환에도 연산자를 잠시 쌓아 두는 스택이 쓰입니다. HTML 태그의 짝, 함수 호출과 반환처럼 ‘안에 같은 구조가 들어 있는’ 것을 다룰 때 스택이 쓰입니다.</li>
-            <li><span class="tag">적용</span><code>([)]</code>는 몇 번째 글자에서 실패하나요? <code>((a+b)*c</code>는 언제 실패가 드러나나요? 후위식 <code>8 2 / 3 -</code>에서 연산자를 만날 때 먼저 꺼낸 수가 왼쪽인지 오른쪽인지 확인하세요. <code>2 3 4 * +</code>를 중위식으로 바꾸어 쓰고, 직접 만든 후위식으로 시험해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>괄호가 한 종류뿐이면 개수를 세는 변수 하나로도 검사할 수 있습니다(중간에 음수가 되지 않고 끝에 0이면 성공). 여러 종류가 섞이면 어떤 괄호가 열려 있는지 순서까지 기억해야 하므로 스택이 필요합니다. 또 이 함수는 <code>print(')')</code>처럼 문자열 안에 든 괄호까지 세어 틀렸다고 판정합니다. 실제 편집기는 문자열과 주석을 먼저 구분합니다. 후위식 코드도 마지막에 스택에 값이 정확히 하나 남았는지 확인해야 잘못된 식을 걸러 낼 수 있습니다.</li>
+            <li><span class="tag">질문</span>코드 편집기는 괄호 짝이 틀리면 곧바로 표시한다. 여는 괄호와 닫는 괄호의 개수만 세면 될까? <code>([)]</code>는 개수가 맞는데도 틀린 식이다. 또 계산기는 <code>(3 + 4) * 2</code>에서 무엇을 먼저 계산할지 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>스택은 맨 위에서만 넣고 꺼내는 후입선출 구조이다. 보통 쓰는 수식(중위 표기)은 연산자가 두 수 사이에 있고, 곱셈이 덧셈보다 먼저라는 우선순위와 괄호로 계산 순서를 정한다.</li>
+            <li><span class="tag">설명</span>괄호는 <em>가장 나중에 열린 것이 가장 먼저 닫혀야</em> 한다. 이 성질이 바로 후입선출이므로, 여는 괄호는 스택에 넣고 닫는 괄호를 만나면 맨 위를 꺼내 종류가 맞는지 본다. 중간에 짝이 틀리거나 스택이 비어 있으면 실패, 끝까지 읽은 뒤 스택이 비어야 성공이다. <em>후위 표기식</em>은 연산자를 두 수 뒤에 쓴다. <code>(3 + 4) * 2</code>는 <code>3 4 + 2 *</code>가 된다. 수는 스택에 넣고, 연산자를 만나면 두 수를 꺼내 계산한 결과를 다시 넣는다. 괄호도 우선순위도 필요 없고, 왼쪽에서 오른쪽으로 한 번만 읽으면 된다.</li>
+            <li><span class="tag">연결</span>두 알고리즘 모두 입력을 한 번씩만 읽으므로 걸리는 시간이 입력 길이에 비례한다. 계산기와 컴파일러는 중위식을 먼저 후위식으로 바꾼 뒤 이 방법으로 계산하는데, 이 변환에도 연산자를 잠시 쌓아 두는 스택이 쓰인다. HTML 태그의 짝, 함수 호출과 반환처럼 ‘안에 같은 구조가 들어 있는’ 것을 다룰 때 스택이 쓰인다.</li>
+            <li><span class="tag">적용</span><code>([)]</code>는 몇 번째 글자에서 실패하는가? <code>((a+b)*c</code>는 언제 실패가 드러나는가? 후위식 <code>8 2 / 3 -</code>에서 연산자를 만날 때 먼저 꺼낸 수가 왼쪽인지 오른쪽인지 확인해 보자. <code>2 3 4 * +</code>를 중위식으로 바꾸어 쓰고, 직접 만든 후위식으로 시험해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>괄호가 한 종류뿐이면 개수를 세는 변수 하나로도 검사할 수 있다(중간에 음수가 되지 않고 끝에 0이면 성공). 여러 종류가 섞이면 어떤 괄호가 열려 있는지 순서까지 기억해야 하므로 스택이 필요하다. 또 이 함수는 <code>print(')')</code>처럼 문자열 안에 든 괄호까지 세어 틀렸다고 판정한다. 실제 편집기는 문자열과 주석을 먼저 구분한다. 후위식 코드도 마지막에 스택에 값이 정확히 하나 남았는지 확인해야 잘못된 식을 걸러 낼 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">후위 표기식 <code>6 2 - 3 *</code>의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12<span class="why"><b>맞습니다.</b> − 를 만나면 2(b)와 6(a)을 꺼내 6 − 2 = 4를 넣고, * 에서 4 × 3 = 12가 됩니다. 중위식으로는 (6 − 2) × 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−12<span class="why"><b>꺼낸 순서를 거꾸로 쓴 답입니다.</b> 먼저 꺼낸 2가 오른쪽 수이므로 2 − 6이 아니라 6 − 2입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>중위식의 우선순위를 적용한 답입니다.</b> 6 − 2 × 3으로 읽으면 0이지만, 후위식에서는 연산자가 나오는 순서가 곧 계산 순서입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>12<span class="why"><b>맞다.</b> − 를 만나면 2(b)와 6(a)을 꺼내 6 − 2 = 4를 넣고, * 에서 4 × 3 = 12가 된다. 중위식으로는 (6 − 2) × 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>−12<span class="why"><b>꺼낸 순서를 거꾸로 쓴 답이다.</b> 먼저 꺼낸 2가 오른쪽 수이므로 2 − 6이 아니라 6 − 2이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0<span class="why"><b>중위식의 우선순위를 적용한 답이다.</b> 6 − 2 × 3으로 읽으면 0이지만, 후위식에서는 연산자가 나오는 순서가 곧 계산 순서이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/2-1.html#card-info-sq"><small class="mono">정보과학 2.1</small>스택과 큐를 리스트로 만들면 무엇이 다를까?</a><a href="../../c/info/2-1.html#text-info-adt"><small class="mono">정보과학 2.1</small>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/2-4.html#card-info-maze"><small class="mono">정보과학 2.4</small>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/2-1.html#card-info-sq"><small class="mono">정보과학 2.1</small>스택과 큐를 리스트로 만들면 무엇이 다를까?</a><a href="../../c/info/2-1.html#text-info-adt"><small class="mono">정보과학 2.1</small>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</a><a href="../../c/info/2-1.html#text-info-queue-impl"><small class="mono">정보과학 2.1</small>스택과 큐의 구현</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/2-4.html#card-info-maze"><small class="mono">정보과학 2.4</small>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</a><a href="../../c/info/2-4.html#text-info-bst-height"><small class="mono">정보과학 2.4</small>트리·그래프로 문제 해결</a></div></nav>
 
       <article class="card" id="card-info-printer">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>중요한 문서가 끼어드는 인쇄 대기열에서 내 문서는 몇 번째로 나올까?</h2><span class="kind">큐 활용 · 시뮬레이션 · 큐 회전</span>
+          <span class="no">탐구 2</span><h2>중요한 문서가 끼어드는 인쇄 대기열에서 내 문서는 몇 번째로 나올까?</h2><span class="kind">큐 활용 · 시뮬레이션 · 큐 회전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -164,43 +221,47 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>공용 프린터에 문서 여러 개가 줄 서 있습니다. 프린터는 맨 앞 문서를 꺼냈을 때 뒤에 더 중요한 문서가 있으면 인쇄하지 않고 줄 맨 뒤로 보냅니다. 내 문서는 몇 번째로 인쇄될까요?</li>
-            <li><span class="tag">복원</span>큐는 앞에서 꺼내고 뒤에 넣는 선입선출 구조입니다. 파이썬에서는 <code>deque</code>의 <code>popleft()</code>와 <code>append()</code>로 씁니다.</li>
-            <li><span class="tag">설명</span>규칙을 그대로 따라 상태를 한 단계씩 바꾸며 결과를 알아내는 방법을 <em>시뮬레이션</em>이라 합니다. 이 문제에서 필요한 연산은 두 가지뿐입니다. 맨 앞을 꺼내고(popleft), 조건이 맞지 않으면 다시 맨 뒤에 넣습니다(append). 꺼내서 뒤로 보내는 것을 되풀이하면 줄이 고리처럼 돌아가는데, 이것을 <em>큐 회전</em>이라 합니다. 각 문서에 처음 위치 번호를 함께 담아 두어야 같은 중요도의 문서를 구별할 수 있습니다.</li>
-            <li><span class="tag">연결</span>운영체제는 여러 프로그램에 처리 시간을 조금씩 나눠 주고, 다 끝나지 않은 프로그램을 대기열 맨 뒤로 보내는 방식(라운드 로빈)을 씁니다. 이것도 큐 회전입니다. 순서를 지키며 기다리는 상황은 대부분 큐로 옮길 수 있습니다.</li>
-            <li><span class="tag">적용</span>첫 예시에서 A는 몇 번째로 인쇄되나요? 찾을 문서를 바꾸어 예상한 뒤 실행해 확인하세요. 중요도를 모두 같게 하면 어떤 순서가 되나요? ‘10개’ 예시의 비교 횟수를 6개 예시와 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>이 코드는 문서를 꺼낼 때마다 <code>any()</code>로 남은 문서를 훑습니다. 문서가 n개면 꺼내기와 비교가 n²에 비례할 만큼 늘어날 수 있습니다. 문서가 많다면 중요도별 남은 개수를 세어 두거나 <em>우선순위 큐</em>(<code>heapq</code>)를 씁니다. 다만 우선순위 큐에서 같은 중요도의 문서가 들어온 순서를 지키려면 (−중요도, 들어온 번호)처럼 순번을 함께 저장해야 합니다. 이 카드의 결과도 회전 규칙 때문에 단순히 “중요도 순, 같으면 들어온 순”과 다를 수 있습니다.</li>
+            <li><span class="tag">질문</span>공용 프린터에 문서 여러 개가 줄 서 있다. 프린터는 맨 앞 문서를 꺼냈을 때 뒤에 더 중요한 문서가 있으면 인쇄하지 않고 줄 맨 뒤로 보낸다. 내 문서는 몇 번째로 인쇄될까?</li>
+            <li><span class="tag">복원</span>큐는 앞에서 꺼내고 뒤에 넣는 선입선출 구조이다. 파이썬에서는 <code>deque</code>의 <code>popleft()</code>와 <code>append()</code>로 쓴다.</li>
+            <li><span class="tag">설명</span>규칙을 그대로 따라 상태를 한 단계씩 바꾸며 결과를 알아내는 방법을 <em>시뮬레이션</em>이라 한다. 이 문제에서 필요한 연산은 두 가지뿐이다. 맨 앞을 꺼내고(popleft), 조건이 맞지 않으면 다시 맨 뒤에 넣는다(append). 꺼내서 뒤로 보내는 것을 되풀이하면 줄이 고리처럼 돌아가는데, 이것을 <em>큐 회전</em>이라 한다. 각 문서에 처음 위치 번호를 함께 담아 두어야 같은 중요도의 문서를 구별할 수 있다.</li>
+            <li><span class="tag">연결</span>운영체제는 여러 프로그램에 처리 시간을 조금씩 나눠 주고, 다 끝나지 않은 프로그램을 대기열 맨 뒤로 보내는 방식(라운드 로빈)을 쓴다. 이것도 큐 회전이다. 순서를 지키며 기다리는 상황은 대부분 큐로 옮길 수 있다.</li>
+            <li><span class="tag">적용</span>첫 예시에서 A는 몇 번째로 인쇄되는가? 찾을 문서를 바꾸어 예상한 뒤 실행해 확인해 보자. 중요도를 모두 같게 하면 어떤 순서가 되는가? ‘10개’ 예시의 비교 횟수를 6개 예시와 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이 코드는 문서를 꺼낼 때마다 <code>any()</code>로 남은 문서를 훑는다. 문서가 n개면 꺼내기와 비교가 n²에 비례할 만큼 늘어날 수 있다. 문서가 많다면 중요도별 남은 개수를 세어 두거나 <em>우선순위 큐</em>(<code>heapq</code>)를 쓴다. 다만 우선순위 큐에서 같은 중요도의 문서가 들어온 순서를 지키려면 (−중요도, 들어온 번호)처럼 순번을 함께 저장해야 한다. 이 카드의 결과도 회전 규칙 때문에 단순히 “중요도 순, 같으면 들어온 순”과 다를 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">중요도가 차례로 <code>2 1 3 2</code>인 문서 A, B, C, D가 있습니다. 같은 규칙에서 D는 몇 번째로 인쇄될까요?</p>
+          <p class="q">중요도가 차례로 <code>2 1 3 2</code>인 문서 A, B, C, D가 있다. 같은 규칙에서 D는 몇 번째로 인쇄될까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4번째<span class="why"><b>보통 큐처럼 들어온 순서대로 본 답입니다.</b> C(3)가 먼저 인쇄되도록 A와 B가 뒤로 밀립니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2번째<span class="why"><b>맞습니다.</b> A(2)와 B(1)는 C(3) 때문에 뒤로 가서 줄이 C D A B가 됩니다. C를 인쇄한 뒤 D(2)보다 중요한 문서가 없으므로 D가 2번째입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3번째<span class="why"><b>중요도가 같으면 먼저 들어온 A가 먼저라고 본 답입니다.</b> A는 회전하며 D 뒤로 갔으므로, 줄에서 D가 앞에 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>4번째<span class="why"><b>보통 큐처럼 들어온 순서대로 본 답이다.</b> C(3)가 먼저 인쇄되도록 A와 B가 뒤로 밀린다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>2번째<span class="why"><b>맞다.</b> A(2)와 B(1)는 C(3) 때문에 뒤로 가서 줄이 C D A B가 된다. C를 인쇄한 뒤 D(2)보다 중요한 문서가 없으므로 D가 2번째이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>3번째<span class="why"><b>중요도가 같으면 먼저 들어온 A가 먼저라고 본 답이다.</b> A는 회전하며 D 뒤로 갔으므로, 줄에서 D가 앞에 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/2-1.html#card-info-sq"><small class="mono">정보과학 2.1</small>스택과 큐를 리스트로 만들면 무엇이 다를까?</a><a href="../../c/info/2-1.html#text-info-adt"><small class="mono">정보과학 2.1</small>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/2-4.html#card-info-maze"><small class="mono">정보과학 2.4</small>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/2-1.html#card-info-sq"><small class="mono">정보과학 2.1</small>스택과 큐를 리스트로 만들면 무엇이 다를까?</a><a href="../../c/info/2-1.html#text-info-adt"><small class="mono">정보과학 2.1</small>스택과 큐는 어디에 쓰이고, 무엇으로 구현할까?</a><a href="../../c/info/2-1.html#text-info-queue-impl"><small class="mono">정보과학 2.1</small>스택과 큐의 구현</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/2-4.html#card-info-maze"><small class="mono">정보과학 2.4</small>미로의 최단 경로는 큐와 스택 중 무엇으로 찾을까?</a><a href="../../c/info/2-4.html#text-info-bst-height"><small class="mono">정보과학 2.4</small>트리·그래프로 문제 해결</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=info-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=info&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/info/body.js"></script>
 <script src="../../js/cards/info/i1-kit.js"></script>
 <script src="../../js/cards/info/i1-bracket.js"></script>
 <script src="../../js/cards/info/i1-printer.js"></script>

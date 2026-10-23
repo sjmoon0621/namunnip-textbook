@@ -1,0 +1,61 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "2-1",
+  "short": "본문 · 지수·로그함수의 극한과 미분"
+}
+-->
+<article class="card reading" id="text-calc2-exp-log" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>지수·로그함수의 극한과 미분</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">은행에 1원을 맡기고 1년 이자율이 100%라면 1년 뒤 2원이 된다. 이자를 반년마다 50%씩 두 번 주면 \(1.5^2 = 2.25\)원, 한 달마다 주면 \(\left(1 + \frac{1}{12}\right)^{12} \approx 2.61\)원이 된다. 이자를 더 자주, 매 순간 준다면 1년 뒤 금액은 끝없이 커질까? 이 물음의 답이 미분에서 특별한 수 \(e\)이다.</p>
+    <figure class="q-fig" data-q="calc2-e">
+      <svg viewBox="0 0 520 230" role="img" aria-label="h에 따른 (1 + h)^(1/h) 의 값과 극한값 e"></svg>
+      <div class="q-ctl"><label>\(h\) <input type="range" data-k="h" min="-0.9" max="2" step="0.01" value="0.5"><output data-k="h"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. \(y = (1 + h)^{\frac{1}{h}}\)의 그래프. \(h\)가 양쪽에서 0에 가까워지면 값이 \(e \approx 2.71828\)에 한없이 가까워진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>지수함수와 로그함수(대수), 함수의 극한, 미분계수와 도함수(미적분Ⅰ).</div>
+
+    <h3><span class="no">2.1.1</span>무리수 \(e\)와 자연로그</h3>
+    <p>이자를 \(n\)번 나누어 주면 1년 뒤 금액은 \(\left(1 + \frac{1}{n}\right)^n\)이다. \(h = \frac{1}{n}\)로 놓으면 \((1 + h)^{\frac{1}{h}}\)이고, \(n\)이 커질수록 \(h\)는 0에 가까워진다. 그림 1에서 \(h\)를 0에 가깝게 해 보면 값은 커지기는 하지만 2.718…을 넘지 않는다.</p>
+    <div class="tb-env thm"><span class="lb">정의 2.1.1 <span class="nm">\(e\)와 자연로그</span></span>
+      <p>\[e = \lim_{h \to 0} (1 + h)^{\frac{1}{h}} = 2.71828\ldots\] 은 무리수이다. \(e\)를 밑으로 하는 로그 \(\log_e x\)를 자연로그라 하고 \(\ln x\)로 쓴다.</p>
+    </div>
+    <p>이자율이 100%가 아니어도 같은 생각을 쓸 수 있다. 연 이자율 \(r\)을 \(n\)번 나누어 주면 1년 뒤 금액은 \(\left(1 + \frac{r}{n}\right)^n\)이고, \(\frac{r}{n} = h\)로 놓으면 \(\left\{(1 + h)^{\frac{1}{h}}\right\}^r\)이므로 매 순간 줄 때 \(e^r\)이 된다. 이것을 \(t\)년 동안 하면 \(e^{rt}\)이다. 그래서 \(e\)의 지수는 '성장률 × 시간'을 뜻하고, 거꾸로 자연로그는 불어난 배수에서 이 값을 꺼내 준다. 가령 매 순간 복리로 2배가 되었다면 \(rt = \ln 2 \approx 0.69\)이므로, 연 이자율 10%이면 약 6.9년이 걸린다.</p>
+    <p>이 극한에서 두 가지 기본 극한이 나온다. 양변에 자연로그를 취하면 \(\lim_{h \to 0} \dfrac{\ln(1 + h)}{h} = 1\)이고, \(e^h - 1 = t\)로 치환하면 \(\lim_{h \to 0} \dfrac{e^h - 1}{h} = 1\)이다.<sup class="fn"><a href="#fn-calc2-exp-log-1">1</a></sup></p>
+
+    <h3><span class="no">2.1.2</span>지수함수와 로그함수의 도함수</h3>
+    <p>\(y = e^x\)의 도함수를 정의대로 구하면 \[\lim_{h \to 0} \frac{e^{x+h} - e^x}{h} = e^x \lim_{h \to 0} \frac{e^h - 1}{h} = e^x\] 이다. \(e^x\)는 어느 점에서나 접선의 기울기가 그 점의 높이와 같은 유일한 지수함수이다. 이것이 처음 질문의 답이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.1.2 <span class="nm">지수·로그함수의 도함수</span></span>
+      <p>\[(e^x)' = e^x,\quad (a^x)' = a^x \ln a,\quad (\ln x)' = \frac{1}{x},\quad (\log_a x)' = \frac{1}{x \ln a}\]</p>
+    </div>
+    <p>\(a^x = e^{x \ln a}\)이므로 \(a^x\)의 기울기는 높이에 \(\ln a\)를 곱한 것이다. 밑이 2이면 \(\ln 2 \approx 0.69\)배, 밑이 3이면 \(\ln 3 \approx 1.10\)배로, 그 사이의 \(e\)에서 정확히 1배가 된다. \(\ln x\)의 도함수는 \(\dfrac{\ln(x + h) - \ln x}{h} = \dfrac{1}{x} \cdot \dfrac{\ln(1 + h/x)}{h/x}\)에서 \(\dfrac{1}{x}\)이다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="밑에 따른 지수함수의 기울기 배율">
+        <g class="s">
+          <text x="30" y="25">밑 a</text><text x="200" y="25">(aˣ)′ ÷ aˣ = ln a</text>
+          <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+          <text x="30" y="55">2</text><text x="200" y="55">약 0.69</text>
+          <text x="30" y="78">e ≈ 2.718</text><text x="200" y="78" class="tb">정확히 1</text>
+          <text x="30" y="101">3</text><text x="200" y="101">약 1.10</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 지수함수 \(a^x\)의 기울기는 높이의 \(\ln a\)배이다. \(a = e\)일 때 기울기와 높이가 같다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.1.3</span>
+      <p>\(\lim_{x \to 0} \dfrac{e^{3x} - 1}{x}\)을 구하여라. 또 곡선 \(y = \ln x\) 위의 점 \((e, 1)\)에서의 접선의 방정식을 구하여라.</p>
+    </div>
+    <p>\(\dfrac{e^{3x} - 1}{x} = 3 \times \dfrac{e^{3x} - 1}{3x}\)이고, \(x \to 0\)이면 \(3x \to 0\)이므로 \(\dfrac{e^{3x} - 1}{3x} \to 1\)이다. 따라서 극한은 3이다.</p>
+    <p>\(y' = \dfrac{1}{x}\)이므로 \(x = e\)에서 기울기는 \(\dfrac{1}{e}\)이다. 접선은 \(y - 1 = \dfrac{1}{e}(x - e)\), 곧 \(y = \dfrac{x}{e}\)이다. 이 접선은 원점을 지난다. 원점에서 \(y = \ln x\)에 그은 접선의 접점이 바로 \((e, 1)\)이라는 뜻이다.</p>
+    <p>아래 탐구 카드에서 \(e\)의 극한, 기울기와 높이가 같은 지수함수, \(\ln x\)의 기울기를 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-exp-log-1">\(e^h - 1 = t\)로 놓으면 \(h = \ln(1 + t)\)이고 \(h \to 0\)일 때 \(t \to 0\)이므로 \(\dfrac{e^h - 1}{h} = \dfrac{t}{\ln(1 + t)} \to 1\)이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>\(e = \lim_{h \to 0}(1 + h)^{1/h}\)는 약 2.718인 무리수이며, 이 극한에서 \(\lim \frac{e^h - 1}{h} = 1\)이 나온다. 그 결과 \((e^x)' = e^x\), \((\ln x)' = \frac{1}{x}\)이다. 그래서 처음 질문의 이자를 매 순간 주어도 1년 뒤 금액은 끝없이 커지지 않고 \(e\)원에 다가가며, 이 \(e\)가 기울기와 높이가 같은 지수함수의 밑이다.</p></div>
+  </div>
+</article>

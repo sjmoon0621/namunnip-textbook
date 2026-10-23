@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/stat/body.js"],
+  "sec": "2-4",
+  "short": "본문 · 조건부확률"
+}
+-->
+<article class="card reading" id="text-stat-conditional" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>조건부확률</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">한 학교 학생 200명 가운데 지각한 학생은 20명이다. 그런데 버스로 오는 학생 80명만 보면 지각한 학생이 12명이다. 아무 학생이나 골랐을 때 지각했을 확률과, 버스로 오는 학생 가운데에서 골랐을 때 지각했을 확률은 같을까?</p>
+    <figure class="q-fig" data-q="stat-cond">
+      <svg viewBox="0 0 520 250" role="img" aria-label="전체를 버스와 버스 아님으로 나누고 각각에서 지각한 부분을 칠한 넓이 그림"></svg>
+      <div class="q-ctl"><label>버스로 오는 학생 중 지각 <input type="range" data-k="a" min="0" max="20" step="1" value="12"><output data-k="a"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. '버스로 온다'는 조건이 주어지면 표본공간이 왼쪽 직사각형으로 줄어들고, 그 안에서 지각한 부분의 비율이 조건부확률이다(학생 200명, 버스 80명, 지각 20명 기준).</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>확률의 덧셈정리와 곱사건(<a href="2-2.html">확률의 덧셈정리</a>), 비율과 백분율.</div>
+
+    <h3><span class="no">2.4.1</span>표본공간이 줄어든다</h3>
+    <p>아무 학생이나 고르면 지각했을 확률은 \(\dfrac{20}{200} = 0.1\)이다. 그런데 '버스로 오는 학생'이라는 정보를 알면, 고르는 대상이 버스로 오는 80명으로 줄어든다. 그 가운데 지각한 학생은 12명이므로 확률은 \(\dfrac{12}{80} = 0.15\)이다.</p>
+    <p>이렇게 사건 \(A\)가 일어났다는 조건 아래에서 사건 \(B\)가 일어날 확률을 <em>조건부확률</em>이라 하고 \(P(B \mid A)\)로 쓴다. 다시 말해 조건부확률은 표본공간을 \(A\)로 바꾸어 계산한 확률이다.</p>
+    <div class="tb-env"><span class="lb">정의 2.4.1 <span class="nm">조건부확률</span></span>
+      <p>\(P(A) &gt; 0\)일 때, 사건 \(A\)가 일어났다는 조건 아래에서 사건 \(B\)가 일어날 확률은 \[P(B \mid A) = \frac{P(A \cap B)}{P(A)}\]</p>
+    </div>
+    <p>정의의 분자와 분모에 \(n(S) = 200\)을 곱하면 \(\dfrac{n(A \cap B)}{n(A)} = \dfrac{12}{80}\)이 되어 위의 계산과 같다. 그림 1의 슬라이더로 버스 학생 가운데 지각한 수를 바꾸어 보면, 전체에서 지각할 확률은 그대로 0.1인데 조건부확률은 크게 달라진다.<sup class="fn"><a href="#fn-stat-conditional-1">1</a></sup></p>
+
+    <h3><span class="no">2.4.2</span>조건의 방향</h3>
+    <p>\(P(B \mid A)\)와 \(P(A \mid B)\)는 다르다. '버스로 오는 학생 가운데 지각한 비율'은 \(\tfrac{12}{80} = 0.15\)이고, '지각한 학생 가운데 버스로 온 비율'은 \(\tfrac{12}{20} = 0.6\)이다. 분자는 같지만 분모, 곧 무엇을 조건으로 삼았는지가 다르다. 이 둘을 헷갈리는 것이 조건부확률에서 가장 흔한 실수이다.</p>
+    <p>이 실수가 얼마나 큰 차이를 낳는지 병원 검사로 살펴보자. 어떤 병에 걸린 사람이 100명 중 1명꼴이고, 검사는 병이 있는 사람의 90%를 양성으로 찾아내며, 병이 없는 사람도 5%는 잘못 양성으로 나온다고 하자. 확률보다 사람 수로 세는 편이 쉬우니 1만 명을 검사한다고 생각한다. 병이 있는 100명 가운데 90명이 양성이고, 병이 없는 9900명 가운데 495명도 양성이다. 그러면 양성인 사람은 모두 585명이고, 그 가운데 정말 병이 있는 사람은 90명뿐이다. 그래서 \(P(\text{양성} \mid \text{병})\)은 0.9이지만 \(P(\text{병} \mid \text{양성})\)은 \(\dfrac{90}{585} \approx 0.15\)에 그친다. 양성 판정을 받았다는 조건은 표본공간을 585명으로 줄이는데, 그 안에는 원래 수가 훨씬 많은 건강한 사람이 섞여 들어오기 때문이다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="버스와 지각의 2×2 표, 행 합계와 열 합계">
+        <g class="s">
+          <line x1="20" y1="40" x2="500" y2="40" class="k"/><line x1="20" y1="80" x2="500" y2="80" class="ax"/><line x1="20" y1="115" x2="500" y2="115" class="k"/>
+          <text x="80" y="30" text-anchor="middle"></text><text x="210" y="30" text-anchor="middle">지각</text><text x="320" y="30" text-anchor="middle">지각 안 함</text><text x="440" y="30" text-anchor="middle">합계</text>
+          <text x="80" y="65" text-anchor="middle">버스</text><text x="210" y="65" text-anchor="middle" class="td">12</text><text x="320" y="65" text-anchor="middle">68</text><text x="440" y="65" text-anchor="middle" class="tb">80</text>
+          <text x="80" y="102" text-anchor="middle">버스 아님</text><text x="210" y="102" text-anchor="middle">8</text><text x="320" y="102" text-anchor="middle">112</text><text x="440" y="102" text-anchor="middle">120</text>
+          <text x="80" y="140" text-anchor="middle">합계</text><text x="210" y="140" text-anchor="middle" class="tc">20</text><text x="320" y="140" text-anchor="middle">180</text><text x="440" y="140" text-anchor="middle">200</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. \(P(\text{지각} \mid \text{버스}) = \tfrac{12}{80}\)은 '버스' 행에서, \(P(\text{버스} \mid \text{지각}) = \tfrac{12}{20}\)은 '지각' 열에서 읽는다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.4.2</span>
+      <p>주사위 두 개를 던져 나온 눈의 합이 8이었다. 이때 두 눈이 모두 짝수일 확률을 구하여라. 또 \(P(A) = 0.4\), \(P(B \mid A) = 0.5\)일 때 \(P(A \cap B)\)를 구하여라.</p>
+    </div>
+    <p>합이 8인 경우는 \((2, 6), (3, 5), (4, 4), (5, 3), (6, 2)\)의 5가지이고, 이것이 새 표본공간이다. 그 가운데 두 눈이 모두 짝수인 것은 \((2, 6), (4, 4), (6, 2)\)의 3가지이다. 따라서 확률은 \(\dfrac{3}{5}\)이다. 조건이 없을 때 두 눈이 모두 짝수일 확률 \(\tfrac{9}{36} = \tfrac{1}{4}\)보다 크다.</p>
+    <p>두 번째 질문은 정의의 양변에 \(P(A)\)를 곱하면 된다. \(P(A \cap B) = P(A)P(B \mid A) = 0.4 \times 0.5 = 0.2\)이다. 이 식은 다음 절의 곱셈정리로 이어진다.</p>
+    <p>두 문제 모두 '무엇이 일어났다는 것을 아는가'에 따라 분모가 바뀌었다. 조건부확률을 구할 때는 먼저 새 표본공간이 무엇인지 적어 두면 헷갈리지 않는다. 아래 탐구 카드에서 표의 수를 바꾸며 두 방향의 조건부확률을 직접 비교해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-stat-conditional-1">지각한 학생이 20명으로 고정되어 있으므로, 버스 학생 가운데 지각한 수를 늘리면 버스가 아닌 학생 가운데 지각한 수는 그만큼 줄어든다. 두 조건부확률이 반대로 움직이는 까닭이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>조건부확률 \(P(B \mid A)\)는 사건 \(A\)가 일어났다는 정보로 표본공간을 \(A\)로 줄여서 계산한 확률이고, \(\tfrac{P(A \cap B)}{P(A)}\)이다. 무엇을 조건으로 삼느냐에 따라 분모가 달라지므로 \(P(B \mid A)\)와 \(P(A \mid B)\)는 다르다. 그래서 처음 질문의 두 확률은 0.1과 0.15로 같지 않다.</p></div>
+  </div>
+</article>

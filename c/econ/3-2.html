@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>역행렬 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="연립일차방정식의 행렬 표현 AX = B, 2×2 행렬의 역행렬 공식과 ad − bc ≠ 0 조건, 역행렬이 없을 때(해가 무수히 많거나 없음)의 뜻, 역행렬로 단가 구하기. 주문 기록으로 단가를 거꾸로 구하는 카드와, 세트 메뉴로 단품 가격을 맞히는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-econ-inverse-steps .grid { display: grid; grid-template-columns: repeat(2, 4.2rem); gap: .3rem; }
@@ -51,22 +56,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-econ-inverse-steps"><span class="mono">3.2.1</span>역행렬로 연립방정식 풀기, ad − bc = 0이면?</a></li>
-        <li><a href="#card-econ-bundle-price"><span class="mono">3.2.2</span>세트 메뉴 가격으로 단품 가격 맞히기</a></li>
+        <li><a href="#text-econ-inverse"><span class="mono">본문</span>역행렬</a></li>
+        <li><a href="#card-econ-inverse-steps"><span class="mono">탐구 1</span>역행렬로 연립방정식 풀기, ad − bc = 0이면?</a></li>
+        <li><a href="#card-econ-bundle-price"><span class="mono">탐구 2</span>세트 메뉴 가격으로 단품 가격 맞히기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=econ-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=econ&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=econ-3-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-econ-inverse" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>역행렬</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">패스트푸드점의 세트 A는 버거 2개와 음료 1개에 13 000원, 세트 B는 버거 1개와 음료 2개에 11 000원이다. 메뉴판에 낱개 가격은 없지만 세트 가격만으로 버거와 음료의 값을 거꾸로 알아낼 수 있을까? 주문표가 '개수 × 단가 = 금액'의 꼴이라면, 금액에서 단가로 거슬러 가는 계산을 행렬 하나로 할 수 있을 것이다.</p>
+          <figure class="q-fig" data-q="econ-inverse">
+            <svg viewBox="0 0 520 230" role="img" aria-label="두 세트 가격 조건을 나타내는 두 직선과 그 교점"></svg>
+            <div class="q-ctl"><label>세트 B의 가격 (원) <input type="range" data-k="c" min="5000" max="26000" step="500" value="11000"><output data-k="c"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 세트 A의 조건 \(2x + y = 13000\)(파랑)과 세트 B의 조건 \(x + 2y = c\)(주황)의 교점이 버거 값 \(x\)와 음료 값 \(y\)이다. 세트 B의 가격을 바꾸면 교점이 움직이며, 현실에 맞지 않는 음수 가격이 나오기도 한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 곱셈(공통수학1), 연립 일차 방정식, 경제 현상과 행렬(<a href="3-1.html">경제 현상과 행렬</a>).</div>
+
+          <h3><span class="no">3.2.1</span>연립방정식을 행렬로</h3>
+          <p>버거 값을 \(x\), 음료 값을 \(y\)라 하면 두 세트의 조건은 \(2x + y = 13000\), \(x + 2y = 11000\)이다. 이를 행렬로 쓰면 \[\begin{pmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 13000 \\ 11000 \end{pmatrix}\] 곧 \(AX = B\)이다. 수에서 \(ax = b\)이면 양변에 \(a^{-1}\)을 곱해 \(x = a^{-1}b\)를 얻듯이, 행렬에서도 \(A\)의 역행렬을 곱하면 \(X\)를 구할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">이차 정사각행렬의 역행렬</span></span>
+            <p>\(A = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}\)에서 \(ad - bc \ne 0\)이면 \[A^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d &amp; -b \\ -c &amp; a \end{pmatrix}\] 이고 \(AA^{-1} = A^{-1}A = E\)이다. \(ad - bc = 0\)이면 역행렬이 없다.</p>
+          </div>
+          <p>역행렬이 있으면 연립방정식의 해는 \(X = A^{-1}B\)로 하나뿐이다. 역행렬이 없으면 두 직선이 평행하거나 겹쳐 해가 없거나 무수히 많다. 예를 들어 세트 A가 버거 2개와 음료 1개, 세트 B가 버거 4개와 음료 2개이면 \(ad - bc = 4 - 4 = 0\)이라 두 세트 가격만으로는 낱개 가격을 정할 수 없다.<sup class="fn"><a href="#fn-econ-inverse-1">1</a></sup></p>
+
+          <h3><span class="no">3.2.2</span>답이 현실에 맞는지 확인하기</h3>
+          <p>그림 1에서 세트 B의 가격을 바꾸어 보자. 가격이 6500원보다 낮거나 26 000원보다 높으면 버거나 음료의 값이 음수로 나온다. 계산은 맞지만 현실의 가격으로는 의미가 없다. 행렬로 구한 답이 경제적으로 말이 되는지, 곧 값과 양이 음수가 아닌지 늘 확인해야 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="역행렬을 곱해 단가를 구하는 과정">
+              <g class="s">
+                <rect x="30" y="35" width="120" height="40" class="lb"/><text x="90" y="60" text-anchor="middle">A X = B</text>
+                <rect x="200" y="35" width="120" height="40" class="lc"/><text x="260" y="60" text-anchor="middle">A⁻¹ 곱하기</text>
+                <rect x="370" y="35" width="120" height="40" class="la"/><text x="430" y="60" text-anchor="middle">X = A⁻¹ B</text>
+                <line x1="150" y1="55" x2="200" y2="55" class="k"/><line x1="320" y1="55" x2="370" y2="55" class="k"/>
+                <text x="260" y="100" text-anchor="middle">개수 행렬 A, 단가 X, 금액 B</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 개수 행렬의 역행렬을 금액에 곱하면 단가가 나온다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+            <p>세트 A(버거 2, 음료 1)가 13 000원, 세트 B(버거 1, 음료 2)가 11 000원일 때 역행렬을 써서 버거와 음료의 값을 구하여라.</p>
+          </div>
+          <p>\(A = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}\)에서 \(ad - bc = 4 - 1 = 3\)이므로 \(A^{-1} = \dfrac{1}{3}\begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 2 \end{pmatrix}\)이다.</p>
+          <p>\[X = A^{-1}B = \frac{1}{3}\begin{pmatrix} 2 \times 13000 - 11000 \\ -13000 + 2 \times 11000 \end{pmatrix} = \frac{1}{3}\begin{pmatrix} 15000 \\ 9000 \end{pmatrix} = \begin{pmatrix} 5000 \\ 3000 \end{pmatrix}\] 이므로 버거는 5000원, 음료는 3000원이다. 확인하면 \(2 \times 5000 + 3000 = 13000\), \(5000 + 2 \times 3000 = 11000\)이다. 세트 가격이 바뀌어도 \(A^{-1}\)은 그대로이므로, 새 금액에 같은 역행렬을 곱하기만 하면 된다.</p>
+          <p>아래 탐구 카드에서 주문표로 단가를 거꾸로 구하고, 세트 가격으로 낱개 가격을 맞혀 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-econ-inverse-1">\(ad - bc\)를 행렬식이라 한다. 행렬식이 0이면 두 조건이 사실상 같은 정보를 담고 있다는 뜻이다. 세트 B가 세트 A를 두 배 한 것이라면 새로운 정보가 없다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>'개수 × 단가 = 금액' 꼴의 연립방정식은 \(AX = B\)로 쓸 수 있고, \(ad - bc \ne 0\)이면 역행렬을 곱해 \(X = A^{-1}B\)로 단가를 구한다. 행렬식이 0이면 해가 하나로 정해지지 않으며, 구한 답이 음수가 아닌지도 확인해야 한다. 그래서 처음 질문의 세트 가격만으로도 버거 5000원, 음료 3000원을 맞힐 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/3-1.html#card-econ-sales-matrix"><small class="mono">경제 수학 3.1</small>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</a><a href="../../c/econ/3-1.html#card-econ-market-share"><small class="mono">경제 수학 3.1</small>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</a><a href="../../c/econ/3-1.html#text-econ-matrix"><small class="mono">경제 수학 3.1</small>경제 현상과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-3.html#card-econ-leontief"><small class="mono">경제 수학 3.3</small>자동차 수요가 100억 원 늘면 철강은 얼마나 더 만들어야 할까?</a><a href="../../c/econ/3-3.html#card-econ-two-market"><small class="mono">경제 수학 3.3</small>돼지고기 값이 오르면 닭고기 값은 왜 따라 오를까?</a><a href="../../c/econ/3-3.html#text-econ-leontief"><small class="mono">경제 수학 3.3</small>행렬로 푸는 경제 문제</a></div></nav>
+
       <article class="card" id="card-econ-inverse-steps">
         <header class="card-head">
-          <span class="no">3.2.1</span><h2>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</h2><span class="kind">역행렬 · 조작</span>
+          <span class="no">탐구 1</span><h2>주문표의 개수와 금액으로 단가를 거꾸로 구할 수 있을까?</h2><span class="kind">역행렬 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">두 번 주문한 기록입니다. 1차: 김밥 \(a\)줄, 라면 \(b\)개에 \(e\)원. 2차: 김밥 \(c\)줄, 라면 \(d\)개에 \(f\)원. 단가 \(x\)(김밥), \(y\)(라면)는?</p>
+            <p class="small">두 번 주문한 기록이다. 1차에는 김밥 \(a\)줄, 라면 \(b\)개에 \(e\)원, 2차에는 김밥 \(c\)줄, 라면 \(d\)개에 \(f\)원을 냈는데, 단가 \(x\)(김밥), \(y\)(라면)는 얼마일까?</p>
             <div class="row">
               <div><span class="small">개수 행렬 \(A\)</span><div class="grid"><input type="number" class="a" value="2" aria-label="a: 1차 김밥 개수"><input type="number" class="b" value="1" aria-label="b: 1차 라면 개수"><input type="number" class="c" value="1" aria-label="c: 2차 김밥 개수"><input type="number" class="d" value="3" aria-label="d: 2차 라면 개수"></div></div>
               <div><span class="small">금액(원)</span><div class="grid" style="grid-template-columns: 6rem"><input type="number" class="e" value="11000" step="500" style="width:6rem" aria-label="e: 1차 금액"><input type="number" class="f" value="13000" step="500" style="width:6rem" aria-label="f: 2차 금액"></div></div>
@@ -76,30 +132,30 @@
             <div class="out small" role="status"></div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>영수증에 단가는 없고 개수와 총액만 남았습니다. 두 번의 주문 기록으로 김밥과 라면의 단가를 알아낼 수 있을까요? 늘 알아낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>연립일차방정식 \(ax + by = e\), \(cx + dy = f\)는 행렬로 \(\begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} e \\ f \end{pmatrix}\)입니다.</li>
-            <li><span class="tag">설명</span>\(AX = B\)에서 \(A\)의 <em>역행렬</em> \(A^{-1}\)이 있으면 양변의 왼쪽에 곱해 \(X = A^{-1}B\)를 얻습니다. \(2 \times 2\) 행렬의 역행렬은 \(A^{-1} = \dfrac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)이고, \(ad - bc \ne 0\)일 때만 존재합니다. \(ad - bc = 0\)이면 두 주문의 개수가 비례해서(두 직선이 평행하거나 일치) 단가를 하나로 정할 수 없습니다.</li>
-            <li><span class="tag">연결</span>상품이 많으면 행렬이 커질 뿐 방법은 같습니다. 다음 절의 산업 연관 분석은 \((I - A)^{-1}\)을 계산하는 문제입니다.</li>
-            <li><span class="tag">적용</span>개수를 바꿔 \(ad - bc\)가 0이 되는 경우를 찾고, 그때 두 직선이 어떻게 되는지 보세요. "2차 주문을 1차의 두 배로"를 눌러 금액까지 두 배인 경우와, 금액만 다른 경우를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(ad - bc = 0\)인데도 금액이 비례하면 해가 무수히 많고, 비례하지 않으면 해가 없습니다(기록에 오류가 있음). 역행렬이 없다는 것은 정보가 부족하거나 모순이라는 뜻입니다.</li>
+            <li><span class="tag">질문</span>영수증에 단가는 없고 개수와 총액만 남았다. 두 번의 주문 기록으로 김밥과 라면의 단가를 알아낼 수 있을까? 늘 알아낼 수 있을까?</li>
+            <li><span class="tag">복원</span>연립일차방정식 \(ax + by = e\), \(cx + dy = f\)는 행렬로 \(\begin{pmatrix} a & b \\ c & d \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} e \\ f \end{pmatrix}\)이다.</li>
+            <li><span class="tag">설명</span>\(AX = B\)에서 \(A\)의 <em>역행렬</em> \(A^{-1}\)이 있으면 양변의 왼쪽에 곱해 \(X = A^{-1}B\)를 얻는다. \(2 \times 2\) 행렬의 역행렬은 \(A^{-1} = \dfrac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)이고, \(ad - bc \ne 0\)일 때만 존재한다. 그래서 \(ad - bc = 0\)이면 두 주문의 개수가 비례해서(두 직선이 평행하거나 일치) 단가를 하나로 정할 수 없다.</li>
+            <li><span class="tag">연결</span>상품이 많으면 행렬이 커질 뿐 방법은 같다. 다음 절의 산업 연관 분석은 \((I - A)^{-1}\)을 계산하는 문제이다.</li>
+            <li><span class="tag">적용</span>개수를 바꿔 \(ad - bc\)가 0이 되는 경우를 찾고, 그때 두 직선이 어떻게 되는지 보자. 그리고 ‘2차 주문을 1차의 두 배로’를 눌러 금액까지 두 배인 경우와 금액만 다른 경우를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(ad - bc = 0\)인데도 금액이 비례하면 해가 무수히 많고, 비례하지 않으면 해가 없다(기록에 오류가 있음). 즉 역행렬이 없다는 것은 정보가 부족하거나 모순이라는 뜻이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(A = \begin{pmatrix} 3 & 2 \\ 1 & 1 \end{pmatrix}\)의 역행렬은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 1 & -2 \\ -1 & 3 \end{pmatrix}\)<span class="why"><b>맞습니다.</b> \(ad - bc = 3 - 2 = 1\)이므로 \(\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\) 그대로입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 1 & 2 \\ 1 & 3 \end{pmatrix}\)<span class="why"><b>\(b, c\)의 부호를 바꾸지 않았습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} \frac13 & \frac12 \\ 1 & 1 \end{pmatrix}\)<span class="why"><b>성분마다 역수를 취했습니다.</b> 역행렬은 그렇게 구하지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>\(ad - bc = 1 \ne 0\)이라 존재합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 1 & -2 \\ -1 & 3 \end{pmatrix}\)<span class="why"><b>맞다.</b> \(ad - bc = 3 - 2 = 1\)이므로 \(\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\) 그대로이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 1 & 2 \\ 1 & 3 \end{pmatrix}\)<span class="why"><b>\(b, c\)의 부호를 바꾸지 않았다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} \frac13 & \frac12 \\ 1 & 1 \end{pmatrix}\)<span class="why"><b>성분마다 역수를 취했다.</b> 역행렬은 그렇게 구하지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>\(ad - bc = 1 \ne 0\)이라 존재한다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/3-1.html#card-econ-sales-matrix"><small class="mono">경제 수학 3.1</small>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</a><a href="../../c/econ/3-1.html#card-econ-market-share"><small class="mono">경제 수학 3.1</small>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-3.html#card-econ-leontief"><small class="mono">경제 수학 3.3</small>자동차 수요가 100억 원 늘면 철강은 얼마나 더 만들어야 할까?</a><a href="../../c/econ/3-3.html#card-econ-two-market"><small class="mono">경제 수학 3.3</small>돼지고기 값이 오르면 닭고기 값은 왜 따라 오를까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/3-1.html#card-econ-sales-matrix"><small class="mono">경제 수학 3.1</small>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</a><a href="../../c/econ/3-1.html#card-econ-market-share"><small class="mono">경제 수학 3.1</small>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</a><a href="../../c/econ/3-1.html#text-econ-matrix"><small class="mono">경제 수학 3.1</small>경제 현상과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-3.html#card-econ-leontief"><small class="mono">경제 수학 3.3</small>자동차 수요가 100억 원 늘면 철강은 얼마나 더 만들어야 할까?</a><a href="../../c/econ/3-3.html#card-econ-two-market"><small class="mono">경제 수학 3.3</small>돼지고기 값이 오르면 닭고기 값은 왜 따라 오를까?</a><a href="../../c/econ/3-3.html#text-econ-leontief"><small class="mono">경제 수학 3.3</small>행렬로 푸는 경제 문제</a></div></nav>
 
       <article class="card" id="card-econ-bundle-price">
         <header class="card-head">
-          <span class="no">3.2.2</span><h2>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</h2><span class="kind">역행렬의 활용 · 도전</span>
+          <span class="no">탐구 2</span><h2>세트 메뉴 가격만 보고 버거 하나의 값을 맞힐 수 있을까?</h2><span class="kind">역행렬의 활용 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -112,42 +168,42 @@
             </div>
             <p class="verdict" role="status"></p>
             <div class="sol small" hidden></div>
-            <p class="fig-note">가게와 가격은 문제마다 새로 만드는 가상 값이고, 세트 할인은 없다고 가정합니다.</p>
+            <p class="fig-note">가게와 가격은 문제마다 새로 만드는 가상 값이고, 세트 할인은 없다고 가정한다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>메뉴판에 세트 가격만 있고 단품 가격은 없습니다. 세트 두 가지의 구성과 가격만으로 단품 가격을 알아낼 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(A^{-1} = \dfrac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\) (역행렬).</li>
-            <li><span class="tag">설명</span>버거 가격을 \(x\), 음료 가격을 \(y\)라 하면 두 세트에서 연립방정식 \(AX = B\)가 나옵니다. 구성 행렬 \(A\)의 역행렬로 \(X = A^{-1}B\)를 계산하면 단품 가격이 나옵니다. 손으로 풀 때는 한 문자를 없애는 소거법이 빠르지만, 같은 구성으로 가격만 바뀌는 문제가 많을 때는 \(A^{-1}\)을 한 번 구해 두면 곱셈만으로 답을 얻습니다.</li>
-            <li><span class="tag">연결</span>회사가 여러 제품을 묶어 팔 때 원가를 나누는 계산, 화학 반응식의 계수 맞추기도 같은 꼴의 연립방정식입니다.</li>
-            <li><span class="tag">적용</span>세 문제 연속으로 맞혀 보세요. 확인한 뒤에는 역행렬 풀이를 보고 자신의 풀이와 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>두 세트의 구성이 비례하면(예: 버거 1·음료 2와 버거 2·음료 4) 행렬식이 0이라 단품 가격을 정할 수 없습니다. 정보가 새로 늘지 않았기 때문입니다.</li>
+            <li><span class="tag">질문</span>메뉴판에 세트 가격만 있고 단품 가격은 없다. 세트 두 가지의 구성과 가격만으로 단품 가격을 알아낼 수 있을까?</li>
+            <li><span class="tag">복원</span>행렬 \(A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\)의 역행렬은 \(A^{-1} = \dfrac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)이다.</li>
+            <li><span class="tag">설명</span>버거 가격을 \(x\), 음료 가격을 \(y\)라 하면 두 세트에서 연립방정식 \(AX = B\)가 나오고, 구성 행렬 \(A\)의 역행렬로 \(X = A^{-1}B\)를 계산하면 단품 가격이 나온다. 손으로 풀 때는 한 문자를 없애는 소거법이 빠르지만, 같은 구성으로 가격만 바뀌는 문제가 많을 때는 \(A^{-1}\)을 한 번 구해 두면 곱셈만으로 답을 얻는다.</li>
+            <li><span class="tag">연결</span>회사가 여러 제품을 묶어 팔 때 원가를 나누는 계산, 화학 반응식의 계수 맞추기도 같은 꼴의 연립방정식이다.</li>
+            <li><span class="tag">적용</span>세 문제 연속으로 맞혀 보자. 확인한 뒤에는 역행렬 풀이를 보고 자신의 풀이와 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>버거 1개와 음료 2개, 버거 2개와 음료 4개처럼 두 세트의 구성이 비례하면 행렬식이 0이라 단품 가격을 정할 수 없다. 정보가 새로 늘지 않았기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">"버거 1 + 음료 1 = 8000원", "버거 2 + 음료 2 = 16000원"만 알 때 버거 단품 가격은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>정할 수 없다<span class="why"><b>맞습니다.</b> 두 식이 같은 정보라(행렬식 \(1 \cdot 2 - 1 \cdot 2 = 0\)) \(x + y = 8000\)인 모든 값이 가능합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4000원<span class="why"><b>둘의 값이 같다고 가정했습니다.</b> 근거가 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8000원<span class="why"><b>음료가 0원이어야 합니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>해가 없다<span class="why"><b>금액도 비례하므로 해는 무수히 많습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>정할 수 없다<span class="why"><b>맞다.</b> 두 식이 같은 정보라(행렬식 \(1 \cdot 2 - 1 \cdot 2 = 0\)) \(x + y = 8000\)인 모든 값이 가능하다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>4000원<span class="why"><b>둘의 값이 같다고 가정했다.</b> 근거가 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>8000원<span class="why"><b>음료가 0원이어야 한다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>해가 없다<span class="why"><b>금액도 비례하므로 해는 무수히 많다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/3-1.html#card-econ-sales-matrix"><small class="mono">경제 수학 3.1</small>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</a><a href="../../c/econ/3-1.html#card-econ-market-share"><small class="mono">경제 수학 3.1</small>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-3.html#card-econ-leontief"><small class="mono">경제 수학 3.3</small>자동차 수요가 100억 원 늘면 철강은 얼마나 더 만들어야 할까?</a><a href="../../c/econ/3-3.html#card-econ-two-market"><small class="mono">경제 수학 3.3</small>돼지고기 값이 오르면 닭고기 값은 왜 따라 오를까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/econ/3-1.html#card-econ-sales-matrix"><small class="mono">경제 수학 3.1</small>세 지점의 하루 매출을 한 번에 계산할 수 있을까?</a><a href="../../c/econ/3-1.html#card-econ-market-share"><small class="mono">경제 수학 3.1</small>해마다 일부 고객이 갈아타면 점유율은 결국 어떻게 될까?</a><a href="../../c/econ/3-1.html#text-econ-matrix"><small class="mono">경제 수학 3.1</small>경제 현상과 행렬</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/econ/3-3.html#card-econ-leontief"><small class="mono">경제 수학 3.3</small>자동차 수요가 100억 원 늘면 철강은 얼마나 더 만들어야 할까?</a><a href="../../c/econ/3-3.html#card-econ-two-market"><small class="mono">경제 수학 3.3</small>돼지고기 값이 오르면 닭고기 값은 왜 따라 오를까?</a><a href="../../c/econ/3-3.html#text-econ-leontief"><small class="mono">경제 수학 3.3</small>행렬로 푸는 경제 문제</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=econ-3-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=econ&amp;sec=3-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -155,6 +211,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/econ/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/econ/inverse-steps.js"></script>
 <script src="../../js/cards/econ/bundle-price.js"></script>

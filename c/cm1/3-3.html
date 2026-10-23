@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>조합 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="순서를 생각하지 않고 r개를 택하는 조합의 수 nCr을 순열 목록을 같은 모임끼리 묶어 nPr ÷ r!로 이끌어 내고, nCr = nCn−r와 nCr = n−1Cr−1 + n−1Cr의 뜻을 막대그래프로 확인한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-comb-group canvas { cursor: pointer; }
@@ -47,18 +52,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm1-comb-group"><span class="mono">3.3.1</span>조합의 수</a></li>
-        <li><a href="#card-cm1-comb-bars"><span class="mono">3.3.2</span>조합의 성질</a></li>
+        <li><a href="#text-cm1-comb"><span class="mono">본문</span>조합</a></li>
+        <li><a href="#card-cm1-comb-group"><span class="mono">탐구 1</span>조합의 수</a></li>
+        <li><a href="#card-cm1-comb-bars"><span class="mono">탐구 2</span>조합의 성질</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm1-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">55문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm1&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm1-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">56문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm1-comb" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>조합</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">학생 5명 가운데 3명을 뽑아 반장, 부반장, 총무를 맡기는 방법은 60가지였다. 그런데 직책 없이 청소 당번 3명만 뽑는다면 몇 가지일까? 순서를 따질 때의 수에서 어떻게 순서를 지울 수 있을까?</p>
+          <figure class="q-fig" data-q="cm1-comb">
+            <svg viewBox="0 0 520 250" role="img" aria-label="5명 가운데 3명을 순서 있게 뽑은 60가지를, 같은 세 사람끼리 묶은 10개의 묶음"></svg>
+            <div class="q-ctl"><label>묶음 고르기 <input type="range" data-k="k" min="0" max="9" step="1" value="0"><output data-k="k"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 순서 있게 뽑은 60가지는 같은 세 사람으로 이루어진 것끼리 6개씩 묶여, 묶음이 \(60 \div 6 = 10\)개가 된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>순열과 계승(<a href="3-2.html">순열</a>), 곱의 법칙(<a href="3-1.html">합의 법칙과 곱의 법칙</a>).</div>
+
+          <h3><span class="no">3.3.1</span>순열을 묶어서 센다</h3>
+          <p>5명을 A, B, C, D, E라 하자. 청소 당번으로 A, B, C를 뽑는 것은 한 가지 경우이다. 그런데 직책을 맡길 때는 ABC, ACB, BAC, BCA, CAB, CBA가 모두 다른 경우였다. 같은 세 사람을 늘어놓는 방법이 \(3! = 6\)가지이기 때문이다.</p>
+          <p>그림 1의 슬라이더로 묶음을 바꾸어 보면, 순서 있게 뽑은 60가지는 세 사람이 같은 것끼리 6개씩 정확히 묶인다. 어느 묶음이든 크기가 6이므로 묶음의 수는 \(60 \div 6 = 10\)이다. 따라서 청소 당번을 뽑는 방법은 10가지이다.</p>
+          <div class="tb-env"><span class="lb">정의 3.3.1 <span class="nm">조합</span></span>
+            <p>서로 다른 \(n\)개에서 순서를 생각하지 않고 \(r\)개\((0 \le r \le n)\)를 택하는 것을 \(n\)개에서 \(r\)개를 택하는 <em>조합</em>이라 하고, 그 수를 \({}_n\mathrm{C}_r\)로 나타낸다. \[{}_n\mathrm{C}_r = \frac{{}_n\mathrm{P}_r}{r!} = \frac{n!}{r!\,(n - r)!}\]</p>
+          </div>
+          <p>정의의 식은 1에서 한 일을 그대로 적은 것이다. 조합 하나마다 그 \(r\)개를 늘어놓는 순열이 \(r!\)개씩 있으므로 \({}_n\mathrm{C}_r \times r! = {}_n\mathrm{P}_r\)이다. 다시 말해 조합은 순열을 '같은 것을 골랐는가'로 묶은 묶음의 수이다.</p>
+
+          <h3><span class="no">3.3.2</span>고르는 것과 남기는 것</h3>
+          <p>5명 가운데 당번 3명을 고르는 일은, 당번이 아닌 2명을 고르는 일과 같다. 당번 3명이 정해지면 나머지 2명이 저절로 정해지고, 거꾸로도 그렇다. 그래서 \({}_5\mathrm{C}_3 = {}_5\mathrm{C}_2 = 10\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.2 <span class="nm">조합의 성질</span></span>
+            <p>\({}_n\mathrm{C}_r = {}_n\mathrm{C}_{n - r}\ (0 \le r \le n)\), \({}_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r\ (1 \le r \le n - 1)\)</p>
+          </div>
+          <p>두 번째 성질도 세는 방법으로 읽힌다. 5명 가운데 3명을 고를 때, A를 꼭 넣는 경우는 나머지 4명에서 2명을 더 고르므로 \({}_4\mathrm{C}_2 = 6\)가지이다. A를 빼는 경우는 4명에서 3명을 모두 고르므로 \({}_4\mathrm{C}_3 = 4\)가지이다. 두 경우는 겹치지 않으니 합의 법칙에 따라 \(6 + 4 = 10\)이다.<sup class="fn"><a href="#fn-cm1-comb-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="A를 포함하는 경우와 포함하지 않는 경우로 나누어 조합을 세는 그림">
+              <rect x="20" y="20" width="230" height="110" class="la"/><rect x="270" y="20" width="230" height="110" class="lb"/>
+              <text x="135" y="48" text-anchor="middle">A를 넣는다</text><text x="135" y="78" text-anchor="middle">나머지 4명에서 2명</text><text x="135" y="108" text-anchor="middle" class="ta">₄C₂ = 6</text>
+              <text x="385" y="48" text-anchor="middle">A를 뺀다</text><text x="385" y="78" text-anchor="middle">나머지 4명에서 3명</text><text x="385" y="108" text-anchor="middle" class="tb">₄C₃ = 4</text>
+              <text x="260" y="158" text-anchor="middle">₅C₃ = 6 + 4 = 10</text>
+            </svg>
+            <figcaption>그림 2. 한 사람을 넣는지 빼는지로 나누면 조합의 수는 더 작은 두 조합의 수의 합이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.3</span>
+            <p>남학생 6명, 여학생 4명 가운데 대표 4명을 뽑을 때, 여학생이 적어도 1명 포함되는 방법의 수를 구하여라. 또 남학생 2명, 여학생 2명을 뽑아 일렬로 세우는 방법의 수를 구하여라.</p>
+          </div>
+          <p>'적어도 1명'은 1명, 2명, 3명, 4명인 경우를 모두 더해야 해서 번거롭다. 그 대신 전체에서 여학생이 한 명도 없는 경우를 뺀다. 10명 가운데 4명을 뽑는 방법은 \({}_{10}\mathrm{C}_4 = \dfrac{10 \times 9 \times 8 \times 7}{4 \times 3 \times 2 \times 1} = 210\)가지이고, 남학생만 4명을 뽑는 방법은 \({}_6\mathrm{C}_4 = {}_6\mathrm{C}_2 = 15\)가지이다. 따라서 \(210 - 15 = 195\)가지이다.</p>
+          <p>두 번째 질문은 뽑는 일과 세우는 일이 잇달아 일어난다. 남학생 2명을 뽑는 방법은 \({}_6\mathrm{C}_2 = 15\), 여학생 2명을 뽑는 방법은 \({}_4\mathrm{C}_2 = 6\)이다. 뽑힌 4명을 일렬로 세우는 방법은 \(4! = 24\)이다. 그러면 곱의 법칙에 따라 \(15 \times 6 \times 24 = 2160\)가지이다.</p>
+          <p>첫 번째 답을 더해서 확인해 보자. 여학생이 1, 2, 3, 4명인 경우는 각각 \({}_4\mathrm{C}_1 \cdot {}_6\mathrm{C}_3 = 80\), \({}_4\mathrm{C}_2 \cdot {}_6\mathrm{C}_2 = 90\), \({}_4\mathrm{C}_3 \cdot {}_6\mathrm{C}_1 = 24\), \({}_4\mathrm{C}_4 = 1\)이고, 합은 195로 같다. 순서가 필요한 단계에서만 순열을 쓰고 고르는 단계에서는 조합을 쓰면 된다. 아래 탐구 카드에서 고르는 과정과 묶는 과정을 직접 조작해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm1-comb-1">이 성질을 줄줄이 늘어놓으면 파스칼의 삼각형이 된다. 각 수는 바로 위 두 수의 합이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>조합은 순열을 같은 것을 고른 것끼리 묶어 센 것이므로, 묶음 하나의 크기 \(r!\)로 나누어 \({}_n\mathrm{C}_r = \tfrac{{}_n\mathrm{P}_r}{r!}\)이다. 처음 질문에서 직책 없이 당번 3명을 뽑는 방법은 \(\tfrac{60}{3!} = 10\)가지이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a><a href="../../c/cm1/3-1.html#card-cm1-sum-rule"><small class="mono">공통수학1 3.1</small>'A 또는 B'의 경우의 수는 언제 더하기만 하면 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div></nav>
+
       <article class="card" id="card-cm1-comb-group">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>순서 없이 뽑는 수는 왜 순열의 수를 \(r!\)로 나눌까?</h2><span class="kind">조합 · 순열 묶기</span>
+          <span class="no">탐구 1</span><h2>순서 없이 뽑는 수는 왜 순열의 수를 \(r!\)로 나눌까?</h2><span class="kind">조합 · 순열 묶기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,30 +141,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>A, B, C, D, E 다섯 명 가운데 대표 3명을 뽑는 방법은 몇 가지일까요? 세 명을 뽑아 한 줄로 세우는 방법 60가지와는 어떻게 다를까요?</li>
-            <li><span class="tag">복원</span>5명 가운데 3명을 뽑아 한 줄로 세우는 방법은 \({}_{5}\mathrm{P}_{3} = 5 \times 4 \times 3 = 60\)가지입니다. 3명을 한 줄로 세우는 방법은 \(3! = 6\)가지입니다.</li>
-            <li><span class="tag">설명</span>서로 다른 \(n\)개에서 순서를 생각하지 않고 \(r\)개를 택하는 것을 \(n\)개에서 \(r\)개를 택하는 <em>조합</em>이라 하고, 그 수를 \(_nC_r\)로 나타냅니다. 같은 \(r\)명으로 이루어진 조합 하나는 줄 세우는 방법이 \(r!\)가지이므로, 순열 목록에 정확히 \(r!\)번 나타납니다. 그래서 \(_nP_r = _nC_r \times r!\)이고 \(_nC_r = _nP_r/r! = n!/(r!(n - r)!)\) (단, \(0 \le r \le n\))입니다. \(0! = 1\)로 정했으므로 \(_nC_0 = _nC_n = 1\)입니다.</li>
-            <li><span class="tag">연결</span>식 \(_nP_r = _nC_r \times r!\)은 곱의 법칙 그대로입니다. 순서대로 세우는 일은 '누구를 뽑을지 정하기'(\(_nC_r\)가지)와 '뽑은 사람을 줄 세우기'(\(r!\)가지)를 잇달아 하는 일이기 때문입니다.</li>
-            <li><span class="tag">적용</span>\(n = 5\), \(r = 3\)에서 ACE 칸을 누르면 같은 세 사람으로 된 칸이 모두 표시됩니다. 몇 칸인가요? '같은 모임끼리 묶기'를 눌러 묶음이 몇 개 생기는지 세고 \({}_{5}\mathrm{P}_{3} \div 3!\)과 비교하세요. \(r\)를 바꾸어도 묶음 하나의 크기가 늘 \(r!\)인지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>대표 3명을 뽑는 것과 회장·부회장·총무를 뽑는 것은 다릅니다. 역할이 정해지면 순서가 생기므로 순열입니다. 뽑힌 것끼리 자리를 바꾸어도 같은 결과인지 물어보면 순열과 조합을 가를 수 있습니다.</li>
+            <li><span class="tag">질문</span>A, B, C, D, E 다섯 명 가운데 대표 3명을 뽑는 방법은 몇 가지일까? 세 명을 뽑아 한 줄로 세우는 방법 60가지와는 무엇이 다를까?</li>
+            <li><span class="tag">복원</span>5명 가운데 3명을 뽑아 한 줄로 세우는 방법은 \({}_{5}\mathrm{P}_{3} = 5 \times 4 \times 3 = 60\)가지이다. 또 3명을 한 줄로 세우는 방법은 \(3! = 6\)가지이다.</li>
+            <li><span class="tag">설명</span>서로 다른 \(n\)개에서 순서를 생각하지 않고 \(r\)개를 택하는 것을 \(n\)개에서 \(r\)개를 택하는 <em>조합</em>이라 하고, 그 수를 \(_nC_r\)로 나타낸다. 그런데 같은 \(r\)명으로 이루어진 조합 하나는 줄 세우는 방법이 \(r!\)가지이므로 순열 목록에 정확히 \(r!\)번 나타난다. 그래서 \(_nP_r = _nC_r \times r!\)이고 \(_nC_r = _nP_r/r! = n!/(r!(n - r)!)\) (단, \(0 \le r \le n\))이다. \(0! = 1\)로 정했으므로 \(_nC_0 = _nC_n = 1\)이다.</li>
+            <li><span class="tag">연결</span>식 \(_nP_r = _nC_r \times r!\)은 곱의 법칙 그대로이다. 순서대로 세우는 일은 '누구를 뽑을지 정하기'(\(_nC_r\)가지)와 '뽑은 사람을 줄 세우기'(\(r!\)가지)를 잇달아 하는 일이기 때문이다.</li>
+            <li><span class="tag">적용</span>\(n = 5\), \(r = 3\)에서 ACE 칸을 누르면 같은 세 사람으로 된 칸이 모두 표시되는데, 그 수가 \(3! = 6\)칸인지 세어 보자. 이어서 '같은 모임끼리 묶기'를 눌러 묶음의 수를 \({}_{5}\mathrm{P}_{3} \div 3!\)과 비교해 보자. \(r\)를 바꾸어도 묶음 하나의 크기는 늘 \(r!\)이다.</li>
+            <li class="warn"><span class="tag">판단</span>대표 3명을 뽑는 것과 회장, 부회장, 총무를 뽑는 것은 다르다. 역할이 정해지면 순서가 생기므로 순열이 된다. 그래서 뽑힌 것끼리 자리를 바꾸어도 같은 결과인지를 물어보면 순열과 조합을 가를 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">8명 가운데 청소 당번 3명을 뽑는 방법은 몇 가지일까요? (당번끼리는 역할 구분이 없습니다.)</p>
+          <p class="q">8명 가운데 청소 당번 3명을 뽑는 방법은 몇 가지일까? (당번끼리는 역할 구분이 없다.)</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>336가지<span class="why"><b>순서를 따졌습니다.</b> \({}_{8}\mathrm{P}_{3} = 336\)은 같은 세 사람을 뽑은 순서에 따라 \(3! = 6\)번씩 센 값입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>56가지<span class="why"><b>맞습니다.</b> \({}_{8}\mathrm{C}_{3} = {}_{8}\mathrm{P}_{3}/3! = 336/6 = 56\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>512가지<span class="why"><b>같은 사람을 다시 뽑았습니다.</b> \(8^3\)은 한 사람이 여러 번 뽑혀도 되고 순서도 따질 때의 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>112가지<span class="why"><b>\(3!\)이 아니라 3으로 나누었습니다.</b> 세 사람을 줄 세우는 방법은 3가지가 아니라 \(3 \times 2 \times 1 = 6\)가지입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>336가지<span class="why"><b>순서를 따졌다.</b> \({}_{8}\mathrm{P}_{3} = 336\)은 같은 세 사람을 뽑은 순서에 따라 \(3! = 6\)번씩 센 값이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>56가지<span class="why"><b>맞다.</b> \({}_{8}\mathrm{C}_{3} = {}_{8}\mathrm{P}_{3}/3! = 336/6 = 56\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>512가지<span class="why"><b>같은 사람을 다시 뽑았다.</b> \(8^3\)은 한 사람이 여러 번 뽑혀도 되고 순서도 따질 때의 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>112가지<span class="why"><b>\(3!\)이 아니라 3으로 나누었다.</b> 세 사람을 줄 세우는 방법은 3가지가 아니라 \(3 \times 2 \times 1 = 6\)가지이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-1.html#card-cm1-sum-rule"><small class="mono">공통수학1 3.1</small>'A 또는 B'의 경우의 수는 언제 더하기만 하면 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a><a href="../../c/cm1/3-1.html#card-cm1-sum-rule"><small class="mono">공통수학1 3.1</small>'A 또는 B'의 경우의 수는 언제 더하기만 하면 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div></nav>
 
       <article class="card" id="card-cm1-comb-bars">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>뽑는 수 r가 바뀌면 조합의 수는 어떻게 변할까?</h2><span class="kind">조합 · 대칭과 나누어 세기</span>
+          <span class="no">탐구 2</span><h2>뽑는 수 r가 바뀌면 조합의 수는 어떻게 변할까?</h2><span class="kind">조합 · 대칭과 나누어 세기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -129,39 +188,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>10명 가운데 2명을 뽑는 방법과 8명을 뽑는 방법은 어느 쪽이 더 많을까요? 많이 뽑을수록 방법도 많아질까요?</li>
-            <li><span class="tag">복원</span>\(_nC_r = n!/(r!(n - r)!)\)이고, 서로 겹치지 않는 경우로 나누어 세면 합의 법칙으로 더할 수 있습니다.</li>
-            <li><span class="tag">설명</span>① \(r\)명을 뽑는 일은 뽑히지 않을 \(n - r\)명을 정하는 일과 같습니다. 그래서 \(_nC_r = _nC_{n-r}\)입니다. 공식에서도 \(r!\)과 \((n - r)!\)이 자리만 바꿉니다. ② 특정한 한 사람 A를 기준으로 나누면, A가 뽑히는 경우는 나머지 \(n - 1\)명에서 \(r - 1\)명을 더 뽑는 \(_{n-1}C_{r-1}\)가지이고, A가 빠지는 경우는 \(_{n-1}C_r\)가지입니다. 두 경우는 겹치지 않으므로 \(_nC_r = _{n-1}C_{r-1} + _{n-1}C_r (1 \le r \le n - 1)\)입니다. ③ 막대를 모두 더하면 몇 명을 뽑든 상관없이 뽑는 방법 전체입니다. 사람마다 '뽑힘'과 '빠짐' 2가지를 고르므로 곱의 법칙에 따라 \(2^n\)입니다.</li>
-            <li><span class="tag">연결</span>②의 관계로 수를 한 줄씩 쌓은 표가 파스칼의 삼각형입니다. 이 수들은 다음 과목에서 \((a + b)^n\)을 전개할 때 계수(이항정리)로 다시 나옵니다.</li>
-            <li><span class="tag">적용</span>\(n\)을 바꾸며 막대 모양이 좌우 대칭인지 보고, \(r\)와 \(n - r\)의 막대 높이를 비교하세요. 'A를 넣느냐 빼느냐로 나누기'를 켜고 두 조각의 값을 적은 뒤, \(n\)을 1 줄여 그 값이 어느 막대에 있는지 찾아보세요. \(n\)이 1 늘 때 막대 높이의 합은 어떻게 변하나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(_nC_r\)는 \(r\)가 \(n/2\)에 가까울 때 가장 큽니다. '많이 뽑을수록 방법이 많다'는 생각은 \(r \le n/2\)인 범위에서만 맞습니다. \(_nC_r = _nC_{n-r}\)를 쓰면 \({}_{20}\mathrm{C}_{18}\) 같은 계산을 \({}_{20}\mathrm{C}_{2} = 190\)으로 줄일 수 있습니다.</li>
+            <li><span class="tag">질문</span>10명 가운데 2명을 뽑는 방법과 8명을 뽑는 방법은 어느 쪽이 더 많을까? 많이 뽑을수록 방법도 많아질까?</li>
+            <li><span class="tag">복원</span>\(_nC_r = n!/(r!(n - r)!)\)이다. 또 서로 겹치지 않는 경우로 나누어 세면 합의 법칙으로 더할 수 있다.</li>
+            <li><span class="tag">설명</span>먼저 \(r\)명을 뽑는 일은 뽑히지 않을 \(n - r\)명을 정하는 일과 같으므로 \(_nC_r = _nC_{n-r}\)이다. 공식에서도 \(r!\)과 \((n - r)!\)이 자리만 바꾼다. 다음으로 특정한 한 사람 A를 기준으로 나누어 보자. A가 뽑히는 경우는 나머지 \(n - 1\)명에서 \(r - 1\)명을 더 뽑는 \(_{n-1}C_{r-1}\)가지이고, A가 빠지는 경우는 \(_{n-1}C_r\)가지이다. 두 경우는 겹치지 않으므로 \(_nC_r = _{n-1}C_{r-1} + _{n-1}C_r (1 \le r \le n - 1)\)이다. 끝으로 막대를 모두 더하면 몇 명을 뽑든 상관없이 뽑는 방법 전체가 된다. 사람마다 '뽑힘'과 '빠짐' 2가지를 고르므로 곱의 법칙에 따라 그 합은 \(2^n\)이다.</li>
+            <li><span class="tag">연결</span>A를 넣느냐 빼느냐로 얻은 관계로 수를 한 줄씩 쌓은 표가 파스칼의 삼각형이다. 이 수들은 다음 과목에서 \((a + b)^n\)을 전개할 때의 계수, 곧 이항정리로 다시 나온다.</li>
+            <li><span class="tag">적용</span>\(n\)을 바꾸며 막대 모양이 좌우 대칭인지 보고, \(r\)와 \(n - r\)의 막대 높이를 비교해 보자. 이어서 'A를 넣느냐 빼느냐로 나누기'를 켜고 두 조각의 값을 적은 뒤, \(n\)을 1 줄여 그 값이 어느 막대에 있는지 찾아보자. \(n\)이 1 늘 때마다 막대 높이의 합이 두 배가 되는지도 확인할 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>\(_nC_r\)는 \(r\)가 \(n/2\)에 가까울 때 가장 크다. 그래서 '많이 뽑을수록 방법이 많다'는 생각은 \(r \le n/2\)인 범위에서만 맞는다. 한편 \(_nC_r = _nC_{n-r}\)를 쓰면 \({}_{20}\mathrm{C}_{18}\) 같은 계산을 \({}_{20}\mathrm{C}_{2} = 190\)으로 줄일 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\({}_{15}\mathrm{C}_{13}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>105<span class="why"><b>맞습니다.</b> \({}_{15}\mathrm{C}_{13} = {}_{15}\mathrm{C}_{2} = (15 \times 14)/2 = 105\)입니다. 13명을 뽑는 것은 남길 2명을 고르는 것과 같습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>210<span class="why"><b>\(2!\)로 나누지 않았습니다.</b> \(15 \times 14 = 210\)은 \({}_{15}\mathrm{P}_{2}\), 곧 남길 2명에 순서를 붙인 수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>455<span class="why"><b>\(15 - 13\)을 잘못 계산했습니다.</b> 455는 \({}_{15}\mathrm{C}_{3}\)입니다. \(n - r = 15 - 13 = 2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(_nC_n\)과 헷갈렸습니다.</b> 값이 1인 것은 전원을 뽑는 \({}_{15}\mathrm{C}_{15}\)와 아무도 뽑지 않는 \({}_{15}\mathrm{C}_{0}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>105<span class="why"><b>맞다.</b> \({}_{15}\mathrm{C}_{13} = {}_{15}\mathrm{C}_{2} = (15 \times 14)/2 = 105\)이다. 13명을 뽑는 것은 남길 2명을 고르는 것과 같다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>210<span class="why"><b>\(2!\)로 나누지 않았다.</b> \(15 \times 14 = 210\)은 \({}_{15}\mathrm{P}_{2}\), 곧 남길 2명에 순서를 붙인 수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>455<span class="why"><b>\(15 - 13\)을 잘못 계산했다.</b> 455는 \({}_{15}\mathrm{C}_{3}\)이다. \(n - r = 15 - 13 = 2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>1<span class="why"><b>\(_nC_n\)과 헷갈렸다.</b> 값이 1인 것은 전원을 뽑는 \({}_{15}\mathrm{C}_{15}\)와 아무도 뽑지 않는 \({}_{15}\mathrm{C}_{0}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-1.html#card-cm1-sum-rule"><small class="mono">공통수학1 3.1</small>'A 또는 B'의 경우의 수는 언제 더하기만 하면 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/3-2.html#card-cm1-perm-slots"><small class="mono">공통수학1 3.2</small>뽑아서 줄 세우는 방법은 왜 n(n − 1)(n − 2)…일까?</a><a href="../../c/cm1/3-2.html#card-cm1-perm-tree"><small class="mono">공통수학1 3.2</small>조건이 붙은 줄 세우기는 어떻게 셀까?</a><a href="../../c/cm1/3-2.html#text-cm1-perm"><small class="mono">공통수학1 3.2</small>순열</a><a href="../../c/cm1/3-1.html#card-cm1-sum-rule"><small class="mono">공통수학1 3.1</small>'A 또는 B'의 경우의 수는 언제 더하기만 하면 될까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/1-2.html#card-dmath-stars-bars"><small class="mono">이산 수학 1.2</small>같은 사탕을 친구들에게 나누는 방법은 몇 가지일까?</a><a href="../../c/dmath/1-2.html#card-dmath-int-solutions"><small class="mono">이산 수학 1.2</small>조건이 붙은 방정식의 정수해는 몇 개일까?</a><a href="../../c/dmath/1-2.html#text-dmath-multiset"><small class="mono">이산 수학 1.2</small>중복조합</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=cm1-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">55문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm1&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm1-3-3"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">56문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -169,6 +229,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm1/body.js"></script>
 <script src="../../js/cards/cm1/comb-group.js"></script>
 <script src="../../js/cards/cm1/comb-bars.js"></script>
 </body>

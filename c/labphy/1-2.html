@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>최소 제곱법과 신뢰구간 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="측정 자료에 최소 제곱법으로 직선을 맞추어 기울기와 절편을 구하고, 잔차를 보고 모형이 알맞은지 판단하며, 기울기의 표준 오차와 95% 신뢰구간으로 결과의 불확도를 나타낸다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-labphy-lsq .cv-res { width: 100%; aspect-ratio: 16 / 6; margin-top: 2px; display: block; }
@@ -44,17 +49,71 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-labphy-lsq"><span class="mono">1.2.1</span>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</a></li>
+        <li><a href="#text-labphy-fit-slope"><span class="mono">본문</span>최소 제곱법과 신뢰구간</a></li>
+        <li><a href="#card-labphy-lsq"><span class="mono">탐구 1</span>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labphy-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labphy&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">6문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labphy-1-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labphy-fit-slope" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>최소 제곱법과 신뢰구간</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">용수철에 추를 0.5 N씩 더 걸며 늘어난 길이를 다섯 번 재어 그래프에 점을 찍었다. 점들은 거의 한 줄로 늘어섰지만 조금씩 어긋나 있다. 모둠의 다섯 명이 저마다 자를 대고 직선을 그었더니 기울기가 3.8부터 4.2까지 나왔다. 기울기에서 용수철 상수를 구해야 하는데, 누구의 직선을 믿어야 할까? 그리고 그 기울기는 몇째 자리까지 믿을 수 있을까?</p>
+          <figure class="q-fig" data-q="lp-lsq">
+            <svg viewBox="0 0 520 230" role="img" aria-label="측정점의 수에 따른 최소 제곱 직선과 기울기의 불확도"></svg>
+            <div class="q-ctl"><label>측정점의 수 <input type="range" data-k="N" min="3" max="30" step="1" value="8"><output data-k="N"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 참값 \(y = 2x + 1\)에 잡음이 섞인 측정점과 최소 제곱 직선. 점이 많아질수록 기울기의 불확도가 줄어든다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>일차 함수의 기울기와 절편, 표준편차, 훅 법칙 \(F = kx\), 오차의 전파(<a href="1-1.html">정확도·정밀도와 오차의 전파</a>).</div>
+
+          <h3><span class="no">1.2.1</span>잔차의 제곱을 가장 작게</h3>
+          <p>점들 사이로 직선 \(y = a + bx\)를 하나 그으면, 각 점은 직선에서 위나 아래로 조금씩 떨어져 있다. 측정값에서 직선의 값을 뺀 \(y_i - (a + bx_i)\)를 잔차라 한다. 잔차를 그냥 더하면 양수와 음수가 지워지므로, 제곱해 더한 값을 직선이 점들에서 벗어난 정도로 삼는다. 이 합이 가장 작아지는 \(a\)와 \(b\)를 고르는 것이 최소 제곱법이다. 같은 점들이 주어지면 누가 계산해도 같은 직선이 나오므로, 손으로 그은 직선처럼 사람마다 달라지지 않는다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.2.1 <span class="nm">최소 제곱 직선</span></span>
+            <p>점 \((x_i, y_i)\) \(n\)개의 평균을 \(\bar{x}, \bar{y}\)라 하면 최소 제곱 직선의 기울기와 절편은 \[b = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sum (x_i - \bar{x})^2}, \qquad a = \bar{y} - b\,\bar{x}\]이다. 잔차의 흩어짐 \(s = \sqrt{\sum r_i^2 / (n-2)}\)로 기울기의 표준 오차를 \(\sigma_b = s / \sqrt{\sum (x_i - \bar{x})^2}\)로 어림한다.</p>
+          </div>
+          <p>직선은 언제나 평균점 \((\bar{x}, \bar{y})\)를 지난다. 그래서 기울기만 구하면 절편은 저절로 정해진다. 분모 \(\sum (x_i - \bar{x})^2\)은 \(x\)값들이 얼마나 넓게 퍼졌는지를 나타낸다. 시소의 받침점이 평균점이라고 생각하면, 양 끝의 점이 멀리 있을수록 같은 흔들림에도 기울기가 덜 흔들린다.</p>
+
+          <h3><span class="no">1.2.2</span>기울기를 얼마나 믿을까</h3>
+          <p>측정을 처음부터 다시 하면 점들이 조금 다르게 찍히고, 기울기도 조금 달라진다. 기울기의 표준 오차는 이 흔들림의 크기를 어림한 값이다. 측정점이 충분히 많으면 다시 잰 기울기의 약 95%가 \(b \pm 2\sigma_b\) 안에 든다. 이 범위를 기울기의 95% 신뢰구간이라 한다. 점이 적으면 \(s\) 자체를 믿기 어려워 범위를 더 넓게 잡는다.</p>
+          <p>그림 1에서 점의 수를 바꾸어 보자. 점이 3개이면 기울기가 참값 2에서 크게 벗어나기도 하고 범위도 넓다. 점이 30개로 늘면 범위가 눈에 띄게 좁아진다. 식에서 \(\sum (x_i - \bar{x})^2\)이 점의 수에 비례해 커지므로, 불확도는 대략 \(1/\sqrt{n}\)로 준다. 점을 네 배로 늘려야 범위가 절반이 된다. 그래서 점을 무작정 늘리기보다, 같은 수의 점을 \(x\)의 넓은 범위에 고르게 펼치는 것이 더 효과적이다.<sup class="fn"><a href="#fn-labphy-fit-slope-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 154" role="img" aria-label="용수철 측정값과 잔차">
+              <g class="s">
+                <text x="20" y="22">추의 무게 x (N)</text><text x="160" y="22">늘어난 길이 y (cm)</text><text x="320" y="22">직선의 값</text><text x="420" y="22">잔차</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">0.5</text><text x="160" y="52">2.1</text><text x="320" y="52">2.04</text><text x="420" y="52">+0.06</text>
+                <text x="20" y="74">1.0</text><text x="160" y="74">3.9</text><text x="320" y="74">4.04</text><text x="420" y="74">−0.14</text>
+                <text x="20" y="96">1.5</text><text x="160" y="96">6.2</text><text x="320" y="96">6.04</text><text x="420" y="96">+0.16</text>
+                <text x="20" y="118">2.0</text><text x="160" y="118">7.9</text><text x="320" y="118">8.04</text><text x="420" y="118">−0.14</text>
+                <text x="20" y="140">2.5</text><text x="160" y="140">10.1</text><text x="320" y="140">10.04</text><text x="420" y="140">+0.06</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 최소 제곱 직선 \(y = 0.04 + 4.00x\)에 대한 잔차는 더하면 0이고, 제곱의 합이 가장 작다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.2.2</span>
+            <p>그림 2의 다섯 점에 최소 제곱 직선을 맞추고, 기울기의 표준 오차를 구하여라. 기울기에서 용수철 상수 \(k\)를 N/m 단위로 구하고 그 오차를 적어라.</p>
+          </div>
+          <p>평균은 \(\bar{x} = 1.5\) N, \(\bar{y} = 6.04\) cm이다. \(x_i - \bar{x}\)는 \(-1, -0.5, 0, 0.5, 1\)이므로 \(\sum (x_i - \bar{x})^2 = 2.5\)이고, \(\sum (x_i - \bar{x})(y_i - \bar{y}) = 10.0\)이다. 기울기는 \(b = 10.0 / 2.5 = 4.00\) cm/N, 절편은 \(a = 6.04 - 4.00 \times 1.5 = 0.04\) cm이다. 잔차의 제곱 합은 \(0.0036 + 0.0196 + 0.0256 + 0.0196 + 0.0036 = 0.072\)이므로 \(s = \sqrt{0.072/3} \approx 0.155\) cm이고, \(\sigma_b = 0.155 / \sqrt{2.5} \approx 0.10\) cm/N이다.</p>
+          <p>늘어난 길이가 무게에 비례하므로 \(x = F/k\)이고, 기울기는 \(1/k\)이다. 따라서 \(k = 1 / 4.00\) N/cm \(= 0.250\) N/cm \(= 25.0\) N/m이다. 역수를 취해도 상대 오차는 그대로이므로 \(0.10/4.00 = 2.5\)%, 곧 \(k = 25.0 \pm 0.6\) N/m이다. 절편 0.04 cm는 잔차의 크기보다 작아 0과 구별되지 않는다. 그러니 용수철이 처음부터 살짝 늘어나 있었다는 계통 오차는 이 자료에서 보이지 않는다. 모둠원들이 손으로 그은 3.8에서 4.2까지의 기울기는 모두 \(4.00 \pm 0.2\) 안쪽이어서 틀렸다기보다 이 불확도만큼 흔들린 것이다.</p>
+          <p>아래 탐구 카드에서 측정 횟수와 잡음을 바꾸어 가며 최소 제곱 직선을 맞추고, 기울기의 신뢰구간이 어떻게 변하는지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labphy-fit-slope-1">최소 제곱법은 1805년 르장드르가 혜성의 궤도를 계산하며 처음 발표했고, 가우스는 자신이 1795년부터 이 방법을 써 왔다고 주장했다. 가우스는 1801년 잃어버린 소행성 세레스의 위치를 이 방법으로 예측해 다시 찾게 했다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>최소 제곱법은 잔차의 제곱 합이 가장 작은 직선을 골라, 같은 자료에서 누구나 같은 기울기와 절편을 얻게 한다. 기울기의 표준 오차는 잔차의 흩어짐을 \(x\)값의 퍼짐으로 나눈 값이고, 약 두 배의 범위가 95% 신뢰구간이 되며 점의 수와 \(x\)의 범위가 클수록 좁아진다. 처음 질문의 다섯 직선은 모두 \(4.00 \pm 0.2\) cm/N 안에 있어, 최소 제곱 직선 하나로 \(k = 25.0 \pm 0.6\) N/m라고 적으면 된다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/labphy/1-1.html#card-labphy-precision"><small class="mono">물리학 실험 1.1</small>밀도를 정확하게 구하려면 어느 길이를 더 정밀하게 재야 할까?</a><a href="../../c/labphy/1-1.html#text-labphy-density"><small class="mono">물리학 실험 1.1</small>정확도·정밀도와 오차의 전파</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-1.html#card-labphy-ticker"><small class="mono">물리학 실험 2.1</small>종이테이프에 찍힌 점만으로 가속도를 구할 수 있을까?</a><a href="../../c/labphy/2-2.html#card-labphy-newton2"><small class="mono">물리학 실험 2.2</small>같은 힘으로 끌 때, 수레가 두 배 무거우면 가속도는 절반이 될까?</a><a href="../../c/labphy/2-2.html#text-labphy-cart-mass"><small class="mono">물리학 실험 2.2</small>질량과 가속도의 관계</a><a href="../../c/labphy/2-4.html#card-labphy-g"><small class="mono">물리학 실험 2.4</small>떨어지는 물체로 g를 몇 % 정확도까지 잴 수 있을까?</a></div></nav>
+
       <article class="card" id="card-labphy-lsq">
         <header class="card-head">
-          <span class="no">1.2.1</span><h2>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</h2><span class="kind">실험 · 최소 제곱법 · 잔차 · 95% 신뢰구간</span>
+          <span class="no">탐구 1</span><h2>흩어진 점들에 그은 직선의 기울기는 얼마나 믿을 수 있을까?</h2><span class="kind">실험 · 최소 제곱법 · 잔차 · 95% 신뢰구간</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -72,42 +131,42 @@
               <canvas class="cv-plot" aria-label="질량과 늘어난 길이 그래프, 최소 제곱 직선, 95% 신뢰 띠"></canvas>
               <canvas class="cv-res" aria-label="잔차 그래프"></canvas>
               <dl class="nums n4"><div><dt>기울기 a (95%)</dt><dd class="n-a">—</dd></div><div><dt>절편 b (95%)</dt><dd class="n-b">—</dd></div><div><dt>용수철 상수 k</dt><dd class="n-k">—</dd></div><div><dt>100번 중 참 기울기를 포함</dt><dd class="n-c">—</dd></div></dl>
-              <p class="fig-note">자의 눈금은 1 mm입니다. 녹색 띠는 맞춘 직선이 있을 법한 95% 신뢰 띠, 아래 그래프는 잔차(측정값 − 직선 값)입니다. 이 용수철은 감긴 코일끼리 서로 누르는 초기 장력이 있어서, 아주 가벼운 추로는 거의 늘어나지 않습니다(모식 모형).</p>
+              <p class="fig-note">자의 눈금은 1 mm이다. 녹색 띠는 맞춘 직선이 있을 법한 95% 신뢰 띠, 아래 그래프는 잔차(측정값 − 직선 값)이다. 이 용수철은 감긴 코일끼리 서로 누르는 초기 장력이 있어서, 아주 가벼운 추로는 거의 늘어나지 않는다(모식 모형).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>추의 질량을 바꿔 가며 용수철이 늘어난 길이를 재면 점들이 직선 근처에 흩어집니다. 어떤 직선이 "가장 잘 맞는" 직선이고, 그 기울기로 구한 용수철 상수는 얼마나 믿을 수 있을까요?</li>
-            <li><span class="tag">복원</span>훅 법칙에 따라 늘어난 길이 x는 힘 mg에 비례합니다(x = mg/k). 그래프의 기울기 a = g/k에서 k를 구합니다. 같은 양을 여러 번 재면 값이 흩어지고, 그 흩어짐은 표준편차로 나타냅니다.</li>
-            <li><span class="tag">설계</span>조작 변인은 추 질량, 종속 변인은 늘어난 길이입니다. 질량을 고르게 펼쳐 여러 점을 잽니다. 가로축 값의 범위가 넓을수록 기울기를 잘 정할 수 있습니다. 눈금은 눈높이를 맞추어 읽습니다.</li>
-            <li><span class="tag">분석</span><em>최소 제곱법</em>은 잔차의 제곱합 Σ(yᵢ − a·xᵢ − b)²이 가장 작아지는 a, b를 고릅니다. 기울기의 표준 오차는 s<sub>a</sub> = s/√Σ(xᵢ − x̄)²이고(s는 잔차의 표준편차), 95% 신뢰구간은 a ± t·s<sub>a</sub>입니다. t는 점이 적을수록 커집니다(점 5개면 3.18, 많으면 2에 가까워짐). 잔차가 0 근처에 고르게 흩어지면 모형이 알맞고, 휘어진 무늬가 보이면 모형이 잘못된 것입니다.</li>
-            <li><span class="tag">측정</span>먼저 질량마다 한 번씩 재어 기울기의 신뢰구간을 확인하세요. 다음에 점을 더 모으거나(N을 늘림) 잡음을 줄였을 때 구간이 어떻게 줄어드는지 보세요. "원점을 지나는 직선"을 켜면 잔차에 어떤 무늬가 생기나요? "100번 반복"으로 신뢰구간이 참 기울기를 몇 번 담는지 세어 보세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>신뢰구간은 우연 오차만 반영합니다. 모형이 틀리면(초기 장력을 무시하고 원점을 지나게 맞추면) 구간이 좁아도 참값을 놓칩니다. 이때는 잔차의 무늬가 신호입니다. 탄성 한계를 넘는 무거운 추를 걸면 용수철이 영구히 늘어나 직선 관계가 깨집니다. 추가 떨어지지 않게 고리를 확인하고, 스탠드가 넘어지지 않도록 바닥을 클램프로 고정합니다.</li>
+            <li><span class="tag">탐구 문제</span>추의 질량을 바꿔 가며 용수철이 늘어난 길이를 재면 점들이 직선 근처에 흩어진다. 어떤 직선이 "가장 잘 맞는" 직선이고, 그 기울기로 구한 용수철 상수는 얼마나 믿을 수 있을까?</li>
+            <li><span class="tag">복원</span>훅 법칙에 따라 늘어난 길이 x는 힘 mg에 비례한다(x = mg/k). 그래프의 기울기 a = g/k에서 k를 구한다. 같은 양을 여러 번 재면 값이 흩어지고, 그 흩어짐은 표준편차로 나타낸다.</li>
+            <li><span class="tag">설계</span>조작 변인은 추 질량, 종속 변인은 늘어난 길이이다. 질량을 고르게 펼쳐 여러 점을 잰다. 가로축 값의 범위가 넓을수록 기울기를 잘 정할 수 있다. 눈금은 눈높이를 맞추어 읽는다.</li>
+            <li><span class="tag">분석</span><em>최소 제곱법</em>은 잔차의 제곱합 Σ(yᵢ − a·xᵢ − b)²이 가장 작아지는 a, b를 고른다. 기울기의 표준 오차는 s<sub>a</sub> = s/√Σ(xᵢ − x̄)²이고(s는 잔차의 표준편차), 95% 신뢰구간은 a ± t·s<sub>a</sub>이다. t는 점이 적을수록 커진다(점 5개면 3.18, 많으면 2에 가까워짐). 잔차가 0 근처에 고르게 흩어지면 모형이 알맞고, 휘어진 무늬가 보이면 모형이 잘못된 것이다.</li>
+            <li><span class="tag">측정</span>먼저 질량마다 한 번씩 재어 기울기의 신뢰구간을 확인해 보자. 다음에 점을 더 모으거나(N을 늘림) 잡음을 줄였을 때 구간이 어떻게 줄어드는지 보자. "원점을 지나는 직선"을 켜면 잔차에 어떤 무늬가 생기는가? "100번 반복"으로 신뢰구간이 참 기울기를 몇 번 담는지 세어 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>신뢰구간은 우연 오차만 반영한다. 모형이 틀리면(초기 장력을 무시하고 원점을 지나게 맞추면) 구간이 좁아도 참값을 놓친다. 이때는 잔차의 무늬가 신호이다. 탄성 한계를 넘는 무거운 추를 걸면 용수철이 영구히 늘어나 직선 관계가 깨진다. 추가 떨어지지 않게 고리를 확인하고, 스탠드가 넘어지지 않도록 바닥을 클램프로 고정한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">같은 용수철로 다시 실험하면서 측정점 수를 5개에서 20개로 늘렸습니다(질량 범위와 잡음은 그대로). 기울기 95% 신뢰구간의 폭은 대략 어떻게 될까요?</p>
+          <p class="q">같은 용수철로 다시 실험하면서 측정점 수를 5개에서 20개로 늘렸다(질량 범위와 잡음은 그대로). 기울기 95% 신뢰구간의 폭은 대략 어떻게 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/4로 줄어든다<span class="why"><b>점 수에 반비례하지 않습니다.</b> 표준 오차는 √N에 반비례하므로 N이 4배면 1/2배 정도입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>절반보다 더 줄어든다<span class="why"><b>맞습니다.</b> s<sub>a</sub>는 1/√N에 비례해 1/2이 되고, t 값도 3.18에서 2.10으로 작아져 구간 폭은 약 1/3까지 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>변하지 않는다<span class="why"><b>점 하나하나의 잡음은 그대로지만</b> 점이 많을수록 우연 오차가 서로 상쇄되어 직선의 기울기는 더 잘 정해집니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>1/4로 줄어든다<span class="why"><b>점 수에 반비례하지 않는다.</b> 표준 오차는 √N에 반비례하므로 N이 4배면 1/2배 정도이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>절반보다 더 줄어든다<span class="why"><b>맞다.</b> s<sub>a</sub>는 1/√N에 비례해 1/2이 되고, t 값도 3.18에서 2.10으로 작아져 구간 폭은 약 1/3까지 줄어든다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>변하지 않는다<span class="why"><b>점 하나하나의 잡음은 그대로지만</b> 점이 많을수록 우연 오차가 서로 상쇄되어 직선의 기울기는 더 잘 정해진다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/labphy/1-1.html#card-labphy-precision"><small class="mono">물리학 실험 1.1</small>밀도를 정확하게 구하려면 어느 길이를 더 정밀하게 재야 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-1.html#card-labphy-ticker"><small class="mono">물리학 실험 2.1</small>종이테이프에 찍힌 점만으로 가속도를 구할 수 있을까?</a><a href="../../c/labphy/2-2.html#card-labphy-newton2"><small class="mono">물리학 실험 2.2</small>같은 힘으로 끌 때, 수레가 두 배 무거우면 가속도는 절반이 될까?</a><a href="../../c/labphy/2-4.html#card-labphy-g"><small class="mono">물리학 실험 2.4</small>떨어지는 물체로 g를 몇 % 정확도까지 잴 수 있을까?</a><a href="../../c/adphy/2-2.html#card-labphy-capacitor"><small class="mono">고급 물리학 2.2</small>포일과 종이로 만든 축전기로 C = εA/d를 확인할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/labphy/1-1.html#card-labphy-precision"><small class="mono">물리학 실험 1.1</small>밀도를 정확하게 구하려면 어느 길이를 더 정밀하게 재야 할까?</a><a href="../../c/labphy/1-1.html#text-labphy-density"><small class="mono">물리학 실험 1.1</small>정확도·정밀도와 오차의 전파</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/2-1.html#card-labphy-ticker"><small class="mono">물리학 실험 2.1</small>종이테이프에 찍힌 점만으로 가속도를 구할 수 있을까?</a><a href="../../c/labphy/2-2.html#card-labphy-newton2"><small class="mono">물리학 실험 2.2</small>같은 힘으로 끌 때, 수레가 두 배 무거우면 가속도는 절반이 될까?</a><a href="../../c/labphy/2-2.html#text-labphy-cart-mass"><small class="mono">물리학 실험 2.2</small>질량과 가속도의 관계</a><a href="../../c/labphy/2-4.html#card-labphy-g"><small class="mono">물리학 실험 2.4</small>떨어지는 물체로 g를 몇 % 정확도까지 잴 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labphy-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labphy&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">6문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -115,6 +174,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/labphy/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/labphy/lsq.js"></script>
 </body>

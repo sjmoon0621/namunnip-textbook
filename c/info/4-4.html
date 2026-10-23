@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>테스트와 디버깅 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="완성도 높은 프로그램을 구현하기 위하여 경계값과 예외 경우를 포함한 테스트를 설계하고, 디버깅으로 오류를 찾아 고쳐 검증한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-info-unit-test pre.code {
@@ -75,18 +80,69 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-info-unit-test"><span class="mono">4.4.1</span>테스트로 버그 찾고 고치기</a></li>
-        <li><a href="#text-info-debug"><span class="mono">4.4.2</span>테스트 자동화와 디버깅 전략</a></li>
+        <li><a href="#text-info-boundary-test"><span class="mono">본문</span>테스트와 디버깅</a></li>
+        <li><a href="#card-info-unit-test"><span class="mono">탐구 1</span>테스트로 버그 찾고 고치기</a></li>
+        <li><a href="#text-info-debug"><span class="mono">읽기 2</span>테스트 자동화와 디버깅 전략</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=info-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=info&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">13문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=info-4-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-info-boundary-test" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>테스트와 디버깅</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">윤년을 판정하는 함수를 '4로 나누어떨어지면 윤년'이라고 짰다. 2024년을 넣으니 윤년, 2023년을 넣으니 평년이 나와 맞았다. 무작위로 고른 연도 100개를 넣어 보아도 대부분 맞았다. 그런데 이 함수는 틀렸다. 100으로 나누어떨어지는 해는 400으로도 나누어떨어져야 윤년이므로, 1900년과 2100년은 평년이다. 평범한 입력은 버그를 거의 드러내지 않는다. 어떤 입력으로 시험해야 버그가 드러나고, 드러난 버그는 어떻게 추적할까?</p>
+          <figure class="q-fig" data-q="info-test">
+            <svg viewBox="0 0 520 230" role="img" aria-label="무작위 시험의 수에 따라 윤년 함수의 버그를 찾을 확률"></svg>
+            <div class="q-ctl"><label>무작위로 고른 연도의 수 <input type="range" data-k="n" min="1" max="500" step="1" value="100"><output data-k="n"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. '4로 나누어떨어지면 윤년'인 함수는 1~10000년 가운데 0.75%(400의 배수가 아닌 100의 배수)에서만 틀린다. 무작위로 연도를 골라 시험할 때 그중 하나라도 틀린 연도가 들어갈 확률.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>조건문과 나머지 연산(정보), 확률과 여사건(수학), 코드 검토(<a href="4-3.html">오픈소스로 협력 개발</a>).</div>
+
+          <h3><span class="no">4.4.1</span>버그는 경계에 숨는다</h3>
+          <p>프로그램의 버그는 대개 평범한 입력이 아니라 조건이 바뀌는 경계에서 생긴다. 윤년 함수의 경계는 4의 배수, 100의 배수, 400의 배수이다. 리스트를 다루는 함수의 경계는 빈 리스트, 원소가 하나인 리스트, 첫 원소와 마지막 원소이다. 점수에 따라 등급을 매기는 함수라면 90점이 A인지 B인지 같은 구간의 끝점이 경계이다. 그래서 시험할 입력은 무작위로 고르기보다, 조건을 하나하나 살펴 경계와 그 바로 옆의 값을 일부러 고른다. 이것이 경계값 시험이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 4.4.1 <span class="nm">무작위 시험으로 버그를 찾을 확률</span></span>
+            <p>입력 가운데 비율 \(f\)에서만 틀리는 버그가 있을 때, 무작위 입력 \(n\)개로 시험해 하나라도 틀린 입력을 만날 확률은 \[1 - (1 - f)^n\]이다. \(f\)가 작은 버그는 시험을 아주 많이 해야 드러난다. 그런 버그는 대개 경계에 모여 있으므로, 경계값을 직접 고르면 시험 몇 개로 찾는다.</p>
+          </div>
+          <p>그림 1에서 시험 수를 바꾸어 보자. 틀린 연도는 1만 년 가운데 75개, 곧 0.75%이다. 무작위 연도 100개로 시험하면 버그를 찾을 확률이 약 53%로 동전 던지기와 비슷하다. 300개를 시험해도 약 90%이다. 그런데 경계값인 1900을 하나만 넣으면 함수가 '윤년'이라 답해 틀린 것이 바로 드러난다. 2000(400의 배수, 윤년)과 2100(평년)을 함께 넣으면 고친 함수가 맞는지도 확인할 수 있다.<sup class="fn"><a href="#fn-info-boundary-test-1">1</a></sup></p>
+
+          <h3><span class="no">4.4.2</span>디버깅</h3>
+          <p>시험에서 틀린 결과가 나오면 그 원인을 찾아 고치는 디버깅을 한다. 먼저 틀린 결과를 늘 되풀이해 낼 수 있는 가장 작은 입력을 찾는다. 그다음 그 입력으로 프로그램을 따라가며, 변수의 값이 예상과 처음 달라지는 곳을 찾는다. 중간중간 값을 출력해 보거나, 디버거로 한 줄씩 실행하며 변수를 살핀다. 의심되는 범위를 반씩 좁혀 가면 긴 코드에서도 빠르게 찾는다. 원인을 고친 뒤에는 그 입력을 시험 목록에 영원히 남겨, 같은 버그가 다시 생기지 않는지 확인한다. 이것을 회귀 시험이라 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="윤년 함수의 경계값 시험">
+              <g class="s">
+                <text x="20" y="22">연도</text><text x="140" y="22">규칙</text><text x="320" y="22">정답</text><text x="420" y="22">틀린 함수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">2024</text><text x="140" y="52">4의 배수</text><text x="320" y="52">윤년</text><text x="420" y="52">윤년</text>
+                <text x="20" y="74">1900</text><text x="140" y="74">100의 배수, 400의 배수 아님</text><text x="320" y="74">평년</text><text x="420" y="74">윤년 (틀림)</text>
+                <text x="20" y="96">2000</text><text x="140" y="96">400의 배수</text><text x="320" y="96">윤년</text><text x="420" y="96">윤년</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 규칙이 바뀌는 경계마다 하나씩 고른 시험이 버그를 드러낸다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.4.2</span>
+            <p>0.75%의 입력에서만 틀리는 버그를 무작위 시험으로 95% 넘는 확률로 찾으려면 시험이 몇 개 필요한가? 윤년 규칙의 조건을 모두 확인하는 경계값 시험은 몇 개면 충분한지 정하고, 고친 함수 <code>y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)</code>를 그 시험으로 확인하여라.</p>
+          </div>
+          <p>\(1 - 0.9925^n > 0.95\)에서 \(0.9925^n &lt; 0.05\)이고, 양변에 로그를 취하면 \(n > \dfrac{\ln 0.05}{\ln 0.9925} \approx \dfrac{-3.00}{-0.00753} \approx 398\)이다. 무작위 시험이 약 400개 필요하다.</p>
+          <p>경계값 시험은 규칙의 네 경우에서 하나씩, 곧 4의 배수가 아닌 해(2023), 4의 배수이지만 100의 배수가 아닌 해(2024), 100의 배수이지만 400의 배수가 아닌 해(1900), 400의 배수(2000)의 네 개면 된다. 고친 함수는 2023에 거짓, 2024에 참, 1900에 \(100\)으로 나누어떨어지고 400으로 나누어떨어지지 않아 거짓, 2000에 참을 돌려주어 네 시험을 모두 통과한다. 즉 시험 네 개가 무작위 시험 400개보다 확실하다. 그래서 시험은 많이 하는 것보다 조건의 경계를 빠짐없이 고르는 것이 중요하다.</p>
+          <p>아래 탐구 카드에서 함수의 경계값을 찾아 시험을 설계하고, 버그를 추적해 고쳐 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-info-boundary-test-1">1900년을 윤년으로 잘못 처리한 버그는 실제로 1980년대 표 계산 프로그램 로터스 1-2-3에 있었다. 엑셀은 그 파일과 호환되도록 일부러 같은 버그를 남겨 두었고, 지금도 엑셀에는 존재하지 않는 1900년 2월 29일이 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>버그는 대개 조건이 바뀌는 경계에 숨어 있어, 드물게 틀리는 버그는 무작위 시험으로 \(1 - (1-f)^n\)의 확률로만 드러난다. 그래서 조건마다 경계와 그 옆의 값을 골라 시험하고, 틀린 결과가 나오면 가장 작은 입력으로 되풀이하며 범위를 좁혀 원인을 찾은 뒤 회귀 시험으로 남긴다. 처음 질문의 윤년 함수는 2024와 2023만으로는 믿을 수 없고, 1900과 2000 같은 경계값까지 넣어 보아야 버그가 드러난다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a><a href="../../c/info/4-2.html#text-info-team-size"><small class="mono">정보과학 4.2</small>프로젝트 설계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-5.html#card-info-eval-groups"><small class="mono">정보과학 4.5</small>정확도 95 %인 프로그램은 모두에게 잘 동작할까?</a><a href="../../c/info/4-5.html#text-info-share"><small class="mono">정보과학 4.5</small>완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?</a></div></nav>
+
       <article class="card" id="card-info-unit-test">
         <header class="card-head">
-          <span class="no">4.4.1</span><h2>어떤 테스트를 넣어야 숨은 버그가 드러날까?</h2><span class="kind">테스트와 디버깅 · 단위 테스트, 경계값, 추적</span>
+          <span class="no">탐구 1</span><h2>어떤 테스트를 넣어야 숨은 버그가 드러날까?</h2><span class="kind">테스트와 디버깅 · 단위 테스트, 경계값, 추적</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -113,37 +169,37 @@
               <div><dt>실패</dt><dd class="n-fail">0</dd></div>
             </dl>
             <div class="res"></div>
-            <p class="fig-note">기대값은 명세(함수가 해야 할 일)대로 계산한 값입니다. 실패한 줄의 ‘추적’을 누르면 그 입력으로 함수를 한 줄씩 실행하며 변수 값을 볼 수 있습니다.</p>
+            <p class="fig-note">기대값은 명세(함수가 해야 할 일)대로 계산한 값이다. 실패한 줄의 ‘추적’을 누르면 그 입력으로 함수를 한 줄씩 실행하며 변수 값을 볼 수 있다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>윤년 판별 함수를 2024년과 2023년으로 시험했더니 둘 다 맞았습니다. 이 함수는 이제 믿어도 될까요? 어떤 입력을 더 넣어 봐야 할까요?</li>
-            <li><span class="tag">복원</span>프로그램은 명세(입력에 대해 무엇을 돌려줘야 하는가)를 만족해야 합니다. 그레고리력에서 윤년은 4로 나누어떨어지는 해 가운데, 100으로 나누어떨어지는 해는 빼고, 400으로 나누어떨어지는 해는 다시 넣습니다.</li>
-            <li><span class="tag">설명</span><em>단위 테스트</em>는 함수 하나에 입력을 넣고 결과가 기대값과 같은지 자동으로 확인하는 코드입니다. 파이썬에서는 assert is_leap(2000) == True처럼 쓰거나 unittest, pytest를 씁니다. 좋은 테스트는 평범한 값뿐 아니라 규칙이 바뀌는 <em>경계값</em>(1900, 2000, 리스트의 맨 끝 원소)과 <em>예외 경우</em>(빈 리스트, 원소가 하나인 리스트)를 고루 넣습니다. 테스트가 실패하면 <em>디버깅</em>을 합니다. 실패한 입력으로 코드를 한 줄씩 따라가며(추적) 변수 값이 예상과 처음 달라지는 곳을 찾습니다.</li>
-            <li><span class="tag">연결</span>버그를 고친 뒤에는 처음에 통과하던 테스트까지 모두 다시 돌립니다(<em>회귀 테스트</em>). 고친 부분이 다른 곳을 망가뜨리지 않았는지 확인하기 위해서입니다. 협업 저장소에서는 커밋할 때마다 테스트가 자동으로 돌도록 설정해 두기도 합니다.</li>
-            <li><span class="tag">적용</span>세 함수마다 평범한 테스트만으로 시작해 모두 통과하는지 보고, 경계값과 예외 경우를 하나씩 더해 실패하는 테스트를 찾으세요. 실패한 테스트를 추적해 버그가 있는 줄을 짚은 다음 ‘고친 코드 적용’을 누르고 모든 테스트를 다시 실행하세요.</li>
-            <li class="warn"><span class="tag">판단</span>테스트를 모두 통과해도 버그가 없다는 증명은 아닙니다. 테스트는 버그가 <em>있음</em>을 보여 줄 수는 있지만 없음을 보여 주지는 못합니다. 그래서 테스트의 개수보다 입력을 성질이 같은 묶음으로 나누어(동등 분할) 묶음마다, 그리고 그 경계마다 골고루 넣는 것이 중요합니다.</li>
+            <li><span class="tag">질문</span>윤년 판별 함수를 2024년과 2023년으로 시험했더니 둘 다 맞았다. 이 함수는 이제 믿어도 될까? 어떤 입력을 더 넣어 봐야 할까?</li>
+            <li><span class="tag">복원</span>프로그램은 명세(입력에 대해 무엇을 돌려줘야 하는가)를 만족해야 한다. 그레고리력에서 윤년은 4로 나누어떨어지는 해 가운데, 100으로 나누어떨어지는 해는 빼고, 400으로 나누어떨어지는 해는 다시 넣는다.</li>
+            <li><span class="tag">설명</span><em>단위 테스트</em>는 함수 하나에 입력을 넣고 결과가 기대값과 같은지 자동으로 확인하는 코드이다. 파이썬에서는 assert is_leap(2000) == True처럼 쓰거나 unittest, pytest를 쓴다. 좋은 테스트는 평범한 값뿐 아니라 규칙이 바뀌는 <em>경계값</em>(1900, 2000, 리스트의 맨 끝 원소)과 <em>예외 경우</em>(빈 리스트, 원소가 하나인 리스트)를 고루 넣는다. 테스트가 실패하면 <em>디버깅</em>을 한다. 실패한 입력으로 코드를 한 줄씩 따라가며(추적) 변수 값이 예상과 처음 달라지는 곳을 찾는다.</li>
+            <li><span class="tag">연결</span>버그를 고친 뒤에는 처음에 통과하던 테스트까지 모두 다시 돌린다(<em>회귀 테스트</em>). 고친 부분이 다른 곳을 망가뜨리지 않았는지 확인하기 위해서이다. 협업 저장소에서는 커밋할 때마다 테스트가 자동으로 돌도록 설정해 두기도 한다.</li>
+            <li><span class="tag">적용</span>세 함수마다 평범한 테스트만으로 시작해 모두 통과하는지 보고, 경계값과 예외 경우를 하나씩 더해 실패하는 테스트를 찾자. 실패한 테스트를 추적해 버그가 있는 줄을 짚은 다음 ‘고친 코드 적용’을 누르고 모든 테스트를 다시 실행해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>테스트를 모두 통과해도 버그가 없다는 증명은 아니다. 테스트는 버그가 <em>있음</em>을 보여 줄 수는 있지만 없음을 보여 주지는 못한다. 그래서 테스트의 개수보다 입력을 성질이 같은 묶음으로 나누어(동등 분할) 묶음마다, 그리고 그 경계마다 골고루 넣는 것이 중요하다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점수(0~100 정수)를 받아 90 이상이면 "A", 80 이상이면 "B", 나머지는 "C"를 돌려주는 함수를 시험하려 합니다. 테스트 네 개만 쓸 수 있다면 가장 좋은 묶음은?</p>
+          <p class="q">점수(0~100 정수)를 받아 90 이상이면 "A", 80 이상이면 "B", 나머지는 "C"를 돌려주는 함수를 시험하려 한다. 테스트 네 개만 쓸 수 있다면 가장 좋은 묶음은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>95, 85, 50, 70<span class="why"><b>등급마다 값이 있어 그럴듯하지만</b> 경계(90, 80)를 하나도 넣지 않아 &gt;=를 &gt;로 잘못 쓴 버그를 찾지 못합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>90, 89, 80, 79<span class="why"><b>맞습니다.</b> 등급이 바뀌는 경계의 양쪽을 모두 넣어 부등호 실수를 바로 잡아냅니다. 여유가 있으면 0과 100도 넣습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>100, 99, 98, 97<span class="why"><b>모두 같은 묶음(A)</b>에 속해 새로운 정보를 주지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>95, 85, 50, 70<span class="why"><b>등급마다 값이 있어 그럴듯하지만</b> 경계(90, 80)를 하나도 넣지 않아 &gt;=를 &gt;로 잘못 쓴 버그를 찾지 못한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>90, 89, 80, 79<span class="why"><b>맞다.</b> 등급이 바뀌는 경계의 양쪽을 모두 넣어 부등호 실수를 바로 잡아낸다. 여유가 있으면 0과 100도 넣는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>100, 99, 98, 97<span class="why"><b>모두 같은 묶음(A)</b>에 속해 새로운 정보를 주지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-5.html#card-info-eval-groups"><small class="mono">정보과학 4.5</small>정확도 95 %인 프로그램은 모두에게 잘 동작할까?</a><a href="../../c/info/4-5.html#text-info-share"><small class="mono">정보과학 4.5</small>완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a><a href="../../c/info/4-2.html#text-info-team-size"><small class="mono">정보과학 4.2</small>프로젝트 설계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-5.html#card-info-eval-groups"><small class="mono">정보과학 4.5</small>정확도 95 %인 프로그램은 모두에게 잘 동작할까?</a><a href="../../c/info/4-5.html#text-info-share"><small class="mono">정보과학 4.5</small>완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?</a></div></nav>
 
       <article class="card reading" id="text-info-debug">
         <header class="card-head">
-          <span class="no">4.4.2</span><h2>버그는 어떤 순서로 잡아야 할까?</h2><span class="kind">읽기 · unittest로 테스트 자동화, 디버깅 과정</span>
+          <span class="no">읽기 2</span><h2>버그는 어떤 순서로 잡아야 할까?</h2><span class="kind">읽기 · unittest로 테스트 자동화, 디버깅 과정</span>
         </header>
         <div class="reading-body">
-          <p class="ask">프로그램이 틀린 답을 냅니다. 코드를 처음부터 눈으로 다시 읽으면 찾을 수 있을까요? 코드가 수백 줄이 넘으면 그렇게 해서는 끝이 나지 않습니다.</p>
+          <p class="ask">프로그램이 틀린 답을 낸다. 코드를 처음부터 눈으로 다시 읽으면 찾을 수 있을까? 코드가 수백 줄이 넘으면 그렇게 해서는 끝이 나지 않는다.</p>
           <h3><span class="mono">1</span>테스트를 코드로 남기기</h3>
-          <p>테스트를 손으로 매번 입력하면 귀찮아서 결국 덜 하게 됩니다. 파이썬 표준 라이브러리의 unittest로 테스트를 파일에 적어 두면, 명령 한 줄로 언제든 모두 다시 돌릴 수 있습니다.</p>
+          <p>테스트를 손으로 매번 입력하면 귀찮아서 결국 덜 하게 된다. 파이썬 표준 라이브러리의 unittest로 테스트를 파일에 적어 두면, 명령 한 줄로 언제든 모두 다시 돌릴 수 있다.</p>
           <pre class="code">import unittest
       from stats import median
 
@@ -160,15 +216,18 @@
 
       if __name__ == "__main__":
           unittest.main()</pre>
-          <p>실행하면 통과한 테스트는 점(.)으로, 실패한 테스트는 F, 예상하지 못한 오류는 E로 표시되고, 실패한 테스트마다 기대값과 실제 값을 보여 줍니다. 버그를 고칠 때마다 이 파일을 다시 돌리면 회귀 테스트가 됩니다. 실무에서는 pytest처럼 더 간결하게 쓰는 외부 라이브러리도 많이 씁니다.</p>
+          <p>실행하면 통과한 테스트는 점(.)으로, 실패한 테스트는 F, 예상하지 못한 오류는 E로 표시되고, 실패한 테스트마다 기대값과 실제 값을 보여 준다. 버그를 고칠 때마다 이 파일을 다시 돌리면 회귀 테스트가 된다. 실무에서는 pytest처럼 더 간결하게 쓰는 외부 라이브러리도 많이 쓴다.</p>
           <h3><span class="mono">2</span>디버깅의 순서</h3>
-          <ul class="dots">
-            <li><em>재현:</em> 버그가 언제나 나타나는 가장 작은 입력을 찾습니다. 그 입력을 그대로 테스트로 만들어 둡니다.</li>
-            <li><em>범위 좁히기:</em> 중간 값을 print로 찍거나, 개발 환경의 디버거로 중단점(breakpoint)을 걸고 한 줄씩 실행하며 변수를 봅니다. 값이 처음으로 예상과 달라지는 줄 근처에 원인이 있습니다. 코드의 절반씩을 확인해 나가면 이진 탐색처럼 빠르게 좁혀집니다.</li>
-            <li><em>원인 이해:</em> 증상(틀린 출력)이 아니라 원인(잘못된 조건, 경계 처리, 자료형)을 찾습니다. 왜 틀렸는지 설명할 수 있어야 제대로 고친 것입니다.</li>
-            <li><em>수정과 확인:</em> 고친 뒤 재현 테스트가 통과하는지, 기존 테스트도 모두 통과하는지 확인합니다.</li>
-            <li><em>기록:</em> 커밋 메시지나 이슈에 무엇이 원인이었고 어떻게 고쳤는지 남깁니다.</li>
-          </ul>
+          <h4>재현</h4>
+          <p>버그가 언제나 나타나는 가장 작은 입력을 찾는다. 그 입력을 그대로 테스트로 만들어 둔다.</p>
+          <h4>범위 좁히기</h4>
+          <p>중간 값을 print로 찍거나, 개발 환경의 디버거로 중단점(breakpoint)을 걸고 한 줄씩 실행하며 변수를 본다. 값이 처음으로 예상과 달라지는 줄 근처에 원인이 있다. 코드의 절반씩을 확인해 나가면 이진 탐색처럼 빠르게 좁혀진다.</p>
+          <h4>원인 이해</h4>
+          <p>증상(틀린 출력)이 아니라 원인(잘못된 조건, 경계 처리, 자료형)을 찾는다. 왜 틀렸는지 설명할 수 있어야 제대로 고친 것이다.</p>
+          <h4>수정과 확인</h4>
+          <p>고친 뒤 재현 테스트가 통과하는지, 기존 테스트도 모두 통과하는지 확인한다.</p>
+          <h4>기록</h4>
+          <p>커밋 메시지나 이슈에 무엇이 원인이었고 어떻게 고쳤는지 남긴다.</p>
           <div class="tbl"><table>
             <thead><tr><th>오류의 종류</th><th>언제 드러나나</th><th>예</th></tr></thead>
             <tbody>
@@ -177,32 +236,32 @@
               <tr><th>논리 오류</th><td>오류 메시지 없이 답이 틀림</td><td>&lt;=를 &lt;로 씀, 400년 규칙 빠뜨림</td></tr>
             </tbody>
           </table></div>
-          <p class="judge"><b>판단</b>논리 오류가 가장 찾기 어렵습니다. 프로그램이 아무 말 없이 틀린 답을 내기 때문입니다. 그래서 정답을 알고 있는 입력으로 테스트를 미리 만들어 두는 것이 중요합니다. 또 버그를 고치려다 코드를 이것저것 동시에 바꾸면 무엇이 효과가 있었는지 알 수 없으니, 한 번에 하나씩 바꾸고 확인합니다.</p>
+          <p class="judge"><b>판단</b>논리 오류가 가장 찾기 어렵다. 프로그램이 아무 말 없이 틀린 답을 내기 때문이다. 그래서 정답을 알고 있는 입력으로 테스트를 미리 만들어 두는 것이 중요하다. 또 버그를 고치려다 코드를 이것저것 동시에 바꾸면 무엇이 효과가 있었는지 알 수 없으니, 한 번에 하나씩 바꾸고 확인한다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">평균을 구하는 프로그램이 오류 메시지 없이 실행되는데, [10, 20, 30]의 평균을 15로 출력합니다. 가장 먼저 할 일은?</p>
+          <p class="q">평균을 구하는 프로그램이 오류 메시지 없이 실행되는데, [10, 20, 30]의 평균을 15로 출력한다. 가장 먼저 할 일은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>오류 메시지가 없으므로 입력 자료가 잘못되었다고 본다<span class="why"><b>논리 오류는 메시지 없이 나타납니다.</b> 입력이 옳다는 것은 이미 손으로 확인할 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>assert average([10, 20, 30]) == 20 테스트를 만들고, 합계와 개수를 찍어 어느 값이 틀렸는지 본다<span class="why"><b>맞습니다.</b> 재현 테스트를 남기고 중간 값으로 범위를 좁힙니다. 15 = 60/4라면 개수를 하나 더 세는 버그일 수 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>함수를 처음부터 다른 방법으로 다시 짠다<span class="why"><b>원인을 모른 채 다시 짜면</b> 같은 실수를 되풀이할 수 있고, 배울 기회도 놓칩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>오류 메시지가 없으므로 입력 자료가 잘못되었다고 본다<span class="why"><b>논리 오류는 메시지 없이 나타난다.</b> 입력이 옳다는 것은 이미 손으로 확인할 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>assert average([10, 20, 30]) == 20 테스트를 만들고, 합계와 개수를 찍어 어느 값이 틀렸는지 본다<span class="why"><b>맞다.</b> 재현 테스트를 남기고 중간 값으로 범위를 좁힌다. 15 = 60/4라면 개수를 하나 더 세는 버그일 수 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>함수를 처음부터 다른 방법으로 다시 짠다<span class="why"><b>원인을 모른 채 다시 짜면</b> 같은 실수를 되풀이할 수 있고, 배울 기회도 놓친다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-5.html#card-info-eval-groups"><small class="mono">정보과학 4.5</small>정확도 95 %인 프로그램은 모두에게 잘 동작할까?</a><a href="../../c/info/4-5.html#text-info-share"><small class="mono">정보과학 4.5</small>완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/info/4-2.html#text-info-project-plan"><small class="mono">정보과학 4.2</small>코딩부터 시작하면 왜 프로젝트가 꼬일까?</a><a href="../../c/info/4-2.html#card-info-critical-path"><small class="mono">정보과학 4.2</small>프로젝트는 어느 단계가 늦어지면 전체가 늦어질까?</a><a href="../../c/info/4-2.html#text-info-team-size"><small class="mono">정보과학 4.2</small>프로젝트 설계</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/info/4-5.html#card-info-eval-groups"><small class="mono">정보과학 4.5</small>정확도 95 %인 프로그램은 모두에게 잘 동작할까?</a><a href="../../c/info/4-5.html#text-info-share"><small class="mono">정보과학 4.5</small>완성한 프로그램은 무엇을 점검하고 어떻게 공유할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=info-4-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=info&amp;sec=4-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">13문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -210,6 +269,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/info/body.js"></script>
 <script src="../../js/lib/lab.js"></script>
 <script src="../../js/cards/info/i3-unit-test.js"></script>
 </body>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>가우스 법칙과 전기장 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="전기 선속으로 가우스 법칙을 유도하고 도체와 유전체가 만드는 전기장을 구하며, 전위, 정전기 차폐와 등전위면, 전기 쌍극자를 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-field canvas { touch-action: none; cursor: crosshair; }
     #card-phy-field .ctl .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 6px 0 4px; }
@@ -49,20 +55,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-phy-field"><span class="mono">2.1.1</span>보이지 않는 전기장을 어떻게 그릴까?</a></li>
-        <li><a href="#card-emq-equipotential"><span class="mono">2.1.2</span>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</a></li>
-        <li><a href="#card-adphy-gauss"><span class="mono">2.1.3</span>가우스 법칙</a></li>
-        <li><a href="#card-adphy-dipole"><span class="mono">2.1.4</span>전기 쌍극자</a></li>
+        <li><a href="#text-adphy-gauss-sphere"><span class="mono">본문</span>가우스 법칙과 전기장</a></li>
+        <li><a href="#card-phy-field"><span class="mono">탐구 1</span>보이지 않는 전기장을 어떻게 그릴까?</a></li>
+        <li><a href="#card-emq-equipotential"><span class="mono">탐구 2</span>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</a></li>
+        <li><a href="#card-adphy-gauss"><span class="mono">탐구 3</span>가우스 법칙</a></li>
+        <li><a href="#card-adphy-dipole"><span class="mono">탐구 4</span>전기 쌍극자</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adphy-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adphy&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=adphy-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">90문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adphy-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adphy-gauss-sphere" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>가우스 법칙과 전기장</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">자동차가 달리다 벼락을 맞아도 안에 탄 사람은 대개 다치지 않는다. 비행기도 해마다 한두 번씩 벼락을 맞지만 승객은 모르고 지나간다. 고무 타이어 덕분이라고 흔히 말하지만, 실제로는 금속으로 된 차체가 중요하다. 수만 암페어의 전류가 쏟아지는데, 금속 상자 속은 어떻게 안전할까? 전하가 퍼져 있는 물체가 만드는 전기장을 일일이 더하지 않고 한 줄로 구하는 방법이 있을까?</p>
+          <figure class="q-fig" data-q="adphy-gsph">
+            <svg viewBox="0 0 520 230" role="img" aria-label="중심에서의 거리에 따른 대전된 구의 전기장"></svg>
+            <div class="q-ctl"><label>중심에서의 거리 r/R <input type="range" data-k="x" min="0" max="3" step="0.05" value="0.5"><output data-k="x"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 같은 양의 전하가 반지름 R인 구 속에 고르게 찬 경우(파랑)와 겉면 껍질에만 있는 경우(주황)의 전기장. 구 밖에서는 둘이 같고, 껍질 속에서는 전기장이 0이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>쿨롱 법칙과 전기장, 전위와 등전위면(물리학), 구의 겉넓이와 부피(수학).</div>
+
+          <h3><span class="no">2.1.1</span>전기 선속과 가우스 법칙</h3>
+          <p>전기장 속에 면을 하나 두면, 그 면을 수직으로 뚫고 지나가는 전기력선의 수를 생각할 수 있다. 이것을 전기 선속이라 하고, 전기장의 면에 수직인 성분과 넓이의 곱 \(\Phi = E_\perp A\)로 계산한다. 점전하 \(q\)를 반지름 \(r\)인 구면으로 감싸면, 전기장 \(\dfrac{q}{4\pi\varepsilon_0 r^2}\)에 겉넓이 \(4\pi r^2\)을 곱해 선속이 \(q/\varepsilon_0\)이 된다. 반지름이 사라졌으므로 구면의 크기와 상관없다. 그리고 면이 찌그러져도 뚫고 나가는 전기력선의 수는 같다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.1.1 <span class="nm">가우스 법칙</span></span>
+            <p>닫힌 면을 뚫고 나가는 전기 선속은 그 면 안에 든 알짜 전하 \(Q_{\text{안}}\)을 \(\varepsilon_0\)으로 나눈 값과 같다. \[\oint E_\perp\,dA = \frac{Q_{\text{안}}}{\varepsilon_0}\] 면 밖의 전하는 들어간 만큼 나오므로 선속에 기여하지 않는다. 대칭이 있으면 \(E\)를 적분 밖으로 꺼내 바로 구할 수 있다.</p>
+          </div>
+          <p>그림 1에서 거리를 바꾸어 보자. 전하가 고르게 찬 구에서 반지름 \(r\) 안에 든 전하는 부피의 비 \((r/R)^3\)만큼이다. 이를 \(4\pi r^2\)으로 나누면 구 안의 전기장은 \(r\)에 비례하여, 중심에서 0이고 겉면에서 가장 크다. 반면 전하가 껍질에만 있으면 안쪽의 가우스 면에는 전하가 하나도 없으므로 전기장이 0이다. 구 밖에서는 두 경우 모두 모든 전하가 중심에 모인 점전하와 같다.<sup class="fn"><a href="#fn-adphy-gauss-sphere-1">1</a></sup></p>
+
+          <h3><span class="no">2.1.2</span>도체 속의 전기장</h3>
+          <p>도체 속에는 자유롭게 움직이는 전자가 많다. 도체 안에 전기장이 조금이라도 있으면 전자가 움직이고, 전자는 그 전기장을 지우는 쪽으로 다시 배열될 때까지 움직인다. 그래서 정전기적 평형에 이른 도체 속의 전기장은 0이다. 가우스 법칙을 도체 속에 그린 면에 적용하면 그 안의 알짜 전하도 0이어야 하므로, 남는 전하는 모두 겉면에 모인다. 속이 빈 금속 상자라면 바깥에 어떤 전하가 와도 상자 안의 전기장은 0이다. 이를 정전기 차폐라 하며, 이런 상자를 패러데이 상자라 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="대칭에 따른 가우스 면과 전기장">
+              <g class="s">
+                <text x="20" y="22">전하 분포</text><text x="170" y="22">가우스 면</text><text x="330" y="22">바깥의 전기장</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">점, 구</text><text x="170" y="52">같은 중심의 구면</text><text x="330" y="52">거리의 제곱에 반비례</text>
+                <text x="20" y="74">무한히 긴 직선</text><text x="170" y="74">같은 축의 원기둥</text><text x="330" y="74">거리에 반비례</text>
+                <text x="20" y="96">무한히 넓은 평면</text><text x="170" y="96">평면을 뚫는 상자</text><text x="330" y="96">거리에 관계없이 일정</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 대칭에 맞는 가우스 면을 고르면 전기장을 한 줄로 구할 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+            <p>반지름 10 cm인 플라스틱 공 속에 전하 \(2.0 \times 10^{-8}\) C이 고르게 퍼져 있다. 중심에서 5 cm, 10 cm, 20 cm 떨어진 곳의 전기장의 세기를 구하여라. \(\dfrac{1}{4\pi\varepsilon_0} = 9.0 \times 10^9\ \text{N·m}^2/\text{C}^2\)이다.</p>
+          </div>
+          <p>겉면(10 cm)에서는 모든 전하가 안에 들어 있으므로 \(E = 9.0 \times 10^9 \times \dfrac{2.0 \times 10^{-8}}{0.10^2} = 1.8 \times 10^4\) N/C이다. 5 cm에서는 안에 든 전하가 \((0.5)^3 = 1/8\)이고 거리가 반이므로 \(E = 9.0 \times 10^9 \times \dfrac{2.5 \times 10^{-9}}{0.05^2} = 9.0 \times 10^3\) N/C로, 겉면의 절반이다.</p>
+          <p>20 cm에서는 다시 모든 전하가 안에 있고 거리가 두 배이므로 겉면의 4분의 1인 \(4.5 \times 10^3\) N/C이다. 즉 구 안에서는 거리에 비례하고 밖에서는 거리의 제곱에 반비례한다. 같은 전하를 금속 공에 주었다면 전하가 모두 겉면으로 가서 5 cm에서의 전기장은 0이 된다. 그래서 금속 차체 안에 앉은 사람은 벼락의 전류가 차체 겉면을 따라 땅으로 흘러가는 동안 전기장 없는 공간에 머문다.</p>
+          <p>아래 탐구 카드에서 닫힌 면 하나로 여러 전하 분포의 전기장을 구해 보고, 알짜 전하가 0인 쌍극자가 전기장에서 어떻게 움직이는지 살펴보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adphy-gauss-sphere-1">뉴턴도 같은 문제로 오래 고민했다. 지구의 모든 부분이 사과를 당기는 힘을 더하면 정말 지구 중심에 모든 질량이 모인 것과 같은지 증명하는 데 수년이 걸렸다. 중력도 거리의 제곱에 반비례하므로 가우스 법칙과 같은 방법이 통한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>가우스 법칙은 닫힌 면을 뚫고 나가는 전기 선속이 면 안의 알짜 전하에만 달려 있다고 말하며, 대칭이 있으면 전기장을 한 줄로 구하게 해 준다. 그래서 고르게 대전된 구 안의 전기장은 거리에 비례하고, 껍질 속이나 도체 속의 전기장은 0이다. 처음 질문의 자동차 안이 안전한 것은 금속 차체가 패러데이 상자처럼 전하를 겉면으로 흘려보내 차 안의 전기장을 0으로 지키기 때문이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">다른 과목에서</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a></div></nav>
+
       <article class="card" id="card-phy-field">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>보이지 않는 전기장을 어떻게 그릴까?</h2><span class="kind">전기력선 · 등전위선 · 중첩</span>
+          <span class="no">탐구 1</span><h2>보이지 않는 전기장을 어떻게 그릴까?</h2><span class="kind">전기력선 · 등전위선 · 중첩</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -89,33 +147,33 @@
                 <div><dt>전기장 세기</dt><dd class="pe">—</dd></div>
                 <div><dt>전하의 합</dt><dd class="pq">—</dd></div>
               </dl>
-              <p class="fig-note">전하는 끌어서 옮기고, 빈 곳을 누르면 초록 탐침이 그 자리의 전기장 방향을 가리킵니다. 전기력선은 1 nC당 12가닥, 등전위선은 ±100·200·400·800·1600 V(빨강 +, 파랑 −, 점선 0 V)입니다.</p>
+              <p class="fig-note">전하는 끌어서 옮기고, 빈 곳을 누르면 초록 탐침이 그 자리의 전기장 방향을 가리킨다. 전기력선은 1 nC당 12가닥, 등전위선은 ±100·200·400·800·1600 V(빨강 +, 파랑 −, 점선 0 V)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>전기장은 눈에 보이지 않습니다. 그런데 교과서에는 전기장이 선으로 그려져 있습니다. 그 선은 어떤 규칙으로 그린 걸까요?</li>
-            <li><span class="tag">복원</span>점전하 q가 거리 r인 곳에 만드는 전기장은 세기가 <span class="formula">E = kq / r²</span>이고, 양전하라면 전하에서 멀어지는 쪽을 향합니다. 전하가 여럿이면 각 전하가 만든 전기장을 벡터로 더합니다.</li>
-            <li><span class="tag">설명</span>전기력선은 한 점에서 그 점의 전기장 방향으로 조금 나아가고, 거기서 다시 방향을 구해 나아가기를 되풀이해 이은 선입니다. 위 그림도 화면의 점마다 벡터 합을 계산해 이렇게 그렸습니다. 선은 양전하에서 나와 음전하로 들어가고, 선이 빽빽한 곳일수록 전기장이 셉니다.</li>
-            <li><span class="tag">연결</span>등전위선은 전위가 같은 점을 이은 선입니다. 점전하의 전위 <span class="formula">V = kq / r</span>는 방향이 없는 양이라 그냥 더하면 됩니다. 등전위선을 따라 전하를 옮기면 전기장이 하는 일이 0이므로, 전기력선과 등전위선은 언제나 수직으로 만납니다.</li>
-            <li><span class="tag">적용</span>‘+2와 −1’을 눌러 보세요. +2에서 나온 24가닥 가운데 −1로 들어가는 선은 몇 가닥인가요? 나머지는 멀리 빠져나갑니다. 멀리서 보면 이 한 쌍은 +1 전하 하나처럼 보입니다.</li>
-            <li class="warn"><span class="tag">판단</span>전기력선은 실제로 있는 줄이 아니라 전기장을 나타내는 약속입니다. 선과 선 사이에도 전기장은 있습니다. 또 전기력선은 전하가 지나가는 길이 아닙니다. 힘은 선의 방향이지만, 이미 속도가 있는 전하는 선을 벗어나 움직입니다.</li>
+            <li><span class="tag">질문</span>전기장은 눈에 보이지 않는다. 그런데 교과서에는 전기장이 선으로 그려져 있다. 그 선은 어떤 규칙으로 그린 걸까?</li>
+            <li><span class="tag">복원</span>점전하 q가 거리 r인 곳에 만드는 전기장은 세기가 <span class="formula">E = kq / r²</span>이고, 양전하라면 전하에서 멀어지는 쪽을 향한다. 그리고 전하가 여럿이면 각 전하가 만든 전기장을 벡터로 더한다.</li>
+            <li><span class="tag">설명</span>전기력선은 한 점에서 그 점의 전기장 방향으로 조금 나아가고, 거기서 다시 방향을 구해 나아가기를 되풀이해 이은 선이다. 위 그림도 화면의 점마다 벡터 합을 계산해 이렇게 그렸다. 그래서 선은 양전하에서 나와 음전하로 들어가고, 선이 빽빽한 곳일수록 전기장이 세다.</li>
+            <li><span class="tag">연결</span>등전위선은 전위가 같은 점을 이은 선이다. 점전하의 전위 <span class="formula">V = kq / r</span>는 방향이 없는 양이라 그냥 더하면 된다. 또 등전위선을 따라 전하를 옮기면 전기장이 하는 일이 0이므로, 전기력선과 등전위선은 언제나 수직으로 만난다.</li>
+            <li><span class="tag">적용</span>‘+2와 −1’을 눌러 +2에서 나온 24가닥 가운데 −1로 들어가는 선이 몇 가닥인지 세어 보자. 나머지는 멀리 빠져나가서, 멀리서 보면 이 한 쌍은 +1 전하 하나처럼 보인다.</li>
+            <li class="warn"><span class="tag">판단</span>전기력선은 실제로 있는 줄이 아니라 전기장을 나타내는 약속이어서, 선과 선 사이에도 전기장은 있다. 또 전기력선은 전하가 지나가는 길이 아니다. 힘은 선의 방향이지만, 이미 속도가 있는 전하는 선을 벗어나 움직인다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">+1 nC 전하 두 개를 5 cm 떨어뜨려 놓았습니다. 두 전하의 한가운데 점에서 맞는 것은?</p>
+          <p class="q">+1 nC 전하 두 개를 5 cm 떨어뜨려 놓았다. 두 전하의 한가운데 점에서 맞는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>전기장도 0이고 전위도 0이다.<span class="why"><b>전기장과 전위를 같은 방식으로 더했습니다.</b> 전기장은 방향이 반대라 상쇄되지만, 전위는 방향이 없어서 두 양수가 그대로 더해집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>전기장은 0이지만 전위는 0이 아니다.<span class="why"><b>맞습니다.</b> 각 전하의 전위는 kq/r ≈ 360 V이고 둘을 더하면 약 720 V입니다. ‘+1과 +1’을 눌러 가운데에 탐침을 놓아 확인해 보세요.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 전하의 영향이 겹쳐서 전기장이 가장 세다.<span class="why"><b>세기만 더하고 방향을 잊었습니다.</b> 왼쪽 전하는 오른쪽으로, 오른쪽 전하는 왼쪽으로 미니 가운데에서는 정확히 상쇄됩니다. 그림에서도 그 자리에는 선이 지나가지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>전기장도 0이고 전위도 0이다.<span class="why"><b>전기장과 전위를 같은 방식으로 더했다.</b> 전기장은 방향이 반대라 상쇄되지만, 전위는 방향이 없어서 두 양수가 그대로 더해진다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>전기장은 0이지만 전위는 0이 아니다.<span class="why"><b>맞다.</b> 각 전하의 전위는 kq/r ≈ 360 V이고 둘을 더하면 약 720 V이다. ‘+1과 +1’을 눌러 가운데에 탐침을 놓아 확인해 보아라.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 전하의 영향이 겹쳐서 전기장이 가장 세다.<span class="why"><b>세기만 더하고 방향을 잊었다.</b> 왼쪽 전하는 오른쪽으로, 오른쪽 전하는 왼쪽으로 미니 가운데에서는 정확히 상쇄된다. 그림에서도 그 자리에는 선이 지나가지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-3.html#card-phy-capacitor"><small class="mono">물리학 2.3</small>축전기는 전기 에너지를 어떻게 저장할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">다른 과목에서</span><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-2.html#card-phy-multitap"><small class="mono">물리학 2.2</small>멀티탭에 기구를 많이 꽂으면 왜 위험할까?</a><a href="../../c/phy/2-2.html#card-phy-bulbs"><small class="mono">물리학 2.2</small>40 W 전구와 100 W 전구를 직렬로 이으면?</a><a href="../../c/phy/2-2.html#card-phy-circuit-meter"><small class="mono">물리학 2.2</small>직렬과 병렬 회로에서 전류계와 전압계는 무엇을 말해 줄까?</a><a href="../../c/phy/2-2.html#text-phy-circuit"><small class="mono">물리학 2.2</small>저항의 연결과 전력</a></div></nav>
 
       <article class="card" id="card-emq-equipotential">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</h2><span class="kind">점전하의 전기장과 전위 · E = −ΔV/Δr</span>
+          <span class="no">탐구 2</span><h2>등전위면 간격만 보고 전기장의 세기를 알 수 있을까?</h2><span class="kind">점전하의 전기장과 전위 · E = −ΔV/Δr</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -130,33 +188,33 @@
                 <div><dt>전기장 E = kQ/r²</dt><dd class="n-e">—</dd></div>
                 <div><dt>이웃한 등전위면 간격으로 구한 E ≈ ΔV/Δr</dt><dd class="n-d">—</dd></div>
               </dl>
-              <p class="fig-note">k = 9.0 × 10⁹ N·m²/C². 등전위면은 전위가 20 V씩 차이 나도록 그렸고, 실제로는 공 모양 면을 자른 원으로 보입니다.</p>
+              <p class="fig-note">k = 9.0 × 10⁹ N·m²/C²이다. 등전위면은 전위가 20 V씩 차이 나도록 그렸고, 실제로는 공 모양 면을 자른 원으로 보인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>지도에서 등고선이 촘촘한 곳은 경사가 가파릅니다. 전하 둘레에 전위가 같은 점을 이은 등전위면을 그리면, 그 간격에서 무엇을 읽을 수 있을까요?</li>
-            <li><span class="tag">복원</span>두 점전하 사이의 힘은 F = kq₁q₂/r²입니다(쿨롱 법칙). 전기장은 +1 C이 받는 힘, 전위는 +1 C이 가진 전기적 퍼텐셜 에너지입니다(물리학).</li>
-            <li><span class="tag">설명</span>점전하 Q에서 r만큼 떨어진 곳의 전기장은 E = kQ/r²이고, 전위는 V = kQ/r입니다. 등전위면을 따라 전하를 옮길 때는 일이 필요 없으므로, 전기장(전기력선)은 언제나 등전위면에 수직입니다. 이웃한 두 등전위면의 전위차 ΔV를 그 사이 거리 Δr로 나누면 전기장의 세기가 됩니다(E = −ΔV/Δr). 그래서 등전위면이 촘촘한 곳일수록 전기장이 셉니다.</li>
-            <li><span class="tag">연결</span>나란한 두 금속판 사이처럼 등전위면이 같은 간격으로 늘어선 곳에서는 전기장이 어디서나 같습니다(균일한 전기장, E = V/d). 점전하 둘레에서는 멀어질수록 등전위면 간격이 넓어지고, 전기장이 거리의 제곱에 반비례해 약해집니다. 도체의 표면은 하나의 등전위면이며, 뾰족한 곳에서는 등전위면이 몰려 전기장이 매우 셉니다(피뢰침).</li>
-            <li><span class="tag">적용</span>측정점을 옮기며 E = kQ/r²과 ΔV/Δr로 어림한 값을 비교해 보세요. 전하에 가까울수록 두 값의 차이가 커지는 까닭은 무엇일까요? 전하량을 음수로 바꾸면 전위와 전기장의 방향은 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>“전위가 0인 곳은 전기장도 0이다”는 틀린 말입니다. 전기장은 전위의 값이 아니라 전위가 변하는 빠르기로 정해집니다. 크기가 같은 +, − 전하 한가운데는 전위가 0이지만 전기장은 셉니다.</li>
+            <li><span class="tag">질문</span>지도에서 등고선이 촘촘한 곳은 경사가 가파르다. 전하 둘레에 전위가 같은 점을 이은 등전위면을 그리면, 그 간격에서 무엇을 읽을 수 있을까?</li>
+            <li><span class="tag">복원</span>두 점전하 사이의 힘은 F = kq₁q₂/r²이다(쿨롱 법칙). 그리고 전기장은 +1 C이 받는 힘, 전위는 +1 C이 가진 전기적 퍼텐셜 에너지이다(물리학).</li>
+            <li><span class="tag">설명</span>점전하 Q에서 r만큼 떨어진 곳의 전기장은 E = kQ/r²이고, 전위는 V = kQ/r이다. 등전위면을 따라 전하를 옮길 때는 일이 필요 없으므로, 전기장(전기력선)은 언제나 등전위면에 수직이다. 또 이웃한 두 등전위면의 전위차 ΔV를 그 사이 거리 Δr로 나누면 전기장의 세기가 되므로(E = −ΔV/Δr), 등전위면이 촘촘한 곳일수록 전기장이 세다.</li>
+            <li><span class="tag">연결</span>나란한 두 금속판 사이처럼 등전위면이 같은 간격으로 늘어선 곳에서는 전기장이 어디서나 같다(균일한 전기장, E = V/d). 반면 점전하 둘레에서는 멀어질수록 등전위면 간격이 넓어지고, 전기장이 거리의 제곱에 반비례해 약해진다. 도체의 표면은 하나의 등전위면이며, 뾰족한 곳에서는 등전위면이 몰려 전기장이 매우 세다(피뢰침).</li>
+            <li><span class="tag">적용</span>측정점을 옮기며 E = kQ/r²과 ΔV/Δr로 어림한 값을 비교하고, 전하에 가까울수록 두 값의 차이가 커지는 까닭을 생각해 보자. 그리고 전하량을 음수로 바꾸면 전위와 전기장의 방향이 어떻게 되는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘전위가 0인 곳은 전기장도 0이다’는 틀린 말이다. 전기장은 전위의 값이 아니라 전위가 변하는 빠르기로 정해지기 때문이다. 그래서 크기가 같은 +, − 전하 한가운데는 전위가 0이지만 전기장은 세다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">점전하에서 거리 r인 곳과 2r인 곳을 비교할 때, 전위와 전기장의 세기는 각각 몇 배가 될까요?</p>
+          <p class="q">점전하에서 거리 r인 곳과 2r인 곳을 비교할 때, 전위와 전기장의 세기는 각각 몇 배가 될까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전위는 1/2배, 전기장은 1/4배<span class="why"><b>맞습니다.</b> V ∝ 1/r, E ∝ 1/r²입니다. 그래서 멀리 갈수록 같은 전위차의 등전위면 사이가 넓어집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 1/4배<span class="why"><b>전위는 거리에 반비례합니다.</b> 제곱에 반비례하는 것은 전기장입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 1/2배<span class="why"><b>전기장은 거리의 제곱에 반비례합니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>전위는 1/2배, 전기장은 1/4배<span class="why"><b>맞다.</b> V ∝ 1/r, E ∝ 1/r²이다. 그래서 멀리 갈수록 같은 전위차의 등전위면 사이가 넓어진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>둘 다 1/4배<span class="why"><b>전위는 거리에 반비례한다.</b> 제곱에 반비례하는 것은 전기장이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>둘 다 1/2배<span class="why"><b>전기장은 거리의 제곱에 반비례한다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div></nav>
 
       <article class="card" id="card-adphy-gauss">
         <header class="card-head">
-          <span class="no">2.1.3</span><h2>닫힌 면 하나로 전기장을 구할 수 있을까?</h2><span class="kind">전기 선속 · 가우스 법칙 · 도체와 유전체</span>
+          <span class="no">탐구 3</span><h2>닫힌 면 하나로 전기장을 구할 수 있을까?</h2><span class="kind">전기 선속 · 가우스 법칙 · 도체와 유전체</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -171,8 +229,8 @@
                 <button type="button" class="chip" data-p="dipole" aria-pressed="false">전기 쌍극자</button>
               </div>
               <div class="presets" role="group" aria-label="그래프">
-                <button type="button" class="chip" data-g="E" aria-pressed="true">그래프: 전기장 E(r)</button>
-                <button type="button" class="chip" data-g="V" aria-pressed="false">그래프: 전위 V(r)</button>
+                <button type="button" class="chip" data-g="E" aria-pressed="true">그래프 전기장 E(r)</button>
+                <button type="button" class="chip" data-g="V" aria-pressed="false">그래프 전위 V(r)</button>
               </div>
               <label class="mono">가우스 면의 반지름 r = <output class="r-out">3.0</output> cm</label>
               <input class="r" type="range" min="0.5" max="10" step="0.1" value="3" aria-label="가우스 면의 반지름">
@@ -185,33 +243,33 @@
                 <div><dt>면 위 V (V)</dt><dd class="n-v">—</dd></div>
               </dl>
               <p class="fig-note n-note"></p>
-              <p class="fig-note">전하량은 모두 1 nC, 진공(공기) 속입니다. k = 8.99×10⁹ N·m²/C², ε₀ = 8.85×10⁻¹² C²/(N·m²). 구대칭 분포의 E는 가우스 법칙으로, 쌍극자의 E는 두 점전하의 쿨롱 전기장을 더해 계산했습니다. 그림은 3차원 구를 지나는 단면입니다.</p>
+              <p class="fig-note">전하량은 모두 1 nC, 진공(공기) 속인다. k = 8.99×10⁹ N·m²/C², ε₀ = 8.85×10⁻¹² C²/(N·m²). 구대칭 분포의 E는 가우스 법칙으로, 쌍극자의 E는 두 점전하의 쿨롱 전기장을 더해 계산했다. 그림은 3차원 구를 지나는 단면이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>점전하 하나의 전기장은 쿨롱 법칙으로 바로 구합니다. 그런데 공 모양으로 퍼진 전하, 전하를 감싼 금속 껍질, 유리처럼 분극되는 물질이 섞이면 수많은 점전하의 전기장을 일일이 더해야 할까요?</li>
-            <li><span class="tag">복원</span>점전하의 전기장은 <em>E = kq/r²</em>(k = 1/4πε₀)이고, 전기력선은 양전하에서 나와 음전하로 들어갑니다. 전기장이 E인 곳에서 면적 ΔA인 작은 면을 지나는 <em>전기 선속</em>은 ΔΦ = EΔA cos θ(θ는 면의 법선과 E 사이의 각)로, 그 면을 뚫고 나가는 전기력선의 수에 비례합니다.</li>
-            <li><span class="tag">설명</span>점전하 q를 중심에 둔 반지름 r인 구면에서 E는 어디서나 kq/r²이고 면에 수직입니다. 그래서 선속은 Φ = E·4πr² = (q/4πε₀r²)·4πr² = <em>q/ε₀</em>로, r과 관계없습니다. 면의 모양을 바꿔도 뚫고 나가는 전기력선 수는 같고, 바깥 전하의 전기력선은 들어온 만큼 나가므로 선속에 보태지 않습니다. 중첩 원리로 일반화하면 <em>가우스 법칙</em> ∮E·dA = Q<sub>안</sub>/ε₀를 얻습니다. 분포에 대칭성이 있어 면 위의 E가 일정하면, 이 식에서 E = Q<sub>안</sub>/(4πε₀r²)를 바로 풀 수 있습니다.</li>
-            <li><span class="tag">연결</span>정전기 평형의 <em>도체</em> 속은 E = 0입니다. 도체 속에 가우스 면을 그리면 Q<sub>안</sub> = 0이어야 하므로, 속 전하 +q가 있으면 안쪽 면에 −q가 유도되고, 알짜 전하는 모두 바깥 면에 모입니다. 빈 도체 속 공간의 전기장이 0이 되는 <em>정전기 차폐</em>도 같은 논리이고, E = 0이므로 도체 전체는 하나의 <em>등전위</em> 영역입니다. <em>유전체</em>는 분자가 분극해 안쪽 면에 −q(1 − 1/κ)의 속박 전하를 만들어 전기장을 E/κ로 줄입니다. 자유 전하만 세려면 ∮κE·dA = Q<sub>자유</sub>/ε₀로 쓰면 됩니다. 전위는 V(r) = ∫<sub>r</sub><sup>∞</sup>E dr로 E 그래프의 넓이에서 나옵니다.</li>
-            <li><span class="tag">적용</span>점전하에서 r을 바꾸며 선속이 변하는지 확인하세요. 부도체 구 안에서 E가 r에 비례하는 까닭을 면 안의 전하로 설명해 보세요. 두 도체 예시에서 r을 4–6 cm에 두고 E와 V를 읽은 뒤 V(r) 그래프로 바꿔 보세요. 유전체 껍질에서 κ를 키우면 껍질 안과 밖의 E는 각각 어떻게 되나요? 마지막으로 쌍극자를 고르고 아래 그래프의 넓이를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>“선속이 0이면 면 위의 전기장도 0이다”는 틀린 추론입니다. 쌍극자를 감싼 면은 선속이 0이지만 위쪽에서는 나가고 아래쪽에서는 들어옵니다. 가우스 법칙은 언제나 성립하지만, E를 적분 밖으로 꺼낼 수 있는 구·원통·평면 대칭에서만 E를 직접 구하는 도구가 됩니다. 또 차폐는 정전기 평형일 때의 이야기이며, 껍질 밖의 전기장은 속 전하가 그대로 만든다는 것도 주의하세요(‘도체 껍질 + 속 전하’에서 r &gt; 6 cm).</li>
+            <li><span class="tag">질문</span>점전하 하나의 전기장은 쿨롱 법칙으로 바로 구한다. 그런데 공 모양으로 퍼진 전하, 전하를 감싼 금속 껍질, 유리처럼 분극되는 물질이 섞이면 수많은 점전하의 전기장을 일일이 더해야 할까?</li>
+            <li><span class="tag">복원</span>점전하의 전기장은 <em>E = kq/r²</em>(k = 1/4πε₀)이고, 전기력선은 양전하에서 나와 음전하로 들어간다. 전기장이 E인 곳에서 면적 ΔA인 작은 면을 지나는 <em>전기 선속</em>은 ΔΦ = EΔA cos θ(θ는 면의 법선과 E 사이의 각)로, 그 면을 뚫고 나가는 전기력선의 수에 비례한다.</li>
+            <li><span class="tag">설명</span>점전하 q를 중심에 둔 반지름 r인 구면에서 E는 어디서나 kq/r²이고 면에 수직이다. 그래서 선속은 Φ = E·4πr² = (q/4πε₀r²)·4πr² = <em>q/ε₀</em>로, r과 관계없다. 면의 모양을 바꿔도 뚫고 나가는 전기력선 수는 같고, 바깥 전하의 전기력선은 들어온 만큼 나가므로 선속에 보태지 않는다. 중첩 원리로 일반화하면 <em>가우스 법칙</em> ∮E·dA = Q<sub>안</sub>/ε₀를 얻는다. 분포에 대칭성이 있어 면 위의 E가 일정하면, 이 식에서 E = Q<sub>안</sub>/(4πε₀r²)를 바로 풀 수 있다.</li>
+            <li><span class="tag">연결</span>정전기 평형의 <em>도체</em> 속은 E = 0이다. 도체 속에 가우스 면을 그리면 Q<sub>안</sub> = 0이어야 하므로, 속 전하 +q가 있으면 안쪽 면에 −q가 유도되고, 알짜 전하는 모두 바깥 면에 모인다. 빈 도체 속 공간의 전기장이 0이 되는 <em>정전기 차폐</em>도 같은 논리이고, E = 0이므로 도체 전체는 하나의 <em>등전위</em> 영역이다. <em>유전체</em>는 분자가 분극해 안쪽 면에 −q(1 − 1/κ)의 속박 전하를 만들어 전기장을 E/κ로 줄인다. 자유 전하만 세려면 ∮κE·dA = Q<sub>자유</sub>/ε₀로 쓰면 된다. 전위는 V(r) = ∫<sub>r</sub><sup>∞</sup>E dr로 E 그래프의 넓이에서 나온다.</li>
+            <li><span class="tag">적용</span>점전하에서 r을 바꾸며 선속이 변하는지 확인해 보자. 부도체 구 안에서 E가 r에 비례하는 까닭을 면 안의 전하로 설명해 보자. 두 도체 예시에서 r을 4–6 cm에 두고 E와 V를 읽은 뒤 V(r) 그래프로 바꿔 보자. 유전체 껍질에서 κ를 키우면 껍질 안과 밖의 E는 각각 어떻게 되는가? 마지막으로 쌍극자를 고르고 아래 그래프의 넓이를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“선속이 0이면 면 위의 전기장도 0이다”는 틀린 추론이다. 쌍극자를 감싼 면은 선속이 0이지만 위쪽에서는 나가고 아래쪽에서는 들어온다. 가우스 법칙은 언제나 성립하지만, E를 적분 밖으로 꺼낼 수 있는 구·원통·평면 대칭에서만 E를 직접 구하는 도구가 된다. 또 차폐는 정전기 평형일 때의 이야기이며, 껍질 밖의 전기장은 속 전하가 그대로 만든다는 것도 주의해 보자(‘도체 껍질 + 속 전하’에서 r &gt; 6 cm).</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">대전되지 않은 속 빈 도체 공 안의 중심에서 벗어난 자리에 +2 nC를 넣었습니다. 공 바깥에서 공을 감싸는 가우스 면에 대해 옳은 것은?</p>
+          <p class="q">대전되지 않은 속 빈 도체 공 안의 중심에서 벗어난 자리에 +2 nC를 넣었다. 공 바깥에서 공을 감싸는 가우스 면에 대해 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>도체가 차폐하므로 바깥 면의 선속은 0이다<span class="why"><b>차폐 방향이 반대입니다.</b> 빈 도체는 바깥의 영향을 속에서 막지만, 속 전하가 만든 유도 전하 +2 nC가 바깥 면에 나타나 바깥 선속은 2 nC/ε₀입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>선속은 2 nC/ε₀이고, 바깥 면의 전하는 고르게 퍼져 공 밖 전기장은 중심에 놓인 점전하와 같다<span class="why"><b>맞습니다.</b> 안쪽 면의 −2 nC는 치우쳐 분포해 속 전하의 영향을 상쇄하고, 도체 속 E = 0이므로 바깥 면의 +2 nC는 속 전하의 위치를 ‘모른 채’ 고르게 퍼집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선속은 2 nC/ε₀이지만 공 밖 전기장은 전하가 치우친 쪽이 더 세다<span class="why"><b>그럴듯하지만 아닙니다.</b> 도체 속 전기장이 0이므로 바깥 면의 전하 분포는 속 전하의 위치와 무관하게 구대칭입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>도체가 차폐하므로 바깥 면의 선속은 0이다<span class="why"><b>차폐 방향이 반대이다.</b> 빈 도체는 바깥의 영향을 속에서 막지만, 속 전하가 만든 유도 전하 +2 nC가 바깥 면에 나타나 바깥 선속은 2 nC/ε₀이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>선속은 2 nC/ε₀이고, 바깥 면의 전하는 고르게 퍼져 공 밖 전기장은 중심에 놓인 점전하와 같다<span class="why"><b>맞다.</b> 안쪽 면의 −2 nC는 치우쳐 분포해 속 전하의 영향을 상쇄하고, 도체 속 E = 0이므로 바깥 면의 +2 nC는 속 전하의 위치를 ‘모른 채’ 고르게 퍼진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>선속은 2 nC/ε₀이지만 공 밖 전기장은 전하가 치우친 쪽이 더 세다<span class="why"><b>그럴듯하지만 아니다.</b> 도체 속 전기장이 0이므로 바깥 면의 전하 분포는 속 전하의 위치와 무관하게 구대칭이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-2.html#card-adphy-capnet"><small class="mono">고급 물리학 2.2</small>유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?</a><a href="../../c/adphy/2-4.html#card-adphy-wave"><small class="mono">고급 물리학 2.4</small>안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?</a><a href="../../c/adphy/2-4.html#text-adphy-maxwell"><small class="mono">고급 물리학 2.4</small>맥스웰은 어떻게 전기와 자기의 식에서 빛의 속력을 꺼냈을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adphy/2-2.html#card-adphy-capnet"><small class="mono">고급 물리학 2.2</small>유전체를 반만 끼운 축전기는 직렬일까, 병렬일까?</a><a href="../../c/adphy/2-4.html#card-adphy-wave"><small class="mono">고급 물리학 2.4</small>안테나 바로 위에 수신기를 두면 왜 신호가 잡히지 않을까?</a><a href="../../c/adphy/2-4.html#text-adphy-maxwell"><small class="mono">고급 물리학 2.4</small>맥스웰은 어떻게 전기와 자기의 식에서 빛의 속력을 꺼냈을까?</a><a href="../../c/adphy/2-4.html#text-adphy-antenna"><small class="mono">고급 물리학 2.4</small>전자기파의 발생과 성질</a></div></nav>
 
       <article class="card" id="card-adphy-dipole">
         <header class="card-head">
-          <span class="no">2.1.4</span><h2>알짜 전하가 0인 쌍극자는 왜 전기장을 만들고 회전할까?</h2><span class="kind">전기 쌍극자 · 등전위선 · 돌림힘 τ = pE sin θ</span>
+          <span class="no">탐구 4</span><h2>알짜 전하가 0인 쌍극자는 왜 전기장을 만들고 회전할까?</h2><span class="kind">전기 쌍극자 · 등전위선 · 돌림힘 τ = pE sin θ</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -228,47 +286,52 @@
                 <div><dt>돌림힘 pE₀ sin θ</dt><dd class="n-tq">—</dd></div>
                 <div><dt>퍼텐셜 에너지 −pE₀ cos θ</dt><dd class="n-u">—</dd></div>
               </dl>
-              <p class="fig-note">±1 nC 두 점전하의 전위와 전기장을 더해 계산했습니다(진공). 빨간 등전위선은 양의 전위, 파란 선은 음의 전위입니다. 물 분자의 쌍극자 모멘트는 약 6.2×10⁻³⁰ C·m로, 이 그림의 모형보다 10¹⁸배쯤 작습니다.</p>
+              <p class="fig-note">±1 nC 두 점전하의 전위와 전기장을 더해 계산했다(진공). 빨간 등전위선은 양의 전위, 파란 선은 음의 전위이다. 물 분자의 쌍극자 모멘트는 약 6.2×10⁻³⁰ C·m로, 이 그림의 모형보다 10¹⁸배쯤 작다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>+Q와 −Q가 가까이 붙어 있으면 알짜 전하는 0입니다. 그렇다면 멀리서 보면 전기장이 없을까요? 물 분자처럼 알짜 전하가 0인 분자가 전자레인지의 전기장 속에서 흔들리는 까닭은 무엇일까요?</li>
-            <li><span class="tag">복원</span>점전하의 전위는 <em>V = kQ/r</em>이고, 여러 전하의 전위는 그냥 더합니다(스칼라 중첩). 전기장은 전위가 가장 빨리 낮아지는 방향을 가리키며 등전위면에 수직입니다(E = −dV/dr).</li>
-            <li><span class="tag">설명</span>크기가 같고 부호가 반대인 두 전하가 거리 d만큼 떨어진 것을 <em>전기 쌍극자</em>라 하고, −Q에서 +Q로 향하는 벡터 <em>p = Qd</em>를 쌍극자 모멘트라 합니다. 축 위 거리 r에서 두 전하의 전기장은 거의 상쇄되어 E = kQ[1/(r − d/2)² − 1/(r + d/2)²] ≈ <em>2kp/r³</em>(r ≫ d)입니다. 알짜 전하가 0이라 1/r²항은 사라지지만, 두 전하의 거리 차이 때문에 1/r³로 빨리 줄어드는 전기장이 남습니다.</li>
-            <li><span class="tag">연결</span>균일한 전기장 E₀ 속에서 +Q는 QE₀, −Q는 −QE₀의 힘을 받아 알짜 힘은 0이지만, 두 힘의 작용선이 어긋나 돌림힘 <em>τ = p × E₀</em>(크기 pE₀ sin θ)가 생깁니다. 이를 회전시키는 데 드는 일로부터 퍼텐셜 에너지 <em>U = −p·E₀</em>를 얻고, U는 p가 E₀와 나란할 때 가장 작습니다. 유전체 속 분자들이 전기장 방향으로 정렬하는 유전 분극, 전자레인지에서 물 분자가 진동하는 것이 이 돌림힘 때문입니다.</li>
-            <li><span class="tag">적용</span>E₀ = 0에서 등전위선이 어떤 모양인지 보고, 두 전하의 가운데를 지나는 수직선의 전위를 말해 보세요. 아래 그래프에서 초록 곡선의 기울기가 점선(점전하)과 달라지는 거리는 d와 어떤 관계인가요? d를 바꿔 확인하세요. E₀를 켜고 θ를 0°, 90°, 180°로 바꾸며 돌림힘과 U를 비교하세요. 어느 방향이 안정한 평형인가요?</li>
-            <li class="warn"><span class="tag">판단</span>“알짜 전하가 0이면 전기적 영향도 없다”는 틀린 생각입니다. 쌍극자는 1/r³의 전기장을 만들고, 균일한 전기장에서는 돌기만 하지만 <em>불균일한</em> 전기장에서는 알짜 힘도 받습니다(대전체가 종잇조각을 끄는 까닭). 또 2kp/r³는 r ≫ d에서만 맞는 근사이므로, 두 전하 사이 거리와 비슷한 곳에서는 정확한 식을 써야 합니다.</li>
+            <li><span class="tag">질문</span>+Q와 −Q가 가까이 붙어 있으면 알짜 전하는 0이다. 그렇다면 멀리서 보면 전기장이 없을까? 물 분자처럼 알짜 전하가 0인 분자가 전자레인지의 전기장 속에서 흔들리는 까닭은 무엇일까?</li>
+            <li><span class="tag">복원</span>점전하의 전위는 <em>V = kQ/r</em>이고, 여러 전하의 전위는 그냥 더한다(스칼라 중첩). 전기장은 전위가 가장 빨리 낮아지는 방향을 가리키며 등전위면에 수직이다(E = −dV/dr).</li>
+            <li><span class="tag">설명</span>크기가 같고 부호가 반대인 두 전하가 거리 d만큼 떨어진 것을 <em>전기 쌍극자</em>라 하고, −Q에서 +Q로 향하는 벡터 <em>p = Qd</em>를 쌍극자 모멘트라 한다. 축 위 거리 r에서 두 전하의 전기장은 거의 상쇄되어 E = kQ[1/(r − d/2)² − 1/(r + d/2)²] ≈ <em>2kp/r³</em>(r ≫ d)이다. 알짜 전하가 0이라 1/r²항은 사라지지만, 두 전하의 거리 차이 때문에 1/r³로 빨리 줄어드는 전기장이 남는다.</li>
+            <li><span class="tag">연결</span>균일한 전기장 E₀ 속에서 +Q는 QE₀, −Q는 −QE₀의 힘을 받아 알짜 힘은 0이지만, 두 힘의 작용선이 어긋나 돌림힘 <em>τ = p × E₀</em>(크기 pE₀ sin θ)가 생긴다. 이를 회전시키는 데 드는 일로부터 퍼텐셜 에너지 <em>U = −p·E₀</em>를 얻고, U는 p가 E₀와 나란할 때 가장 작다. 유전체 속 분자들이 전기장 방향으로 정렬하는 유전 분극, 전자레인지에서 물 분자가 진동하는 것이 이 돌림힘 때문이다.</li>
+            <li><span class="tag">적용</span>E₀ = 0에서 등전위선이 어떤 모양인지 보고, 두 전하의 가운데를 지나는 수직선의 전위를 말해 보자. 아래 그래프에서 초록 곡선의 기울기가 점선(점전하)과 달라지는 거리는 d와 어떤 관계인가? d를 바꿔 확인해 보자. E₀를 켜고 θ를 0°, 90°, 180°로 바꾸며 돌림힘과 U를 비교해 보자. 어느 방향이 안정한 평형인가?</li>
+            <li class="warn"><span class="tag">판단</span>“알짜 전하가 0이면 전기적 영향도 없다”는 틀린 생각이다. 쌍극자는 1/r³의 전기장을 만들고, 균일한 전기장에서는 돌기만 하지만 <em>불균일한</em> 전기장에서는 알짜 힘도 받는다(대전체가 종잇조각을 끄는 까닭). 또 2kp/r³는 r ≫ d에서만 맞는 근사이므로, 두 전하 사이 거리와 비슷한 곳에서는 정확한 식을 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">쌍극자 축 위에서 멀리 떨어진 곳(r ≫ d)의 전기장을 재었더니 E였습니다. 쌍극자의 두 전하는 그대로 두고 거리 r만 2배로 늘리면 전기장은?</p>
+          <p class="q">쌍극자 축 위에서 멀리 떨어진 곳(r ≫ d)의 전기장을 재었더니 E였다. 쌍극자의 두 전하는 그대로 두고 거리 r만 2배로 늘리면 전기장은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>E/4<span class="why"><b>점전하의 1/r² 법칙을 그대로 쓴 답입니다.</b> 쌍극자는 두 전하의 전기장이 거의 상쇄되어 더 빨리 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>E/8<span class="why"><b>맞습니다.</b> r ≫ d이면 E ≈ 2kp/r³이므로 r이 2배가 되면 1/8이 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>알짜 전하가 0이므로 처음부터 E = 0이어야 한다<span class="why"><b>가우스 법칙의 선속과 전기장을 혼동한 답입니다.</b> 닫힌 면의 선속이 0이어도 면 위의 전기장은 0이 아닙니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>E/4<span class="why"><b>점전하의 1/r² 법칙을 그대로 쓴 답이다.</b> 쌍극자는 두 전하의 전기장이 거의 상쇄되어 더 빨리 줄어든다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>E/8<span class="why"><b>맞다.</b> r ≫ d이면 E ≈ 2kp/r³이므로 r이 2배가 되면 1/8이 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>알짜 전하가 0이므로 처음부터 E = 0이어야 한다<span class="why"><b>가우스 법칙의 선속과 전기장을 혼동한 답이다.</b> 닫힌 면의 선속이 0이어도 면 위의 전기장은 0이 아니다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-1.html#card-phy-potential"><small class="mono">물리학 2.1</small>전위차는 ‘전기의 높이’일까?</a><a href="../../c/phy/2-1.html#text-phy-efield"><small class="mono">물리학 2.1</small>전기장과 전위차</a><a href="../../c/emq/1-1.html#text-emq-field"><small class="mono">전자기와 양자 1.1</small>전기장과 등전위면</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adphy-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adphy&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=adphy-2-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">90문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/adphy/body.js"></script>
 <script src="../../js/cards/phy/em-field.js"></script>
 <script src="../../js/cards/emq/e-equipotential.js"></script>
 <script src="../../js/cards/adphy/em-gauss.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>극좌표 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="극좌표의 뜻, 극좌표와 직교좌표의 관계. 레이더 화면에서 극좌표로 주어진 목표를 찾는 도전 카드, tan⁻¹으로 각을 구하다 사분면을 놓친 풀이의 오류 찾기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-radar canvas { aspect-ratio: 1 / 1; max-width: 400px; margin: 0 auto; display: block; touch-action: manipulation; }
@@ -44,18 +49,77 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-radar"><span class="mono">2.1.1</span>레이더 화면에서 극좌표 찾기</a></li>
-        <li><a href="#card-adcalc-polar-spot"><span class="mono">2.1.2</span>좌표 바꾸기의 오류 찾기</a></li>
+        <li><a href="#text-adcalc-polar"><span class="mono">본문</span>극좌표</a></li>
+        <li><a href="#card-adcalc-radar"><span class="mono">탐구 1</span>레이더 화면에서 극좌표 찾기</a></li>
+        <li><a href="#card-adcalc-polar-spot"><span class="mono">탐구 2</span>좌표 바꾸기의 오류 찾기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-2-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-polar" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>극좌표</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공항 레이더는 안테나를 돌리며 전파를 쏘아, 되돌아온 시간으로 비행기까지의 거리를, 안테나의 방향으로 비행기의 방향을 잰다. 그래서 레이더 화면은 가운데에서 몇 km, 북쪽에서 몇 도라는 두 수로 비행기를 나타낸다. 한 비행기가 레이더에서 동쪽으로 \(-1\) km, 북쪽으로 \(-\sqrt3\) km인 곳에 있다고 하자. 계산기로 \(\tan^{-1}(y/x) = \tan^{-1}\sqrt3\)을 구하면 60°가 나오는데, 이 비행기는 정말 60° 방향에 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 210" role="img" aria-label="직교좌표와 극좌표로 나타낸 한 점">
+              <line x1="60" y1="100" x2="300" y2="100" class="ax"/><line x1="180" y1="10" x2="180" y2="200" class="ax"/>
+              <circle cx="180" cy="100" r="80" class="gd"/>
+              <line x1="180" y1="100" x2="140" y2="169.3" class="d"/><circle cx="140" cy="169.3" r="5" class="fd"/><text x="70" y="190" class="s td">(−1, −√3)</text>
+              <line x1="180" y1="100" x2="220" y2="30.7" class="dsh"/><circle cx="220" cy="30.7" r="4" class="fb"/><text x="226" y="28" class="s tb">60° 방향의 점 (1, √3)</text>
+              <path d="M205 100 A25 25 0 1 0 167.5 121.7" class="d"/><text x="200" y="76" class="s td">θ = 240°</text>
+              <text x="320" y="70" class="s">r = √(x² + y²) = 2</text>
+              <text x="320" y="92" class="s">tan θ = y/x = √3</text>
+              <text x="320" y="114" class="s">θ = 60° 또는 240°</text>
+              <text x="320" y="136" class="s td">제3사분면이므로 240°</text>
+            </svg>
+            <figcaption>그림 1. \(\tan\theta\)가 같은 각은 두 개이므로, 점이 있는 사분면을 보고 각을 골라야 한다. 각은 동쪽에서 시계 반대 방향으로 잰다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>일반각과 호도법, 삼각함수의 뜻, 원의 방정식, 역삼각함수의 치역.</div>
+
+          <h3><span class="no">2.1.1</span>거리와 방향으로 적는 좌표</h3>
+          <p>평면 위의 한 점 \(O\)를 극으로, \(O\)에서 오른쪽으로 뻗은 반직선을 시초선으로 정하자. 점 \(P\)의 위치는 \(O\)에서 \(P\)까지의 거리 \(r\)과, 시초선에서 \(OP\)까지 시계 반대 방향으로 잰 각 \(\theta\)로 나타낼 수 있다. 이 \((r, \theta)\)가 극좌표이다. 레이더나 소리의 방향처럼 한 점을 중심으로 퍼져 나가는 현상은 극좌표로 쓰면 간단해진다. 예를 들어 원점을 중심으로 하는 반지름 2인 원은 직교좌표로 \(x^2 + y^2 = 4\)이지만 극좌표로는 \(r = 2\) 한 줄이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.1.1 <span class="nm">극좌표와 직교좌표</span></span>
+            <p>극좌표 \((r, \theta)\)인 점의 직교좌표는 \(x = r\cos\theta\), \(y = r\sin\theta\)이다. 거꾸로 \[r = \sqrt{x^2 + y^2},\qquad \cos\theta = \frac{x}{r},\ \ \sin\theta = \frac{y}{r}\]이다. \(\tan\theta = y/x\)만으로는 \(\theta\)와 \(\theta + \pi\)를 구별할 수 없으므로, 점이 있는 사분면으로 각을 정한다.</p>
+          </div>
+          <p>극좌표는 한 점을 나타내는 방법이 여러 가지이다. \((2, 60°)\)과 \((2, 420°)\)는 같은 점이고, \(r\)이 음수인 것을 허용하면 \((-2, 240°)\)도 \(240°\) 방향의 반대쪽으로 2만큼 간 같은 점이다. 그래서 극좌표로 나타낸 두 식을 비교하거나 교점을 구할 때는 같은 점이 다른 좌표로 나타날 수 있음을 염두에 두어야 한다. 반면 직교좌표는 한 점에 한 쌍의 좌표만 대응한다.<sup class="fn"><a href="#fn-adcalc-polar-1">1</a></sup></p>
+
+          <h3><span class="no">2.1.2</span>계산기의 각이 틀리는 까닭</h3>
+          <p>\(\tan^{-1}\)은 \(-90°\)부터 \(90°\) 사이의 각만 돌려주므로, \(x &lt; 0\)인 제2, 제3사분면의 점에서는 실제 각과 \(180°\)만큼 어긋난다. \((-1, -\sqrt3)\)은 \(y/x = \sqrt3\)이어서 \(\tan^{-1}\)이 60°를 주지만, 60° 방향의 점은 \((1, \sqrt3)\)으로 정반대에 있다. 실제 각은 \(\cos\theta = -1/2\), \(\sin\theta = -\sqrt3/2\)을 함께 만족하는 \(240°\)이다. 그래서 프로그래밍 언어에는 \(x\)와 \(y\)의 부호를 함께 보고 각을 돌려주는 함수가 따로 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="여러 점의 극좌표">
+              <g class="s">
+                <text x="20" y="22">직교좌표</text><text x="140" y="22">r</text><text x="220" y="22">tan⁻¹(y/x)</text><text x="340" y="22">실제 θ</text><text x="430" y="22">사분면</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(1, √3)</text><text x="140" y="52">2</text><text x="220" y="52">60°</text><text x="340" y="52">60°</text><text x="430" y="52">1</text>
+                <text x="20" y="74">(−√3, 1)</text><text x="140" y="74">2</text><text x="220" y="74">−30°</text><text x="340" y="74" class="td">150°</text><text x="430" y="74">2</text>
+                <text x="20" y="96">(−1, −√3)</text><text x="140" y="96">2</text><text x="220" y="96">60°</text><text x="340" y="96" class="td">240°</text><text x="430" y="96">3</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(x &lt; 0\)인 점에서는 \(\tan^{-1}(y/x)\)에 \(180°\)를 더해야 실제 각이 된다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.1.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.1.2</span>
+            <p>처음 질문의 비행기 위치 \((-1, -\sqrt3)\)을 극좌표로 나타내어라. 또 직교좌표의 방정식 \(x^2 + y^2 = 4x\)를 극방정식으로 바꾸고, 어떤 도형인지 말하여라.</p>
+          </div>
+          <p>\(r = \sqrt{1 + 3} = 2\)이고, \(\cos\theta = -1/2\), \(\sin\theta = -\sqrt3/2\)이므로 \(\theta = 240° = 4\pi/3\)이다. 그래서 비행기는 레이더에서 2 km 떨어진 \(240°\) 방향에 있다. 계산기의 60°를 그대로 쓰면 정반대 방향을 가리키게 된다.</p>
+          <p>\(x^2 + y^2 = r^2\), \(x = r\cos\theta\)를 넣으면 \(r^2 = 4r\cos\theta\)이고, \(r \ne 0\)이면 \(r = 4\cos\theta\)이다. \(r = 0\)인 극도 \(\theta = \pi/2\)일 때 이 식에 포함된다. 직교좌표로 정리하면 \((x - 2)^2 + y^2 = 4\)로, 중심 \((2, 0)\), 반지름 2인 원이다. 그래서 극을 지나는 원은 극방정식이 \(r = 4\cos\theta\)처럼 간단해진다. 즉 극좌표는 거리와 방향으로 점을 나타내어 한 점을 중심으로 한 현상을 간단히 쓰게 해 주지만, 각을 구할 때는 사분면을 확인해야 한다.</p>
+          <p>아래 탐구 카드에서 레이더 화면의 점을 극좌표와 직교좌표로 바꾸어 보고, \(\tan^{-1}(y/x)\)로 각을 구한 풀이가 언제 틀리는지 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-polar-1">극좌표는 17세기에 뉴턴과 야코프 베르누이가 나선과 같은 곡선을 다루며 썼다. 오늘날 항공 관제와 선박 항해에서도 레이더의 거리와 방위각을 그대로 써서 위치를 알린다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>극좌표 \((r, \theta)\)는 극에서의 거리와 시초선에서 잰 각으로 점을 나타내며, \(x = r\cos\theta\), \(y = r\sin\theta\), \(r = \sqrt{x^2 + y^2}\)로 직교좌표와 바뀐다. \(\tan\theta = y/x\)만으로는 각이 두 개이므로 사분면으로 골라야 하고, 한 점이 여러 극좌표로 나타날 수 있다. 처음 질문의 비행기는 60°가 아니라 2 km 떨어진 \(240°\) 방향에 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-1.html#card-alg-radian"><small class="mono">대수 2.1</small>각의 크기를 길이의 비로 잴 수 있을까?</a><a href="../../c/alg/2-2.html#card-alg-trig-def"><small class="mono">대수 2.2</small>150circ나 -60circ의 사인은 무엇일까?</a><a href="../../c/alg/2-2.html#text-alg-trig-func"><small class="mono">대수 2.2</small>삼각함수와 그래프</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
+
       <article class="card" id="card-adcalc-radar">
         <header class="card-head">
-          <span class="no">2.1.1</span><h2>레이더는 왜 \((x, y)\) 대신 거리와 방향으로 위치를 알려 줄까?</h2><span class="kind">극좌표 · 도전</span>
+          <span class="no">탐구 1</span><h2>레이더는 왜 \((x, y)\) 대신 거리와 방향으로 위치를 알려 줄까?</h2><span class="kind">극좌표 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -68,34 +132,34 @@
                 <div><dt>누른 곳과의 거리</dt><dd class="n-e">—</dd></div>
                 <div><dt>직교좌표 \((x, y)\)</dt><dd class="n-xy">?</dd></div>
               </dl>
-              <p class="fig-note">동심원 한 칸은 1, 방사선 한 칸은 \(30^\circ = \frac{\pi}{6}\)입니다. 목표에서 0.3 안쪽을 누르면 맞힌 것으로 칩니다.</p>
+              <p class="fig-note">동심원 한 칸은 1, 방사선 한 칸은 \(30^\circ = \frac{\pi}{6}\)이다. 목표에서 0.3 안쪽을 누르면 맞힌 것으로 친다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>레이더는 안테나를 돌리며 전파를 쏘고, 되돌아오는 데 걸린 시간으로 거리를 잽니다. 그러니 레이더가 바로 아는 것은 "어느 방향으로 얼마나 멀리"입니다. 이 두 수로 평면의 점을 나타내는 방법이 있을까요?</li>
-            <li><span class="tag">복원</span>호도법에서 \(\pi = 180^\circ\)입니다. 반지름 \(r\)인 원 위에서 각 \(\theta\)인 점의 좌표는 \((r\cos\theta, r\sin\theta)\)입니다.</li>
-            <li><span class="tag">설명</span>원점 O(<em>극</em>)와 O에서 오른쪽으로 그은 반직선(<em>시초선</em>)을 정하면, 점 P는 \(r = \overline{\mathrm{OP}}\)와 시초선에서 OP까지 잰 각 \(\theta\)로 정해집니다. \((r, \theta)\)를 점 P의 <em>극좌표</em>라고 합니다. 직교좌표와는 \[x = r\cos\theta,\quad y = r\sin\theta\]이고, 거꾸로 \(r^2 = x^2 + y^2\), \(\tan\theta = \frac{y}{x}\ (x \ne 0)\)입니다. 약속에 따라 \(r &lt; 0\)이면 \(\theta\) 방향의 <b>반대쪽</b>으로 \(|r|\)만큼 간 점을 뜻합니다.</li>
-            <li><span class="tag">연결</span>직교좌표에서는 한 점의 좌표가 하나뿐이지만, 극좌표에서는 \((r, \theta)\), \((r, \theta + 2\pi)\), \((-r, \theta + \pi)\)가 모두 같은 점입니다. 원, 장미, 나선처럼 극을 중심으로 도는 곡선은 극좌표로 쓰면 식이 아주 간단해집니다.</li>
-            <li><span class="tag">적용</span>여섯 목표를 차례로 눌러 보세요. 뒤쪽 목표에는 음의 \(r\)이나 \(2\pi\)보다 큰 각이 나옵니다. 맞히면 직교좌표가 나타납니다. 직교좌표로 바꾼 값이 그림의 위치와 맞나요?</li>
-            <li class="warn"><span class="tag">판단</span>극 O 자체는 \(r = 0\)이기만 하면 \(\theta\)가 무엇이든 같은 점입니다. 그래서 극에서는 각이 정해지지 않습니다. 레이더 화면의 가운데에서 방향을 말할 수 없는 것과 같습니다.</li>
+            <li><span class="tag">질문</span>레이더는 안테나를 돌리며 전파를 쏘고, 되돌아오는 데 걸린 시간으로 거리를 잰다. 그러니 레이더가 바로 아는 것은 "어느 방향으로 얼마나 멀리"이다. 이 두 수로 평면의 점을 나타내는 방법이 있을까?</li>
+            <li><span class="tag">복원</span>호도법에서 \(\pi = 180^\circ\)이다. 반지름 \(r\)인 원 위에서 각 \(\theta\)인 점의 좌표는 \((r\cos\theta, r\sin\theta)\)이다.</li>
+            <li><span class="tag">설명</span>원점 O(<em>극</em>)와 O에서 오른쪽으로 그은 반직선(<em>시초선</em>)을 정하면, 점 P는 \(r = \overline{\mathrm{OP}}\)와 시초선에서 OP까지 잰 각 \(\theta\)로 정해진다. \((r, \theta)\)를 점 P의 <em>극좌표</em>라고 한다. 직교좌표와는 \[x = r\cos\theta,\quad y = r\sin\theta\]이고, 거꾸로 \(r^2 = x^2 + y^2\), \(\tan\theta = \frac{y}{x}\ (x \ne 0)\)이다. 약속에 따라 \(r &lt; 0\)이면 \(\theta\) 방향의 반대쪽으로 \(|r|\)만큼 간 점을 뜻한다.</li>
+            <li><span class="tag">연결</span>직교좌표에서는 한 점의 좌표가 하나뿐이지만, 극좌표에서는 \((r, \theta)\), \((r, \theta + 2\pi)\), \((-r, \theta + \pi)\)가 모두 같은 점이다. 원, 장미, 나선처럼 극을 중심으로 도는 곡선은 극좌표로 쓰면 식이 아주 간단해진다.</li>
+            <li><span class="tag">적용</span>여섯 목표를 차례로 눌러 보자. 뒤쪽 목표에는 음의 \(r\)이나 \(2\pi\)보다 큰 각이 나온다. 맞히면 직교좌표가 나타난다. 직교좌표로 바꾼 값이 그림의 위치와 맞는가?</li>
+            <li class="warn"><span class="tag">판단</span>극 O 자체는 \(r = 0\)이기만 하면 \(\theta\)가 무엇이든 같은 점이다. 그래서 극에서는 각이 정해지지 않는다. 레이더 화면의 가운데에서 방향을 말할 수 없는 것과 같다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">극좌표가 \(\left(-2, \frac{\pi}{3}\right)\)인 점의 직교좌표는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((-1, -\sqrt{3})\)<span class="why"><b>맞습니다.</b> \(x = -2\cos\frac{\pi}{3} = -1\), \(y = -2\sin\frac{\pi}{3} = -\sqrt{3}\)입니다. \(\frac{\pi}{3}\) 방향의 반대쪽 점입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, \sqrt{3})\)<span class="why"><b>\(r\)의 부호를 무시했습니다.</b> 그것은 \(\left(2, \frac{\pi}{3}\right)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((-\sqrt{3}, -1)\)<span class="why"><b>사인과 코사인을 바꾸었습니다.</b> \(x\)에 코사인, \(y\)에 사인입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>음의 거리는 없다고 보았습니다.</b> 극좌표에서는 음의 \(r\)을 반대 방향으로 약속합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((-1, -\sqrt{3})\)<span class="why"><b>맞다.</b> \(x = -2\cos\frac{\pi}{3} = -1\), \(y = -2\sin\frac{\pi}{3} = -\sqrt{3}\)이다. \(\frac{\pi}{3}\) 방향의 반대쪽 점이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, \sqrt{3})\)<span class="why"><b>\(r\)의 부호를 무시했다.</b> 그것은 \(\left(2, \frac{\pi}{3}\right)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((-\sqrt{3}, -1)\)<span class="why"><b>사인과 코사인을 바꾸었다.</b> \(x\)에 코사인, \(y\)에 사인이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>존재하지 않는다<span class="why"><b>음의 거리는 없다고 보았다.</b> 극좌표에서는 음의 \(r\)을 반대 방향으로 약속한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-1.html#card-alg-radian"><small class="mono">대수 2.1</small>각의 크기를 길이의 비로 잴 수 있을까?</a><a href="../../c/alg/2-2.html#card-alg-trig-def"><small class="mono">대수 2.2</small>150circ나 -60circ의 사인은 무엇일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-1.html#card-alg-radian"><small class="mono">대수 2.1</small>각의 크기를 길이의 비로 잴 수 있을까?</a><a href="../../c/alg/2-2.html#card-alg-trig-def"><small class="mono">대수 2.2</small>150circ나 -60circ의 사인은 무엇일까?</a><a href="../../c/alg/2-2.html#text-alg-trig-func"><small class="mono">대수 2.2</small>삼각함수와 그래프</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
 
       <article class="card" id="card-adcalc-polar-spot">
         <header class="card-head">
-          <span class="no">2.1.2</span><h2>\(\theta = \tan^{-1}\frac{y}{x}\)로 각을 구한 이 풀이, 맞을까?</h2><span class="kind">극좌표와 직교좌표 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>\(\theta = \tan^{-1}\frac{y}{x}\)로 각을 구한 이 풀이, 맞을까?</h2><span class="kind">극좌표와 직교좌표 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -143,39 +207,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>직교좌표를 극좌표로 바꿀 때 \(r = \sqrt{x^2 + y^2}\), \(\theta = \tan^{-1}\frac{y}{x}\)로 계산하면 될까요? 계산기도 이렇게 하라고 알려 주는 것 같습니다.</li>
-            <li><span class="tag">복원</span>\(x = r\cos\theta\), \(y = r\sin\theta\), \(r^2 = x^2 + y^2\). \(\tan\theta\)는 주기가 \(\pi\)인 함수라, 같은 \(\tan\) 값을 갖는 각이 \(0 \le \theta &lt; 2\pi\)에 두 개 있습니다.</li>
-            <li><span class="tag">설명</span>\(\tan\theta = \frac{y}{x}\)는 각의 후보를 두 개로 좁혀 줄 뿐입니다. 점이 몇 사분면에 있는지 보고 하나를 골라야 합니다(풀이 1). \(x = 0\)이면 이 식을 쓸 수 없지만 각은 \(\frac{\pi}{2}\)나 \(\frac{3\pi}{2}\)로 정해집니다(풀이 2). 극방정식을 직교좌표로 바꿀 때는 \(\cos\theta = \frac{x}{r}\)이므로 양변에 \(r\)을 곱해 \(r\cos\theta\) 꼴을 만드는 것이 요령입니다(풀이 4).</li>
-            <li><span class="tag">연결</span>프로그래밍 언어의 \(\operatorname{atan2}(y, x)\) 함수는 \(x\), \(y\)의 부호를 함께 보고 사분면까지 맞는 각을 돌려줍니다. \(\tan^{-1}\frac{y}{x}\)가 사분면을 잃어버리는 문제를 해결하려고 만든 함수입니다.</li>
-            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾으세요. 풀이 1의 답은 원래 점과 어떤 관계인가요? 풀이 3에서 음의 \(r\)이 나왔는데도 맞는 까닭은 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>극방정식 양변에 \(r\)을 곱하면 극(\(r = 0\))이 새 해로 끼어들 수 있습니다. \(r = 2\cos\theta\)는 이미 \(\theta = \frac{\pi}{2}\)에서 극을 지나므로 괜찮지만, 다른 식에서는 극이 원래 곡선 위에 있는지 따로 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>직교좌표를 극좌표로 바꿀 때 \(r = \sqrt{x^2 + y^2}\), \(\theta = \tan^{-1}\frac{y}{x}\)로 계산하면 될까? 계산기도 이렇게 하라고 알려 주는 것 같다.</li>
+            <li><span class="tag">복원</span>\(x = r\cos\theta\), \(y = r\sin\theta\), \(r^2 = x^2 + y^2\). \(\tan\theta\)는 주기가 \(\pi\)인 함수라, 같은 \(\tan\) 값을 갖는 각이 \(0 \le \theta &lt; 2\pi\)에 두 개 있다.</li>
+            <li><span class="tag">설명</span>\(\tan\theta = \frac{y}{x}\)는 각의 후보를 두 개로 좁혀 줄 뿐이다. 점이 몇 사분면에 있는지 보고 하나를 골라야 한다(풀이 1). \(x = 0\)이면 이 식을 쓸 수 없지만 각은 \(\frac{\pi}{2}\)나 \(\frac{3\pi}{2}\)로 정해진다(풀이 2). 극방정식을 직교좌표로 바꿀 때는 \(\cos\theta = \frac{x}{r}\)이므로 양변에 \(r\)을 곱해 \(r\cos\theta\) 꼴을 만드는 것이 요령이다(풀이 4).</li>
+            <li><span class="tag">연결</span>프로그래밍 언어의 \(\operatorname{atan2}(y, x)\) 함수는 \(x\), \(y\)의 부호를 함께 보고 사분면까지 맞는 각을 돌려준다. \(\tan^{-1}\frac{y}{x}\)가 사분면을 잃어버리는 문제를 해결하려고 만든 함수이다.</li>
+            <li><span class="tag">적용</span>네 풀이에서 처음 틀린 줄을 찾자. 풀이 1의 답은 원래 점과 어떤 관계인가? 풀이 3에서 음의 \(r\)이 나왔는데도 맞는 까닭은 무엇인가?</li>
+            <li class="warn"><span class="tag">판단</span>극방정식 양변에 \(r\)을 곱하면 극(\(r = 0\))이 새 해로 끼어들 수 있다. \(r = 2\cos\theta\)는 이미 \(\theta = \frac{\pi}{2}\)에서 극을 지나므로 괜찮지만, 다른 식에서는 극이 원래 곡선 위에 있는지 따로 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">점 \((-\sqrt{3}, 1)\)의 극좌표 \((r, \theta)\)는? (\(r &gt; 0\), \(0 \le \theta &lt; 2\pi\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\left(2, \frac{5\pi}{6}\right)\)<span class="why"><b>맞습니다.</b> 제2사분면의 점이고 \(\tan\theta = -\frac{1}{\sqrt{3}}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\left(2, -\frac{\pi}{6}\right)\)<span class="why"><b>\(\tan^{-1}\)의 값을 그대로 썼습니다.</b> 이 각은 범위를 벗어나고, 제4사분면을 가리킵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left(2, \frac{11\pi}{6}\right)\)<span class="why"><b>범위는 맞췄지만 사분면이 틀렸습니다.</b> 이것은 \((\sqrt{3}, -1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\left(4, \frac{5\pi}{6}\right)\)<span class="why"><b>제곱근을 취하지 않았습니다.</b> \(r^2 = 4\)이므로 \(r = 2\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\left(2, \frac{5\pi}{6}\right)\)<span class="why"><b>맞다.</b> 제2사분면의 점이고 \(\tan\theta = -\frac{1}{\sqrt{3}}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\left(2, -\frac{\pi}{6}\right)\)<span class="why"><b>\(\tan^{-1}\)의 값을 그대로 썼다.</b> 이 각은 범위를 벗어나고, 제4사분면을 가리킨다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left(2, \frac{11\pi}{6}\right)\)<span class="why"><b>범위는 맞췄지만 사분면이 틀렸다.</b> 이것은 \((\sqrt{3}, -1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\left(4, \frac{5\pi}{6}\right)\)<span class="why"><b>제곱근을 취하지 않았다.</b> \(r^2 = 4\)이므로 \(r = 2\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-1.html#card-alg-radian"><small class="mono">대수 2.1</small>각의 크기를 길이의 비로 잴 수 있을까?</a><a href="../../c/alg/2-2.html#card-alg-trig-def"><small class="mono">대수 2.2</small>150circ나 -60circ의 사인은 무엇일까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-1.html#card-alg-radian"><small class="mono">대수 2.1</small>각의 크기를 길이의 비로 잴 수 있을까?</a><a href="../../c/alg/2-2.html#card-alg-trig-def"><small class="mono">대수 2.2</small>150circ나 -60circ의 사인은 무엇일까?</a><a href="../../c/alg/2-2.html#text-alg-trig-func"><small class="mono">대수 2.2</small>삼각함수와 그래프</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/2-2.html#card-adcalc-polar-trace"><small class="mono">고급 미적분 2.2</small>r = f(θ)의 그래프를 극좌표로 옮기면 어떤 모양이 될까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-rose-predict"><small class="mono">고급 미적분 2.2</small>r = cos kθ의 꽃잎은 몇 장일까?</a><a href="../../c/adcalc/2-2.html#card-adcalc-mic-pattern"><small class="mono">고급 미적분 2.2</small>무대용 마이크는 왜 뒤쪽 소리를 잘 받지 않을까?</a><a href="../../c/adcalc/2-2.html#text-adcalc-polar-graph"><small class="mono">고급 미적분 2.2</small>극곡선의 대칭성과 그래프</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-2-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=2-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

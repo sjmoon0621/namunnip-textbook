@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>대우와 귀류법 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="대우를 이용한 증명법과 귀류법. n²이 m의 배수이면 n도 m의 배수임을 넓이 모형으로 증명하고, √2가 무리수임을 귀류법으로 따라가는 카드와 유클리드의 소수 무한 증명 읽기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm2-contra-square canvas { width: 100%; aspect-ratio: 4 / 3; }
@@ -49,19 +54,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm2-contra-square"><span class="mono">2.7.1</span>대우를 이용한 증명</a></li>
-        <li><a href="#card-cm2-sqrt2-absurd"><span class="mono">2.7.2</span>귀류법: √2는 무리수</a></li>
-        <li><a href="#text-cm2-proof-ways"><span class="mono">2.7.3</span>세 가지 증명법과 소수의 무한성</a></li>
+        <li><a href="#text-cm2-proof"><span class="mono">본문</span>대우와 귀류법</a></li>
+        <li><a href="#card-cm2-contra-square"><span class="mono">탐구 1</span>대우를 이용한 증명</a></li>
+        <li><a href="#card-cm2-sqrt2-absurd"><span class="mono">탐구 2</span>귀류법: √2는 무리수</a></li>
+        <li><a href="#text-cm2-proof-ways"><span class="mono">읽기 3</span>세 가지 증명법과 소수의 무한성</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm2-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">2문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm2&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm2-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">2문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm2-2-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm2-proof" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>대우와 귀류법</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\sqrt{2}\)가 분수로 나타낼 수 없는 수라는 것을 어떻게 보일까? 분수를 하나씩 대입해 보는 방법으로는 끝이 없다. '그런 분수는 없다'처럼 없다는 것을 증명할 때는 어디서부터 출발해야 할까?</p>
+          <figure class="q-fig" data-q="cm2-sqrt2">
+            <svg viewBox="0 0 520 200" role="img" aria-label="분수 p/q를 제곱해 2에 가까워지는지 보는 그림, 정확히 2가 되는 분수는 없다"></svg>
+            <div class="q-ctl"><label>분모 \(q\) = <input type="range" data-k="q" min="1" max="40" step="1" value="12"><output data-k="q"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 분모를 키우면 \(\left(\tfrac{p}{q}\right)^2\)이 2에 얼마든지 가까워지지만, 정확히 2가 되는 분수는 나오지 않는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>명제와 대우(<a href="2-5.html">역과 대우</a>), 짝수와 홀수, 기약분수, 중학교의 유리수와 무리수.</div>
+
+          <h3><span class="no">2.7.1</span>대우를 이용한 증명</h3>
+          <p>명제 '자연수 \(n\)에 대하여 \(n^2\)이 짝수이면 \(n\)은 짝수이다'를 직접 증명하려 하면 막힌다. \(n^2 = 2k\)에서 \(n\)에 대해 무엇을 말할지 마땅치 않기 때문이다. 그런데 대우 '\(n\)이 홀수이면 \(n^2\)은 홀수이다'는 쉽다. \(n = 2k - 1\)이면 \(n^2 = 2(2k^2 - 2k) + 1\)이므로 홀수이다.</p>
+          <p>명제와 대우는 참, 거짓이 같으므로 대우가 참이면 원래 명제도 참이다. 이렇게 대우를 증명해서 원래 명제를 증명하는 방법을 대우를 이용한 증명법이라 한다. 결론의 부정에서 출발하면 손에 쥔 정보가 더 구체적일 때 이 방법이 쓸모 있다.</p>
+
+          <h3><span class="no">2.7.2</span>귀류법</h3>
+          <p>처음 질문처럼 '어떤 것이 없다'를 보일 때는 다른 길을 쓴다. 일단 그런 것이 있다고 가정하고 논리를 따라가다 모순에 부딪히면, 가정이 틀렸다고 결론 내리는 것이다. 이 방법을 <em>귀류법</em>이라 한다.</p>
+          <div class="tb-env"><span class="lb">방법 2.7.1 <span class="nm">귀류법</span></span>
+            <p>명제의 결론을 부정했다고 가정한다. 이 가정과 이미 참으로 알려진 사실에서 모순이 생김을 보인다. 그러면 결론을 부정한 가정이 틀렸으므로 원래 결론이 참이다.</p>
+          </div>
+          <p>\(\sqrt{2}\)가 유리수라고 가정하자. 그러면 서로소인 두 자연수 \(p\), \(q\)로 \(\sqrt{2} = \dfrac{p}{q}\)라 쓸 수 있다. 양변을 제곱하면 \(p^2 = 2q^2\)이므로 \(p^2\)은 짝수이고, 1에서 증명한 명제에 따라 \(p\)도 짝수이다.</p>
+          <p>\(p = 2m\)으로 두고 대입하면 \(4m^2 = 2q^2\), 곧 \(q^2 = 2m^2\)이다. 그러면 같은 이유로 \(q\)도 짝수이다. 그런데 \(p\)와 \(q\)가 모두 짝수이면 2라는 공약수가 있어서 서로소라는 가정과 어긋난다. 따라서 처음 가정이 틀렸고, \(\sqrt{2}\)는 유리수가 아니다.<span class="qed"></span></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="귀류법의 흐름: 결론의 부정을 가정, 논리 전개, 모순, 결론">
+              <rect x="10" y="60" width="110" height="60" class="ld"/><text x="65" y="86" text-anchor="middle">√2 = p/q</text><text x="65" y="106" text-anchor="middle" class="s">(서로소) 가정</text>
+              <rect x="140" y="60" width="110" height="60" class="lk"/><text x="195" y="86" text-anchor="middle">p² = 2q²</text><text x="195" y="106" text-anchor="middle" class="s">p는 짝수</text>
+              <rect x="270" y="60" width="110" height="60" class="lk"/><text x="325" y="86" text-anchor="middle">q² = 2m²</text><text x="325" y="106" text-anchor="middle" class="s">q도 짝수</text>
+              <rect x="400" y="60" width="110" height="60" class="lc"/><text x="455" y="86" text-anchor="middle">모순</text><text x="455" y="106" text-anchor="middle" class="s">서로소가 아니다</text>
+              <path d="M122 90 L138 90" class="k"/><path d="M252 90 L268 90" class="k"/><path d="M382 90 L398 90" class="k"/>
+              <text x="260" y="170" text-anchor="middle">따라서 가정이 거짓, √2는 무리수</text>
+            </svg>
+            <figcaption>그림 2. 귀류법은 결론을 부정한 가정에서 출발해 모순에 이르면 가정을 버린다.</figcaption>
+          </figure>
+          <p>그림 1에서 분모를 키우며 확인해 보자. \(\tfrac{17}{12}\), \(\tfrac{41}{29}\)처럼 제곱이 2에 아주 가까운 분수는 계속 나오지만, 정확히 2가 되지는 않는다.<sup class="fn"><a href="#fn-cm2-proof-1">1</a></sup> 그림은 짐작을 줄 뿐이고, 모든 분수에 대해 확실히 말해 주는 것은 귀류법의 논증이다.</p>
+
+          <h3><span class="no">2.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.7.2</span>
+            <p>자연수 \(a\), \(b\)에 대하여 '\(ab\)가 홀수이면 \(a\)와 \(b\)는 모두 홀수이다'를 대우를 이용하여 증명하여라.</p>
+          </div>
+          <p>결론 '\(a\)와 \(b\)는 모두 홀수이다'의 부정은 '\(a\)와 \(b\) 가운데 적어도 하나는 짝수이다'이다. 따라서 대우는 '\(a\)와 \(b\) 가운데 적어도 하나가 짝수이면 \(ab\)는 짝수이다'이다.</p>
+          <p>\(a\)가 짝수라 하자. \(a = 2k\)이면 \(ab = 2(kb)\)이므로 \(ab\)는 짝수이다. \(b\)가 짝수인 경우도 같다. 그러면 대우가 참이므로 원래 명제도 참이다.<span class="qed"></span></p>
+          <p>여기서 '모두'의 부정이 '적어도 하나는 아니다'가 된다는 데 주의하자. '모두 짝수'로 잘못 부정하면 \(a = 2\), \(b = 3\) 같은 경우가 빠져 증명이 불완전해진다. 아래 탐구 카드에서 귀류법의 각 단계를 직접 따라가 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm2-proof-1">\(17^2 = 289\), \(2 \times 12^2 = 288\)이므로 \(\left(\tfrac{17}{12}\right)^2\)은 2보다 \(\tfrac{1}{144}\) 크다. \(41^2 = 1681\), \(2 \times 29^2 = 1682\)이므로 \(\left(\tfrac{41}{29}\right)^2\)은 2보다 \(\tfrac{1}{841}\) 작다. 오차는 줄지만 0이 되지는 않는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>결론의 부정에서 출발하는 쪽이 쉬우면 대우를 증명하고, '없다'를 보일 때는 있다고 가정해 모순을 끌어내는 귀류법을 쓴다. 그래서 처음 질문의 \(\sqrt{2}\)는 '분수 \(\tfrac{p}{q}\)로 쓸 수 있다'고 가정하면 \(p\), \(q\)가 모두 짝수가 되어 서로소라는 가정과 부딪치므로, 분수로 나타낼 수 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-5.html#text-cm2-converse"><small class="mono">공통수학2 2.5</small>역과 대우</a></div></nav>
+
       <article class="card" id="card-cm2-contra-square">
         <header class="card-head">
-          <span class="no">2.7.1</span><h2>\(n^2\)이 짝수이면 \(n\)도 짝수임을 어떻게 증명할까?</h2><span class="kind">대우를 이용한 증명 · 넓이 모형</span>
+          <span class="no">탐구 1</span><h2>\(n^2\)이 짝수이면 \(n\)도 짝수임을 어떻게 증명할까?</h2><span class="kind">대우를 이용한 증명 · 넓이 모형</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -88,30 +147,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>"자연수 \(n\)에 대하여 \(n^2\)이 짝수이면 \(n\)은 짝수이다"를 증명하고 싶습니다. \(n^2 = 2k\)로 놓으면 \(n = \sqrt{2k}\)가 되어 더 나아갈 수 없습니다. 어떻게 해야 할까요?</li>
-            <li><span class="tag">복원</span>명제와 그 대우는 참·거짓이 같습니다. 자연수 \(n\)을 \(m\)으로 나누면 \(n = mk + r (0 \le r &lt; m)\)로 쓸 수 있습니다.</li>
-            <li><span class="tag">설명</span>원래 명제 대신 대우 "\(n\)이 홀수이면 \(n^2\)은 홀수이다"를 증명합니다. \(n = 2k + 1\)이면 \(n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1\)이므로 홀수입니다. 대우가 참이므로 원래 명제도 참입니다. 이것이 <em>대우를 이용한 증명법</em>입니다. 그림에서 한 변이 \(n = mk + r\)인 정사각형은 \((mk)^2\) 조각, \(mk \times r\) 띠 두 개, \(r \times r\) 구석으로 나뉩니다. 앞의 세 조각은 넓이가 모두 \(m\)의 배수이므로, \(n^2\)을 \(m\)으로 나눈 나머지는 구석 \(r^2\)이 정합니다.</li>
-            <li><span class="tag">연결</span>이 결과는 바로 다음 카드의 귀류법에서 "\(p^2\)이 짝수이므로 \(p\)도 짝수"라는 단계로 쓰입니다. 결론이 '~가 아니다' 꼴이거나 가정에서 결론으로 가는 길이 막힐 때 대우를 떠올리면 좋습니다.</li>
-            <li><span class="tag">적용</span>\(m = 2\)에서 \(n\)을 바꾸며 구석 조각을 보세요. \(n\)이 홀수이면 구석은 늘 몇 칸인가요? \(m = 3\)으로 바꾸어 \(r = 1, 2\)일 때 구석의 넓이를 3으로 나눈 나머지를 확인하세요. \(m = 4\)에서 \(n = 2, 6, 10\)은 무엇을 알려 주나요? 각 경우에 '증명 다음 단계'를 끝까지 눌러 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>대우를 이용한 증명이 언제나 통하는 것은 아닙니다. 명제가 거짓이면 대우도 거짓이어서 증명이 막힙니다. \(m = 4\)에서 \(n = 2\)이면 \(n^2 = 4\)는 4의 배수이지만 2는 4의 배수가 아니므로, "\(n^2\)이 4의 배수이면 \(n\)은 4의 배수"는 거짓입니다. 증명 단계에서 막히면 반례를 찾아보세요.</li>
+            <li><span class="tag">질문</span>"자연수 \(n\)에 대하여 \(n^2\)이 짝수이면 \(n\)은 짝수이다"를 증명하고 싶다. 그런데 \(n^2 = 2k\)로 놓으면 \(n = \sqrt{2k}\)가 되어 더 나아갈 수 없다. 어떻게 해야 할까?</li>
+            <li><span class="tag">복원</span>명제와 그 대우는 참, 거짓이 같다. 또 자연수 \(n\)을 \(m\)으로 나누면 \(n = mk + r (0 \le r &lt; m)\)로 쓸 수 있다.</li>
+            <li><span class="tag">설명</span>그래서 원래 명제 대신 대우 "\(n\)이 홀수이면 \(n^2\)은 홀수이다"를 증명한다. \(n = 2k + 1\)이면 \(n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1\)이므로 홀수이다. 대우가 참이므로 원래 명제도 참이고, 이것이 <em>대우를 이용한 증명법</em>이다. 그림에서 한 변이 \(n = mk + r\)인 정사각형은 \((mk)^2\) 조각, \(mk \times r\) 띠 두 개, \(r \times r\) 구석으로 나뉜다. 앞의 세 조각은 넓이가 모두 \(m\)의 배수이므로, \(n^2\)을 \(m\)으로 나눈 나머지는 구석 \(r^2\)이 정한다.</li>
+            <li><span class="tag">연결</span>이 결과는 바로 다음 카드의 귀류법에서 "\(p^2\)이 짝수이므로 \(p\)도 짝수"라는 단계로 쓰인다. 결론이 '~가 아니다' 꼴이거나 가정에서 결론으로 가는 길이 막힐 때 대우를 떠올리면 좋다.</li>
+            <li><span class="tag">적용</span>\(m = 2\)에서 \(n\)을 바꾸며 구석 조각을 보면, \(n\)이 홀수일 때 구석은 늘 1칸이다. \(m = 3\)으로 바꾸어 \(r = 1, 2\)일 때 구석의 넓이를 3으로 나눈 나머지를 확인해 보자. \(m = 4\)에서는 \(n = 2, 6, 10\)이 무엇을 알려 주는지 보고, 각 경우에 '증명 다음 단계'를 끝까지 눌러 보자.</li>
+            <li class="warn"><span class="tag">판단</span>대우를 이용한 증명이 언제나 통하는 것은 아니다. 명제가 거짓이면 대우도 거짓이어서 증명이 막힌다. \(m = 4\)에서 \(n = 2\)이면 \(n^2 = 4\)는 4의 배수이지만 2는 4의 배수가 아니므로, "\(n^2\)이 4의 배수이면 \(n\)은 4의 배수"는 거짓이다. 그래서 증명 단계에서 막히면 반례를 찾아보는 것이 좋다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">자연수 \(n\)에 대하여 '\(n^2\)이 5의 배수이면 \(n\)은 5의 배수이다'를 대우를 이용해 증명할 때 확인해야 하는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(n = 5k\)이면 \(n^2 = 25k^2\)이 5의 배수인 것<span class="why"><b>역을 증명했습니다.</b> 이것은 '\(n\)이 5의 배수이면 \(n^2\)이 5의 배수'이고, 원래 명제와 참·거짓이 같지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(n = 5k + r (r = 1, 2, 3, 4)\)일 때 \(r^2 = 1, 4, 9, 16\) 가운데 5의 배수가 없는 것<span class="why"><b>맞습니다.</b> \(n^2 = 5(5k^2 + 2kr) + r^2\)이므로 나머지는 \(r^2\)이 정합니다. 1, 4, 9, 16은 5의 배수가 아니므로 대우가 참입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n^2 = 5k\)로 놓고 \(n = \sqrt{5k}\)를 구하는 것<span class="why"><b>직접 증명의 막힌 길입니다.</b> \(\sqrt{5k}\)가 5의 배수인지 이 식만으로는 알 수 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(n = 1, 2, \cdots, 20\)에서 반례가 없는 것<span class="why"><b>예를 모은 것은 증명이 아닙니다.</b> 모든 자연수를 다 확인할 수 없으므로 나머지로 경우를 나누어야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(n = 5k\)이면 \(n^2 = 25k^2\)이 5의 배수인 것<span class="why"><b>역을 증명했다.</b> 이것은 '\(n\)이 5의 배수이면 \(n^2\)이 5의 배수'이고, 원래 명제와 참·거짓이 같지 않다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(n = 5k + r (r = 1, 2, 3, 4)\)일 때 \(r^2 = 1, 4, 9, 16\) 가운데 5의 배수가 없는 것<span class="why"><b>맞다.</b> \(n^2 = 5(5k^2 + 2kr) + r^2\)이므로 나머지는 \(r^2\)이 정한다. 1, 4, 9, 16은 5의 배수가 아니므로 대우가 참이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(n^2 = 5k\)로 놓고 \(n = \sqrt{5k}\)를 구하는 것<span class="why"><b>직접 증명의 막힌 길이다.</b> \(\sqrt{5k}\)가 5의 배수인지 이 식만으로는 알 수 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(n = 1, 2, \cdots, 20\)에서 반례가 없는 것<span class="why"><b>예를 모은 것은 증명이 아니다.</b> 모든 자연수를 다 확인할 수 없으므로 나머지로 경우를 나누어야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-5.html#text-cm2-converse"><small class="mono">공통수학2 2.5</small>역과 대우</a></div></nav>
 
       <article class="card" id="card-cm2-sqrt2-absurd">
         <header class="card-head">
-          <span class="no">2.7.2</span><h2>\(\sqrt{2}\)가 분수가 아니라는 것을 어떻게 증명할까?</h2><span class="kind">귀류법 · 무리수</span>
+          <span class="no">탐구 2</span><h2>\(\sqrt{2}\)가 분수가 아니라는 것을 어떻게 증명할까?</h2><span class="kind">귀류법 · 무리수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -137,31 +196,31 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\sqrt{2} = 1.41421\cdots\)은 \(\frac{7}{5} = 1.4, \frac{17}{12} = 1.4166\cdots\)처럼 분수에 아주 가까워질 수 있습니다. 그렇다면 정확히 \(\sqrt{2}\)와 같은 분수는 정말 없을까요? 어떻게 '없다'를 증명할 수 있을까요?</li>
-            <li><span class="tag">복원</span>유리수는 서로소인 두 정수 \(p, q(q \ne 0)\)로 \(\frac{p}{q}\)처럼 나타낼 수 있는 수입니다. "\(n^2\)이 짝수이면 \(n\)은 짝수"는 대우로 증명한 사실입니다.</li>
-            <li><span class="tag">설명</span>'없다'는 하나하나 확인해서 보일 수 없습니다. 그래서 결론을 부정해 \(\sqrt{2} = \frac{p}{q}\)(\(p, q\)는 서로소인 자연수)라고 가정합니다. 제곱하면 \(p^2 = 2q^2\)이므로 \(p^2\)은 짝수, 따라서 \(p\)도 짝수입니다. \(p = 2m\)을 넣으면 \(q^2 = 2m^2\)이 되어 \(q\)도 짝수입니다. \(p, q\)가 모두 2로 나누어떨어지므로 서로소라는 가정과 <b>모순</b>입니다. 이처럼 결론을 부정했을 때 모순이 생김을 보여 원래 명제가 참임을 증명하는 방법을 <em>귀류법</em>이라 합니다.</li>
-            <li><span class="tag">연결</span>같은 방법으로 \(\sqrt{3}, \sqrt{5}\)가 무리수임도 증명할 수 있습니다. 이때는 "\(p^2\)이 3의 배수이면 \(p\)도 3의 배수"가 필요합니다. 귀류법은 '무한히 많다', '존재하지 않는다'처럼 하나씩 확인할 수 없는 명제를 증명할 때 자주 씁니다.</li>
-            <li><span class="tag">적용</span>점을 누르거나 슬라이더로 \(p, q\)를 골라 \(p^2 - 2q^2 = 0\)인 점을 찾아보세요. 직선에 가장 가까운 점들(테두리 점)에서 차이는 얼마인가요? 찾지 못했다면 그것이 증명인지 생각해 본 뒤 '증명 다음 단계'를 끝까지 눌러 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>격자에서 \(p^2 = 2q^2\)인 점을 찾지 못한 것은 증명이 아닙니다. 더 큰 수에서 있을지도 모르기 때문입니다. 귀류법은 모든 경우를 한 번에 다룹니다. 또 '서로소'라는 가정을 빼면 모순이 생기지 않습니다. 모순이 어느 가정과 부딪히는지 분명히 해야 합니다.</li>
+            <li><span class="tag">질문</span>\(\sqrt{2} = 1.41421\cdots\)은 \(\frac{7}{5} = 1.4, \frac{17}{12} = 1.4166\cdots\)처럼 분수에 아주 가까워질 수 있다. 그렇다면 정확히 \(\sqrt{2}\)와 같은 분수는 정말 없을까? 어떻게 '없다'를 증명할 수 있을까?</li>
+            <li><span class="tag">복원</span>유리수는 서로소인 두 정수 \(p, q(q \ne 0)\)로 \(\frac{p}{q}\)처럼 나타낼 수 있는 수이다. 또 "\(n^2\)이 짝수이면 \(n\)은 짝수"는 앞에서 대우로 증명한 사실이다.</li>
+            <li><span class="tag">설명</span>'없다'는 하나하나 확인해서 보일 수 없다. 그래서 결론을 부정해 \(\sqrt{2} = \frac{p}{q}\)(\(p, q\)는 서로소인 자연수)라고 가정한다. 제곱하면 \(p^2 = 2q^2\)이므로 \(p^2\)은 짝수이고, 따라서 \(p\)도 짝수이다. \(p = 2m\)을 넣으면 \(q^2 = 2m^2\)이 되어 \(q\)도 짝수이다. 그러면 \(p, q\)가 모두 2로 나누어떨어지므로 서로소라는 가정과 모순이다. 결론을 부정했을 때 모순이 생김을 보여 원래 명제가 참임을 증명하는 이런 방법을 <em>귀류법</em>이라 한다.</li>
+            <li><span class="tag">연결</span>같은 방법으로 \(\sqrt{3}, \sqrt{5}\)가 무리수임도 증명할 수 있다. 다만 이때는 "\(p^2\)이 3의 배수이면 \(p\)도 3의 배수"가 필요하다. 귀류법은 '무한히 많다', '존재하지 않는다'처럼 하나씩 확인할 수 없는 명제를 증명할 때 자주 쓴다.</li>
+            <li><span class="tag">적용</span>점을 누르거나 슬라이더로 \(p, q\)를 골라 \(p^2 - 2q^2 = 0\)인 점을 찾아보자. 직선에 가장 가까운 테두리 점들에서도 차이는 1 또는 \(-1\)에 머문다. 찾지 못했다고 해서 그것이 증명인지 생각해 본 뒤, '증명 다음 단계'를 끝까지 눌러 보자.</li>
+            <li class="warn"><span class="tag">판단</span>격자에서 \(p^2 = 2q^2\)인 점을 찾지 못한 것은 증명이 아니다. 더 큰 수에서 있을지도 모르기 때문이다. 반면 귀류법은 모든 경우를 한 번에 다룬다. 또 '서로소'라는 가정을 빼면 모순이 생기지 않으므로, 모순이 어느 가정과 부딪히는지 분명히 해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">귀류법으로 \(\sqrt{3}\)이 무리수임을 증명하려고 \(\sqrt{3} = \frac{p}{q}\)(\(p, q\)는 서로소인 자연수)로 놓았습니다. \(p^2 = 3q^2\)에서 바로 이어지는 단계는?</p>
+          <p class="q">귀류법으로 \(\sqrt{3}\)이 무리수임을 증명하려고 \(\sqrt{3} = \frac{p}{q}\)(\(p, q\)는 서로소인 자연수)로 놓았다. \(p^2 = 3q^2\)에서 바로 이어지는 단계는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(p\)는 짝수이다<span class="why"><b>\(\sqrt{2}\)의 증명을 그대로 옮겼습니다.</b> \(3q^2\)은 짝수일 수도 홀수일 수도 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(p\)는 3의 배수이다<span class="why"><b>맞습니다.</b> \(p^2\)이 3의 배수이므로, 대우로 증명한 사실에 따라 \(p\)도 3의 배수입니다. 이어서 \(p = 3m\)을 넣으면 \(q\)도 3의 배수가 됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(q\)는 3의 배수이다<span class="why"><b>순서를 건너뛰었습니다.</b> \(q\)가 3의 배수라는 것은 \(p = 3m\)을 넣은 뒤에야 나옵니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(p = 3q\)이다<span class="why"><b>제곱을 빠뜨렸습니다.</b> \(p = 3q\)이면 \(p^2 = 9q^2\)이 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\(p\)는 짝수이다<span class="why"><b>\(\sqrt{2}\)의 증명을 그대로 옮겼다.</b> \(3q^2\)은 짝수일 수도 홀수일 수도 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\(p\)는 3의 배수이다<span class="why"><b>맞다.</b> \(p^2\)이 3의 배수이므로, 대우로 증명한 사실에 따라 \(p\)도 3의 배수이다. 이어서 \(p = 3m\)을 넣으면 \(q\)도 3의 배수가 된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(q\)는 3의 배수이다<span class="why"><b>순서를 건너뛰었다.</b> \(q\)가 3의 배수라는 것은 \(p = 3m\)을 넣은 뒤에야 나온다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(p = 3q\)이다<span class="why"><b>제곱을 빠뜨렸다.</b> \(p = 3q\)이면 \(p^2 = 9q^2\)이 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-5.html#text-cm2-converse"><small class="mono">공통수학2 2.5</small>역과 대우</a></div></nav>
 
       <article class="card reading" id="text-cm2-proof-ways">
-        <header class="card-head"><span class="no">2.7.3</span><h2>어떤 명제에 어떤 증명법을 쓸까?</h2><span class="kind">읽기 · 증명법 · 유클리드</span></header>
+        <header class="card-head"><span class="no">읽기 3</span><h2>어떤 명제에 어떤 증명법을 쓸까?</h2><span class="kind">읽기 · 증명법 · 유클리드</span></header>
         <div class="reading-body">
-          <p class="ask">같은 명제라도 어떤 길로 증명하느냐에 따라 쉽기도 하고 막히기도 합니다. 세 가지 증명법을 비교하고, 2천 년 넘게 쓰여 온 귀류법의 대표 예를 따라가 봅니다.</p>
+          <p class="ask">같은 명제라도 어떤 길로 증명하느냐에 따라 쉽기도 하고 막히기도 한다. 그렇다면 어떤 명제에 어떤 증명법이 잘 맞을까? 세 가지 증명법을 비교하고, 2천 년 넘게 쓰여 온 귀류법의 대표 예를 따라가 보자.</p>
           <h3><span class="mono">1</span>세 가지 길</h3>
           <div class="tbl"><table>
             <thead><tr><th>증명법</th><th>하는 일</th><th>잘 맞는 명제</th></tr></thead>
@@ -171,41 +230,37 @@
               <tr><td>귀류법</td><td>결론을 부정하고 모순을 이끈다</td><td>\(\sqrt{2}\)는 무리수이다, 소수는 무한히 많다</td></tr>
             </tbody>
           </table></div>
-          <p>대우를 이용한 증명과 귀류법은 모두 결론을 부정한 데서 출발합니다. 차이는 도착점입니다. 대우는 정해진 목표 \({\sim}p\)에 도착해야 하고, 귀류법은 가정이든 이미 아는 사실이든 무엇과든 모순이 생기면 됩니다.</p>
-          <h3><span class="mono">2</span>유클리드: 소수는 무한히 많다</h3>
-          <p>기원전 300년 무렵 유클리드의 『원론』에 실린 증명을 지금의 말로 옮기면 다음과 같습니다.</p>
-          <ul class="dots">
-            <li>결론을 부정해, 소수가 유한개 \(p_1, p_2, \cdots, p_k\)뿐이라고 가정합니다.</li>
-            <li>\(N = p_1p_2 \cdots p_k + 1\)을 만듭니다. \(N\)은 1보다 큰 자연수이므로 소인수를 적어도 하나 가집니다.</li>
-            <li>\(N\)을 \(p_1, \cdots, p_k\) 가운데 어느 것으로 나누어도 나머지가 1입니다. 따라서 \(N\)의 소인수는 목록에 없는 소수입니다.</li>
-            <li>목록이 모든 소수라는 가정과 모순이므로, 소수는 무한히 많습니다.</li>
-          </ul>
-          <p class="judge"><b>판단</b>이 증명은 "\(N\)이 소수이다"라고 말하지 않습니다. \(2 \times 3 \times 5 \times 7 \times 11 \times 13 + 1 = 30031 = 59 \times 509\)처럼 \(N\)이 합성수일 수도 있습니다. 증명에 필요한 것은 \(N\)의 소인수가 목록 밖에 있다는 사실뿐입니다.</p>
+          <p>표에서 보듯 대우를 이용한 증명과 귀류법은 모두 결론을 부정한 데서 출발한다. 차이는 도착점에 있다. 대우는 정해진 목표 \({\sim}p\)에 도착해야 하지만, 귀류법은 가정이든 이미 아는 사실이든 무엇과든 모순이 생기기만 하면 된다. 그래서 도착할 곳이 분명하지 않은 '존재하지 않는다', '무한히 많다' 꼴의 명제에는 귀류법이 잘 맞는다.</p>
+          <h3><span class="mono">2</span>유클리드, 소수는 무한히 많다</h3>
+          <p>기원전 300년 무렵 유클리드의 『원론』에 실린 증명을 지금의 말로 따라가 보자. 먼저 결론을 부정해, 소수가 유한개 \(p_1, p_2, \cdots, p_k\)뿐이라고 가정한다. 그리고 이 소수를 모두 곱한 뒤 1을 더한 수 \(N = p_1p_2 \cdots p_k + 1\)을 만든다. \(N\)은 1보다 큰 자연수이므로 소인수를 적어도 하나 가진다.</p>
+          <p>그런데 \(N\)을 \(p_1, \cdots, p_k\) 가운데 어느 것으로 나누어도 나머지가 1이다. 따라서 \(N\)의 소인수는 목록에 없는 소수여야 한다. 이것은 목록이 모든 소수라는 가정과 모순이므로, 소수는 무한히 많다.</p>
+          <p class="judge"><b>판단</b>이 증명은 "\(N\)이 소수이다"라고 말하지 않는다. \(2 \times 3 \times 5 \times 7 \times 11 \times 13 + 1 = 30031 = 59 \times 509\)처럼 \(N\)이 합성수일 수도 있다. 증명에 필요한 것은 \(N\)의 소인수가 목록 밖에 있다는 사실뿐이다.</p>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">실수 \(a, b\)에 대하여 '\(a + b &gt; 2\)이면 \(a &gt; 1\) 또는 \(b &gt; 1\)이다'를 증명하는 가장 간단한 방법은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>대우 '\(a \le 1\) 그리고 \(b \le 1\)이면 \(a + b \le 2\)'를 보인다<span class="why"><b>맞습니다.</b> 두 부등식을 더하면 바로 \(a + b \le 2\)가 나옵니다. 결론의 '또는'을 부정하면 '그리고'가 되어 다루기 쉬워집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>역 '\(a &gt; 1\) 또는 \(b &gt; 1\)이면 \(a + b &gt; 2\)'를 보인다<span class="why"><b>역은 원래 명제와 참·거짓이 같지 않습니다.</b> 게다가 이 역은 \(a = 2, b = -3\)이라는 반례가 있는 거짓 명제입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(a = 1.5, b = 1\)처럼 예를 몇 개 확인한다<span class="why"><b>예는 증명이 아닙니다.</b> 실수는 무한히 많으므로 모든 경우를 확인할 수 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>대우 '\(a \le 1\) 그리고 \(b \le 1\)이면 \(a + b \le 2\)'를 보인다<span class="why"><b>맞다.</b> 두 부등식을 더하면 바로 \(a + b \le 2\)가 나온다. 결론의 '또는'을 부정하면 '그리고'가 되어 다루기 쉬워진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>역 '\(a &gt; 1\) 또는 \(b &gt; 1\)이면 \(a + b &gt; 2\)'를 보인다<span class="why"><b>역은 원래 명제와 참·거짓이 같지 않다.</b> 게다가 이 역은 \(a = 2, b = -3\)이라는 반례가 있는 거짓 명제이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(a = 1.5, b = 1\)처럼 예를 몇 개 확인한다<span class="why"><b>예는 증명이 아니다.</b> 실수는 무한히 많으므로 모든 경우를 확인할 수 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm2/2-5.html#card-cm2-converse"><small class="mono">공통수학2 2.5</small>가정과 결론을 바꾸거나 부정하면 참·거짓은 어떻게 될까?</a><a href="../../c/cm2/2-5.html#card-cm2-contra-venn"><small class="mono">공통수학2 2.5</small>명제와 대우의 참·거짓은 왜 항상 같을까?</a><a href="../../c/cm2/2-5.html#text-cm2-converse"><small class="mono">공통수학2 2.5</small>역과 대우</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=cm2-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">2문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm2&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm2-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">2문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -213,6 +268,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm2/body.js"></script>
 <script src="../../js/cards/cm2/contra-square.js"></script>
 <script src="../../js/cards/cm2/sqrt2-absurd.js"></script>
 </body>

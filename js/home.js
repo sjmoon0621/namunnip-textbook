@@ -5,11 +5,17 @@
   if (!view || !window.TOC) return;
   const R = ["", "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"];
   const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const count = (c) => {
-    let sec = 0, open = 0, cards = 0, vids = 0;   // 읽기(text) 블록은 카드와 함께 센다
+  /* 카드 수는 서로 다른 카드만 센다(여러 절·과목에 함께 실린 카드는 한 번). 읽기(text) 블록은 카드와 함께 센다.
+     seen을 넘기면 과목을 넘어서도 중복을 뺀다(첫 화면 합계 = 내 노트의 '본 카드·읽기' 분모) */
+  const count = (c, seen = new Set()) => {
+    let sec = 0, open = 0, cards = 0, vids = 0;
     c.chapters.forEach((ch) => ch.sections.forEach((s) => {
       sec++; if (s.page) open++;
-      s.items.forEach((it) => (it.kind === "video" ? vids++ : cards++));
+      s.items.forEach((it) => {
+        if (seen.has(it.id)) return;
+        seen.add(it.id);
+        if (it.kind === "video") vids++; else cards++;
+      });
     }));
     return { sec, open, cards, vids };
   };
@@ -40,7 +46,7 @@
     };
     const pick = (f) => TOC.filter(f).sort((a, b) => RANK.indexOf(a.level) - RANK.indexOf(b.level));
     const tree = document.getElementById("tree");
-    /* 과학: 공통 과목 띠 아래에 교과(행) × 선택 구분(열) 표. 일반·진로·융합선택은 나란히 고르는 구분이고,
+    /* 과학: 공통 과목 행(선택 과목 행과 같은 꼴) 아래에 교과(행) × 선택 구분(열) 표. 일반·진로·융합선택은 나란히 고르는 구분이고,
        과학계열 과목은 과학고·영재학교 등에서 여는 과목이라 맨 오른쪽 열에 둔다 */
     const SCI_COLS = [["일반", "일반선택", "교과의 기본"], ["진로", "진로선택", "심화·진로"], ["융합", "융합선택", "교과 융합·실생활"],
       ["고급", "과학계열 진로선택", "과학고·영재학교"], ["실험", "과학계열 융합선택", "과학고·영재학교"]];
@@ -83,12 +89,12 @@
         <p class="mono small dim tree-note">공통 과목을 배운 뒤 선택 과목을 고릅니다. <span class="for-sci">열은 교과, 행은 선택 구분입니다.</span><span class="for-math">행은 선택 구분입니다.</span> 흐린 상자는 아직 준비 중입니다.</p></div>
       <div class="tree-body" id="tree-body">
       <div class="tree-sci">
-        <div class="tree-band" data-track="common"><span class="band-lb mono">공통</span><div>${pick((c) => c.track === "common").map((c) => box(c)).join("")}</div></div>
+        <div class="mx" role="table" aria-label="공통 과목"><div class="mx-row mx-flowrow" role="row" data-track="common"><span class="mx-lb mx-lv" role="rowheader">공통<small>고1 공통 과목</small></span><div class="mx-cell mx-flow" role="cell" data-col="공통">${pick((c) => c.track === "common").map((c) => box(c)).join("")}</div></div></div>
         <p class="mx-arrow mono small dim" aria-hidden="true">↓ 선택 과목</p>
         ${sciMatrix()}
       </div>
       <div class="tree-mth">
-        <div class="tree-band" data-track="math"><span class="band-lb mono">공통</span><div>${pick((c) => c.track === "math" && c.level === "공통").map((c) => box(c)).join("")}</div></div>
+        <div class="mx" role="table" aria-label="공통 과목"><div class="mx-row mx-flowrow" role="row" data-track="math"><span class="mx-lb mx-lv" role="rowheader">공통<small>고1 공통 과목</small></span><div class="mx-cell mx-flow" role="cell" data-col="공통">${pick((c) => c.track === "math" && c.level === "공통").map((c) => box(c)).join("")}</div></div></div>
         <p class="mx-arrow mono small dim" aria-hidden="true">↓ 선택 과목</p>
         ${mathMatrix()}
       </div>
@@ -230,7 +236,8 @@
     let saved = new URLSearchParams(location.search).get("tab");
     if (!saved) try { saved = localStorage.getItem(TAB_KEY); } catch (e) { saved = null; }
     setDomain(saved, false);
-    const total = TOC.reduce((a, c) => { const n = count(c); a.cards += n.cards; a.vids += n.vids; a.open += n.open; return a; }, { cards: 0, vids: 0, open: 0 });
+    const seenAll = new Set();
+    const total = TOC.reduce((a, c) => { const n = count(c, seenAll); a.cards += n.cards; a.vids += n.vids; a.open += n.open; return a; }, { cards: 0, vids: 0, open: 0 });
     const stat = document.getElementById("stat");
     const live = TOC.filter((c) => c.id !== "extra" && count(c).open).length;
     if (stat) stat.textContent = `과목 ${live}/${TOC.length - 1} · 절 ${total.open} · 카드 ${total.cards} · 영상 ${total.vids}`;
@@ -294,6 +301,7 @@
     const subj = (k) => { const p = k.split("-"); return p.length === 2 ? p[0].replace(/\d{2}$/, "") : p[0]; };
     const info = [["구분", c.meta], ["구성", `대단원 ${c.chapters.length} · 절 ${n.open}/${n.sec} · 카드 ${n.cards}${n.vids ? ` · 영상 ${n.vids}` : ""}`],
       ["교육과정", code ? `2022 개정 [${subj(code)}]` : "교육과정 밖 교양"]];
+    const nAi = c.chapters.reduce((t, ch) => t + ch.sections.reduce((u, s) => u + (s.ai || 0), 0), 0);   // AI 출제 연습 문항(bank.html)
     const kindLb = (i) => (i.kind === "video" ? '<span class="cx-k mono">영상</span>' : i.kind === "text" ? '<span class="cx-k mono">읽기</span>' : "");
 
     document.title = `${c.name} — 나뭇잎 디지털 교과서`;
@@ -310,6 +318,7 @@
           <div class="cx-prog" aria-hidden="true"><i style="width:${pct}%"></i></div>
           <p class="cx-prog-t mono small">카드 <span class="cx-done">${done}</span>/${items.length} 공부함 (<span class="cx-pct">${pct}</span>%)</p>
           ${nextUp ? `<a class="cx-go" href="${nextUp.ch.n}-${nextUp.s.n}.html#${nextUp.i.id}">${done ? "이어서 공부하기" : "처음부터 공부하기"} · ${nextUp.ch.n}.${nextUp.s.n} ${esc(nextUp.s.title)}</a>` : items.length ? `<p class="cx-all small">모든 카드를 공부했습니다.</p>` : ""}
+          ${nAi ? `<a class="cx-bank" href="../../bank.html?c=${c.id}"><b>연습 시험 풀기</b><span class="dim">중간고사·기말고사 범위 시험지 · AI 출제 ${nAi}문항</span></a>` : ""}
           <dl class="cx-info">${info.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
           <div class="cx-path small">
             <p><span class="dim">먼저 공부할 과목</span>${pre.length ? pre.map(link).join(" · ") : esc(FIRST[c.id] || "따로 없음")}</p>

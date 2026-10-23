@@ -1,0 +1,58 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "3-7",
+  "short": "본문 · 속도와 거리"
+}
+-->
+<article class="card reading" id="text-calc2-distance" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>속도와 거리</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">자동차의 속도계 기록만 남아 있다고 하자. 그 기록으로 자동차가 처음 위치에서 얼마나 떨어진 곳에 있는지, 그리고 실제로 얼마나 먼 길을 달렸는지 알 수 있을까? 앞으로 갔다가 후진했다면 두 값은 다를 것이다. 또 평면 위를 구불구불 움직인 점이 지나간 길의 길이는 어떻게 구할까?</p>
+    <figure class="q-fig" data-q="calc2-dist">
+      <svg viewBox="0 0 520 230" role="img" aria-label="속도 v(t) = t² − 4t + 3 의 그래프와 0부터 T까지의 넓이"></svg>
+      <div class="q-ctl"><label>시각 \(T\) <input type="range" data-k="T" min="0.2" max="5" step="0.05" value="3"><output data-k="T"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 속도 \(v(t) = t^2 - 4t + 3\). \(1 &lt; t &lt; 3\)에서는 속도가 음수로 뒤로 간다. 위치의 변화는 넓이에 부호를 붙여 더한 값이고, 움직인 거리는 넓이를 모두 양수로 더한 값이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>속도와 가속도(<a href="2-11.html">속도와 가속도</a>), 두 곡선 사이의 넓이(<a href="3-5.html">넓이</a>), 치환적분법(<a href="3-2.html">치환적분법</a>).</div>
+
+    <h3><span class="no">3.7.1</span>직선 위의 운동</h3>
+    <p>수직선 위를 움직이는 점의 속도가 \(v(t)\)이면 위치 \(x(t)\)는 \(v(t)\)의 원시함수이다. 따라서 시각 \(a\)에서 \(b\)까지 위치의 변화는 \(\int_a^b v(t)\,dt\)이다. 그런데 속도가 음수인 동안은 뒤로 가므로, 이 값은 실제로 움직인 거리보다 작을 수 있다. 움직인 거리는 앞으로 간 것과 뒤로 간 것을 모두 더해야 한다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.7.1 <span class="nm">위치의 변화와 움직인 거리</span></span>
+      <p>시각 \(t = a\)에서 \(t = b\)까지 \[\text{위치의 변화} = \int_a^b v(t)\,dt,\qquad \text{움직인 거리} = \int_a^b |v(t)|\,dt\]</p>
+    </div>
+    <p>그림 1에서 \(T\)를 3으로 맞추어 보자. 위치의 변화는 \(\int_0^3 (t^2 - 4t + 3)\,dt = 9 - 18 + 9 = 0\)으로, 처음 자리로 돌아왔다. 그러나 \(0 \le t \le 1\)에서 \(\dfrac{4}{3}\)만큼 앞으로 갔다가 \(1 \le t \le 3\)에서 \(\dfrac{4}{3}\)만큼 뒤로 왔으므로 움직인 거리는 \(\dfrac{8}{3}\)이다.</p>
+
+    <h3><span class="no">3.7.2</span>평면 위의 운동과 곡선의 길이</h3>
+    <p>평면 위를 움직이는 점의 속도가 \(\left(\dfrac{dx}{dt}, \dfrac{dy}{dt}\right)\)이면 아주 짧은 시간 \(\Delta t\) 동안 움직인 거리는 피타고라스 정리로 \(\sqrt{(\Delta x)^2 + (\Delta y)^2} \approx |\vec v|\,\Delta t\)이다. 이를 모두 더하면 움직인 거리가 된다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.7.2 <span class="nm">평면 위에서 움직인 거리와 곡선의 길이</span></span>
+      <p>\[s = \int_a^b \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}\,dt\] 곡선 \(y = f(x)\) (\(a \le x \le b\))의 길이는 \(\displaystyle\int_a^b \sqrt{1 + \{f'(x)\}^2}\,dx\)이다.</p>
+    </div>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 120" role="img" aria-label="짧은 곡선 조각을 직각삼각형의 빗변으로 어림하는 그림">
+        <g class="s">
+          <path d="M60 100 Q 150 90 220 30" class="b"/>
+          <line x1="140" y1="85" x2="190" y2="85" class="gd"/><line x1="190" y1="85" x2="190" y2="55" class="gd"/><line x1="140" y1="85" x2="190" y2="55" class="c"/>
+          <text x="165" y="100" text-anchor="middle">Δx</text><text x="196" y="74">Δy</text>
+          <text x="260" y="45">짧은 조각의 길이</text><text x="260" y="70">≈ √((Δx)² + (Δy)²)</text><text x="260" y="95">모두 더하고 극한을 취한다</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 곡선을 잘게 나누면 각 조각은 직각삼각형의 빗변처럼 볼 수 있다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.7.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.7.3</span>
+      <p>평면 위를 움직이는 점의 위치가 \(x = t^2\), \(y = \dfrac{2}{3}t^3\)일 때, \(t = 0\)에서 \(t = \sqrt{3}\)까지 움직인 거리를 구하여라.</p>
+    </div>
+    <p>\(\dfrac{dx}{dt} = 2t\), \(\dfrac{dy}{dt} = 2t^2\)이므로 속력은 \(\sqrt{4t^2 + 4t^4} = 2t\sqrt{1 + t^2}\)이다 (\(t \ge 0\)).</p>
+    <p>움직인 거리는 \(\int_0^{\sqrt{3}} 2t\sqrt{1 + t^2}\,dt\)이다. \(u = 1 + t^2\)으로 치환하면 \(du = 2t\,dt\)이고 \(u: 1 \to 4\)이므로 \(\int_1^4 \sqrt{u}\,du = \left[\dfrac{2}{3}u^{3/2}\right]_1^4 = \dfrac{2}{3}(8 - 1) = \dfrac{14}{3}\)이다. 같은 시간 동안 출발점에서 도착점까지의 직선거리는 \(\sqrt{3^2 + (2\sqrt{3})^2} = \sqrt{21} \approx 4.58\)로, 움직인 거리 \(\dfrac{14}{3} \approx 4.67\)보다 조금 짧다.</p>
+    <p>아래 탐구 카드에서 속도 그래프로 움직인 거리를 구하고, 평면 위를 움직인 점의 경로 길이를 직접 계산해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-distance-1">곡선의 길이 공식은 대부분 근을 포함한 적분이 되어 정확한 값을 구하기 어렵다. 그래서 실제로는 컴퓨터로 짧은 선분의 길이를 더해 어림하는 경우가 많다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>위치의 변화는 속도를 그대로 적분한 \(\int v\,dt\)이고, 움직인 거리는 속도의 절댓값을 적분한 \(\int|v|\,dt\)이다. 평면 위에서 움직인 거리는 속력 \(\sqrt{(dx/dt)^2 + (dy/dt)^2}\)을 적분한다. 그래서 처음 질문의 속도계 기록만으로도, 부호를 살린 적분으로 처음 위치와의 거리를, 절댓값의 적분으로 실제로 달린 거리를 알 수 있다.</p></div>
+  </div>
+</article>

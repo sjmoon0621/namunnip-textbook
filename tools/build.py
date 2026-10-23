@@ -5,13 +5,15 @@
 
 - 블록: blocks/<폴더>/<블록 id>.html. 맨 앞 <!--block {JSON} --> 머리, 선택적 <style>, 그다음 본문.
   type: intro(절 소개) · card(개념 카드) · text(읽기: 글·사진·그림·표) · video(영상) · related(관련 카드 상자)
-- 번호: 카드·읽기 블록에 대단원.절.순서를 매겨 <span class="no">에 넣는다. 영상은 '영상'으로 표시.
+- 번호: 카드·읽기 블록에 '종류 차례'(탐구 1, 읽기 2)를 <span class="no">에 넣는다. 본문은 번호 없이 '본문', 영상은 '영상'으로 표시.
+  절 번호 체계(2.10.1)는 본문 안의 소제목·정의·정리만 쓴다(STYLE.md 2절 9).
 - 교육과정이 바뀌면 curricula/*.json에서 블록 id의 위치만 옮기고 다시 빌드한다.
 - 한 블록을 여러 과목·절에 배치해도 된다(예: 일반선택 카드를 진로선택 절에서 재사용). 같은 절에 두 번은 안 된다.
 """
 import json, re, sys, pathlib, html as H
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+SITE_URL = "https://radix24.github.io/namunnip-textbook/"   # 공유 미리보기(og:image)와 sitemap.xml의 절대 주소
 
 # Windows에서도 맥·리눅스와 같은 결과를 내도록 읽기·쓰기는 UTF-8, 줄바꿈은 LF로 고정한다.
 def rd(p):
@@ -19,6 +21,12 @@ def rd(p):
 
 
 def wr(p, s):
+    # 내용이 같으면 쓰지 않는다. Windows에서는 파일을 새로 쓸 때마다 검사가 붙어 전체 빌드가 수 분씩 걸린다.
+    try:
+        if p.read_bytes() == s.encode("utf-8"):
+            return
+    except OSError:
+        pass
     p.write_text(s, encoding="utf-8", newline="\n")
 
 
@@ -64,12 +72,17 @@ THEME_BTN = ('<button type="button" class="theme-btn" aria-label="다크 모드"
              '<svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>')
 # 푸터 첫 줄: 나뭇잎 홈페이지와 연락처. 손으로 쓴 페이지와 QURI(tools/build.py)에도 같은 줄이 있다.
 FOOT_ORG = ('<p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg>'
-            '<b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>')
+            '<b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a>'
+            '<a class="foot-mail mono" href="../../credits.html">크레딧</a></p>')
 
 
 def pwa_head(p):
     """모든 페이지 <head>에 들어가는 아이콘·글꼴·앱 설치(PWA)·다크 모드 태그. p는 최상위까지의 상대 경로('', '../../')."""
-    return f'''  <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
+    return f'''  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="{SITE_URL}assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="{p}assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="{p}manifest.webmanifest">
   <meta name="theme-color" content="#f3f4ef">
@@ -109,19 +122,69 @@ def indent(text, n):
 
 
 EXAM_INDEX = ROOT / "exams" / "index.json"   # {"<과목>-<대단원>-<절>": 문항 수} — 기출 처리 도구가 만든다
+BANK_DIR = ROOT / "exams" / "bank"           # <과목>.json: AI 출제 연습 문항(tools/bank.py가 만들고 검사한다)
 _exam_counts = None
+_bank_counts = None
 
 
-def exam_count(course, ch, sec):
-    """절 끝 연습문제 버튼에 적을 문항 수 문구."""
+def exam_n(course, ch, sec):
+    """이 절에 분류된 기출 문항 수. 0이면 절 페이지에 기출 버튼을 만들지 않는다."""
     global _exam_counts
     if _exam_counts is None:
         _exam_counts = json.loads(rd(EXAM_INDEX)) if EXAM_INDEX.exists() else {}
-    n = _exam_counts.get(f'{course["id"]}-{ch["n"]}-{sec["n"]}', 0)
-    return f"{n}문항" if n else "준비 중"
+    return _exam_counts.get(f'{course["id"]}-{ch["n"]}-{sec["n"]}', 0)
+
+
+def bank_counts(cid):
+    """과목의 AI 연습 문항 수: {"<대단원>-<절>": 문항 수}. 문제은행 파일이 없으면 빈 사전."""
+    global _bank_counts
+    if _bank_counts is None:
+        _bank_counts = {}
+        for f in sorted(BANK_DIR.glob("*.json")) if BANK_DIR.exists() else []:
+            d = json.loads(rd(f))
+            n = _bank_counts.setdefault(d["course"], {})
+            for it in d["items"]:
+                n[it["sec"]] = n.get(it["sec"], 0) + 1
+    return _bank_counts.get(cid, {})
+
+
+def exam_split(course):
+    """중간고사 범위 = 앞쪽 절 몇 개(목차 순서). 절 수의 절반에서 1절 이내에 대단원 경계가 있으면 그 경계에서,
+    없으면 대단원 중간이라도 절반(올림)에서 나눈다. 기말고사 범위는 나머지 절이다."""
+    sizes = [len(ch["sections"]) for ch in course["chapters"]]
+    total = sum(sizes)
+    cuts = [sum(sizes[:k]) for k in range(1, len(sizes))]
+    near = [x for x in cuts if abs(x - total / 2) <= 1]
+    return min(near, key=lambda x: (abs(x - total / 2), -x)) if near else (total + 1) // 2
+
+
+def practice_links(course, ch, sec, where):
+    """절 페이지의 연습문제(AI 출제)·기출문제 버튼. where='side'(왼쪽 목차 아래) | 'end'(절 끝).
+    연습문제가 이 절에 없으면 이 절이 든 시험 범위의 시험지 목록으로 보낸다. 기출이 0이면 기출 버튼을 만들지 않는다."""
+    cid, here = course["id"], f'{ch["n"]}-{sec["n"]}'
+    bank = bank_counts(cid)
+    out = []
+    if bank:
+        n = bank.get(here, 0)
+        order = [f'{c["n"]}-{x["n"]}' for c in course["chapters"] for x in c["sections"]]
+        rng = "mid" if order.index(here) < exam_split(course) else "fin"
+        href = f'../../bank.html?c={cid}&amp;sec={here}' if n else f'../../bank.html?c={cid}&amp;r={rng}'
+        what = f"{n}문항" if n else ("중간고사 범위" if rng == "mid" else "기말고사 범위")
+        out.append((href, "AI 출제 문항", "연습문제 풀어보기", what))
+    ex = exam_n(course, ch, sec)
+    if ex:
+        out.append((f"../../practice.html?sec={cid}-{here}", "수능·모의평가·학력평가", "기출문제 풀어보기", f"{ex}문항"))
+    if where == "side":
+        return "".join(f'\n      <a class="toc-px" href="{h}"><span class="mono">{k}</span><b>{t}</b><span class="mono">{w} →</span></a>' for h, k, t, w in out)
+    return "".join(f'      <a class="px-go" href="{h}"><span class="mono">{k}</span><b>{t}</b><span class="mono px-n">{w}</span></a>\n' for h, k, t, w in out)
 
 
 REL, USED, NAMES = {}, {}, {}   # main()이 채운다: 카드별 연관 카드, 블록 배치 위치, 과목 이름
+DOMAIN = {}   # main()이 채운다: 과목 id → "math" | "sci". 개념 지도와 연관 카드는 두 분야를 섞지 않는다
+
+
+def block_domains(bid):
+    return {DOMAIN.get(h.split()[0]) for h in USED.get(bid, [])}
 
 
 def related_map(blocks, used):
@@ -153,10 +216,12 @@ def related_map(blocks, used):
         if b not in used or blocks[b]["type"] not in NUMBERED:
             continue
         home = used[b][0].split()[0]
+        dom = DOMAIN.get(home)
+        keep = lambda xs: [x for x in xs if DOMAIN.get(used[x][0].split()[0]) == dom]   # 수학과 과학은 서로 잇지 않는다
         rel[b] = {
-            "before": cards([r for c in cids for r in cons[c][1]], b),
-            "same": [x for x in cards(cids, b) if used[x][0].split()[0] != home],
-            "after": cards([n for c in cids for n in next_of.get(c, [])], b),
+            "before": keep(cards([r for c in cids for r in cons[c][1]], b)),
+            "same": keep([x for x in cards(cids, b) if used[x][0].split()[0] != home]),
+            "after": keep(cards([n for c in cids for n in next_of.get(c, [])], b)),
         }
     return rel
 
@@ -260,10 +325,14 @@ def page_html(course, ch, sec, blocks):
     for b in items:
         body = b["body"]
         if b["type"] in NUMBERED:
-            no += 1
-            label = f'{ch["n"]}.{sec["n"]}.{no}'
+            if 'data-kind="본문"' in body:
+                label = "본문"
+            else:
+                no += 1
+                label = f'{"탐구" if b["type"] == "card" else "읽기"} {no}'
             body = body.replace('<span class="no"></span>', f'<span class="no">{label}</span>', 1)
-            toc.append(f'        <li><a href="#{b["id"]}"><span class="mono">{label}</span>{b["toc_title"]}</a></li>')
+            title = re.sub(r"^본문\s*·\s*", "", b["toc_title"]) if label == "본문" else b["toc_title"]   # 꼬리표와 겹치는 '본문 ·'는 뺀다
+            toc.append(f'        <li><a href="#{b["id"]}"><span class="mono">{label}</span>{title}</a></li>')
         elif b["type"] == "video":
             toc.append(f'        <li><a href="#{b["id"]}"><span class="mono">영상</span>{b["toc_title"]}</a></li>')
         bodies.append(indent(body, 6) + (rel_html(b["id"], here) if b["type"] in NUMBERED else ""))
@@ -290,6 +359,7 @@ def page_html(course, ch, sec, blocks):
   <meta name="description" content="{H.escape(desc)}">
 {pwa_head("../../")}
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
 {math_css}{style}</head>
 <body data-course="{course["id"]}" data-sec="{ch["n"]}-{sec["n"]}">
 
@@ -311,16 +381,14 @@ def page_html(course, ch, sec, blocks):
       <ol id="toc-list">
 {chr(10).join(toc)}
       </ol>
-      <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec={course["id"]}-{ch["n"]}-{sec["n"]}"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">{exam_count(course, ch, sec)} →</span></a>
+      <p class="progress mono small"></p>{practice_links(course, ch, sec, "side")}
       <p class="toc-links mono small"><a href="../../graph.html?sec={course["id"]}-{ch["n"]}-{sec["n"]}">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
 {(chr(10) + chr(10)).join(bodies)}
 
-      <a class="px-go" href="../../practice.html?sec={course["id"]}-{ch["n"]}-{sec["n"]}"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">{exam_count(course, ch, sec)}</span></a>
-
+{practice_links(course, ch, sec, "end")}
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
@@ -330,7 +398,7 @@ def page_html(course, ch, sec, blocks):
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 {math_js}<script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
@@ -367,6 +435,14 @@ def build_graph(blocks, used, out):
         for r in c["req"]:
             if r not in ids:
                 errors.append(f'{c["line"]}행 {c["id"]}: 없는 선수 개념 {r}')
+    # 수학(교양·심화 포함)과 과학은 개념 지도에서 서로 잇지 않는다
+    cdom = {c["id"]: set().union(*[block_domains(x) for x in c["blocks"]]) - {None} for c in concepts}
+    for c in concepts:
+        if len(cdom[c["id"]]) > 1:
+            errors.append(f'{c["line"]}행 {c["id"]}: 수학 블록과 과학 블록이 한 개념에 섞임')
+        for r in c["req"]:
+            if r in cdom and cdom[r] and cdom[c["id"]] and not (cdom[r] & cdom[c["id"]]):
+                errors.append(f'{c["line"]}행 {c["id"]}: 선수 개념 {r}이 다른 분야(수학·과학)에 있음')
     # 선수 관계에 순환이 있으면 안 된다
     req = {c["id"]: [r for r in c["req"] if r in ids] for c in concepts}
     state = {}
@@ -398,6 +474,8 @@ def build_graph(blocks, used, out):
             a, sep, b = (x.strip() for x in line.partition(">"))
             if not sep or a not in used or b not in used:
                 raise SystemExit(f"graph/links.txt {ln}행: '먼저 블록 > 다음 블록' 형식이 아니거나 배치되지 않은 블록")
+            if block_domains(a) != block_domains(b):
+                raise SystemExit(f"graph/links.txt {ln}행: 수학과 과학 블록은 잇지 않는다")
             extra.append([a, b])
     wr(out / "js" / "graph-data.js", "/* 자동 생성: python3 tools/build.py (원본: graph/concepts.txt, graph/links.txt) — 직접 고치지 말 것 */\n"
         + "window.GRAPH = " + json.dumps(data, ensure_ascii=False) + ";\nwindow.GRAPH_LINKS = " + json.dumps(extra, ensure_ascii=False) + ";\n")
@@ -418,7 +496,8 @@ def main():
     pages = []
     for c in cur["courses"]:
         NAMES[c["id"]] = c["name"]
-        tc = {"id": c["id"], "name": c["name"], "meta": c["meta"], "track": c["track"], "level": c["level"], "chapters": []}
+        DOMAIN[c["id"]] = "math" if c["track"] == "math" or c["id"] == "extra" else "sci"
+        tc = {"id": c["id"], "name": c["name"], "meta": c["meta"], "track": c["track"], "level": c["level"], "split": exam_split(c), "chapters": []}
         toc.append(tc)
         for ch in c["chapters"]:
             tch = {"n": ch["n"], "title": ch["title"], "sections": []}
@@ -433,7 +512,11 @@ def main():
                     used.setdefault(bid, []).append(here)   # 한 블록을 여러 과목·절에 재사용할 수 있다
                 items = [{"kind": TOC_KIND[blocks[b]["type"]], "id": b, "title": tex_plain(blocks[b]["title"])}
                          for b in s["blocks"] if blocks[b]["type"] in TOC_KIND]
-                tch["sections"].append({"n": s["n"], "title": s["title"], "code": s["code"], "page": bool(s["blocks"]), "items": items})
+                ts = {"n": s["n"], "title": s["title"], "code": s["code"], "page": bool(s["blocks"]), "items": items}
+                ex, ai = exam_n(c, ch, s), bank_counts(c["id"]).get(f'{ch["n"]}-{s["n"]}', 0)
+                if ex: ts["ex"] = ex   # 기출 문항 수
+                if ai: ts["ai"] = ai   # AI 출제 연습 문항 수
+                tch["sections"].append(ts)
                 if s["blocks"]:
                     pages.append((c, ch, s))
 
@@ -448,8 +531,18 @@ def main():
         wr(p, page_html(c, ch, s, blocks))
 
     (out / "js").mkdir(parents=True, exist_ok=True)
-    wr(out / "js" / "toc.js", "/* 자동 생성: python3 tools/build.py — 직접 고치지 말 것 */\nwindow.TOC = " + json.dumps(toc, ensure_ascii=False, indent=1) + ";\n")
+    head = "/* 자동 생성: python3 tools/build.py — 직접 고치지 말 것 */\nwindow.TOC = "
+    # 전 과목 목차는 첫 화면·연습 시험·노트·개념 지도만 읽는다. 절 페이지는 자기 과목 것(c/<과목>/toc.js)만 읽어 받는 양을 줄인다
+    wr(out / "js" / "toc.js", head + json.dumps(toc, ensure_ascii=False, separators=(",", ":")) + ";\n")
+    for c in toc:
+        (out / "c" / c["id"]).mkdir(parents=True, exist_ok=True)
+        wr(out / "c" / c["id"] / "toc.js", head + json.dumps([c], ensure_ascii=False, separators=(",", ":")) + ";\n")
     build_graph(blocks, used, out)
+    # 검색 엔진용 사이트맵: 첫 화면·연습 화면과 과목·절 페이지 (robots.txt는 radix24.github.io 저장소에 있다)
+    urls = ["", "practice.html", "bank.html", "graph.html"] + [f'c/{c["id"]}/' for c in toc] + \
+        [f'c/{c["id"]}/{ch["n"]}-{s["n"]}.html' for c in toc for ch in c["chapters"] for s in ch["sections"] if s["page"]]
+    wr(out / "sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+       + "".join(f"<url><loc>{SITE_URL}{u}</loc></url>\n" for u in dict.fromkeys(urls)) + "</urlset>\n")
     if out == ROOT:
         build_sw()   # 페이지를 모두 만든 뒤에 해시를 잰다
     unused = sorted(set(blocks) - set(used))

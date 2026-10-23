@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>테일러다항식과 테일러급수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="테일러다항식, 테일러 정리와 오차, 테일러급수. cos x를 이차식으로 직접 흉내 내 보고 테일러다항식과 비교하는 만들기 카드, 차수와 중심을 바꾸며 테일러다항식이 함수를 따라가는 범위를 보는 조작 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adcalc-taylor-fit canvas { aspect-ratio: 16 / 10; }
@@ -44,18 +49,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adcalc-taylor-fit"><span class="mono">3.6.1</span>이차식으로 cos x 흉내 내기</a></li>
-        <li><a href="#card-adcalc-taylor-build"><span class="mono">3.6.2</span>차수를 올리며 테일러다항식 보기</a></li>
+        <li><a href="#text-adcalc-taylor"><span class="mono">본문</span>테일러다항식과 테일러급수</a></li>
+        <li><a href="#card-adcalc-taylor-fit"><span class="mono">탐구 1</span>이차식으로 cos x 흉내 내기</a></li>
+        <li><a href="#card-adcalc-taylor-build"><span class="mono">탐구 2</span>차수를 올리며 테일러다항식 보기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adcalc-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adcalc&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adcalc-3-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adcalc-taylor" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>테일러다항식과 테일러급수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(\cos x\)의 그래프는 \(x = 0\)에서 높이 1, 기울기 0인 봉우리를 이룬다. 이 봉우리를 이차식 \(a + bx + cx^2\)으로 흉내 내려면, 높이와 기울기를 맞추는 것만으로는 부족하고 휘어진 정도까지 맞추어야 한다. 그렇게 정한 이차식은 \(1 - x^2/2\)인데, \(x = 0.5\)에서 0.875로 \(\cos0.5 = 0.8776\)과 아주 가깝다. 차수를 하나씩 올리면 다항식은 \(\cos x\)를 어디까지 따라갈까? 그리고 오차는 얼마나 될까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="차수에 따른 cos x의 테일러다항식">
+              <g class="s">
+                <text x="20" y="22">다항식</text><text x="200" y="22">x = 0.5</text><text x="300" y="22">x = 1</text><text x="400" y="22">x = 2</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">1 − x²/2</text><text x="200" y="52">0.8750</text><text x="300" y="52">0.5</text><text x="400" y="52">−1</text>
+                <text x="20" y="74">1 − x²/2 + x⁴/24</text><text x="200" y="74">0.87760</text><text x="300" y="74">0.5417</text><text x="400" y="74">−0.333</text>
+                <text x="20" y="96">… − x⁶/720</text><text x="200" y="96">0.877582</text><text x="300" y="96">0.54028</text><text x="400" y="96">−0.4222</text>
+                <text x="20" y="122">cos x</text><text x="200" y="122" class="td">0.877583</text><text x="300" y="122" class="td">0.54030</text><text x="400" y="122" class="td">−0.4161</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 차수를 올릴수록 다항식이 \(\cos x\)를 더 멀리까지 정확히 따라간다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>접선의 기울기, 합성함수의 미분법, 삼각함수의 도함수, 지수함수의 도함수, 멱급수(<a href="3-5.html">멱급수의 성질과 함수의 표현</a>).</div>
+
+          <h3><span class="no">3.6.1</span>도함수를 차례로 맞추다</h3>
+          <p>함수 \(f\)를 \(x = 0\) 근처에서 \(n\)차 다항식 \(p(x) = c_0 + c_1x + \cdots + c_nx^n\)으로 흉내 내려면, 0에서 함숫값과 1계부터 \(n\)계까지의 도함수가 모두 같도록 계수를 정한다. \(p\)를 \(k\)번 미분해 \(x = 0\)을 넣으면 \(k!\,c_k\)만 남으므로, \(c_k = f^{(k)}(0)/k!\)이다. 함숫값을 맞추면 높이가, 1계 도함수를 맞추면 기울기가, 2계 도함수를 맞추면 휘어진 정도가 같아진다. 이렇게 만든 다항식을 테일러다항식이라 하며, 1차 테일러다항식이 곧 접선이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.6.1 <span class="nm">테일러다항식과 나머지</span></span>
+            <p>\(f\)의 \(x = 0\)에서의 \(n\)차 테일러다항식은 \[p_n(x) = \sum_{k=0}^{n}\frac{f^{(k)}(0)}{k!}x^k\]이다. 오차 \(R_n(x) = f(x) - p_n(x)\)는 0과 \(x\) 사이의 어떤 \(c\)에 대해 \(R_n(x) = \dfrac{f^{(n+1)}(c)}{(n+1)!}x^{n+1}\)이다. \(n \to \infty\)일 때 \(R_n \to 0\)이면 \(f\)는 테일러급수와 같다.</p>
+          </div>
+          <p>\(\cos x\)의 도함수는 \(\cos, -\sin, -\cos, \sin\)이 되풀이되므로 0에서의 값은 \(1, 0, -1, 0, 1, \ldots\)이다. 그래서 \(\cos x = 1 - \dfrac{x^2}{2!} + \dfrac{x^4}{4!} - \cdots\)이고, 짝수 차 항만 나오는 것은 \(\cos x\)가 우함수이기 때문이다. \(e^x\)는 모든 도함수가 \(e^x\)여서 0에서 모두 1이므로 \(e^x = 1 + x + \dfrac{x^2}{2!} + \cdots\)이다. 나머지의 식에서 \((n+1)!\)이 \(x^{n+1}\)보다 훨씬 빨리 커지므로, 이 두 함수는 모든 \(x\)에서 테일러급수와 같다.<sup class="fn"><a href="#fn-adcalc-taylor-1">1</a></sup></p>
+
+          <h3><span class="no">3.6.2</span>오차의 크기를 미리 알다</h3>
+          <p>테일러다항식으로 어림할 때는 나머지 식으로 오차의 상한을 구할 수 있다. \(\cos x\)는 모든 도함수의 절댓값이 1 이하이므로 \(|R_n(x)| \le \dfrac{|x|^{n+1}}{(n+1)!}\)이다. 그래서 \(x = 0.5\)에서 2차 다항식의 오차는 \(\dfrac{0.5^3}{6} \approx 0.021\) 이하인데, \(\cos\)는 3차 항이 0이므로 사실 3차 다항식과 같아 오차는 \(\dfrac{0.5^4}{24} \approx 0.0026\) 이하이다. 실제 오차 0.0026과 거의 같다. 이렇게 오차를 미리 알 수 있어서, 원하는 정확도에 필요한 차수를 정할 수 있다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="e^0.5의 테일러다항식과 오차">
+              <g class="s">
+                <text x="20" y="22">차수 n</text><text x="140" y="22">1</text><text x="220" y="22">2</text><text x="300" y="22">3</text><text x="390" y="22">4</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">pₙ(0.5)</text><text x="140" y="52">1.5</text><text x="220" y="52">1.625</text><text x="300" y="52">1.645833</text><text x="390" y="52">1.648438</text>
+                <text x="20" y="74">실제 오차</text><text x="140" y="74">0.149</text><text x="220" y="74">0.024</text><text x="300" y="74" class="td">0.0029</text><text x="390" y="74">0.00028</text>
+                <text x="20" y="96">오차 상한</text><text x="140" y="96">0.21</text><text x="220" y="96">0.034</text><text x="300" y="96" class="tb">0.0043</text><text x="390" y="96">0.00043</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(e^{0.5} = 1.648721\cdots\)이다. 실제 오차는 늘 나머지 식으로 구한 상한보다 작다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+            <p>\(e^x\)의 3차 테일러다항식으로 \(e^{0.5}\)를 구하고, 나머지 식으로 오차의 상한을 구하여라. \(e^{0.5} &lt; 1.65\)를 써도 된다. 오차를 \(10^{-5}\) 이하로 하려면 몇 차까지 필요한가?</p>
+          </div>
+          <p>\(p_3(0.5) = 1 + 0.5 + \dfrac{0.25}{2} + \dfrac{0.125}{6} = 1 + 0.5 + 0.125 + 0.0208333 = 1.6458333\)이다. 나머지는 \(R_3 = \dfrac{e^c}{4!}0.5^4\)이고 \(0 &lt; c &lt; 0.5\)이므로 \(e^c &lt; 1.65\)이다. 그래서 \(R_3 &lt; \dfrac{1.65\times0.0625}{24} \approx 0.0043\)이다. 실제 오차는 \(1.6487213 - 1.6458333 \approx 0.0029\)로 상한 안에 든다.</p>
+          <p>\(\dfrac{1.65\times0.5^{n+1}}{(n+1)!} \le 10^{-5}\)이 되는 \(n\)을 찾으면, \(n = 5\)일 때 \(1.65\times0.015625/720 \approx 3.6\times10^{-5}\)이고, \(n = 6\)일 때 \(1.65\times0.0078/5040 \approx 2.6\times10^{-6}\)이다. 그래서 6차면 충분하다. 즉 테일러다항식은 한 점에서 함숫값과 도함수들을 차례로 맞추어 함수를 흉내 내는 다항식이고, 나머지 식이 오차의 크기를 미리 알려 주어 필요한 차수를 정할 수 있다.</p>
+          <p>아래 탐구 카드에서 이차식의 계수를 바꾸며 \(\cos x\)를 가장 잘 흉내 내는 식을 찾고, 차수를 올리며 테일러다항식이 함수를 어디까지 따라가는지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adcalc-taylor-1">이 다항식은 1715년 영국의 테일러가 일반적인 형태로 발표했다. \(\ln(1 + x)\)처럼 테일러급수가 \(|x| &lt; 1\)에서만 함수와 같은 경우도 있고, 모든 도함수가 0에서 0인데도 함수는 0이 아닌 \(e^{-1/x^2}\) 같은 예외도 있어, 나머지가 0으로 가는지 꼭 확인해야 한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>\(f\)의 \(n\)차 테일러다항식은 한 점에서 함숫값과 \(n\)계까지의 도함수를 모두 맞춘 다항식으로, 계수는 \(f^{(k)}(0)/k!\)이며 1차 테일러다항식이 접선이다. 오차는 나머지 \(f^{(n+1)}(c)x^{n+1}/(n+1)!\)로 미리 어림할 수 있고, 나머지가 0으로 가면 함수는 테일러급수와 같다. 처음 질문의 이차식 \(1 - x^2/2\)는 \(\cos x\)의 2차 테일러다항식이어서 \(x = 0.5\)에서 오차가 0.003보다 작고, 차수를 올릴수록 더 멀리까지 맞는다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-7.html#card-adcalc-calc-sin"><small class="mono">고급 미적분 3.7</small>계산기는 sin 1000circ를 어떻게 계산할까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-pendulum"><small class="mono">고급 미적분 3.7</small>진자의 주기 공식 2π√L/g는 언제까지 믿을 수 있을까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-relativity"><small class="mono">고급 미적분 3.7</small>운동 에너지 1/2mv²은 상대성 이론의 어떤 근사일까?</a><a href="../../c/adcalc/3-7.html#text-adcalc-taylor-use"><small class="mono">고급 미적분 3.7</small>테일러급수의 활용</a></div></nav>
+
       <article class="card" id="card-adcalc-taylor-fit">
         <header class="card-head">
-          <span class="no">3.6.1</span><h2>이차식 하나로 \(\cos x\)를 가장 잘 흉내 내려면?</h2><span class="kind">테일러다항식 · 만들기 · 예측 → 확인</span>
+          <span class="no">탐구 1</span><h2>이차식 하나로 \(\cos x\)를 가장 잘 흉내 내려면?</h2><span class="kind">테일러다항식 · 만들기 · 예측 → 확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -79,30 +142,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>계산기에는 \(\cos\) 표가 없습니다. 덧셈과 곱셈만으로 계산하는 다항식으로 \(\cos x\)를 흉내 낼 수 있다면 편리합니다. \(x = 0\) 근처에서 \(\cos x\)와 가장 비슷한 이차식 \(c_0 + c_1x + c_2x^2\)은 무엇일까요? 막대로 직접 맞춰 보세요.</li>
-            <li><span class="tag">복원</span>접선 \(y = f(a) + f'(a)(x - a)\)는 \(x = a\)에서 함숫값과 기울기가 \(f\)와 같은 일차식입니다. 이계도함수는 그래프가 휘는 정도를 나타냅니다.</li>
-            <li><span class="tag">설명</span>"0 근처에서 가장 비슷하다"는 것을 "0에서 함숫값, 기울기, 휘는 정도가 모두 같다"로 정하면 \(p(0) = f(0)\), \(p'(0) = f'(0)\), \(p''(0) = f''(0)\)이고, \(p''(0) = 2c_2\)이므로 \[c_0 = f(0),\quad c_1 = f'(0),\quad c_2 = \frac{f''(0)}{2}\]입니다. 일반적으로 \(n\)계도함수까지 맞춘 \(T_n(x) = \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x - a)^k\)을 <em>테일러다항식</em>이라고 합니다. \(\cos x\)에서는 \(T_2(x) = 1 - \frac{x^2}{2}\)입니다.</li>
-            <li><span class="tag">연결</span>테일러다항식의 차수를 끝없이 늘린 급수 \(\sum\frac{f^{(k)}(a)}{k!}(x - a)^k\)을 <em>테일러급수</em>라고 합니다. \(\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots\), \(e^x = 1 + x + \frac{x^2}{2!} + \cdots\)은 모든 \(x\)에서 원래 함수와 같습니다.</li>
-            <li><span class="tag">적용</span>막대로 \(\cos x\)에 가장 잘 맞는 이차식을 만든 다음 테일러다항식과 비교하세요. \(x = 0.1\)에서는 어느 쪽 오차가 작은가요? \([-1, 1]\) 전체의 최대 오차는 어떤가요? \(e^x\)로도 해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>테일러다항식은 중심 근처에서 가장 잘 맞도록 만든 것이지, 넓은 구간 전체에서 최대 오차가 가장 작은 다항식은 아닙니다. 막대로 맞춘 식이 \([-1, 1]\)의 최대 오차는 더 작을 수도 있습니다. 구간 전체를 고르게 맞추는 다항식은 다른 방법(최소최대 근사)으로 만듭니다.</li>
+            <li><span class="tag">질문</span>계산기에는 \(\cos\) 표가 없다. 덧셈과 곱셈만으로 계산하는 다항식으로 \(\cos x\)를 흉내 낼 수 있다면 편리하다. \(x = 0\) 근처에서 \(\cos x\)와 가장 비슷한 이차식 \(c_0 + c_1x + c_2x^2\)은 무엇일까? 막대로 직접 맞춰 보자.</li>
+            <li><span class="tag">복원</span>접선 \(y = f(a) + f'(a)(x - a)\)는 \(x = a\)에서 함숫값과 기울기가 \(f\)와 같은 일차식이다. 이계도함수는 그래프가 휘는 정도를 나타낸다.</li>
+            <li><span class="tag">설명</span>"0 근처에서 가장 비슷하다"는 것을 "0에서 함숫값, 기울기, 휘는 정도가 모두 같다"로 정하면 \(p(0) = f(0)\), \(p'(0) = f'(0)\), \(p''(0) = f''(0)\)이고, \(p''(0) = 2c_2\)이므로 \[c_0 = f(0),\quad c_1 = f'(0),\quad c_2 = \frac{f''(0)}{2}\]이다. 일반적으로 \(n\)계도함수까지 맞춘 \(T_n(x) = \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x - a)^k\)을 <em>테일러다항식</em>이라고 한다. \(\cos x\)에서는 \(T_2(x) = 1 - \frac{x^2}{2}\)이다.</li>
+            <li><span class="tag">연결</span>테일러다항식의 차수를 끝없이 늘린 급수 \(\sum\frac{f^{(k)}(a)}{k!}(x - a)^k\)을 <em>테일러급수</em>라고 한다. \(\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots\), \(e^x = 1 + x + \frac{x^2}{2!} + \cdots\)은 모든 \(x\)에서 원래 함수와 같다.</li>
+            <li><span class="tag">적용</span>막대로 \(\cos x\)에 가장 잘 맞는 이차식을 만든 다음 테일러다항식과 비교해 보자. \(x = 0.1\)에서는 어느 쪽 오차가 작은가? \([-1, 1]\) 전체의 최대 오차는 어떤가? \(e^x\)로도 해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>테일러다항식은 중심 근처에서 가장 잘 맞도록 만든 것이지, 넓은 구간 전체에서 최대 오차가 가장 작은 다항식은 아니다. 막대로 맞춘 식이 \([-1, 1]\)의 최대 오차는 더 작을 수도 있다. 구간 전체를 고르게 맞추는 다항식은 다른 방법(최소최대 근사)으로 만든다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = \ln(1 + x)\)의 \(x = 0\)에서의 2차 테일러다항식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x - \frac{x^2}{2}\)<span class="why"><b>맞습니다.</b> \(f(0) = 0\), \(f'(0) = 1\), \(f''(0) = -1\)이므로 \(c_2 = -\frac{1}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x - x^2\)<span class="why"><b>\(2!\)로 나누지 않았습니다.</b> \(c_2 = \frac{f''(0)}{2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(1 + x - \frac{x^2}{2}\)<span class="why"><b>\(f(0) = \ln 1 = 0\)인데 1을 넣었습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x + \frac{x^2}{2}\)<span class="why"><b>\(f''(x) = -\frac{1}{(1 + x)^2}\)의 부호를 놓쳤습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(x - \frac{x^2}{2}\)<span class="why"><b>맞다.</b> \(f(0) = 0\), \(f'(0) = 1\), \(f''(0) = -1\)이므로 \(c_2 = -\frac{1}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x - x^2\)<span class="why"><b>\(2!\)로 나누지 않았다.</b> \(c_2 = \frac{f''(0)}{2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(1 + x - \frac{x^2}{2}\)<span class="why"><b>\(f(0) = \ln 1 = 0\)인데 1을 넣었다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(x + \frac{x^2}{2}\)<span class="why"><b>\(f''(x) = -\frac{1}{(1 + x)^2}\)의 부호를 놓쳤다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-7.html#card-adcalc-calc-sin"><small class="mono">고급 미적분 3.7</small>계산기는 sin 1000circ를 어떻게 계산할까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-pendulum"><small class="mono">고급 미적분 3.7</small>진자의 주기 공식 2π√L/g는 언제까지 믿을 수 있을까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-relativity"><small class="mono">고급 미적분 3.7</small>운동 에너지 1/2mv²은 상대성 이론의 어떤 근사일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-7.html#card-adcalc-calc-sin"><small class="mono">고급 미적분 3.7</small>계산기는 sin 1000circ를 어떻게 계산할까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-pendulum"><small class="mono">고급 미적분 3.7</small>진자의 주기 공식 2π√L/g는 언제까지 믿을 수 있을까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-relativity"><small class="mono">고급 미적분 3.7</small>운동 에너지 1/2mv²은 상대성 이론의 어떤 근사일까?</a><a href="../../c/adcalc/3-7.html#text-adcalc-taylor-use"><small class="mono">고급 미적분 3.7</small>테일러급수의 활용</a></div></nav>
 
       <article class="card" id="card-adcalc-taylor-build">
         <header class="card-head">
-          <span class="no">3.6.2</span><h2>차수를 올리면 테일러다항식은 어디까지 함수를 따라갈까?</h2><span class="kind">테일러다항식과 테일러급수 · 조작</span>
+          <span class="no">탐구 2</span><h2>차수를 올리면 테일러다항식은 어디까지 함수를 따라갈까?</h2><span class="kind">테일러다항식과 테일러급수 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -124,39 +187,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\sin x\)의 테일러다항식은 차수를 올릴수록 더 넓은 범위에서 \(\sin x\)를 따라갑니다. 차수를 끝없이 올리면 모든 함수를 어디서나 따라갈 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(T_n(x) = \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x - a)^k\)는 \(x = a\)에서 \(n\)계도함수까지 \(f\)와 같은 다항식입니다.</li>
-            <li><span class="tag">설명</span>오차 \(R_n(x) = f(x) - T_n(x)\)는 \(a\)와 \(x\) 사이의 어떤 \(c\)에 대해 \[R_n(x) = \frac{f^{(n+1)}(c)}{(n + 1)!}(x - a)^{n+1}\]입니다(테일러 정리). \(\sin x\), \(e^x\)는 도함수가 제한되거나 천천히 커지므로 \((n + 1)!\)이 이겨서 모든 \(x\)에서 \(R_n \to 0\)이고, 테일러급수가 원래 함수와 같습니다. \(\ln(1 + x)\)는 \(f^{(n+1)}\)이 \(n!\)처럼 커져서 \(|x| &lt; 1\)에서만 따라가고, \(x &gt; 1\)에서는 차수를 올릴수록 오히려 크게 벗어납니다.</li>
-            <li><span class="tag">연결</span>아래 그림은 오차를 로그 눈금으로 보여 줍니다. 오차의 골짜기가 중심 \(a\)에 있고, 차수를 올릴 때 골짜기가 넓어지면 테일러급수가 그 범위에서 함수로 수렴하는 것입니다. 중심을 옮기면 같은 차수라도 맞는 곳이 옮겨 갑니다.</li>
-            <li><span class="tag">적용</span>\(\sin x\)에서 \(n\)을 1, 3, 5, …로 올리며 맞는 범위가 넓어지는지 보세요. \(\ln(1 + x)\)에서는 \(x = 1.5\) 근처가 어떻게 되나요? 중심을 \(a = 1\)로 옮기면 어떻게 바뀌나요? 마지막 보기 \(e^{-1/x^2}\)의 테일러다항식은 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(f(x) = e^{-1/x^2}\ (f(0) = 0)\)은 \(x = 0\)에서 모든 계도함수가 0이라 테일러급수가 \(0 + 0 + \cdots = 0\)입니다. 급수는 모든 \(x\)에서 수렴하지만 \(x \ne 0\)에서 원래 함수와 다릅니다. "테일러급수가 수렴한다"와 "테일러급수가 그 함수와 같다"는 다른 말입니다.</li>
+            <li><span class="tag">질문</span>\(\sin x\)의 테일러다항식은 차수를 올릴수록 더 넓은 범위에서 \(\sin x\)를 따라간다. 차수를 끝없이 올리면 모든 함수를 어디서나 따라갈 수 있을까?</li>
+            <li><span class="tag">복원</span>\(T_n(x) = \sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x - a)^k\)는 \(x = a\)에서 \(n\)계도함수까지 \(f\)와 같은 다항식이다.</li>
+            <li><span class="tag">설명</span>오차 \(R_n(x) = f(x) - T_n(x)\)는 \(a\)와 \(x\) 사이의 어떤 \(c\)에 대해 \[R_n(x) = \frac{f^{(n+1)}(c)}{(n + 1)!}(x - a)^{n+1}\]이다(테일러 정리). \(\sin x\), \(e^x\)는 도함수가 제한되거나 천천히 커지므로 \((n + 1)!\)이 이겨서 모든 \(x\)에서 \(R_n \to 0\)이고, 테일러급수가 원래 함수와 같다. \(\ln(1 + x)\)는 \(f^{(n+1)}\)이 \(n!\)처럼 커져서 \(|x| &lt; 1\)에서만 따라가고, \(x &gt; 1\)에서는 차수를 올릴수록 오히려 크게 벗어난다.</li>
+            <li><span class="tag">연결</span>아래 그림은 오차를 로그 눈금으로 보여 준다. 오차의 골짜기가 중심 \(a\)에 있고, 차수를 올릴 때 골짜기가 넓어지면 테일러급수가 그 범위에서 함수로 수렴하는 것이다. 중심을 옮기면 같은 차수라도 맞는 곳이 옮겨 간다.</li>
+            <li><span class="tag">적용</span>\(\sin x\)에서 \(n\)을 1, 3, 5, …로 올리며 맞는 범위가 넓어지는지 보자. \(\ln(1 + x)\)에서는 \(x = 1.5\) 근처가 어떻게 되는가? 중심을 \(a = 1\)로 옮기면 어떻게 바뀌는가? 마지막 보기 \(e^{-1/x^2}\)의 테일러다항식은 무엇인가?</li>
+            <li class="warn"><span class="tag">판단</span>\(f(x) = e^{-1/x^2}\ (f(0) = 0)\)은 \(x = 0\)에서 모든 계도함수가 0이라 테일러급수가 \(0 + 0 + \cdots = 0\)이다. 급수는 모든 \(x\)에서 수렴하지만 \(x \ne 0\)에서 원래 함수와 다르다. "테일러급수가 수렴한다"와 "테일러급수가 그 함수와 같다"는 다른 말이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(e^x\)를 \(T_3(x) = 1 + x + \frac{x^2}{2} + \frac{x^3}{6}\)으로 \(x = 0.5\)에서 계산할 때 오차의 크기는 대략?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{0.5^4}{4!}\)쯤, 약 0.003<span class="why"><b>맞습니다.</b> 다음 항 \(\frac{x^4}{4!} \approx 0.0026\)이 오차의 대부분입니다. 실제 오차는 약 0.0029입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{0.5^3}{3!}\)쯤, 약 0.02<span class="why"><b>마지막으로 넣은 항을 오차로 보았습니다.</b> 오차는 빠진 첫 항 쪽입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0이다<span class="why"><b>다항식은 \(e^x\)와 같지 않습니다.</b> 0인 것은 \(x = 0\)에서뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 0.5<span class="why"><b>지나치게 큰 값입니다.</b> \(T_3(0.5) \approx 1.6458\), \(e^{0.5} \approx 1.6487\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{0.5^4}{4!}\)쯤, 약 0.003<span class="why"><b>맞다.</b> 다음 항 \(\frac{x^4}{4!} \approx 0.0026\)이 오차의 대부분이다. 실제 오차는 약 0.0029이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{0.5^3}{3!}\)쯤, 약 0.02<span class="why"><b>마지막으로 넣은 항을 오차로 보았다.</b> 오차는 빠진 첫 항 쪽이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>0이다<span class="why"><b>다항식은 \(e^x\)와 같지 않다.</b> 0인 것은 \(x = 0\)에서뿐이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 0.5<span class="why"><b>지나치게 큰 값이다.</b> \(T_3(0.5) \approx 1.6458\), \(e^{0.5} \approx 1.6487\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a><a href="../../c/pmath/1-4.html#card-pmath-jerk"><small class="mono">전문 수학 1.4</small>엘리베이터가 덜컹거리지 않으려면 몇 번째 도함수까지 매끄러워야 할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-7.html#card-adcalc-calc-sin"><small class="mono">고급 미적분 3.7</small>계산기는 sin 1000circ를 어떻게 계산할까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-pendulum"><small class="mono">고급 미적분 3.7</small>진자의 주기 공식 2π√L/g는 언제까지 믿을 수 있을까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-relativity"><small class="mono">고급 미적분 3.7</small>운동 에너지 1/2mv²은 상대성 이론의 어떤 근사일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adcalc/3-4.html#card-adcalc-radius"><small class="mono">고급 미적분 3.4</small>멱급수는 x가 얼마일 때까지 수렴할까?</a><a href="../../c/adcalc/3-4.html#card-adcalc-radius-why"><small class="mono">고급 미적분 3.4</small>어디서나 매끄러운 1/(1 + x²)의 급수는 왜 |x| &lt; 1에서만 맞을까?</a><a href="../../c/adcalc/3-4.html#text-adcalc-power-series"><small class="mono">고급 미적분 3.4</small>멱급수와 수렴반경</a><a href="../../c/calc2/2-9.html#card-calc2-concavity"><small class="mono">미적분Ⅱ 2.9</small>곡선이 휘는 방향을 무엇으로 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/3-7.html#card-adcalc-calc-sin"><small class="mono">고급 미적분 3.7</small>계산기는 sin 1000circ를 어떻게 계산할까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-pendulum"><small class="mono">고급 미적분 3.7</small>진자의 주기 공식 2π√L/g는 언제까지 믿을 수 있을까?</a><a href="../../c/adcalc/3-7.html#card-adcalc-relativity"><small class="mono">고급 미적분 3.7</small>운동 에너지 1/2mv²은 상대성 이론의 어떤 근사일까?</a><a href="../../c/adcalc/3-7.html#text-adcalc-taylor-use"><small class="mono">고급 미적분 3.7</small>테일러급수의 활용</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adcalc-3-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adcalc&amp;sec=3-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

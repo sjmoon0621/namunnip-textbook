@@ -1,0 +1,59 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/alg/body.js"],
+  "sec": "3-6",
+  "short": "본문 · 수열의 귀납적 정의"
+}
+-->
+<article class="card reading" id="text-alg-recursion" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>수열의 귀납적 정의</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">가로 2, 세로 \(n\)인 판을 \(1 \times 2\) 크기의 타일로 빈틈없이 덮는 방법의 수를 \(a_n\)이라 하자. \(n = 10\)일 때의 방법은 그림을 다 그려 세기에는 너무 많다. 그런데 \(a_9\)와 \(a_8\)을 알면 \(a_{10}\)을 바로 구할 수 있다고 한다. 어떻게 그럴까?</p>
+    <figure class="q-fig" data-q="alg-tiling">
+      <svg viewBox="0 0 520 230" role="img" aria-label="2×n 판을 덮는 방법을 맨 끝 타일 모양에 따라 두 경우로 나누는 그림"></svg>
+      <div class="q-ctl"><label>\(n\) = <input type="range" data-k="n" min="1" max="12" step="1" value="6"><output data-k="n"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 판의 맨 끝을 세로 타일 하나로 덮으면 남은 판은 \(2 \times (n - 1)\), 가로 타일 두 개로 덮으면 \(2 \times (n - 2)\)이므로 \(a_n = a_{n-1} + a_{n-2}\)이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>수열과 일반항(<a href="3-1.html">수열의 뜻</a>), 등차수열과 등비수열(<a href="3-2.html">등차수열</a>, <a href="3-3.html">등비수열</a>), 합의 법칙(공통수학1).</div>
+
+    <h3><span class="no">3.6.1</span>첫째항과 규칙으로 정하기</h3>
+    <p>수열은 일반항으로 정할 수도 있지만, 첫째항과 이웃한 항 사이의 관계로 정할 수도 있다. 가령 '\(a_1 = 3\)이고, \(a_{n+1} = a_n + 2\)'라고 하면 \(a_2 = 5\), \(a_3 = 7\), …로 모든 항이 차례로 정해진다. 이렇게 처음 몇 항과 이웃한 항 사이의 관계식으로 수열을 정하는 것을 수열의 <em>귀납적 정의</em>라 하고, 관계식을 점화식이라 한다.</p>
+    <div class="tb-env"><span class="lb">정리 3.6.1 <span class="nm">대표적인 점화식</span></span>
+      <p>\(a_{n+1} = a_n + d\)이면 공차가 \(d\)인 등차수열이고, \(a_{n+1} = ra_n\)이면 공비가 \(r\)인 등비수열이다. \(2a_{n+1} = a_n + a_{n+2}\)이면 등차수열, \(a_{n+1}^2 = a_na_{n+2}\)이면 등비수열이다.</p>
+    </div>
+
+    <h3><span class="no">3.6.2</span>경우를 나누어 점화식 세우기</h3>
+    <p>점화식은 일반항을 찾기 어려운 문제에서 특히 쓸모 있다. 처음 질문의 판에서 맨 오른쪽 끝을 어떻게 덮었는지로 경우를 나누어 보자. 세로 타일 하나로 덮었다면 나머지 \(2 \times (n - 1)\) 판을 덮는 방법은 \(a_{n-1}\)가지이다. 가로 타일 두 개를 위아래로 겹쳐 덮었다면 나머지는 \(2 \times (n - 2)\) 판이고 \(a_{n-2}\)가지이다.</p>
+    <p>두 경우는 겹치지 않고 모든 경우를 빠짐없이 나누므로, 합의 법칙에 따라 \(a_n = a_{n-1} + a_{n-2}\)이다. 그런데 이 식만으로는 출발할 수 없다. \(a_1 = 1\), \(a_2 = 2\)를 직접 세어 주어야 \(a_3 = 3\), \(a_4 = 5\), \(a_5 = 8\), …이 차례로 정해진다. 그림 1의 슬라이더로 \(n\)을 바꾸어 보면 두 경우의 수가 앞의 두 값이다.<sup class="fn"><a href="#fn-alg-recursion-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 150" role="img" aria-label="점화식 a_{n+1}=2a_n+1로 항을 차례로 계산하는 사슬">
+        <g class="s">
+          <rect x="20" y="50" width="70" height="44" class="lc"/><text x="55" y="77" text-anchor="middle">a₁ = 1</text>
+          <rect x="130" y="50" width="70" height="44" class="lb"/><text x="165" y="77" text-anchor="middle">a₂ = 3</text>
+          <rect x="240" y="50" width="70" height="44" class="lb"/><text x="275" y="77" text-anchor="middle">a₃ = 7</text>
+          <rect x="350" y="50" width="70" height="44" class="lb"/><text x="385" y="77" text-anchor="middle">a₄ = 15</text>
+          <text x="460" y="77">…</text>
+          <text x="110" y="40" text-anchor="middle">×2+1</text><text x="220" y="40" text-anchor="middle">×2+1</text><text x="330" y="40" text-anchor="middle">×2+1</text>
+          <text x="260" y="130" text-anchor="middle">처음 값과 규칙만으로 모든 항이 이어서 정해진다</text>
+        </g>
+        <path d="M92 72 L128 72" class="k"/><path d="M202 72 L238 72" class="k"/><path d="M312 72 L348 72" class="k"/>
+      </svg>
+      <figcaption>그림 2. 귀납적 정의에서는 첫째항과 규칙이 사슬처럼 다음 항을 차례로 정한다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.6.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.6.2</span>
+      <p>처음 질문의 \(a_{10}\)을 구하여라. 또 \(a_1 = 1\), \(a_{n+1} = 2a_n + 1\)로 정해진 수열의 제5항을 구하고, \(b_n = a_n + 1\)로 두어 일반항을 구하여라.</p>
+    </div>
+    <p>\(a_1 = 1\), \(a_2 = 2\)에서 점화식으로 차례로 더하면 3, 5, 8, 13, 21, 34, 55, 89이므로 \(a_{10} = 89\)이다. 10칸짜리 판을 덮는 방법이 89가지라는 것을 그림을 하나도 그리지 않고 얻었다.</p>
+    <p>두 번째 수열은 1, 3, 7, 15, 31이므로 제5항은 31이다. 그런데 각 항에 1을 더하면 2, 4, 8, 16, 32로 등비수열처럼 보인다. 실제로 \(b_{n+1} = a_{n+1} + 1 = 2a_n + 2 = 2b_n\)이므로 \(\{b_n\}\)은 첫째항 2, 공비 2인 등비수열이다.</p>
+    <p>따라서 \(b_n = 2^n\)이고 \(a_n = 2^n - 1\)이다. 점화식을 아는 꼴로 바꾸는 치환 하나로 일반항까지 얻은 셈이다. 아래 탐구 카드에서 점화식의 첫째항과 규칙을 바꾸며 수열이 어떻게 이어지는지 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-alg-recursion-1">\(a_n = a_{n-1} + a_{n-2}\)를 만족하는 수열 1, 1, 2, 3, 5, 8, …을 피보나치수열이라 한다. 이웃한 두 항의 비 \(\tfrac{a_{n+1}}{a_n}\)은 \(n\)이 커질수록 황금비 \(\tfrac{1 + \sqrt{5}}{2} \approx 1.618\)에 가까워진다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>귀납적 정의는 처음 몇 항과 이웃한 항 사이의 점화식으로 수열을 정하며, 일반항을 바로 찾기 어려운 경우의 수 문제에서 경우를 나누어 점화식을 세우면 쉽게 풀린다. 그래서 처음 질문의 판은 맨 끝을 덮는 두 가지 방법으로 나누어 \(a_n = a_{n-1} + a_{n-2}\)를 얻고, \(a_{10} = 89\)이다.</p></div>
+  </div>
+</article>

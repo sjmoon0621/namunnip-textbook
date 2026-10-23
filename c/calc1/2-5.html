@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>접선의 방정식 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="곡선 y = f(x) 위의 점 (a, f(a))에서의 접선의 방정식 y − f(a) = f′(a)(x − a). 접점이 주어질 때, 기울기가 주어질 때, 곡선 밖의 점에서 그을 때의 세 경우와 접선이 곡선과 다시 만나는 경우.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-tangent-line canvas { aspect-ratio: 16 / 12; touch-action: pan-y; cursor: ew-resize; }
@@ -50,19 +55,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-tangent-line"><span class="mono">2.5.1</span>접점이 주어진 접선</a></li>
-        <li><a href="#card-calc1-tangent-slope"><span class="mono">2.5.2</span>기울기가 주어진 접선</a></li>
-        <li><a href="#card-calc1-tangent-ext"><span class="mono">2.5.3</span>곡선 밖의 점에서 그은 접선</a></li>
+        <li><a href="#text-calc1-tangent"><span class="mono">본문</span>접선의 방정식</a></li>
+        <li><a href="#card-calc1-tangent-line"><span class="mono">탐구 1</span>접점이 주어진 접선</a></li>
+        <li><a href="#card-calc1-tangent-slope"><span class="mono">탐구 2</span>기울기가 주어진 접선</a></li>
+        <li><a href="#card-calc1-tangent-ext"><span class="mono">탐구 3</span>곡선 밖의 점에서 그은 접선</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">99문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">99문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-2-5">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-tangent" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>접선의 방정식</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">곡선 \(y = x^3 - 3x\) 위의 점 \((2, 2)\)에서 곡선에 접하는 직선의 식은 무엇일까? 또 곡선 밖의 점 \((0, 2)\)에서 이 곡선에 접선을 그으면 몇 개나 그을 수 있을까? 접점을 모를 때는 어디서부터 시작해야 할까?</p>
+          <figure class="q-fig" data-q="calc1-tan">
+            <svg viewBox="0 0 520 280" role="img" aria-label="곡선 y=x³−3x 위의 점 t에서 그은 접선"></svg>
+            <div class="q-ctl"><label>접점의 \(x\)좌표 \(t\) = <input type="range" data-k="t" min="-2.2" max="2.2" step="0.1" value="2"><output data-k="t"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 접점 \((t, f(t))\)를 지나고 기울기가 \(f'(t)\)인 직선이 접선이다. 접점을 움직이면 접선이 곡선을 따라 돈다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>미분계수의 기하적 의미(<a href="2-1.html">미분계수</a>), 다항함수의 도함수(<a href="2-4.html">다항함수의 도함수</a>), 한 점과 기울기로 직선의 방정식 세우기, 인수분해.</div>
+
+          <h3><span class="no">2.5.1</span>접점을 알 때</h3>
+          <p>미분계수 \(f'(a)\)는 곡선 \(y = f(x)\) 위의 점 \((a, f(a))\)에서의 접선의 기울기이다. 한 점과 기울기를 알면 직선은 하나로 정해지므로, 접선의 방정식은 다음과 같이 바로 쓸 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.5.1 <span class="nm">접선의 방정식</span></span>
+            <p>곡선 \(y = f(x)\) 위의 점 \((a, f(a))\)에서의 접선의 방정식은 \[y - f(a) = f'(a)(x - a)\]</p>
+          </div>
+          <p>처음 질문의 곡선은 \(f'(x) = 3x^2 - 3\)이므로 \(f'(2) = 9\)이다. 따라서 점 \((2, 2)\)에서의 접선은 \(y - 2 = 9(x - 2)\), 곧 \(y = 9x - 16\)이다. 그림 1의 처음 모습이 이 직선이다.</p>
+
+          <h3><span class="no">2.5.2</span>기울기를 알 때, 곡선 밖의 점을 알 때</h3>
+          <p>기울기 \(m\)만 주어지면 \(f'(t) = m\)을 풀어 접점의 \(x\)좌표 \(t\)를 구한다. 가령 이 곡선에서 기울기가 0인 접선은 \(3t^2 - 3 = 0\), 곧 \(t = \pm 1\)에서 생기며, 접선은 \(y = -2\)와 \(y = 2\)이다.</p>
+          <p>곡선 밖의 점 \((p, q)\)를 지나는 접선은 접점을 모르므로, 접점을 \((t, f(t))\)로 두고 시작한다. 접선 \(y - f(t) = f'(t)(x - t)\)가 \((p, q)\)를 지나야 하므로 \(q - f(t) = f'(t)(p - t)\)이다. 이 \(t\)에 대한 방정식의 실근 하나하나가 접점 하나에 대응한다.<sup class="fn"><a href="#fn-calc1-tangent-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="접선을 구하는 세 가지 경우: 접점, 기울기, 곡선 밖의 점">
+              <g class="s">
+                <rect x="15" y="25" width="150" height="100" class="la"/><text x="90" y="50" text-anchor="middle">접점을 안다</text><text x="90" y="80" text-anchor="middle">기울기 f′(a)를 구해</text><text x="90" y="100" text-anchor="middle">바로 쓴다</text>
+                <rect x="185" y="25" width="150" height="100" class="lb"/><text x="260" y="50" text-anchor="middle">기울기 m을 안다</text><text x="260" y="80" text-anchor="middle">f′(t) = m을 풀어</text><text x="260" y="100" text-anchor="middle">접점을 찾는다</text>
+                <rect x="355" y="25" width="150" height="100" class="lc"/><text x="430" y="50" text-anchor="middle">밖의 점을 안다</text><text x="430" y="80" text-anchor="middle">접점을 (t, f(t))로 두고</text><text x="430" y="100" text-anchor="middle">t의 방정식을 푼다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 무엇을 아느냐에 따라 접점을 먼저 찾는 방법이 다르지만, 마지막에는 모두 '점과 기울기'로 직선을 쓴다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.5.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.5.2</span>
+            <p>점 \((0, 2)\)에서 곡선 \(y = x^3 - 3x\)에 그은 접선의 방정식을 모두 구하여라.</p>
+          </div>
+          <p>접점을 \((t, t^3 - 3t)\)라 하면 접선은 \(y - (t^3 - 3t) = (3t^2 - 3)(x - t)\)이다. 이 직선이 \((0, 2)\)를 지나므로 \(2 - t^3 + 3t = (3t^2 - 3)(-t)\)이다. 정리하면 \(2 - t^3 + 3t = -3t^3 + 3t\), 곧 \(2t^3 = -2\)이다.</p>
+          <p>따라서 \(t^3 = -1\)이고 실근은 \(t = -1\) 하나이다. 접점은 \((-1, 2)\), 기울기는 \(f'(-1) = 0\)이므로 접선은 \(y = 2\)이다.</p>
+          <p>그림 1에서 \(t = -1\)로 옮기면 접선이 수평선 \(y = 2\)가 되고, 이 직선이 점 \((0, 2)\)를 지나는 것을 볼 수 있다. 다른 \(t\)에서는 접선이 \((0, 2)\)를 지나지 않으므로 접선은 하나뿐이다. 아래 탐구 카드에서 접점과 기울기, 바깥의 점을 바꾸며 접선의 개수를 직접 세어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-tangent-1">삼차함수에서는 곡선 밖의 한 점을 지나는 접선이 그 점의 위치에 따라 1개, 2개, 3개가 될 수 있다. 개수는 \(t\)에 대한 삼차방정식의 실근의 개수와 같다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>접선은 접점 \((a, f(a))\)를 지나고 기울기가 \(f'(a)\)인 직선이므로 \(y - f(a) = f'(a)(x - a)\)이다. 기울기나 곡선 밖의 점이 주어지면 접점의 \(x\)좌표를 \(t\)로 두고 방정식을 풀어 접점부터 찾는다. 그래서 처음 질문의 접선은 \(y = 9x - 16\)이고, 점 \((0, 2)\)에서 그은 접선은 \(y = 2\) 하나이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/1-1.html#text-adcalc-newton"><small class="mono">고급 미적분 1.1</small>뉴턴의 방법</a></div></nav>
+
       <article class="card" id="card-calc1-tangent-line">
         <header class="card-head">
-          <span class="no">2.5.1</span><h2>곡선 위의 한 점에서 그은 접선의 방정식은?</h2><span class="kind">접선의 방정식 · 접점 끌기</span>
+          <span class="no">탐구 1</span><h2>곡선 위의 한 점에서 그은 접선의 방정식은?</h2><span class="kind">접선의 방정식 · 접점 끌기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,34 +137,34 @@
                 <div><dt>접선이 곡선과 다시 만나는 점 \(Q\)</dt><dd class="n-q">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">그림을 좌우로 끌면 접점 \(P\)가 곡선을 따라 움직입니다. 주황 직선이 \(P\)에서의 접선입니다.</p>
+              <p class="fig-note">그림을 좌우로 끌면 접점 \(P\)가 곡선을 따라 움직인다. 주황 직선이 \(P\)에서의 접선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>곡선 위의 한 점에서 곡선에 딱 맞닿는 직선을 식으로 쓰려면 무엇을 알아야 할까요? 그 직선은 곡선과 그 점에서만 만날까요?</li>
-            <li><span class="tag">복원</span>기울기가 \(m\)이고 점 \((x_1, y_1)\)을 지나는 직선은 \(y - y_1 = m(x - x_1)\)입니다. 미분계수 \(f'(a)\)는 점 \((a, f(a))\)에서의 접선의 기울기입니다.</li>
-            <li><span class="tag">설명</span>두 사실을 합치면 <em>곡선 \(y = f(x)\) 위의 점 \((a, f(a))\)에서의 접선의 방정식은 \(y - f(a) = f'(a)(x - a)\)</em>입니다. 순서는 ① \(f'(x)\)를 구하고 ② 접점의 \(x\)좌표 \(a\)를 넣어 기울기 \(f'(a)\)와 \(f(a)\)를 구한 뒤 ③ 식에 대입합니다. 예를 들어 \(y = x^3 - 3x\) 위의 점 (2, 2)에서는 \(y' = 3x^2 - 3\)이므로 기울기 9, 접선은 \(y = 9x - 16\)입니다.</li>
-            <li><span class="tag">연결</span>\(f'(a) = 0\)인 점에서는 접선이 \(x\)축과 평행한 직선 \(y = f(a)\)입니다. 이런 점은 그래프가 오르다가 내리거나 내리다가 오르는 곳의 후보가 됩니다. 접선의 방정식은 점 근처에서 함수를 일차식으로 어림하는 식으로도 쓰입니다.</li>
-            <li><span class="tag">적용</span>\(x^3 - 3x\)에서 \(P\)를 (2, 2)로 옮겨 접선의 식이 위 예와 같은지 확인하세요. \(a = 1\)로 두면 접선은 어떤 직선이고, \(Q\)는 어디에 생기나요? 여러 \(a\)에서 \(Q\)의 \(x\)좌표와 \(a\) 사이에 어떤 관계가 있나요? \(x^2\)로 바꾸면 \(Q\)가 생기나요?</li>
-            <li class="warn"><span class="tag">판단</span>접선은 '곡선과 한 점에서만 만나는 직선'이 아닙니다. 삼차함수의 접선은 보통 곡선과 다른 점 \(Q\)에서 또 만납니다. 거꾸로 한 점에서만 만나도 접선이 아닐 수 있습니다. 또 접선의 기울기를 \(f'(x)\) 식 그대로 두면 직선이 되지 않습니다. 반드시 접점의 \(x\)좌표를 넣은 수 \(f'(a)\)를 써야 합니다.</li>
+            <li><span class="tag">질문</span>곡선 위의 한 점에서 곡선에 딱 맞닿는 직선을 식으로 쓰려면 무엇을 알아야 할까? 그 직선은 곡선과 그 점에서만 만날까?</li>
+            <li><span class="tag">복원</span>기울기가 \(m\)이고 점 \((x_1, y_1)\)을 지나는 직선은 \(y - y_1 = m(x - x_1)\)이다. 그리고 미분계수 \(f'(a)\)는 점 \((a, f(a))\)에서의 접선의 기울기이다.</li>
+            <li><span class="tag">설명</span>두 사실을 합치면 <em>곡선 \(y = f(x)\) 위의 점 \((a, f(a))\)에서의 접선의 방정식은 \(y - f(a) = f'(a)(x - a)\)</em>이다. 먼저 \(f'(x)\)를 구하고, 접점의 \(x\)좌표 \(a\)를 넣어 기울기 \(f'(a)\)와 \(f(a)\)를 구한 뒤 식에 대입한다. 예를 들어 \(y = x^3 - 3x\) 위의 점 (2, 2)에서는 \(y' = 3x^2 - 3\)이므로 기울기가 9이고, 접선은 \(y = 9x - 16\)이다.</li>
+            <li><span class="tag">연결</span>\(f'(a) = 0\)인 점에서는 접선이 \(x\)축과 평행한 직선 \(y = f(a)\)이고, 이런 점은 그래프가 오르다가 내리거나 내리다가 오르는 곳의 후보가 된다. 또 접선의 방정식은 점 근처에서 함수를 일차식으로 어림하는 식으로도 쓰인다.</li>
+            <li><span class="tag">적용</span>\(x^3 - 3x\)에서 \(P\)를 (2, 2)로 옮겨 접선의 식이 위 예와 같은지 확인해 보자. \(a = 1\)로 두면 접선이 어떤 직선이고 \(Q\)가 어디에 생기는지 보고, 여러 \(a\)에서 \(Q\)의 \(x\)좌표와 \(a\) 사이의 관계를 찾은 뒤, \(x^2\)로 바꾸면 \(Q\)가 생기는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>접선은 '곡선과 한 점에서만 만나는 직선'이 아니다. 삼차함수의 접선은 보통 곡선과 다른 점 \(Q\)에서 또 만나고, 거꾸로 한 점에서만 만나도 접선이 아닐 수 있다. 또 접선의 기울기를 \(f'(x)\) 식 그대로 두면 직선이 되지 않으므로, 반드시 접점의 \(x\)좌표를 넣은 수 \(f'(a)\)를 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">곡선 \(y = x^3 - 2x + 1\) 위의 점 (1, 0)에서의 접선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = x - 1\)<span class="why"><b>맞습니다.</b> \(y' = 3x^2 - 2\)이므로 기울기는 1입니다. \(y - 0 = 1 \times (x - 1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = 3x - 3\)<span class="why"><b>\(-2x\)를 미분하지 않았습니다.</b> 기울기를 3으로 잡았습니다. \((-2x)' = -2\)이므로 기울기는 \(3 - 2 = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = x\)<span class="why"><b>\(y\)절편에 \(f(1)\)을 넣었습니다.</b> \(y = f'(1)x + f(1)\)은 점 \((0, f(1))\)을 지나는 직선입니다. \(x = 1\)을 넣으면 1이 되어 (1, 0)을 지나지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = -x + 1\)<span class="why"><b>기울기의 부호를 바꾸었습니다.</b> 점 (1, 0)은 지나지만 기울기가 \(-1\)입니다. \(f'(1) = 3 - 2 = 1\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = x - 1\)<span class="why"><b>맞다.</b> \(y' = 3x^2 - 2\)이므로 기울기는 1이다. \(y - 0 = 1 \times (x - 1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = 3x - 3\)<span class="why"><b>\(-2x\)를 미분하지 않았다.</b> 기울기를 3으로 잡았다. \((-2x)' = -2\)이므로 기울기는 \(3 - 2 = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = x\)<span class="why"><b>\(y\)절편에 \(f(1)\)을 넣었다.</b> \(y = f'(1)x + f(1)\)은 점 \((0, f(1))\)을 지나는 직선이다. \(x = 1\)을 넣으면 1이 되어 (1, 0)을 지나지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = -x + 1\)<span class="why"><b>기울기의 부호를 바꾸었다.</b> 점 (1, 0)은 지나지만 기울기가 \(-1\)이다. \(f'(1) = 3 - 2 = 1\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/1-1.html#text-adcalc-newton"><small class="mono">고급 미적분 1.1</small>뉴턴의 방법</a></div></nav>
 
       <article class="card" id="card-calc1-tangent-slope">
         <header class="card-head">
-          <span class="no">2.5.2</span><h2>기울기가 \(m\)인 접선은 몇 개일까?</h2><span class="kind">접선의 방정식 · 기울기가 주어질 때</span>
+          <span class="no">탐구 2</span><h2>기울기가 \(m\)인 접선은 몇 개일까?</h2><span class="kind">접선의 방정식 · 기울기가 주어질 때</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,34 +182,34 @@
                 <div><dt>접점</dt><dd class="n-t">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">아래 그림에서 \(y = f'(x)\)와 가로 점선 \(y = m\)이 만나는 점의 \(x\)좌표가 위 그림의 접점입니다.</p>
+              <p class="fig-note">아래 그림에서 \(y = f'(x)\)와 가로 점선 \(y = m\)이 만나는 점의 \(x\)좌표가 위 그림의 접점이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>기울기가 정해진 직선을 곡선에 맞닿게 하려면 접점을 어디에 두어야 할까요? 그런 접선은 언제나 하나뿐일까요?</li>
-            <li><span class="tag">복원</span>점 \((t, f(t))\)에서의 접선의 기울기는 \(f'(t)\)이고, 접선의 방정식은 \(y - f(t) = f'(t)(x - t)\)입니다.</li>
-            <li><span class="tag">설명</span>기울기 \(m\)이 주어지면 접점의 \(x\)좌표 \(t\)는 방정식 <em>\(f'(t) = m\)</em>의 해입니다. 해를 구해 접점 \((t, f(t))\)를 정한 뒤 \(y - f(t) = m(x - t)\)에 넣습니다. 해가 여러 개면 접선도 여러 개입니다. \(f(x) = x^3 - 3x, m = 9\)이면 \(3t^2 - 3 = 9\)에서 \(t = \pm 2\)이고, 접선은 \(y = 9x - 16\)과 \(y = 9x + 16\)입니다.</li>
-            <li><span class="tag">연결</span>접선의 개수는 \(y = f'(x)\)의 그래프와 직선 \(y = m\)의 교점 수와 같습니다. \(x^3 - 3x\)의 도함수 \(3x^2 - 3\)은 최솟값이 \(-3\)이므로, 기울기가 \(-3\)보다 작은 접선은 그을 수 없습니다. 어떤 직선과 평행한 접선을 구하는 문제도 그 직선의 기울기를 \(m\)으로 두면 같은 방법으로 풉니다.</li>
-            <li><span class="tag">적용</span>\(x^3 - 3x\)에서 \(m\)을 \(-5\)부터 올리며 접선이 0개, 1개, 2개로 바뀌는 순간을 찾으세요. 접선이 1개일 때 접점은 어디인가요? \(x^2\)에서는 \(m\)을 바꾸어도 접선의 개수가 바뀌나요? \(x^3\)에서 접선이 없는 \(m\)의 범위는 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>\(f'(t) = m\)에서 나온 해를 하나만 쓰고 멈추는 실수가 흔합니다. 이차방정식이면 해가 두 개일 수 있고, 접선도 두 개입니다. 또 접점의 \(y\)좌표는 \(f'(t)\)가 아니라 원래 함수의 값 \(f(t)\)입니다.</li>
+            <li><span class="tag">질문</span>기울기가 정해진 직선을 곡선에 맞닿게 하려면 접점을 어디에 두어야 할까? 그런 접선은 언제나 하나뿐일까?</li>
+            <li><span class="tag">복원</span>점 \((t, f(t))\)에서의 접선의 기울기는 \(f'(t)\)이고, 접선의 방정식은 \(y - f(t) = f'(t)(x - t)\)이다.</li>
+            <li><span class="tag">설명</span>그래서 기울기 \(m\)이 주어지면 접점의 \(x\)좌표 \(t\)는 방정식 <em>\(f'(t) = m\)</em>의 해이다. 해를 구해 접점 \((t, f(t))\)를 정한 뒤 \(y - f(t) = m(x - t)\)에 넣고, 해가 여러 개면 접선도 여러 개이다. 가령 \(f(x) = x^3 - 3x, m = 9\)이면 \(3t^2 - 3 = 9\)에서 \(t = \pm 2\)이고, 접선은 \(y = 9x - 16\)과 \(y = 9x + 16\)이다.</li>
+            <li><span class="tag">연결</span>즉 접선의 개수는 \(y = f'(x)\)의 그래프와 직선 \(y = m\)의 교점 수와 같다. \(x^3 - 3x\)의 도함수 \(3x^2 - 3\)은 최솟값이 \(-3\)이므로, 기울기가 \(-3\)보다 작은 접선은 그을 수 없다. 어떤 직선과 평행한 접선을 구하는 문제도 그 직선의 기울기를 \(m\)으로 두면 같은 방법으로 푼다.</li>
+            <li><span class="tag">적용</span>\(x^3 - 3x\)에서 \(m\)을 \(-5\)부터 올리며 접선이 0개, 1개, 2개로 바뀌는 순간을 찾고, 접선이 1개일 때 접점이 어디인지 보자. \(x^2\)에서는 \(m\)을 바꾸어도 접선이 늘 하나인지, \(x^3\)에서 접선이 없는 \(m\)의 범위는 무엇인지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(f'(t) = m\)에서 나온 해를 하나만 쓰고 멈추는 실수가 흔하다. 이차방정식이면 해가 두 개일 수 있고, 그러면 접선도 두 개이다. 또 접점의 \(y\)좌표는 \(f'(t)\)가 아니라 원래 함수의 값 \(f(t)\)이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">곡선 \(y = x^2 - 4x + 1\)에 접하고 기울기가 2인 직선의 방정식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = 2x - 8\)<span class="why"><b>맞습니다.</b> \(2t - 4 = 2\)에서 \(t = 3\), 접점은 \((3, -2)\)입니다. \(y + 2 = 2(x - 3)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = 2x - 2\)<span class="why"><b>\(y\)절편에 접점의 \(y\)좌표를 넣었습니다.</b> 이 직선은 \((0, -2)\)를 지납니다. 접점 \((3, -2)\)를 지나야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = 2x - 4\)<span class="why"><b>접점을 잘못 구했습니다.</b> \(2t = 2\)로 \(-4\)를 빠뜨려 \(t = 1\)로 잡았습니다. 그 점 \((1, -2)\)에서의 기울기는 \(-2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = 2x + 1\)<span class="why"><b>곡선의 \(y\)절편을 그대로 썼습니다.</b> (0, 1)에서의 접선 기울기는 \(-4\)이므로 이 직선은 곡선에 접하지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(y = 2x - 8\)<span class="why"><b>맞다.</b> \(2t - 4 = 2\)에서 \(t = 3\), 접점은 \((3, -2)\)이다. \(y + 2 = 2(x - 3)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(y = 2x - 2\)<span class="why"><b>\(y\)절편에 접점의 \(y\)좌표를 넣었다.</b> 이 직선은 \((0, -2)\)를 지난다. 접점 \((3, -2)\)를 지나야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(y = 2x - 4\)<span class="why"><b>접점을 잘못 구했다.</b> \(2t = 2\)로 \(-4\)를 빠뜨려 \(t = 1\)로 잡았다. 그 점 \((1, -2)\)에서의 기울기는 \(-2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(y = 2x + 1\)<span class="why"><b>곡선의 \(y\)절편을 그대로 썼다.</b> (0, 1)에서의 접선 기울기는 \(-4\)이므로 이 직선은 곡선에 접하지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/1-1.html#text-adcalc-newton"><small class="mono">고급 미적분 1.1</small>뉴턴의 방법</a></div></nav>
 
       <article class="card" id="card-calc1-tangent-ext">
         <header class="card-head">
-          <span class="no">2.5.3</span><h2>곡선 밖의 점에서 접선을 몇 개 그을 수 있을까?</h2><span class="kind">접선의 방정식 · 곡선 밖의 점</span>
+          <span class="no">탐구 3</span><h2>곡선 밖의 점에서 접선을 몇 개 그을 수 있을까?</h2><span class="kind">접선의 방정식 · 곡선 밖의 점</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -172,43 +228,44 @@
                 <div><dt>접점</dt><dd class="n-t">—</dd></div>
               </dl>
               <p class="mono eq">—</p>
-              <p class="fig-note">그림을 누르거나 끌면 점 \(Q\)가 0.5 간격으로 옮겨 갑니다. 주황 직선이 \(Q\)를 지나는 접선입니다.</p>
+              <p class="fig-note">그림을 누르거나 끌면 점 \(Q\)가 0.5 간격으로 옮겨 간다. 주황 직선이 \(Q\)를 지나는 접선이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>곡선 위에 있지 않은 점 \(Q\)에서 곡선에 접하는 직선을 그으려 합니다. 접점을 모르니 앞의 공식을 바로 쓸 수 없습니다. 어떻게 접점을 찾을 수 있을까요?</li>
-            <li><span class="tag">복원</span>곡선 위의 점 \((t, f(t))\)에서의 접선은 \(y - f(t) = f'(t)(x - t)\)입니다. 이차방정식 \(t^2 - 2pt + q = 0\)의 실근 개수는 판별식 \(\frac{D}{4} = p^2 - q\)의 부호로 정해집니다.</li>
-            <li><span class="tag">설명</span>모르는 접점을 \((t, f(t))\)로 두고 접선의 방정식을 \(t\)로 씁니다. 이 직선이 \(Q(p, q)\)를 지나야 하므로 \(Q\)의 좌표를 넣으면 <em>\(t\)에 대한 방정식</em>이 나옵니다. \(f(x) = x^2\)이면 접선은 \(y = 2tx - t^2\)이고, \(Q\)를 넣으면 \(q = 2tp - t^2\), 곧 \(t^2 - 2pt + q = 0\)입니다. 이 방정식의 실근 하나하나가 접점이므로, 실근을 구해 접선의 방정식에 다시 넣습니다.</li>
-            <li><span class="tag">연결</span>접선의 개수는 실근의 개수입니다. \(y = x^2\)에서는 \(Q\)가 포물선의 바깥쪽(아래쪽)에 있으면 \((p^2 &gt; q)\) 두 개, 포물선 위의 점이면 한 개, 포물선의 안쪽에 있으면 \((p^2 &lt; q)\) 0개입니다. 삼차함수에서는 \(t\)에 대한 삼차방정식이 나오므로 접선이 세 개까지 생길 수 있습니다.</li>
-            <li><span class="tag">적용</span>\(Q(1, -3)\)에서 두 접점과 두 접선의 방정식을 읽고, 이 카드의 확인 문제와 맞춰 보세요. \(Q\)를 위로 천천히 끌어 올리면 두 접점은 어떻게 움직이고, 접선이 하나가 되는 순간 \(Q\)는 어디에 있나요? \(Q\)를 포물선 안쪽으로 옮기면 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(Q\)의 좌표를 접점으로 착각해 \(f'(p)\)를 기울기로 쓰면 안 됩니다. \(Q\)는 곡선 위에 있지 않으므로 그 점의 미분계수는 접선의 기울기가 아닙니다. 접점은 반드시 미지수 \(t\)로 두고 구해야 합니다. 또 \(Q\)가 곡선 위에 있어도, 삼차함수라면 \(Q\)를 지나면서 다른 점에서 접하는 접선이 더 있을 수 있습니다.</li>
+            <li><span class="tag">질문</span>곡선 위에 있지 않은 점 \(Q\)에서 곡선에 접하는 직선을 그으려 한다. 접점을 모르니 앞의 공식을 바로 쓸 수 없다. 어떻게 접점을 찾을 수 있을까?</li>
+            <li><span class="tag">복원</span>곡선 위의 점 \((t, f(t))\)에서의 접선은 \(y - f(t) = f'(t)(x - t)\)이다. 그리고 이차방정식 \(t^2 - 2pt + q = 0\)의 실근 개수는 판별식 \(\frac{D}{4} = p^2 - q\)의 부호로 정해진다.</li>
+            <li><span class="tag">설명</span>그래서 모르는 접점을 \((t, f(t))\)로 두고 접선의 방정식을 \(t\)로 쓴다. 이 직선이 \(Q(p, q)\)를 지나야 하므로 \(Q\)의 좌표를 넣으면 <em>\(t\)에 대한 방정식</em>이 나온다. 가령 \(f(x) = x^2\)이면 접선은 \(y = 2tx - t^2\)이고, \(Q\)를 넣으면 \(q = 2tp - t^2\), 곧 \(t^2 - 2pt + q = 0\)이다. 이 방정식의 실근 하나하나가 접점이므로, 실근을 구해 접선의 방정식에 다시 넣는다.</li>
+            <li><span class="tag">연결</span>따라서 접선의 개수는 실근의 개수이다. \(y = x^2\)에서는 \(Q\)가 포물선의 바깥쪽(아래쪽)에 있으면\((p^2 &gt; q)\) 두 개, 포물선 위의 점이면 한 개, 포물선의 안쪽에 있으면\((p^2 &lt; q)\) 0개이다. 삼차함수에서는 \(t\)에 대한 삼차방정식이 나오므로 접선이 세 개까지 생길 수 있다.</li>
+            <li><span class="tag">적용</span>\(Q(1, -3)\)에서 두 접점과 두 접선의 방정식을 읽고, 이 카드의 확인 문제와 맞춰 보자. \(Q\)를 위로 천천히 끌어 올리며 두 접점이 어떻게 움직이는지, 접선이 하나가 되는 순간 \(Q\)가 어디에 있는지 보고, \(Q\)를 포물선 안쪽으로 옮겨 접선이 사라지는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(Q\)의 좌표를 접점으로 착각해 \(f'(p)\)를 기울기로 쓰면 안 된다. \(Q\)는 곡선 위에 있지 않으므로 그 점의 미분계수는 접선의 기울기가 아니다. 그래서 접점은 반드시 미지수 \(t\)로 두고 구해야 한다. 또 \(Q\)가 곡선 위에 있어도, 삼차함수라면 \(Q\)를 지나면서 다른 점에서 접하는 접선이 더 있을 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">점 \((1, -3)\)에서 곡선 \(y = x^2\)에 그은 접선의 접점의 \(x\)좌표를 모두 고르면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1, 3\)<span class="why"><b>맞습니다.</b> \(-3 = 2t \times 1 - t^2\)에서 \(t^2 - 2t - 3 = 0, (t + 1)(t - 3) = 0\)입니다. 접선은 \(y = -2x - 1\)과 \(y = 6x - 9\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1, -3\)<span class="why"><b>인수분해의 부호를 바꾸었습니다.</b> \(t^2 - 2t - 3 = (t - 3)(t + 1)\)이므로 근은 3과 \(-1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>\(Q\)의 \(x\)좌표를 접점으로 썼습니다.</b> \((1, -3)\)은 곡선 위의 점이 아닙니다. 곡선 위의 (1, 1)에서의 접선 \(y = 2x - 1\)은 \((1, -3)\)을 지나지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>없다<span class="why"><b>곡선 밖의 점에서는 접선을 못 긋는다고 보았습니다.</b> 포물선 아래쪽의 점에서는 접선을 두 개 그을 수 있습니다. 판별식/\(4 = 1 + 3 = 4 &gt; 0\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-1, 3\)<span class="why"><b>맞다.</b> \(-3 = 2t \times 1 - t^2\)에서 \(t^2 - 2t - 3 = 0, (t + 1)(t - 3) = 0\)이다. 접선은 \(y = -2x - 1\)과 \(y = 6x - 9\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(1, -3\)<span class="why"><b>인수분해의 부호를 바꾸었다.</b> \(t^2 - 2t - 3 = (t - 3)(t + 1)\)이므로 근은 3과 \(-1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>\(Q\)의 \(x\)좌표를 접점으로 썼다.</b> \((1, -3)\)은 곡선 위의 점이 아니다. 곡선 위의 (1, 1)에서의 접선 \(y = 2x - 1\)은 \((1, -3)\)을 지나지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>없다<span class="why"><b>곡선 밖의 점에서는 접선을 못 긋는다고 보았다.</b> 포물선 아래쪽의 점에서는 접선을 두 개 그을 수 있다. 판별식/\(4 = 1 + 3 = 4 &gt; 0\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/4-1.html#card-adcalc-slope-field"><small class="mono">고급 미적분 4.1</small>풀지 않고도 미분방정식의 해를 그릴 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a><a href="../../c/calc1/2-4.html#card-calc1-sum-rule"><small class="mono">미적분Ⅰ 2.4</small>두 함수를 더하면 기울기도 더해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adcalc/1-1.html#card-adcalc-newton-tangent"><small class="mono">고급 미적분 1.1</small>접선을 따라 내려가면 방정식의 근에 닿을까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-sqrt"><small class="mono">고급 미적분 1.1</small>계산기는 √a를 어떻게 구할까?</a><a href="../../c/adcalc/1-1.html#card-adcalc-newton-basin"><small class="mono">고급 미적분 1.1</small>출발점에서 가장 가까운 근으로 갈까?</a><a href="../../c/adcalc/1-1.html#text-adcalc-newton"><small class="mono">고급 미적분 1.1</small>뉴턴의 방법</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-2-5"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">99문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=2-5"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-2-5"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">99문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -216,6 +273,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/tangent-line.js"></script>
 <script src="../../js/cards/calc1/tangent-slope.js"></script>

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>정규직교기저 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="서로 수직이고 크기가 1인 벡터들로 이루어진 정규직교기저와 그람-슈미트 과정. 3D에서 그람-슈미트를 한 단계씩 실행하는 카드와, 정규직교기저에서는 좌표가 내적 한 번으로 구해지는 것을 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-gram-schmidt canvas { aspect-ratio: 1 / 1; max-width: 440px; margin: 0 auto; display: block; }
@@ -45,18 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-gram-schmidt"><span class="mono">1.8.1</span>비스듬한 기저를 반듯하게 펴기</a></li>
-        <li><a href="#card-adalg-ortho-coords"><span class="mono">1.8.2</span>내적 한 번으로 구하는 좌표와 압축</a></li>
+        <li><a href="#text-adalg-orthonormal"><span class="mono">본문</span>정규직교기저</a></li>
+        <li><a href="#card-adalg-gram-schmidt"><span class="mono">탐구 1</span>비스듬한 기저를 반듯하게 펴기</a></li>
+        <li><a href="#card-adalg-ortho-coords"><span class="mono">탐구 2</span>내적 한 번으로 구하는 좌표와 압축</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-1-8"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=1-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-1-8">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-orthonormal" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>정규직교기저</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">기저 \((2, 1)\), \((1, 2)\)로 점의 좌표를 구하려면 매번 연립방정식을 풀어야 한다. 그런데 서로 수직이고 길이가 1인 기저를 쓰면, 좌표가 점과 기저 벡터의 내적 한 번으로 바로 나온다. 예를 들어 \(\vec u_1 = (0.6, 0.8)\), \(\vec u_2 = (0.8, -0.6)\)을 기저로 쓰면 점 \((2, 1)\)의 좌표는 \((2, 1)\cdot\vec u_1 = 2\)와 \((2, 1)\cdot\vec u_2 = 1\)이다. 비스듬한 벡터 \((3, 4)\)와 \((1, 0)\)에서 이런 직각 자를 만들어 낼 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="그람–슈미트 과정의 단계">
+              <g class="s">
+                <text x="20" y="22">단계</text><text x="200" y="22">계산</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">v₁ 정규화</text><text x="200" y="52">(3, 4) / 5</text><text x="400" y="52" class="ta">u₁ = (0.6, 0.8)</text>
+                <text x="20" y="74">v₂에서 u₁ 성분 빼기</text><text x="200" y="74">(1, 0) − 0.6 u₁</text><text x="400" y="74">(0.64, −0.48)</text>
+                <text x="20" y="96">정규화</text><text x="200" y="96">(0.64, −0.48) / 0.8</text><text x="400" y="96" class="tb">u₂ = (0.8, −0.6)</text>
+                <text x="20" y="122">u₁ · u₂ = 0.48 − 0.48 = 0, 두 벡터 모두 길이 1</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 둘째 벡터에서 첫째 방향의 그림자를 빼면 첫째 벡터에 수직인 부분만 남는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>벡터의 내적과 수직 조건, 기저(<a href="1-5.html">기저</a>), 벡터의 정사영(<a href="1-7.html">벡터의 정사영</a>).</div>
+
+          <h3><span class="no">1.8.1</span>내적 한 번으로 좌표를</h3>
+          <p>기저 벡터들이 서로 수직이고 길이가 모두 1이면 정규직교기저라 한다. \(\vec v = c_1\vec u_1 + c_2\vec u_2\)의 양변에 \(\vec u_1\)을 내적하면, \(\vec u_1\cdot\vec u_1 = 1\), \(\vec u_2\cdot\vec u_1 = 0\)이므로 \(\vec v\cdot\vec u_1 = c_1\)만 남는다. 그래서 각 좌표는 연립방정식을 풀 필요 없이 그 기저 벡터와의 내적 한 번으로 구해진다. 표준기저 \((1, 0)\), \((0, 1)\)이 편리한 것도 정규직교기저이기 때문이고, 돌린 좌표축처럼 다른 정규직교기저를 써도 같은 편리함을 누릴 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.8.1 <span class="nm">그람–슈미트 과정</span></span>
+            <p>일차독립인 \(\vec v_1, \vec v_2, \ldots\)에서 \(\vec u_1 = \vec v_1/|\vec v_1|\)로 두고, \(\vec w_2 = \vec v_2 - (\vec v_2\cdot\vec u_1)\vec u_1\), \(\vec u_2 = \vec w_2/|\vec w_2|\)처럼 각 벡터에서 앞의 정규직교 벡터들 위로의 정사영을 빼고 길이를 1로 맞춘다. 이렇게 얻은 \(\vec u_1, \vec u_2, \ldots\)는 같은 공간을 생성하는 정규직교기저이다.</p>
+          </div>
+          <p>둘째 벡터에서 첫째 방향의 정사영을 빼면 남는 부분은 첫째 벡터에 수직이다. 정사영의 오차가 늘 수직이었던 것과 같은 이치이다. 셋째 벡터가 있으면 앞의 두 방향으로의 정사영을 모두 빼고 남은 부분을 정규화한다. 그래서 비스듬한 기저에서 출발해도 같은 공간을 생성하는 직각 자를 차례로 만들 수 있다. 처음 벡터들이 일차종속이면 어느 단계에서 남는 부분이 영벡터가 되어 과정이 멈추므로, 이 과정은 일차독립을 판정하는 데도 쓰인다.<sup class="fn"><a href="#fn-adalg-orthonormal-1">1</a></sup></p>
+
+          <h3><span class="no">1.8.2</span>길이와 각이 그대로이다</h3>
+          <p>정규직교기저로 바꾼 좌표에서는 길이와 내적이 표준좌표에서와 똑같이 계산된다. \(\vec v\)의 좌표가 \((c_1, c_2)\)이면 \(|\vec v|^2 = c_1^2 + c_2^2\)이다. 비스듬한 기저의 좌표로는 이렇게 계산할 수 없는데, 기저 벡터끼리의 내적이 0이 아니어서 교차하는 항이 남기 때문이다. 그래서 정규직교기저는 좌표축을 돌리거나 뒤집은 것과 같고, 도형의 모양과 크기를 바꾸지 않는다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="두 기저에서 같은 점의 좌표를 구하는 방법">
+              <g class="s">
+                <text x="20" y="22">기저</text><text x="200" y="22">(2, 1)의 좌표 구하기</text><text x="420" y="22">좌표</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">(2, 1), (1, 2)</text><text x="200" y="52">연립방정식 2a + b = 2, a + 2b = 1</text><text x="420" y="52">(1, 0)</text>
+                <text x="20" y="74">u₁, u₂ (정규직교)</text><text x="200" y="74">내적 (2,1)·u₁, (2,1)·u₂</text><text x="420" y="74" class="td">(2, 1)</text>
+                <text x="20" y="96">길이 확인</text><text x="200" y="96">2² + 1² = 5 = |(2, 1)|²</text><text x="420" y="96"></text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 정규직교기저에서는 좌표를 내적으로 바로 구하고, 좌표로 계산한 길이도 그대로이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.8.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.8.2</span>
+            <p>\(\vec v_1 = (3, 4)\), \(\vec v_2 = (1, 0)\)에 그람–슈미트 과정을 써서 정규직교기저를 만들고, 점 \((2, 1)\)과 \((-1, 7)\)의 좌표를 구하여라. 좌표로 구한 길이가 원래 길이와 같은지 확인하여라.</p>
+          </div>
+          <p>\(\vec u_1 = (3, 4)/5 = (0.6, 0.8)\)이다. \(\vec v_2\cdot\vec u_1 = 0.6\)이므로 \(\vec w_2 = (1, 0) - 0.6(0.6, 0.8) = (0.64, -0.48)\)이고, 길이 \(\sqrt{0.4096 + 0.2304} = 0.8\)로 나누면 \(\vec u_2 = (0.8, -0.6)\)이다. \(\vec u_1\cdot\vec u_2 = 0.48 - 0.48 = 0\)이다.</p>
+          <p>\((2, 1)\)의 좌표는 \((2\times0.6 + 1\times0.8,\ 2\times0.8 - 1\times0.6) = (2, 1)\)이고, \((-1, 7)\)의 좌표는 \((-0.6 + 5.6,\ -0.8 - 4.2) = (5, -5)\)이다. 길이를 확인하면 \(|(-1, 7)|^2 = 50\)이고 좌표로는 \(5^2 + (-5)^2 = 50\)으로 같다. 즉 정규직교기저에서는 좌표를 내적 한 번으로 구하고 길이와 각이 그대로 보존되며, 그람–슈미트 과정은 앞 방향으로의 정사영을 빼고 정규화해 비스듬한 기저를 정규직교기저로 바꾼다.</p>
+          <p>아래 탐구 카드에서 비스듬한 두 벡터로 그람–슈미트 과정을 따라가 직각 자를 만들고, 정규직교기저의 좌표가 내적 한 번으로 나오는지 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-orthonormal-1">이 과정은 덴마크의 그람이 1883년, 독일의 슈미트가 1907년에 발표했다. 컴퓨터로 계산할 때는 반올림 오차가 쌓여 수직이 조금씩 무너지므로, 앞 벡터의 성분을 하나씩 다시 빼는 수정된 그람–슈미트 과정을 주로 쓴다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>서로 수직이고 길이가 1인 정규직교기저에서는 각 좌표가 그 기저 벡터와의 내적 한 번으로 구해지고, 좌표로 계산한 길이와 각이 그대로 보존된다. 그람–슈미트 과정은 각 벡터에서 앞의 정규직교 벡터들 위로의 정사영을 빼고 길이를 1로 맞추어, 일차독립인 벡터들로부터 정규직교기저를 만든다. 처음 질문의 \((3, 4)\)와 \((1, 0)\)에서는 정규직교기저 \((0.6, 0.8)\), \((0.8, -0.6)\)이 나오고, 이 기저로 \((2, 1)\)의 좌표는 내적만으로 \((2, 1)\)이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-7.html#card-adalg-proj-shadow"><small class="mono">고급 대수 1.7</small>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</a><a href="../../c/adalg/1-7.html#card-adalg-least-squares"><small class="mono">고급 대수 1.7</small>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</a><a href="../../c/adalg/1-7.html#text-adalg-projection"><small class="mono">고급 대수 1.7</small>벡터의 정사영</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a></div></nav>
+
       <article class="card" id="card-adalg-gram-schmidt">
         <header class="card-head">
-          <span class="no">1.8.1</span><h2>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</h2><span class="kind">그람-슈미트 과정 · 조작</span>
+          <span class="no">탐구 1</span><h2>비스듬한 두 벡터로 직각 자를 만들 수 있을까?</h2><span class="kind">그람-슈미트 과정 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -69,34 +132,34 @@
                 <button class="chip" type="button" data-s="3">3 u₂ 만들기</button>
               </div>
               <p class="mono small say" role="status"></p>
-              <p class="fig-note">점선 원은 반지름 1인 원입니다. 끝점은 0.5 간격으로 맞춰집니다.</p>
+              <p class="fig-note">점선 원은 반지름 1인 원이다. 끝점은 0.5 간격으로 맞춰진다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>기저가 서로 수직이고 길이가 1이면 좌표를 구할 때 연립방정식이 필요 없습니다(다음 카드). 그런데 처음 주어진 기저는 대개 비스듬합니다. 생성하는 공간은 그대로 두고 기저만 반듯하게 고칠 수 있을까요?</li>
-            <li><span class="tag">복원</span>\(\vec{v}\)의 \(\vec{u}\) 방향 정사영을 빼면 \(\vec{u}\)와 수직인 부분이 남습니다. 단위벡터 \(\vec{u}\)이면 정사영은 \((\vec{v}\cdot\vec{u})\vec{u}\)입니다.</li>
-            <li><span class="tag">설명</span>서로 수직이고 길이가 1인 벡터로 이루어진 기저를 <em>정규직교기저</em>라고 합니다. <em>그람-슈미트 과정</em>은 일차독립인 \(\vec{v}_1, \vec{v}_2, \ldots\)에서 차례로 만듭니다. ① \(\vec{u}_1 = \vec{v}_1 / |\vec{v}_1|\). ② \(\vec{w}_2 = \vec{v}_2 - (\vec{v}_2\cdot\vec{u}_1)\vec{u}_1\)(앞 방향의 그림자 빼기). ③ \(\vec{u}_2 = \vec{w}_2 / |\vec{w}_2|\). 셋째부터는 앞의 모든 \(\vec{u}\) 방향 그림자를 빼고 길이를 1로 맞춥니다. 매 단계에서 생성하는 공간은 바뀌지 않습니다.</li>
-            <li><span class="tag">연결</span>컴퓨터는 이 과정을 행렬 분해(QR 분해)로 바꾸어 최소제곱 문제를 안정적으로 풉니다. 3D 그래픽에서 카메라의 앞·위·옆 방향을 서로 수직으로 다시 맞출 때도 씁니다.</li>
-            <li><span class="tag">적용</span>단계 버튼을 차례로 누르며 각 단계에서 무엇이 생기는지 보세요. 그다음 \(\vec{v}_1\)을 움직이면 \(\vec{u}_1\), \(\vec{u}_2\)가 어떻게 바뀌나요? 순서를 바꾸어(\(\vec{v}_2\)부터) 시작하면 결과가 같을까요?</li>
-            <li class="warn"><span class="tag">판단</span>\(\vec{v}_1\)과 \(\vec{v}_2\)가 평행하면 ②에서 \(\vec{w}_2 = \vec{0}\)이 되어 ③에서 0으로 나누게 됩니다. 그람-슈미트 과정은 일차독립인 벡터에만 쓸 수 있고, 거의 평행하면 계산 오차가 커집니다.</li>
+            <li><span class="tag">질문</span>기저가 서로 수직이고 길이가 1이면 좌표를 구할 때 연립방정식이 필요 없다(다음 카드). 그런데 처음 주어진 기저는 대개 비스듬하다. 생성하는 공간은 그대로 두고 기저만 반듯하게 고칠 수 있을까?</li>
+            <li><span class="tag">복원</span>\(\vec{v}\)의 \(\vec{u}\) 방향 정사영을 빼면 \(\vec{u}\)와 수직인 부분이 남는다. 단위벡터 \(\vec{u}\)이면 정사영은 \((\vec{v}\cdot\vec{u})\vec{u}\)이다.</li>
+            <li><span class="tag">설명</span>서로 수직이고 길이가 1인 벡터로 이루어진 기저를 <em>정규직교기저</em>라고 한다. <em>그람-슈미트 과정</em>은 일차독립인 \(\vec{v}_1, \vec{v}_2, \ldots\)에서 차례로 만든다. ① \(\vec{u}_1 = \vec{v}_1 / |\vec{v}_1|\). ② \(\vec{w}_2 = \vec{v}_2 - (\vec{v}_2\cdot\vec{u}_1)\vec{u}_1\)(앞 방향의 그림자 빼기). ③ \(\vec{u}_2 = \vec{w}_2 / |\vec{w}_2|\). 셋째부터는 앞의 모든 \(\vec{u}\) 방향 그림자를 빼고 길이를 1로 맞춘다. 매 단계에서 생성하는 공간은 바뀌지 않는다.</li>
+            <li><span class="tag">연결</span>컴퓨터는 이 과정을 행렬 분해(QR 분해)로 바꾸어 최소제곱 문제를 안정적으로 푼다. 3D 그래픽에서 카메라의 앞·위·옆 방향을 서로 수직으로 다시 맞출 때도 쓴다.</li>
+            <li><span class="tag">적용</span>단계 버튼을 차례로 누르며 각 단계에서 무엇이 생기는지 보자. 그다음 \(\vec{v}_1\)을 움직이면 \(\vec{u}_1\), \(\vec{u}_2\)가 어떻게 바뀌는가? 순서를 바꾸어(\(\vec{v}_2\)부터) 시작하면 결과가 같을까?</li>
+            <li class="warn"><span class="tag">판단</span>\(\vec{v}_1\)과 \(\vec{v}_2\)가 평행하면 ②에서 \(\vec{w}_2 = \vec{0}\)이 되어 ③에서 0으로 나누게 된다. 그람-슈미트 과정은 일차독립인 벡터에만 쓸 수 있고, 거의 평행하면 계산 오차가 커진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\vec{v}_1 = (3, 4)\), \(\vec{v}_2 = (1, 0)\)에 그람-슈미트 과정을 쓰면 \(\vec{u}_2\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((4/5, -3/5)\)<span class="why"><b>맞습니다.</b> \(\vec{u}_1 = (3/5, 4/5)\), \(\vec{w}_2 = (1, 0) - \frac{3}{5}(3/5, 4/5) = (16/25, -12/25)\), 길이 \(4/5\)로 나누면 \((4/5, -3/5)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, 0)\)<span class="why"><b>\(\vec{v}_2\)는 \(\vec{u}_1\)과 수직이 아닙니다.</b> 내적이 \(3/5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((16/25, -12/25)\)<span class="why"><b>길이를 1로 맞추지 않았습니다.</b> 이것은 \(\vec{w}_2\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((-4/5, 3/5)\)<span class="why"><b>방향이 반대입니다.</b> 이것도 \(\vec{u}_1\)과 수직인 단위벡터지만, 과정이 만드는 것은 \(\vec{v}_2\) 쪽을 향하는 벡터입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((4/5, -3/5)\)<span class="why"><b>맞다.</b> \(\vec{u}_1 = (3/5, 4/5)\), \(\vec{w}_2 = (1, 0) - \frac{3}{5}(3/5, 4/5) = (16/25, -12/25)\), 길이 \(4/5\)로 나누면 \((4/5, -3/5)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((1, 0)\)<span class="why"><b>\(\vec{v}_2\)는 \(\vec{u}_1\)과 수직이 아니다.</b> 내적이 \(3/5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((16/25, -12/25)\)<span class="why"><b>길이를 1로 맞추지 않았다.</b> 이것은 \(\vec{w}_2\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((-4/5, 3/5)\)<span class="why"><b>방향이 반대이다.</b> 이것도 \(\vec{u}_1\)과 수직인 단위벡터지만, 과정이 만드는 것은 \(\vec{v}_2\) 쪽을 향하는 벡터이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-7.html#card-adalg-proj-shadow"><small class="mono">고급 대수 1.7</small>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</a><a href="../../c/adalg/1-7.html#card-adalg-least-squares"><small class="mono">고급 대수 1.7</small>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-hunt"><small class="mono">고급 대수 1.5</small>비스듬한 두 방향만으로 목표점까지 안내할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-7.html#card-adalg-proj-shadow"><small class="mono">고급 대수 1.7</small>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</a><a href="../../c/adalg/1-7.html#card-adalg-least-squares"><small class="mono">고급 대수 1.7</small>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</a><a href="../../c/adalg/1-7.html#text-adalg-projection"><small class="mono">고급 대수 1.7</small>벡터의 정사영</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a></div></nav>
 
       <article class="card" id="card-adalg-ortho-coords">
         <header class="card-head">
-          <span class="no">1.8.2</span><h2>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</h2><span class="kind">정규직교기저와 좌표 · 만들기</span>
+          <span class="no">탐구 2</span><h2>정규직교기저의 좌표는 왜 내적 한 번이면 될까?</h2><span class="kind">정규직교기저와 좌표 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -118,39 +181,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>소리나 사진은 수를 늘어놓은 긴 벡터입니다. 이것을 "평평한 정도, 왼쪽-오른쪽 차이, …" 같은 기본 모양의 합으로 나누면 압축이 쉬워집니다. 기본 모양마다 얼마씩 섞였는지 가장 빨리 알아내는 방법은 무엇일까요?</li>
-            <li><span class="tag">복원</span>보통의 기저에서는 좌표를 구하려고 연립방정식을 풀어야 했습니다(기저와 좌표 카드). 그람-슈미트 과정으로 기저를 정규직교기저로 바꿀 수 있었습니다.</li>
-            <li><span class="tag">설명</span>\(\{\vec{u}_1, \ldots, \vec{u}_n\}\)이 정규직교기저이고 \(\vec{x} = c_1\vec{u}_1 + \cdots + c_n\vec{u}_n\)이면, 양변에 \(\vec{u}_k\)를 내적할 때 \(\vec{u}_k\cdot\vec{u}_j\)가 \(j \ne k\)이면 0, \(j = k\)이면 1이므로 \(c_k = \vec{x}\cdot\vec{u}_k\)만 남습니다. <b>좌표 하나에 내적 한 번</b>입니다. 또 \(|\vec{x}|^2 = c_1^2 + \cdots + c_n^2\)이 성립합니다. 이 카드의 기저는 성분이 \(\pm\frac{1}{2}\)인 네 벡터 \(\vec{u}_1 = \frac{1}{2}(1,1,1,1)\), \(\vec{u}_2 = \frac{1}{2}(1,1,-1,-1)\), \(\vec{u}_3 = \frac{1}{2}(1,-1,1,-1)\), \(\vec{u}_4 = \frac{1}{2}(1,-1,-1,1)\)입니다.</li>
-            <li><span class="tag">연결</span>JPEG 사진과 MP3 음악은 이와 같은 정규직교기저(코사인 모양)로 좌표를 구한 뒤, 작은 좌표를 버려 용량을 줄입니다. \(|\vec{x}|^2 = \sum c_k^2\)이므로 작은 \(c_k\)를 버려도 잃는 양이 \(c_k^2\)만큼으로 작습니다.</li>
-            <li><span class="tag">적용</span>먼저 슬라이더로 목표 신호를 만들어 보세요. 그다음 \(c_1 = \vec{x}\cdot\vec{u}_1\)을 손으로 계산해 맞는지 확인하세요. "가장 작은 계수 버리기"를 누르면 신호가 얼마나 달라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(c_k = \vec{x}\cdot\vec{u}_k\)는 기저가 정규직교일 때만 맞습니다. 수직이기만 하고 길이가 1이 아니면 \(c_k = \dfrac{\vec{x}\cdot\vec{u}_k}{\vec{u}_k\cdot\vec{u}_k}\)로 나누어야 하고, 수직이 아니면 연립방정식을 풀어야 합니다.</li>
+            <li><span class="tag">질문</span>소리나 사진은 수를 늘어놓은 긴 벡터이다. 이것을 "평평한 정도, 왼쪽-오른쪽 차이, …" 같은 기본 모양의 합으로 나누면 압축이 쉬워진다. 기본 모양마다 얼마씩 섞였는지 가장 빨리 알아내는 방법은 무엇일까?</li>
+            <li><span class="tag">복원</span>보통의 기저에서는 좌표를 구하려고 연립방정식을 풀어야 했다(기저와 좌표 카드). 그람-슈미트 과정으로 기저를 정규직교기저로 바꿀 수 있었다.</li>
+            <li><span class="tag">설명</span>\(\{\vec{u}_1, \ldots, \vec{u}_n\}\)이 정규직교기저이고 \(\vec{x} = c_1\vec{u}_1 + \cdots + c_n\vec{u}_n\)이면, 양변에 \(\vec{u}_k\)를 내적할 때 \(\vec{u}_k\cdot\vec{u}_j\)가 \(j \ne k\)이면 0, \(j = k\)이면 1이므로 \(c_k = \vec{x}\cdot\vec{u}_k\)만 남는다. 좌표 하나에 내적 한 번이다. 또 \(|\vec{x}|^2 = c_1^2 + \cdots + c_n^2\)이 성립한다. 이 카드의 기저는 성분이 \(\pm\frac{1}{2}\)인 네 벡터 \(\vec{u}_1 = \frac{1}{2}(1,1,1,1)\), \(\vec{u}_2 = \frac{1}{2}(1,1,-1,-1)\), \(\vec{u}_3 = \frac{1}{2}(1,-1,1,-1)\), \(\vec{u}_4 = \frac{1}{2}(1,-1,-1,1)\)이다.</li>
+            <li><span class="tag">연결</span>JPEG 사진과 MP3 음악은 이와 같은 정규직교기저(코사인 모양)로 좌표를 구한 뒤, 작은 좌표를 버려 용량을 줄인다. \(|\vec{x}|^2 = \sum c_k^2\)이므로 작은 \(c_k\)를 버려도 잃는 양이 \(c_k^2\)만큼으로 작다.</li>
+            <li><span class="tag">적용</span>먼저 슬라이더로 목표 신호를 만들어 보자. 그다음 \(c_1 = \vec{x}\cdot\vec{u}_1\)을 손으로 계산해 맞는지 확인해 보자. "가장 작은 계수 버리기"를 누르면 신호가 얼마나 달라지는가?</li>
+            <li class="warn"><span class="tag">판단</span>\(c_k = \vec{x}\cdot\vec{u}_k\)는 기저가 정규직교일 때만 맞다. 수직이기만 하고 길이가 1이 아니면 \(c_k = \dfrac{\vec{x}\cdot\vec{u}_k}{\vec{u}_k\cdot\vec{u}_k}\)로 나누어야 하고, 수직이 아니면 연립방정식을 풀어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">정규직교기저 \(\vec{u}_1 = \frac{1}{\sqrt{2}}(1, 1)\), \(\vec{u}_2 = \frac{1}{\sqrt{2}}(1, -1)\)에 대한 \(\vec{x} = (3, 1)\)의 좌표는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2\sqrt{2}, \sqrt{2})\)<span class="why"><b>맞습니다.</b> \(\vec{x}\cdot\vec{u}_1 = 4/\sqrt{2}\), \(\vec{x}\cdot\vec{u}_2 = 2/\sqrt{2}\)입니다. \(8 + 2 = 10 = |\vec{x}|^2\)도 확인됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((4, 2)\)<span class="why"><b>\(\sqrt{2}\)로 나누지 않았습니다.</b> \((1, 1)\)은 길이가 1이 아닙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((2, 1)\)<span class="why"><b>정규직교가 아닌 기저 \((1, 1), (1, -1)\)에 대한 좌표입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 1)\)<span class="why"><b>표준기저에 대한 좌표입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2\sqrt{2}, \sqrt{2})\)<span class="why"><b>맞다.</b> \(\vec{x}\cdot\vec{u}_1 = 4/\sqrt{2}\), \(\vec{x}\cdot\vec{u}_2 = 2/\sqrt{2}\)이다. \(8 + 2 = 10 = |\vec{x}|^2\)도 확인된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\((4, 2)\)<span class="why"><b>\(\sqrt{2}\)로 나누지 않았다.</b> \((1, 1)\)은 길이가 1이 아니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((2, 1)\)<span class="why"><b>정규직교가 아닌 기저 \((1, 1), (1, -1)\)에 대한 좌표이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\((3, 1)\)<span class="why"><b>표준기저에 대한 좌표이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-7.html#card-adalg-proj-shadow"><small class="mono">고급 대수 1.7</small>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</a><a href="../../c/adalg/1-7.html#card-adalg-least-squares"><small class="mono">고급 대수 1.7</small>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a><a href="../../c/adalg/1-5.html#card-adalg-basis-hunt"><small class="mono">고급 대수 1.5</small>비스듬한 두 방향만으로 목표점까지 안내할 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/1-7.html#card-adalg-proj-shadow"><small class="mono">고급 대수 1.7</small>비탈에서 썰매를 끄는 힘 중 얼마가 일을 할까?</a><a href="../../c/adalg/1-7.html#card-adalg-least-squares"><small class="mono">고급 대수 1.7</small>모든 점을 지나는 직선이 없을 때 가장 좋은 직선은?</a><a href="../../c/adalg/1-7.html#text-adalg-projection"><small class="mono">고급 대수 1.7</small>벡터의 정사영</a><a href="../../c/adalg/1-5.html#card-adalg-basis-grid"><small class="mono">고급 대수 1.5</small>같은 점인데 기저를 바꾸면 왜 좌표가 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/3-4.html#card-adalg-symmetric-ellipse"><small class="mono">고급 대수 3.4</small>대칭행렬은 원을 어떤 모양으로 바꿀까?</a><a href="../../c/adalg/3-4.html#card-adalg-orth-diag-proof"><small class="mono">고급 대수 3.4</small>대칭행렬의 고유벡터는 왜 서로 수직일까?</a><a href="../../c/adalg/3-4.html#text-adalg-orthogonal-diag"><small class="mono">고급 대수 3.4</small>직교행렬과 직교대각화</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-1-8"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=1-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

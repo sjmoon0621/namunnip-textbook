@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>증가·감소와 극대·극소 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="도함수의 부호로 함수의 증가와 감소를 판정하고, f′의 부호 변화로 극대와 극소를 찾는다. 증감표 만들기, f′(c) = 0이어도 극값이 아닌 경우를 직접 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-incdec canvas { aspect-ratio: 4 / 3.4; touch-action: pan-y; cursor: ew-resize; }
@@ -52,18 +57,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-incdec"><span class="mono">2.7.1</span>증가와 감소</a></li>
-        <li><a href="#card-calc1-extremum"><span class="mono">2.7.2</span>극대와 극소</a></li>
+        <li><a href="#text-calc1-extrema"><span class="mono">본문</span>증가·감소와 극대·극소</a></li>
+        <li><a href="#card-calc1-incdec"><span class="mono">탐구 1</span>증가와 감소</a></li>
+        <li><a href="#card-calc1-extremum"><span class="mono">탐구 2</span>극대와 극소</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">154문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">154문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-2-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-extrema" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>증가·감소와 극대·극소</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">등산로의 높이를 함수로 나타냈을 때, 기울기가 양수인 곳은 오르막, 음수인 곳은 내리막이다. 그렇다면 \(f(x) = x^3 - 6x^2 + 9x + 1\)의 그래프를 그리지 않고도 어디가 오르막이고 어디가 봉우리인지 알 수 있을까? 기울기가 0인 점은 언제나 봉우리나 골짜기일까?</p>
+          <figure class="q-fig" data-q="calc1-incdec">
+            <svg viewBox="0 0 520 300" role="img" aria-label="위는 f의 그래프, 아래는 f′의 그래프, 점을 움직이면 기울기의 부호와 증가 감소가 함께 보인다"></svg>
+            <div class="q-ctl"><label>\(x\) = <input type="range" data-k="x" min="-0.5" max="4.5" step="0.05" value="0.5"><output data-k="x"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 아래 \(f'\)의 그래프가 \(x\)축 위에 있는 구간에서 위 \(f\)는 올라가고, 아래에 있는 구간에서 내려간다. \(f'\)의 부호가 바뀌는 곳이 봉우리와 골짜기이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>다항함수의 도함수(<a href="2-4.html">다항함수의 도함수</a>), 평균값 정리(<a href="2-6.html">평균값 정리</a>), 이차부등식(공통수학1).</div>
+
+          <h3><span class="no">2.7.1</span>도함수의 부호와 증가·감소</h3>
+          <p>어떤 구간의 모든 \(x\)에서 \(f'(x) &gt; 0\)이라 하자. 그 구간의 두 점 \(x_1 &lt; x_2\)를 잡으면 평균값 정리에 따라 \(f(x_2) - f(x_1) = f'(c)(x_2 - x_1)\)인 \(c\)가 그 사이에 있다. \(f'(c) &gt; 0\)이므로 \(f(x_2) &gt; f(x_1)\)이다. 즉 \(f\)는 그 구간에서 증가한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.7.1 <span class="nm">도함수의 부호와 증가·감소</span></span>
+            <p>함수 \(f(x)\)가 어떤 열린구간에서 미분가능할 때, 그 구간에서 \(f'(x) &gt; 0\)이면 \(f(x)\)는 증가하고, \(f'(x) &lt; 0\)이면 감소한다.</p>
+          </div>
+
+          <h3><span class="no">2.7.2</span>극대와 극소</h3>
+          <p>\(x = a\) 근처에서 \(f(a)\)가 가장 크면 \(f\)는 \(x = a\)에서 극대라 하고 \(f(a)\)를 극댓값이라 한다. 근처에서 가장 작으면 극소, 극솟값이라 한다. 미분가능한 함수가 극대나 극소가 되는 점에서는 접선이 수평이므로 \(f'(a) = 0\)이다.</p>
+          <p>그런데 거꾸로 \(f'(a) = 0\)이라고 극대나 극소인 것은 아니다. \(y = x^3\)은 원점에서 \(f'(0) = 0\)이지만 양쪽에서 모두 올라가므로 봉우리도 골짜기도 아니다. 극대, 극소를 가르는 것은 \(f'(a) = 0\)인 점 앞뒤에서 \(f'\)의 부호가 바뀌는가이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.7.2 <span class="nm">극대와 극소의 판정</span></span>
+            <p>\(f'(a) = 0\)이고 \(x = a\)의 좌우에서 \(f'(x)\)의 부호가 양에서 음으로 바뀌면 극대, 음에서 양으로 바뀌면 극소이다. 부호가 바뀌지 않으면 극값이 아니다.</p>
+          </div>
+          <p>그림 1의 점을 왼쪽에서 오른쪽으로 옮겨 보자. 아래 \(f'\)의 그래프가 \(x = 1\)에서 \(x\)축 위에서 아래로 내려가는데, 바로 그때 위의 \(f\)가 봉우리에 이른다. \(x = 3\)에서는 반대로 골짜기에 이른다.<sup class="fn"><a href="#fn-calc1-extrema-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 140" role="img" aria-label="증감표: x, f′(x)의 부호, f(x)의 증감과 극대 극소">
+              <g class="s">
+                <line x1="20" y1="45" x2="500" y2="45" class="k"/><line x1="20" y1="85" x2="500" y2="85" class="k"/><line x1="90" y1="15" x2="90" y2="125" class="k"/>
+                <text x="55" y="35" text-anchor="middle">x</text><text x="55" y="70" text-anchor="middle">f′(x)</text><text x="55" y="110" text-anchor="middle">f(x)</text>
+                <text x="140" y="35" text-anchor="middle">…</text><text x="220" y="35" text-anchor="middle">1</text><text x="300" y="35" text-anchor="middle">…</text><text x="380" y="35" text-anchor="middle">3</text><text x="460" y="35" text-anchor="middle">…</text>
+                <text x="140" y="70" text-anchor="middle" class="ta">+</text><text x="220" y="70" text-anchor="middle">0</text><text x="300" y="70" text-anchor="middle" class="td">−</text><text x="380" y="70" text-anchor="middle">0</text><text x="460" y="70" text-anchor="middle" class="ta">+</text>
+                <text x="140" y="110" text-anchor="middle">↗</text><text x="220" y="110" text-anchor="middle">5 (극대)</text><text x="300" y="110" text-anchor="middle">↘</text><text x="380" y="110" text-anchor="middle">1 (극소)</text><text x="460" y="110" text-anchor="middle">↗</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 증감표는 \(f'\)의 부호가 바뀌는 점을 기준으로 \(f\)의 증가, 감소와 극값을 한 줄에 정리한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.7.3</span>
+            <p>\(f(x) = x^3 - 6x^2 + 9x + 1\)의 증가와 감소를 조사하고 극댓값과 극솟값을 구하여라.</p>
+          </div>
+          <p>\(f'(x) = 3x^2 - 12x + 9 = 3(x - 1)(x - 3)\)이므로 \(f'(x) = 0\)인 점은 \(x = 1, 3\)이다. \(f'\)는 위로 열린 포물선이므로 \(x &lt; 1\)과 \(x &gt; 3\)에서 양수, \(1 &lt; x &lt; 3\)에서 음수이다.</p>
+          <p>따라서 \(f\)는 \(x \le 1\)에서 증가하고, \(1 \le x \le 3\)에서 감소하며, \(x \ge 3\)에서 다시 증가한다. \(x = 1\)에서 부호가 양에서 음으로 바뀌므로 극대이고 극댓값은 \(f(1) = 1 - 6 + 9 + 1 = 5\)이다. \(x = 3\)에서는 음에서 양으로 바뀌므로 극소이고 극솟값은 \(f(3) = 27 - 54 + 27 + 1 = 1\)이다.</p>
+          <p>그림 2의 증감표가 이 결과를 한눈에 보여 준다. 처음 질문의 '오르막'은 \(f' &gt; 0\)인 구간, '봉우리'는 \(f'\)의 부호가 양에서 음으로 바뀌는 점이다. 아래 탐구 카드에서 점을 움직이며 기울기의 부호와 극값을 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-extrema-1">극댓값이 극솟값보다 항상 큰 것은 아니다. 극대와 극소는 '근처에서' 가장 크거나 작다는 뜻이므로, 멀리 떨어진 극솟값이 어떤 극댓값보다 클 수도 있다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>도함수가 양수인 구간에서 함수는 증가하고 음수인 구간에서 감소하며, 이것은 평균값 정리로 보장된다. 극대와 극소는 \(f'(a) = 0\)이면서 그 좌우에서 \(f'\)의 부호가 바뀌는 점에서 생긴다. 그래서 처음 질문의 함수는 그래프를 그리지 않고도 \(x = 1\)에서 봉우리 5, \(x = 3\)에서 골짜기 1을 갖는다는 것을 알 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-10.html#card-calc1-motion"><small class="mono">미적분Ⅰ 2.10</small>점은 언제 방향을 바꿀까?</a><a href="../../c/calc1/2-10.html#card-calc1-throw"><small class="mono">미적분Ⅰ 2.10</small>위로 던진 공은 언제 가장 높이 올라갈까?</a><a href="../../c/calc1/2-10.html#text-calc1-velocity"><small class="mono">미적분Ⅰ 2.10</small>속도와 가속도</a></div></nav>
+
       <article class="card" id="card-calc1-incdec">
         <header class="card-head">
-          <span class="no">2.7.1</span><h2>그래프를 그리지 않고 오르막을 알 수 있을까?</h2><span class="kind">증가와 감소 · 도함수의 부호</span>
+          <span class="no">탐구 1</span><h2>그래프를 그리지 않고 오르막을 알 수 있을까?</h2><span class="kind">증가와 감소 · 도함수의 부호</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,35 +142,35 @@
                 <div><dt>\(f'(x)\)의 부호</dt><dd class="n-s">—</dd></div>
                 <div><dt>이 근처에서 \(f\)는</dt><dd class="n-f">—</dd></div>
               </dl>
-              <div class="legend"><span>아래 칸 띠:</span><b class="good">초록 \(f' &gt; 0\)</b><span>·</span><b class="bad">주황 \(f' &lt; 0\)</b><span>·</span><span>점 \(f' = 0\)</span></div>
-              <p class="fig-note">그림 위를 끌어도 점이 움직입니다.</p>
+              <div class="legend"><span>아래 칸 띠는</span><b class="good">초록 \(f' &gt; 0\)</b><span>·</span><b class="bad">주황 \(f' &lt; 0\)</b><span>·</span><span>점 \(f' = 0\)</span></div>
+              <p class="fig-note">그림 위를 끌어도 점이 움직인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f(x) = x^3 - 3x\)는 어느 구간에서 오르막이고 어느 구간에서 내리막일까요? 점을 하나하나 찍지 않고 판정할 방법이 있을까요?</li>
-            <li><span class="tag">복원</span>어떤 구간의 임의의 두 수 \(x_1 &lt; x_2\)에 대하여 \(f(x_1) &lt; f(x_2)\)이면 \(f\)는 그 구간에서 <em>증가</em>한다고 하고, \(f(x_1) &gt; f(x_2)\)이면 <em>감소</em>한다고 합니다. \(f'(x)\)는 그 점에서 접선의 기울기입니다.</li>
-            <li><span class="tag">설명</span>\(f\)가 어떤 열린 구간에서 미분가능하고 그 구간의 모든 \(x\)에서 <b>\(f'(x) &gt; 0\)이면 \(f\)는 그 구간에서 증가</b>하고, <b>\(f'(x) &lt; 0\)이면 감소</b>합니다. 근거는 평균값 정리입니다. \(x_1 &lt; x_2\)이면 \(f(x_2) - f(x_1) = f'(c)(x_2 - x_1)\)인 \(c\)가 둘 사이에 있고, \(f'(c) &gt; 0\)이면 이 값이 양수입니다. 그래서 \(x^3 - 3x\)는 \(f'(x) = 3(x + 1)(x - 1)\)의 부호를 따져, \(x \le -1\)과 \(x \ge 1\)에서 증가하고 \(-1 \le x \le 1\)에서 감소합니다.</li>
-            <li><span class="tag">연결</span>증가와 감소를 판정하는 일은 결국 도함수에 대한 부등식 \(f'(x) &gt; 0\)을 푸는 일입니다. 다항함수의 도함수는 다시 다항식이므로, 이차부등식의 풀이가 그대로 쓰입니다. 오르막과 내리막이 바뀌는 곳은 다음 카드의 극대와 극소입니다.</li>
-            <li><span class="tag">적용</span>점을 왼쪽에서 오른쪽으로 끌면서 위 칸의 접선 기울기와 아래 칸의 \(f'\) 그래프 높이가 늘 같은 부호인지 보세요. 아래 칸의 초록 띠는 위 칸에서 어떤 모양에 해당하나요? 세 번째 함수 \(x^3\)에서는 \(x = 0\)일 때 \(f' = 0\)입니다. 그 점에서 \(f\)는 증가를 멈추나요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(f\)가 증가하면 \(f' &gt; 0\)"은 거꾸로는 맞지 않습니다. \(x^3\)은 실수 전체에서 증가하지만 \(f'(0) = 0\)입니다. 그래서 다항함수가 어떤 구간에서 증가할 조건을 물으면 "그 구간에서 \(f'(x) \ge 0\)"으로 풉니다. \(f' = 0\)인 점이 따로 떨어져 있으면 증가는 깨지지 않습니다.</li>
+            <li><span class="tag">질문</span>\(f(x) = x^3 - 3x\)는 어느 구간에서 오르막이고 어느 구간에서 내리막일까? 점을 하나하나 찍지 않고 판정할 방법이 있을까?</li>
+            <li><span class="tag">복원</span>어떤 구간의 임의의 두 수 \(x_1 &lt; x_2\)에 대하여 \(f(x_1) &lt; f(x_2)\)이면 \(f\)는 그 구간에서 <em>증가</em>한다고 하고, \(f(x_1) &gt; f(x_2)\)이면 <em>감소</em>한다고 한다. 그리고 \(f'(x)\)는 그 점에서 접선의 기울기이다.</li>
+            <li><span class="tag">설명</span>\(f\)가 어떤 열린 구간에서 미분가능하고 그 구간의 모든 \(x\)에서 \(f'(x) &gt; 0\)이면 \(f\)는 그 구간에서 증가하고, \(f'(x) &lt; 0\)이면 감소한다. 근거는 평균값 정리이다. \(x_1 &lt; x_2\)이면 \(f(x_2) - f(x_1) = f'(c)(x_2 - x_1)\)인 \(c\)가 둘 사이에 있고, \(f'(c) &gt; 0\)이면 이 값이 양수이기 때문이다. 그래서 \(x^3 - 3x\)는 \(f'(x) = 3(x + 1)(x - 1)\)의 부호를 따져, \(x \le -1\)과 \(x \ge 1\)에서 증가하고 \(-1 \le x \le 1\)에서 감소한다.</li>
+            <li><span class="tag">연결</span>즉 증가와 감소를 판정하는 일은 도함수에 대한 부등식 \(f'(x) &gt; 0\)을 푸는 일이다. 다항함수의 도함수는 다시 다항식이므로, 이차부등식의 풀이가 그대로 쓰인다. 그리고 오르막과 내리막이 바뀌는 곳은 다음 카드의 극대와 극소이다.</li>
+            <li><span class="tag">적용</span>점을 왼쪽에서 오른쪽으로 끌면서 위 칸의 접선 기울기와 아래 칸의 \(f'\) 그래프 높이가 늘 같은 부호인지 보자. 아래 칸의 초록 띠가 위 칸의 오르막에 해당하는 것도 확인하자. 세 번째 함수 \(x^3\)에서는 \(x = 0\)일 때 \(f' = 0\)인데, 그 점에서 \(f\)가 증가를 멈추는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(f\)가 증가하면 \(f' &gt; 0\)"은 거꾸로는 맞지 않는다. \(x^3\)은 실수 전체에서 증가하지만 \(f'(0) = 0\)이다. 그래서 다항함수가 어떤 구간에서 증가할 조건을 물으면 "그 구간에서 \(f'(x) \ge 0\)"으로 푼다. \(f' = 0\)인 점이 따로 떨어져 있으면 증가는 깨지지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = x^3 + ax^2 + 3x\)가 실수 전체에서 증가하도록 하는 실수 \(a\)의 범위는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-3 \le a \le 3\)<span class="why"><b>맞습니다.</b> \(f'(x) = 3x^2 + 2ax + 3 \ge 0\)이 늘 성립해야 하므로 판별식 \(\frac{D}{4} = a^2 - 9 \le 0\)입니다. \(a = \pm 3\)이면 \(f'\)이 한 점에서만 0이 되어 증가는 유지됩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-3 &lt; a &lt; 3\)<span class="why"><b>등호를 뺐습니다.</b> \(a = 3\)이면 \(f'(x) = 3(x + 1)^2\)으로 \(x = -1\)에서만 0이고, \(x^3\)처럼 여전히 증가합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(a \le -3\) 또는 \(a \ge 3\)<span class="why"><b>판별식 조건을 거꾸로 썼습니다.</b> \(a = 4\)이면 \(f'(x) = 3x^2 + 8x + 3\)이 두 근 사이에서 음수가 되어 감소 구간이 생깁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(a &gt; 0\)<span class="why"><b>계수의 부호만 보았습니다.</b> 증가 여부는 \(a\)의 부호가 아니라 \(f'\)의 판별식이 정합니다. \(a = 4\)는 위처럼 감소 구간이 생깁니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(-3 \le a \le 3\)<span class="why"><b>맞다.</b> \(f'(x) = 3x^2 + 2ax + 3 \ge 0\)이 늘 성립해야 하므로 판별식 \(\frac{D}{4} = a^2 - 9 \le 0\)이다. \(a = \pm 3\)이면 \(f'\)이 한 점에서만 0이 되어 증가는 유지된다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-3 &lt; a &lt; 3\)<span class="why"><b>등호를 뺐다.</b> \(a = 3\)이면 \(f'(x) = 3(x + 1)^2\)으로 \(x = -1\)에서만 0이고, \(x^3\)처럼 여전히 증가한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(a \le -3\) 또는 \(a \ge 3\)<span class="why"><b>판별식 조건을 거꾸로 썼다.</b> \(a = 4\)이면 \(f'(x) = 3x^2 + 8x + 3\)이 두 근 사이에서 음수가 되어 감소 구간이 생긴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(a &gt; 0\)<span class="why"><b>계수의 부호만 보았다.</b> 증가 여부는 \(a\)의 부호가 아니라 \(f'\)의 판별식이 정한다. \(a = 4\)는 위처럼 감소 구간이 생긴다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-10.html#card-calc1-motion"><small class="mono">미적분Ⅰ 2.10</small>점은 언제 방향을 바꿀까?</a><a href="../../c/calc1/2-10.html#card-calc1-throw"><small class="mono">미적분Ⅰ 2.10</small>위로 던진 공은 언제 가장 높이 올라갈까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-6.html#card-calc1-mvt"><small class="mono">미적분Ⅰ 2.6</small>평균 기울기와 같은 순간 기울기는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-10.html#card-calc1-motion"><small class="mono">미적분Ⅰ 2.10</small>점은 언제 방향을 바꿀까?</a><a href="../../c/calc1/2-10.html#card-calc1-throw"><small class="mono">미적분Ⅰ 2.10</small>위로 던진 공은 언제 가장 높이 올라갈까?</a><a href="../../c/calc1/2-10.html#text-calc1-velocity"><small class="mono">미적분Ⅰ 2.10</small>속도와 가속도</a></div></nav>
 
       <article class="card" id="card-calc1-extremum">
         <header class="card-head">
-          <span class="no">2.7.2</span><h2>기울기가 0인 점은 언제나 봉우리나 골짜기일까?</h2><span class="kind">극대와 극소 · 증감표</span>
+          <span class="no">탐구 2</span><h2>기울기가 0인 점은 언제나 봉우리나 골짜기일까?</h2><span class="kind">극대와 극소 · 증감표</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,43 +189,44 @@
                 <div><dt>극댓값</dt><dd class="n-max">—</dd></div>
                 <div><dt>극솟값</dt><dd class="n-min">—</dd></div>
               </dl>
-              <p class="fig-note">증감표는 \(f'(x) = 3x^2 + 2px + q\)의 부호로 만들어집니다. 표의 화살표와 그래프의 오르내림을 견주어 보세요.</p>
+              <p class="fig-note">증감표는 \(f'(x) = 3x^2 + 2px + q\)의 부호로 만든다. 표의 화살표와 그래프의 오르내림을 견주어 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f'(c) = 0\)이면 접선이 수평입니다. 그러면 그 점은 언제나 봉우리나 골짜기일까요?</li>
-            <li><span class="tag">복원</span>\(f' &gt; 0\)인 구간에서 \(f\)는 증가하고, \(f' &lt; 0\)인 구간에서 감소합니다.</li>
-            <li><span class="tag">설명</span>\(x = a\)를 포함하는 어떤 열린 구간의 모든 \(x\)에서 \(f(x) \le f(a)\)이면 \(f\)는 \(x = a\)에서 <em>극대</em>라 하고, \(f(a)\)를 <em>극댓값</em>이라 합니다. 부등호를 바꾸면 <em>극소</em>와 <em>극솟값</em>입니다. 둘을 묶어 <em>극값</em>이라 합니다. 미분가능한 함수가 \(x = a\)에서 극값을 가지면 \(f'(a) = 0\)입니다. 판정은 \(f'\)의 <b>부호 변화</b>로 합니다. \(f'(a) = 0\)이고 \(a\)의 좌우에서 \(f'\)의 부호가 <b>+에서 −로</b> 바뀌면 극대, <b>−에서 +로</b> 바뀌면 극소입니다. 부호가 바뀌지 않으면 극값이 아닙니다. 이를 한눈에 정리한 것이 <em>증감표</em>입니다.</li>
-            <li><span class="tag">연결</span>삼차함수에서 \(f'\)은 이차식이므로, 극값이 있는지는 \(f' = 0\)의 판별식이 정합니다. \(D &gt; 0\)이면 부호가 두 번 바뀌어 극대와 극소가 하나씩 생기고, \(D \le 0\)이면 부호가 바뀌지 않아 극값이 없습니다. 증감표는 다음 절에서 그래프의 개형을 그리는 뼈대가 됩니다.</li>
-            <li><span class="tag">적용</span>\(p = 0, q = -3\)에서 증감표를 읽고 극댓값과 극솟값을 확인하세요. \(q\)를 늘리면 봉우리와 골짜기가 어떻게 되나요? 판별식이 0이 되는 순간(예: \(p = 0, q = 0\))의 증감표에서 \(f' = 0\)인 칸 좌우의 부호를 보세요. \(p = 3\)일 때는 \(q\)가 얼마 이상이면 극값이 사라지나요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(f'(a) = 0\)이면 극값"은 틀립니다. \(x^3\)은 \(f'(0) = 0\)이지만 0의 좌우에서 모두 증가합니다. 또 극댓값은 그 근처에서 가장 큰 값일 뿐, 함수 전체의 최댓값이 아닙니다. 극댓값이 극솟값보다 작을 수도 있고, 닫힌 구간의 최댓값은 끝점에서 나올 수도 있습니다.</li>
+            <li><span class="tag">질문</span>\(f'(c) = 0\)이면 접선이 수평이다. 그러면 그 점은 언제나 봉우리나 골짜기일까?</li>
+            <li><span class="tag">복원</span>\(f' &gt; 0\)인 구간에서 \(f\)는 증가하고, \(f' &lt; 0\)인 구간에서 감소한다.</li>
+            <li><span class="tag">설명</span>\(x = a\)를 포함하는 어떤 열린 구간의 모든 \(x\)에서 \(f(x) \le f(a)\)이면 \(f\)는 \(x = a\)에서 <em>극대</em>라 하고, \(f(a)\)를 <em>극댓값</em>이라 한다. 부등호를 바꾸면 <em>극소</em>와 <em>극솟값</em>이고, 둘을 묶어 <em>극값</em>이라 한다. 미분가능한 함수가 \(x = a\)에서 극값을 가지면 \(f'(a) = 0\)이다. 그런데 판정은 \(f'\)의 부호 변화로 한다. \(f'(a) = 0\)이고 \(a\)의 좌우에서 \(f'\)의 부호가 +에서 −로 바뀌면 극대, −에서 +로 바뀌면 극소이고, 부호가 바뀌지 않으면 극값이 아니다. 이를 한눈에 정리한 것이 <em>증감표</em>이다.</li>
+            <li><span class="tag">연결</span>삼차함수에서 \(f'\)은 이차식이므로, 극값이 있는지는 \(f' = 0\)의 판별식이 정한다. \(D &gt; 0\)이면 부호가 두 번 바뀌어 극대와 극소가 하나씩 생기고, \(D \le 0\)이면 부호가 바뀌지 않아 극값이 없다. 증감표는 다음 절에서 그래프의 개형을 그리는 뼈대가 된다.</li>
+            <li><span class="tag">적용</span>\(p = 0, q = -3\)에서 증감표를 읽고 극댓값과 극솟값을 확인해 보자. \(q\)를 늘리면 봉우리와 골짜기가 가까워지다 사라진다. 판별식이 0이 되는 순간(예를 들어 \(p = 0, q = 0\))의 증감표에서 \(f' = 0\)인 칸 좌우의 부호를 보고, \(p = 3\)일 때는 \(q\)가 얼마 이상이면 극값이 사라지는지도 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(f'(a) = 0\)이면 극값"은 틀린 말이다. \(x^3\)은 \(f'(0) = 0\)이지만 0의 좌우에서 모두 증가한다. 또 극댓값은 그 근처에서 가장 큰 값일 뿐, 함수 전체의 최댓값이 아니다. 그래서 극댓값이 극솟값보다 작을 수도 있고, 닫힌 구간의 최댓값은 끝점에서 나올 수도 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = x^3 - 6x^2 + 9x + 1\)의 극댓값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞습니다.</b> \(f'(x) = 3(x - 1)(x - 3)\)의 부호가 \(x = 1\)에서 +에서 −로 바뀌므로 극대이고, \(f(1) = 1 - 6 + 9 + 1 = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>극솟값입니다.</b> \(x = 3\)에서는 \(f'\)이 −에서 +로 바뀌므로 극소이고, \(f(3) = 1\)입니다. 부호 변화의 방향을 거꾸로 읽었습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 1\)<span class="why"><b>극대가 되는 위치를 답했습니다.</b> 극댓값은 그 위치에서의 함숫값 \(f(1)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>4<span class="why"><b>상수항을 빠뜨렸습니다.</b> \(f(1) = 1 - 6 + 9 + 1\)이고, 마지막 \(+1\)까지 더해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞다.</b> \(f'(x) = 3(x - 1)(x - 3)\)의 부호가 \(x = 1\)에서 +에서 −로 바뀌므로 극대이고, \(f(1) = 1 - 6 + 9 + 1 = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>극솟값이다.</b> \(x = 3\)에서는 \(f'\)이 −에서 +로 바뀌므로 극소이고, \(f(3) = 1\)이다. 부호 변화의 방향을 거꾸로 읽었다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x = 1\)<span class="why"><b>극대가 되는 위치를 답했다.</b> 극댓값은 그 위치에서의 함숫값 \(f(1)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>4<span class="why"><b>상수항을 빠뜨렸다.</b> \(f(1) = 1 - 6 + 9 + 1\)이고, 마지막 \(+1\)까지 더해야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-8.html#card-calc1-sketch"><small class="mono">미적분Ⅰ 2.8</small>점 몇 개로 그래프의 뼈대를 세울 수 있을까?</a><a href="../../c/calc1/2-8.html#card-calc1-maxmin"><small class="mono">미적분Ⅰ 2.8</small>극댓값이 곧 최댓값일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/calc1/2-8.html#card-calc1-sketch"><small class="mono">미적분Ⅰ 2.8</small>점 몇 개로 그래프의 뼈대를 세울 수 있을까?</a><a href="../../c/calc1/2-8.html#text-calc1-sketch"><small class="mono">미적분Ⅰ 2.8</small>그래프의 개형</a><a href="../../c/calc1/2-8.html#card-calc1-maxmin"><small class="mono">미적분Ⅰ 2.8</small>극댓값이 곧 최댓값일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-2-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">154문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=2-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-2-7"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">154문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -172,6 +234,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/incdec.js"></script>
 <script src="../../js/cards/calc1/extremum.js"></script>

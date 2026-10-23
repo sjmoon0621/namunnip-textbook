@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>연속확률변수와 정규분포 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="연속확률변수의 기댓값과 표준편차를 적분으로 구하고, 정규분포의 성질과 정규분포·이항분포의 관계(연속성 보정)를 다룬다. 밀도함수를 적분하는 카드, 연속성 보정 카드, 직접 모은 자료에 정규곡선을 맞추는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-cont-expect canvas { aspect-ratio: 16 / 10; }
@@ -45,19 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-cont-expect"><span class="mono">3.7.1</span>적분으로 구하는 평균과 표준편차</a></li>
-        <li><a href="#card-pmath-continuity-corr"><span class="mono">3.7.2</span>연속성 보정</a></li>
-        <li><a href="#card-pmath-height-normal"><span class="mono">3.7.3</span>내 자료에 정규곡선 맞추기</a></li>
+        <li><a href="#text-pmath-normal"><span class="mono">본문</span>연속확률변수와 정규분포</a></li>
+        <li><a href="#card-pmath-cont-expect"><span class="mono">탐구 1</span>적분으로 구하는 평균과 표준편차</a></li>
+        <li><a href="#card-pmath-continuity-corr"><span class="mono">탐구 2</span>연속성 보정</a></li>
+        <li><a href="#card-pmath-height-normal"><span class="mono">탐구 3</span>내 자료에 정규곡선 맞추기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=3-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">9문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-3-7">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-normal" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>연속확률변수와 정규분포</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">동전을 100번 던져 앞면이 45번 이하로 나올 확률을 이항분포로 정확히 계산하면 0.1841이다. 이 계산은 46개의 항을 더해야 해서 번거롭다. 그래서 평균 50, 표준편차 5인 정규분포로 어림하는데, \(X \le 45\)를 그대로 표준화하면 0.1587이 나와 정확한 값과 꽤 다르다. 그런데 45 대신 45.5로 표준화하면 0.1841로 거의 정확해진다. 0.5는 어디서 왔을까? 정규분포는 이항분포를 어떻게 어림할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="연속성 보정의 유무에 따른 어림값">
+              <g class="s">
+                <text x="20" y="22">방법</text><text x="200" y="22">계산</text><text x="400" y="22">P(X ≤ 45)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">이항분포 (정확)</text><text x="200" y="52">46개 항의 합</text><text x="400" y="52">0.1841</text>
+                <text x="20" y="74">정규분포, 보정 없음</text><text x="200" y="74">P(Z ≤ (45 − 50)/5 = −1.0)</text><text x="400" y="74" class="tb">0.1587</text>
+                <text x="20" y="96">정규분포, 보정</text><text x="200" y="96">P(Z ≤ (45.5 − 50)/5 = −0.9)</text><text x="400" y="96" class="td">0.1841</text>
+                <text x="20" y="122">X는 B(100, 1/2)를 따르고 평균 50, 표준편차 5이다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 막대 45의 오른쪽 절반까지 넣어 45.5에서 자르면 정규분포의 어림값이 정확한 값과 거의 같아진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>확률밀도함수와 넓이(<a href="3-5.html">확률변수와 확률분포</a>), 이항분포의 평균과 표준편차(<a href="3-6.html">이산확률변수와 이항분포</a>), 정적분.</div>
+
+          <h3><span class="no">3.7.1</span>종 모양의 밀도 곡선</h3>
+          <p>사람의 키나 측정 오차처럼 작은 요인이 많이 더해져 생기는 양은 평균 근처에 많이 모이고 양쪽으로 갈수록 드물어지는 종 모양으로 분포한다. 이 모양을 나타내는 밀도 곡선이 정규분포이며, 평균 \(m\)과 표준편차 \(\sigma\)만으로 모양이 정해진다. 평균은 밀도 곡선의 무게 중심이어서, 곡선 모양의 판을 평균 자리에서 받치면 수평을 이룬다. 정규분포를 따르는 확률변수 \(X\)를 \(Z = (X - m)/\sigma\)로 바꾸면 평균 0, 표준편차 1인 표준정규분포가 되어, 표준정규분포표 하나로 모든 정규분포의 확률을 구할 수 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.7.1 <span class="nm">정규분포와 이항분포의 어림</span></span>
+            <p>\(X\)가 \(N(m, \sigma^2)\)을 따르면 \(Z = \dfrac{X - m}{\sigma}\)는 \(N(0, 1)\)을 따른다. \(X\)가 \(B(n, p)\)를 따르고 \(n\)이 충분히 크면 \(X\)는 근사적으로 \(N\big(np,\ np(1 - p)\big)\)를 따르며, 정수 \(k\)에 대해 \[P(X \le k) \approx P\left(Z \le \frac{k + 0.5 - np}{\sqrt{np(1 - p)}}\right)\]이다.</p>
+          </div>
+          <p>이항분포의 막대그래프는 각 정수 \(k\)를 가운데에 두고 폭 1인 막대로 그린다. 그래서 \(X = 45\)의 막대는 44.5에서 45.5까지 걸쳐 있다. 이 막대들을 정규분포의 밀도 곡선으로 바꾸어 넓이를 잴 때 45에서 자르면 막대 45의 오른쪽 절반이 빠진다. 45.5에서 잘라야 막대 45가 통째로 들어가므로, 이산적인 값을 연속인 곡선으로 어림할 때 0.5를 더하거나 빼는 연속성 보정을 한다.<sup class="fn"><a href="#fn-pmath-normal-1">1</a></sup></p>
+
+          <h3><span class="no">3.7.2</span>표준편차를 잣대로</h3>
+          <p>정규분포에서는 평균에서 표준편차의 몇 배 떨어졌는지만 알면 확률이 정해진다. 평균에서 표준편차 1배 안에 약 68%, 2배 안에 약 95%, 3배 안에 약 99.7%가 들어간다. 그래서 반 학생들의 키가 평균 170 cm, 표준편차 6 cm인 정규분포를 따른다면 158 cm에서 182 cm 사이에 약 95%의 학생이 있고, 182 cm보다 큰 학생은 약 2.3%이다. 실제 자료가 정규분포를 따르는지는 히스토그램의 모양과 이 비율을 비교해 확인한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="표준정규분포의 주요 확률">
+              <g class="s">
+                <text x="20" y="22">z</text><text x="120" y="22">0.5</text><text x="200" y="22">0.9</text><text x="280" y="22">1.0</text><text x="360" y="22">1.96</text><text x="440" y="22">2.0</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">P(0 ≤ Z ≤ z)</text><text x="120" y="52">0.1915</text><text x="200" y="52">0.3159</text><text x="280" y="52">0.3413</text><text x="360" y="52">0.4750</text><text x="440" y="52">0.4772</text>
+                <text x="20" y="74">P(Z ≤ −z)</text><text x="120" y="74">0.3085</text><text x="200" y="74" class="td">0.1841</text><text x="280" y="74" class="tb">0.1587</text><text x="360" y="74">0.0250</text><text x="440" y="74">0.0228</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 표준정규분포표의 값이다. 곡선이 대칭이므로 \(P(Z \le -z) = 0.5 - P(0 \le Z \le z)\)이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.7.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.7.2</span>
+            <p>처음 질문의 \(X\)에 대해 연속성 보정으로 \(P(X \le 45)\)를 구하여라. 같은 방법으로 앞면이 정확히 50번 나올 확률 \(P(X = 50)\)을 어림하고, 정확한 값 \({}_{100}\mathrm{C}_{50}/2^{100} \approx 0.0796\)과 비교하여라.</p>
+          </div>
+          <p>\(X\)는 \(B(100, 1/2)\)이므로 평균 50, 표준편차 \(\sqrt{100\times\tfrac12\times\tfrac12} = 5\)이다. 보정하면 \(P(X \le 45) \approx P\left(Z \le \dfrac{45.5 - 50}{5}\right) = P(Z \le -0.9) = 0.5 - 0.3159 = 0.1841\)로 정확한 값과 같다.</p>
+          <p>정확히 50번은 막대 하나이므로 49.5에서 50.5까지의 넓이로 어림한다. \(P(-0.1 \le Z \le 0.1) \approx 2\times0.0398 = 0.0797\)로, 정확한 값 0.0796과 거의 같다. 보정 없이 정규분포로 \(P(X = 50)\)을 구하면 한 점의 확률이어서 0이 되어 버린다. 그래서 이산적인 이항분포를 연속인 정규분포로 어림할 때는 각 정수가 폭 1인 막대를 차지한다는 것을 기억해 0.5를 더하고 빼야 한다. 즉 \(n\)이 큰 이항분포는 평균과 표준편차가 같은 정규분포로 어림할 수 있고, 연속성 보정이 그 어림을 정확하게 만든다.</p>
+          <p>아래 탐구 카드에서 밀도 곡선의 받침점으로 평균을 찾고, 연속성 보정의 효과를 확인하고, 직접 잰 자료가 정규분포를 따르는지 살펴보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-normal-1">이항분포가 정규분포로 다가간다는 것은 1733년 프랑스 출신의 수학자 드무아브르가 동전 던지기에서 처음 보였다. 정규분포는 뒤에 가우스가 천문 관측의 오차를 다루며 널리 써서 가우스 분포라고도 부른다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>정규분포는 평균과 표준편차로 정해지는 종 모양의 분포이며, \(Z = (X - m)/\sigma\)로 표준화하면 표준정규분포표 하나로 확률을 구한다. \(n\)이 큰 이항분포 \(B(n, p)\)는 \(N(np, np(1 - p))\)로 어림하고, 각 정수가 폭 1인 막대를 차지하므로 0.5를 더하거나 빼는 연속성 보정을 한다. 처음 질문의 45.5는 막대 45를 통째로 넣기 위한 것으로, 보정하면 \(P(X \le 45) \approx 0.1841\)이 정확한 값과 같아진다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pmath/3-5.html#card-pmath-dice-dist"><small class="mono">전문 수학 3.5</small>두 주사위 눈의 합은 왜 7이 가장 잘 나올까?</a><a href="../../c/pmath/3-5.html#card-pmath-hist-density"><small class="mono">전문 수학 3.5</small>버스를 정확히 3분 기다릴 확률은 왜 0일까?</a><a href="../../c/pmath/3-5.html#text-pmath-random-variable"><small class="mono">전문 수학 3.5</small>확률변수와 확률분포</a><a href="../../c/pmath/1-6.html#card-pmath-riemann"><small class="mono">전문 수학 1.6</small>직사각형을 끝없이 잘게 쪼개면 곡선 아래 넓이가 될까?</a></div></nav>
+
       <article class="card" id="card-pmath-cont-expect">
         <header class="card-head">
-          <span class="no">3.7.1</span><h2>밀도 곡선의 어디에 받침을 대면 수평이 될까?</h2><span class="kind">연속확률변수의 기댓값과 표준편차 · 조작</span>
+          <span class="no">탐구 1</span><h2>밀도 곡선의 어디에 받침을 대면 수평이 될까?</h2><span class="kind">연속확률변수의 기댓값과 표준편차 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -78,34 +140,34 @@
                 <div><dt>받침 기준 돌림힘</dt><dd class="n-t">—</dd></div>
               </dl>
               <p class="mono small f">—</p>
-              <p class="fig-note">정의역은 \(0 \le x \le 4\)입니다. "직접 만들기"에서는 곡선 위 다섯 점을 위아래로 끌 수 있고, 넓이가 1이 되도록 자동으로 맞춥니다.</p>
+              <p class="fig-note">정의역은 \(0 \le x \le 4\)이다. "직접 만들기"에서는 곡선 위 다섯 점을 위아래로 끌 수 있고, 넓이가 1이 되도록 자동으로 맞춘다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>막대 모양의 확률분포에서는 평균을 \(\sum x_i p_i\)로 구했습니다. 그런데 연속확률변수는 값이 셀 수 없이 많고 한 값의 확률은 0입니다. 평균은 어떻게 정할까요?</li>
-            <li><span class="tag">복원</span>정적분은 잘게 나눈 직사각형 넓이 합의 극한입니다. 이산확률변수의 평균은 확률을 무게로 본 무게중심 \(\sum x_i p_i\)이고, 분산은 \(\sum (x_i - m)^2 p_i\)입니다.</li>
-            <li><span class="tag">설명</span>구간을 잘게 나누면 \(x\) 근처의 확률은 \(f(x)\Delta x\)이므로 \(\sum x f(x)\Delta x\)의 극한, 곧 <b>\(E(X) = \int_a^b x f(x)\,dx\)</b>가 평균입니다. 같은 방법으로 <b>\(V(X) = \int_a^b (x - m)^2 f(x)\,dx = \int_a^b x^2 f(x)\,dx - m^2\)</b>, \(\sigma(X) = \sqrt{V(X)}\)입니다. 밀도 곡선 아래 영역을 얇은 판으로 오려 받침 위에 올리면, 평균 자리에서 정확히 수평이 됩니다. 예를 들어 \(f(x) = \frac{x}{8}\)이면 \(E(X) = \int_0^4 \frac{x^2}{8}dx = \frac{8}{3}\)입니다.</li>
-            <li><span class="tag">연결</span>이 계산은 미적분을 배운 뒤에만 할 수 있어, 확률과 통계에서는 정규분포의 평균과 표준편차를 주어진 것으로 썼습니다. 정규분포 \(\mathrm{N}(m, \sigma^2)\)의 밀도함수를 이렇게 적분하면 정말로 평균 \(m\), 표준편차 \(\sigma\)가 나옵니다.</li>
-            <li><span class="tag">적용</span>받침을 움직여 돌림힘이 0이 되는(수평이 되는) 자리를 찾고, 그 자리가 \(E(X)\)와 같은지 보세요. 세 밀도함수의 평균을 직접 적분해 확인하세요. "직접 만들기"로 오른쪽이 무거운 분포를 만들면 평균은 어느 쪽으로 가나요?</li>
-            <li class="warn"><span class="tag">판단</span>평균은 곡선이 가장 높은 곳(최빈값)이나 넓이를 반으로 나누는 곳(중앙값)과 다를 수 있습니다. \(f(x) = \frac{x}{8}\)에서 가장 높은 곳은 4, 중앙값은 \(2\sqrt{2} \approx 2.83\), 평균은 \(\frac{8}{3} \approx 2.67\)입니다.</li>
+            <li><span class="tag">질문</span>막대 모양의 확률분포에서는 평균을 \(\sum x_i p_i\)로 구했다. 그런데 연속확률변수는 값이 셀 수 없이 많고 한 값의 확률은 0이다. 평균은 어떻게 정할까?</li>
+            <li><span class="tag">복원</span>정적분은 잘게 나눈 직사각형 넓이 합의 극한이다. 이산확률변수의 평균은 확률을 무게로 본 무게중심 \(\sum x_i p_i\)이고, 분산은 \(\sum (x_i - m)^2 p_i\)이다.</li>
+            <li><span class="tag">설명</span>구간을 잘게 나누면 \(x\) 근처의 확률은 \(f(x)\Delta x\)이므로 \(\sum x f(x)\Delta x\)의 극한, 곧 \(E(X) = \int_a^b x f(x)\,dx\)가 평균이다. 같은 방법으로 \(V(X) = \int_a^b (x - m)^2 f(x)\,dx = \int_a^b x^2 f(x)\,dx - m^2\), \(\sigma(X) = \sqrt{V(X)}\)이다. 밀도 곡선 아래 영역을 얇은 판으로 오려 받침 위에 올리면, 평균 자리에서 정확히 수평이 된다. 예를 들어 \(f(x) = \frac{x}{8}\)이면 \(E(X) = \int_0^4 \frac{x^2}{8}dx = \frac{8}{3}\)이다.</li>
+            <li><span class="tag">연결</span>이 계산은 미적분을 배운 뒤에만 할 수 있어, 확률과 통계에서는 정규분포의 평균과 표준편차를 주어진 것으로 썼다. 정규분포 \(\mathrm{N}(m, \sigma^2)\)의 밀도함수를 이렇게 적분하면 정말로 평균 \(m\), 표준편차 \(\sigma\)가 나온다.</li>
+            <li><span class="tag">적용</span>받침을 움직여 돌림힘이 0이 되는(수평이 되는) 자리를 찾고, 그 자리가 \(E(X)\)와 같은지 보자. 세 밀도함수의 평균을 직접 적분해 확인해 보자. "직접 만들기"로 오른쪽이 무거운 분포를 만들면 평균은 어느 쪽으로 가는가?</li>
+            <li class="warn"><span class="tag">판단</span>평균은 곡선이 가장 높은 곳(최빈값)이나 넓이를 반으로 나누는 곳(중앙값)과 다를 수 있다. \(f(x) = \frac{x}{8}\)에서 가장 높은 곳은 4, 중앙값은 \(2\sqrt{2} \approx 2.83\), 평균은 \(\frac{8}{3} \approx 2.67\)이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">확률밀도함수가 \(f(x) = 2x\) \((0 \le x \le 1)\)인 확률변수 \(X\)의 평균은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{2}{3}\)<span class="why"><b>맞습니다.</b> \(\int_0^1 x \cdot 2x\,dx = \left[\frac{2x^3}{3}\right]_0^1 = \frac{2}{3}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>구간의 가운데를 답했습니다.</b> 오른쪽이 더 무거워 평균이 오른쪽으로 갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>\(\int_0^1 2x\,dx\)를 계산했습니다.</b> 이것은 전체 확률이고, 평균은 \(x\)를 곱해 적분합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{\sqrt{2}}\)<span class="why"><b>중앙값을 구했습니다.</b> \(\int_0^m 2x\,dx = \frac{1}{2}\)의 해입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{2}{3}\)<span class="why"><b>맞다.</b> \(\int_0^1 x \cdot 2x\,dx = \left[\frac{2x^3}{3}\right]_0^1 = \frac{2}{3}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{1}{2}\)<span class="why"><b>구간의 가운데를 답했다.</b> 오른쪽이 더 무거워 평균이 오른쪽으로 간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1<span class="why"><b>\(\int_0^1 2x\,dx\)를 계산했다.</b> 이것은 전체 확률이고, 평균은 \(x\)를 곱해 적분한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{1}{\sqrt{2}}\)<span class="why"><b>중앙값을 구했다.</b> \(\int_0^m 2x\,dx = \frac{1}{2}\)의 해이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pmath/3-5.html#card-pmath-dice-dist"><small class="mono">전문 수학 3.5</small>두 주사위 눈의 합은 왜 7이 가장 잘 나올까?</a><a href="../../c/pmath/3-5.html#card-pmath-hist-density"><small class="mono">전문 수학 3.5</small>버스를 정확히 3분 기다릴 확률은 왜 0일까?</a><a href="../../c/pmath/1-6.html#card-pmath-riemann"><small class="mono">전문 수학 1.6</small>직사각형을 끝없이 잘게 쪼개면 곡선 아래 넓이가 될까?</a><a href="../../c/pmath/1-6.html#card-pmath-pyramid"><small class="mono">전문 수학 1.6</small>각뿔의 부피는 왜 각기둥의 1/3일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pmath/3-5.html#card-pmath-dice-dist"><small class="mono">전문 수학 3.5</small>두 주사위 눈의 합은 왜 7이 가장 잘 나올까?</a><a href="../../c/pmath/3-5.html#card-pmath-hist-density"><small class="mono">전문 수학 3.5</small>버스를 정확히 3분 기다릴 확률은 왜 0일까?</a><a href="../../c/pmath/3-5.html#text-pmath-random-variable"><small class="mono">전문 수학 3.5</small>확률변수와 확률분포</a><a href="../../c/pmath/1-6.html#card-pmath-riemann"><small class="mono">전문 수학 1.6</small>직사각형을 끝없이 잘게 쪼개면 곡선 아래 넓이가 될까?</a></div></nav>
 
       <article class="card" id="card-pmath-continuity-corr">
         <header class="card-head">
-          <span class="no">3.7.2</span><h2>이항분포를 정규분포로 어림할 때 왜 0.5를 더하고 뺄까?</h2><span class="kind">정규분포와 이항분포의 관계 · 조작</span>
+          <span class="no">탐구 2</span><h2>이항분포를 정규분포로 어림할 때 왜 0.5를 더하고 뺄까?</h2><span class="kind">정규분포와 이항분포의 관계 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -128,30 +190,30 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>동전을 20번 던져 앞면이 8번 이상 12번 이하로 나올 확률을 정규분포로 어림하려고 합니다. 그런데 \(P(8 \le Y \le 12)\)로 계산하면 정확한 값과 꽤 차이가 납니다. 무엇을 빠뜨린 걸까요?</li>
-            <li><span class="tag">복원</span>이항분포 \(\mathrm{B}(n, p)\)의 평균은 \(np\), 분산은 \(np(1 - p)\)입니다. \(n\)이 충분히 크면 이항분포는 정규분포 \(\mathrm{N}(np, np(1 - p))\)에 가까워집니다. 정규분포의 확률은 표준화 \(Z = \frac{Y - m}{\sigma}\)로 구합니다.</li>
-            <li><span class="tag">설명</span>이항분포의 막대 하나는 정수 \(k\) 하나에 서 있지만, 정규곡선으로 보면 그 막대는 \(k - 0.5\)부터 \(k + 0.5\)까지의 폭을 차지합니다. 그래서 막대 \(k_1\)부터 \(k_2\)까지를 곡선 아래 넓이로 바꾸려면 <b>\(P(k_1 \le X \le k_2) \approx P(k_1 - 0.5 \le Y \le k_2 + 0.5)\)</b>로 양 끝에 반 칸씩 더해야 합니다. 이것이 <em>연속성 보정</em>입니다. 보정하지 않으면 양 끝 막대를 반씩 잘라 버리는 셈입니다.</li>
-            <li><span class="tag">연결</span>\(n\)이 아주 크면 막대 하나의 폭이 전체에 비해 작아져 보정의 효과가 줄어듭니다. 그래서 교과서의 큰 수 문제에서는 보정 없이 어림하기도 합니다. 정규 근사는 보통 \(np \ge 5\), \(n(1 - p) \ge 5\)일 때 쓸 만하다고 봅니다.</li>
-            <li><span class="tag">적용</span>보정을 켜고 끄며 세 값을 비교하세요. \(k_1 = k_2\)로 두면(한 값의 확률) 보정 없는 어림은 무엇이 되나요? \(n\)을 200까지 늘리면 보정의 효과는 어떻게 되나요? \(p = 0.1\)처럼 치우치면 어림이 얼마나 나빠지나요?</li>
-            <li class="warn"><span class="tag">판단</span>"\(X &lt; k\)"처럼 등호가 없는 범위는 \(X \le k - 1\)과 같으므로 보정하면 \(Y \le k - 0.5\)입니다. 부등호의 종류를 정수 범위로 먼저 바꾼 뒤 보정해야 실수를 막을 수 있습니다.</li>
+            <li><span class="tag">질문</span>동전을 20번 던져 앞면이 8번 이상 12번 이하로 나올 확률을 정규분포로 어림하려고 한다. 그런데 \(P(8 \le Y \le 12)\)로 계산하면 정확한 값과 꽤 차이가 난다. 무엇을 빠뜨린 걸까?</li>
+            <li><span class="tag">복원</span>이항분포 \(\mathrm{B}(n, p)\)의 평균은 \(np\), 분산은 \(np(1 - p)\)이다. \(n\)이 충분히 크면 이항분포는 정규분포 \(\mathrm{N}(np, np(1 - p))\)에 가까워진다. 정규분포의 확률은 표준화 \(Z = \frac{Y - m}{\sigma}\)로 구한다.</li>
+            <li><span class="tag">설명</span>이항분포의 막대 하나는 정수 \(k\) 하나에 서 있지만, 정규곡선으로 보면 그 막대는 \(k - 0.5\)부터 \(k + 0.5\)까지의 폭을 차지한다. 그래서 막대 \(k_1\)부터 \(k_2\)까지를 곡선 아래 넓이로 바꾸려면 \(P(k_1 \le X \le k_2) \approx P(k_1 - 0.5 \le Y \le k_2 + 0.5)\)로 양 끝에 반 칸씩 더해야 한다. 이것이 <em>연속성 보정</em>이다. 보정하지 않으면 양 끝 막대를 반씩 잘라 버리는 셈이다.</li>
+            <li><span class="tag">연결</span>\(n\)이 아주 크면 막대 하나의 폭이 전체에 비해 작아져 보정의 효과가 줄어든다. 그래서 교과서의 큰 수 문제에서는 보정 없이 어림하기도 한다. 정규 근사는 보통 \(np \ge 5\), \(n(1 - p) \ge 5\)일 때 쓸 만하다고 본다.</li>
+            <li><span class="tag">적용</span>보정을 켜고 끄며 세 값을 비교해 보자. \(k_1 = k_2\)로 두면(한 값의 확률) 보정 없는 어림은 무엇이 되는가? \(n\)을 200까지 늘리면 보정의 효과는 어떻게 되는가? \(p = 0.1\)처럼 치우치면 어림이 얼마나 나빠지는가?</li>
+            <li class="warn"><span class="tag">판단</span>"\(X &lt; k\)"처럼 등호가 없는 범위는 \(X \le k - 1\)과 같으므로 보정하면 \(Y \le k - 0.5\)이다. 부등호의 종류를 정수 범위로 먼저 바꾼 뒤 보정해야 실수를 막을 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(X \sim \mathrm{B}(100, 0.5)\)에서 \(P(X &lt; 45)\)를 연속성 보정으로 어림할 때 쓰는 식은? (\(Y \sim \mathrm{N}(50, 25)\))</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(P(Y \le 44.5)\)<span class="why"><b>맞습니다.</b> \(X &lt; 45\)는 \(X \le 44\)이므로 막대 44의 오른쪽 끝 44.5까지입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(P(Y \le 45.5)\)<span class="why"><b>45를 포함했습니다.</b> 등호가 없으므로 45는 빠집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(P(Y &lt; 45)\)<span class="why"><b>보정을 하지 않았습니다.</b> 막대 44의 오른쪽 절반을 놓칩니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(P(Y \le 43.5)\)<span class="why"><b>반 칸을 반대로 뺐습니다.</b> 막대 44를 통째로 빼게 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(P(Y \le 44.5)\)<span class="why"><b>맞다.</b> \(X &lt; 45\)는 \(X \le 44\)이므로 막대 44의 오른쪽 끝 44.5까지이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(P(Y \le 45.5)\)<span class="why"><b>45를 포함했다.</b> 등호가 없으므로 45는 빠진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(P(Y &lt; 45)\)<span class="why"><b>보정을 하지 않았다.</b> 막대 44의 오른쪽 절반을 놓친다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(P(Y \le 43.5)\)<span class="why"><b>반 칸을 반대로 뺐다.</b> 막대 44를 통째로 빼게 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a><a href="../../c/stat/3-4.html#text-stat-normal"><small class="mono">확률과 통계 3.4</small>정규분포</a><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a></div></nav>
 
       <article class="card" id="card-pmath-height-normal">
         <header class="card-head">
-          <span class="no">3.7.3</span><h2>우리 반의 키(또는 직접 잰 자료)는 정규분포를 따를까?</h2><span class="kind">정규분포 · 자료에 곡선 맞추기 · 만들기</span>
+          <span class="no">탐구 3</span><h2>우리 반의 키(또는 직접 잰 자료)는 정규분포를 따를까?</h2><span class="kind">정규분포 · 자료에 곡선 맞추기 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -167,42 +229,42 @@
               <div><dt>표준편차 \(s\)</dt><dd class="n-s">—</dd></div>
               <div><dt>\(\bar{x} \pm s\) 안 / \(\pm 2s\) 안</dt><dd class="n-r">—</dd></div>
             </dl>
-            <p class="fig-note">입력한 자료는 이 화면에서만 쓰이고 어디에도 저장되거나 보내지지 않습니다. 예시는 컴퓨터가 만든 모의 자료로, 실제 측정값이 아닙니다.</p>
+            <p class="fig-note">입력한 자료는 이 화면에서만 쓰이고 어디에도 저장되거나 보내지지 않는다. 예시는 컴퓨터가 만든 모의 자료로, 실제 측정값이 아니다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>여러 사람의 키를 모아 히스토그램을 그리면 가운데가 볼록한 종 모양이 나온다고 합니다. 직접 모은 자료도 정말 그럴까요? 종 모양이라는 것은 무엇으로 확인할 수 있을까요?</li>
-            <li><span class="tag">복원</span>정규분포 \(\mathrm{N}(m, \sigma^2)\)에서 \(P(m - \sigma \le X \le m + \sigma) \approx 0.683\), \(P(m - 2\sigma \le X \le m + 2\sigma) \approx 0.954\)입니다.</li>
-            <li><span class="tag">설명</span>자료의 평균 \(\bar{x}\)와 표준편차 \(s\)를 구해 \(\mathrm{N}(\bar{x}, s^2)\)의 곡선을 히스토그램 위에 겹쳐 봅니다. 히스토그램은 높이를 "상대도수 ÷ 칸 폭"으로 그려야 곡선과 같은 눈금이 됩니다. 정규분포에 가까운 자료라면 막대가 곡선을 따라가고, <b>\(\bar{x} \pm s\) 안에 약 68 %, \(\bar{x} \pm 2s\) 안에 약 95 %</b>가 들어갑니다. 여러 요인이 조금씩 더해져 생기는 양(키, 측정 오차)은 정규분포에 가까운 경우가 많습니다.</li>
-            <li><span class="tag">연결</span>정규분포가 이렇게 자주 나타나는 까닭은 "독립인 작은 효과를 많이 더하면 그 합은 정규분포에 가까워진다"는 중심극한정리입니다. 갈톤 보드에서 공이 종 모양으로 쌓인 것도 같은 원리입니다.</li>
-            <li><span class="tag">적용</span>친구들의 키, 한 달 동안의 등교 시간, 같은 물건을 여러 번 잰 길이처럼 직접 모은 자료를 넣어 보세요. 68 %, 95 % 규칙에 얼마나 가깝나요? 칸 수를 바꾸면 모양이 어떻게 달라 보이나요? 자료가 20개 이하일 때와 100개 이상일 때를 비교해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>모든 자료가 정규분포를 따르지는 않습니다. 소득, 대기 시간, 시험 점수처럼 한쪽으로 꼬리가 길거나 봉우리가 둘인 자료도 흔합니다. 남녀를 섞은 키처럼 서로 다른 집단이 섞이면 봉우리가 둘로 보일 수 있습니다. 곡선을 겹쳐 보고 확인한 뒤에 정규분포를 써야 합니다.</li>
+            <li><span class="tag">질문</span>여러 사람의 키를 모아 히스토그램을 그리면 가운데가 볼록한 종 모양이 나온다고 한다. 직접 모은 자료도 정말 그럴까? 종 모양이라는 것은 무엇으로 확인할 수 있을까?</li>
+            <li><span class="tag">복원</span>정규분포 \(\mathrm{N}(m, \sigma^2)\)에서 \(P(m - \sigma \le X \le m + \sigma) \approx 0.683\), \(P(m - 2\sigma \le X \le m + 2\sigma) \approx 0.954\)이다.</li>
+            <li><span class="tag">설명</span>자료의 평균 \(\bar{x}\)와 표준편차 \(s\)를 구해 \(\mathrm{N}(\bar{x}, s^2)\)의 곡선을 히스토그램 위에 겹쳐 본다. 히스토그램은 높이를 "상대도수 ÷ 칸 폭"으로 그려야 곡선과 같은 눈금이 된다. 정규분포에 가까운 자료라면 막대가 곡선을 따라가고, \(\bar{x} \pm s\) 안에 약 68 %, \(\bar{x} \pm 2s\) 안에 약 95 %가 들어간다. 여러 요인이 조금씩 더해져 생기는 양(키, 측정 오차)은 정규분포에 가까운 경우가 많다.</li>
+            <li><span class="tag">연결</span>정규분포가 이렇게 자주 나타나는 까닭은 "독립인 작은 효과를 많이 더하면 그 합은 정규분포에 가까워진다"는 중심극한정리이다. 갈톤 보드에서 공이 종 모양으로 쌓인 것도 같은 원리이다.</li>
+            <li><span class="tag">적용</span>친구들의 키, 한 달 동안의 등교 시간, 같은 물건을 여러 번 잰 길이처럼 직접 모은 자료를 넣어 보자. 68 %, 95 % 규칙에 얼마나 가까운가? 칸 수를 바꾸면 모양이 어떻게 달라 보이는가? 자료가 20개 이하일 때와 100개 이상일 때를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>모든 자료가 정규분포를 따르지는 않는다. 소득, 대기 시간, 시험 점수처럼 한쪽으로 꼬리가 길거나 봉우리가 둘인 자료도 흔하다. 남녀를 섞은 키처럼 서로 다른 집단이 섞이면 봉우리가 둘로 보일 수 있다. 곡선을 겹쳐 보고 확인한 뒤에 정규분포를 써야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">어떤 자료의 평균이 170, 표준편차가 6이고 정규분포에 가깝습니다. 158보다 작은 값은 대략 몇 %일까요?</p>
+          <p class="q">어떤 자료의 평균이 170, 표준편차가 6이고 정규분포에 가깝다. 158보다 작은 값은 대략 몇 %일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 2.3 %<span class="why"><b>맞습니다.</b> 158은 평균보다 \(2s\) 작습니다. \(\pm 2s\) 안이 약 95.4 %이므로 한쪽 바깥은 약 \(\frac{4.6}{2} = 2.3\) %입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 4.6 %<span class="why"><b>양쪽 바깥을 모두 셌습니다.</b> 158보다 작은 쪽만 물었습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 16 %<span class="why"><b>\(1s\) 바깥으로 계산했습니다.</b> 158은 \(2s\)만큼 떨어져 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 5 %<span class="why"><b>95 %의 나머지를 한쪽에 몰았습니다.</b> 나머지는 양쪽에 반씩 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>약 2.3 %<span class="why"><b>맞다.</b> 158은 평균보다 \(2s\) 작다. \(\pm 2s\) 안이 약 95.4 %이므로 한쪽 바깥은 약 \(\frac{4.6}{2} = 2.3\) %이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>약 4.6 %<span class="why"><b>양쪽 바깥을 모두 셌다.</b> 158보다 작은 쪽만 물었다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 16 %<span class="why"><b>\(1s\) 바깥으로 계산했다.</b> 158은 \(2s\)만큼 떨어져 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>약 5 %<span class="why"><b>95 %의 나머지를 한쪽에 몰았다.</b> 나머지는 양쪽에 반씩 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/stat/3-4.html#card-stat-normal-curve"><small class="mono">확률과 통계 3.4</small>평균과 표준편차만으로 종 모양이 정해질까?</a><a href="../../c/stat/3-4.html#card-stat-standardize"><small class="mono">확률과 통계 3.4</small>정규분포표 하나로 모든 정규분포의 확률을 구할 수 있을까?</a><a href="../../c/stat/3-4.html#text-stat-normal"><small class="mono">확률과 통계 3.4</small>정규분포</a><a href="../../c/stat/3-4.html#card-stat-binom-normal"><small class="mono">확률과 통계 3.4</small>시행 횟수가 많아지면 이항분포는 어떤 모양에 가까워질까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-3-7"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=3-7"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">9문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

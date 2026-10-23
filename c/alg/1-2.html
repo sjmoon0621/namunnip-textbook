@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>지수의 확장 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="지수를 0, 음의 정수, 유리수, 실수로 넓히는 과정과 밑이 양수여야 하는 까닭. 지수를 하나씩 줄이고, 분모를 바꾸고, 소수 자릿수를 늘리는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-exp-zero-neg .eq { font-size: 14px; margin: 8px 0 2px; line-height: 1.7; }
@@ -45,19 +50,76 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-exp-zero-neg"><span class="mono">1.2.1</span>0과 음의 정수 지수</a></li>
-        <li><a href="#card-alg-rational-exp"><span class="mono">1.2.2</span>유리수 지수와 밑의 조건</a></li>
-        <li><a href="#card-alg-real-exp"><span class="mono">1.2.3</span>실수 지수</a></li>
+        <li><a href="#text-alg-exp-extend"><span class="mono">본문</span>지수의 확장</a></li>
+        <li><a href="#card-alg-exp-zero-neg"><span class="mono">탐구 1</span>0과 음의 정수 지수</a></li>
+        <li><a href="#card-alg-rational-exp"><span class="mono">탐구 2</span>유리수 지수와 밑의 조건</a></li>
+        <li><a href="#card-alg-real-exp"><span class="mono">탐구 3</span>실수 지수</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">25문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-1-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">25문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-1-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-exp-extend" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>지수의 확장</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(2^3\)은 2를 세 번 곱한 수이다. 그런데 \(2^0\), \(2^{-1}\), \(2^{1/2}\)은 '몇 번 곱한다'로는 뜻을 줄 수 없다. 그래도 수학에서는 이 값들을 1, \(\tfrac{1}{2}\), \(\sqrt{2}\)로 정한다. 왜 하필 이 값들일까? 정하는 기준은 무엇일까?</p>
+          <figure class="q-fig" data-q="alg-ladder">
+            <svg viewBox="0 0 520 260" role="img" aria-label="지수가 1 늘 때마다 2배가 되는 계단을 아래와 사이로 늘린 그림"></svg>
+            <div class="q-ctl"><label>지수 \(x\) = <input type="range" data-k="x" min="-3" max="4" step="0.5" value="0"><output data-k="x"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 지수가 1 늘 때마다 값이 2배가 된다는 규칙을 지수 0, 음수, 분수까지 이어 가면 \(2^0 = 1\), \(2^{-1} = \tfrac{1}{2}\), \(2^{1/2} = \sqrt{2}\)가 자연스럽게 나온다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>자연수 지수의 지수법칙 \(a^m a^n = a^{m+n}\), \((a^m)^n = a^{mn}\), 거듭제곱근과 그 성질(<a href="1-1.html">거듭제곱과 거듭제곱근</a>).</div>
+
+          <h3><span class="no">1.2.1</span>규칙을 지키도록 정한다</h3>
+          <p>\(2^1, 2^2, 2^3, 2^4\)은 2, 4, 8, 16이다. 지수가 1 늘 때마다 값이 2배가 되고, 거꾸로 지수가 1 줄 때마다 값이 반이 된다. 이 규칙을 지수 1에서 한 칸 더 내려가 보자. \(2^1 = 2\)의 반이므로 \(2^0 = 1\)이다. 다시 반으로 줄이면 \(2^{-1} = \tfrac{1}{2}\), \(2^{-2} = \tfrac{1}{4}\)이다.</p>
+          <p>이렇게 정하면 지수법칙 \(a^m a^n = a^{m+n}\)이 0과 음수에서도 그대로 성립한다. 가령 \(2^3 \times 2^{-3} = 2^0\)이어야 하는데, \(8 \times \tfrac{1}{8} = 1\)이므로 맞는다. 즉 새 지수의 값은 마음대로 정한 것이 아니라, 원래의 지수법칙이 깨지지 않도록 하나로 정해진 것이다.</p>
+          <div class="tb-env"><span class="lb">정의 1.2.1 <span class="nm">0과 음의 정수 지수</span></span>
+            <p>\(a \ne 0\)이고 \(n\)이 양의 정수일 때 \(a^0 = 1\), \(a^{-n} = \dfrac{1}{a^n}\)이다.</p>
+          </div>
+
+          <h3><span class="no">1.2.2</span>분수 지수</h3>
+          <p>이번에는 계단 사이로 들어가 보자. \(2^{1/2}\)은 무엇이어야 할까? 지수법칙 \((a^m)^n = a^{mn}\)이 성립하려면 \(\left(2^{1/2}\right)^2 = 2^1 = 2\)여야 한다. 따라서 \(2^{1/2}\)은 제곱해서 2가 되는 양수, 곧 \(\sqrt{2}\)이다. 같은 이유로 \(2^{1/3} = \sqrt[3]{2}\)이고, \(8^{2/3} = \left(8^{1/3}\right)^2 = 2^2 = 4\)이다.</p>
+          <div class="tb-env"><span class="lb">정의 1.2.2 <span class="nm">유리수 지수</span></span>
+            <p>\(a &gt; 0\)이고 \(m\)이 정수, \(n\)이 2 이상의 자연수일 때 \(a^{m/n} = \sqrt[n]{a^m}\)이다.</p>
+          </div>
+          <p>여기서 밑이 양수라는 조건이 붙는 까닭이 있다. 밑이 음수이면 같은 수를 다르게 쓴 지수가 다른 값을 줄 수 있다. 가령 \(\tfrac{1}{3} = \tfrac{2}{6}\)인데 \((-8)^{1/3} = -2\)로, \((-8)^{2/6} = \sqrt[6]{64} = 2\)로 계산되어 모순이 생긴다.<sup class="fn"><a href="#fn-alg-exp-extend-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="자연수에서 정수, 유리수, 실수로 지수의 범위를 넓혀 가는 단계">
+              <rect x="10" y="40" width="110" height="60" class="lk"/><text x="65" y="66" text-anchor="middle">자연수</text><text x="65" y="86" text-anchor="middle" class="s">곱한 횟수</text>
+              <rect x="140" y="40" width="110" height="60" class="lb"/><text x="195" y="66" text-anchor="middle">정수</text><text x="195" y="86" text-anchor="middle" class="s">a⁰ = 1, a⁻ⁿ = 1/aⁿ</text>
+              <rect x="270" y="40" width="110" height="60" class="la"/><text x="325" y="66" text-anchor="middle">유리수</text><text x="325" y="86" text-anchor="middle" class="s">a^(m/n) = ⁿ√aᵐ</text>
+              <rect x="400" y="40" width="110" height="60" class="lc"/><text x="455" y="66" text-anchor="middle">실수</text><text x="455" y="86" text-anchor="middle" class="s">가까운 유리수로</text>
+              <path d="M122 70 L138 70" class="k"/><path d="M252 70 L268 70" class="k"/><path d="M382 70 L398 70" class="k"/>
+              <text x="260" y="135" text-anchor="middle" class="s">단계마다 지수법칙이 그대로 성립하도록 정한다</text>
+            </svg>
+            <figcaption>그림 2. 지수는 자연수에서 정수, 유리수, 실수로 넓어지며, 단계마다 지수법칙을 지키도록 뜻을 정한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.2.3</span>무리수 지수</h3>
+          <p>\(2^{\sqrt{2}}\)처럼 지수가 무리수이면 분수로 쓸 수도 없다. 그런데 \(\sqrt{2} = 1.414\ldots\)에 가까워지는 유리수 1.4, 1.41, 1.414, …를 지수로 넣으면 \(2^{1.4}, 2^{1.41}, 2^{1.414}, \ldots\)이 한 값에 점점 가까워진다. 그 값을 \(2^{\sqrt{2}}\)로 정한다(약 2.665). 이렇게 하면 지수는 모든 실수로 넓어지고, 그래프 \(y = 2^x\)는 끊김 없는 곡선이 된다.</p>
+
+          <h3><span class="no">1.2.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.2.3</span>
+            <p>\(16^{-3/4}\), \(\left(\tfrac{1}{27}\right)^{-2/3}\), \(5^0 + 4^{-1/2}\)의 값을 구하여라.</p>
+          </div>
+          <p>\(16 = 2^4\)이므로 \(16^{-3/4} = (2^4)^{-3/4} = 2^{-3} = \dfrac{1}{8}\)이다. 밑을 소수의 거듭제곱으로 바꾸면 지수의 곱셈만 남는다.</p>
+          <p>\(\tfrac{1}{27} = 3^{-3}\)이므로 \(\left(\tfrac{1}{27}\right)^{-2/3} = (3^{-3})^{-2/3} = 3^2 = 9\)이다. 음수 지수가 두 번 나와 부호가 상쇄되었다.</p>
+          <p>\(5^0 = 1\)이고 \(4^{-1/2} = \dfrac{1}{4^{1/2}} = \dfrac{1}{2}\)이므로 \(5^0 + 4^{-1/2} = \dfrac{3}{2}\)이다. 세 계산 모두 정의를 외워서가 아니라 '지수법칙이 성립하도록'이라는 한 가지 원리로 풀렸다. 아래 탐구 카드에서 지수를 0과 음수, 분수로 움직이며 값이 어떻게 이어지는지 직접 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-exp-extend-1">그래서 유리수 지수와 실수 지수는 밑이 양수일 때만 정한다. 정수 지수는 밑이 음수여도 \((-2)^3 = -8\)처럼 문제없이 정해진다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>지수는 자연수에서 정수, 유리수, 실수로 넓혀 가며, 각 단계에서 지수법칙이 그대로 성립하도록 값을 정한다. 그 결과 \(a^0 = 1\), \(a^{-n} = \tfrac{1}{a^n}\), \(a^{m/n} = \sqrt[n]{a^m}\)이 되고, 유리수와 실수 지수는 밑이 양수일 때만 정한다. 그래서 처음 질문의 \(2^0\), \(2^{-1}\), \(2^{1/2}\)은 2배씩 커지는 계단을 아래와 사이로 이어 얻은 1, \(\tfrac{1}{2}\), \(\sqrt{2}\)이다.</p></div>
+        </div>
+      </article>
+
       <article class="card" id="card-alg-exp-zero-neg">
         <header class="card-head">
-          <span class="no">1.2.1</span><h2>\(2^0\)은 왜 0이 아니라 1일까?</h2><span class="kind">0과 음의 정수 지수 · 규칙 이어 가기</span>
+          <span class="no">탐구 1</span><h2>\(2^0\)은 왜 0이 아니라 1일까?</h2><span class="kind">0과 음의 정수 지수 · 규칙 이어 가기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,33 +137,33 @@
                 <div><dt>\(a^k\)의 값</dt><dd class="n-v">—</dd></div>
                 <div><dt>\(a^k \times a^{-k}\)</dt><dd class="n-p">—</dd></div>
               </dl>
-              <p class="fig-note">막대 높이는 실제 값에 비례합니다. 값이 아주 작은 막대는 숫자로 읽으세요.</p>
+              <p class="fig-note">막대 높이는 실제 값에 비례한다. 값이 아주 작은 막대는 숫자로 읽는다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2^3\)은 2를 세 번 곱한 수입니다. \(2^0\)은 "2를 0번 곱한 수"인데, 그러면 0일까요? \(2^{-1}\)은 무엇일까요?</li>
-            <li><span class="tag">복원</span>자연수 \(m, n\)에 대하여 \(a^ma^n = a^{m+n}\)이고, \(m &gt; n\)이면 \(a^m \div a^n = a^{m-n}\)입니다. 지수가 1 줄면 값은 \(a\)로 한 번 나눈 것이 됩니다.</li>
-            <li><span class="tag">설명</span>"\(a\)를 0번 곱한다"는 말로는 값을 정할 수 없습니다. 그래서 이미 성립하는 규칙이 깨지지 않도록 뜻을 정합니다. 지수가 1 줄 때마다 \(a\)로 나누는 규칙을 이어 가면 \(a^1 \div a = 1\)이므로 \(a \ne 0\)일 때 <em>\(a^0 = 1\)</em>로 정합니다. 한 번 더 나누면 \(\frac{1}{a}\)이므로 <em>\(a^{-n} = \frac{1}{a^n}\)</em>(\(n\)은 자연수)로 정합니다. 이렇게 정하면 \(a^ma^n = a^{m+n}\)이 모든 정수 \(m, n\)에서 성립합니다. 예를 들어 \(a^3 \times a^{-3} = a^0 = 1\)이어야 하므로, \(a^{-3}\)은 \(a^3\)의 역수일 수밖에 없습니다.</li>
-            <li><span class="tag">연결</span>과학에서는 아주 작은 수를 음의 지수로 씁니다. \(1\,\text{nm} = 10^{-9}\,\text{m}\)이고, 수소 원자 하나의 질량은 약 \(1.67 \times 10^{-27}\,\text{kg}\)입니다. 다음 카드에서는 같은 생각으로 지수를 분수까지 넓힙니다.</li>
-            <li><span class="tag">적용</span>"지수 1 줄이기"를 눌러 지수를 1에서 \(-3\)까지 내려 보세요. 막대 높이가 매번 몇 분의 몇으로 줄어드나요? 밑을 3으로 바꾸어도 \(a^0\)이 1인지, \(a^k \times a^{-k}\)가 언제나 1인지 확인하세요.</li>
-            <li class="warn"><span class="tag">판단</span>"\(2^{-3} = -8\)" 또는 "\(-6\)"으로 계산하는 실수가 흔합니다. 음의 지수는 값을 음수로 만드는 것이 아니라 역수를 뜻합니다. \(2^{-3} = \frac{1}{8}\)은 양수입니다. 또 0으로는 나눌 수 없으므로 \(0^0, 0^{-1}\)은 이 방법으로 정하지 않습니다.</li>
+            <li><span class="tag">질문</span>\(2^3\)은 2를 세 번 곱한 수이다. 그러면 \(2^0\)은 "2를 0번 곱한 수"이니 0일까? 그리고 \(2^{-1}\)은 무엇일까?</li>
+            <li><span class="tag">복원</span>자연수 \(m, n\)에 대하여 \(a^ma^n = a^{m+n}\)이고, \(m &gt; n\)이면 \(a^m \div a^n = a^{m-n}\)이다. 즉 지수가 1 줄면 값은 \(a\)로 한 번 나눈 것이 된다.</li>
+            <li><span class="tag">설명</span>"\(a\)를 0번 곱한다"는 말로는 값을 정할 수 없다. 그래서 이미 성립하는 규칙이 깨지지 않도록 뜻을 정한다. 지수가 1 줄 때마다 \(a\)로 나누는 규칙을 이어 가면 \(a^1 \div a = 1\)이므로, \(a \ne 0\)일 때 <em>\(a^0 = 1\)</em>로 정한다. 한 번 더 나누면 \(\frac{1}{a}\)이므로 <em>\(a^{-n} = \frac{1}{a^n}\)</em>(\(n\)은 자연수)로 정한다. 이렇게 정하면 \(a^ma^n = a^{m+n}\)이 모든 정수 \(m, n\)에서 성립한다. 예를 들어 \(a^3 \times a^{-3} = a^0 = 1\)이어야 하므로, \(a^{-3}\)은 \(a^3\)의 역수일 수밖에 없다.</li>
+            <li><span class="tag">연결</span>과학에서는 아주 작은 수를 음의 지수로 쓴다. 가령 \(1\,\text{nm} = 10^{-9}\,\text{m}\)이고, 수소 원자 하나의 질량은 약 \(1.67 \times 10^{-27}\,\text{kg}\)이다. 다음 카드에서는 같은 생각으로 지수를 분수까지 넓힌다.</li>
+            <li><span class="tag">적용</span>"지수 1 줄이기"를 눌러 지수를 1에서 \(-3\)까지 내리며 막대 높이가 매번 몇 분의 몇으로 줄어드는지 보자. 밑을 3으로 바꾸어도 \(a^0\)이 1인지, \(a^k \times a^{-k}\)가 언제나 1인지도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"\(2^{-3} = -8\)" 또는 "\(-6\)"으로 계산하는 실수가 흔하다. 하지만 음의 지수는 값을 음수로 만드는 것이 아니라 역수를 뜻하므로, \(2^{-3} = \frac{1}{8}\)은 양수이다. 또 0으로는 나눌 수 없으므로 \(0^0, 0^{-1}\)은 이 방법으로 정하지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(5^{-2} \times 5^0 \div 5^{-3}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞습니다.</b> 지수만 계산하면 \(-2 + 0 - (-3) = 1\)이므로 \(5^1 = 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>\(5^0\)을 0으로 보았습니다.</b> \(5^0 = 1\)이므로 곱해도 값이 바뀌지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3125}\)<span class="why"><b>나눗셈의 부호를 놓쳤습니다.</b> \(-2 + 0 + (-3) = -5\)로 계산한 값입니다. \(-3\)을 빼면 3을 더하는 것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-5\)<span class="why"><b>음의 지수를 음수로 보았습니다.</b> 지수의 합은 1이고, 양수 밑의 거듭제곱은 언제나 양수입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>5<span class="why"><b>맞다.</b> 지수만 계산하면 \(-2 + 0 - (-3) = 1\)이므로 \(5^1 = 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>0<span class="why"><b>\(5^0\)을 0으로 보았다.</b> \(5^0 = 1\)이므로 곱해도 값이 바뀌지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\frac{1}{3125}\)<span class="why"><b>나눗셈의 부호를 놓쳤다.</b> \(-2 + 0 + (-3) = -5\)로 계산한 값이다. \(-3\)을 빼면 3을 더하는 것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-5\)<span class="why"><b>음의 지수를 음수로 보았다.</b> 지수의 합은 1이고, 양수 밑의 거듭제곱은 언제나 양수이다.</span></span></button></li>
           </ol>
         </div>
       </article>
 
       <article class="card" id="card-alg-rational-exp">
         <header class="card-head">
-          <span class="no">1.2.2</span><h2>\(8^{2/3}\)은 무엇을 뜻하고, 밑은 왜 양수여야 할까?</h2><span class="kind">유리수 지수 · 분모를 바꾸며 점 찍기</span>
+          <span class="no">탐구 2</span><h2>\(8^{2/3}\)은 무엇을 뜻하고, 밑은 왜 양수여야 할까?</h2><span class="kind">유리수 지수 · 분모를 바꾸며 점 찍기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -123,34 +185,34 @@
                 <div><dt>\(\sqrt[2n]{a^{2m}}\) (같은 분수)</dt><dd class="n-2">—</dd></div>
                 <div><dt>두 값이 같은가</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">점은 지수가 \(\frac{k}{n}\)(\(k\)는 정수)인 곳에서 \(\sqrt[n]{a^k}\)로 계산한 값입니다. 주황색 점이 지금 고른 \(\frac{m}{n}\)입니다.</p>
+              <p class="fig-note">점은 지수가 \(\frac{k}{n}\)(\(k\)는 정수)인 곳에서 \(\sqrt[n]{a^k}\)로 계산한 값이다. 주황색 점이 지금 고른 \(\frac{m}{n}\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(8^{2/3}\)을 "8을 \(\frac{2}{3}\)번 곱한 수"라고 할 수는 없습니다. 이 수를 어떤 값으로 정해야 할까요? 또 \((-8)^{1/3}\)은 \(-2\)라고 해도 될까요?</li>
-            <li><span class="tag">복원</span>\(a^0\)과 \(a^{-n}\)은 지수법칙이 깨지지 않도록 뜻을 정했습니다. 지수법칙 \((a^m)^n = a^{mn}\)이 있고, \(\sqrt[n]{a}\)는 \(n\)제곱해서 \(a\)가 되는 수입니다.</li>
-            <li><span class="tag">설명</span>\((a^{1/n})^n = a^1 = a\)가 성립하려면 \(a^{1/n}\)은 \(n\)제곱해서 \(a\)가 되는 수, 곧 \(\sqrt[n]{a}\)여야 합니다. 그래서 <em>\(a &gt; 0\)</em>이고 \(m\)은 정수, \(n\)은 2 이상의 자연수일 때 <em>\(a^{m/n} = \sqrt[n]{a^m}\)</em>으로 정합니다. 예를 들어 \(8^{2/3} = \sqrt[3]{64} = 4\)입니다. 밑을 양수로 제한하는 까닭은 같은 유리수를 다르게 쓸 때 드러납니다. \(\frac{1}{3} = \frac{2}{6}\)인데 밑이 \(-8\)이면 \(\sqrt[3]{-8} = -2\), \(\sqrt[6]{(-8)^2} = \sqrt[6]{64} = 2\)가 되어 값이 하나로 정해지지 않습니다. 밑이 양수이면 분수를 어떻게 나타내도 값이 같습니다(거듭제곱근의 성질 \(\sqrt[np]{a^{mp}} = \sqrt[n]{a^m}\)).</li>
-            <li><span class="tag">연결</span>3년 동안 두 배가 되는 양은 1년마다 \(2^{1/3} \approx 1.26\)배씩 늘어난 것입니다. 분모 \(n\)을 키우면 점이 촘촘해져 곡선을 메우지만, 지수가 \(\sqrt{2}\) 같은 무리수인 곳은 여전히 비어 있습니다. 그 빈틈은 다음 카드에서 채웁니다.</li>
-            <li><span class="tag">적용</span>밑 2에서 \(n\)을 1부터 6까지 키우며 점이 어떻게 늘어나는지 보세요. \(m, n\)을 바꾸며 두 값이 언제나 같은지 확인한 뒤, 밑을 \(-8\)로 바꾸고 \(m = 1\), \(n = 3\)을 보세요. 밑 \(-8\)에서 찍히지 않는 점은 왜 빠졌나요?</li>
-            <li class="warn"><span class="tag">판단</span>\(8^{2/3}\)을 \(8 \times \frac{2}{3} = \frac{16}{3}\)으로 계산하는 실수가 흔합니다. 지수는 곱하는 수가 아니라 거듭제곱근과 거듭제곱의 횟수를 알려 줍니다. 또 \(\sqrt[3]{-8} = -2\)는 거듭제곱근으로는 옳지만, 이것을 \((-8)^{1/3}\)으로 쓰지는 않습니다. 유리수 지수는 밑이 양수일 때만 정의합니다.</li>
+            <li><span class="tag">질문</span>\(8^{2/3}\)을 "8을 \(\frac{2}{3}\)번 곱한 수"라고 할 수는 없다. 이 수를 어떤 값으로 정해야 할까? 또 \((-8)^{1/3}\)은 \(-2\)라고 해도 될까?</li>
+            <li><span class="tag">복원</span>\(a^0\)과 \(a^{-n}\)은 지수법칙이 깨지지 않도록 뜻을 정했다. 그리고 지수법칙 \((a^m)^n = a^{mn}\)이 있고, \(\sqrt[n]{a}\)는 \(n\)제곱해서 \(a\)가 되는 수이다.</li>
+            <li><span class="tag">설명</span>\((a^{1/n})^n = a^1 = a\)가 성립하려면 \(a^{1/n}\)은 \(n\)제곱해서 \(a\)가 되는 수, 곧 \(\sqrt[n]{a}\)여야 한다. 그래서 <em>\(a &gt; 0\)</em>이고 \(m\)은 정수, \(n\)은 2 이상의 자연수일 때 <em>\(a^{m/n} = \sqrt[n]{a^m}\)</em>으로 정한다. 예를 들어 \(8^{2/3} = \sqrt[3]{64} = 4\)이다. 밑을 양수로 제한하는 까닭은 같은 유리수를 다르게 쓸 때 드러난다. \(\frac{1}{3} = \frac{2}{6}\)인데 밑이 \(-8\)이면 \(\sqrt[3]{-8} = -2\), \(\sqrt[6]{(-8)^2} = \sqrt[6]{64} = 2\)가 되어 값이 하나로 정해지지 않는다. 반면 밑이 양수이면 분수를 어떻게 나타내도 값이 같다(거듭제곱근의 성질 \(\sqrt[np]{a^{mp}} = \sqrt[n]{a^m}\)).</li>
+            <li><span class="tag">연결</span>가령 3년 동안 두 배가 되는 양은 1년마다 \(2^{1/3} \approx 1.26\)배씩 늘어난 것이다. 분모 \(n\)을 키우면 점이 촘촘해져 곡선을 메우지만, 지수가 \(\sqrt{2}\) 같은 무리수인 곳은 여전히 비어 있다. 그 빈틈은 다음 카드에서 채운다.</li>
+            <li><span class="tag">적용</span>밑 2에서 \(n\)을 1부터 6까지 키우며 점이 어떻게 늘어나는지 보자. \(m, n\)을 바꾸며 두 값이 언제나 같은지 확인한 뒤, 밑을 \(-8\)로 바꾸고 \(m = 1\), \(n = 3\)을 보면 찍히지 않는 점이 생긴다. 왜 그 점이 빠졌는지 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(8^{2/3}\)을 \(8 \times \frac{2}{3} = \frac{16}{3}\)으로 계산하는 실수가 흔하다. 지수는 곱하는 수가 아니라 거듭제곱근과 거듭제곱의 횟수를 알려 준다. 또 \(\sqrt[3]{-8} = -2\)는 거듭제곱근으로는 옳지만, 이것을 \((-8)^{1/3}\)으로 쓰지는 않는다. 유리수 지수는 밑이 양수일 때만 정의하기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(27^{-2/3}\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{9}\)<span class="why"><b>맞습니다.</b> \(27^{1/3} = 3\)이므로 \(27^{2/3} = 9\)이고, 음의 지수는 역수라서 \(\frac{1}{9}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-9\)<span class="why"><b>음의 지수를 음수로 보았습니다.</b> 양수 밑의 거듭제곱은 지수가 음수여도 양수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>지수의 부호를 빠뜨렸습니다.</b> 9는 \(27^{2/3}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-18\)<span class="why"><b>밑과 지수를 곱했습니다.</b> \(27 \times (-\frac{2}{3}) = -18\)은 거듭제곱과 상관없는 계산입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{1}{9}\)<span class="why"><b>맞다.</b> \(27^{1/3} = 3\)이므로 \(27^{2/3} = 9\)이고, 음의 지수는 역수라서 \(\frac{1}{9}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(-9\)<span class="why"><b>음의 지수를 음수로 보았다.</b> 양수 밑의 거듭제곱은 지수가 음수여도 양수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>9<span class="why"><b>지수의 부호를 빠뜨렸다.</b> 9는 \(27^{2/3}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(-18\)<span class="why"><b>밑과 지수를 곱했다.</b> \(27 \times (-\frac{2}{3}) = -18\)은 거듭제곱과 상관없는 계산이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-1.html#card-alg-root-rules"><small class="mono">대수 1.1</small>거듭제곱근끼리 곱하면 왜 근호 하나로 합쳐질까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-1.html#card-alg-root-rules"><small class="mono">대수 1.1</small>거듭제곱근끼리 곱하면 왜 근호 하나로 합쳐질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/extra/1-5.html#text-extra-temperament"><small class="mono">교양·심화 1.5</small>평균율과 2의 12제곱근</a><a href="../../c/extra/1-5.html#card-extra-piano"><small class="mono">교양·심화 1.5</small>평균율의 화음과 순정한 화음은 귀로 구별될까?</a></div></nav>
 
       <article class="card" id="card-alg-real-exp">
         <header class="card-head">
-          <span class="no">1.2.3</span><h2>\(2^{\sqrt{2}}\)처럼 지수가 무리수인 수는 어떻게 정할까?</h2><span class="kind">실수 지수 · 유리수로 감싸기</span>
+          <span class="no">탐구 3</span><h2>\(2^{\sqrt{2}}\)처럼 지수가 무리수인 수는 어떻게 정할까?</h2><span class="kind">실수 지수 · 유리수로 감싸기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -173,43 +235,44 @@
                 <div class="wide"><dt>값을 감싸는 구간</dt><dd class="n-y">—</dd></div>
                 <div><dt>값 구간 폭</dt><dd class="n-dy">—</dd></div>
               </dl>
-              <p class="fig-note">누를 때마다 그림을 10배로 확대합니다. 축 눈금은 감싸는 구간의 양 끝입니다.</p>
+              <p class="fig-note">누를 때마다 그림을 10배로 확대한다. 축 눈금은 감싸는 구간의 양 끝이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\sqrt{2}\)는 분수로 나타낼 수 없으므로 \(2^{\sqrt{2}}\)는 거듭제곱근으로도 쓸 수 없습니다. 그래도 이 수는 하나로 정해질까요?</li>
-            <li><span class="tag">복원</span>\(\sqrt{2} = 1.41421356\cdots\)은 무리수이고, 소수점 아래 자릿수를 늘리면 유리수로 얼마든지 가깝게 다가갈 수 있습니다. 밑이 1보다 큰 양수이면 유리수 지수가 커질수록 거듭제곱 값도 커집니다.</li>
-            <li><span class="tag">설명</span>\(\sqrt{2}\)를 유리수로 위아래에서 감쌉니다. \(1.4 &lt; \sqrt{2} &lt; 1.5, 1.41 &lt; \sqrt{2} &lt; 1.42, 1.414 &lt; \sqrt{2} &lt; 1.415 \cdots\) 그러면 값도 \(2^{1.4} &lt; 2^{\sqrt{2}} &lt; 2^{1.5}, 2^{1.41} &lt; 2^{\sqrt{2}} &lt; 2^{1.42} \cdots\) 처럼 감싸집니다. 지수 구간의 폭이 0에 가까워지면 값 구간의 폭도 0에 가까워지므로, 모든 값 구간에 공통으로 들어 있는 수는 하나뿐입니다. 그 수를 \(2^{\sqrt{2}}\)로 정합니다(약 2.6651). 이렇게 하면 \(a &gt; 0\)일 때 모든 실수 \(x\)에 대하여 \(a^x\)가 하나로 정해지고, 지수법칙도 그대로 성립합니다. 고등학교에서는 지수가 실수인 경우를 이처럼 직관적으로 이해하면 충분합니다.</li>
-            <li><span class="tag">연결</span>계산기가 \(2^{\sqrt{2}}\)를 보여 주는 것도 이런 근삿값입니다. 지수가 모든 실수로 넓혀졌으므로 \(y = 2^x\)의 그래프는 끊긴 곳이 없는 곡선이 되고, 이것이 지수함수의 출발점입니다.</li>
-            <li><span class="tag">적용</span>"소수 자릿수 하나 더"를 누르며 값 구간의 폭이 매번 약 몇 분의 1로 줄어드는지 보세요. 밑을 0.5로 바꾸면 지수 구간의 왼쪽 끝은 값 구간의 어느 쪽 끝과 짝이 되나요? 지수를 \(\pi\)로 바꾸면 \(2^\pi\)는 얼마에 가까워지나요?</li>
-            <li class="warn"><span class="tag">판단</span>밑이 1보다 작으면 지수가 커질수록 값이 작아지므로 부등호의 방향이 뒤집힙니다. 그래도 값 구간이 하나의 수로 좁혀지는 것은 같습니다. 밑이 1이면 구간 폭이 처음부터 0입니다. 이 방법은 밑이 양수일 때만 쓸 수 있습니다. 밑이 음수이면 유리수 지수부터 값이 정해지지 않기 때문입니다. 또 \(2^{\sqrt{2}} = 2.665\)처럼 근삿값을 등호로 쓰지 않습니다.</li>
+            <li><span class="tag">질문</span>\(\sqrt{2}\)는 분수로 나타낼 수 없으므로 \(2^{\sqrt{2}}\)는 거듭제곱근으로도 쓸 수 없다. 그래도 이 수는 하나로 정해질까?</li>
+            <li><span class="tag">복원</span>\(\sqrt{2} = 1.41421356\cdots\)은 무리수이지만, 소수점 아래 자릿수를 늘리면 유리수로 얼마든지 가깝게 다가갈 수 있다. 그리고 밑이 1보다 큰 양수이면 유리수 지수가 커질수록 거듭제곱 값도 커진다.</li>
+            <li><span class="tag">설명</span>그래서 \(\sqrt{2}\)를 유리수로 위아래에서 감싼다. \(1.4 &lt; \sqrt{2} &lt; 1.5, 1.41 &lt; \sqrt{2} &lt; 1.42, 1.414 &lt; \sqrt{2} &lt; 1.415 \cdots\)로 감싸면 값도 \(2^{1.4} &lt; 2^{\sqrt{2}} &lt; 2^{1.5}, 2^{1.41} &lt; 2^{\sqrt{2}} &lt; 2^{1.42} \cdots\) 처럼 감싸진다. 지수 구간의 폭이 0에 가까워지면 값 구간의 폭도 0에 가까워지므로, 모든 값 구간에 공통으로 들어 있는 수는 하나뿐이다. 그 수를 \(2^{\sqrt{2}}\)로 정한다(약 2.6651). 이렇게 하면 \(a &gt; 0\)일 때 모든 실수 \(x\)에 대하여 \(a^x\)가 하나로 정해지고, 지수법칙도 그대로 성립한다. 고등학교에서는 지수가 실수인 경우를 이렇게 직관적으로 이해하면 충분하다.</li>
+            <li><span class="tag">연결</span>계산기가 \(2^{\sqrt{2}}\)를 보여 주는 것도 이런 근삿값이다. 또 지수가 모든 실수로 넓혀졌으므로 \(y = 2^x\)의 그래프는 끊긴 곳이 없는 곡선이 되고, 이것이 지수함수의 출발점이다.</li>
+            <li><span class="tag">적용</span>"소수 자릿수 하나 더"를 누르며 값 구간의 폭이 매번 약 몇 분의 1로 줄어드는지 보자. 밑을 0.5로 바꾸면 지수 구간의 왼쪽 끝이 값 구간의 오른쪽 끝과 짝이 되고, 지수를 \(\pi\)로 바꾸면 \(2^\pi\)가 얼마에 가까워지는지도 볼 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>밑이 1보다 작으면 지수가 커질수록 값이 작아지므로 부등호의 방향이 뒤집힌다. 그래도 값 구간이 하나의 수로 좁혀지는 것은 같고, 밑이 1이면 구간 폭이 처음부터 0이다. 다만 이 방법은 밑이 양수일 때만 쓸 수 있는데, 밑이 음수이면 유리수 지수부터 값이 정해지지 않기 때문이다. 또 \(2^{\sqrt{2}} = 2.665\)처럼 근삿값을 등호로 쓰지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\((\frac{1}{2})^{\sqrt{2}}\)에 대하여 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\((\frac{1}{2})^{1.4} &lt; (\frac{1}{2})^{\sqrt{2}} &lt; (\frac{1}{2})^{1.5}\)<span class="why"><b>밑이 1보다 클 때의 방향입니다.</b> 밑이 \(\frac{1}{2}\)이면 지수가 커질수록 값이 작아지므로 부등호가 뒤집힙니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\((\frac{1}{2})^{1.5} &lt; (\frac{1}{2})^{\sqrt{2}} &lt; (\frac{1}{2})^{1.4}\)<span class="why"><b>맞습니다.</b> \(1.4 &lt; \sqrt{2} &lt; 1.5\)이고 밑이 1보다 작으므로 지수가 큰 쪽의 값이 더 작습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((\frac{1}{2})^{\sqrt{2}}\)는 음수이다.<span class="why"><b>밑과 값의 부호를 헷갈렸습니다.</b> 양수 밑의 거듭제곱은 지수가 무엇이든 양수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>밑이 1보다 작으면 무리수 지수는 정의되지 않는다.<span class="why"><b>조건을 잘못 기억했습니다.</b> 필요한 조건은 밑이 양수인 것입니다. \(0 &lt; a &lt; 1\)이어도 감싸는 방법이 그대로 통합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>\((\frac{1}{2})^{1.4} &lt; (\frac{1}{2})^{\sqrt{2}} &lt; (\frac{1}{2})^{1.5}\)<span class="why"><b>밑이 1보다 클 때의 방향이다.</b> 밑이 \(\frac{1}{2}\)이면 지수가 커질수록 값이 작아지므로 부등호가 뒤집힌다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>\((\frac{1}{2})^{1.5} &lt; (\frac{1}{2})^{\sqrt{2}} &lt; (\frac{1}{2})^{1.4}\)<span class="why"><b>맞다.</b> \(1.4 &lt; \sqrt{2} &lt; 1.5\)이고 밑이 1보다 작으므로 지수가 큰 쪽의 값이 더 작다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\((\frac{1}{2})^{\sqrt{2}}\)는 음수이다.<span class="why"><b>밑과 값의 부호를 헷갈렸다.</b> 양수 밑의 거듭제곱은 지수가 무엇이든 양수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>밑이 1보다 작으면 무리수 지수는 정의되지 않는다.<span class="why"><b>조건을 잘못 기억했다.</b> 필요한 조건은 밑이 양수인 것이다. \(0 &lt; a &lt; 1\)이어도 감싸는 방법이 그대로 통한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a><a href="../../c/alg/1-4.html#card-alg-log-def"><small class="mono">대수 1.4</small>2를 몇 제곱하면 5가 될까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/alg/1-3.html#card-alg-exp-law-count"><small class="mono">대수 1.3</small>거듭제곱끼리 곱하면 지수는 왜 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-law-graph"><small class="mono">대수 1.3</small>지수가 소수여도 높이를 곱하면 지수가 더해질까?</a><a href="../../c/alg/1-3.html#card-alg-exp-simplify"><small class="mono">대수 1.3</small>복잡한 거듭제곱 식을 밑 하나로 정리하려면?</a><a href="../../c/alg/1-3.html#text-alg-exp-laws"><small class="mono">대수 1.3</small>지수법칙</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">25문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-1-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">25문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -217,6 +280,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>
 <script src="../../js/cards/alg/exp-zero-neg.js"></script>
 <script src="../../js/cards/alg/rational-exp.js"></script>

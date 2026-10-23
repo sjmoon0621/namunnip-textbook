@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부등식의 영역과 경제 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="연립일차부등식의 영역으로 나타낸 생산 가능 영역, 이익 직선을 평행이동해 최댓값 찾기, 최적해가 꼭짓점에 있다는 성질(선형계획법), 열린 영역에서의 최소 비용과 정수 조건. 공방의 생산 계획 카드와, 가장 싼 식단 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-econ-lp-production canvas { aspect-ratio: 1 / 0.85; max-width: 460px; width: 100%; margin: 0 auto; display: block; }
@@ -47,22 +52,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-econ-lp-production"><span class="mono">2.6.1</span>제한된 자원으로 이익을 가장 크게 — 선형계획</a></li>
-        <li><a href="#card-econ-diet"><span class="mono">2.6.2</span>영양 기준을 채우는 가장 싼 아침</a></li>
+        <li><a href="#text-econ-lp"><span class="mono">본문</span>부등식의 영역과 경제</a></li>
+        <li><a href="#card-econ-lp-production"><span class="mono">탐구 1</span>제한된 자원으로 이익을 가장 크게 — 선형계획</a></li>
+        <li><a href="#card-econ-diet"><span class="mono">탐구 2</span>영양 기준을 채우는 가장 싼 아침</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=econ-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=econ&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=econ-2-6">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-econ-lp" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부등식의 영역과 경제</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">가구 공방은 하루에 목재 100단위와 작업 시간 80시간을 쓸 수 있다. 책상 하나에는 목재 2단위와 1시간, 의자 하나에는 목재 1단위와 2시간이 든다. 책상 하나는 40만 원, 의자 하나는 30만 원의 이익을 낸다. 목재와 시간이 모자라지 않는 범위에서 이익을 가장 크게 하려면 몇 개씩 만들어야 할까?</p>
+          <figure class="q-fig" data-q="econ-lp">
+            <svg viewBox="0 0 520 230" role="img" aria-label="제약 조건이 만드는 영역과 이익이 최대가 되는 꼭짓점"></svg>
+            <div class="q-ctl"><label>책상 하나의 이익 (만 원) <input type="range" data-k="a" min="5" max="80" step="5" value="40"><output data-k="a"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 초록 영역은 목재와 시간 조건을 모두 만족하는 생산 계획이다. 이익이 같은 직선(빨강)을 바깥으로 밀어 영역에서 마지막으로 닿는 꼭짓점이 최적이다. 책상의 이익이 바뀌면 최적의 꼭짓점도 바뀐다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>연립 일차 부등식, 부등식의 영역(공통수학2), 일차함수의 그래프.</div>
+
+          <h3><span class="no">2.6.1</span>제약 조건과 실행 가능 영역</h3>
+          <p>책상을 \(x\)개, 의자를 \(y\)개 만든다고 하자. 목재 조건은 \(2x + y \le 100\), 시간 조건은 \(x + 2y \le 80\)이고, 개수는 음수가 될 수 없으므로 \(x \ge 0\), \(y \ge 0\)이다. 이 부등식들을 모두 만족하는 점 \((x, y)\)의 영역이 가능한 생산 계획 전체이다. 영역은 네 꼭짓점 \((0, 0)\), \((50, 0)\), \((40, 20)\), \((0, 40)\)을 가진 볼록한 사각형이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.6.1 <span class="nm">일차식의 최댓값과 최솟값</span></span>
+            <p>일차부등식들로 둘러싸인 볼록한 다각형 영역에서 일차식 \(ax + by\)의 최댓값과 최솟값은 다각형의 꼭짓점에서 나타난다.</p>
+          </div>
+          <p>이익 \(40x + 30y = k\)는 기울기가 \(-\dfrac{4}{3}\)인 직선이고, \(k\)가 커질수록 위로 평행이동한다. 이 직선이 영역과 만나는 동안 \(k\)를 최대한 키우면, 직선이 영역의 한 꼭짓점에 마지막으로 닿는다. 그래서 꼭짓점만 비교하면 된다. 이런 문제를 선형계획법이라 한다. 영역 안쪽의 점은 모든 방향으로 조금씩 움직일 수 있어 이익을 더 늘릴 여지가 있으므로 최적이 될 수 없다.<sup class="fn"><a href="#fn-econ-lp-1">1</a></sup></p>
+
+          <h3><span class="no">2.6.2</span>이익이 바뀌면 답도 바뀐다</h3>
+          <p>그림 1에서 책상의 이익을 바꾸어 보자. 책상 이익이 15만 원보다 작으면 이익 직선이 완만해져 의자만 만드는 \((0, 40)\)이, 60만 원보다 크면 가팔라져 책상만 만드는 \((50, 0)\)이 최적이 된다. 그 사이에서는 두 조건이 모두 빠듯해지는 \((40, 20)\)이 최적이다. 이익 직선의 기울기가 영역의 변의 기울기를 넘어설 때마다 최적의 꼭짓점이 옮겨 간다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="꼭짓점마다 이익 비교">
+              <g class="s">
+                <text x="30" y="25">꼭짓점 (책상, 의자)</text><text x="260" y="25">이익 40x + 30y (만 원)</text>
+                <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+                <text x="30" y="55">(50, 0)</text><text x="260" y="55">2000</text>
+                <text x="30" y="78">(40, 20)</text><text x="260" y="78" class="td">2200 (최대)</text>
+                <text x="30" y="101">(0, 40)</text><text x="260" y="101">1200</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 영역의 꼭짓점에서 이익을 비교하면 최댓값을 찾을 수 있다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.6.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.6.2</span>
+            <p>위 공방에서 책상 이익이 40만 원, 의자 이익이 30만 원일 때 이익을 최대로 하는 생산량과 그때의 이익을 구하여라. 이때 목재와 시간이 남는가?</p>
+          </div>
+          <p>꼭짓점 \((40, 20)\)은 \(2x + y = 100\)과 \(x + 2y = 80\)을 연립하여 얻는다. 첫 식에 2를 곱해 둘째 식을 빼면 \(3x = 120\), 곧 \(x = 40\), \(y = 20\)이다.</p>
+          <p>네 꼭짓점의 이익은 \(0\), \(2000\), \(2200\), \(1200\)만 원이므로 책상 40개, 의자 20개를 만들 때 최대 2200만 원이다. 이때 목재는 \(80 + 20 = 100\), 시간은 \(40 + 40 = 80\)으로 둘 다 남김없이 쓴다. 두 자원이 모두 빠듯하게 쓰이는 점이 최적이 된 것이다. 남는 자원이 있다면 그것으로 무언가를 더 만들어 이익을 늘릴 수 있었을 것이다.</p>
+          <p>아래 탐구 카드에서 가구 생산 계획과 가장 싼 아침 식단을 부등식의 영역으로 직접 찾아보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-econ-lp-1">선형계획법은 제2차 세계 대전 무렵 군수 물자의 수송 계획을 세우며 발전했다. 오늘날에는 항공사의 운항 계획, 공장의 생산 계획, 영양 식단 설계 등에 쓰인다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>자원의 제약은 연립 일차 부등식이 되고, 이를 만족하는 영역이 가능한 계획 전체이다. 이 영역에서 이익 같은 일차식의 최댓값과 최솟값은 꼭짓점에서 나타나므로, 꼭짓점의 값만 비교하면 된다. 그래서 처음 질문의 공방은 목재와 시간을 모두 빠듯하게 쓰는 책상 40개, 의자 20개에서 이익이 가장 크다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-9.html#card-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>음수로 나누면 왜 부등호 방향이 바뀔까?</a><a href="../../c/cm1/2-9.html#card-cm1-ineq-system"><small class="mono">공통수학1 2.9</small>두 부등식을 함께 만족하는 범위는 어디일까?</a><a href="../../c/cm1/2-9.html#text-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>연립일차부등식</a></div></nav>
+
       <article class="card" id="card-econ-lp-production">
         <header class="card-head">
-          <span class="no">2.6.1</span><h2>책상과 의자를 몇 개씩 만들어야 이익이 가장 클까?</h2><span class="kind">부등식의 영역과 최대 · 조작</span>
+          <span class="no">탐구 1</span><h2>책상과 의자를 몇 개씩 만들어야 이익이 가장 클까?</h2><span class="kind">부등식의 영역과 최대 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small">작은 공방의 일주일: 책상 1개에 작업 2시간과 나무 1장, 의자 1개에 작업 1시간과 나무 2장이 듭니다. 작업 시간은 100시간, 나무는 80장까지 쓸 수 있습니다.</p>
+            <p class="small">작은 공방의 일주일이다. 책상 1개에 작업 2시간과 나무 1장, 의자 1개에 작업 1시간과 나무 2장이 들고, 작업 시간은 100시간, 나무는 80장까지 쓸 수 있다.</p>
             <div class="ctl-row">
               <div><label class="mono">책상 x = <output class="x-out"></output>개</label><input class="x" type="range" min="0" max="60" step="1" value="10" aria-label="책상 수"></div>
               <div><label class="mono">의자 y = <output class="y-out"></output>개</label><input class="y" type="range" min="0" max="60" step="1" value="10" aria-label="의자 수"></div>
@@ -71,33 +127,33 @@
             <canvas aria-label="두 부등식이 만드는 생산 가능 영역, 고른 점, 그 점을 지나는 같은 이익의 직선"></canvas>
             <div class="presets"><button class="chip go-v" type="button">꼭짓점의 이익 보기</button></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">수치는 수업용 모의 값입니다. 의자 1개의 이익은 3만 원으로 고정했습니다.</p>
+            <p class="fig-note">수치는 수업용 모의 값이다. 의자 1개의 이익은 3만 원으로 고정했다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>책상이 의자보다 이익이 크니 책상만 만들면 될까요? 시간과 나무가 모두 제한되어 있을 때 가장 좋은 생산 계획은 무엇일까요?</li>
-            <li><span class="tag">복원</span>부등식 \(ax + by \le c\)의 영역은 직선 \(ax + by = c\)를 경계로 하는 반평면입니다. 연립부등식의 영역은 각 영역의 공통부분입니다.</li>
-            <li><span class="tag">설명</span>제약 조건 \(2x + y \le 100\), \(x + 2y \le 80\), \(x \ge 0\), \(y \ge 0\)을 모두 만족하는 점들이 <em>생산 가능 영역</em>입니다. 이익 \(5x + 3y = k\)는 기울기가 일정한 평행선들이고, \(k\)가 클수록 원점에서 멀어집니다. 영역과 만나는 직선 가운데 가장 바깥의 것을 찾으면 최대 이익이 나오고, 그 점은 늘 영역의 <em>꼭짓점</em>입니다. 이렇게 일차부등식 조건에서 일차식의 최댓값·최솟값을 찾는 방법을 <em>선형계획법</em>이라 합니다.</li>
-            <li><span class="tag">연결</span>항공사의 비행 일정, 공장의 원료 배합, 물류 배송 계획에 선형계획법을 씁니다. 변수가 많아지면 컴퓨터가 꼭짓점을 차례로 따라가며 찾습니다(심플렉스법).</li>
-            <li><span class="tag">적용</span>점을 움직여 이익이 가장 큰 계획을 찾은 뒤 꼭짓점의 이익과 비교하세요. 책상 1개의 이익을 바꾸면 최적의 꼭짓점이 언제 바뀌나요?</li>
-            <li class="warn"><span class="tag">판단</span>이익이 큰 제품만 만드는 것이 최선이 아닐 수 있습니다. 이익 직선의 기울기가 경계선의 기울기 사이에 있으면 두 제약이 만나는 꼭짓점이 최적이 됩니다.</li>
+            <li><span class="tag">질문</span>책상이 의자보다 이익이 크니 책상만 만들면 될까? 시간과 나무가 모두 제한되어 있을 때 가장 좋은 생산 계획은 무엇일까?</li>
+            <li><span class="tag">복원</span>부등식 \(ax + by \le c\)의 영역은 직선 \(ax + by = c\)를 경계로 하는 반평면이고, 연립부등식의 영역은 각 영역의 공통부분이다.</li>
+            <li><span class="tag">설명</span>제약 조건 \(2x + y \le 100\), \(x + 2y \le 80\), \(x \ge 0\), \(y \ge 0\)을 모두 만족하는 점들이 <em>생산 가능 영역</em>이다. 이익 \(5x + 3y = k\)는 기울기가 일정한 평행선들이고 \(k\)가 클수록 원점에서 멀어지므로, 영역과 만나는 직선 가운데 가장 바깥의 것을 찾으면 최대 이익이 나오며, 그 점은 늘 영역의 <em>꼭짓점</em>이다. 이렇게 일차부등식 조건에서 일차식의 최댓값이나 최솟값을 찾는 방법을 <em>선형계획법</em>이라 한다.</li>
+            <li><span class="tag">연결</span>항공사의 비행 일정, 공장의 원료 배합, 물류 배송 계획에 선형계획법을 쓴다. 변수가 많아지면 컴퓨터가 꼭짓점을 차례로 따라가며 찾는다(심플렉스법).</li>
+            <li><span class="tag">적용</span>점을 움직여 이익이 가장 큰 계획을 찾은 뒤 꼭짓점의 이익과 비교해 보자. 그리고 책상 1개의 이익을 바꾸면 최적의 꼭짓점이 언제 바뀌는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>이익이 큰 제품만 만드는 것이 최선이 아닐 수 있다. 이익 직선의 기울기가 경계선의 기울기 사이에 있으면 두 제약이 만나는 꼭짓점이 최적이 되기 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">같은 제약에서 책상 1개 이익이 1만 원, 의자 1개 이익이 3만 원이면 최적 계획은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>의자만 40개<span class="why"><b>맞습니다.</b> 꼭짓점 \((0, 40)\)에서 120만 원, \((40, 20)\)에서 100만 원, \((50, 0)\)에서 50만 원입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>책상 40개, 의자 20개<span class="why"><b>이익이 100만 원으로 더 작습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>의자만 100개<span class="why"><b>나무 제약 \(x + 2y \le 80\)을 어깁니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>책상만 50개<span class="why"><b>이익이 50만 원입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>의자만 40개<span class="why"><b>맞다.</b> 꼭짓점 \((0, 40)\)에서 120만 원, \((40, 20)\)에서 100만 원, \((50, 0)\)에서 50만 원이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>책상 40개, 의자 20개<span class="why"><b>이익이 100만 원으로 더 작다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>의자만 100개<span class="why"><b>나무 제약 \(x + 2y \le 80\)을 어긴다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>책상만 50개<span class="why"><b>이익이 50만 원이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-9.html#card-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>음수로 나누면 왜 부등호 방향이 바뀔까?</a><a href="../../c/cm1/2-9.html#card-cm1-ineq-system"><small class="mono">공통수학1 2.9</small>두 부등식을 함께 만족하는 범위는 어디일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-9.html#card-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>음수로 나누면 왜 부등호 방향이 바뀔까?</a><a href="../../c/cm1/2-9.html#card-cm1-ineq-system"><small class="mono">공통수학1 2.9</small>두 부등식을 함께 만족하는 범위는 어디일까?</a><a href="../../c/cm1/2-9.html#text-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>연립일차부등식</a></div></nav>
 
       <article class="card" id="card-econ-diet">
         <header class="card-head">
-          <span class="no">2.6.2</span><h2>영양 기준을 채우는 가장 싼 아침 식단은?</h2><span class="kind">부등식의 영역과 최소 · 활용</span>
+          <span class="no">탐구 2</span><h2>영양 기준을 채우는 가장 싼 아침 식단은?</h2><span class="kind">부등식의 영역과 최소 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -112,42 +168,42 @@
             <canvas aria-label="두 영양 기준을 모두 채우는 영역(위쪽으로 열림), 고른 점, 같은 비용의 직선"></canvas>
             <div class="presets"><button class="chip go-v" type="button">꼭짓점의 비용 보기</button></div>
             <p class="mono small say" role="status"></p>
-            <p class="fig-note">영양 정보와 값은 수업용 가상 값입니다. 한 주 동안의 아침을 합친 양이라고 생각하세요.</p>
+            <p class="fig-note">영양 정보와 값은 수업용 가상 값이다. 한 주 동안의 아침을 합친 양이라고 생각하자.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>단백질과 열량 기준을 모두 채우면서 비용을 가장 줄이려면 우유와 시리얼을 얼마나 사야 할까요?</li>
-            <li><span class="tag">복원</span>\(ax + by \ge c\)의 영역은 경계 직선의 원점 반대쪽입니다(\(c > 0\)일 때).</li>
-            <li><span class="tag">설명</span>조건은 \(8x + 4y \ge 32\), \(120x + 200y \ge 1000\), \(x, y \ge 0\)이고, 영역은 위쪽과 오른쪽으로 끝없이 열려 있습니다. 비용 \(800x + 600y = k\)를 원점 쪽으로 최대한 당겼을 때 영역에 마지막으로 닿는 꼭짓점에서 비용이 최소가 됩니다. 이 문제에서는 두 기준선의 교점 \(\left(\frac{15}{7}, \frac{26}{7}\right)\)이고, 비용은 약 3943원입니다.</li>
-            <li><span class="tag">연결</span>1940년대 미국에서 "가장 싼 영양 식단" 문제를 푸는 과정에서 선형계획법이 크게 발전했습니다. 지금은 사료 배합, 급식 식단 설계에 쓰입니다.</li>
-            <li><span class="tag">적용</span>점을 움직여 기준을 채우는 가장 싼 조합을 찾고, 꼭짓점과 비교하세요. 우유와 시리얼을 정수로만 살 수 있다면 가장 싼 조합은 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>최적의 꼭짓점이 정수가 아니면, 그 근처 정수점이 늘 최적인 것은 아닙니다. 정수 조건이 있으면 기준을 만족하는 정수점들을 따로 비교해야 합니다.</li>
+            <li><span class="tag">질문</span>단백질과 열량 기준을 모두 채우면서 비용을 가장 줄이려면 우유와 시리얼을 얼마나 사야 할까?</li>
+            <li><span class="tag">복원</span>\(c &gt; 0\)일 때 \(ax + by \ge c\)의 영역은 경계 직선의 원점 반대쪽이다.</li>
+            <li><span class="tag">설명</span>조건은 \(8x + 4y \ge 32\), \(120x + 200y \ge 1000\), \(x, y \ge 0\)이고, 영역은 위쪽과 오른쪽으로 끝없이 열려 있다. 비용 \(800x + 600y = k\)를 원점 쪽으로 최대한 당겼을 때 영역에 마지막으로 닿는 꼭짓점에서 비용이 최소가 되는데, 이 문제에서는 두 기준선의 교점 \(\left(\frac{15}{7}, \frac{26}{7}\right)\)이고 비용은 약 3943원이다.</li>
+            <li><span class="tag">연결</span>1940년대 미국에서 가장 싼 영양 식단 문제를 푸는 과정에서 선형계획법이 크게 발전했고, 지금은 사료 배합과 급식 식단 설계에 쓰인다.</li>
+            <li><span class="tag">적용</span>점을 움직여 기준을 채우는 가장 싼 조합을 찾고 꼭짓점과 비교해 보자. 그리고 우유와 시리얼을 정수로만 살 수 있다면 가장 싼 조합이 무엇인지 찾아보자.</li>
+            <li class="warn"><span class="tag">판단</span>최적의 꼭짓점이 정수가 아니면 그 근처 정수점이 늘 최적인 것은 아니다. 그래서 정수 조건이 있으면 기준을 만족하는 정수점들을 따로 비교해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">이 카드의 조건에서 우유 2잔, 시리얼 4그릇은 기준을 채울까요? 비용은?</p>
+          <p class="q">이 카드의 조건에서 우유 2잔, 시리얼 4그릇은 기준을 채울까? 비용은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>채운다, 4000원<span class="why"><b>맞습니다.</b> 단백질 32 g, 열량 1040 kcal로 기준을 채우고, 정수 조합 중 가장 쌉니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>단백질이 모자란다<span class="why"><b>\(8 \times 2 + 4 \times 4 = 32\)로 딱 맞습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>채운다, 3943원<span class="why"><b>실수 최적해의 비용입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>열량이 모자란다<span class="why"><b>\(240 + 800 = 1040\) kcal입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>채운다, 4000원<span class="why"><b>맞다.</b> 단백질 32 g, 열량 1040 kcal로 기준을 채우고, 정수 조합 중 가장 싸다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>단백질이 모자란다<span class="why"><b>\(8 \times 2 + 4 \times 4 = 32\)로 딱 맞다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>채운다, 3943원<span class="why"><b>실수 최적해의 비용이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>열량이 모자란다<span class="why"><b>\(240 + 800 = 1040\) kcal이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-9.html#card-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>음수로 나누면 왜 부등호 방향이 바뀔까?</a><a href="../../c/cm1/2-9.html#card-cm1-ineq-system"><small class="mono">공통수학1 2.9</small>두 부등식을 함께 만족하는 범위는 어디일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/cm1/2-9.html#card-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>음수로 나누면 왜 부등호 방향이 바뀔까?</a><a href="../../c/cm1/2-9.html#card-cm1-ineq-system"><small class="mono">공통수학1 2.9</small>두 부등식을 함께 만족하는 범위는 어디일까?</a><a href="../../c/cm1/2-9.html#text-cm1-lin-ineq"><small class="mono">공통수학1 2.9</small>연립일차부등식</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=econ-2-6"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=econ&amp;sec=2-6"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -155,6 +211,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/econ/body.js"></script>
 <script src="../../js/cards/econ/econ.js"></script>
 <script src="../../js/cards/econ/region.js"></script>
 <script src="../../js/cards/econ/lp-production.js"></script>

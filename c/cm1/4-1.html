@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>행렬의 뜻 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="행렬의 뜻, 행·열·성분, m × n 행렬과 a_ij, 두 행렬이 같을 조건, 판매표와 도로망을 행렬로 나타내기. 칸을 골라 보고 도로를 바꿔 보는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-cm1-matrix-entry canvas { width: 100%; aspect-ratio: 16 / 10; cursor: pointer; touch-action: none; }
@@ -48,18 +53,72 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-cm1-matrix-entry"><span class="mono">4.1.1</span>행렬과 성분</a></li>
-        <li><a href="#card-cm1-road-matrix"><span class="mono">4.1.2</span>도로망과 행렬</a></li>
+        <li><a href="#text-cm1-matrix"><span class="mono">본문</span>행렬의 뜻</a></li>
+        <li><a href="#card-cm1-matrix-entry"><span class="mono">탐구 1</span>행렬과 성분</a></li>
+        <li><a href="#card-cm1-road-matrix"><span class="mono">탐구 2</span>도로망과 행렬</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=cm1-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">38문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=cm1&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=cm1-4-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">39문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=cm1-4-1">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-cm1-matrix" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>행렬의 뜻</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">세 도시 사이의 직행 버스 노선을 기록하려 한다. 어느 도시에서 어느 도시로 가는 노선이 몇 개인지 문장으로 적으면 길고 헷갈린다. 수를 가로와 세로로 늘어놓은 표 하나로 정리하면, 그 표에서 무엇을 바로 읽을 수 있을까?</p>
+          <figure class="q-fig" data-q="cm1-road">
+            <svg viewBox="0 0 520 240" role="img" aria-label="세 도시 사이의 노선 그림과 그것을 나타낸 3×3 행렬"></svg>
+            <div class="q-ctl"><label>노선 바꾸기 <input type="range" data-k="v" min="0" max="3" step="1" value="0"><output data-k="v"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. \(i\)번 도시에서 \(j\)번 도시로 가는 노선의 수를 \(i\)행 \(j\)열에 적으면, 노선도 전체가 수 9개의 행렬 하나로 정리된다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>중학교에서 자료를 표로 정리하던 경험, 좌표에서 '가로 먼저, 세로 다음'으로 위치를 말하는 방법.</div>
+
+          <h3><span class="no">4.1.1</span>표에서 머리글을 지우면</h3>
+          <p>그림 1의 왼쪽은 세 도시 1, 2, 3 사이의 노선도이다. 1에서 2로 가는 노선이 2개, 2에서 3으로 가는 노선이 1개처럼 화살표마다 수가 붙어 있다. 오른쪽에는 같은 정보를 표로 옮겼다. 출발 도시를 줄(가로)에, 도착 도시를 칸(세로)에 두고, 만나는 자리에 노선의 수를 적었다.</p>
+          <p>표에서 '출발', '도착' 같은 머리글을 지우고 괄호로 묶으면 수만 직사각형 모양으로 남는다. 이렇게 수나 문자를 직사각형 모양으로 배열하고 괄호로 묶은 것을 <em>행렬</em>이라 하고, 그 안의 각 수를 <em>성분</em>이라 한다. 머리글은 사라졌지만 자리가 뜻을 가지고 있으므로 정보는 그대로 남는다.</p>
+
+          <h3><span class="no">4.1.2</span>행, 열, 그리고 자리</h3>
+          <div class="tb-env"><span class="lb">정의 4.1.1 <span class="nm">행렬의 행, 열, 성분</span></span>
+            <p>행렬의 가로줄을 <em>행</em>, 세로줄을 <em>열</em>이라 하고, 위에서부터 제1행, 제2행, …, 왼쪽에서부터 제1열, 제2열, …이라 한다. 행이 \(m\)개, 열이 \(n\)개인 행렬을 \(m \times n\) 행렬이라 하고, 제\(i\)행과 제\(j\)열이 만나는 자리의 성분을 \((i, j)\) 성분이라 하며 \(a_{ij}\)로 나타낸다.</p>
+          </div>
+          <p>그림 1의 행렬은 \(3 \times 3\) 행렬이고, \((1, 2)\) 성분은 1번 도시에서 2번 도시로 가는 노선의 수이다. 즉 행 번호가 출발, 열 번호가 도착이다. 슬라이더로 노선도를 바꾸면 행렬의 성분도 함께 바뀌는데, 화살표 하나가 언제나 정확히 성분 하나에 대응한다.</p>
+          <p>행과 열의 개수가 같은 행렬을 정사각행렬이라 한다. 가령 \(n \times n\) 행렬을 \(n\)차 정사각행렬이라 부른다. 성분의 개수가 \(m \times n\)개라는 것은 곱의 법칙으로 바로 보인다. 행이 \(m\)개이고 각 행에 성분이 \(n\)개씩 있기 때문이다.<sup class="fn"><a href="#fn-cm1-matrix-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 190" role="img" aria-label="2×3 행렬에서 행, 열, (2,3) 성분의 위치">
+              <path d="M150 30 Q140 95 150 160" class="k"/><path d="M370 30 Q380 95 370 160" class="k"/>
+              <rect x="160" y="40" width="200" height="44" class="la"/><rect x="290" y="34" width="66" height="122" class="lb"/>
+              <text x="190" y="68" text-anchor="middle" class="i">1</text><text x="260" y="68" text-anchor="middle" class="i">0</text><text x="323" y="68" text-anchor="middle" class="i">4</text>
+              <text x="190" y="128" text-anchor="middle" class="i">−2</text><text x="260" y="128" text-anchor="middle" class="i">5</text><text x="323" y="128" text-anchor="middle" class="i td">3</text>
+              <circle cx="323" cy="123" r="16" class="d"/>
+              <text x="60" y="68" class="ta">제1행 →</text><text x="323" y="180" text-anchor="middle" class="tb">제3열 ↑</text><text x="400" y="128" class="td">(2, 3) 성분 = 3</text>
+            </svg>
+            <figcaption>그림 2. \(2 \times 3\) 행렬에서 성분의 자리는 '몇째 행, 몇째 열'의 순서쌍으로 정해진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">4.1.3</span>두 행렬이 같다는 것</h3>
+          <p>행렬은 자리가 뜻을 가지므로, 두 행렬이 같으려면 모양이 같고 같은 자리의 성분이 모두 같아야 한다. 같은 수 6개를 담고 있어도 \(2 \times 3\) 행렬과 \(3 \times 2\) 행렬은 서로 다르다. 노선도로 말하면 '1에서 2로 2개'와 '2에서 1로 2개'는 다른 정보이기 때문이다.</p>
+
+          <h3><span class="no">4.1.4</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 4.1.2</span>
+            <p>\(2 \times 3\) 행렬 \(A\)의 \((i, j)\) 성분이 \(a_{ij} = 2i - j\)일 때 \(A\)를 구하여라. 또 \(\begin{pmatrix} x + y &amp; 3 \\ 1 &amp; x - y \end{pmatrix} = \begin{pmatrix} 7 &amp; 3 \\ 1 &amp; 1 \end{pmatrix}\)일 때 \(x\), \(y\)를 구하여라.</p>
+          </div>
+          <p>첫째 행은 \(i = 1\)이므로 \(a_{11} = 1\), \(a_{12} = 0\), \(a_{13} = -1\)이다. 둘째 행은 \(i = 2\)이므로 \(a_{21} = 3\), \(a_{22} = 2\), \(a_{23} = 1\)이다. 따라서 \(A = \begin{pmatrix} 1 &amp; 0 &amp; -1 \\ 3 &amp; 2 &amp; 1 \end{pmatrix}\)이다. 같은 행에서는 열 번호가 하나 커질 때마다 성분이 1씩 작아지는데, 식 \(2i - j\)에서 \(j\)의 계수가 \(-1\)이기 때문이다.</p>
+          <p>두 번째 질문은 두 행렬이 같다는 조건이다. 같은 자리의 성분이 같아야 하므로 \(x + y = 7\), \(x - y = 1\)이다. 두 식을 더하면 \(2x = 8\)이므로 \(x = 4\), \(y = 3\)이다. 넣어 보면 \((1, 1)\) 성분이 7, \((2, 2)\) 성분이 1로 맞는다. 행렬의 등식 하나가 연립방정식 여러 개를 한꺼번에 담고 있는 셈이다. 아래 탐구 카드에서 성분의 자리를 직접 찾고 노선도를 행렬로 바꾸어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-cm1-matrix-1">\(1 \times n\) 행렬을 행벡터, \(m \times 1\) 행렬을 열벡터라고도 부른다. 벡터는 진로선택 과목인 기하에서 다룬다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>행렬은 수를 직사각형으로 늘어놓고 자리마다 뜻을 준 것이다. 제\(i\)행 제\(j\)열의 성분 \(a_{ij}\)가 하나의 정보를 담으므로, 두 행렬은 모양과 모든 성분이 같을 때만 같다. 처음 질문의 노선도는 행이 출발, 열이 도착인 \(3 \times 3\) 행렬로 정리되고, \((i, j)\) 성분을 읽으면 \(i\)에서 \(j\)로 가는 노선의 수가 바로 나온다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#text-cm1-matrix-ops"><small class="mono">공통수학1 4.2</small>행렬의 연산</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a></div></nav>
+
       <article class="card" id="card-cm1-matrix-entry">
         <header class="card-head">
-          <span class="no">4.1.1</span><h2>표의 칸 하나를 어떻게 정확히 가리킬까?</h2><span class="kind">행렬 · 행, 열, 성분</span>
+          <span class="no">탐구 1</span><h2>표의 칸 하나를 어떻게 정확히 가리킬까?</h2><span class="kind">행렬 · 행, 열, 성분</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -84,34 +143,34 @@
                 <div><dt class="d-ij">a_ij</dt><dd class="n-ij">—</dd></div>
                 <div><dt class="d-ji">a_ji</dt><dd class="n-ji">—</dd></div>
               </dl>
-              <p class="fig-note">칸을 누르거나 끌어서 성분을 고르세요(그림을 고른 뒤 화살표 키도 됩니다). 판매표는 행렬의 뜻을 보이려고 만든 가상 자료입니다.</p>
+              <p class="fig-note">칸을 누르거나 끌어서 성분을 고른다(그림을 고른 뒤 화살표 키도 된다). 판매표는 행렬의 뜻을 보이려고 만든 가상 자료이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>두 매점의 우유, 빵, 주스 판매량을 표로 적었습니다. "둘째 매점의 셋째 상품"처럼 칸 하나를 짧고 정확하게 가리키려면 어떻게 해야 할까요?</li>
-            <li><span class="tag">복원</span>좌표평면에서 점 하나를 \((x, y)\)라는 순서쌍으로 가리켰습니다. 순서를 바꾸면 다른 점이 됩니다. 표의 칸도 가로줄 번호와 세로줄 번호 두 개로 가리킬 수 있습니다.</li>
-            <li><span class="tag">설명</span>여러 개의 수나 문자를 직사각형 모양으로 배열하고 괄호로 묶은 것을 <em>행렬</em>이라 합니다. 배열된 수 하나하나를 <em>성분</em>, 가로줄을 <em>행</em>, 세로줄을 <em>열</em>이라 합니다. 행은 위에서부터 제1행, 제2행, …, 열은 왼쪽부터 제1열, 제2열, …로 부릅니다. 행이 \(m\)개, 열이 \(n\)개인 행렬을 <em>\(m \times n\) 행렬</em>이라 하고, 제\(i\)행과 제\(j\)열이 만나는 성분을 \((i, j)\) 성분이라 하며 \(a_{ij}\)로 씁니다. 행의 수와 열의 수가 같은 행렬은 <em>정사각행렬</em>입니다. 두 행렬은 크기가 같고 대응하는 성분이 모두 같을 때 서로 같다고 합니다.</li>
-            <li><span class="tag">연결</span>\(a_{ij} = 2i - j\)처럼 성분을 \(i\), \(j\)의 식으로 주면 행렬 전체가 정해집니다. 이것은 함수에서 \(x\)를 넣으면 \(y\)가 정해지는 것과 같은 생각입니다. 지역별·연도별 평균 기온, 학급별·과목별 점수처럼 두 기준으로 정리한 자료는 모두 행렬로 나타낼 수 있습니다.</li>
-            <li><span class="tag">적용</span>판매표에서 둘째 매점의 주스 판매량은 몇 행 몇 열에 있나요? \(a_{ij} = 2i - j\)를 고르고 \(m\), \(n\)을 바꾸면서 성분의 개수가 언제나 \(m \times n\)개인지 확인하세요. 같은 행렬에서 \(a_{12}\)와 \(a_{21}\)을 비교하고, \(a_{ij} = i + j\)에서는 어떻게 되는지도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>\(a_{ij}\)의 첫 번째 첨자는 행, 두 번째 첨자는 열입니다. \(a_{12}\)와 \(a_{21}\)은 대개 다른 성분입니다. 또 \(2 \times 3\) 행렬과 \(3 \times 2\) 행렬은 성분의 개수가 6개로 같아도 크기가 다른 행렬이므로 서로 같을 수 없습니다. 행렬은 수를 모아 둔 배열이지 하나의 수가 아니므로, 크기를 비교하는 부등호를 쓰지 않습니다.</li>
+            <li><span class="tag">질문</span>두 매점의 우유, 빵, 주스 판매량을 표로 적었다. "둘째 매점의 셋째 상품"처럼 칸 하나를 짧고 정확하게 가리키려면 어떻게 해야 할까?</li>
+            <li><span class="tag">복원</span>좌표평면에서는 점 하나를 \((x, y)\)라는 순서쌍으로 가리켰고, 순서를 바꾸면 다른 점이 되었다. 표의 칸도 마찬가지로 가로줄 번호와 세로줄 번호 두 개로 가리킬 수 있다.</li>
+            <li><span class="tag">설명</span>여러 개의 수나 문자를 직사각형 모양으로 배열하고 괄호로 묶은 것을 <em>행렬</em>이라 한다. 배열된 수 하나하나를 <em>성분</em>, 가로줄을 <em>행</em>, 세로줄을 <em>열</em>이라 하고, 행은 위에서부터 제1행, 제2행, …, 열은 왼쪽부터 제1열, 제2열, …로 부른다. 행이 \(m\)개, 열이 \(n\)개인 행렬을 <em>\(m \times n\) 행렬</em>이라 하고, 제\(i\)행과 제\(j\)열이 만나는 성분을 \((i, j)\) 성분이라 하며 \(a_{ij}\)로 쓴다. 행의 수와 열의 수가 같은 행렬은 <em>정사각행렬</em>이다. 두 행렬은 크기가 같고 대응하는 성분이 모두 같을 때 서로 같다고 한다.</li>
+            <li><span class="tag">연결</span>\(a_{ij} = 2i - j\)처럼 성분을 \(i\), \(j\)의 식으로 주면 행렬 전체가 정해진다. 함수에서 \(x\)를 넣으면 \(y\)가 정해지는 것과 같은 생각이다. 그래서 지역별, 연도별 평균 기온이나 학급별, 과목별 점수처럼 두 기준으로 정리한 자료는 모두 행렬로 나타낼 수 있다.</li>
+            <li><span class="tag">적용</span>판매표에서 둘째 매점의 주스 판매량이 몇 행 몇 열에 있는지 찾아보자. 이어서 \(a_{ij} = 2i - j\)를 고르고 \(m\), \(n\)을 바꾸면 성분의 개수가 언제나 \(m \times n\)개라는 것을 볼 수 있다. 같은 행렬에서 \(a_{12}\)와 \(a_{21}\)을 비교하고, \(a_{ij} = i + j\)에서는 두 값이 같아지는 것도 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>\(a_{ij}\)의 첫 번째 첨자는 행, 두 번째 첨자는 열이므로 \(a_{12}\)와 \(a_{21}\)은 대개 다른 성분이다. 또 \(2 \times 3\) 행렬과 \(3 \times 2\) 행렬은 성분의 개수가 6개로 같아도 크기가 다르므로 서로 같을 수 없다. 행렬은 수를 모아 둔 배열이지 하나의 수가 아니므로, 크기를 비교하는 부등호도 쓰지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(2 \times 3\) 행렬 \(A\)의 \((i, j)\) 성분이 \(a_{ij} = 3i - j\)입니다. \(A\)의 제2행에 있는 성분을 모두 더한 값은?</p>
+          <p class="q">\(2 \times 3\) 행렬 \(A\)의 \((i, j)\) 성분이 \(a_{ij} = 3i - j\)이다. \(A\)의 제2행에 있는 성분을 모두 더한 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>5<span class="why"><b>제2열을 더했습니다.</b> 제2열은 \(a_{12} + a_{22} = 1 + 4 = 5\)입니다. 행은 가로줄이므로 \(i = 2\)로 고정해야 합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12<span class="why"><b>맞습니다.</b> \(a_{21} = 5\), \(a_{22} = 4\), \(a_{23} = 3\)이므로 합은 12입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>성분 하나만 구했습니다.</b> 4는 \((2, 2)\) 성분입니다. 제2행에는 열의 수만큼, 곧 3개의 성분이 있습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>15<span class="why"><b>모든 성분을 더했습니다.</b> 제1행 \(2 + 1 + 0 = 3\)까지 더한 값입니다. 물은 것은 제2행뿐입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>5<span class="why"><b>제2열을 더했다.</b> 제2열은 \(a_{12} + a_{22} = 1 + 4 = 5\)이다. 행은 가로줄이므로 \(i = 2\)로 고정해야 한다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>12<span class="why"><b>맞다.</b> \(a_{21} = 5\), \(a_{22} = 4\), \(a_{23} = 3\)이므로 합은 12이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>4<span class="why"><b>성분 하나만 구했다.</b> 4는 \((2, 2)\) 성분이다. 제2행에는 열의 수만큼, 곧 3개의 성분이 있다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>15<span class="why"><b>모든 성분을 더했다.</b> 제1행 \(2 + 1 + 0 = 3\)까지 더한 값이다. 물은 것은 제2행뿐이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#text-cm1-matrix-ops"><small class="mono">공통수학1 4.2</small>행렬의 연산</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a></div></nav>
 
       <article class="card" id="card-cm1-road-matrix">
         <header class="card-head">
-          <span class="no">4.1.2</span><h2>도로 지도를 수의 표로 바꿀 수 있을까?</h2><span class="kind">행렬 · 실생활 표현</span>
+          <span class="no">탐구 2</span><h2>도로 지도를 수의 표로 바꿀 수 있을까?</h2><span class="kind">행렬 · 실생활 표현</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,43 +186,44 @@
                 <div><dt class="d-out">가에서 나가는</dt><dd class="n-out">—</dd></div>
                 <div><dt class="d-in">가로 들어오는</dt><dd class="n-in">—</dd></div>
               </dl>
-              <p class="fig-note">두 마을 사이의 선을 누르면 도로가 바뀌고, 행렬의 칸을 누르면 그 성분이 바뀝니다. 마을을 누르면 그 마을의 행과 열이 강조됩니다. 마을과 도로는 모식입니다.</p>
+              <p class="fig-note">두 마을 사이의 선을 누르면 도로가 바뀌고, 행렬의 칸을 누르면 그 성분이 바뀐다. 마을을 누르면 그 마을의 행과 열이 강조된다. 마을과 도로는 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>네 마을을 잇는 도로 지도가 있습니다. 그림 없이 수만으로 "어느 마을에서 어느 마을로 가는 도로가 몇 개인지"를 빠짐없이 전할 수 있을까요?</li>
-            <li><span class="tag">복원</span>행렬의 \((i, j)\) 성분 \(a_{ij}\)는 제\(i\)행과 제\(j\)열이 만나는 자리의 수입니다. 행에 마을을, 열에도 같은 순서로 마을을 놓으면 칸 하나가 "출발 마을, 도착 마을" 한 쌍에 대응합니다.</li>
-            <li><span class="tag">설명</span>\(a_{ij}\)를 "마을 \(i\)에서 마을 \(j\)로 바로 가는 도로의 수"로 정하면 도로망 전체가 \(4 \times 4\) 행렬 하나로 나타납니다. 같은 마을끼리 잇는 도로는 없으므로 왼쪽 위에서 오른쪽 아래로 가는 대각선의 성분은 모두 0입니다. 양방향 도로는 \(i\)에서 \(j\)로도, \(j\)에서 \(i\)로도 갈 수 있으므로 \(a_{ij} = a_{ji}\)가 되어 행렬이 대각선을 기준으로 대칭입니다. 제\(i\)행의 합은 마을 \(i\)에서 나가는 도로의 수, 제\(j\)열의 합은 마을 \(j\)로 들어오는 도로의 수입니다.</li>
-            <li><span class="tag">연결</span>노선도, 친구 관계, 항공편처럼 "무엇과 무엇이 이어져 있는가"를 나타내는 자료는 이런 정사각행렬로 정리합니다. 지역별·연도별 강수량이나 재난 피해 건수처럼 행과 열의 기준이 서로 다른 자료는 직사각형 행렬로 정리합니다. 행렬로 바꾸어 두면 컴퓨터가 자료를 저장하고 계산하기 쉽습니다.</li>
-            <li><span class="tag">적용</span>양방향 도로에서 가와 다 사이 선을 눌러 도로를 0개, 1개, 2개로 바꾸면 행렬의 어느 두 칸이 함께 바뀌나요? 일방통행으로 바꾼 뒤 한쪽 방향만 남기면 대칭이 깨지는지 확인하세요. 마을 다를 눌러 나가는 도로와 들어오는 도로의 수가 행의 합, 열의 합과 같은지도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>양방향 도로망에서 성분을 모두 더하면 도로 하나를 두 번(\(a_{ij}\)와 \(a_{ji}\)) 세게 되므로, 도로의 수는 성분의 합의 절반입니다. 일방통행 도로망에서는 성분의 합이 곧 도로의 수입니다. 또 행렬은 도로의 길이나 실제 위치는 담지 않습니다. 어떤 정보를 성분으로 정했는지에 따라 같은 지도도 다른 행렬이 됩니다.</li>
+            <li><span class="tag">질문</span>네 마을을 잇는 도로 지도가 있다. 그림 없이 수만으로 "어느 마을에서 어느 마을로 가는 도로가 몇 개인지"를 빠짐없이 전할 수 있을까?</li>
+            <li><span class="tag">복원</span>행렬의 \((i, j)\) 성분 \(a_{ij}\)는 제\(i\)행과 제\(j\)열이 만나는 자리의 수이다. 그래서 행에 마을을, 열에도 같은 순서로 마을을 놓으면 칸 하나가 "출발 마을, 도착 마을" 한 쌍에 대응한다.</li>
+            <li><span class="tag">설명</span>이제 \(a_{ij}\)를 "마을 \(i\)에서 마을 \(j\)로 바로 가는 도로의 수"로 정하면 도로망 전체가 \(4 \times 4\) 행렬 하나로 나타난다. 같은 마을끼리 잇는 도로는 없으므로 왼쪽 위에서 오른쪽 아래로 가는 대각선의 성분은 모두 0이다. 또 양방향 도로는 \(i\)에서 \(j\)로도, \(j\)에서 \(i\)로도 갈 수 있으므로 \(a_{ij} = a_{ji}\)가 되어 행렬이 대각선을 기준으로 대칭이다. 제\(i\)행의 합은 마을 \(i\)에서 나가는 도로의 수이고, 제\(j\)열의 합은 마을 \(j\)로 들어오는 도로의 수이다.</li>
+            <li><span class="tag">연결</span>노선도, 친구 관계, 항공편처럼 "무엇과 무엇이 이어져 있는가"를 나타내는 자료는 이런 정사각행렬로 정리한다. 반면 지역별, 연도별 강수량이나 재난 피해 건수처럼 행과 열의 기준이 서로 다른 자료는 직사각형 행렬로 정리한다. 행렬로 바꾸어 두면 컴퓨터가 자료를 저장하고 계산하기 쉽다.</li>
+            <li><span class="tag">적용</span>양방향 도로에서 가와 다 사이 선을 눌러 도로를 0개, 1개, 2개로 바꾸면 행렬의 대칭인 두 칸이 함께 바뀐다. 일방통행으로 바꾼 뒤 한쪽 방향만 남기면 대칭이 깨지는 것도 확인해 보자. 마을 다를 눌러 나가는 도로와 들어오는 도로의 수가 행의 합, 열의 합과 같은지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>양방향 도로망에서 성분을 모두 더하면 도로 하나를 \(a_{ij}\)와 \(a_{ji}\)로 두 번 세게 되므로, 도로의 수는 성분의 합의 절반이다. 일방통행 도로망에서는 성분의 합이 곧 도로의 수이다. 또 행렬은 도로의 길이나 실제 위치를 담지 않는다. 어떤 정보를 성분으로 정했는지에 따라 같은 지도도 다른 행렬이 된다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">세 마을 P, Q, R 사이의 일방통행 도로를 행렬 <span class="mx" style="grid-template-columns:repeat(3,auto)"><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span></span>로 나타냈습니다. 행과 열의 순서는 P, Q, R이고, \(a_{ij}\)는 \(i\)에서 \(j\)로 가는 도로의 수입니다. 옳은 것은?</p>
+          <p class="q">세 마을 P, Q, R 사이의 일방통행 도로를 행렬 <span class="mx" style="grid-template-columns:repeat(3,auto)"><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span><span>1</span><span>1</span><span>0</span><span>0</span></span>로 나타냈다. 행과 열의 순서는 P, Q, R이고, \(a_{ij}\)는 \(i\)에서 \(j\)로 가는 도로의 수이다. 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>P로 들어오는 도로는 2개입니다.<span class="why"><b>행과 열을 바꾸어 읽었습니다.</b> 제1행의 합 2는 P에서 나가는 도로입니다. P로 들어오는 도로는 제1열의 합 \(0 + 0 + 1 = 1\)개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>Q에서 나가는 도로는 1개입니다.<span class="why"><b>맞습니다.</b> 제2행 \((0, 0, 1)\)의 합이 1이므로 Q에서는 R로 가는 도로 하나만 나갑니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>도로는 모두 2개입니다.<span class="why"><b>양방향일 때의 규칙을 썼습니다.</b> 성분의 합 4를 절반으로 나누는 것은 도로 하나를 두 번 세는 양방향 도로망에서만 맞습니다. 일방통행이면 4개입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>R에서 Q로 바로 가는 도로가 있습니다.<span class="why"><b>첨자의 순서를 바꾸었습니다.</b> 1이 적힌 것은 \(a_{23}\), 곧 Q에서 R로 가는 도로입니다. R에서 Q로 가는 도로는 \(a_{32} = 0\)이므로 없습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>P로 들어오는 도로는 2개이다.<span class="why"><b>행과 열을 바꾸어 읽었다.</b> 제1행의 합 2는 P에서 나가는 도로이다. P로 들어오는 도로는 제1열의 합 \(0 + 0 + 1 = 1\)개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>Q에서 나가는 도로는 1개이다.<span class="why"><b>맞다.</b> 제2행 \((0, 0, 1)\)의 합이 1이므로 Q에서는 R로 가는 도로 하나만 나간다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>도로는 모두 2개이다.<span class="why"><b>양방향일 때의 규칙을 썼다.</b> 성분의 합 4를 절반으로 나누는 것은 도로 하나를 두 번 세는 양방향 도로망에서만 맞다. 일방통행이면 4개이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>R에서 Q로 바로 가는 도로가 있다.<span class="why"><b>첨자의 순서를 바꾸었다.</b> 1이 적힌 것은 \(a_{23}\), 곧 Q에서 R로 가는 도로이다. R에서 Q로 가는 도로는 \(a_{32} = 0\)이므로 없다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">이어지는 카드</span><a href="../../c/cm1/4-2.html#card-cm1-matrix-add"><small class="mono">공통수학1 4.2</small>행렬을 더하고 실수배하면 성분은 어떻게 바뀔까?</a><a href="../../c/cm1/4-2.html#text-cm1-matrix-ops"><small class="mono">공통수학1 4.2</small>행렬의 연산</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=cm1-4-1"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">38문항</span></a>
+      <a class="px-go" href="../../bank.html?c=cm1&amp;sec=4-1"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=cm1-4-1"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">39문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -171,6 +231,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/cm1/body.js"></script>
 <script src="../../js/cards/cm1/mat.js"></script>
 <script src="../../js/cards/cm1/matrix-entry.js"></script>
 <script src="../../js/cards/cm1/road-matrix.js"></script>

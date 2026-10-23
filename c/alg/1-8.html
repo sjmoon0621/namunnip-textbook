@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>지수함수와 로그함수의 활용 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="지수함수와 로그함수의 그래프로 지수·로그 방정식과 부등식을 풀고(밑의 크기에 따른 부등호 방향, 진수 조건), 반감기·복리·세균 증식 같은 실제 현상을 지수함수로 나타내 걸리는 시간을 로그로 구한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-alg-exp-ineq .eq { font-size: 14px; margin: 8px 0 2px; line-height: 1.7; overflow-wrap: anywhere; }
@@ -43,18 +48,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-alg-exp-ineq"><span class="mono">1.8.1</span>지수·로그 방정식과 부등식</a></li>
-        <li><a href="#card-alg-growth-time"><span class="mono">1.8.2</span>반감기·복리·증식에 걸리는 시간</a></li>
+        <li><a href="#text-alg-exp-log-apply"><span class="mono">본문</span>지수함수와 로그함수의 활용</a></li>
+        <li><a href="#card-alg-exp-ineq"><span class="mono">탐구 1</span>지수·로그 방정식과 부등식</a></li>
+        <li><a href="#card-alg-growth-time"><span class="mono">탐구 2</span>반감기·복리·증식에 걸리는 시간</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=alg-1-8"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">318문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=alg&amp;sec=1-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=alg-1-8"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">323문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=alg-1-8">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-alg-exp-log-apply" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>지수함수와 로그함수의 활용</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">탄소-14는 5730년마다 양이 절반으로 줄어든다. 어떤 나무 화석에 남은 탄소-14가 처음의 \(\tfrac{1}{4}\)이면 약 11 460년이 지난 것이다. 그런데 처음의 30%가 남았다면 몇 년이 지난 것일까? 지수가 미지수인 방정식은 어떻게 풀까?</p>
+          <figure class="q-fig" data-q="alg-decay">
+            <svg viewBox="0 0 520 260" role="img" aria-label="탄소-14의 남은 비율이 시간에 따라 반감기마다 절반이 되는 곡선"></svg>
+            <div class="q-ctl"><label>남은 비율(%) <input type="range" data-k="r" min="5" max="95" step="5" value="30"><output data-k="r"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 남은 비율 \(\left(\tfrac{1}{2}\right)^{t/5730}\)의 곡선에서 높이를 정하면, 로그로 지난 시간 \(t\)를 거꾸로 읽을 수 있다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>지수함수와 로그함수의 그래프(<a href="1-7.html">지수함수와 로그함수의 그래프</a>), 로그의 성질, 상용로그(<a href="1-5.html">상용로그</a>).</div>
+
+          <h3><span class="no">1.8.1</span>지수방정식</h3>
+          <p>지수에 미지수가 있는 방정식을 지수방정식이라 한다. 지수함수는 일대일대응이므로 \(a^{f(x)} = a^{g(x)}\)이면 \(f(x) = g(x)\)이다. 따라서 양변의 밑을 같게 만들면 지수끼리 비교하는 방정식이 된다. 가령 \(4^x = 8\)은 \(2^{2x} = 2^3\)이므로 \(x = \tfrac{3}{2}\)이다.</p>
+          <p>밑을 같게 만들 수 없을 때는 양변에 로그를 취한다. \(2^x = 5\)이면 \(x = \log_2 5\)이고, 상용로그로 \(x = \dfrac{\log 5}{\log 2}\)처럼 계산한다. 또 \(4^x - 2^{x+1} - 8 = 0\)처럼 \(2^x\)가 여러 번 나오면 \(2^x = t\ (t &gt; 0)\)로 두어 이차방정식으로 바꾼다.</p>
+
+          <h3><span class="no">1.8.2</span>지수부등식과 부등호의 방향</h3>
+          <p>부등식에서는 밑이 1보다 큰지 작은지가 중요하다. \(a &gt; 1\)이면 지수함수가 증가하므로 \(a^{f(x)} &lt; a^{g(x)} \iff f(x) &lt; g(x)\)이다. 그런데 \(0 &lt; a &lt; 1\)이면 감소함수이므로 부등호의 방향이 바뀐다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.8.1 <span class="nm">지수부등식과 로그부등식</span></span>
+            <p>\(a &gt; 1\)일 때 \(a^{f(x)} &lt; a^{g(x)} \iff f(x) &lt; g(x)\), \(\log_a f(x) &lt; \log_a g(x) \iff 0 &lt; f(x) &lt; g(x)\)이다. \(0 &lt; a &lt; 1\)이면 오른쪽 부등호의 방향이 바뀐다.</p>
+          </div>
+          <p>로그부등식에서는 진수가 양수라는 조건을 함께 챙겨야 한다. \(\log_2 (x - 1) &lt; 3\)은 \(x - 1 &lt; 8\)뿐 아니라 \(x - 1 &gt; 0\)도 만족해야 하므로 해는 \(1 &lt; x &lt; 9\)이다.<sup class="fn"><a href="#fn-alg-exp-log-apply-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 160" role="img" aria-label="반감기마다 양이 1, 1/2, 1/4, 1/8로 줄어드는 막대">
+              <g class="s">
+                <rect x="40" y="20" width="60" height="100" class="lb"/><text x="70" y="140" text-anchor="middle">0년</text><text x="70" y="14" text-anchor="middle">1</text>
+                <rect x="150" y="70" width="60" height="50" class="lb"/><text x="180" y="140" text-anchor="middle">5730년</text><text x="180" y="64" text-anchor="middle">1/2</text>
+                <rect x="260" y="95" width="60" height="25" class="lb"/><text x="290" y="140" text-anchor="middle">11460년</text><text x="290" y="89" text-anchor="middle">1/4</text>
+                <rect x="370" y="107.5" width="60" height="12.5" class="lb"/><text x="400" y="140" text-anchor="middle">17190년</text><text x="400" y="101" text-anchor="middle">1/8</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 반감기마다 남은 양이 절반이 되므로, 남은 비율은 시간에 대한 지수함수이다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.8.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.8.2</span>
+            <p>탄소-14가 처음의 30% 남은 화석은 약 몇 년 전의 것인가? (\(\log 2 = 0.3010\), \(\log 3 = 0.4771\)) 또 연이율 5%로 복리 예금을 하면 원금이 2배 이상이 되는 데 최소 몇 년이 걸리는가? (\(\log 1.05 = 0.0212\))</p>
+          </div>
+          <p>지난 시간을 \(t\)년이라 하면 \(\left(\tfrac{1}{2}\right)^{t/5730} = 0.3\)이다. 양변에 상용로그를 취하면 \(-\dfrac{t}{5730}\log 2 = \log 0.3 = \log 3 - 1 = -0.5229\)이다. 따라서 \(t = 5730 \times \dfrac{0.5229}{0.3010} \approx 9954\), 곧 약 1만 년 전의 것이다. 남은 양이 \(\tfrac{1}{2}\)과 \(\tfrac{1}{4}\) 사이이므로, 반감기 한 번과 두 번 사이라는 그림 2의 짐작과도 맞는다.</p>
+          <p>복리 예금은 \(n\)년 뒤 원금의 \(1.05^n\)배가 되므로 \(1.05^n \ge 2\)를 풀어야 한다. 양변에 상용로그를 취하면 밑 10이 1보다 크므로 부등호 방향은 그대로이고, \(0.0212n \ge 0.3010\)이다. 따라서 \(n \ge 14.2\)이고, 최소 15년이 걸린다.</p>
+          <p>두 문제 모두 '몇 번 곱해야 하는가'를 묻는 문제였고, 로그가 그 횟수를 계산해 주었다. 아래 탐구 카드에서 부등호의 방향이 바뀌는 경우와 반감기 계산을 직접 해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-alg-exp-log-apply-1">밑이 1보다 작은 로그부등식, 가령 \(\log_{1/2} x &gt; -2\)는 \(0 &lt; x &lt; \left(\tfrac{1}{2}\right)^{-2} = 4\)이다. 감소함수이므로 진수의 부등호가 반대가 된다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>지수방정식은 밑을 같게 하거나 양변에 로그를 취해 지수를 끌어내려 풀고, 부등식에서는 밑이 1보다 작으면 부등호 방향이 바뀌며 로그의 진수 조건을 함께 따진다. 그래서 처음 질문의 화석은 \(\left(\tfrac{1}{2}\right)^{t/5730} = 0.3\)을 로그로 풀어 약 1만 년 전의 것임을 알 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-7.html#card-alg-exp-graph"><small class="mono">대수 1.7</small>밑이 바뀌면 지수함수의 그래프는 어떻게 달라질까?</a><a href="../../c/alg/1-7.html#card-alg-inverse-graph"><small class="mono">대수 1.7</small>로그함수의 그래프는 지수함수의 그래프와 어떤 관계일까?</a><a href="../../c/alg/1-7.html#text-alg-exp-log-graph"><small class="mono">대수 1.7</small>지수함수와 로그함수의 그래프</a><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a></div></nav>
+
       <article class="card" id="card-alg-exp-ineq">
         <header class="card-head">
-          <span class="no">1.8.1</span><h2>지수부등식에서 부등호는 언제 뒤집힐까?</h2><span class="kind">지수·로그 방정식과 부등식 · 그래프로 풀기</span>
+          <span class="no">탐구 1</span><h2>지수부등식에서 부등호는 언제 뒤집힐까?</h2><span class="kind">지수·로그 방정식과 부등식 · 그래프로 풀기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -77,34 +134,34 @@
                 <div><dt>부등호 방향</dt><dd class="n-d">—</dd></div>
                 <div><dt>해</dt><dd class="n-s">—</dd></div>
               </dl>
-              <p class="fig-note">주황색으로 칠한 \(x\)축 구간이 해입니다. 속이 빈 점은 해에 들지 않는 끝점입니다.</p>
+              <p class="fig-note">주황색으로 칠한 \(x\)축 구간이 해이고, 속이 빈 점은 해에 들지 않는 끝점이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2^x &gt; 4\)의 해는 \(x &gt; 2\)입니다. 그러면 \((\frac{1}{2})^x &gt; 4\)의 해도 \(x &gt; 2\)일까요? \(\log_2 x &lt; 3\)의 해는 \(x &lt; 8\)이면 될까요?</li>
-            <li><span class="tag">복원</span>\(a &gt; 1\)이면 \(y = a^x\)와 \(y = \log_a x\)는 증가하고, \(0 &lt; a &lt; 1\)이면 감소합니다. \(a^x &gt; 0\)이고, 로그의 진수는 양수여야 합니다.</li>
-            <li><span class="tag">설명</span>증가함수에서는 "값이 크다 ⇔ 입력이 크다", 감소함수에서는 "값이 크다 ⇔ 입력이 작다"입니다. 그래서 \(a^{f(x)} &gt; a^{g(x)}\)는 \(a &gt; 1\)이면 \(f(x) &gt; g(x)\), \(0 &lt; a &lt; 1\)이면 <em>\(f(x) &lt; g(x)\)로 부등호가 바뀝니다</em>. 방정식 \(a^x = k(k &gt; 0)\)의 해는 \(x = \log_a k\) 하나입니다. 로그부등식 \(\log_a f(x) &gt; \log_a g(x)\)는 <em>먼저 진수 조건 \(f(x) &gt; 0\), \(g(x) &gt; 0\)</em>을 세우고, 그다음 밑에 따라 진수의 대소를 비교한 뒤 두 조건을 함께 만족하는 범위를 답합니다.</li>
-            <li><span class="tag">연결</span>\(4^x - 3 \cdot 2^x + 2 = 0\)처럼 같은 밑이 거듭 나오면 \(2^x = t(t &gt; 0)\)로 두고 이차방정식으로 풉니다. 이때도 \(t\)가 양수라는 조건을 잊지 않아야 합니다. 이 식의 해는 \(t = 1, 2\)에서 \(x = 0, 1\)입니다.</li>
-            <li><span class="tag">적용</span>부등호를 \(&gt;\)로 두고 밑을 2에서 0.5로 바꾸면 칠한 구간은 어느 쪽으로 넘어가나요? \(k\)를 0 이하로 내리면 \(a^x &gt; k\)와 \(a^x &lt; k\)의 해는 각각 어떻게 되나요? 로그 모드에서 \(&lt;\)를 고르면 해의 왼쪽 끝은 어디인가요?</li>
-            <li class="warn"><span class="tag">판단</span>로그부등식에서 진수 조건을 빠뜨리는 실수가 가장 흔합니다. \(\log_2 x &lt; 3\)의 해는 \(x &lt; 8\)이 아니라 \(0 &lt; x &lt; 8\)입니다. 또 밑에 문자가 있으면(예: \(a^x &gt; a^2\)) \(a &gt; 1\)인 경우와 \(0 &lt; a &lt; 1\)인 경우로 나누어 풀어야 합니다.</li>
+            <li><span class="tag">질문</span>\(2^x &gt; 4\)의 해는 \(x &gt; 2\)이다. 그러면 \((\frac{1}{2})^x &gt; 4\)의 해도 \(x &gt; 2\)일까? 또 \(\log_2 x &lt; 3\)의 해는 \(x &lt; 8\)이면 될까?</li>
+            <li><span class="tag">복원</span>\(a &gt; 1\)이면 \(y = a^x\)와 \(y = \log_a x\)는 증가하고, \(0 &lt; a &lt; 1\)이면 감소한다. 또 \(a^x &gt; 0\)이고, 로그의 진수는 양수여야 한다.</li>
+            <li><span class="tag">설명</span>증가함수에서는 "값이 크다 ⇔ 입력이 크다"이고, 감소함수에서는 "값이 크다 ⇔ 입력이 작다"이다. 그래서 \(a^{f(x)} &gt; a^{g(x)}\)는 \(a &gt; 1\)이면 \(f(x) &gt; g(x)\)이고, \(0 &lt; a &lt; 1\)이면 <em>\(f(x) &lt; g(x)\)로 부등호가 바뀐다</em>. 방정식 \(a^x = k(k &gt; 0)\)의 해는 \(x = \log_a k\) 하나이다. 로그부등식 \(\log_a f(x) &gt; \log_a g(x)\)는 <em>먼저 진수 조건 \(f(x) &gt; 0\), \(g(x) &gt; 0\)</em>을 세우고, 그다음 밑에 따라 진수의 대소를 비교한 뒤 두 조건을 함께 만족하는 범위를 답한다.</li>
+            <li><span class="tag">연결</span>\(4^x - 3 \cdot 2^x + 2 = 0\)처럼 같은 밑이 거듭 나오면 \(2^x = t(t &gt; 0)\)로 두고 이차방정식으로 푼다. 이때도 \(t\)가 양수라는 조건을 잊지 않아야 한다. 이 식은 \(t = 1, 2\)이므로 해가 \(x = 0, 1\)이다.</li>
+            <li><span class="tag">적용</span>부등호를 \(&gt;\)로 두고 밑을 2에서 0.5로 바꾸면 칠한 구간이 반대쪽으로 넘어간다. 다음에는 \(k\)를 0 이하로 내려 \(a^x &gt; k\)와 \(a^x &lt; k\)의 해가 각각 어떻게 되는지 보고, 로그 모드에서 \(&lt;\)를 골라 해의 왼쪽 끝이 어디인지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>로그부등식에서 진수 조건을 빠뜨리는 실수가 가장 흔하다. \(\log_2 x &lt; 3\)의 해는 \(x &lt; 8\)이 아니라 \(0 &lt; x &lt; 8\)이다. 또 밑에 문자가 있으면(예를 들어 \(a^x &gt; a^2\)) \(a &gt; 1\)인 경우와 \(0 &lt; a &lt; 1\)인 경우로 나누어 풀어야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">부등식 \(\log_{1/2}(x - 1) &gt; -2\)의 해는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(1 &lt; x &lt; 5\)<span class="why"><b>맞습니다.</b> 진수 조건 \(x &gt; 1\), 그리고 \(-2 = \log_{1/2} 4\)이고 밑이 1보다 작으므로 \(x - 1 &lt; 4\)입니다. 함께 만족하는 범위는 \(1 &lt; x &lt; 5\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x &gt; 5\)<span class="why"><b>부등호를 뒤집지 않았습니다.</b> 밑이 \(\frac{1}{2}\)이면 로그함수가 감소하므로 진수끼리는 부등호가 반대입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x &lt; 5\)<span class="why"><b>진수 조건을 빠뜨렸습니다.</b> \(x \le 1\)이면 \(\log_{1/2}(x - 1)\)이 정의되지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1 &lt; x &lt; \frac{5}{4}\)<span class="why"><b>\(-2\)를 진수 \((\frac{1}{2})^2 = \frac{1}{4}\)로 바꾸었습니다.</b> \(\log_{1/2} M = -2\)이면 \(M = (\frac{1}{2})^{-2} = 4\)입니다. 지수의 부호를 빠뜨리면 역수가 됩니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(1 &lt; x &lt; 5\)<span class="why"><b>맞다.</b> 진수 조건 \(x &gt; 1\), 그리고 \(-2 = \log_{1/2} 4\)이고 밑이 1보다 작으므로 \(x - 1 &lt; 4\)이다. 함께 만족하는 범위는 \(1 &lt; x &lt; 5\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(x &gt; 5\)<span class="why"><b>부등호를 뒤집지 않았다.</b> 밑이 \(\frac{1}{2}\)이면 로그함수가 감소하므로 진수끼리는 부등호가 반대이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(x &lt; 5\)<span class="why"><b>진수 조건을 빠뜨렸다.</b> \(x \le 1\)이면 \(\log_{1/2}(x - 1)\)이 정의되지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1 &lt; x &lt; \frac{5}{4}\)<span class="why"><b>\(-2\)를 진수 \((\frac{1}{2})^2 = \frac{1}{4}\)로 바꾸었다.</b> \(\log_{1/2} M = -2\)이면 \(M = (\frac{1}{2})^{-2} = 4\)이다. 지수의 부호를 빠뜨리면 역수가 된다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-7.html#card-alg-exp-graph"><small class="mono">대수 1.7</small>밑이 바뀌면 지수함수의 그래프는 어떻게 달라질까?</a><a href="../../c/alg/1-7.html#card-alg-inverse-graph"><small class="mono">대수 1.7</small>로그함수의 그래프는 지수함수의 그래프와 어떤 관계일까?</a><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-7.html#card-alg-exp-graph"><small class="mono">대수 1.7</small>밑이 바뀌면 지수함수의 그래프는 어떻게 달라질까?</a><a href="../../c/alg/1-7.html#card-alg-inverse-graph"><small class="mono">대수 1.7</small>로그함수의 그래프는 지수함수의 그래프와 어떤 관계일까?</a><a href="../../c/alg/1-7.html#text-alg-exp-log-graph"><small class="mono">대수 1.7</small>지수함수와 로그함수의 그래프</a><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a></div></nav>
 
       <article class="card" id="card-alg-growth-time">
         <header class="card-head">
-          <span class="no">1.8.2</span><h2>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</h2><span class="kind">지수함수의 활용 · 걸리는 시간을 로그로</span>
+          <span class="no">탐구 2</span><h2>탄소-14가 4분의 1만 남았다면 몇 년이 지났을까?</h2><span class="kind">지수함수의 활용 · 걸리는 시간을 로그로</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,39 +184,40 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>화석 속 탄소-14가 살아 있을 때의 25%만 남았다면 이 생물은 몇 년 전에 죽었을까요? 연 5% 복리 예금이 두 배가 되려면 몇 년이 걸릴까요?</li>
-            <li><span class="tag">복원</span>같은 시간마다 같은 비율로 변하는 양은 \(y = y_0 \cdot r^{t/T}\)(\(T\)는 비율 \(r\)만큼 변하는 데 걸리는 시간)로 나타냅니다. \(a^x = k \Leftrightarrow x = \log_a k\)이고, \(\log_a k = \log k / \log a\)입니다.</li>
-            <li><span class="tag">설명</span>목표 비율 \(m\)에 이르는 시각은 \(r^{t/T} = m\)을 풀면 됩니다. 양변에 상용로그를 취하면 \((\frac{t}{T}) \log r = \log m\), 곧 <em>\(t = T \cdot \log m / \log r\)</em>입니다. 탄소-14는 반감기 약 5730년이므로 25%가 남으려면 \((\frac{1}{2})^{t/5730} = \frac{1}{4}\)에서 \(t = 2 \times 5730 = 11460\)년입니다. 연 5% 복리는 \(1.05^t = 2\)에서 \(t = \log 2 / \log 1.05 \approx 0.3010 / 0.0212 \approx 14.2\)년입니다. 20분마다 두 배가 되는 세균이 1000배가 되려면 \(t = 20 \times \log 1000 / \log 2 \approx 199\)분이 걸립니다.</li>
-            <li><span class="tag">연결</span>고고학의 방사성 탄소 연대 측정은 이 계산에서 출발합니다. 금융에서 쓰는 "72의 법칙"(두 배가 되는 \(\text{햇수} \approx 72 \div \text{연이율}\%\))은 이 식의 어림셈입니다. 연 5%이면 \(72 \div 5 = 14.4\)년으로, 정확한 값 14.2년에 가깝습니다.</li>
-            <li><span class="tag">적용</span>탄소-14에서 남은 비율을 0.5, 0.25, 0.125에 가깝게 두면 걸리는 시간은 반감기의 몇 배인가요? 예금에서 목표를 2배에서 4배로 바꾸면 시간도 두 배가 되나요? 세균에서 목표를 10배씩 늘리면 시간은 얼마씩 늘어나나요?</li>
-            <li class="warn"><span class="tag">판단</span>"25%가 남으면 반감기의 1.5배"처럼 비율을 직선으로 나누는 실수가 흔합니다. 반감기마다 절반이 되므로 50%까지 한 번, 25%까지 두 번입니다. 모형의 한계도 있습니다. 실제 세균은 영양과 공간이 부족해지면 더 이상 두 배씩 늘지 않으므로 20분마다 두 배는 이상적인 조건의 모식입니다. 탄소 연대도 대기 중 탄소-14 비율이 시대마다 조금씩 달라 보정이 필요하고, 예금 계산은 세금과 수수료를 무시했습니다.</li>
+            <li><span class="tag">질문</span>화석 속 탄소-14가 살아 있을 때의 25%만 남았다면 이 생물은 몇 년 전에 죽었을까? 또 연 5% 복리 예금이 두 배가 되려면 몇 년이 걸릴까?</li>
+            <li><span class="tag">복원</span>같은 시간마다 같은 비율로 변하는 양은 \(y = y_0 \cdot r^{t/T}\)(\(T\)는 비율 \(r\)만큼 변하는 데 걸리는 시간)로 나타낸다. 그리고 \(a^x = k \Leftrightarrow x = \log_a k\)이고, \(\log_a k = \log k / \log a\)이다.</li>
+            <li><span class="tag">설명</span>따라서 목표 비율 \(m\)에 이르는 시각은 \(r^{t/T} = m\)을 풀면 된다. 양변에 상용로그를 취하면 \((\frac{t}{T}) \log r = \log m\), 곧 <em>\(t = T \cdot \log m / \log r\)</em>이다. 탄소-14는 반감기가 약 5730년이므로 25%가 남으려면 \((\frac{1}{2})^{t/5730} = \frac{1}{4}\)에서 \(t = 2 \times 5730 = 11460\)년이다. 연 5% 복리는 \(1.05^t = 2\)에서 \(t = \log 2 / \log 1.05 \approx 0.3010 / 0.0212 \approx 14.2\)년이고, 20분마다 두 배가 되는 세균이 1000배가 되려면 \(t = 20 \times \log 1000 / \log 2 \approx 199\)분이 걸린다.</li>
+            <li><span class="tag">연결</span>고고학의 방사성 탄소 연대 측정은 이 계산에서 출발한다. 금융에서 쓰는 "72의 법칙"(두 배가 되는 \(\text{햇수} \approx 72 \div \text{연이율}\%\))도 이 식의 어림셈이다. 연 5%이면 \(72 \div 5 = 14.4\)년으로, 정확한 값 14.2년에 가깝다.</li>
+            <li><span class="tag">적용</span>탄소-14에서 남은 비율을 0.5, 0.25, 0.125에 가깝게 두며 걸리는 시간이 반감기의 몇 배인지 보자. 다음에는 예금의 목표를 2배에서 4배로 바꿔 시간도 두 배가 되는지 확인하고, 세균의 목표를 10배씩 늘리면 시간이 얼마씩 늘어나는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>"25%가 남으면 반감기의 1.5배"처럼 비율을 직선으로 나누는 실수가 흔하다. 반감기마다 절반이 되므로 50%까지 한 번, 25%까지 두 번이다. 또 모형에도 한계가 있다. 실제 세균은 영양과 공간이 부족해지면 더 이상 두 배씩 늘지 않으므로 20분마다 두 배는 이상적인 조건의 모식이다. 탄소 연대도 대기 중 탄소-14 비율이 시대마다 조금씩 달라 보정이 필요하고, 예금 계산은 세금과 수수료를 무시했다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">어떤 약은 몸속 양이 6시간마다 절반으로 줄어든다고 하자(모식). 처음 양의 \(\frac{1}{8}\) 이하가 되는 것은 최소 몇 시간 뒤인가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>18시간<span class="why"><b>맞습니다.</b> \((\frac{1}{2})^{t/6} \le \frac{1}{8} = (\frac{1}{2})^3\)에서 밑이 1보다 작으므로 \(\frac{t}{6} \ge 3\), 곧 \(t \ge 18\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48시간<span class="why"><b>8을 횟수로 보았습니다.</b> \(\frac{1}{8}\)은 절반이 세 번 일어난 결과입니다. \(6 \times 8\)이 아니라 \(6 \times 3\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5.25시간<span class="why"><b>직선으로 줄어든다고 보았습니다.</b> \(6 \times (1 - \frac{1}{8})\)은 일정한 양씩 줄 때의 계산입니다. 이 약은 일정한 비율로 줄어듭니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>최대 18시간<span class="why"><b>부등호 방향을 뒤집지 않았습니다.</b> 시간이 지날수록 양이 줄어드므로 \(\frac{1}{8}\) 이하가 되는 시간은 18시간 이상입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>18시간<span class="why"><b>맞다.</b> \((\frac{1}{2})^{t/6} \le \frac{1}{8} = (\frac{1}{2})^3\)에서 밑이 1보다 작으므로 \(\frac{t}{6} \ge 3\), 곧 \(t \ge 18\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>48시간<span class="why"><b>8을 횟수로 보았다.</b> \(\frac{1}{8}\)은 절반이 세 번 일어난 결과이다. \(6 \times 8\)이 아니라 \(6 \times 3\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5.25시간<span class="why"><b>직선으로 줄어든다고 보았다.</b> \(6 \times (1 - \frac{1}{8})\)은 일정한 양씩 줄 때의 계산이다. 이 약은 일정한 비율로 줄어든다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>최대 18시간<span class="why"><b>부등호 방향을 뒤집지 않았다.</b> 시간이 지날수록 양이 줄어드므로 \(\frac{1}{8}\) 이하가 되는 시간은 18시간 이상이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-7.html#card-alg-exp-graph"><small class="mono">대수 1.7</small>밑이 바뀌면 지수함수의 그래프는 어떻게 달라질까?</a><a href="../../c/alg/1-7.html#card-alg-inverse-graph"><small class="mono">대수 1.7</small>로그함수의 그래프는 지수함수의 그래프와 어떤 관계일까?</a><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a><a href="../../c/alg/1-5.html#card-alg-log-scale"><small class="mono">대수 1.5</small>규모 7 지진은 규모 5 지진보다 몇 배 셀까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/1-7.html#card-alg-exp-graph"><small class="mono">대수 1.7</small>밑이 바뀌면 지수함수의 그래프는 어떻게 달라질까?</a><a href="../../c/alg/1-7.html#card-alg-inverse-graph"><small class="mono">대수 1.7</small>로그함수의 그래프는 지수함수의 그래프와 어떤 관계일까?</a><a href="../../c/alg/1-7.html#text-alg-exp-log-graph"><small class="mono">대수 1.7</small>지수함수와 로그함수의 그래프</a><a href="../../c/alg/1-5.html#card-alg-log-digits"><small class="mono">대수 1.5</small>2⁵⁰은 몇 자리 수일까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=alg-1-8"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">318문항</span></a>
+      <a class="px-go" href="../../bank.html?c=alg&amp;sec=1-8"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=alg-1-8"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">323문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -167,6 +225,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/alg/body.js"></script>
 <script src="../../js/cards/alg/expo.js"></script>
 <script src="../../js/cards/alg/exp-ineq.js"></script>
 <script src="../../js/cards/alg/growth-time.js"></script>

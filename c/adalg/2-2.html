@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>역행렬 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="역행렬의 뜻, [A | I]에 가우스-조르당 소거법을 써서 역행렬 구하기, 역행렬이 없는 경우. 역행렬의 존재를 예측하고 소거 과정을 따라가는 카드와, 행렬 곱과 역행렬로 만드는 힐 암호 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-adalg-inverse-elim .mat { overflow-x: auto; margin: .4rem 0; }
@@ -48,24 +53,82 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-adalg-inverse-elim"><span class="mono">2.2.1</span>[A | I]를 소거해 역행렬 얻기</a></li>
-        <li><a href="#card-adalg-hill-cipher"><span class="mono">2.2.2</span>행렬로 만드는 암호와 역행렬로 푸는 해독</a></li>
+        <li><a href="#text-adalg-inverse"><span class="mono">본문</span>역행렬</a></li>
+        <li><a href="#card-adalg-inverse-elim"><span class="mono">탐구 1</span>[A | I]를 소거해 역행렬 얻기</a></li>
+        <li><a href="#card-adalg-hill-cipher"><span class="mono">탐구 2</span>행렬로 만드는 암호와 역행렬로 푸는 해독</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=adalg-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=adalg&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=adalg-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-adalg-inverse" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>역행렬</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">알파벳을 A = 0, B = 1, ⋯, Z = 25로 바꾸고, 두 글자씩 묶어 열벡터로 만든 뒤 행렬 \(K = \begin{pmatrix}3 & 3\\ 2 & 5\end{pmatrix}\)를 곱하고 26으로 나눈 나머지를 취해 암호문을 만든다. 이 방법으로 "HI"를 잠그면 "TC"가 된다. 암호문을 받은 친구가 원래 글자를 되찾으려면 \(K\)가 한 일을 되돌리는 행렬이 필요하다. 그런 행렬은 어떻게 구하고, 어떤 행렬이면 열쇠를 만들 수 없을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 132" role="img" aria-label="힐 암호로 HI를 잠그고 여는 과정">
+              <g class="s">
+                <text x="20" y="22">단계</text><text x="160" y="22">계산</text><text x="380" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">글자를 수로</text><text x="160" y="52">H = 7, I = 8</text><text x="380" y="52">(7, 8)</text>
+                <text x="20" y="74">잠그기</text><text x="160" y="74">(3·7 + 3·8, 2·7 + 5·8) = (45, 54)</text><text x="380" y="74" class="td">(19, 2) = TC</text>
+                <text x="20" y="96">열기</text><text x="160" y="96">K⁻¹ (mod 26)를 곱함</text><text x="380" y="96" class="tb">(7, 8) = HI</text>
+                <text x="20" y="122">26으로 나눈 나머지만 남긴다.</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 행렬을 곱해 잠근 글자는 역행렬을 곱해 연다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 곱셈, 가우스 소거법(<a href="2-1.html">가우스 소거법</a>), 나머지 연산.</div>
+
+          <h3><span class="no">2.2.1</span>곱한 것을 되돌리는 행렬</h3>
+          <p>정사각행렬 \(A\)에 대해 \(AX = XA = I\)인 행렬 \(X\)가 있으면 \(X\)를 \(A\)의 역행렬이라 하고 \(A^{-1}\)로 쓴다. \(A\vec x = \vec b\)에서 양변에 \(A^{-1}\)을 곱하면 \(\vec x = A^{-1}\vec b\)이므로, 역행렬은 \(A\)가 한 일을 되돌린다. 역행렬은 가우스 소거법으로 구할 수 있다. \(A\)와 단위행렬 \(I\)를 나란히 놓은 \((A \mid I)\)에 행 연산을 해서 왼쪽을 \(I\)로 만들면, 오른쪽이 \(A^{-1}\)이 된다. 왼쪽을 \(I\)로 만들 수 없으면 역행렬이 없다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">\(2\times2\) 역행렬</span></span>
+            <p>\(A = \begin{pmatrix}a & b\\ c & d\end{pmatrix}\)이고 \(ad - bc \ne 0\)이면 \[A^{-1} = \frac{1}{ad - bc}\begin{pmatrix}d & -b\\ -c & a\end{pmatrix}\]이다. \(ad - bc = 0\)이면 역행렬이 없다. \(n\times n\) 행렬 \(A\)가 역행렬을 가질 필요충분조건은 열벡터들이 일차독립인 것이다.</p>
+          </div>
+          <p>역행렬이 없는 행렬은 서로 다른 두 벡터를 같은 벡터로 보낸다. 예를 들어 \(\begin{pmatrix}1 & 2\\ 2 & 4\end{pmatrix}\)은 두 열이 실수배여서 평면 전체를 한 직선으로 납작하게 누른다. 납작해진 직선 위의 한 점으로 간 벡터들이 무수히 많으므로, 어느 것이 원래 벡터였는지 되찾을 수 없다. 그래서 역행렬이 있는지는 열벡터가 일차독립인지, 행렬식이 0이 아닌지로 계산하기 전에 알 수 있다.<sup class="fn"><a href="#fn-adalg-inverse-1">1</a></sup></p>
+
+          <h3><span class="no">2.2.2</span>나머지 세계의 역행렬</h3>
+          <p>암호에서는 26으로 나눈 나머지만 다루므로 분수를 쓸 수 없다. 그래서 \(\dfrac{1}{ad - bc}\) 대신 \((ad - bc)\times k\)를 26으로 나눈 나머지가 1이 되는 수 \(k\)를 곱한다. \(K\)의 행렬식은 \(3\times5 - 3\times2 = 9\)이고, \(9\times3 = 27\)을 26으로 나눈 나머지가 1이므로 \(k = 3\)이다. 행렬식이 26과 공약수를 가지면, 곧 짝수이거나 13의 배수이면 그런 \(k\)가 없어서 열쇠 행렬을 만들 수 없다. 그래서 힐 암호의 열쇠는 행렬식이 26과 서로소인 행렬로 골라야 한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="열쇠 행렬 K의 역행렬 계산">
+              <g class="s">
+                <text x="20" y="22">단계</text><text x="200" y="22">계산</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">행렬식</text><text x="200" y="52">3·5 − 3·2</text><text x="400" y="52">9</text>
+                <text x="20" y="74">9의 역수 (mod 26)</text><text x="200" y="74">9 × 3 = 27 ≡ 1</text><text x="400" y="74">3</text>
+                <text x="20" y="96">K⁻¹</text><text x="200" y="96">3 × (5, −3 / −2, 3)</text><text x="400" y="96" class="td">(15, 17 / 20, 9)</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 나머지 연산에서는 행렬식으로 나누는 대신 행렬식의 역수에 해당하는 수를 곱한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>처음 질문의 열쇠 \(K\)로 "HI"를 잠가 암호문을 구하고, 26으로 나눈 나머지 세계의 역행렬로 다시 열어 보아라. 또 \(\begin{pmatrix}2 & 1\\ 4 & 3\end{pmatrix}\)은 열쇠로 쓸 수 있는가?</p>
+          </div>
+          <p>\(K\begin{pmatrix}7\\ 8\end{pmatrix} = \begin{pmatrix}45\\ 54\end{pmatrix}\)이고, 26으로 나눈 나머지는 \((19, 2)\), 곧 "TC"이다. 역행렬은 \(3\begin{pmatrix}5 & -3\\ -2 & 3\end{pmatrix} = \begin{pmatrix}15 & -9\\ -6 & 9\end{pmatrix}\)이고, 음수를 26을 더해 바꾸면 \(\begin{pmatrix}15 & 17\\ 20 & 9\end{pmatrix}\)이다.</p>
+          <p>\(\begin{pmatrix}15 & 17\\ 20 & 9\end{pmatrix}\begin{pmatrix}19\\ 2\end{pmatrix} = \begin{pmatrix}319\\ 398\end{pmatrix}\)이고, 26으로 나눈 나머지는 \((7, 8)\), 곧 "HI"로 되돌아온다. \(\begin{pmatrix}2 & 1\\ 4 & 3\end{pmatrix}\)은 행렬식이 \(6 - 4 = 2\)로 짝수여서 26과 공약수 2를 가지므로, 나머지 세계에서 역행렬이 없어 열쇠로 쓸 수 없다. 실제로 이 행렬은 서로 다른 글자 묶음을 같은 암호문으로 보내기도 한다. 즉 역행렬은 행렬을 곱한 일을 되돌리는 행렬이며, 행렬식이 0이 아닐 때, 나머지 세계에서는 행렬식이 법과 서로소일 때만 존재한다.</p>
+          <p>아래 탐구 카드에서 역행렬이 있는지 계산하기 전에 판단해 보고, 행렬로 잠근 암호를 역행렬로 풀어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-adalg-inverse-1">이 암호는 1929년 미국의 수학자 힐이 발표했다. 한 글자씩이 아니라 여러 글자를 한꺼번에 섞어 글자의 빈도로 깨뜨리기 어려웠지만, 원문과 암호문 몇 쌍이 알려지면 연립방정식으로 열쇠를 거꾸로 구할 수 있어 오늘날에는 쓰이지 않는다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>역행렬 \(A^{-1}\)은 \(AA^{-1} = A^{-1}A = I\)인 행렬로 \(A\)가 한 일을 되돌리며, \((A \mid I)\)를 가우스 소거법으로 \((I \mid A^{-1})\)로 바꾸어 구한다. \(2\times2\) 행렬은 \(ad - bc \ne 0\)일 때만 역행렬이 있고, 열벡터가 일차종속이면 평면을 납작하게 눌러 되돌릴 수 없다. 처음 질문의 열쇠 \(K\)는 행렬식 9가 26과 서로소여서 나머지 세계의 역행렬 \(\begin{pmatrix}15 & 17\\ 20 & 9\end{pmatrix}\)로 "TC"를 "HI"로 연다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a><a href="../../c/adalg/2-1.html#text-adalg-gauss"><small class="mono">고급 대수 2.1</small>가우스 소거법</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a><a href="../../c/adalg/2-3.html#text-adalg-determinant"><small class="mono">고급 대수 2.3</small>행렬식</a><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a></div></nav>
+
       <article class="card" id="card-adalg-inverse-elim">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>역행렬이 있는지 계산하기 전에 알 수 있을까?</h2><span class="kind">가우스-조르당 소거법 · 예측→확인</span>
+          <span class="no">탐구 1</span><h2>역행렬이 있는지 계산하기 전에 알 수 있을까?</h2><span class="kind">가우스-조르당 소거법 · 예측→확인</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
             <div class="ctl-row"><label class="mono">행렬 A <select class="pick" aria-label="행렬 고르기"><option value="0">A₁</option><option value="1">A₂</option><option value="2">A₃</option><option value="3">A₄</option></select></label></div>
             <div class="mat a0"></div>
-            <p class="small">예측: 이 행렬은 역행렬이 있을까요?</p>
+            <p class="small">먼저 예측해 보자. 이 행렬은 역행렬이 있을까?</p>
             <div class="gp" role="group" aria-label="예측">
               <button class="chip" type="button" data-g="1">있다</button>
               <button class="chip" type="button" data-g="0">없다</button>
@@ -76,30 +139,30 @@
             <p class="verdict"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(2x = 6\)은 양변을 2로 나누어 풉니다. \(A\vec{x} = \vec{b}\)도 \(A\)로 "나눌" 수 있다면 \(\vec{x} = A^{-1}\vec{b}\)로 한 번에 풀립니다. \(A^{-1}\)은 어떻게 구하고, 언제 없을까요?</li>
-            <li><span class="tag">복원</span>\(AX = XA = I\)인 \(X\)를 \(A\)의 <em>역행렬</em> \(A^{-1}\)이라고 합니다. 기본 행 연산은 해를 바꾸지 않습니다.</li>
-            <li><span class="tag">설명</span>\(A\) 옆에 단위행렬을 붙인 \([A \mid I]\)에 행 연산을 해서 왼쪽을 \(I\)로 만들면 오른쪽이 \(A^{-1}\)이 됩니다(<em>가우스-조르당 소거법</em>). 행 연산 하나하나가 왼쪽에 어떤 행렬(기본행렬)을 곱하는 것과 같아서, 그 곱을 \(E\)라 하면 \(EA = I\)이고 같은 \(E\)가 오른쪽의 \(I\)를 \(E = A^{-1}\)로 바꾸기 때문입니다. 소거 중에 왼쪽에 피벗이 없는 열이 생기면 \(I\)를 만들 수 없고, 역행렬이 없습니다.</li>
-            <li><span class="tag">연결</span>역행렬이 없는 것은 열벡터들이 일차종속인 것, 다음 절의 행렬식이 0인 것과 같은 말입니다. 실제 계산에서는 \(A^{-1}\)을 따로 구하기보다 \(A\vec{x} = \vec{b}\)를 바로 소거해 푸는 편이 빠르고 정확합니다.</li>
-            <li><span class="tag">적용</span>네 행렬 각각에 대해 먼저 역행렬이 있을지 예측하세요. 열 사이에 눈에 띄는 관계가 있는지 보면 단서가 됩니다. 그다음 한 단계씩 소거를 따라가 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>첫 피벗 자리가 0이라고 역행렬이 없는 것은 아닙니다(A₄). 아래 행과 바꾸면 계속할 수 있습니다. 열 전체에서 피벗을 찾을 수 없을 때만 멈춥니다.</li>
+            <li><span class="tag">질문</span>\(2x = 6\)은 양변을 2로 나누어 푼다. \(A\vec{x} = \vec{b}\)도 \(A\)로 "나눌" 수 있다면 \(\vec{x} = A^{-1}\vec{b}\)로 한 번에 풀린다. \(A^{-1}\)은 어떻게 구하고, 언제 없을까?</li>
+            <li><span class="tag">복원</span>\(AX = XA = I\)인 \(X\)를 \(A\)의 <em>역행렬</em> \(A^{-1}\)이라고 한다. 기본 행 연산은 해를 바꾸지 않는다.</li>
+            <li><span class="tag">설명</span>\(A\) 옆에 단위행렬을 붙인 \([A \mid I]\)에 행 연산을 해서 왼쪽을 \(I\)로 만들면 오른쪽이 \(A^{-1}\)이 된다(<em>가우스-조르당 소거법</em>). 행 연산 하나하나가 왼쪽에 어떤 행렬(기본행렬)을 곱하는 것과 같아서, 그 곱을 \(E\)라 하면 \(EA = I\)이고 같은 \(E\)가 오른쪽의 \(I\)를 \(E = A^{-1}\)로 바꾸기 때문이다. 소거 중에 왼쪽에 피벗이 없는 열이 생기면 \(I\)를 만들 수 없고, 역행렬이 없다.</li>
+            <li><span class="tag">연결</span>역행렬이 없는 것은 열벡터들이 일차종속인 것, 다음 절의 행렬식이 0인 것과 같은 말이다. 실제 계산에서는 \(A^{-1}\)을 따로 구하기보다 \(A\vec{x} = \vec{b}\)를 바로 소거해 푸는 편이 빠르고 정확하다.</li>
+            <li><span class="tag">적용</span>네 행렬 각각에 대해 먼저 역행렬이 있을지 예측해 보자. 열 사이에 눈에 띄는 관계가 있는지 보면 단서가 된다. 그다음 한 단계씩 소거를 따라가 보자.</li>
+            <li class="warn"><span class="tag">판단</span>첫 피벗 자리가 0이라고 역행렬이 없는 것은 아니다(A₄). 아래 행과 바꾸면 계속할 수 있다. 열 전체에서 피벗을 찾을 수 없을 때만 멈춘다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(A = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}\)일 때 \(A\vec{x} = \binom{1}{2}\)의 해는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\vec{x} = (1, -1)\)<span class="why"><b>맞습니다.</b> \(A^{-1} = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}\)이고 \(A^{-1}\binom{1}{2} = \binom{1}{-1}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\vec{x} = (-1, 1)\)<span class="why"><b>부호가 바뀌었습니다.</b> \(2(-1) + 1 = -1 \ne 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\vec{x} = (1/2, 2/3)\)<span class="why"><b>성분끼리 나눈 것은 역행렬이 아닙니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>역행렬이 없어 풀 수 없다.<span class="why"><b>\(6 - 5 = 1 \ne 0\)이라 역행렬이 있습니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\vec{x} = (1, -1)\)<span class="why"><b>맞다.</b> \(A^{-1} = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}\)이고 \(A^{-1}\binom{1}{2} = \binom{1}{-1}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\vec{x} = (-1, 1)\)<span class="why"><b>부호가 바뀌었다.</b> \(2(-1) + 1 = -1 \ne 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\vec{x} = (1/2, 2/3)\)<span class="why"><b>성분끼리 나눈 것은 역행렬이 아니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>역행렬이 없어 풀 수 없다.<span class="why"><b>\(6 - 5 = 1 \ne 0\)이라 역행렬이 있다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a><a href="../../c/adalg/2-1.html#text-adalg-gauss"><small class="mono">고급 대수 2.1</small>가우스 소거법</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a><a href="../../c/adalg/2-3.html#text-adalg-determinant"><small class="mono">고급 대수 2.3</small>행렬식</a><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a></div></nav>
 
       <article class="card" id="card-adalg-hill-cipher">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</h2><span class="kind">역행렬 · 활용</span>
+          <span class="no">탐구 2</span><h2>행렬로 잠근 암호는 어떤 열쇠로 열릴까?</h2><span class="kind">역행렬 · 활용</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -113,42 +176,42 @@
             <p>해독 결과 <span class="big pt">—</span></p>
             <div class="presets"><button class="chip go-bad" type="button">det가 13인 열쇠로 바꾸기</button><button class="chip go-ok" type="button">처음 열쇠로</button></div>
             <p class="verdict" role="status"></p>
-            <p class="fig-note">A = 0, B = 1, …, Z = 25로 바꾸고 두 글자씩 묶어 벡터로 만듭니다. 계산은 모두 26으로 나눈 나머지로 합니다. 글자 수가 홀수이면 끝에 X를 붙입니다.</p>
+            <p class="fig-note">A = 0, B = 1, …, Z = 25로 바꾸고 두 글자씩 묶어 벡터로 만든다. 계산은 모두 26으로 나눈 나머지로 한다. 글자 수가 홀수이면 끝에 X를 붙인다.</p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>1929년 수학자 힐(L. S. Hill)은 글자를 숫자 벡터로 바꾸고 행렬을 곱해 암호를 만들었습니다. 받는 사람은 암호문을 어떻게 원래 글로 되돌릴까요? 아무 행렬이나 열쇠로 써도 될까요?</li>
-            <li><span class="tag">복원</span>\(2 \times 2\) 행렬 \(K = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\)의 역행렬은 \(ad - bc \ne 0\)일 때 \(K^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)입니다.</li>
-            <li><span class="tag">설명</span>평문 벡터 \(\vec{p}\)를 \(\vec{c} = K\vec{p}\)로 바꾸는 것이 암호화이고, \(\vec{p} = K^{-1}\vec{c}\)가 해독입니다. 다만 글자는 26개뿐이라 계산을 26으로 나눈 나머지로 하므로, \(\frac{1}{ad - bc}\) 대신 "곱해서 26으로 나눈 나머지가 1이 되는 수"를 씁니다. 그런 수는 \(ad - bc\)가 26과 서로소일 때만 있습니다. 예를 들어 처음 열쇠는 \(\det K = 9\)이고 \(9 \times 3 = 27\)이라 3을 곱합니다.</li>
-            <li><span class="tag">연결</span>역행렬이 없으면 서로 다른 평문이 같은 암호문이 되어 되돌릴 수 없습니다. 이것이 "역변환이 없다"는 뜻입니다. 힐 암호는 지금은 쉽게 깨지지만, 오늘날의 암호도 "되돌리기 쉬운 계산과 어려운 계산"의 차이를 씁니다.</li>
-            <li><span class="tag">적용</span>평문을 바꾸며 암호문이 어떻게 달라지는지 보세요. 같은 글자가 늘 같은 글자로 바뀌나요? "det가 13인 열쇠"로 바꾸면 해독이 어떻게 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>실수에서는 \(\det K \ne 0\)이면 충분했지만, 나머지 계산에서는 \(\det K\)가 26과 서로소여야 합니다. 2나 13의 배수이면 실수에서는 역행렬이 있어도 암호는 풀리지 않습니다. 조건은 계산하는 세계에 따라 달라집니다.</li>
+            <li><span class="tag">질문</span>1929년 수학자 힐(L. S. Hill)은 글자를 숫자 벡터로 바꾸고 행렬을 곱해 암호를 만들었다. 받는 사람은 암호문을 어떻게 원래 글로 되돌릴까? 아무 행렬이나 열쇠로 써도 될까?</li>
+            <li><span class="tag">복원</span>\(2 \times 2\) 행렬 \(K = \begin{pmatrix} a & b \\ c & d \end{pmatrix}\)의 역행렬은 \(ad - bc \ne 0\)일 때 \(K^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)이다.</li>
+            <li><span class="tag">설명</span>평문 벡터 \(\vec{p}\)를 \(\vec{c} = K\vec{p}\)로 바꾸는 것이 암호화이고, \(\vec{p} = K^{-1}\vec{c}\)가 해독이다. 다만 글자는 26개뿐이라 계산을 26으로 나눈 나머지로 하므로, \(\frac{1}{ad - bc}\) 대신 "곱해서 26으로 나눈 나머지가 1이 되는 수"를 쓴다. 그런 수는 \(ad - bc\)가 26과 서로소일 때만 있다. 예를 들어 처음 열쇠는 \(\det K = 9\)이고 \(9 \times 3 = 27\)이라 3을 곱한다.</li>
+            <li><span class="tag">연결</span>역행렬이 없으면 서로 다른 평문이 같은 암호문이 되어 되돌릴 수 없다. 이것이 "역변환이 없다"는 뜻이다. 힐 암호는 지금은 쉽게 깨지지만, 오늘날의 암호도 "되돌리기 쉬운 계산과 어려운 계산"의 차이를 쓴다.</li>
+            <li><span class="tag">적용</span>평문을 바꾸며 암호문이 어떻게 달라지는지 보자. 같은 글자가 늘 같은 글자로 바뀌는가? "det가 13인 열쇠"로 바꾸면 해독이 어떻게 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>실수에서는 \(\det K \ne 0\)이면 충분했지만, 나머지 계산에서는 \(\det K\)가 26과 서로소여야 한다. 2나 13의 배수이면 실수에서는 역행렬이 있어도 암호는 풀리지 않는다. 조건은 계산하는 세계에 따라 달라진다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">다음 중 힐 암호(26으로 나눈 나머지)의 열쇠로 쓸 수 있는 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}\)<span class="why"><b>맞습니다.</b> \(\det = 1\)이라 26과 서로소입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>\(\det = 2\)가 26과 서로소가 아닙니다.</b> A(0)와 N(13)이 같은 글자로 바뀝니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\)<span class="why"><b>\(\det = 0\)이라 실수에서도 역행렬이 없습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\begin{pmatrix} 5 & 1 \\ 3 & 5 \end{pmatrix}\)<span class="why"><b>\(\det = 22\)가 2의 배수입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}\)<span class="why"><b>맞다.</b> \(\det = 1\)이라 26과 서로소이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\begin{pmatrix} 2 & 0 \\ 0 & 1 \end{pmatrix}\)<span class="why"><b>\(\det = 2\)가 26과 서로소가 아니다.</b> A(0)와 N(13)이 같은 글자로 바뀐다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\)<span class="why"><b>\(\det = 0\)이라 실수에서도 역행렬이 없다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\begin{pmatrix} 5 & 1 \\ 3 & 5 \end{pmatrix}\)<span class="why"><b>\(\det = 22\)가 2의 배수이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a><a href="../../c/adalg/2-6.html#card-adalg-undo"><small class="mono">고급 대수 2.6</small>뒤틀린 그림을 제자리로 되돌리는 행렬은?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/adalg/2-1.html#card-adalg-row-puzzle"><small class="mono">고급 대수 2.1</small>행 연산 세 가지면 어떤 연립방정식도 풀릴까?</a><a href="../../c/adalg/2-1.html#card-adalg-balance-eq"><small class="mono">고급 대수 2.1</small>화학 반응식의 계수는 어떻게 한 번에 정할까?</a><a href="../../c/adalg/2-1.html#text-adalg-gauss"><small class="mono">고급 대수 2.1</small>가우스 소거법</a><a href="../../c/cm1/4-2.html#card-cm1-matrix-mult"><small class="mono">공통수학1 4.2</small>행렬의 곱은 왜 행과 열을 짝지어 계산할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adalg/2-3.html#card-adalg-det-area"><small class="mono">고급 대수 2.3</small>행렬식은 무엇을 재는 수일까?</a><a href="../../c/adalg/2-3.html#card-adalg-det-spot"><small class="mono">고급 대수 2.3</small>이 행렬식 계산, 어디서 틀렸을까?</a><a href="../../c/adalg/2-3.html#text-adalg-determinant"><small class="mono">고급 대수 2.3</small>행렬식</a><a href="../../c/adalg/2-6.html#card-adalg-compose-order"><small class="mono">고급 대수 2.6</small>두 변환의 순서를 바꾸면 결과도 달라질까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=adalg-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=adalg&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

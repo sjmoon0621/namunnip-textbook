@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>로런츠 힘 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="자기장 속에서 움직이는 전하가 받는 로런츠 힘의 조건과 방향을 알고, 입자의 원운동, 질량 분석기, 오로라, 입자 가속기 등 관련 현상과 기술을 설명한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-phy-motor .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: 6px 0 4px; }
     #card-phy-motor .row .mono { color: var(--ink-3); }
@@ -43,18 +49,70 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-emq-lorentz"><span class="mono">1.4.1</span>자기장으로 원자의 질량을 잴 수 있을까?</a></li>
-        <li><a href="#card-phy-motor"><span class="mono">1.4.2</span>전동기는 어떻게 계속 돌까?</a></li>
+        <li><a href="#text-emq-lorentz"><span class="mono">본문</span>로런츠 힘</a></li>
+        <li><a href="#card-emq-lorentz"><span class="mono">탐구 1</span>자기장으로 원자의 질량을 잴 수 있을까?</a></li>
+        <li><a href="#card-phy-motor"><span class="mono">탐구 2</span>전동기는 어떻게 계속 돌까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=emq-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">39문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=emq&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">12문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=emq-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">42문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=emq-1-4">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-emq-lorentz" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>로런츠 힘</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">원자 하나의 질량은 \(10^{-26}\) kg 정도로, 어떤 저울로도 직접 달 수 없다. 그런데 과학자들은 탄소 원자와 산소 원자의 질량 차이를 아주 정밀하게 안다. 전하를 띤 원자를 자기장 속으로 쏘면 원을 그리며 휘는데, 무거운 원자일수록 덜 휜다. 자기장이 왜 움직이는 전하를 휘게 하며, 휜 정도로 어떻게 질량을 알아낼까?</p>
+          <figure class="q-fig" data-q="emq-mass">
+            <svg viewBox="0 0 520 220" role="img" aria-label="질량 분석기에서 이온이 그리는 반원 경로"></svg>
+            <div class="q-ctl"><label>자기장 \(B\) (T) <input type="range" data-k="B" min="0.2" max="1" step="0.05" value="0.5"><output data-k="B"></output></label><label>이온의 질량수 <input type="range" data-k="A" min="1" max="40" step="1" value="16"><output data-k="A"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 1000 V로 가속한 +1가 이온이 종이면에 수직인 자기장 속에서 반원을 그린다. 질량이 클수록 반지름이 크고, 도착점의 위치로 질량을 구한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>원운동과 구심력(역학과 에너지), 전류가 받는 자기력, 전류가 만드는 자기장(<a href="1-3.html">전류가 만드는 자기장</a>), 전위차와 에너지 \(qV\)(<a href="1-1.html">전기장과 등전위면</a>).</div>
+
+          <h3><span class="no">1.4.1</span>움직이는 전하가 받는 힘</h3>
+          <p>자기장 속의 도선에 전류가 흐르면 도선이 힘을 받는다. 전류는 전하의 흐름이므로, 그 힘은 사실 도선 속에서 움직이는 전하 하나하나가 받는 힘을 모은 것이다. 그래서 도선 없이 빈 공간을 날아가는 전하도 자기장 속에서 힘을 받는다. 이 힘을 로런츠 힘이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.4.1 <span class="nm">로런츠 힘</span></span>
+            <p>전하량 \(q\)인 입자가 속력 \(v\)로 자기장 \(B\)에 수직으로 움직이면 크기 \[F = qvB\] 의 힘을 받는다. 힘의 방향은 속도와 자기장에 모두 수직이며, 정지한 전하는 자기력을 받지 않는다.</p>
+          </div>
+          <p>힘이 늘 속도에 수직이므로 로런츠 힘은 입자의 속력을 바꾸지 못하고 방향만 바꾼다. 즉 일을 하지 않는다. 그 결과 입자는 등속 원운동을 한다. 구심력이 로런츠 힘이므로 \(\dfrac{mv^2}{r} = qvB\)에서 반지름은 \(r = \dfrac{mv}{qB}\)이다.</p>
+
+          <h3><span class="no">1.4.2</span>질량 분석기와 오로라</h3>
+          <p>질량 분석기는 원자를 이온으로 만들어 전압 \(V\)로 가속한 뒤 자기장 속으로 보낸다. 가속하면 \(\dfrac{1}{2}mv^2 = qV\)이므로 무거운 이온일수록 느리다. 그런데 반지름은 \(mv\)에 비례하므로, 두 식을 합치면 \(r = \dfrac{1}{B}\sqrt{\dfrac{2mV}{q}}\)이다. 반지름이 질량의 제곱근에 비례하여 도착점이 질량마다 달라진다. 그림 1에서 질량수를 바꾸어 보자.</p>
+          <p>한편 태양에서 오는 대전 입자들은 지구 자기장에 붙잡혀 자기력선을 따라 나선을 그리며 극지방으로 몰린다. 그곳에서 대기 분자와 부딪쳐 빛을 내는 것이 오로라이다.<sup class="fn"><a href="#fn-emq-lorentz-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 120" role="img" aria-label="로런츠 힘의 방향">
+              <g class="s">
+                <circle cx="120" cy="60" r="40" class="gd"/><circle cx="160" cy="60" r="5" class="fb"/>
+                <line x1="160" y1="60" x2="160" y2="20" class="b"/><line x1="160" y1="60" x2="128" y2="60" class="d"/>
+                <text x="170" y="25">속도 v</text><text x="70" y="55">힘 F</text><text x="110" y="112" text-anchor="middle">자기장: 종이면에 들어가는 방향</text>
+                <text x="280" y="45">힘이 속도에 늘 수직이라</text><text x="280" y="70">속력은 그대로이고</text><text x="280" y="95">방향만 바뀌어 원을 그린다</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 로런츠 힘은 늘 원의 중심을 향하는 구심력 역할을 한다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.4.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.4.2</span>
+            <p>탄소-12 이온(+1가, 질량 \(12 \times 1.66 \times 10^{-27}\) kg)을 1000 V로 가속하여 0.5 T의 자기장에 수직으로 들여보냈다. 원운동의 반지름을 구하여라. 산소-16 이온이라면 반지름은 얼마인가?</p>
+          </div>
+          <p>질량은 \(m = 1.99 \times 10^{-26}\) kg이다. 속력은 \(v = \sqrt{\dfrac{2qV}{m}} = \sqrt{\dfrac{2 \times 1.6 \times 10^{-19} \times 1000}{1.99 \times 10^{-26}}} \approx 1.27 \times 10^5\) m/s이다.</p>
+          <p>반지름은 \(r = \dfrac{mv}{qB} = \dfrac{1.99 \times 10^{-26} \times 1.27 \times 10^5}{1.6 \times 10^{-19} \times 0.5} \approx 0.032\) m, 곧 약 3.2 cm이다. 산소-16은 반지름이 질량의 제곱근에 비례하므로 \(3.2 \times \sqrt{\dfrac{16}{12}} \approx 3.7\) cm이다. 반원을 그리고 도착하므로 두 이온의 도착점은 지름 차이인 약 1 cm만큼 떨어진다. 그래서 검출판의 위치만 보고도 어떤 원자인지 구별할 수 있다.</p>
+          <p>아래 탐구 카드에서 자기장과 이온의 질량을 바꾸며 질량 분석기의 원리와 전동기가 도는 까닭을 직접 따져 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-emq-lorentz-1">입자 가속기의 하나인 사이클로트론은 자기장으로 입자를 원운동시키며 한 바퀴 돌 때마다 전기장으로 조금씩 가속한다. 반지름 \(\frac{mv}{qB}\)에서 원운동 주기 \(\frac{2\pi m}{qB}\)는 속력과 관계없어, 일정한 주기로 전압을 바꾸어 주면 된다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>자기장에 수직으로 움직이는 전하는 속도에 수직인 로런츠 힘 \(qvB\)를 받아 반지름 \(\frac{mv}{qB}\)인 등속 원운동을 한다. 같은 전압으로 가속한 이온의 반지름은 질량의 제곱근에 비례한다. 그래서 처음 질문의 원자 질량은 이온을 자기장 속에 쏘아 휘는 반지름, 곧 검출판에 닿는 위치로 잴 수 있다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/1-3.html#card-emq-bfield"><small class="mono">전자기와 양자 1.3</small>도선을 둥글게 감으면 자기장은 어떻게 달라질까?</a><a href="../../c/adphy/2-3.html#text-adphy-rl-circuit"><small class="mono">고급 물리학 2.3</small>전류의 자기장과 자체 유도</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/3-6.html#card-labphy-current-balance"><small class="mono">물리학 실험 3.6</small>전자저울 눈금만으로 자석 사이 자기장의 세기를 잴 수 있을까?</a><a href="../../c/labphy/3-6.html#text-labphy-balance"><small class="mono">물리학 실험 3.6</small>자기장 속 도선이 받는 힘</a><a href="../../c/labphy/5-2.html#card-labphy-cathode"><small class="mono">물리학 실험 5.2</small>음극선은 빛일까, 전하를 띤 알갱이일까?</a><a href="../../c/labphy/5-2.html#text-labphy-deflect"><small class="mono">물리학 실험 5.2</small>음극선의 성질</a></div></nav>
+
       <article class="card" id="card-emq-lorentz">
         <header class="card-head">
-          <span class="no">1.4.1</span><h2>자기장으로 원자의 질량을 잴 수 있을까?</h2><span class="kind">로런츠 힘 · 자기장 속 입자의 원운동과 질량 분석기</span>
+          <span class="no">탐구 1</span><h2>자기장으로 원자의 질량을 잴 수 있을까?</h2><span class="kind">로런츠 힘 · 자기장 속 입자의 원운동과 질량 분석기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -75,33 +133,33 @@
                 <div><dt>원운동 반지름 r = mv/(qB)</dt><dd class="n-r">—</dd></div>
                 <div><dt>한 바퀴 도는 시간 T = 2πm/(qB)</dt><dd class="n-t">—</dd></div>
               </dl>
-              <p class="fig-note">입자는 가속 전압 V로 정지 상태에서 가속되어(½mv² = qV) 아래쪽 입구로 들어옵니다. 여러 입자를 고르면 함께 그립니다. 전자는 반지름이 매우 작아 확대 표시합니다.</p>
+              <p class="fig-note">입자는 가속 전압 V로 정지 상태에서 가속되어(½mv² = qV) 아래쪽 입구로 들어온다. 여러 입자를 고르면 함께 그리고, 전자는 반지름이 매우 작아 확대 표시한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>수소 원자와 무거운 수소(중수소)는 화학적 성질이 거의 같아서 화학 반응으로는 가려내기 어렵습니다. 무게만 다른 원자를 어떻게 구별할까요?</li>
-            <li><span class="tag">복원</span>자기장 속의 도선에 전류가 흐르면 도선이 힘을 받습니다(전동기). 등속 원운동에는 중심을 향하는 구심력 mv²/r이 필요합니다.</li>
-            <li><span class="tag">설명</span>전류는 움직이는 전하이므로, 자기장 속에서 움직이는 전하 하나하나가 힘을 받습니다. 이 힘이 <em>로런츠 힘</em> F = qvB이며, 전하가 자기장과 나란하지 않게 움직일 때만 생기고, 방향은 속도와 자기장 모두에 수직입니다. 힘이 늘 속도에 수직이므로 속력은 변하지 않고 방향만 바뀌어 원운동을 합니다. qvB = mv²/r에서 반지름은 r = mv/(qB)입니다.</li>
-            <li><span class="tag">연결</span>같은 전압으로 가속한 이온을 자기장에 넣으면 무거운 이온일수록 큰 원을 그려 다른 곳에 떨어지는데, 이것이 <em>질량 분석기</em>입니다. 동위원소 분석, 연대 측정, 도핑 검사에 쓰입니다. 주기 T = 2πm/(qB)가 속력과 관계없다는 성질은 입자 가속기 사이클로트론에 쓰이고, 지구 자기장이 태양풍 입자를 휘게 해 극지방으로 모으는 것이 오로라입니다.</li>
-            <li><span class="tag">적용</span>양성자와 중양성자를 함께 켜고 도착 위치의 차이를 보세요. 반지름의 비는 얼마인가요? 전압을 4배로 하면 반지름은 몇 배가 되나요? 전자는 왜 반대쪽으로 휘나요?</li>
-            <li class="warn"><span class="tag">판단</span>“자기력이 입자를 더 빠르게 한다”는 오해입니다. 로런츠 힘(자기력)은 속도에 늘 수직이라 일을 하지 않으므로 운동 에너지를 바꾸지 못합니다. 입자를 가속하는 것은 전기장입니다.</li>
+            <li><span class="tag">질문</span>수소 원자와 무거운 수소(중수소)는 화학적 성질이 거의 같아서 화학 반응으로는 가려내기 어렵다. 무게만 다른 원자를 어떻게 구별할까?</li>
+            <li><span class="tag">복원</span>자기장 속의 도선에 전류가 흐르면 도선이 힘을 받는다(전동기). 그리고 등속 원운동에는 중심을 향하는 구심력 mv²/r이 필요하다.</li>
+            <li><span class="tag">설명</span>전류는 움직이는 전하이므로, 자기장 속에서 움직이는 전하 하나하나가 힘을 받는다. 이 힘이 <em>로런츠 힘</em> F = qvB이며, 전하가 자기장과 나란하지 않게 움직일 때만 생기고 방향은 속도와 자기장 모두에 수직이다. 힘이 늘 속도에 수직이므로 속력은 변하지 않고 방향만 바뀌어 원운동을 하며, qvB = mv²/r에서 반지름은 r = mv/(qB)이다.</li>
+            <li><span class="tag">연결</span>같은 전압으로 가속한 이온을 자기장에 넣으면 무거운 이온일수록 큰 원을 그려 다른 곳에 떨어지는데, 이것이 <em>질량 분석기</em>이며 동위원소 분석, 연대 측정, 도핑 검사에 쓴다. 또 주기 T = 2πm/(qB)가 속력과 관계없다는 성질은 입자 가속기 사이클로트론에 쓰이고, 지구 자기장이 태양풍 입자를 휘게 해 극지방으로 모으는 것이 오로라이다.</li>
+            <li><span class="tag">적용</span>양성자와 중양성자를 함께 켜고 도착 위치의 차이와 반지름의 비를 보자. 그리고 전압을 4배로 하면 반지름이 몇 배가 되는지, 전자는 왜 반대쪽으로 휘는지 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>‘자기력이 입자를 더 빠르게 한다’는 생각은 오해이다. 로런츠 힘(자기력)은 속도에 늘 수직이라 일을 하지 않으므로 운동 에너지를 바꾸지 못하고, 입자를 가속하는 것은 전기장이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">같은 전압으로 가속한 양성자(질량 m, 전하 e)와 알파 입자(질량 4m, 전하 2e)가 같은 자기장에 들어갔습니다. 반지름의 비(양성자 : 알파)는?</p>
+          <p class="q">같은 전압으로 가속한 양성자(질량 m, 전하 e)와 알파 입자(질량 4m, 전하 2e)가 같은 자기장에 들어갔다. 반지름의 비(양성자 : 알파)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1 : √2<span class="why"><b>맞습니다.</b> qV = ½mv²에서 mv = √(2mqV)이므로 r = √(2mV/q)/B ∝ √(m/q). 알파는 m/q가 2배라 √2배입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1 : 2<span class="why"><b>속력도 입자마다 달라집니다.</b> 가속 전압이 같을 때 r ∝ √(m/q)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1 : 4<span class="why"><b>질량만 보면 안 됩니다.</b> 전하도 2배입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>1 : √2<span class="why"><b>맞다.</b> qV = ½mv²에서 mv = √(2mqV)이므로 r = √(2mV/q)/B ∝ √(m/q). 알파는 m/q가 2배라 √2배이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1 : 2<span class="why"><b>속력도 입자마다 달라진다.</b> 가속 전압이 같을 때 r ∝ √(m/q)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>1 : 4<span class="why"><b>질량만 보면 안 된다.</b> 전하도 2배이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/1-3.html#card-emq-bfield"><small class="mono">전자기와 양자 1.3</small>도선을 둥글게 감으면 자기장은 어떻게 달라질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/3-6.html#card-labphy-current-balance"><small class="mono">물리학 실험 3.6</small>전자저울 눈금만으로 자석 사이 자기장의 세기를 잴 수 있을까?</a><a href="../../c/labphy/5-2.html#card-labphy-cathode"><small class="mono">물리학 실험 5.2</small>음극선은 빛일까, 전하를 띤 알갱이일까?</a><a href="../../c/labphy/5-3.html#card-labphy-em-ratio"><small class="mono">물리학 실험 5.3</small>빛나는 전자 고리의 지름만 재서 전자의 e/m을 구할 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/emq/1-3.html#card-emq-bfield"><small class="mono">전자기와 양자 1.3</small>도선을 둥글게 감으면 자기장은 어떻게 달라질까?</a><a href="../../c/adphy/2-3.html#text-adphy-rl-circuit"><small class="mono">고급 물리학 2.3</small>전류의 자기장과 자체 유도</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/labphy/3-6.html#card-labphy-current-balance"><small class="mono">물리학 실험 3.6</small>전자저울 눈금만으로 자석 사이 자기장의 세기를 잴 수 있을까?</a><a href="../../c/labphy/3-6.html#text-labphy-balance"><small class="mono">물리학 실험 3.6</small>자기장 속 도선이 받는 힘</a><a href="../../c/labphy/5-2.html#card-labphy-cathode"><small class="mono">물리학 실험 5.2</small>음극선은 빛일까, 전하를 띤 알갱이일까?</a><a href="../../c/labphy/5-2.html#text-labphy-deflect"><small class="mono">물리학 실험 5.2</small>음극선의 성질</a></div></nav>
 
       <article class="card" id="card-phy-motor">
         <header class="card-head">
-          <span class="no">1.4.2</span><h2>전동기는 어떻게 계속 돌까?</h2><span class="kind">자기력 F = BIL · 돌림힘 · 정류자</span>
+          <span class="no">탐구 2</span><h2>전동기는 어떻게 계속 돌까?</h2><span class="kind">자기력 F = BIL · 돌림힘 · 정류자</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -123,47 +181,52 @@
                 <div><dt>전원에서 흐르는 전류</dt><dd class="n-i">—</dd></div>
                 <div><dt>역기전력</dt><dd class="n-emf">—</dd></div>
               </dl>
-              <p class="fig-note">코일 50회, 4 cm × 4 cm, 자기장 0.2 T, 저항 2 Ω인 장난감 전동기를 가정했습니다(모식). 초록 화살표는 코일 양쪽 변이 받는 힘입니다. 그래프는 멈춘 코일에 전원을 넣는 순간의 돌림힘이고, 점선보다 작으면 정지 마찰을 이기지 못합니다.</p>
+              <p class="fig-note">코일 50회, 4 cm × 4 cm, 자기장 0.2 T, 저항 2 Ω인 장난감 전동기를 가정했다(모식). 초록 화살표는 코일 양쪽 변이 받는 힘이다. 그래프는 멈춘 코일에 전원을 넣는 순간의 돌림힘이고, 점선보다 작으면 정지 마찰을 이기지 못한다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>자석 사이에 놓은 코일에 전류를 흘리면 코일이 돌기 시작합니다. 그런데 정류자를 빼면 코일은 조금 돌다가 멈춰 버립니다. 무엇이 코일을 계속 돌게 할까요?</li>
-            <li><span class="tag">복원</span>자기장 속에서 전류가 흐르는 도선은 힘을 받습니다. 도선이 자기장에 수직이면 크기는 <span class="formula">F = BIL</span>이고, 방향은 전류와 자기장 모두에 수직입니다.</li>
-            <li><span class="tag">설명</span>코일의 양쪽 변에는 전류가 반대로 흐르므로 힘도 반대 방향이고, 이 한 쌍의 힘이 코일을 돌립니다. 코일 면이 자기장과 나란할 때 돌림힘이 가장 크고, 수직일 때는 두 힘이 한 직선 위에 놓여 돌림힘이 0이 됩니다.</li>
-            <li><span class="tag">연결</span>코일이 수직 위치를 지나면 돌림힘의 방향이 거꾸로 바뀌어 코일을 되돌립니다. 정류자는 코일이 이 위치를 지날 때마다 코일 속 전류의 방향을 바꿔, 돌림힘이 늘 같은 방향이 되게 합니다. 그래프에서 돌림힘의 부호를 비교해 보세요.</li>
-            <li><span class="tag">적용</span>‘정류자 없음’에서 코일을 0°에 놓고 전원을 켜 보세요. 코일은 흔들리다 어디에서 멈추나요? ‘정류자 있음’으로 바꾸고 코일을 90°에 놓으면 전동기가 출발하지 못합니다. 이 문제를 어떻게 풀 수 있을까요? ‘코일 2개’로 확인해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>전동기는 한없이 빨라지지 않습니다. 코일이 자기장 속에서 돌면 전자기 유도로 전원과 반대 방향의 기전력(역기전력)이 생겨 전류가 줄어듭니다. 역기전력이 전원 전압에 가까워지는 속도에서 더 빨라지지 않습니다. 반대로 막 켰을 때나 축이 걸려 멈췄을 때는 역기전력이 없어 전류가 가장 크게 흐릅니다.</li>
+            <li><span class="tag">질문</span>자석 사이에 놓은 코일에 전류를 흘리면 코일이 돌기 시작한다. 그런데 정류자를 빼면 코일은 조금 돌다가 멈춰 버린다. 무엇이 코일을 계속 돌게 할까?</li>
+            <li><span class="tag">복원</span>자기장 속에서 전류가 흐르는 도선은 힘을 받는다. 도선이 자기장에 수직이면 크기는 <span class="formula">F = BIL</span>이고, 방향은 전류와 자기장 모두에 수직이다.</li>
+            <li><span class="tag">설명</span>코일의 양쪽 변에는 전류가 반대로 흐르므로 힘도 반대 방향이고, 이 한 쌍의 힘이 코일을 돌린다. 그런데 코일 면이 자기장과 나란할 때 돌림힘이 가장 크고, 수직일 때는 두 힘이 한 직선 위에 놓여 돌림힘이 0이 된다.</li>
+            <li><span class="tag">연결</span>그래서 코일이 수직 위치를 지나면 돌림힘의 방향이 거꾸로 바뀌어 코일을 되돌린다. 정류자는 코일이 이 위치를 지날 때마다 코일 속 전류의 방향을 바꿔, 돌림힘이 늘 같은 방향이 되게 한다. 그래프에서 돌림힘의 부호를 비교해 보면 이 차이가 보인다.</li>
+            <li><span class="tag">적용</span>‘정류자 없음’에서 코일을 0°에 놓고 전원을 켜면 코일이 흔들리다 어디에서 멈추는지 보자. ‘정류자 있음’으로 바꾸고 코일을 90°에 놓으면 전동기가 출발하지 못하는데, 이 문제를 어떻게 풀 수 있는지 ‘코일 2개’로 확인해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>전동기는 한없이 빨라지지 않는다. 코일이 자기장 속에서 돌면 전자기 유도로 전원과 반대 방향의 기전력(역기전력)이 생겨 전류가 줄어들고, 역기전력이 전원 전압에 가까워지는 속도에서 더 빨라지지 않는다. 반대로 막 켰을 때나 축이 걸려 멈췄을 때는 역기전력이 없어 전류가 가장 크게 흐른다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">정류자가 있는 전동기에서 자석의 N극과 S극을 서로 바꾸고, 전원의 +와 −도 바꿔 연결했습니다. 전동기는?</p>
+          <p class="q">정류자가 있는 전동기에서 자석의 N극과 S극을 서로 바꾸고, 전원의 +와 −도 바꿔 연결했다. 전동기는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>반대 방향으로 돈다.<span class="why"><b>둘 중 하나만 바꿨을 때의 답입니다.</b> 자기장만 바꾸거나 전류만 바꾸면 반대로 돕니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>원래와 같은 방향으로 돈다.<span class="why"><b>맞습니다.</b> 힘의 방향은 전류와 자기장의 방향에 함께 달려 있어서, 둘을 모두 뒤집으면 힘의 방향은 그대로입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 효과가 상쇄되어 돌지 않는다.<span class="why"><b>힘의 크기가 줄어든다고 본 답입니다.</b> 방향이 두 번 뒤집힐 뿐, 크기 BIL은 그대로입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>반대 방향으로 돈다.<span class="why"><b>둘 중 하나만 바꿨을 때의 답이다.</b> 자기장만 바꾸거나 전류만 바꾸면 반대로 돈다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>원래와 같은 방향으로 돈다.<span class="why"><b>맞다.</b> 힘의 방향은 전류와 자기장의 방향에 함께 달려 있어서, 둘을 모두 뒤집으면 힘의 방향은 그대로이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>두 효과가 상쇄되어 돌지 않는다.<span class="why"><b>힘의 크기가 줄어든다고 본 답이다.</b> 방향이 두 번 뒤집힐 뿐, 크기 BIL은 그대로이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-4.html#card-phy-magnet"><small class="mono">물리학 2.4</small>철은 자석에 붙는데 알루미늄은 왜 안 붙을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-6.html#card-phy-lenz"><small class="mono">물리학 2.6</small>자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?</a><a href="../../c/phy/2-6.html#card-phy-wireless"><small class="mono">물리학 2.6</small>무선 충전기는 선 없이 어떻게 전기를 보낼까?</a><a href="../../c/is2/2-5.html#card-is2-generator"><small class="mono">통합과학2 2.5</small>자석을 움직이면 왜 전류가 흐를까?</a><a href="../../c/phy/2-6.html#text-phy-induction-tech"><small class="mono">물리학 2.6</small>교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/phy/2-4.html#card-phy-magnet"><small class="mono">물리학 2.4</small>철은 자석에 붙는데 알루미늄은 왜 안 붙을까?</a><a href="../../c/phy/2-4.html#text-phy-magnetism"><small class="mono">물리학 2.4</small>자성체</a><a href="../../c/emq/1-3.html#text-emq-bfield"><small class="mono">전자기와 양자 1.3</small>전류가 만드는 자기장</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/phy/2-6.html#card-phy-lenz"><small class="mono">물리학 2.6</small>자석을 코일에 넣으면 전류는 어느 쪽으로 흐를까?</a><a href="../../c/phy/2-6.html#card-phy-wireless"><small class="mono">물리학 2.6</small>무선 충전기는 선 없이 어떻게 전기를 보낼까?</a><a href="../../c/is2/2-5.html#card-is2-generator"><small class="mono">통합과학2 2.5</small>자석을 움직이면 왜 전류가 흐를까?</a><a href="../../c/phy/2-6.html#text-phy-induction-tech"><small class="mono">물리학 2.6</small>교통 카드와 금속 탐지기는 어떻게 전자기 유도를 쓸까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=emq-1-4"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">39문항</span></a>
+      <a class="px-go" href="../../bank.html?c=emq&amp;sec=1-4"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">12문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=emq-1-4"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">42문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/emq/body.js"></script>
 <script src="../../js/cards/emq/e-lorentz.js"></script>
 <script src="../../js/cards/phy/em-motor.js"></script>
 </body>

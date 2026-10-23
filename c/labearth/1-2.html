@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>진앙·진원 깊이와 지각 두께 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="여러 관측소의 지진 기록에서 P파와 S파의 도달 시간을 읽어 진원 거리를 구하고, 3원법으로 진앙의 위치와 진원 깊이를 결정하며, 굴절파의 주시 곡선으로 지각의 두께를 계산한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-labearth-epicenter .cv-plot.sq { aspect-ratio: 1 / 1; }
     #card-labearth-epicenter .pick-out { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); align-self: center; }
@@ -43,17 +49,74 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-labearth-epicenter"><span class="mono">1.2.1</span>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</a></li>
+        <li><a href="#text-labearth-sp-time"><span class="mono">본문</span>진앙·진원 깊이와 지각 두께</a></li>
+        <li><a href="#card-labearth-epicenter"><span class="mono">탐구 1</span>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=labearth-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=labearth&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">5문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=labearth-1-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-labearth-sp-time" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>진앙·진원 깊이와 지각 두께</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">2016년 경주 지진 때 진앙에서 10 km 떨어진 관측소의 지진계에는 먼저 작은 떨림인 P파가, 2.2초 뒤에 큰 떨림인 S파가 기록되었다. 더 먼 관측소일수록 두 파의 도착 시간 차이가 길었다. 땅속을 들여다보지 않고도 이 시간 차이만으로 지진이 일어난 곳까지의 거리를 알 수 있다고 한다. 그렇다면 진앙 바로 근처 관측소의 기록으로 진원이 땅속 몇 km 깊이였는지도 알 수 있을까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 170" role="img" aria-label="진원, 진앙, 관측소의 기하">
+              <line x1="40" y1="40" x2="480" y2="40" class="k"/><text x="480" y="32" class="s" text-anchor="end">지표</text>
+              <circle cx="140" cy="40" r="5" class="fd"/><text x="140" y="30" class="s td" text-anchor="middle">진앙</text>
+              <circle cx="140" cy="140" r="6" class="fd"/><text x="128" y="160" class="s td">진원</text>
+              <rect x="300" y="32" width="14" height="10" class="fk"/><text x="307" y="26" class="s" text-anchor="middle">관측소</text>
+              <line x1="140" y1="140" x2="307" y2="40" class="b"/><text x="236" y="100" class="s tb">진원 거리 D</text>
+              <line x1="140" y1="40" x2="140" y2="140" class="c"/><text x="100" y="94" class="s tc">깊이 z</text>
+              <text x="224" y="58" class="s">진앙 거리 Δ</text>
+            </svg>
+            <figcaption>그림 1. 관측소에서 진원까지의 거리 \(D\), 진앙까지의 거리 \(\Delta\), 진원의 깊이 \(z\)는 직각삼각형을 이룬다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>지진파의 종류와 속도, 거리·속력·시간, 피타고라스 정리.</div>
+
+          <h3><span class="no">1.2.1</span>두 파의 경주</h3>
+          <p>지진이 일어나면 P파와 S파가 함께 출발한다. P파가 S파보다 빠르므로 관측소에 먼저 도착하고, 거리가 멀수록 두 파의 도착 시간 차이인 PS시가 길어진다. 달리기에서 빠른 선수와 느린 선수가 동시에 출발하면 결승선이 멀수록 두 선수의 도착 시간 차이가 커지는 것과 같다. 그래서 PS시와 두 파의 속도를 알면 관측소에서 진원까지의 거리를 구할 수 있다. 세 관측소에서 거리를 구해 지도 위에 원을 그리면, 세 원이 만나는 곳이 진앙이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.2.1 <span class="nm">진원 거리와 깊이</span></span>
+            <p>P파와 S파의 속도가 \(v_P\), \(v_S\)이고 PS시가 \(t\)이면 진원 거리는 \[D = \frac{v_P v_S}{v_P - v_S}\,t\]이다. 진앙 거리가 \(\Delta\)이면 진원의 깊이는 \(z = \sqrt{D^2 - \Delta^2}\)이다.</p>
+          </div>
+          <p>지각의 \(v_P = 6.0\) km/s, \(v_S = 3.5\) km/s로 보면 \(v_P v_S/(v_P - v_S) = 8.4\) km/s이므로, PS시 1초마다 진원이 약 8.4 km 멀다. 진앙에서 가까운 관측소는 진원 거리가 대부분 깊이로 이루어져 있어 깊이를 정하는 데 유리하다. 멀리 있는 관측소만으로는 깊이가 몇 km 달라져도 진원 거리가 거의 변하지 않아 깊이를 정하기 어렵다.<sup class="fn"><a href="#fn-labearth-sp-time-1">1</a></sup></p>
+
+          <h3><span class="no">1.2.2</span>지각의 두께</h3>
+          <p>지진파는 지각과 맨틀의 경계인 모호면에서 굴절하여, 맨틀 꼭대기를 따라 더 빠르게 달린 뒤 다시 지표로 올라오기도 한다. 진앙에서 가까운 관측소에는 지각을 곧게 지난 파가 먼저 오지만, 어떤 거리를 넘으면 모호면을 따라 돌아온 파가 먼저 도착한다. 이렇게 앞뒤가 바뀌는 거리로 지각의 두께를 어림할 수 있다. 우리나라 지각의 두께는 약 30 km에서 35 km이다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="세 관측소의 PS시와 진원 거리">
+              <g class="s">
+                <text x="20" y="22">관측소</text><text x="150" y="22">PS시 (s)</text><text x="280" y="22">진원 거리 (km)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">가 (진앙에서 10 km)</text><text x="150" y="52">2.2</text><text x="280" y="52">18.5</text>
+                <text x="20" y="74">나</text><text x="150" y="74">5.0</text><text x="280" y="74">42</text>
+                <text x="20" y="96">다</text><text x="150" y="96">8.1</text><text x="280" y="96">68</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. PS시에 8.4 km/s를 곱해 각 관측소의 진원 거리를 얻는다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.2.2</span>
+            <p>진앙에서 10 km 떨어진 관측소에서 PS시가 2.2 s였다. 진원 거리와 진원의 깊이를 구하여라. PS시를 0.1 s 틀리게 읽었다면 깊이는 얼마나 달라지는가?</p>
+          </div>
+          <p>진원 거리는 \(D = 8.4 \times 2.2 \approx 18.5\) km이다. 깊이는 \(z = \sqrt{18.5^2 - 10^2} = \sqrt{342 - 100} = \sqrt{242} \approx 15.6\) km이다. 경주 지진의 발표된 깊이 약 15 km와 비슷하다.</p>
+          <p>PS시가 2.3 s였다면 \(D = 19.3\) km이고 \(z = \sqrt{372 - 100} \approx 16.5\) km이다. 0.1 s의 차이로 깊이가 약 0.9 km 달라진다. 그래서 진원의 깊이는 진앙 근처의 여러 관측소 기록을 함께 써서 정하고, 속도 모형의 불확실성까지 고려해 몇 km의 오차 범위와 함께 발표한다. 즉 두 지진파의 도착 시간 차이가 진원까지의 거리를 알려 주고, 진앙 거리와 함께 쓰면 깊이까지 알 수 있다.</p>
+          <p>아래 탐구 카드에서 여러 관측소의 지진 기록으로 진앙과 진원의 깊이를 구하고, 지각의 두께를 어림해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-labearth-sp-time-1">1909년 크로아티아의 모호로비치치는 자그레브 근처 지진의 기록에서, 먼 관측소에 더 빠른 파가 먼저 도착하는 것을 보고 지하 약 50 km에 지진파 속도가 갑자기 커지는 경계가 있다고 결론지었다. 이 경계가 그의 이름을 딴 모호면이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>P파와 S파는 함께 출발하지만 속도가 달라, 도착 시간 차이 PS시에 \(v_Pv_S/(v_P - v_S)\)를 곱하면 진원 거리가 나오고, 세 관측소의 거리로 진앙을 찾는다. 진앙 거리와 진원 거리로 직각삼각형을 풀면 진원의 깊이가 나오며, 모호면을 돌아온 파가 앞서는 거리로 지각의 두께를 어림한다. 처음 질문의 지진은 진원 거리 18.5 km, 깊이 약 15.6 km에서 일어났다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/esys/1-5.html#card-esys-seismic"><small class="mono">지구시스템과학 1.5</small>지진파가 닿지 않는 곳이 왜 생길까?</a><a href="../../c/esys/1-5.html#text-esys-seismic-shadow"><small class="mono">지구시스템과학 1.5</small>지진파와 지구 내부 구조</a><a href="../../c/adearth/1-1.html#text-adearth-moho"><small class="mono">고급 지구과학 1.1</small>지진파와 지구 내부</a><a href="../../c/is1/3-2.html#card-is1-seafloor"><small class="mono">통합과학1 3.2</small>바다 밑 줄무늬는 무엇을 기록하고 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/1-1.html#card-adearth-prem"><small class="mono">고급 지구과학 1.1</small>아무도 가 보지 못한 지구 속 물질을 지진파 속도로 어떻게 알아낼까?</a></div></nav>
+
       <article class="card" id="card-labearth-epicenter">
         <header class="card-head">
-          <span class="no">1.2.1</span><h2>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</h2><span class="kind">실험 · PS시와 3원법 · 굴절파 주시 곡선</span>
+          <span class="no">탐구 1</span><h2>지진 기록 몇 장으로 진앙과 진원 깊이, 지각 두께를 알 수 있을까?</h2><span class="kind">실험 · PS시와 3원법 · 굴절파 주시 곡선</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -82,43 +145,45 @@
               <div class="lab-btns"><button class="chip clear" type="button">이 실험 기록 지우기</button></div>
               <canvas class="cv-plot" aria-label="진원 거리 원을 그린 지도 또는 주시 곡선"></canvas>
               <dl class="nums"><div><dt>공통현 교점 (진앙)</dt><dd class="n-1">—</dd></div><div><dt>진원 깊이</dt><dd class="n-2">—</dd></div><div><dt>기상청 진앙과의 차이</dt><dd class="n-3">—</dd></div></dl>
-              <p class="fig-note">A의 진앙(35.76°N, 129.19°E)과 발생 시각(2016-09-12 20:32:54 KST)은 기상청 발표값이고, 진원 깊이는 약 15 km로 두었습니다. 지진 기록은 지각 평균 속도 V<sub>P</sub> = 6.0 km/s, V<sub>S</sub> = 3.5 km/s로 계산해 잡음을 섞은 모식 파형이며, 관측소 위치는 도시 중심 근처로 단순화했습니다. B는 지각 6.2 km/s, 맨틀 8.0 km/s의 두 층 모형으로 만든 모식 자료입니다(읽기 오차 ±0.08 s). 해안선: Natural Earth (퍼블릭 도메인).</p>
+              <p class="fig-note">A의 진앙(35.76°N, 129.19°E)과 발생 시각(2016-09-12 20:32:54 KST)은 기상청 발표값이고, 진원 깊이는 약 15 km로 두었다. 지진 기록은 지각 평균 속도 V<sub>P</sub> = 6.0 km/s, V<sub>S</sub> = 3.5 km/s로 계산해 잡음을 섞은 모식 파형이며, 관측소 위치는 도시 중심 근처로 단순화했다. B는 지각 6.2 km/s, 맨틀 8.0 km/s의 두 층 모형으로 만든 모식 자료이다(읽기 오차 ±0.08 s). 해안선은 Natural Earth (퍼블릭 도메인).</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">탐구 문제</span>2016년 9월 12일 저녁, 경주에서 규모 5.8의 지진이 일어났습니다. 여러 관측소의 지진 기록만 가지고 진앙의 위치와 진원의 깊이를 정할 수 있을까요? 또 멀리 떨어진 관측소의 기록으로 땅속 지각의 두께까지 알 수 있을까요?</li>
-            <li><span class="tag">복원</span>P파는 S파보다 빠르므로 진원에서 멀수록 두 파의 도달 시간 차(<em>PS시</em>)가 커집니다. 두 파가 같은 거리 R을 지나므로 R/V<sub>S</sub> − R/V<sub>P</sub> = PS시, 곧 <em>R = k·PS시</em>(오모리 공식, k = V<sub>P</sub>V<sub>S</sub>/(V<sub>P</sub> − V<sub>S</sub>) = 8.4 km/s)입니다. 지진파는 속도가 다른 층의 경계에서 굴절하고, 임계각으로 들어간 파는 경계면을 따라 아래층 속도로 달리다 다시 올라옵니다(<em>굴절파</em>).</li>
-            <li><span class="tag">설계</span>A: 관측소마다 기록에서 P파와 S파가 처음 도착한 순간을 커서로 읽고, PS시로 진원 거리 R을 구합니다. 관측소를 중심으로 반지름 R인 원을 세 개 이상 그리면 원들이 겹치고, 두 원씩의 공통현이 한 점에서 만납니다. 그 점이 진앙입니다. B: 지표의 발파 지점에서 거리를 바꿔 가며 가장 먼저 도착한 파(초동)의 시간을 읽습니다.</li>
-            <li><span class="tag">분석</span>진원이 깊이 h에 있으면 R² = r² + h²(r: 진앙 거리)이므로 원이 한 점이 아니라 겹친 영역을 이룹니다. 진앙에서 h = √(R² − r²)로 깊이를 구합니다. B의 주시 곡선은 기울기 1/V₁인 직접파 직선과 기울기 1/V₂인 굴절파 직선으로 꺾입니다. 두 직선이 만나는 교차 거리 x<sub>c</sub>에서 <em>h = (x<sub>c</sub>/2)·√((V₂ − V₁)/(V₂ + V₁))</em>입니다.</li>
-            <li><span class="tag">측정</span>A: 관측소를 고르고 파형이 갑자기 커지는 첫 순간에 커서를 맞춰 P와 S를 기록하세요. 세 곳 이상 기록하면 지도에 원과 공통현이 그려집니다. 진원 깊이는 몇 km인가요? 가까운 관측소 세 곳과 먼 관측소 세 곳으로 각각 구해 비교해 보세요. B: 10 km부터 300 km까지 재고, 나누는 거리를 꺾이는 곳에 맞춰 지각 두께를 구하세요.</li>
-            <li class="warn"><span class="tag">오차·안전</span>S파는 P파 진동 위에 겹쳐 도착해서 시작점을 늦게 읽기 쉽습니다. PS시 0.1 s의 오차는 진원 거리 약 0.8 km의 오차가 되고, 깊이는 R² − r²의 작은 차이로 구하므로 오차가 훨씬 크게 불어납니다. 실제 지각은 속도가 깊이에 따라 달라서 k가 하나로 정해지지 않으며, 이것이 계통 오차가 됩니다. 실제 굴절법 탐사의 발파는 자격을 갖춘 전문가만 하며, 지진이 나면 탁자 밑으로 몸을 보호하고 흔들림이 멈춘 뒤 넓은 곳으로 대피합니다.</li>
+            <li><span class="tag">탐구 문제</span>2016년 9월 12일 저녁, 경주에서 규모 5.8의 지진이 일어났다. 여러 관측소의 지진 기록만 가지고 진앙의 위치와 진원의 깊이를 정할 수 있을까? 또 멀리 떨어진 관측소의 기록으로 땅속 지각의 두께까지 알 수 있을까?</li>
+            <li><span class="tag">복원</span>P파는 S파보다 빠르므로 진원에서 멀수록 두 파의 도달 시간 차(<em>PS시</em>)가 커진다. 두 파가 같은 거리 R을 지나므로 R/V<sub>S</sub> − R/V<sub>P</sub> = PS시, 곧 <em>R = k·PS시</em>(오모리 공식, k = V<sub>P</sub>V<sub>S</sub>/(V<sub>P</sub> − V<sub>S</sub>) = 8.4 km/s)이다. 지진파는 속도가 다른 층의 경계에서 굴절하고, 임계각으로 들어간 파는 경계면을 따라 아래층 속도로 달리다 다시 올라온다(<em>굴절파</em>).</li>
+            <li><span class="tag">설계</span>A에서는 관측소마다 기록에서 P파와 S파가 처음 도착한 순간을 커서로 읽고, PS시로 진원 거리 R을 구한다. 관측소를 중심으로 반지름 R인 원을 세 개 이상 그리면 원들이 겹치고, 두 원씩의 공통현이 한 점에서 만난다. 그 점이 진앙이다. B에서는 지표의 발파 지점에서 거리를 바꿔 가며 가장 먼저 도착한 파(초동)의 시간을 읽는다.</li>
+            <li><span class="tag">분석</span>진원이 깊이 h에 있으면 R² = r² + h²(r은 진앙 거리)이므로 원이 한 점이 아니라 겹친 영역을 이룬다. 진앙에서 h = √(R² − r²)로 깊이를 구한다. B의 주시 곡선은 기울기 1/V₁인 직접파 직선과 기울기 1/V₂인 굴절파 직선으로 꺾인다. 두 직선이 만나는 교차 거리 x<sub>c</sub>에서 <em>h = (x<sub>c</sub>/2)·√((V₂ − V₁)/(V₂ + V₁))</em>이다.</li>
+            <li><span class="tag">측정</span>A에서는 관측소를 고르고 파형이 갑자기 커지는 첫 순간에 커서를 맞춰 P와 S를 기록해 보자. 세 곳 이상 기록하면 지도에 원과 공통현이 그려진다. 진원 깊이는 몇 km인가? 가까운 관측소 세 곳과 먼 관측소 세 곳으로 각각 구해 비교해 보자. B에서는 10 km부터 300 km까지 재고, 나누는 거리를 꺾이는 곳에 맞춰 지각 두께를 구해 보자.</li>
+            <li class="warn"><span class="tag">오차·안전</span>S파는 P파 진동 위에 겹쳐 도착해서 시작점을 늦게 읽기 쉽다. PS시 0.1 s의 오차는 진원 거리 약 0.8 km의 오차가 되고, 깊이는 R² − r²의 작은 차이로 구하므로 오차가 훨씬 크게 불어난다. 실제 지각은 속도가 깊이에 따라 달라서 k가 하나로 정해지지 않으며, 이것이 계통 오차가 된다. 실제 굴절법 탐사의 발파는 자격을 갖춘 전문가만 하며, 지진이 나면 탁자 밑으로 몸을 보호하고 흔들림이 멈춘 뒤 넓은 곳으로 대피한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">진원이 지표 바로 아래(깊이 0 km)인 지진을 세 관측소에서 기록해 진원 거리로 원을 그렸습니다. 세 원은 어떻게 만날까요?</p>
+          <p class="q">진원이 지표 바로 아래(깊이 0 km)인 지진을 세 관측소에서 기록해 진원 거리로 원을 그렸다. 세 원은 어떻게 만날까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>세 원이 한 점(진앙)에서 만난다<span class="why"><b>맞습니다.</b> h = 0이면 R = r이므로 모든 원이 진앙을 지납니다. 원들이 넓게 겹칠수록 진원이 깊다는 뜻입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>세 원이 넓게 겹친다<span class="why"><b>깊은 진원일 때의 모습입니다.</b> 진원 거리 R이 진앙 거리 r보다 커서 원이 진앙을 지나쳐 겹치는 것입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>세 원이 서로 만나지 않는다<span class="why"><b>측정이 맞다면 일어나지 않습니다.</b> 원이 만나지 않는다면 PS시를 너무 짧게 읽었거나 k가 실제보다 작은 것입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>세 원이 한 점(진앙)에서 만난다<span class="why"><b>맞다.</b> h = 0이면 R = r이므로 모든 원이 진앙을 지난다. 원들이 넓게 겹칠수록 진원이 깊다는 뜻이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>세 원이 넓게 겹친다<span class="why"><b>깊은 진원일 때의 모습이다.</b> 진원 거리 R이 진앙 거리 r보다 커서 원이 진앙을 지나쳐 겹치는 것이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>세 원이 서로 만나지 않는다<span class="why"><b>측정이 맞다면 일어나지 않는다.</b> 원이 만나지 않는다면 PS시를 너무 짧게 읽었거나 k가 실제보다 작은 것이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/esys/1-5.html#card-esys-seismic"><small class="mono">지구시스템과학 1.5</small>지진파가 닿지 않는 곳이 왜 생길까?</a><a href="../../c/is1/3-2.html#card-is1-seafloor"><small class="mono">통합과학1 3.2</small>바다 밑 줄무늬는 무엇을 기록하고 있을까?</a><a href="../../c/is1/3-2.html#card-is1-plate-boundary"><small class="mono">통합과학1 3.2</small>판 경계마다 지진과 화산은 어떻게 다를까?</a><a href="../../c/is1/3-2.html#text-is1-geosphere-effects"><small class="mono">통합과학1 3.2</small>화산 하나가 지구 전체의 기온을 바꿀 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/1-1.html#card-adearth-prem"><small class="mono">고급 지구과학 1.1</small>아무도 가 보지 못한 지구 속 물질을 지진파 속도로 어떻게 알아낼까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/esys/1-5.html#card-esys-seismic"><small class="mono">지구시스템과학 1.5</small>지진파가 닿지 않는 곳이 왜 생길까?</a><a href="../../c/esys/1-5.html#text-esys-seismic-shadow"><small class="mono">지구시스템과학 1.5</small>지진파와 지구 내부 구조</a><a href="../../c/adearth/1-1.html#text-adearth-moho"><small class="mono">고급 지구과학 1.1</small>지진파와 지구 내부</a><a href="../../c/is1/3-2.html#card-is1-seafloor"><small class="mono">통합과학1 3.2</small>바다 밑 줄무늬는 무엇을 기록하고 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/adearth/1-1.html#card-adearth-prem"><small class="mono">고급 지구과학 1.1</small>아무도 가 보지 못한 지구 속 물질을 지진파 속도로 어떻게 알아낼까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=labearth-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=labearth&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">5문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>

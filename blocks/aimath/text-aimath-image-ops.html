@@ -1,0 +1,57 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/aimath/body.js"],
+  "sec": "3-2",
+  "short": "본문 · 행렬 연산과 이미지 변환"
+}
+-->
+<article class="card reading" id="text-aimath-image-ops" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>행렬 연산과 이미지 변환</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">사진 편집 앱에서 '밝기'를 올리면 사진 전체가 환해지고, '대비'를 올리면 밝은 곳은 더 밝게, 어두운 곳은 더 어둡게 바뀐다. '반전'을 누르면 필름 사진처럼 흑백이 뒤집힌다. 사진이 행렬이라면, 이 버튼들은 행렬의 각 성분에 어떤 계산을 하는 것일까? 윤곽선을 찾는 기능은 어떻게 작동할까?</p>
+    <figure class="q-fig" data-q="ai-imgops">
+      <svg viewBox="0 0 520 230" role="img" aria-label="밝기, 대비, 반전에 따라 원본 행렬이 변환된 모습"></svg>
+      <div class="q-ctl"><label>밝기 \(d\) <input type="range" data-k="d" min="-100" max="100" step="10" value="40"><output data-k="d"></output></label><label>대비 \(c\) <input type="range" data-k="c" min="0.2" max="2.5" step="0.1" value="1"><output data-k="c"></output></label><label>반전 <input type="range" data-k="inv" min="0" max="1" step="1" value="0"><output data-k="inv"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. 왼쪽 원본의 각 성분 \(v\)에 \(c(v - 128) + 128 + d\)를 계산하고 0~255 범위로 자른 결과가 오른쪽이다. 밝기는 모든 성분에 같은 수를 더하고, 대비는 가운데 값 128에서 떨어진 정도를 늘린다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 덧셈, 뺄셈, 실수배, 행렬의 곱셈(공통수학1), 이미지와 행렬(<a href="3-1.html">행렬로 나타낸 이미지</a>).</div>
+
+    <h3><span class="no">3.2.1</span>성분별 계산으로 바꾸는 이미지</h3>
+    <p>이미지 행렬 \(A\)의 모든 성분에 같은 수 \(d\)를 더하면 사진 전체의 밝기가 바뀐다. 이는 \(A\)에 모든 성분이 \(d\)인 행렬을 더하는 것이다. 그리고 모든 성분에 실수 \(k\)를 곱하는 실수배 \(kA\)는 밝은 곳과 어두운 곳의 차이를 \(k\)배로 늘리거나 줄인다. 반전은 \(255 - v\)로, 모든 성분이 255인 행렬에서 \(A\)를 빼는 것이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.2.1 <span class="nm">기본적인 이미지 변환</span></span>
+      <p>밝기 \(A + dJ\), 대비 \(c(A - 128J) + 128J\), 반전 \(255J - A\) (\(J\)는 모든 성분이 1인 행렬). 계산 결과가 0보다 작으면 0으로, 255보다 크면 255로 자른다.</p>
+    </div>
+    <p>그림 1에서 밝기를 올리면 모든 칸이 같은 만큼 환해지고, 이미 흰 칸은 255에서 더 밝아지지 않는다. 그런데 대비를 2로 올리면 230은 255로, 40은 0으로 가서 흑백이 뚜렷해진다. 대비를 0.5로 낮추면 모든 값이 128 쪽으로 모여 흐릿한 회색이 된다.</p>
+
+    <h3><span class="no">3.2.2</span>이웃 픽셀을 섞는 계산</h3>
+    <p>흐리게 하기나 윤곽선 찾기는 한 픽셀만 보지 않고 둘레의 픽셀과 함께 계산한다. 작은 행렬(필터)을 이미지 위에 겹쳐 놓고, 겹친 성분끼리 곱해 더한 값을 새 픽셀 값으로 삼는다. 이를 합성곱이라 한다. 모든 성분이 \(\frac{1}{9}\)인 3 × 3 필터는 둘레 9칸의 평균을 내어 사진을 흐리게 한다. 가운데가 8이고 둘레가 \(-1\)인 필터는 둘레와 밝기가 다른 곳, 곧 윤곽선에서 큰 값을 낸다.<sup class="fn"><a href="#fn-aimath-image-ops-1">1</a></sup></p>
+    <p>지금까지는 픽셀의 값을 바꾸었는데, 사진을 뒤집거나 돌리는 버튼은 값은 그대로 두고 픽셀의 자리를 옮긴다. 이때는 각 픽셀의 좌표 \(\begin{pmatrix} x \\ y \end{pmatrix}\)에 2 × 2 행렬을 곱한다. 행렬의 첫째 열은 오른쪽으로 한 칸인 \(\begin{pmatrix} 1 \\ 0 \end{pmatrix}\)이 옮겨 갈 자리, 둘째 열은 위로 한 칸인 \(\begin{pmatrix} 0 \\ 1 \end{pmatrix}\)이 옮겨 갈 자리라고 생각하면 행렬을 쉽게 만들 수 있다. 좌우 뒤집기는 오른쪽 한 칸을 왼쪽 한 칸으로 보내고 위쪽은 그대로 두므로 \(\begin{pmatrix} -1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\)이고, 시계 반대 방향으로 90° 돌리기는 오른쪽 한 칸을 위로, 위로 한 칸을 왼쪽으로 보내므로 \(\begin{pmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{pmatrix}\)이다. 다른 모든 칸은 이 두 칸의 조합이므로 두 열만 정하면 사진 전체가 어떻게 움직일지 정해진다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 120" role="img" aria-label="윤곽선 필터">
+        <g class="s">
+          <rect x="40" y="20" width="90" height="90" class="gd"/>
+          <text x="55" y="45">−1</text><text x="85" y="45">−1</text><text x="115" y="45">−1</text>
+          <text x="55" y="75">−1</text><text x="88" y="75" class="td">8</text><text x="115" y="75">−1</text>
+          <text x="55" y="105">−1</text><text x="85" y="105">−1</text><text x="115" y="105">−1</text>
+          <text x="170" y="50">밝기가 고른 곳 → 8v − 8v = 0</text><text x="170" y="80">밝기가 바뀌는 곳 → 0이 아닌 값</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 윤곽선 필터는 가운데 값과 둘레 값의 차이를 계산한다. 밝기가 고른 곳에서는 0이 된다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.2.2</span>
+      <p>2 × 2 이미지 \(A = \begin{pmatrix} 40 &amp; 120 \\ 200 &amp; 250 \end{pmatrix}\)에 밝기 \(+30\)을 적용한 행렬과, 대비 2배(\(2(v - 128) + 128\))를 적용한 행렬, 반전한 행렬을 각각 구하여라.</p>
+    </div>
+    <p>밝기 \(+30\)이면 \(\begin{pmatrix} 70 &amp; 150 \\ 230 &amp; 280 \end{pmatrix}\)에서 280을 255로 잘라 \(\begin{pmatrix} 70 &amp; 150 \\ 230 &amp; 255 \end{pmatrix}\)이다.</p>
+    <p>대비 2배이면 \(2v - 128\)이므로 \(\begin{pmatrix} -48 &amp; 112 \\ 272 &amp; 372 \end{pmatrix}\)을 잘라 \(\begin{pmatrix} 0 &amp; 112 \\ 255 &amp; 255 \end{pmatrix}\)이다. 그리고 반전은 \(\begin{pmatrix} 215 &amp; 135 \\ 55 &amp; 5 \end{pmatrix}\)이다. 대비를 지나치게 올리면 200과 250처럼 다르던 값이 모두 255가 되어, 밝은 부분의 차이가 사라진다는 것을 알 수 있다.</p>
+    <p>아래 탐구 카드에서 사진 편집 버튼의 계산을 확인하고, 이웃 픽셀과 섞어 윤곽선을 찾아보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-aimath-image-ops-1">이미지를 인식하는 인공지능(합성곱 신경망)은 이런 필터의 성분을 사람이 정하지 않고 자료로부터 학습한다. 첫 층의 필터는 대개 윤곽선이나 무늬를 찾는 모양으로 학습된다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>이미지 행렬의 모든 성분에 같은 수를 더하면 밝기가, 가운데 값에서의 차이를 실수배하면 대비가, 255에서 빼면 반전이 바뀐다. 둘레 픽셀과 필터를 곱해 더하는 합성곱으로 흐리게 하거나 윤곽선을 찾는다. 그래서 처음 질문의 편집 버튼들은 모두 행렬의 덧셈, 실수배, 뺄셈, 그리고 이웃 성분을 섞는 계산이다.</p></div>
+  </div>
+</article>

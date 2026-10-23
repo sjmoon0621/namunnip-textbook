@@ -1,0 +1,60 @@
+<!--block
+{
+  "type": "text",
+  "scripts": ["js/lib/qfig.js", "js/cards/calc2/body.js"],
+  "sec": "1-2",
+  "short": "본문 · 수열의 극한의 성질"
+}
+-->
+<article class="card reading" id="text-calc2-lim-props" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>수열의 극한의 성질</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">\(\dfrac{3n^2 + 5n}{n^2 + 1}\)이나 \(\dfrac{\sin n}{n}\)처럼 생긴 수열의 극한을 매번 정의로 따지기는 번거롭다. 함수의 극한에서처럼 더하고 곱하고 나누는 성질을 쓸 수 있다면 편할 것이다. 그런데 \(\sin n\)은 수렴하지 않는데, \(\dfrac{\sin n}{n}\)의 극한은 어떻게 구할 수 있을까?</p>
+    <figure class="q-fig" data-q="calc2-squeeze">
+      <svg viewBox="0 0 520 230" role="img" aria-label="수열 sin n / n 이 −1/n 과 1/n 사이에 갇혀 0으로 가는 모습"></svg>
+      <div class="q-ctl"><label>그릴 항의 수 \(n\) <input type="range" data-k="m" min="1" max="40" step="1" value="12"><output data-k="m"></output></label></div>
+      <p class="q-read"></p>
+      <figcaption>그림 1. \(-\dfrac{1}{n} \le \dfrac{\sin n}{n} \le \dfrac{1}{n}\)이다. 위아래 경계(주황)가 모두 0으로 수렴하므로, 그 사이에 갇힌 수열(파랑)도 0으로 수렴한다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>수열의 수렴과 발산(<a href="1-1.html">수열의 수렴과 발산</a>), 함수의 극한에 대한 성질(미적분Ⅰ), 무리식의 유리화.</div>
+
+    <h3><span class="no">1.2.1</span>극한의 기본 성질</h3>
+    <p>두 수열 \(\{a_n\}\), \(\{b_n\}\)이 각각 \(\alpha\), \(\beta\)에 수렴하면, \(a_n\)과 \(b_n\)이 각각 \(\alpha\), \(\beta\)에 한없이 가까워지므로 그 합은 \(\alpha + \beta\)에 한없이 가까워진다. 곱과 몫도 마찬가지이다.</p>
+    <div class="tb-env thm"><span class="lb">정리 1.2.1 <span class="nm">수열의 극한에 대한 성질</span></span>
+      <p>\(\lim a_n = \alpha\), \(\lim b_n = \beta\)일 때 (\(c\)는 상수) \[\lim c\,a_n = c\alpha,\quad \lim (a_n \pm b_n) = \alpha \pm \beta,\quad \lim a_n b_n = \alpha\beta,\quad \lim \frac{a_n}{b_n} = \frac{\alpha}{\beta}\ (b_n \ne 0,\ \beta \ne 0)\]</p>
+    </div>
+    <p>이 성질은 두 수열이 모두 수렴할 때만 쓸 수 있다. \(\dfrac{3n^2 + 5n}{n^2 + 1}\)은 분자와 분모가 모두 발산하므로 바로 나눌 수 없다. 이럴 때는 분모의 최고차항 \(n^2\)으로 분자와 분모를 나누어 \(\dfrac{3 + \frac{5}{n}}{1 + \frac{1}{n^2}}\)로 바꾸면, 분자는 3, 분모는 1로 수렴하므로 극한은 3이다. 분모와 분자의 차수가 같으면 최고차항 계수의 비가, 분모의 차수가 더 높으면 0이 극한이 된다.</p>
+
+    <h3><span class="no">1.2.2</span>대소 관계와 조임 정리</h3>
+    <p>수렴하는 두 수열이 모든 \(n\)에서 \(a_n \le b_n\)이면 극한도 \(\alpha \le \beta\)이다. 이 성질에서 다음 정리가 나온다.</p>
+    <div class="tb-env thm"><span class="lb">정리 1.2.2 <span class="nm">조임 정리</span></span>
+      <p>모든 자연수 \(n\)에 대하여 \(a_n \le c_n \le b_n\)이고 \(\lim a_n = \lim b_n = \alpha\)이면 \(\lim c_n = \alpha\)이다.</p>
+    </div>
+    <p>\(\sin n\)은 \(-1\)과 1 사이를 불규칙하게 오가며 수렴하지 않는다. 그러나 \(-1 \le \sin n \le 1\)이므로 양변을 \(n\)으로 나누면 \(-\dfrac{1}{n} \le \dfrac{\sin n}{n} \le \dfrac{1}{n}\)이다. 그림 1에서 항의 수를 늘려 보자. 위아래 경계가 모두 0으로 조여 들면서 가운데 수열도 0으로 끌려간다.<sup class="fn"><a href="#fn-calc2-lim-props-1">1</a></sup></p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="분모와 분자의 차수에 따른 극한">
+        <g class="s">
+          <text x="30" y="25">차수 비교</text><text x="210" y="25">예</text><text x="400" y="25">극한</text>
+          <line x1="20" y1="33" x2="500" y2="33" class="gd"/>
+          <text x="30" y="55">분자 = 분모</text><text x="210" y="55">(3n² + 5n)/(n² + 1)</text><text x="400" y="55">3</text>
+          <text x="30" y="78">분자 &lt; 분모</text><text x="210" y="78">(2n + 1)/(n² + 4)</text><text x="400" y="78">0</text>
+          <text x="30" y="101">분자 &gt; 분모</text><text x="210" y="101">(n² + 1)/(n + 2)</text><text x="400" y="101">∞로 발산</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. \(\dfrac{\infty}{\infty}\) 꼴의 유리식 수열은 분모의 최고차항으로 나누어 극한을 구한다.</figcaption>
+    </figure>
+
+    <h3><span class="no">1.2.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 1.2.3</span>
+      <p>\(\lim_{n \to \infty} (\sqrt{n^2 + 4n} - n)\)을 구하여라.</p>
+    </div>
+    <p>\(\sqrt{n^2 + 4n}\)과 \(n\)이 모두 발산하므로 \(\infty - \infty\) 꼴이 되어 바로 뺄 수 없다. 분모를 1로 보고 분자를 유리화한다.</p>
+    <p>\[\sqrt{n^2 + 4n} - n = \frac{(n^2 + 4n) - n^2}{\sqrt{n^2 + 4n} + n} = \frac{4n}{\sqrt{n^2 + 4n} + n}\] 분자와 분모를 \(n\)으로 나누면 \(\dfrac{4}{\sqrt{1 + \frac{4}{n}} + 1}\)이 되고, \(n \to \infty\)일 때 분모가 \(1 + 1 = 2\)로 수렴하므로 극한은 \(\dfrac{4}{2} = 2\)이다. 실제로 \(n = 100\)이면 \(\sqrt{10\,400} - 100 \approx 1.98\)이다.</p>
+    <p>극한의 성질은 수렴하는 수열들로 쪼갠 뒤에야 쓸 수 있다는 점을 기억하자. 아래 탐구 카드에서 극한의 성질, \(\dfrac{\infty}{\infty}\) 꼴, 조임 정리를 직접 확인해 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-calc2-lim-props-1">'모든 \(n\)'이 아니라 '어느 번째 항부터 모든 \(n\)'에서 부등식이 성립해도 조임 정리는 그대로 성립한다. 극한은 처음 몇 항과 상관없기 때문이다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>수렴하는 수열의 합, 차, 곱, 몫의 극한은 각 극한의 합, 차, 곱, 몫이고, \(\dfrac{\infty}{\infty}\)나 \(\infty - \infty\) 꼴은 식을 변형하여 수렴하는 수열로 바꾼 뒤 성질을 쓴다. 위아래에서 같은 값으로 조여지는 수열은 그 값으로 수렴한다. 그래서 처음 질문의 \(\dfrac{\sin n}{n}\)은 \(\pm\dfrac{1}{n}\) 사이에 갇혀 0으로 수렴한다.</p></div>
+  </div>
+</article>

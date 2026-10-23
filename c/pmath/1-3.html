@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>역삼각함수 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="역삼각함수 arcsin, arccos, arctan의 뜻과 정의역·치역, 그래프. 일대일이 되도록 정의역을 제한하는 이유와 arcsin(sin x) ≠ x가 되는 경우를 그래프로 확인하는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pmath-arc-restrict canvas { aspect-ratio: 16 / 10; }
@@ -43,18 +48,75 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pmath-arc-restrict"><span class="mono">1.3.1</span>역함수가 되는 구간 고르기</a></li>
-        <li><a href="#card-pmath-arc-sawtooth"><span class="mono">1.3.2</span>arcsin(sin x)는 x일까</a></li>
+        <li><a href="#text-pmath-inverse-trig"><span class="mono">본문</span>역삼각함수</a></li>
+        <li><a href="#card-pmath-arc-restrict"><span class="mono">탐구 1</span>역함수가 되는 구간 고르기</a></li>
+        <li><a href="#card-pmath-arc-sawtooth"><span class="mono">탐구 2</span>arcsin(sin x)는 x일까</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pmath-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pmath&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pmath-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pmath-inverse-trig" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>역삼각함수</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">공학용 계산기에서 \(\sin 2\)(라디안)를 계산하니 0.909가 나왔다. 이 값에 다시 \(\sin^{-1}\) 단추를 누르면 2로 돌아올 줄 알았는데 1.1416이 나왔다. \(\sin 5\)에 \(\sin^{-1}\)을 누르면 5 대신 \(-1.283\)이 나왔다. 역함수는 원래 함수가 한 일을 되돌리는 함수인데, 왜 원래 값으로 돌아오지 않을까? 계산기는 어떤 규칙으로 하나의 값을 고를까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 210" role="img" aria-label="arcsin(sin x)의 톱니 모양 그래프">
+              <line x1="30" y1="105" x2="500" y2="105" class="ax"/><line x1="190" y1="15" x2="190" y2="195" class="ax"/>
+              <path d="M30 105 L70 55 L150 155 L230 55 L310 155 L390 55 L470 155 L500 117.5" class="d"/>
+              <line x1="190" y1="105" x2="230" y2="55" class="a"/>
+              <circle cx="241" cy="68.7" r="4" class="fd"/><text x="250" y="66" class="s td">x = 2에서 π − 2 ≈ 1.14</text>
+              <text x="236" y="122" class="s">π/2</text><text x="266" y="122" class="s">π</text><text x="300" y="122" class="s">3π/2</text>
+              <text x="196" y="52" class="s">π/2</text><text x="196" y="162" class="s">−π/2</text>
+              <text x="40" y="190" class="s">y = arcsin(sin x)는 −π/2와 π/2 사이에서만 y = x</text>
+            </svg>
+            <figcaption>그림 1. \(\arcsin(\sin x)\)는 \(-\pi/2 \le x \le \pi/2\)에서만 \(x\)와 같고, 그 밖에서는 기울기 \(\pm1\)인 선분이 번갈아 이어진 톱니 모양이다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>역함수와 그 그래프, 삼각함수의 정의와 그래프, 합성함수.</div>
+
+          <h3><span class="no">1.3.1</span>잘라야 역함수가 생긴다</h3>
+          <p>역함수가 있으려면 함수가 일대일이어야 한다. 그런데 사인함수는 \(\sin(\pi/6) = \sin(5\pi/6) = \sin(13\pi/6) = 1/2\)처럼 같은 값을 끝없이 많은 \(x\)에서 가지므로, 그대로는 역함수가 없다. 그래서 사인함수의 정의역을 한 구간으로 잘라, 그 안에서는 증가만 하고 \(-1\)부터 1까지의 모든 값을 한 번씩 갖도록 한다. 원점을 지나며 증가하는 구간 \([-\pi/2, \pi/2]\)를 고르는 것이 약속이고, 이렇게 자른 사인함수의 역함수가 \(\arcsin x\)이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">역삼각함수의 정의역과 치역</span></span>
+            <p>\(y = \arcsin x \iff x = \sin y\), \(-\pi/2 \le y \le \pi/2\)이다. \(\arccos x\)는 치역이 \([0, \pi]\), \(\arctan x\)는 정의역이 모든 실수이고 치역이 \((-\pi/2, \pi/2)\)이다. 언제나 \(\sin(\arcsin x) = x\)이지만, \(\arcsin(\sin x) = x\)는 \(-\pi/2 \le x \le \pi/2\)일 때만 성립한다.</p>
+          </div>
+          <p>코사인함수는 원점 근처에서 증가하다 감소하므로 같은 구간을 쓸 수 없고, 감소만 하는 \([0, \pi]\)를 고른다. 탄젠트함수는 \((-\pi/2, \pi/2)\)에서 모든 실수 값을 한 번씩 가지므로 그 구간을 쓴다. 역함수의 그래프는 자른 원래 그래프를 직선 \(y = x\)에 대해 대칭으로 옮긴 것이어서, \(\arctan x\)의 그래프에는 \(y = \pm\pi/2\)인 가로 점근선이 생긴다.<sup class="fn"><a href="#fn-pmath-inverse-trig-1">1</a></sup></p>
+
+          <h3><span class="no">1.3.2</span>\(\arcsin(\sin x)\)의 톱니</h3>
+          <p>\(\arcsin(\sin x)\)는 \(\sin x\)와 같은 사인값을 가지면서 \([-\pi/2, \pi/2]\) 안에 있는 각을 돌려준다. \(x\)가 이 구간 안에 있으면 \(x\) 자신이 그런 각이다. 반면 \(x\)가 \(\pi/2\)와 \(3\pi/2\) 사이에 있으면 \(\sin(\pi - x) = \sin x\)이고 \(\pi - x\)가 구간 안에 있으므로 값은 \(\pi - x\)이다. 그래서 그래프는 기울기 1과 \(-1\)인 선분이 주기 \(2\pi\)로 번갈아 이어지는 톱니 모양이 된다. 계산기는 이 규칙에 따라 늘 \([-\pi/2, \pi/2]\) 안의 값 하나를 고른다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="세 역삼각함수의 정의역과 치역">
+              <g class="s">
+                <text x="20" y="22">함수</text><text x="150" y="22">정의역</text><text x="280" y="22">치역 (자른 구간)</text><text x="420" y="22">원래 함수</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">arcsin x</text><text x="150" y="52">[−1, 1]</text><text x="280" y="52" class="td">[−π/2, π/2]</text><text x="420" y="52">증가</text>
+                <text x="20" y="74">arccos x</text><text x="150" y="74">[−1, 1]</text><text x="280" y="74">[0, π]</text><text x="420" y="74">감소</text>
+                <text x="20" y="96">arctan x</text><text x="150" y="96">모든 실수</text><text x="280" y="96">(−π/2, π/2)</text><text x="420" y="96">증가</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 원래 함수가 한 방향으로만 변하며 모든 값을 한 번씩 갖는 구간을 치역으로 고른다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>처음 질문의 \(\arcsin(\sin 2)\)와 \(\arcsin(\sin 5)\)의 값을 \(\pi\)를 써서 구하여라. 또 \(\arccos(\cos 5)\)는 얼마인가? \(\pi \approx 3.1416\)이다.</p>
+          </div>
+          <p>2는 \(\pi/2 \approx 1.571\)과 \(3\pi/2 \approx 4.712\) 사이에 있으므로 \(\arcsin(\sin 2) = \pi - 2 \approx 1.1416\)이다. 계산기의 값과 같다. 5는 \(3\pi/2\)와 \(5\pi/2\) 사이에 있고, 그 구간에서는 \(x - 2\pi\)가 \([-\pi/2, \pi/2]\)에 들어가며 사인값이 같으므로 \(\arcsin(\sin 5) = 5 - 2\pi \approx -1.283\)이다.</p>
+          <p>\(\arccos(\cos 5)\)는 \([0, \pi]\) 안에서 코사인값이 \(\cos 5\)와 같은 각이다. \(\cos(2\pi - 5) = \cos 5\)이고 \(2\pi - 5 \approx 1.283\)은 \([0, \pi]\) 안에 있으므로 값은 \(2\pi - 5 \approx 1.283\)이다. 같은 5를 넣어도 \(\arcsin\)과 \(\arccos\)가 고르는 각이 다르다. 즉 역삼각함수는 정의역을 자른 삼각함수의 역함수여서, 원래 값이 자른 구간 밖에 있으면 같은 삼각함수값을 갖는 구간 안의 각으로 바뀌어 돌아온다.</p>
+          <p>아래 탐구 카드에서 사인함수의 여러 구간을 잘라 역함수가 생기는지 확인하고, \(\arcsin(\sin x)\)의 그래프를 예측해 그려 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pmath-inverse-trig-1">계산기의 \(\sin^{-1}\)은 \(1/\sin\)이 아니라 역함수를 뜻한다. 이 혼동을 피하려고 많은 책은 \(\arcsin\)이라는 이름을 쓰는데, 단위원에서 사인값이 \(x\)인 호(arc)의 길이라는 뜻이다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>삼각함수는 같은 값을 끝없이 많은 곳에서 가지므로, 한 방향으로만 변하며 모든 값을 한 번씩 갖는 구간으로 정의역을 잘라야 역함수가 생긴다. \(\arcsin\)은 \([-\pi/2, \pi/2]\), \(\arccos\)은 \([0, \pi]\), \(\arctan\)은 \((-\pi/2, \pi/2)\)의 값을 돌려주며, 그래서 \(\arcsin(\sin x)\)는 톱니 모양이다. 처음 질문의 계산기는 \(\arcsin(\sin 2) = \pi - 2 \approx 1.14\), \(\arcsin(\sin 5) = 5 - 2\pi \approx -1.28\)을 돌려준 것이다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-2.html#card-alg-trig-graph"><small class="mono">대수 2.2</small>원을 도는 점의 높이를 옆으로 펼치면 어떤 모양일까?</a><a href="../../c/alg/2-2.html#card-alg-sin-param"><small class="mono">대수 2.2</small>식의 어느 수가 파동의 높이와 폭을 정할까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-map"><small class="mono">공통수학2 3.3</small>화살표를 거꾸로 돌리면 언제 함수가 될까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-graph"><small class="mono">공통수학2 3.3</small>역함수는 어떻게 구하고, 그래프는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-deriv-trace"><small class="mono">전문 수학 1.4</small>접선의 기울기를 모으면 sec x의 도함수가 보일까?</a><a href="../../c/pmath/1-4.html#card-pmath-museum"><small class="mono">전문 수학 1.4</small>벽에 높이 걸린 그림은 몇 걸음 떨어져야 가장 크게 보일까?</a><a href="../../c/pmath/1-4.html#text-pmath-derivatives"><small class="mono">전문 수학 1.4</small>여러 가지 함수의 미분과 고계도함수</a><a href="../../c/pmath/1-7.html#card-pmath-trig-sub"><small class="mono">전문 수학 1.7</small>∫₀a√(1 − x²) dx를 원의 그림만으로 계산할 수 있을까?</a></div></nav>
+
       <article class="card" id="card-pmath-arc-restrict">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>사인함수의 어디를 잘라야 역함수가 생길까?</h2><span class="kind">역삼각함수 · 도전</span>
+          <span class="no">탐구 1</span><h2>사인함수의 어디를 잘라야 역함수가 생길까?</h2><span class="kind">역삼각함수 · 도전</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -71,34 +133,34 @@
                 <div><dt>모든 값을 갖는가</dt><dd class="n-all">—</dd></div>
               </dl>
               <p class="verdict" role="status"></p>
-              <p class="fig-note">x축 아래의 두 손잡이(▲)를 끌어 구간의 양 끝을 정하세요. 끝점은 \(\frac{\pi}{12}\) 간격으로 맞춰집니다. 도전: 조건 두 가지를 모두 만족하는 구간을 세 개 이상 찾아 보세요.</p>
+              <p class="fig-note">x축 아래의 두 손잡이(▲)를 끌어 구간의 양 끝을 정해 보자. 끝점은 \(\frac{\pi}{12}\) 간격으로 맞춰진다. 도전해 보자. 조건 두 가지를 모두 만족하는 구간을 세 개 이상 찾아 보자.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(\sin x = 0.5\)인 \(x\)는 하나가 아닙니다. 그런데 계산기의 \(\sin^{-1}\) 버튼은 0.5를 넣으면 늘 \(30^\circ\) 하나만 돌려줍니다. 계산기는 무엇을 약속해 둔 것일까요?</li>
-            <li><span class="tag">복원</span>함수가 역함수를 가지려면 <em>일대일대응</em>이어야 합니다. 서로 다른 \(x\)는 서로 다른 \(y\)로 가야 하고(일대일), 공역의 모든 값이 쓰여야 합니다. 역함수의 그래프는 원래 그래프를 직선 \(y = x\)에 대하여 뒤집은 것입니다.</li>
-            <li><span class="tag">설명</span>사인함수는 같은 값을 끝없이 되풀이하므로 전체로는 일대일이 아닙니다. 그래서 정의역을 잘라 쓰는데, 두 조건을 지켜야 합니다. ① 고른 구간에서 그래프가 계속 올라가거나 계속 내려가야 하고(일대일), ② −1부터 1까지 모든 값을 지나야 합니다. 이런 구간은 무수히 많지만, 0을 포함하고 증가하는 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)로 약속합니다. 이렇게 정한 역함수가 <b>\(y = \arcsin x\) (정의역 \([-1, 1]\), 치역 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\))</b>입니다. 코사인은 \([0, \pi]\)에서, 탄젠트는 \(\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)\)에서 잘라 \(\arccos x\), \(\arctan x\)를 정합니다.</li>
-            <li><span class="tag">연결</span>코사인을 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)에서 자르면 왜 안 될까요? 이 구간에서 코사인은 올라갔다 내려오므로 일대일이 아닙니다. 함수마다 약속한 구간이 다른 이유가 여기에 있습니다. 역삼각함수는 다음 절에서 적분 \(\int \frac{dx}{1 + x^2} = \arctan x + C\)로 다시 나옵니다.</li>
-            <li><span class="tag">적용</span>손잡이를 끌어 사인함수에서 두 조건을 모두 만족하는 구간을 찾으세요. 찾을 때마다 오른쪽 그래프가 함수의 그래프가 되는지 보세요. 구간이 너무 넓으면 오른쪽 그래프에 무슨 일이 생기나요? 코사인과 탄젠트에서도 해 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>일대일만 만족하고 모든 값을 갖지 않는 구간(예: 사인에서 \(\left[0, \frac{\pi}{3}\right]\))을 고르면 역함수는 생기지만 정의역이 좁아집니다. 그러면 \(\arcsin(-0.5)\) 같은 값을 정할 수 없습니다. 두 조건이 모두 필요한 이유입니다.</li>
+            <li><span class="tag">질문</span>\(\sin x = 0.5\)인 \(x\)는 하나가 아니다. 그런데 계산기의 \(\sin^{-1}\) 버튼은 0.5를 넣으면 늘 \(30^\circ\) 하나만 돌려준다. 계산기는 무엇을 약속해 둔 것일까?</li>
+            <li><span class="tag">복원</span>함수가 역함수를 가지려면 <em>일대일대응</em>이어야 한다. 서로 다른 \(x\)는 서로 다른 \(y\)로 가야 하고(일대일), 공역의 모든 값이 쓰여야 한다. 역함수의 그래프는 원래 그래프를 직선 \(y = x\)에 대하여 뒤집은 것이다.</li>
+            <li><span class="tag">설명</span>사인함수는 같은 값을 끝없이 되풀이하므로 전체로는 일대일이 아니다. 그래서 정의역을 잘라 쓰는데, 두 조건을 지켜야 한다. ① 고른 구간에서 그래프가 계속 올라가거나 계속 내려가야 하고(일대일), ② −1부터 1까지 모든 값을 지나야 한다. 이런 구간은 무수히 많지만, 0을 포함하고 증가하는 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)로 약속한다. 이렇게 정한 역함수가 \(y = \arcsin x\) (정의역 \([-1, 1]\), 치역 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\))이다. 코사인은 \([0, \pi]\)에서, 탄젠트는 \(\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)\)에서 잘라 \(\arccos x\), \(\arctan x\)를 정한다.</li>
+            <li><span class="tag">연결</span>코사인을 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)에서 자르면 왜 안 될까? 이 구간에서 코사인은 올라갔다 내려오므로 일대일이 아니다. 함수마다 약속한 구간이 다른 이유가 여기에 있다. 역삼각함수는 다음 절에서 적분 \(\int \frac{dx}{1 + x^2} = \arctan x + C\)로 다시 나온다.</li>
+            <li><span class="tag">적용</span>손잡이를 끌어 사인함수에서 두 조건을 모두 만족하는 구간을 찾자. 찾을 때마다 오른쪽 그래프가 함수의 그래프가 되는지 보자. 구간이 너무 넓으면 오른쪽 그래프에 무슨 일이 생기는가? 코사인과 탄젠트에서도 해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>일대일만 만족하고 모든 값을 갖지 않는 구간(예를 들어 사인에서 \(\left[0, \frac{\pi}{3}\right]\))을 고르면 역함수는 생기지만 정의역이 좁아진다. 그러면 \(\arcsin(-0.5)\) 같은 값을 정할 수 없다. 두 조건이 모두 필요한 이유이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">함수 \(y = \cos x\)의 정의역을 다음 중 어느 구간으로 제한해야 치역이 \([-1, 1]\)인 역함수를 가질까요?</p>
+          <p class="q">함수 \(y = \cos x\)의 정의역을 다음 중 어느 구간으로 제한해야 치역이 \([-1, 1]\)인 역함수를 가질까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\([\pi, 2\pi]\)<span class="why"><b>맞습니다.</b> 이 구간에서 코사인은 −1에서 1로 계속 증가하므로 일대일이고 모든 값을 갖습니다. 다만 약속한 \(\arccos\)는 \([0, \pi]\)를 씁니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)<span class="why"><b>사인의 구간을 그대로 썼습니다.</b> 이 구간에서 코사인은 0에서 1로 올랐다가 다시 0으로 내려오므로 일대일이 아니고, 음수 값도 갖지 않습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left[0, \frac{\pi}{2}\right]\)<span class="why"><b>일대일이지만 값이 모자랍니다.</b> 이 구간의 코사인 값은 0부터 1까지뿐입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\([0, 2\pi]\)<span class="why"><b>너무 넓습니다.</b> 한 주기를 통째로 고르면 같은 값이 두 번씩 나옵니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\([\pi, 2\pi]\)<span class="why"><b>맞다.</b> 이 구간에서 코사인은 −1에서 1로 계속 증가하므로 일대일이고 모든 값을 갖는다. 다만 약속한 \(\arccos\)는 \([0, \pi]\)를 쓴다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\)<span class="why"><b>사인의 구간을 그대로 썼다.</b> 이 구간에서 코사인은 0에서 1로 올랐다가 다시 0으로 내려오므로 일대일이 아니고, 음수 값도 갖지 않는다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(\left[0, \frac{\pi}{2}\right]\)<span class="why"><b>일대일이지만 값이 모자란다.</b> 이 구간의 코사인 값은 0부터 1까지뿐이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\([0, 2\pi]\)<span class="why"><b>너무 넓다.</b> 한 주기를 통째로 고르면 같은 값이 두 번씩 나온다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-2.html#card-alg-trig-graph"><small class="mono">대수 2.2</small>원을 도는 점의 높이를 옆으로 펼치면 어떤 모양일까?</a><a href="../../c/alg/2-2.html#card-alg-sin-param"><small class="mono">대수 2.2</small>식의 어느 수가 파동의 높이와 폭을 정할까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-map"><small class="mono">공통수학2 3.3</small>화살표를 거꾸로 돌리면 언제 함수가 될까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-graph"><small class="mono">공통수학2 3.3</small>역함수는 어떻게 구하고, 그래프는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-deriv-trace"><small class="mono">전문 수학 1.4</small>접선의 기울기를 모으면 sec x의 도함수가 보일까?</a><a href="../../c/pmath/1-4.html#card-pmath-museum"><small class="mono">전문 수학 1.4</small>벽에 높이 걸린 그림은 몇 걸음 떨어져야 가장 크게 보일까?</a><a href="../../c/pmath/1-7.html#card-pmath-trig-sub"><small class="mono">전문 수학 1.7</small>∫₀a√(1 − x²) dx를 원의 그림만으로 계산할 수 있을까?</a><a href="../../c/adcalc/3-5.html#card-adcalc-series-build"><small class="mono">고급 미적분 3.5</small>1/(1 − x) 하나로 ln(1 + x)와 tan⁻¹x의 급수를 만들 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-2.html#card-alg-trig-graph"><small class="mono">대수 2.2</small>원을 도는 점의 높이를 옆으로 펼치면 어떤 모양일까?</a><a href="../../c/alg/2-2.html#card-alg-sin-param"><small class="mono">대수 2.2</small>식의 어느 수가 파동의 높이와 폭을 정할까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-map"><small class="mono">공통수학2 3.3</small>화살표를 거꾸로 돌리면 언제 함수가 될까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-graph"><small class="mono">공통수학2 3.3</small>역함수는 어떻게 구하고, 그래프는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-deriv-trace"><small class="mono">전문 수학 1.4</small>접선의 기울기를 모으면 sec x의 도함수가 보일까?</a><a href="../../c/pmath/1-4.html#card-pmath-museum"><small class="mono">전문 수학 1.4</small>벽에 높이 걸린 그림은 몇 걸음 떨어져야 가장 크게 보일까?</a><a href="../../c/pmath/1-4.html#text-pmath-derivatives"><small class="mono">전문 수학 1.4</small>여러 가지 함수의 미분과 고계도함수</a><a href="../../c/pmath/1-7.html#card-pmath-trig-sub"><small class="mono">전문 수학 1.7</small>∫₀a√(1 − x²) dx를 원의 그림만으로 계산할 수 있을까?</a></div></nav>
 
       <article class="card" id="card-pmath-arc-sawtooth">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>\(\arcsin(\sin x)\)는 언제나 \(x\)일까?</h2><span class="kind">역삼각함수의 합성 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>\(\arcsin(\sin x)\)는 언제나 \(x\)일까?</h2><span class="kind">역삼각함수의 합성 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -126,39 +188,39 @@
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(f\)와 \(f^{-1}\)이 서로 역함수이면 \(f^{-1}(f(x)) = x\)입니다. 그렇다면 \(\arcsin\left(\sin\frac{5\pi}{6}\right)\)는 \(\frac{5\pi}{6}\)일까요?</li>
-            <li><span class="tag">복원</span>\(\arcsin x\)의 치역은 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\), \(\arccos x\)의 치역은 \([0, \pi]\), \(\arctan x\)의 치역은 \(\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)\)입니다. 역삼각함수의 값은 반드시 이 범위 안에 있습니다.</li>
-            <li><span class="tag">설명</span>\(\arcsin(\sin x)\)는 "사인값이 \(\sin x\)와 같은 각 가운데 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\) 안에 있는 것"입니다. \(x\)가 이 구간 안에 있으면 그 각이 바로 \(x\)이지만, 밖에 있으면 같은 사인값을 갖는 다른 각이 답이 됩니다. 그래서 그래프는 <b>구간 안에서만 \(y = x\)와 겹치고, 밖에서는 꺾여 내려오는 톱니 모양</b>이 됩니다. 거꾸로 \(\sin(\arcsin x)\)는 \(\arcsin\)이 정의되는 \([-1, 1]\)에서 언제나 \(x\)와 같고, 그 밖에서는 정의되지 않습니다.</li>
-            <li><span class="tag">연결</span>합성 순서가 바뀌면 결과가 달라지는 것은 역함수를 "잘라서" 만들었기 때문입니다. 제곱근도 같습니다. \(\sqrt{x^2} = |x|\)이지 \(x\)가 아닙니다. \(\sqrt{\phantom{x}}\)도 제곱함수를 \(x \ge 0\)으로 잘라 만든 역함수입니다.</li>
-            <li><span class="tag">적용</span>학생의 풀이에서 처음 틀린 줄을 찾은 뒤, \(x\)를 \(\frac{5\pi}{6}\) 근처로 움직여 그래프로 확인하세요. 네 가지 합성을 바꿔 가며 \(y = x\)와 겹치는 구간을 찾으세요. \(\arctan(\tan x)\)의 그래프가 끊어지는 곳은 어디인가요?</li>
-            <li class="warn"><span class="tag">판단</span>계산기에서 \(\sin^{-1}(\sin 150^\circ)\)를 누르면 \(30^\circ\)가 나옵니다. 계산기가 틀린 것이 아니라, 역함수의 치역을 약속대로 지킨 것입니다. 각의 범위가 주어진 문제에서는 약속된 치역 밖의 답이 필요할 수 있으니, 역삼각함수의 값을 구한 뒤 각을 다시 맞춰야 합니다.</li>
+            <li><span class="tag">질문</span>\(f\)와 \(f^{-1}\)이 서로 역함수이면 \(f^{-1}(f(x)) = x\)이다. 그렇다면 \(\arcsin\left(\sin\frac{5\pi}{6}\right)\)는 \(\frac{5\pi}{6}\)일까?</li>
+            <li><span class="tag">복원</span>\(\arcsin x\)의 치역은 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\), \(\arccos x\)의 치역은 \([0, \pi]\), \(\arctan x\)의 치역은 \(\left(-\frac{\pi}{2}, \frac{\pi}{2}\right)\)이다. 역삼각함수의 값은 반드시 이 범위 안에 있다.</li>
+            <li><span class="tag">설명</span>\(\arcsin(\sin x)\)는 "사인값이 \(\sin x\)와 같은 각 가운데 \(\left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\) 안에 있는 것"이다. \(x\)가 이 구간 안에 있으면 그 각이 바로 \(x\)이지만, 밖에 있으면 같은 사인값을 갖는 다른 각이 답이 된다. 그래서 그래프는 구간 안에서만 \(y = x\)와 겹치고, 밖에서는 꺾여 내려오는 톱니 모양이 된다. 거꾸로 \(\sin(\arcsin x)\)는 \(\arcsin\)이 정의되는 \([-1, 1]\)에서 언제나 \(x\)와 같고, 그 밖에서는 정의되지 않는다.</li>
+            <li><span class="tag">연결</span>합성 순서가 바뀌면 결과가 달라지는 것은 역함수를 "잘라서" 만들었기 때문이다. 제곱근도 같다. \(\sqrt{x^2} = |x|\)이지 \(x\)가 아니다. \(\sqrt{\phantom{x}}\)도 제곱함수를 \(x \ge 0\)으로 잘라 만든 역함수이다.</li>
+            <li><span class="tag">적용</span>학생의 풀이에서 처음 틀린 줄을 찾은 뒤, \(x\)를 \(\frac{5\pi}{6}\) 근처로 움직여 그래프로 확인해 보자. 네 가지 합성을 바꿔 가며 \(y = x\)와 겹치는 구간을 찾자. \(\arctan(\tan x)\)의 그래프가 끊어지는 곳은 어디인가?</li>
+            <li class="warn"><span class="tag">판단</span>계산기에서 \(\sin^{-1}(\sin 150^\circ)\)를 누르면 \(30^\circ\)가 나온다. 계산기가 틀린 것이 아니라, 역함수의 치역을 약속대로 지킨 것이다. 각의 범위가 주어진 문제에서는 약속된 치역 밖의 답이 필요할 수 있으니, 역삼각함수의 값을 구한 뒤 각을 다시 맞춰야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(\arccos\left(\cos\frac{4\pi}{3}\right)\)의 값은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{2\pi}{3}\)<span class="why"><b>맞습니다.</b> \(\cos\frac{4\pi}{3} = -\frac{1}{2}\)이고, \([0, \pi]\)에서 코사인값이 \(-\frac{1}{2}\)인 각은 \(\frac{2\pi}{3}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{4\pi}{3}\)<span class="why"><b>치역을 확인하지 않았습니다.</b> \(\arccos\)의 값은 \([0, \pi]\) 안에 있어야 하는데 \(\frac{4\pi}{3} &gt; \pi\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-\frac{2\pi}{3}\)<span class="why"><b>\(\arcsin\)의 범위처럼 음수를 골랐습니다.</b> \(\arccos\)의 치역에는 음수가 없습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{\pi}{3}\)<span class="why"><b>부호를 놓쳤습니다.</b> \(\arccos\frac{1}{2} = \frac{\pi}{3}\)이지만, 여기서는 \(\cos\frac{4\pi}{3} = -\frac{1}{2}\)입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(\frac{2\pi}{3}\)<span class="why"><b>맞다.</b> \(\cos\frac{4\pi}{3} = -\frac{1}{2}\)이고, \([0, \pi]\)에서 코사인값이 \(-\frac{1}{2}\)인 각은 \(\frac{2\pi}{3}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(\frac{4\pi}{3}\)<span class="why"><b>치역을 확인하지 않았다.</b> \(\arccos\)의 값은 \([0, \pi]\) 안에 있어야 하는데 \(\frac{4\pi}{3} &gt; \pi\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(-\frac{2\pi}{3}\)<span class="why"><b>\(\arcsin\)의 범위처럼 음수를 골랐다.</b> \(\arccos\)의 치역에는 음수가 없다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(\frac{\pi}{3}\)<span class="why"><b>부호를 놓쳤다.</b> \(\arccos\frac{1}{2} = \frac{\pi}{3}\)이지만, 여기서는 \(\cos\frac{4\pi}{3} = -\frac{1}{2}\)이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-2.html#card-alg-trig-graph"><small class="mono">대수 2.2</small>원을 도는 점의 높이를 옆으로 펼치면 어떤 모양일까?</a><a href="../../c/alg/2-2.html#card-alg-sin-param"><small class="mono">대수 2.2</small>식의 어느 수가 파동의 높이와 폭을 정할까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-map"><small class="mono">공통수학2 3.3</small>화살표를 거꾸로 돌리면 언제 함수가 될까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-graph"><small class="mono">공통수학2 3.3</small>역함수는 어떻게 구하고, 그래프는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-deriv-trace"><small class="mono">전문 수학 1.4</small>접선의 기울기를 모으면 sec x의 도함수가 보일까?</a><a href="../../c/pmath/1-4.html#card-pmath-museum"><small class="mono">전문 수학 1.4</small>벽에 높이 걸린 그림은 몇 걸음 떨어져야 가장 크게 보일까?</a><a href="../../c/pmath/1-7.html#card-pmath-trig-sub"><small class="mono">전문 수학 1.7</small>∫₀a√(1 − x²) dx를 원의 그림만으로 계산할 수 있을까?</a><a href="../../c/adcalc/3-5.html#card-adcalc-series-build"><small class="mono">고급 미적분 3.5</small>1/(1 − x) 하나로 ln(1 + x)와 tan⁻¹x의 급수를 만들 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/alg/2-2.html#card-alg-trig-graph"><small class="mono">대수 2.2</small>원을 도는 점의 높이를 옆으로 펼치면 어떤 모양일까?</a><a href="../../c/alg/2-2.html#card-alg-sin-param"><small class="mono">대수 2.2</small>식의 어느 수가 파동의 높이와 폭을 정할까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-map"><small class="mono">공통수학2 3.3</small>화살표를 거꾸로 돌리면 언제 함수가 될까?</a><a href="../../c/cm2/3-3.html#card-cm2-inverse-graph"><small class="mono">공통수학2 3.3</small>역함수는 어떻게 구하고, 그래프는 어디에 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pmath/1-4.html#card-pmath-deriv-trace"><small class="mono">전문 수학 1.4</small>접선의 기울기를 모으면 sec x의 도함수가 보일까?</a><a href="../../c/pmath/1-4.html#card-pmath-museum"><small class="mono">전문 수학 1.4</small>벽에 높이 걸린 그림은 몇 걸음 떨어져야 가장 크게 보일까?</a><a href="../../c/pmath/1-4.html#text-pmath-derivatives"><small class="mono">전문 수학 1.4</small>여러 가지 함수의 미분과 고계도함수</a><a href="../../c/pmath/1-7.html#card-pmath-trig-sub"><small class="mono">전문 수학 1.7</small>∫₀a√(1 − x²) dx를 원의 그림만으로 계산할 수 있을까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pmath-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pmath&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

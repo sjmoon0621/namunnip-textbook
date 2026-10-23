@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "sec": "2-4",
+  "short": "본문 · 선형변환과 행렬"
+}
+-->
+<article class="card reading" id="text-adalg-linear-map" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>선형변환과 행렬</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">모눈종이에 그린 고양이 그림을 어떤 변환으로 옮겼더니, 가로 눈금은 오른쪽 위로 비스듬히, 세로 눈금은 오른쪽으로 기울어진 평행사변형 격자가 되었다. 원래 \((1, 0)\)에 있던 점은 \((2, 1)\)로, \((0, 1)\)에 있던 점은 \((1, 1)\)로 옮겨졌다. 격자의 선들은 여전히 곧고 서로 나란하며, 원점도 그대로이다. 이 정보 두 가지만으로 고양이 그림의 다른 모든 점이 어디로 갔는지 알 수 있을까? 변환을 행렬 하나로 나타낼 수 있을까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 200" role="img" aria-label="선형변환으로 바뀐 격자">
+        <line x1="20" y1="160" x2="230" y2="160" class="ax"/><line x1="40" y1="20" x2="40" y2="190" class="ax"/>
+        <rect x="40" y="120" width="40" height="40" class="la"/><text x="46" y="146" class="s ta">e₁, e₂</text>
+        <line x1="290" y1="160" x2="500" y2="160" class="ax"/><line x1="310" y1="20" x2="310" y2="190" class="ax"/>
+        <path d="M310 160 L390 120 L430 80 L350 120 Z" class="lb"/>
+        <line x1="310" y1="160" x2="390" y2="120" class="b"/><text x="396" y="124" class="s tb">T(e₁) = (2, 1)</text>
+        <line x1="310" y1="160" x2="350" y2="120" class="d"/><text x="300" y="110" class="s td">T(e₂) = (1, 1)</text>
+        <text x="240" y="100" class="s">→</text>
+        <text x="20" y="196" class="s">원래 격자</text><text x="390" y="196" class="s">바뀐 격자</text>
+      </svg>
+      <figcaption>그림 1. 기저 벡터 두 개가 어디로 가는지 알면 격자 전체가 어떻게 바뀌는지 정해진다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬의 곱셈, 기저와 좌표(<a href="1-5.html">기저</a>), 행렬식(<a href="2-3.html">행렬식</a>).</div>
+
+    <h3><span class="no">2.4.1</span>더하기와 실수배를 지키는 변환</h3>
+    <p>벡터를 벡터로 보내는 함수 \(T\)가 \(T(\vec u + \vec v) = T(\vec u) + T(\vec v)\), \(T(k\vec u) = kT(\vec u)\)를 만족하면 선형변환이라 한다. 덧셈과 실수배를 지키므로 직선은 직선으로, 평행한 선은 평행한 선으로 가고, 원점은 원점으로 간다. 모든 벡터는 \(\vec v = x\vec e_1 + y\vec e_2\)처럼 기저의 일차결합이므로, 선형성에서 \(T(\vec v) = xT(\vec e_1) + yT(\vec e_2)\)이다. 그래서 기저 벡터의 행선지만 알면 모든 벡터의 행선지가 정해진다.</p>
+    <div class="tb-env thm"><span class="lb">정리 2.4.1 <span class="nm">선형변환의 행렬</span></span>
+      <p>평면의 선형변환 \(T\)에 대해 \(T(\vec e_1)\)과 \(T(\vec e_2)\)를 차례로 열로 하는 행렬을 \(A\)라 하면, 모든 \(\vec v\)에 대해 \(T(\vec v) = A\vec v\)이다. 거꾸로 모든 행렬은 \(\vec v \mapsto A\vec v\)로 선형변환을 정한다. \(T\)는 넓이를 \(|\det A|\)배로 바꾼다.</p>
+    </div>
+    <p>행렬의 열이 기저 벡터의 행선지라는 것은, 행렬을 보면 변환을 그릴 수 있고 변환을 보면 행렬을 쓸 수 있다는 뜻이다. 행렬과 벡터의 곱 \(A\vec v\)는 \(A\)의 열들을 \(\vec v\)의 성분만큼 곱해 더한 것이어서, 바뀐 격자 위에서 원래 좌표대로 칸을 세어 가는 일과 같다. 원점을 옮기는 평행이동이나 곧은 선을 휘게 하는 변환은 선형변환이 아니어서 이렇게 행렬 하나로 나타낼 수 없다.<sup class="fn"><a href="#fn-adalg-linear-map-1">1</a></sup></p>
+
+    <h3><span class="no">2.4.2</span>바뀐 그림에서 행렬 읽기</h3>
+    <p>바뀐 그림에서 행렬을 알아내려면, 원래 \((1, 0)\)과 \((0, 1)\)에 있던 두 점이 어디로 갔는지 찾아 그 좌표를 열로 적는다. 오른쪽으로 2배 늘인 변환은 \((1, 0)\)이 \((2, 0)\)으로 가고 \((0, 1)\)은 그대로이므로 \(\begin{pmatrix}2 & 0\\ 0 & 1\end{pmatrix}\)이다. 위쪽을 오른쪽으로 밀어 기울인 변환은 \((0, 1)\)이 \((1, 1)\)로 가므로 \(\begin{pmatrix}1 & 1\\ 0 & 1\end{pmatrix}\)이다. 기저가 아닌 두 점의 행선지만 알 때는, 그 두 점을 기저로 쓰는 식을 세워 연립방정식으로 행렬을 구한다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="변환된 점의 계산">
+        <g class="s">
+          <text x="20" y="22">원래 점</text><text x="160" y="22">일차결합</text><text x="340" y="22">행선지</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">(3, −1)</text><text x="160" y="52">3(2, 1) − (1, 1)</text><text x="340" y="52" class="td">(5, 2)</text>
+          <text x="20" y="74">(1, 1)</text><text x="160" y="74">(2, 1) + (1, 1)</text><text x="340" y="74">(3, 2)</text>
+          <text x="20" y="96">(−1, 2)</text><text x="160" y="96">−(2, 1) + 2(1, 1)</text><text x="340" y="96">(0, 1)</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 바뀐 점은 행렬의 두 열을 원래 좌표만큼 곱해 더한 것이다.</figcaption>
+    </figure>
+
+    <h3><span class="no">2.4.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 2.4.2</span>
+      <p>처음 질문의 변환을 행렬로 쓰고, 점 \((3, -1)\)의 행선지를 구하여라. 넓이 6인 고양이 그림은 바뀐 뒤 넓이가 얼마인가? 또 \((1, 1)\)이 \((3, 1)\)로, \((1, -1)\)이 \((1, 3)\)으로 가는 선형변환의 행렬을 구하여라.</p>
+    </div>
+    <p>\(T(\vec e_1) = (2, 1)\), \(T(\vec e_2) = (1, 1)\)이므로 \(A = \begin{pmatrix}2 & 1\\ 1 & 1\end{pmatrix}\)이다. \(A\begin{pmatrix}3\\ -1\end{pmatrix} = \begin{pmatrix}5\\ 2\end{pmatrix}\)이다. \(\det A = 2 - 1 = 1\)이므로 고양이 그림은 모양이 기울어져도 넓이는 6 그대로이다.</p>
+    <p>둘째 변환은 \(\vec e_1 = \tfrac12[(1, 1) + (1, -1)]\), \(\vec e_2 = \tfrac12[(1, 1) - (1, -1)]\)이므로 선형성에서 \(T(\vec e_1) = \tfrac12[(3, 1) + (1, 3)] = (2, 2)\), \(T(\vec e_2) = \tfrac12[(3, 1) - (1, 3)] = (1, -1)\)이다. 그래서 행렬은 \(\begin{pmatrix}2 & 1\\ 2 & -1\end{pmatrix}\)이다. 확인하면 \(\begin{pmatrix}2 & 1\\ 2 & -1\end{pmatrix}\begin{pmatrix}1\\ 1\end{pmatrix} = \begin{pmatrix}3\\ 1\end{pmatrix}\)이다. 즉 선형변환은 덧셈과 실수배를 지키므로 기저 벡터의 행선지만으로 정해지고, 그 행선지를 열로 늘어놓은 행렬을 곱하는 것과 같다.</p>
+    <p>아래 탐구 카드에서 행렬을 바꾸며 격자 전체가 어떻게 움직이는지 보고, 바뀐 그림만 보고 행렬을 알아맞혀 보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adalg-linear-map-1">컴퓨터 그래픽에서는 평행이동도 행렬 곱셈으로 다루려고 점 \((x, y)\)를 \((x, y, 1)\)로 쓰는 동차좌표를 쓴다. 한 차원을 늘리면 평행이동이 \(3\times3\) 행렬의 선형변환이 되어, 회전과 확대와 이동을 행렬 하나로 합칠 수 있다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>덧셈과 실수배를 지키는 선형변환은 직선을 직선으로, 원점을 원점으로 보내며, 기저 벡터의 행선지만으로 모든 벡터의 행선지가 정해진다. 그래서 \(T(\vec e_1)\), \(T(\vec e_2)\)를 열로 하는 행렬 \(A\)에 대해 \(T(\vec v) = A\vec v\)이고, 넓이는 \(|\det A|\)배가 된다. 처음 질문의 변환은 행렬 \(\begin{pmatrix}2 & 1\\ 1 & 1\end{pmatrix}\)이어서 \((3, -1)\)을 \((5, 2)\)로 보내고, 행렬식이 1이라 그림의 넓이는 그대로이다.</p></div>
+  </div>
+</article>

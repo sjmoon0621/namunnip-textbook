@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>이온화 상수와 pH — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="산과 염기의 이온화 상수 Ka, Kb로 세기를 비교하고, 약산과 약염기 수용액의 pH를 이온화 평형으로 구한다.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,8 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
+  <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-is2-ph-log canvas { width: 100%; aspect-ratio: 4 / 3; }
     #card-is2-ph-log .nums dd { font-size: 14px; }
@@ -44,20 +50,73 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-is2-ph-log"><span class="mono">1.2.1</span>pH는 왜 로그 눈금일까?</a></li>
-        <li><a href="#card-chem-autoion"><span class="mono">1.2.2</span>순수한 물에도 이온이 있을까?</a></li>
-        <li><a href="#card-chem-ph-scale"><span class="mono">1.2.3</span>[H₃O⁺]가 늘면 [OH⁻]는 왜 줄어들까?</a></li>
-        <li><a href="#card-rxn-weak-acid"><span class="mono">1.2.4</span>같은 농도의 산인데 pH는 왜 다를까?</a></li>
+        <li><a href="#text-rxn-ph"><span class="mono">본문</span>이온화 상수와 pH</a></li>
+        <li><a href="#card-is2-ph-log"><span class="mono">탐구 1</span>pH는 왜 로그 눈금일까?</a></li>
+        <li><a href="#card-chem-autoion"><span class="mono">탐구 2</span>순수한 물에도 이온이 있을까?</a></li>
+        <li><a href="#card-chem-ph-scale"><span class="mono">탐구 3</span>[H₃O⁺]가 늘면 [OH⁻]는 왜 줄어들까?</a></li>
+        <li><a href="#card-rxn-weak-acid"><span class="mono">탐구 4</span>같은 농도의 산인데 pH는 왜 다를까?</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=rxn-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">48문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=rxn&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=rxn-1-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">50문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=rxn-1-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-rxn-ph" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>이온화 상수와 pH</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">0.1 M 염산의 pH는 1이다. 그런데 같은 농도의 아세트산, 곧 식초의 산은 pH가 약 2.9이다. pH가 1.9 차이 난다는 것은 수소 이온 농도가 거의 80배 다르다는 뜻이다. 같은 수의 산 분자를 녹였는데 왜 내놓는 수소 이온의 양이 이렇게 다를까? 그리고 그 차이를 계산으로 미리 알 수 있을까?</p>
+          <figure class="q-fig" data-q="rxn-weakph">
+            <svg viewBox="0 0 520 230" role="img" aria-label="산의 종류와 농도에 따른 pH"></svg>
+            <div class="q-ctl"><label>산의 농도 (10의 거듭제곱 M) <input type="range" data-k="lc" min="-4" max="0" step="0.25" value="-1"><output data-k="lc"></output></label><label>산 (0 염산, 1 플루오린화 수소산, 2 아세트산) <input type="range" data-k="a" min="0" max="2" step="1" value="2"><output data-k="a"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 산의 농도에 따른 pH. 센 산(염산)은 모두 이온화하여 농도가 10배 묽어질 때마다 pH가 1씩 오른다. 약한 산은 일부만 이온화하여 같은 농도에서 pH가 높고, 묽을수록 이온화하는 비율이 커진다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>pH와 로그 눈금, 물의 이온곱(화학), 평형 상수, 짝산과 짝염기(<a href="1-1.html">브뢴스테드–라우리 산과 염기</a>), 이차방정식(수학).</div>
+
+          <h3><span class="no">1.2.1</span>이온화 상수</h3>
+          <p>산 HA를 물에 녹이면 \(\text{HA} + \text{H}_2\text{O} \rightleftharpoons \text{H}_3\text{O}^+ + \text{A}^-\)의 평형에 이른다. 이 평형 상수를 산의 이온화 상수라 한다. 그런데 물은 용매로 아주 많아 농도가 거의 변하지 않으므로 식에서 뺀다.</p>
+          <div class="tb-env thm"><span class="lb">정의 1.2.1 <span class="nm">산의 이온화 상수와 pH</span></span>
+            <p>\[K_a = \frac{[\text{H}_3\text{O}^+][\text{A}^-]}{[\text{HA}]},\qquad \text{pH} = -\log[\text{H}_3\text{O}^+]\] \(K_a\)가 클수록 센 산이다. 이온화한 비율을 이온화도라 한다.</p>
+          </div>
+          <p>염산은 \(K_a\)가 매우 커서 사실상 모두 이온화하므로 \([\text{H}_3\text{O}^+]\)가 산의 농도와 같다. 반면 아세트산은 \(K_a = 1.8 \times 10^{-5}\)로 작아, 0.1 M에서 100개 가운데 약 1.3개만 이온화한다. 그래서 같은 농도에서도 pH가 크게 다르다.</p>
+
+          <h3><span class="no">1.2.2</span>약산의 pH 계산</h3>
+          <p>처음 농도 \(C\)인 약산이 \(x\)만큼 이온화하면 평형에서 \([\text{H}_3\text{O}^+] = [\text{A}^-] = x\), \([\text{HA}] = C - x\)이다. 따라서 \(K_a = \dfrac{x^2}{C - x}\)이다. 그런데 약산은 \(x\)가 \(C\)보다 훨씬 작으므로 \(C - x \approx C\)로 어림하면 \(x \approx \sqrt{K_aC}\)이다.<sup class="fn"><a href="#fn-rxn-ph-1">1</a></sup></p>
+          <p>그림 1에서 농도를 바꾸어 보자. 아세트산을 100배 묽게 하면 \([\text{H}_3\text{O}^+]\)는 10분의 1이 되어 pH는 1만 오른다. 반면 이온화도는 10배 커진다. 즉 약한 산은 묽을수록 더 많은 비율이 이온화한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="0.1 M 산의 이온화 비교">
+              <g class="s">
+                <text x="20" y="22">0.1 M 산</text><text x="190" y="22">Ka</text><text x="300" y="22">[H₃O⁺]</text><text x="420" y="22">pH</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">염산</text><text x="190" y="52">매우 큼</text><text x="300" y="52">0.1 M</text><text x="420" y="52">1.00</text>
+                <text x="20" y="74">플루오린화 수소산</text><text x="190" y="74">6.8 × 10⁻⁴</text><text x="300" y="74">7.9 × 10⁻³ M</text><text x="420" y="74">2.10</text>
+                <text x="20" y="96">아세트산</text><text x="190" y="96">1.8 × 10⁻⁵</text><text x="300" y="96">1.3 × 10⁻³ M</text><text x="420" y="96">2.87</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 같은 농도라도 이온화 상수에 따라 수소 이온 농도가 수십 배 차이 난다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.2.2</span>
+            <p>0.10 M 아세트산 수용액의 \([\text{H}_3\text{O}^+]\), pH, 이온화도를 구하여라(\(K_a = 1.8 \times 10^{-5}\)). 이 용액을 물로 100배 묽히면 pH는 얼마가 되는가?</p>
+          </div>
+          <p>\(x \approx \sqrt{1.8 \times 10^{-5} \times 0.10} = \sqrt{1.8 \times 10^{-6}} \approx 1.34 \times 10^{-3}\) M이다. pH는 \(-\log(1.34 \times 10^{-3}) \approx 2.87\)이고, 이온화도는 \(\dfrac{1.34 \times 10^{-3}}{0.10} \approx 1.3\%\)이다. \(x\)가 \(C\)의 1.3%뿐이므로 어림이 정당하다.</p>
+          <p>100배 묽히면 \(C = 1.0 \times 10^{-3}\) M이고 \(x \approx \sqrt{1.8 \times 10^{-8}} \approx 1.34 \times 10^{-4}\) M이다. 그러나 이온화도가 13%로 커져 어림의 오차가 커지므로 이차방정식으로 풀면 \(x \approx 1.25 \times 10^{-4}\) M, pH는 약 3.90이다. 그러므로 묽혀도 pH는 약 1만 올랐고, 염산이었다면 2가 올랐을 것이다.</p>
+          <p>아래 탐구 카드에서 pH가 로그 눈금인 까닭과, 같은 농도의 산이 pH가 다른 까닭을 직접 계산해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-rxn-ph-1">어림은 이온화도가 5%보다 작을 때 잘 맞는다. 그보다 크면 \(x^2 + K_ax - K_aC = 0\)을 근의 공식으로 푼다. 그림 1은 늘 근의 공식으로 계산한다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>산의 세기는 이온화 상수 \(K_a = \frac{[\text{H}_3\text{O}^+][\text{A}^-]}{[\text{HA}]}\)로 나타내며, 약산의 수소 이온 농도는 대략 \(\sqrt{K_aC}\)이다. 약산은 묽을수록 이온화도가 커진다. 그래서 처음 질문의 염산과 아세트산은 같은 0.1 M이어도 이온화 상수가 달라, 아세트산은 약 1.3%만 이온화하여 pH가 2.9로 높다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/is2/1-4.html#card-is2-ion-migration"><small class="mono">통합과학2 1.4</small>여러 가지 산에 공통으로 들어 있는 것은?</a><a href="../../c/is2/1-4.html#card-is2-neutral"><small class="mono">통합과학2 1.4</small>산과 염기를 섞으면 무엇이 사라질까?</a><a href="../../c/is2/1-4.html#card-is2-acid-plate"><small class="mono">통합과학2 1.4</small>이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?</a><a href="../../c/is2/1-4.html#text-is2-acid-base"><small class="mono">통합과학2 1.4</small>산과 염기, 중화 반응</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-1.html#card-chem-kw-temp"><small class="mono">화학 4.1</small>pH 7은 언제나 중성일까?</a><a href="../../c/chem/4-1.html#card-chem-dilute-ph"><small class="mono">화학 4.1</small>염산을 10배씩 계속 묽히면 pH는 끝없이 커질까?</a><a href="../../c/chem/4-1.html#text-chem-ph"><small class="mono">화학 4.1</small>물의 자동 이온화와 pH</a><a href="../../c/chem/4-3.html#card-chem-ion-count"><small class="mono">화학 4.3</small>산과 염기를 섞을 때 이온 수는 어떻게 변할까?</a></div></nav>
+
       <article class="card" id="card-is2-ph-log">
         <header class="card-head">
-          <span class="no">1.2.1</span><h2>pH는 왜 로그 눈금일까?</h2><span class="kind">pH · 지시약 · 묽히기</span>
+          <span class="no">탐구 1</span><h2>pH는 왜 로그 눈금일까?</h2><span class="kind">pH · 지시약 · 묽히기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -81,33 +140,33 @@
                 <div><dt>순수한 물보다 H⁺</dt><dd class="x">—</dd></div>
               </dl>
               <p class="fig-note msg"></p>
-              <p class="fig-note">25 °C 기준. 물질의 pH는 대표값이며 제품과 상태에 따라 다릅니다. 지시약의 색이 바뀌는 범위: 리트머스 4.5–8.3, BTB 6.0–7.6, 페놀프탈레인 8.2–10.</p>
+              <p class="fig-note">25 °C 기준이다. 물질의 pH는 대표값이며 제품과 상태에 따라 다르다. 지시약의 색이 바뀌는 범위는 리트머스 4.5~8.3, BTB 6.0~7.6, 페놀프탈레인 8.2~10이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>레몬즙의 H⁺ 농도는 약 0.006 mol/L, 바닷물은 약 0.000 000 008 mol/L입니다. 이런 수를 한 자로 비교하려면 어떻게 해야 할까요?</li>
-            <li><span class="tag">복원</span>물속 H⁺ 농도는 물질에 따라 10¹⁴배 넘게 차이 납니다. 이렇게 폭이 넓은 양은 값 자체보다 <em>10의 몇 제곱인지</em>로 나타내는 편이 편합니다.</li>
-            <li><span class="tag">설명</span>H⁺ 농도를 10의 거듭제곱으로 썼을 때 지수에서 − 부호를 뗀 수가 pH입니다. [H⁺]가 10⁻³ mol/L이면 pH 3입니다(식으로는 <span class="formula">pH = −log[H⁺]</span>이고, 로그는 대수 과목에서 배웁니다). 그래서 pH가 1 작아지면 H⁺는 10배, 2 작아지면 100배 많습니다. 25 °C 물에서는 [H⁺]×[OH⁻] = 10⁻¹⁴이라, 중성인 pH 7에서 둘이 10⁻⁷ mol/L로 같습니다.</li>
-            <li><span class="tag">연결</span>지시약은 특정 pH 범위에서 색이 바뀌는 물질입니다. 범위가 서로 달라서, BTB는 중성 근처를, 페놀프탈레인은 염기성 쪽을 잘 가려냅니다.</li>
-            <li><span class="tag">적용</span>아래 막대 그래프는 같은 양을 선형 눈금으로 그린 것입니다. pH가 2 높은 쪽 막대는 거의 보이나요? 그다음 ‘0.1 M 염산’에서 ‘물로 10배 묽히기’를 여러 번 눌러 보세요. pH가 7을 넘어가나요?</li>
-            <li class="warn"><span class="tag">판단</span>“pH 3은 pH 6보다 두 배 산성”이 아닙니다. H⁺는 1000배입니다. 또 산을 아무리 묽혀도 염기가 되지는 않습니다. 물 자체가 H⁺와 OH⁻를 10⁻⁷ mol/L씩 내놓기 때문에, 묽힐수록 pH는 7에 다가갈 뿐입니다.</li>
+            <li><span class="tag">질문</span>레몬즙의 H⁺ 농도는 약 0.006 mol/L, 바닷물은 약 0.000 000 008 mol/L이다. 이런 수를 한 자로 비교하려면 어떻게 해야 할까?</li>
+            <li><span class="tag">복원</span>물속 H⁺ 농도는 물질에 따라 10¹⁴배 넘게 차이 난다. 이렇게 폭이 넓은 양은 값 자체보다 <em>10의 몇 제곱인지</em>로 나타내는 편이 편하다.</li>
+            <li><span class="tag">설명</span>그래서 H⁺ 농도를 10의 거듭제곱으로 썼을 때 지수에서 − 부호를 뗀 수를 pH라 한다. [H⁺]가 10⁻³ mol/L이면 pH 3이다(식으로는 <span class="formula">pH = −log[H⁺]</span>이고, 로그는 대수 과목에서 배운다). 따라서 pH가 1 작아지면 H⁺는 10배, 2 작아지면 100배 많다. 또 25 °C 물에서는 [H⁺]×[OH⁻] = 10⁻¹⁴이라, 중성인 pH 7에서 둘이 10⁻⁷ mol/L로 같다.</li>
+            <li><span class="tag">연결</span>지시약은 특정 pH 범위에서 색이 바뀌는 물질이다. 범위가 서로 달라서, BTB는 중성 근처를, 페놀프탈레인은 염기성 쪽을 잘 가려낸다.</li>
+            <li><span class="tag">적용</span>아래 막대 그래프는 같은 양을 선형 눈금으로 그린 것인데, pH가 2 높은 쪽 막대는 거의 보이지 않는다. 그다음 ‘0.1 M 염산’에서 ‘물로 10배 묽히기’를 여러 번 누르면 pH가 7에 다가가기만 할 뿐 넘어가지 않는다.</li>
+            <li class="warn"><span class="tag">판단</span>“pH 3은 pH 6보다 두 배 산성”이 아니라, H⁺가 1000배이다. 또 산을 아무리 묽혀도 염기가 되지는 않는다. 물 자체가 H⁺와 OH⁻를 10⁻⁷ mol/L씩 내놓기 때문에, 묽힐수록 pH는 7에 다가갈 뿐이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">pH 4인 빗물과 pH 6인 빗물이 있습니다. 두 빗물의 H⁺ 농도를 비교한 것으로 옳은 것은?</p>
+          <p class="q">pH 4인 빗물과 pH 6인 빗물이 있다. 두 빗물의 H⁺ 농도를 비교한 것으로 옳은 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>pH 4 빗물이 1.5배 진하다.<span class="why"><b>눈금을 선형으로 읽은 답입니다.</b> 6 ÷ 4 = 1.5처럼 pH 값을 그대로 나누면 안 됩니다. pH는 지수입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>pH 4 빗물이 2배 진하다.<span class="why"><b>pH 차이 2를 그대로 배수로 본 답입니다.</b> pH가 1 차이 날 때마다 10배씩이므로 차이 2는 10 × 10입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>pH 4 빗물이 100배 진하다.<span class="why"><b>맞습니다.</b> 10⁻⁴ ÷ 10⁻⁶ = 10². 깨끗한 빗물도 공기 중 CO₂가 녹아 pH 5.6 정도이므로, 보통 pH 5.6보다 낮은 비를 산성비라고 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>pH 4 빗물이 1.5배 진하다.<span class="why"><b>눈금을 선형으로 읽은 답이다.</b> 6 ÷ 4 = 1.5처럼 pH 값을 그대로 나누면 안 된다. pH는 지수이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>pH 4 빗물이 2배 진하다.<span class="why"><b>pH 차이 2를 그대로 배수로 본 답이다.</b> pH가 1 차이 날 때마다 10배씩이므로 차이 2는 10 × 10이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄷ</span><span>pH 4 빗물이 100배 진하다.<span class="why"><b>맞다.</b> 10⁻⁴ ÷ 10⁻⁶ = 10². 깨끗한 빗물도 공기 중 CO₂가 녹아 pH 5.6 정도이므로, 보통 pH 5.6보다 낮은 비를 산성비라고 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-1.html#card-chem-kw-temp"><small class="mono">화학 4.1</small>pH 7은 언제나 중성일까?</a><a href="../../c/chem/4-1.html#card-chem-dilute-ph"><small class="mono">화학 4.1</small>염산을 10배씩 계속 묽히면 pH는 끝없이 커질까?</a><a href="../../c/chem/4-3.html#card-chem-ion-count"><small class="mono">화학 4.3</small>산과 염기를 섞을 때 이온 수는 어떻게 변할까?</a><a href="../../c/chem/4-3.html#card-chem-eq-point"><small class="mono">화학 4.3</small>중화점에서 용액은 언제나 중성일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is1/2-4.html#card-is1-bond"><small class="mono">통합과학1 2.4</small>원자는 왜 전자를 주고받거나 함께 쓸까?</a><a href="../../c/is1/2-4.html#card-is1-conduct"><small class="mono">통합과학1 2.4</small>소금물은 전기가 통하는데 설탕물은 왜 안 통할까?</a><a href="../../c/chem/2-1.html#card-chem-nacl"><small class="mono">화학 2.1</small>고체 소금은 전기가 안 통하는데, 녹이면 왜 통할까?</a><a href="../../c/chem/2-1.html#card-chem-h2oel"><small class="mono">화학 2.1</small>물을 전기 분해하면 왜 수소가 산소의 2배 나올까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/rxn/1-1.html#text-rxn-bronsted"><small class="mono">화학 반응의 세계 1.1</small>브뢴스테드–라우리 산과 염기</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-1.html#card-chem-kw-temp"><small class="mono">화학 4.1</small>pH 7은 언제나 중성일까?</a><a href="../../c/chem/4-1.html#card-chem-dilute-ph"><small class="mono">화학 4.1</small>염산을 10배씩 계속 묽히면 pH는 끝없이 커질까?</a><a href="../../c/chem/4-1.html#text-chem-ph"><small class="mono">화학 4.1</small>물의 자동 이온화와 pH</a><a href="../../c/chem/4-3.html#card-chem-ion-count"><small class="mono">화학 4.3</small>산과 염기를 섞을 때 이온 수는 어떻게 변할까?</a></div></nav>
 
       <article class="card" id="card-chem-autoion">
         <header class="card-head">
-          <span class="no">1.2.2</span><h2>순수한 물에도 이온이 있을까?</h2><span class="kind">물의 자동 이온화 · 개수 세기</span>
+          <span class="no">탐구 2</span><h2>순수한 물에도 이온이 있을까?</h2><span class="kind">물의 자동 이온화 · 개수 세기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -127,33 +186,33 @@
                 <div><dt>OH⁻ (평균)</dt><dd class="n-oh">—</dd></div>
               </dl>
               <p class="fig-note msg" aria-live="polite"></p>
-              <p class="fig-note">25 °C 순수한 물: [H₂O] = 55.5 mol/L, [H₃O⁺] = [OH⁻] = 1.0×10⁻⁷ mol/L로 계산한 평균 개수입니다.</p>
+              <p class="fig-note">25 °C 순수한 물에서 [H₂O] = 55.5 mol/L, [H₃O⁺] = [OH⁻] = 1.0×10⁻⁷ mol/L로 계산한 평균 개수이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>아주 깨끗하게 정제한 물도 전기가 아주 조금은 통합니다. 이온이 있다는 뜻입니다. 물 분자만 있는데 이온은 어디서 왔을까요?</li>
-            <li><span class="tag">복원</span>산은 H⁺를 내주고, 염기는 H⁺를 받습니다. 물 분자는 둘 다 할 수 있습니다.</li>
-            <li><span class="tag">설명</span>물 분자 두 개가 부딪칠 때 하나가 다른 하나에게 H⁺를 넘기기도 합니다. <span class="formula">H₂O + H₂O ⇌ H₃O⁺ + OH⁻</span>. 이것이 물의 자동 이온화입니다. 곧바로 되돌아가기도 하므로 동적 평형을 이룹니다.</li>
-            <li><span class="tag">연결</span>물은 거의 변하지 않으므로 평형 상수 식에서 빠지고, <span class="formula">K<sub>w</sub> = [H₃O⁺][OH⁻] = 1.0×10⁻¹⁴</span> (25 °C)만 남습니다. 순수한 물에서는 두 이온이 똑같이 생기므로 각각 1.0×10⁻⁷ mol/L입니다.</li>
-            <li><span class="tag">적용</span>물방울을 줄여 보세요. 세균 하나 크기(1 μm)의 물에는 H₃O⁺가 몇 개 있나요? 바이러스 크기(100 nm)로 줄이면 평균이 1개보다 작아집니다. 이것은 무슨 뜻일까요?</li>
-            <li class="warn"><span class="tag">판단</span>“순수한 물은 이온이 없어서 전기가 전혀 통하지 않는다”는 틀립니다. 아주 적게 통합니다. 반대로 수돗물이 전기가 잘 통하는 것은 물의 자동 이온화 때문이 아니라 녹아 있는 무기 염류의 이온 때문입니다.</li>
+            <li><span class="tag">질문</span>아주 깨끗하게 정제한 물도 전기가 아주 조금은 통한다. 이온이 있다는 뜻이다. 물 분자만 있는데 이온은 어디서 왔을까?</li>
+            <li><span class="tag">복원</span>산은 H⁺를 내주고, 염기는 H⁺를 받는다. 그런데 물 분자는 둘 다 할 수 있다.</li>
+            <li><span class="tag">설명</span>그래서 물 분자 두 개가 부딪칠 때 하나가 다른 하나에게 H⁺를 넘기기도 하는데(<span class="formula">H₂O + H₂O ⇌ H₃O⁺ + OH⁻</span>), 이것이 물의 자동 이온화이다. 곧바로 되돌아가기도 하므로 동적 평형을 이룬다.</li>
+            <li><span class="tag">연결</span>물은 거의 변하지 않으므로 평형 상수 식에서 빠지고, <span class="formula">K<sub>w</sub> = [H₃O⁺][OH⁻] = 1.0×10⁻¹⁴</span> (25 °C)만 남는다. 순수한 물에서는 두 이온이 똑같이 생기므로 각각 1.0×10⁻⁷ mol/L이다.</li>
+            <li><span class="tag">적용</span>물방울을 줄여 세균 하나 크기(1 μm)의 물에 H₃O⁺가 몇 개 있는지 보자. 바이러스 크기(100 nm)로 줄이면 평균이 1개보다 작아지는데, 이것이 무슨 뜻인지도 생각해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“순수한 물은 이온이 없어서 전기가 전혀 통하지 않는다”는 틀린 말이고, 아주 적게 통한다. 반대로 수돗물이 전기가 잘 통하는 것은 물의 자동 이온화 때문이 아니라 녹아 있는 무기 염류의 이온 때문이다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">25 °C 순수한 물 1.0 L에 들어 있는 H₃O⁺의 개수에 가장 가까운 것은?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0개<span class="why"><b>평균이 1보다 작아지는 것은 아주 작은 물방울일 때입니다.</b> 1 L는 충분히 커서 이온이 엄청나게 많습니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 6×10¹⁶개<span class="why"><b>맞습니다.</b> 1.0×10⁻⁷ mol × 6.02×10²³ /mol ≈ 6.0×10¹⁶개. 개수는 많지만 물 분자(약 3.3×10²⁵개)에 비하면 5억 5천만분의 1입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 6×10²³개<span class="why"><b>1 mol의 개수를 그대로 쓴 답입니다.</b> [H₃O⁺]는 1 mol/L가 아니라 1.0×10⁻⁷ mol/L입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>0개<span class="why"><b>평균이 1보다 작아지는 것은 아주 작은 물방울일 때이다.</b> 1 L는 충분히 커서 이온이 엄청나게 많다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>약 6×10¹⁶개<span class="why"><b>맞다.</b> 1.0×10⁻⁷ mol × 6.02×10²³ /mol ≈ 6.0×10¹⁶개. 개수는 많지만 물 분자(약 3.3×10²⁵개)에 비하면 5억 5천만분의 1이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>약 6×10²³개<span class="why"><b>1 mol의 개수를 그대로 쓴 답이다.</b> [H₃O⁺]는 1 mol/L가 아니라 1.0×10⁻⁷ mol/L이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is2/1-4.html#card-is2-ion-migration"><small class="mono">통합과학2 1.4</small>여러 가지 산에 공통으로 들어 있는 것은?</a><a href="../../c/is2/1-4.html#card-is2-neutral"><small class="mono">통합과학2 1.4</small>산과 염기를 섞으면 무엇이 사라질까?</a><a href="../../c/is2/1-4.html#card-is2-acid-plate"><small class="mono">통합과학2 1.4</small>이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?</a><a href="../../c/chem/3-2.html#card-chem-k-hi"><small class="mono">화학 3.2</small>평형 상수는 무엇을 알려 줄까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-4.html#card-chem-vinegar"><small class="mono">화학 4.4</small>식초 속 아세트산 농도를 어떻게 알아낼까?</a><a href="../../c/chem/4-4.html#card-chem-indicator"><small class="mono">화학 4.4</small>지시약은 왜 딱 그 순간에 색이 바뀔까?</a><a href="../../c/labchem/1-2.html#card-labchem-tools"><small class="mono">화학 실험 1.2</small>25 mL를 옮길 때 비커, 실린더, 피펫 가운데 무엇을 써야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is2/1-4.html#card-is2-ion-migration"><small class="mono">통합과학2 1.4</small>여러 가지 산에 공통으로 들어 있는 것은?</a><a href="../../c/is2/1-4.html#card-is2-neutral"><small class="mono">통합과학2 1.4</small>산과 염기를 섞으면 무엇이 사라질까?</a><a href="../../c/is2/1-4.html#card-is2-acid-plate"><small class="mono">통합과학2 1.4</small>이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?</a><a href="../../c/is2/1-4.html#text-is2-acid-base"><small class="mono">통합과학2 1.4</small>산과 염기, 중화 반응</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-4.html#card-chem-vinegar"><small class="mono">화학 4.4</small>식초 속 아세트산 농도를 어떻게 알아낼까?</a><a href="../../c/chem/4-4.html#card-chem-indicator"><small class="mono">화학 4.4</small>지시약은 왜 딱 그 순간에 색이 바뀔까?</a><a href="../../c/chem/4-4.html#text-chem-titration"><small class="mono">화학 4.4</small>중화 적정</a><a href="../../c/adchem/4-5.html#text-adchem-weak-base"><small class="mono">고급 화학 4.5</small>약산·약염기의 pH</a></div></nav>
 
       <article class="card" id="card-chem-ph-scale">
         <header class="card-head">
-          <span class="no">1.2.3</span><h2>[H₃O⁺]가 늘면 [OH⁻]는 왜 줄어들까?</h2><span class="kind">K<sub>w</sub> · pH 척도</span>
+          <span class="no">탐구 3</span><h2>[H₃O⁺]가 늘면 [OH⁻]는 왜 줄어들까?</h2><span class="kind">K<sub>w</sub> · pH 척도</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -172,33 +231,33 @@
                 <div><dt>pH 7보다 H₃O⁺가</dt><dd class="ratio" style="font-size:14px">—</dd></div>
                 <div><dt>액성 (25 °C)</dt><dd class="side">—</dd></div>
               </dl>
-              <p class="fig-note">예시 물질의 pH는 대략적인 값으로, 제품과 상태에 따라 다릅니다. 색 띠는 산성과 염기성을 구분하기 위한 모식입니다.</p>
+              <p class="fig-note">예시 물질의 pH는 대략적인 값으로, 제품과 상태에 따라 다르다. 색 띠는 산성과 염기성을 구분하기 위한 모식이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>레몬즙에 H₃O⁺가 많다는 것은 알겠습니다. 그렇다면 레몬즙에는 OH⁻가 하나도 없을까요?</li>
-            <li><span class="tag">복원</span>25 °C 수용액에서는 언제나 <span class="formula">[H₃O⁺][OH⁻] = 1.0×10⁻¹⁴</span>입니다. 순수한 물이든, 산이나 염기를 녹인 용액이든 마찬가지입니다.</li>
-            <li><span class="tag">설명</span>산을 넣어 H₃O⁺가 늘면 평형 <span class="formula">2H₂O ⇌ H₃O⁺ + OH⁻</span>가 왼쪽으로 이동해 OH⁻가 줄어듭니다. 곱이 일정하니 한쪽이 10배가 되면 다른 쪽은 10분의 1이 됩니다. OH⁻가 0이 되지는 않습니다.</li>
-            <li><span class="tag">연결</span>농도가 10⁻¹에서 10⁻¹⁴까지 넓게 걸쳐 있어 지수만 떼어 씁니다. <span class="formula">pH = −log[H₃O⁺]</span>. pH가 1 작아지면 [H₃O⁺]는 10배가 됩니다. 25 °C에서는 <span class="formula">pH + pOH = 14</span>입니다.</li>
-            <li><span class="tag">적용</span>슬라이더를 pH 7에서 3까지 옮기며 두 막대를 보세요. [H₃O⁺]는 몇 배가 되었고, [OH⁻]는 몇 분의 1이 되었나요? 레몬즙(pH 2.3)과 커피(pH 5.0)의 [H₃O⁺]는 몇 배 차이인가요?</li>
-            <li class="warn"><span class="tag">판단</span>“pH 4는 pH 8보다 두 배 산성이다”는 틀립니다. pH는 로그 척도라 4 차이는 [H₃O⁺] 1만 배 차이입니다. 또 pH는 0보다 작거나 14보다 클 수도 있습니다. 진한 염산은 pH가 음수가 되기도 합니다.</li>
+            <li><span class="tag">질문</span>레몬즙에 H₃O⁺가 많다는 것은 알겠다. 그렇다면 레몬즙에는 OH⁻가 하나도 없을까?</li>
+            <li><span class="tag">복원</span>25 °C 수용액에서는 언제나 <span class="formula">[H₃O⁺][OH⁻] = 1.0×10⁻¹⁴</span>이다. 순수한 물이든, 산이나 염기를 녹인 용액이든 마찬가지이다.</li>
+            <li><span class="tag">설명</span>그래서 산을 넣어 H₃O⁺가 늘면 평형 <span class="formula">2H₂O ⇌ H₃O⁺ + OH⁻</span>가 왼쪽으로 이동해 OH⁻가 줄어든다. 곱이 일정하니 한쪽이 10배가 되면 다른 쪽은 10분의 1이 되지만, OH⁻가 0이 되지는 않는다.</li>
+            <li><span class="tag">연결</span>그런데 농도가 10⁻¹에서 10⁻¹⁴까지 넓게 걸쳐 있어 지수만 떼어 <span class="formula">pH = −log[H₃O⁺]</span>로 쓴다. 그러면 pH가 1 작아질 때 [H₃O⁺]는 10배가 되고, 25 °C에서는 <span class="formula">pH + pOH = 14</span>이다.</li>
+            <li><span class="tag">적용</span>슬라이더를 pH 7에서 3까지 옮기며 [H₃O⁺]가 몇 배가 되고 [OH⁻]가 몇 분의 1이 되는지 두 막대로 보자. 레몬즙(pH 2.3)과 커피(pH 5.0)의 [H₃O⁺]가 몇 배 차이인지도 계산해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>“pH 4는 pH 8보다 두 배 산성이다”는 틀린 말이다. pH는 로그 척도라 4 차이는 [H₃O⁺] 1만 배 차이이기 때문이다. 또 pH는 0보다 작거나 14보다 클 수도 있어서, 진한 염산은 pH가 음수가 되기도 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">25 °C에서 [OH⁻] = 1.0×10⁻³ M인 용액의 pH는?</p>
           <ol>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3<span class="why"><b>[OH⁻]로 pH를 바로 계산한 답입니다.</b> −log[OH⁻] = 3은 pOH입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞습니다.</b> [H₃O⁺] = 1.0×10⁻¹⁴ / 1.0×10⁻³ = 1.0×10⁻¹¹ M. pH = 11, 염기성입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>7<span class="why"><b>OH⁻가 있다고 중성은 아닙니다.</b> 중성은 두 이온의 농도가 같을 때입니다. 여기서는 OH⁻가 1억 배 많습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄱ</span><span>3<span class="why"><b>[OH⁻]로 pH를 바로 계산한 답이다.</b> −log[OH⁻] = 3은 pOH이다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄴ</span><span>11<span class="why"><b>맞다.</b> [H₃O⁺] = 1.0×10⁻¹⁴ / 1.0×10⁻³ = 1.0×10⁻¹¹ M. pH = 11, 염기성이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>7<span class="why"><b>OH⁻가 있다고 중성은 아니다.</b> 중성은 두 이온의 농도가 같을 때이다. 여기서는 OH⁻가 1억 배 많다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is2/1-4.html#card-is2-ion-migration"><small class="mono">통합과학2 1.4</small>여러 가지 산에 공통으로 들어 있는 것은?</a><a href="../../c/is2/1-4.html#card-is2-neutral"><small class="mono">통합과학2 1.4</small>산과 염기를 섞으면 무엇이 사라질까?</a><a href="../../c/is2/1-4.html#card-is2-acid-plate"><small class="mono">통합과학2 1.4</small>이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?</a><a href="../../c/chem/3-2.html#card-chem-k-hi"><small class="mono">화학 3.2</small>평형 상수는 무엇을 알려 줄까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-4.html#card-chem-vinegar"><small class="mono">화학 4.4</small>식초 속 아세트산 농도를 어떻게 알아낼까?</a><a href="../../c/chem/4-4.html#card-chem-indicator"><small class="mono">화학 4.4</small>지시약은 왜 딱 그 순간에 색이 바뀔까?</a><a href="../../c/labchem/1-2.html#card-labchem-tools"><small class="mono">화학 실험 1.2</small>25 mL를 옮길 때 비커, 실린더, 피펫 가운데 무엇을 써야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/is2/1-4.html#card-is2-ion-migration"><small class="mono">통합과학2 1.4</small>여러 가지 산에 공통으로 들어 있는 것은?</a><a href="../../c/is2/1-4.html#card-is2-neutral"><small class="mono">통합과학2 1.4</small>산과 염기를 섞으면 무엇이 사라질까?</a><a href="../../c/is2/1-4.html#card-is2-acid-plate"><small class="mono">통합과학2 1.4</small>이름표가 떨어진 용액 여섯 개, 어떤 시험으로 가려낼까?</a><a href="../../c/is2/1-4.html#text-is2-acid-base"><small class="mono">통합과학2 1.4</small>산과 염기, 중화 반응</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/chem/4-4.html#card-chem-vinegar"><small class="mono">화학 4.4</small>식초 속 아세트산 농도를 어떻게 알아낼까?</a><a href="../../c/chem/4-4.html#card-chem-indicator"><small class="mono">화학 4.4</small>지시약은 왜 딱 그 순간에 색이 바뀔까?</a><a href="../../c/chem/4-4.html#text-chem-titration"><small class="mono">화학 4.4</small>중화 적정</a><a href="../../c/adchem/4-5.html#text-adchem-weak-base"><small class="mono">고급 화학 4.5</small>약산·약염기의 pH</a></div></nav>
 
       <article class="card" id="card-rxn-weak-acid">
         <header class="card-head">
-          <span class="no">1.2.4</span><h2>같은 농도의 산인데 pH는 왜 다를까?</h2><span class="kind">이온화 상수 · 약산과 약염기의 pH</span>
+          <span class="no">탐구 4</span><h2>같은 농도의 산인데 pH는 왜 다를까?</h2><span class="kind">이온화 상수 · 약산과 약염기의 pH</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -219,47 +278,52 @@
                 <div><dt>근사식 [H₃O⁺] ≈ √(Ka·C)로 구한 pH</dt><dd class="n-ap">—</dd></div>
                 <div><dt>이온화도 α</dt><dd class="n-a">—</dd></div>
               </dl>
-              <p class="fig-note">25 °C의 이온화 상수를 썼고, 물의 자동 이온화까지 포함한 전하 균형을 수치로 풀었습니다.</p>
+              <p class="fig-note">25 °C의 이온화 상수를 썼고, 물의 자동 이온화까지 포함한 전하 균형을 수치로 풀었다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>0.1 M 염산은 pH 1인데, 0.1 M 아세트산은 pH가 약 2.9입니다. 같은 수의 산 분자를 녹였는데 왜 H₃O⁺의 양이 약 75배나 차이 날까요?</li>
-            <li><span class="tag">복원</span>pH = −log[H₃O⁺]이고, 가역 반응이 평형에 이르면 생성물과 반응물 농도의 비가 평형 상수 K로 일정합니다(화학).</li>
-            <li><span class="tag">설명</span>약산 HA는 물과 반응해 일부만 이온화하고 평형을 이룹니다: HA + H₂O ⇌ H₃O⁺ + A⁻. 이 평형 상수가 <em>산의 이온화 상수</em> Ka = [H₃O⁺][A⁻]/[HA]이며, 클수록 강한 산입니다. 농도 C인 약산에서 이온화한 양을 x라 하면 Ka = x²/(C − x)이고, x가 C보다 훨씬 작으면 x ≈ √(Ka·C)입니다. 약염기는 같은 방식으로 Kb = [BH⁺][OH⁻]/[B]를 씁니다.</li>
-            <li><span class="tag">연결</span>짝산–짝염기의 이온화 상수는 Ka × Kb = Kw(1.0 × 10⁻¹⁴)로 묶여 있어, 강한 산의 짝염기는 매우 약한 염기입니다. 약산은 묽을수록 이온화도 α = x/C가 커집니다(르샤틀리에 원리). 이 성질은 적정 곡선의 모양, 염의 가수 분해, 완충 용액을 이해하는 바탕입니다.</li>
-            <li><span class="tag">적용</span>산을 바꿔 가며 같은 0.1 M에서 이온화한 분자 수를 비교하세요. 아세트산을 0.1 M에서 0.001 M로 묽히면 이온화도는 어떻게 되나요? 근사식이 정확한 값과 크게 달라지는 조건은 무엇인가요?</li>
-            <li class="warn"><span class="tag">판단</span>‘강한 산’과 ‘진한 산’은 다릅니다. 강산·약산은 이온화 정도(Ka), 진함·묽음은 농도입니다. 진한 아세트산보다 묽은 염산의 pH가 더 낮을 수도 있고, HF는 약산이지만 유리를 녹이고 피부에 매우 위험합니다. 위험성은 산의 세기만으로 정해지지 않습니다.</li>
+            <li><span class="tag">질문</span>0.1 M 염산은 pH 1인데, 0.1 M 아세트산은 pH가 약 2.9이다. 같은 수의 산 분자를 녹였는데 왜 H₃O⁺의 양이 약 75배나 차이 날까?</li>
+            <li><span class="tag">복원</span>pH = −log[H₃O⁺]이고, 가역 반응이 평형에 이르면 생성물과 반응물 농도의 비가 평형 상수 K로 일정하다(화학).</li>
+            <li><span class="tag">설명</span>약산 HA는 물과 반응해 일부만 이온화하고 HA + H₂O ⇌ H₃O⁺ + A⁻의 평형을 이룬다. 이 평형 상수가 <em>산의 이온화 상수</em> Ka = [H₃O⁺][A⁻]/[HA]이며, 클수록 강한 산이다. 농도 C인 약산에서 이온화한 양을 x라 하면 Ka = x²/(C − x)이고, x가 C보다 훨씬 작으면 x ≈ √(Ka·C)로 어림할 수 있다. 약염기도 같은 방식으로 Kb = [BH⁺][OH⁻]/[B]를 쓴다.</li>
+            <li><span class="tag">연결</span>짝산–짝염기의 이온화 상수는 Ka × Kb = Kw(1.0 × 10⁻¹⁴)로 묶여 있으므로, 강한 산의 짝염기는 매우 약한 염기이다. 또 약산은 묽을수록 이온화도 α = x/C가 커진다(르샤틀리에 원리). 이 성질은 적정 곡선의 모양, 염의 가수 분해, 완충 용액을 이해하는 바탕이 된다.</li>
+            <li><span class="tag">적용</span>산을 바꿔 가며 같은 0.1 M에서 이온화한 분자 수를 비교해 보자. 아세트산을 0.1 M에서 0.001 M로 묽히면 이온화도는 어떻게 될까? 근사식이 정확한 값과 크게 달라지는 조건은 무엇일까?</li>
+            <li class="warn"><span class="tag">판단</span>‘강한 산’과 ‘진한 산’은 다르다. 강산과 약산은 이온화 정도(Ka)를, 진함과 묽음은 농도를 말한다. 그래서 진한 아세트산보다 묽은 염산의 pH가 더 낮을 수도 있고, HF는 약산이지만 유리를 녹이고 피부에 매우 위험하다. 위험성은 산의 세기만으로 정해지지 않는다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">Ka = 1.0 × 10⁻⁵인 약산 0.10 M 수용액의 pH는 약 얼마일까요?</p>
+          <p class="q">Ka = 1.0 × 10⁻⁵인 약산 0.10 M 수용액의 pH는 약 얼마일까?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞습니다.</b> [H₃O⁺] ≈ √(10⁻⁵ × 0.1) = 10⁻³ M이므로 pH ≈ 3입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>강산일 때의 값입니다.</b> 약산은 일부만 이온화합니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>pKa를 그대로 쓴 것입니다.</b> pH는 농도에도 달려 있습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>3<span class="why"><b>맞다.</b> [H₃O⁺] ≈ √(10⁻⁵ × 0.1) = 10⁻³ M이므로 pH ≈ 3이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>1<span class="why"><b>강산일 때의 값이다.</b> 약산은 일부만 이온화한다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>5<span class="why"><b>pKa를 그대로 쓴 것이다.</b> pH는 농도에도 달려 있다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/rxn/1-1.html#card-rxn-conjugate"><small class="mono">화학 반응의 세계 1.1</small>OH⁻가 없는 암모니아는 어떻게 염기일까?</a><a href="../../c/chem/3-2.html#card-chem-k-hi"><small class="mono">화학 3.2</small>평형 상수는 무엇을 알려 줄까?</a><a href="../../c/chem/3-2.html#card-chem-k-solid"><small class="mono">화학 3.2</small>평형 상수 식에는 왜 고체가 빠질까?</a><a href="../../c/chem/3-3.html#card-chem-qk"><small class="mono">화학 3.3</small>Q와 K를 비교하면 무엇을 알 수 있을까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/rxn/1-3.html#card-rxn-titration"><small class="mono">화학 반응의 세계 1.3</small>적정 곡선의 모양에서 산의 세기를 읽을 수 있을까?</a><a href="../../c/rxn/1-4.html#card-rxn-hydrolysis"><small class="mono">화학 반응의 세계 1.4</small>중화로 만든 염의 수용액은 왜 중성이 아닐 수 있을까?</a><a href="../../c/rxn/1-5.html#card-rxn-buffer"><small class="mono">화학 반응의 세계 1.5</small>혈액의 pH는 어떻게 7.4에 머물까?</a><a href="../../c/adchem/1-7.html#card-adchem-fg-acid"><small class="mono">고급 화학 1.7</small>페놀은 왜 수산화 나트륨에는 녹고 탄산수소 나트륨에는 안 녹을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/rxn/1-1.html#card-rxn-conjugate"><small class="mono">화학 반응의 세계 1.1</small>OH⁻가 없는 암모니아는 어떻게 염기일까?</a><a href="../../c/adchem/4-4.html#text-adchem-ionization-degree"><small class="mono">고급 화학 4.4</small>루이스 산 염기와 이온화 상수</a><a href="../../c/chem/3-2.html#card-chem-k-hi"><small class="mono">화학 3.2</small>평형 상수는 무엇을 알려 줄까?</a><a href="../../c/chem/3-2.html#card-chem-k-solid"><small class="mono">화학 3.2</small>평형 상수 식에는 왜 고체가 빠질까?</a></div><div><span class="mono">다른 과목에서</span><a href="../../c/adchem/4-5.html#text-adchem-weak-base"><small class="mono">고급 화학 4.5</small>약산·약염기의 pH</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/rxn/1-3.html#card-rxn-titration"><small class="mono">화학 반응의 세계 1.3</small>적정 곡선의 모양에서 산의 세기를 읽을 수 있을까?</a><a href="../../c/adchem/4-6.html#text-adchem-titration-curve"><small class="mono">고급 화학 4.6</small>적정 곡선과 완충 용액</a><a href="../../c/rxn/1-4.html#card-rxn-hydrolysis"><small class="mono">화학 반응의 세계 1.4</small>중화로 만든 염의 수용액은 왜 중성이 아닐 수 있을까?</a><a href="../../c/rxn/1-4.html#text-rxn-hydrolysis"><small class="mono">화학 반응의 세계 1.4</small>염의 가수 분해</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=rxn-1-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">48문항</span></a>
+      <a class="px-go" href="../../bank.html?c=rxn&amp;sec=1-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=rxn-1-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">50문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../assets/katex/katex.min.js"></script>
+<script src="../../js/math.js"></script>
 <script src="../../js/store.js"></script>
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/rxn/body.js"></script>
 <script src="../../js/cards/is2/v-ph-log.js"></script>
 <script src="../../js/cards/chem/b-autoion.js"></script>
 <script src="../../js/cards/chem/b-ph-scale.js"></script>

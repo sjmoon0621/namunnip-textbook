@@ -1,0 +1,62 @@
+<!--block
+{
+  "type": "text",
+  "sec": "3-1",
+  "short": "본문 · 고윳값과 고유벡터"
+}
+-->
+<article class="card reading" id="text-adalg-eigen" data-kind="본문">
+  <header class="card-head"><span class="no"></span><h2>고윳값과 고유벡터</h2><span class="kind">본문</span></header>
+  <div class="reading-body q-text">
+    <p class="q-ask">행렬 \(A = \begin{pmatrix}2 & 1\\ 1 & 2\end{pmatrix}\)을 평면의 여러 벡터에 곱해 보았다. \((1, 0)\)은 \((2, 1)\)로 가서 방향이 바뀌고, \((0, 1)\)은 \((1, 2)\)로 가서 역시 방향이 바뀐다. 그런데 \((1, 1)\)은 \((3, 3)\)으로 가서 방향은 그대로이고 길이만 3배가 되었다. \((1, -1)\)도 \((1, -1)\)로 가서 방향이 그대로이다. 이렇게 행렬을 곱해도 방향이 바뀌지 않는 벡터는 어떻게 찾고, 그 벡터는 행렬에 대해 무엇을 알려 줄까?</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 132" role="img" aria-label="행렬 A를 곱한 여러 벡터">
+        <g class="s">
+          <text x="20" y="22">벡터 v</text><text x="160" y="22">Av</text><text x="300" y="22">방향</text><text x="420" y="22">배율</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">(1, 0)</text><text x="160" y="52">(2, 1)</text><text x="300" y="52">바뀜</text><text x="420" y="52"></text>
+          <text x="20" y="74">(1, 1)</text><text x="160" y="74">(3, 3)</text><text x="300" y="74" class="td">그대로</text><text x="420" y="74" class="td">3</text>
+          <text x="20" y="96">(1, −1)</text><text x="160" y="96">(1, −1)</text><text x="300" y="96" class="tb">그대로</text><text x="420" y="96" class="tb">1</text>
+          <text x="20" y="122">방향이 그대로인 벡터가 고유벡터, 배율이 고윳값이다.</text>
+        </g>
+      </svg>
+      <figcaption>그림 1. 대부분의 벡터는 방향이 바뀌지만, 두 방향의 벡터는 늘어나거나 그대로일 뿐이다.</figcaption>
+    </figure>
+    <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>행렬식(<a href="2-3.html">행렬식</a>), 선형변환과 행렬, 이차방정식.</div>
+
+    <h3><span class="no">3.1.1</span>늘이기만 하는 방향</h3>
+    <p>영벡터가 아닌 벡터 \(\vec v\)에 대해 \(A\vec v = \lambda\vec v\)인 수 \(\lambda\)가 있으면, \(\vec v\)를 \(A\)의 고유벡터, \(\lambda\)를 그에 대한 고윳값이라 한다. 고유벡터 방향의 직선 위의 점들은 변환 뒤에도 같은 직선 위에 남고, 원점에서의 거리만 \(\lambda\)배가 된다. 그래서 고유벡터는 행렬이 공간을 어떤 축을 따라 늘이고 줄이는지를 알려 준다. \(\lambda\)가 음수이면 방향이 반대로 뒤집히고, 0이면 그 방향의 벡터가 영벡터로 납작해진다.</p>
+    <div class="tb-env thm"><span class="lb">정리 3.1.1 <span class="nm">특성방정식</span></span>
+      <p>\(A\vec v = \lambda\vec v\)는 \((A - \lambda I)\vec v = \vec 0\)과 같고, 영벡터가 아닌 해가 있으려면 \[\det(A - \lambda I) = 0\]이어야 한다. \(2\times2\) 행렬에서 이 식은 \(\lambda^2 - (\mathrm{tr}\,A)\lambda + \det A = 0\)이다. 고윳값의 합은 \(\mathrm{tr}\,A\), 곱은 \(\det A\)이다.</p>
+    </div>
+    <p>\(A - \lambda I\)가 역행렬을 가지면 \((A - \lambda I)\vec v = \vec 0\)의 해는 영벡터뿐이다. 그래서 영벡터가 아닌 고유벡터가 있으려면 \(A - \lambda I\)가 공간을 납작하게 눌러야 하고, 그 조건이 행렬식이 0이라는 특성방정식이다. 특성방정식을 풀어 고윳값을 먼저 구하고, 각 고윳값을 넣은 연립방정식을 풀어 고유벡터를 구한다. 회전 행렬처럼 특성방정식의 근이 실수가 아니면, 평면에서 방향이 그대로인 벡터가 없다.<sup class="fn"><a href="#fn-adalg-eigen-1">1</a></sup></p>
+
+    <h3><span class="no">3.1.2</span>거듭 곱하면 큰 고윳값이 이긴다</h3>
+    <p>어떤 벡터에 \(A\)를 거듭 곱하면, 그 벡터를 고유벡터들의 일차결합으로 나눈 각 부분이 고윳값의 거듭제곱만큼 늘어난다. 고윳값이 3인 부분은 \(3^n\)배, 1인 부분은 그대로이므로, 여러 번 곱하면 가장 큰 고윳값의 고유벡터 방향이 압도한다. 검색 엔진이 웹 페이지의 중요도를 매기는 방법도 이 성질을 쓴다. 페이지 사이의 링크로 만든 행렬을 거듭 곱하면, 가장 큰 고윳값 1의 고유벡터에 다가가고, 그 성분이 각 페이지의 중요도가 된다.</p>
+    <figure class="q-fig">
+      <svg viewBox="0 0 520 110" role="img" aria-label="(1, 0)에 A를 거듭 곱한 결과">
+        <g class="s">
+          <text x="20" y="22">n</text><text x="120" y="22">Aⁿ(1, 0)</text><text x="300" y="22">두 성분의 비</text>
+          <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+          <text x="20" y="52">1</text><text x="120" y="52">(2, 1)</text><text x="300" y="52">0.5</text>
+          <text x="20" y="74">3</text><text x="120" y="74">(14, 13)</text><text x="300" y="74">0.929</text>
+          <text x="20" y="96">6</text><text x="120" y="96">(365, 364)</text><text x="300" y="96" class="td">0.997, 고유벡터 (1, 1)에 다가감</text>
+        </g>
+      </svg>
+      <figcaption>그림 2. 거듭 곱하면 가장 큰 고윳값 3의 고유벡터 방향으로 점점 기울어진다.</figcaption>
+    </figure>
+
+    <h3><span class="no">3.1.3</span>예제 하나를 끝까지</h3>
+    <div class="tb-env ex"><span class="lb">예제 3.1.2</span>
+      <p>처음 질문의 행렬 \(A\)의 고윳값과 고유벡터를 구하여라. \((1, 0)\)을 고유벡터의 일차결합으로 나타내고, \(A^n(1, 0)\)을 구하여라.</p>
+    </div>
+    <p>특성방정식은 \(\lambda^2 - 4\lambda + 3 = 0\)이므로 \(\lambda = 3\), \(\lambda = 1\)이다. \(\lambda = 3\)이면 \((A - 3I)\vec v = \vec 0\)은 \(-x + y = 0\)이므로 고유벡터는 \((1, 1)\)이고, \(\lambda = 1\)이면 \(x + y = 0\)이므로 \((1, -1)\)이다. 고윳값의 합 4와 곱 3이 각각 \(\mathrm{tr}\,A\)와 \(\det A\)와 같다.</p>
+    <p>\((1, 0) = \tfrac12(1, 1) + \tfrac12(1, -1)\)이므로 \(A^n(1, 0) = \tfrac12\cdot3^n(1, 1) + \tfrac12(1, -1) = \left(\dfrac{3^n + 1}{2}, \dfrac{3^n - 1}{2}\right)\)이다. \(n = 6\)이면 \((365, 364)\)로 그림 2와 같다. 행렬을 여섯 번 곱하지 않고도 고윳값의 거듭제곱만으로 결과를 얻은 것이다. 즉 고유벡터는 행렬을 곱해도 방향이 바뀌지 않는 벡터이고 고윳값은 그 배율이며, 특성방정식 \(\det(A - \lambda I) = 0\)으로 구하고, 행렬을 거듭 곱한 결과를 쉽게 계산하게 해 준다.</p>
+    <p>아래 탐구 카드에서 벡터를 돌려 가며 행렬을 곱해도 방향이 그대로인 벡터를 찾아보고, 검색 엔진이 페이지 순위를 매기는 방법을 고유벡터로 알아보자.</p>
+
+    <ol class="fn-list">
+      <li id="fn-adalg-eigen-1">고유라는 말은 독일어 eigen에서 왔는데, 그 행렬이 본래 가진 고유한 값이라는 뜻이다. 다리나 건물이 흔들릴 때의 고유 진동수도 운동 방정식 행렬의 고윳값으로 구하며, 바람이나 발걸음의 박자가 이 진동수와 맞으면 크게 흔들린다.</li>
+    </ol>
+    <div class="tb-summary"><span class="lb">마무리</span><p>\(A\vec v = \lambda\vec v\)인 영벡터가 아닌 \(\vec v\)가 고유벡터, \(\lambda\)가 고윳값이며, 고유벡터 방향은 변환 뒤에도 그대로이고 길이만 \(\lambda\)배가 된다. 고윳값은 특성방정식 \(\det(A - \lambda I) = 0\)으로 구하고, 그 합과 곱은 대각합과 행렬식이며, 행렬을 거듭 곱하면 가장 큰 고윳값의 고유벡터 방향이 압도한다. 처음 질문의 행렬은 고윳값 3, 1에 고유벡터 \((1, 1)\), \((1, -1)\)을 가져, 두 방향의 벡터만 방향이 바뀌지 않는다.</p></div>
+  </div>
+</article>

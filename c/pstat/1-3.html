@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>모집단과 표본추출 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="가상 학교 360명에서 36명을 단순임의·계통·층화·집락 추출로 뽑아 표본평균의 분포 비교, 층 사이 차이가 클 때 층화추출의 장점, 자발적 응답 표본의 편향 0.4a/(0.4a + 0.6b)와 무작위 표본의 오차범위. 표본추출 방법 카드와, 온라인 투표 편향 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-pstat-sampling-methods canvas { aspect-ratio: 16 / 9; max-width: 640px; margin: .3rem auto 0; }
@@ -33,7 +38,7 @@
   <section class="topic-hero">
     <div class="meta"></div>
     <h1>모집단과 표본추출</h1>
-    <p class="lead">모집단 전체를 조사하기 어려울 때는 일부인 <em>표본</em>을 뽑아 조사합니다. 표본이 모집단을 잘 대표하려면 뽑는 방법이 중요합니다. 이 절에서는 여러 <em>표본추출 방법</em>을 비교하고, 응답자가 많아도 치우친 표본은 믿을 수 없다는 것을 시뮬레이션으로 확인합니다.</p>
+    <p class="lead">모집단 전체를 조사하기 어려울 때는 일부인 <em>표본</em>을 뽑아 조사합니다. 표본이 모집단을 잘 대표하려면 어떻게 뽑느냐가 결과를 좌우합니다. 이 절에서는 여러 <em>표본추출 방법</em>을 비교하고, 응답자가 많아도 치우친 표본은 믿을 수 없다는 것을 시뮬레이션으로 확인합니다.</p>
     <div class="prereq">
       <span class="mono">먼저 알면 좋은 것</span>
       <a class="p p-card" href="../../c/stat/3-5.html#card-stat-random-sample" title="확률과 통계 3.5 · 정문 앞에서 만난 학생 20명으로 평균 통학 시간을 알 수 있을까?">표본과 무작위 추출</a><button type="button" class="p p-basic" data-basic="b-l-mean" title="중학교 개념 설명 보기">평균</button>
@@ -44,55 +49,112 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-pstat-sampling-methods"><span class="mono">1.3.1</span>단순임의·계통·층화·집락 추출, 어느 것이 더 정확할까</a></li>
-        <li><a href="#card-pstat-volunteer-bias"><span class="mono">1.3.2</span>응답자 수천 명의 온라인 투표보다 100명 무작위 표본이 나은 까닭</a></li>
+        <li><a href="#text-pstat-sampling"><span class="mono">본문</span>모집단과 표본추출</a></li>
+        <li><a href="#card-pstat-sampling-methods"><span class="mono">탐구 1</span>단순임의·계통·층화·집락 추출, 어느 것이 더 정확할까</a></li>
+        <li><a href="#card-pstat-volunteer-bias"><span class="mono">탐구 2</span>응답자 수천 명의 온라인 투표보다 100명 무작위 표본이 나은 까닭</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=pstat-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=pstat&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">16문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=pstat-1-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-pstat-sampling" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>모집단과 표본추출</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">학교 누리집에 '등교 시간을 30분 늦추는 데 찬성하는가'라는 투표를 올렸더니 3000명이 참여해 70%가 찬성했다. 같은 때 학생회가 전교생 명부에서 무작위로 100명을 뽑아 물었더니 찬성은 45%였다. 3000명은 100명의 30배이니 온라인 투표가 더 정확해 보인다. 그런데 학생회는 자기들의 100명 조사를 믿어야 한다고 말한다. 누구 말이 맞을까? 표본은 크기보다 무엇이 더 중요할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="학년별 층에서 같은 비율로 뽑은 층화 추출">
+              <text x="20" y="34" class="s">1학년</text><text x="20" y="74" class="s">2학년</text><text x="20" y="114" class="s">3학년</text>
+              <g>
+                <rect x="70" y="20" width="360" height="22" class="lk"/><rect x="70" y="60" width="360" height="22" class="lk"/><rect x="70" y="100" width="360" height="22" class="lk"/>
+                <rect x="70" y="20" width="36" height="22" class="lb"/><rect x="70" y="60" width="36" height="22" class="lb"/><rect x="70" y="100" width="36" height="22" class="lb"/>
+              </g>
+              <text x="440" y="36" class="s">120명 중 12명</text><text x="440" y="76" class="s">120명 중 12명</text><text x="440" y="116" class="s">120명 중 12명</text>
+              <text x="70" y="142" class="s">각 학년에서 10%씩 무작위로 뽑아 모두 36명</text>
+            </svg>
+            <figcaption>그림 1. 층화 추출은 모집단을 성질이 비슷한 층으로 나누고 각 층에서 같은 비율로 무작위로 뽑아, 표본의 구성을 모집단과 같게 한다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>표본과 무작위 추출, 평균, 비율과 백분율.</div>
+
+          <h3><span class="no">1.3.1</span>표본은 모집단을 닮아야 한다</h3>
+          <p>알고 싶은 대상 전체를 모집단이라 하고, 그 가운데 실제로 조사하는 일부를 표본이라 한다. 그런데 표본에서 얻은 값으로 모집단을 어림하려면 표본이 모집단을 닮아야 한다. 가장 기본적인 방법은 단순 무작위 추출로, 모집단의 모든 대상이 뽑힐 기회를 똑같이 갖게 하는 것이다. 예를 들어 명부에서 번호를 무작위로 고르는 것이 그렇다. 모집단 안에 성질이 다른 집단이 있다면, 그 집단들을 층으로 나누고 층마다 크기에 비례해 무작위로 뽑는 층화 추출을 쓴다. 명부에서 10번째마다 한 명씩 고르는 계통 추출이나 반 몇 개를 통째로 고르는 집락 추출도 있다.</p>
+          <div class="tb-env thm"><span class="lb">정리 1.3.1 <span class="nm">치우침과 우연 오차</span></span>
+            <p>표본으로 어림한 값의 오차는 두 가지로 나뉜다. 무작위로 뽑아도 생기는 우연 오차는 표본이 클수록 \(1/\sqrt{n}\)에 비례해 줄어든다. 뽑는 방법 때문에 한쪽으로 쏠리는 치우침은 표본을 아무리 키워도 줄지 않는다.</p>
+          </div>
+          <p>온라인 투표에는 스스로 참여한 사람만 들어간다. 등교 시간을 바꾸고 싶은 학생은 적극적으로 투표하지만, 상관없다고 생각하는 학생은 굳이 참여하지 않는다. 이렇게 자발적으로 응답한 사람들로 만든 표본은 강한 의견을 가진 사람 쪽으로 치우친다. 참여자가 3000명으로 늘어도 같은 방식으로 모이면 치우침은 그대로이고, 우연 오차만 작아져 틀린 값을 더 확신하게 만든다.<sup class="fn"><a href="#fn-pstat-sampling-1">1</a></sup></p>
+
+          <h3><span class="no">1.3.2</span>층화 추출의 이점</h3>
+          <p>학년마다 의견이나 생활이 크게 다르면, 단순 무작위 추출로 36명을 뽑을 때 우연히 한 학년이 많이 뽑힐 수 있다. 그러나 층화 추출은 학년마다 정확히 같은 비율을 뽑으므로 이런 흔들림을 없앤다. 그림 2처럼 학년마다 평균 수면 시간이 다르다면, 층화 추출의 표본 평균은 단순 무작위 추출보다 모집단 평균 근처에 더 촘촘히 모인다. 반대로 편의상 도서관에 있던 학생만 조사하면 시험을 앞둔 3학년이 많이 들어가 평균이 낮게 치우친다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="학년별 평균 수면 시간과 여러 표본의 평균">
+              <g class="s">
+                <text x="20" y="22">표본</text><text x="220" y="22">구성</text><text x="400" y="22">평균 수면 (시간)</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">전교생 (모집단)</text><text x="220" y="52">1, 2, 3학년 120명씩</text><text x="400" y="52">6.83</text>
+                <text x="20" y="74">층화 추출 36명</text><text x="220" y="74">학년마다 12명</text><text x="400" y="74">6.83 근처</text>
+                <text x="20" y="96">도서관의 36명</text><text x="220" y="96">3학년 30명, 2학년 6명</text><text x="400" y="96" class="td">6.17</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. 학년 평균이 7.5, 7.0, 6.0시간일 때, 한 학년으로 쏠린 편의 표본은 평균을 크게 낮춘다.</figcaption>
+          </figure>
+
+          <h3><span class="no">1.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 1.3.2</span>
+            <p>1, 2, 3학년의 평균 수면 시간이 7.5, 7.0, 6.0시간이고 학생 수가 120명씩이다. 전교생 평균과 도서관에서 뽑은 표본(3학년 30명, 2학년 6명)의 평균을 구하여라. 또 처음 질문의 무작위 100명 조사에서 찬성률의 95% 오차범위는 얼마이고, 온라인 투표의 70%와 비교하면 무엇을 알 수 있는가?</p>
+          </div>
+          <p>전교생 평균은 \((7.5 + 7.0 + 6.0) \div 3 \approx 6.83\)시간이다. 도서관 표본의 평균은 \((30 \times 6.0 + 6 \times 7.0) \div 36 = 222 \div 36 \approx 6.17\)시간으로 40분 가까이 짧다. 게다가 이 오차는 36명을 360명으로 늘려도 같은 방식으로 모으면 줄지 않는다.</p>
+          <p>무작위 100명의 찬성률 45%의 오차범위는 \(1.96\sqrt{0.45 \times 0.55 / 100} \approx 0.098\)이므로 약 ±10%포인트이다. 실제 찬성률은 35%에서 55% 사이로 어림되고, 온라인 투표의 70%는 이 범위를 한참 벗어난다. 우연 오차만으로는 이 차이를 설명할 수 없으므로, 온라인 투표가 찬성하는 학생 쪽으로 치우쳤다고 보아야 한다. 100명 조사는 범위가 넓은 대신 바른 곳을 가리키고, 3000명 투표는 범위가 좁은 대신 엉뚱한 곳을 가리킨다.</p>
+          <p>아래 탐구 카드에서 여러 표본추출 방법으로 표본을 뽑아 비교하고, 자발적 응답의 치우침을 시뮬레이션으로 확인해 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-pstat-sampling-1">1948년 미국 대통령 선거 전날 여러 여론조사는 듀이의 승리를 예측했고, 한 신문은 '듀이가 트루먼을 이기다'라는 제목을 미리 찍었다. 조사원이 응답자를 할당 기준 안에서 마음대로 고른 방식이 치우침을 낳았고, 이후 무작위 추출이 여론조사의 기본이 되었다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>표본은 모집단을 닮아야 하므로 모든 대상에게 뽑힐 기회를 고르게 주는 무작위 추출을 기본으로 하고, 성질이 다른 집단이 있으면 층마다 비율대로 뽑는 층화 추출을 쓴다. 표본이 커지면 우연 오차는 줄지만 뽑는 방법에서 생긴 치우침은 줄지 않는다. 처음 질문의 온라인 투표는 3000명이어도 자발적 응답으로 치우쳐 있어, 오차범위 ±10%포인트인 무작위 100명 조사가 더 믿을 만하다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/1-2.html#card-pstat-ppdac-order"><small class="mono">실용 통계 1.2</small>매점 줄을 줄이고 싶을 때, 통계 탐구는 어떤 순서로 해야 할까?</a><a href="../../c/pstat/1-2.html#card-pstat-question-refine"><small class="mono">실용 통계 1.2</small>"학생들은 스마트폰을 많이 쓸까?"를 통계로 답할 수 있는 질문으로 바꾸려면?</a><a href="../../c/pstat/1-2.html#text-pstat-cycle"><small class="mono">실용 통계 1.2</small>통계적 문제해결 과정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/2-2.html#card-pstat-survey-wording"><small class="mono">실용 통계 2.2</small>설문 문항을 어떻게 쓰느냐에 따라 응답이 달라질까?</a><a href="../../c/pstat/2-2.html#card-pstat-random-assign"><small class="mono">실용 통계 2.2</small>새 공부법을 고른 학생들의 점수가 높다면, 공부법의 효과일까?</a><a href="../../c/pstat/2-2.html#text-pstat-collect"><small class="mono">실용 통계 2.2</small>자료의 수집 방법</a><a href="../../c/pstat/3-2.html#card-pstat-ci-t-cover"><small class="mono">실용 통계 3.2</small>배터리 6개로 평균 수명을 추정할 때, 신뢰구간은 어떻게 만들어야 할까?</a></div></nav>
+
       <article class="card" id="card-pstat-sampling-methods">
         <header class="card-head">
-          <span class="no">1.3.1</span><h2>전교생 360명 중 36명만 조사한다면, 어떻게 뽑아야 전체를 잘 대표할까?</h2><span class="kind">표본추출 방법 · 시뮬레이션</span>
+          <span class="no">탐구 1</span><h2>전교생 360명 중 36명만 조사한다면, 어떻게 뽑아야 전체를 잘 대표할까?</h2><span class="kind">표본추출 방법 · 시뮬레이션</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small"><b>가상</b> 학교: 3개 학년 × 6개 반 × 20명. 칸의 색이 진할수록 주당 독서 시간이 깁니다(학년마다 차이가 큼).</p>
+            <p class="small">가상 학교이다. 3개 학년 × 6개 반 × 20명. 칸의 색이 진할수록 주당 독서 시간이 길다(학년마다 차이가 큼).</p>
             <div class="presets" role="group" aria-label="추출 방법"><button class="chip" type="button" data-m="0">단순임의</button><button class="chip" type="button" data-m="1">계통</button><button class="chip" type="button" data-m="2">층화(학년별)</button><button class="chip" type="button" data-m="3">집락(반 2개)</button><button class="chip many" type="button">방법마다 300번 뽑기</button></div>
             <canvas aria-label="왼쪽은 학교 전체 학생 격자와 뽑힌 학생, 오른쪽은 방법별 표본평균 분포"></canvas>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>전교생의 평균 독서 시간을 알고 싶은데 모두 조사할 수는 없습니다. 36명을 뽑는다면 어떤 방법이 전체 평균에 더 가까운 값을 줄까요?</li>
-            <li><span class="tag">복원</span>모집단과 표본, 임의추출, 표본평균.</li>
-            <li><span class="tag">설명</span><em>단순임의추출</em>은 모든 학생이 같은 확률로 뽑히게 합니다. <em>계통추출</em>은 명단에서 일정한 간격으로 뽑습니다. <em>층화추출</em>은 모집단을 성질이 비슷한 층(여기서는 학년)으로 나누고 층마다 비율대로 뽑아, 층 사이 차이가 클 때 추정이 더 정확합니다. <em>집락추출</em>은 반 같은 묶음을 통째로 뽑아 조사가 편하지만, 묶음 안 학생들이 서로 비슷하면 추정이 크게 흔들립니다.</li>
-            <li><span class="tag">연결</span>국가 통계 조사는 지역을 층으로 나누고 조사구를 묶음으로 뽑는 등 여러 방법을 섞어 씁니다.</li>
-            <li><span class="tag">적용</span>"방법마다 300번 뽑기"를 눌러 네 분포의 폭을 비교하세요. 어느 방법이 가장 좁고, 어느 방법이 가장 넓은가요? 왜 그럴까요?</li>
-            <li class="warn"><span class="tag">판단</span>계통추출은 명단의 순서에 주기적인 규칙이 있으면 크게 치우칠 수 있습니다. 어떤 방법이든 뽑는 과정에 사람의 선택이 끼어들지 않아야 합니다.</li>
+            <li><span class="tag">질문</span>전교생의 평균 독서 시간을 알고 싶은데 모두 조사할 수는 없다. 36명을 뽑는다면 어떤 방법이 전체 평균에 더 가까운 값을 줄까?</li>
+            <li><span class="tag">복원</span>모집단과 표본, 임의추출, 표본평균을 떠올리자.</li>
+            <li><span class="tag">설명</span><em>단순임의추출</em>은 모든 학생이 같은 확률로 뽑히게 한다. <em>계통추출</em>은 명단에서 일정한 간격으로 뽑는다. <em>층화추출</em>은 모집단을 성질이 비슷한 층(여기서는 학년)으로 나누고 층마다 비율대로 뽑아, 층 사이 차이가 클 때 추정이 더 정확하다. <em>집락추출</em>은 반 같은 묶음을 통째로 뽑아 조사가 편하지만, 묶음 안 학생들이 서로 비슷하면 추정이 크게 흔들린다.</li>
+            <li><span class="tag">연결</span>국가 통계 조사는 지역을 층으로 나누고 조사구를 묶음으로 뽑는 등 여러 방법을 섞어 쓴다.</li>
+            <li><span class="tag">적용</span>"방법마다 300번 뽑기"를 눌러 네 분포의 폭을 비교해 보자. 어느 방법이 가장 좁고, 어느 방법이 가장 넓은가? 왜 그럴까?</li>
+            <li class="warn"><span class="tag">판단</span>계통추출은 명단의 순서에 주기적인 규칙이 있으면 크게 치우칠 수 있다. 어떤 방법이든 뽑는 과정에 사람의 선택이 끼어들지 않아야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">지역마다 소득 차이가 큰 도시에서 가구 소득을 조사할 때, 추정이 더 정확해지도록 고르기 좋은 방법은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>지역을 층으로 나누는 층화추출<span class="why"><b>맞습니다.</b> 층 사이 차이가 클수록 층화의 효과가 큽니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>한두 지역을 통째로 뽑는 집락추출<span class="why"><b>뽑힌 지역에 따라 결과가 크게 달라집니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>조사원 집 근처 가구 조사<span class="why"><b>편의표본은 치우칩니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>응답을 원하는 가구만 조사<span class="why"><b>자발적 응답 표본은 치우칩니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>지역을 층으로 나누는 층화추출<span class="why"><b>맞다.</b> 층 사이 차이가 클수록 층화의 효과가 크다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>한두 지역을 통째로 뽑는 집락추출<span class="why"><b>뽑힌 지역에 따라 결과가 크게 달라진다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>조사원 집 근처 가구 조사<span class="why"><b>편의표본은 치우친다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>응답을 원하는 가구만 조사<span class="why"><b>자발적 응답 표본은 치우친다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/1-2.html#card-pstat-ppdac-order"><small class="mono">실용 통계 1.2</small>매점 줄을 줄이고 싶을 때, 통계 탐구는 어떤 순서로 해야 할까?</a><a href="../../c/pstat/1-2.html#card-pstat-question-refine"><small class="mono">실용 통계 1.2</small>"학생들은 스마트폰을 많이 쓸까?"를 통계로 답할 수 있는 질문으로 바꾸려면?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/2-2.html#card-pstat-survey-wording"><small class="mono">실용 통계 2.2</small>설문 문항을 어떻게 쓰느냐에 따라 응답이 달라질까?</a><a href="../../c/pstat/2-2.html#card-pstat-random-assign"><small class="mono">실용 통계 2.2</small>새 공부법을 고른 학생들의 점수가 높다면, 공부법의 효과일까?</a><a href="../../c/pstat/3-2.html#card-pstat-ci-t-cover"><small class="mono">실용 통계 3.2</small>배터리 6개로 평균 수명을 추정할 때, 신뢰구간은 어떻게 만들어야 할까?</a><a href="../../c/pstat/3-2.html#card-pstat-sample-size"><small class="mono">실용 통계 3.2</small>택배 배송 시간의 평균을 ±0.5시간 안으로 추정하려면 몇 건을 조사해야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/1-2.html#card-pstat-ppdac-order"><small class="mono">실용 통계 1.2</small>매점 줄을 줄이고 싶을 때, 통계 탐구는 어떤 순서로 해야 할까?</a><a href="../../c/pstat/1-2.html#card-pstat-question-refine"><small class="mono">실용 통계 1.2</small>"학생들은 스마트폰을 많이 쓸까?"를 통계로 답할 수 있는 질문으로 바꾸려면?</a><a href="../../c/pstat/1-2.html#text-pstat-cycle"><small class="mono">실용 통계 1.2</small>통계적 문제해결 과정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/2-2.html#card-pstat-survey-wording"><small class="mono">실용 통계 2.2</small>설문 문항을 어떻게 쓰느냐에 따라 응답이 달라질까?</a><a href="../../c/pstat/2-2.html#card-pstat-random-assign"><small class="mono">실용 통계 2.2</small>새 공부법을 고른 학생들의 점수가 높다면, 공부법의 효과일까?</a><a href="../../c/pstat/2-2.html#text-pstat-collect"><small class="mono">실용 통계 2.2</small>자료의 수집 방법</a><a href="../../c/pstat/3-2.html#card-pstat-ci-t-cover"><small class="mono">실용 통계 3.2</small>배터리 6개로 평균 수명을 추정할 때, 신뢰구간은 어떻게 만들어야 할까?</a></div></nav>
 
       <article class="card" id="card-pstat-volunteer-bias">
         <header class="card-head">
-          <span class="no">1.3.2</span><h2>응답자가 수천 명인 온라인 투표와 100명 무작위 조사, 무엇을 믿어야 할까?</h2><span class="kind">표본의 편향 · 오류 찾기</span>
+          <span class="no">탐구 2</span><h2>응답자가 수천 명인 온라인 투표와 100명 무작위 조사, 무엇을 믿어야 할까?</h2><span class="kind">표본의 편향 · 오류 찾기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
-            <p class="small"><b>가상</b> 학교 학생 1만 명 중 실제로 "게임 시간 규제 완화"에 찬성하는 학생은 40%입니다. 온라인 투표에는 원하는 사람만 참여합니다.</p>
+            <p class="small">가상 학교 학생 1만 명 중 실제로 "게임 시간 규제 완화"에 찬성하는 학생은 40%이다. 온라인 투표에는 원하는 사람만 참여한다.</p>
             <div class="ctl-row">
               <div><label class="mono">찬성 학생의 참여율 = <output class="a-out"></output>%</label><input class="a" type="range" min="1" max="60" step="1" value="40" aria-label="찬성 학생의 참여율"></div>
               <div><label class="mono">반대 학생의 참여율 = <output class="b-out"></output>%</label><input class="b" type="range" min="1" max="60" step="1" value="10" aria-label="반대 학생의 참여율"></div>
@@ -102,39 +164,39 @@
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>온라인 투표에 수천 명이 참여해 찬성이 73%로 나왔습니다. 무작위로 뽑은 100명 조사에서는 찬성이 40% 안팎이었습니다. 응답자가 훨씬 많은 온라인 투표가 더 정확할까요?</li>
-            <li><span class="tag">복원</span>비율, 임의추출, 표본비율의 오차범위.</li>
-            <li><span class="tag">설명</span>스스로 참여하는 <em>자발적 응답 표본</em>에서는 그 문제에 관심이 크거나 의견이 강한 사람이 더 많이 응답합니다. 찬성 학생의 참여율이 \(a\), 반대 학생이 \(b\)이면 온라인 투표의 찬성률은 \(\frac{0.4a}{0.4a + 0.6b}\)로, 실제 40%와 달라집니다. 이 <em>편향</em>은 응답자를 아무리 늘려도 줄지 않습니다. 무작위 표본은 크기가 작아 우연한 오차가 있지만, 그 크기를 오차범위로 가늠할 수 있습니다.</li>
-            <li><span class="tag">연결</span>1936년 미국 대선 때 한 잡지가 수백만 장의 응답으로 예측했지만 크게 빗나간 사례가 표본 편향의 대표적 예로 알려져 있습니다.</li>
-            <li><span class="tag">적용</span>두 참여율이 같으면 온라인 투표 결과는 어떻게 되나요? 찬성 학생이 반대 학생보다 4배 많이 참여하면 결과는 몇 %가 되나요?</li>
-            <li class="warn"><span class="tag">판단</span>"많은 사람이 참여했다"는 정확하다는 뜻이 아닙니다. 조사 결과를 볼 때는 응답자를 <em>어떻게</em> 모았는지 먼저 확인해야 합니다.</li>
+            <li><span class="tag">질문</span>온라인 투표에 수천 명이 참여해 찬성이 73%로 나왔다. 무작위로 뽑은 100명 조사에서는 찬성이 40% 안팎이었다. 응답자가 훨씬 많은 온라인 투표가 더 정확할까?</li>
+            <li><span class="tag">복원</span>비율, 임의추출, 표본비율의 오차범위를 떠올리자.</li>
+            <li><span class="tag">설명</span>스스로 참여하는 <em>자발적 응답 표본</em>에서는 그 문제에 관심이 크거나 의견이 강한 사람이 더 많이 응답한다. 찬성 학생의 참여율이 \(a\), 반대 학생이 \(b\)이면 온라인 투표의 찬성률은 \(\frac{0.4a}{0.4a + 0.6b}\)로, 실제 40%와 달라진다. 이 <em>편향</em>은 응답자를 아무리 늘려도 줄지 않는다. 무작위 표본은 크기가 작아 우연한 오차가 있지만, 그 크기를 오차범위로 가늠할 수 있다.</li>
+            <li><span class="tag">연결</span>1936년 미국 대선 때 한 잡지가 수백만 장의 응답으로 예측했지만 크게 빗나간 사례가 표본 편향의 대표적 예로 알려져 있다.</li>
+            <li><span class="tag">적용</span>두 참여율이 같으면 온라인 투표 결과는 어떻게 되는가? 찬성 학생이 반대 학생보다 4배 많이 참여하면 결과는 몇 %가 되는가?</li>
+            <li class="warn"><span class="tag">판단</span>"많은 사람이 참여했다"는 정확하다는 뜻이 아니다. 조사 결과를 볼 때는 응답자를 <em>어떻게</em> 모았는지 먼저 확인해야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">실제 찬성률 50%인 집단에서 찬성자의 30%, 반대자의 10%가 온라인 투표에 참여했습니다. 투표 결과의 찬성률은?</p>
+          <p class="q">실제 찬성률 50%인 집단에서 찬성자의 30%, 반대자의 10%가 온라인 투표에 참여했다. 투표 결과의 찬성률은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>75%<span class="why"><b>맞습니다.</b> \(\frac{0.5 \times 0.3}{0.5 \times 0.3 + 0.5 \times 0.1} = \frac{0.15}{0.2}\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50%<span class="why"><b>참여율의 차이를 무시했습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>30%<span class="why"><b>찬성자의 참여율입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>60%<span class="why"><b>계산을 다시 확인하세요.</b> 찬성 응답 0.15, 전체 응답 0.2입니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>75%<span class="why"><b>맞다.</b> \(\frac{0.5 \times 0.3}{0.5 \times 0.3 + 0.5 \times 0.1} = \frac{0.15}{0.2}\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>50%<span class="why"><b>참여율의 차이를 무시했다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>30%<span class="why"><b>찬성자의 참여율이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>60%<span class="why"><b>계산을 다시 확인하여라.</b> 찬성 응답 0.15, 전체 응답 0.2이다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/1-2.html#card-pstat-ppdac-order"><small class="mono">실용 통계 1.2</small>매점 줄을 줄이고 싶을 때, 통계 탐구는 어떤 순서로 해야 할까?</a><a href="../../c/pstat/1-2.html#card-pstat-question-refine"><small class="mono">실용 통계 1.2</small>"학생들은 스마트폰을 많이 쓸까?"를 통계로 답할 수 있는 질문으로 바꾸려면?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/2-2.html#card-pstat-survey-wording"><small class="mono">실용 통계 2.2</small>설문 문항을 어떻게 쓰느냐에 따라 응답이 달라질까?</a><a href="../../c/pstat/2-2.html#card-pstat-random-assign"><small class="mono">실용 통계 2.2</small>새 공부법을 고른 학생들의 점수가 높다면, 공부법의 효과일까?</a><a href="../../c/pstat/3-2.html#card-pstat-ci-t-cover"><small class="mono">실용 통계 3.2</small>배터리 6개로 평균 수명을 추정할 때, 신뢰구간은 어떻게 만들어야 할까?</a><a href="../../c/pstat/3-2.html#card-pstat-sample-size"><small class="mono">실용 통계 3.2</small>택배 배송 시간의 평균을 ±0.5시간 안으로 추정하려면 몇 건을 조사해야 할까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/pstat/1-2.html#card-pstat-ppdac-order"><small class="mono">실용 통계 1.2</small>매점 줄을 줄이고 싶을 때, 통계 탐구는 어떤 순서로 해야 할까?</a><a href="../../c/pstat/1-2.html#card-pstat-question-refine"><small class="mono">실용 통계 1.2</small>"학생들은 스마트폰을 많이 쓸까?"를 통계로 답할 수 있는 질문으로 바꾸려면?</a><a href="../../c/pstat/1-2.html#text-pstat-cycle"><small class="mono">실용 통계 1.2</small>통계적 문제해결 과정</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/pstat/2-2.html#card-pstat-survey-wording"><small class="mono">실용 통계 2.2</small>설문 문항을 어떻게 쓰느냐에 따라 응답이 달라질까?</a><a href="../../c/pstat/2-2.html#card-pstat-random-assign"><small class="mono">실용 통계 2.2</small>새 공부법을 고른 학생들의 점수가 높다면, 공부법의 효과일까?</a><a href="../../c/pstat/2-2.html#text-pstat-collect"><small class="mono">실용 통계 2.2</small>자료의 수집 방법</a><a href="../../c/pstat/3-2.html#card-pstat-ci-t-cover"><small class="mono">실용 통계 3.2</small>배터리 6개로 평균 수명을 추정할 때, 신뢰구간은 어떻게 만들어야 할까?</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=pstat-1-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=pstat&amp;sec=1-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">16문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

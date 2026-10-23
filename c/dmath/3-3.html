@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>부울 함수와 간소화 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="부울 함수와 연산(곱·합·보수), 참값표, 최소항의 합, 부울 대수의 법칙과 카르노 맵을 이용한 간소화. 규칙을 참값표와 식으로 바꾸는 카드와, 카르노 맵에서 묶음을 찾아 식을 줄이는 카드.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-dmath-truth-table table.tt { border-collapse: collapse; font-family: "IBM Plex Mono", ui-monospace, monospace; margin: .4rem 0; }
@@ -56,18 +61,80 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-dmath-truth-table"><span class="mono">3.3.1</span>말로 된 규칙을 참값표와 식으로</a></li>
-        <li><a href="#card-dmath-karnaugh"><span class="mono">3.3.2</span>카르노 맵으로 묶어 식 줄이기</a></li>
+        <li><a href="#text-dmath-boolean"><span class="mono">본문</span>부울 함수와 간소화</a></li>
+        <li><a href="#card-dmath-truth-table"><span class="mono">탐구 1</span>말로 된 규칙을 참값표와 식으로</a></li>
+        <li><a href="#card-dmath-karnaugh"><span class="mono">탐구 2</span>카르노 맵으로 묶어 식 줄이기</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=dmath-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">준비 중 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=dmath&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">10문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=dmath-3-3">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-dmath-boolean" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>부울 함수와 간소화</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">학급 회의에서 세 대표 A, B, C가 찬성(1)이나 반대(0)를 누르면, 둘 이상이 찬성할 때 안건이 통과(1)되는 장치를 만들려 한다. 찬성과 반대의 경우는 \(2^3 = 8\)가지이고, 통과되는 경우를 하나씩 적으면 \(\bar ABC + A\bar BC + AB\bar C + ABC\)라는 식이 된다. 이 식대로 회로를 만들면 부품이 많이 든다. 같은 일을 하는 더 짧은 식이 있을까? 그리고 그 식이 정말 같은 일을 하는지는 어떻게 확인할까?</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 200" role="img" aria-label="다수결 함수의 진리표">
+              <g class="s">
+                <text x="40" y="22">A</text><text x="90" y="22">B</text><text x="140" y="22">C</text><text x="200" y="22">통과 f</text><text x="290" y="22">AB + BC + CA</text>
+                <line x1="20" y1="30" x2="400" y2="30" class="gd"/>
+                <text x="40" y="48">0</text><text x="90" y="48">0</text><text x="140" y="48">0</text><text x="200" y="48">0</text><text x="290" y="48">0</text>
+                <text x="40" y="66">0</text><text x="90" y="66">0</text><text x="140" y="66">1</text><text x="200" y="66">0</text><text x="290" y="66">0</text>
+                <text x="40" y="84">0</text><text x="90" y="84">1</text><text x="140" y="84">0</text><text x="200" y="84">0</text><text x="290" y="84">0</text>
+                <text x="40" y="102">0</text><text x="90" y="102">1</text><text x="140" y="102">1</text><text x="200" y="102" class="td">1</text><text x="290" y="102" class="td">1</text>
+                <text x="40" y="120">1</text><text x="90" y="120">0</text><text x="140" y="120">0</text><text x="200" y="120">0</text><text x="290" y="120">0</text>
+                <text x="40" y="138">1</text><text x="90" y="138">0</text><text x="140" y="138">1</text><text x="200" y="138" class="td">1</text><text x="290" y="138" class="td">1</text>
+                <text x="40" y="156">1</text><text x="90" y="156">1</text><text x="140" y="156">0</text><text x="200" y="156" class="td">1</text><text x="290" y="156" class="td">1</text>
+                <text x="40" y="174">1</text><text x="90" y="174">1</text><text x="140" y="174">1</text><text x="200" y="174" class="td">1</text><text x="290" y="174" class="td">1</text>
+              </g>
+            </svg>
+            <figcaption>그림 1. 여덟 가지 입력 모두에서 \(AB + BC + CA\)의 값이 통과 여부와 같다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>명제와 조건, 그리고와 또는, 이진수(<a href="3-2.html">이진수의 사칙연산</a>).</div>
+
+          <h3><span class="no">3.3.1</span>참과 거짓의 계산</h3>
+          <p>0과 1만을 값으로 갖는 변수와, 그 변수들에 대한 연산 그리고(곱 \(AB\)), 또는(합 \(A + B\)), 부정(\(\bar A\))으로 만든 함수를 부울 함수라 한다. \(AB\)는 둘 다 1일 때만 1이고, \(A + B\)는 하나라도 1이면 1이며, \(\bar A\)는 \(A\)를 뒤집는다. 부울 함수는 모든 입력에 대한 출력을 적은 진리표로 완전히 정해진다. 진리표에서 출력이 1인 행마다, 그 행의 입력과 정확히 일치할 때만 1이 되는 곱을 만들어 모두 더하면 그 함수의 식이 된다. 이것을 곱의 합 꼴이라 한다.</p>
+          <div class="tb-env thm"><span class="lb">정리 3.3.1 <span class="nm">부울 대수의 법칙</span></span>
+            <p>교환법칙, 결합법칙, 분배법칙 \(A(B + C) = AB + AC\)와 함께 \(A + A = A\), \(A + \bar A = 1\), \(A\bar A = 0\), \(A + AB = A\)가 성립한다. 드모르간의 법칙은 \(\overline{A + B} = \bar A\,\bar B\), \(\overline{AB} = \bar A + \bar B\)이다. 두 부울 함수가 같은지는 진리표의 모든 행을 비교해 확인한다.</p>
+          </div>
+          <p>보통의 수와 달리 \(A + A = A\)이고, 또는 연산에 대해서도 분배법칙 \(A + BC = (A + B)(A + C)\)이 성립한다. 이 법칙들로 식을 바꾸어 같은 진리표를 갖는 더 짧은 식을 찾는 것을 간소화라 한다. 간소화의 기본 요령은 한 변수만 다르고 나머지가 같은 두 곱을 찾는 것이다. 예를 들어 \(ABC + AB\bar C = AB(C + \bar C) = AB\)처럼, 그 변수가 지워진다. 또 \(A + A = A\)를 써서 한 곱을 여러 번 짝짓는 데 쓸 수 있다.<sup class="fn"><a href="#fn-dmath-boolean-1">1</a></sup></p>
+
+          <h3><span class="no">3.3.2</span>그림으로 묶는 간소화</h3>
+          <p>카르노 맵은 진리표의 칸을 이웃한 칸끼리 한 변수만 다르도록 늘어놓은 표이다. 출력이 1인 칸들을 2개, 4개처럼 2의 거듭제곱 개씩 직사각형으로 묶으면, 묶음 안에서 바뀌는 변수가 지워진 곱 하나가 된다. 묶음은 클수록, 개수는 적을수록 식이 짧아지고, 한 칸을 여러 묶음에 함께 넣어도 된다. 그래서 대수 법칙을 하나하나 쓰는 대신 그림에서 묶음을 찾아 간소화한다.</p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 110" role="img" aria-label="다수결 함수의 간소화">
+              <g class="s">
+                <text x="20" y="22">짝지은 두 곱</text><text x="240" y="22">지워지는 변수</text><text x="400" y="22">결과</text>
+                <line x1="15" y1="30" x2="505" y2="30" class="gd"/>
+                <text x="20" y="52">ABC̄ + ABC</text><text x="240" y="52">C</text><text x="400" y="52">AB</text>
+                <text x="20" y="74">ĀBC + ABC</text><text x="240" y="74">A</text><text x="400" y="74">BC</text>
+                <text x="20" y="96">AB̄C + ABC</text><text x="240" y="96">B</text><text x="400" y="96" class="td">CA</text>
+              </g>
+            </svg>
+            <figcaption>그림 2. \(ABC\)를 세 번 복제해 다른 세 곱과 하나씩 짝지으면 각각 한 변수가 지워진다.</figcaption>
+          </figure>
+
+          <h3><span class="no">3.3.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 3.3.2</span>
+            <p>처음 질문의 식 \(\bar ABC + A\bar BC + AB\bar C + ABC\)를 부울 대수의 법칙으로 \(AB + BC + CA\)로 간소화하여라. 각 식을 회로로 만들 때 필요한 그리고 게이트와 또는 게이트의 입력 수를 비교하여라.</p>
+          </div>
+          <p>\(ABC = ABC + ABC + ABC\)이므로 식을 \((AB\bar C + ABC) + (\bar ABC + ABC) + (A\bar BC + ABC)\)로 다시 묶는다. 각 괄호는 한 변수만 다른 두 곱이어서 \(AB(\bar C + C) = AB\), \(BC(\bar A + A) = BC\), \(CA(\bar B + B) = CA\)가 된다. 그래서 \(f = AB + BC + CA\)이고, 그림 1의 진리표로 여덟 경우가 모두 같음을 확인할 수 있다.</p>
+          <p>원래 식은 세 입력 그리고 게이트 4개와 네 입력 또는 게이트 하나, 부정 게이트 3개가 필요하다. 간소화한 식은 두 입력 그리고 게이트 3개와 세 입력 또는 게이트 하나로 충분하다. 식으로 보면 "어느 두 사람이든 함께 찬성하면 통과"라는 뜻이 그대로 드러난다. 즉 부울 함수는 진리표로 정해지고 곱의 합 꼴로 쓸 수 있으며, 한 변수만 다른 곱을 짝지어 그 변수를 지우는 간소화로 같은 일을 하는 더 짧은 식을 얻는다.</p>
+          <p>아래 탐구 카드에서 "셋 중 둘 이상"의 진리표를 만들어 식으로 써 보고, 카르노 맵으로 긴 부울 식을 묶어 줄여 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-dmath-boolean-1">1854년 영국의 불은 논리를 0과 1의 계산으로 다루는 대수를 만들었다. 80여 년 뒤인 1937년 미국의 섀넌은 대학원 논문에서 전기 스위치 회로가 불의 대수를 따른다는 것을 보여, 디지털 회로 설계의 바탕을 놓았다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>0과 1만을 값으로 하고 그리고, 또는, 부정으로 만든 부울 함수는 진리표로 완전히 정해지며, 출력이 1인 행마다 곱을 만들어 더한 곱의 합 꼴로 쓸 수 있다. 분배법칙, \(A + \bar A = 1\), 드모르간의 법칙 같은 부울 대수의 법칙으로, 한 변수만 다른 곱을 짝지어 그 변수를 지우면 식을 간소화할 수 있다. 처음 질문의 통과 조건은 \(AB + BC + CA\)로 간소화되어, 어느 두 사람이든 함께 찬성하면 통과라는 뜻을 짧은 식과 작은 회로로 나타낸다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a><a href="../../c/dmath/3-2.html#text-dmath-binary-arith"><small class="mono">이산 수학 3.2</small>이진수의 사칙연산</a><a href="../../c/cm2/2-4.html#card-cm2-all-some"><small class="mono">공통수학2 2.4</small>'모든'과 '어떤'이 붙으면 참·거짓은 어떻게 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/3-4.html#card-dmath-gate-lab"><small class="mono">이산 수학 3.4</small>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#card-dmath-adder"><small class="mono">이산 수학 3.4</small>게이트만으로 덧셈하는 기계를 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#text-dmath-logic-circuit"><small class="mono">이산 수학 3.4</small>논리 회로</a></div></nav>
+
       <article class="card" id="card-dmath-truth-table">
         <header class="card-head">
-          <span class="no">3.3.1</span><h2>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</h2><span class="kind">부울 함수와 참값표 · 만들기</span>
+          <span class="no">탐구 1</span><h2>"셋 중 둘 이상이 찬성하면 통과"를 식으로 쓸 수 있을까?</h2><span class="kind">부울 함수와 참값표 · 만들기</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -79,30 +146,30 @@
             <p class="mono small expr"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>세 심사위원 A, B, C가 각각 찬성(1) 또는 반대(0)를 누르면, 둘 이상 찬성할 때 불이 켜지는 장치를 만들려고 합니다. 이 규칙을 기계가 이해하는 식으로 어떻게 쓸까요?</li>
-            <li><span class="tag">복원</span>명제 \(p \wedge q\)(그리고)는 둘 다 참일 때만 참, \(p \vee q\)(또는)는 하나라도 참이면 참, \(\sim p\)는 참과 거짓을 바꿉니다.</li>
-            <li><span class="tag">설명</span>0과 1만 가지는 변수로 이루어진 함수를 <em>부울 함수</em>라 하고, 곱(AND) \(AB\), 합(OR) \(A + B\), 보수(NOT) \(A'\)로 나타냅니다. 모든 입력에 대한 출력을 적은 표가 <em>참값표</em>입니다. 참값표에서 출력이 1인 줄마다 "그 입력일 때만 1"인 곱(최소항, 예: \(ABC'\))을 만들어 모두 더하면 함수를 나타내는 식이 됩니다. 그래서 어떤 규칙이든 AND, OR, NOT만으로 쓸 수 있습니다.</li>
-            <li><span class="tag">연결</span>이렇게 얻은 식은 길어지기 쉬워서 다음 카드에서 간단히 만들고, 4절에서 실제 논리 회로로 바꿉니다. 부울 대수는 1854년 조지 불이 논리를 계산으로 다루려고 만들었습니다.</li>
-            <li><span class="tag">적용</span>과제마다 출력 칸을 채우고 확인하세요. 맞으면 참값표에서 얻은 식(최소항의 합)과 간단히 한 식이 나타납니다. 다수결 함수의 최소항은 몇 개인가요?</li>
-            <li class="warn"><span class="tag">판단</span>부울 대수의 \(1 + 1\)은 1입니다(또는). 이진수 덧셈의 \(1 + 1 = 10_{(2)}\)과 기호가 같지만 다른 연산입니다. 무엇을 계산하는지 늘 확인하세요.</li>
+            <li><span class="tag">질문</span>세 심사위원 A, B, C가 각각 찬성(1) 또는 반대(0)를 누르면, 둘 이상 찬성할 때 불이 켜지는 장치를 만들려고 한다. 이 규칙을 기계가 이해하는 식으로 어떻게 쓸까?</li>
+            <li><span class="tag">복원</span>명제 \(p \wedge q\)(그리고)는 둘 다 참일 때만 참, \(p \vee q\)(또는)는 하나라도 참이면 참, \(\sim p\)는 참과 거짓을 바꾼다.</li>
+            <li><span class="tag">설명</span>0과 1만 가지는 변수로 이루어진 함수를 <em>부울 함수</em>라 하고, 곱(AND) \(AB\), 합(OR) \(A + B\), 보수(NOT) \(A'\)로 나타낸다. 모든 입력에 대한 출력을 적은 표가 <em>참값표</em>이다. 참값표에서 출력이 1인 줄마다 "그 입력일 때만 1"인 곱(최소항, 예를 들어 \(ABC'\))을 만들어 모두 더하면 함수를 나타내는 식이 된다. 그래서 어떤 규칙이든 AND, OR, NOT만으로 쓸 수 있다.</li>
+            <li><span class="tag">연결</span>이렇게 얻은 식은 길어지기 쉬워서 다음 카드에서 간단히 만들고, 4절에서 실제 논리 회로로 바꾼다. 부울 대수는 1854년 조지 불이 논리를 계산으로 다루려고 만들었다.</li>
+            <li><span class="tag">적용</span>과제마다 출력 칸을 채우고 확인해 보자. 맞으면 참값표에서 얻은 식(최소항의 합)과 간단히 한 식이 나타난다. 다수결 함수의 최소항은 몇 개인가?</li>
+            <li class="warn"><span class="tag">판단</span>부울 대수의 \(1 + 1\)은 1이다(또는). 이진수 덧셈의 \(1 + 1 = 10_{(2)}\)과 기호가 같지만 다른 연산이다. 무엇을 계산하는지 늘 확인해 보자.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">참값표에서 출력이 1인 입력이 \((A, B) = (0, 1)\), \((1, 0)\)뿐인 함수의 식은?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A'B + AB'\)<span class="why"><b>맞습니다.</b> 두 최소항의 합으로, 배타적 논리합(XOR)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(A + B\)<span class="why"><b>\((1, 1)\)에서도 1이 됩니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(AB + A'B'\)<span class="why"><b>반대로 같을 때 1인 함수입니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(A'B'\)<span class="why"><b>\((0, 0)\)에서만 1입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A'B + AB'\)<span class="why"><b>맞다.</b> 두 최소항의 합으로, 배타적 논리합(XOR)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(A + B\)<span class="why"><b>\((1, 1)\)에서도 1이 된다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(AB + A'B'\)<span class="why"><b>반대로 같을 때 1인 함수이다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(A'B'\)<span class="why"><b>\((0, 0)\)에서만 1이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a><a href="../../c/cm2/2-4.html#card-cm2-all-some"><small class="mono">공통수학2 2.4</small>'모든'과 '어떤'이 붙으면 참·거짓은 어떻게 정해질까?</a><a href="../../c/cm2/2-4.html#card-cm2-prop-truthset"><small class="mono">공통수학2 2.4</small>'p이면 q이다'가 참인지 집합으로 어떻게 판단할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/3-4.html#card-dmath-gate-lab"><small class="mono">이산 수학 3.4</small>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#card-dmath-adder"><small class="mono">이산 수학 3.4</small>게이트만으로 덧셈하는 기계를 만들 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a><a href="../../c/dmath/3-2.html#text-dmath-binary-arith"><small class="mono">이산 수학 3.2</small>이진수의 사칙연산</a><a href="../../c/cm2/2-4.html#card-cm2-all-some"><small class="mono">공통수학2 2.4</small>'모든'과 '어떤'이 붙으면 참·거짓은 어떻게 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/3-4.html#card-dmath-gate-lab"><small class="mono">이산 수학 3.4</small>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#card-dmath-adder"><small class="mono">이산 수학 3.4</small>게이트만으로 덧셈하는 기계를 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#text-dmath-logic-circuit"><small class="mono">이산 수학 3.4</small>논리 회로</a></div></nav>
 
       <article class="card" id="card-dmath-karnaugh">
         <header class="card-head">
-          <span class="no">3.3.2</span><h2>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</h2><span class="kind">부울 함수의 간소화 · 조작</span>
+          <span class="no">탐구 2</span><h2>긴 부울 식을 그림으로 묶어 줄일 수 있을까?</h2><span class="kind">부울 함수의 간소화 · 조작</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -110,45 +177,45 @@
               <label class="mono">변수 <select class="pn" aria-label="변수 개수"><option value="3">3개 (A, B, C)</option><option value="4" selected>4개 (A, B, C, D)</option></select></label>
               <label class="mono">예 <select class="ex" aria-label="예시 함수"><option value="">직접 만들기</option><option value="a" selected>예 1</option><option value="b">예 2</option><option value="c">예 3</option></select></label>
             </div>
-            <p class="small">칸을 누르면 그 입력의 출력이 0과 1로 바뀝니다. 칸 아래의 색 점은 그 칸을 덮는 묶음입니다.</p>
+            <p class="small">칸을 누르면 그 입력의 출력이 0과 1로 바뀐다. 칸 아래의 색 점은 그 칸을 덮는 묶음이다.</p>
             <table class="km" aria-label="카르노 맵"></table>
             <div class="groups" aria-label="찾은 묶음"></div>
             <p class="mono small say" role="status"></p>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>참값표에서 최소항을 모두 더하면 식이 길어집니다. 예를 들어 \(A'BC'D + A'BCD + ABC'D + ABCD\)는 사실 \(BD\) 하나와 같습니다. 이런 줄임을 눈으로 빨리 찾는 방법이 있을까요?</li>
-            <li><span class="tag">복원</span>부울 대수에서 \(X + X' = 1\)이므로 \(ABC + ABC' = AB(C + C') = AB\)입니다. 한 변수만 다른 두 항은 그 변수를 지우고 하나로 합칠 수 있습니다.</li>
-            <li><span class="tag">설명</span><em>카르노 맵</em>은 참값표를 이웃한 칸끼리 한 변수만 다르도록(00, 01, 11, 10 순서) 배열한 표입니다. 그래서 이웃한 1을 2개, 4개, 8개처럼 2의 거듭제곱 개의 직사각형으로 묶으면 그 안에서 바뀌는 변수가 지워집니다. 표의 양 끝도 이웃합니다(위아래, 좌우가 이어짐). 1을 모두 덮되 묶음은 되도록 크게, 개수는 되도록 적게 하면 간단한 식이 됩니다.</li>
-            <li><span class="tag">연결</span>식이 간단하면 4절의 논리 회로에서 게이트 수가 줄어 회로가 싸고 빨라집니다. 변수가 많아지면 컴퓨터가 같은 원리(콰인-매클러스키 방법 등)로 간소화합니다.</li>
-            <li><span class="tag">적용</span>예 1~3을 불러 묶음이 어떻게 생기는지 보세요. 네 귀퉁이 칸만 1로 하면 어떤 식이 되나요? 직접 1을 놓으며, 처음 식(최소항의 합)과 간단한 식의 글자 수를 비교하세요.</li>
-            <li class="warn"><span class="tag">판단</span>묶음은 반드시 1, 2, 4, 8개의 직사각형이어야 합니다. 3개나 ㄱ자 모양은 묶을 수 없습니다. 또 간단한 식이 하나뿐이 아닌 경우도 있어, 같은 글자 수의 다른 답이 있을 수 있습니다.</li>
+            <li><span class="tag">질문</span>참값표에서 최소항을 모두 더하면 식이 길어진다. 예를 들어 \(A'BC'D + A'BCD + ABC'D + ABCD\)는 사실 \(BD\) 하나와 같다. 이런 줄임을 눈으로 빨리 찾는 방법이 있을까?</li>
+            <li><span class="tag">복원</span>부울 대수에서 \(X + X' = 1\)이므로 \(ABC + ABC' = AB(C + C') = AB\)이다. 한 변수만 다른 두 항은 그 변수를 지우고 하나로 합칠 수 있다.</li>
+            <li><span class="tag">설명</span><em>카르노 맵</em>은 참값표를 이웃한 칸끼리 한 변수만 다르도록(00, 01, 11, 10 순서) 배열한 표이다. 그래서 이웃한 1을 2개, 4개, 8개처럼 2의 거듭제곱 개의 직사각형으로 묶으면 그 안에서 바뀌는 변수가 지워진다. 표의 양 끝도 이웃한다(위아래, 좌우가 이어짐). 1을 모두 덮되 묶음은 되도록 크게, 개수는 되도록 적게 하면 간단한 식이 된다.</li>
+            <li><span class="tag">연결</span>식이 간단하면 4절의 논리 회로에서 게이트 수가 줄어 회로가 싸고 빨라진다. 변수가 많아지면 컴퓨터가 같은 원리(콰인-매클러스키 방법 등)로 간소화한다.</li>
+            <li><span class="tag">적용</span>예 1~3을 불러 묶음이 어떻게 생기는지 보자. 네 귀퉁이 칸만 1로 하면 어떤 식이 되는가? 직접 1을 놓으며, 처음 식(최소항의 합)과 간단한 식의 글자 수를 비교해 보자.</li>
+            <li class="warn"><span class="tag">판단</span>묶음은 반드시 1, 2, 4, 8개의 직사각형이어야 한다. 3개나 ㄱ자 모양은 묶을 수 없다. 또 간단한 식이 하나뿐이 아닌 경우도 있어, 같은 글자 수의 다른 답이 있을 수 있다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(AB'C + AB'C' + ABC + ABC'\)를 간단히 하면?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A\)<span class="why"><b>맞습니다.</b> \(A = 1\)인 네 칸이 모두 1이라 B, C가 지워집니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(AB + AB'\)<span class="why"><b>한 번 더 줄일 수 있습니다.</b> \(B + B' = 1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(AC\)<span class="why"><b>\(C' \)가 있는 항을 빠뜨렸습니다.</b></span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>\(A = 0\)이면 0입니다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\(A\)<span class="why"><b>맞다.</b> \(A = 1\)인 네 칸이 모두 1이라 B, C가 지워진다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>\(AB + AB'\)<span class="why"><b>한 번 더 줄일 수 있다.</b> \(B + B' = 1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>\(AC\)<span class="why"><b>\(C' \)가 있는 항을 빠뜨렸다.</b></span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>\(1\)<span class="why"><b>\(A = 0\)이면 0이다.</b></span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a><a href="../../c/cm2/2-4.html#card-cm2-all-some"><small class="mono">공통수학2 2.4</small>'모든'과 '어떤'이 붙으면 참·거짓은 어떻게 정해질까?</a><a href="../../c/cm2/2-4.html#card-cm2-prop-truthset"><small class="mono">공통수학2 2.4</small>'p이면 q이다'가 참인지 집합으로 어떻게 판단할까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/3-4.html#card-dmath-gate-lab"><small class="mono">이산 수학 3.4</small>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#card-dmath-adder"><small class="mono">이산 수학 3.4</small>게이트만으로 덧셈하는 기계를 만들 수 있을까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/dmath/3-2.html#card-dmath-binary-add"><small class="mono">이산 수학 3.2</small>이진수의 덧셈과 곱셈은 왜 이렇게 단순할까?</a><a href="../../c/dmath/3-2.html#card-dmath-twos-comp"><small class="mono">이산 수학 3.2</small>8자리 이진수로 음수를 나타내면 100 + 50은 얼마가 될까?</a><a href="../../c/dmath/3-2.html#text-dmath-binary-arith"><small class="mono">이산 수학 3.2</small>이진수의 사칙연산</a><a href="../../c/cm2/2-4.html#card-cm2-all-some"><small class="mono">공통수학2 2.4</small>'모든'과 '어떤'이 붙으면 참·거짓은 어떻게 정해질까?</a></div><div><span class="mono">이어지는 카드</span><a href="../../c/dmath/3-4.html#card-dmath-gate-lab"><small class="mono">이산 수학 3.4</small>스위치와 게이트로 규칙을 회로로 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#card-dmath-adder"><small class="mono">이산 수학 3.4</small>게이트만으로 덧셈하는 기계를 만들 수 있을까?</a><a href="../../c/dmath/3-4.html#text-dmath-logic-circuit"><small class="mono">이산 수학 3.4</small>논리 회로</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=dmath-3-3"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">준비 중</span></a>
+      <a class="px-go" href="../../bank.html?c=dmath&amp;sec=3-3"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">10문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>

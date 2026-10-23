@@ -71,7 +71,7 @@
     panel(ctx, 30 + pw + 34, 26, pw, h - 76, b, "B");
     ctx.font = `10px ${F.mono}`; ctx.fillStyle = C.ink3; ctx.textAlign = "left"; ctx.fillText("km", 4, 22);
     ctx.font = `10.5px ${F.sans}`;
-    ctx.fillStyle = C.ink3; ctx.fillText("가로축: 기온 (°C)", w - 120, h - 6);
+    ctx.fillStyle = C.ink3; ctx.fillText("가로축은 기온 (°C)", w - 120, h - 6);
     ctx.fillStyle = C.apple; ctx.fillText("— 기온", 30, h - 6);
     ctx.fillStyle = C.forest; ctx.fillText("— 이슬점", 82, h - 6);
     ctx.fillStyle = C.ink3; ctx.fillText("- - 구름 밑면 어림", 146, h - 6);

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>미분가능성과 연속성 — 나뭇잎 디지털 교과서</title>
   <meta name="description" content="좌우 평균변화율의 극한으로 미분가능성 판정, 꺾인 점과 끊어진 점, 미분가능하면 연속이라는 정리와 그 역이 거짓인 예, 이어 붙인 함수가 미분가능할 조건 구하기.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="나뭇잎 디지털 교과서">
+  <meta property="og:image" content="https://radix24.github.io/namunnip-textbook/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
@@ -14,6 +18,7 @@
   <meta name="apple-mobile-web-app-title" content="나뭇잎 교과서">
   <link rel="stylesheet" href="../../css/fonts.css">
   <link rel="stylesheet" href="../../css/tb.css">
+  <link rel="stylesheet" href="../../css/shared.css">
   <link rel="stylesheet" href="../../assets/katex/katex.min.css">
   <style>
     #card-calc1-corner canvas { aspect-ratio: 16 / 11; touch-action: pan-y; cursor: ew-resize; }
@@ -47,18 +52,66 @@
     <aside class="toc" aria-label="이 절의 카드">
       <p class="mono small toc-title">이 절의 카드<button type="button" class="toc-fold" aria-expanded="true" aria-controls="toc-list" title="카드 목록 접기"><span>접기</span></button></p>
       <ol id="toc-list">
-        <li><a href="#card-calc1-corner"><span class="mono">2.2.1</span>꺾인 점의 미분가능성</a></li>
-        <li><a href="#card-calc1-glue"><span class="mono">2.2.2</span>미분가능하면 연속</a></li>
+        <li><a href="#text-calc1-differentiability"><span class="mono">본문</span>미분가능성과 연속성</a></li>
+        <li><a href="#card-calc1-corner"><span class="mono">탐구 1</span>꺾인 점의 미분가능성</a></li>
+        <li><a href="#card-calc1-glue"><span class="mono">탐구 2</span>미분가능하면 연속</a></li>
       </ol>
       <p class="progress mono small"></p>
-      <a class="toc-px" href="../../practice.html?sec=calc1-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항</b><span class="mono">90문항 →</span></a>
+      <a class="toc-px" href="../../bank.html?c=calc1&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono">11문항 →</span></a>
+      <a class="toc-px" href="../../practice.html?sec=calc1-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono">90문항 →</span></a>
       <p class="toc-links mono small"><a href="../../graph.html?sec=calc1-2-2">이 절을 개념 지도에서 보기</a></p>
     </aside>
 
     <div>
+      <article class="card reading" id="text-calc1-differentiability" data-kind="본문">
+        <header class="card-head"><span class="no">본문</span><h2>미분가능성과 연속성</h2><span class="kind">본문</span></header>
+        <div class="reading-body q-text">
+          <p class="q-ask">\(y = |x|\)의 그래프는 원점에서 끊기지 않고 이어진 V자 모양이다. 그런데 원점에서 접선은 무엇일까? 왼쪽에서 보면 기울기가 \(-1\), 오른쪽에서 보면 1이다. 이어져 있다는 것과 매끄럽다는 것은 어떻게 다를까?</p>
+          <figure class="q-fig" data-q="calc1-corner">
+            <svg viewBox="0 0 520 270" role="img" aria-label="꺾인 점을 확대해도 꺾임이 남는 y=|x|와, 확대하면 직선이 되는 매끄러운 곡선의 비교"></svg>
+            <div class="q-ctl"><label>확대 배율 <input type="range" data-k="z" min="0" max="3" step="1" value="0"><output data-k="z"></output></label></div>
+            <p class="q-read"></p>
+            <figcaption>그림 1. 매끄러운 곡선은 확대할수록 한 직선에 가까워지지만, \(y = |x|\)의 원점은 아무리 확대해도 꺾인 채로 남는다.</figcaption>
+          </figure>
+          <div class="tb-goal"><span class="lb">먼저 알아야 할 것</span>미분계수(<a href="2-1.html">미분계수</a>), 좌극한과 우극한(<a href="1-1.html">함수의 극한</a>), 함수의 연속(<a href="1-3.html">함수의 연속</a>).</div>
+
+          <h3><span class="no">2.2.1</span>왼쪽 기울기와 오른쪽 기울기</h3>
+          <p>미분계수 \(\displaystyle f'(a) = \lim_{h \to 0}\frac{f(a + h) - f(a)}{h}\)도 극한이므로, 좌극한과 우극한이 같아야 존재한다. \(f(x) = |x|\)에서 \(a = 0\)이면 \(\dfrac{|h|}{h}\)인데, \(h &gt; 0\)이면 1, \(h &lt; 0\)이면 \(-1\)이다. 두 값이 다르므로 극한이 없고, \(|x|\)는 \(x = 0\)에서 미분가능하지 않다.</p>
+          <p>그림 1의 슬라이더로 확대해 보자. 매끄러운 곡선은 확대할수록 한 직선처럼 보이지만, \(|x|\)는 몇 배를 확대해도 같은 V자가 그대로이다. 즉 미분가능하다는 것은 '충분히 확대하면 직선으로 보인다'는 뜻이고, 꺾인 점에서는 그 직선을 하나로 정할 수 없다.</p>
+
+          <h3><span class="no">2.2.2</span>미분가능하면 연속이다</h3>
+          <p>반대 방향은 언제나 성립한다. \(f\)가 \(x = a\)에서 미분가능하면 \(f(a + h) - f(a) = \dfrac{f(a + h) - f(a)}{h} \times h\)이고, \(h \to 0\)일 때 오른쪽은 \(f'(a) \times 0 = 0\)이다. 따라서 \(\displaystyle\lim_{h \to 0} f(a + h) = f(a)\)이므로 \(f\)는 \(x = a\)에서 연속이다.</p>
+          <div class="tb-env thm"><span class="lb">정리 2.2.1 <span class="nm">미분가능성과 연속성</span></span>
+            <p>함수 \(f(x)\)가 \(x = a\)에서 미분가능하면 \(x = a\)에서 연속이다. 그러나 그 역은 성립하지 않는다.</p>
+          </div>
+          <p>역의 반례가 바로 \(|x|\)이다. 원점에서 연속이지만 미분가능하지 않다. 그림 2처럼 연속이 아니면 미분가능할 수 없고, 연속이어도 꺾이거나 세로로 솟으면 미분가능하지 않다.<sup class="fn"><a href="#fn-calc1-differentiability-1">1</a></sup></p>
+          <figure class="q-fig">
+            <svg viewBox="0 0 520 150" role="img" aria-label="미분가능한 함수의 집합이 연속함수의 집합 안에 들어 있는 벤 다이어그램">
+              <ellipse cx="260" cy="75" rx="230" ry="65" class="lb"/><ellipse cx="300" cy="80" rx="120" ry="40" class="la"/>
+              <text x="110" y="70" class="s">연속인 함수</text><text x="110" y="90" class="s">(|x|는 여기)</text><text x="300" y="84" text-anchor="middle" class="s">미분가능한 함수</text>
+            </svg>
+            <figcaption>그림 2. 미분가능한 함수는 모두 연속이지만, 연속인 함수가 모두 미분가능한 것은 아니다.</figcaption>
+          </figure>
+
+          <h3><span class="no">2.2.3</span>예제 하나를 끝까지</h3>
+          <div class="tb-env ex"><span class="lb">예제 2.2.2</span>
+            <p>함수 \(f(x) = \begin{cases} x^2 + a &amp; (x &lt; 1) \\ bx + 1 &amp; (x \ge 1) \end{cases}\)이 \(x = 1\)에서 미분가능하도록 상수 \(a\), \(b\)를 정하여라.</p>
+          </div>
+          <p>미분가능하려면 먼저 연속이어야 한다. 좌극한 \(1 + a\)와 함숫값 \(b + 1\)이 같아야 하므로 \(a = b\)이다.</p>
+          <p>다음으로 왼쪽과 오른쪽의 기울기가 같아야 한다. 왼쪽 식 \(x^2 + a\)의 \(x = 1\)에서의 미분계수는 \(\displaystyle\lim_{h \to 0-}\frac{(1 + h)^2 - 1}{h} = 2\)이고, 오른쪽 직선의 기울기는 \(b\)이다. 따라서 \(b = 2\)이고, \(a = 2\)이다.</p>
+          <p>이때 \(f\)는 \(x &lt; 1\)에서 포물선 \(x^2 + 2\), \(x \ge 1\)에서 직선 \(2x + 1\)이고, 직선은 점 \((1, 3)\)에서 포물선의 접선이 된다. 높이만 맞추면 연속이고, 기울기까지 맞추어야 매끄럽게 이어진다. 아래 탐구 카드에서 두 식을 이어 붙이며 높이와 기울기를 차례로 맞추어 보자.</p>
+
+          <ol class="fn-list">
+            <li id="fn-calc1-differentiability-1">\(y = \sqrt[3]{x}\)는 원점에서 연속이지만, 접선이 세로선이 되어 기울기가 한없이 커지므로 미분가능하지 않다.</li>
+          </ol>
+          <div class="tb-summary"><span class="lb">마무리</span><p>미분가능하려면 왼쪽과 오른쪽에서 잰 순간변화율이 같아야 하며, 미분가능한 함수는 반드시 연속이다. 그러나 연속이어도 꺾인 점에서는 기울기가 하나로 정해지지 않아 미분가능하지 않다. 그래서 처음 질문의 \(y = |x|\)는 원점에서 이어져 있지만 접선을 그을 수 없다.</p></div>
+        </div>
+      </article>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a></div></nav>
+
       <article class="card" id="card-calc1-corner">
         <header class="card-head">
-          <span class="no">2.2.1</span><h2>왼쪽에서 본 기울기와 오른쪽에서 본 기울기가 다르면?</h2><span class="kind">미분가능성 · 좌우 극한</span>
+          <span class="no">탐구 1</span><h2>왼쪽에서 본 기울기와 오른쪽에서 본 기울기가 다르면?</h2><span class="kind">미분가능성 · 좌우 극한</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -77,34 +130,34 @@
                 <div><dt>\(x = 1\)에서 연속인가</dt><dd class="n-c">—</dd></div>
               </dl>
               <p class="msg">—</p>
-              <p class="fig-note">슬라이더를 오른쪽으로 밀면 \(h\)가 \(1, 0.1, 0.01, \cdots\)로 줄어듭니다. 그림을 끌어도 \(L\)과 \(R\)이 함께 움직입니다.</p>
+              <p class="fig-note">슬라이더를 오른쪽으로 밀면 \(h\)가 \(1, 0.1, 0.01, \cdots\)로 줄어든다. 그림을 끌어도 \(L\)과 \(R\)이 함께 움직인다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(y = |x - 1|\)의 그래프는 \(x = 1\)에서 \(V\)자로 꺾입니다. 이 점에서 접선의 기울기, 곧 미분계수를 하나로 정할 수 있을까요?</li>
-            <li><span class="tag">복원</span>극한값 \(\lim_{x \to a} g(x)\)가 있으려면 좌극한과 우극한이 모두 있고 서로 같아야 합니다. 미분계수 \(f'(a)\)는 \(g(h) = \frac{f(a + h) - f(a)}{h}\)의 \(h \to 0\)일 때의 극한값입니다.</li>
-            <li><span class="tag">설명</span>그래서 \(f'(a)\)가 있으려면 \(h \to 0^-\) (왼쪽 점 \(L\)에서 그은 할선)과 \(h \to 0^+\) (오른쪽 점 \(R\)에서 그은 할선)의 극한이 모두 있고 같아야 합니다. \(|x - 1|\)에서는 왼쪽 값이 늘 \(-1\), 오른쪽 값이 늘 1이라 극한이 서로 다릅니다. 따라서 \(x = 1\)에서 <em>연속이지만 미분가능하지 않습니다</em>. \((x - 1)|x - 1|\)에서는 두 값이 모두 0에 다가가므로 미분가능하고 \(f'(1) = 0\)입니다. 그래프가 끊어진 세 번째 함수는 왼쪽 값이 한없이 커져 극한이 없습니다.</li>
-            <li><span class="tag">연결</span>그래프로 보면 미분가능한 점은 매끄럽게 이어진 점이고, 미분가능하지 않은 점은 꺾인 점이나 끊어진 점입니다. 함수가 열린구간의 모든 점에서 미분가능하면 그 구간에서 <em>미분가능한 함수</em>라고 합니다. 다항함수는 모든 실수에서 미분가능합니다.</li>
-            <li><span class="tag">적용</span>세 함수 각각에서 \(h\)를 0.0001까지 줄이며 왼쪽 값과 오른쪽 값이 어디로 가는지 보세요. 연속인데 미분가능하지 않은 함수, 연속이면서 미분가능한 함수, 연속도 아닌 함수는 각각 어느 것인가요?</li>
-            <li class="warn"><span class="tag">판단</span>'그래프가 이어져 있으면 미분가능하다'는 틀린 말입니다. \(|x - 1|\)처럼 이어져 있어도 꺾이면 미분가능하지 않습니다. 또 끊어진 함수에서 오른쪽 값만 보고 "\(f'(1) = 1\)"이라 하면 안 됩니다. 양쪽 극한이 모두 있고 같아야 합니다.</li>
+            <li><span class="tag">질문</span>\(y = |x - 1|\)의 그래프는 \(x = 1\)에서 \(V\)자로 꺾인다. 이 점에서 접선의 기울기, 곧 미분계수를 하나로 정할 수 있을까?</li>
+            <li><span class="tag">복원</span>극한값 \(\lim_{x \to a} g(x)\)가 있으려면 좌극한과 우극한이 모두 있고 서로 같아야 한다. 그리고 미분계수 \(f'(a)\)는 \(g(h) = \frac{f(a + h) - f(a)}{h}\)의 \(h \to 0\)일 때의 극한값이다.</li>
+            <li><span class="tag">설명</span>그래서 \(f'(a)\)가 있으려면 \(h \to 0^-\) (왼쪽 점 \(L\)에서 그은 할선)과 \(h \to 0^+\) (오른쪽 점 \(R\)에서 그은 할선)의 극한이 모두 있고 같아야 한다. \(|x - 1|\)에서는 왼쪽 값이 늘 \(-1\), 오른쪽 값이 늘 1이라 극한이 서로 다르다. 따라서 \(x = 1\)에서 <em>연속이지만 미분가능하지 않다</em>. 반면 \((x - 1)|x - 1|\)에서는 두 값이 모두 0에 다가가므로 미분가능하고 \(f'(1) = 0\)이다. 그래프가 끊어진 세 번째 함수는 왼쪽 값이 한없이 커져 극한이 없다.</li>
+            <li><span class="tag">연결</span>그래프로 보면 미분가능한 점은 매끄럽게 이어진 점이고, 미분가능하지 않은 점은 꺾인 점이나 끊어진 점이다. 함수가 열린구간의 모든 점에서 미분가능하면 그 구간에서 <em>미분가능한 함수</em>라고 하며, 다항함수는 모든 실수에서 미분가능하다.</li>
+            <li><span class="tag">적용</span>세 함수 각각에서 \(h\)를 0.0001까지 줄이며 왼쪽 값과 오른쪽 값이 어디로 가는지 보자. 그러면 연속인데 미분가능하지 않은 함수, 연속이면서 미분가능한 함수, 연속도 아닌 함수를 하나씩 가려낼 수 있다.</li>
+            <li class="warn"><span class="tag">판단</span>'그래프가 이어져 있으면 미분가능하다'는 틀린 말이다. \(|x - 1|\)처럼 이어져 있어도 꺾이면 미분가능하지 않다. 또 끊어진 함수에서 오른쪽 값만 보고 "\(f'(1) = 1\)"이라 하면 안 되고, 양쪽 극한이 모두 있고 같아야 한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
-          <p class="q">\(f(x) = |x^2 - 4|\)는 \(x = 2\)에서 어떠한가요?</p>
+          <p class="q">\(f(x) = |x^2 - 4|\)는 \(x = 2\)에서 어떠한가?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>연속이지만 미분가능하지 않다<span class="why"><b>맞습니다.</b> \(f(2) = 0\)이고 양쪽 극한도 0이라 연속입니다. 그러나 왼쪽에서는 \(f(x) = -(x^2 - 4)\)라 기울기가 \(-4\)로, 오른쪽에서는 4로 다가가 서로 다릅니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연속이 아니다<span class="why"><b>꺾인 것을 끊어진 것으로 보았습니다.</b> 절댓값은 그래프를 접을 뿐 끊지 않습니다. \(x \to 2\)이면 \(f(x) \to 0 = f(2)\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>미분가능하고 \(f'(2) = 0\)이다<span class="why"><b>가장 낮은 점이라 기울기가 0이라고 보았습니다.</b> 매끄러운 바닥이면 그렇지만, 여기서는 뾰족하게 꺾여 좌우 기울기가 \(-4\)와 4입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>미분가능하고 \(f'(2) = 4\)이다<span class="why"><b>오른쪽 극한만 보았습니다.</b> 왼쪽에서 다가가면 \(-4\)이므로 극한값이 하나로 정해지지 않습니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>연속이지만 미분가능하지 않다<span class="why"><b>맞다.</b> \(f(2) = 0\)이고 양쪽 극한도 0이라 연속이다. 그러나 왼쪽에서는 \(f(x) = -(x^2 - 4)\)라 기울기가 \(-4\)로, 오른쪽에서는 4로 다가가 서로 다르다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>연속이 아니다<span class="why"><b>꺾인 것을 끊어진 것으로 보았다.</b> 절댓값은 그래프를 접을 뿐 끊지 않는다. \(x \to 2\)이면 \(f(x) \to 0 = f(2)\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>미분가능하고 \(f'(2) = 0\)이다<span class="why"><b>가장 낮은 점이라 기울기가 0이라고 보았다.</b> 매끄러운 바닥이면 그렇지만, 여기서는 뾰족하게 꺾여 좌우 기울기가 \(-4\)와 4이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>미분가능하고 \(f'(2) = 4\)이다<span class="why"><b>오른쪽 극한만 보았다.</b> 왼쪽에서 다가가면 \(-4\)이므로 극한값이 하나로 정해지지 않는다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a></div></nav>
 
       <article class="card" id="card-calc1-glue">
         <header class="card-head">
-          <span class="no">2.2.2</span><h2>두 식을 이어 붙이면 언제 매끄럽게 이어질까?</h2><span class="kind">미분가능성과 연속성 · 이어 붙인 함수</span>
+          <span class="no">탐구 2</span><h2>두 식을 이어 붙이면 언제 매끄럽게 이어질까?</h2><span class="kind">미분가능성과 연속성 · 이어 붙인 함수</span>
         </header>
         <div class="card-body">
           <div class="card-fig">
@@ -123,43 +176,44 @@
                 <div><dt>오른쪽 미분계수</dt><dd class="n-r">—</dd></div>
               </dl>
               <p class="mono eq st">—</p>
-              <p class="fig-note">왼쪽 미분계수는 \(\lim_{h \to 0^-} \frac{f(1 + h) - f(1)}{h}\)입니다. \(f(1)\)은 오른쪽 식으로 정한 값 \(a + b\)입니다.</p>
+              <p class="fig-note">왼쪽 미분계수는 \(\lim_{h \to 0^-} \frac{f(1 + h) - f(1)}{h}\)이다. \(f(1)\)은 오른쪽 식으로 정한 값 \(a + b\)이다.</p>
             </div>
           </div>
           <ol class="steps">
-            <li><span class="tag">질문</span>\(x &lt; 1\)에서는 \(x^2, x \ge 1\)에서는 직선 \(ax + b\)인 함수가 있습니다. 끊기지도 꺾이지도 않게, 곧 \(x = 1\)에서 미분가능하게 하려면 \(a\)와 \(b\)를 어떻게 골라야 할까요?</li>
-            <li><span class="tag">복원</span>\(f\)가 \(x = 1\)에서 연속이려면 \(\lim_{x \to 1} f(x) = f(1)\)이어야 합니다. 미분가능하려면 좌우의 \(\frac{f(1 + h) - f(1)}{h}\)가 같은 극한값을 가져야 합니다.</li>
-            <li><span class="tag">설명</span><em>\(f\)가 \(x = a\)에서 미분가능하면 \(x = a\)에서 연속입니다.</em> \(h \ne 0\)일 때 \(f(a + h) - f(a) = \frac{f(a + h) - f(a)}{h} \times h\)로 쓸 수 있습니다. \(h \to 0\)이면 앞의 인수는 \(f'(a)\)로, 뒤의 인수는 0으로 가므로 \(f(a + h) - f(a) \to f'(a) \times 0 = 0\), 곧 \(\lim_{h \to 0} f(a + h) = f(a)\)입니다. 이 정리의 대우는 "연속이 아니면 미분가능하지 않다"입니다. 그러나 역 "연속이면 미분가능하다"는 거짓입니다. \(|x|\)는 \(x = 0\)에서 연속이지만 미분가능하지 않습니다. 그래서 이 함수에서는 ① 연속 조건 \(1 = a + b\)와 ② 좌우 미분계수가 같다는 조건 \(2 = a\)를 함께 써야 합니다.</li>
-            <li><span class="tag">연결</span>두 조건을 만족하는 직선 \(y = 2x - 1\)은 \(y = x^2\)의 점 (1, 1)에서의 접선입니다. 이어 붙인 함수가 미분가능하다는 것은 오른쪽 식이 왼쪽 식과 같은 점, 같은 기울기로 이어진다는 뜻입니다.</li>
-            <li><span class="tag">적용</span>먼저 \(a = 1\)로 둔 채 \(b\)만 움직여 연속이 되는 \(b\)를 찾으세요. 이때 좌우 미분계수는 같은가요? 이번에는 \(a + b = 1\)을 지키며 \(a\)를 바꾸어 미분가능하게 되는 \(a\)를 찾으세요. 연속이 아닐 때 왼쪽 미분계수가 어떻게 되는지도 보세요.</li>
-            <li class="warn"><span class="tag">판단</span>좌우 도함수의 값만 같게 맞추고 연속 조건을 빠뜨리는 실수가 흔합니다. \(a = 2, b = 0\)이면 왼쪽 식의 기울기 \(2x\)와 오른쪽 기울기 2가 \(x = 1\)에서 같아 보이지만, 그래프가 끊어져 있어 미분가능하지 않습니다. 이때 왼쪽 미분계수는 2가 아니라 발산합니다.</li>
+            <li><span class="tag">질문</span>\(x &lt; 1\)에서는 \(x^2\), \(x \ge 1\)에서는 직선 \(ax + b\)인 함수가 있다. 끊기지도 꺾이지도 않게, 곧 \(x = 1\)에서 미분가능하게 하려면 \(a\)와 \(b\)를 어떻게 골라야 할까?</li>
+            <li><span class="tag">복원</span>\(f\)가 \(x = 1\)에서 연속이려면 \(\lim_{x \to 1} f(x) = f(1)\)이어야 한다. 그리고 미분가능하려면 좌우의 \(\frac{f(1 + h) - f(1)}{h}\)가 같은 극한값을 가져야 한다.</li>
+            <li><span class="tag">설명</span><em>\(f\)가 \(x = a\)에서 미분가능하면 \(x = a\)에서 연속이다.</em> \(h \ne 0\)일 때 \(f(a + h) - f(a) = \frac{f(a + h) - f(a)}{h} \times h\)로 쓸 수 있는데, \(h \to 0\)이면 앞의 인수는 \(f'(a)\)로, 뒤의 인수는 0으로 가므로 \(f(a + h) - f(a) \to f'(a) \times 0 = 0\), 곧 \(\lim_{h \to 0} f(a + h) = f(a)\)이다. 이 정리의 대우는 "연속이 아니면 미분가능하지 않다"이다. 그러나 역 "연속이면 미분가능하다"는 거짓이어서, \(|x|\)는 \(x = 0\)에서 연속이지만 미분가능하지 않다. 그래서 이 함수에서는 연속 조건 \(1 = a + b\)와 좌우 미분계수가 같다는 조건 \(2 = a\)를 함께 써야 한다.</li>
+            <li><span class="tag">연결</span>두 조건을 만족하는 직선 \(y = 2x - 1\)은 \(y = x^2\)의 점 (1, 1)에서의 접선이다. 즉 이어 붙인 함수가 미분가능하다는 것은 오른쪽 식이 왼쪽 식과 같은 점, 같은 기울기로 이어진다는 뜻이다.</li>
+            <li><span class="tag">적용</span>먼저 \(a = 1\)로 둔 채 \(b\)만 움직여 연속이 되는 \(b\)를 찾고, 이때 좌우 미분계수가 같은지 보자. 이번에는 \(a + b = 1\)을 지키며 \(a\)를 바꾸어 미분가능하게 되는 \(a\)를 찾고, 연속이 아닐 때 왼쪽 미분계수가 어떻게 되는지도 보자.</li>
+            <li class="warn"><span class="tag">판단</span>좌우 도함수의 값만 같게 맞추고 연속 조건을 빠뜨리는 실수가 흔하다. \(a = 2, b = 0\)이면 왼쪽 식의 기울기 \(2x\)와 오른쪽 기울기 2가 \(x = 1\)에서 같아 보이지만, 그래프가 끊어져 있어 미분가능하지 않다. 이때 왼쪽 미분계수는 2가 아니라 발산한다.</li>
           </ol>
         </div>
         <div class="quiz">
           <h3><span class="mono">확인</span>조건이 달라지면</h3>
           <p class="q">\(f(x) = ax^2 + 1\ (x &lt; 1), 4x + b\ (x \ge 1)\)이 \(x = 1\)에서 미분가능할 때 \((a, b)\)는?</p>
           <ol>
-            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, -1)\)<span class="why"><b>맞습니다.</b> 미분계수 조건 \(2a = 4\)에서 \(a = 2\), 연속 조건 \(a + 1 = 4 + b\)에서 \(b = -1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(4, 1)<span class="why"><b>\((ax^2)' = 2ax\)의 2를 빠뜨렸습니다.</b> \(x = 1\)에서 왼쪽 기울기는 \(2a\)이므로 \(2a = 4\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(2, 1)<span class="why"><b>연속 조건을 잘못 옮겼습니다.</b> \(a + 1 = 4 + b\)에 \(a = 2\)를 넣으면 \(3 = 4 + b, b = -1\)입니다.</span></span></button></li>
-            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>하나로 정해지지 않는다<span class="why"><b>연속 조건만 썼습니다.</b> \(a + 1 = 4 + b\)만으로는 무수히 많지만, 미분가능하려면 기울기 조건 \(2a = 4\)도 함께 성립해야 합니다.</span></span></button></li>
+            <li><button class="opt" data-ok="1"><span class="mono">ㄱ</span><span>\((2, -1)\)<span class="why"><b>맞다.</b> 미분계수 조건 \(2a = 4\)에서 \(a = 2\), 연속 조건 \(a + 1 = 4 + b\)에서 \(b = -1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄴ</span><span>(4, 1)<span class="why"><b>\((ax^2)' = 2ax\)의 2를 빠뜨렸다.</b> \(x = 1\)에서 왼쪽 기울기는 \(2a\)이므로 \(2a = 4\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄷ</span><span>(2, 1)<span class="why"><b>연속 조건을 잘못 옮겼다.</b> \(a + 1 = 4 + b\)에 \(a = 2\)를 넣으면 \(3 = 4 + b, b = -1\)이다.</span></span></button></li>
+            <li><button class="opt" data-ok="0"><span class="mono">ㄹ</span><span>하나로 정해지지 않는다<span class="why"><b>연속 조건만 썼다.</b> \(a + 1 = 4 + b\)만으로는 무수히 많지만, 미분가능하려면 기울기 조건 \(2a = 4\)도 함께 성립해야 한다.</span></span></button></li>
           </ol>
         </div>
       </article>
-      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a></div></nav>
+      <nav class="rel" aria-label="연관 카드"><div><span class="mono">먼저 볼 카드</span><a href="../../c/calc1/2-1.html#card-calc1-secant"><small class="mono">미적분Ⅰ 2.1</small>할선의 기울기는 h가 0에 가까워지면 어디로 갈까?</a><a href="../../c/calc1/2-1.html#card-calc1-zoom"><small class="mono">미적분Ⅰ 2.1</small>곡선을 계속 확대하면 무엇이 보일까?</a><a href="../../c/calc1/2-1.html#text-calc1-derivative-coef"><small class="mono">미적분Ⅰ 2.1</small>미분계수</a></div></nav>
 
-      <a class="px-go" href="../../practice.html?sec=calc1-2-2"><span class="mono">연습문제</span><b>이 절의 기출 문항 풀기</b><span class="mono px-n">90문항</span></a>
+      <a class="px-go" href="../../bank.html?c=calc1&amp;sec=2-2"><span class="mono">AI 출제 문항</span><b>연습문제 풀어보기</b><span class="mono px-n">11문항</span></a>
+      <a class="px-go" href="../../practice.html?sec=calc1-2-2"><span class="mono">수능·모의평가·학력평가</span><b>기출문제 풀어보기</b><span class="mono px-n">90문항</span></a>
 
       <nav class="next" aria-label="절 이동"></nav>
     </div>
   </div>
 
   <footer class="site-foot">
-    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a></p>
+    <p class="foot-org"><a class="foot-home" href="https://nmnp.kr"><svg class="brand-mark" aria-hidden="true"><use href="#nm"/></svg><b>나뭇잎</b><span class="mono">nmnp.kr</span></a><a class="foot-mail mono" href="mailto:contact@nmnp.kr">contact@nmnp.kr</a><a class="foot-mail mono" href="../../credits.html">크레딧</a></p>
   </footer>
 </main>
 
-<script src="../../js/toc.js"></script>
+<script src="toc.js"></script>
 <script src="../../js/core.js"></script>
 <script src="../../assets/katex/katex.min.js"></script>
 <script src="../../js/math.js"></script>
@@ -167,6 +221,8 @@
 <script src="../../js/notes.js"></script>
 <script src="../../js/reader.js"></script>
 <script src="../../js/prereq.js"></script>
+<script src="../../js/lib/qfig.js"></script>
+<script src="../../js/cards/calc1/body.js"></script>
 <script src="../../js/cards/calc1/plot.js"></script>
 <script src="../../js/cards/calc1/corner.js"></script>
 <script src="../../js/cards/calc1/glue.js"></script>
